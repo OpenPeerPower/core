@@ -21,7 +21,7 @@ from tests.common import MockConfigEntry, async_fire_time_changed, load_fixture
     "datapoint.Forecast.datetime.datetime",
     NewDateTime,
 )
-async def test_site_cannot_connect.opp, requests_mock, legacy_patchable_time):
+async def test_site_cannot_connect(opp, requests_mock, legacy_patchable_time):
     """Test we handle cannot connect error."""
 
     requests_mock.get("/public/data/val/wxfcs/all/json/sitelist/", text="")
@@ -31,11 +31,11 @@ async def test_site_cannot_connect.opp, requests_mock, legacy_patchable_time):
         domain=DOMAIN,
         data=METOFFICE_CONFIG_WAVERTREE,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("weather.met_office_wavertree") is None
+    assert opp.states.get("weather.met_office_wavertree") is None
     for sensor_id in WAVERTREE_SENSOR_RESULTS:
         sensor_name, sensor_value = WAVERTREE_SENSOR_RESULTS[sensor_id]
         sensor = opp.states.get(f"sensor.wavertree_{sensor_name}")
@@ -46,7 +46,7 @@ async def test_site_cannot_connect.opp, requests_mock, legacy_patchable_time):
     "datapoint.Forecast.datetime.datetime",
     NewDateTime,
 )
-async def test_site_cannot_update.opp, requests_mock, legacy_patchable_time):
+async def test_site_cannot_update(opp, requests_mock, legacy_patchable_time):
     """Test we handle cannot connect error."""
 
     # all metoffice test data encapsulated in here
@@ -63,7 +63,7 @@ async def test_site_cannot_update.opp, requests_mock, legacy_patchable_time):
         domain=DOMAIN,
         data=METOFFICE_CONFIG_WAVERTREE,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
@@ -73,7 +73,7 @@ async def test_site_cannot_update.opp, requests_mock, legacy_patchable_time):
     requests_mock.get("/public/data/val/wxfcs/all/json/354107?res=3hourly", text="")
 
     future_time = utcnow() + timedelta(minutes=20)
-    async_fire_time_changed.opp, future_time)
+    async_fire_time_changed(opp, future_time)
     await opp.async_block_till_done()
 
     entity = opp.states.get("weather.met_office_wavertree")
@@ -84,7 +84,7 @@ async def test_site_cannot_update.opp, requests_mock, legacy_patchable_time):
     "datapoint.Forecast.datetime.datetime",
     NewDateTime,
 )
-async def test_one_weather_site_running.opp, requests_mock, legacy_patchable_time):
+async def test_one_weather_site_running(opp, requests_mock, legacy_patchable_time):
     """Test the Met Office weather platform."""
 
     # all metoffice test data encapsulated in here
@@ -102,7 +102,7 @@ async def test_one_weather_site_running.opp, requests_mock, legacy_patchable_tim
         domain=DOMAIN,
         data=METOFFICE_CONFIG_WAVERTREE,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
@@ -122,7 +122,7 @@ async def test_one_weather_site_running.opp, requests_mock, legacy_patchable_tim
     "datapoint.Forecast.datetime.datetime",
     NewDateTime,
 )
-async def test_two_weather_sites_running.opp, requests_mock, legacy_patchable_time):
+async def test_two_weather_sites_running(opp, requests_mock, legacy_patchable_time):
     """Test we handle two different weather sites both running."""
 
     # all metoffice test data encapsulated in here
@@ -143,13 +143,13 @@ async def test_two_weather_sites_running.opp, requests_mock, legacy_patchable_ti
         domain=DOMAIN,
         data=METOFFICE_CONFIG_WAVERTREE,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     entry2 = MockConfigEntry(
         domain=DOMAIN,
         data=METOFFICE_CONFIG_KINGSLYNN,
     )
-    entry2.add_to.opp.opp)
+    entry2.add_to_opp(opp)
     await opp.config_entries.async_setup(entry2.entry_id)
     await opp.async_block_till_done()
 

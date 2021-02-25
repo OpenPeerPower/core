@@ -21,7 +21,7 @@ from tests.common import MockConfigEntry
 
 async def test_form_user.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -60,13 +60,13 @@ async def test_form_user.opp):
 
 async def test_form_user_already_configured.opp):
     """Test we abort if already configured."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     config_entry = MockConfigEntry(
         domain=DOMAIN,
         data={CONF_HOST: "1.1.1.1", CONF_PORT: 12, CONF_SYSTEM_ID: 46},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -99,7 +99,7 @@ async def test_form_user_already_configured.opp):
 
 async def test_form_import.opp):
     """Test we get the form with import source."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "openpeerpower.components.somfy_mylink.config_flow.SomfyMyLinkSynergy.status_info",
@@ -134,7 +134,7 @@ async def test_form_import.opp):
 
 async def test_form_import_with_entity_config(opp):
     """Test we can import entity config."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "openpeerpower.components.somfy_mylink.config_flow.SomfyMyLinkSynergy.status_info",
@@ -173,13 +173,13 @@ async def test_form_import_with_entity_config(opp):
 
 async def test_form_import_already_exists(opp):
     """Test we get the form with import source."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     config_entry = MockConfigEntry(
         domain=DOMAIN,
         data={CONF_HOST: "1.1.1.1", CONF_PORT: 12, CONF_SYSTEM_ID: 46},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.somfy_mylink.config_flow.SomfyMyLinkSynergy.status_info",
@@ -281,13 +281,13 @@ async def test_form_unknown_error(opp):
 
 async def test_options_not_loaded.opp):
     """Test options will not display until loaded."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     config_entry = MockConfigEntry(
         domain=DOMAIN,
         data={CONF_HOST: "1.1.1.1", CONF_PORT: 12, CONF_SYSTEM_ID: "46"},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.somfy_mylink.SomfyMyLinkSynergy.status_info",
@@ -299,15 +299,15 @@ async def test_options_not_loaded.opp):
 
 
 @pytest.mark.parametrize("reversed", [True, False])
-async def test_options_with_targets.opp, reversed):
+async def test_options_with_targets(opp, reversed):
     """Test we can configure reverse for a target."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     config_entry = MockConfigEntry(
         domain=DOMAIN,
         data={CONF_HOST: "1.1.1.1", CONF_PORT: 12, CONF_SYSTEM_ID: "46"},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.somfy_mylink.SomfyMyLinkSynergy.status_info",
@@ -355,9 +355,9 @@ async def test_options_with_targets.opp, reversed):
 
 
 @pytest.mark.parametrize("reversed", [True, False])
-async def test_form_import_with_entity_config_modify_options.opp, reversed):
+async def test_form_import_with_entity_config_modify_options(opp, reversed):
     """Test we can import entity config and modify options."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     mock_imported_config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -369,7 +369,7 @@ async def test_form_import_with_entity_config_modify_options.opp, reversed):
             CONF_ENTITY_CONFIG: {"cover.xyz": {CONF_REVERSE: False}},
         },
     )
-    mock_imported_config_entry.add_to.opp.opp)
+    mock_imported_config_entry.add_to_opp(opp)
 
     mock_status_info = {
         "result": [
@@ -427,13 +427,13 @@ async def test_form_import_with_entity_config_modify_options.opp, reversed):
 
 async def test_form_user_already_configured_from_dhcp.opp):
     """Test we abort if already configured from dhcp."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     config_entry = MockConfigEntry(
         domain=DOMAIN,
         data={CONF_HOST: "1.1.1.1", CONF_PORT: 12, CONF_SYSTEM_ID: 46},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.somfy_mylink.config_flow.SomfyMyLinkSynergy.status_info",
@@ -463,10 +463,10 @@ async def test_form_user_already_configured_from_dhcp.opp):
 
 async def test_already_configured_with_ignored.opp):
     """Test ignored entries do not break checking for existing entries."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     config_entry = MockConfigEntry(domain=DOMAIN, data={}, source="ignore")
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -482,7 +482,7 @@ async def test_already_configured_with_ignored.opp):
 
 async def test_dhcp_discovery.opp):
     """Test we can process the discovery from dhcp."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_DHCP},

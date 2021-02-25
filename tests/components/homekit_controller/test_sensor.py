@@ -69,7 +69,7 @@ def create_battery_level_sensor(accessory):
     return service
 
 
-async def test_temperature_sensor_read_state.opp, utcnow):
+async def test_temperature_sensor_read_state(opp, utcnow):
     """Test reading the state of a HomeKit temperature sensor accessory."""
     helper = await setup_test_component(
         opp. create_temperature_sensor_service, suffix="temperature"
@@ -86,7 +86,7 @@ async def test_temperature_sensor_read_state.opp, utcnow):
     assert state.attributes["device_class"] == DEVICE_CLASS_TEMPERATURE
 
 
-async def test_humidity_sensor_read_state.opp, utcnow):
+async def test_humidity_sensor_read_state(opp, utcnow):
     """Test reading the state of a HomeKit humidity sensor accessory."""
     helper = await setup_test_component(
         opp. create_humidity_sensor_service, suffix="humidity"
@@ -103,7 +103,7 @@ async def test_humidity_sensor_read_state.opp, utcnow):
     assert state.attributes["device_class"] == DEVICE_CLASS_HUMIDITY
 
 
-async def test_light_level_sensor_read_state.opp, utcnow):
+async def test_light_level_sensor_read_state(opp, utcnow):
     """Test reading the state of a HomeKit temperature sensor accessory."""
     helper = await setup_test_component(
         opp. create_light_level_sensor_service, suffix="light_level"
@@ -120,7 +120,7 @@ async def test_light_level_sensor_read_state.opp, utcnow):
     assert state.attributes["device_class"] == DEVICE_CLASS_ILLUMINANCE
 
 
-async def test_carbon_dioxide_level_sensor_read_state.opp, utcnow):
+async def test_carbon_dioxide_level_sensor_read_state(opp, utcnow):
     """Test reading the state of a HomeKit carbon dioxide sensor accessory."""
     helper = await setup_test_component(
         opp. create_carbon_dioxide_level_sensor_service, suffix="co2"
@@ -135,7 +135,7 @@ async def test_carbon_dioxide_level_sensor_read_state.opp, utcnow):
     assert state.state == "20"
 
 
-async def test_battery_level_sensor.opp, utcnow):
+async def test_battery_level_sensor(opp, utcnow):
     """Test reading the state of a HomeKit battery level sensor."""
     helper = await setup_test_component(
         opp. create_battery_level_sensor, suffix="battery"
@@ -154,7 +154,7 @@ async def test_battery_level_sensor.opp, utcnow):
     assert state.attributes["device_class"] == DEVICE_CLASS_BATTERY
 
 
-async def test_battery_charging.opp, utcnow):
+async def test_battery_charging(opp, utcnow):
     """Test reading the state of a HomeKit battery's charging state."""
     helper = await setup_test_component(
         opp. create_battery_level_sensor, suffix="battery"
@@ -170,7 +170,7 @@ async def test_battery_charging.opp, utcnow):
     assert state.attributes["icon"] == "mdi:battery-charging-20"
 
 
-async def test_battery_low.opp, utcnow):
+async def test_battery_low(opp, utcnow):
     """Test reading the state of a HomeKit battery's low state."""
     helper = await setup_test_component(
         opp. create_battery_level_sensor, suffix="battery"
@@ -202,9 +202,9 @@ def create_switch_with_sensor(accessory):
     return service
 
 
-async def test_switch_with_sensor.opp, utcnow):
+async def test_switch_with_sensor(opp, utcnow):
     """Test a switch service that has a sensor characteristic is correctly handled."""
-    helper = await setup_test_component.opp, create_switch_with_sensor)
+    helper = await setup_test_component(opp, create_switch_with_sensor)
     outlet = helper.accessory.services.first(service_type=ServicesTypes.OUTLET)
 
     # Helper will be for the primary entity, which is the outlet. Make a helper for the sensor.

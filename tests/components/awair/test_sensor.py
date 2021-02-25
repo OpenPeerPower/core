@@ -45,12 +45,12 @@ from .const import (
 from tests.common import MockConfigEntry
 
 
-async def setup_awair.opp, fixtures):
+async def setup_awair(opp, fixtures):
     """Add Awair devices to.opp, using specified fixtures for data."""
 
     entry = MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG)
     with patch("python_awair.AwairClient.query", side_effect=fixtures):
-        entry.add_to.opp.opp)
+        entry.add_to_opp(opp)
         await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
@@ -73,7 +73,7 @@ async def test_awair_gen1_sensors.opp):
     """Test expected sensors on a 1st gen Awair."""
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, GEN1_DATA_FIXTURE]
-    await setup_awair.opp, fixtures)
+    await setup_awair(opp, fixtures)
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     assert_expected_properties(
@@ -158,18 +158,18 @@ async def test_awair_gen1_sensors.opp):
 
     # We should not have a dust sensor; it's aliased as pm2.5
     # and pm10 sensors.
-    assert.opp.states.get("sensor.living_room_dust") is None
+    assert opp.states.get("sensor.living_room_dust") is None
 
     # We should not have sound or lux sensors.
-    assert.opp.states.get("sensor.living_room_sound_level") is None
-    assert.opp.states.get("sensor.living_room_illuminance") is None
+    assert opp.states.get("sensor.living_room_sound_level") is None
+    assert opp.states.get("sensor.living_room_illuminance") is None
 
 
 async def test_awair_gen2_sensors.opp):
     """Test expected sensors on a 2nd gen Awair."""
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, GEN2_DATA_FIXTURE]
-    await setup_awair.opp, fixtures)
+    await setup_awair(opp, fixtures)
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     assert_expected_properties(
@@ -196,14 +196,14 @@ async def test_awair_gen2_sensors.opp):
 
     # The Awair 2nd gen reports specifically a pm2.5 sensor,
     # and so we don't alias anything. Make sure we didn't do that.
-    assert.opp.states.get("sensor.living_room_pm10") is None
+    assert opp.states.get("sensor.living_room_pm10") is None
 
 
 async def test_awair_mint_sensors.opp):
     """Test expected sensors on an Awair mint."""
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, MINT_DATA_FIXTURE]
-    await setup_awair.opp, fixtures)
+    await setup_awair(opp, fixtures)
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     assert_expected_properties(
@@ -238,14 +238,14 @@ async def test_awair_mint_sensors.opp):
     )
 
     # The Mint does not have a CO2 sensor.
-    assert.opp.states.get("sensor.living_room_carbon_dioxide") is None
+    assert opp.states.get("sensor.living_room_carbon_dioxide") is None
 
 
 async def test_awair_glow_sensors.opp):
     """Test expected sensors on an Awair glow."""
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, GLOW_DATA_FIXTURE]
-    await setup_awair.opp, fixtures)
+    await setup_awair(opp, fixtures)
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     assert_expected_properties(
@@ -258,14 +258,14 @@ async def test_awair_glow_sensors.opp):
     )
 
     # The glow does not have a particle sensor
-    assert.opp.states.get("sensor.living_room_pm2_5") is None
+    assert opp.states.get("sensor.living_room_pm2_5") is None
 
 
 async def test_awair_omni_sensors.opp):
     """Test expected sensors on an Awair omni."""
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, OMNI_DATA_FIXTURE]
-    await setup_awair.opp, fixtures)
+    await setup_awair(opp, fixtures)
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     assert_expected_properties(
@@ -300,7 +300,7 @@ async def test_awair_offline.opp):
     """Test expected behavior when an Awair is offline."""
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, OFFLINE_FIXTURE]
-    await setup_awair.opp, fixtures)
+    await setup_awair(opp, fixtures)
 
     # The expected behavior is that we won't have any sensors
     # if the device is not online when we set it up. python_awair
@@ -311,14 +311,14 @@ async def test_awair_offline.opp):
     # device *should* have if it's online. If we don't see it,
     # then we probably didn't set anything up. Which is correct,
     # in this case.
-    assert.opp.states.get("sensor.living_room_awair_score") is None
+    assert opp.states.get("sensor.living_room_awair_score") is None
 
 
 async def test_awair_unavailable.opp):
     """Test expected behavior when an Awair becomes offline later."""
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, GEN1_DATA_FIXTURE]
-    await setup_awair.opp, fixtures)
+    await setup_awair(opp, fixtures)
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     assert_expected_properties(

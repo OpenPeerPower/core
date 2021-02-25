@@ -13,7 +13,7 @@ from openpeerpower.core import State
 from tests.common import async_mock_service
 
 
-async def test_reproducing_states.opp, caplog):
+async def test_reproducing_states(opp, caplog):
     """Test reproducing Timer states."""
     opp.states.async_set("timer.entity_idle", STATUS_IDLE, {})
     opp.states.async_set("timer.entity_paused", STATUS_PAUSED, {})
@@ -22,9 +22,9 @@ async def test_reproducing_states.opp, caplog):
         "timer.entity_active_attr", STATUS_ACTIVE, {ATTR_DURATION: "00:01:00"}
     )
 
-    start_calls = async_mock_service.opp, "timer", SERVICE_START)
-    pause_calls = async_mock_service.opp, "timer", SERVICE_PAUSE)
-    cancel_calls = async_mock_service.opp, "timer", SERVICE_CANCEL)
+    start_calls = async_mock_service(opp, "timer", SERVICE_START)
+    pause_calls = async_mock_service(opp, "timer", SERVICE_PAUSE)
+    cancel_calls = async_mock_service(opp, "timer", SERVICE_CANCEL)
 
     # These calls should do nothing as entities already in desired state
     await opp.helpers.state.async_reproduce_state(

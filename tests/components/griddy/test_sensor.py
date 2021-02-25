@@ -11,7 +11,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import load_fixture
 
 
-async def _load_json_fixture.opp, path):
+async def _load_json_fixture(opp, path):
     fixture = await opp.async_add_executor_job(
         load_fixture, os.path.join("griddy", path)
     )
@@ -26,13 +26,13 @@ def _mock_get_config():
 async def test_houston_loadzone.opp):
     """Test creation of the houston load zone."""
 
-    getnow_json = await _load_json_fixture.opp, "getnow.json")
+    getnow_json = await _load_json_fixture(opp, "getnow.json")
     griddy_price_data = GriddyPriceData(getnow_json)
     with patch(
         "openpeerpower.components.griddy.AsyncGriddy.async_getnow",
         return_value=griddy_price_data,
     ):
-        assert await async_setup_component.opp, DOMAIN, _mock_get_config())
+        assert await async_setup_component(opp, DOMAIN, _mock_get_config())
         await opp.async_block_till_done()
 
     sensor_lz_houston_price_now = opp.states.get("sensor.lz_houston_price_now")

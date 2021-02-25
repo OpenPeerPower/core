@@ -26,7 +26,7 @@ async def test_sensors(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the creation and values of the sensors."""
-    entry = await setup_integration.opp, aioclient_mock, skip_entry_setup=True)
+    entry = await setup_integration(opp, aioclient_mock, skip_entry_setup=True)
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     # Pre-create registry entries for disabled by default sensors
@@ -106,7 +106,7 @@ async def test_disabled_by_default_sensors(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker, entity_id: str
 ) -> None:
     """Test the disabled by default sensors."""
-    await setup_integration.opp, aioclient_mock)
+    await setup_integration(opp, aioclient_mock)
     registry = await opp.helpers.entity_registry.async_get_registry()
     print(registry.entities)
 
@@ -126,9 +126,9 @@ async def test_availability(
     now = dt_util.utcnow()
 
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-        await setup_integration.opp, aioclient_mock)
+        await setup_integration(opp, aioclient_mock)
 
-    assert.opp.states.get(UPCOMING_ENTITY_ID).state == "1"
+    assert opp.states.get(UPCOMING_ENTITY_ID).state == "1"
 
     # state to unavailable
     aioclient_mock.clear_requests()
@@ -136,10 +136,10 @@ async def test_availability(
 
     future = now + timedelta(minutes=1)
     with patch("openpeerpower.util.dt.utcnow", return_value=future):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
-    assert.opp.states.get(UPCOMING_ENTITY_ID).state == STATE_UNAVAILABLE
+    assert opp.states.get(UPCOMING_ENTITY_ID).state == STATE_UNAVAILABLE
 
     # state to available
     aioclient_mock.clear_requests()
@@ -147,10 +147,10 @@ async def test_availability(
 
     future += timedelta(minutes=1)
     with patch("openpeerpower.util.dt.utcnow", return_value=future):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
-    assert.opp.states.get(UPCOMING_ENTITY_ID).state == "1"
+    assert opp.states.get(UPCOMING_ENTITY_ID).state == "1"
 
     # state to unavailable
     aioclient_mock.clear_requests()
@@ -158,10 +158,10 @@ async def test_availability(
 
     future += timedelta(minutes=1)
     with patch("openpeerpower.util.dt.utcnow", return_value=future):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
-    assert.opp.states.get(UPCOMING_ENTITY_ID).state == STATE_UNAVAILABLE
+    assert opp.states.get(UPCOMING_ENTITY_ID).state == STATE_UNAVAILABLE
 
     # state to available
     aioclient_mock.clear_requests()
@@ -169,7 +169,7 @@ async def test_availability(
 
     future += timedelta(minutes=1)
     with patch("openpeerpower.util.dt.utcnow", return_value=future):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
-    assert.opp.states.get(UPCOMING_ENTITY_ID).state == "1"
+    assert opp.states.get(UPCOMING_ENTITY_ID).state == "1"

@@ -10,14 +10,14 @@ from tests.components.august.mocks import (
 )
 
 
-async def test_create_doorbell.opp, aiohttp_client):
+async def test_create_doorbell(opp, aiohttp_client):
     """Test creation of a doorbell."""
-    doorbell_one = await _mock_doorbell_from_fixture.opp, "get_doorbell.json")
+    doorbell_one = await _mock_doorbell_from_fixture(opp, "get_doorbell.json")
 
     with patch.object(
         doorbell_one, "async_get_doorbell_image", create=False, return_value="image"
     ):
-        await _create_august_with_devices.opp, [doorbell_one])
+        await _create_august_with_devices(opp, [doorbell_one])
 
         camera_k98gidt45gul_name_camera = opp.states.get(
             "camera.k98gidt45gul_name_camera"

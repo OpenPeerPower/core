@@ -15,7 +15,7 @@ VALID_CONFIG = {
 
 async def test_setup_opp, requests_mock):
     """Test the setup."""
-    await async_setup_component.opp, ring.DOMAIN, {})
+    await async_setup_component(opp, ring.DOMAIN, {})
 
     requests_mock.post(
         "https://oauth.ring.com/oauth/token", text=load_fixture("ring_oauth.json")

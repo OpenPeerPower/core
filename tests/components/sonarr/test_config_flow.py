@@ -101,7 +101,7 @@ async def test_full_reauth_flow_implementation(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the manual reauth flow from start to finish."""
-    entry = await setup_integration.opp, aioclient_mock, skip_entry_setup=True)
+    entry = await setup_integration(opp, aioclient_mock, skip_entry_setup=True)
     assert entry
 
     result = await opp.config_entries.flow.async_init(
@@ -196,10 +196,10 @@ async def test_full_user_flow_advanced_options(
     assert result["data"][CONF_VERIFY_SSL]
 
 
-async def test_options_flow.opp, aioclient_mock: AiohttpClientMocker):
+async def test_options_flow(opp, aioclient_mock: AiohttpClientMocker):
     """Test updating options."""
     with patch("openpeerpower.components.sonarr.PLATFORMS", []):
-        entry = await setup_integration.opp, aioclient_mock)
+        entry = await setup_integration(opp, aioclient_mock)
 
     assert entry.options[CONF_UPCOMING_DAYS] == DEFAULT_UPCOMING_DAYS
     assert entry.options[CONF_WANTED_MAX_ITEMS] == DEFAULT_WANTED_MAX_ITEMS

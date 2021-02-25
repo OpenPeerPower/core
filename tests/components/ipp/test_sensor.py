@@ -18,7 +18,7 @@ async def test_sensors(
     """Test the creation and values of the IPP sensors."""
     mock_connection(aioclient_mock)
 
-    entry = await init_integration.opp, aioclient_mock, skip_setup=True)
+    entry = await init_integration(opp, aioclient_mock, skip_setup=True)
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     # Pre-create registry entries for disabled by default sensors
@@ -85,7 +85,7 @@ async def test_disabled_by_default_sensors(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the disabled by default IPP sensors."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     state = opp.states.get("sensor.epson_xp_6000_series_uptime")
@@ -101,7 +101,7 @@ async def test_missing_entry_unique_id(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the unique_id of IPP sensor when printer is missing identifiers."""
-    entry = await init_integration.opp, aioclient_mock, uuid=None, unique_id=None)
+    entry = await init_integration(opp, aioclient_mock, uuid=None, unique_id=None)
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     entity = registry.async_get("sensor.epson_xp_6000_series")

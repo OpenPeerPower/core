@@ -68,7 +68,7 @@ MOCK_RESPONSE = [
 
 async def test_form.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -175,7 +175,7 @@ async def test_entry_already_exists(opp):
 
     mock_id = f"{CONFIG[CONF_LATITUDE]}-{CONFIG[CONF_LONGITUDE]}"
     mock_entry = MockConfigEntry(domain=DOMAIN, unique_id=mock_id)
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],

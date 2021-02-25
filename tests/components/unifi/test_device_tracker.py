@@ -150,14 +150,14 @@ EVENT_DEVICE_2_UPGRADED = {
 }
 
 
-async def test_no_clients.opp, aioclient_mock):
+async def test_no_clients(opp, aioclient_mock):
     """Test the update_clients function when no clients are found."""
-    await setup_unifi_integration.opp, aioclient_mock)
+    await setup_unifi_integration(opp, aioclient_mock)
 
     assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 0
 
 
-async def test_tracked_wireless_clients.opp, aioclient_mock):
+async def test_tracked_wireless_clients(opp, aioclient_mock):
     """Test the update_items function with some clients."""
     config_entry = await setup_unifi_integration(
         opp. aioclient_mock, clients_response=[CLIENT_1]
@@ -198,7 +198,7 @@ async def test_tracked_wireless_clients.opp, aioclient_mock):
 
     new_time = dt_util.utcnow() + controller.option_detection_time
     with patch("openpeerpower.util.dt.utcnow", return_value=new_time):
-        async_fire_time_changed.opp, new_time)
+        async_fire_time_changed(opp, new_time)
         await opp.async_block_till_done()
 
     client_1 = opp.states.get("device_tracker.client_1")
@@ -215,7 +215,7 @@ async def test_tracked_wireless_clients.opp, aioclient_mock):
     assert client_1.state == "home"
 
 
-async def test_tracked_clients.opp, aioclient_mock):
+async def test_tracked_clients(opp, aioclient_mock):
     """Test the update_items function with some clients."""
     client_4_copy = copy(CLIENT_4)
     client_4_copy["last_seen"] = dt_util.as_timestamp(dt_util.utcnow())
@@ -262,7 +262,7 @@ async def test_tracked_clients.opp, aioclient_mock):
     assert client_1.state == "home"
 
 
-async def test_tracked_devices.opp, aioclient_mock):
+async def test_tracked_devices(opp, aioclient_mock):
     """Test the update_items function with some devices."""
     config_entry = await setup_unifi_integration(
         opp,
@@ -298,7 +298,7 @@ async def test_tracked_devices.opp, aioclient_mock):
 
     new_time = dt_util.utcnow() + timedelta(seconds=90)
     with patch("openpeerpower.util.dt.utcnow", return_value=new_time):
-        async_fire_time_changed.opp, new_time)
+        async_fire_time_changed(opp, new_time)
         await opp.async_block_till_done()
 
     device_1 = opp.states.get("device_tracker.device_1")
@@ -333,7 +333,7 @@ async def test_tracked_devices.opp, aioclient_mock):
     assert device.sw_version == EVENT_DEVICE_2_UPGRADED["version_to"]
 
 
-async def test_remove_clients.opp, aioclient_mock):
+async def test_remove_clients(opp, aioclient_mock):
     """Test the remove_items function with some clients."""
     config_entry = await setup_unifi_integration(
         opp. aioclient_mock, clients_response=[CLIENT_1, CLIENT_2]
@@ -364,7 +364,7 @@ async def test_remove_clients.opp, aioclient_mock):
     assert wired_client is not None
 
 
-async def test_controller_state_change.opp, aioclient_mock):
+async def test_controller_state_change(opp, aioclient_mock):
     """Verify entities state reflect on controller becoming unavailable."""
     config_entry = await setup_unifi_integration(
         opp,
@@ -404,7 +404,7 @@ async def test_controller_state_change.opp, aioclient_mock):
     assert device_1.state == "home"
 
 
-async def test_option_track_clients.opp, aioclient_mock):
+async def test_option_track_clients(opp, aioclient_mock):
     """Test the tracking of clients can be turned off."""
     config_entry = await setup_unifi_integration(
         opp,
@@ -454,7 +454,7 @@ async def test_option_track_clients.opp, aioclient_mock):
     assert device_1 is not None
 
 
-async def test_option_track_wired_clients.opp, aioclient_mock):
+async def test_option_track_wired_clients(opp, aioclient_mock):
     """Test the tracking of wired clients can be turned off."""
     config_entry = await setup_unifi_integration(
         opp,
@@ -504,7 +504,7 @@ async def test_option_track_wired_clients.opp, aioclient_mock):
     assert device_1 is not None
 
 
-async def test_option_track_devices.opp, aioclient_mock):
+async def test_option_track_devices(opp, aioclient_mock):
     """Test the tracking of devices can be turned off."""
     config_entry = await setup_unifi_integration(
         opp,
@@ -554,7 +554,7 @@ async def test_option_track_devices.opp, aioclient_mock):
     assert device_1 is not None
 
 
-async def test_option_ssid_filter.opp, aioclient_mock):
+async def test_option_ssid_filter(opp, aioclient_mock):
     """Test the SSID filter works.
 
     Client 1 will travel from a supported SSID to an unsupported ssid.
@@ -630,7 +630,7 @@ async def test_option_ssid_filter.opp, aioclient_mock):
 
     new_time = dt_util.utcnow() + controller.option_detection_time
     with patch("openpeerpower.util.dt.utcnow", return_value=new_time):
-        async_fire_time_changed.opp, new_time)
+        async_fire_time_changed(opp, new_time)
         await opp.async_block_till_done()
 
     client_1 = opp.states.get("device_tracker.client_1")
@@ -652,14 +652,14 @@ async def test_option_ssid_filter.opp, aioclient_mock):
         dt_util.utcnow() + controller.option_detection_time + timedelta(seconds=1)
     )
     with patch("openpeerpower.util.dt.utcnow", return_value=new_time):
-        async_fire_time_changed.opp, new_time)
+        async_fire_time_changed(opp, new_time)
         await opp.async_block_till_done()
 
     client_3 = opp.states.get("device_tracker.client_3")
     assert client_3.state == "not_home"
 
 
-async def test_wireless_client_go_wired_issue.opp, aioclient_mock):
+async def test_wireless_client_go_wired_issue(opp, aioclient_mock):
     """Test the solution to catch wireless device go wired UniFi issue.
 
     UniFi has a known issue that when a wireless device goes away it sometimes gets marked as wired.
@@ -693,7 +693,7 @@ async def test_wireless_client_go_wired_issue.opp, aioclient_mock):
     # Pass time
     new_time = dt_util.utcnow() + controller.option_detection_time
     with patch("openpeerpower.util.dt.utcnow", return_value=new_time):
-        async_fire_time_changed.opp, new_time)
+        async_fire_time_changed(opp, new_time)
         await opp.async_block_till_done()
 
     # Marked as home according to the timer
@@ -723,7 +723,7 @@ async def test_wireless_client_go_wired_issue.opp, aioclient_mock):
     assert client_1.attributes["is_wired"] is False
 
 
-async def test_option_ignore_wired_bug.opp, aioclient_mock):
+async def test_option_ignore_wired_bug(opp, aioclient_mock):
     """Test option to ignore wired bug."""
     client_1_client = copy(CLIENT_1)
     client_1_client["last_seen"] = dt_util.as_timestamp(dt_util.utcnow())
@@ -757,7 +757,7 @@ async def test_option_ignore_wired_bug.opp, aioclient_mock):
     # pass time
     new_time = dt_util.utcnow() + controller.option_detection_time
     with patch("openpeerpower.util.dt.utcnow", return_value=new_time):
-        async_fire_time_changed.opp, new_time)
+        async_fire_time_changed(opp, new_time)
         await opp.async_block_till_done()
 
     # Timer marks client as away
@@ -787,7 +787,7 @@ async def test_option_ignore_wired_bug.opp, aioclient_mock):
     assert client_1.attributes["is_wired"] is False
 
 
-async def test_restoring_client.opp, aioclient_mock):
+async def test_restoring_client(opp, aioclient_mock):
     """Test the update_items function with some clients."""
     config_entry = config_entries.ConfigEntry(
         version=1,
@@ -830,7 +830,7 @@ async def test_restoring_client.opp, aioclient_mock):
     assert device_1 is not None
 
 
-async def test_dont_track_clients.opp, aioclient_mock):
+async def test_dont_track_clients(opp, aioclient_mock):
     """Test don't track clients config works."""
     config_entry = await setup_unifi_integration(
         opp,
@@ -862,7 +862,7 @@ async def test_dont_track_clients.opp, aioclient_mock):
     assert device_1 is not None
 
 
-async def test_dont_track_devices.opp, aioclient_mock):
+async def test_dont_track_devices(opp, aioclient_mock):
     """Test don't track devices config works."""
     config_entry = await setup_unifi_integration(
         opp,
@@ -894,7 +894,7 @@ async def test_dont_track_devices.opp, aioclient_mock):
     assert device_1 is not None
 
 
-async def test_dont_track_wired_clients.opp, aioclient_mock):
+async def test_dont_track_wired_clients(opp, aioclient_mock):
     """Test don't track wired clients config works."""
     config_entry = await setup_unifi_integration(
         opp,

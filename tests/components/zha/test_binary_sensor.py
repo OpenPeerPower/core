@@ -32,28 +32,28 @@ DEVICE_OCCUPANCY = {
 }
 
 
-async def async_test_binary_sensor_on_off.opp, cluster, entity_id):
+async def async_test_binary_sensor_on_off(opp, cluster, entity_id):
     """Test getting on and off messages for binary sensors."""
     # binary sensor on
-    await send_attributes_report.opp, cluster, {1: 0, 0: 1, 2: 2})
-    assert.opp.states.get(entity_id).state == STATE_ON
+    await send_attributes_report(opp, cluster, {1: 0, 0: 1, 2: 2})
+    assert opp.states.get(entity_id).state == STATE_ON
 
     # binary sensor off
-    await send_attributes_report.opp, cluster, {1: 1, 0: 0, 2: 2})
-    assert.opp.states.get(entity_id).state == STATE_OFF
+    await send_attributes_report(opp, cluster, {1: 1, 0: 0, 2: 2})
+    assert opp.states.get(entity_id).state == STATE_OFF
 
 
-async def async_test_iaszone_on_off.opp, cluster, entity_id):
+async def async_test_iaszone_on_off(opp, cluster, entity_id):
     """Test getting on and off messages for iaszone binary sensors."""
     # binary sensor on
     cluster.listener_event("cluster_command", 1, 0, [1])
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == STATE_ON
+    assert opp.states.get(entity_id).state == STATE_ON
 
     # binary sensor off
     cluster.listener_event("cluster_command", 1, 0, [0])
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == STATE_OFF
+    assert opp.states.get(entity_id).state == STATE_OFF
 
 
 @pytest.mark.parametrize(
@@ -78,20 +78,20 @@ async def test_binary_sensor(
     entity_id = await find_entity_id(DOMAIN, zha_device, opp)
     assert entity_id is not None
 
-    assert.opp.states.get(entity_id).state == STATE_OFF
-    await async_enable_traffic.opp, [zha_device], enabled=False)
+    assert opp.states.get(entity_id).state == STATE_OFF
+    await async_enable_traffic(opp, [zha_device], enabled=False)
     # test that the sensors exist and are in the unavailable state
-    assert.opp.states.get(entity_id).state == STATE_UNAVAILABLE
+    assert opp.states.get(entity_id).state == STATE_UNAVAILABLE
 
-    await async_enable_traffic.opp, [zha_device])
+    await async_enable_traffic(opp, [zha_device])
 
     # test that the sensors exist and are in the off state
-    assert.opp.states.get(entity_id).state == STATE_OFF
+    assert opp.states.get(entity_id).state == STATE_OFF
 
     # test getting messages that trigger and reset the sensors
     cluster = getattr(zigpy_device.endpoints[1], cluster_name)
-    await on_off_test.opp, cluster, entity_id)
+    await on_off_test(opp, cluster, entity_id)
 
     # test rejoin
-    await async_test_rejoin.opp, zigpy_device, [cluster], reporting)
-    assert.opp.states.get(entity_id).state == STATE_OFF
+    await async_test_rejoin(opp, zigpy_device, [cluster], reporting)
+    assert opp.states.get(entity_id).state == STATE_OFF

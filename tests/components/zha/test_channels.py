@@ -31,7 +31,7 @@ def nwk():
 
 
 @pytest.fixture
-async def zha_gateway.opp, setup_zha):
+async def zha_gateway(opp, setup_zha):
     """Return ZhaGateway fixture."""
     await setup_zha()
     return get_zha_gateway.opp)
@@ -462,12 +462,12 @@ async def test_poll_control_checkin_response(poll_control_ch):
     assert cluster.endpoint.request.call_args_list[1][0][0] == 0x0020
 
 
-async def test_poll_control_cluster_command.opp, poll_control_device):
+async def test_poll_control_cluster_command(opp, poll_control_device):
     """Test poll control channel response to cluster command."""
     checkin_mock = AsyncMock()
     poll_control_ch = poll_control_device.channels.pools[0].all_channels["1:0x0020"]
     cluster = poll_control_ch.cluster
-    events = async_capture_events.opp, "zha_event")
+    events = async_capture_events(opp, "zha_event")
 
     with mock.patch.object(poll_control_ch, "check_in_response", checkin_mock):
         tsn = 22

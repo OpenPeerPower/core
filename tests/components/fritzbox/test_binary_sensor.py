@@ -26,7 +26,7 @@ ENTITY_ID = f"{DOMAIN}.fake_name"
 
 async def setup_fritzbox.opp: OpenPeerPowerType, config: dict):
     """Set up mock AVM Fritz!Box."""
-    assert await async_setup_component.opp, FB_DOMAIN, config)
+    assert await async_setup_component(opp, FB_DOMAIN, config)
     await opp.async_block_till_done()
 
 
@@ -35,7 +35,7 @@ async def test_setup_opp: OpenPeerPowerType, fritz: Mock):
     device = FritzDeviceBinarySensorMock()
     fritz().get_devices.return_value = [device]
 
-    await setup_fritzbox.opp, MOCK_CONFIG)
+    await setup_fritzbox(opp, MOCK_CONFIG)
     state = opp.states.get(ENTITY_ID)
 
     assert state
@@ -50,7 +50,7 @@ async def test_is_off.opp: OpenPeerPowerType, fritz: Mock):
     device.present = False
     fritz().get_devices.return_value = [device]
 
-    await setup_fritzbox.opp, MOCK_CONFIG)
+    await setup_fritzbox(opp, MOCK_CONFIG)
     state = opp.states.get(ENTITY_ID)
 
     assert state
@@ -62,13 +62,13 @@ async def test_update.opp: OpenPeerPowerType, fritz: Mock):
     device = FritzDeviceBinarySensorMock()
     fritz().get_devices.return_value = [device]
 
-    await setup_fritzbox.opp, MOCK_CONFIG)
+    await setup_fritzbox(opp, MOCK_CONFIG)
 
     assert device.update.call_count == 1
     assert fritz().login.call_count == 1
 
     next_update = dt_util.utcnow() + timedelta(seconds=200)
-    async_fire_time_changed.opp, next_update)
+    async_fire_time_changed(opp, next_update)
     await opp.async_block_till_done()
 
     assert device.update.call_count == 2
@@ -81,13 +81,13 @@ async def test_update_error(opp: OpenPeerPowerType, fritz: Mock):
     device.update.side_effect = [mock.DEFAULT, HTTPError("Boom")]
     fritz().get_devices.return_value = [device]
 
-    await setup_fritzbox.opp, MOCK_CONFIG)
+    await setup_fritzbox(opp, MOCK_CONFIG)
 
     assert device.update.call_count == 1
     assert fritz().login.call_count == 1
 
     next_update = dt_util.utcnow() + timedelta(seconds=200)
-    async_fire_time_changed.opp, next_update)
+    async_fire_time_changed(opp, next_update)
     await opp.async_block_till_done()
 
     assert device.update.call_count == 2

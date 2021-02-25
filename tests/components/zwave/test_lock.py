@@ -277,7 +277,7 @@ def test_lock_alarm_level(mock_openzwave):
     )
 
 
-async def setup_ozw.opp, mock_openzwave):
+async def setup_ozw(opp, mock_openzwave):
     """Set up the mock ZWave config entry."""
     opp.config.components.add("zwave")
     config_entry = config_entries.ConfigEntry(
@@ -293,7 +293,7 @@ async def setup_ozw.opp, mock_openzwave):
     await opp.async_block_till_done()
 
 
-async def test_lock_set_usercode_service.opp, mock_openzwave):
+async def test_lock_set_usercode_service(opp, mock_openzwave):
     """Test the zwave lock set_usercode service."""
     mock_network = opp.data[const.DATA_NETWORK] = MagicMock()
 
@@ -305,7 +305,7 @@ async def test_lock_set_usercode_service.opp, mock_openzwave):
 
     mock_network.nodes = {node.node_id: node}
 
-    await setup_ozw.opp, mock_openzwave)
+    await setup_ozw(opp, mock_openzwave)
     await opp.async_block_till_done()
 
     await opp.services.async_call(
@@ -336,7 +336,7 @@ async def test_lock_set_usercode_service.opp, mock_openzwave):
     assert value1.data == "1234"
 
 
-async def test_lock_get_usercode_service.opp, mock_openzwave):
+async def test_lock_get_usercode_service(opp, mock_openzwave):
     """Test the zwave lock get_usercode service."""
     mock_network = opp.data[const.DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=12)
@@ -345,7 +345,7 @@ async def test_lock_get_usercode_service.opp, mock_openzwave):
 
     node.get_values.return_value = {value0.value_id: value0, value1.value_id: value1}
 
-    await setup_ozw.opp, mock_openzwave)
+    await setup_ozw(opp, mock_openzwave)
     await opp.async_block_till_done()
 
     with patch.object(lock, "_LOGGER") as mock_logger:
@@ -362,7 +362,7 @@ async def test_lock_get_usercode_service.opp, mock_openzwave):
         assert mock_logger.info.mock_calls[0][1][2] == "1234"
 
 
-async def test_lock_clear_usercode_service.opp, mock_openzwave):
+async def test_lock_clear_usercode_service(opp, mock_openzwave):
     """Test the zwave lock clear_usercode service."""
     mock_network = opp.data[const.DATA_NETWORK] = MagicMock()
     node = MockNode(node_id=12)
@@ -373,7 +373,7 @@ async def test_lock_clear_usercode_service.opp, mock_openzwave):
 
     mock_network.nodes = {node.node_id: node}
 
-    await setup_ozw.opp, mock_openzwave)
+    await setup_ozw(opp, mock_openzwave)
     await opp.async_block_till_done()
 
     await opp.services.async_call(

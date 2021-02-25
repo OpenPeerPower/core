@@ -23,7 +23,7 @@ async def test_config_non_unique_profile.opp: OpenPeerPower) -> None:
     config_entry = MockConfigEntry(
         domain=const.DOMAIN, data={const.PROFILE: "person0"}, unique_id="0"
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": "profile"}, data={const.PROFILE: "person0"}
@@ -49,13 +49,13 @@ async def test_config_reauth_profile(
         },
     }
     await async_process_op_core_config(opp, opp_config.get(OP_DOMAIN))
-    assert await async_setup_component.opp, const.DOMAIN, opp_config)
+    assert await async_setup_component(opp, const.DOMAIN, opp_config)
     await opp.async_block_till_done()
 
     config_entry = MockConfigEntry(
         domain=const.DOMAIN, data={const.PROFILE: "person0"}, unique_id="0"
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": "reauth", "profile": "person0"}

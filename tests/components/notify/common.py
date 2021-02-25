@@ -14,7 +14,7 @@ from openpeerpower.loader import bind.opp
 
 
 @bind.opp
-def send_message.opp, message, title=None, data=None):
+def send_message(opp, message, title=None, data=None):
     """Send a notification message."""
     info = {ATTR_MESSAGE: message}
 

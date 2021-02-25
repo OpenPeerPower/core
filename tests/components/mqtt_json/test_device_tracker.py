@@ -26,7 +26,7 @@ LOCATION_MESSAGE_INCOMPLETE = {"longitude": 2.0}
 
 
 @pytest.fixture(autouse=True)
-def setup_comp.opp, mqtt_mock):
+def setup_comp(opp, mqtt_mock):
     """Initialize components."""
     yaml_devices = opp.config.path(YAML_DEVICES)
     yield
@@ -37,7 +37,7 @@ def setup_comp.opp, mqtt_mock):
 async def test_ensure_device_tracker_platform_validation.opp):
     """Test if platform validation was done."""
 
-    async def mock_setup_scanner.opp, config, see, discovery_info=None):
+    async def mock_setup_scanner(opp, config, see, discovery_info=None):
         """Check that Qos was added by validation."""
         assert "qos" in config
 
@@ -68,14 +68,14 @@ async def test_json_message.opp):
         DT_DOMAIN,
         {DT_DOMAIN: {CONF_PLATFORM: "mqtt_json", "devices": {dev_id: topic}}},
     )
-    async_fire_mqtt_message.opp, topic, location)
+    async_fire_mqtt_message(opp, topic, location)
     await opp.async_block_till_done()
     state = opp.states.get("device_tracker.zanzito")
     assert state.attributes.get("latitude") == 2.0
     assert state.attributes.get("longitude") == 1.0
 
 
-async def test_non_json_message.opp, caplog):
+async def test_non_json_message(opp, caplog):
     """Test receiving a non JSON message."""
     dev_id = "zanzito"
     topic = "location/zanzito"
@@ -89,12 +89,12 @@ async def test_non_json_message.opp, caplog):
 
     caplog.set_level(logging.ERROR)
     caplog.clear()
-    async_fire_mqtt_message.opp, topic, location)
+    async_fire_mqtt_message(opp, topic, location)
     await opp.async_block_till_done()
     assert "Error parsing JSON payload: home" in caplog.text
 
 
-async def test_incomplete_message.opp, caplog):
+async def test_incomplete_message(opp, caplog):
     """Test receiving an incomplete message."""
     dev_id = "zanzito"
     topic = "location/zanzito"
@@ -108,7 +108,7 @@ async def test_incomplete_message.opp, caplog):
 
     caplog.set_level(logging.ERROR)
     caplog.clear()
-    async_fire_mqtt_message.opp, topic, location)
+    async_fire_mqtt_message(opp, topic, location)
     await opp.async_block_till_done()
     assert (
         "Skipping update for following data because of missing "
@@ -128,7 +128,7 @@ async def test_single_level_wildcard_topic.opp):
         DT_DOMAIN,
         {DT_DOMAIN: {CONF_PLATFORM: "mqtt_json", "devices": {dev_id: subscription}}},
     )
-    async_fire_mqtt_message.opp, topic, location)
+    async_fire_mqtt_message(opp, topic, location)
     await opp.async_block_till_done()
     state = opp.states.get("device_tracker.zanzito")
     assert state.attributes.get("latitude") == 2.0
@@ -147,7 +147,7 @@ async def test_multi_level_wildcard_topic.opp):
         DT_DOMAIN,
         {DT_DOMAIN: {CONF_PLATFORM: "mqtt_json", "devices": {dev_id: subscription}}},
     )
-    async_fire_mqtt_message.opp, topic, location)
+    async_fire_mqtt_message(opp, topic, location)
     await opp.async_block_till_done()
     state = opp.states.get("device_tracker.zanzito")
     assert state.attributes.get("latitude") == 2.0
@@ -167,9 +167,9 @@ async def test_single_level_wildcard_topic_not_matching.opp):
         DT_DOMAIN,
         {DT_DOMAIN: {CONF_PLATFORM: "mqtt_json", "devices": {dev_id: subscription}}},
     )
-    async_fire_mqtt_message.opp, topic, location)
+    async_fire_mqtt_message(opp, topic, location)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id) is None
+    assert opp.states.get(entity_id) is None
 
 
 async def test_multi_level_wildcard_topic_not_matching.opp):
@@ -185,6 +185,6 @@ async def test_multi_level_wildcard_topic_not_matching.opp):
         DT_DOMAIN,
         {DT_DOMAIN: {CONF_PLATFORM: "mqtt_json", "devices": {dev_id: subscription}}},
     )
-    async_fire_mqtt_message.opp, topic, location)
+    async_fire_mqtt_message(opp, topic, location)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id) is None
+    assert opp.states.get(entity_id) is None

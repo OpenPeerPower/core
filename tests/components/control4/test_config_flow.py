@@ -46,7 +46,7 @@ def _get_mock_c4_director(getAllItemInfo={}):
 
 async def test_form.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -164,7 +164,7 @@ async def test_form_cannot_connect.opp):
 async def test_option_flow.opp):
     """Test config flow options."""
     entry = MockConfigEntry(domain=DOMAIN, data={}, options=None)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 
@@ -184,7 +184,7 @@ async def test_option_flow.opp):
 async def test_option_flow_defaults.opp):
     """Test config flow options."""
     entry = MockConfigEntry(domain=DOMAIN, data={}, options=None)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 

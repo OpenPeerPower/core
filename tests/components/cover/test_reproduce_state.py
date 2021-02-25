@@ -20,7 +20,7 @@ from openpeerpower.core import State
 from tests.common import async_mock_service
 
 
-async def test_reproducing_states.opp, caplog):
+async def test_reproducing_states(opp, caplog):
     """Test reproducing Cover states."""
     opp.states.async_set("cover.entity_close", STATE_CLOSED, {})
     opp.states.async_set(
@@ -51,11 +51,11 @@ async def test_reproducing_states.opp, caplog):
         {ATTR_CURRENT_POSITION: 100, ATTR_CURRENT_TILT_POSITION: 100},
     )
 
-    close_calls = async_mock_service.opp, "cover", SERVICE_CLOSE_COVER)
-    open_calls = async_mock_service.opp, "cover", SERVICE_OPEN_COVER)
-    close_tilt_calls = async_mock_service.opp, "cover", SERVICE_CLOSE_COVER_TILT)
-    open_tilt_calls = async_mock_service.opp, "cover", SERVICE_OPEN_COVER_TILT)
-    position_calls = async_mock_service.opp, "cover", SERVICE_SET_COVER_POSITION)
+    close_calls = async_mock_service(opp, "cover", SERVICE_CLOSE_COVER)
+    open_calls = async_mock_service(opp, "cover", SERVICE_OPEN_COVER)
+    close_tilt_calls = async_mock_service(opp, "cover", SERVICE_CLOSE_COVER_TILT)
+    open_tilt_calls = async_mock_service(opp, "cover", SERVICE_OPEN_COVER_TILT)
+    position_calls = async_mock_service(opp, "cover", SERVICE_SET_COVER_POSITION)
     position_tilt_calls = async_mock_service(
         opp. "cover", SERVICE_SET_COVER_TILT_POSITION
     )

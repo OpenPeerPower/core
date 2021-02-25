@@ -77,7 +77,7 @@ async def test_discovery.opp):
     assert result["step_id"] == "link"
 
 
-async def test_link.opp, connect):
+async def test_link(opp, connect):
     """Test linking."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -97,7 +97,7 @@ async def test_abort_if_already_setup_opp):
     """Test we abort if component is already setup."""
     MockConfigEntry(
         domain=DOMAIN, data={CONF_HOST: HOST, CONF_PORT: PORT}, unique_id=HOST
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     # Should fail, same HOST (import)
     result = await opp.config_entries.flow.async_init(

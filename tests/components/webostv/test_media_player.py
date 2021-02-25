@@ -52,7 +52,7 @@ async def setup_webostv.opp):
     await opp.async_block_till_done()
 
 
-async def test_mute.opp, client):
+async def test_mute(opp, client):
     """Test simple service call."""
 
     await setup_webostv.opp)
@@ -67,7 +67,7 @@ async def test_mute.opp, client):
     client.set_mute.assert_called_once()
 
 
-async def test_select_source_with_empty_source_list.opp, client):
+async def test_select_source_with_empty_source_list(opp, client):
     """Ensure we don't call client methods when we don't have sources."""
 
     await setup_webostv.opp)
@@ -83,7 +83,7 @@ async def test_select_source_with_empty_source_list.opp, client):
     client.set_input.assert_not_called()
 
 
-async def test_button.opp, client):
+async def test_button(opp, client):
     """Test generic button functionality."""
 
     await setup_webostv.opp)
@@ -99,7 +99,7 @@ async def test_button.opp, client):
     client.button.assert_called_with("test")
 
 
-async def test_command.opp, client):
+async def test_command(opp, client):
     """Test generic command functionality."""
     await setup_webostv.opp)
 
@@ -113,7 +113,7 @@ async def test_command.opp, client):
     client.request.assert_called_with("test", payload=None)
 
 
-async def test_command_with_optional_arg.opp, client):
+async def test_command_with_optional_arg(opp, client):
     """Test generic command functionality."""
     await setup_webostv.opp)
 

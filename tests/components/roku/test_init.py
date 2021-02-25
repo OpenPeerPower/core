@@ -17,7 +17,7 @@ async def test_config_entry_not_ready(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the Roku configuration entry not ready."""
-    entry = await setup_integration.opp, aioclient_mock, error=True)
+    entry = await setup_integration(opp, aioclient_mock, error=True)
 
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
@@ -33,9 +33,9 @@ async def test_unload_config_entry(
         "openpeerpower.components.roku.remote.async_setup_entry",
         return_value=True,
     ):
-        entry = await setup_integration.opp, aioclient_mock)
+        entry = await setup_integration(opp, aioclient_mock)
 
-    assert.opp.data[DOMAIN][entry.entry_id]
+    assert opp.data[DOMAIN][entry.entry_id]
     assert entry.state == ENTRY_STATE_LOADED
 
     await opp.config_entries.async_unload(entry.entry_id)

@@ -8,7 +8,7 @@ from .util import async_init_integration
 async def test_pr3000rt2u.opp):
     """Test creation of PR3000RT2U sensors."""
 
-    await async_init_integration.opp, "PR3000RT2U", ["battery.charge"])
+    await async_init_integration(opp, "PR3000RT2U", ["battery.charge"])
     registry = await opp.helpers.entity_registry.async_get_registry()
     entry = registry.async_get("sensor.ups1_battery_charge")
     assert entry
@@ -33,7 +33,7 @@ async def test_pr3000rt2u.opp):
 async def test_cp1350c.opp):
     """Test creation of CP1350C sensors."""
 
-    config_entry = await async_init_integration.opp, "CP1350C", ["battery.charge"])
+    config_entry = await async_init_integration(opp, "CP1350C", ["battery.charge"])
 
     registry = await opp.helpers.entity_registry.async_get_registry()
     entry = registry.async_get("sensor.ups1_battery_charge")
@@ -59,7 +59,7 @@ async def test_cp1350c.opp):
 async def test_5e850i.opp):
     """Test creation of 5E850I sensors."""
 
-    config_entry = await async_init_integration.opp, "5E850I", ["battery.charge"])
+    config_entry = await async_init_integration(opp, "5E850I", ["battery.charge"])
     registry = await opp.helpers.entity_registry.async_get_registry()
     entry = registry.async_get("sensor.ups1_battery_charge")
     assert entry
@@ -84,7 +84,7 @@ async def test_5e850i.opp):
 async def test_5e650i.opp):
     """Test creation of 5E650I sensors."""
 
-    config_entry = await async_init_integration.opp, "5E650I", ["battery.charge"])
+    config_entry = await async_init_integration(opp, "5E650I", ["battery.charge"])
     registry = await opp.helpers.entity_registry.async_get_registry()
     entry = registry.async_get("sensor.ups1_battery_charge")
     assert entry
@@ -109,7 +109,7 @@ async def test_5e650i.opp):
 async def test_backupsses600m1.opp):
     """Test creation of BACKUPSES600M1 sensors."""
 
-    await async_init_integration.opp, "BACKUPSES600M1", ["battery.charge"])
+    await async_init_integration(opp, "BACKUPSES600M1", ["battery.charge"])
     registry = await opp.helpers.entity_registry.async_get_registry()
     entry = registry.async_get("sensor.ups1_battery_charge")
     assert entry
@@ -164,7 +164,7 @@ async def test_cp1500pfclcd.opp):
 async def test_dl650elcd.opp):
     """Test creation of DL650ELCD sensors."""
 
-    config_entry = await async_init_integration.opp, "DL650ELCD", ["battery.charge"])
+    config_entry = await async_init_integration(opp, "DL650ELCD", ["battery.charge"])
     registry = await opp.helpers.entity_registry.async_get_registry()
     entry = registry.async_get("sensor.ups1_battery_charge")
     assert entry
@@ -189,7 +189,7 @@ async def test_dl650elcd.opp):
 async def test_blazer_usb.opp):
     """Test creation of blazer_usb sensors."""
 
-    config_entry = await async_init_integration.opp, "blazer_usb", ["battery.charge"])
+    config_entry = await async_init_integration(opp, "blazer_usb", ["battery.charge"])
     registry = await opp.helpers.entity_registry.async_get_registry()
     entry = registry.async_get("sensor.ups1_battery_charge")
     assert entry

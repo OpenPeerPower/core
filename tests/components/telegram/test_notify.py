@@ -28,7 +28,7 @@ async def test_reload_notify.opp):
         )
         await opp.async_block_till_done()
 
-    assert.opp.services.has_service(notify.DOMAIN, DOMAIN)
+    assert opp.services.has_service(notify.DOMAIN, DOMAIN)
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -45,7 +45,7 @@ async def test_reload_notify.opp):
         await opp.async_block_till_done()
 
     assert not.opp.services.has_service(notify.DOMAIN, DOMAIN)
-    assert.opp.services.has_service(notify.DOMAIN, "telegram_reloaded")
+    assert opp.services.has_service(notify.DOMAIN, "telegram_reloaded")
 
 
 def _get_fixtures_base_path():

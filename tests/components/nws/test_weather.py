@@ -54,7 +54,7 @@ async def test_imperial_metric(
         domain=nws.DOMAIN,
         data=NWS_CONFIG,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
@@ -85,7 +85,7 @@ async def test_imperial_metric(
         assert forecast[0].get(key) == value
 
 
-async def test_none_values.opp, mock_simple_nws):
+async def test_none_values(opp, mock_simple_nws):
     """Test with none values in observation and forecast dicts."""
     instance = mock_simple_nws.return_value
     instance.observation = NONE_OBSERVATION
@@ -95,7 +95,7 @@ async def test_none_values.opp, mock_simple_nws):
         domain=nws.DOMAIN,
         data=NWS_CONFIG,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
@@ -110,7 +110,7 @@ async def test_none_values.opp, mock_simple_nws):
         assert forecast[0].get(key) is None
 
 
-async def test_none.opp, mock_simple_nws):
+async def test_none(opp, mock_simple_nws):
     """Test with None as observation and forecast."""
     instance = mock_simple_nws.return_value
     instance.observation = None
@@ -120,7 +120,7 @@ async def test_none.opp, mock_simple_nws):
         domain=nws.DOMAIN,
         data=NWS_CONFIG,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
@@ -136,7 +136,7 @@ async def test_none.opp, mock_simple_nws):
     assert forecast is None
 
 
-async def test_error_station.opp, mock_simple_nws):
+async def test_error_station(opp, mock_simple_nws):
     """Test error in setting station."""
 
     instance = mock_simple_nws.return_value
@@ -146,25 +146,25 @@ async def test_error_station.opp, mock_simple_nws):
         domain=nws.DOMAIN,
         data=NWS_CONFIG,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("weather.abc_hourly") is None
-    assert.opp.states.get("weather.abc_daynight") is None
+    assert opp.states.get("weather.abc_hourly") is None
+    assert opp.states.get("weather.abc_daynight") is None
 
 
-async def test_entity_refresh.opp, mock_simple_nws):
+async def test_entity_refresh(opp, mock_simple_nws):
     """Test manual refresh."""
     instance = mock_simple_nws.return_value
 
-    await async_setup_component.opp, "openpeerpower", {})
+    await async_setup_component(opp, "openpeerpower", {})
 
     entry = MockConfigEntry(
         domain=nws.DOMAIN,
         data=NWS_CONFIG,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
     instance.update_observation.assert_called_once()
@@ -183,7 +183,7 @@ async def test_entity_refresh.opp, mock_simple_nws):
     instance.update_forecast_hourly.assert_called_once()
 
 
-async def test_error_observation.opp, mock_simple_nws):
+async def test_error_observation(opp, mock_simple_nws):
     """Test error during update observation."""
     utc_time = dt_util.utcnow()
     with patch("openpeerpower.components.nws.utcnow") as mock_utc, patch(
@@ -193,7 +193,7 @@ async def test_error_observation.opp, mock_simple_nws):
         def increment_time(time):
             mock_utc.return_value += time
             mock_utc_weather.return_value += time
-            async_fire_time_changed.opp, mock_utc.return_value)
+            async_fire_time_changed(opp, mock_utc.return_value)
 
         mock_utc.return_value = utc_time
         mock_utc_weather.return_value = utc_time
@@ -205,7 +205,7 @@ async def test_error_observation.opp, mock_simple_nws):
             domain=nws.DOMAIN,
             data=NWS_CONFIG,
         )
-        entry.add_to.opp.opp)
+        entry.add_to_opp(opp)
         await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
@@ -247,7 +247,7 @@ async def test_error_observation.opp, mock_simple_nws):
         assert state.state == STATE_UNAVAILABLE
 
 
-async def test_error_forecast.opp, mock_simple_nws):
+async def test_error_forecast(opp, mock_simple_nws):
     """Test error during update forecast."""
     instance = mock_simple_nws.return_value
     instance.update_forecast.side_effect = aiohttp.ClientError
@@ -256,7 +256,7 @@ async def test_error_forecast.opp, mock_simple_nws):
         domain=nws.DOMAIN,
         data=NWS_CONFIG,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
@@ -268,7 +268,7 @@ async def test_error_forecast.opp, mock_simple_nws):
 
     instance.update_forecast.side_effect = None
 
-    async_fire_time_changed.opp, dt_util.utcnow() + timedelta(minutes=1))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(minutes=1))
     await opp.async_block_till_done()
 
     assert instance.update_forecast.call_count == 2
@@ -278,7 +278,7 @@ async def test_error_forecast.opp, mock_simple_nws):
     assert state.state == ATTR_CONDITION_SUNNY
 
 
-async def test_error_forecast_hourly.opp, mock_simple_nws):
+async def test_error_forecast_hourly(opp, mock_simple_nws):
     """Test error during update forecast hourly."""
     instance = mock_simple_nws.return_value
     instance.update_forecast_hourly.side_effect = aiohttp.ClientError
@@ -297,7 +297,7 @@ async def test_error_forecast_hourly.opp, mock_simple_nws):
         domain=nws.DOMAIN,
         data=NWS_CONFIG,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
@@ -309,7 +309,7 @@ async def test_error_forecast_hourly.opp, mock_simple_nws):
 
     instance.update_forecast_hourly.side_effect = None
 
-    async_fire_time_changed.opp, dt_util.utcnow() + timedelta(minutes=1))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(minutes=1))
     await opp.async_block_till_done()
 
     assert instance.update_forecast_hourly.call_count == 2
@@ -319,13 +319,13 @@ async def test_error_forecast_hourly.opp, mock_simple_nws):
     assert state.state == ATTR_CONDITION_SUNNY
 
 
-async def test_forecast_hourly_disable_enable.opp, mock_simple_nws):
+async def test_forecast_hourly_disable_enable(opp, mock_simple_nws):
     """Test error during update forecast hourly."""
     entry = MockConfigEntry(
         domain=nws.DOMAIN,
         data=NWS_CONFIG,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()

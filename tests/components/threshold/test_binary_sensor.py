@@ -14,7 +14,7 @@ async def test_sensor_upper.opp):
         }
     }
 
-    assert await async_setup_component.opp, "binary_sensor", config)
+    assert await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     opp.states.async_set(
@@ -58,7 +58,7 @@ async def test_sensor_lower.opp):
         }
     }
 
-    assert await async_setup_component.opp, "binary_sensor", config)
+    assert await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     opp.states.async_set("sensor.test_monitored", 16)
@@ -92,7 +92,7 @@ async def test_sensor_hysteresis.opp):
         }
     }
 
-    assert await async_setup_component.opp, "binary_sensor", config)
+    assert await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     opp.states.async_set("sensor.test_monitored", 20)
@@ -147,7 +147,7 @@ async def test_sensor_in_range_no_hysteresis.opp):
         }
     }
 
-    assert await async_setup_component.opp, "binary_sensor", config)
+    assert await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     opp.states.async_set(
@@ -196,7 +196,7 @@ async def test_sensor_in_range_with_hysteresis.opp):
         }
     }
 
-    assert await async_setup_component.opp, "binary_sensor", config)
+    assert await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     opp.states.async_set(
@@ -294,7 +294,7 @@ async def test_sensor_in_range_unknown_state.opp):
         }
     }
 
-    assert await async_setup_component.opp, "binary_sensor", config)
+    assert await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     opp.states.async_set(
@@ -333,7 +333,7 @@ async def test_sensor_lower_zero_threshold.opp):
         }
     }
 
-    assert await async_setup_component.opp, "binary_sensor", config)
+    assert await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     opp.states.async_set("sensor.test_monitored", 16)
@@ -364,7 +364,7 @@ async def test_sensor_upper_zero_threshold.opp):
         }
     }
 
-    assert await async_setup_component.opp, "binary_sensor", config)
+    assert await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
     opp.states.async_set("sensor.test_monitored", -10)

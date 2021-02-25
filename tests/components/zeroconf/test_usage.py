@@ -10,9 +10,9 @@ from openpeerpower.setup import async_setup_component
 DOMAIN = "zeroconf"
 
 
-async def test_multiple_zeroconf_instances.opp, mock_zeroconf, caplog):
+async def test_multiple_zeroconf_instances(opp, mock_zeroconf, caplog):
     """Test creating multiple zeroconf throws without an integration."""
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {}})
 
     zeroconf_instance = await async_get_instance.opp)
 
@@ -24,9 +24,9 @@ async def test_multiple_zeroconf_instances.opp, mock_zeroconf, caplog):
     assert "Zeroconf" in caplog.text
 
 
-async def test_multiple_zeroconf_instances_gives_shared.opp, mock_zeroconf, caplog):
+async def test_multiple_zeroconf_instances_gives_shared(opp, mock_zeroconf, caplog):
     """Test creating multiple zeroconf gives the shared instance to an integration."""
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {}})
 
     zeroconf_instance = await async_get_instance.opp)
 

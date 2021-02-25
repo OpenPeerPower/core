@@ -12,7 +12,7 @@ STATIONS = [
 ]
 
 
-async def init_integration.opp, incomplete_data=False) -> MockConfigEntry:
+async def init_integration(opp, incomplete_data=False) -> MockConfigEntry:
     """Set up the GIOS integration in Open Peer Power."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -40,7 +40,7 @@ async def init_integration.opp, incomplete_data=False) -> MockConfigEntry:
     ), patch(
         "openpeerpower.components.gios.Gios._get_indexes", return_value=indexes
     ):
-        entry.add_to.opp.opp)
+        entry.add_to_opp(opp)
         await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 

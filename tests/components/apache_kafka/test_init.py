@@ -55,7 +55,7 @@ def mock_client_stop():
 async def test_minimal_config(opp, mock_client):
     """Test the minimal config and defaults of component."""
     config = {apache_kafka.DOMAIN: MIN_CONFIG}
-    assert await async_setup_component.opp, apache_kafka.DOMAIN, config)
+    assert await async_setup_component(opp, apache_kafka.DOMAIN, config)
     await opp.async_block_till_done()
     assert mock_client.start.called_once
 
@@ -76,7 +76,7 @@ async def test_full_config(opp, mock_client):
     }
     config[apache_kafka.DOMAIN].update(MIN_CONFIG)
 
-    assert await async_setup_component.opp, apache_kafka.DOMAIN, config)
+    assert await async_setup_component(opp, apache_kafka.DOMAIN, config)
     await opp.async_block_till_done()
     assert mock_client.start.called_once
 
@@ -86,11 +86,11 @@ async def _setup_opp, filter_config):
     config = {apache_kafka.DOMAIN: {"filter": filter_config}}
     config[apache_kafka.DOMAIN].update(MIN_CONFIG)
 
-    assert await async_setup_component.opp, apache_kafka.DOMAIN, config)
+    assert await async_setup_component(opp, apache_kafka.DOMAIN, config)
     await opp.async_block_till_done()
 
 
-async def _run_filter_tests.opp, tests, mock_client):
+async def _run_filter_tests(opp, tests, mock_client):
     """Run a series of filter tests on apache kafka."""
     for test in tests:
         opp.states.async_set(test.id, STATE_ON)
@@ -103,7 +103,7 @@ async def _run_filter_tests.opp, tests, mock_client):
             mock_client.send_and_wait.assert_not_called()
 
 
-async def test_allowlist.opp, mock_client):
+async def test_allowlist(opp, mock_client):
     """Test an allowlist only config."""
     await _setup(
         opp,
@@ -123,10 +123,10 @@ async def test_allowlist.opp, mock_client):
         FilterTest("binary_sensor.excluded", False),
     ]
 
-    await _run_filter_tests.opp, tests, mock_client)
+    await _run_filter_tests(opp, tests, mock_client)
 
 
-async def test_denylist.opp, mock_client):
+async def test_denylist(opp, mock_client):
     """Test a denylist only config."""
     await _setup(
         opp,
@@ -146,10 +146,10 @@ async def test_denylist.opp, mock_client):
         FilterTest("binary_sensor.excluded", False),
     ]
 
-    await _run_filter_tests.opp, tests, mock_client)
+    await _run_filter_tests(opp, tests, mock_client)
 
 
-async def test_filtered_allowlist.opp, mock_client):
+async def test_filtered_allowlist(opp, mock_client):
     """Test an allowlist config with a filtering denylist."""
     await _setup(
         opp,
@@ -170,10 +170,10 @@ async def test_filtered_allowlist.opp, mock_client):
         FilterTest("climate.included_test", False),
     ]
 
-    await _run_filter_tests.opp, tests, mock_client)
+    await _run_filter_tests(opp, tests, mock_client)
 
 
-async def test_filtered_denylist.opp, mock_client):
+async def test_filtered_denylist(opp, mock_client):
     """Test a denylist config with a filtering allowlist."""
     await _setup(
         opp,
@@ -194,4 +194,4 @@ async def test_filtered_denylist.opp, mock_client):
         FilterTest("light.included", True),
     ]
 
-    await _run_filter_tests.opp, tests, mock_client)
+    await _run_filter_tests(opp, tests, mock_client)

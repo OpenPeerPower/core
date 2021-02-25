@@ -21,7 +21,7 @@ async def test_manually_configured_platform.opp):
     assert not.opp.data.get(HMIPC_DOMAIN)
 
 
-async def test_hmip_weather_sensor.opp, default_mock_hap_factory):
+async def test_hmip_weather_sensor(opp, default_mock_hap_factory):
     """Test HomematicipWeatherSensor."""
     entity_id = "weather.weather_sensor_plus"
     entity_name = "Weather Sensor – plus"
@@ -40,12 +40,12 @@ async def test_hmip_weather_sensor.opp, default_mock_hap_factory):
     assert op_state.attributes[ATTR_WEATHER_WIND_SPEED] == 15.0
     assert op_state.attributes[ATTR_WEATHER_ATTRIBUTION] == "Powered by Homematic IP"
 
-    await async_manipulate_test_data.opp, hmip_device, "actualTemperature", 12.1)
+    await async_manipulate_test_data(opp, hmip_device, "actualTemperature", 12.1)
     op_state = opp.states.get(entity_id)
     assert op_state.attributes[ATTR_WEATHER_TEMPERATURE] == 12.1
 
 
-async def test_hmip_weather_sensor_pro.opp, default_mock_hap_factory):
+async def test_hmip_weather_sensor_pro(opp, default_mock_hap_factory):
     """Test HomematicipWeatherSensorPro."""
     entity_id = "weather.wettersensor_pro"
     entity_name = "Wettersensor - pro"
@@ -65,12 +65,12 @@ async def test_hmip_weather_sensor_pro.opp, default_mock_hap_factory):
     assert op_state.attributes[ATTR_WEATHER_WIND_BEARING] == 295.0
     assert op_state.attributes[ATTR_WEATHER_ATTRIBUTION] == "Powered by Homematic IP"
 
-    await async_manipulate_test_data.opp, hmip_device, "actualTemperature", 12.1)
+    await async_manipulate_test_data(opp, hmip_device, "actualTemperature", 12.1)
     op_state = opp.states.get(entity_id)
     assert op_state.attributes[ATTR_WEATHER_TEMPERATURE] == 12.1
 
 
-async def test_hmip_home_weather.opp, default_mock_hap_factory):
+async def test_hmip_home_weather(opp, default_mock_hap_factory):
     """Test HomematicipHomeWeather."""
     entity_id = "weather.weather_1010_wien_osterreich"
     entity_name = "Weather 1010  Wien, Österreich"

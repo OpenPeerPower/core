@@ -81,20 +81,20 @@ SENSORS = {
 }
 
 
-async def test_no_sensors.opp, aioclient_mock):
+async def test_no_sensors(opp, aioclient_mock):
     """Test that no sensors in deconz results in no sensor entities."""
-    await setup_deconz_integration.opp, aioclient_mock)
+    await setup_deconz_integration(opp, aioclient_mock)
     assert len.opp.states.async_all()) == 0
 
 
-async def test_sensors.opp, aioclient_mock):
+async def test_sensors(opp, aioclient_mock):
     """Test successful creation of sensor entities."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = deepcopy(SENSORS)
     config_entry = await setup_deconz_integration(
         opp. aioclient_mock, get_state_response=data
     )
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
 
     assert len.opp.states.async_all()) == 5
 
@@ -102,16 +102,16 @@ async def test_sensors.opp, aioclient_mock):
     assert light_level_sensor.state == "999.8"
     assert light_level_sensor.attributes["device_class"] == DEVICE_CLASS_ILLUMINANCE
 
-    assert.opp.states.get("sensor.presence_sensor") is None
-    assert.opp.states.get("sensor.switch_1") is None
-    assert.opp.states.get("sensor.switch_1_battery_level") is None
-    assert.opp.states.get("sensor.switch_2") is None
+    assert opp.states.get("sensor.presence_sensor") is None
+    assert opp.states.get("sensor.switch_1") is None
+    assert opp.states.get("sensor.switch_1_battery_level") is None
+    assert opp.states.get("sensor.switch_2") is None
 
     switch_2_battery_level = opp.states.get("sensor.switch_2_battery_level")
     assert switch_2_battery_level.state == "100"
     assert switch_2_battery_level.attributes["device_class"] == DEVICE_CLASS_BATTERY
 
-    assert.opp.states.get("sensor.daylight_sensor") is None
+    assert opp.states.get("sensor.daylight_sensor") is None
 
     power_sensor = opp.states.get("sensor.power_sensor")
     assert power_sensor.state == "6"
@@ -121,7 +121,7 @@ async def test_sensors.opp, aioclient_mock):
     assert consumption_sensor.state == "0.002"
     assert "device_class" not in consumption_sensor.attributes
 
-    assert.opp.states.get("sensor.clip_light_level_sensor") is None
+    assert opp.states.get("sensor.clip_light_level_sensor") is None
 
     # Event signals new light level
 
@@ -134,7 +134,7 @@ async def test_sensors.opp, aioclient_mock):
     }
     gateway.api.event_handler(state_changed_event)
 
-    assert.opp.states.get("sensor.light_level_sensor").state == "1.6"
+    assert opp.states.get("sensor.light_level_sensor").state == "1.6"
 
     # Event signals new battery level
 
@@ -148,7 +148,7 @@ async def test_sensors.opp, aioclient_mock):
     gateway.api.event_handler(state_changed_event)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.switch_2_battery_level").state == "75"
+    assert opp.states.get("sensor.switch_2_battery_level").state == "75"
 
     await opp.config_entries.async_unload(config_entry.entry_id)
 
@@ -162,7 +162,7 @@ async def test_sensors.opp, aioclient_mock):
     assert len.opp.states.async_all()) == 0
 
 
-async def test_allow_clip_sensors.opp, aioclient_mock):
+async def test_allow_clip_sensors(opp, aioclient_mock):
     """Test that CLIP sensors can be allowed."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = deepcopy(SENSORS)
@@ -174,7 +174,7 @@ async def test_allow_clip_sensors.opp, aioclient_mock):
     )
 
     assert len.opp.states.async_all()) == 6
-    assert.opp.states.get("sensor.clip_light_level_sensor").state == "999.8"
+    assert opp.states.get("sensor.clip_light_level_sensor").state == "999.8"
 
     # Disallow clip sensors
 
@@ -184,7 +184,7 @@ async def test_allow_clip_sensors.opp, aioclient_mock):
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 5
-    assert.opp.states.get("sensor.clip_light_level_sensor") is None
+    assert opp.states.get("sensor.clip_light_level_sensor") is None
 
     # Allow clip sensors
 
@@ -194,13 +194,13 @@ async def test_allow_clip_sensors.opp, aioclient_mock):
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 6
-    assert.opp.states.get("sensor.clip_light_level_sensor")
+    assert opp.states.get("sensor.clip_light_level_sensor")
 
 
-async def test_add_new_sensor.opp, aioclient_mock):
+async def test_add_new_sensor(opp, aioclient_mock):
     """Test that adding a new sensor works."""
-    config_entry = await setup_deconz_integration.opp, aioclient_mock)
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    config_entry = await setup_deconz_integration(opp, aioclient_mock)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
     assert len.opp.states.async_all()) == 0
 
     state_added_event = {
@@ -214,17 +214,17 @@ async def test_add_new_sensor.opp, aioclient_mock):
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
-    assert.opp.states.get("sensor.light_level_sensor").state == "999.8"
+    assert opp.states.get("sensor.light_level_sensor").state == "999.8"
 
 
-async def test_add_battery_later.opp, aioclient_mock):
+async def test_add_battery_later(opp, aioclient_mock):
     """Test that a sensor without an initial battery state creates a battery sensor once state exist."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = {"1": deepcopy(SENSORS["3"])}
     config_entry = await setup_deconz_integration(
         opp. aioclient_mock, get_state_response=data
     )
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
     remote = gateway.api.sensors["1"]
 
     assert len.opp.states.async_all()) == 0
@@ -238,10 +238,10 @@ async def test_add_battery_later.opp, aioclient_mock):
     assert len(gateway.events) == 1
     assert len(remote._callbacks) == 2  # Event and battery entity
 
-    assert.opp.states.get("sensor.switch_1_battery_level")
+    assert opp.states.get("sensor.switch_1_battery_level")
 
 
-async def test_air_quality_sensor.opp, aioclient_mock):
+async def test_air_quality_sensor(opp, aioclient_mock):
     """Test successful creation of air quality sensor entities."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = {
@@ -263,7 +263,7 @@ async def test_air_quality_sensor.opp, aioclient_mock):
             "uniqueid": "00:12:4b:00:14:4d:00:07-02-fdef",
         }
     }
-    await setup_deconz_integration.opp, aioclient_mock, get_state_response=data)
+    await setup_deconz_integration(opp, aioclient_mock, get_state_response=data)
 
     assert len.opp.states.async_all()) == 1
 
@@ -271,7 +271,7 @@ async def test_air_quality_sensor.opp, aioclient_mock):
     assert air_quality.state == "poor"
 
 
-async def test_time_sensor.opp, aioclient_mock):
+async def test_time_sensor(opp, aioclient_mock):
     """Test successful creation of time sensor entities."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = {
@@ -294,7 +294,7 @@ async def test_time_sensor.opp, aioclient_mock):
             "uniqueid": "cc:cc:cc:ff:fe:38:4d:b3-01-000a",
         }
     }
-    await setup_deconz_integration.opp, aioclient_mock, get_state_response=data)
+    await setup_deconz_integration(opp, aioclient_mock, get_state_response=data)
 
     assert len.opp.states.async_all()) == 2
 
@@ -305,13 +305,13 @@ async def test_time_sensor.opp, aioclient_mock):
     assert time_battery.state == "40"
 
 
-async def test_unsupported_sensor.opp, aioclient_mock):
+async def test_unsupported_sensor(opp, aioclient_mock):
     """Test that unsupported sensors doesn't break anything."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = {
         "0": {"type": "not supported", "name": "name", "state": {}, "config": {}}
     }
-    await setup_deconz_integration.opp, aioclient_mock, get_state_response=data)
+    await setup_deconz_integration(opp, aioclient_mock, get_state_response=data)
 
     assert len.opp.states.async_all()) == 1
 

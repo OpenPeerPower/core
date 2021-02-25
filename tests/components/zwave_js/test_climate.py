@@ -395,7 +395,7 @@ async def test_thermostat_different_endpoints(
     assert state.attributes[ATTR_CURRENT_TEMPERATURE] == 22.5
 
 
-async def test_setpoint_thermostat.opp, client, climate_danfoss_lc_13, integration):
+async def test_setpoint_thermostat(opp, client, climate_danfoss_lc_13, integration):
     """Test a setpoint thermostat command class entity."""
     node = climate_danfoss_lc_13
     state = opp.states.get(CLIMATE_DANFOSS_LC13_ENTITY)
@@ -472,7 +472,7 @@ async def test_setpoint_thermostat.opp, client, climate_danfoss_lc_13, integrati
     client.async_send_command.reset_mock()
 
 
-async def test_thermostat_heatit.opp, client, climate_heatit_z_trm3, integration):
+async def test_thermostat_heatit(opp, client, climate_heatit_z_trm3, integration):
     """Test a thermostat v2 command class entity."""
     state = opp.states.get(CLIMATE_FLOOR_THERMOSTAT_ENTITY)
 

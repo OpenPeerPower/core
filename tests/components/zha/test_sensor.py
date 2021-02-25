@@ -36,40 +36,40 @@ from .common import (
 )
 
 
-async def async_test_humidity.opp, cluster, entity_id):
+async def async_test_humidity(opp, cluster, entity_id):
     """Test humidity sensor."""
-    await send_attributes_report.opp, cluster, {1: 1, 0: 1000, 2: 100})
-    assert_state.opp, entity_id, "10.0", PERCENTAGE)
+    await send_attributes_report(opp, cluster, {1: 1, 0: 1000, 2: 100})
+    assert_state(opp, entity_id, "10.0", PERCENTAGE)
 
 
-async def async_test_temperature.opp, cluster, entity_id):
+async def async_test_temperature(opp, cluster, entity_id):
     """Test temperature sensor."""
-    await send_attributes_report.opp, cluster, {1: 1, 0: 2900, 2: 100})
-    assert_state.opp, entity_id, "29.0", TEMP_CELSIUS)
+    await send_attributes_report(opp, cluster, {1: 1, 0: 2900, 2: 100})
+    assert_state(opp, entity_id, "29.0", TEMP_CELSIUS)
 
 
-async def async_test_pressure.opp, cluster, entity_id):
+async def async_test_pressure(opp, cluster, entity_id):
     """Test pressure sensor."""
-    await send_attributes_report.opp, cluster, {1: 1, 0: 1000, 2: 10000})
-    assert_state.opp, entity_id, "1000", PRESSURE_HPA)
+    await send_attributes_report(opp, cluster, {1: 1, 0: 1000, 2: 10000})
+    assert_state(opp, entity_id, "1000", PRESSURE_HPA)
 
-    await send_attributes_report.opp, cluster, {0: 1000, 20: -1, 16: 10000})
-    assert_state.opp, entity_id, "1000", PRESSURE_HPA)
+    await send_attributes_report(opp, cluster, {0: 1000, 20: -1, 16: 10000})
+    assert_state(opp, entity_id, "1000", PRESSURE_HPA)
 
 
-async def async_test_illuminance.opp, cluster, entity_id):
+async def async_test_illuminance(opp, cluster, entity_id):
     """Test illuminance sensor."""
-    await send_attributes_report.opp, cluster, {1: 1, 0: 10, 2: 20})
-    assert_state.opp, entity_id, "1.0", LIGHT_LUX)
+    await send_attributes_report(opp, cluster, {1: 1, 0: 10, 2: 20})
+    assert_state(opp, entity_id, "1.0", LIGHT_LUX)
 
 
-async def async_test_metering.opp, cluster, entity_id):
+async def async_test_metering(opp, cluster, entity_id):
     """Test metering sensor."""
-    await send_attributes_report.opp, cluster, {1025: 1, 1024: 12345, 1026: 100})
-    assert_state.opp, entity_id, "12345.0", "unknown")
+    await send_attributes_report(opp, cluster, {1025: 1, 1024: 12345, 1026: 100})
+    assert_state(opp, entity_id, "12345.0", "unknown")
 
 
-async def async_test_electrical_measurement.opp, cluster, entity_id):
+async def async_test_electrical_measurement(opp, cluster, entity_id):
     """Test electrical measurement sensor."""
     with mock.patch(
         (
@@ -79,29 +79,29 @@ async def async_test_electrical_measurement.opp, cluster, entity_id):
         new_callable=mock.PropertyMock,
     ) as divisor_mock:
         divisor_mock.return_value = 1
-        await send_attributes_report.opp, cluster, {0: 1, 1291: 100, 10: 1000})
-        assert_state.opp, entity_id, "100", POWER_WATT)
+        await send_attributes_report(opp, cluster, {0: 1, 1291: 100, 10: 1000})
+        assert_state(opp, entity_id, "100", POWER_WATT)
 
-        await send_attributes_report.opp, cluster, {0: 1, 1291: 99, 10: 1000})
-        assert_state.opp, entity_id, "99", POWER_WATT)
+        await send_attributes_report(opp, cluster, {0: 1, 1291: 99, 10: 1000})
+        assert_state(opp, entity_id, "99", POWER_WATT)
 
         divisor_mock.return_value = 10
-        await send_attributes_report.opp, cluster, {0: 1, 1291: 1000, 10: 5000})
-        assert_state.opp, entity_id, "100", POWER_WATT)
+        await send_attributes_report(opp, cluster, {0: 1, 1291: 1000, 10: 5000})
+        assert_state(opp, entity_id, "100", POWER_WATT)
 
-        await send_attributes_report.opp, cluster, {0: 1, 1291: 99, 10: 5000})
-        assert_state.opp, entity_id, "9.9", POWER_WATT)
+        await send_attributes_report(opp, cluster, {0: 1, 1291: 99, 10: 5000})
+        assert_state(opp, entity_id, "9.9", POWER_WATT)
 
 
-async def async_test_powerconfiguration.opp, cluster, entity_id):
+async def async_test_powerconfiguration(opp, cluster, entity_id):
     """Test powerconfiguration/battery sensor."""
-    await send_attributes_report.opp, cluster, {33: 98})
-    assert_state.opp, entity_id, "49", "%")
-    assert.opp.states.get(entity_id).attributes["battery_voltage"] == 2.9
-    assert.opp.states.get(entity_id).attributes["battery_quantity"] == 3
-    assert.opp.states.get(entity_id).attributes["battery_size"] == "AAA"
-    await send_attributes_report.opp, cluster, {32: 20})
-    assert.opp.states.get(entity_id).attributes["battery_voltage"] == 2.0
+    await send_attributes_report(opp, cluster, {33: 98})
+    assert_state(opp, entity_id, "49", "%")
+    assert opp.states.get(entity_id).attributes["battery_voltage"] == 2.9
+    assert opp.states.get(entity_id).attributes["battery_quantity"] == 3
+    assert opp.states.get(entity_id).attributes["battery_size"] == "AAA"
+    await send_attributes_report(opp, cluster, {32: 20})
+    assert opp.states.get(entity_id).attributes["battery_voltage"] == 2.0
 
 
 @pytest.mark.parametrize(
@@ -177,33 +177,33 @@ async def test_sensor(
     zha_device = await zha_device_joined_restored(zigpy_device)
     entity_id = await find_entity_id(DOMAIN, zha_device, opp)
 
-    await async_enable_traffic.opp, [zha_device], enabled=False)
+    await async_enable_traffic(opp, [zha_device], enabled=False)
     await opp.async_block_till_done()
     # ensure the sensor entity was created
-    assert.opp.states.get(entity_id).state == STATE_UNAVAILABLE
+    assert opp.states.get(entity_id).state == STATE_UNAVAILABLE
 
     # allow traffic to flow through the gateway and devices
-    await async_enable_traffic.opp, [zha_device])
+    await async_enable_traffic(opp, [zha_device])
 
     # test that the sensor now have a state of unknown
-    assert.opp.states.get(entity_id).state == STATE_UNKNOWN
+    assert opp.states.get(entity_id).state == STATE_UNKNOWN
 
     # test sensor associated logic
-    await test_func.opp, cluster, entity_id)
+    await test_func(opp, cluster, entity_id)
 
     # test rejoin
-    await async_test_rejoin.opp, zigpy_device, [cluster], (report_count,))
+    await async_test_rejoin(opp, zigpy_device, [cluster], (report_count,))
 
 
-def assert_state.opp, entity_id, state, unit_of_measurement):
+def assert_state(opp, entity_id, state, unit_of_measurement):
     """Check that the state is what is expected.
 
     This is used to ensure that the logic in each sensor class handled the
     attribute report it received correctly.
     """
     opp.state = opp.states.get(entity_id)
-    assert.opp_state.state == state
-    assert.opp_state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == unit_of_measurement
+    assert opp_state.state == state
+    assert opp_state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == unit_of_measurement
 
 
 @pytest.fixture
@@ -298,17 +298,17 @@ async def test_temp_uom(
     entity_id = await find_entity_id(DOMAIN, zha_device, opp)
 
     if not restore:
-        await async_enable_traffic.opp, [zha_device], enabled=False)
-        assert.opp.states.get(entity_id).state == STATE_UNAVAILABLE
+        await async_enable_traffic(opp, [zha_device], enabled=False)
+        assert opp.states.get(entity_id).state == STATE_UNAVAILABLE
 
     # allow traffic to flow through the gateway and devices
-    await async_enable_traffic.opp, [zha_device])
+    await async_enable_traffic(opp, [zha_device])
 
     # test that the sensors now have a state of unknown
     if not restore:
-        assert.opp.states.get(entity_id).state == STATE_UNKNOWN
+        assert opp.states.get(entity_id).state == STATE_UNKNOWN
 
-    await send_attribute_report.opp, cluster, 0, raw_temp)
+    await send_attribute_report(opp, cluster, 0, raw_temp)
     await opp.async_block_till_done()
     state = opp.states.get(entity_id)
     assert state is not None
@@ -338,12 +338,12 @@ async def test_electrical_measurement_init(
     entity_id = await find_entity_id(DOMAIN, zha_device, opp)
 
     # allow traffic to flow through the gateway and devices
-    await async_enable_traffic.opp, [zha_device])
+    await async_enable_traffic(opp, [zha_device])
 
     # test that the sensor now have a state of unknown
-    assert.opp.states.get(entity_id).state == STATE_UNKNOWN
+    assert opp.states.get(entity_id).state == STATE_UNKNOWN
 
-    await send_attributes_report.opp, cluster, {0: 1, 1291: 100, 10: 1000})
+    await send_attributes_report(opp, cluster, {0: 1, 1291: 100, 10: 1000})
     assert int.opp.states.get(entity_id).state) == 100
 
     channel = zha_device.channels.pools[0].all_channels["1:0x0b04"]
@@ -351,23 +351,23 @@ async def test_electrical_measurement_init(
     assert channel.multiplier == 1
 
     # update power divisor
-    await send_attributes_report.opp, cluster, {0: 1, 1291: 20, 0x0403: 5, 10: 1000})
+    await send_attributes_report(opp, cluster, {0: 1, 1291: 20, 0x0403: 5, 10: 1000})
     assert channel.divisor == 5
     assert channel.multiplier == 1
-    assert.opp.states.get(entity_id).state == "4.0"
+    assert opp.states.get(entity_id).state == "4.0"
 
-    await send_attributes_report.opp, cluster, {0: 1, 1291: 30, 0x0605: 10, 10: 1000})
+    await send_attributes_report(opp, cluster, {0: 1, 1291: 30, 0x0605: 10, 10: 1000})
     assert channel.divisor == 10
     assert channel.multiplier == 1
-    assert.opp.states.get(entity_id).state == "3.0"
+    assert opp.states.get(entity_id).state == "3.0"
 
     # update power multiplier
-    await send_attributes_report.opp, cluster, {0: 1, 1291: 20, 0x0402: 6, 10: 1000})
+    await send_attributes_report(opp, cluster, {0: 1, 1291: 20, 0x0402: 6, 10: 1000})
     assert channel.divisor == 10
     assert channel.multiplier == 6
-    assert.opp.states.get(entity_id).state == "12.0"
+    assert opp.states.get(entity_id).state == "12.0"
 
-    await send_attributes_report.opp, cluster, {0: 1, 1291: 30, 0x0604: 20, 10: 1000})
+    await send_attributes_report(opp, cluster, {0: 1, 1291: 30, 0x0604: 20, 10: 1000})
     assert channel.divisor == 10
     assert channel.multiplier == 20
-    assert.opp.states.get(entity_id).state == "60.0"
+    assert opp.states.get(entity_id).state == "60.0"

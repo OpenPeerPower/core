@@ -23,7 +23,7 @@ from tests.common import MockConfigEntry
 
 async def test_form.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -239,7 +239,7 @@ async def test_form_reauth.opp):
         },
         unique_id="my@email.tld",
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "reauth"}, data=entry.data

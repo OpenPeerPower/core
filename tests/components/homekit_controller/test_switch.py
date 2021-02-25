@@ -38,9 +38,9 @@ def create_valve_service(accessory):
     remaining.value = 99
 
 
-async def test_switch_change_outlet_state.opp, utcnow):
+async def test_switch_change_outlet_state(opp, utcnow):
     """Test that we can turn a HomeKit outlet on and off again."""
-    helper = await setup_test_component.opp, create_switch_service)
+    helper = await setup_test_component(opp, create_switch_service)
 
     await opp.services.async_call(
         "switch", "turn_on", {"entity_id": "switch.testdevice"}, blocking=True
@@ -53,9 +53,9 @@ async def test_switch_change_outlet_state.opp, utcnow):
     assert helper.characteristics[("outlet", "on")].value == 0
 
 
-async def test_switch_read_outlet_state.opp, utcnow):
+async def test_switch_read_outlet_state(opp, utcnow):
     """Test that we can read the state of a HomeKit outlet accessory."""
-    helper = await setup_test_component.opp, create_switch_service)
+    helper = await setup_test_component(opp, create_switch_service)
 
     # Initial state is that the switch is off and the outlet isn't in use
     switch_1 = await helper.poll_and_get_state()
@@ -80,9 +80,9 @@ async def test_switch_read_outlet_state.opp, utcnow):
     assert switch_1.attributes["outlet_in_use"] is True
 
 
-async def test_valve_change_active_state.opp, utcnow):
+async def test_valve_change_active_state(opp, utcnow):
     """Test that we can turn a valve on and off again."""
-    helper = await setup_test_component.opp, create_valve_service)
+    helper = await setup_test_component(opp, create_valve_service)
 
     await opp.services.async_call(
         "switch", "turn_on", {"entity_id": "switch.testdevice"}, blocking=True
@@ -95,9 +95,9 @@ async def test_valve_change_active_state.opp, utcnow):
     assert helper.characteristics[("valve", "active")].value == 0
 
 
-async def test_valve_read_state.opp, utcnow):
+async def test_valve_read_state(opp, utcnow):
     """Test that we can read the state of a valve accessory."""
-    helper = await setup_test_component.opp, create_valve_service)
+    helper = await setup_test_component(opp, create_valve_service)
 
     # Initial state is that the switch is off and the outlet isn't in use
     switch_1 = await helper.poll_and_get_state()

@@ -380,7 +380,7 @@ async def test_query_message.opp):
 
 async def test_execute.opp):
     """Test an execute command."""
-    await async_setup_component.opp, "light", {"light": {"platform": "demo"}})
+    await async_setup_component(opp, "light", {"light": {"platform": "demo"}})
     await opp.async_block_till_done()
 
     await opp.services.async_call(
@@ -739,7 +739,7 @@ async def test_unavailable_state_does_sync.opp):
         ("outlet", "action.devices.types.OUTLET"),
     ],
 )
-async def test_device_class_switch.opp, device_class, google_type):
+async def test_device_class_switch(opp, device_class, google_type):
     """Test that a cover entity syncs to the correct device type."""
     sensor = DemoSwitch(
         None,
@@ -789,7 +789,7 @@ async def test_device_class_switch.opp, device_class, google_type):
         ("window", "action.devices.types.SENSOR"),
     ],
 )
-async def test_device_class_binary_sensor.opp, device_class, google_type):
+async def test_device_class_binary_sensor(opp, device_class, google_type):
     """Test that a binary entity syncs to the correct device type."""
     sensor = DemoBinarySensor(
         None, "Demo Sensor", state=False, device_class=device_class
@@ -835,7 +835,7 @@ async def test_device_class_binary_sensor.opp, device_class, google_type):
         ("garage", "action.devices.types.GARAGE"),
     ],
 )
-async def test_device_class_cover.opp, device_class, google_type):
+async def test_device_class_cover(opp, device_class, google_type):
     """Test that a binary entity syncs to the correct device type."""
     sensor = DemoCover(None, opp, "Demo Sensor", device_class=device_class)
     sensor.opp = opp
@@ -880,7 +880,7 @@ async def test_device_class_cover.opp, device_class, google_type):
         ("receiver", "action.devices.types.AUDIO_VIDEO_RECEIVER"),
     ],
 )
-async def test_device_media_player.opp, device_class, google_type):
+async def test_device_media_player(opp, device_class, google_type):
     """Test that a binary entity syncs to the correct device type."""
     sensor = AbstractDemoPlayer("Demo", device_class=device_class)
     sensor.opp = opp
@@ -1157,7 +1157,7 @@ async def test_reachable_devices.opp):
     }
 
 
-async def test_sync_message_recovery.opp, caplog):
+async def test_sync_message_recovery(opp, caplog):
     """Test a sync message recovers from bad entities."""
     light = DemoLight(
         None,
@@ -1216,7 +1216,7 @@ async def test_sync_message_recovery.opp, caplog):
     assert "Error serializing light.bad_light" in caplog.text
 
 
-async def test_query_recover.opp, caplog):
+async def test_query_recover(opp, caplog):
     """Test that we recover if an entity raises during query."""
 
     opp.states.async_set(

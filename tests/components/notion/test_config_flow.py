@@ -45,7 +45,7 @@ async def test_duplicate_error(opp):
 @pytest.mark.parametrize(
     "mock_client", [AsyncMock(side_effect=aionotion.errors.NotionError)]
 )
-async def test_invalid_credentials.opp, mock_aionotion):
+async def test_invalid_credentials(opp, mock_aionotion):
     """Test that an invalid API/App Key throws an error."""
     conf = {CONF_USERNAME: "user@host.com", CONF_PASSWORD: "password123"}
 
@@ -69,7 +69,7 @@ async def test_show_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_step_user.opp, mock_aionotion):
+async def test_step_user(opp, mock_aionotion):
     """Test that the user step works."""
     conf = {CONF_USERNAME: "user@host.com", CONF_PASSWORD: "password123"}
 

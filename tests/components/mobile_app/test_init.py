@@ -6,12 +6,12 @@ from .const import CALL_SERVICE
 from tests.common import async_mock_service
 
 
-async def test_unload_unloads.opp, create_registrations, webhook_client):
+async def test_unload_unloads(opp, create_registrations, webhook_client):
     """Test we clean up when we unload."""
     # Second config entry is the one without encryption
     config_entry = opp.config_entries.async_entries("mobile_app")[1]
     webhook_id = config_entry.data["webhook_id"]
-    calls = async_mock_service.opp, "test", "mobile_app")
+    calls = async_mock_service(opp, "test", "mobile_app")
 
     # Test it works
     await webhook_client.post(f"/api/webhook/{webhook_id}", json=CALL_SERVICE)
@@ -24,7 +24,7 @@ async def test_unload_unloads.opp, create_registrations, webhook_client):
     assert len(calls) == 1
 
 
-async def test_remove_entry.opp, create_registrations):
+async def test_remove_entry(opp, create_registrations):
     """Test we clean up when we remove entry."""
     for config_entry in.opp.config_entries.async_entries("mobile_app"):
         await opp.config_entries.async_remove(config_entry.entry_id)

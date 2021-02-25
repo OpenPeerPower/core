@@ -16,7 +16,7 @@ from tests.common import (
 )
 
 
-async def add_eventstream.opp, sub_topic=None, pub_topic=None, ignore_event=None):
+async def add_eventstream(opp, sub_topic=None, pub_topic=None, ignore_event=None):
     """Add a mqtt_eventstream component."""
     config = {}
     if sub_topic:
@@ -30,34 +30,34 @@ async def add_eventstream.opp, sub_topic=None, pub_topic=None, ignore_event=None
     )
 
 
-async def test_setup_succeeds.opp, mqtt_mock):
+async def test_setup_succeeds(opp, mqtt_mock):
     """Test the success of the setup."""
     assert await add_eventstream.opp)
 
 
-async def test_setup_with_pub.opp, mqtt_mock):
+async def test_setup_with_pub(opp, mqtt_mock):
     """Test the setup with subscription."""
     # Should start off with no listeners for all events
-    assert.opp.bus.async_listeners().get("*") is None
+    assert opp.bus.async_listeners().get("*") is None
 
-    assert await add_eventstream.opp, pub_topic="bar")
+    assert await add_eventstream(opp, pub_topic="bar")
     await opp.async_block_till_done()
 
     # Verify that the event handler has been added as a listener
-    assert.opp.bus.async_listeners().get("*") == 1
+    assert opp.bus.async_listeners().get("*") == 1
 
 
-async def test_subscribe.opp, mqtt_mock):
+async def test_subscribe(opp, mqtt_mock):
     """Test the subscription."""
     sub_topic = "foo"
-    assert await add_eventstream.opp, sub_topic=sub_topic)
+    assert await add_eventstream(opp, sub_topic=sub_topic)
     await opp.async_block_till_done()
 
     # Verify that the this entity was subscribed to the topic
     mqtt_mock.async_subscribe.assert_called_with(sub_topic, ANY, 0, ANY)
 
 
-async def test_state_changed_event_sends_message.opp, mqtt_mock):
+async def test_state_changed_event_sends_message(opp, mqtt_mock):
     """Test the sending of a new message if event changed."""
     now = dt_util.as_utc(dt_util.now())
     e_id = "fake.entity"
@@ -67,7 +67,7 @@ async def test_state_changed_event_sends_message.opp, mqtt_mock):
         return_value=now,
     ):
         # Add the eventstream component for publishing events
-        assert await add_eventstream.opp, pub_topic=pub_topic)
+        assert await add_eventstream(opp, pub_topic=pub_topic)
         await opp.async_block_till_done()
 
         # Reset the mock because it will have already gotten calls for the
@@ -75,7 +75,7 @@ async def test_state_changed_event_sends_message.opp, mqtt_mock):
         mqtt_mock.async_publish.reset_mock()
 
         # Set a state of an entity
-        mock_state_change_event.opp, State(e_id, "on"))
+        mock_state_change_event(opp, State(e_id, "on"))
         await opp.async_block_till_done()
         await opp.async_block_till_done()
 
@@ -104,23 +104,23 @@ async def test_state_changed_event_sends_message.opp, mqtt_mock):
     assert result == event
 
 
-async def test_time_event_does_not_send_message.opp, mqtt_mock):
+async def test_time_event_does_not_send_message(opp, mqtt_mock):
     """Test the sending of a new message if time event."""
-    assert await add_eventstream.opp, pub_topic="bar")
+    assert await add_eventstream(opp, pub_topic="bar")
     await opp.async_block_till_done()
 
     # Reset the mock because it will have already gotten calls for the
     # mqtt_eventstream state change on initialization, etc.
     mqtt_mock.async_publish.reset_mock()
 
-    async_fire_time_changed.opp, dt_util.utcnow())
+    async_fire_time_changed(opp, dt_util.utcnow())
     assert not mqtt_mock.async_publish.called
 
 
-async def test_receiving_remote_event_fires.opp_event.opp, mqtt_mock):
+async def test_receiving_remote_event_fires.opp_event(opp, mqtt_mock):
     """Test the receiving of the remotely fired event."""
     sub_topic = "foo"
-    assert await add_eventstream.opp, sub_topic=sub_topic)
+    assert await add_eventstream(opp, sub_topic=sub_topic)
     await opp.async_block_till_done()
 
     calls = []
@@ -135,15 +135,15 @@ async def test_receiving_remote_event_fires.opp_event.opp, mqtt_mock):
     payload = json.dumps(
         {"event_type": "test_event", "event_data": {}}, cls=JSONEncoder
     )
-    async_fire_mqtt_message.opp, sub_topic, payload)
+    async_fire_mqtt_message(opp, sub_topic, payload)
     await opp.async_block_till_done()
 
     assert 1 == len(calls)
 
 
-async def test_ignored_event_doesnt_send_over_stream.opp, mqtt_mock):
+async def test_ignored_event_doesnt_send_over_stream(opp, mqtt_mock):
     """Test the ignoring of sending events if defined."""
-    assert await add_eventstream.opp, pub_topic="bar", ignore_event=["state_changed"])
+    assert await add_eventstream(opp, pub_topic="bar", ignore_event=["state_changed"])
     await opp.async_block_till_done()
 
     e_id = "entity.test_id"
@@ -157,15 +157,15 @@ async def test_ignored_event_doesnt_send_over_stream.opp, mqtt_mock):
     mqtt_mock.async_publish.reset_mock()
 
     # Set a state of an entity
-    mock_state_change_event.opp, State(e_id, "on"))
+    mock_state_change_event(opp, State(e_id, "on"))
     await opp.async_block_till_done()
 
     assert not mqtt_mock.async_publish.called
 
 
-async def test_wrong_ignored_event_sends_over_stream.opp, mqtt_mock):
+async def test_wrong_ignored_event_sends_over_stream(opp, mqtt_mock):
     """Test the ignoring of sending events if defined."""
-    assert await add_eventstream.opp, pub_topic="bar", ignore_event=["statee_changed"])
+    assert await add_eventstream(opp, pub_topic="bar", ignore_event=["statee_changed"])
     await opp.async_block_till_done()
 
     e_id = "entity.test_id"
@@ -179,7 +179,7 @@ async def test_wrong_ignored_event_sends_over_stream.opp, mqtt_mock):
     mqtt_mock.async_publish.reset_mock()
 
     # Set a state of an entity
-    mock_state_change_event.opp, State(e_id, "on"))
+    mock_state_change_event(opp, State(e_id, "on"))
     await opp.async_block_till_done()
     await opp.async_block_till_done()
 

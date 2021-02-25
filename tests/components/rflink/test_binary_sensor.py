@@ -45,7 +45,7 @@ CONFIG = {
 async def test_default_setup_opp, monkeypatch):
     """Test all basic functionality of the rflink sensor component."""
     # setup mocking rflink module
-    event_callback, create, _, _ = await mock_rflink.opp, CONFIG, DOMAIN, monkeypatch)
+    event_callback, create, _, _ = await mock_rflink(opp, CONFIG, DOMAIN, monkeypatch)
 
     # make sure arguments are passed
     assert create.call_args_list[0][1]["ignore"]
@@ -60,28 +60,28 @@ async def test_default_setup_opp, monkeypatch):
     event_callback({"id": "test", "command": "on"})
     await opp.async_block_till_done()
 
-    assert.opp.states.get("binary_sensor.test").state == STATE_ON
+    assert opp.states.get("binary_sensor.test").state == STATE_ON
 
     # test off event for config sensor
     event_callback({"id": "test", "command": "off"})
     await opp.async_block_till_done()
 
-    assert.opp.states.get("binary_sensor.test").state == STATE_OFF
+    assert opp.states.get("binary_sensor.test").state == STATE_OFF
 
     # test allon event for config sensor
     event_callback({"id": "test", "command": "allon"})
     await opp.async_block_till_done()
 
-    assert.opp.states.get("binary_sensor.test").state == STATE_ON
+    assert opp.states.get("binary_sensor.test").state == STATE_ON
 
     # test alloff event for config sensor
     event_callback({"id": "test", "command": "alloff"})
     await opp.async_block_till_done()
 
-    assert.opp.states.get("binary_sensor.test").state == STATE_OFF
+    assert opp.states.get("binary_sensor.test").state == STATE_OFF
 
 
-async def test_entity_availability.opp, monkeypatch):
+async def test_entity_availability(opp, monkeypatch):
     """If Rflink device is disconnected, entities should become unavailable."""
     # Make sure Rflink mock does not 'recover' to quickly from the
     # disconnect or else the unavailability cannot be measured
@@ -95,7 +95,7 @@ async def test_entity_availability.opp, monkeypatch):
     )
 
     # Entities are available by default
-    assert.opp.states.get("binary_sensor.test").state == STATE_OFF
+    assert opp.states.get("binary_sensor.test").state == STATE_OFF
 
     # Mock a disconnect of the Rflink device
     disconnect_callback()
@@ -104,7 +104,7 @@ async def test_entity_availability.opp, monkeypatch):
     await opp.async_block_till_done()
 
     # Entity should be unavailable
-    assert.opp.states.get("binary_sensor.test").state == STATE_UNAVAILABLE
+    assert opp.states.get("binary_sensor.test").state == STATE_UNAVAILABLE
 
     # Reconnect the Rflink device
     disconnect_callback()
@@ -113,13 +113,13 @@ async def test_entity_availability.opp, monkeypatch):
     await opp.async_block_till_done()
 
     # Entities should be available again
-    assert.opp.states.get("binary_sensor.test").state == STATE_OFF
+    assert opp.states.get("binary_sensor.test").state == STATE_OFF
 
 
-async def test_off_delay.opp, legacy_patchable_time, monkeypatch):
+async def test_off_delay(opp, legacy_patchable_time, monkeypatch):
     """Test off_delay option."""
     # setup mocking rflink module
-    event_callback, create, _, _ = await mock_rflink.opp, CONFIG, DOMAIN, monkeypatch)
+    event_callback, create, _, _ = await mock_rflink(opp, CONFIG, DOMAIN, monkeypatch)
 
     # make sure arguments are passed
     assert create.call_args_list[0][1]["ignore"]
@@ -139,7 +139,7 @@ async def test_off_delay.opp, legacy_patchable_time, monkeypatch):
     # fake time and turn on sensor
     future = now + timedelta(seconds=0)
     with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=future):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         event_callback(on_event)
         await opp.async_block_till_done()
         await opp.async_block_till_done()
@@ -150,7 +150,7 @@ async def test_off_delay.opp, legacy_patchable_time, monkeypatch):
     # fake time and turn on sensor again
     future = now + timedelta(seconds=15)
     with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=future):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         event_callback(on_event)
         await opp.async_block_till_done()
         await opp.async_block_till_done()
@@ -161,7 +161,7 @@ async def test_off_delay.opp, legacy_patchable_time, monkeypatch):
     # fake time and verify sensor still on (de-bounce)
     future = now + timedelta(seconds=35)
     with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=future):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
         await opp.async_block_till_done()
     state = opp.states.get("binary_sensor.test2")
@@ -171,7 +171,7 @@ async def test_off_delay.opp, legacy_patchable_time, monkeypatch):
     # fake time and verify sensor is off
     future = now + timedelta(seconds=45)
     with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=future):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
         await opp.async_block_till_done()
     state = opp.states.get("binary_sensor.test2")

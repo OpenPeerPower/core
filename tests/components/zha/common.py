@@ -152,12 +152,12 @@ def make_attribute(attrid, value, status=0):
     return attr
 
 
-def send_attribute_report.opp, cluster, attrid, value):
+def send_attribute_report(opp, cluster, attrid, value):
     """Send a single attribute report."""
-    return send_attributes_report.opp, cluster, {attrid: value})
+    return send_attributes_report(opp, cluster, {attrid: value})
 
 
-async def send_attributes_report.opp, cluster: int, attributes: dict):
+async def send_attributes_report(opp, cluster: int, attributes: dict):
     """Cause the sensor to receive an attribute report from the network.
 
     This is to simulate the normal device communication that happens when a
@@ -188,7 +188,7 @@ async def find_entity_id(domain, zha_device, opp):
     return None
 
 
-def async_find_group_entity_id.opp, domain, group):
+def async_find_group_entity_id(opp, domain, group):
     """Find the group entity id under test."""
     entity_id = f"{domain}.{group.name.lower().replace(' ','_')}_zha_group_0x{group.group_id:04x}"
 
@@ -199,7 +199,7 @@ def async_find_group_entity_id.opp, domain, group):
     return None
 
 
-async def async_enable_traffic.opp, zha_devices, enabled=True):
+async def async_enable_traffic(opp, zha_devices, enabled=True):
     """Allow traffic to flow through the gateway and the zha device."""
     for zha_device in zha_devices:
         zha_device.update_available(enabled)
@@ -225,7 +225,7 @@ def reset_clusters(clusters):
         cluster.write_attributes.reset_mock()
 
 
-async def async_test_rejoin.opp, zigpy_device, clusters, report_counts, ep_id=1):
+async def async_test_rejoin(opp, zigpy_device, clusters, report_counts, ep_id=1):
     """Test device rejoins."""
     reset_clusters(clusters)
 

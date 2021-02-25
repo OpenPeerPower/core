@@ -79,7 +79,7 @@ DEFAULT_CONFIG = {
 }
 
 
-async def test_setup_fails.opp, mqtt_mock):
+async def test_setup_fails(opp, mqtt_mock):
     """Test that setup fails with missing required configuration items."""
     with assert_setup_component(0, light.DOMAIN):
         assert await async_setup_component(
@@ -88,7 +88,7 @@ async def test_setup_fails.opp, mqtt_mock):
             {light.DOMAIN: {"platform": "mqtt", "schema": "template", "name": "test"}},
         )
         await opp.async_block_till_done()
-    assert.opp.states.get("light.test") is None
+    assert opp.states.get("light.test") is None
 
     with assert_setup_component(0, light.DOMAIN):
         assert await async_setup_component(
@@ -104,7 +104,7 @@ async def test_setup_fails.opp, mqtt_mock):
             },
         )
         await opp.async_block_till_done()
-    assert.opp.states.get("light.test") is None
+    assert opp.states.get("light.test") is None
 
     with assert_setup_component(0, light.DOMAIN):
         assert await async_setup_component(
@@ -121,7 +121,7 @@ async def test_setup_fails.opp, mqtt_mock):
             },
         )
         await opp.async_block_till_done()
-    assert.opp.states.get("light.test") is None
+    assert opp.states.get("light.test") is None
 
     with assert_setup_component(0, light.DOMAIN):
         assert await async_setup_component(
@@ -138,10 +138,10 @@ async def test_setup_fails.opp, mqtt_mock):
             },
         )
         await opp.async_block_till_done()
-    assert.opp.states.get("light.test") is None
+    assert opp.states.get("light.test") is None
 
 
-async def test_state_change_via_topic.opp, mqtt_mock):
+async def test_state_change_via_topic(opp, mqtt_mock):
     """Test state change via topic."""
     with assert_setup_component(1, light.DOMAIN):
         assert await async_setup_component(
@@ -176,7 +176,7 @@ async def test_state_change_via_topic.opp, mqtt_mock):
     assert state.attributes.get("white_value") is None
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "test_light_rgb", "on")
+    async_fire_mqtt_message(opp, "test_light_rgb", "on")
 
     state = opp.states.get("light.test")
     assert state.state == STATE_ON
@@ -234,7 +234,7 @@ async def test_state_brightness_color_effect_temp_white_change_via_topic(
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     # turn on the light, full white
-    async_fire_mqtt_message.opp, "test_light_rgb", "on,255,145,123,255-128-64,")
+    async_fire_mqtt_message(opp, "test_light_rgb", "on,255,145,123,255-128-64,")
 
     state = opp.states.get("light.test")
     assert state.state == STATE_ON
@@ -245,43 +245,43 @@ async def test_state_brightness_color_effect_temp_white_change_via_topic(
     assert state.attributes.get("effect") is None
 
     # turn the light off
-    async_fire_mqtt_message.opp, "test_light_rgb", "off")
+    async_fire_mqtt_message(opp, "test_light_rgb", "off")
 
     state = opp.states.get("light.test")
     assert state.state == STATE_OFF
 
     # lower the brightness
-    async_fire_mqtt_message.opp, "test_light_rgb", "on,100")
+    async_fire_mqtt_message(opp, "test_light_rgb", "on,100")
 
     light_state = opp.states.get("light.test")
     assert light_state.attributes["brightness"] == 100
 
     # change the color temp
-    async_fire_mqtt_message.opp, "test_light_rgb", "on,,195")
+    async_fire_mqtt_message(opp, "test_light_rgb", "on,,195")
 
     light_state = opp.states.get("light.test")
     assert light_state.attributes["color_temp"] == 195
 
     # change the color
-    async_fire_mqtt_message.opp, "test_light_rgb", "on,,,,41-42-43")
+    async_fire_mqtt_message(opp, "test_light_rgb", "on,,,,41-42-43")
 
     light_state = opp.states.get("light.test")
     assert light_state.attributes.get("rgb_color") == (243, 249, 255)
 
     # change the white value
-    async_fire_mqtt_message.opp, "test_light_rgb", "on,,,134")
+    async_fire_mqtt_message(opp, "test_light_rgb", "on,,,134")
 
     light_state = opp.states.get("light.test")
     assert light_state.attributes["white_value"] == 134
 
     # change the effect
-    async_fire_mqtt_message.opp, "test_light_rgb", "on,,,,41-42-43,rainbow")
+    async_fire_mqtt_message(opp, "test_light_rgb", "on,,,,41-42-43,rainbow")
 
     light_state = opp.states.get("light.test")
     assert light_state.attributes.get("effect") == "rainbow"
 
 
-async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
+async def test_sending_mqtt_commands_and_optimistic(opp, mqtt_mock):
     """Test the sending of command in optimistic mode."""
     fake_state = op.State(
         "light.test",
@@ -340,7 +340,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     assert state.attributes.get("white_value") == 50
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
-    await common.async_turn_off.opp, "light.test")
+    await common.async_turn_off(opp, "light.test")
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "off", 2, False
     )
@@ -348,7 +348,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     state = opp.states.get("light.test")
     assert state.state == STATE_OFF
 
-    await common.async_turn_on.opp, "light.test")
+    await common.async_turn_on(opp, "light.test")
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,,,,--", 2, False
     )
@@ -357,7 +357,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     assert state.state == STATE_ON
 
     # Set color_temp
-    await common.async_turn_on.opp, "light.test", color_temp=70)
+    await common.async_turn_on(opp, "light.test", color_temp=70)
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,,70,,--", 2, False
     )
@@ -367,7 +367,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     assert state.attributes.get("color_temp") == 70
 
     # Set full brightness
-    await common.async_turn_on.opp, "light.test", brightness=255)
+    await common.async_turn_on(opp, "light.test", brightness=255)
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,255,,,--", 2, False
     )
@@ -389,7 +389,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     assert state.attributes.get("rgb_color") == (255, 128, 0)
 
     # Full brightness - normalization of RGB values sent over MQTT
-    await common.async_turn_on.opp, "light.test", rgb_color=[128, 64, 0])
+    await common.async_turn_on(opp, "light.test", rgb_color=[128, 64, 0])
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,,,,255-127-0", 2, False
     )
@@ -399,7 +399,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     assert state.attributes.get("rgb_color") == (255, 127, 0)
 
     # Set half brightness
-    await common.async_turn_on.opp, "light.test", brightness=128)
+    await common.async_turn_on(opp, "light.test", brightness=128)
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,128,,,--", 2, False
     )
@@ -480,7 +480,7 @@ async def test_sending_mqtt_commands_non_optimistic_brightness_template(
     assert not state.attributes.get("white_value")
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    await common.async_turn_off.opp, "light.test")
+    await common.async_turn_off(opp, "light.test")
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "off", 0, False
     )
@@ -488,7 +488,7 @@ async def test_sending_mqtt_commands_non_optimistic_brightness_template(
     state = opp.states.get("light.test")
     assert state.state == STATE_OFF
 
-    await common.async_turn_on.opp, "light.test")
+    await common.async_turn_on(opp, "light.test")
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,,,,--", 0, False
     )
@@ -497,7 +497,7 @@ async def test_sending_mqtt_commands_non_optimistic_brightness_template(
     assert state.state == STATE_OFF
 
     # Set color_temp
-    await common.async_turn_on.opp, "light.test", color_temp=70)
+    await common.async_turn_on(opp, "light.test", color_temp=70)
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,,70,,--", 0, False
     )
@@ -507,7 +507,7 @@ async def test_sending_mqtt_commands_non_optimistic_brightness_template(
     assert not state.attributes.get("color_temp")
 
     # Set full brightness
-    await common.async_turn_on.opp, "light.test", brightness=255)
+    await common.async_turn_on(opp, "light.test", brightness=255)
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,255,,,--", 0, False
     )
@@ -530,14 +530,14 @@ async def test_sending_mqtt_commands_non_optimistic_brightness_template(
     assert not state.attributes.get("rgb_color")
 
     # Full brightness - normalization of RGB values sent over MQTT
-    await common.async_turn_on.opp, "light.test", rgb_color=[128, 64, 0])
+    await common.async_turn_on(opp, "light.test", rgb_color=[128, 64, 0])
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,,,,255-127-0", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
 
     # Set half brightness
-    await common.async_turn_on.opp, "light.test", brightness=128)
+    await common.async_turn_on(opp, "light.test", brightness=128)
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,128,,,--", 0, False
     )
@@ -564,7 +564,7 @@ async def test_sending_mqtt_commands_non_optimistic_brightness_template(
     state = opp.states.get("light.test")
 
 
-async def test_effect.opp, mqtt_mock):
+async def test_effect(opp, mqtt_mock):
     """Test effect sent over MQTT in optimistic mode."""
     with assert_setup_component(1, light.DOMAIN):
         assert await async_setup_component(
@@ -589,7 +589,7 @@ async def test_effect.opp, mqtt_mock):
     assert state.state == STATE_OFF
     assert state.attributes.get(ATTR_SUPPORTED_FEATURES) == 44
 
-    await common.async_turn_on.opp, "light.test")
+    await common.async_turn_on(opp, "light.test")
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,", 0, False
     )
@@ -598,7 +598,7 @@ async def test_effect.opp, mqtt_mock):
     assert state.state == STATE_ON
     assert not state.attributes.get("effect")
 
-    await common.async_turn_on.opp, "light.test", effect="rainbow")
+    await common.async_turn_on(opp, "light.test", effect="rainbow")
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,rainbow", 0, False
     )
@@ -607,7 +607,7 @@ async def test_effect.opp, mqtt_mock):
     assert state.state == STATE_ON
     assert state.attributes.get("effect") == "rainbow"
 
-    await common.async_turn_on.opp, "light.test", effect="colorloop")
+    await common.async_turn_on(opp, "light.test", effect="colorloop")
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,colorloop", 0, False
     )
@@ -616,7 +616,7 @@ async def test_effect.opp, mqtt_mock):
     assert state.attributes.get("effect") == "colorloop"
 
 
-async def test_flash.opp, mqtt_mock):
+async def test_flash(opp, mqtt_mock):
     """Test flash sent over MQTT in optimistic mode."""
     with assert_setup_component(1, light.DOMAIN):
         assert await async_setup_component(
@@ -640,7 +640,7 @@ async def test_flash.opp, mqtt_mock):
     assert state.state == STATE_OFF
     assert state.attributes.get(ATTR_SUPPORTED_FEATURES) == 40
 
-    await common.async_turn_on.opp, "light.test")
+    await common.async_turn_on(opp, "light.test")
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,", 0, False
     )
@@ -648,7 +648,7 @@ async def test_flash.opp, mqtt_mock):
     state = opp.states.get("light.test")
     assert state.state == STATE_ON
 
-    await common.async_turn_on.opp, "light.test", flash="short")
+    await common.async_turn_on(opp, "light.test", flash="short")
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,short", 0, False
     )
@@ -656,7 +656,7 @@ async def test_flash.opp, mqtt_mock):
     state = opp.states.get("light.test")
     assert state.state == STATE_ON
 
-    await common.async_turn_on.opp, "light.test", flash="long")
+    await common.async_turn_on(opp, "light.test", flash="long")
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,long", 0, False
     )
@@ -664,7 +664,7 @@ async def test_flash.opp, mqtt_mock):
     assert state.state == STATE_ON
 
 
-async def test_transition.opp, mqtt_mock):
+async def test_transition(opp, mqtt_mock):
     """Test for transition time being sent when included."""
     with assert_setup_component(1, light.DOMAIN):
         assert await async_setup_component(
@@ -689,7 +689,7 @@ async def test_transition.opp, mqtt_mock):
 
     assert state.attributes.get(ATTR_SUPPORTED_FEATURES) == 40
 
-    await common.async_turn_on.opp, "light.test", transition=10.0)
+    await common.async_turn_on(opp, "light.test", transition=10.0)
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,10.0", 1, False
     )
@@ -697,7 +697,7 @@ async def test_transition.opp, mqtt_mock):
     state = opp.states.get("light.test")
     assert state.state == STATE_ON
 
-    await common.async_turn_off.opp, "light.test", transition=20.0)
+    await common.async_turn_off(opp, "light.test", transition=20.0)
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "off,20", 1, False
     )
@@ -705,7 +705,7 @@ async def test_transition.opp, mqtt_mock):
     assert state.state == STATE_OFF
 
 
-async def test_invalid_values.opp, mqtt_mock):
+async def test_invalid_values(opp, mqtt_mock):
     """Test that invalid values are ignored."""
     with assert_setup_component(1, light.DOMAIN):
         assert await async_setup_component(
@@ -763,91 +763,91 @@ async def test_invalid_values.opp, mqtt_mock):
     assert state.attributes.get("effect") == "rainbow"
 
     # bad state value
-    async_fire_mqtt_message.opp, "test_light_rgb", "offf")
+    async_fire_mqtt_message(opp, "test_light_rgb", "offf")
 
     # state should not have changed
     state = opp.states.get("light.test")
     assert state.state == STATE_ON
 
     # bad brightness values
-    async_fire_mqtt_message.opp, "test_light_rgb", "on,off,255-255-255")
+    async_fire_mqtt_message(opp, "test_light_rgb", "on,off,255-255-255")
 
     # brightness should not have changed
     state = opp.states.get("light.test")
     assert state.attributes.get("brightness") == 255
 
     # bad color temp values
-    async_fire_mqtt_message.opp, "test_light_rgb", "on,,off,255-255-255")
+    async_fire_mqtt_message(opp, "test_light_rgb", "on,,off,255-255-255")
 
     # color temp should not have changed
     state = opp.states.get("light.test")
     assert state.attributes.get("color_temp") == 215
 
     # bad color values
-    async_fire_mqtt_message.opp, "test_light_rgb", "on,255,a-b-c")
+    async_fire_mqtt_message(opp, "test_light_rgb", "on,255,a-b-c")
 
     # color should not have changed
     state = opp.states.get("light.test")
     assert state.attributes.get("rgb_color") == (255, 255, 255)
 
     # bad white value values
-    async_fire_mqtt_message.opp, "test_light_rgb", "on,,,off,255-255-255")
+    async_fire_mqtt_message(opp, "test_light_rgb", "on,,,off,255-255-255")
 
     # white value should not have changed
     state = opp.states.get("light.test")
     assert state.attributes.get("white_value") == 222
 
     # bad effect value
-    async_fire_mqtt_message.opp, "test_light_rgb", "on,255,a-b-c,white")
+    async_fire_mqtt_message(opp, "test_light_rgb", "on,255,a-b-c,white")
 
     # effect should not have changed
     state = opp.states.get("light.test")
     assert state.attributes.get("effect") == "rainbow"
 
 
-async def test_availability_when_connection_lost.opp, mqtt_mock):
+async def test_availability_when_connection_lost(opp, mqtt_mock):
     """Test availability after MQTT disconnection."""
     await help_test_availability_when_connection_lost(
         opp. mqtt_mock, light.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_availability_without_topic.opp, mqtt_mock):
+async def test_availability_without_topic(opp, mqtt_mock):
     """Test availability without defined availability topic."""
     await help_test_availability_without_topic(
         opp. mqtt_mock, light.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_default_availability_payload.opp, mqtt_mock):
+async def test_default_availability_payload(opp, mqtt_mock):
     """Test availability by default payload with defined topic."""
     await help_test_default_availability_payload(
         opp. mqtt_mock, light.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_custom_availability_payload.opp, mqtt_mock):
+async def test_custom_availability_payload(opp, mqtt_mock):
     """Test availability by custom payload with defined topic."""
     await help_test_custom_availability_payload(
         opp. mqtt_mock, light.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_setting_attribute_via_mqtt_json_message.opp, mqtt_mock):
+async def test_setting_attribute_via_mqtt_json_message(opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_via_mqtt_json_message(
         opp. mqtt_mock, light.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_setting_attribute_with_template.opp, mqtt_mock):
+async def test_setting_attribute_with_template(opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_with_template(
         opp. mqtt_mock, light.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_update_with_json_attrs_not_dict.opp, mqtt_mock, caplog):
+async def test_update_with_json_attrs_not_dict(opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_not_dict(
         opp. mqtt_mock, caplog, light.DOMAIN, DEFAULT_CONFIG
@@ -861,14 +861,14 @@ async def test_update_with_json_attrs_bad_JSON.opp, mqtt_mock, caplog):
     )
 
 
-async def test_discovery_update_attr.opp, mqtt_mock, caplog):
+async def test_discovery_update_attr(opp, mqtt_mock, caplog):
     """Test update of discovered MQTTAttributes."""
     await help_test_discovery_update_attr(
         opp. mqtt_mock, caplog, light.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_unique_id.opp, mqtt_mock):
+async def test_unique_id(opp, mqtt_mock):
     """Test unique id option only creates one light per unique_id."""
     config = {
         light.DOMAIN: [
@@ -892,10 +892,10 @@ async def test_unique_id.opp, mqtt_mock):
             },
         ]
     }
-    await help_test_unique_id.opp, mqtt_mock, light.DOMAIN, config)
+    await help_test_unique_id(opp, mqtt_mock, light.DOMAIN, config)
 
 
-async def test_discovery_removal.opp, mqtt_mock, caplog):
+async def test_discovery_removal(opp, mqtt_mock, caplog):
     """Test removal of discovered mqtt_json lights."""
     data = (
         '{ "name": "test",'
@@ -904,10 +904,10 @@ async def test_discovery_removal.opp, mqtt_mock, caplog):
         '  "command_on_template": "on",'
         '  "command_off_template": "off"}'
     )
-    await help_test_discovery_removal.opp, mqtt_mock, caplog, light.DOMAIN, data)
+    await help_test_discovery_removal(opp, mqtt_mock, caplog, light.DOMAIN, data)
 
 
-async def test_discovery_update_light.opp, mqtt_mock, caplog):
+async def test_discovery_update_light(opp, mqtt_mock, caplog):
     """Test update of discovered light."""
     data1 = (
         '{ "name": "Beer",'
@@ -930,7 +930,7 @@ async def test_discovery_update_light.opp, mqtt_mock, caplog):
     )
 
 
-async def test_discovery_update_unchanged_light.opp, mqtt_mock, caplog):
+async def test_discovery_update_unchanged_light(opp, mqtt_mock, caplog):
     """Test update of discovered light."""
     data1 = (
         '{ "name": "Beer",'
@@ -949,7 +949,7 @@ async def test_discovery_update_unchanged_light.opp, mqtt_mock, caplog):
 
 
 @pytest.mark.no_fail_on_log_exception
-async def test_discovery_broken.opp, mqtt_mock, caplog):
+async def test_discovery_broken(opp, mqtt_mock, caplog):
     """Test handling of bad discovery message."""
     data1 = '{ "name": "Beer" }'
     data2 = (
@@ -965,49 +965,49 @@ async def test_discovery_broken.opp, mqtt_mock, caplog):
     )
 
 
-async def test_entity_device_info_with_connection.opp, mqtt_mock):
+async def test_entity_device_info_with_connection(opp, mqtt_mock):
     """Test MQTT light device registry integration."""
     await help_test_entity_device_info_with_connection(
         opp. mqtt_mock, light.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_entity_device_info_with_identifier.opp, mqtt_mock):
+async def test_entity_device_info_with_identifier(opp, mqtt_mock):
     """Test MQTT light device registry integration."""
     await help_test_entity_device_info_with_identifier(
         opp. mqtt_mock, light.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_entity_device_info_update.opp, mqtt_mock):
+async def test_entity_device_info_update(opp, mqtt_mock):
     """Test device registry update."""
     await help_test_entity_device_info_update(
         opp. mqtt_mock, light.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_entity_device_info_remove.opp, mqtt_mock):
+async def test_entity_device_info_remove(opp, mqtt_mock):
     """Test device registry remove."""
     await help_test_entity_device_info_remove(
         opp. mqtt_mock, light.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_entity_id_update_subscriptions.opp, mqtt_mock):
+async def test_entity_id_update_subscriptions(opp, mqtt_mock):
     """Test MQTT subscriptions are managed when entity_id is updated."""
     await help_test_entity_id_update_subscriptions(
         opp. mqtt_mock, light.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_entity_id_update_discovery_update.opp, mqtt_mock):
+async def test_entity_id_update_discovery_update(opp, mqtt_mock):
     """Test MQTT discovery update when entity_id is updated."""
     await help_test_entity_id_update_discovery_update(
         opp. mqtt_mock, light.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_entity_debug_info_message.opp, mqtt_mock):
+async def test_entity_debug_info_message(opp, mqtt_mock):
     """Test MQTT debug info."""
     config = {
         light.DOMAIN: {
@@ -1020,10 +1020,10 @@ async def test_entity_debug_info_message.opp, mqtt_mock):
             "state_template": '{{ value.split(",")[0] }}',
         }
     }
-    await help_test_entity_debug_info_message.opp, mqtt_mock, light.DOMAIN, config)
+    await help_test_entity_debug_info_message(opp, mqtt_mock, light.DOMAIN, config)
 
 
-async def test_max_mireds.opp, mqtt_mock):
+async def test_max_mireds(opp, mqtt_mock):
     """Test setting min_mireds and max_mireds."""
     config = {
         light.DOMAIN: {
@@ -1038,7 +1038,7 @@ async def test_max_mireds.opp, mqtt_mock):
         }
     }
 
-    assert await async_setup_component.opp, light.DOMAIN, config)
+    assert await async_setup_component(opp, light.DOMAIN, config)
     await opp.async_block_till_done()
 
     state = opp.states.get("light.test")

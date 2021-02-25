@@ -54,7 +54,7 @@ def dummy_client_fixture.opp):
         yield client.return_value
 
 
-async def test_ssdp.opp, dummy_client):
+async def test_ssdp(opp, dummy_client):
     """Test a ssdp import flow."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -75,7 +75,7 @@ async def test_ssdp_abort.opp):
     entry = MockConfigEntry(
         domain=DOMAIN, data=MOCK_CONFIG_ENTRY, title=MOCK_NAME, unique_id=MOCK_UUID
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -86,7 +86,7 @@ async def test_ssdp_abort.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_ssdp_unable_to_connect.opp, dummy_client):
+async def test_ssdp_unable_to_connect(opp, dummy_client):
     """Test a ssdp import flow."""
     dummy_client.start.side_effect = AsyncMock(side_effect=ConnectionFailed)
 
@@ -111,7 +111,7 @@ async def test_ssdp_update.opp):
         title=MOCK_NAME,
         unique_id=MOCK_UUID,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -124,7 +124,7 @@ async def test_ssdp_update.opp):
     assert entry.data[CONF_HOST] == MOCK_HOST
 
 
-async def test_user.opp, aioclient_mock):
+async def test_user(opp, aioclient_mock):
     """Test a manual user configuration flow."""
 
     result = await opp.config_entries.flow.async_init(
@@ -151,7 +151,7 @@ async def test_user.opp, aioclient_mock):
     assert result["result"].unique_id == MOCK_UUID
 
 
-async def test_invalid_ssdp.opp, aioclient_mock):
+async def test_invalid_ssdp(opp, aioclient_mock):
     """Test a a config flow where ssdp fails."""
     user_input = {
         CONF_HOST: MOCK_HOST,
@@ -170,7 +170,7 @@ async def test_invalid_ssdp.opp, aioclient_mock):
     assert result["result"].unique_id is None
 
 
-async def test_user_wrong.opp, aioclient_mock):
+async def test_user_wrong(opp, aioclient_mock):
     """Test a manual user configuration flow with no ssdp response."""
     user_input = {
         CONF_HOST: MOCK_HOST,
@@ -194,4 +194,4 @@ async def test_get_entry_client.opp):
         domain=DOMAIN, data=MOCK_CONFIG_ENTRY, title=MOCK_NAME, unique_id=MOCK_UUID
     )
     opp.data[DOMAIN_DATA_ENTRIES] = {entry.entry_id: "dummy"}
-    assert get_entry_client.opp, entry) == "dummy"
+    assert get_entry_client(opp, entry) == "dummy"

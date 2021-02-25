@@ -21,7 +21,7 @@ ENTITY_PWM = "number.pwm_1"
 @pytest.fixture(autouse=True)
 async def setup_demo_number.opp):
     """Initialize setup demo Number entity."""
-    assert await async_setup_component.opp, DOMAIN, {"number": {"platform": "demo"}})
+    assert await async_setup_component(opp, DOMAIN, {"number": {"platform": "demo"}})
     await opp.async_block_till_done()
 
 

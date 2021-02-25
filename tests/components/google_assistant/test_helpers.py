@@ -68,13 +68,13 @@ async def test_google_entity_sync_serialize_with_local_sdk.opp):
             assert "customData" not in serialized
 
 
-async def test_config_local_sdk.opp, opp_client):
+async def test_config_local_sdk(opp, opp_client):
     """Test the local SDK."""
-    command_events = async_capture_events.opp, EVENT_COMMAND_RECEIVED)
-    turn_on_calls = async_mock_service.opp, "light", "turn_on")
+    command_events = async_capture_events(opp, EVENT_COMMAND_RECEIVED)
+    turn_on_calls = async_mock_service(opp, "light", "turn_on")
     opp.states.async_set("light.ceiling_lights", "off")
 
-    assert await async_setup_component.opp, "webhook", {})
+    assert await async_setup_component(opp, "webhook", {})
 
     config = MockConfig(
         opp.opp,
@@ -130,9 +130,9 @@ async def test_config_local_sdk.opp, opp_client):
     assert await resp.read() == b""
 
 
-async def test_config_local_sdk_if_disabled.opp, opp_client):
+async def test_config_local_sdk_if_disabled(opp, opp_client):
     """Test the local SDK."""
-    assert await async_setup_component.opp, "webhook", {})
+    assert await async_setup_component(opp, "webhook", {})
 
     config = MockConfig(
         opp.opp,
@@ -163,7 +163,7 @@ async def test_config_local_sdk_if_disabled.opp, opp_client):
     assert await resp.read() == b""
 
 
-async def test_agent_user_id_storage.opp, opp_storage):
+async def test_agent_user_id_storage(opp, opp_storage):
     """Test a disconnect message."""
 
     opp.storage["google_assistant"] = {
@@ -175,17 +175,17 @@ async def test_agent_user_id_storage.opp, opp_storage):
     store = helpers.GoogleConfigStore.opp)
     await store.async_load()
 
-    assert.opp_storage["google_assistant"] == {
+    assert opp_storage["google_assistant"] == {
         "version": 1,
         "key": "google_assistant",
         "data": {"agent_user_ids": {"agent_1": {}}},
     }
 
     async def _check_after_delay(data):
-        async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=2))
+        async_fire_time_changed(opp, dt.utcnow() + timedelta(seconds=2))
         await opp.async_block_till_done()
 
-        assert.opp_storage["google_assistant"] == {
+        assert opp_storage["google_assistant"] == {
             "version": 1,
             "key": "google_assistant",
             "data": data,

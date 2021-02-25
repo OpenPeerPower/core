@@ -13,7 +13,7 @@ async def test_intent_set_color.opp):
         "light.hello_2", "off", {ATTR_SUPPORTED_FEATURES: light.SUPPORT_COLOR}
     )
     opp.states.async_set("switch.hello", "off")
-    calls = async_mock_service.opp, light.DOMAIN, light.SERVICE_TURN_ON)
+    calls = async_mock_service(opp, light.DOMAIN, light.SERVICE_TURN_ON)
     await intent.async_setup_intents.opp)
 
     result = await opp.helpers.intent.async_handle(
@@ -36,7 +36,7 @@ async def test_intent_set_color.opp):
 async def test_intent_set_color_tests_feature.opp):
     """Test the set color intent."""
     opp.states.async_set("light.hello", "off")
-    calls = async_mock_service.opp, light.DOMAIN, light.SERVICE_TURN_ON)
+    calls = async_mock_service(opp, light.DOMAIN, light.SERVICE_TURN_ON)
     await intent.async_setup_intents.opp)
 
     try:
@@ -60,7 +60,7 @@ async def test_intent_set_color_and_brightness.opp):
         {ATTR_SUPPORTED_FEATURES: (light.SUPPORT_COLOR | light.SUPPORT_BRIGHTNESS)},
     )
     opp.states.async_set("switch.hello", "off")
-    calls = async_mock_service.opp, light.DOMAIN, light.SERVICE_TURN_ON)
+    calls = async_mock_service(opp, light.DOMAIN, light.SERVICE_TURN_ON)
     await intent.async_setup_intents.opp)
 
     result = await opp.helpers.intent.async_handle(

@@ -46,11 +46,11 @@ async def test_setup_fail.opp):
         }
     }
     with assert_setup_component(0):
-        assert await async_setup_component.opp, "sensor", config)
+        assert await async_setup_component(opp, "sensor", config)
         await opp.async_block_till_done()
 
 
-async def test_chain.opp, values):
+async def test_chain(opp, values):
     """Test if filter chaining works."""
     config = {
         "sensor": {
@@ -67,7 +67,7 @@ async def test_chain.opp, values):
     await async_init_recorder_component.opp)
 
     with assert_setup_component(1, "sensor"):
-        assert await async_setup_component.opp, "sensor", config)
+        assert await async_setup_component(opp, "sensor", config)
         await opp.async_block_till_done()
 
         for value in values:
@@ -78,7 +78,7 @@ async def test_chain.opp, values):
         assert "18.05" == state.state
 
 
-async def test_chain_history.opp, values, missing=False):
+async def test_chain_history(opp, values, missing=False):
     """Test if filter chaining works."""
     config = {
         "history": {},
@@ -122,7 +122,7 @@ async def test_chain_history.opp, values, missing=False):
             return_value=fake_states,
         ):
             with assert_setup_component(1, "sensor"):
-                assert await async_setup_component.opp, "sensor", config)
+                assert await async_setup_component(opp, "sensor", config)
                 await opp.async_block_till_done()
 
             for value in values:
@@ -136,7 +136,7 @@ async def test_chain_history.opp, values, missing=False):
                 assert "17.05" == state.state
 
 
-async def test_source_state_none.opp, values):
+async def test_source_state_none(opp, values):
     """Test is source sensor state is null and sets state to STATE_UNKNOWN."""
     await async_init_recorder_component.opp)
 
@@ -164,7 +164,7 @@ async def test_source_state_none.opp, values):
             },
         ]
     }
-    await async_setup_component.opp, "sensor", config)
+    await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
 
     opp.states.async_set("sensor.test_state", 0)
@@ -201,9 +201,9 @@ async def test_source_state_none.opp, values):
     assert state.state == STATE_UNKNOWN
 
 
-async def test_chain_history_missing.opp, values):
+async def test_chain_history_missing(opp, values):
     """Test if filter chaining works when recorder is enabled but the source is not recorded."""
-    await test_chain_history.opp, values, missing=True)
+    await test_chain_history(opp, values, missing=True)
 
 
 async def test_history_time.opp):
@@ -240,7 +240,7 @@ async def test_history_time.opp):
             return_value=fake_states,
         ):
             with assert_setup_component(1, "sensor"):
-                assert await async_setup_component.opp, "sensor", config)
+                assert await async_setup_component(opp, "sensor", config)
                 await opp.async_block_till_done()
 
             await opp.async_block_till_done()
@@ -264,7 +264,7 @@ async def test_setup_opp):
     await async_init_recorder_component.opp)
 
     with assert_setup_component(1, "sensor"):
-        assert await async_setup_component.opp, "sensor", config)
+        assert await async_setup_component(opp, "sensor", config)
         await opp.async_block_till_done()
 
         opp.states.async_set(
@@ -295,7 +295,7 @@ async def test_invalid_state.opp):
     await async_init_recorder_component.opp)
 
     with assert_setup_component(1, "sensor"):
-        assert await async_setup_component.opp, "sensor", config)
+        assert await async_setup_component(opp, "sensor", config)
         await opp.async_block_till_done()
 
         opp.states.async_set("sensor.test_monitored", STATE_UNAVAILABLE)
@@ -468,7 +468,7 @@ async def test_reload.opp):
 
     assert len.opp.states.async_all()) == 2
 
-    assert.opp.states.get("sensor.test")
+    assert opp.states.get("sensor.test")
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -486,8 +486,8 @@ async def test_reload.opp):
 
     assert len.opp.states.async_all()) == 2
 
-    assert.opp.states.get("sensor.test") is None
-    assert.opp.states.get("sensor.filtered_realistic_humidity")
+    assert opp.states.get("sensor.test") is None
+    assert opp.states.get("sensor.filtered_realistic_humidity")
 
 
 def _get_fixtures_base_path():

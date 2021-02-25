@@ -142,7 +142,7 @@ async def test_form_already_exists(opp):
         data=TEST_DATA,
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -164,7 +164,7 @@ async def test_options_flow.opp):
         data=TEST_DATA,
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 
@@ -208,7 +208,7 @@ async def test_op_to_risco_schema.opp):
         data=TEST_DATA,
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 

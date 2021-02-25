@@ -44,7 +44,7 @@ async def test_duplicate_error(opp):
 
     MockConfigEntry(
         domain=DOMAIN, unique_id="51.528308, -0.3817765", data=geography_conf
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -62,7 +62,7 @@ async def test_duplicate_error(opp):
 
     MockConfigEntry(
         domain=DOMAIN, unique_id="192.168.1.100", data=node_pro_conf
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data={"type": "AirVisual Node/Pro"}
@@ -75,7 +75,7 @@ async def test_duplicate_error(opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_invalid_identifier_geography_api_key.opp):
+async def test_invalid_identifier_geography_api_key(opp):
     """Test that an invalid API key throws an error."""
     with patch(
         "pyairvisual.air_quality.AirQuality.nearest_city",
@@ -99,7 +99,7 @@ async def test_invalid_identifier_geography_api_key.opp):
         assert result["errors"] == {CONF_API_KEY: "invalid_api_key"}
 
 
-async def test_invalid_identifier_geography_name.opp):
+async def test_invalid_identifier_geography_name(opp):
     """Test that an invalid location name throws an error."""
     with patch(
         "pyairvisual.air_quality.AirQuality.city",
@@ -124,7 +124,7 @@ async def test_invalid_identifier_geography_name.opp):
         assert result["errors"] == {CONF_CITY: "location_not_found"}
 
 
-async def test_invalid_identifier_geography_unknown.opp):
+async def test_invalid_identifier_geography_unknown(opp):
     """Test that an unknown identifier issue throws an error."""
     with patch(
         "pyairvisual.air_quality.AirQuality.city",
@@ -149,7 +149,7 @@ async def test_invalid_identifier_geography_unknown.opp):
         assert result["errors"] == {"base": "unknown"}
 
 
-async def test_invalid_identifier_node_pro.opp):
+async def test_invalid_identifier_node_pro(opp):
     """Test that an invalid Node/Pro identifier shows an error."""
     node_pro_conf = {CONF_IP_ADDRESS: "192.168.1.100", CONF_PASSWORD: "my_password"}
 
@@ -167,7 +167,7 @@ async def test_invalid_identifier_node_pro.opp):
         assert result["errors"] == {CONF_IP_ADDRESS: "cannot_connect"}
 
 
-async def test_migration.opp):
+async def test_migration(opp):
     """Test migrating from version 1 to the current version."""
     conf = {
         CONF_API_KEY: "abcde12345",
@@ -180,14 +180,14 @@ async def test_migration.opp):
     config_entry = MockConfigEntry(
         domain=DOMAIN, version=1, unique_id="abcde12345", data=conf
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
     with patch("pyairvisual.air_quality.AirQuality.city"), patch(
         "pyairvisual.air_quality.AirQuality.nearest_city"
     ), patch.object.opp.config_entries, "async_forward_entry_setup"):
-        assert await async_setup_component.opp, DOMAIN, {DOMAIN: conf})
+        assert await async_setup_component(opp, DOMAIN, {DOMAIN: conf})
         await opp.async_block_till_done()
 
     config_entries = opp.config_entries.async_entries(DOMAIN)
@@ -214,7 +214,7 @@ async def test_migration.opp):
     }
 
 
-async def test_options_flow.opp):
+async def test_options_flow(opp):
     """Test config flow options."""
     geography_conf = {
         CONF_API_KEY: "abcde12345",
@@ -228,7 +228,7 @@ async def test_options_flow.opp):
         data=geography_conf,
         options={CONF_SHOW_ON_MAP: True},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.airvisual.async_setup_entry", return_value=True
@@ -247,7 +247,7 @@ async def test_options_flow.opp):
         assert config_entry.options == {CONF_SHOW_ON_MAP: False}
 
 
-async def test_step_geography_by_coords.opp):
+async def test_step_geography_by_coords(opp):
     """Test setting up a geopgraphy entry by latitude/longitude."""
     conf = {
         CONF_API_KEY: "abcde12345",
@@ -277,7 +277,7 @@ async def test_step_geography_by_coords.opp):
         }
 
 
-async def test_step_geography_by_name.opp):
+async def test_step_geography_by_name(opp):
     """Test setting up a geopgraphy entry by city/state/country."""
     conf = {
         CONF_API_KEY: "abcde12345",
@@ -309,7 +309,7 @@ async def test_step_geography_by_name.opp):
         }
 
 
-async def test_step_node_pro.opp):
+async def test_step_node_pro(opp):
     """Test the Node/Pro step."""
     conf = {CONF_IP_ADDRESS: "192.168.1.100", CONF_PASSWORD: "my_password"}
 
@@ -335,7 +335,7 @@ async def test_step_node_pro.opp):
         }
 
 
-async def test_step_reauth.opp):
+async def test_step_reauth(opp):
     """Test that the reauth step works."""
     entry_data = {
         CONF_API_KEY: "abcde12345",
@@ -346,7 +346,7 @@ async def test_step_reauth.opp):
 
     MockConfigEntry(
         domain=DOMAIN, unique_id="51.528308, -0.3817765", data=entry_data
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "reauth"}, data=entry_data
@@ -369,7 +369,7 @@ async def test_step_reauth.opp):
     assert len.opp.config_entries.async_entries()) == 1
 
 
-async def test_step_user.opp):
+async def test_step_user(opp):
     """Test the user ("pick the integration type") step."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}

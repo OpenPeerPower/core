@@ -17,10 +17,10 @@ TEST_SITE_UUID = "test-site-uuid"
 TEST_SITE_NAME = "test-site-name"
 
 
-async def setup_risco.opp, events=[], options={}):
+async def setup_risco(opp, events=[], options={}):
     """Set up a Risco integration for testing."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=TEST_CONFIG, options=options)
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.risco.RiscoAPI.login",

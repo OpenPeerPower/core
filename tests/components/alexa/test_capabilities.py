@@ -39,7 +39,7 @@ from tests.common import async_mock_service
 
 
 @pytest.mark.parametrize("result,adjust", [(25, "-5"), (35, "5"), (0, "-80")])
-async def test_api_adjust_brightness.opp, result, adjust):
+async def test_api_adjust_brightness(opp, result, adjust):
     """Test api adjust brightness process."""
     request = get_new_request(
         "Alexa.BrightnessController", "AdjustBrightness", "light#test"
@@ -53,9 +53,9 @@ async def test_api_adjust_brightness.opp, result, adjust):
         "light.test", "off", {"friendly_name": "Test light", "brightness": "77"}
     )
 
-    call_light = async_mock_service.opp, "light", "turn_on")
+    call_light = async_mock_service(opp, "light", "turn_on")
 
-    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+    msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request)
     await opp.async_block_till_done()
 
     assert "event" in msg
@@ -83,9 +83,9 @@ async def test_api_set_color_rgb.opp):
         "light.test", "off", {"friendly_name": "Test light", "supported_features": 16}
     )
 
-    call_light = async_mock_service.opp, "light", "turn_on")
+    call_light = async_mock_service(opp, "light", "turn_on")
 
-    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+    msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request)
     await opp.async_block_till_done()
 
     assert "event" in msg
@@ -109,9 +109,9 @@ async def test_api_set_color_temperature.opp):
     # setup test devices
     opp.states.async_set("light.test", "off", {"friendly_name": "Test light"})
 
-    call_light = async_mock_service.opp, "light", "turn_on")
+    call_light = async_mock_service(opp, "light", "turn_on")
 
-    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+    msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request)
     await opp.async_block_till_done()
 
     assert "event" in msg
@@ -124,7 +124,7 @@ async def test_api_set_color_temperature.opp):
 
 
 @pytest.mark.parametrize("result,initial", [(383, "333"), (500, "500")])
-async def test_api_decrease_color_temp.opp, result, initial):
+async def test_api_decrease_color_temp(opp, result, initial):
     """Test api decrease color temp process."""
     request = get_new_request(
         "Alexa.ColorTemperatureController", "DecreaseColorTemperature", "light#test"
@@ -137,9 +137,9 @@ async def test_api_decrease_color_temp.opp, result, initial):
         {"friendly_name": "Test light", "color_temp": initial, "max_mireds": 500},
     )
 
-    call_light = async_mock_service.opp, "light", "turn_on")
+    call_light = async_mock_service(opp, "light", "turn_on")
 
-    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+    msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request)
     await opp.async_block_till_done()
 
     assert "event" in msg
@@ -152,7 +152,7 @@ async def test_api_decrease_color_temp.opp, result, initial):
 
 
 @pytest.mark.parametrize("result,initial", [(283, "333"), (142, "142")])
-async def test_api_increase_color_temp.opp, result, initial):
+async def test_api_increase_color_temp(opp, result, initial):
     """Test api increase color temp process."""
     request = get_new_request(
         "Alexa.ColorTemperatureController", "IncreaseColorTemperature", "light#test"
@@ -165,9 +165,9 @@ async def test_api_increase_color_temp.opp, result, initial):
         {"friendly_name": "Test light", "color_temp": initial, "min_mireds": 142},
     )
 
-    call_light = async_mock_service.opp, "light", "turn_on")
+    call_light = async_mock_service(opp, "light", "turn_on")
 
-    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+    msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request)
     await opp.async_block_till_done()
 
     assert "event" in msg
@@ -188,7 +188,7 @@ async def test_api_increase_color_temp.opp, result, initial):
         ("media_player", "BAD DEVICE", ["satellite_tv", "game console"], None),
     ],
 )
-async def test_api_select_input.opp, domain, payload, source_list, idx):
+async def test_api_select_input(opp, domain, payload, source_list, idx):
     """Test api set input process."""
     opp.states.async_set(
         "media_player.test",
@@ -229,13 +229,13 @@ async def test_report_lock_state.opp):
     opp.states.async_set("lock.unlocked", STATE_UNLOCKED, {})
     opp.states.async_set("lock.unknown", STATE_UNKNOWN, {})
 
-    properties = await reported_properties.opp, "lock.locked")
+    properties = await reported_properties(opp, "lock.locked")
     properties.assert_equal("Alexa.LockController", "lockState", "LOCKED")
 
-    properties = await reported_properties.opp, "lock.unlocked")
+    properties = await reported_properties(opp, "lock.unlocked")
     properties.assert_equal("Alexa.LockController", "lockState", "UNLOCKED")
 
-    properties = await reported_properties.opp, "lock.unknown")
+    properties = await reported_properties(opp, "lock.unknown")
     properties.assert_equal("Alexa.LockController", "lockState", "JAMMED")
 
 
@@ -252,10 +252,10 @@ async def test_report_dimmable_light_state.opp):
         {"friendly_name": "Test light Off", "supported_features": 1},
     )
 
-    properties = await reported_properties.opp, "light.test_on")
+    properties = await reported_properties(opp, "light.test_on")
     properties.assert_equal("Alexa.BrightnessController", "brightness", 50)
 
-    properties = await reported_properties.opp, "light.test_off")
+    properties = await reported_properties(opp, "light.test_off")
     properties.assert_equal("Alexa.BrightnessController", "brightness", 0)
 
 
@@ -277,14 +277,14 @@ async def test_report_colored_light_state.opp):
         {"friendly_name": "Test light Off", "supported_features": 17},
     )
 
-    properties = await reported_properties.opp, "light.test_on")
+    properties = await reported_properties(opp, "light.test_on")
     properties.assert_equal(
         "Alexa.ColorController",
         "color",
         {"hue": 180, "saturation": 0.75, "brightness": 128 / 255.0},
     )
 
-    properties = await reported_properties.opp, "light.test_off")
+    properties = await reported_properties(opp, "light.test_off")
     properties.assert_equal(
         "Alexa.ColorController", "color", {"hue": 0, "saturation": 0, "brightness": 0}
     )
@@ -303,12 +303,12 @@ async def test_report_colored_temp_light_state.opp):
         {"friendly_name": "Test light Off", "supported_features": 2},
     )
 
-    properties = await reported_properties.opp, "light.test_on")
+    properties = await reported_properties(opp, "light.test_on")
     properties.assert_equal(
         "Alexa.ColorTemperatureController", "colorTemperatureInKelvin", 4166
     )
 
-    properties = await reported_properties.opp, "light.test_off")
+    properties = await reported_properties(opp, "light.test_off")
     properties.assert_not_has_property(
         "Alexa.ColorTemperatureController", "colorTemperatureInKelvin"
     )
@@ -361,22 +361,22 @@ async def test_report_fan_speed_state.opp):
         },
     )
 
-    properties = await reported_properties.opp, "fan.off")
+    properties = await reported_properties(opp, "fan.off")
     properties.assert_equal("Alexa.PercentageController", "percentage", 0)
     properties.assert_equal("Alexa.PowerLevelController", "powerLevel", 0)
     properties.assert_equal("Alexa.RangeController", "rangeValue", 0)
 
-    properties = await reported_properties.opp, "fan.low_speed")
+    properties = await reported_properties(opp, "fan.low_speed")
     properties.assert_equal("Alexa.PercentageController", "percentage", 33)
     properties.assert_equal("Alexa.PowerLevelController", "powerLevel", 33)
     properties.assert_equal("Alexa.RangeController", "rangeValue", 1)
 
-    properties = await reported_properties.opp, "fan.medium_speed")
+    properties = await reported_properties(opp, "fan.medium_speed")
     properties.assert_equal("Alexa.PercentageController", "percentage", 66)
     properties.assert_equal("Alexa.PowerLevelController", "powerLevel", 66)
     properties.assert_equal("Alexa.RangeController", "rangeValue", 2)
 
-    properties = await reported_properties.opp, "fan.high_speed")
+    properties = await reported_properties(opp, "fan.high_speed")
     properties.assert_equal("Alexa.PercentageController", "percentage", 100)
     properties.assert_equal("Alexa.PowerLevelController", "powerLevel", 100)
     properties.assert_equal("Alexa.RangeController", "rangeValue", 3)
@@ -399,10 +399,10 @@ async def test_report_fan_oscillating.opp):
         },
     )
 
-    properties = await reported_properties.opp, "fan.oscillating_off")
+    properties = await reported_properties(opp, "fan.oscillating_off")
     properties.assert_equal("Alexa.ToggleController", "toggleState", "OFF")
 
-    properties = await reported_properties.opp, "fan.oscillating_on")
+    properties = await reported_properties(opp, "fan.oscillating_on")
     properties.assert_equal("Alexa.ToggleController", "toggleState", "ON")
 
 
@@ -430,13 +430,13 @@ async def test_report_fan_direction.opp):
         },
     )
 
-    properties = await reported_properties.opp, "fan.off")
+    properties = await reported_properties(opp, "fan.off")
     properties.assert_not_has_property("Alexa.ModeController", "mode")
 
-    properties = await reported_properties.opp, "fan.reverse")
+    properties = await reported_properties(opp, "fan.reverse")
     properties.assert_equal("Alexa.ModeController", "mode", "direction.reverse")
 
-    properties = await reported_properties.opp, "fan.forward")
+    properties = await reported_properties(opp, "fan.forward")
     properties.assert_equal("Alexa.ModeController", "mode", "direction.forward")
 
 
@@ -470,13 +470,13 @@ async def test_report_cover_range_value.opp):
         },
     )
 
-    properties = await reported_properties.opp, "cover.fully_open")
+    properties = await reported_properties(opp, "cover.fully_open")
     properties.assert_equal("Alexa.RangeController", "rangeValue", 100)
 
-    properties = await reported_properties.opp, "cover.half_open")
+    properties = await reported_properties(opp, "cover.half_open")
     properties.assert_equal("Alexa.RangeController", "rangeValue", 50)
 
-    properties = await reported_properties.opp, "cover.closed")
+    properties = await reported_properties(opp, "cover.closed")
     properties.assert_equal("Alexa.RangeController", "rangeValue", 0)
 
 
@@ -493,7 +493,7 @@ async def test_report_climate_state.opp):
                 ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS,
             },
         )
-        properties = await reported_properties.opp, "climate.downstairs")
+        properties = await reported_properties(opp, "climate.downstairs")
         properties.assert_equal("Alexa.ThermostatController", "thermostatMode", "AUTO")
         properties.assert_equal(
             "Alexa.TemperatureSensor",
@@ -512,7 +512,7 @@ async def test_report_climate_state.opp):
                 ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS,
             },
         )
-        properties = await reported_properties.opp, "climate.downstairs")
+        properties = await reported_properties(opp, "climate.downstairs")
         properties.assert_equal("Alexa.ThermostatController", "thermostatMode", "OFF")
         properties.assert_equal(
             "Alexa.TemperatureSensor",
@@ -531,7 +531,7 @@ async def test_report_climate_state.opp):
             ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS,
         },
     )
-    properties = await reported_properties.opp, "climate.downstairs")
+    properties = await reported_properties(opp, "climate.downstairs")
     properties.assert_equal("Alexa.ThermostatController", "thermostatMode", "CUSTOM")
     properties.assert_equal(
         "Alexa.TemperatureSensor", "temperature", {"value": 34.0, "scale": "CELSIUS"}
@@ -547,7 +547,7 @@ async def test_report_climate_state.opp):
             ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS,
         },
     )
-    properties = await reported_properties.opp, "climate.heat")
+    properties = await reported_properties(opp, "climate.heat")
     properties.assert_equal("Alexa.ThermostatController", "thermostatMode", "HEAT")
     properties.assert_equal(
         "Alexa.TemperatureSensor", "temperature", {"value": 34.0, "scale": "CELSIUS"}
@@ -563,7 +563,7 @@ async def test_report_climate_state.opp):
             ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS,
         },
     )
-    properties = await reported_properties.opp, "climate.cool")
+    properties = await reported_properties(opp, "climate.cool")
     properties.assert_equal("Alexa.ThermostatController", "thermostatMode", "COOL")
     properties.assert_equal(
         "Alexa.TemperatureSensor", "temperature", {"value": 34.0, "scale": "CELSIUS"}
@@ -574,7 +574,7 @@ async def test_report_climate_state.opp):
         "unavailable",
         {"friendly_name": "Climate Unavailable", "supported_features": 91},
     )
-    properties = await reported_properties.opp, "climate.unavailable")
+    properties = await reported_properties(opp, "climate.unavailable")
     properties.assert_not_has_property("Alexa.ThermostatController", "thermostatMode")
 
     opp.states.async_set(
@@ -588,7 +588,7 @@ async def test_report_climate_state.opp):
         },
     )
     with pytest.raises(UnsupportedProperty):
-        properties = await reported_properties.opp, "climate.unsupported")
+        properties = await reported_properties(opp, "climate.unsupported")
         properties.assert_not_has_property(
             "Alexa.ThermostatController", "thermostatMode"
         )
@@ -608,13 +608,13 @@ async def test_temperature_sensor_sensor.opp):
             {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS},
         )
 
-        properties = await reported_properties.opp, "sensor.temp_living_room")
+        properties = await reported_properties(opp, "sensor.temp_living_room")
         properties.assert_not_has_property("Alexa.TemperatureSensor", "temperature")
 
     opp.states.async_set(
         "sensor.temp_living_room", "34", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
-    properties = await reported_properties.opp, "sensor.temp_living_room")
+    properties = await reported_properties(opp, "sensor.temp_living_room")
     properties.assert_equal(
         "Alexa.TemperatureSensor", "temperature", {"value": 34.0, "scale": "CELSIUS"}
     )
@@ -629,7 +629,7 @@ async def test_temperature_sensor_climate.opp):
             {climate.ATTR_CURRENT_TEMPERATURE: bad_value},
         )
 
-        properties = await reported_properties.opp, "climate.downstairs")
+        properties = await reported_properties(opp, "climate.downstairs")
         properties.assert_not_has_property("Alexa.TemperatureSensor", "temperature")
 
     opp.states.async_set(
@@ -637,7 +637,7 @@ async def test_temperature_sensor_climate.opp):
         climate.HVAC_MODE_HEAT,
         {climate.ATTR_CURRENT_TEMPERATURE: 34},
     )
-    properties = await reported_properties.opp, "climate.downstairs")
+    properties = await reported_properties(opp, "climate.downstairs")
     properties.assert_equal(
         "Alexa.TemperatureSensor", "temperature", {"value": 34.0, "scale": "CELSIUS"}
     )
@@ -655,7 +655,7 @@ async def test_report_alarm_control_panel_state.opp):
     )
     opp.states.async_set("alarm_control_panel.disarmed", STATE_ALARM_DISARMED, {})
 
-    properties = await reported_properties.opp, "alarm_control_panel.armed_away")
+    properties = await reported_properties(opp, "alarm_control_panel.armed_away")
     properties.assert_equal("Alexa.SecurityPanelController", "armState", "ARMED_AWAY")
 
     properties = await reported_properties(
@@ -663,13 +663,13 @@ async def test_report_alarm_control_panel_state.opp):
     )
     properties.assert_equal("Alexa.SecurityPanelController", "armState", "ARMED_STAY")
 
-    properties = await reported_properties.opp, "alarm_control_panel.armed_home")
+    properties = await reported_properties(opp, "alarm_control_panel.armed_home")
     properties.assert_equal("Alexa.SecurityPanelController", "armState", "ARMED_STAY")
 
-    properties = await reported_properties.opp, "alarm_control_panel.armed_night")
+    properties = await reported_properties(opp, "alarm_control_panel.armed_night")
     properties.assert_equal("Alexa.SecurityPanelController", "armState", "ARMED_NIGHT")
 
-    properties = await reported_properties.opp, "alarm_control_panel.disarmed")
+    properties = await reported_properties(opp, "alarm_control_panel.disarmed")
     properties.assert_equal("Alexa.SecurityPanelController", "armState", "DISARMED")
 
 
@@ -685,7 +685,7 @@ async def test_report_playback_state.opp):
         },
     )
 
-    properties = await reported_properties.opp, "media_player.test")
+    properties = await reported_properties(opp, "media_player.test")
 
     properties.assert_equal(
         "Alexa.PlaybackStateReporter", "playbackState", {"state": "STOPPED"}
@@ -704,7 +704,7 @@ async def test_report_speaker_volume.opp):
             "device_class": "speaker",
         },
     )
-    properties = await reported_properties.opp, "media_player.test_speaker")
+    properties = await reported_properties(opp, "media_player.test_speaker")
     properties.assert_not_has_property("Alexa.Speaker", "volume")
 
     for good_value in range(101):
@@ -718,7 +718,7 @@ async def test_report_speaker_volume.opp):
                 "device_class": "speaker",
             },
         )
-        properties = await reported_properties.opp, "media_player.test_speaker")
+        properties = await reported_properties(opp, "media_player.test_speaker")
         properties.assert_equal("Alexa.Speaker", "volume", good_value)
 
 
@@ -735,7 +735,7 @@ async def test_report_image_processing.opp):
         },
     )
 
-    properties = await reported_properties.opp, "image_processing#test_face")
+    properties = await reported_properties(opp, "image_processing#test_face")
     properties.assert_equal(
         "Alexa.EventDetectionSensor",
         "humanPresenceDetectionState",
@@ -756,7 +756,7 @@ async def test_report_image_processing.opp):
             "total_faces": 3,
         },
     )
-    properties = await reported_properties.opp, "image_processing#test_classifier")
+    properties = await reported_properties(opp, "image_processing#test_classifier")
     properties.assert_equal(
         "Alexa.EventDetectionSensor",
         "humanPresenceDetectionState",
@@ -764,7 +764,7 @@ async def test_report_image_processing.opp):
     )
 
 
-async def test_get_property_blowup.opp, caplog):
+async def test_get_property_blowup(opp, caplog):
     """Test we handle a property blowing up."""
     opp.states.async_set(
         "climate.downstairs",
@@ -780,7 +780,7 @@ async def test_get_property_blowup.opp, caplog):
         "openpeerpower.components.alexa.capabilities.float",
         side_effect=Exception("Boom Fail"),
     ):
-        properties = await reported_properties.opp, "climate.downstairs")
+        properties = await reported_properties(opp, "climate.downstairs")
         properties.assert_not_has_property("Alexa.ThermostatController", "temperature")
 
     assert "Boom Fail" in caplog.text

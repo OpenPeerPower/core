@@ -4,7 +4,7 @@ from . import async_setup_auth
 from tests.common import CLIENT_ID, CLIENT_REDIRECT_URI
 
 
-async def async_get_code.opp, aiohttp_client):
+async def async_get_code(opp, aiohttp_client):
     """Return authorization code for link user tests."""
     config = [
         {
@@ -23,7 +23,7 @@ async def async_get_code.opp, aiohttp_client):
             ],
         },
     ]
-    client = await async_setup_auth.opp, aiohttp_client, config)
+    client = await async_setup_auth(opp, aiohttp_client, config)
     user = await opp.auth.async_create_user(name="Hello")
     refresh_token = await opp.auth.async_create_refresh_token(user, CLIENT_ID)
     access_token = opp.auth.async_create_access_token(refresh_token)
@@ -57,9 +57,9 @@ async def async_get_code.opp, aiohttp_client):
     }
 
 
-async def test_link_user.opp, aiohttp_client):
+async def test_link_user(opp, aiohttp_client):
     """Test linking a user to new credentials."""
-    info = await async_get_code.opp, aiohttp_client)
+    info = await async_get_code(opp, aiohttp_client)
     client = info["client"]
     code = info["code"]
 
@@ -74,9 +74,9 @@ async def test_link_user.opp, aiohttp_client):
     assert len(info["user"].credentials) == 1
 
 
-async def test_link_user_invalid_client_id.opp, aiohttp_client):
+async def test_link_user_invalid_client_id(opp, aiohttp_client):
     """Test linking a user to new credentials."""
-    info = await async_get_code.opp, aiohttp_client)
+    info = await async_get_code(opp, aiohttp_client)
     client = info["client"]
     code = info["code"]
 
@@ -91,9 +91,9 @@ async def test_link_user_invalid_client_id.opp, aiohttp_client):
     assert len(info["user"].credentials) == 0
 
 
-async def test_link_user_invalid_code.opp, aiohttp_client):
+async def test_link_user_invalid_code(opp, aiohttp_client):
     """Test linking a user to new credentials."""
-    info = await async_get_code.opp, aiohttp_client)
+    info = await async_get_code(opp, aiohttp_client)
     client = info["client"]
 
     # Link user
@@ -107,9 +107,9 @@ async def test_link_user_invalid_code.opp, aiohttp_client):
     assert len(info["user"].credentials) == 0
 
 
-async def test_link_user_invalid_auth.opp, aiohttp_client):
+async def test_link_user_invalid_auth(opp, aiohttp_client):
     """Test linking a user to new credentials."""
-    info = await async_get_code.opp, aiohttp_client)
+    info = await async_get_code(opp, aiohttp_client)
     client = info["client"]
     code = info["code"]
 

@@ -40,7 +40,7 @@ async def test_import_shows_user_step.opp):
     ] == smartapp.get_webhook_url.opp)
 
 
-async def test_entry_created.opp, app, app_oauth_client, location, smartthings_mock):
+async def test_entry_created(opp, app, app_oauth_client, location, smartthings_mock):
     """Test local webhook, new app, install event creates entry."""
     token = str(uuid4())
     installed_app_id = str(uuid4())
@@ -87,7 +87,7 @@ async def test_entry_created.opp, app, app_oauth_client, location, smartthings_m
     assert result["url"] == format_install_url(app.app_id, location.location_id)
 
     # Complete external auth and advance to install
-    await smartapp.smartapp_install.opp, request, None, app)
+    await smartapp.smartapp_install(opp, request, None, app)
 
     # Finish
     result = await opp.config_entries.flow.async_configure(result["flow_id"])
@@ -158,7 +158,7 @@ async def test_entry_created_from_update_event(
     assert result["url"] == format_install_url(app.app_id, location.location_id)
 
     # Complete external auth and advance to install
-    await smartapp.smartapp_update.opp, request, None, app)
+    await smartapp.smartapp_update(opp, request, None, app)
 
     # Finish
     result = await opp.config_entries.flow.async_configure(result["flow_id"])
@@ -229,7 +229,7 @@ async def test_entry_created_existing_app_new_oauth_client(
     assert result["url"] == format_install_url(app.app_id, location.location_id)
 
     # Complete external auth and advance to install
-    await smartapp.smartapp_install.opp, request, None, app)
+    await smartapp.smartapp_install(opp, request, None, app)
 
     # Finish
     result = await opp.config_entries.flow.async_configure(result["flow_id"])
@@ -278,7 +278,7 @@ async def test_entry_created_existing_app_copies_oauth_client(
             CONF_ACCESS_TOKEN: token,
         },
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     # Webhook confirmation shown
     result = await opp.config_entries.flow.async_init(
@@ -315,7 +315,7 @@ async def test_entry_created_existing_app_copies_oauth_client(
     assert result["url"] == format_install_url(app.app_id, location.location_id)
 
     # Complete external auth and advance to install
-    await smartapp.smartapp_install.opp, request, None, app)
+    await smartapp.smartapp_install(opp, request, None, app)
 
     # Finish
     result = await opp.config_entries.flow.async_configure(result["flow_id"])
@@ -404,7 +404,7 @@ async def test_entry_created_with_cloudhook(
         assert result["url"] == format_install_url(app.app_id, location.location_id)
 
         # Complete external auth and advance to install
-        await smartapp.smartapp_install.opp, request, None, app)
+        await smartapp.smartapp_install(opp, request, None, app)
 
         # Finish
         result = await opp.config_entries.flow.async_configure(result["flow_id"])
@@ -713,7 +713,7 @@ async def test_no_available_locations_aborts(
     entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_LOCATION_ID: location.location_id}
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     # Webhook confirmation shown
     result = await opp.config_entries.flow.async_init(

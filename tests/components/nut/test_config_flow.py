@@ -76,7 +76,7 @@ async def test_form_zeroconf.opp):
 
 async def test_form_user_one_ups.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -134,14 +134,14 @@ async def test_form_user_one_ups.opp):
 
 async def test_form_user_multiple_ups.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     config_entry = MockConfigEntry(
         domain=DOMAIN,
         data={"host": "2.2.2.2", "port": 123, "resources": ["battery.charge"]},
         options={CONF_RESOURCES: ["battery.charge"]},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -217,9 +217,9 @@ async def test_form_user_one_ups_with_ignored_entry.opp):
     ignored_entry = MockConfigEntry(
         domain=DOMAIN, data={}, source=config_entries.SOURCE_IGNORE
     )
-    ignored_entry.add_to.opp.opp)
+    ignored_entry.add_to_opp(opp)
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -310,7 +310,7 @@ async def test_options_flow.opp):
         data=VALID_CONFIG,
         options={CONF_RESOURCES: ["battery.charge"]},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     mock_pynut = _get_mock_pynutclient(
         list_vars={"battery.voltage": "voltage"}, list_ups=["ups1"]

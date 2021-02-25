@@ -66,7 +66,7 @@ async def test_default_setup_opp, monkeypatch):
     event_callback({"id": "protocol_0_0", "command": "down"})
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
+    assert opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
 
     # should respond to group command
     event_callback({"id": "protocol_0_0", "command": "allon"})
@@ -79,14 +79,14 @@ async def test_default_setup_opp, monkeypatch):
     event_callback({"id": "protocol_0_0", "command": "alloff"})
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
+    assert opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
 
     # test following aliases
     # mock incoming command event for this device alias
     event_callback({"id": "test_alias_0_0", "command": "up"})
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
+    assert opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
 
     # test changing state from HA propagates to RFLink
     opp.async_create_task(
@@ -95,7 +95,7 @@ async def test_default_setup_opp, monkeypatch):
         )
     )
     await opp.async_block_till_done()
-    assert.opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
+    assert opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
     assert protocol.send_command_ack.call_args_list[0][0][0] == "protocol_0_0"
     assert protocol.send_command_ack.call_args_list[0][0][1] == "DOWN"
 
@@ -105,11 +105,11 @@ async def test_default_setup_opp, monkeypatch):
         )
     )
     await opp.async_block_till_done()
-    assert.opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
+    assert(opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
     assert protocol.send_command_ack.call_args_list[1][0][1] == "UP"
 
 
-async def test_firing_bus_event.opp, monkeypatch):
+async def test_firing_bus_event(opp, monkeypatch):
     """Incoming RFLink command events should be put on the HA event bus."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -126,7 +126,7 @@ async def test_firing_bus_event.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    event_callback, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    event_callback, _, _, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
     calls = []
 
@@ -144,7 +144,7 @@ async def test_firing_bus_event.opp, monkeypatch):
     assert calls[0].data == {"state": "down", "entity_id": f"{DOMAIN}.test"}
 
 
-async def test_signal_repetitions.opp, monkeypatch):
+async def test_signal_repetitions(opp, monkeypatch):
     """Command should be sent amount of configured repetitions."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -159,7 +159,7 @@ async def test_signal_repetitions.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    _, _, protocol, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    _, _, protocol, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
     # test if signal repetition is performed according to configuration
     opp.async_create_task(
@@ -186,7 +186,7 @@ async def test_signal_repetitions.opp, monkeypatch):
     assert protocol.send_command_ack.call_count == 5
 
 
-async def test_signal_repetitions_alternation.opp, monkeypatch):
+async def test_signal_repetitions_alternation(opp, monkeypatch):
     """Simultaneously switching entities must alternate repetitions."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -200,7 +200,7 @@ async def test_signal_repetitions_alternation.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    _, _, protocol, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    _, _, protocol, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
     opp.async_create_task(
         opp.services.async_call(
@@ -221,7 +221,7 @@ async def test_signal_repetitions_alternation.opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[3][0][0] == "protocol_0_1"
 
 
-async def test_signal_repetitions_cancelling.opp, monkeypatch):
+async def test_signal_repetitions_cancelling(opp, monkeypatch):
     """Cancel outstanding repetitions when state changed."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -232,7 +232,7 @@ async def test_signal_repetitions_cancelling.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    _, _, protocol, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    _, _, protocol, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
     opp.async_create_task(
         opp.services.async_call(
@@ -254,7 +254,7 @@ async def test_signal_repetitions_cancelling.opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[3][0][1] == "UP"
 
 
-async def test_group_alias.opp, monkeypatch):
+async def test_group_alias(opp, monkeypatch):
     """Group aliases should only respond to group commands (allon/alloff)."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -267,24 +267,24 @@ async def test_group_alias.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    event_callback, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    event_callback, _, _, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
-    assert.opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
+    assert opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
 
     # test sending group command to group alias
     event_callback({"id": "test_group_0_0", "command": "allon"})
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
+    assert opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
 
     # test sending group command to group alias
     event_callback({"id": "test_group_0_0", "command": "down"})
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
+    assert opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
 
 
-async def test_nogroup_alias.opp, monkeypatch):
+async def test_nogroup_alias(opp, monkeypatch):
     """Non group aliases should not respond to group commands."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -300,24 +300,24 @@ async def test_nogroup_alias.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    event_callback, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    event_callback, _, _, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
-    assert.opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
+    assert opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
 
     # test sending group command to nogroup alias
     event_callback({"id": "test_nogroup_0_0", "command": "allon"})
     await opp.async_block_till_done()
     # should not affect state
-    assert.opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
+    assert opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
 
     # test sending group command to nogroup alias
     event_callback({"id": "test_nogroup_0_0", "command": "up"})
     await opp.async_block_till_done()
     # should affect state
-    assert.opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
+    assert opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
 
 
-async def test_nogroup_device_id.opp, monkeypatch):
+async def test_nogroup_device_id(opp, monkeypatch):
     """Device id that do not respond to group commands (allon/alloff)."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -328,24 +328,24 @@ async def test_nogroup_device_id.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    event_callback, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    event_callback, _, _, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
-    assert.opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
+    assert opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
 
     # test sending group command to nogroup
     event_callback({"id": "test_nogroup_0_0", "command": "allon"})
     await opp.async_block_till_done()
     # should not affect state
-    assert.opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
+    assert opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
 
     # test sending group command to nogroup
     event_callback({"id": "test_nogroup_0_0", "command": "up"})
     await opp.async_block_till_done()
     # should affect state
-    assert.opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
+    assert opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
 
 
-async def test_restore_state.opp, monkeypatch):
+async def test_restore_state(opp, monkeypatch):
     """Ensure states are restored on startup."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -367,7 +367,7 @@ async def test_restore_state.opp, monkeypatch):
     opp.state = CoreState.starting
 
     # setup mocking rflink module
-    _, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    _, _, _, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
     state = opp.states.get(f"{DOMAIN}.c1")
     assert state
@@ -391,7 +391,7 @@ async def test_restore_state.opp, monkeypatch):
 # The code checks the ID, it will use the
 # 'inverted' class when the name starts with
 # 'newkaku'
-async def test_inverted_cover.opp, monkeypatch):
+async def test_inverted_cover(opp, monkeypatch):
     """Ensure states are restored on startup."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -616,7 +616,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.nonkaku_type_standard").state == STATE_CLOSED
+    assert opp.states.get(f"{DOMAIN}.nonkaku_type_standard").state == STATE_CLOSED
     assert protocol.send_command_ack.call_args_list[0][0][0] == "nonkaku_device_1"
     assert protocol.send_command_ack.call_args_list[0][0][1] == "DOWN"
 
@@ -633,7 +633,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.nonkaku_type_standard").state == STATE_OPEN
+    assert opp.states.get(f"{DOMAIN}.nonkaku_type_standard").state == STATE_OPEN
     assert protocol.send_command_ack.call_args_list[1][0][0] == "nonkaku_device_1"
     assert protocol.send_command_ack.call_args_list[1][0][1] == "UP"
 
@@ -648,7 +648,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.nonkaku_type_none").state == STATE_CLOSED
+    assert opp.states.get(f"{DOMAIN}.nonkaku_type_none").state == STATE_CLOSED
     assert protocol.send_command_ack.call_args_list[2][0][0] == "nonkaku_device_2"
     assert protocol.send_command_ack.call_args_list[2][0][1] == "DOWN"
 
@@ -663,7 +663,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.nonkaku_type_none").state == STATE_OPEN
+    assert opp.states.get(f"{DOMAIN}.nonkaku_type_none").state == STATE_OPEN
     assert protocol.send_command_ack.call_args_list[3][0][0] == "nonkaku_device_2"
     assert protocol.send_command_ack.call_args_list[3][0][1] == "UP"
 
@@ -680,7 +680,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.nonkaku_type_inverted").state == STATE_CLOSED
+    assert opp.states.get(f"{DOMAIN}.nonkaku_type_inverted").state == STATE_CLOSED
     assert protocol.send_command_ack.call_args_list[4][0][0] == "nonkaku_device_3"
     assert protocol.send_command_ack.call_args_list[4][0][1] == "UP"
 
@@ -697,7 +697,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.nonkaku_type_inverted").state == STATE_OPEN
+    assert opp.states.get(f"{DOMAIN}.nonkaku_type_inverted").state == STATE_OPEN
     assert protocol.send_command_ack.call_args_list[5][0][0] == "nonkaku_device_3"
     assert protocol.send_command_ack.call_args_list[5][0][1] == "DOWN"
 
@@ -714,7 +714,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.newkaku_type_standard").state == STATE_CLOSED
+    assert opp.states.get(f"{DOMAIN}.newkaku_type_standard").state == STATE_CLOSED
     assert protocol.send_command_ack.call_args_list[6][0][0] == "newkaku_device_4"
     assert protocol.send_command_ack.call_args_list[6][0][1] == "DOWN"
 
@@ -731,7 +731,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.newkaku_type_standard").state == STATE_OPEN
+    assert opp.states.get(f"{DOMAIN}.newkaku_type_standard").state == STATE_OPEN
     assert protocol.send_command_ack.call_args_list[7][0][0] == "newkaku_device_4"
     assert protocol.send_command_ack.call_args_list[7][0][1] == "UP"
 
@@ -746,7 +746,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.newkaku_type_none").state == STATE_CLOSED
+    assert opp.states.get(f"{DOMAIN}.newkaku_type_none").state == STATE_CLOSED
     assert protocol.send_command_ack.call_args_list[8][0][0] == "newkaku_device_5"
     assert protocol.send_command_ack.call_args_list[8][0][1] == "UP"
 
@@ -761,7 +761,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.newkaku_type_none").state == STATE_OPEN
+    assert opp.states.get(f"{DOMAIN}.newkaku_type_none").state == STATE_OPEN
     assert protocol.send_command_ack.call_args_list[9][0][0] == "newkaku_device_5"
     assert protocol.send_command_ack.call_args_list[9][0][1] == "DOWN"
 
@@ -778,7 +778,7 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.newkaku_type_inverted").state == STATE_CLOSED
+    assert opp.states.get(f"{DOMAIN}.newkaku_type_inverted").state == STATE_CLOSED
     assert protocol.send_command_ack.call_args_list[10][0][0] == "newkaku_device_6"
     assert protocol.send_command_ack.call_args_list[10][0][1] == "UP"
 
@@ -795,6 +795,6 @@ async def test_inverted_cover.opp, monkeypatch):
 
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.newkaku_type_inverted").state == STATE_OPEN
+    assert opp.states.get(f"{DOMAIN}.newkaku_type_inverted").state == STATE_OPEN
     assert protocol.send_command_ack.call_args_list[11][0][0] == "newkaku_device_6"
     assert protocol.send_command_ack.call_args_list[11][0][1] == "DOWN"

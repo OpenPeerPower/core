@@ -19,7 +19,7 @@ async def test_state.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
 
     entity_id = config["sensor"]["source"]
     base = dt_util.utcnow()
@@ -41,7 +41,7 @@ async def test_state.opp):
     assert state.attributes.get("unit_of_measurement") == "kW"
 
 
-async def _setup_sensor.opp, config):
+async def _setup_sensor(opp, config):
     default_config = {
         "platform": "derivative",
         "name": "power",
@@ -50,7 +50,7 @@ async def _setup_sensor.opp, config):
     }
 
     config = {"sensor": dict(default_config, **config)}
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
 
     entity_id = config["sensor"]["source"]
     opp.states.async_set(entity_id, 0, {})
@@ -59,9 +59,9 @@ async def _setup_sensor.opp, config):
     return config, entity_id
 
 
-async def setup_tests.opp, config, times, values, expected_state):
+async def setup_tests(opp, config, times, values, expected_state):
     """Test derivative sensor state."""
-    config, entity_id = await _setup_sensor.opp, config)
+    config, entity_id = await _setup_sensor(opp, config)
 
     # Testing a energy sensor with non-monotonic intervals and values
     base = dt_util.utcnow()
@@ -138,7 +138,7 @@ async def test_dataSet5.opp):
 
 async def test_dataSet6.opp):
     """Test derivative sensor state."""
-    await setup_tests.opp, {}, times=[0, 60], values=[0, 1 / 60], expected_state=1)
+    await setup_tests(opp, {}, times=[0, 60], values=[0, 1 / 60], expected_state=1)
 
 
 async def test_data_moving_average_for_discrete_sensor.opp):
@@ -192,7 +192,7 @@ async def test_prefix.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
 
     entity_id = config["sensor"]["source"]
     base = dt_util.utcnow()
@@ -230,7 +230,7 @@ async def test_suffix.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
 
     entity_id = config["sensor"]["source"]
     base = dt_util.utcnow()

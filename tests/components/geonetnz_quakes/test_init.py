@@ -14,8 +14,8 @@ async def test_component_unload_config_entry(opp, config_entry):
         assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
         assert mock_feed_manager_update.call_count == 1
-        assert.opp.data[DOMAIN][FEED][config_entry.entry_id] is not None
+        assert opp.data[DOMAIN][FEED][config_entry.entry_id] is not None
         # Unload config entry.
         assert await opp.config_entries.async_unload(config_entry.entry_id)
         await opp.async_block_till_done()
-        assert.opp.data[DOMAIN][FEED].get(config_entry.entry_id) is None
+        assert opp.data[DOMAIN][FEED].get(config_entry.entry_id) is None

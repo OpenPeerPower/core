@@ -18,7 +18,7 @@ async def test_device_remove(
     config = copy.deepcopy(DEFAULT_CONFIG)
     mac = config["mac"]
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
     # Verify device entry is created
@@ -47,7 +47,7 @@ async def test_device_remove_non_tasmota_device(
 ):
     """Test removing a non Tasmota device through device registry."""
     config_entry = MockConfigEntry(domain="test")
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     mac = "12:34:56:AB:CD:EF"
     device_entry = device_reg.async_get_or_create(
@@ -105,7 +105,7 @@ async def test_tasmota_ws_remove_discovered_device(
     config = copy.deepcopy(DEFAULT_CONFIG)
     mac = config["mac"]
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
     # Verify device entry is created
@@ -131,7 +131,7 @@ async def test_tasmota_ws_remove_discovered_device_twice(
     config = copy.deepcopy(DEFAULT_CONFIG)
     mac = config["mac"]
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
     # Verify device entry is created
@@ -159,7 +159,7 @@ async def test_tasmota_ws_remove_non_tasmota_device(
 ):
     """Test Tasmota websocket device removal of device belonging to other domain."""
     config_entry = MockConfigEntry(domain="test")
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,

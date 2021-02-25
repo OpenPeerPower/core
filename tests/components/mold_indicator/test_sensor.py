@@ -276,16 +276,16 @@ async def test_sensor_changed.opp):
         "test.indoortemp", "30", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
     await opp.async_block_till_done()
-    assert.opp.states.get("sensor.mold_indicator").state == "90"
+    assert opp.states.get("sensor.mold_indicator").state == "90"
 
     opp.states.async_set(
         "test.outdoortemp", "25", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
     )
     await opp.async_block_till_done()
-    assert.opp.states.get("sensor.mold_indicator").state == "57"
+    assert opp.states.get("sensor.mold_indicator").state == "57"
 
     opp.states.async_set(
         "test.indoorhumidity", "20", {ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE}
     )
     await opp.async_block_till_done()
-    assert.opp.states.get("sensor.mold_indicator").state == "23"
+    assert opp.states.get("sensor.mold_indicator").state == "23"

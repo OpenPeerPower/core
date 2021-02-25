@@ -26,13 +26,13 @@ from openpeerpower.setup import async_setup_component
 from tests.common import MockConfigEntry
 
 
-async def test_migration_creates_new_flow.opp, smartthings_mock, config_entry):
+async def test_migration_creates_new_flow(opp, smartthings_mock, config_entry):
     """Test migration deletes app and creates new flow."""
-    assert await async_setup_component.opp, "persistent_notification", {})
+    assert await async_setup_component(opp, "persistent_notification", {})
     config_entry.version = 1
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
-    await smartthings.async_migrate_entry.opp, config_entry)
+    await smartthings.async_migrate_entry(opp, config_entry)
     await opp.async_block_till_done()
 
     assert smartthings_mock.delete_installed_app.call_count == 1
@@ -54,15 +54,15 @@ async def test_unrecoverable_api_errors_create_new_flow(
     403 (forbidden/not found): Occurs when the app or installed app could
         not be retrieved/found (likely deleted?)
     """
-    assert await async_setup_component.opp, "persistent_notification", {})
-    config_entry.add_to.opp.opp)
+    assert await async_setup_component(opp, "persistent_notification", {})
+    config_entry.add_to_opp(opp)
     request_info = Mock(real_url="http://example.com")
     smartthings_mock.app.side_effect = ClientResponseError(
         request_info=request_info, history=None, status=401
     )
 
     # Assert setup returns false
-    result = await smartthings.async_setup_entry.opp, config_entry)
+    result = await smartthings.async_setup_entry(opp, config_entry)
     assert not result
 
     # Assert entry was removed and new flow created
@@ -79,21 +79,21 @@ async def test_recoverable_api_errors_raise_not_ready(
     opp. config_entry, smartthings_mock
 ):
     """Test config entry not ready raised for recoverable API errors."""
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     request_info = Mock(real_url="http://example.com")
     smartthings_mock.app.side_effect = ClientResponseError(
         request_info=request_info, history=None, status=HTTP_INTERNAL_SERVER_ERROR
     )
 
     with pytest.raises(ConfigEntryNotReady):
-        await smartthings.async_setup_entry.opp, config_entry)
+        await smartthings.async_setup_entry(opp, config_entry)
 
 
 async def test_scenes_api_errors_raise_not_ready(
     opp. config_entry, app, installed_app, smartthings_mock
 ):
     """Test if scenes are unauthorized we continue to load platforms."""
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     request_info = Mock(real_url="http://example.com")
     smartthings_mock.app.return_value = app
     smartthings_mock.installed_app.return_value = installed_app
@@ -101,16 +101,16 @@ async def test_scenes_api_errors_raise_not_ready(
         request_info=request_info, history=None, status=HTTP_INTERNAL_SERVER_ERROR
     )
     with pytest.raises(ConfigEntryNotReady):
-        await smartthings.async_setup_entry.opp, config_entry)
+        await smartthings.async_setup_entry(opp, config_entry)
 
 
-async def test_connection_errors_raise_not_ready.opp, config_entry, smartthings_mock):
+async def test_connection_errors_raise_not_ready(opp, config_entry, smartthings_mock):
     """Test config entry not ready raised for connection errors."""
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     smartthings_mock.app.side_effect = ClientConnectionError()
 
     with pytest.raises(ConfigEntryNotReady):
-        await smartthings.async_setup_entry.opp, config_entry)
+        await smartthings.async_setup_entry(opp, config_entry)
 
 
 async def test_base_url_no_longer_https_does_not_load(
@@ -121,11 +121,11 @@ async def test_base_url_no_longer_https_does_not_load(
         opp,
         {"external_url": "http://example.local:8123"},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     smartthings_mock.app.return_value = app
 
     # Assert setup returns false
-    result = await smartthings.async_setup_entry.opp, config_entry)
+    result = await smartthings.async_setup_entry(opp, config_entry)
     assert not result
 
 
@@ -133,14 +133,14 @@ async def test_unauthorized_installed_app_raises_not_ready(
     opp. config_entry, app, installed_app, smartthings_mock
 ):
     """Test config entry not ready raised when the app isn't authorized."""
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     installed_app.installed_app_status = InstalledAppStatus.PENDING
 
     smartthings_mock.app.return_value = app
     smartthings_mock.installed_app.return_value = installed_app
 
     with pytest.raises(ConfigEntryNotReady):
-        await smartthings.async_setup_entry.opp, config_entry)
+        await smartthings.async_setup_entry(opp, config_entry)
 
 
 async def test_scenes_unauthorized_loads_platforms(
@@ -153,7 +153,7 @@ async def test_scenes_unauthorized_loads_platforms(
     subscription_factory,
 ):
     """Test if scenes are unauthorized we continue to load platforms."""
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     request_info = Mock(real_url="http://example.com")
     smartthings_mock.app.return_value = app
     smartthings_mock.installed_app.return_value = installed_app
@@ -171,7 +171,7 @@ async def test_scenes_unauthorized_loads_platforms(
     smartthings_mock.subscriptions.return_value = subscriptions
 
     with patch.object.opp.config_entries, "async_forward_entry_setup") as forward_mock:
-        assert await smartthings.async_setup_entry.opp, config_entry)
+        assert await smartthings.async_setup_entry(opp, config_entry)
         # Assert platforms loaded
         await opp.async_block_till_done()
         assert forward_mock.call_count == len(SUPPORTED_PLATFORMS)
@@ -188,7 +188,7 @@ async def test_config_entry_loads_platforms(
     scene,
 ):
     """Test config entry loads properly and proxies to platforms."""
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     smartthings_mock.app.return_value = app
     smartthings_mock.installed_app.return_value = installed_app
     smartthings_mock.devices.return_value = [device]
@@ -203,7 +203,7 @@ async def test_config_entry_loads_platforms(
     smartthings_mock.subscriptions.return_value = subscriptions
 
     with patch.object.opp.config_entries, "async_forward_entry_setup") as forward_mock:
-        assert await smartthings.async_setup_entry.opp, config_entry)
+        assert await smartthings.async_setup_entry(opp, config_entry)
         # Assert platforms loaded
         await opp.async_block_till_done()
         assert forward_mock.call_count == len(SUPPORTED_PLATFORMS)
@@ -220,7 +220,7 @@ async def test_config_entry_loads_unconnected_cloud(
     scene,
 ):
     """Test entry loads during startup when cloud isn't connected."""
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     opp.data[DOMAIN][CONF_CLOUDHOOK_URL] = "https://test.cloud"
     smartthings_mock.app.return_value = app
     smartthings_mock.installed_app.return_value = installed_app
@@ -235,12 +235,12 @@ async def test_config_entry_loads_unconnected_cloud(
     ]
     smartthings_mock.subscriptions.return_value = subscriptions
     with patch.object.opp.config_entries, "async_forward_entry_setup") as forward_mock:
-        assert await smartthings.async_setup_entry.opp, config_entry)
+        assert await smartthings.async_setup_entry(opp, config_entry)
         await opp.async_block_till_done()
         assert forward_mock.call_count == len(SUPPORTED_PLATFORMS)
 
 
-async def test_unload_entry.opp, config_entry):
+async def test_unload_entry(opp, config_entry):
     """Test entries are unloaded correctly."""
     connect_disconnect = Mock()
     smart_app = Mock()
@@ -252,7 +252,7 @@ async def test_unload_entry.opp, config_entry):
     with patch.object(
         opp.config_entries, "async_forward_entry_unload", return_value=True
     ) as forward_mock:
-        assert await smartthings.async_unload_entry.opp, config_entry)
+        assert await smartthings.async_unload_entry(opp, config_entry)
 
         assert connect_disconnect.call_count == 1
         assert config_entry.entry_id not in.opp.data[DOMAIN][DATA_BROKERS]
@@ -261,20 +261,20 @@ async def test_unload_entry.opp, config_entry):
         assert forward_mock.call_count == len(SUPPORTED_PLATFORMS)
 
 
-async def test_remove_entry.opp, config_entry, smartthings_mock):
+async def test_remove_entry(opp, config_entry, smartthings_mock):
     """Test that the installed app and app are removed up."""
     # Act
-    await smartthings.async_remove_entry.opp, config_entry)
+    await smartthings.async_remove_entry(opp, config_entry)
     # Assert
     assert smartthings_mock.delete_installed_app.call_count == 1
     assert smartthings_mock.delete_app.call_count == 1
 
 
-async def test_remove_entry_cloudhook.opp, config_entry, smartthings_mock):
+async def test_remove_entry_cloudhook(opp, config_entry, smartthings_mock):
     """Test that the installed app, app, and cloudhook are removed up."""
     opp.config.components.add("cloud")
     # Arrange
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     opp.data[DOMAIN][CONF_CLOUDHOOK_URL] = "https://test.cloud"
     # Act
     with patch.object(
@@ -282,7 +282,7 @@ async def test_remove_entry_cloudhook.opp, config_entry, smartthings_mock):
     ) as mock_async_is_logged_in, patch.object(
         cloud, "async_delete_cloudhook"
     ) as mock_async_delete_cloudhook:
-        await smartthings.async_remove_entry.opp, config_entry)
+        await smartthings.async_remove_entry(opp, config_entry)
     # Assert
     assert smartthings_mock.delete_installed_app.call_count == 1
     assert smartthings_mock.delete_app.call_count == 1
@@ -290,22 +290,22 @@ async def test_remove_entry_cloudhook.opp, config_entry, smartthings_mock):
     assert mock_async_delete_cloudhook.call_count == 1
 
 
-async def test_remove_entry_app_in_use.opp, config_entry, smartthings_mock):
+async def test_remove_entry_app_in_use(opp, config_entry, smartthings_mock):
     """Test app is not removed if in use by another config entry."""
     # Arrange
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     data = config_entry.data.copy()
     data[CONF_INSTALLED_APP_ID] = str(uuid4())
     entry2 = MockConfigEntry(version=2, domain=DOMAIN, data=data)
-    entry2.add_to.opp.opp)
+    entry2.add_to_opp(opp)
     # Act
-    await smartthings.async_remove_entry.opp, config_entry)
+    await smartthings.async_remove_entry(opp, config_entry)
     # Assert
     assert smartthings_mock.delete_installed_app.call_count == 1
     assert smartthings_mock.delete_app.call_count == 0
 
 
-async def test_remove_entry_already_deleted.opp, config_entry, smartthings_mock):
+async def test_remove_entry_already_deleted(opp, config_entry, smartthings_mock):
     """Test handles when the apps have already been removed."""
     request_info = Mock(real_url="http://example.com")
     # Arrange
@@ -316,7 +316,7 @@ async def test_remove_entry_already_deleted.opp, config_entry, smartthings_mock)
         request_info=request_info, history=None, status=HTTP_FORBIDDEN
     )
     # Act
-    await smartthings.async_remove_entry.opp, config_entry)
+    await smartthings.async_remove_entry(opp, config_entry)
     # Assert
     assert smartthings_mock.delete_installed_app.call_count == 1
     assert smartthings_mock.delete_app.call_count == 1
@@ -333,7 +333,7 @@ async def test_remove_entry_installedapp_api_error(
     )
     # Act
     with pytest.raises(ClientResponseError):
-        await smartthings.async_remove_entry.opp, config_entry)
+        await smartthings.async_remove_entry(opp, config_entry)
     # Assert
     assert smartthings_mock.delete_installed_app.call_count == 1
     assert smartthings_mock.delete_app.call_count == 0
@@ -347,7 +347,7 @@ async def test_remove_entry_installedapp_unknown_error(
     smartthings_mock.delete_installed_app.side_effect = Exception
     # Act
     with pytest.raises(Exception):
-        await smartthings.async_remove_entry.opp, config_entry)
+        await smartthings.async_remove_entry(opp, config_entry)
     # Assert
     assert smartthings_mock.delete_installed_app.call_count == 1
     assert smartthings_mock.delete_app.call_count == 0
@@ -362,7 +362,7 @@ async def test_remove_entry_app_api_error(opp, config_entry, smartthings_mock):
     )
     # Act
     with pytest.raises(ClientResponseError):
-        await smartthings.async_remove_entry.opp, config_entry)
+        await smartthings.async_remove_entry(opp, config_entry)
     # Assert
     assert smartthings_mock.delete_installed_app.call_count == 1
     assert smartthings_mock.delete_app.call_count == 1
@@ -374,19 +374,19 @@ async def test_remove_entry_app_unknown_error(opp, config_entry, smartthings_moc
     smartthings_mock.delete_app.side_effect = Exception
     # Act
     with pytest.raises(Exception):
-        await smartthings.async_remove_entry.opp, config_entry)
+        await smartthings.async_remove_entry(opp, config_entry)
     # Assert
     assert smartthings_mock.delete_installed_app.call_count == 1
     assert smartthings_mock.delete_app.call_count == 1
 
 
-async def test_broker_regenerates_token.opp, config_entry):
+async def test_broker_regenerates_token(opp, config_entry):
     """Test the device broker regenerates the refresh token."""
     token = Mock(OAuthToken)
     token.refresh_token = str(uuid4())
     stored_action = None
 
-    def async_track_time_interval.opp, action, interval):
+    def async_track_time_interval(opp, action, interval):
         nonlocal stored_action
         stored_action = action
 
@@ -438,7 +438,7 @@ async def test_event_handler_dispatches_updated_devices(
         called = True
         assert device_ids == ids
 
-    async_dispatcher_connect.opp, SIGNAL_SMARTTHINGS_UPDATE, signal)
+    async_dispatcher_connect(opp, SIGNAL_SMARTTHINGS_UPDATE, signal)
 
     broker = smartthings.DeviceBroker.opp, config_entry, Mock(), Mock(), devices, [])
     broker.connect()
@@ -466,7 +466,7 @@ async def test_event_handler_ignores_other_installed_app(
         nonlocal called
         called = True
 
-    async_dispatcher_connect.opp, SIGNAL_SMARTTHINGS_UPDATE, signal)
+    async_dispatcher_connect(opp, SIGNAL_SMARTTHINGS_UPDATE, signal)
     broker = smartthings.DeviceBroker.opp, config_entry, Mock(), Mock(), [device], [])
     broker.connect()
 

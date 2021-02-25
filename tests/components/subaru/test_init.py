@@ -35,12 +35,12 @@ from .conftest import (
 
 async def test_setup_with_no_config(opp):
     """Test DOMAIN is empty if there is no config."""
-    assert await async_setup_component.opp, DOMAIN, {})
+    assert await async_setup_component(opp, DOMAIN, {})
     await opp.async_block_till_done()
     assert DOMAIN not in.opp.config_entries.async_domains()
 
 
-async def test_setup_ev.opp, ev_entry):
+async def test_setup_ev(opp, ev_entry):
     """Test setup with an EV vehicle."""
     check_entry = opp.config_entries.async_get_entry(ev_entry.entry_id)
     assert check_entry
@@ -116,7 +116,7 @@ async def test_update_skip_unsubscribed.opp):
         mock_fetch.assert_not_called()
 
 
-async def test_update_disabled.opp, ev_entry):
+async def test_update_disabled(opp, ev_entry):
     """Test update function disable option."""
     with patch(MOCK_API_FETCH, side_effect=SubaruException("403 Error"),), patch(
         MOCK_API_UPDATE,
@@ -145,7 +145,7 @@ async def test_fetch_failed.opp):
     assert test_entity.state == "unavailable"
 
 
-async def test_unload_entry.opp, ev_entry):
+async def test_unload_entry(opp, ev_entry):
     """Test that entry is unloaded."""
     assert ev_entry.state == ENTRY_STATE_LOADED
     assert await opp.config_entries.async_unload(ev_entry.entry_id)

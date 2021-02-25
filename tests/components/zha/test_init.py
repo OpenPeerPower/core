@@ -32,10 +32,10 @@ def config_entry_v1.opp):
 
 @pytest.mark.parametrize("config", ({}, {DOMAIN: {}}))
 @patch("openpeerpower.components.zop.async_setup_entry", AsyncMock(return_value=True))
-async def test_migration_from_v1_no_baudrate.opp, config_entry_v1, config):
+async def test_migration_from_v1_no_baudrate(opp, config_entry_v1, config):
     """Test migration of config entry from v1."""
-    config_entry_v1.add_to.opp.opp)
-    assert await async_setup_component.opp, DOMAIN, config)
+    config_entry_v1.add_to_opp(opp)
+    assert await async_setup_component(opp, DOMAIN, config)
 
     assert config_entry_v1.data[CONF_RADIO_TYPE] == DATA_RADIO_TYPE
     assert CONF_DEVICE in config_entry_v1.data
@@ -46,10 +46,10 @@ async def test_migration_from_v1_no_baudrate.opp, config_entry_v1, config):
 
 
 @patch("openpeerpower.components.zop.async_setup_entry", AsyncMock(return_value=True))
-async def test_migration_from_v1_with_baudrate.opp, config_entry_v1):
+async def test_migration_from_v1_with_baudrate(opp, config_entry_v1):
     """Test migration of config entry from v1 with baudrate in config."""
-    config_entry_v1.add_to.opp.opp)
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_BAUDRATE: 115200}})
+    config_entry_v1.add_to_opp(opp)
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_BAUDRATE: 115200}})
 
     assert config_entry_v1.data[CONF_RADIO_TYPE] == DATA_RADIO_TYPE
     assert CONF_DEVICE in config_entry_v1.data
@@ -61,10 +61,10 @@ async def test_migration_from_v1_with_baudrate.opp, config_entry_v1):
 
 
 @patch("openpeerpower.components.zop.async_setup_entry", AsyncMock(return_value=True))
-async def test_migration_from_v1_wrong_baudrate.opp, config_entry_v1):
+async def test_migration_from_v1_wrong_baudrate(opp, config_entry_v1):
     """Test migration of config entry from v1 with wrong baudrate."""
-    config_entry_v1.add_to.opp.opp)
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_BAUDRATE: 115222}})
+    config_entry_v1.add_to_opp(opp)
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_BAUDRATE: 115222}})
 
     assert config_entry_v1.data[CONF_RADIO_TYPE] == DATA_RADIO_TYPE
     assert CONF_DEVICE in config_entry_v1.data
@@ -87,12 +87,12 @@ async def test_migration_from_v1_wrong_baudrate.opp, config_entry_v1):
         {CONF_RADIO_TYPE: "ezsp", CONF_USB_PATH: "str"},
     ),
 )
-async def test_config_depreciation.opp, zha_config):
+async def test_config_depreciation(opp, zha_config):
     """Test config option depreciation."""
-    await async_setup_component.opp, "persistent_notification", {})
+    await async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "openpeerpower.components.zop.async_setup", return_value=True
     ) as setup_mock:
-        assert await async_setup_component.opp, DOMAIN, {DOMAIN: zha_config})
+        assert await async_setup_component(opp, DOMAIN, {DOMAIN: zha_config})
         assert setup_mock.call_count == 1

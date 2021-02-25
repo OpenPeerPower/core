@@ -16,7 +16,7 @@ DEFAULT_CONFIG = {HMIPC_HAPID: "ABC123", HMIPC_PIN: "123", HMIPC_NAME: "hmip"}
 IMPORT_CONFIG = {HMIPC_HAPID: "ABC123", HMIPC_AUTHTOKEN: "123", HMIPC_NAME: "hmip"}
 
 
-async def test_flow_works.opp, simple_mock_home):
+async def test_flow_works(opp, simple_mock_home):
     """Test config flow."""
 
     with patch(
@@ -127,7 +127,7 @@ async def test_init_flow_show_form.opp):
 
 async def test_init_already_configured.opp):
     """Test accesspoint is already configured."""
-    MockConfigEntry(domain=HMIPC_DOMAIN, unique_id="ABC123").add_to.opp.opp)
+    MockConfigEntry(domain=HMIPC_DOMAIN, unique_id="ABC123").add_to_opp(opp)
     with patch(
         "openpeerpower.components.homematicip_cloud.hap.HomematicipAuth.async_checkbutton",
         return_value=True,
@@ -166,7 +166,7 @@ async def test_import_config(opp, simple_mock_home):
 
 async def test_import_existing_config(opp):
     """Test abort of an existing accesspoint from config."""
-    MockConfigEntry(domain=HMIPC_DOMAIN, unique_id="ABC123").add_to.opp.opp)
+    MockConfigEntry(domain=HMIPC_DOMAIN, unique_id="ABC123").add_to_opp(opp)
     with patch(
         "openpeerpower.components.homematicip_cloud.hap.HomematicipAuth.async_checkbutton",
         return_value=True,

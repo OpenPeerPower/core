@@ -39,7 +39,7 @@ SSDP_DATA = {
 }
 
 
-def _flow_next.opp, flow_id):
+def _flow_next(opp, flow_id):
     return next(
         flow
         for flow in.opp.config_entries.flow.async_progress()
@@ -67,7 +67,7 @@ async def test_flow_ssdp.opp):
         CONF_NAME: FRIENDLY_NAME,
         CONF_HOST: HOST,
     }
-    flow = _flow_next.opp, result["flow_id"])
+    flow = _flow_next(opp, result["flow_id"])
     assert flow["context"]["unique_id"] == UDN
 
     with _patch_setup():
@@ -91,7 +91,7 @@ async def test_flow_user.opp):
         assert result["type"] == RESULT_TYPE_FORM
         assert result["step_id"] == "user"
         assert result["errors"] is None
-        _flow_next.opp, result["flow_id"])
+        _flow_next(opp, result["flow_id"])
 
         result = await opp.config_entries.flow.async_configure(
             result["flow_id"],
@@ -145,7 +145,7 @@ def _create_mock_config_entry.opp):
         domain=DOMAIN,
         unique_id="uuid:0000",
         data=CONF_DATA,
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
 
 async def test_ssdp_bravia.opp):

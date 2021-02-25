@@ -26,7 +26,7 @@ config = {
 
 async def test_setup_with_config(opp):
     """Test the platform setup with configuration."""
-    assert await async_setup_component.opp, "sensor", {"wsdot": config})
+    assert await async_setup_component(opp, "sensor", {"wsdot": config})
 
 
 async def test_setup_opp, requests_mock):
@@ -44,7 +44,7 @@ async def test_setup_opp, requests_mock):
 
     uri = re.compile(RESOURCE + "*")
     requests_mock.get(uri, text=load_fixture("wsdot.json"))
-    wsdot.setup_platform.opp, config, add_entities)
+    wsdot.setup_platform(opp, config, add_entities)
     assert len(entities) == 1
     sensor = entities[0]
     assert sensor.name == "I90 EB"

@@ -19,7 +19,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import MockEntity, MockEntityPlatform, async_mock_service
 
 
-async def test_call_service.opp, websocket_client):
+async def test_call_service(opp, websocket_client):
     """Test call service command."""
     calls = []
 
@@ -52,7 +52,7 @@ async def test_call_service.opp, websocket_client):
     assert call.data == {"hello": "world"}
 
 
-async def test_call_service_target.opp, websocket_client):
+async def test_call_service_target(opp, websocket_client):
     """Test call service command with target."""
     calls = []
 
@@ -93,7 +93,7 @@ async def test_call_service_target.opp, websocket_client):
     }
 
 
-async def test_call_service_not_found.opp, websocket_client):
+async def test_call_service_not_found(opp, websocket_client):
     """Test call service command."""
     await websocket_client.send_json(
         {
@@ -112,7 +112,7 @@ async def test_call_service_not_found.opp, websocket_client):
     assert msg["error"]["code"] == const.ERR_NOT_FOUND
 
 
-async def test_call_service_child_not_found.opp, websocket_client):
+async def test_call_service_child_not_found(opp, websocket_client):
     """Test not reporting not found errors if it's not the called service."""
 
     async def serv_handler(call):
@@ -257,7 +257,7 @@ async def test_call_service_error(opp, websocket_client):
     assert msg["error"]["message"] == "value_error"
 
 
-async def test_subscribe_unsubscribe_events.opp, websocket_client):
+async def test_subscribe_unsubscribe_events(opp, websocket_client):
     """Test subscribe/unsubscribe events command."""
     init_count = sum.opp.bus.async_listeners().values())
 
@@ -301,7 +301,7 @@ async def test_subscribe_unsubscribe_events.opp, websocket_client):
     assert sum.opp.bus.async_listeners().values()) == init_count
 
 
-async def test_get_states.opp, websocket_client):
+async def test_get_states(opp, websocket_client):
     """Test get_states command."""
     opp.states.async_set("greeting.hello", "world")
     opp.states.async_set("greeting.bye", "universe")
@@ -320,7 +320,7 @@ async def test_get_states.opp, websocket_client):
     assert msg["result"] == states
 
 
-async def test_get_services.opp, websocket_client):
+async def test_get_services(opp, websocket_client):
     """Test get_services command."""
     await websocket_client.send_json({"id": 5, "type": "get_services"})
 
@@ -367,11 +367,11 @@ async def test_ping(websocket_client):
     assert msg["type"] == "pong"
 
 
-async def test_call_service_context_with_user.opp, aiohttp_client, opp_access_token):
+async def test_call_service_context_with_user(opp, aiohttp_client, opp_access_token):
     """Test that the user is set in the service call context."""
-    assert await async_setup_component.opp, "websocket_api", {})
+    assert await async_setup_component(opp, "websocket_api", {})
 
-    calls = async_mock_service.opp, "domain_test", "test_service")
+    calls = async_mock_service(opp, "domain_test", "test_service")
     client = await aiohttp_client.opp.http.app)
 
     async with client.ws_connect(URL) as ws:
@@ -418,7 +418,7 @@ async def test_subscribe_requires_admin(websocket_client, opp_admin_user):
     assert msg["error"]["code"] == const.ERR_UNAUTHORIZED
 
 
-async def test_states_filters_visible.opp, opp_admin_user, websocket_client):
+async def test_states_filters_visible(opp, opp_admin_user, websocket_client):
     """Test we only get entities that we're allowed to see."""
     opp.admin_user.mock_policy({"entities": {"entity_ids": {"test.entity": True}}})
     opp.states.async_set("test.entity", "hello")
@@ -434,7 +434,7 @@ async def test_states_filters_visible.opp, opp_admin_user, websocket_client):
     assert msg["result"][0]["entity_id"] == "test.entity"
 
 
-async def test_get_states_not_allows_nan.opp, websocket_client):
+async def test_get_states_not_allows_nan(opp, websocket_client):
     """Test get_states command not allows NaN floats."""
     opp.states.async_set("greeting.hello", "world", {"hello": float("NaN")})
 
@@ -508,7 +508,7 @@ async def test_subscribe_unsubscribe_events_state_changed(
     assert msg["event"]["data"]["entity_id"] == "light.permitted"
 
 
-async def test_render_template_renders_template.opp, websocket_client):
+async def test_render_template_renders_template(opp, websocket_client):
     """Test simple template is rendered and updated."""
     opp.states.async_set("light.test", "on")
 
@@ -639,7 +639,7 @@ async def test_render_template_with_timeout_and_error(opp, websocket_client, cap
     assert "TemplateError" not in caplog.text
 
 
-async def test_render_template_error_in_template_code.opp, websocket_client, caplog):
+async def test_render_template_error_in_template_code(opp, websocket_client, caplog):
     """Test a template that will throw in template.py."""
     await websocket_client.send_json(
         {"id": 5, "type": "render_template", "template": "{{ now() | random }}"}
@@ -704,7 +704,7 @@ async def test_render_template_with_delayed_error(opp, websocket_client, caplog)
     assert "TemplateError" not in caplog.text
 
 
-async def test_render_template_with_timeout.opp, websocket_client, caplog):
+async def test_render_template_with_timeout(opp, websocket_client, caplog):
     """Test a template that will timeout."""
 
     slow_template_str = """
@@ -733,7 +733,7 @@ async def test_render_template_with_timeout.opp, websocket_client, caplog):
     assert "TemplateError" not in caplog.text
 
 
-async def test_render_template_returns_with_match_all.opp, websocket_client):
+async def test_render_template_returns_with_match_all(opp, websocket_client):
     """Test that a template that would match with all entities still return success."""
     await websocket_client.send_json(
         {"id": 5, "type": "render_template", "template": "State is: {{ 42 }}"}
@@ -745,10 +745,10 @@ async def test_render_template_returns_with_match_all.opp, websocket_client):
     assert msg["success"]
 
 
-async def test_manifest_list.opp, websocket_client):
+async def test_manifest_list(opp, websocket_client):
     """Test loading manifests."""
-    http = await async_get_integration.opp, "http")
-    websocket_api = await async_get_integration.opp, "websocket_api")
+    http = await async_get_integration(opp, "http")
+    websocket_api = await async_get_integration(opp, "websocket_api")
 
     await websocket_client.send_json({"id": 5, "type": "manifest/list"})
 
@@ -762,9 +762,9 @@ async def test_manifest_list.opp, websocket_client):
     ]
 
 
-async def test_manifest_get.opp, websocket_client):
+async def test_manifest_get(opp, websocket_client):
     """Test getting a manifest."""
-    hue = await async_get_integration.opp, "hue")
+    hue = await async_get_integration(opp, "hue")
 
     await websocket_client.send_json(
         {"id": 6, "type": "manifest/get", "integration": "hue"}
@@ -788,7 +788,7 @@ async def test_manifest_get.opp, websocket_client):
     assert msg["error"]["code"] == "not_found"
 
 
-async def test_entity_source_admin.opp, websocket_client, opp_admin_user):
+async def test_entity_source_admin(opp, websocket_client, opp_admin_user):
     """Check that we fetch sources correctly."""
     platform = MockEntityPlatform.opp)
 
@@ -901,7 +901,7 @@ async def test_entity_source_admin.opp, websocket_client, opp_admin_user):
     assert msg["error"]["code"] == const.ERR_UNAUTHORIZED
 
 
-async def test_subscribe_trigger.opp, websocket_client):
+async def test_subscribe_trigger(opp, websocket_client):
     """Test subscribing to a trigger."""
     init_count = sum.opp.bus.async_listeners().values())
 
@@ -955,7 +955,7 @@ async def test_subscribe_trigger.opp, websocket_client):
     assert sum.opp.bus.async_listeners().values()) == init_count
 
 
-async def test_test_condition.opp, websocket_client):
+async def test_test_condition(opp, websocket_client):
     """Test testing a condition."""
     opp.states.async_set("hello.world", "paulus")
 

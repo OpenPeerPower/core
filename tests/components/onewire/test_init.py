@@ -32,7 +32,7 @@ async def test_owserver_connect_failure.opp):
         options={},
         entry_id="2",
     )
-    config_entry_owserver.add_to.opp.opp)
+    config_entry_owserver.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.onewire.onewirehub.protocol.proxy",
@@ -61,7 +61,7 @@ async def test_failed_owserver_listing.opp):
         options={},
         entry_id="2",
     )
-    config_entry_owserver.add_to.opp.opp)
+    config_entry_owserver.add_to_opp(opp)
 
     with patch("openpeerpower.components.onewire.onewirehub.protocol.proxy") as owproxy:
         owproxy.return_value.dir.side_effect = OwnetError

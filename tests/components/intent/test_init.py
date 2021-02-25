@@ -9,7 +9,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import async_mock_service
 
 
-async def test_http_handle_intent.opp, opp_client, opp_admin_user):
+async def test_http_handle_intent(opp, opp_client, opp_admin_user):
     """Test handle intent via HTTP API."""
 
     class TestIntentHandler(intent.IntentHandler):
@@ -29,9 +29,9 @@ async def test_http_handle_intent.opp, opp_client, opp_admin_user):
             )
             return response
 
-    intent.async_register.opp, TestIntentHandler())
+    intent.async_register(opp, TestIntentHandler())
 
-    result = await async_setup_component.opp, "intent", {})
+    result = await async_setup_component(opp, "intent", {})
     assert result
 
     client = await opp_client()
@@ -52,17 +52,17 @@ async def test_http_handle_intent.opp, opp_client, opp_admin_user):
 
 async def test_cover_intents_loading.opp):
     """Test Cover Intents Loading."""
-    assert await async_setup_component.opp, "intent", {})
+    assert await async_setup_component(opp, "intent", {})
 
     with pytest.raises(intent.UnknownIntent):
         await intent.async_handle(
             opp. "test", " OppOpenCover", {"name": {"value": "garage door"}}
         )
 
-    assert await async_setup_component.opp, "cover", {})
+    assert await async_setup_component(opp, "cover", {})
 
     opp.states.async_set("cover.garage_door", "closed")
-    calls = async_mock_service.opp, "cover", SERVICE_OPEN_COVER)
+    calls = async_mock_service(opp, "cover", SERVICE_OPEN_COVER)
 
     response = await intent.async_handle(
         opp. "test", " OppOpenCover", {"name": {"value": "garage door"}}
@@ -79,12 +79,12 @@ async def test_cover_intents_loading.opp):
 
 async def test_turn_on_intent.opp):
     """Test OppTurnOn intent."""
-    result = await async_setup_component.opp, "openpeerpower", {})
-    result = await async_setup_component.opp, "intent", {})
+    result = await async_setup_component(opp, "openpeerpower", {})
+    result = await async_setup_component(opp, "intent", {})
     assert result
 
     opp.states.async_set("light.test_light", "off")
-    calls = async_mock_service.opp, "light", SERVICE_TURN_ON)
+    calls = async_mock_service(opp, "light", SERVICE_TURN_ON)
 
     response = await intent.async_handle(
         opp. "test", " OppTurnOn", {"name": {"value": "test light"}}
@@ -101,12 +101,12 @@ async def test_turn_on_intent.opp):
 
 async def test_turn_off_intent.opp):
     """Test OppTurnOff intent."""
-    result = await async_setup_component.opp, "openpeerpower", {})
-    result = await async_setup_component.opp, "intent", {})
+    result = await async_setup_component(opp, "openpeerpower", {})
+    result = await async_setup_component(opp, "intent", {})
     assert result
 
     opp.states.async_set("light.test_light", "on")
-    calls = async_mock_service.opp, "light", SERVICE_TURN_OFF)
+    calls = async_mock_service(opp, "light", SERVICE_TURN_OFF)
 
     response = await intent.async_handle(
         opp. "test", " OppTurnOff", {"name": {"value": "test light"}}
@@ -123,12 +123,12 @@ async def test_turn_off_intent.opp):
 
 async def test_toggle_intent.opp):
     """Test OppToggle intent."""
-    result = await async_setup_component.opp, "openpeerpower", {})
-    result = await async_setup_component.opp, "intent", {})
+    result = await async_setup_component(opp, "openpeerpower", {})
+    result = await async_setup_component(opp, "intent", {})
     assert result
 
     opp.states.async_set("light.test_light", "off")
-    calls = async_mock_service.opp, "light", SERVICE_TOGGLE)
+    calls = async_mock_service(opp, "light", SERVICE_TOGGLE)
 
     response = await intent.async_handle(
         opp. "test", " OppToggle", {"name": {"value": "test light"}}
@@ -148,14 +148,14 @@ async def test_turn_on_multiple_intent.opp):
 
     This tests that matching finds the proper entity among similar names.
     """
-    result = await async_setup_component.opp, "openpeerpower", {})
-    result = await async_setup_component.opp, "intent", {})
+    result = await async_setup_component(opp, "openpeerpower", {})
+    result = await async_setup_component(opp, "intent", {})
     assert result
 
     opp.states.async_set("light.test_light", "off")
     opp.states.async_set("light.test_lights_2", "off")
     opp.states.async_set("light.test_lighter", "off")
-    calls = async_mock_service.opp, "light", SERVICE_TURN_ON)
+    calls = async_mock_service(opp, "light", SERVICE_TURN_ON)
 
     response = await intent.async_handle(
         opp. "test", " OppTurnOn", {"name": {"value": "test lights"}}

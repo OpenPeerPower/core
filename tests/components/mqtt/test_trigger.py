@@ -14,16 +14,16 @@ from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
 @pytest.fixture(autouse=True)
-def setup_comp.opp, mqtt_mock):
+def setup_comp(opp, mqtt_mock):
     """Initialize components."""
-    mock_component.opp, "group")
+    mock_component(opp, "group")
 
 
-async def test_if_fires_on_topic_match.opp, calls):
+async def test_if_fires_on_topic_match(opp, calls):
     """Test if message is fired on topic match."""
     assert await async_setup_component(
         opp,
@@ -43,7 +43,7 @@ async def test_if_fires_on_topic_match.opp, calls):
         },
     )
 
-    async_fire_mqtt_message.opp, "test-topic", '{ "hello": "world" }')
+    async_fire_mqtt_message(opp, "test-topic", '{ "hello": "world" }')
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert 'mqtt - test-topic - { "hello": "world" } - world' == calls[0].data["some"]
@@ -54,12 +54,12 @@ async def test_if_fires_on_topic_match.opp, calls):
         {ATTR_ENTITY_ID: ENTITY_MATCH_ALL},
         blocking=True,
     )
-    async_fire_mqtt_message.opp, "test-topic", "test_payload")
+    async_fire_mqtt_message(opp, "test-topic", "test_payload")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_if_fires_on_topic_and_payload_match.opp, calls):
+async def test_if_fires_on_topic_and_payload_match(opp, calls):
     """Test if message is fired on topic and payload match."""
     assert await async_setup_component(
         opp,
@@ -76,12 +76,12 @@ async def test_if_fires_on_topic_and_payload_match.opp, calls):
         },
     )
 
-    async_fire_mqtt_message.opp, "test-topic", "hello")
+    async_fire_mqtt_message(opp, "test-topic", "hello")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_if_fires_on_templated_topic_and_payload_match.opp, calls):
+async def test_if_fires_on_templated_topic_and_payload_match(opp, calls):
     """Test if message is fired on templated topic and payload match."""
     assert await async_setup_component(
         opp,
@@ -98,20 +98,20 @@ async def test_if_fires_on_templated_topic_and_payload_match.opp, calls):
         },
     )
 
-    async_fire_mqtt_message.opp, "test-topic-", "foo")
+    async_fire_mqtt_message(opp, "test-topic-", "foo")
     await opp.async_block_till_done()
     assert len(calls) == 0
 
-    async_fire_mqtt_message.opp, "test-topic-4", "foo")
+    async_fire_mqtt_message(opp, "test-topic-4", "foo")
     await opp.async_block_till_done()
     assert len(calls) == 0
 
-    async_fire_mqtt_message.opp, "test-topic-4", "bar")
+    async_fire_mqtt_message(opp, "test-topic-4", "bar")
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_non_allowed_templates.opp, calls, caplog):
+async def test_non_allowed_templates(opp, calls, caplog):
     """Test non allowed function in template."""
     assert await async_setup_component(
         opp,
@@ -133,7 +133,7 @@ async def test_non_allowed_templates.opp, calls, caplog):
     )
 
 
-async def test_if_not_fires_on_topic_but_no_payload_match.opp, calls):
+async def test_if_not_fires_on_topic_but_no_payload_match(opp, calls):
     """Test if message is not fired on topic but no payload."""
     assert await async_setup_component(
         opp,
@@ -150,12 +150,12 @@ async def test_if_not_fires_on_topic_but_no_payload_match.opp, calls):
         },
     )
 
-    async_fire_mqtt_message.opp, "test-topic", "no-hello")
+    async_fire_mqtt_message(opp, "test-topic", "no-hello")
     await opp.async_block_till_done()
     assert len(calls) == 0
 
 
-async def test_encoding_default.opp, calls, mqtt_mock):
+async def test_encoding_default(opp, calls, mqtt_mock):
     """Test default encoding."""
     assert await async_setup_component(
         opp,
@@ -171,7 +171,7 @@ async def test_encoding_default.opp, calls, mqtt_mock):
     mqtt_mock.async_subscribe.assert_called_once_with("test-topic", ANY, 0, "utf-8")
 
 
-async def test_encoding_custom.opp, calls, mqtt_mock):
+async def test_encoding_custom(opp, calls, mqtt_mock):
     """Test default encoding."""
     assert await async_setup_component(
         opp,

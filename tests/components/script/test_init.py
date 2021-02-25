@@ -221,8 +221,8 @@ async def test_reload_service(opp, running):
         },
     )
 
-    assert.opp.states.get(ENTITY_ID) is not None
-    assert.opp.services.has_service(script.DOMAIN, "test")
+    assert opp.states.get(ENTITY_ID) is not None
+    assert opp.services.has_service(script.DOMAIN, "test")
 
     if running != "no":
         _, object_id = split_entity_id(ENTITY_ID)
@@ -240,15 +240,15 @@ async def test_reload_service(opp, running):
         await opp.async_block_till_done()
 
     if running != "same":
-        assert.opp.states.get(ENTITY_ID) is None
+        assert opp.states.get(ENTITY_ID) is None
         assert not.opp.services.has_service(script.DOMAIN, "test")
 
-        assert.opp.states.get("script.test2") is not None
-        assert.opp.services.has_service(script.DOMAIN, "test2")
+        assert opp.states.get("script.test2") is not None
+        assert opp.services.has_service(script.DOMAIN, "test2")
 
     else:
-        assert.opp.states.get(ENTITY_ID) is not None
-        assert.opp.services.has_service(script.DOMAIN, "test")
+        assert opp.states.get(ENTITY_ID) is not None
+        assert opp.services.has_service(script.DOMAIN, "test")
 
 
 async def test_service_descriptions(opp):

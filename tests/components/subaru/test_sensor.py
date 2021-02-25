@@ -33,12 +33,12 @@ async def test_sensors_ev_imperial.opp):
         vehicle_data=VEHICLE_DATA[TEST_VIN_2_EV],
         vehicle_status=VEHICLE_STATUS_EV,
     )
-    _assert_data.opp, EXPECTED_STATE_EV_IMPERIAL)
+    _assert_data(opp, EXPECTED_STATE_EV_IMPERIAL)
 
 
-async def test_sensors_ev_metric.opp, ev_entry):
+async def test_sensors_ev_metric(opp, ev_entry):
     """Test sensors supporting metric units."""
-    _assert_data.opp, EXPECTED_STATE_EV_METRIC)
+    _assert_data(opp, EXPECTED_STATE_EV_METRIC)
 
 
 async def test_sensors_missing_vin_data.opp):
@@ -49,10 +49,10 @@ async def test_sensors_missing_vin_data.opp):
         vehicle_data=VEHICLE_DATA[TEST_VIN_2_EV],
         vehicle_status=None,
     )
-    _assert_data.opp, EXPECTED_STATE_EV_UNAVAILABLE)
+    _assert_data(opp, EXPECTED_STATE_EV_UNAVAILABLE)
 
 
-def _assert_data.opp, expected_state):
+def _assert_data(opp, expected_state):
     sensor_list = EV_SENSORS
     sensor_list.extend(API_GEN_2_SENSORS)
     sensor_list.extend(SAFETY_SENSORS)

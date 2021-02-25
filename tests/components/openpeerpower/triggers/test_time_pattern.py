@@ -21,7 +21,7 @@ def calls.opp,
 
 
 @pytest.fixture(autouse=True)
-def setup_comp.opp,
+def setup_comp(opp,
     """Initialize components."""
     mock_component.opp."group")
 

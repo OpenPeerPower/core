@@ -24,7 +24,7 @@ DISCOVERY_INFO = {
 
 async def test_form.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -66,7 +66,7 @@ async def test_form.opp):
 
 async def test_title_without_name.opp):
     """Test we set the title to the hostname when the device doesn't have a name."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -165,7 +165,7 @@ async def test_form_auth.opp):
 @pytest.mark.parametrize(
     "error", [(asyncio.TimeoutError, "cannot_connect"), (ValueError, "unknown")]
 )
-async def test_form_errors_get_info.opp, error):
+async def test_form_errors_get_info(opp, error):
     """Test we handle errors."""
     exc, base_error = error
     result = await opp.config_entries.flow.async_init(
@@ -185,7 +185,7 @@ async def test_form_errors_get_info.opp, error):
 @pytest.mark.parametrize(
     "error", [(asyncio.TimeoutError, "cannot_connect"), (ValueError, "unknown")]
 )
-async def test_form_errors_test_connection.opp, error):
+async def test_form_errors_test_connection(opp, error):
     """Test we handle errors."""
     exc, base_error = error
     result = await opp.config_entries.flow.async_init(
@@ -206,11 +206,11 @@ async def test_form_errors_test_connection.opp, error):
 
 async def test_form_already_configured.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     entry = MockConfigEntry(
         domain="shelly", unique_id="test-mac", data={"host": "0.0.0.0"}
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -234,14 +234,14 @@ async def test_form_already_configured.opp):
 
 async def test_user_setup_ignored_device.opp):
     """Test user can successfully setup an ignored device."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     entry = MockConfigEntry(
         domain="shelly",
         unique_id="test-mac",
         data={"host": "0.0.0.0"},
         source=config_entries.SOURCE_IGNORE,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -306,7 +306,7 @@ async def test_form_firmware_unsupported.opp):
         (ValueError, "unknown"),
     ],
 )
-async def test_form_auth_errors_test_connection.opp, error):
+async def test_form_auth_errors_test_connection(opp, error):
     """Test we handle errors in authenticated devices."""
     exc, base_error = error
     result = await opp.config_entries.flow.async_init(
@@ -333,7 +333,7 @@ async def test_form_auth_errors_test_connection.opp, error):
 
 async def test_zeroconf.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "aioshelly.get_info",
@@ -384,7 +384,7 @@ async def test_zeroconf.opp):
 
 async def test_zeroconf_sleeping_device.opp):
     """Test sleeping device configuration via zeroconf."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "aioshelly.get_info",
@@ -456,7 +456,7 @@ async def test_zeroconf_sleeping_device.opp):
 async def test_zeroconf_sleeping_device_error(opp, error):
     """Test sleeping device configuration via zeroconf with error."""
     exc = error
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "aioshelly.get_info",
@@ -485,7 +485,7 @@ async def test_zeroconf_sleeping_device_error(opp, error):
 async def test_zeroconf_confirm_error(opp, error):
     """Test we get the form."""
     exc, base_error = error
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "aioshelly.get_info",
@@ -514,11 +514,11 @@ async def test_zeroconf_confirm_error(opp, error):
 
 async def test_zeroconf_already_configured.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     entry = MockConfigEntry(
         domain="shelly", unique_id="test-mac", data={"host": "0.0.0.0"}
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch(
         "aioshelly.get_info",
@@ -563,7 +563,7 @@ async def test_zeroconf_cannot_connect.opp):
 
 async def test_zeroconf_require_auth.opp):
     """Test zeroconf if auth is required."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "aioshelly.get_info",

@@ -47,7 +47,7 @@ async def test_unknown_command(websocket_client):
     assert msg["error"]["code"] == const.ERR_UNKNOWN_COMMAND
 
 
-async def test_handler_failing.opp, websocket_client):
+async def test_handler_failing(opp, websocket_client):
     """Test a command that raises."""
     opp.components.websocket_api.async_register_command(
         "bla",
@@ -63,7 +63,7 @@ async def test_handler_failing.opp, websocket_client):
     assert msg["error"]["code"] == const.ERR_UNKNOWN_ERROR
 
 
-async def test_invalid_vol.opp, websocket_client):
+async def test_invalid_vol(opp, websocket_client):
     """Test a command that raises invalid vol error."""
     opp.components.websocket_api.async_register_command(
         "bla",

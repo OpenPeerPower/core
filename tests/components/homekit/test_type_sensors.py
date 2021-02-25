@@ -33,7 +33,7 @@ from openpeerpower.core import CoreState
 from openpeerpower.helpers import entity_registry
 
 
-async def test_temperature.opp, hk_driver):
+async def test_temperature(opp, hk_driver):
     """Test if accessory is updated after state change."""
     entity_id = "sensor.temperature"
 
@@ -67,7 +67,7 @@ async def test_temperature.opp, hk_driver):
     assert acc.char_temp.value == 24
 
 
-async def test_humidity.opp, hk_driver):
+async def test_humidity(opp, hk_driver):
     """Test if accessory is updated after state change."""
     entity_id = "sensor.humidity"
 
@@ -91,7 +91,7 @@ async def test_humidity.opp, hk_driver):
     assert acc.char_humidity.value == 20
 
 
-async def test_air_quality.opp, hk_driver):
+async def test_air_quality(opp, hk_driver):
     """Test if accessory is updated after state change."""
     entity_id = "sensor.air_quality"
 
@@ -123,7 +123,7 @@ async def test_air_quality.opp, hk_driver):
     assert acc.char_quality.value == 5
 
 
-async def test_co.opp, hk_driver):
+async def test_co(opp, hk_driver):
     """Test if accessory is updated after state change."""
     entity_id = "sensor.co"
 
@@ -203,7 +203,7 @@ async def test_co2.opp, hk_driver):
     assert acc.char_detected.value == 0
 
 
-async def test_light.opp, hk_driver):
+async def test_light(opp, hk_driver):
     """Test if accessory is updated after state change."""
     entity_id = "sensor.light"
 
@@ -227,7 +227,7 @@ async def test_light.opp, hk_driver):
     assert acc.char_light.value == 300
 
 
-async def test_binary.opp, hk_driver):
+async def test_binary(opp, hk_driver):
     """Test if accessory is updated after state change."""
     entity_id = "binary_sensor.opening"
 
@@ -264,7 +264,7 @@ async def test_binary.opp, hk_driver):
     assert acc.char_detected.value == 0
 
 
-async def test_motion_uses_bool.opp, hk_driver):
+async def test_motion_uses_bool(opp, hk_driver):
     """Test if accessory is updated after state change."""
     entity_id = "binary_sensor.motion"
 
@@ -309,7 +309,7 @@ async def test_motion_uses_bool.opp, hk_driver):
     assert acc.char_detected.value is False
 
 
-async def test_binary_device_classes.opp, hk_driver):
+async def test_binary_device_classes(opp, hk_driver):
     """Test if services and characteristics are assigned correctly."""
     entity_id = "binary_sensor.demo"
 
@@ -322,7 +322,7 @@ async def test_binary_device_classes.opp, hk_driver):
         assert acc.char_detected.display_name == char
 
 
-async def test_sensor_restore.opp, hk_driver, events):
+async def test_sensor_restore(opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
     opp.state = CoreState.not_running
 
@@ -346,8 +346,8 @@ async def test_sensor_restore.opp, hk_driver, events):
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
     await opp.async_block_till_done()
 
-    acc = get_accessory.opp, hk_driver, opp.states.get("sensor.temperature"), 2, {})
+    acc = get_accessory(opp, hk_driver, opp.states.get("sensor.temperature"), 2, {})
     assert acc.category == 10
 
-    acc = get_accessory.opp, hk_driver, opp.states.get("sensor.humidity"), 2, {})
+    acc = get_accessory(opp, hk_driver, opp.states.get("sensor.humidity"), 2, {})
     assert acc.category == 10

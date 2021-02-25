@@ -132,7 +132,7 @@ async def test_ssdp_device_exists_abort.opp: OpenPeerPowerType) -> None:
         },
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO_P_B.copy()
     result = await opp.config_entries.flow.async_init(

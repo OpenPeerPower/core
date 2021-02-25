@@ -52,7 +52,7 @@ def minio_client_event_fixture():
         yield minio_client_mock
 
 
-async def test_minio_services.opp, caplog, minio_client):
+async def test_minio_services(opp, caplog, minio_client):
     """Test Minio services."""
     opp.config.allowlist_external_dirs = {"/test"}
 
@@ -105,7 +105,7 @@ async def test_minio_services.opp, caplog, minio_client):
     minio_client.reset_mock()
 
 
-async def test_minio_listen.opp, caplog, minio_client_event):
+async def test_minio_listen(opp, caplog, minio_client_event):
     """Test minio listen on notifications."""
     minio_client_event.presigned_get_object.return_value = "http://url"
 

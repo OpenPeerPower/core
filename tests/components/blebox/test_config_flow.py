@@ -50,7 +50,7 @@ def flow_feature_mock_fixture():
     )
 
 
-async def test_flow_works.opp, valid_feature_mock, flow_feature_mock):
+async def test_flow_works(opp, valid_feature_mock, flow_feature_mock):
     """Test that config flow works."""
 
     result = await opp.config_entries.flow.async_init(
@@ -82,7 +82,7 @@ def product_class_mock_fixture():
     yield patcher
 
 
-async def test_flow_with_connection_failure.opp, product_class_mock):
+async def test_flow_with_connection_failure(opp, product_class_mock):
     """Test that config flow works."""
     with product_class_mock as products_class:
         products_class.async_from_host = AsyncMock(
@@ -97,7 +97,7 @@ async def test_flow_with_connection_failure.opp, product_class_mock):
         assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_flow_with_api_failure.opp, product_class_mock):
+async def test_flow_with_api_failure(opp, product_class_mock):
     """Test that config flow works."""
     with product_class_mock as products_class:
         products_class.async_from_host = AsyncMock(
@@ -112,7 +112,7 @@ async def test_flow_with_api_failure.opp, product_class_mock):
         assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_flow_with_unknown_failure.opp, product_class_mock):
+async def test_flow_with_unknown_failure(opp, product_class_mock):
     """Test that config flow works."""
     with product_class_mock as products_class:
         products_class.async_from_host = AsyncMock(side_effect=RuntimeError)
@@ -124,7 +124,7 @@ async def test_flow_with_unknown_failure.opp, product_class_mock):
         assert result["errors"] == {"base": "unknown"}
 
 
-async def test_flow_with_unsupported_version.opp, product_class_mock):
+async def test_flow_with_unsupported_version(opp, product_class_mock):
     """Test that config flow works."""
     with product_class_mock as products_class:
         products_class.async_from_host = AsyncMock(
@@ -141,15 +141,15 @@ async def test_flow_with_unsupported_version.opp, product_class_mock):
 
 async def test_async_setup_opp):
     """Test async_setup (for coverage)."""
-    assert await async_setup_component.opp, "blebox", {"host": "172.2.3.4"})
+    assert await async_setup_component(opp, "blebox", {"host": "172.2.3.4"})
     await opp.async_block_till_done()
 
 
-async def test_already_configured.opp, valid_feature_mock):
+async def test_already_configured(opp, valid_feature_mock):
     """Test that same device cannot be added twice."""
 
     config = mock_config("172.2.3.4")
-    config.add_to.opp.opp)
+    config.add_to_opp(opp)
 
     await opp.config_entries.async_setup(config.entry_id)
     await opp.async_block_till_done()
@@ -163,24 +163,24 @@ async def test_already_configured.opp, valid_feature_mock):
     assert result["reason"] == "address_already_configured"
 
 
-async def test_async_setup_entry.opp, valid_feature_mock):
+async def test_async_setup_entry(opp, valid_feature_mock):
     """Test async_setup_entry (for coverage)."""
 
     config = mock_config()
-    config.add_to.opp.opp)
+    config.add_to_opp(opp)
 
     assert await opp.config_entries.async_setup(config.entry_id)
     await opp.async_block_till_done()
 
-    assert.opp.config_entries.async_entries() == [config]
+    assert opp.config_entries.async_entries() == [config]
     assert config.state == config_entries.ENTRY_STATE_LOADED
 
 
-async def test_async_remove_entry.opp, valid_feature_mock):
+async def test_async_remove_entry(opp, valid_feature_mock):
     """Test async_setup_entry (for coverage)."""
 
     config = mock_config()
-    config.add_to.opp.opp)
+    config.add_to_opp(opp)
 
     assert await opp.config_entries.async_setup(config.entry_id)
     await opp.async_block_till_done()
@@ -188,5 +188,5 @@ async def test_async_remove_entry.opp, valid_feature_mock):
     assert await opp.config_entries.async_remove(config.entry_id)
     await opp.async_block_till_done()
 
-    assert.opp.config_entries.async_entries() == []
+    assert opp.config_entries.async_entries() == []
     assert config.state == config_entries.ENTRY_STATE_NOT_LOADED

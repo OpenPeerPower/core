@@ -242,7 +242,7 @@ async def test_options(opp: OpenPeerPower):
         CONF_NIGHTLIGHT_SWITCH: DEFAULT_NIGHTLIGHT_SWITCH,
     }
     assert config_entry.options == config
-    assert.opp.states.get(f"light.{NAME}_nightlight") is None
+    assert opp.states.get(f"light.{NAME}_nightlight") is None
 
     result = await opp.config_entries.options.async_init(config_entry.entry_id)
     assert result["type"] == "form"
@@ -259,7 +259,7 @@ async def test_options(opp: OpenPeerPower):
     assert result2["type"] == "create_entry"
     assert result2["data"] == config
     assert result2["data"] == config_entry.options
-    assert.opp.states.get(f"light.{NAME}_nightlight") is not None
+    assert opp.states.get(f"light.{NAME}_nightlight") is not None
 
 
 async def test_manual_no_capabilities(opp: OpenPeerPower):

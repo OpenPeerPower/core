@@ -77,24 +77,24 @@ async def test_turn_off_switch.opp: core.OpenPeerPower):
 
 async def test_update_reports_switch_is_on.opp: core.OpenPeerPower):
     """Tests that update command sets correct state when Bond API reports the device is on."""
-    await setup_platform.opp, SWITCH_DOMAIN, generic_device("name-1"))
+    await setup_platform(opp, SWITCH_DOMAIN, generic_device("name-1"))
 
     with patch_bond_device_state(return_value={"power": 1}):
-        async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+        async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
         await opp.async_block_till_done()
 
-    assert.opp.states.get("switch.name_1").state == "on"
+    assert opp.states.get("switch.name_1").state == "on"
 
 
 async def test_update_reports_switch_is_off.opp: core.OpenPeerPower):
     """Tests that update command sets correct state when Bond API reports the device is off."""
-    await setup_platform.opp, SWITCH_DOMAIN, generic_device("name-1"))
+    await setup_platform(opp, SWITCH_DOMAIN, generic_device("name-1"))
 
     with patch_bond_device_state(return_value={"power": 0}):
-        async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+        async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
         await opp.async_block_till_done()
 
-    assert.opp.states.get("switch.name_1").state == "off"
+    assert opp.states.get("switch.name_1").state == "off"
 
 
 async def test_switch_available.opp: core.OpenPeerPower):

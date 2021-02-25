@@ -25,8 +25,8 @@ async def test_intent_set_humidity.opp):
     opp.states.async_set(
         "humidifier.bedroom_humidifier", STATE_ON, {ATTR_HUMIDITY: 40}
     )
-    humidity_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_HUMIDITY)
-    turn_on_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
+    humidity_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_HUMIDITY)
+    turn_on_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_ON)
     await intent.async_setup_intents.opp)
 
     result = await opp.helpers.intent.async_handle(
@@ -52,8 +52,8 @@ async def test_intent_set_humidity_and_turn_on.opp):
     opp.states.async_set(
         "humidifier.bedroom_humidifier", STATE_OFF, {ATTR_HUMIDITY: 40}
     )
-    humidity_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_HUMIDITY)
-    turn_on_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
+    humidity_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_HUMIDITY)
+    turn_on_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_ON)
     await intent.async_setup_intents.opp)
 
     result = await opp.helpers.intent.async_handle(
@@ -93,8 +93,8 @@ async def test_intent_set_mode.opp):
             ATTR_MODE: "home",
         },
     )
-    mode_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_MODE)
-    turn_on_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
+    mode_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_MODE)
+    turn_on_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_ON)
     await intent.async_setup_intents.opp)
 
     result = await opp.helpers.intent.async_handle(
@@ -130,8 +130,8 @@ async def test_intent_set_mode_and_turn_on.opp):
             ATTR_MODE: "home",
         },
     )
-    mode_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_MODE)
-    turn_on_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
+    mode_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_MODE)
+    turn_on_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_ON)
     await intent.async_setup_intents.opp)
 
     result = await opp.helpers.intent.async_handle(
@@ -164,7 +164,7 @@ async def test_intent_set_mode_tests_feature.opp):
     opp.states.async_set(
         "humidifier.bedroom_humidifier", STATE_ON, {ATTR_HUMIDITY: 40}
     )
-    mode_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_MODE)
+    mode_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_MODE)
     await intent.async_setup_intents.opp)
 
     try:
@@ -192,7 +192,7 @@ async def test_intent_set_unknown_mode.opp):
             ATTR_MODE: "home",
         },
     )
-    mode_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_MODE)
+    mode_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_MODE)
     await intent.async_setup_intents.opp)
 
     try:

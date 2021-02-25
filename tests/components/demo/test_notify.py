@@ -53,12 +53,12 @@ def mock_demo_notify_fixture():
 async def setup_notify.opp):
     """Test setup."""
     with assert_setup_component(1, notify.DOMAIN) as config:
-        assert await async_setup_component.opp, notify.DOMAIN, CONFIG)
+        assert await async_setup_component(opp, notify.DOMAIN, CONFIG)
     assert config[notify.DOMAIN]
     await opp.async_block_till_done()
 
 
-async def test_no_notify_service.opp, mock_demo_notify, caplog):
+async def test_no_notify_service(opp, mock_demo_notify, caplog):
     """Test missing platform notify service instance."""
     caplog.set_level(logging.ERROR)
     mock_demo_notify.return_value = None
@@ -68,7 +68,7 @@ async def test_no_notify_service.opp, mock_demo_notify, caplog):
     assert "Failed to initialize notification service demo" in caplog.text
 
 
-async def test_discover_notify.opp, mock_demo_notify):
+async def test_discover_notify(opp, mock_demo_notify):
     """Test discovery of notify demo platform."""
     assert notify.DOMAIN not in.opp.config.components
     mock_demo_notify.return_value = None
@@ -85,7 +85,7 @@ async def test_discover_notify.opp, mock_demo_notify):
     )
 
 
-async def test_sending_none_message.opp, events):
+async def test_sending_none_message(opp, events):
     """Test send with None as message."""
     await setup_notify.opp)
     with pytest.raises(vol.Invalid):
@@ -96,7 +96,7 @@ async def test_sending_none_message.opp, events):
     assert len(events) == 0
 
 
-async def test_sending_templated_message.opp, events):
+async def test_sending_templated_message(opp, events):
     """Send a templated message."""
     await setup_notify.opp)
     opp.states.async_set("sensor.temperature", 10)
@@ -111,7 +111,7 @@ async def test_sending_templated_message.opp, events):
     assert last_event.data[notify.ATTR_MESSAGE] == "10"
 
 
-async def test_method_forwards_correct_data.opp, events):
+async def test_method_forwards_correct_data(opp, events):
     """Test that all data from the service gets forwarded to service."""
     await setup_notify.opp)
     data = {
@@ -130,7 +130,7 @@ async def test_method_forwards_correct_data.opp, events):
     } == data
 
 
-async def test_calling_notify_from_script_loaded_from_yaml_without_title.opp, events):
+async def test_calling_notify_from_script_loaded_from_yaml_without_title(opp, events):
     """Test if we can call a notify from a script."""
     await setup_notify.opp)
     step = {
@@ -152,7 +152,7 @@ async def test_calling_notify_from_script_loaded_from_yaml_without_title.opp, ev
     } == events[0].data
 
 
-async def test_calling_notify_from_script_loaded_from_yaml_with_title.opp, events):
+async def test_calling_notify_from_script_loaded_from_yaml_with_title(opp, events):
     """Test if we can call a notify from a script."""
     await setup_notify.opp)
     step = {
@@ -178,12 +178,12 @@ async def test_calling_notify_from_script_loaded_from_yaml_with_title.opp, event
 async def test_targets_are_services.opp):
     """Test that all targets are exposed as individual services."""
     await setup_notify.opp)
-    assert.opp.services.has_service("notify", "demo") is not None
+    assert opp.services.has_service("notify", "demo") is not None
     service = "demo_test_target_name"
-    assert.opp.services.has_service("notify", service) is not None
+    assert opp.services.has_service("notify", service) is not None
 
 
-async def test_messages_to_targets_route.opp, calls, record_calls):
+async def test_messages_to_targets_route(opp, calls, record_calls):
     """Test message routing to specific target services."""
     await setup_notify.opp)
     opp.bus.async_listen_once("notify", record_calls)

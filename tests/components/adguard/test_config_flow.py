@@ -57,7 +57,7 @@ async def test_connection_error(opp, aioclient_mock):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_full_flow_implementation.opp, aioclient_mock):
+async def test_full_flow_implementation(opp, aioclient_mock):
     """Test registering an integration and finishing flow works."""
     aioclient_mock.get(
         f"{'https' if FIXTURE_USER_INPUT[CONF_SSL] else 'http'}"
@@ -86,7 +86,7 @@ async def test_full_flow_implementation.opp, aioclient_mock):
 
 async def test_integration_already_exists(opp):
     """Test we only allow a single config flow."""
-    MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
+    MockConfigEntry(domain=DOMAIN).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
@@ -99,7 +99,7 @@ async def test.oppio_single_instance.opp):
     """Test we only allow a single config flow."""
     MockConfigEntry(
         domain="adguard", data={"host": "mock-adguard", "port": "3000"}
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         "adguard",
@@ -115,7 +115,7 @@ async def test.oppio_update_instance_not_running.opp):
     entry = MockConfigEntry(
         domain="adguard", data={"host": "mock-adguard", "port": "3000"}
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
 
     result = await opp.config_entries.flow.async_init(
@@ -131,7 +131,7 @@ async def test.oppio_update_instance_not_running.opp):
     assert result["reason"] == "existing_instance_updated"
 
 
-async def test.oppio_update_instance_running.opp, aioclient_mock):
+async def test.oppio_update_instance_running(opp, aioclient_mock):
     """Test we only allow a single config flow."""
     aioclient_mock.get(
         "http://mock-adguard-updated:3000/control/status",
@@ -155,7 +155,7 @@ async def test.oppio_update_instance_running.opp, aioclient_mock):
             "ssl": False,
         },
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch.object(
         opp.config_entries,
@@ -192,7 +192,7 @@ async def test.oppio_update_instance_running.opp, aioclient_mock):
     assert entry.data["host"] == "mock-adguard-updated"
 
 
-async def test.oppio_confirm.opp, aioclient_mock):
+async def test.oppio_confirm(opp, aioclient_mock):
     """Test we can finish a config flow."""
     aioclient_mock.get(
         "http://mock-adguard:3000/control/status",

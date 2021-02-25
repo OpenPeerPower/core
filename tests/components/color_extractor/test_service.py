@@ -116,7 +116,7 @@ async def test_missing_url_and_path.opp):
     assert state.state == STATE_OFF
 
 
-async def _async_load_color_extractor_url.opp, service_data):
+async def _async_load_color_extractor_url(opp, service_data):
     # Load our color_extractor component
     await async_setup_component(
         opp,
@@ -138,7 +138,7 @@ async def _async_load_color_extractor_url.opp, service_data):
     await opp.async_block_till_done()
 
 
-async def test_url_success.opp, aioclient_mock):
+async def test_url_success(opp, aioclient_mock):
     """Test that a successful image GET translate to light RGB."""
     service_data = {
         ATTR_URL: "http://example.com/images/logo.png",
@@ -156,7 +156,7 @@ async def test_url_success.opp, aioclient_mock):
     # Allow access to this URL using the proper mechanism
     opp.config.allowlist_external_urls.add("http://example.com/images/")
 
-    await _async_load_color_extractor_url.opp, service_data)
+    await _async_load_color_extractor_url(opp, service_data)
 
     state = opp.states.get(LIGHT_ENTITY)
     assert state
@@ -171,14 +171,14 @@ async def test_url_success.opp, aioclient_mock):
     assert _close_enough(state.attributes[ATTR_RGB_COLOR], (50, 100, 150))
 
 
-async def test_url_not_allowed.opp, aioclient_mock):
+async def test_url_not_allowed(opp, aioclient_mock):
     """Test that a not allowed external URL fails to turn light on."""
     service_data = {
         ATTR_URL: "http://denied.com/images/logo.png",
         ATTR_ENTITY_ID: LIGHT_ENTITY,
     }
 
-    await _async_load_color_extractor_url.opp, service_data)
+    await _async_load_color_extractor_url(opp, service_data)
 
     # Light has not been modified due to failure
     state = opp.states.get(LIGHT_ENTITY)
@@ -186,7 +186,7 @@ async def test_url_not_allowed.opp, aioclient_mock):
     assert state.state == STATE_OFF
 
 
-async def test_url_exception.opp, aioclient_mock):
+async def test_url_exception(opp, aioclient_mock):
     """Test that a HTTPError fails to turn light on."""
     service_data = {
         ATTR_URL: "http://example.com/images/logo.png",
@@ -199,7 +199,7 @@ async def test_url_exception.opp, aioclient_mock):
     # Mock the HTTP Response with an HTTPError
     aioclient_mock.get(url=service_data[ATTR_URL], exc=aiohttp.ClientError)
 
-    await _async_load_color_extractor_url.opp, service_data)
+    await _async_load_color_extractor_url(opp, service_data)
 
     # Light has not been modified due to failure
     state = opp.states.get(LIGHT_ENTITY)
@@ -220,7 +220,7 @@ async def test_url_error(opp, aioclient_mock):
     # Mock the HTTP Response with a 400 Bad Request error
     aioclient_mock.get(url=service_data[ATTR_URL], status=400)
 
-    await _async_load_color_extractor_url.opp, service_data)
+    await _async_load_color_extractor_url(opp, service_data)
 
     # Light has not been modified due to failure
     state = opp.states.get(LIGHT_ENTITY)
@@ -260,7 +260,7 @@ async def test_file.opp):
     # Add our /opt/ path to the allowed list of paths
     opp.config.allowlist_external_dirs.add("/opt/")
 
-    await async_setup_component.opp, DOMAIN, {})
+    await async_setup_component(opp, DOMAIN, {})
     await opp.async_block_till_done()
 
     # Verify pre service check
@@ -298,7 +298,7 @@ async def test_file_denied_dir.opp):
         ATTR_BRIGHTNESS_PCT: 100,
     }
 
-    await async_setup_component.opp, DOMAIN, {})
+    await async_setup_component(opp, DOMAIN, {})
     await opp.async_block_till_done()
 
     # Verify pre service check

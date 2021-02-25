@@ -6,9 +6,9 @@ import pytest
 from .common import setup_ozw
 
 
-async def test_services.opp, light_data, sent_messages):
+async def test_services(opp, light_data, sent_messages):
     """Test services on lock."""
-    await setup_ozw.opp, fixture=light_data)
+    await setup_ozw(opp, fixture=light_data)
 
     # Test set_config_parameter list by label
     await opp.services.async_call(

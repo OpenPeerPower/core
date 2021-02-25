@@ -167,7 +167,7 @@ async def test_user_device_exists_abort.opp):
             unique_id="1006000212",
             source=SOURCE_USER,
         )
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
         assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
         result = await opp.config_entries.flow.async_init(
@@ -208,7 +208,7 @@ async def test_zeroconf_device_exists_abort.opp):
             unique_id="1006000212",
             source=SOURCE_USER,
         )
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
 
         assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
@@ -236,7 +236,7 @@ async def test_cloud_device_exists_abort.opp):
         unique_id="smappeeCloud",
         source=SOURCE_USER,
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
@@ -257,7 +257,7 @@ async def test_zeroconf_abort_if_cloud_device_exists(opp):
         unique_id="smappeeCloud",
         source=SOURCE_USER,
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
@@ -298,7 +298,7 @@ async def test_zeroconf_confirm_abort_if_cloud_device_exists(opp):
         unique_id="smappeeCloud",
         source=SOURCE_USER,
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
@@ -317,7 +317,7 @@ async def test_abort_cloud_flow_if_local_device_exists(opp):
         unique_id="1006000212",
         source=SOURCE_USER,
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 

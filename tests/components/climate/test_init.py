@@ -16,12 +16,12 @@ from openpeerpower.components.climate import (
 from tests.common import async_mock_service
 
 
-async def test_set_temp_schema_no_req.opp, caplog):
+async def test_set_temp_schema_no_req(opp, caplog):
     """Test the set temperature schema with missing required data."""
     domain = "climate"
     service = "test_set_temperature"
     schema = SET_TEMPERATURE_SCHEMA
-    calls = async_mock_service.opp, domain, service, schema)
+    calls = async_mock_service(opp, domain, service, schema)
 
     data = {"hvac_mode": "off", "entity_id": ["climate.test_id"]}
     with pytest.raises(vol.Invalid):
@@ -31,12 +31,12 @@ async def test_set_temp_schema_no_req.opp, caplog):
     assert len(calls) == 0
 
 
-async def test_set_temp_schema.opp, caplog):
+async def test_set_temp_schema(opp, caplog):
     """Test the set temperature schema with ok required data."""
     domain = "climate"
     service = "test_set_temperature"
     schema = SET_TEMPERATURE_SCHEMA
-    calls = async_mock_service.opp, domain, service, schema)
+    calls = async_mock_service(opp, domain, service, schema)
 
     data = {"temperature": 20.0, "hvac_mode": "heat", "entity_id": ["climate.test_id"]}
     await opp.services.async_call(domain, service, data)

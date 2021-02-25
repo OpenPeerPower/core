@@ -12,17 +12,17 @@ from openpeerpower.components.zwave import (
 from tests.mock.zwave import MockEntityValues, MockNode, MockValue, value_changed
 
 
-def test_get_device_detects_none.opp, mock_openzwave):
+def test_get_device_detects_none(opp, mock_openzwave):
     """Test device returns none."""
     node = MockNode()
     value = MockValue(data=0, node=node)
     values = MockEntityValues(primary=value, node=node)
 
-    device = cover.get_device.opp.opp, node=node, values=values, node_config={})
+    device = cover.get_device_opp(opp, node=node, values=values, node_config={})
     assert device is None
 
 
-def test_get_device_detects_rollershutter.opp, mock_openzwave):
+def test_get_device_detects_rollershutter(opp, mock_openzwave):
     """Test device returns rollershutter."""
     opp.data[const.DATA_NETWORK] = MagicMock()
     node = MockNode()
@@ -31,11 +31,11 @@ def test_get_device_detects_rollershutter.opp, mock_openzwave):
     )
     values = MockEntityValues(primary=value, open=None, close=None, node=node)
 
-    device = cover.get_device.opp.opp, node=node, values=values, node_config={})
+    device = cover.get_device_opp(opp, node=node, values=values, node_config={})
     assert isinstance(device, cover.ZwaveRollershutter)
 
 
-def test_get_device_detects_garagedoor_switch.opp, mock_openzwave):
+def test_get_device_detects_garagedoor_switch(opp, mock_openzwave):
     """Test device returns garage door."""
     node = MockNode()
     value = MockValue(
@@ -43,13 +43,13 @@ def test_get_device_detects_garagedoor_switch.opp, mock_openzwave):
     )
     values = MockEntityValues(primary=value, node=node)
 
-    device = cover.get_device.opp.opp, node=node, values=values, node_config={})
+    device = cover.get_device_opp(opp, node=node, values=values, node_config={})
     assert isinstance(device, cover.ZwaveGarageDoorSwitch)
     assert device.device_class == "garage"
     assert device.supported_features == SUPPORT_OPEN | SUPPORT_CLOSE
 
 
-def test_get_device_detects_garagedoor_barrier.opp, mock_openzwave):
+def test_get_device_detects_garagedoor_barrier(opp, mock_openzwave):
     """Test device returns garage door."""
     node = MockNode()
     value = MockValue(
@@ -57,13 +57,13 @@ def test_get_device_detects_garagedoor_barrier.opp, mock_openzwave):
     )
     values = MockEntityValues(primary=value, node=node)
 
-    device = cover.get_device.opp.opp, node=node, values=values, node_config={})
+    device = cover.get_device_opp(opp, node=node, values=values, node_config={})
     assert isinstance(device, cover.ZwaveGarageDoorBarrier)
     assert device.device_class == "garage"
     assert device.supported_features == SUPPORT_OPEN | SUPPORT_CLOSE
 
 
-def test_roller_no_position_workaround.opp, mock_openzwave):
+def test_roller_no_position_workaround(opp, mock_openzwave):
     """Test position changed."""
     opp.data[const.DATA_NETWORK] = MagicMock()
     node = MockNode(manufacturer_id="0047", product_type="5a52")
@@ -71,12 +71,12 @@ def test_roller_no_position_workaround.opp, mock_openzwave):
         data=45, node=node, command_class=const.COMMAND_CLASS_SWITCH_MULTILEVEL
     )
     values = MockEntityValues(primary=value, open=None, close=None, node=node)
-    device = cover.get_device.opp.opp, node=node, values=values, node_config={})
+    device = cover.get_device_opp(opp, node=node, values=values, node_config={})
 
     assert device.current_cover_position is None
 
 
-def test_roller_value_changed.opp, mock_openzwave):
+def test_roller_value_changed(opp, mock_openzwave):
     """Test position changed."""
     opp.data[const.DATA_NETWORK] = MagicMock()
     node = MockNode()
@@ -84,7 +84,7 @@ def test_roller_value_changed.opp, mock_openzwave):
         data=None, node=node, command_class=const.COMMAND_CLASS_SWITCH_MULTILEVEL
     )
     values = MockEntityValues(primary=value, open=None, close=None, node=node)
-    device = cover.get_device.opp.opp, node=node, values=values, node_config={})
+    device = cover.get_device(opp(opp, node=node, values=values, node_config={})
 
     assert device.current_cover_position is None
     assert device.is_closed is None
@@ -108,7 +108,7 @@ def test_roller_value_changed.opp, mock_openzwave):
     assert not device.is_closed
 
 
-def test_roller_commands.opp, mock_openzwave):
+def test_roller_commands(opp, mock_openzwave):
     """Test position changed."""
     mock_network = opp.data[const.DATA_NETWORK] = MagicMock()
     node = MockNode()
@@ -120,7 +120,7 @@ def test_roller_commands.opp, mock_openzwave):
     values = MockEntityValues(
         primary=value, open=open_value, close=close_value, node=node
     )
-    device = cover.get_device.opp.opp, node=node, values=values, node_config={})
+    device = cover.get_device(opp(opp, node=node, values=values, node_config={})
 
     device.set_cover_position(position=25)
     assert node.set_dimmer.called
@@ -144,7 +144,7 @@ def test_roller_commands.opp, mock_openzwave):
     assert value_id == open_value.value_id
 
 
-def test_roller_invert_percent.opp, mock_openzwave):
+def test_roller_invert_percent(opp, mock_openzwave):
     """Test position changed."""
     mock_network = opp.data[const.DATA_NETWORK] = MagicMock()
     node = MockNode()
@@ -157,7 +157,7 @@ def test_roller_invert_percent.opp, mock_openzwave):
         primary=value, open=open_value, close=close_value, node=node
     )
     device = cover.get_device(
-        opp.opp, node=node, values=values, node_config={CONF_INVERT_PERCENT: True}
+        opp(opp, node=node, values=values, node_config={CONF_INVERT_PERCENT: True}
     )
 
     device.set_cover_position(position=25)
@@ -172,7 +172,7 @@ def test_roller_invert_percent.opp, mock_openzwave):
     assert value_id == open_value.value_id
 
 
-def test_roller_reverse_open_close.opp, mock_openzwave):
+def test_roller_reverse_open_close(opp, mock_openzwave):
     """Test position changed."""
     mock_network = opp.data[const.DATA_NETWORK] = MagicMock()
     node = MockNode()
@@ -185,7 +185,7 @@ def test_roller_reverse_open_close.opp, mock_openzwave):
         primary=value, open=open_value, close=close_value, node=node
     )
     device = cover.get_device(
-        opp.opp,
+        opp(opp,
         node=node,
         values=values,
         node_config={CONF_INVERT_OPENCLOSE_BUTTONS: True},
@@ -207,14 +207,14 @@ def test_roller_reverse_open_close.opp, mock_openzwave):
     assert value_id == close_value.value_id
 
 
-def test_switch_garage_value_changed.opp, mock_openzwave):
+def test_switch_garage_value_changed(opp, mock_openzwave):
     """Test position changed."""
     node = MockNode()
     value = MockValue(
         data=False, node=node, command_class=const.COMMAND_CLASS_SWITCH_BINARY
     )
     values = MockEntityValues(primary=value, node=node)
-    device = cover.get_device.opp.opp, node=node, values=values, node_config={})
+    device = cover.get_device(opp(opp, node=node, values=values, node_config={})
 
     assert device.is_closed
 
@@ -223,14 +223,14 @@ def test_switch_garage_value_changed.opp, mock_openzwave):
     assert not device.is_closed
 
 
-def test_switch_garage_commands.opp, mock_openzwave):
+def test_switch_garage_commands(opp, mock_openzwave):
     """Test position changed."""
     node = MockNode()
     value = MockValue(
         data=False, node=node, command_class=const.COMMAND_CLASS_SWITCH_BINARY
     )
     values = MockEntityValues(primary=value, node=node)
-    device = cover.get_device.opp.opp, node=node, values=values, node_config={})
+    device = cover.get_device(opp(opp, node=node, values=values, node_config={})
 
     assert value.data is False
     device.open_cover()
@@ -239,14 +239,14 @@ def test_switch_garage_commands.opp, mock_openzwave):
     assert value.data is False
 
 
-def test_barrier_garage_value_changed.opp, mock_openzwave):
+def test_barrier_garage_value_changed(opp, mock_openzwave):
     """Test position changed."""
     node = MockNode()
     value = MockValue(
         data="Closed", node=node, command_class=const.COMMAND_CLASS_BARRIER_OPERATOR
     )
     values = MockEntityValues(primary=value, node=node)
-    device = cover.get_device.opp.opp, node=node, values=values, node_config={})
+    device = cover.get_device(opp(opp, node=node, values=values, node_config={})
 
     assert device.is_closed
     assert not device.is_opening
@@ -271,14 +271,14 @@ def test_barrier_garage_value_changed.opp, mock_openzwave):
     assert device.is_closing
 
 
-def test_barrier_garage_commands.opp, mock_openzwave):
+def test_barrier_garage_commands(opp, mock_openzwave):
     """Test position changed."""
     node = MockNode()
     value = MockValue(
         data="Closed", node=node, command_class=const.COMMAND_CLASS_BARRIER_OPERATOR
     )
     values = MockEntityValues(primary=value, node=node)
-    device = cover.get_device.opp.opp, node=node, values=values, node_config={})
+    device = cover.get_device(opp(opp, node=node, values=values, node_config={})
 
     assert value.data == "Closed"
     device.open_cover()

@@ -69,7 +69,7 @@ def test_binary_sensor_value_changed(mock_openzwave):
     assert device.is_on
 
 
-async def test_trigger_sensor_value_changed.opp, mock_openzwave):
+async def test_trigger_sensor_value_changed(opp, mock_openzwave):
     """Test value changed for trigger sensor."""
     node = MockNode(manufacturer_id="013c", product_type="0002", product_id="0002")
     value = MockValue(data=False, node=node)

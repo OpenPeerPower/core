@@ -86,7 +86,7 @@ def create_thermostat_service_min_max(accessory):
 
 async def test_climate_respect_supported_op_modes_1.opp, utcnow):
     """Test that climate respects minValue/maxValue hints."""
-    helper = await setup_test_component.opp, create_thermostat_service_min_max)
+    helper = await setup_test_component(opp, create_thermostat_service_min_max)
     state = await helper.poll_and_get_state()
     assert state.attributes["hvac_modes"] == ["off", "heat"]
 
@@ -101,14 +101,14 @@ def create_thermostat_service_valid_vals(accessory):
 
 async def test_climate_respect_supported_op_modes_2.opp, utcnow):
     """Test that climate respects validValue hints."""
-    helper = await setup_test_component.opp, create_thermostat_service_valid_vals)
+    helper = await setup_test_component(opp, create_thermostat_service_valid_vals)
     state = await helper.poll_and_get_state()
     assert state.attributes["hvac_modes"] == ["off", "heat", "cool"]
 
 
-async def test_climate_change_thermostat_state.opp, utcnow):
+async def test_climate_change_thermostat_state(opp, utcnow):
     """Test that we can turn a HomeKit thermostat on and off again."""
-    helper = await setup_test_component.opp, create_thermostat_service)
+    helper = await setup_test_component(opp, create_thermostat_service)
 
     await opp.services.async_call(
         DOMAIN,
@@ -144,9 +144,9 @@ async def test_climate_change_thermostat_state.opp, utcnow):
     assert helper.characteristics[HEATING_COOLING_TARGET].value == 0
 
 
-async def test_climate_check_min_max_values_per_mode.opp, utcnow):
+async def test_climate_check_min_max_values_per_mode(opp, utcnow):
     """Test that we we get the appropriate min/max values for each mode."""
-    helper = await setup_test_component.opp, create_thermostat_service)
+    helper = await setup_test_component(opp, create_thermostat_service)
 
     await opp.services.async_call(
         DOMAIN,
@@ -179,9 +179,9 @@ async def test_climate_check_min_max_values_per_mode.opp, utcnow):
     assert climate_state.attributes["max_temp"] == 40
 
 
-async def test_climate_change_thermostat_temperature.opp, utcnow):
+async def test_climate_change_thermostat_temperature(opp, utcnow):
     """Test that we can turn a HomeKit thermostat on and off again."""
-    helper = await setup_test_component.opp, create_thermostat_service)
+    helper = await setup_test_component(opp, create_thermostat_service)
 
     await opp.services.async_call(
         DOMAIN,
@@ -200,9 +200,9 @@ async def test_climate_change_thermostat_temperature.opp, utcnow):
     assert helper.characteristics[TEMPERATURE_TARGET].value == 25
 
 
-async def test_climate_change_thermostat_temperature_range.opp, utcnow):
+async def test_climate_change_thermostat_temperature_range(opp, utcnow):
     """Test that we can set separate heat and cool setpoints in heat_cool mode."""
-    helper = await setup_test_component.opp, create_thermostat_service)
+    helper = await setup_test_component(opp, create_thermostat_service)
 
     await opp.services.async_call(
         DOMAIN,
@@ -227,9 +227,9 @@ async def test_climate_change_thermostat_temperature_range.opp, utcnow):
     assert helper.characteristics[THERMOSTAT_TEMPERATURE_COOLING_THRESHOLD].value == 25
 
 
-async def test_climate_change_thermostat_temperature_range_iphone.opp, utcnow):
+async def test_climate_change_thermostat_temperature_range_iphone(opp, utcnow):
     """Test that we can set all three set points at once (iPhone heat_cool mode support)."""
-    helper = await setup_test_component.opp, create_thermostat_service)
+    helper = await setup_test_component(opp, create_thermostat_service)
 
     await opp.services.async_call(
         DOMAIN,
@@ -255,9 +255,9 @@ async def test_climate_change_thermostat_temperature_range_iphone.opp, utcnow):
     assert helper.characteristics[THERMOSTAT_TEMPERATURE_COOLING_THRESHOLD].value == 24
 
 
-async def test_climate_cannot_set_thermostat_temp_range_in_wrong_mode.opp, utcnow):
+async def test_climate_cannot_set_thermostat_temp_range_in_wrong_mode(opp, utcnow):
     """Test that we cannot set range values when not in heat_cool mode."""
-    helper = await setup_test_component.opp, create_thermostat_service)
+    helper = await setup_test_component(opp, create_thermostat_service)
 
     await opp.services.async_call(
         DOMAIN,
@@ -308,9 +308,9 @@ def create_thermostat_single_set_point_auto(accessory):
     char.value = 0
 
 
-async def test_climate_check_min_max_values_per_mode_sspa_device.opp, utcnow):
+async def test_climate_check_min_max_values_per_mode_sspa_device(opp, utcnow):
     """Test appropriate min/max values for each mode on sspa devices."""
-    helper = await setup_test_component.opp, create_thermostat_single_set_point_auto)
+    helper = await setup_test_component(opp, create_thermostat_single_set_point_auto)
 
     await opp.services.async_call(
         DOMAIN,
@@ -343,9 +343,9 @@ async def test_climate_check_min_max_values_per_mode_sspa_device.opp, utcnow):
     assert climate_state.attributes["max_temp"] == 35
 
 
-async def test_climate_set_thermostat_temp_on_sspa_device.opp, utcnow):
+async def test_climate_set_thermostat_temp_on_sspa_device(opp, utcnow):
     """Test setting temperature in different modes on device with single set point in auto."""
-    helper = await setup_test_component.opp, create_thermostat_single_set_point_auto)
+    helper = await setup_test_component(opp, create_thermostat_single_set_point_auto)
 
     await opp.services.async_call(
         DOMAIN,
@@ -383,9 +383,9 @@ async def test_climate_set_thermostat_temp_on_sspa_device.opp, utcnow):
     assert helper.characteristics[TEMPERATURE_TARGET].value == 22
 
 
-async def test_climate_change_thermostat_humidity.opp, utcnow):
+async def test_climate_change_thermostat_humidity(opp, utcnow):
     """Test that we can turn a HomeKit thermostat on and off again."""
-    helper = await setup_test_component.opp, create_thermostat_service)
+    helper = await setup_test_component(opp, create_thermostat_service)
 
     await opp.services.async_call(
         DOMAIN,
@@ -404,9 +404,9 @@ async def test_climate_change_thermostat_humidity.opp, utcnow):
     assert helper.characteristics[HUMIDITY_TARGET].value == 45
 
 
-async def test_climate_read_thermostat_state.opp, utcnow):
+async def test_climate_read_thermostat_state(opp, utcnow):
     """Test that we can read the state of a HomeKit thermostat accessory."""
-    helper = await setup_test_component.opp, create_thermostat_service)
+    helper = await setup_test_component(opp, create_thermostat_service)
 
     # Simulate that heating is on
     helper.characteristics[TEMPERATURE_CURRENT].value = 19
@@ -446,9 +446,9 @@ async def test_climate_read_thermostat_state.opp, utcnow):
     assert state.state == HVAC_MODE_HEAT_COOL
 
 
-async def test_hvac_mode_vs_hvac_action.opp, utcnow):
+async def test_hvac_mode_vs_hvac_action(opp, utcnow):
     """Check that we haven't conflated hvac_mode and hvac_action."""
-    helper = await setup_test_component.opp, create_thermostat_service)
+    helper = await setup_test_component(opp, create_thermostat_service)
 
     # Simulate that current temperature is above target temp
     # Heating might be on, but hvac_action currently 'off'
@@ -524,7 +524,7 @@ def create_heater_cooler_service_min_max(accessory):
 
 async def test_heater_cooler_respect_supported_op_modes_1.opp, utcnow):
     """Test that climate respects minValue/maxValue hints."""
-    helper = await setup_test_component.opp, create_heater_cooler_service_min_max)
+    helper = await setup_test_component(opp, create_heater_cooler_service_min_max)
     state = await helper.poll_and_get_state()
     assert state.attributes["hvac_modes"] == ["heat", "cool", "off"]
 
@@ -539,14 +539,14 @@ def create_theater_cooler_service_valid_vals(accessory):
 
 async def test_heater_cooler_respect_supported_op_modes_2.opp, utcnow):
     """Test that climate respects validValue hints."""
-    helper = await setup_test_component.opp, create_theater_cooler_service_valid_vals)
+    helper = await setup_test_component(opp, create_theater_cooler_service_valid_vals)
     state = await helper.poll_and_get_state()
     assert state.attributes["hvac_modes"] == ["heat", "cool", "off"]
 
 
-async def test_heater_cooler_change_thermostat_state.opp, utcnow):
+async def test_heater_cooler_change_thermostat_state(opp, utcnow):
     """Test that we can change the operational mode."""
-    helper = await setup_test_component.opp, create_heater_cooler_service)
+    helper = await setup_test_component(opp, create_heater_cooler_service)
 
     await opp.services.async_call(
         DOMAIN,
@@ -594,9 +594,9 @@ async def test_heater_cooler_change_thermostat_state.opp, utcnow):
     )
 
 
-async def test_heater_cooler_change_thermostat_temperature.opp, utcnow):
+async def test_heater_cooler_change_thermostat_temperature(opp, utcnow):
     """Test that we can change the target temperature."""
-    helper = await setup_test_component.opp, create_heater_cooler_service)
+    helper = await setup_test_component(opp, create_heater_cooler_service)
 
     await opp.services.async_call(
         DOMAIN,
@@ -627,9 +627,9 @@ async def test_heater_cooler_change_thermostat_temperature.opp, utcnow):
     assert helper.characteristics[TEMPERATURE_COOLING_THRESHOLD].value == 26
 
 
-async def test_heater_cooler_read_thermostat_state.opp, utcnow):
+async def test_heater_cooler_read_thermostat_state(opp, utcnow):
     """Test that we can read the state of a HomeKit thermostat accessory."""
-    helper = await setup_test_component.opp, create_heater_cooler_service)
+    helper = await setup_test_component(opp, create_heater_cooler_service)
 
     # Simulate that heating is on
     helper.characteristics[HEATER_COOLER_TEMPERATURE_CURRENT].value = 19
@@ -678,9 +678,9 @@ async def test_heater_cooler_read_thermostat_state.opp, utcnow):
     assert state.state == HVAC_MODE_HEAT_COOL
 
 
-async def test_heater_cooler_hvac_mode_vs_hvac_action.opp, utcnow):
+async def test_heater_cooler_hvac_mode_vs_hvac_action(opp, utcnow):
     """Check that we haven't conflated hvac_mode and hvac_action."""
-    helper = await setup_test_component.opp, create_heater_cooler_service)
+    helper = await setup_test_component(opp, create_heater_cooler_service)
 
     # Simulate that current temperature is above target temp
     # Heating might be on, but hvac_action currently 'off'
@@ -710,9 +710,9 @@ async def test_heater_cooler_hvac_mode_vs_hvac_action.opp, utcnow):
     assert state.attributes["hvac_action"] == "heating"
 
 
-async def test_heater_cooler_change_swing_mode.opp, utcnow):
+async def test_heater_cooler_change_swing_mode(opp, utcnow):
     """Test that we can change the swing mode."""
-    helper = await setup_test_component.opp, create_heater_cooler_service)
+    helper = await setup_test_component(opp, create_heater_cooler_service)
 
     await opp.services.async_call(
         DOMAIN,
@@ -731,9 +731,9 @@ async def test_heater_cooler_change_swing_mode.opp, utcnow):
     assert helper.characteristics[SWING_MODE].value == SwingModeValues.DISABLED
 
 
-async def test_heater_cooler_turn_off.opp, utcnow):
+async def test_heater_cooler_turn_off(opp, utcnow):
     """Test that both hvac_action and hvac_mode return "off" when turned off."""
-    helper = await setup_test_component.opp, create_heater_cooler_service)
+    helper = await setup_test_component(opp, create_heater_cooler_service)
     # Simulate that the device is turned off but CURRENT_HEATER_COOLER_STATE still returns HEATING/COOLING
     helper.characteristics[HEATER_COOLER_ACTIVE].value = ActivationStateValues.INACTIVE
     helper.characteristics[

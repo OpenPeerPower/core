@@ -6,7 +6,7 @@ components. Instead call the service directly.
 from openpeerpower.components.camera.const import DATA_CAMERA_PREFS, PREF_PRELOAD_STREAM
 
 
-def mock_camera_prefs.opp, entity_id, prefs=None):
+def mock_camera_prefs(opp, entity_id, prefs=None):
     """Fixture for cloud component."""
     prefs_to_set = {PREF_PRELOAD_STREAM: True}
     if prefs is not None:

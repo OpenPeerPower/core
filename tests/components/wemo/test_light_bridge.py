@@ -92,7 +92,7 @@ async def test_light_update_entity(
     opp. pywemo_registry, pywemo_bridge_light, wemo_entity
 ):
     """Verify that the light performs state updates."""
-    await async_setup_component.opp, OP_DOMAIN, {})
+    await async_setup_component(opp, OP_DOMAIN, {})
 
     # On state.
     pywemo_bridge_light.state = {"onoff": 1}
@@ -102,7 +102,7 @@ async def test_light_update_entity(
         {ATTR_ENTITY_ID: [wemo_entity.entity_id]},
         blocking=True,
     )
-    assert.opp.states.get(wemo_entity.entity_id).state == STATE_ON
+    assert opp.states.get(wemo_entity.entity_id).state == STATE_ON
 
     # Off state.
     pywemo_bridge_light.state = {"onoff": 0}
@@ -112,4 +112,4 @@ async def test_light_update_entity(
         {ATTR_ENTITY_ID: [wemo_entity.entity_id]},
         blocking=True,
     )
-    assert.opp.states.get(wemo_entity.entity_id).state == STATE_OFF
+    assert opp.states.get(wemo_entity.entity_id).state == STATE_OFF

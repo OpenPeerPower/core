@@ -95,7 +95,7 @@ class TestCommandLine(unittest.TestCase):
         assert mock_error.call_count == 1
 
 
-async def test_timeout.opp, caplog):
+async def test_timeout(opp, caplog):
     """Test we do not block forever."""
     assert await async_setup_component(
         opp,

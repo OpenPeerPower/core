@@ -120,7 +120,7 @@ async def setup_integration.opp):
     entry = MockConfigEntry(
         domain=DOMAIN, unique_id=TEST_USERNAME, data=CONFIG, entry_id=ENTRY_ID
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
@@ -228,7 +228,7 @@ async def test_coordinator_updates(
     """Test the update coordinator update functions."""
     coordinator = opp.data[DOMAIN][ENTRY_ID]
 
-    await async_setup_component.opp, "openpeerpower", {})
+    await async_setup_component(opp, "openpeerpower", {})
 
     with patch.object(
         MockShark, "async_update", side_effect=side_effect

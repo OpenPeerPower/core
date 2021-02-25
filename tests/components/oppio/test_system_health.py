@@ -12,7 +12,7 @@ from .test_init import MOCK_ENVIRON
 from tests.common import get_system_health_info
 
 
-async def test.oppio_system_health.opp, aioclient_mock):
+async def test.oppio_system_health(opp, aioclient_mock):
     """Test.oppio system health."""
     aioclient_mock.get("http://127.0.0.1/info", json={"result": "ok", "data": {}})
     aioclient_mock.get("http://127.0.0.1/host/info", json={"result": "ok", "data": {}})
@@ -25,7 +25,7 @@ async def test.oppio_system_health.opp, aioclient_mock):
 
     opp.config.components.add(.oppio")
     with patch.dict(os.environ, MOCK_ENVIRON):
-        assert await async_setup_component.opp, "system_health", {})
+        assert await async_setup_component(opp, "system_health", {})
 
     opp.data[.oppio_info"] = {
         "channel": "stable",
@@ -45,7 +45,7 @@ async def test.oppio_system_health.opp, aioclient_mock):
         "addons": [{"name": "Awesome Addon", "version": "1.0.0"}],
     }
 
-    info = await get_system_health_info.opp,  opp.o")
+    info = await get_system_health_info(opp,  opp.o")
 
     for key, val in info.items():
         if asyncio.iscoroutine(val):
@@ -67,7 +67,7 @@ async def test.oppio_system_health.opp, aioclient_mock):
     }
 
 
-async def test.oppio_system_health_with_issues.opp, aioclient_mock):
+async def test.oppio_system_health_with_issues(opp, aioclient_mock):
     """Test.oppio system health."""
     aioclient_mock.get("http://127.0.0.1/info", json={"result": "ok", "data": {}})
     aioclient_mock.get("http://127.0.0.1/host/info", json={"result": "ok", "data": {}})
@@ -80,7 +80,7 @@ async def test.oppio_system_health_with_issues.opp, aioclient_mock):
 
     opp.config.components.add(.oppio")
     with patch.dict(os.environ, MOCK_ENVIRON):
-        assert await async_setup_component.opp, "system_health", {})
+        assert await async_setup_component(opp, "system_health", {})
 
     opp.data[.oppio_info"] = {"channel": "stable"}
     opp.data[.oppio_host_info"] = {}
@@ -90,7 +90,7 @@ async def test.oppio_system_health_with_issues.opp, aioclient_mock):
         "supported": False,
     }
 
-    info = await get_system_health_info.opp,  opp.o")
+    info = await get_system_health_info(opp,  opp.o")
 
     for key, val in info.items():
         if asyncio.iscoroutine(val):

@@ -35,13 +35,13 @@ def entity_reg.opp):
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
-async def test_get_conditions.opp, device_reg, entity_reg):
+async def test_get_conditions(opp, device_reg, entity_reg):
     """Test we get the expected conditions from a humidifier."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -81,14 +81,14 @@ async def test_get_conditions.opp, device_reg, entity_reg):
             "entity_id": f"{DOMAIN}.test_5678",
         },
     ]
-    conditions = await async_get_device_automations.opp, "condition", device_entry.id)
+    conditions = await async_get_device_automations(opp, "condition", device_entry.id)
     assert_lists_same(conditions, expected_conditions)
 
 
-async def test_get_conditions_toggle_only.opp, device_reg, entity_reg):
+async def test_get_conditions_toggle_only(opp, device_reg, entity_reg):
     """Test we get the expected conditions from a humidifier."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -121,11 +121,11 @@ async def test_get_conditions_toggle_only.opp, device_reg, entity_reg):
             "entity_id": f"{DOMAIN}.test_5678",
         },
     ]
-    conditions = await async_get_device_automations.opp, "condition", device_entry.id)
+    conditions = await async_get_device_automations(opp, "condition", device_entry.id)
     assert_lists_same(conditions, expected_conditions)
 
 
-async def test_if_state.opp, calls):
+async def test_if_state(opp, calls):
     """Test for turn_on and turn_off conditions."""
     opp.states.async_set(
         "humidifier.entity", STATE_ON, {const.ATTR_MODE: const.MODE_AWAY}
@@ -197,7 +197,7 @@ async def test_if_state.opp, calls):
         },
     )
     await opp.async_block_till_done()
-    assert.opp.states.get("humidifier.entity").state == STATE_ON
+    assert opp.states.get("humidifier.entity").state == STATE_ON
     assert len(calls) == 0
 
     opp.bus.async_fire("test_event1")
@@ -293,10 +293,10 @@ async def test_capabilities_no_state.opp):
     ]
 
 
-async def test_get_condition_capabilities.opp, device_reg, entity_reg):
+async def test_get_condition_capabilities(opp, device_reg, entity_reg):
     """Test we get the expected toggle capabilities."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -307,7 +307,7 @@ async def test_get_condition_capabilities.opp, device_reg, entity_reg):
             {"name": "for", "optional": True, "type": "positive_time_period_dict"}
         ]
     }
-    conditions = await async_get_device_automations.opp, "condition", device_entry.id)
+    conditions = await async_get_device_automations(opp, "condition", device_entry.id)
     for condition in conditions:
         capabilities = await async_get_device_automation_capabilities(
             opp. "condition", condition

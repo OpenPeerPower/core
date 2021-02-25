@@ -15,7 +15,7 @@ from openpeerpower.const import (
 from tests.common import async_mock_service
 
 
-async def test_lock_unlock.opp, hk_driver, events):
+async def test_lock_unlock(opp, hk_driver, events):
     """Test if accessory and HA are updated accordingly."""
     code = "1234"
     config = {ATTR_CODE: code}
@@ -53,8 +53,8 @@ async def test_lock_unlock.opp, hk_driver, events):
     assert acc.char_target_state.value == 0
 
     # Set from HomeKit
-    call_lock = async_mock_service.opp, DOMAIN, "lock")
-    call_unlock = async_mock_service.opp, DOMAIN, "unlock")
+    call_lock = async_mock_service(opp, DOMAIN, "lock")
+    call_unlock = async_mock_service(opp, DOMAIN, "unlock")
 
     await opp.async_add_executor_job(acc.char_target_state.client_update_value, 1)
     await opp.async_block_till_done()
@@ -76,7 +76,7 @@ async def test_lock_unlock.opp, hk_driver, events):
 
 
 @pytest.mark.parametrize("config", [{}, {ATTR_CODE: None}])
-async def test_no_code.opp, hk_driver, config, events):
+async def test_no_code(opp, hk_driver, config, events):
     """Test accessory if lock doesn't require a code."""
     entity_id = "lock.kitchen_door"
 
@@ -85,7 +85,7 @@ async def test_no_code.opp, hk_driver, config, events):
     acc = Lock.opp, hk_driver, "Lock", entity_id, 2, config)
 
     # Set from HomeKit
-    call_lock = async_mock_service.opp, DOMAIN, "lock")
+    call_lock = async_mock_service(opp, DOMAIN, "lock")
 
     await opp.async_add_executor_job(acc.char_target_state.client_update_value, 1)
     await opp.async_block_till_done()

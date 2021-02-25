@@ -21,7 +21,7 @@ from tests.common import (
 from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 
 
-async def test_get_triggers_btn.opp, device_reg, entity_reg, mqtt_mock, setup_tasmota):
+async def test_get_triggers_btn(opp, device_reg, entity_reg, mqtt_mock, setup_tasmota):
     """Test we get the expected triggers from a discovered mqtt device."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["btn"][0] = 1
@@ -30,7 +30,7 @@ async def test_get_triggers_btn.opp, device_reg, entity_reg, mqtt_mock, setup_ta
     config["so"]["73"] = 1
     mac = config["mac"]
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -52,17 +52,17 @@ async def test_get_triggers_btn.opp, device_reg, entity_reg, mqtt_mock, setup_ta
             "subtype": "button_2",
         },
     ]
-    triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
+    triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     assert_lists_same(triggers, expected_triggers)
 
 
-async def test_get_triggers_swc.opp, device_reg, entity_reg, mqtt_mock, setup_tasmota):
+async def test_get_triggers_swc(opp, device_reg, entity_reg, mqtt_mock, setup_tasmota):
     """Test we get the expected triggers from a discovered mqtt device."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["swc"][0] = 0
     mac = config["mac"]
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -76,7 +76,7 @@ async def test_get_triggers_swc.opp, device_reg, entity_reg, mqtt_mock, setup_ta
             "subtype": "switch_1",
         },
     ]
-    triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
+    triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     assert_lists_same(triggers, expected_triggers)
 
 
@@ -89,7 +89,7 @@ async def test_get_unknown_triggers(
     config["swc"][0] = -1
     mac = config["mac"]
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -117,7 +117,7 @@ async def test_get_unknown_triggers(
         },
     )
 
-    triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
+    triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     assert_lists_same(triggers, [])
 
 
@@ -130,11 +130,11 @@ async def test_get_non_existing_triggers(
     config1["swc"][0] = -1
     mac = config1["mac"]
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
     await opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
-    triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
+    triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     assert_lists_same(triggers, [])
 
 
@@ -158,7 +158,7 @@ async def test_discover_bad_triggers(
         await opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
-    triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
+    triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     assert_lists_same(triggers, [])
 
     # Trigger an exception when the entity is discovered
@@ -190,11 +190,11 @@ async def test_discover_bad_triggers(
         await opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
-    triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
+    triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     assert_lists_same(triggers, [])
 
     # Rediscover without exception
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
     expected_triggers = [
@@ -207,7 +207,7 @@ async def test_discover_bad_triggers(
             "subtype": "switch_1",
         },
     ]
-    triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
+    triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     assert_lists_same(triggers, expected_triggers)
 
 
@@ -228,7 +228,7 @@ async def test_update_remove_triggers(
     config3 = copy.deepcopy(DEFAULT_CONFIG)
     config3["swc"][0] = -1
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
     await opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -254,23 +254,23 @@ async def test_update_remove_triggers(
     expected_triggers2 = copy.deepcopy(expected_triggers1)
     expected_triggers2[1]["type"] = "button_double_press"
 
-    triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
+    triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     for expected in expected_triggers1:
         assert expected in triggers
 
     # Update trigger
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config2))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config2))
     await opp.async_block_till_done()
 
-    triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
+    triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     for expected in expected_triggers2:
         assert expected in triggers
 
     # Remove trigger
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config3))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config3))
     await opp.async_block_till_done()
 
-    triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
+    triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     assert triggers == []
 
 
@@ -285,7 +285,7 @@ async def test_if_fires_on_mqtt_message_btn(
     config["so"]["73"] = 1
     mac = config["mac"]
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
 
@@ -355,7 +355,7 @@ async def test_if_fires_on_mqtt_message_swc(
     config["swn"][2] = "custom_switch"
     mac = config["mac"]
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
 
@@ -450,7 +450,7 @@ async def test_if_fires_on_mqtt_message_late_discover(
     config2["swc"][3] = 9
     config2["swn"][3] = "custom_switch"
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
     await opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -492,7 +492,7 @@ async def test_if_fires_on_mqtt_message_late_discover(
         },
     )
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config2))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config2))
     await opp.async_block_till_done()
 
     # Fake short press.
@@ -524,7 +524,7 @@ async def test_if_fires_on_mqtt_message_after_update(
     config2["tp"][1] = "status"
     mac = config1["mac"]
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
     await opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -560,7 +560,7 @@ async def test_if_fires_on_mqtt_message_after_update(
     assert len(calls) == 1
 
     # Update the trigger with different topic
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config2))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config2))
     await opp.async_block_till_done()
 
     async_fire_mqtt_message(
@@ -576,7 +576,7 @@ async def test_if_fires_on_mqtt_message_after_update(
     assert len(calls) == 2
 
     # Update the trigger with same topic
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config2))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config2))
     await opp.async_block_till_done()
 
     async_fire_mqtt_message(
@@ -592,7 +592,7 @@ async def test_if_fires_on_mqtt_message_after_update(
     assert len(calls) == 3
 
 
-async def test_no_resubscribe_same_topic.opp, device_reg, mqtt_mock, setup_tasmota):
+async def test_no_resubscribe_same_topic(opp, device_reg, mqtt_mock, setup_tasmota):
     """Test subscription to topics without change."""
     # Discover a device with device trigger
     config = copy.deepcopy(DEFAULT_CONFIG)
@@ -601,7 +601,7 @@ async def test_no_resubscribe_same_topic.opp, device_reg, mqtt_mock, setup_tasmo
 
     mqtt_mock.async_subscribe.reset_mock()
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -631,7 +631,7 @@ async def test_no_resubscribe_same_topic.opp, device_reg, mqtt_mock, setup_tasmo
 
     call_count = mqtt_mock.async_subscribe.call_count
     assert call_count == 1
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
     assert mqtt_mock.async_subscribe.call_count == call_count
 
@@ -647,7 +647,7 @@ async def test_not_fires_on_mqtt_message_after_remove_by_mqtt(
 
     mqtt_mock.async_subscribe.reset_mock()
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -684,7 +684,7 @@ async def test_not_fires_on_mqtt_message_after_remove_by_mqtt(
 
     # Remove the trigger
     config["swc"][0] = -1
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
     async_fire_mqtt_message(
@@ -695,7 +695,7 @@ async def test_not_fires_on_mqtt_message_after_remove_by_mqtt(
 
     # Rediscover the trigger
     config["swc"][0] = 0
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
     async_fire_mqtt_message(
@@ -716,7 +716,7 @@ async def test_not_fires_on_mqtt_message_after_remove_from_registry(
 
     mqtt_mock.async_subscribe.reset_mock()
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -762,7 +762,7 @@ async def test_not_fires_on_mqtt_message_after_remove_from_registry(
     assert len(calls) == 1
 
 
-async def test_attach_remove.opp, device_reg, mqtt_mock, setup_tasmota):
+async def test_attach_remove(opp, device_reg, mqtt_mock, setup_tasmota):
     """Test attach and removal of trigger."""
     # Discover a device with device trigger
     config = copy.deepcopy(DEFAULT_CONFIG)
@@ -771,7 +771,7 @@ async def test_attach_remove.opp, device_reg, mqtt_mock, setup_tasmota):
 
     mqtt_mock.async_subscribe.reset_mock()
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -815,7 +815,7 @@ async def test_attach_remove.opp, device_reg, mqtt_mock, setup_tasmota):
     assert len(calls) == 1
 
 
-async def test_attach_remove_late.opp, device_reg, mqtt_mock, setup_tasmota):
+async def test_attach_remove_late(opp, device_reg, mqtt_mock, setup_tasmota):
     """Test attach and removal of trigger."""
     # Discover a device without device triggers
     config1 = copy.deepcopy(DEFAULT_CONFIG)
@@ -826,7 +826,7 @@ async def test_attach_remove_late.opp, device_reg, mqtt_mock, setup_tasmota):
     config2 = copy.deepcopy(DEFAULT_CONFIG)
     config2["swc"][0] = 0
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
     await opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -857,7 +857,7 @@ async def test_attach_remove_late.opp, device_reg, mqtt_mock, setup_tasmota):
     await opp.async_block_till_done()
     assert len(calls) == 0
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config2))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config2))
     await opp.async_block_till_done()
 
     # Fake short press.
@@ -891,7 +891,7 @@ async def test_attach_remove_late2.opp, device_reg, mqtt_mock, setup_tasmota):
     config2 = copy.deepcopy(DEFAULT_CONFIG)
     config2["swc"][0] = 0
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
     await opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -919,7 +919,7 @@ async def test_attach_remove_late2.opp, device_reg, mqtt_mock, setup_tasmota):
     remove()
     await opp.async_block_till_done()
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
     await opp.async_block_till_done()
 
     # Verify the triggers is not active
@@ -937,7 +937,7 @@ async def test_attach_remove_unknown1.opp, device_reg, mqtt_mock, setup_tasmota)
     config1["swc"][0] = -1
     mac = config1["mac"]
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
     await opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -975,11 +975,11 @@ async def test_attach_unknown_remove_device_from_registry(
     config2["swc"][0] = 0
 
     # Discovery a device with device triggers to load Tasmota device trigger integration
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config2))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config2))
     await opp.async_block_till_done()
 
     # Forget the trigger
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
     await opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
@@ -1003,7 +1003,7 @@ async def test_attach_unknown_remove_device_from_registry(
     await opp.async_block_till_done()
 
 
-async def test_attach_remove_config_entry.opp, device_reg, mqtt_mock, setup_tasmota):
+async def test_attach_remove_config_entry(opp, device_reg, mqtt_mock, setup_tasmota):
     """Test trigger cleanup when removing a Tasmota config entry."""
     # Discover a device with device trigger
     config = copy.deepcopy(DEFAULT_CONFIG)
@@ -1012,7 +1012,7 @@ async def test_attach_remove_config_entry.opp, device_reg, mqtt_mock, setup_tasm
 
     mqtt_mock.async_subscribe.reset_mock()
 
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})

@@ -12,9 +12,9 @@ DATA = {"username": "test@example.com", "password": "pass"}
 
 
 @pytest.mark.parametrize("step", ["import", "user"])
-async def test_already_configured.opp, step):
+async def test_already_configured(opp, step):
     """Test config flow when iaqualink component is already setup."""
-    MockConfigEntry(domain="iaqualink", data=DATA).add_to.opp.opp)
+    MockConfigEntry(domain="iaqualink", data=DATA).add_to_opp(opp)
 
     flow = config_flow.AqualinkFlowHandler()
     flow.opp = opp
@@ -44,7 +44,7 @@ async def test_without_config(opp, step):
 
 
 @pytest.mark.parametrize("step", ["import", "user"])
-async def test_with_invalid_credentials.opp, step):
+async def test_with_invalid_credentials(opp, step):
     """Test config flow with invalid username and/or password."""
     flow = config_flow.AqualinkFlowHandler()
     flow.opp = opp

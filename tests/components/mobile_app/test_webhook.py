@@ -89,9 +89,9 @@ async def test_webhook_handle_render_template(create_registrations, webhook_clie
     }
 
 
-async def test_webhook_handle_call_services.opp, create_registrations, webhook_client):
+async def test_webhook_handle_call_services(opp, create_registrations, webhook_client):
     """Test that we call services properly."""
-    calls = async_mock_service.opp, "test", "mobile_app")
+    calls = async_mock_service(opp, "test", "mobile_app")
 
     resp = await webhook_client.post(
         "/api/webhook/{}".format(create_registrations[1]["webhook_id"]),
@@ -103,7 +103,7 @@ async def test_webhook_handle_call_services.opp, create_registrations, webhook_c
     assert len(calls) == 1
 
 
-async def test_webhook_handle_fire_event.opp, create_registrations, webhook_client):
+async def test_webhook_handle_fire_event(opp, create_registrations, webhook_client):
     """Test that we can fire events."""
     events = []
 
@@ -150,7 +150,7 @@ async def test_webhook_update_registration(webhook_client, authed_api_client):
     assert CONF_SECRET not in update_json
 
 
-async def test_webhook_handle_get_zones.opp, create_registrations, webhook_client):
+async def test_webhook_handle_get_zones(opp, create_registrations, webhook_client):
     """Test that we can get zones properly."""
     await async_setup_component(
         opp,
@@ -253,7 +253,7 @@ async def test_webhook_requires_encryption(webhook_client, create_registrations)
     assert webhook_json["error"]["code"] == "encryption_required"
 
 
-async def test_webhook_update_location.opp, webhook_client, create_registrations):
+async def test_webhook_update_location(opp, webhook_client, create_registrations):
     """Test that location can be updated."""
     resp = await webhook_client.post(
         "/api/webhook/{}".format(create_registrations[1]["webhook_id"]),
@@ -273,7 +273,7 @@ async def test_webhook_update_location.opp, webhook_client, create_registrations
     assert state.attributes["altitude"] == -10
 
 
-async def test_webhook_enable_encryption.opp, webhook_client, create_registrations):
+async def test_webhook_enable_encryption(opp, webhook_client, create_registrations):
     """Test that encryption can be added to a reg initially created without."""
     webhook_id = create_registrations[1]["webhook_id"]
 
@@ -422,7 +422,7 @@ async def test_webhook_camera_stream_stream_available_but_errors(
     assert webhook_json["mjpeg_path"] == "/api/camera_proxy_stream/camera.stream_camera"
 
 
-async def test_webhook_handle_scan_tag.opp, create_registrations, webhook_client):
+async def test_webhook_handle_scan_tag(opp, create_registrations, webhook_client):
     """Test that we can scan tags."""
     events = []
 

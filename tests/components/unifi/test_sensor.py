@@ -49,7 +49,7 @@ CLIENTS = [
 ]
 
 
-async def test_no_clients.opp, aioclient_mock):
+async def test_no_clients(opp, aioclient_mock):
     """Test the update_clients function when no clients are found."""
     await setup_unifi_integration(
         opp,
@@ -63,7 +63,7 @@ async def test_no_clients.opp, aioclient_mock):
     assert len.opp.states.async_entity_ids(SENSOR_DOMAIN)) == 0
 
 
-async def test_sensors.opp, aioclient_mock):
+async def test_sensors(opp, aioclient_mock):
     """Test the update_items function with some clients."""
     config_entry = await setup_unifi_integration(
         opp,
@@ -178,7 +178,7 @@ async def test_sensors.opp, aioclient_mock):
     assert len.opp.states.async_entity_ids(SENSOR_DOMAIN)) == 6
 
 
-async def test_remove_sensors.opp, aioclient_mock):
+async def test_remove_sensors(opp, aioclient_mock):
     """Test the remove_items function with some clients."""
     config_entry = await setup_unifi_integration(
         opp,

@@ -47,7 +47,7 @@ IEEE_GROUPABLE_DEVICE = "01:2d:6f:00:0a:90:69:e8"
 
 
 @pytest.fixture
-async def device_switch.opp, zigpy_device_mock, zha_device_joined):
+async def device_switch(opp, zigpy_device_mock, zha_device_joined):
     """Test zha switch platform."""
 
     zigpy_device = zigpy_device_mock(
@@ -66,7 +66,7 @@ async def device_switch.opp, zigpy_device_mock, zha_device_joined):
 
 
 @pytest.fixture
-async def device_groupable.opp, zigpy_device_mock, zha_device_joined):
+async def device_groupable(opp, zigpy_device_mock, zha_device_joined):
     """Test zha light platform."""
 
     zigpy_device = zigpy_device_mock(
@@ -89,7 +89,7 @@ async def device_groupable.opp, zigpy_device_mock, zha_device_joined):
 
 
 @pytest.fixture
-async def zha_client.opp, opp_ws_client, device_switch, device_groupable):
+async def zha_client(opp, opp_ws_client, device_switch, device_groupable):
     """Test zha switch platform."""
 
     # load the ZHA API
@@ -97,7 +97,7 @@ async def zha_client.opp, opp_ws_client, device_switch, device_groupable):
     return await opp_ws_client.opp)
 
 
-async def test_device_clusters.opp, zha_client):
+async def test_device_clusters(opp, zha_client):
     """Test getting device cluster info."""
     await zha_client.send_json(
         {ID: 5, TYPE: "zha/devices/clusters", ATTR_IEEE: IEEE_SWITCH_DEVICE}
@@ -359,7 +359,7 @@ async def test_remove_group(zha_client):
 
 
 @pytest.fixture
-async def app_controller.opp, setup_zha):
+async def app_controller(opp, setup_zha):
     """Fixture for zigpy Application Controller."""
     await setup_zha()
     controller = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY].application_controller

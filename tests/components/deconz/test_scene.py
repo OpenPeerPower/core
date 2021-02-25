@@ -24,13 +24,13 @@ GROUPS = {
 }
 
 
-async def test_no_scenes.opp, aioclient_mock):
+async def test_no_scenes(opp, aioclient_mock):
     """Test that scenes can be loaded without scenes being available."""
-    await setup_deconz_integration.opp, aioclient_mock)
+    await setup_deconz_integration(opp, aioclient_mock)
     assert len.opp.states.async_all()) == 0
 
 
-async def test_scenes.opp, aioclient_mock):
+async def test_scenes(opp, aioclient_mock):
     """Test that scenes works."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["groups"] = deepcopy(GROUPS)
@@ -39,7 +39,7 @@ async def test_scenes.opp, aioclient_mock):
     )
 
     assert len.opp.states.async_all()) == 1
-    assert.opp.states.get("scene.light_group_scene")
+    assert opp.states.get("scene.light_group_scene")
 
     # Verify service calls
 

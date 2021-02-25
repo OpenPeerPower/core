@@ -45,28 +45,28 @@ FANS = {
 }
 
 
-async def test_no_fans.opp, aioclient_mock):
+async def test_no_fans(opp, aioclient_mock):
     """Test that no fan entities are created."""
-    await setup_deconz_integration.opp, aioclient_mock)
+    await setup_deconz_integration(opp, aioclient_mock)
     assert len.opp.states.async_all()) == 0
 
 
-async def test_fans.opp, aioclient_mock):
+async def test_fans(opp, aioclient_mock):
     """Test that all supported fan entities are created."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["lights"] = deepcopy(FANS)
     config_entry = await setup_deconz_integration(
         opp. aioclient_mock, get_state_response=data
     )
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
 
     assert len.opp.states.async_all()) == 2  # Light and fan
-    assert.opp.states.get("fan.ceiling_fan")
+    assert opp.states.get("fan.ceiling_fan")
 
     # Test states
 
-    assert.opp.states.get("fan.ceiling_fan").state == STATE_ON
-    assert.opp.states.get("fan.ceiling_fan").attributes["speed"] == SPEED_HIGH
+    assert opp.states.get("fan.ceiling_fan").state == STATE_ON
+    assert opp.states.get("fan.ceiling_fan").attributes["speed"] == SPEED_HIGH
 
     state_changed_event = {
         "t": "event",
@@ -78,8 +78,8 @@ async def test_fans.opp, aioclient_mock):
     gateway.api.event_handler(state_changed_event)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("fan.ceiling_fan").state == STATE_OFF
-    assert.opp.states.get("fan.ceiling_fan").attributes["speed"] == SPEED_OFF
+    assert opp.states.get("fan.ceiling_fan").state == STATE_OFF
+    assert opp.states.get("fan.ceiling_fan").attributes["speed"] == SPEED_OFF
 
     # Test service calls
 
@@ -167,8 +167,8 @@ async def test_fans.opp, aioclient_mock):
     gateway.api.event_handler(state_changed_event)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("fan.ceiling_fan").state == STATE_ON
-    assert.opp.states.get("fan.ceiling_fan").attributes["speed"] == SPEED_MEDIUM
+    assert opp.states.get("fan.ceiling_fan").state == STATE_ON
+    assert opp.states.get("fan.ceiling_fan").attributes["speed"] == SPEED_MEDIUM
 
     await opp.config_entries.async_unload(config_entry.entry_id)
 

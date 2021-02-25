@@ -26,7 +26,7 @@ def trigger_db_commit.opp):
     """Force the recorder to commit."""
     for _ in range(recorder.DEFAULT_COMMIT_INTERVAL):
         # We only commit on time change
-        fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=1))
+        fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=1))
 
 
 def corrupt_db_file(test_db_file):

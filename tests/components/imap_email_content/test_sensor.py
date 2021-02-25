@@ -163,7 +163,7 @@ async def test_multiple_emails.opp):
     def state_changed_listener(entity_id, from_s, to_s):
         states.append(to_s)
 
-    async_track_state_change.opp, ["sensor.emailtest"], state_changed_listener)
+    async_track_state_change(opp, ["sensor.emailtest"], state_changed_listener)
 
     sensor = imap_email_content.EmailContentSensor(
         opp,

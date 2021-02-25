@@ -31,4 +31,4 @@ def recorder_url_mock():
 
 async def test_setup_opp, mock_zeroconf):
     """Test setup."""
-    assert await async_setup_component.opp, "default_config", {"foo": "bar"})
+    assert await async_setup_component(opp, "default_config", {"foo": "bar"})

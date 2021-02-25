@@ -32,7 +32,7 @@ def init_config_flow.opp):
     return flow
 
 
-async def test_user.opp, test_api):
+async def test_user(opp, test_api):
     """Test user config."""
     flow = init_config_flow.opp)
 
@@ -50,7 +50,7 @@ async def test_user.opp, test_api):
     assert result["data"][CONF_API_KEY] == API_KEY
 
 
-async def test_import.opp, test_api):
+async def test_import(opp, test_api):
     """Test import step."""
     flow = init_config_flow.opp)
 
@@ -79,7 +79,7 @@ async def test_abort_if_already_setup_opp, test_api):
     MockConfigEntry(
         domain="solaredge",
         data={CONF_NAME: DEFAULT_NAME, CONF_SITE_ID: SITE_ID, CONF_API_KEY: API_KEY},
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     # import: Should fail, same SITE_ID
     result = await flow.async_step_import(
@@ -96,7 +96,7 @@ async def test_abort_if_already_setup_opp, test_api):
     assert result["errors"] == {CONF_SITE_ID: "already_configured"}
 
 
-async def test_asserts.opp, test_api):
+async def test_asserts(opp, test_api):
     """Test the _site_in_configuration_exists method."""
     flow = init_config_flow.opp)
 

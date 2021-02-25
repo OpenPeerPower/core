@@ -43,7 +43,7 @@ def storage_setup_opp, opp_storage):
             opp.storage[DOMAIN] = items
         if config is None:
             config = {DOMAIN: {}}
-        return await async_setup_component.opp, DOMAIN, config)
+        return await async_setup_component(opp, DOMAIN, config)
 
     return _storage
 
@@ -53,33 +53,33 @@ async def test_config(opp):
     invalid_configs = [None, 1, {}, {"name with space": None}]
 
     for cfg in invalid_configs:
-        assert not await async_setup_component.opp, DOMAIN, {DOMAIN: cfg})
+        assert not await async_setup_component(opp, DOMAIN, {DOMAIN: cfg})
 
 
 async def test_methods.opp):
     """Test is_on, turn_on, turn_off methods."""
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {"test_1": None}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {"test_1": None}})
     entity_id = "input_boolean.test_1"
 
-    assert not is_on.opp, entity_id)
+    assert not is_on(opp, entity_id)
 
     await opp.services.async_call(
         DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: entity_id}, blocking=True
     )
 
-    assert is_on.opp, entity_id)
+    assert is_on(opp, entity_id)
 
     await opp.services.async_call(
         DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: entity_id}, blocking=True
     )
 
-    assert not is_on.opp, entity_id)
+    assert not is_on(opp, entity_id)
 
     await opp.services.async_call(
         DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: entity_id}, blocking=True
     )
 
-    assert is_on.opp, entity_id)
+    assert is_on(opp, entity_id)
 
 
 async def test_config_options.opp):
@@ -130,9 +130,9 @@ async def test_restore_state.opp):
     )
 
     opp.state = CoreState.starting
-    mock_component.opp, "recorder")
+    mock_component(opp, "recorder")
 
-    await async_setup_component.opp, DOMAIN, {DOMAIN: {"b1": None, "b2": None}})
+    await async_setup_component(opp, DOMAIN, {DOMAIN: {"b1": None, "b2": None}})
 
     state = opp.states.get("input_boolean.b1")
     assert state
@@ -166,7 +166,7 @@ async def test_initial_state_overrules_restore_state.opp):
     assert state.state == "on"
 
 
-async def test_input_boolean_context.opp, opp_admin_user):
+async def test_input_boolean_context(opp, opp_admin_user):
     """Test that input_boolean context works."""
     assert await async_setup_component(
         opp. "input_boolean", {"input_boolean": {"ac": {CONF_INITIAL: True}}}
@@ -189,7 +189,7 @@ async def test_input_boolean_context.opp, opp_admin_user):
     assert state2.context.user_id == opp_admin_user.id
 
 
-async def test_reload.opp, opp_admin_user):
+async def test_reload(opp, opp_admin_user):
     """Test reload service."""
     count_start = len.opp.states.async_entity_ids())
     ent_reg = await entity_registry.async_get_registry.opp)
@@ -264,7 +264,7 @@ async def test_reload.opp, opp_admin_user):
     assert "mdi:work_reloaded" == state_2.attributes.get(ATTR_ICON)
 
 
-async def test_load_from_storage.opp, storage_setup):
+async def test_load_from_storage(opp, storage_setup):
     """Test set up from storage."""
     assert await storage_setup()
     state = opp.states.get(f"{DOMAIN}.from_storage")
@@ -273,7 +273,7 @@ async def test_load_from_storage.opp, storage_setup):
     assert state.attributes.get(ATTR_EDITABLE)
 
 
-async def test_editable_state_attribute.opp, storage_setup):
+async def test_editable_state_attribute(opp, storage_setup):
     """Test editable attribute."""
     assert await storage_setup(config={DOMAIN: {"from_yaml": None}})
 
@@ -287,7 +287,7 @@ async def test_editable_state_attribute.opp, storage_setup):
     assert not state.attributes.get(ATTR_EDITABLE)
 
 
-async def test_ws_list.opp, opp_ws_client, storage_setup):
+async def test_ws_list(opp, opp_ws_client, storage_setup):
     """Test listing via WS."""
     assert await storage_setup(config={DOMAIN: {"from_yaml": None}})
 
@@ -307,7 +307,7 @@ async def test_ws_list.opp, opp_ws_client, storage_setup):
     assert result[storage_ent][ATTR_NAME] == "from storage"
 
 
-async def test_ws_delete.opp, opp_ws_client, storage_setup):
+async def test_ws_delete(opp, opp_ws_client, storage_setup):
     """Test WS delete cleans up entity registry."""
     assert await storage_setup()
 
@@ -335,7 +335,7 @@ async def test_ws_delete.opp, opp_ws_client, storage_setup):
 async def test_setup_no_config(opp, opp_admin_user):
     """Test component setup with no config."""
     count_start = len.opp.states.async_entity_ids())
-    assert await async_setup_component.opp, DOMAIN, {})
+    assert await async_setup_component(opp, DOMAIN, {})
 
     with patch(
         "openpeerpower.config.load_yaml_config_file", autospec=True, return_value={}

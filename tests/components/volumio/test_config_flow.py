@@ -74,7 +74,7 @@ async def test_form_updates_unique_id.opp):
         },
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -254,7 +254,7 @@ async def test_discovery_updates_unique_id.opp):
         state=config_entries.ENTRY_STATE_SETUP_RETRY,
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.volumio.async_setup", return_value=True

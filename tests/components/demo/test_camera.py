@@ -38,7 +38,7 @@ async def test_init_state_is_streaming.opp):
     with patch(
         "openpeerpower.components.demo.camera.Path.read_bytes", return_value=b"ON"
     ) as mock_read_bytes:
-        image = await async_get_image.opp, ENTITY_CAMERA)
+        image = await async_get_image(opp, ENTITY_CAMERA)
         assert mock_read_bytes.call_count == 1
         assert image.content == b"ON"
 
@@ -70,7 +70,7 @@ async def test_turn_off_image.opp):
     )
 
     with pytest.raises(OpenPeerPowerError) as error:
-        await async_get_image.opp, ENTITY_CAMERA)
+        await async_get_image(opp, ENTITY_CAMERA)
         assert error.args[0] == "Camera is off"
 
 

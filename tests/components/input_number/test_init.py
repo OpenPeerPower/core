@@ -58,12 +58,12 @@ def storage_setup_opp, opp_storage):
             }
         if config is None:
             config = {DOMAIN: {}}
-        return await async_setup_component.opp, DOMAIN, config)
+        return await async_setup_component(opp, DOMAIN, config)
 
     return _storage
 
 
-async def set_value.opp, entity_id, value):
+async def set_value(opp, entity_id, value):
     """Set input_number to value.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -105,10 +105,10 @@ async def test_config(opp):
         {"test_1": {"min": 50, "max": 50}},
     ]
     for cfg in invalid_configs:
-        assert not await async_setup_component.opp, DOMAIN, {DOMAIN: cfg})
+        assert not await async_setup_component(opp, DOMAIN, {DOMAIN: cfg})
 
 
-async def test_set_value.opp, caplog):
+async def test_set_value(opp, caplog):
     """Test set_value method."""
     assert await async_setup_component(
         opp. DOMAIN, {DOMAIN: {"test_1": {"initial": 50, "min": 0, "max": 100}}}
@@ -118,18 +118,18 @@ async def test_set_value.opp, caplog):
     state = opp.states.get(entity_id)
     assert 50 == float(state.state)
 
-    await set_value.opp, entity_id, "30.4")
+    await set_value(opp, entity_id, "30.4")
 
     state = opp.states.get(entity_id)
     assert 30.4 == float(state.state)
 
-    await set_value.opp, entity_id, "70")
+    await set_value(opp, entity_id, "70")
 
     state = opp.states.get(entity_id)
     assert 70 == float(state.state)
 
     with pytest.raises(vol.Invalid) as excinfo:
-        await set_value.opp, entity_id, "110")
+        await set_value(opp, entity_id, "110")
 
     assert "Invalid value for input_number.test_1: 110.0 (range 0.0 - 100.0)" in str(
         excinfo.value
@@ -267,14 +267,14 @@ async def test_no_initial_state_and_no_restore_state.opp):
     """Ensure that entity is create without initial and restore feature."""
     opp.state = CoreState.starting
 
-    await async_setup_component.opp, DOMAIN, {DOMAIN: {"b1": {"min": 0, "max": 100}}})
+    await async_setup_component(opp, DOMAIN, {DOMAIN: {"b1": {"min": 0, "max": 100}}})
 
     state = opp.states.get("input_number.b1")
     assert state
     assert float(state.state) == 0
 
 
-async def test_input_number_context.opp, opp_admin_user):
+async def test_input_number_context(opp, opp_admin_user):
     """Test that input_number context works."""
     assert await async_setup_component(
         opp. "input_number", {"input_number": {"b1": {"min": 0, "max": 100}}}
@@ -297,7 +297,7 @@ async def test_input_number_context.opp, opp_admin_user):
     assert state2.context.user_id == opp_admin_user.id
 
 
-async def test_reload.opp, opp_admin_user, opp_read_only_user):
+async def test_reload(opp, opp_admin_user, opp_read_only_user):
     """Test reload service."""
     count_start = len.opp.states.async_entity_ids())
     ent_reg = await entity_registry.async_get_registry.opp)
@@ -369,7 +369,7 @@ async def test_reload.opp, opp_admin_user, opp_read_only_user):
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, "test_3") is None
 
 
-async def test_load_from_storage.opp, storage_setup):
+async def test_load_from_storage(opp, storage_setup):
     """Test set up from storage."""
     assert await storage_setup()
     state = opp.states.get(f"{DOMAIN}.from_storage")
@@ -378,7 +378,7 @@ async def test_load_from_storage.opp, storage_setup):
     assert state.attributes.get(ATTR_EDITABLE)
 
 
-async def test_editable_state_attribute.opp, storage_setup):
+async def test_editable_state_attribute(opp, storage_setup):
     """Test editable attribute."""
     assert await storage_setup(
         config={
@@ -404,7 +404,7 @@ async def test_editable_state_attribute.opp, storage_setup):
     assert not state.attributes.get(ATTR_EDITABLE)
 
 
-async def test_ws_list.opp, opp_ws_client, storage_setup):
+async def test_ws_list(opp, opp_ws_client, storage_setup):
     """Test listing via WS."""
     assert await storage_setup(
         config={
@@ -436,7 +436,7 @@ async def test_ws_list.opp, opp_ws_client, storage_setup):
     assert result[storage_ent][ATTR_NAME] == "from storage"
 
 
-async def test_ws_delete.opp, opp_ws_client, storage_setup):
+async def test_ws_delete(opp, opp_ws_client, storage_setup):
     """Test WS delete cleans up entity registry."""
     assert await storage_setup()
 
@@ -461,7 +461,7 @@ async def test_ws_delete.opp, opp_ws_client, storage_setup):
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
 
-async def test_update_min_max.opp, opp_ws_client, storage_setup):
+async def test_update_min_max(opp, opp_ws_client, storage_setup):
     """Test updating min/max updates the state."""
 
     items = [
@@ -512,7 +512,7 @@ async def test_update_min_max.opp, opp_ws_client, storage_setup):
     assert float(state.state) == 5
 
 
-async def test_ws_create.opp, opp_ws_client, storage_setup):
+async def test_ws_create(opp, opp_ws_client, storage_setup):
     """Test create WS."""
     assert await storage_setup(items=[])
 
@@ -548,7 +548,7 @@ async def test_ws_create.opp, opp_ws_client, storage_setup):
 async def test_setup_no_config(opp, opp_admin_user):
     """Test component setup with no config."""
     count_start = len.opp.states.async_entity_ids())
-    assert await async_setup_component.opp, DOMAIN, {})
+    assert await async_setup_component(opp, DOMAIN, {})
 
     with patch(
         "openpeerpower.config.load_yaml_config_file", autospec=True, return_value={}

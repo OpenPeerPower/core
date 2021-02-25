@@ -75,7 +75,7 @@ def device_reg.opp):
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
 @pytest.fixture
@@ -89,14 +89,14 @@ def events.opp):
 @pytest.fixture
 async def coap_wrapper.opp):
     """Setups a coap wrapper with mocked device."""
-    await async_setup_component.opp, "shelly", {})
+    await async_setup_component(opp, "shelly", {})
 
     config_entry = MockConfigEntry(
         domain=DOMAIN,
         data={"sleep_period": 0, "model": "SHSW-25"},
         unique_id="12345678",
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     device = Mock(
         blocks=MOCK_BLOCKS,

@@ -3,7 +3,7 @@ from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.components.gree.const import DOMAIN as GREE_DOMAIN
 
 
-async def test_creating_entry_sets_up_climate.opp, discovery, device, setup):
+async def test_creating_entry_sets_up_climate(opp, discovery, device, setup):
     """Test setting up Gree creates the climate components."""
     result = await opp.config_entries.flow.async_init(
         GREE_DOMAIN, context={"source": config_entries.SOURCE_USER}

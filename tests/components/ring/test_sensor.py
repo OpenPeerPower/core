@@ -4,9 +4,9 @@ from .common import setup_platform
 WIFI_ENABLED = False
 
 
-async def test_sensor.opp, requests_mock):
+async def test_sensor(opp, requests_mock):
     """Test the Ring sensors."""
-    await setup_platform.opp, "sensor")
+    await setup_platform(opp, "sensor")
 
     front_battery_state = opp.states.get("sensor.front_battery")
     assert front_battery_state is not None

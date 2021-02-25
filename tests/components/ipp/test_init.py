@@ -15,7 +15,7 @@ async def test_config_entry_not_ready(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the IPP configuration entry not ready."""
-    entry = await init_integration.opp, aioclient_mock, conn_error=True)
+    entry = await init_integration(opp, aioclient_mock, conn_error=True)
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
 
@@ -23,9 +23,9 @@ async def test_unload_config_entry(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the IPP configuration entry unloading."""
-    entry = await init_integration.opp, aioclient_mock)
+    entry = await init_integration(opp, aioclient_mock)
 
-    assert.opp.data[DOMAIN]
+    assert opp.data[DOMAIN]
     assert entry.entry_id in.opp.data[DOMAIN]
     assert entry.state == ENTRY_STATE_LOADED
 

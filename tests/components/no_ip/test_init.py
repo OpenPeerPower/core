@@ -19,7 +19,7 @@ USERNAME = "abc@123.com"
 
 
 @pytest.fixture
-def setup_no_ip.opp, aioclient_mock):
+def setup_no_ip(opp, aioclient_mock):
     """Fixture that sets up NO-IP."""
     aioclient_mock.get(UPDATE_URL, params={"hostname": DOMAIN}, text="good 0.0.0.0")
 
@@ -50,12 +50,12 @@ async def test_setup_opp, aioclient_mock):
     assert result
     assert aioclient_mock.call_count == 1
 
-    async_fire_time_changed.opp, utcnow() + timedelta(minutes=5))
+    async_fire_time_changed(opp, utcnow() + timedelta(minutes=5))
     await opp.async_block_till_done()
     assert aioclient_mock.call_count == 2
 
 
-async def test_setup_fails_if_update_fails.opp, aioclient_mock):
+async def test_setup_fails_if_update_fails(opp, aioclient_mock):
     """Test setup fails if first update fails."""
     aioclient_mock.get(UPDATE_URL, params={"hostname": DOMAIN}, text="nohost")
 
@@ -68,7 +68,7 @@ async def test_setup_fails_if_update_fails.opp, aioclient_mock):
     assert aioclient_mock.call_count == 1
 
 
-async def test_setup_fails_if_wrong_auth.opp, aioclient_mock):
+async def test_setup_fails_if_wrong_auth(opp, aioclient_mock):
     """Test setup fails if first update fails through wrong authentication."""
     aioclient_mock.get(UPDATE_URL, params={"hostname": DOMAIN}, text="badauth")
 

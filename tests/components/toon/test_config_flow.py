@@ -199,7 +199,7 @@ async def test_agreement_already_set_up(
 ):
     """Test showing display form again if display already exists."""
     await setup_component.opp)
-    MockConfigEntry(domain=DOMAIN, unique_id=123).add_to.opp.opp)
+    MockConfigEntry(domain=DOMAIN, unique_id=123).add_to_opp(opp)
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
@@ -274,7 +274,7 @@ async def test_toon_abort(
         assert result2["reason"] == "connection_error"
 
 
-async def test_import.opp, current_request_with_host):
+async def test_import(opp, current_request_with_host):
     """Test if importing step works."""
     await setup_component.opp)
 
@@ -293,7 +293,7 @@ async def test_import_migration(
 ):
     """Test if importing step with migration works."""
     old_entry = MockConfigEntry(domain=DOMAIN, unique_id=123, version=1)
-    old_entry.add_to.opp.opp)
+    old_entry.add_to_opp(opp)
 
     await setup_component.opp)
 

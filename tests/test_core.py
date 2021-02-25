@@ -605,7 +605,7 @@ def test_state_repr():
 async def test_statemachine_is_state(opp):
     """Test is_state method."""
     opp.states.async_set("light.bowl", "on", {})
-    assert.opp.states.is_state("light.Bowl", "on")
+    assert opp.states.is_state("light.Bowl", "on")
     assert not.opp.states.is_state("light.Bowl", "off")
     assert not.opp.states.is_state("light.Non_existing", "on")
 
@@ -633,7 +633,7 @@ async def test_statemachine_remove(opp):
     events = async_capture_events(opp, EVENT_STATE_CHANGED)
 
     assert "light.bowl" in.opp.states.async_entity_ids()
-    assert.opp.states.async_remove("light.bowl")
+    assert opp.states.async_remove("light.bowl")
     await opp.async_block_till_done()
 
     assert "light.bowl" not in.opp.states.async_entity_ids()
@@ -656,7 +656,7 @@ async def test_statemachine_case_insensitivty(opp):
     opp.states.async_set("light.BOWL", "off")
     await opp.async_block_till_done()
 
-    assert.opp.states.is_state("light.bowl", "off")
+    assert opp.states.is_state("light.bowl", "off")
     assert len(events) == 1
 
 
@@ -706,7 +706,7 @@ async def test_serviceregistry_op._service(opp):
     """Test has_service method."""
     opp.services.async_register("test_domain", "test_service", lambda call: None)
     assert len.opp.services.async_services()) == 1
-    assert.opp.services.has_service("tesT_domaiN", "tesT_servicE")
+    assert opp.services.has_service("tesT_domaiN", "tesT_servicE")
     assert not.opp.services.has_service("test_domain", "non_existing")
     assert not.opp.services.has_service("non_existing", "test_service")
 
@@ -790,7 +790,7 @@ async def test_serviceregistry_remove_service(opp):
     calls_remove = async_capture_events(opp, EVENT_SERVICE_REMOVED)
 
     opp.services.async_register("test_domain", "test_service", lambda call: None)
-    assert.opp.services.has_service("test_Domain", "test_Service")
+    assert opp.services.has_service("test_Domain", "test_Service")
 
     opp.services.async_remove("test_Domain", "test_Service")
     await opp.async_block_till_done()
@@ -990,12 +990,12 @@ async def test_event_on_update(opp):
 
     opp.bus.async_listen(EVENT_CORE_CONFIG_UPDATE, callback)
 
-    assert.opp.config.latitude != 12
+    assert opp.config.latitude != 12
 
     await opp.config.async_update(latitude=12)
     await opp.async_block_till_done()
 
-    assert.opp.config.latitude == 12
+    assert opp.config.latitude == 12
     assert len(events) == 1
     assert events[0].data == {"latitude": 12}
 
@@ -1119,14 +1119,14 @@ async def test_opp_start_starts_the_timer(loop):
         with patch("openpeerpower.core._async_create_timer") as mock_timer:
             await opp.async_start()
 
-        assert.opp.state == op.CoreState.running
+        assert opp.state == op.CoreState.running
         assert not.opp._track_task
         assert len(mock_timer.mock_calls) == 1
         assert mock_timer.mock_calls[0][1][0] is.opp
 
     finally:
         await opp.async_stop()
-        assert.opp.state == op.CoreState.stopped
+        assert opp.state == op.CoreState.stopped
 
 
 async def test_start_taking_too_long(loop, caplog):
@@ -1140,27 +1140,27 @@ async def test_start_taking_too_long(loop, caplog):
         ), patch("openpeerpower.core._async_create_timer") as mock_timer:
             await opp.async_start()
 
-        assert.opp.state == op.CoreState.running
+        assert opp.state == op.CoreState.running
         assert len(mock_timer.mock_calls) == 1
         assert mock_timer.mock_calls[0][1][0] is.opp
         assert "Something is blocking Open Peer Power" in caplog.text
 
     finally:
         await opp.async_stop()
-        assert.opp.state == op.CoreState.stopped
+        assert opp.state == op.CoreState.stopped
 
 
 async def test_track_task_functions(loop):
     """Test function to start/stop track task and initial state."""
    opp =  op.OpenPeerPower()
     try:
-        assert.opp._track_task
+        assert opp._track_task
 
         opp.async_stop_track_tasks()
         assert not.opp._track_task
 
         opp.async_track_tasks()
-        assert.opp._track_task
+        assert opp._track_task
     finally:
         await opp.async_stop()
 
@@ -1471,13 +1471,13 @@ async def test_async_entity_ids_count(opp):
     opp.states.async_set("light.frog", "on")
     opp.states.async_set("vacuum.floor", "on")
 
-    assert.opp.states.async_entity_ids_count() == 4
-    assert.opp.states.async_entity_ids_count("light") == 2
+    assert opp.states.async_entity_ids_count() == 4
+    assert opp.states.async_entity_ids_count("light") == 2
 
     opp.states.async_set("light.cow", "on")
 
-    assert.opp.states.async_entity_ids_count() == 5
-    assert.opp.states.async_entity_ids_count("light") == 3
+    assert opp.states.async_entity_ids_count() == 5
+    assert opp.states.async_entity_ids_count("light") == 3
 
 
 async def test_oppjob_forbid_coroutine():
@@ -1499,23 +1499,23 @@ async def test_reserving_states(opp):
     """Test we can reserve a state in the state machine."""
 
     opp.states.async_reserve("light.bedroom")
-    assert.opp.states.async_available("light.bedroom") is False
+    assert opp.states.async_available("light.bedroom") is False
     opp.states.async_set("light.bedroom", "on")
-    assert.opp.states.async_available("light.bedroom") is False
+    assert opp.states.async_available("light.bedroom") is False
 
     with pytest.raises(op.OpenPeerPowerError):
         opp.states.async_reserve("light.bedroom")
 
     opp.states.async_remove("light.bedroom")
-    assert.opp.states.async_available("light.bedroom") is True
+    assert opp.states.async_available("light.bedroom") is True
     opp.states.async_set("light.bedroom", "on")
 
     with pytest.raises(op.OpenPeerPowerError):
         opp.states.async_reserve("light.bedroom")
 
-    assert.opp.states.async_available("light.bedroom") is False
+    assert opp.states.async_available("light.bedroom") is False
     opp.states.async_remove("light.bedroom")
-    assert.opp.states.async_available("light.bedroom") is True
+    assert opp.states.async_available("light.bedroom") is True
 
 
 async def test_state_change_events_match_state_time(opp):

@@ -312,14 +312,14 @@ async def test_sensor_default_enabled_entities(
 
     # Assert entities should not exist yet.
     for attribute in get_platform_attributes(SENSOR_DOMAIN):
-        assert not await async_get_entity_id.opp, attribute, PERSON0.user_id)
+        assert not await async_get_entity_id(opp, attribute, PERSON0.user_id)
 
     # person 0
     await component_factory.setup_profile(PERSON0.user_id)
 
     # Assert entities should exist.
     for attribute in get_platform_attributes(SENSOR_DOMAIN):
-        entity_id = await async_get_entity_id.opp, attribute, PERSON0.user_id)
+        entity_id = await async_get_entity_id(opp, attribute, PERSON0.user_id)
         assert entity_id
         assert entity_registry.async_is_registered(entity_id)
 
@@ -331,7 +331,7 @@ async def test_sensor_default_enabled_entities(
 
     for person, measurement, expected in EXPECTED_DATA:
         attribute = WITHINGS_MEASUREMENTS_MAP[measurement]
-        entity_id = await async_get_entity_id.opp, attribute, person.user_id)
+        entity_id = await async_get_entity_id(opp, attribute, person.user_id)
         state_obj = opp.states.get(entity_id)
 
         if attribute.enabled_by_default:
@@ -360,14 +360,14 @@ async def test_all_entities(
 
         # Assert entities should not exist yet.
         for attribute in get_platform_attributes(SENSOR_DOMAIN):
-            assert not await async_get_entity_id.opp, attribute, PERSON0.user_id)
+            assert not await async_get_entity_id(opp, attribute, PERSON0.user_id)
 
         # person 0
         await component_factory.setup_profile(PERSON0.user_id)
 
         # Assert entities should exist.
         for attribute in get_platform_attributes(SENSOR_DOMAIN):
-            entity_id = await async_get_entity_id.opp, attribute, PERSON0.user_id)
+            entity_id = await async_get_entity_id(opp, attribute, PERSON0.user_id)
             assert entity_id
             assert entity_registry.async_is_registered(entity_id)
 
@@ -379,7 +379,7 @@ async def test_all_entities(
 
         for person, measurement, expected in EXPECTED_DATA:
             attribute = WITHINGS_MEASUREMENTS_MAP[measurement]
-            entity_id = await async_get_entity_id.opp, attribute, person.user_id)
+            entity_id = await async_get_entity_id(opp, attribute, person.user_id)
             state_obj = opp.states.get(entity_id)
 
             async_assert_state_equals(entity_id, state_obj, expected, attribute)

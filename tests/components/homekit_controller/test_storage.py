@@ -13,7 +13,7 @@ from tests.components.homekit_controller.common import (
 )
 
 
-async def test_load_from_storage.opp, opp_storage):
+async def test_load_from_storage(opp, opp_storage):
     """Test that entity map can be correctly loaded from cache."""
     hkid = "00:00:00:00:00:00"
 
@@ -26,7 +26,7 @@ async def test_load_from_storage.opp, opp_storage):
     assert hkid in.opp.data[ENTITY_MAP].storage_data
 
 
-async def test_storage_is_removed.opp, opp_storage):
+async def test_storage_is_removed(opp, opp_storage):
     """Test entity map storage removal is idempotent."""
     await setup_platform.opp)
 
@@ -42,7 +42,7 @@ async def test_storage_is_removed.opp, opp_storage):
     assert hkid not in.opp.data[ENTITY_MAP].storage_data
     await flush_store(entity_map.store)
 
-    assert.opp_storage[ENTITY_MAP]["data"]["pairings"] == {}
+    assert opp_storage[ENTITY_MAP]["data"]["pairings"] == {}
 
 
 async def test_storage_is_removed_idempotent.opp):
@@ -66,9 +66,9 @@ def create_lightbulb_service(accessory):
     on_char.value = 0
 
 
-async def test_storage_is_updated_on_add.opp, opp_storage, utcnow):
+async def test_storage_is_updated_on_add(opp, opp_storage, utcnow):
     """Test entity map storage is cleaned up on adding an accessory."""
-    await setup_test_component.opp, create_lightbulb_service)
+    await setup_test_component(opp, create_lightbulb_service)
 
     entity_map = opp.data[ENTITY_MAP]
     hkid = "00:00:00:00:00:00"
@@ -81,9 +81,9 @@ async def test_storage_is_updated_on_add.opp, opp_storage, utcnow):
     assert hkid in.opp_storage[ENTITY_MAP]["data"]["pairings"]
 
 
-async def test_storage_is_removed_on_config_entry_removal.opp, utcnow):
+async def test_storage_is_removed_on_config_entry_removal(opp, utcnow):
     """Test entity map storage is cleaned up on config entry removal."""
-    await setup_test_component.opp, create_lightbulb_service)
+    await setup_test_component(opp, create_lightbulb_service)
 
     hkid = "00:00:00:00:00:00"
 
@@ -101,6 +101,6 @@ async def test_storage_is_removed_on_config_entry_removal.opp, utcnow):
 
     assert hkid in.opp.data[ENTITY_MAP].storage_data
 
-    await async_remove_entry.opp, entry)
+    await async_remove_entry(opp, entry)
 
     assert hkid not in.opp.data[ENTITY_MAP].storage_data

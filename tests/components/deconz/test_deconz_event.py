@@ -54,23 +54,23 @@ SENSORS = {
 }
 
 
-async def test_deconz_events.opp, aioclient_mock):
+async def test_deconz_events(opp, aioclient_mock):
     """Test successful creation of deconz events."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = deepcopy(SENSORS)
     config_entry = await setup_deconz_integration(
         opp. aioclient_mock, get_state_response=data
     )
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
 
     assert len.opp.states.async_all()) == 3
     assert len(gateway.events) == 5
-    assert.opp.states.get("sensor.switch_1") is None
-    assert.opp.states.get("sensor.switch_1_battery_level") is None
-    assert.opp.states.get("sensor.switch_2") is None
-    assert.opp.states.get("sensor.switch_2_battery_level").state == "100"
+    assert opp.states.get("sensor.switch_1") is None
+    assert opp.states.get("sensor.switch_1_battery_level") is None
+    assert opp.states.get("sensor.switch_2") is None
+    assert opp.states.get("sensor.switch_2_battery_level").state == "100"
 
-    events = async_capture_events.opp, CONF_DECONZ_EVENT)
+    events = async_capture_events(opp, CONF_DECONZ_EVENT)
 
     gateway.api.sensors["1"].update({"state": {"buttonevent": 2000}})
     await opp.async_block_till_done()

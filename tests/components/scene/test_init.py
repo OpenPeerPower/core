@@ -19,7 +19,7 @@ def entities.opp):
     yield platform.ENTITIES[0:2]
 
 
-async def test_config_yaml_alias_anchor.opp, entities):
+async def test_config_yaml_alias_anchor(opp, entities):
     """Test the usage of YAML aliases and anchors.
 
     The following test scene configuration is equivalent to:
@@ -36,7 +36,7 @@ async def test_config_yaml_alias_anchor.opp, entities):
     reference to the original dictionary, instead of creating a copy, so
     care needs to be taken to not modify the original.
     """
-    light_1, light_2 = await setup_lights.opp, entities)
+    light_1, light_2 = await setup_lights(opp, entities)
     entity_state = {"state": "on", "brightness": 100}
 
     assert await async_setup_component(
@@ -58,15 +58,15 @@ async def test_config_yaml_alias_anchor.opp, entities):
 
     await activate.opp, "scene.test")
 
-    assert light.is_on.opp, light_1.entity_id)
-    assert light.is_on.opp, light_2.entity_id)
+    assert light.is_on(opp, light_1.entity_id)
+    assert light.is_on(opp, light_2.entity_id)
     assert 100 == light_1.last_call("turn_on")[1].get("brightness")
     assert 100 == light_2.last_call("turn_on")[1].get("brightness")
 
 
-async def test_config_yaml_bool.opp, entities):
+async def test_config_yaml_bool(opp, entities):
     """Test parsing of booleans in yaml config."""
-    light_1, light_2 = await setup_lights.opp, entities)
+    light_1, light_2 = await setup_lights(opp, entities)
 
     config = (
         "scene:\n"
@@ -81,19 +81,19 @@ async def test_config_yaml_bool.opp, entities):
     with io.StringIO(config) as file:
         doc = yaml_loader.yaml.safe_load(file)
 
-    assert await async_setup_component.opp, scene.DOMAIN, doc)
+    assert await async_setup_component(opp, scene.DOMAIN, doc)
     await opp.async_block_till_done()
 
     await activate.opp, "scene.test")
 
-    assert light.is_on.opp, light_1.entity_id)
-    assert light.is_on.opp, light_2.entity_id)
+    assert light.is_on(opp, light_1.entity_id)
+    assert light.is_on(opp, light_2.entity_id)
     assert 100 == light_2.last_call("turn_on")[1].get("brightness")
 
 
-async def test_activate_scene.opp, entities):
+async def test_activate_scene(opp, entities):
     """Test active scene."""
-    light_1, light_2 = await setup_lights.opp, entities)
+    light_1, light_2 = await setup_lights(opp, entities)
 
     assert await async_setup_component(
         opp,
@@ -113,11 +113,11 @@ async def test_activate_scene.opp, entities):
     await opp.async_block_till_done()
     await activate.opp, "scene.test")
 
-    assert light.is_on.opp, light_1.entity_id)
-    assert light.is_on.opp, light_2.entity_id)
+    assert light.is_on(opp, light_1.entity_id)
+    assert light.is_on(opp, light_2.entity_id)
     assert light_2.last_call("turn_on")[1].get("brightness") == 100
 
-    calls = async_mock_service.opp, "light", "turn_on")
+    calls = async_mock_service(opp, "light", "turn_on")
 
     await opp.services.async_call(
         scene.DOMAIN, "turn_on", {"transition": 42, "entity_id": "scene.test"}
@@ -142,13 +142,13 @@ async def activate.opp, entity_id=ENTITY_MATCH_ALL):
 
 async def test_services_registered.opp):
     """Test we register services with empty config."""
-    assert await async_setup_component.opp, "scene", {})
-    assert.opp.services.has_service("scene", "reload")
-    assert.opp.services.has_service("scene", "turn_on")
-    assert.opp.services.has_service("scene", "apply")
+    assert await async_setup_component(opp, "scene", {})
+    assert opp.services.has_service("scene", "reload")
+    assert opp.services.has_service("scene", "turn_on")
+    assert opp.services.has_service("scene", "apply")
 
 
-async def setup_lights.opp, entities):
+async def setup_lights(opp, entities):
     """Set up the light component."""
     assert await async_setup_component(
         opp. light.DOMAIN, {light.DOMAIN: {"platform": "test"}}
@@ -165,7 +165,7 @@ async def setup_lights.opp, entities):
     )
     await opp.async_block_till_done()
 
-    assert not light.is_on.opp, light_1.entity_id)
-    assert not light.is_on.opp, light_2.entity_id)
+    assert not light.is_on(opp, light_1.entity_id)
+    assert not light.is_on(opp, light_2.entity_id)
 
     return light_1, light_2

@@ -75,10 +75,10 @@ async def test_setup_entry_successful.opp):
         "openpeerpower.components.emulated_roku.binding.EmulatedRokuServer",
         return_value=Mock(start=AsyncMock(), close=AsyncMock()),
     ) as instantiate:
-        assert await emulated_roku.async_setup_entry.opp, entry) is True
+        assert await emulated_roku.async_setup_entry(opp, entry) is True
 
     assert len(instantiate.mock_calls) == 1
-    assert.opp.data[emulated_roku.DOMAIN]
+    assert opp.data[emulated_roku.DOMAIN]
 
     roku_instance = opp.data[emulated_roku.DOMAIN]["Emulated Roku Test"]
 
@@ -99,12 +99,12 @@ async def test_unload_entry.opp):
         "openpeerpower.components.emulated_roku.binding.EmulatedRokuServer",
         return_value=Mock(start=AsyncMock(), close=AsyncMock()),
     ):
-        assert await emulated_roku.async_setup_entry.opp, entry) is True
+        assert await emulated_roku.async_setup_entry(opp, entry) is True
 
     assert emulated_roku.DOMAIN in.opp.data
 
     await opp.async_block_till_done()
 
-    assert await emulated_roku.async_unload_entry.opp, entry)
+    assert await emulated_roku.async_unload_entry(opp, entry)
 
     assert len.opp.data[emulated_roku.DOMAIN]) == 0

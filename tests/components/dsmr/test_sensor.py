@@ -24,7 +24,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import MockConfigEntry, patch
 
 
-async def test_setup_platform.opp, dsmr_connection_fixture):
+async def test_setup_platform(opp, dsmr_connection_fixture):
     """Test setup of platform."""
     async_add_entities = MagicMock()
 
@@ -102,7 +102,7 @@ async def test_default_setup_opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data, options=entry_options
     )
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -148,7 +148,7 @@ async def test_default_setup_opp, dsmr_connection_fixture):
     assert gas_consumption.attributes.get("unit_of_measurement") == VOLUME_CUBIC_METERS
 
 
-async def test_setup_only_energy.opp, dsmr_connection_fixture):
+async def test_setup_only_energy(opp, dsmr_connection_fixture):
     """Test the default setup."""
     entry_data = {
         "port": "/dev/ttyUSB0",
@@ -162,7 +162,7 @@ async def test_setup_only_energy.opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data
     )
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -217,7 +217,7 @@ async def test_derivative():
     assert entity.unit_of_measurement == VOLUME_FLOW_RATE_CUBIC_METERS_PER_HOUR
 
 
-async def test_v4_meter.opp, dsmr_connection_fixture):
+async def test_v4_meter(opp, dsmr_connection_fixture):
     """Test if v4 meter is correctly parsed."""
     (connection_factory, transport, protocol) = dsmr_connection_fixture
 
@@ -253,7 +253,7 @@ async def test_v4_meter.opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data, options=entry_options
     )
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -277,7 +277,7 @@ async def test_v4_meter.opp, dsmr_connection_fixture):
     assert gas_consumption.attributes.get("unit_of_measurement") == VOLUME_CUBIC_METERS
 
 
-async def test_v5_meter.opp, dsmr_connection_fixture):
+async def test_v5_meter(opp, dsmr_connection_fixture):
     """Test if v5 meter is correctly parsed."""
     (connection_factory, transport, protocol) = dsmr_connection_fixture
 
@@ -313,7 +313,7 @@ async def test_v5_meter.opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data, options=entry_options
     )
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -337,7 +337,7 @@ async def test_v5_meter.opp, dsmr_connection_fixture):
     assert gas_consumption.attributes.get("unit_of_measurement") == VOLUME_CUBIC_METERS
 
 
-async def test_luxembourg_meter.opp, dsmr_connection_fixture):
+async def test_luxembourg_meter(opp, dsmr_connection_fixture):
     """Test if v5 meter is correctly parsed."""
     (connection_factory, transport, protocol) = dsmr_connection_fixture
 
@@ -379,7 +379,7 @@ async def test_luxembourg_meter.opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data, options=entry_options
     )
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -406,7 +406,7 @@ async def test_luxembourg_meter.opp, dsmr_connection_fixture):
     assert gas_consumption.attributes.get("unit_of_measurement") == VOLUME_CUBIC_METERS
 
 
-async def test_belgian_meter.opp, dsmr_connection_fixture):
+async def test_belgian_meter(opp, dsmr_connection_fixture):
     """Test if Belgian meter is correctly parsed."""
     (connection_factory, transport, protocol) = dsmr_connection_fixture
 
@@ -442,7 +442,7 @@ async def test_belgian_meter.opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data, options=entry_options
     )
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -466,7 +466,7 @@ async def test_belgian_meter.opp, dsmr_connection_fixture):
     assert gas_consumption.attributes.get("unit_of_measurement") == VOLUME_CUBIC_METERS
 
 
-async def test_belgian_meter_low.opp, dsmr_connection_fixture):
+async def test_belgian_meter_low(opp, dsmr_connection_fixture):
     """Test if Belgian meter is correctly parsed."""
     (connection_factory, transport, protocol) = dsmr_connection_fixture
 
@@ -491,7 +491,7 @@ async def test_belgian_meter_low.opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data, options=entry_options
     )
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -510,7 +510,7 @@ async def test_belgian_meter_low.opp, dsmr_connection_fixture):
     assert power_tariff.attributes.get("unit_of_measurement") == ""
 
 
-async def test_tcp.opp, dsmr_connection_fixture):
+async def test_tcp(opp, dsmr_connection_fixture):
     """If proper config provided TCP connection should be made."""
     (connection_factory, transport, protocol) = dsmr_connection_fixture
 
@@ -528,7 +528,7 @@ async def test_tcp.opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data
     )
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -537,7 +537,7 @@ async def test_tcp.opp, dsmr_connection_fixture):
     assert connection_factory.call_args_list[0][0][1] == "1234"
 
 
-async def test_connection_errors_retry.opp, dsmr_connection_fixture):
+async def test_connection_errors_retry(opp, dsmr_connection_fixture):
     """Connection should be retried on error during setup."""
     (connection_factory, transport, protocol) = dsmr_connection_fixture
 
@@ -560,7 +560,7 @@ async def test_connection_errors_retry.opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data
     )
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.dsmr.sensor.create_dsmr_reader",
@@ -574,7 +574,7 @@ async def test_connection_errors_retry.opp, dsmr_connection_fixture):
         assert first_fail_connection_factory.call_count >= 2, "connecting not retried"
 
 
-async def test_reconnect.opp, dsmr_connection_fixture):
+async def test_reconnect(opp, dsmr_connection_fixture):
     """If transport disconnects, the connection should be retried."""
     (connection_factory, transport, protocol) = dsmr_connection_fixture
 
@@ -602,7 +602,7 @@ async def test_reconnect.opp, dsmr_connection_fixture):
         domain="dsmr", unique_id="/dev/ttyUSB0", data=entry_data
     )
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()

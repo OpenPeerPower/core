@@ -40,7 +40,7 @@ class HlsClient:
 
 
 @pytest.fixture
-def hls_stream.opp, opp_client):
+def hls_stream(opp, opp_client):
     """Create test fixture for creating an HLS client for a stream."""
 
     async def create_client_for_stream(stream):
@@ -75,20 +75,20 @@ def make_playlist(sequence, discontinuity_sequence=0, segments=[]):
     return "\n".join(response)
 
 
-async def test_hls_stream.opp, hls_stream, stream_worker_sync):
+async def test_hls_stream(opp, hls_stream, stream_worker_sync):
     """
     Test hls stream.
 
     Purposefully not mocking anything here to test full
     integration with the stream component.
     """
-    await async_setup_component.opp, "stream", {"stream": {}})
+    await async_setup_component(opp, "stream", {"stream": {}})
 
     stream_worker_sync.pause()
 
     # Setup demo HLS track
     source = generate_h264_video()
-    stream = create_stream.opp, source)
+    stream = create_stream(opp, source)
 
     # Request stream
     stream.add_provider("hls")
@@ -121,15 +121,15 @@ async def test_hls_stream.opp, hls_stream, stream_worker_sync):
     assert fail_response.status == HTTP_NOT_FOUND
 
 
-async def test_stream_timeout.opp, opp_client, stream_worker_sync):
+async def test_stream_timeout(opp, opp_client, stream_worker_sync):
     """Test hls stream timeout."""
-    await async_setup_component.opp, "stream", {"stream": {}})
+    await async_setup_component(opp, "stream", {"stream": {}})
 
     stream_worker_sync.pause()
 
     # Setup demo HLS track
     source = generate_h264_video()
-    stream = create_stream.opp, source)
+    stream = create_stream(opp, source)
 
     # Request stream
     stream.add_provider("hls")
@@ -145,7 +145,7 @@ async def test_stream_timeout.opp, opp_client, stream_worker_sync):
 
     # Wait a minute
     future = dt_util.utcnow() + timedelta(minutes=1)
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
 
     # Fetch again to reset timer
     playlist_response = await http_client.get(parsed_url.path)
@@ -155,7 +155,7 @@ async def test_stream_timeout.opp, opp_client, stream_worker_sync):
 
     # Wait 5 minutes
     future = dt_util.utcnow() + timedelta(minutes=5)
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.async_block_till_done()
 
     # Ensure playlist not accessible
@@ -163,15 +163,15 @@ async def test_stream_timeout.opp, opp_client, stream_worker_sync):
     assert fail_response.status == HTTP_NOT_FOUND
 
 
-async def test_stream_timeout_after_stop.opp, opp_client, stream_worker_sync):
+async def test_stream_timeout_after_stop(opp, opp_client, stream_worker_sync):
     """Test hls stream timeout after the stream has been stopped already."""
-    await async_setup_component.opp, "stream", {"stream": {}})
+    await async_setup_component(opp, "stream", {"stream": {}})
 
     stream_worker_sync.pause()
 
     # Setup demo HLS track
     source = generate_h264_video()
-    stream = create_stream.opp, source)
+    stream = create_stream(opp, source)
 
     # Request stream
     stream.add_provider("hls")
@@ -183,19 +183,19 @@ async def test_stream_timeout_after_stop.opp, opp_client, stream_worker_sync):
     # Wait 5 minutes and fire callback.  Stream should already have been
     # stopped so this is a no-op.
     future = dt_util.utcnow() + timedelta(minutes=5)
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.async_block_till_done()
 
 
-async def test_stream_ended.opp, stream_worker_sync):
+async def test_stream_ended(opp, stream_worker_sync):
     """Test hls stream packets ended."""
-    await async_setup_component.opp, "stream", {"stream": {}})
+    await async_setup_component(opp, "stream", {"stream": {}})
 
     stream_worker_sync.pause()
 
     # Setup demo HLS track
     source = generate_h264_video()
-    stream = create_stream.opp, source)
+    stream = create_stream(opp, source)
     track = stream.add_provider("hls")
 
     # Request stream
@@ -222,11 +222,11 @@ async def test_stream_ended.opp, stream_worker_sync):
 
 async def test_stream_keepalive.opp):
     """Test hls stream retries the stream when keepalive=True."""
-    await async_setup_component.opp, "stream", {"stream": {}})
+    await async_setup_component(opp, "stream", {"stream": {}})
 
     # Setup demo HLS track
     source = "test_stream_keepalive_source"
-    stream = create_stream.opp, source)
+    stream = create_stream(opp, source)
     track = stream.add_provider("hls")
     track.num_segments = 2
     stream.start()
@@ -258,11 +258,11 @@ async def test_stream_keepalive.opp):
     stream.stop()
 
 
-async def test_hls_playlist_view_no_output.opp, opp_client, hls_stream):
+async def test_hls_playlist_view_no_output(opp, opp_client, hls_stream):
     """Test rendering the hls playlist with no output segments."""
-    await async_setup_component.opp, "stream", {"stream": {}})
+    await async_setup_component(opp, "stream", {"stream": {}})
 
-    stream = create_stream.opp, STREAM_SOURCE)
+    stream = create_stream(opp, STREAM_SOURCE)
     stream.add_provider("hls")
 
     hls_client = await hls_stream(stream)
@@ -272,11 +272,11 @@ async def test_hls_playlist_view_no_output.opp, opp_client, hls_stream):
     assert resp.status == 404
 
 
-async def test_hls_playlist_view.opp, hls_stream, stream_worker_sync):
+async def test_hls_playlist_view(opp, hls_stream, stream_worker_sync):
     """Test rendering the hls playlist with 1 and 2 output segments."""
-    await async_setup_component.opp, "stream", {"stream": {}})
+    await async_setup_component(opp, "stream", {"stream": {}})
 
-    stream = create_stream.opp, STREAM_SOURCE)
+    stream = create_stream(opp, STREAM_SOURCE)
     stream_worker_sync.pause()
     hls = stream.add_provider("hls")
 
@@ -301,11 +301,11 @@ async def test_hls_playlist_view.opp, hls_stream, stream_worker_sync):
     stream.stop()
 
 
-async def test_hls_max_segments.opp, hls_stream, stream_worker_sync):
+async def test_hls_max_segments(opp, hls_stream, stream_worker_sync):
     """Test rendering the hls playlist with more segments than the segment deque can hold."""
-    await async_setup_component.opp, "stream", {"stream": {}})
+    await async_setup_component(opp, "stream", {"stream": {}})
 
-    stream = create_stream.opp, STREAM_SOURCE)
+    stream = create_stream(opp, STREAM_SOURCE)
     stream_worker_sync.pause()
     hls = stream.add_provider("hls")
 
@@ -346,11 +346,11 @@ async def test_hls_max_segments.opp, hls_stream, stream_worker_sync):
     stream.stop()
 
 
-async def test_hls_playlist_view_discontinuity.opp, hls_stream, stream_worker_sync):
+async def test_hls_playlist_view_discontinuity(opp, hls_stream, stream_worker_sync):
     """Test a discontinuity across segments in the stream with 3 segments."""
-    await async_setup_component.opp, "stream", {"stream": {}})
+    await async_setup_component(opp, "stream", {"stream": {}})
 
-    stream = create_stream.opp, STREAM_SOURCE)
+    stream = create_stream(opp, STREAM_SOURCE)
     stream_worker_sync.pause()
     hls = stream.add_provider("hls")
 
@@ -376,11 +376,11 @@ async def test_hls_playlist_view_discontinuity.opp, hls_stream, stream_worker_sy
     stream.stop()
 
 
-async def test_hls_max_segments_discontinuity.opp, hls_stream, stream_worker_sync):
+async def test_hls_max_segments_discontinuity(opp, hls_stream, stream_worker_sync):
     """Test a discontinuity with more segments than the segment deque can hold."""
-    await async_setup_component.opp, "stream", {"stream": {}})
+    await async_setup_component(opp, "stream", {"stream": {}})
 
-    stream = create_stream.opp, STREAM_SOURCE)
+    stream = create_stream(opp, STREAM_SOURCE)
     stream_worker_sync.pause()
     hls = stream.add_provider("hls")
 

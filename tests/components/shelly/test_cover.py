@@ -17,7 +17,7 @@ from openpeerpower.const import ATTR_ENTITY_ID
 ROLLER_BLOCK_ID = 1
 
 
-async def test_services.opp, coap_wrapper, monkeypatch):
+async def test_services(opp, coap_wrapper, monkeypatch):
     """Test device turn on/off services."""
     assert coap_wrapper
 
@@ -42,7 +42,7 @@ async def test_services.opp, coap_wrapper, monkeypatch):
         {ATTR_ENTITY_ID: "cover.test_name"},
         blocking=True,
     )
-    assert.opp.states.get("cover.test_name").state == STATE_OPENING
+    assert opp.states.get("cover.test_name").state == STATE_OPENING
 
     await opp.services.async_call(
         COVER_DOMAIN,
@@ -50,7 +50,7 @@ async def test_services.opp, coap_wrapper, monkeypatch):
         {ATTR_ENTITY_ID: "cover.test_name"},
         blocking=True,
     )
-    assert.opp.states.get("cover.test_name").state == STATE_CLOSING
+    assert opp.states.get("cover.test_name").state == STATE_CLOSING
 
     await opp.services.async_call(
         COVER_DOMAIN,
@@ -58,10 +58,10 @@ async def test_services.opp, coap_wrapper, monkeypatch):
         {ATTR_ENTITY_ID: "cover.test_name"},
         blocking=True,
     )
-    assert.opp.states.get("cover.test_name").state == STATE_CLOSED
+    assert opp.states.get("cover.test_name").state == STATE_CLOSED
 
 
-async def test_update.opp, coap_wrapper, monkeypatch):
+async def test_update(opp, coap_wrapper, monkeypatch):
     """Test device update."""
     assert coap_wrapper
 
@@ -73,15 +73,15 @@ async def test_update.opp, coap_wrapper, monkeypatch):
     monkeypatch.setattr(coap_wrapper.device.blocks[ROLLER_BLOCK_ID], "rollerPos", 0)
     await opp.helpers.entity_component.async_update_entity("cover.test_name")
     await opp.async_block_till_done()
-    assert.opp.states.get("cover.test_name").state == STATE_CLOSED
+    assert opp.states.get("cover.test_name").state == STATE_CLOSED
 
     monkeypatch.setattr(coap_wrapper.device.blocks[ROLLER_BLOCK_ID], "rollerPos", 100)
     await opp.helpers.entity_component.async_update_entity("cover.test_name")
     await opp.async_block_till_done()
-    assert.opp.states.get("cover.test_name").state == STATE_OPEN
+    assert opp.states.get("cover.test_name").state == STATE_OPEN
 
 
-async def test_no_roller_blocks.opp, coap_wrapper, monkeypatch):
+async def test_no_roller_blocks(opp, coap_wrapper, monkeypatch):
     """Test device without roller blocks."""
     assert coap_wrapper
 
@@ -90,4 +90,4 @@ async def test_no_roller_blocks.opp, coap_wrapper, monkeypatch):
         opp.config_entries.async_forward_entry_setup(coap_wrapper.entry, COVER_DOMAIN)
     )
     await opp.async_block_till_done()
-    assert.opp.states.get("cover.test_name") is None
+    assert opp.states.get("cover.test_name") is None

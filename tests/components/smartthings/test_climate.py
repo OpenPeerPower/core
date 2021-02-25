@@ -198,9 +198,9 @@ def air_conditioner_fixture(device_factory):
     return device
 
 
-async def test_legacy_thermostat_entity_state.opp, legacy_thermostat):
+async def test_legacy_thermostat_entity_state(opp, legacy_thermostat):
     """Tests the state attributes properly match the thermostat type."""
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[legacy_thermostat])
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[legacy_thermostat])
     state = opp.states.get("climate.legacy_thermostat")
     assert state.state == HVAC_MODE_HEAT_COOL
     assert (
@@ -224,9 +224,9 @@ async def test_legacy_thermostat_entity_state.opp, legacy_thermostat):
     assert state.attributes[ATTR_CURRENT_TEMPERATURE] == 21.1  # celsius
 
 
-async def test_basic_thermostat_entity_state.opp, basic_thermostat):
+async def test_basic_thermostat_entity_state(opp, basic_thermostat):
     """Tests the state attributes properly match the thermostat type."""
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[basic_thermostat])
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[basic_thermostat])
     state = opp.states.get("climate.basic_thermostat")
     assert state.state == HVAC_MODE_OFF
     assert (
@@ -243,9 +243,9 @@ async def test_basic_thermostat_entity_state.opp, basic_thermostat):
     assert state.attributes[ATTR_CURRENT_TEMPERATURE] == 21.1  # celsius
 
 
-async def test_thermostat_entity_state.opp, thermostat):
+async def test_thermostat_entity_state(opp, thermostat):
     """Tests the state attributes properly match the thermostat type."""
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[thermostat])
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[thermostat])
     state = opp.states.get("climate.thermostat")
     assert state.state == HVAC_MODE_HEAT
     assert (
@@ -269,9 +269,9 @@ async def test_thermostat_entity_state.opp, thermostat):
     assert state.attributes[ATTR_CURRENT_HUMIDITY] == 34
 
 
-async def test_buggy_thermostat_entity_state.opp, buggy_thermostat):
+async def test_buggy_thermostat_entity_state(opp, buggy_thermostat):
     """Tests the state attributes properly match the thermostat type."""
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[buggy_thermostat])
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[buggy_thermostat])
     state = opp.states.get("climate.buggy_thermostat")
     assert state.state == STATE_UNKNOWN
     assert (
@@ -284,19 +284,19 @@ async def test_buggy_thermostat_entity_state.opp, buggy_thermostat):
     assert state.attributes[ATTR_HVAC_MODES] == []
 
 
-async def test_buggy_thermostat_invalid_mode.opp, buggy_thermostat):
+async def test_buggy_thermostat_invalid_mode(opp, buggy_thermostat):
     """Tests when an invalid operation mode is included."""
     buggy_thermostat.status.update_attribute_value(
         Attribute.supported_thermostat_modes, ["heat", "emergency heat", "other"]
     )
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[buggy_thermostat])
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[buggy_thermostat])
     state = opp.states.get("climate.buggy_thermostat")
     assert state.attributes[ATTR_HVAC_MODES] == [HVAC_MODE_HEAT]
 
 
-async def test_air_conditioner_entity_state.opp, air_conditioner):
+async def test_air_conditioner_entity_state(opp, air_conditioner):
     """Tests when an invalid operation mode is included."""
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[air_conditioner])
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[air_conditioner])
     state = opp.states.get("climate.air_conditioner")
     assert state.state == HVAC_MODE_HEAT_COOL
     assert (
@@ -331,9 +331,9 @@ async def test_air_conditioner_entity_state.opp, air_conditioner):
     assert state.attributes["power_consumption_end"] == "2019-02-26T02:05:55Z"
 
 
-async def test_set_fan_mode.opp, thermostat, air_conditioner):
+async def test_set_fan_mode(opp, thermostat, air_conditioner):
     """Test the fan mode is set successfully."""
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[thermostat, air_conditioner])
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[thermostat, air_conditioner])
     entity_ids = ["climate.thermostat", "climate.air_conditioner"]
     await opp.services.async_call(
         CLIMATE_DOMAIN,
@@ -346,9 +346,9 @@ async def test_set_fan_mode.opp, thermostat, air_conditioner):
         assert state.attributes[ATTR_FAN_MODE] == "auto", entity_id
 
 
-async def test_set_hvac_mode.opp, thermostat, air_conditioner):
+async def test_set_hvac_mode(opp, thermostat, air_conditioner):
     """Test the hvac mode is set successfully."""
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[thermostat, air_conditioner])
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[thermostat, air_conditioner])
     entity_ids = ["climate.thermostat", "climate.air_conditioner"]
     await opp.services.async_call(
         CLIMATE_DOMAIN,
@@ -362,13 +362,13 @@ async def test_set_hvac_mode.opp, thermostat, air_conditioner):
         assert state.state == HVAC_MODE_COOL, entity_id
 
 
-async def test_ac_set_hvac_mode_from_off.opp, air_conditioner):
+async def test_ac_set_hvac_mode_from_off(opp, air_conditioner):
     """Test setting HVAC mode when the unit is off."""
     air_conditioner.status.update_attribute_value(
         Attribute.air_conditioner_mode, "heat"
     )
     air_conditioner.status.update_attribute_value(Attribute.switch, "off")
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[air_conditioner])
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[air_conditioner])
     state = opp.states.get("climate.air_conditioner")
     assert state.state == HVAC_MODE_OFF
     await opp.services.async_call(
@@ -384,9 +384,9 @@ async def test_ac_set_hvac_mode_from_off.opp, air_conditioner):
     assert state.state == HVAC_MODE_HEAT_COOL
 
 
-async def test_ac_set_hvac_mode_off.opp, air_conditioner):
+async def test_ac_set_hvac_mode_off(opp, air_conditioner):
     """Test the AC HVAC mode can be turned off set successfully."""
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[air_conditioner])
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[air_conditioner])
     state = opp.states.get("climate.air_conditioner")
     assert state.state != HVAC_MODE_OFF
     await opp.services.async_call(
@@ -399,10 +399,10 @@ async def test_ac_set_hvac_mode_off.opp, air_conditioner):
     assert state.state == HVAC_MODE_OFF
 
 
-async def test_set_temperature_heat_mode.opp, thermostat):
+async def test_set_temperature_heat_mode(opp, thermostat):
     """Test the temperature is set successfully when in heat mode."""
     thermostat.status.thermostat_mode = "heat"
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[thermostat])
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[thermostat])
     await opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
@@ -415,10 +415,10 @@ async def test_set_temperature_heat_mode.opp, thermostat):
     assert thermostat.status.heating_setpoint == 69.8
 
 
-async def test_set_temperature_cool_mode.opp, thermostat):
+async def test_set_temperature_cool_mode(opp, thermostat):
     """Test the temperature is set successfully when in cool mode."""
     thermostat.status.thermostat_mode = "cool"
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[thermostat])
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[thermostat])
     await opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
@@ -429,10 +429,10 @@ async def test_set_temperature_cool_mode.opp, thermostat):
     assert state.attributes[ATTR_TEMPERATURE] == 21
 
 
-async def test_set_temperature.opp, thermostat):
+async def test_set_temperature(opp, thermostat):
     """Test the temperature is set successfully."""
     thermostat.status.thermostat_mode = "auto"
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[thermostat])
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[thermostat])
     await opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
@@ -448,9 +448,9 @@ async def test_set_temperature.opp, thermostat):
     assert state.attributes[ATTR_TARGET_TEMP_LOW] == 22.2
 
 
-async def test_set_temperature_ac.opp, air_conditioner):
+async def test_set_temperature_ac(opp, air_conditioner):
     """Test the temperature is set successfully."""
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[air_conditioner])
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[air_conditioner])
     await opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
@@ -461,9 +461,9 @@ async def test_set_temperature_ac.opp, air_conditioner):
     assert state.attributes[ATTR_TEMPERATURE] == 27
 
 
-async def test_set_temperature_ac_with_mode.opp, air_conditioner):
+async def test_set_temperature_ac_with_mode(opp, air_conditioner):
     """Test the temperature is set successfully."""
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[air_conditioner])
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[air_conditioner])
     await opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
@@ -479,14 +479,14 @@ async def test_set_temperature_ac_with_mode.opp, air_conditioner):
     assert state.state == HVAC_MODE_COOL
 
 
-async def test_set_temperature_ac_with_mode_from_off.opp, air_conditioner):
+async def test_set_temperature_ac_with_mode_from_off(opp, air_conditioner):
     """Test the temp and mode is set successfully when the unit is off."""
     air_conditioner.status.update_attribute_value(
         Attribute.air_conditioner_mode, "heat"
     )
     air_conditioner.status.update_attribute_value(Attribute.switch, "off")
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[air_conditioner])
-    assert.opp.states.get("climate.air_conditioner").state == HVAC_MODE_OFF
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[air_conditioner])
+    assert opp.states.get("climate.air_conditioner").state == HVAC_MODE_OFF
     await opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
@@ -502,10 +502,10 @@ async def test_set_temperature_ac_with_mode_from_off.opp, air_conditioner):
     assert state.state == HVAC_MODE_COOL
 
 
-async def test_set_temperature_ac_with_mode_to_off.opp, air_conditioner):
+async def test_set_temperature_ac_with_mode_to_off(opp, air_conditioner):
     """Test the temp and mode is set successfully to turn off the unit."""
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[air_conditioner])
-    assert.opp.states.get("climate.air_conditioner").state != HVAC_MODE_OFF
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[air_conditioner])
+    assert opp.states.get("climate.air_conditioner").state != HVAC_MODE_OFF
     await opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
@@ -521,9 +521,9 @@ async def test_set_temperature_ac_with_mode_to_off.opp, air_conditioner):
     assert state.state == HVAC_MODE_OFF
 
 
-async def test_set_temperature_with_mode.opp, thermostat):
+async def test_set_temperature_with_mode(opp, thermostat):
     """Test the temperature and mode is set successfully."""
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[thermostat])
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[thermostat])
     await opp.services.async_call(
         CLIMATE_DOMAIN,
         SERVICE_SET_TEMPERATURE,
@@ -541,9 +541,9 @@ async def test_set_temperature_with_mode.opp, thermostat):
     assert state.state == HVAC_MODE_HEAT_COOL
 
 
-async def test_set_turn_off.opp, air_conditioner):
+async def test_set_turn_off(opp, air_conditioner):
     """Test the a/c is turned off successfully."""
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[air_conditioner])
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[air_conditioner])
     state = opp.states.get("climate.air_conditioner")
     assert state.state == HVAC_MODE_HEAT_COOL
     await opp.services.async_call(
@@ -553,10 +553,10 @@ async def test_set_turn_off.opp, air_conditioner):
     assert state.state == HVAC_MODE_OFF
 
 
-async def test_set_turn_on.opp, air_conditioner):
+async def test_set_turn_on(opp, air_conditioner):
     """Test the a/c is turned on successfully."""
     air_conditioner.status.update_attribute_value(Attribute.switch, "off")
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[air_conditioner])
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[air_conditioner])
     state = opp.states.get("climate.air_conditioner")
     assert state.state == HVAC_MODE_OFF
     await opp.services.async_call(
@@ -566,9 +566,9 @@ async def test_set_turn_on.opp, air_conditioner):
     assert state.state == HVAC_MODE_HEAT_COOL
 
 
-async def test_entity_and_device_attributes.opp, thermostat):
+async def test_entity_and_device_attributes(opp, thermostat):
     """Test the attributes of the entries are correct."""
-    await setup_platform.opp, CLIMATE_DOMAIN, devices=[thermostat])
+    await setup_platform(opp, CLIMATE_DOMAIN, devices=[thermostat])
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
     device_registry = await opp.helpers.device_registry.async_get_registry()
 

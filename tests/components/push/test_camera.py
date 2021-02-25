@@ -9,7 +9,7 @@ from openpeerpower.util import dt as dt_util
 from tests.common import async_fire_time_changed
 
 
-async def test_bad_posting.opp, aiohttp_client):
+async def test_bad_posting(opp, aiohttp_client):
     """Test that posting to wrong api endpoint fails."""
     await async_process_op_core_config(
         opp,
@@ -28,7 +28,7 @@ async def test_bad_posting.opp, aiohttp_client):
         },
     )
     await opp.async_block_till_done()
-    assert.opp.states.get("camera.config_test") is not None
+    assert opp.states.get("camera.config_test") is not None
 
     client = await aiohttp_client.opp.http.app)
 
@@ -40,7 +40,7 @@ async def test_bad_posting.opp, aiohttp_client):
     assert camera_state.state == "idle"  # no file supplied we are still idle
 
 
-async def test_posting_url.opp, aiohttp_client):
+async def test_posting_url(opp, aiohttp_client):
     """Test that posting to api endpoint works."""
     await async_process_op_core_config(
         opp,
@@ -77,7 +77,7 @@ async def test_posting_url.opp, aiohttp_client):
 
     # await timeout
     shifted_time = dt_util.utcnow() + timedelta(seconds=15)
-    async_fire_time_changed.opp, shifted_time)
+    async_fire_time_changed(opp, shifted_time)
     await opp.async_block_till_done()
 
     # back to initial state

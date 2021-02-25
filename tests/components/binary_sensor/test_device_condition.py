@@ -157,7 +157,7 @@ async def test_if_state(opp, calls):
         },
     )
     await opp.async_block_till_done()
-    assert.opp.states.get(sensor1.entity_id).state == STATE_ON
+    assert opp.states.get(sensor1.entity_id).state == STATE_ON
     assert len(calls) == 0
 
     opp.bus.async_fire("test_event1")
@@ -218,7 +218,7 @@ async def test_if_fires_on_for_condition(opp, calls):
             },
         )
         await opp.async_block_till_done()
-        assert.opp.states.get(sensor1.entity_id).state == STATE_ON
+        assert opp.states.get(sensor1.entity_id).state == STATE_ON
         assert len(calls) == 0
 
         opp.bus.async_fire("test_event1")

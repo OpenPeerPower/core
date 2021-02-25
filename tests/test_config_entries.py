@@ -295,7 +295,7 @@ async def test_remove_entry(opp, manager):
     await opp.async_block_till_done()
 
     # Check entity state got added
-    assert.opp.states.get("light.test_entity") is not None
+    assert opp.states.get("light.test_entity") is not None
     assert len.opp.states.async_all()) == 1
 
     # Check entity got added to entity registry
@@ -318,7 +318,7 @@ async def test_remove_entry(opp, manager):
     assert [item.entry_id for item in manager.async_entries()] == ["test1", "test3"]
 
     # Check that entity state has been removed
-    assert.opp.states.get("light.test_entity") is None
+    assert opp.states.get("light.test_entity") is None
     assert len.opp.states.async_all()) == 0
 
     # Check that entity registry entry has been removed

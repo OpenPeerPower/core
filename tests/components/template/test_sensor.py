@@ -24,7 +24,7 @@ import openpeerpower.util.dt as dt_util
 from tests.common import assert_setup_component, async_fire_time_changed
 
 
-async def test_template.opp):
+async def test_template(opp):
     """Test template."""
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
@@ -55,7 +55,7 @@ async def test_template.opp):
     assert state.state == "It Works."
 
 
-async def test_icon_template.opp):
+async def test_icon_template(opp):
     """Test icon template."""
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
@@ -90,7 +90,7 @@ async def test_icon_template.opp):
     assert state.attributes["icon"] == "mdi:check"
 
 
-async def test_entity_picture_template.opp):
+async def test_entity_picture_template(opp):
     """Test entity_picture template."""
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
@@ -125,7 +125,7 @@ async def test_entity_picture_template.opp):
     assert state.attributes["entity_picture"] == "/local/sensor.png"
 
 
-async def test_friendly_name_template.opp):
+async def test_friendly_name_template(opp):
     """Test friendly_name template."""
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
@@ -157,7 +157,7 @@ async def test_friendly_name_template.opp):
     assert state.attributes["friendly_name"] == "It Works."
 
 
-async def test_friendly_name_template_with_unknown_state.opp):
+async def test_friendly_name_template_with_unknown_state(opp):
     """Test friendly_name template with an unknown value_template."""
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
@@ -189,7 +189,7 @@ async def test_friendly_name_template_with_unknown_state.opp):
     assert state.attributes["friendly_name"] == "It Works."
 
 
-async def test_attribute_templates.opp):
+async def test_attribute_templates(opp):
     """Test attribute_templates template."""
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
@@ -242,7 +242,7 @@ async def test_template_syntax_error(opp):
     await opp.async_block_till_done()
     await opp.async_start()
     await opp.async_block_till_done()
-    assert.opp.states.async_all() == []
+    assert opp.states.async_all() == []
 
 
 async def test_template_attribute_missing.opp):
@@ -294,7 +294,7 @@ async def test_invalid_name_does_not_create.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.async_all() == []
+    assert opp.states.async_all() == []
 
 
 async def test_invalid_sensor_does_not_create.opp):
@@ -314,7 +314,7 @@ async def test_invalid_sensor_does_not_create.opp):
     await opp.async_block_till_done()
     await opp.async_start()
 
-    assert.opp.states.async_all() == []
+    assert opp.states.async_all() == []
 
 
 async def test_no_sensors_does_not_create.opp):
@@ -328,7 +328,7 @@ async def test_no_sensors_does_not_create.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.async_all() == []
+    assert opp.states.async_all() == []
 
 
 async def test_missing_template_does_not_create.opp):
@@ -353,7 +353,7 @@ async def test_missing_template_does_not_create.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.async_all() == []
+    assert opp.states.async_all() == []
 
 
 async def test_setup_invalid_device_class.opp):
@@ -411,7 +411,7 @@ async def test_creating_sensor_loads_group.opp):
     order = []
     after_dep_event = Event()
 
-    async def async_setup_group.opp, config):
+    async def async_setup_group(opp, config):
         # Make sure group takes longer to load, so that it won't
         # be loaded first by chance
         await after_dep_event.wait()
@@ -475,17 +475,17 @@ async def test_available_template_with_entities.opp):
     await opp.async_block_till_done()
 
     # Device State should not be unavailable
-    assert.opp.states.get("sensor.test_template_sensor").state != STATE_UNAVAILABLE
+    assert opp.states.get("sensor.test_template_sensor").state != STATE_UNAVAILABLE
 
     # When Availability template returns false
     opp.states.async_set("sensor.availability_sensor", STATE_OFF)
     await opp.async_block_till_done()
 
     # device state should be unavailable
-    assert.opp.states.get("sensor.test_template_sensor").state == STATE_UNAVAILABLE
+    assert opp.states.get("sensor.test_template_sensor").state == STATE_UNAVAILABLE
 
 
-async def test_invalid_attribute_template.opp, caplog):
+async def test_invalid_attribute_template(opp, caplog):
     """Test that errors are logged if rendering template fails."""
     opp.states.async_set("sensor.test_sensor", "startup")
 
@@ -517,7 +517,7 @@ async def test_invalid_attribute_template.opp, caplog):
     assert "test_attribute" in caplog.text
 
 
-async def test_invalid_availability_template_keeps_component_available.opp, caplog):
+async def test_invalid_availability_template_keeps_component_available(opp, caplog):
     """Test that an invalid availability keeps the device available."""
 
     await async_setup_component(
@@ -540,11 +540,11 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.my_sensor").state != STATE_UNAVAILABLE
+    assert opp.states.get("sensor.my_sensor").state != STATE_UNAVAILABLE
     assert ("UndefinedError: 'x' is undefined") in caplog.text
 
 
-async def test_no_template_match_all.opp, caplog):
+async def test_no_template_match_all(opp, caplog):
     """Test that we allow static templates."""
     opp.states.async_set("sensor.test_sensor", "startup")
 
@@ -580,38 +580,38 @@ async def test_no_template_match_all.opp, caplog):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.invalid_state").state == "unknown"
-    assert.opp.states.get("sensor.invalid_icon").state == "unknown"
-    assert.opp.states.get("sensor.invalid_entity_picture").state == "unknown"
-    assert.opp.states.get("sensor.invalid_friendly_name").state == "unknown"
+    assert opp.states.get("sensor.invalid_state").state == "unknown"
+    assert opp.states.get("sensor.invalid_icon").state == "unknown"
+    assert opp.states.get("sensor.invalid_entity_picture").state == "unknown"
+    assert opp.states.get("sensor.invalid_friendly_name").state == "unknown"
 
     await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 6
 
-    assert.opp.states.get("sensor.invalid_state").state == "unknown"
-    assert.opp.states.get("sensor.invalid_icon").state == "unknown"
-    assert.opp.states.get("sensor.invalid_entity_picture").state == "unknown"
-    assert.opp.states.get("sensor.invalid_friendly_name").state == "unknown"
-    assert.opp.states.get("sensor.invalid_attribute").state == "unknown"
+    assert opp.states.get("sensor.invalid_state").state == "unknown"
+    assert opp.states.get("sensor.invalid_icon").state == "unknown"
+    assert opp.states.get("sensor.invalid_entity_picture").state == "unknown"
+    assert opp.states.get("sensor.invalid_friendly_name").state == "unknown"
+    assert opp.states.get("sensor.invalid_attribute").state == "unknown"
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.invalid_state").state == "2"
-    assert.opp.states.get("sensor.invalid_icon").state == "startup"
-    assert.opp.states.get("sensor.invalid_entity_picture").state == "startup"
-    assert.opp.states.get("sensor.invalid_friendly_name").state == "startup"
-    assert.opp.states.get("sensor.invalid_attribute").state == "startup"
+    assert opp.states.get("sensor.invalid_state").state == "2"
+    assert opp.states.get("sensor.invalid_icon").state == "startup"
+    assert opp.states.get("sensor.invalid_entity_picture").state == "startup"
+    assert opp.states.get("sensor.invalid_friendly_name").state == "startup"
+    assert opp.states.get("sensor.invalid_attribute").state == "startup"
 
     opp.states.async_set("sensor.test_sensor", "hello")
     await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.invalid_state").state == "2"
+    assert opp.states.get("sensor.invalid_state").state == "2"
     # Will now process because we have at least one valid template
-    assert.opp.states.get("sensor.invalid_icon").state == "hello"
-    assert.opp.states.get("sensor.invalid_entity_picture").state == "hello"
-    assert.opp.states.get("sensor.invalid_friendly_name").state == "hello"
-    assert.opp.states.get("sensor.invalid_attribute").state == "hello"
+    assert opp.states.get("sensor.invalid_icon").state == "hello"
+    assert opp.states.get("sensor.invalid_entity_picture").state == "hello"
+    assert opp.states.get("sensor.invalid_friendly_name").state == "hello"
+    assert opp.states.get("sensor.invalid_attribute").state == "hello"
 
     await opp.helpers.entity_component.async_update_entity("sensor.invalid_state")
     await opp.helpers.entity_component.async_update_entity("sensor.invalid_icon")
@@ -623,11 +623,11 @@ async def test_no_template_match_all.opp, caplog):
     )
     await opp.helpers.entity_component.async_update_entity("sensor.invalid_attribute")
 
-    assert.opp.states.get("sensor.invalid_state").state == "2"
-    assert.opp.states.get("sensor.invalid_icon").state == "hello"
-    assert.opp.states.get("sensor.invalid_entity_picture").state == "hello"
-    assert.opp.states.get("sensor.invalid_friendly_name").state == "hello"
-    assert.opp.states.get("sensor.invalid_attribute").state == "hello"
+    assert opp.states.get("sensor.invalid_state").state == "2"
+    assert opp.states.get("sensor.invalid_icon").state == "hello"
+    assert opp.states.get("sensor.invalid_entity_picture").state == "hello"
+    assert opp.states.get("sensor.invalid_friendly_name").state == "hello"
+    assert opp.states.get("sensor.invalid_attribute").state == "hello"
 
 
 async def test_unique_id.opp):
@@ -693,8 +693,8 @@ async def test_sun_renders_once_per_sensor.opp):
 
     assert len.opp.states.async_all()) == 3
 
-    assert.opp.states.get("sensor.solar_angle").state == "45.3"
-    assert.opp.states.get("sensor.sunrise").state == str(now)
+    assert opp.states.get("sensor.solar_angle").state == "45.3"
+    assert opp.states.get("sensor.sunrise").state == str(now)
 
     async_render_calls = []
 
@@ -710,8 +710,8 @@ async def test_sun_renders_once_per_sensor.opp):
         opp.states.async_set("sun.sun", {"elevation": 50, "next_rising": later})
         await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.solar_angle").state == "mocked"
-    assert.opp.states.get("sensor.sunrise").state == "mocked"
+    assert opp.states.get("sensor.solar_angle").state == "mocked"
+    assert opp.states.get("sensor.sunrise").state == "mocked"
 
     assert len(async_render_calls) == 2
     assert set(async_render_calls) == {
@@ -720,7 +720,7 @@ async def test_sun_renders_once_per_sensor.opp):
     }
 
 
-async def test_self_referencing_sensor_loop.opp, caplog):
+async def test_self_referencing_sensor_loop(opp, caplog):
     """Test a self referencing sensor does not loop forever."""
 
     await async_setup_component(
@@ -755,7 +755,7 @@ async def test_self_referencing_sensor_loop.opp, caplog):
     assert int(state.state) == 2
 
 
-async def test_self_referencing_sensor_with_icon_loop.opp, caplog):
+async def test_self_referencing_sensor_with_icon_loop(opp, caplog):
     """Test a self referencing sensor loops forever with a valid self referencing icon."""
 
     await async_setup_component(
@@ -793,7 +793,7 @@ async def test_self_referencing_sensor_with_icon_loop.opp, caplog):
     assert int(state.state) == 3
 
 
-async def test_self_referencing_sensor_with_icon_and_picture_entity_loop.opp, caplog):
+async def test_self_referencing_sensor_with_icon_and_picture_entity_loop(opp, caplog):
     """Test a self referencing sensor loop forevers with a valid self referencing icon."""
 
     await async_setup_component(
@@ -833,7 +833,7 @@ async def test_self_referencing_sensor_with_icon_and_picture_entity_loop.opp, ca
     assert int(state.state) == 4
 
 
-async def test_self_referencing_entity_picture_loop.opp, caplog):
+async def test_self_referencing_entity_picture_loop(opp, caplog):
     """Test a self referencing sensor does not loop forever with a looping self referencing entity picture."""
 
     await async_setup_component(
@@ -862,7 +862,7 @@ async def test_self_referencing_entity_picture_loop.opp, caplog):
     with patch(
         "openpeerpower.helpers.ratelimit.dt_util.utcnow", return_value=next_time
     ):
-        async_fire_time_changed.opp, next_time)
+        async_fire_time_changed(opp, next_time)
         await opp.async_block_till_done()
         await opp.async_block_till_done()
 
@@ -876,7 +876,7 @@ async def test_self_referencing_entity_picture_loop.opp, caplog):
     assert int(state.state) == 1
 
 
-async def test_self_referencing_icon_with_no_loop.opp, caplog):
+async def test_self_referencing_icon_with_no_loop(opp, caplog):
     """Test a self referencing icon that does not loop."""
 
     opp.states.async_set("sensor.heartworm_high_80", 10)

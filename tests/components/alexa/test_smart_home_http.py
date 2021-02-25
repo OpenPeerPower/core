@@ -10,7 +10,7 @@ from . import get_new_request
 
 async def do_http_discovery(config, opp, opp_client):
     """Submit a request to the Smart Home HTTP API."""
-    await async_setup_component.opp, DOMAIN, config)
+    await async_setup_component(opp, DOMAIN, config)
     http_client = await opp_client()
 
     request = get_new_request("Alexa.Discovery", "Discover")
@@ -22,7 +22,7 @@ async def do_http_discovery(config, opp, opp_client):
     return response
 
 
-async def test_http_api.opp, opp_client):
+async def test_http_api(opp, opp_client):
     """With `smart_home:` HTTP API is exposed."""
     config = {"alexa": {"smart_home": None}}
 
@@ -34,7 +34,7 @@ async def test_http_api.opp, opp_client):
     assert response_data["event"]["header"]["name"] == "Discover.Response"
 
 
-async def test_http_api_disabled.opp, opp_client):
+async def test_http_api_disabled(opp, opp_client):
     """Without `smart_home:`, the HTTP API is disabled."""
     config = {"alexa": {}}
     response = await do_http_discovery(config, opp, opp_client)

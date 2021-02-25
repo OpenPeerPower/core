@@ -17,11 +17,11 @@ async def test_sensors(opp, config_entry, aioclient_mock_fixture):
     assert len.opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 1
 
     # we should have 5 entities for the device
-    assert.opp.states.get("sensor.current_system_mode").state == "home"
-    assert.opp.states.get("sensor.today_s_water_usage").state == "3.7"
-    assert.opp.states.get("sensor.water_flow_rate").state == "0"
-    assert.opp.states.get("sensor.water_pressure").state == "54.2"
-    assert.opp.states.get("sensor.water_temperature").state == "21.1"
+    assert opp.states.get("sensor.current_system_mode").state == "home"
+    assert opp.states.get("sensor.today_s_water_usage").state == "3.7"
+    assert opp.states.get("sensor.water_flow_rate").state == "0"
+    assert opp.states.get("sensor.water_pressure").state == "54.2"
+    assert opp.states.get("sensor.water_temperature").state == "21.1"
 
 
 async def test_manual_update_entity(

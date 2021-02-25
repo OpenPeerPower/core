@@ -301,7 +301,7 @@ async def get_request_return_values_fixture():
 
 
 @pytest.fixture(name="mock_api_object")
-async def mock_api_object_fixture.opp, config_entry, get_request_return_values):
+async def mock_api_object_fixture(opp, config_entry, get_request_return_values):
     """Create mock api fixture."""
 
     async def get_request_side_effect(update_type):
@@ -317,7 +317,7 @@ async def mock_api_object_fixture.opp, config_entry, get_request_return_values):
         mock_api.return_value.full_url.return_value = ""
         mock_api.return_value.get_pipes.return_value = SAMPLE_PIPES
         mock_api.return_value.get_playlists.return_value = SAMPLE_PLAYLISTS
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
         await config_entry.async_setup_opp)
         await opp.async_block_till_done()
 
@@ -344,16 +344,16 @@ async def mock_api_object_fixture.opp, config_entry, get_request_return_values):
     return mock_api.return_value
 
 
-async def test_unload_config_entry.opp, config_entry, mock_api_object):
+async def test_unload_config_entry(opp, config_entry, mock_api_object):
     """Test the player is set unavailable when the config entry is unloaded."""
-    assert.opp.states.get(TEST_MASTER_ENTITY_NAME)
-    assert.opp.states.get(TEST_ZONE_ENTITY_NAMES[0])
+    assert opp.states.get(TEST_MASTER_ENTITY_NAME)
+    assert opp.states.get(TEST_ZONE_ENTITY_NAMES[0])
     await config_entry.async_unload.opp)
-    assert.opp.states.get(TEST_MASTER_ENTITY_NAME).state == STATE_UNAVAILABLE
-    assert.opp.states.get(TEST_ZONE_ENTITY_NAMES[0]).state == STATE_UNAVAILABLE
+    assert opp.states.get(TEST_MASTER_ENTITY_NAME).state == STATE_UNAVAILABLE
+    assert opp.states.get(TEST_ZONE_ENTITY_NAMES[0]).state == STATE_UNAVAILABLE
 
 
-def test_master_state.opp, mock_api_object):
+def test_master_state(opp, mock_api_object):
     """Test master state attributes."""
     state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     assert state.state == STATE_PAUSED
@@ -412,7 +412,7 @@ async def _service_call(
     )
 
 
-async def test_zone.opp, mock_api_object):
+async def test_zone(opp, mock_api_object):
     """Test zone attributes and methods."""
     zone_entity_name = TEST_ZONE_ENTITY_NAMES[0]
     state = opp.states.get(zone_entity_name)
@@ -421,9 +421,9 @@ async def test_zone.opp, mock_api_object):
     assert state.state == STATE_ON
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 0.5
     assert not state.attributes[ATTR_MEDIA_VOLUME_MUTED]
-    await _service_call.opp, zone_entity_name, SERVICE_TURN_ON)
-    await _service_call.opp, zone_entity_name, SERVICE_TURN_OFF)
-    await _service_call.opp, zone_entity_name, SERVICE_TOGGLE)
+    await _service_call(opp, zone_entity_name, SERVICE_TURN_ON)
+    await _service_call(opp, zone_entity_name, SERVICE_TURN_OFF)
+    await _service_call(opp, zone_entity_name, SERVICE_TOGGLE)
     await _service_call(
         opp. zone_entity_name, SERVICE_VOLUME_SET, {ATTR_MEDIA_VOLUME_LEVEL: 0.3}
     )
@@ -434,7 +434,7 @@ async def test_zone.opp, mock_api_object):
         opp. zone_entity_name, SERVICE_VOLUME_MUTE, {ATTR_MEDIA_VOLUME_MUTED: False}
     )
     zone_entity_name = TEST_ZONE_ENTITY_NAMES[2]
-    await _service_call.opp, zone_entity_name, SERVICE_TOGGLE)
+    await _service_call(opp, zone_entity_name, SERVICE_TOGGLE)
     await _service_call(
         opp. zone_entity_name, SERVICE_VOLUME_MUTE, {ATTR_MEDIA_VOLUME_MUTED: True}
     )
@@ -451,10 +451,10 @@ async def test_zone.opp, mock_api_object):
     mock_api_object.change_output.assert_any_call(output_id, selected=True)
 
 
-async def test_last_outputs_master.opp, mock_api_object):
+async def test_last_outputs_master(opp, mock_api_object):
     """Test restoration of _last_outputs."""
     # Test turning on sends API call
-    await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_TURN_ON)
+    await _service_call(opp, TEST_MASTER_ENTITY_NAME, SERVICE_TURN_ON)
     assert mock_api_object.change_output.call_count == 0
     assert mock_api_object.set_enabled_outputs.call_count == 1
     await _service_call(
@@ -462,16 +462,16 @@ async def test_last_outputs_master.opp, mock_api_object):
     )  # should have stored last outputs
     assert mock_api_object.change_output.call_count == 0
     assert mock_api_object.set_enabled_outputs.call_count == 2
-    await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_TURN_ON)
+    await _service_call(opp, TEST_MASTER_ENTITY_NAME, SERVICE_TURN_ON)
     assert mock_api_object.change_output.call_count == 3
     assert mock_api_object.set_enabled_outputs.call_count == 2
 
 
-async def test_bunch_of_stuff_master.opp, get_request_return_values, mock_api_object):
+async def test_bunch_of_stuff_master(opp, get_request_return_values, mock_api_object):
     """Run bunch of stuff."""
-    await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_TURN_ON)
-    await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_TURN_OFF)
-    await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_TOGGLE)
+    await _service_call(opp, TEST_MASTER_ENTITY_NAME, SERVICE_TURN_ON)
+    await _service_call(opp, TEST_MASTER_ENTITY_NAME, SERVICE_TURN_OFF)
+    await _service_call(opp, TEST_MASTER_ENTITY_NAME, SERVICE_TOGGLE)
     await _service_call(
         opp,
         TEST_MASTER_ENTITY_NAME,
@@ -490,18 +490,18 @@ async def test_bunch_of_stuff_master.opp, get_request_return_values, mock_api_ob
         SERVICE_VOLUME_SET,
         {ATTR_MEDIA_VOLUME_LEVEL: 0.5},
     )
-    await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_PAUSE)
-    await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_PLAY)
-    await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_STOP)
-    await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_PREVIOUS_TRACK)
-    await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_NEXT_TRACK)
+    await _service_call(opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_PAUSE)
+    await _service_call(opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_PLAY)
+    await _service_call(opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_STOP)
+    await _service_call(opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_PREVIOUS_TRACK)
+    await _service_call(opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_NEXT_TRACK)
     await _service_call(
         opp,
         TEST_MASTER_ENTITY_NAME,
         SERVICE_MEDIA_SEEK,
         {ATTR_MEDIA_SEEK_POSITION: 35},
     )
-    await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_CLEAR_PLAYLIST)
+    await _service_call(opp, TEST_MASTER_ENTITY_NAME, SERVICE_CLEAR_PLAYLIST)
     await _service_call(
         opp. TEST_MASTER_ENTITY_NAME, SERVICE_SHUFFLE_SET, {ATTR_MEDIA_SHUFFLE: False}
     )
@@ -526,7 +526,7 @@ async def test_bunch_of_stuff_master.opp, get_request_return_values, mock_api_ob
     await updater_update(["outputs"])
     await opp.async_block_till_done()
     # toggle from off
-    await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_TOGGLE)
+    await _service_call(opp, TEST_MASTER_ENTITY_NAME, SERVICE_TOGGLE)
     for output in SAMPLE_OUTPUTS_ON:
         mock_api_object.change_output.assert_any_call(
             output["id"],
@@ -550,7 +550,7 @@ async def test_bunch_of_stuff_master.opp, get_request_return_values, mock_api_ob
     mock_api_object.clear_queue.assert_called_once()
 
 
-async def test_async_play_media_from_paused.opp, mock_api_object):
+async def test_async_play_media_from_paused(opp, mock_api_object):
     """Test async play media from paused."""
     initial_state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     await _service_call(
@@ -591,7 +591,7 @@ async def test_async_play_media_from_stopped(
     assert state.last_updated > initial_state.last_updated
 
 
-async def test_async_play_media_unsupported.opp, mock_api_object):
+async def test_async_play_media_unsupported(opp, mock_api_object):
     """Test async play media on unsupported media type."""
     initial_state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     await _service_call(
@@ -607,7 +607,7 @@ async def test_async_play_media_unsupported.opp, mock_api_object):
     assert state.last_updated == initial_state.last_updated
 
 
-async def test_async_play_media_tts_timeout.opp, mock_api_object):
+async def test_async_play_media_tts_timeout(opp, mock_api_object):
     """Test async play media with TTS timeout."""
     mock_api_object.add_to_queue.side_effect = None
     with patch("openpeerpower.components.forked_daapd.media_player.TTS_TIMEOUT", 0):
@@ -626,7 +626,7 @@ async def test_async_play_media_tts_timeout.opp, mock_api_object):
         assert state.last_updated > initial_state.last_updated
 
 
-async def test_use_pipe_control_with_no_api.opp, mock_api_object):
+async def test_use_pipe_control_with_no_api(opp, mock_api_object):
     """Test using pipe control with no api set."""
     await _service_call(
         opp,
@@ -634,11 +634,11 @@ async def test_use_pipe_control_with_no_api.opp, mock_api_object):
         SERVICE_SELECT_SOURCE,
         {ATTR_INPUT_SOURCE: "librespot-java (pipe)"},
     )
-    await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_PLAY)
+    await _service_call(opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_PLAY)
     assert mock_api_object.start_playback.call_count == 0
 
 
-async def test_clear_source.opp, mock_api_object):
+async def test_clear_source(opp, mock_api_object):
     """Test changing source to clear."""
     await _service_call(
         opp,
@@ -689,10 +689,10 @@ async def test_librespot_java_stuff(
     state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     assert state.attributes[ATTR_INPUT_SOURCE] == "librespot-java (pipe)"
     # call some basic services
-    await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_STOP)
-    await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_PREVIOUS_TRACK)
-    await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_NEXT_TRACK)
-    await _service_call.opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_PLAY)
+    await _service_call(opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_STOP)
+    await _service_call(opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_PREVIOUS_TRACK)
+    await _service_call(opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_NEXT_TRACK)
+    await _service_call(opp, TEST_MASTER_ENTITY_NAME, SERVICE_MEDIA_PLAY)
     pipe_control_api_object.player_pause.assert_called_once()
     pipe_control_api_object.player_prev.assert_called_once()
     pipe_control_api_object.player_next.assert_called_once()
@@ -718,7 +718,7 @@ async def test_librespot_java_stuff(
     assert state.attributes[ATTR_MEDIA_ALBUM_NAME] == "some album"
 
 
-async def test_librespot_java_play_media.opp, pipe_control_api_object):
+async def test_librespot_java_play_media(opp, pipe_control_api_object):
     """Test play media with librespot-java pipe."""
     initial_state = opp.states.get(TEST_MASTER_ENTITY_NAME)
     await _service_call(
@@ -735,7 +735,7 @@ async def test_librespot_java_play_media.opp, pipe_control_api_object):
     assert state.last_updated > initial_state.last_updated
 
 
-async def test_librespot_java_play_media_pause_timeout.opp, pipe_control_api_object):
+async def test_librespot_java_play_media_pause_timeout(opp, pipe_control_api_object):
     """Test play media with librespot-java pipe."""
     # test media play with pause timeout
     pipe_control_api_object.player_pause.side_effect = None
@@ -757,34 +757,34 @@ async def test_librespot_java_play_media_pause_timeout.opp, pipe_control_api_obj
         assert state.last_updated > initial_state.last_updated
 
 
-async def test_unsupported_update.opp, mock_api_object):
+async def test_unsupported_update(opp, mock_api_object):
     """Test unsupported update type."""
     last_updated = opp.states.get(TEST_MASTER_ENTITY_NAME).last_updated
     updater_update = mock_api_object.start_websocket_handler.call_args[0][2]
     await updater_update(["config"])
     await opp.async_block_till_done()
-    assert.opp.states.get(TEST_MASTER_ENTITY_NAME).last_updated == last_updated
+    assert opp.states.get(TEST_MASTER_ENTITY_NAME).last_updated == last_updated
 
 
-async def test_invalid_websocket_port.opp, config_entry):
+async def test_invalid_websocket_port(opp, config_entry):
     """Test invalid websocket port on async_init."""
     with patch(
         "openpeerpower.components.forked_daapd.media_player.ForkedDaapdAPI",
         autospec=True,
     ) as mock_api:
         mock_api.return_value.get_request.return_value = SAMPLE_CONFIG_NO_WEBSOCKET
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
         await config_entry.async_setup_opp)
         await opp.async_block_till_done()
-        assert.opp.states.get(TEST_MASTER_ENTITY_NAME).state == STATE_UNAVAILABLE
+        assert opp.states.get(TEST_MASTER_ENTITY_NAME).state == STATE_UNAVAILABLE
 
 
-async def test_websocket_disconnect.opp, mock_api_object):
+async def test_websocket_disconnect(opp, mock_api_object):
     """Test websocket disconnection."""
-    assert.opp.states.get(TEST_MASTER_ENTITY_NAME).state != STATE_UNAVAILABLE
-    assert.opp.states.get(TEST_ZONE_ENTITY_NAMES[0]).state != STATE_UNAVAILABLE
+    assert opp.states.get(TEST_MASTER_ENTITY_NAME).state != STATE_UNAVAILABLE
+    assert opp.states.get(TEST_ZONE_ENTITY_NAMES[0]).state != STATE_UNAVAILABLE
     updater_disconnected = mock_api_object.start_websocket_handler.call_args[0][4]
     updater_disconnected()
     await opp.async_block_till_done()
-    assert.opp.states.get(TEST_MASTER_ENTITY_NAME).state == STATE_UNAVAILABLE
-    assert.opp.states.get(TEST_ZONE_ENTITY_NAMES[0]).state == STATE_UNAVAILABLE
+    assert opp.states.get(TEST_MASTER_ENTITY_NAME).state == STATE_UNAVAILABLE
+    assert opp.states.get(TEST_ZONE_ENTITY_NAMES[0]).state == STATE_UNAVAILABLE

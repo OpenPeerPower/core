@@ -17,41 +17,41 @@ def entities.opp):
     yield platform.ENTITIES
 
 
-async def test_methods.opp, entities):
+async def test_methods(opp, entities):
     """Test is_on, turn_on, turn_off methods."""
     switch_1, switch_2, switch_3 = entities
     assert await async_setup_component(
         opp. switch.DOMAIN, {switch.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
-    assert switch.is_on.opp, switch_1.entity_id)
-    assert not switch.is_on.opp, switch_2.entity_id)
-    assert not switch.is_on.opp, switch_3.entity_id)
+    assert switch.is_on(opp, switch_1.entity_id)
+    assert not switch.is_on(opp, switch_2.entity_id)
+    assert not switch.is_on(opp, switch_3.entity_id)
 
-    await common.async_turn_off.opp, switch_1.entity_id)
-    await common.async_turn_on.opp, switch_2.entity_id)
+    await common.async_turn_off(opp, switch_1.entity_id)
+    await common.async_turn_on(opp, switch_2.entity_id)
 
-    assert not switch.is_on.opp, switch_1.entity_id)
-    assert switch.is_on.opp, switch_2.entity_id)
+    assert not switch.is_on(opp, switch_1.entity_id)
+    assert switch.is_on(opp, switch_2.entity_id)
 
     # Turn all off
     await common.async_turn_off.opp)
 
-    assert not switch.is_on.opp, switch_1.entity_id)
-    assert not switch.is_on.opp, switch_2.entity_id)
-    assert not switch.is_on.opp, switch_3.entity_id)
+    assert not switch.is_on(opp, switch_1.entity_id)
+    assert not switch.is_on(opp, switch_2.entity_id)
+    assert not switch.is_on(opp, switch_3.entity_id)
 
     # Turn all on
     await common.async_turn_on.opp)
 
-    assert switch.is_on.opp, switch_1.entity_id)
-    assert switch.is_on.opp, switch_2.entity_id)
-    assert switch.is_on.opp, switch_3.entity_id)
+    assert switch.is_on(opp, switch_1.entity_id)
+    assert switch.is_on(opp, switch_2.entity_id)
+    assert switch.is_on(opp, switch_3.entity_id)
 
 
-async def test_switch_context.opp, entities, opp_admin_user):
+async def test_switch_context(opp, entities, opp_admin_user):
     """Test that switch context works."""
-    assert await async_setup_component.opp, "switch", {"switch": {"platform": "test"}})
+    assert await async_setup_component(opp, "switch", {"switch": {"platform": "test"}})
 
     await opp.async_block_till_done()
 

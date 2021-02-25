@@ -67,7 +67,7 @@ async def test_setup_entry_encrypted.opp):
         data={**MOCK_CONFIG_DATA, **MOCK_ENCRYPTION_DATA, **MOCK_DEVICE_INFO},
     )
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     mock_remote = get_mock_remote()
 
@@ -92,7 +92,7 @@ async def test_setup_entry_encrypted_missing_device_info.opp):
         data={**MOCK_CONFIG_DATA, **MOCK_ENCRYPTION_DATA},
     )
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     mock_remote = get_mock_remote()
 
@@ -120,7 +120,7 @@ async def test_setup_entry_encrypted_missing_device_info_none.opp):
         data={**MOCK_CONFIG_DATA, **MOCK_ENCRYPTION_DATA},
     )
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     mock_remote = get_mock_remote(device_info=None)
 
@@ -148,7 +148,7 @@ async def test_setup_entry_unencrypted.opp):
         data={**MOCK_CONFIG_DATA, **MOCK_DEVICE_INFO},
     )
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     mock_remote = get_mock_remote()
 
@@ -173,7 +173,7 @@ async def test_setup_entry_unencrypted_missing_device_info.opp):
         data=MOCK_CONFIG_DATA,
     )
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     mock_remote = get_mock_remote()
 
@@ -201,7 +201,7 @@ async def test_setup_entry_unencrypted_missing_device_info_none.opp):
         data=MOCK_CONFIG_DATA,
     )
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     mock_remote = get_mock_remote(device_info=None)
 
@@ -241,7 +241,7 @@ async def test_setup_unload_entry.opp):
         domain=DOMAIN, unique_id=MOCK_DEVICE_INFO[ATTR_UDN], data=MOCK_CONFIG_DATA
     )
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     mock_remote = get_mock_remote()
 

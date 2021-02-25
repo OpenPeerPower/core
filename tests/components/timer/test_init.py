@@ -75,7 +75,7 @@ def storage_setup_opp, opp_storage):
             }
         if config is None:
             config = {DOMAIN: {}}
-        return await async_setup_component.opp, DOMAIN, config)
+        return await async_setup_component(opp, DOMAIN, config)
 
     return _storage
 
@@ -85,7 +85,7 @@ async def test_config(opp):
     invalid_configs = [None, 1, {}, {"name with space": None}]
 
     for cfg in invalid_configs:
-        assert not await async_setup_component.opp, DOMAIN, {DOMAIN: cfg})
+        assert not await async_setup_component(opp, DOMAIN, {DOMAIN: cfg})
 
 
 async def test_config_options.opp):
@@ -106,7 +106,7 @@ async def test_config_options.opp):
         }
     }
 
-    assert await async_setup_component.opp, "timer", config)
+    assert await async_setup_component(opp, "timer", config)
     await opp.async_block_till_done()
 
     assert count_start + 3 == len.opp.states.async_entity_ids())
@@ -139,7 +139,7 @@ async def test_methods_and_events.opp):
     """Test methods and events."""
     opp.state = CoreState.starting
 
-    await async_setup_component.opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
+    await async_setup_component(opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
 
     state = opp.states.get("timer.test1")
     assert state
@@ -194,7 +194,7 @@ async def test_wait_till_timer_expires.opp):
     """Test for a timer to end."""
     opp.state = CoreState.starting
 
-    await async_setup_component.opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
+    await async_setup_component(opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
 
     state = opp.states.get("timer.test1")
     assert state
@@ -223,7 +223,7 @@ async def test_wait_till_timer_expires.opp):
     assert results[-1].event_type == EVENT_TIMER_STARTED
     assert len(results) == 1
 
-    async_fire_time_changed.opp, utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
 
     state = opp.states.get("timer.test1")
@@ -238,14 +238,14 @@ async def test_no_initial_state_and_no_restore_state.opp):
     """Ensure that entity is create without initial and restore feature."""
     opp.state = CoreState.starting
 
-    await async_setup_component.opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
+    await async_setup_component(opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
 
     state = opp.states.get("timer.test1")
     assert state
     assert state.state == STATUS_IDLE
 
 
-async def test_config_reload.opp, opp_admin_user, opp_read_only_user):
+async def test_config_reload(opp, opp_admin_user, opp_read_only_user):
     """Test reload service."""
     count_start = len.opp.states.async_entity_ids())
     ent_reg = await entity_registry.async_get_registry.opp)
@@ -263,7 +263,7 @@ async def test_config_reload.opp, opp_admin_user, opp_read_only_user):
         }
     }
 
-    assert await async_setup_component.opp, "timer", config)
+    assert await async_setup_component(opp, "timer", config)
     await opp.async_block_till_done()
 
     assert count_start + 2 == len.opp.states.async_entity_ids())
@@ -345,7 +345,7 @@ async def test_timer_restarted_event.opp):
     """Ensure restarted event is called after starting a paused or running timer."""
     opp.state = CoreState.starting
 
-    await async_setup_component.opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
+    await async_setup_component(opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
 
     state = opp.states.get("timer.test1")
     assert state
@@ -412,7 +412,7 @@ async def test_state_changed_when_timer_restarted.opp):
     """Ensure timer's state changes when it restarted."""
     opp.state = CoreState.starting
 
-    await async_setup_component.opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
+    await async_setup_component(opp, DOMAIN, {DOMAIN: {"test1": {CONF_DURATION: 10}}})
 
     state = opp.states.get("timer.test1")
     assert state
@@ -449,7 +449,7 @@ async def test_state_changed_when_timer_restarted.opp):
     assert len(results) == 2
 
 
-async def test_load_from_storage.opp, storage_setup):
+async def test_load_from_storage(opp, storage_setup):
     """Test set up from storage."""
     assert await storage_setup()
     state = opp.states.get(f"{DOMAIN}.timer_from_storage")
@@ -458,7 +458,7 @@ async def test_load_from_storage.opp, storage_setup):
     assert state.attributes.get(ATTR_EDITABLE)
 
 
-async def test_editable_state_attribute.opp, storage_setup):
+async def test_editable_state_attribute(opp, storage_setup):
     """Test editable attribute."""
     assert await storage_setup(config={DOMAIN: {"from_yaml": None}})
 
@@ -472,7 +472,7 @@ async def test_editable_state_attribute.opp, storage_setup):
     assert state.state == STATUS_IDLE
 
 
-async def test_ws_list.opp, opp_ws_client, storage_setup):
+async def test_ws_list(opp, opp_ws_client, storage_setup):
     """Test listing via WS."""
     assert await storage_setup(config={DOMAIN: {"from_yaml": None}})
 
@@ -492,7 +492,7 @@ async def test_ws_list.opp, opp_ws_client, storage_setup):
     assert result[storage_ent][ATTR_NAME] == "timer from storage"
 
 
-async def test_ws_delete.opp, opp_ws_client, storage_setup):
+async def test_ws_delete(opp, opp_ws_client, storage_setup):
     """Test WS delete cleans up entity registry."""
     assert await storage_setup()
 
@@ -518,7 +518,7 @@ async def test_ws_delete.opp, opp_ws_client, storage_setup):
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, timer_id) is None
 
 
-async def test_update.opp, opp_ws_client, storage_setup):
+async def test_update(opp, opp_ws_client, storage_setup):
     """Test updating timer entity."""
 
     assert await storage_setup()
@@ -548,7 +548,7 @@ async def test_update.opp, opp_ws_client, storage_setup):
     assert state.attributes[ATTR_DURATION] == _format_timedelta(cv.time_period(33))
 
 
-async def test_ws_create.opp, opp_ws_client, storage_setup):
+async def test_ws_create(opp, opp_ws_client, storage_setup):
     """Test create WS."""
     assert await storage_setup(items=[])
 
@@ -582,7 +582,7 @@ async def test_ws_create.opp, opp_ws_client, storage_setup):
 async def test_setup_no_config(opp, opp_admin_user):
     """Test component setup with no config."""
     count_start = len.opp.states.async_entity_ids())
-    assert await async_setup_component.opp, DOMAIN, {})
+    assert await async_setup_component(opp, DOMAIN, {})
 
     with patch(
         "openpeerpower.config.load_yaml_config_file", autospec=True, return_value={}

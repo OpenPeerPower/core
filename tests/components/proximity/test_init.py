@@ -17,7 +17,7 @@ async def test_proximities.opp):
         }
     }
 
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
 
     proximities = ["home", "work"]
 
@@ -46,7 +46,7 @@ async def test_proximities_setup_opp):
         }
     }
 
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
 
 
 async def test_proximity.opp):
@@ -61,7 +61,7 @@ async def test_proximity.opp):
         }
     }
 
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
 
     state = opp.states.get("proximity.home")
     assert state.state == "not set"
@@ -86,7 +86,7 @@ async def test_device_tracker_test1_in_zone.opp):
         }
     }
 
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
 
     opp.states.async_set(
         "device_tracker.test1",
@@ -112,7 +112,7 @@ async def test_device_trackers_in_zone.opp):
         }
     }
 
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
 
     opp.states.async_set(
         "device_tracker.test1",
@@ -146,7 +146,7 @@ async def test_device_tracker_test1_away.opp):
         }
     }
 
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
 
     opp.states.async_set(
         "device_tracker.test1",
@@ -176,7 +176,7 @@ async def test_device_tracker_test1_awayfurther.opp):
         }
     }
 
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
 
     opp.states.async_set(
         "device_tracker.test1",
@@ -214,7 +214,7 @@ async def test_device_tracker_test1_awaycloser.opp):
         }
     }
 
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
 
     opp.states.async_set(
         "device_tracker.test1",
@@ -249,7 +249,7 @@ async def test_all_device_trackers_in_ignored_zone.opp):
         }
     }
 
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
 
     opp.states.async_set("device_tracker.test1", "work", {"friendly_name": "test1"})
     await opp.async_block_till_done()
@@ -271,7 +271,7 @@ async def test_device_tracker_test1_no_coordinates.opp):
         }
     }
 
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
 
     opp.states.async_set(
         "device_tracker.test1", "not_home", {"friendly_name": "test1"}

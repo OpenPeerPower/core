@@ -166,7 +166,7 @@ async def test_stderr_captured(mock_output, opp):
     assert test_phrase.encode() + b"\n" == mock_output.call_args_list[0][0][-1]
 
 
-async def test_do_no_run_forever.opp, caplog):
+async def test_do_no_run_forever(opp, caplog):
     """Test subprocesses terminate after the timeout."""
 
     with patch.object(shell_command, "COMMAND_TIMEOUT", 0.001):

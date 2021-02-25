@@ -56,7 +56,7 @@ def mock_lj(opp):
         mock_lj.on_switch_released.side_effect = on_switch_released
 
         config = {"litejet": {"port": "/dev/serial/by-id/mock-litejet"}}
-        assert.opp.loop.run_until_complete(
+        assert opp.loop.run_until_complete(
             setup.async_setup_component(opp, litejet.DOMAIN, config)
         )
 

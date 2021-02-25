@@ -44,7 +44,7 @@ def mock_request_info():
         yield mock_ri
 
 
-async def test_form.opp, mock_login, mock_get_devices):
+async def test_form(opp, mock_login, mock_get_devices):
     """Test we get the form."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -77,7 +77,7 @@ async def test_form.opp, mock_login, mock_get_devices):
     "error,reason",
     [(ClientError(), "cannot_connect"), (asyncio.TimeoutError(), "cannot_connect")],
 )
-async def test_form_errors.opp, mock_login, mock_get_devices, error, reason):
+async def test_form_errors(opp, mock_login, mock_get_devices, error, reason):
     """Test we handle cannot connect error."""
     mock_login.side_effect = error
 
@@ -116,7 +116,7 @@ async def test_form_response_errors(
     assert result["reason"] == message
 
 
-async def test_import_with_token.opp, mock_login, mock_get_devices):
+async def test_import_with_token(opp, mock_login, mock_get_devices):
     """Test successful import."""
     with patch(
         "openpeerpower.components.melcloud.async_setup", return_value=True
@@ -140,14 +140,14 @@ async def test_import_with_token.opp, mock_login, mock_get_devices):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_token_refresh.opp, mock_login, mock_get_devices):
+async def test_token_refresh(opp, mock_login, mock_get_devices):
     """Re-configuration with existing username should refresh token."""
     mock_entry = MockConfigEntry(
         domain=DOMAIN,
         data={"username": "test-email@test-domain.com", "token": "test-original-token"},
         unique_id="test-email@test-domain.com",
     )
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.melcloud.async_setup", return_value=True

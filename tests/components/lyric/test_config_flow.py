@@ -18,7 +18,7 @@ CLIENT_SECRET = "5678"
 @pytest.fixture()
 async def mock_impl.opp):
     """Mock implementation."""
-    await setup.async_setup_component.opp, "http", {})
+    await setup.async_setup_component(opp, "http", {})
 
     impl = config_entry_oauth2_flow.LocalOAuth2Implementation(
         opp,
@@ -28,7 +28,7 @@ async def mock_impl.opp):
         OAUTH2_AUTHORIZE,
         OAUTH2_TOKEN,
     )
-    config_flow.OAuth2FlowHandler.async_register_implementation.opp, impl)
+    config_flow.OAuth2FlowHandler.async_register_implementation(opp, impl)
     return impl
 
 

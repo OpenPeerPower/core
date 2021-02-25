@@ -149,7 +149,7 @@ async def test_reauth.opp):
         return_value=True,
     ):
         mock_config = MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG)
-        mock_config.add_to.opp.opp)
+        mock_config.add_to_opp(opp)
         opp.config_entries.async_update_entry(
             mock_config, data={**CONFIG, CONF_ACCESS_TOKEN: "blah"}
         )

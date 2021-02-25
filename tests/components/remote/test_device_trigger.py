@@ -37,13 +37,13 @@ def entity_reg.opp):
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
-async def test_get_triggers.opp, device_reg, entity_reg):
+async def test_get_triggers(opp, device_reg, entity_reg):
     """Test we get the expected triggers from a remote."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -65,14 +65,14 @@ async def test_get_triggers.opp, device_reg, entity_reg):
             "entity_id": f"{DOMAIN}.test_5678",
         },
     ]
-    triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
+    triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     assert triggers == expected_triggers
 
 
-async def test_get_trigger_capabilities.opp, device_reg, entity_reg):
+async def test_get_trigger_capabilities(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a remote trigger."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -83,7 +83,7 @@ async def test_get_trigger_capabilities.opp, device_reg, entity_reg):
             {"name": "for", "optional": True, "type": "positive_time_period_dict"}
         ]
     }
-    triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
+    triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     for trigger in triggers:
         capabilities = await async_get_device_automation_capabilities(
             opp. "trigger", trigger
@@ -91,12 +91,12 @@ async def test_get_trigger_capabilities.opp, device_reg, entity_reg):
         assert capabilities == expected_capabilities
 
 
-async def test_if_fires_on_state_change.opp, calls):
+async def test_if_fires_on_state_change(opp, calls):
     """Test for turn_on and turn_off triggers firing."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
 
     platform.init()
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     ent1, ent2, ent3 = platform.ENTITIES
@@ -158,7 +158,7 @@ async def test_if_fires_on_state_change.opp, calls):
         },
     )
     await opp.async_block_till_done()
-    assert.opp.states.get(ent1.entity_id).state == STATE_ON
+    assert opp.states.get(ent1.entity_id).state == STATE_ON
     assert len(calls) == 0
 
     opp.states.async_set(ent1.entity_id, STATE_OFF)
@@ -176,12 +176,12 @@ async def test_if_fires_on_state_change.opp, calls):
     )
 
 
-async def test_if_fires_on_state_change_with_for.opp, calls):
+async def test_if_fires_on_state_change_with_for(opp, calls):
     """Test for triggers firing with delay."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
 
     platform.init()
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     ent1, ent2, ent3 = platform.ENTITIES
@@ -220,13 +220,13 @@ async def test_if_fires_on_state_change_with_for.opp, calls):
         },
     )
     await opp.async_block_till_done()
-    assert.opp.states.get(ent1.entity_id).state == STATE_ON
+    assert opp.states.get(ent1.entity_id).state == STATE_ON
     assert len(calls) == 0
 
     opp.states.async_set(ent1.entity_id, STATE_OFF)
     await opp.async_block_till_done()
     assert len(calls) == 0
-    async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert len(calls) == 1
     await opp.async_block_till_done()

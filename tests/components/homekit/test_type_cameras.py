@@ -42,35 +42,35 @@ MOCK_START_STREAM_SESSION_UUID = UUID("3303d503-17cc-469a-b672-92436a71a2f6")
 PID_THAT_WILL_NEVER_BE_ALIVE = 2147483647
 
 
-async def _async_start_streaming.opp, acc):
+async def _async_start_streaming(opp, acc):
     """Start streaming a camera."""
     acc.set_selected_stream_configuration(MOCK_START_STREAM_TLV)
     await acc.run()
     await opp.async_block_till_done()
 
 
-async def _async_setup_endpoints.opp, acc):
+async def _async_setup_endpoints(opp, acc):
     """Set camera endpoints."""
     acc.set_endpoints(MOCK_END_POINTS_TLV)
     await acc.run()
     await opp.async_block_till_done()
 
 
-async def _async_reconfigure_stream.opp, acc, session_info, stream_config):
+async def _async_reconfigure_stream(opp, acc, session_info, stream_config):
     """Reconfigure the stream."""
     await acc.reconfigure_stream(session_info, stream_config)
     await acc.run()
     await opp.async_block_till_done()
 
 
-async def _async_stop_all_streams.opp, acc):
+async def _async_stop_all_streams(opp, acc):
     """Stop all camera streams."""
     await acc.stop()
     await acc.run()
     await opp.async_block_till_done()
 
 
-async def _async_stop_stream.opp, acc, session_info):
+async def _async_stop_stream(opp, acc, session_info):
     """Stop a camera stream."""
     await acc.stop_stream(session_info)
     await acc.run()
@@ -124,9 +124,9 @@ def _get_failing_mock_ffmpeg():
     return ffmpeg
 
 
-async def test_camera_stream_source_configured.opp, run_driver, events):
+async def test_camera_stream_source_configured(opp, run_driver, events):
     """Test a camera that can stream with a configured source."""
-    await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
+    await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
     await async_setup_component(
         opp. camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
@@ -161,7 +161,7 @@ async def test_camera_stream_source_configured.opp, run_driver, events):
     assert acc.aid == 2
     assert acc.category == 17  # Camera
 
-    await _async_setup_endpoints.opp, acc)
+    await _async_setup_endpoints(opp, acc)
     working_ffmpeg = _get_working_mock_ffmpeg()
     session_info = acc.sessions[MOCK_START_STREAM_SESSION_UUID]
 
@@ -172,8 +172,8 @@ async def test_camera_stream_source_configured.opp, run_driver, events):
         "openpeerpower.components.homekit.type_cameras.HAFFmpeg",
         return_value=working_ffmpeg,
     ):
-        await _async_start_streaming.opp, acc)
-        await _async_stop_all_streams.opp, acc)
+        await _async_start_streaming(opp, acc)
+        await _async_stop_all_streams(opp, acc)
 
     expected_output = (
         "-map 0:v:0 -an -c:v libx264 -profile:v high -tune zerolatency -pix_fmt "
@@ -196,7 +196,7 @@ async def test_camera_stream_source_configured.opp, run_driver, events):
         stderr_pipe=True,
     )
 
-    await _async_setup_endpoints.opp, acc)
+    await _async_setup_endpoints(opp, acc)
     working_ffmpeg = _get_working_mock_ffmpeg()
     session_info = acc.sessions[MOCK_START_STREAM_SESSION_UUID]
 
@@ -207,10 +207,10 @@ async def test_camera_stream_source_configured.opp, run_driver, events):
         "openpeerpower.components.homekit.type_cameras.HAFFmpeg",
         return_value=working_ffmpeg,
     ):
-        await _async_start_streaming.opp, acc)
-        await _async_stop_all_streams.opp, acc)
+        await _async_start_streaming(opp, acc)
+        await _async_stop_all_streams(opp, acc)
         # Calling a second time should not throw
-        await _async_stop_all_streams.opp, acc)
+        await _async_stop_all_streams(opp, acc)
 
     turbo_jpeg = mock_turbo_jpeg(
         first_width=16, first_height=12, second_width=300, second_height=200
@@ -241,7 +241,7 @@ async def test_camera_stream_source_configured_with_failing_ffmpeg(
     opp. run_driver, events
 ):
     """Test a camera that can stream with a configured source with ffmpeg failing."""
-    await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
+    await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
     await async_setup_component(
         opp. camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
@@ -276,7 +276,7 @@ async def test_camera_stream_source_configured_with_failing_ffmpeg(
     assert acc.aid == 2
     assert acc.category == 17  # Camera
 
-    await _async_setup_endpoints.opp, acc)
+    await _async_setup_endpoints(opp, acc)
 
     with patch(
         "openpeerpower.components.demo.camera.DemoCamera.stream_source",
@@ -285,15 +285,15 @@ async def test_camera_stream_source_configured_with_failing_ffmpeg(
         "openpeerpower.components.homekit.type_cameras.HAFFmpeg",
         return_value=_get_failing_mock_ffmpeg(),
     ):
-        await _async_start_streaming.opp, acc)
-        await _async_stop_all_streams.opp, acc)
+        await _async_start_streaming(opp, acc)
+        await _async_stop_all_streams(opp, acc)
         # Calling a second time should not throw
-        await _async_stop_all_streams.opp, acc)
+        await _async_stop_all_streams(opp, acc)
 
 
-async def test_camera_stream_source_found.opp, run_driver, events):
+async def test_camera_stream_source_found(opp, run_driver, events):
     """Test a camera that can stream and we get the source from the entity."""
-    await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
+    await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
     await async_setup_component(
         opp. camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
@@ -316,7 +316,7 @@ async def test_camera_stream_source_found.opp, run_driver, events):
     assert acc.aid == 2
     assert acc.category == 17  # Camera
 
-    await _async_setup_endpoints.opp, acc)
+    await _async_setup_endpoints(opp, acc)
 
     with patch(
         "openpeerpower.components.demo.camera.DemoCamera.stream_source",
@@ -325,10 +325,10 @@ async def test_camera_stream_source_found.opp, run_driver, events):
         "openpeerpower.components.homekit.type_cameras.HAFFmpeg",
         return_value=_get_working_mock_ffmpeg(),
     ):
-        await _async_start_streaming.opp, acc)
-        await _async_stop_all_streams.opp, acc)
+        await _async_start_streaming(opp, acc)
+        await _async_stop_all_streams(opp, acc)
 
-    await _async_setup_endpoints.opp, acc)
+    await _async_setup_endpoints(opp, acc)
 
     with patch(
         "openpeerpower.components.demo.camera.DemoCamera.stream_source",
@@ -337,13 +337,13 @@ async def test_camera_stream_source_found.opp, run_driver, events):
         "openpeerpower.components.homekit.type_cameras.HAFFmpeg",
         return_value=_get_working_mock_ffmpeg(),
     ):
-        await _async_start_streaming.opp, acc)
-        await _async_stop_all_streams.opp, acc)
+        await _async_start_streaming(opp, acc)
+        await _async_stop_all_streams(opp, acc)
 
 
-async def test_camera_stream_source_fails.opp, run_driver, events):
+async def test_camera_stream_source_fails(opp, run_driver, events):
     """Test a camera that can stream and we cannot get the source from the entity."""
-    await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
+    await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
     await async_setup_component(
         opp. camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
@@ -366,7 +366,7 @@ async def test_camera_stream_source_fails.opp, run_driver, events):
     assert acc.aid == 2
     assert acc.category == 17  # Camera
 
-    await _async_setup_endpoints.opp, acc)
+    await _async_setup_endpoints(opp, acc)
 
     with patch(
         "openpeerpower.components.demo.camera.DemoCamera.stream_source",
@@ -375,14 +375,14 @@ async def test_camera_stream_source_fails.opp, run_driver, events):
         "openpeerpower.components.homekit.type_cameras.HAFFmpeg",
         return_value=_get_working_mock_ffmpeg(),
     ):
-        await _async_start_streaming.opp, acc)
-        await _async_stop_all_streams.opp, acc)
+        await _async_start_streaming(opp, acc)
+        await _async_stop_all_streams(opp, acc)
 
 
-async def test_camera_with_no_stream.opp, run_driver, events):
+async def test_camera_with_no_stream(opp, run_driver, events):
     """Test a camera that cannot stream."""
-    await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
-    await async_setup_component.opp, camera.DOMAIN, {camera.DOMAIN: {}})
+    await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
+    await async_setup_component(opp, camera.DOMAIN, {camera.DOMAIN: {}})
 
     entity_id = "camera.demo_camera"
 
@@ -401,9 +401,9 @@ async def test_camera_with_no_stream.opp, run_driver, events):
     assert acc.aid == 2
     assert acc.category == 17  # Camera
 
-    await _async_setup_endpoints.opp, acc)
-    await _async_start_streaming.opp, acc)
-    await _async_stop_all_streams.opp, acc)
+    await _async_setup_endpoints(opp, acc)
+    await _async_start_streaming(opp, acc)
+    await _async_stop_all_streams(opp, acc)
 
     with pytest.raises(OpenPeerPowerError):
         assert await acc.async_get_snapshot(
@@ -411,9 +411,9 @@ async def test_camera_with_no_stream.opp, run_driver, events):
         )
 
 
-async def test_camera_stream_source_configured_and_copy_codec.opp, run_driver, events):
+async def test_camera_stream_source_configured_and_copy_codec(opp, run_driver, events):
     """Test a camera that can stream with a configured source."""
-    await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
+    await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
     await async_setup_component(
         opp. camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
@@ -444,7 +444,7 @@ async def test_camera_stream_source_configured_and_copy_codec.opp, run_driver, e
     assert acc.aid == 2
     assert acc.category == 17  # Camera
 
-    await _async_setup_endpoints.opp, acc)
+    await _async_setup_endpoints(opp, acc)
     session_info = acc.sessions[MOCK_START_STREAM_SESSION_UUID]
 
     working_ffmpeg = _get_working_mock_ffmpeg()
@@ -456,10 +456,10 @@ async def test_camera_stream_source_configured_and_copy_codec.opp, run_driver, e
         "openpeerpower.components.homekit.type_cameras.HAFFmpeg",
         return_value=working_ffmpeg,
     ):
-        await _async_start_streaming.opp, acc)
-        await _async_reconfigure_stream.opp, acc, session_info, {})
-        await _async_stop_stream.opp, acc, session_info)
-        await _async_stop_all_streams.opp, acc)
+        await _async_start_streaming(opp, acc)
+        await _async_reconfigure_stream(opp, acc, session_info, {})
+        await _async_stop_stream(opp, acc, session_info)
+        await _async_stop_all_streams(opp, acc)
 
     expected_output = (
         "-map 0:v:0 -an -c:v copy -tune zerolatency -pix_fmt yuv420p -r 30 -b:v 299k "
@@ -482,9 +482,9 @@ async def test_camera_stream_source_configured_and_copy_codec.opp, run_driver, e
     )
 
 
-async def test_camera_streaming_fails_after_starting_ffmpeg.opp, run_driver, events):
+async def test_camera_streaming_fails_after_starting_ffmpeg(opp, run_driver, events):
     """Test a camera that can stream with a configured source."""
-    await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
+    await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
     await async_setup_component(
         opp. camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
@@ -515,7 +515,7 @@ async def test_camera_streaming_fails_after_starting_ffmpeg.opp, run_driver, eve
     assert acc.aid == 2
     assert acc.category == 17  # Camera
 
-    await _async_setup_endpoints.opp, acc)
+    await _async_setup_endpoints(opp, acc)
     session_info = acc.sessions[MOCK_START_STREAM_SESSION_UUID]
 
     ffmpeg_with_invalid_pid = _get_exits_after_startup_mock_ffmpeg()
@@ -527,11 +527,11 @@ async def test_camera_streaming_fails_after_starting_ffmpeg.opp, run_driver, eve
         "openpeerpower.components.homekit.type_cameras.HAFFmpeg",
         return_value=ffmpeg_with_invalid_pid,
     ):
-        await _async_start_streaming.opp, acc)
-        await _async_reconfigure_stream.opp, acc, session_info, {})
+        await _async_start_streaming(opp, acc)
+        await _async_reconfigure_stream(opp, acc, session_info, {})
         # Should not throw
-        await _async_stop_stream.opp, acc, {"id": "does_not_exist"})
-        await _async_stop_all_streams.opp, acc)
+        await _async_stop_stream(opp, acc, {"id": "does_not_exist"})
+        await _async_stop_all_streams(opp, acc)
 
     expected_output = (
         "-map 0:v:0 -an -c:v h264_omx -profile:v high -tune zerolatency -pix_fmt yuv420p -r 30 -b:v 299k "
@@ -554,9 +554,9 @@ async def test_camera_streaming_fails_after_starting_ffmpeg.opp, run_driver, eve
     )
 
 
-async def test_camera_with_linked_motion_sensor.opp, run_driver, events):
+async def test_camera_with_linked_motion_sensor(opp, run_driver, events):
     """Test a camera with a linked motion sensor can update."""
-    await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
+    await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
     await async_setup_component(
         opp. camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
@@ -622,9 +622,9 @@ async def test_camera_with_linked_motion_sensor.opp, run_driver, events):
     assert char.value is True
 
 
-async def test_camera_with_a_missing_linked_motion_sensor.opp, run_driver, events):
+async def test_camera_with_a_missing_linked_motion_sensor(opp, run_driver, events):
     """Test a camera with a configured linked motion sensor that is missing."""
-    await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
+    await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
     await async_setup_component(
         opp. camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
@@ -652,9 +652,9 @@ async def test_camera_with_a_missing_linked_motion_sensor.opp, run_driver, event
     assert not acc.get_service(SERV_MOTION_SENSOR)
 
 
-async def test_camera_with_linked_doorbell_sensor.opp, run_driver, events):
+async def test_camera_with_linked_doorbell_sensor(opp, run_driver, events):
     """Test a camera with a linked doorbell sensor can update."""
-    await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
+    await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
     await async_setup_component(
         opp. camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
@@ -731,9 +731,9 @@ async def test_camera_with_linked_doorbell_sensor.opp, run_driver, events):
     assert char2.value == 0
 
 
-async def test_camera_with_a_missing_linked_doorbell_sensor.opp, run_driver, events):
+async def test_camera_with_a_missing_linked_doorbell_sensor(opp, run_driver, events):
     """Test a camera with a configured linked doorbell sensor that is missing."""
-    await async_setup_component.opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
+    await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
     await async_setup_component(
         opp. camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )

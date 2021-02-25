@@ -50,7 +50,7 @@ ENTITY_VACUUM_STATE = f"{DOMAIN}.{DEMO_VACUUM_STATE}".lower()
 @pytest.fixture(autouse=True)
 async def setup_demo_vacuum.opp):
     """Initialize setup demo vacuum."""
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "demo"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "demo"}})
     await opp.async_block_till_done()
 
 
@@ -108,39 +108,39 @@ async def test_methods.opp):
     """Test if methods call the services as expected."""
     opp.states.async_set(ENTITY_VACUUM_BASIC, STATE_ON)
     await opp.async_block_till_done()
-    assert vacuum.is_on.opp, ENTITY_VACUUM_BASIC)
+    assert vacuum.is_on(opp, ENTITY_VACUUM_BASIC)
 
     opp.states.async_set(ENTITY_VACUUM_BASIC, STATE_OFF)
     await opp.async_block_till_done()
-    assert not vacuum.is_on.opp, ENTITY_VACUUM_BASIC)
+    assert not vacuum.is_on(opp, ENTITY_VACUUM_BASIC)
 
-    await common.async_turn_on.opp, ENTITY_VACUUM_COMPLETE)
-    assert vacuum.is_on.opp, ENTITY_VACUUM_COMPLETE)
+    await common.async_turn_on(opp, ENTITY_VACUUM_COMPLETE)
+    assert vacuum.is_on(opp, ENTITY_VACUUM_COMPLETE)
 
-    await common.async_turn_off.opp, ENTITY_VACUUM_COMPLETE)
-    assert not vacuum.is_on.opp, ENTITY_VACUUM_COMPLETE)
+    await common.async_turn_off(opp, ENTITY_VACUUM_COMPLETE)
+    assert not vacuum.is_on(opp, ENTITY_VACUUM_COMPLETE)
 
-    await common.async_toggle.opp, ENTITY_VACUUM_COMPLETE)
-    assert vacuum.is_on.opp, ENTITY_VACUUM_COMPLETE)
+    await common.async_toggle(opp, ENTITY_VACUUM_COMPLETE)
+    assert vacuum.is_on(opp, ENTITY_VACUUM_COMPLETE)
 
-    await common.async_start_pause.opp, ENTITY_VACUUM_COMPLETE)
-    assert not vacuum.is_on.opp, ENTITY_VACUUM_COMPLETE)
+    await common.async_start_pause(opp, ENTITY_VACUUM_COMPLETE)
+    assert not vacuum.is_on(opp, ENTITY_VACUUM_COMPLETE)
 
-    await common.async_start_pause.opp, ENTITY_VACUUM_COMPLETE)
-    assert vacuum.is_on.opp, ENTITY_VACUUM_COMPLETE)
+    await common.async_start_pause(opp, ENTITY_VACUUM_COMPLETE)
+    assert vacuum.is_on(opp, ENTITY_VACUUM_COMPLETE)
 
-    await common.async_stop.opp, ENTITY_VACUUM_COMPLETE)
-    assert not vacuum.is_on.opp, ENTITY_VACUUM_COMPLETE)
+    await common.async_stop(opp, ENTITY_VACUUM_COMPLETE)
+    assert not vacuum.is_on(opp, ENTITY_VACUUM_COMPLETE)
 
     state = opp.states.get(ENTITY_VACUUM_COMPLETE)
     assert state.attributes.get(ATTR_BATTERY_LEVEL) < 100
     assert state.attributes.get(ATTR_STATUS) != "Charging"
 
-    await common.async_locate.opp, ENTITY_VACUUM_COMPLETE)
+    await common.async_locate(opp, ENTITY_VACUUM_COMPLETE)
     state = opp.states.get(ENTITY_VACUUM_COMPLETE)
     assert "I'm over here" in state.attributes.get(ATTR_STATUS)
 
-    await common.async_return_to_base.opp, ENTITY_VACUUM_COMPLETE)
+    await common.async_return_to_base(opp, ENTITY_VACUUM_COMPLETE)
     state = opp.states.get(ENTITY_VACUUM_COMPLETE)
     assert "Returning home" in state.attributes.get(ATTR_STATUS)
 
@@ -150,20 +150,20 @@ async def test_methods.opp):
     state = opp.states.get(ENTITY_VACUUM_COMPLETE)
     assert state.attributes.get(ATTR_FAN_SPEED) == FAN_SPEEDS[-1]
 
-    await common.async_clean_spot.opp, entity_id=ENTITY_VACUUM_COMPLETE)
+    await common.async_clean_spot(opp, entity_id=ENTITY_VACUUM_COMPLETE)
     state = opp.states.get(ENTITY_VACUUM_COMPLETE)
     assert "spot" in state.attributes.get(ATTR_STATUS)
     assert state.state == STATE_ON
 
-    await common.async_start.opp, ENTITY_VACUUM_STATE)
+    await common.async_start(opp, ENTITY_VACUUM_STATE)
     state = opp.states.get(ENTITY_VACUUM_STATE)
     assert state.state == STATE_CLEANING
 
-    await common.async_pause.opp, ENTITY_VACUUM_STATE)
+    await common.async_pause(opp, ENTITY_VACUUM_STATE)
     state = opp.states.get(ENTITY_VACUUM_STATE)
     assert state.state == STATE_PAUSED
 
-    await common.async_stop.opp, ENTITY_VACUUM_STATE)
+    await common.async_stop(opp, ENTITY_VACUUM_STATE)
     state = opp.states.get(ENTITY_VACUUM_STATE)
     assert state.state == STATE_IDLE
 
@@ -171,7 +171,7 @@ async def test_methods.opp):
     assert state.attributes.get(ATTR_BATTERY_LEVEL) < 100
     assert state.state != STATE_DOCKED
 
-    await common.async_return_to_base.opp, ENTITY_VACUUM_STATE)
+    await common.async_return_to_base(opp, ENTITY_VACUUM_STATE)
     state = opp.states.get(ENTITY_VACUUM_STATE)
     assert state.state == STATE_RETURNING
 
@@ -181,7 +181,7 @@ async def test_methods.opp):
     state = opp.states.get(ENTITY_VACUUM_STATE)
     assert state.attributes.get(ATTR_FAN_SPEED) == FAN_SPEEDS[-1]
 
-    await common.async_clean_spot.opp, entity_id=ENTITY_VACUUM_STATE)
+    await common.async_clean_spot(opp, entity_id=ENTITY_VACUUM_STATE)
     state = opp.states.get(ENTITY_VACUUM_STATE)
     assert state.state == STATE_CLEANING
 
@@ -190,41 +190,41 @@ async def test_unsupported_methods.opp):
     """Test service calls for unsupported vacuums."""
     opp.states.async_set(ENTITY_VACUUM_NONE, STATE_ON)
     await opp.async_block_till_done()
-    assert vacuum.is_on.opp, ENTITY_VACUUM_NONE)
+    assert vacuum.is_on(opp, ENTITY_VACUUM_NONE)
 
-    await common.async_turn_off.opp, ENTITY_VACUUM_NONE)
-    assert vacuum.is_on.opp, ENTITY_VACUUM_NONE)
+    await common.async_turn_off(opp, ENTITY_VACUUM_NONE)
+    assert vacuum.is_on(opp, ENTITY_VACUUM_NONE)
 
-    await common.async_stop.opp, ENTITY_VACUUM_NONE)
-    assert vacuum.is_on.opp, ENTITY_VACUUM_NONE)
+    await common.async_stop(opp, ENTITY_VACUUM_NONE)
+    assert vacuum.is_on(opp, ENTITY_VACUUM_NONE)
 
     opp.states.async_set(ENTITY_VACUUM_NONE, STATE_OFF)
     await opp.async_block_till_done()
-    assert not vacuum.is_on.opp, ENTITY_VACUUM_NONE)
+    assert not vacuum.is_on(opp, ENTITY_VACUUM_NONE)
 
-    await common.async_turn_on.opp, ENTITY_VACUUM_NONE)
-    assert not vacuum.is_on.opp, ENTITY_VACUUM_NONE)
+    await common.async_turn_on(opp, ENTITY_VACUUM_NONE)
+    assert not vacuum.is_on(opp, ENTITY_VACUUM_NONE)
 
-    await common.async_toggle.opp, ENTITY_VACUUM_NONE)
-    assert not vacuum.is_on.opp, ENTITY_VACUUM_NONE)
+    await common.async_toggle(opp, ENTITY_VACUUM_NONE)
+    assert not vacuum.is_on(opp, ENTITY_VACUUM_NONE)
 
     # Non supported methods:
-    await common.async_start_pause.opp, ENTITY_VACUUM_NONE)
-    assert not vacuum.is_on.opp, ENTITY_VACUUM_NONE)
+    await common.async_start_pause(opp, ENTITY_VACUUM_NONE)
+    assert not vacuum.is_on(opp, ENTITY_VACUUM_NONE)
 
-    await common.async_locate.opp, ENTITY_VACUUM_NONE)
+    await common.async_locate(opp, ENTITY_VACUUM_NONE)
     state = opp.states.get(ENTITY_VACUUM_NONE)
     assert state.attributes.get(ATTR_STATUS) is None
 
-    await common.async_return_to_base.opp, ENTITY_VACUUM_NONE)
+    await common.async_return_to_base(opp, ENTITY_VACUUM_NONE)
     state = opp.states.get(ENTITY_VACUUM_NONE)
     assert state.attributes.get(ATTR_STATUS) is None
 
-    await common.async_set_fan_speed.opp, FAN_SPEEDS[-1], entity_id=ENTITY_VACUUM_NONE)
+    await common.async_set_fan_speed(opp, FAN_SPEEDS[-1], entity_id=ENTITY_VACUUM_NONE)
     state = opp.states.get(ENTITY_VACUUM_NONE)
     assert state.attributes.get(ATTR_FAN_SPEED) != FAN_SPEEDS[-1]
 
-    await common.async_clean_spot.opp, entity_id=ENTITY_VACUUM_BASIC)
+    await common.async_clean_spot(opp, entity_id=ENTITY_VACUUM_BASIC)
     state = opp.states.get(ENTITY_VACUUM_BASIC)
     assert "spot" not in state.attributes.get(ATTR_STATUS)
     assert state.state == STATE_OFF
@@ -232,28 +232,28 @@ async def test_unsupported_methods.opp):
     # VacuumEntity should not support start and pause methods.
     opp.states.async_set(ENTITY_VACUUM_COMPLETE, STATE_ON)
     await opp.async_block_till_done()
-    assert vacuum.is_on.opp, ENTITY_VACUUM_COMPLETE)
+    assert vacuum.is_on(opp, ENTITY_VACUUM_COMPLETE)
 
-    await common.async_pause.opp, ENTITY_VACUUM_COMPLETE)
-    assert vacuum.is_on.opp, ENTITY_VACUUM_COMPLETE)
+    await common.async_pause(opp, ENTITY_VACUUM_COMPLETE)
+    assert vacuum.is_on(opp, ENTITY_VACUUM_COMPLETE)
 
     opp.states.async_set(ENTITY_VACUUM_COMPLETE, STATE_OFF)
     await opp.async_block_till_done()
-    assert not vacuum.is_on.opp, ENTITY_VACUUM_COMPLETE)
+    assert not vacuum.is_on(opp, ENTITY_VACUUM_COMPLETE)
 
-    await common.async_start.opp, ENTITY_VACUUM_COMPLETE)
-    assert not vacuum.is_on.opp, ENTITY_VACUUM_COMPLETE)
+    await common.async_start(opp, ENTITY_VACUUM_COMPLETE)
+    assert not vacuum.is_on(opp, ENTITY_VACUUM_COMPLETE)
 
     # StateVacuumEntity does not support on/off
-    await common.async_turn_on.opp, entity_id=ENTITY_VACUUM_STATE)
+    await common.async_turn_on(opp, entity_id=ENTITY_VACUUM_STATE)
     state = opp.states.get(ENTITY_VACUUM_STATE)
     assert state.state != STATE_CLEANING
 
-    await common.async_turn_off.opp, entity_id=ENTITY_VACUUM_STATE)
+    await common.async_turn_off(opp, entity_id=ENTITY_VACUUM_STATE)
     state = opp.states.get(ENTITY_VACUUM_STATE)
     assert state.state != STATE_RETURNING
 
-    await common.async_toggle.opp, entity_id=ENTITY_VACUUM_STATE)
+    await common.async_toggle(opp, entity_id=ENTITY_VACUUM_STATE)
     state = opp.states.get(ENTITY_VACUUM_STATE)
     assert state.state != STATE_CLEANING
 
@@ -261,7 +261,7 @@ async def test_unsupported_methods.opp):
 async def test_services.opp):
     """Test vacuum services."""
     # Test send_command
-    send_command_calls = async_mock_service.opp, DOMAIN, SERVICE_SEND_COMMAND)
+    send_command_calls = async_mock_service(opp, DOMAIN, SERVICE_SEND_COMMAND)
 
     params = {"rotate": 150, "speed": 20}
     await common.async_send_command(
@@ -277,7 +277,7 @@ async def test_services.opp):
     assert call.data[ATTR_PARAMS] == params
 
     # Test set fan speed
-    set_fan_speed_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_FAN_SPEED)
+    set_fan_speed_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_FAN_SPEED)
 
     await common.async_set_fan_speed(
         opp. FAN_SPEEDS[0], entity_id=ENTITY_VACUUM_COMPLETE
@@ -300,7 +300,7 @@ async def test_set_fan_speed.opp):
     old_state_complete = opp.states.get(ENTITY_VACUUM_COMPLETE)
     old_state_state = opp.states.get(ENTITY_VACUUM_STATE)
 
-    await common.async_set_fan_speed.opp, FAN_SPEEDS[0], entity_id=group_vacuums)
+    await common.async_set_fan_speed(opp, FAN_SPEEDS[0], entity_id=group_vacuums)
 
     new_state_basic = opp.states.get(ENTITY_VACUUM_BASIC)
     new_state_complete = opp.states.get(ENTITY_VACUUM_COMPLETE)

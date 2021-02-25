@@ -32,9 +32,9 @@ from tests.common import async_fire_time_changed, load_fixture
 from tests.components.airly import init_integration
 
 
-async def test_air_quality.opp, aioclient_mock):
+async def test_air_quality(opp, aioclient_mock):
     """Test states of the air_quality."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     state = opp.states.get("air_quality.home")
@@ -62,9 +62,9 @@ async def test_air_quality.opp, aioclient_mock):
     assert entry.unique_id == "123-456"
 
 
-async def test_availability.opp, aioclient_mock):
+async def test_availability(opp, aioclient_mock):
     """Ensure that we mark the entities unavailable correctly when service causes an error."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     state = opp.states.get("air_quality.home")
     assert state
@@ -77,7 +77,7 @@ async def test_availability.opp, aioclient_mock):
     )
     future = utcnow() + timedelta(minutes=60)
 
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.async_block_till_done()
 
     state = opp.states.get("air_quality.home")
@@ -88,7 +88,7 @@ async def test_availability.opp, aioclient_mock):
     aioclient_mock.get(API_POINT_URL, text=load_fixture("airly_valid_station.json"))
     future = utcnow() + timedelta(minutes=120)
 
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.async_block_till_done()
 
     state = opp.states.get("air_quality.home")
@@ -97,12 +97,12 @@ async def test_availability.opp, aioclient_mock):
     assert state.state == "14"
 
 
-async def test_manual_update_entity.opp, aioclient_mock):
+async def test_manual_update_entity(opp, aioclient_mock):
     """Test manual update entity via service homeasasistant/update_entity."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     call_count = aioclient_mock.call_count
-    await async_setup_component.opp, "openpeerpower", {})
+    await async_setup_component(opp, "openpeerpower", {})
     await opp.services.async_call(
         "openpeerpower",
         "update_entity",

@@ -16,7 +16,7 @@ async def test_config_entry_not_ready(
 ) -> None:
     """Test configuration entry not ready on library error."""
     aioclient_mock.post("http://127.0.0.1:10000/retrieve", exc=aiohttp.ClientError)
-    entry = await init_integration.opp, aioclient_mock)
+    entry = await init_integration(opp, aioclient_mock)
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
 
@@ -25,7 +25,7 @@ async def test_config_entry_empty_reply(
 ) -> None:
     """Test configuration entry not ready when library returns False."""
     with patch("pyatag.AtagOne.update", return_value=False):
-        entry = await init_integration.opp, aioclient_mock)
+        entry = await init_integration(opp, aioclient_mock)
         assert entry.state == ENTRY_STATE_SETUP_RETRY
 
 
@@ -33,8 +33,8 @@ async def test_unload_config_entry(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the ATAG configuration entry unloading."""
-    entry = await init_integration.opp, aioclient_mock)
-    assert.opp.data[DOMAIN]
+    entry = await init_integration(opp, aioclient_mock)
+    assert opp.data[DOMAIN]
     await opp.config_entries.async_unload(entry.entry_id)
     await opp.async_block_till_done()
     assert not.opp.data.get(DOMAIN)

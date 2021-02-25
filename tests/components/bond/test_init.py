@@ -32,7 +32,7 @@ from tests.common import MockConfigEntry
 
 async def test_async_setup_no_domain_config(opp: OpenPeerPower):
     """Test setup without configuration is noop."""
-    result = await async_setup_component.opp, DOMAIN, {})
+    result = await async_setup_component(opp, DOMAIN, {})
 
     assert result is True
 
@@ -43,7 +43,7 @@ async def test_async_setup_raises_entry_not_ready.opp: OpenPeerPower):
         domain=DOMAIN,
         data={CONF_HOST: "some host", CONF_ACCESS_TOKEN: "test-token"},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch_bond_version(side_effect=ClientConnectionError()):
         await opp.config_entries.async_setup(config_entry.entry_id)
@@ -70,7 +70,7 @@ async def test_async_setup_entry_sets_up_hub_and_supported_domains.opp: OpenPeer
     ) as mock_light_async_setup_entry, patch_setup_entry(
         "switch"
     ) as mock_switch_async_setup_entry:
-        result = await setup_bond_entity.opp, config_entry, patch_device_ids=True)
+        result = await setup_bond_entity(opp, config_entry, patch_device_ids=True)
         assert result is True
         await opp.async_block_till_done()
 
@@ -135,7 +135,7 @@ async def test_old_identifiers_are_removed.opp: OpenPeerPower):
         name="old",
     )
 
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch_bond_bridge(), patch_bond_version(
         return_value={
@@ -174,7 +174,7 @@ async def test_smart_by_bond_device_suggested_area.opp: OpenPeerPower):
         data={CONF_HOST: "some host", CONF_ACCESS_TOKEN: "test-token"},
     )
 
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch_bond_bridge(
         side_effect=ClientResponseError(Mock(), Mock(), status=404)
@@ -217,7 +217,7 @@ async def test_bridge_device_suggested_area.opp: OpenPeerPower):
         data={CONF_HOST: "some host", CONF_ACCESS_TOKEN: "test-token"},
     )
 
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch_bond_bridge(
         return_value={

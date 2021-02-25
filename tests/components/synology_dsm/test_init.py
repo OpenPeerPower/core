@@ -36,7 +36,7 @@ async def test_services_registered.opp: OpenPeerPowerType):
                 CONF_MAC: MACS[0],
             },
         )
-        entry.add_to.opp.opp)
+        entry.add_to_opp(opp)
         assert await opp.config_entries.async_setup(entry.entry_id)
         for service in SERVICES:
-            assert.opp.services.has_service(DOMAIN, service)
+            assert opp.services.has_service(DOMAIN, service)

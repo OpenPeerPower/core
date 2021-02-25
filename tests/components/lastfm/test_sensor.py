@@ -44,7 +44,7 @@ def lastfm_network_fixture():
         yield lastfm_network
 
 
-async def test_update_not_playing.opp, lastfm_network):
+async def test_update_not_playing(opp, lastfm_network):
     """Test update when no playing song."""
 
     lastfm_network.return_value.get_user.return_value = MockUser(None)
@@ -63,7 +63,7 @@ async def test_update_not_playing.opp, lastfm_network):
     assert state.state == STATE_NOT_SCROBBLING
 
 
-async def test_update_playing.opp, lastfm_network):
+async def test_update_playing(opp, lastfm_network):
     """Test update when song playing."""
 
     lastfm_network.return_value.get_user.return_value = MockUser(

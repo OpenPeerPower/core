@@ -11,7 +11,7 @@ def time_zone():
     return dt_util.get_time_zone("America/New_York")
 
 
-async def test_time.opp, time_zone):
+async def test_time(opp, time_zone):
     """Test the time at a different location."""
     config = {"sensor": {"platform": "worldclock", "time_zone": "America/New_York"}}
 
@@ -28,7 +28,7 @@ async def test_time.opp, time_zone):
     assert state.state == dt_util.now(time_zone=time_zone).strftime("%H:%M")
 
 
-async def test_time_format.opp, time_zone):
+async def test_time_format(opp, time_zone):
     """Test time_format setting."""
     time_format = "%a, %b %d, %Y %I:%M %p"
     config = {

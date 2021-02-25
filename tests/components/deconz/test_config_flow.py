@@ -40,7 +40,7 @@ from .test_gateway import API_KEY, BRIDGEID, setup_deconz_integration
 BAD_BRIDGEID = "0000000000000000"
 
 
-async def test_flow_discovered_bridges.opp, aioclient_mock):
+async def test_flow_discovered_bridges(opp, aioclient_mock):
     """Test that config flow works for discovered bridges."""
     aioclient_mock.get(
         pydeconz.utils.URL_DISCOVER,
@@ -84,7 +84,7 @@ async def test_flow_discovered_bridges.opp, aioclient_mock):
     }
 
 
-async def test_flow_manual_configuration_decision.opp, aioclient_mock):
+async def test_flow_manual_configuration_decision(opp, aioclient_mock):
     """Test that config flow for one discovered bridge works."""
     aioclient_mock.get(
         pydeconz.utils.URL_DISCOVER,
@@ -136,7 +136,7 @@ async def test_flow_manual_configuration_decision.opp, aioclient_mock):
     }
 
 
-async def test_flow_manual_configuration.opp, aioclient_mock):
+async def test_flow_manual_configuration(opp, aioclient_mock):
     """Test that config flow works with manual configuration after no discovered bridges."""
     aioclient_mock.get(
         pydeconz.utils.URL_DISCOVER,
@@ -184,7 +184,7 @@ async def test_flow_manual_configuration.opp, aioclient_mock):
     }
 
 
-async def test_manual_configuration_after_discovery_timeout.opp, aioclient_mock):
+async def test_manual_configuration_after_discovery_timeout(opp, aioclient_mock):
     """Test failed discovery fallbacks to manual configuration."""
     aioclient_mock.get(pydeconz.utils.URL_DISCOVER, exc=asyncio.TimeoutError)
 
@@ -210,9 +210,9 @@ async def test_manual_configuration_after_discovery_Responseerror(opp, aioclient
     assert not.opp.config_entries.flow._progress[result["flow_id"]].bridges
 
 
-async def test_manual_configuration_update_configuration.opp, aioclient_mock):
+async def test_manual_configuration_update_configuration(opp, aioclient_mock):
     """Test that manual configuration can update existing config entry."""
-    config_entry = await setup_deconz_integration.opp, aioclient_mock)
+    config_entry = await setup_deconz_integration(opp, aioclient_mock)
 
     aioclient_mock.get(
         pydeconz.utils.URL_DISCOVER,
@@ -256,9 +256,9 @@ async def test_manual_configuration_update_configuration.opp, aioclient_mock):
     assert config_entry.data[CONF_HOST] == "2.3.4.5"
 
 
-async def test_manual_configuration_dont_update_configuration.opp, aioclient_mock):
+async def test_manual_configuration_dont_update_configuration(opp, aioclient_mock):
     """Test that _create_entry work and that bridgeid can be requested."""
-    await setup_deconz_integration.opp, aioclient_mock)
+    await setup_deconz_integration(opp, aioclient_mock)
 
     aioclient_mock.get(
         pydeconz.utils.URL_DISCOVER,
@@ -301,7 +301,7 @@ async def test_manual_configuration_dont_update_configuration.opp, aioclient_moc
     assert result["reason"] == "already_configured"
 
 
-async def test_manual_configuration_timeout_get_bridge.opp, aioclient_mock):
+async def test_manual_configuration_timeout_get_bridge(opp, aioclient_mock):
     """Test that _create_entry handles a timeout."""
     aioclient_mock.get(
         pydeconz.utils.URL_DISCOVER,
@@ -372,9 +372,9 @@ async def test_link_get_api_key_Responseerror(opp, aioclient_mock):
     assert result["errors"] == {"base": "no_key"}
 
 
-async def test_reauth_flow_update_configuration.opp, aioclient_mock):
+async def test_reauth_flow_update_configuration(opp, aioclient_mock):
     """Verify reauth flow can update gateway API key."""
-    config_entry = await setup_deconz_integration.opp, aioclient_mock)
+    config_entry = await setup_deconz_integration(opp, aioclient_mock)
 
     result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN,
@@ -408,7 +408,7 @@ async def test_reauth_flow_update_configuration.opp, aioclient_mock):
     assert config_entry.data[CONF_API_KEY] == new_api_key
 
 
-async def test_flow_ssdp_discovery.opp, aioclient_mock):
+async def test_flow_ssdp_discovery(opp, aioclient_mock):
     """Test that config flow for one discovered bridge works."""
     result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN,
@@ -442,9 +442,9 @@ async def test_flow_ssdp_discovery.opp, aioclient_mock):
     }
 
 
-async def test_ssdp_discovery_update_configuration.opp, aioclient_mock):
+async def test_ssdp_discovery_update_configuration(opp, aioclient_mock):
     """Test if a discovered bridge is configured but updates with new attributes."""
-    config_entry = await setup_deconz_integration.opp, aioclient_mock)
+    config_entry = await setup_deconz_integration(opp, aioclient_mock)
 
     with patch(
         "openpeerpower.components.deconz.async_setup_entry",
@@ -467,9 +467,9 @@ async def test_ssdp_discovery_update_configuration.opp, aioclient_mock):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_ssdp_discovery_dont_update_configuration.opp, aioclient_mock):
+async def test_ssdp_discovery_dont_update_configuration(opp, aioclient_mock):
     """Test if a discovered bridge has already been configured."""
-    config_entry = await setup_deconz_integration.opp, aioclient_mock)
+    config_entry = await setup_deconz_integration(opp, aioclient_mock)
 
     result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN,
@@ -547,9 +547,9 @@ async def test_flow.oppio_discovery.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test.oppio_discovery_update_configuration.opp, aioclient_mock):
+async def test.oppio_discovery_update_configuration(opp, aioclient_mock):
     """Test we can update an existing config entry."""
-    config_entry = await setup_deconz_integration.opp, aioclient_mock)
+    config_entry = await setup_deconz_integration(opp, aioclient_mock)
 
     with patch(
         "openpeerpower.components.deconz.async_setup_entry",
@@ -575,9 +575,9 @@ async def test.oppio_discovery_update_configuration.opp, aioclient_mock):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test.oppio_discovery_dont_update_configuration.opp, aioclient_mock):
+async def test.oppio_discovery_dont_update_configuration(opp, aioclient_mock):
     """Test we can update an existing config entry."""
-    await setup_deconz_integration.opp, aioclient_mock)
+    await setup_deconz_integration(opp, aioclient_mock)
 
     result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN,
@@ -594,9 +594,9 @@ async def test.oppio_discovery_dont_update_configuration.opp, aioclient_mock):
     assert result["reason"] == "already_configured"
 
 
-async def test_option_flow.opp, aioclient_mock):
+async def test_option_flow(opp, aioclient_mock):
     """Test config flow options."""
-    config_entry = await setup_deconz_integration.opp, aioclient_mock)
+    config_entry = await setup_deconz_integration(opp, aioclient_mock)
 
     result = await opp.config_entries.options.async_init(config_entry.entry_id)
 

@@ -98,7 +98,7 @@ def remotews_fixture():
         yield remotews
 
 
-async def test_user_legacy.opp, remote):
+async def test_user_legacy(opp, remote):
     """Test starting a flow by user."""
     # show form
     result = await opp.config_entries.flow.async_init(
@@ -122,7 +122,7 @@ async def test_user_legacy.opp, remote):
     assert result["data"][CONF_ID] is None
 
 
-async def test_user_websocket.opp, remotews):
+async def test_user_websocket(opp, remotews):
     """Test starting a flow by user."""
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote", side_effect=OSError("Boom")
@@ -232,7 +232,7 @@ async def test_user_not_successful_2.opp):
         assert result["reason"] == "cannot_connect"
 
 
-async def test_user_already_configured.opp, remote):
+async def test_user_already_configured(opp, remote):
     """Test starting a flow by user when already configured."""
 
     # entry was added
@@ -249,7 +249,7 @@ async def test_user_already_configured.opp, remote):
     assert result["reason"] == "already_configured"
 
 
-async def test_ssdp.opp, remote):
+async def test_ssdp(opp, remote):
     """Test starting a flow from discovery."""
 
     # confirm to add the entry
@@ -272,7 +272,7 @@ async def test_ssdp.opp, remote):
     assert result["data"][CONF_ID] == "fake_uuid"
 
 
-async def test_ssdp_noprefix.opp, remote):
+async def test_ssdp_noprefix(opp, remote):
     """Test starting a flow from discovery without prefixes."""
 
     # confirm to add the entry
@@ -419,7 +419,7 @@ async def test_ssdp_not_successful_2.opp):
         assert result["reason"] == "cannot_connect"
 
 
-async def test_ssdp_already_in_progress.opp, remote):
+async def test_ssdp_already_in_progress(opp, remote):
     """Test starting a flow from discovery twice."""
 
     # confirm to add the entry
@@ -437,7 +437,7 @@ async def test_ssdp_already_in_progress.opp, remote):
     assert result["reason"] == "already_in_progress"
 
 
-async def test_ssdp_already_configured.opp, remote):
+async def test_ssdp_already_configured(opp, remote):
     """Test starting a flow from discovery when already configured."""
 
     # entry was added
@@ -463,7 +463,7 @@ async def test_ssdp_already_configured.opp, remote):
     assert entry.data[CONF_ID] == "fake_uuid"
 
 
-async def test_autodetect_websocket.opp, remote, remotews):
+async def test_autodetect_websocket(opp, remote, remotews):
     """Test for send key with autodetection of protocol."""
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",
@@ -486,7 +486,7 @@ async def test_autodetect_websocket.opp, remote, remotews):
         assert remotews.call_args_list == [call(**AUTODETECT_WEBSOCKET_PLAIN)]
 
 
-async def test_autodetect_websocket_ssl.opp, remote, remotews):
+async def test_autodetect_websocket_ssl(opp, remote, remotews):
     """Test for send key with autodetection of protocol."""
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",
@@ -515,7 +515,7 @@ async def test_autodetect_websocket_ssl.opp, remote, remotews):
         ]
 
 
-async def test_autodetect_auth_missing.opp, remote):
+async def test_autodetect_auth_missing(opp, remote):
     """Test for send key with autodetection of protocol."""
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",
@@ -530,7 +530,7 @@ async def test_autodetect_auth_missing.opp, remote):
         assert remote.call_args_list == [call(AUTODETECT_LEGACY)]
 
 
-async def test_autodetect_not_supported.opp, remote):
+async def test_autodetect_not_supported(opp, remote):
     """Test for send key with autodetection of protocol."""
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",
@@ -545,7 +545,7 @@ async def test_autodetect_not_supported.opp, remote):
         assert remote.call_args_list == [call(AUTODETECT_LEGACY)]
 
 
-async def test_autodetect_legacy.opp, remote):
+async def test_autodetect_legacy(opp, remote):
     """Test for send key with autodetection of protocol."""
     with patch("openpeerpower.components.samsungtv.bridge.Remote") as remote:
         result = await opp.config_entries.flow.async_init(
@@ -557,7 +557,7 @@ async def test_autodetect_legacy.opp, remote):
         assert remote.call_args_list == [call(AUTODETECT_LEGACY)]
 
 
-async def test_autodetect_none.opp, remote, remotews):
+async def test_autodetect_none(opp, remote, remotews):
     """Test for send key with autodetection of protocol."""
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",

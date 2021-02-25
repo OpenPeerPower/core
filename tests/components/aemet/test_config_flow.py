@@ -73,7 +73,7 @@ async def test_form_duplicated_id.opp):
         entry = MockConfigEntry(
             domain=DOMAIN, unique_id="40.30403754--3.72935236", data=CONFIG
         )
-        entry.add_to.opp.opp)
+        entry.add_to_opp(opp)
 
         result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONFIG

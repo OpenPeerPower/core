@@ -70,10 +70,10 @@ SENSOR_OUTPUT = {
 
 
 @pytest.fixture
-def mock_client.opp, opp_client):
+def mock_client(opp, opp_client):
     """Start the Open Peer Power HTTP component."""
     with patch("openpeerpower.components.spaceapi", return_value=mock_coro(True)):
-        opp.loop.run_until_complete(async_setup_component.opp, "spaceapi", CONFIG))
+        opp.loop.run_until_complete(async_setup_component(opp, "spaceapi", CONFIG))
 
     opp.states.async_set(
         "test.temp1", 25, attributes={ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
@@ -88,7 +88,7 @@ def mock_client.opp, opp_client):
     return.opp.loop.run_until_complete.opp_client())
 
 
-async def test_spaceapi_get.opp, mock_client):
+async def test_spaceapi_get(opp, mock_client):
     """Test response after start-up Open Peer Power."""
     resp = await mock_client.get(URL_API_SPACEAPI)
     assert resp.status == 200
@@ -132,7 +132,7 @@ async def test_spaceapi_get.opp, mock_client):
     assert data["radio_show"][0]["end"] == "2019-09-02T12:00Z"
 
 
-async def test_spaceapi_state_get.opp, mock_client):
+async def test_spaceapi_state_get(opp, mock_client):
     """Test response if the state entity was set."""
     opp.states.async_set("test.test_door", True)
 
@@ -143,7 +143,7 @@ async def test_spaceapi_state_get.opp, mock_client):
     assert data["state"]["open"] == bool(1)
 
 
-async def test_spaceapi_sensors_get.opp, mock_client):
+async def test_spaceapi_sensors_get(opp, mock_client):
     """Test the response for the sensors."""
     resp = await mock_client.get(URL_API_SPACEAPI)
     assert resp.status == 200

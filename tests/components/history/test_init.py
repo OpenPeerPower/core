@@ -759,17 +759,17 @@ class TestComponentHistory(unittest.TestCase):
         return zero, four, states
 
 
-async def test_fetch_period_api.opp, opp_client):
+async def test_fetch_period_api(opp, opp_client):
     """Test the fetch period view for history."""
     await opp.async_add_executor_job(init_recorder_component, opp)
-    await async_setup_component.opp, "history", {})
+    await async_setup_component(opp, "history", {})
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
     client = await opp_client()
     response = await client.get(f"/api/history/period/{dt_util.utcnow().isoformat()}")
     assert response.status == 200
 
 
-async def test_fetch_period_api_with_use_include_order.opp, opp_client):
+async def test_fetch_period_api_with_use_include_order(opp, opp_client):
     """Test the fetch period view for history with include order."""
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component(
@@ -781,10 +781,10 @@ async def test_fetch_period_api_with_use_include_order.opp, opp_client):
     assert response.status == 200
 
 
-async def test_fetch_period_api_with_minimal_response.opp, opp_client):
+async def test_fetch_period_api_with_minimal_response(opp, opp_client):
     """Test the fetch period view for history with minimal_response."""
     await opp.async_add_executor_job(init_recorder_component, opp)
-    await async_setup_component.opp, "history", {})
+    await async_setup_component(opp, "history", {})
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
     client = await opp_client()
     response = await client.get(
@@ -793,17 +793,17 @@ async def test_fetch_period_api_with_minimal_response.opp, opp_client):
     assert response.status == 200
 
 
-async def test_fetch_period_api_with_no_timestamp.opp, opp_client):
+async def test_fetch_period_api_with_no_timestamp(opp, opp_client):
     """Test the fetch period view for history with no timestamp."""
     await opp.async_add_executor_job(init_recorder_component, opp)
-    await async_setup_component.opp, "history", {})
+    await async_setup_component(opp, "history", {})
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
     client = await opp_client()
     response = await client.get("/api/history/period")
     assert response.status == 200
 
 
-async def test_fetch_period_api_with_include_order.opp, opp_client):
+async def test_fetch_period_api_with_include_order(opp, opp_client):
     """Test the fetch period view for history."""
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component(
@@ -825,7 +825,7 @@ async def test_fetch_period_api_with_include_order.opp, opp_client):
     assert response.status == 200
 
 
-async def test_fetch_period_api_with_entity_glob_include.opp, opp_client):
+async def test_fetch_period_api_with_entity_glob_include(opp, opp_client):
     """Test the fetch period view for history."""
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component(
@@ -857,7 +857,7 @@ async def test_fetch_period_api_with_entity_glob_include.opp, opp_client):
     assert response_json[0][0]["entity_id"] == "light.kitchen"
 
 
-async def test_fetch_period_api_with_entity_glob_exclude.opp, opp_client):
+async def test_fetch_period_api_with_entity_glob_exclude(opp, opp_client):
     """Test the fetch period view for history."""
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component(
@@ -897,7 +897,7 @@ async def test_fetch_period_api_with_entity_glob_exclude.opp, opp_client):
     assert response_json[1][0]["entity_id"] == "light.match"
 
 
-async def test_fetch_period_api_with_entity_glob_include_and_exclude.opp, opp_client):
+async def test_fetch_period_api_with_entity_glob_include_and_exclude(opp, opp_client):
     """Test the fetch period view for history."""
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component(
@@ -942,7 +942,7 @@ async def test_fetch_period_api_with_entity_glob_include_and_exclude.opp, opp_cl
     assert response_json[2][0]["entity_id"] == "switch.match"
 
 
-async def test_entity_ids_limit_via_api.opp, opp_client):
+async def test_entity_ids_limit_via_api(opp, opp_client):
     """Test limiting history to entity_ids."""
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component(
@@ -972,7 +972,7 @@ async def test_entity_ids_limit_via_api.opp, opp_client):
     assert response_json[1][0]["entity_id"] == "light.cow"
 
 
-async def test_entity_ids_limit_via_api_with_skip_initial_state.opp, opp_client):
+async def test_entity_ids_limit_via_api_with_skip_initial_state(opp, opp_client):
     """Test limiting history to entity_ids with skip_initial_state."""
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component(

@@ -30,11 +30,11 @@ from .test_common import (
 from tests.common import async_fire_mqtt_message
 
 
-async def test_missing_relay.opp, mqtt_mock, setup_tasmota):
+async def test_missing_relay(opp, mqtt_mock, setup_tasmota):
     """Test no cover is discovered if relays are missing."""
 
 
-async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
+async def test_controlling_state_via_mqtt(opp, mqtt_mock, setup_tasmota):
     """Test state update via MQTT."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 3
@@ -52,7 +52,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/LWT", "Online")
     state = opp.states.get("cover.tasmota_cover_1")
     assert state.state == STATE_UNKNOWN
     assert (
@@ -195,7 +195,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     assert state.attributes["current_position"] == 100
 
 
-async def test_controlling_state_via_mqtt_inverted.opp, mqtt_mock, setup_tasmota):
+async def test_controlling_state_via_mqtt_inverted(opp, mqtt_mock, setup_tasmota):
     """Test state update via MQTT."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 3
@@ -214,7 +214,7 @@ async def test_controlling_state_via_mqtt_inverted.opp, mqtt_mock, setup_tasmota
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/LWT", "Online")
     state = opp.states.get("cover.tasmota_cover_1")
     assert state.state == STATE_UNKNOWN
     assert (
@@ -357,7 +357,7 @@ async def test_controlling_state_via_mqtt_inverted.opp, mqtt_mock, setup_tasmota
     assert state.attributes["current_position"] == 0
 
 
-async def call_service.opp, entity_id, service, **kwargs):
+async def call_service(opp, entity_id, service, **kwargs):
     """Call a fan service."""
     await opp.services.async_call(
         cover.DOMAIN,
@@ -367,7 +367,7 @@ async def call_service.opp, entity_id, service, **kwargs):
     )
 
 
-async def test_sending_mqtt_commands.opp, mqtt_mock, setup_tasmota):
+async def test_sending_mqtt_commands(opp, mqtt_mock, setup_tasmota):
     """Test the sending MQTT commands."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["dn"] = "Test"
@@ -382,7 +382,7 @@ async def test_sending_mqtt_commands.opp, mqtt_mock, setup_tasmota):
     )
     await opp.async_block_till_done()
 
-    async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/LWT", "Online")
     state = opp.states.get("cover.test_cover_1")
     assert state.state == STATE_UNKNOWN
     await opp.async_block_till_done()
@@ -390,7 +390,7 @@ async def test_sending_mqtt_commands.opp, mqtt_mock, setup_tasmota):
     mqtt_mock.async_publish.reset_mock()
 
     # Close the cover and verify MQTT message is sent
-    await call_service.opp, "cover.test_cover_1", "close_cover")
+    await call_service(opp, "cover.test_cover_1", "close_cover")
     mqtt_mock.async_publish.assert_called_once_with(
         "tasmota_49A3BC/cmnd/ShutterClose1", "", 0, False
     )
@@ -401,35 +401,35 @@ async def test_sending_mqtt_commands.opp, mqtt_mock, setup_tasmota):
     assert state.state == STATE_UNKNOWN
 
     # Open the cover and verify MQTT message is sent
-    await call_service.opp, "cover.test_cover_1", "open_cover")
+    await call_service(opp, "cover.test_cover_1", "open_cover")
     mqtt_mock.async_publish.assert_called_once_with(
         "tasmota_49A3BC/cmnd/ShutterOpen1", "", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
 
     # Stop the cover and verify MQTT message is sent
-    await call_service.opp, "cover.test_cover_1", "stop_cover")
+    await call_service(opp, "cover.test_cover_1", "stop_cover")
     mqtt_mock.async_publish.assert_called_once_with(
         "tasmota_49A3BC/cmnd/ShutterStop1", "", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
 
     # Set position and verify MQTT message is sent
-    await call_service.opp, "cover.test_cover_1", "set_cover_position", position=0)
+    await call_service(opp, "cover.test_cover_1", "set_cover_position", position=0)
     mqtt_mock.async_publish.assert_called_once_with(
         "tasmota_49A3BC/cmnd/ShutterPosition1", "0", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
 
     # Set position and verify MQTT message is sent
-    await call_service.opp, "cover.test_cover_1", "set_cover_position", position=99)
+    await call_service(opp, "cover.test_cover_1", "set_cover_position", position=99)
     mqtt_mock.async_publish.assert_called_once_with(
         "tasmota_49A3BC/cmnd/ShutterPosition1", "99", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
 
 
-async def test_sending_mqtt_commands_inverted.opp, mqtt_mock, setup_tasmota):
+async def test_sending_mqtt_commands_inverted(opp, mqtt_mock, setup_tasmota):
     """Test the sending MQTT commands."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["dn"] = "Test"
@@ -445,7 +445,7 @@ async def test_sending_mqtt_commands_inverted.opp, mqtt_mock, setup_tasmota):
     )
     await opp.async_block_till_done()
 
-    async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/LWT", "Online")
     state = opp.states.get("cover.test_cover_1")
     assert state.state == STATE_UNKNOWN
     await opp.async_block_till_done()
@@ -453,7 +453,7 @@ async def test_sending_mqtt_commands_inverted.opp, mqtt_mock, setup_tasmota):
     mqtt_mock.async_publish.reset_mock()
 
     # Close the cover and verify MQTT message is sent
-    await call_service.opp, "cover.test_cover_1", "close_cover")
+    await call_service(opp, "cover.test_cover_1", "close_cover")
     mqtt_mock.async_publish.assert_called_once_with(
         "tasmota_49A3BC/cmnd/ShutterClose1", "", 0, False
     )
@@ -464,28 +464,28 @@ async def test_sending_mqtt_commands_inverted.opp, mqtt_mock, setup_tasmota):
     assert state.state == STATE_UNKNOWN
 
     # Open the cover and verify MQTT message is sent
-    await call_service.opp, "cover.test_cover_1", "open_cover")
+    await call_service(opp, "cover.test_cover_1", "open_cover")
     mqtt_mock.async_publish.assert_called_once_with(
         "tasmota_49A3BC/cmnd/ShutterOpen1", "", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
 
     # Stop the cover and verify MQTT message is sent
-    await call_service.opp, "cover.test_cover_1", "stop_cover")
+    await call_service(opp, "cover.test_cover_1", "stop_cover")
     mqtt_mock.async_publish.assert_called_once_with(
         "tasmota_49A3BC/cmnd/ShutterStop1", "", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
 
     # Set position and verify MQTT message is sent
-    await call_service.opp, "cover.test_cover_1", "set_cover_position", position=0)
+    await call_service(opp, "cover.test_cover_1", "set_cover_position", position=0)
     mqtt_mock.async_publish.assert_called_once_with(
         "tasmota_49A3BC/cmnd/ShutterPosition1", "100", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
 
     # Set position and verify MQTT message is sent
-    await call_service.opp, "cover.test_cover_1", "set_cover_position", position=99)
+    await call_service(opp, "cover.test_cover_1", "set_cover_position", position=99)
     mqtt_mock.async_publish.assert_called_once_with(
         "tasmota_49A3BC/cmnd/ShutterPosition1", "1", 0, False
     )
@@ -510,7 +510,7 @@ async def test_availability_when_connection_lost(
     )
 
 
-async def test_availability.opp, mqtt_mock, setup_tasmota):
+async def test_availability(opp, mqtt_mock, setup_tasmota):
     """Test availability."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["dn"] = "Test"
@@ -521,7 +521,7 @@ async def test_availability.opp, mqtt_mock, setup_tasmota):
     )
 
 
-async def test_availability_discovery_update.opp, mqtt_mock, setup_tasmota):
+async def test_availability_discovery_update(opp, mqtt_mock, setup_tasmota):
     """Test availability discovery update."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["dn"] = "Test"
@@ -545,7 +545,7 @@ async def test_availability_poll_state(
     )
 
 
-async def test_discovery_removal_cover.opp, mqtt_mock, caplog, setup_tasmota):
+async def test_discovery_removal_cover(opp, mqtt_mock, caplog, setup_tasmota):
     """Test removal of discovered cover."""
     config1 = copy.deepcopy(DEFAULT_CONFIG)
     config1["dn"] = "Test"
@@ -568,7 +568,7 @@ async def test_discovery_removal_cover.opp, mqtt_mock, caplog, setup_tasmota):
     )
 
 
-async def test_discovery_update_unchanged_cover.opp, mqtt_mock, caplog, setup_tasmota):
+async def test_discovery_update_unchanged_cover(opp, mqtt_mock, caplog, setup_tasmota):
     """Test update of discovered cover."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["dn"] = "Test"
@@ -589,7 +589,7 @@ async def test_discovery_update_unchanged_cover.opp, mqtt_mock, caplog, setup_ta
         )
 
 
-async def test_discovery_device_remove.opp, mqtt_mock, setup_tasmota):
+async def test_discovery_device_remove(opp, mqtt_mock, setup_tasmota):
     """Test device registry remove."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["dn"] = "Test"
@@ -601,7 +601,7 @@ async def test_discovery_device_remove.opp, mqtt_mock, setup_tasmota):
     )
 
 
-async def test_entity_id_update_subscriptions.opp, mqtt_mock, setup_tasmota):
+async def test_entity_id_update_subscriptions(opp, mqtt_mock, setup_tasmota):
     """Test MQTT subscriptions are managed when entity_id is updated."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["dn"] = "Test"
@@ -618,7 +618,7 @@ async def test_entity_id_update_subscriptions.opp, mqtt_mock, setup_tasmota):
     )
 
 
-async def test_entity_id_update_discovery_update.opp, mqtt_mock, setup_tasmota):
+async def test_entity_id_update_discovery_update(opp, mqtt_mock, setup_tasmota):
     """Test MQTT discovery update when entity_id is updated."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["dn"] = "Test"

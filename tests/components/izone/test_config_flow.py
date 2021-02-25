@@ -17,17 +17,17 @@ def mock_disco():
     yield disco
 
 
-def _mock_start_discovery.opp, mock_disco):
+def _mock_start_discovery(opp, mock_disco):
     from openpeerpower.helpers.dispatcher import async_dispatcher_send
 
     def do_disovered(*args):
-        async_dispatcher_send.opp, DISPATCH_CONTROLLER_DISCOVERED, True)
+        async_dispatcher_send(opp, DISPATCH_CONTROLLER_DISCOVERED, True)
         return mock_disco
 
     return do_disovered
 
 
-async def test_not_found.opp, mock_disco):
+async def test_not_found(opp, mock_disco):
     """Test not finding iZone controller."""
 
     with patch(
@@ -36,7 +36,7 @@ async def test_not_found.opp, mock_disco):
         "openpeerpower.components.izone.config_flow.async_stop_discovery_service",
         return_value=None,
     ) as stop_disco:
-        start_disco.side_effect = _mock_start_discovery.opp, mock_disco)
+        start_disco.side_effect = _mock_start_discovery(opp, mock_disco)
         result = await opp.config_entries.flow.async_init(
             IZONE, context={"source": config_entries.SOURCE_USER}
         )
@@ -52,7 +52,7 @@ async def test_not_found.opp, mock_disco):
     stop_disco.assert_called_once()
 
 
-async def test_found.opp, mock_disco):
+async def test_found(opp, mock_disco):
     """Test not finding iZone controller."""
     mock_disco.pi_disco.controllers["blah"] = object()
 
@@ -65,7 +65,7 @@ async def test_found.opp, mock_disco):
         "openpeerpower.components.izone.async_start_discovery_service",
         return_value=None,
     ):
-        start_disco.side_effect = _mock_start_discovery.opp, mock_disco)
+        start_disco.side_effect = _mock_start_discovery(opp, mock_disco)
         result = await opp.config_entries.flow.async_init(
             IZONE, context={"source": config_entries.SOURCE_USER}
         )

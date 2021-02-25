@@ -38,7 +38,7 @@ async def test_properties(player, state):
     assert not player.should_poll
 
 
-async def test_powered_off.opp, player, state):
+async def test_powered_off(opp, player, state):
     """Test properties in powered off state."""
     state.get_source.return_value = None
     state.get_power.return_value = None
@@ -119,7 +119,7 @@ async def test_2ch(player, state, fmt, result):
     "source, value",
     [("PVR", SourceCodes.PVR), ("BD", SourceCodes.BD), ("INVALID", None)],
 )
-async def test_select_source.opp, player_setup, state, source, value):
+async def test_select_source(opp, player_setup, state, source, value):
     """Test selection of source."""
     await opp.services.async_call(
         "media_player",

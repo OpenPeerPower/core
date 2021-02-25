@@ -9,9 +9,9 @@ from .const import REGISTER, REGISTER_CLEARTEXT
 
 
 @pytest.fixture
-async def create_registrations.opp, authed_api_client):
+async def create_registrations(opp, authed_api_client):
     """Return two new registrations."""
-    await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
+    await async_setup_component(opp, DOMAIN, {DOMAIN: {}})
 
     enc_reg = await authed_api_client.post(
         "/api/mobile_app/registrations", json=REGISTER
@@ -33,9 +33,9 @@ async def create_registrations.opp, authed_api_client):
 
 
 @pytest.fixture
-async def push_registration.opp, authed_api_client):
+async def push_registration(opp, authed_api_client):
     """Return registration with push notifications enabled."""
-    await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
+    await async_setup_component(opp, DOMAIN, {DOMAIN: {}})
 
     enc_reg = await authed_api_client.post(
         "/api/mobile_app/registrations",
@@ -53,7 +53,7 @@ async def push_registration.opp, authed_api_client):
 
 
 @pytest.fixture
-async def webhook_client.opp, authed_api_client, aiohttp_client):
+async def webhook_client(opp, authed_api_client, aiohttp_client):
     """mobile_app mock client."""
     # We pass in the authed_api_client server instance because
     # it is used inside create_registrations and just passing in
@@ -63,9 +63,9 @@ async def webhook_client.opp, authed_api_client, aiohttp_client):
 
 
 @pytest.fixture
-async def authed_api_client.opp, opp_client):
+async def authed_api_client(opp, opp_client):
     """Provide an authenticated client for mobile_app to use."""
-    await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
+    await async_setup_component(opp, DOMAIN, {DOMAIN: {}})
     await opp.async_block_till_done()
     return await opp_client()
 
@@ -73,5 +73,5 @@ async def authed_api_client.opp, opp_client):
 @pytest.fixture(autouse=True)
 async def setup_ws.opp):
     """Configure the websocket_api component."""
-    assert await async_setup_component.opp, "websocket_api", {})
+    assert await async_setup_component(opp, "websocket_api", {})
     await opp.async_block_till_done()

@@ -13,7 +13,7 @@ VALID_NUMBER1 = "19.0"
 VALID_NUMBER2 = "99.9"
 
 
-async def test_reproducing_states.opp, caplog):
+async def test_reproducing_states(opp, caplog):
     """Test reproducing Number states."""
 
     opp.states.async_set(
@@ -29,10 +29,10 @@ async def test_reproducing_states.opp, caplog):
         ],
     )
 
-    assert.opp.states.get("number.test_number").state == VALID_NUMBER1
+    assert opp.states.get("number.test_number").state == VALID_NUMBER1
 
     # Test reproducing with different state
-    calls = async_mock_service.opp, DOMAIN, SERVICE_SET_VALUE)
+    calls = async_mock_service(opp, DOMAIN, SERVICE_SET_VALUE)
     await opp.helpers.state.async_reproduce_state(
         [
             State("number.test_number", VALID_NUMBER2),

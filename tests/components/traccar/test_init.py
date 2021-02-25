@@ -29,9 +29,9 @@ def mock_dev_track(mock_device_tracker_conf):
 @pytest.fixture(name="client")
 async def traccar_client(loop, opp, aiohttp_client):
     """Mock client for Traccar (unauthenticated)."""
-    assert await async_setup_component.opp, "persistent_notification", {})
+    assert await async_setup_component(opp, "persistent_notification", {})
 
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {}})
 
     await opp.async_block_till_done()
 
@@ -58,7 +58,7 @@ async def setup_zones(loop, opp):
 
 
 @pytest.fixture(name="webhook_id")
-async def webhook_id_fixture.opp, client):
+async def webhook_id_fixture(opp, client):
     """Initialize the Traccar component and get the webhook_id."""
     await async_process_op_core_config(
         opp,
@@ -76,7 +76,7 @@ async def webhook_id_fixture.opp, client):
     return result["result"].data["webhook_id"]
 
 
-async def test_missing_data.opp, client, webhook_id):
+async def test_missing_data(opp, client, webhook_id):
     """Test missing data."""
     url = f"/api/webhook/{webhook_id}"
     data = {"lat": "1.0", "lon": "1.1", "id": "123"}
@@ -101,7 +101,7 @@ async def test_missing_data.opp, client, webhook_id):
     assert req.status == HTTP_UNPROCESSABLE_ENTITY
 
 
-async def test_enter_and_exit.opp, client, webhook_id):
+async def test_enter_and_exit(opp, client, webhook_id):
     """Test when there is a known zone."""
     url = f"/api/webhook/{webhook_id}"
     data = {"lat": str(HOME_LATITUDE), "lon": str(HOME_LONGITUDE), "id": "123"}
@@ -143,7 +143,7 @@ async def test_enter_and_exit.opp, client, webhook_id):
     assert len(ent_reg.entities) == 1
 
 
-async def test_enter_with_attrs.opp, client, webhook_id):
+async def test_enter_with_attrs(opp, client, webhook_id):
     """Test when additional attributes are present."""
     url = f"/api/webhook/{webhook_id}"
     data = {
@@ -192,7 +192,7 @@ async def test_enter_with_attrs.opp, client, webhook_id):
     assert state.attributes["altitude"] == 123
 
 
-async def test_two_devices.opp, client, webhook_id):
+async def test_two_devices(opp, client, webhook_id):
     """Test updating two different devices."""
     url = f"/api/webhook/{webhook_id}"
 
@@ -224,7 +224,7 @@ async def test_two_devices.opp, client, webhook_id):
 @pytest.mark.xfail(
     reason="The device_tracker component does not support unloading yet."
 )
-async def test_load_unload_entry.opp, client, webhook_id):
+async def test_load_unload_entry(opp, client, webhook_id):
     """Test that the appropriate dispatch signals are added and removed."""
     url = f"/api/webhook/{webhook_id}"
     data = {"lat": str(HOME_LATITUDE), "lon": str(HOME_LONGITUDE), "id": "123"}
@@ -241,6 +241,6 @@ async def test_load_unload_entry.opp, client, webhook_id):
 
     entry = opp.config_entries.async_entries(DOMAIN)[0]
 
-    assert await traccar.async_unload_entry.opp, entry)
+    assert await traccar.async_unload_entry(opp, entry)
     await opp.async_block_till_done()
     assert not.opp.data[DATA_DISPATCHER][TRACKER_UPDATE]

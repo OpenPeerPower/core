@@ -10,14 +10,14 @@ from tests.common import MockConfigEntry, mock_restore_cache
 from tests.components.rfxtrx.conftest import create_rfx_test_cfg
 
 
-async def test_one_cover.opp, rfxtrx):
+async def test_one_cover(opp, rfxtrx):
     """Test with 1 cover."""
     entry_data = create_rfx_test_cfg(
         devices={"0b1400cd0213c7f20d010f51": {"signal_repetitions": 1}}
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -54,27 +54,27 @@ async def test_one_cover.opp, rfxtrx):
 
 
 @pytest.mark.parametrize("state", ["open", "closed"])
-async def test_state_restore.opp, rfxtrx, state):
+async def test_state_restore(opp, rfxtrx, state):
     """State restoration."""
 
     entity_id = "cover.lightwaverf_siemens_0213c7_242"
 
-    mock_restore_cache.opp, [State(entity_id, state)])
+    mock_restore_cache(opp, [State(entity_id, state)])
 
     entry_data = create_rfx_test_cfg(
         devices={"0b1400cd0213c7f20d010f51": {"signal_repetitions": 1}}
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
 
-    assert.opp.states.get(entity_id).state == state
+    assert opp.states.get(entity_id).state == state
 
 
-async def test_several_covers.opp, rfxtrx):
+async def test_several_covers(opp, rfxtrx):
     """Test with 3 covers."""
     entry_data = create_rfx_test_cfg(
         devices={
@@ -85,7 +85,7 @@ async def test_several_covers.opp, rfxtrx):
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -106,7 +106,7 @@ async def test_several_covers.opp, rfxtrx):
     assert state.attributes.get("friendly_name") == "RollerTrol 009ba8:1"
 
 
-async def test_discover_covers.opp, rfxtrx_automatic):
+async def test_discover_covers(opp, rfxtrx_automatic):
     """Test with discovery of covers."""
     rfxtrx = rfxtrx_automatic
 
@@ -121,7 +121,7 @@ async def test_discover_covers.opp, rfxtrx_automatic):
     assert state.state == "open"
 
 
-async def test_duplicate_cover.opp, rfxtrx):
+async def test_duplicate_cover(opp, rfxtrx):
     """Test with 2 duplicate covers."""
     entry_data = create_rfx_test_cfg(
         devices={
@@ -131,7 +131,7 @@ async def test_duplicate_cover.opp, rfxtrx):
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -142,7 +142,7 @@ async def test_duplicate_cover.opp, rfxtrx):
     assert state.attributes.get("friendly_name") == "LightwaveRF, Siemens 0213c7:242"
 
 
-async def test_rfy_cover.opp, rfxtrx):
+async def test_rfy_cover(opp, rfxtrx):
     """Test Rfy venetian blind covers."""
     entry_data = create_rfx_test_cfg(
         devices={
@@ -156,7 +156,7 @@ async def test_rfy_cover.opp, rfxtrx):
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()

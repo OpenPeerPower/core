@@ -38,21 +38,21 @@ async def test_generate_media_source_id():
 
 async def test_async_browse_media.opp):
     """Test browse media."""
-    assert await async_setup_component.opp, const.DOMAIN, {})
+    assert await async_setup_component(opp, const.DOMAIN, {})
     await opp.async_block_till_done()
 
     # Test non-media ignored (/media has test.mp3 and not_media.txt)
-    media = await media_source.async_browse_media.opp, "")
+    media = await media_source.async_browse_media(opp, "")
     assert isinstance(media, media_source.models.BrowseMediaSource)
     assert media.title == "media/"
     assert len(media.children) == 1
 
     # Test invalid media content
     with pytest.raises(ValueError):
-        await media_source.async_browse_media.opp, "invalid")
+        await media_source.async_browse_media(opp, "invalid")
 
     # Test base URI returns all domains
-    media = await media_source.async_browse_media.opp, const.URI_SCHEME)
+    media = await media_source.async_browse_media(opp, const.URI_SCHEME)
     assert isinstance(media, media_source.models.BrowseMediaSource)
     assert len(media.children) == 1
     assert media.children[0].title == "Local Media"
@@ -60,7 +60,7 @@ async def test_async_browse_media.opp):
 
 async def test_async_resolve_media.opp):
     """Test browse media."""
-    assert await async_setup_component.opp, const.DOMAIN, {})
+    assert await async_setup_component(opp, const.DOMAIN, {})
     await opp.async_block_till_done()
 
     media = await media_source.async_resolve_media(
@@ -72,17 +72,17 @@ async def test_async_resolve_media.opp):
 
 async def test_async_unresolve_media.opp):
     """Test browse media."""
-    assert await async_setup_component.opp, const.DOMAIN, {})
+    assert await async_setup_component(opp, const.DOMAIN, {})
     await opp.async_block_till_done()
 
     # Test no media content
     with pytest.raises(Unresolvable):
-        await media_source.async_resolve_media.opp, "")
+        await media_source.async_resolve_media(opp, "")
 
 
-async def test_websocket_browse_media.opp, opp_ws_client):
+async def test_websocket_browse_media(opp, opp_ws_client):
     """Test browse media websocket."""
-    assert await async_setup_component.opp, const.DOMAIN, {})
+    assert await async_setup_component(opp, const.DOMAIN, {})
     await opp.async_block_till_done()
 
     client = await opp_ws_client.opp)
@@ -133,9 +133,9 @@ async def test_websocket_browse_media.opp, opp_ws_client):
     assert msg["error"]["message"] == "test"
 
 
-async def test_websocket_resolve_media.opp, opp_ws_client):
+async def test_websocket_resolve_media(opp, opp_ws_client):
     """Test browse media websocket."""
-    assert await async_setup_component.opp, const.DOMAIN, {})
+    assert await async_setup_component(opp, const.DOMAIN, {})
     await opp.async_block_till_done()
 
     client = await opp_ws_client.opp)

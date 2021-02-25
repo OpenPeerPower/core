@@ -12,12 +12,12 @@ from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 @pytest.fixture(autouse=True)
 async def setup_http.opp):
     """Set up http."""
-    assert await async_setup_component.opp, "http", {})
-    assert await async_setup_component.opp, "webhook", {})
+    assert await async_setup_component(opp, "http", {})
+    assert await async_setup_component(opp, "webhook", {})
     await opp.async_block_till_done()
 
 
-async def test_webhook_json.opp, aiohttp_client):
+async def test_webhook_json(opp, aiohttp_client):
     """Test triggering with a JSON webhook."""
     events = []
 
@@ -52,7 +52,7 @@ async def test_webhook_json.opp, aiohttp_client):
     assert events[0].data["hello"] == "yo world"
 
 
-async def test_webhook_post.opp, aiohttp_client):
+async def test_webhook_post(opp, aiohttp_client):
     """Test triggering with a POST webhook."""
     events = []
 
@@ -87,7 +87,7 @@ async def test_webhook_post.opp, aiohttp_client):
     assert events[0].data["hello"] == "yo world"
 
 
-async def test_webhook_query.opp, aiohttp_client):
+async def test_webhook_query(opp, aiohttp_client):
     """Test triggering with a query POST webhook."""
     events = []
 
@@ -122,7 +122,7 @@ async def test_webhook_query.opp, aiohttp_client):
     assert events[0].data["hello"] == "yo world"
 
 
-async def test_webhook_reload.opp, aiohttp_client):
+async def test_webhook_reload(opp, aiohttp_client):
     """Test reloading a webhook."""
     events = []
 

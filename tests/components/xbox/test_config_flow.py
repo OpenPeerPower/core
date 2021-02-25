@@ -13,7 +13,7 @@ CLIENT_SECRET = "5678"
 
 async def test_abort_if_existing_entry.opp):
     """Check flow abort when an entry already exist."""
-    MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
+    MockConfigEntry(domain=DOMAIN).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         "xbox", context={"source": config_entries.SOURCE_USER}

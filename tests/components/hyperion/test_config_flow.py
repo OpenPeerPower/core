@@ -608,7 +608,7 @@ async def test_options(opp: OpenPeerPowerType) -> None:
     ):
         await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
-        assert.opp.states.get(TEST_ENTITY_ID_1) is not None
+        assert opp.states.get(TEST_ENTITY_ID_1) is not None
 
         result = await opp.config_entries.options.async_init(config_entry.entry_id)
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM

@@ -20,7 +20,7 @@ async def test_default_config(opp, rfxtrx):
     entry_data = create_rfx_test_cfg(devices={})
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -28,12 +28,12 @@ async def test_default_config(opp, rfxtrx):
     assert len.opp.states.async_all()) == 0
 
 
-async def test_one_sensor.opp, rfxtrx):
+async def test_one_sensor(opp, rfxtrx):
     """Test with 1 sensor."""
     entry_data = create_rfx_test_cfg(devices={"0a52080705020095220269": {}})
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -52,30 +52,30 @@ async def test_one_sensor.opp, rfxtrx):
     "state,event",
     [["18.4", "0a520801070100b81b0279"], ["17.9", "0a52085e070100b31b0279"]],
 )
-async def test_state_restore.opp, rfxtrx, state, event):
+async def test_state_restore(opp, rfxtrx, state, event):
     """State restoration."""
 
     entity_id = "sensor.wt260_wt260h_wt440h_wt450_wt450h_07_01_temperature"
 
-    mock_restore_cache.opp, [State(entity_id, state, attributes={ATTR_EVENT: event})])
+    mock_restore_cache(opp, [State(entity_id, state, attributes={ATTR_EVENT: event})])
 
     entry_data = create_rfx_test_cfg(devices={"0a520801070100b81b0279": {}})
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
 
-    assert.opp.states.get(entity_id).state == state
+    assert opp.states.get(entity_id).state == state
 
 
-async def test_one_sensor_no_datatype.opp, rfxtrx):
+async def test_one_sensor_no_datatype(opp, rfxtrx):
     """Test with 1 sensor."""
     entry_data = create_rfx_test_cfg(devices={"0a52080705020095220269": {}})
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -117,7 +117,7 @@ async def test_one_sensor_no_datatype.opp, rfxtrx):
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == PERCENTAGE
 
 
-async def test_several_sensors.opp, rfxtrx):
+async def test_several_sensors(opp, rfxtrx):
     """Test with 3 sensors."""
     entry_data = create_rfx_test_cfg(
         devices={
@@ -127,7 +127,7 @@ async def test_several_sensors.opp, rfxtrx):
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -161,7 +161,7 @@ async def test_several_sensors.opp, rfxtrx):
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == PERCENTAGE
 
 
-async def test_discover_sensor.opp, rfxtrx_automatic):
+async def test_discover_sensor(opp, rfxtrx_automatic):
     """Test with discovery of sensor."""
     rfxtrx = rfxtrx_automatic
 
@@ -264,7 +264,7 @@ async def test_discover_sensor.opp, rfxtrx_automatic):
     assert len.opp.states.async_all()) == 10
 
 
-async def test_update_of_sensors.opp, rfxtrx):
+async def test_update_of_sensors(opp, rfxtrx):
     """Test with 3 sensors."""
     entry_data = create_rfx_test_cfg(
         devices={
@@ -274,7 +274,7 @@ async def test_update_of_sensors.opp, rfxtrx):
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -308,7 +308,7 @@ async def test_update_of_sensors.opp, rfxtrx):
     assert state.state == "15"
 
 
-async def test_rssi_sensor.opp, rfxtrx):
+async def test_rssi_sensor(opp, rfxtrx):
     """Test with 1 sensor."""
     entry_data = create_rfx_test_cfg(
         devices={
@@ -322,7 +322,7 @@ async def test_rssi_sensor.opp, rfxtrx):
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()

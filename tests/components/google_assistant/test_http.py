@@ -43,7 +43,7 @@ async def test_get_jwt.opp):
     assert res == jwt
 
 
-async def test_get_access_token.opp, aioclient_mock):
+async def test_get_access_token(opp, aioclient_mock):
     """Test the function to get access token."""
     jwt = "dummyjwt"
 
@@ -53,7 +53,7 @@ async def test_get_access_token.opp, aioclient_mock):
         json={"access_token": "1234", "expires_in": 3600},
     )
 
-    await _get_homegraph_token.opp, jwt)
+    await _get_homegraph_token(opp, jwt)
     assert aioclient_mock.call_count == 1
     assert aioclient_mock.mock_calls[0][3] == {
         "Authorization": f"Bearer {jwt}",
@@ -96,7 +96,7 @@ async def test_update_access_token.opp):
         mock_get_token.assert_called_once()
 
 
-async def test_call_homegraph_api.opp, aioclient_mock, opp_storage):
+async def test_call_homegraph_api(opp, aioclient_mock, opp_storage):
     """Test the function to call the homegraph api."""
     config = Googleconfig(opp, DUMMY_CONFIG)
     await config.async_initialize()
@@ -119,7 +119,7 @@ async def test_call_homegraph_api.opp, aioclient_mock, opp_storage):
         assert call[3] == MOCK_HEADER
 
 
-async def test_call_homegraph_api_retry.opp, aioclient_mock, opp_storage):
+async def test_call_homegraph_api_retry(opp, aioclient_mock, opp_storage):
     """Test the that the calls get retried with new token on 401."""
     config = Googleconfig(opp, DUMMY_CONFIG)
     await config.async_initialize()
@@ -144,7 +144,7 @@ async def test_call_homegraph_api_retry.opp, aioclient_mock, opp_storage):
         assert call[3] == MOCK_HEADER
 
 
-async def test_report_state.opp, aioclient_mock, opp_storage):
+async def test_report_state(opp, aioclient_mock, opp_storage):
     """Test the report state function."""
     agent_user_id = "user"
     config = Googleconfig(opp, DUMMY_CONFIG)

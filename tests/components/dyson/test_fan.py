@@ -104,7 +104,7 @@ async def test_state_purecoollink(
     assert attributes[ATTR_SUPPORTED_FEATURES] == SUPPORT_OSCILLATE | SUPPORT_SET_SPEED
 
     device.state.fan_mode = FanMode.OFF.value
-    await async_update_device.opp, device, DysonPureCoolState)
+    await async_update_device(opp, device, DysonPureCoolState)
     state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_OFF
 
@@ -112,7 +112,7 @@ async def test_state_purecoollink(
     device.state.speed = FanSpeed.FAN_SPEED_AUTO.value
     device.state.night_mode = "OFF"
     device.state.oscillation = "OFF"
-    await async_update_device.opp, device, DysonPureCoolState)
+    await async_update_device(opp, device, DysonPureCoolState)
     state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
     attributes = state.attributes
@@ -165,7 +165,7 @@ async def test_state_purecool.opp: OpenPeerPower, device: DysonPureCool) -> None
     device.state.front_direction = "OFF"
     device.state.sleep_timer = "0120"
     device.state.carbon_filter_state = "INV"
-    await async_update_device.opp, device, DysonPureCoolV2State)
+    await async_update_device(opp, device, DysonPureCoolV2State)
     state = opp.states.get(ENTITY_ID)
     attributes = state.attributes
     assert attributes[ATTR_NIGHT_MODE] is False
@@ -180,7 +180,7 @@ async def test_state_purecool.opp: OpenPeerPower, device: DysonPureCool) -> None
     assert attributes[ATTR_CARBON_FILTER] == "INV"
 
     device.state.fan_power = "OFF"
-    await async_update_device.opp, device, DysonPureCoolV2State)
+    await async_update_device(opp, device, DysonPureCoolV2State)
     state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_OFF
 

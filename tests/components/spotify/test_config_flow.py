@@ -31,7 +31,7 @@ async def test_abort_if_no_configuration.opp):
 
 async def test_zeroconf_abort_if_existing_entry.opp):
     """Check zeroconf flow aborts when an entry already exist."""
-    MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
+    MockConfigEntry(domain=DOMAIN).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}
@@ -178,7 +178,7 @@ async def test_reauthentication(
         version=1,
         data={"id": "frenck", "auth_implementation": DOMAIN},
     )
-    old_entry.add_to.opp.opp)
+    old_entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "reauth"}, data=old_entry.data
@@ -243,7 +243,7 @@ async def test_reauth_account_mismatch(
         version=1,
         data={"id": "frenck", "auth_implementation": DOMAIN},
     )
-    old_entry.add_to.opp.opp)
+    old_entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "reauth"}, data=old_entry.data

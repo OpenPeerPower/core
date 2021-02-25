@@ -8,10 +8,10 @@ from tests.common import load_fixture
 VALID_CONFIG = {"sensor": {"platform": "london_air", CONF_LOCATIONS: ["Merton"]}}
 
 
-async def test_valid_state.opp, requests_mock):
+async def test_valid_state(opp, requests_mock):
     """Test for operational london_air sensor with proper attributes."""
     requests_mock.get(URL, text=load_fixture("london_air.json"), status_code=HTTP_OK)
-    assert await async_setup_component.opp, "sensor", VALID_CONFIG)
+    assert await async_setup_component(opp, "sensor", VALID_CONFIG)
     await opp.async_block_till_done()
 
     state = opp.states.get("sensor.merton")
@@ -39,10 +39,10 @@ async def test_valid_state.opp, requests_mock):
     assert pollutants[0]["summary"] == "PM10 is Low"
 
 
-async def test_api_failure.opp, requests_mock):
+async def test_api_failure(opp, requests_mock):
     """Test for failure in the API."""
     requests_mock.get(URL, status_code=HTTP_SERVICE_UNAVAILABLE)
-    assert await async_setup_component.opp, "sensor", VALID_CONFIG)
+    assert await async_setup_component(opp, "sensor", VALID_CONFIG)
     await opp.async_block_till_done()
 
     state = opp.states.get("sensor.merton")

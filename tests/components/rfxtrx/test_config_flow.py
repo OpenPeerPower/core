@@ -293,7 +293,7 @@ async def test_setup_serial_manual_fail(com_mock, opp):
 )
 async def test_import_serial(connect_mock, opp):
     """Test we can import."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch("openpeerpower.components.rfxtrx.async_setup_entry", return_value=True):
         result = await opp.config_entries.flow.async_init(
@@ -318,7 +318,7 @@ async def test_import_serial(connect_mock, opp):
 )
 async def test_import_network(connect_mock, opp):
     """Test we can import."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch("openpeerpower.components.rfxtrx.async_setup_entry", return_value=True):
         result = await opp.config_entries.flow.async_init(
@@ -343,7 +343,7 @@ async def test_import_network(connect_mock, opp):
 )
 async def test_import_network_connection_fail(connect_mock, opp):
     """Test we can import."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch("openpeerpower.components.rfxtrx.async_setup_entry", return_value=True):
         result = await opp.config_entries.flow.async_init(
@@ -358,7 +358,7 @@ async def test_import_network_connection_fail(connect_mock, opp):
 
 async def test_import_update.opp):
     """Test we can import."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -371,7 +371,7 @@ async def test_import_update.opp):
         },
         unique_id=DOMAIN,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -391,14 +391,14 @@ async def test_import_update.opp):
 
 async def test_import_migrate.opp):
     """Test we can import."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(
         domain=DOMAIN,
         data={"host": None, "port": None, "device": "/dev/tty123", "debug": False},
         unique_id=DOMAIN,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch("openpeerpower.components.rfxtrx.async_setup_entry", return_value=True):
         result = await opp.config_entries.flow.async_init(
@@ -422,7 +422,7 @@ async def test_import_migrate.opp):
 
 async def test_options_global.opp):
     """Test if we can set global options."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -435,7 +435,7 @@ async def test_options_global.opp):
         },
         unique_id=DOMAIN,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 
@@ -455,7 +455,7 @@ async def test_options_global.opp):
 
 async def test_options_add_device.opp):
     """Test we can add a device."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -468,7 +468,7 @@ async def test_options_add_device.opp):
         },
         unique_id=DOMAIN,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 
@@ -521,7 +521,7 @@ async def test_options_add_device.opp):
 
 async def test_options_add_duplicate_device.opp):
     """Test we can add a device."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -535,7 +535,7 @@ async def test_options_add_duplicate_device.opp):
         },
         unique_id=DOMAIN,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 
@@ -558,7 +558,7 @@ async def test_options_add_duplicate_device.opp):
 
 async def test_options_add_remove_device.opp):
     """Test we can add a device."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -571,7 +571,7 @@ async def test_options_add_remove_device.opp):
         },
         unique_id=DOMAIN,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 
@@ -642,7 +642,7 @@ async def test_options_add_remove_device.opp):
 
 async def test_options_replace_sensor_device.opp):
     """Test we can replace a sensor device."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -658,7 +658,7 @@ async def test_options_replace_sensor_device.opp):
         },
         unique_id=DOMAIN,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
@@ -803,7 +803,7 @@ async def test_options_replace_sensor_device.opp):
 
 async def test_options_replace_control_device.opp):
     """Test we can replace a control device."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -825,7 +825,7 @@ async def test_options_replace_control_device.opp):
         },
         unique_id=DOMAIN,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
@@ -912,7 +912,7 @@ async def test_options_replace_control_device.opp):
 
 async def test_options_remove_multiple_devices.opp):
     """Test we can add a device."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -929,7 +929,7 @@ async def test_options_remove_multiple_devices.opp):
         },
         unique_id=DOMAIN,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
@@ -983,7 +983,7 @@ async def test_options_remove_multiple_devices.opp):
 
 async def test_options_add_and_configure_device.opp):
     """Test we can add a device."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -996,7 +996,7 @@ async def test_options_add_and_configure_device.opp):
         },
         unique_id=DOMAIN,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 
@@ -1105,7 +1105,7 @@ async def test_options_add_and_configure_device.opp):
 
 async def test_options_configure_rfy_cover_device.opp):
     """Test we can configure the venetion blind mode of an Rfy cover."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -1118,7 +1118,7 @@ async def test_options_configure_rfy_cover_device.opp):
         },
         unique_id=DOMAIN,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()

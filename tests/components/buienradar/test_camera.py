@@ -142,7 +142,7 @@ async def test_failure_response_not_cached(aioclient_mock, opp, opp_client):
     aioclient_mock.get(radar_map_url(), text="hello world", status=401)
 
     await async_setup_component(
-        opp. "camera", {"camera": {"name": "config_test", "platform": "buienradar"}}
+        opp, "camera", {"camera": {"name": "config_test", "platform": "buienradar"}}
     )
     await opp.async_block_till_done()
 

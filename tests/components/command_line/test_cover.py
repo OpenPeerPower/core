@@ -108,7 +108,7 @@ async def test_reload.opp):
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
-    assert.opp.states.get("cover.test").state
+    assert opp.states.get("cover.test").state
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -126,8 +126,8 @@ async def test_reload.opp):
 
     assert len.opp.states.async_all()) == 1
 
-    assert.opp.states.get("cover.test") is None
-    assert.opp.states.get("cover.from_yaml")
+    assert opp.states.get("cover.test") is None
+    assert opp.states.get("cover.from_yaml")
 
 
 def _get_fixtures_base_path():

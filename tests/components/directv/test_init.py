@@ -17,7 +17,7 @@ async def test_config_entry_not_ready(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the DirecTV configuration entry not ready."""
-    entry = await setup_integration.opp, aioclient_mock, setup_error=True)
+    entry = await setup_integration(opp, aioclient_mock, setup_error=True)
 
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
@@ -26,7 +26,7 @@ async def test_unload_config_entry(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the DirecTV configuration entry unloading."""
-    entry = await setup_integration.opp, aioclient_mock)
+    entry = await setup_integration(opp, aioclient_mock)
 
     assert entry.entry_id in.opp.data[DOMAIN]
     assert entry.state == ENTRY_STATE_LOADED

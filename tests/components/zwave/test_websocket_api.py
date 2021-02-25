@@ -13,7 +13,7 @@ from openpeerpower.components.zwave.websocket_api import ID, TYPE
 NETWORK_KEY = "0xTE, 0xST, 0xTE, 0xST, 0xTE, 0xST, 0xTE, 0xST, 0xTE, 0xST, 0xTE, 0xST, 0xTE, 0xST, 0xTE, 0xST"
 
 
-async def test_zwave_ws_api.opp, mock_openzwave, opp_ws_client):
+async def test_zwave_ws_api(opp, mock_openzwave, opp_ws_client):
     """Test Z-Wave websocket API."""
 
     await async_setup_component(
@@ -43,7 +43,7 @@ async def test_zwave_ws_api.opp, mock_openzwave, opp_ws_client):
     assert result[CONF_POLLING_INTERVAL] == 6000
 
 
-async def test_zwave_ozw_migration_api.opp, mock_openzwave, opp_ws_client):
+async def test_zwave_ozw_migration_api(opp, mock_openzwave, opp_ws_client):
     """Test Z-Wave to OpenZWave websocket migration API."""
 
     await async_setup_component(

@@ -7,7 +7,7 @@ from openpeerpower.components.alexa import state_report
 from . import DEFAULT_CONFIG, TEST_URL
 
 
-async def test_report_state.opp, aioclient_mock):
+async def test_report_state(opp, aioclient_mock):
     """Test proactive state reports."""
     aioclient_mock.post(TEST_URL, text="", status=202)
 
@@ -17,7 +17,7 @@ async def test_report_state.opp, aioclient_mock):
         {"friendly_name": "Test Contact Sensor", "device_class": "door"},
     )
 
-    await state_report.async_enable_proactive_mode.opp, DEFAULT_CONFIG)
+    await state_report.async_enable_proactive_mode(opp, DEFAULT_CONFIG)
 
     opp.states.async_set(
         "binary_sensor.test_contact",
@@ -41,7 +41,7 @@ async def test_report_state.opp, aioclient_mock):
     assert call_json["event"]["endpoint"]["endpointId"] == "binary_sensor#test_contact"
 
 
-async def test_report_state_instance.opp, aioclient_mock):
+async def test_report_state_instance(opp, aioclient_mock):
     """Test proactive state reports with instance."""
     aioclient_mock.post(TEST_URL, text="", status=202)
 
@@ -57,7 +57,7 @@ async def test_report_state_instance.opp, aioclient_mock):
         },
     )
 
-    await state_report.async_enable_proactive_mode.opp, DEFAULT_CONFIG)
+    await state_report.async_enable_proactive_mode(opp, DEFAULT_CONFIG)
 
     opp.states.async_set(
         "fan.test_fan",
@@ -91,7 +91,7 @@ async def test_report_state_instance.opp, aioclient_mock):
     assert call_json["event"]["endpoint"]["endpointId"] == "fan#test_fan"
 
 
-async def test_send_add_or_update_message.opp, aioclient_mock):
+async def test_send_add_or_update_message(opp, aioclient_mock):
     """Test sending an AddOrUpdateReport message."""
     aioclient_mock.post(TEST_URL, text="")
 
@@ -118,7 +118,7 @@ async def test_send_add_or_update_message.opp, aioclient_mock):
     )
 
 
-async def test_send_delete_message.opp, aioclient_mock):
+async def test_send_delete_message(opp, aioclient_mock):
     """Test sending an AddOrUpdateReport message."""
     aioclient_mock.post(TEST_URL, json={"data": "is irrelevant"})
 
@@ -145,7 +145,7 @@ async def test_send_delete_message.opp, aioclient_mock):
     )
 
 
-async def test_doorbell_event.opp, aioclient_mock):
+async def test_doorbell_event(opp, aioclient_mock):
     """Test doorbell press reports."""
     aioclient_mock.post(TEST_URL, text="", status=202)
 
@@ -155,7 +155,7 @@ async def test_doorbell_event.opp, aioclient_mock):
         {"friendly_name": "Test Doorbell Sensor", "device_class": "occupancy"},
     )
 
-    await state_report.async_enable_proactive_mode.opp, DEFAULT_CONFIG)
+    await state_report.async_enable_proactive_mode(opp, DEFAULT_CONFIG)
 
     opp.states.async_set(
         "binary_sensor.test_doorbell",
@@ -176,10 +176,10 @@ async def test_doorbell_event.opp, aioclient_mock):
     assert call_json["event"]["endpoint"]["endpointId"] == "binary_sensor#test_doorbell"
 
 
-async def test_proactive_mode_filter_states.opp, aioclient_mock):
+async def test_proactive_mode_filter_states(opp, aioclient_mock):
     """Test all the cases that filter states."""
     aioclient_mock.post(TEST_URL, text="", status=202)
-    await state_report.async_enable_proactive_mode.opp, DEFAULT_CONFIG)
+    await state_report.async_enable_proactive_mode(opp, DEFAULT_CONFIG)
 
     # First state should report
     opp.states.async_set(

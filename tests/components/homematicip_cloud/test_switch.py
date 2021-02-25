@@ -22,7 +22,7 @@ async def test_manually_configured_platform.opp):
     assert not.opp.data.get(HMIPC_DOMAIN)
 
 
-async def test_hmip_switch.opp, default_mock_hap_factory):
+async def test_hmip_switch(opp, default_mock_hap_factory):
     """Test HomematicipSwitch."""
     entity_id = "switch.schrank"
     entity_name = "Schrank"
@@ -44,7 +44,7 @@ async def test_hmip_switch.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 1
     assert hmip_device.mock_calls[-1][0] == "turn_off"
     assert hmip_device.mock_calls[-1][1] == (1,)
-    await async_manipulate_test_data.opp, hmip_device, "on", False)
+    await async_manipulate_test_data(opp, hmip_device, "on", False)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OFF
 
@@ -54,12 +54,12 @@ async def test_hmip_switch.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 3
     assert hmip_device.mock_calls[-1][0] == "turn_on"
     assert hmip_device.mock_calls[-1][1] == (1,)
-    await async_manipulate_test_data.opp, hmip_device, "on", True)
+    await async_manipulate_test_data(opp, hmip_device, "on", True)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_ON
 
 
-async def test_hmip_switch_input.opp, default_mock_hap_factory):
+async def test_hmip_switch_input(opp, default_mock_hap_factory):
     """Test HomematicipSwitch."""
     entity_id = "switch.wohnzimmer_beleuchtung"
     entity_name = "Wohnzimmer Beleuchtung"
@@ -81,7 +81,7 @@ async def test_hmip_switch_input.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 1
     assert hmip_device.mock_calls[-1][0] == "turn_off"
     assert hmip_device.mock_calls[-1][1] == (1,)
-    await async_manipulate_test_data.opp, hmip_device, "on", False)
+    await async_manipulate_test_data(opp, hmip_device, "on", False)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OFF
 
@@ -91,12 +91,12 @@ async def test_hmip_switch_input.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 3
     assert hmip_device.mock_calls[-1][0] == "turn_on"
     assert hmip_device.mock_calls[-1][1] == (1,)
-    await async_manipulate_test_data.opp, hmip_device, "on", True)
+    await async_manipulate_test_data(opp, hmip_device, "on", True)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_ON
 
 
-async def test_hmip_switch_measuring.opp, default_mock_hap_factory):
+async def test_hmip_switch_measuring(opp, default_mock_hap_factory):
     """Test HomematicipSwitchMeasuring."""
     entity_id = "switch.pc"
     entity_name = "Pc"
@@ -118,7 +118,7 @@ async def test_hmip_switch_measuring.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 1
     assert hmip_device.mock_calls[-1][0] == "turn_off"
     assert hmip_device.mock_calls[-1][1] == (1,)
-    await async_manipulate_test_data.opp, hmip_device, "on", False)
+    await async_manipulate_test_data(opp, hmip_device, "on", False)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OFF
 
@@ -128,19 +128,19 @@ async def test_hmip_switch_measuring.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 3
     assert hmip_device.mock_calls[-1][0] == "turn_on"
     assert hmip_device.mock_calls[-1][1] == (1,)
-    await async_manipulate_test_data.opp, hmip_device, "on", True)
-    await async_manipulate_test_data.opp, hmip_device, "currentPowerConsumption", 50)
+    await async_manipulate_test_data(opp, hmip_device, "on", True)
+    await async_manipulate_test_data(opp, hmip_device, "currentPowerConsumption", 50)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_ON
     assert op_state.attributes[ATTR_CURRENT_POWER_W] == 50
     assert op_state.attributes[ATTR_TODAY_ENERGY_KWH] == 36
 
-    await async_manipulate_test_data.opp, hmip_device, "energyCounter", None)
+    await async_manipulate_test_data(opp, hmip_device, "energyCounter", None)
     op_state = opp.states.get(entity_id)
     assert not op_state.attributes.get(ATTR_TODAY_ENERGY_KWH)
 
 
-async def test_hmip_group_switch.opp, default_mock_hap_factory):
+async def test_hmip_group_switch(opp, default_mock_hap_factory):
     """Test HomematicipGroupSwitch."""
     entity_id = "switch.strom_group"
     entity_name = "Strom Group"
@@ -160,7 +160,7 @@ async def test_hmip_group_switch.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 1
     assert hmip_device.mock_calls[-1][0] == "turn_off"
     assert hmip_device.mock_calls[-1][1] == ()
-    await async_manipulate_test_data.opp, hmip_device, "on", False)
+    await async_manipulate_test_data(opp, hmip_device, "on", False)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OFF
 
@@ -170,17 +170,17 @@ async def test_hmip_group_switch.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 3
     assert hmip_device.mock_calls[-1][0] == "turn_on"
     assert hmip_device.mock_calls[-1][1] == ()
-    await async_manipulate_test_data.opp, hmip_device, "on", True)
+    await async_manipulate_test_data(opp, hmip_device, "on", True)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_ON
 
     assert not op_state.attributes.get(ATTR_GROUP_MEMBER_UNREACHABLE)
-    await async_manipulate_test_data.opp, hmip_device, "unreach", True)
+    await async_manipulate_test_data(opp, hmip_device, "unreach", True)
     op_state = opp.states.get(entity_id)
     assert op_state.attributes[ATTR_GROUP_MEMBER_UNREACHABLE]
 
 
-async def test_hmip_multi_switch.opp, default_mock_hap_factory):
+async def test_hmip_multi_switch(opp, default_mock_hap_factory):
     """Test HomematicipMultiSwitch."""
     entity_id = "switch.jalousien_1_kizi_2_schlazi_channel1"
     entity_name = "Jalousien - 1 KiZi, 2 SchlaZi Channel1"
@@ -208,7 +208,7 @@ async def test_hmip_multi_switch.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 1
     assert hmip_device.mock_calls[-1][0] == "turn_on"
     assert hmip_device.mock_calls[-1][1] == (1,)
-    await async_manipulate_test_data.opp, hmip_device, "on", True)
+    await async_manipulate_test_data(opp, hmip_device, "on", True)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_ON
 
@@ -218,7 +218,7 @@ async def test_hmip_multi_switch.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 3
     assert hmip_device.mock_calls[-1][0] == "turn_off"
     assert hmip_device.mock_calls[-1][1] == (1,)
-    await async_manipulate_test_data.opp, hmip_device, "on", False)
+    await async_manipulate_test_data(opp, hmip_device, "on", False)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OFF
 
@@ -233,7 +233,7 @@ async def test_hmip_multi_switch.opp, default_mock_hap_factory):
     assert op_state.state == STATE_OFF
 
 
-async def test_hmip_wired_multi_switch.opp, default_mock_hap_factory):
+async def test_hmip_wired_multi_switch(opp, default_mock_hap_factory):
     """Test HomematicipMultiSwitch."""
     entity_id = "switch.fernseher_wohnzimmer"
     entity_name = "Fernseher (Wohnzimmer)"
@@ -257,7 +257,7 @@ async def test_hmip_wired_multi_switch.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 1
     assert hmip_device.mock_calls[-1][0] == "turn_off"
     assert hmip_device.mock_calls[-1][1] == (1,)
-    await async_manipulate_test_data.opp, hmip_device, "on", False)
+    await async_manipulate_test_data(opp, hmip_device, "on", False)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OFF
 
@@ -267,6 +267,6 @@ async def test_hmip_wired_multi_switch.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 3
     assert hmip_device.mock_calls[-1][0] == "turn_on"
     assert hmip_device.mock_calls[-1][1] == (1,)
-    await async_manipulate_test_data.opp, hmip_device, "on", True)
+    await async_manipulate_test_data(opp, hmip_device, "on", True)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_ON

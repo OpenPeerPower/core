@@ -29,7 +29,7 @@ async def owner_access_token(opp, opp_owner_user):
 
 
 @pytest.fixture
-async def.opp_admin_credential.opp, auth_provider):
+async def.opp_admin_credential(opp, auth_provider):
     """Overload credentials to admin user."""
     await opp.async_add_executor_job(
         auth_provider.data.add_auth, "test-user", "test-pass"
@@ -42,7 +42,7 @@ async def.opp_admin_credential.opp, auth_provider):
 
 async def test_create_auth_system_generated_user(opp, opp_ws_client):
     """Test we can't add auth to system generated users."""
-    system_user = MockUser(system_generated=True).add_to.opp.opp)
+    system_user = MockUser(system_generated=True).add_to_opp(opp)
     client = await opp_ws_client(opp)
 
     await client.send_json(
@@ -90,7 +90,7 @@ async def test_create_auth_requires_admin(
     opp. opp_ws_client, opp_read_only_access_token
 ):
     """Test create requires admin to call API."""
-    client = await opp_ws_client.opp, opp_read_only_access_token)
+    client = await opp_ws_client(opp, opp_read_only_access_token)
 
     await client.send_json(
         {
@@ -110,7 +110,7 @@ async def test_create_auth_requires_admin(
 async def test_create_auth(opp, opp_ws_client, opp_storage):
     """Test create auth command works."""
     client = await opp_ws_client(opp)
-    user = MockUser().add_to.opp.opp)
+    user = MockUser().add_to_opp(opp)
 
     assert len(user.credentials) == 0
 
@@ -139,7 +139,7 @@ async def test_create_auth(opp, opp_ws_client, opp_storage):
 async def test_create_auth_duplicate_username(opp, opp_ws_client, opp_storage):
     """Test we can't create auth with a duplicate username."""
     client = await opp_ws_client(opp)
-    user = MockUser().add_to.opp.opp)
+    user = MockUser().add_to_opp(opp)
 
     opp.storage[prov_op.STORAGE_KEY] = {
         "version": 1,
@@ -187,7 +187,7 @@ async def test_delete_removes_credential(opp, opp_ws_client, opp_storage):
     """Test deleting auth that is connected to a user."""
     client = await opp_ws_client(opp)
 
-    user = MockUser().add_to.opp.opp)
+    user = MockUser().add_to_opp(opp)
     opp.storage[prov_op.STORAGE_KEY] = {
         "version": 1,
         "data": {"users": [{"username": "test-user"}]},
@@ -327,7 +327,7 @@ async def test_admin_change_password_not_owner(opp, opp_ws_client, auth_provider
 
 async def test_admin_change_password_no_user(opp, opp_ws_client, owner_access_token):
     """Test that change password fails with unknown user."""
-    client = await opp_ws_client.opp, owner_access_token)
+    client = await opp_ws_client(opp, owner_access_token)
 
     await client.send_json(
         {
@@ -349,7 +349,7 @@ async def test_admin_change_password_no_cred(
     """Test that change password fails with unknown credential."""
 
     opp.admin_user.credentials.clear()
-    client = await opp_ws_client.opp, owner_access_token)
+    client = await opp_ws_client(opp, owner_access_token)
 
     await client.send_json(
         {
@@ -373,7 +373,7 @@ async def test_admin_change_password(
     opp_admin_user,
 ):
     """Test that owners can change any password."""
-    client = await opp_ws_client.opp, owner_access_token)
+    client = await opp_ws_client(opp, owner_access_token)
 
     await client.send_json(
         {

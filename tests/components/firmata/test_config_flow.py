@@ -11,7 +11,7 @@ from openpeerpower.core import OpenPeerPower
 
 async def test_import_cannot_connect_pymata.opp: OpenPeerPower) -> None:
     """Test we fail with an invalid board."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "openpeerpower.components.firmata.board.PymataExpress.start_aio",
@@ -29,7 +29,7 @@ async def test_import_cannot_connect_pymata.opp: OpenPeerPower) -> None:
 
 async def test_import_cannot_connect_serial.opp: OpenPeerPower) -> None:
     """Test we fail with an invalid board."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "openpeerpower.components.firmata.board.PymataExpress.start_aio",
@@ -47,7 +47,7 @@ async def test_import_cannot_connect_serial.opp: OpenPeerPower) -> None:
 
 async def test_import_cannot_connect_serial_timeout.opp: OpenPeerPower) -> None:
     """Test we fail with an invalid board."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "openpeerpower.components.firmata.board.PymataExpress.start_aio",
@@ -65,7 +65,7 @@ async def test_import_cannot_connect_serial_timeout.opp: OpenPeerPower) -> None:
 
 async def test_import.opp: OpenPeerPower) -> None:
     """Test we create an entry from config."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "openpeerpower.components.firmata.board.PymataExpress", autospec=True

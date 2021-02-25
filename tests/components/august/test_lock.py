@@ -21,7 +21,7 @@ from tests.components.august.mocks import (
 async def test_lock_device_registry.opp):
     """Test creation of a lock with doorsense and bridge ands up in the registry."""
     lock_one = await _mock_doorsense_enabled_august_lock_detail.opp)
-    await _create_august_with_devices.opp, [lock_one])
+    await _create_august_with_devices(opp, [lock_one])
 
     device_registry = await opp.helpers.device_registry.async_get_registry()
 
@@ -38,8 +38,8 @@ async def test_lock_changed_by.opp):
     """Test creation of a lock with doorsense and bridge."""
     lock_one = await _mock_doorsense_enabled_august_lock_detail.opp)
 
-    activities = await _mock_activities_from_fixture.opp, "get_activity.lock.json")
-    await _create_august_with_devices.opp, [lock_one], activities=activities)
+    activities = await _mock_activities_from_fixture(opp, "get_activity.lock.json")
+    await _create_august_with_devices(opp, [lock_one], activities=activities)
 
     lock_online_with_doorsense_name = opp.states.get("lock.online_with_doorsense_name")
 
@@ -54,7 +54,7 @@ async def test_lock_changed_by.opp):
 async def test_one_lock_operation.opp):
     """Test creation of a lock with doorsense and bridge."""
     lock_one = await _mock_doorsense_enabled_august_lock_detail.opp)
-    await _create_august_with_devices.opp, [lock_one])
+    await _create_august_with_devices(opp, [lock_one])
 
     lock_online_with_doorsense_name = opp.states.get("lock.online_with_doorsense_name")
 
@@ -107,7 +107,7 @@ async def test_one_lock_unknown_state.opp):
         opp,
         "get_lock.online.unknown_state.json",
     )
-    await _create_august_with_devices.opp, [lock_one])
+    await _create_august_with_devices(opp, [lock_one])
 
     lock_brokenid_name = opp.states.get("lock.brokenid_name")
 

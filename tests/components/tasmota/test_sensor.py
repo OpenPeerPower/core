@@ -88,7 +88,7 @@ NESTED_SENSOR_CONFIG = {
 }
 
 
-async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
+async def test_controlling_state_via_mqtt(opp, mqtt_mock, setup_tasmota):
     """Test state update via MQTT."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     sensor_config = copy.deepcopy(DEFAULT_SENSOR_CONFIG)
@@ -111,7 +111,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/LWT", "Online")
     state = opp.states.get("sensor.tasmota_dht11_temperature")
     assert state.state == STATE_UNKNOWN
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
@@ -133,7 +133,7 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     assert state.state == "20.0"
 
 
-async def test_nested_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
+async def test_nested_sensor_state_via_mqtt(opp, mqtt_mock, setup_tasmota):
     """Test state update via MQTT."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     sensor_config = copy.deepcopy(NESTED_SENSOR_CONFIG)
@@ -156,7 +156,7 @@ async def test_nested_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/LWT", "Online")
     state = opp.states.get("sensor.tasmota_tx23_speed_act")
     assert state.state == STATE_UNKNOWN
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
@@ -178,7 +178,7 @@ async def test_nested_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     assert state.state == "23.4"
 
 
-async def test_indexed_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
+async def test_indexed_sensor_state_via_mqtt(opp, mqtt_mock, setup_tasmota):
     """Test state update via MQTT."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     sensor_config = copy.deepcopy(INDEXED_SENSOR_CONFIG)
@@ -201,7 +201,7 @@ async def test_indexed_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/LWT", "Online")
     state = opp.states.get("sensor.tasmota_energy_totaltariff_1")
     assert state.state == STATE_UNKNOWN
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
@@ -224,7 +224,7 @@ async def test_indexed_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
 
 
 @pytest.mark.parametrize("status_sensor_disabled", [False])
-async def test_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
+async def test_status_sensor_state_via_mqtt(opp, mqtt_mock, setup_tasmota):
     """Test state update via MQTT."""
     entity_reg = await opp.helpers.entity_registry.async_get_registry()
 
@@ -252,7 +252,7 @@ async def test_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/LWT", "Online")
     state = opp.states.get("sensor.tasmota_status")
     assert state.state == STATE_UNKNOWN
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
@@ -277,7 +277,7 @@ async def test_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
 
 
 @pytest.mark.parametrize("status_sensor_disabled", [False])
-async def test_single_shot_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
+async def test_single_shot_status_sensor_state_via_mqtt(opp, mqtt_mock, setup_tasmota):
     """Test state update via MQTT."""
     entity_reg = await opp.helpers.entity_registry.async_get_registry()
 
@@ -305,7 +305,7 @@ async def test_single_shot_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_ta
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/LWT", "Online")
     state = opp.states.get("sensor.tasmota_status")
     assert state.state == STATE_UNKNOWN
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
@@ -331,7 +331,7 @@ async def test_single_shot_status_sensor_state_via_mqtt.opp, mqtt_mock, setup_ta
     assert state.state == "Some reason"
 
     # Device signals online again
-    async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/LWT", "Online")
     await opp.async_block_till_done()
     state = opp.states.get("sensor.tasmota_status")
     assert state.state == "Some reason"
@@ -389,7 +389,7 @@ async def test_restart_time_status_sensor_state_via_mqtt(
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/LWT", "Online")
     state = opp.states.get("sensor.tasmota_status")
     assert state.state == STATE_UNKNOWN
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
@@ -407,7 +407,7 @@ async def test_restart_time_status_sensor_state_via_mqtt(
     assert state.state == "2020-11-11T07:00:00+00:00"
 
 
-async def test_attributes.opp, mqtt_mock, setup_tasmota):
+async def test_attributes(opp, mqtt_mock, setup_tasmota):
     """Test correct attributes for sensors."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     sensor_config = {
@@ -445,7 +445,7 @@ async def test_attributes.opp, mqtt_mock, setup_tasmota):
     assert state.attributes.get("unit_of_measurement") == "ppm"
 
 
-async def test_nested_sensor_attributes.opp, mqtt_mock, setup_tasmota):
+async def test_nested_sensor_attributes(opp, mqtt_mock, setup_tasmota):
     """Test correct attributes for sensors."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     sensor_config = copy.deepcopy(NESTED_SENSOR_CONFIG)
@@ -477,7 +477,7 @@ async def test_nested_sensor_attributes.opp, mqtt_mock, setup_tasmota):
     assert state.attributes.get("unit_of_measurement") == " "
 
 
-async def test_indexed_sensor_attributes.opp, mqtt_mock, setup_tasmota):
+async def test_indexed_sensor_attributes(opp, mqtt_mock, setup_tasmota):
     """Test correct attributes for sensors."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     sensor_config = {
@@ -516,7 +516,7 @@ async def test_indexed_sensor_attributes.opp, mqtt_mock, setup_tasmota):
 
 
 @pytest.mark.parametrize("status_sensor_disabled", [False])
-async def test_enable_status_sensor.opp, mqtt_mock, setup_tasmota):
+async def test_enable_status_sensor(opp, mqtt_mock, setup_tasmota):
     """Test enabling status sensor."""
     entity_reg = await opp.helpers.entity_registry.async_get_registry()
 
@@ -563,7 +563,7 @@ async def test_enable_status_sensor.opp, mqtt_mock, setup_tasmota):
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/LWT", "Online")
     state = opp.states.get("sensor.tasmota_signal")
     assert state.state == STATE_UNKNOWN
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
@@ -586,7 +586,7 @@ async def test_availability_when_connection_lost(
     )
 
 
-async def test_availability.opp, mqtt_mock, setup_tasmota):
+async def test_availability(opp, mqtt_mock, setup_tasmota):
     """Test availability."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     sensor_config = copy.deepcopy(DEFAULT_SENSOR_CONFIG)
@@ -600,7 +600,7 @@ async def test_availability.opp, mqtt_mock, setup_tasmota):
     )
 
 
-async def test_availability_discovery_update.opp, mqtt_mock, setup_tasmota):
+async def test_availability_discovery_update(opp, mqtt_mock, setup_tasmota):
     """Test availability discovery update."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     sensor_config = copy.deepcopy(DEFAULT_SENSOR_CONFIG)
@@ -633,7 +633,7 @@ async def test_availability_poll_state(
     )
 
 
-async def test_discovery_removal_sensor.opp, mqtt_mock, caplog, setup_tasmota):
+async def test_discovery_removal_sensor(opp, mqtt_mock, caplog, setup_tasmota):
     """Test removal of discovered sensor."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     sensor_config1 = copy.deepcopy(DEFAULT_SENSOR_CONFIG)
@@ -674,7 +674,7 @@ async def test_discovery_update_unchanged_sensor(
         )
 
 
-async def test_discovery_device_remove.opp, mqtt_mock, setup_tasmota):
+async def test_discovery_device_remove(opp, mqtt_mock, setup_tasmota):
     """Test device registry remove."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     sensor_config = copy.deepcopy(DEFAULT_SENSOR_CONFIG)
@@ -684,7 +684,7 @@ async def test_discovery_device_remove.opp, mqtt_mock, setup_tasmota):
     )
 
 
-async def test_entity_id_update_subscriptions.opp, mqtt_mock, setup_tasmota):
+async def test_entity_id_update_subscriptions(opp, mqtt_mock, setup_tasmota):
     """Test MQTT subscriptions are managed when entity_id is updated."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     sensor_config = copy.deepcopy(DEFAULT_SENSOR_CONFIG)
@@ -704,7 +704,7 @@ async def test_entity_id_update_subscriptions.opp, mqtt_mock, setup_tasmota):
     )
 
 
-async def test_entity_id_update_discovery_update.opp, mqtt_mock, setup_tasmota):
+async def test_entity_id_update_discovery_update(opp, mqtt_mock, setup_tasmota):
     """Test MQTT discovery update when entity_id is updated."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     sensor_config = copy.deepcopy(DEFAULT_SENSOR_CONFIG)

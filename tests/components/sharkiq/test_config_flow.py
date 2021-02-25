@@ -16,7 +16,7 @@ from tests.common import MockConfigEntry
 
 async def test_form.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -73,7 +73,7 @@ async def test_reauth_success.opp: OpenPeerPower):
     """Test reauth flow."""
     with patch("sharkiqpy.AylaApi.async_sign_in", return_value=True):
         mock_config = MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG)
-        mock_config.add_to.opp.opp)
+        mock_config.add_to_opp(opp)
 
         result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "reauth", "unique_id": UNIQUE_ID}, data=CONFIG

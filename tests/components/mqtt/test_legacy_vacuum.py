@@ -74,7 +74,7 @@ DEFAULT_CONFIG = {
 DEFAULT_CONFIG_2 = {vacuum.DOMAIN: {"platform": "mqtt", "name": "test"}}
 
 
-async def test_default_supported_features.opp, mqtt_mock):
+async def test_default_supported_features(opp, mqtt_mock):
     """Test that the correct supported features."""
     assert await async_setup_component(
         opp. vacuum.DOMAIN, {vacuum.DOMAIN: DEFAULT_CONFIG}
@@ -95,63 +95,63 @@ async def test_default_supported_features.opp, mqtt_mock):
     )
 
 
-async def test_all_commands.opp, mqtt_mock):
+async def test_all_commands(opp, mqtt_mock):
     """Test simple commands to the vacuum."""
     config = deepcopy(DEFAULT_CONFIG)
     config[mqttvacuum.CONF_SUPPORTED_FEATURES] = services_to_strings(
         ALL_SERVICES, SERVICE_TO_STRING
     )
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
-    await common.async_turn_on.opp, "vacuum.mqtttest")
+    await common.async_turn_on(opp, "vacuum.mqtttest")
     mqtt_mock.async_publish.assert_called_once_with(
         "vacuum/command", "turn_on", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
 
-    await common.async_turn_off.opp, "vacuum.mqtttest")
+    await common.async_turn_off(opp, "vacuum.mqtttest")
     mqtt_mock.async_publish.assert_called_once_with(
         "vacuum/command", "turn_off", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
 
-    await common.async_stop.opp, "vacuum.mqtttest")
+    await common.async_stop(opp, "vacuum.mqtttest")
     mqtt_mock.async_publish.assert_called_once_with("vacuum/command", "stop", 0, False)
     mqtt_mock.async_publish.reset_mock()
 
-    await common.async_clean_spot.opp, "vacuum.mqtttest")
+    await common.async_clean_spot(opp, "vacuum.mqtttest")
     mqtt_mock.async_publish.assert_called_once_with(
         "vacuum/command", "clean_spot", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
 
-    await common.async_locate.opp, "vacuum.mqtttest")
+    await common.async_locate(opp, "vacuum.mqtttest")
     mqtt_mock.async_publish.assert_called_once_with(
         "vacuum/command", "locate", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
 
-    await common.async_start_pause.opp, "vacuum.mqtttest")
+    await common.async_start_pause(opp, "vacuum.mqtttest")
     mqtt_mock.async_publish.assert_called_once_with(
         "vacuum/command", "start_pause", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
 
-    await common.async_return_to_base.opp, "vacuum.mqtttest")
+    await common.async_return_to_base(opp, "vacuum.mqtttest")
     mqtt_mock.async_publish.assert_called_once_with(
         "vacuum/command", "return_to_base", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
 
-    await common.async_set_fan_speed.opp, "high", "vacuum.mqtttest")
+    await common.async_set_fan_speed(opp, "high", "vacuum.mqtttest")
     mqtt_mock.async_publish.assert_called_once_with(
         "vacuum/set_fan_speed", "high", 0, False
     )
     mqtt_mock.async_publish.reset_mock()
 
-    await common.async_send_command.opp, "44 FE 93", entity_id="vacuum.mqtttest")
+    await common.async_send_command(opp, "44 FE 93", entity_id="vacuum.mqtttest")
     mqtt_mock.async_publish.assert_called_once_with(
         "vacuum/send_command", "44 FE 93", 0, False
     )
@@ -174,7 +174,7 @@ async def test_all_commands.opp, mqtt_mock):
     }
 
 
-async def test_commands_without_supported_features.opp, mqtt_mock):
+async def test_commands_without_supported_features(opp, mqtt_mock):
     """Test commands which are not supported by the vacuum."""
     config = deepcopy(DEFAULT_CONFIG)
     services = mqttvacuum.STRING_TO_SERVICE["status"]
@@ -182,47 +182,47 @@ async def test_commands_without_supported_features.opp, mqtt_mock):
         services, SERVICE_TO_STRING
     )
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
-    await common.async_turn_on.opp, "vacuum.mqtttest")
+    await common.async_turn_on(opp, "vacuum.mqtttest")
     mqtt_mock.async_publish.assert_not_called()
     mqtt_mock.async_publish.reset_mock()
 
-    await common.async_turn_off.opp, "vacuum.mqtttest")
+    await common.async_turn_off(opp, "vacuum.mqtttest")
     mqtt_mock.async_publish.assert_not_called()
     mqtt_mock.async_publish.reset_mock()
 
-    await common.async_stop.opp, "vacuum.mqtttest")
+    await common.async_stop(opp, "vacuum.mqtttest")
     mqtt_mock.async_publish.assert_not_called()
     mqtt_mock.async_publish.reset_mock()
 
-    await common.async_clean_spot.opp, "vacuum.mqtttest")
+    await common.async_clean_spot(opp, "vacuum.mqtttest")
     mqtt_mock.async_publish.assert_not_called()
     mqtt_mock.async_publish.reset_mock()
 
-    await common.async_locate.opp, "vacuum.mqtttest")
+    await common.async_locate(opp, "vacuum.mqtttest")
     mqtt_mock.async_publish.assert_not_called()
     mqtt_mock.async_publish.reset_mock()
 
-    await common.async_start_pause.opp, "vacuum.mqtttest")
+    await common.async_start_pause(opp, "vacuum.mqtttest")
     mqtt_mock.async_publish.assert_not_called()
     mqtt_mock.async_publish.reset_mock()
 
-    await common.async_return_to_base.opp, "vacuum.mqtttest")
+    await common.async_return_to_base(opp, "vacuum.mqtttest")
     mqtt_mock.async_publish.assert_not_called()
     mqtt_mock.async_publish.reset_mock()
 
-    await common.async_set_fan_speed.opp, "high", "vacuum.mqtttest")
+    await common.async_set_fan_speed(opp, "high", "vacuum.mqtttest")
     mqtt_mock.async_publish.assert_not_called()
     mqtt_mock.async_publish.reset_mock()
 
-    await common.async_send_command.opp, "44 FE 93", entity_id="vacuum.mqtttest")
+    await common.async_send_command(opp, "44 FE 93", entity_id="vacuum.mqtttest")
     mqtt_mock.async_publish.assert_not_called()
     mqtt_mock.async_publish.reset_mock()
 
 
-async def test_attributes_without_supported_features.opp, mqtt_mock):
+async def test_attributes_without_supported_features(opp, mqtt_mock):
     """Test attributes which are not supported by the vacuum."""
     config = deepcopy(DEFAULT_CONFIG)
     services = mqttvacuum.STRING_TO_SERVICE["turn_on"]
@@ -230,7 +230,7 @@ async def test_attributes_without_supported_features.opp, mqtt_mock):
         services, SERVICE_TO_STRING
     )
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
     message = """{
@@ -240,7 +240,7 @@ async def test_attributes_without_supported_features.opp, mqtt_mock):
         "charging": false,
         "fan_speed": "max"
     }"""
-    async_fire_mqtt_message.opp, "vacuum/state", message)
+    async_fire_mqtt_message(opp, "vacuum/state", message)
     state = opp.states.get("vacuum.mqtttest")
     assert state.state == STATE_ON
     assert state.attributes.get(ATTR_BATTERY_LEVEL) is None
@@ -249,14 +249,14 @@ async def test_attributes_without_supported_features.opp, mqtt_mock):
     assert state.attributes.get(ATTR_FAN_SPEED_LIST) is None
 
 
-async def test_status.opp, mqtt_mock):
+async def test_status(opp, mqtt_mock):
     """Test status updates from the vacuum."""
     config = deepcopy(DEFAULT_CONFIG)
     config[mqttvacuum.CONF_SUPPORTED_FEATURES] = services_to_strings(
         ALL_SERVICES, SERVICE_TO_STRING
     )
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
     message = """{
@@ -266,7 +266,7 @@ async def test_status.opp, mqtt_mock):
         "charging": false,
         "fan_speed": "max"
     }"""
-    async_fire_mqtt_message.opp, "vacuum/state", message)
+    async_fire_mqtt_message(opp, "vacuum/state", message)
     state = opp.states.get("vacuum.mqtttest")
     assert state.state == STATE_ON
     assert state.attributes.get(ATTR_BATTERY_ICON) == "mdi:battery-50"
@@ -281,7 +281,7 @@ async def test_status.opp, mqtt_mock):
         "fan_speed": "min"
     }"""
 
-    async_fire_mqtt_message.opp, "vacuum/state", message)
+    async_fire_mqtt_message(opp, "vacuum/state", message)
     state = opp.states.get("vacuum.mqtttest")
     assert state.state == STATE_OFF
     assert state.attributes.get(ATTR_BATTERY_ICON) == "mdi:battery-charging-60"
@@ -289,111 +289,111 @@ async def test_status.opp, mqtt_mock):
     assert state.attributes.get(ATTR_FAN_SPEED) == "min"
 
 
-async def test_status_battery.opp, mqtt_mock):
+async def test_status_battery(opp, mqtt_mock):
     """Test status updates from the vacuum."""
     config = deepcopy(DEFAULT_CONFIG)
     config[mqttvacuum.CONF_SUPPORTED_FEATURES] = services_to_strings(
         ALL_SERVICES, SERVICE_TO_STRING
     )
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
     message = """{
         "battery_level": 54
     }"""
-    async_fire_mqtt_message.opp, "vacuum/state", message)
+    async_fire_mqtt_message(opp, "vacuum/state", message)
     state = opp.states.get("vacuum.mqtttest")
     assert state.attributes.get(ATTR_BATTERY_ICON) == "mdi:battery-50"
 
 
-async def test_status_cleaning.opp, mqtt_mock):
+async def test_status_cleaning(opp, mqtt_mock):
     """Test status updates from the vacuum."""
     config = deepcopy(DEFAULT_CONFIG)
     config[mqttvacuum.CONF_SUPPORTED_FEATURES] = services_to_strings(
         ALL_SERVICES, SERVICE_TO_STRING
     )
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
     message = """{
         "cleaning": true
     }"""
-    async_fire_mqtt_message.opp, "vacuum/state", message)
+    async_fire_mqtt_message(opp, "vacuum/state", message)
     state = opp.states.get("vacuum.mqtttest")
     assert state.state == STATE_ON
 
 
-async def test_status_docked.opp, mqtt_mock):
+async def test_status_docked(opp, mqtt_mock):
     """Test status updates from the vacuum."""
     config = deepcopy(DEFAULT_CONFIG)
     config[mqttvacuum.CONF_SUPPORTED_FEATURES] = services_to_strings(
         ALL_SERVICES, SERVICE_TO_STRING
     )
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
     message = """{
         "docked": true
     }"""
-    async_fire_mqtt_message.opp, "vacuum/state", message)
+    async_fire_mqtt_message(opp, "vacuum/state", message)
     state = opp.states.get("vacuum.mqtttest")
     assert state.state == STATE_OFF
 
 
-async def test_status_charging.opp, mqtt_mock):
+async def test_status_charging(opp, mqtt_mock):
     """Test status updates from the vacuum."""
     config = deepcopy(DEFAULT_CONFIG)
     config[mqttvacuum.CONF_SUPPORTED_FEATURES] = services_to_strings(
         ALL_SERVICES, SERVICE_TO_STRING
     )
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
     message = """{
         "charging": true
     }"""
-    async_fire_mqtt_message.opp, "vacuum/state", message)
+    async_fire_mqtt_message(opp, "vacuum/state", message)
     state = opp.states.get("vacuum.mqtttest")
     assert state.attributes.get(ATTR_BATTERY_ICON) == "mdi:battery-outline"
 
 
-async def test_status_fan_speed.opp, mqtt_mock):
+async def test_status_fan_speed(opp, mqtt_mock):
     """Test status updates from the vacuum."""
     config = deepcopy(DEFAULT_CONFIG)
     config[mqttvacuum.CONF_SUPPORTED_FEATURES] = services_to_strings(
         ALL_SERVICES, SERVICE_TO_STRING
     )
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
     message = """{
         "fan_speed": "max"
     }"""
-    async_fire_mqtt_message.opp, "vacuum/state", message)
+    async_fire_mqtt_message(opp, "vacuum/state", message)
     state = opp.states.get("vacuum.mqtttest")
     assert state.attributes.get(ATTR_FAN_SPEED) == "max"
 
 
-async def test_status_fan_speed_list.opp, mqtt_mock):
+async def test_status_fan_speed_list(opp, mqtt_mock):
     """Test status updates from the vacuum."""
     config = deepcopy(DEFAULT_CONFIG)
     config[mqttvacuum.CONF_SUPPORTED_FEATURES] = services_to_strings(
         ALL_SERVICES, SERVICE_TO_STRING
     )
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
     state = opp.states.get("vacuum.mqtttest")
     assert state.attributes.get(ATTR_FAN_SPEED_LIST) == ["min", "medium", "high", "max"]
 
 
-async def test_status_no_fan_speed_list.opp, mqtt_mock):
+async def test_status_no_fan_speed_list(opp, mqtt_mock):
     """Test status updates from the vacuum.
 
     If the vacuum doesn't support fan speed, fan speed list should be None.
@@ -404,7 +404,7 @@ async def test_status_no_fan_speed_list.opp, mqtt_mock):
         services, SERVICE_TO_STRING
     )
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
     state = opp.states.get("vacuum.mqtttest")
@@ -418,25 +418,25 @@ async def test_status_error(opp, mqtt_mock):
         ALL_SERVICES, SERVICE_TO_STRING
     )
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
     message = """{
         "error": "Error1"
     }"""
-    async_fire_mqtt_message.opp, "vacuum/state", message)
+    async_fire_mqtt_message(opp, "vacuum/state", message)
     state = opp.states.get("vacuum.mqtttest")
     assert state.attributes.get(ATTR_STATUS) == "Error: Error1"
 
     message = """{
         "error": ""
     }"""
-    async_fire_mqtt_message.opp, "vacuum/state", message)
+    async_fire_mqtt_message(opp, "vacuum/state", message)
     state = opp.states.get("vacuum.mqtttest")
     assert state.attributes.get(ATTR_STATUS) == "Stopped"
 
 
-async def test_battery_template.opp, mqtt_mock):
+async def test_battery_template(opp, mqtt_mock):
     """Test that you can use non-default templates for battery_level."""
     config = deepcopy(DEFAULT_CONFIG)
     config.update(
@@ -449,146 +449,146 @@ async def test_battery_template.opp, mqtt_mock):
         }
     )
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
-    async_fire_mqtt_message.opp, "retroroomba/battery_level", "54")
+    async_fire_mqtt_message(opp, "retroroomba/battery_level", "54")
     state = opp.states.get("vacuum.mqtttest")
     assert state.attributes.get(ATTR_BATTERY_LEVEL) == 54
     assert state.attributes.get(ATTR_BATTERY_ICON) == "mdi:battery-50"
 
 
-async def test_status_invalid_json.opp, mqtt_mock):
+async def test_status_invalid_json(opp, mqtt_mock):
     """Test to make sure nothing breaks if the vacuum sends bad JSON."""
     config = deepcopy(DEFAULT_CONFIG)
     config[mqttvacuum.CONF_SUPPORTED_FEATURES] = services_to_strings(
         ALL_SERVICES, SERVICE_TO_STRING
     )
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
-    async_fire_mqtt_message.opp, "vacuum/state", '{"asdfasas false}')
+    async_fire_mqtt_message(opp, "vacuum/state", '{"asdfasas false}')
     state = opp.states.get("vacuum.mqtttest")
     assert state.state == STATE_OFF
     assert state.attributes.get(ATTR_STATUS) == "Stopped"
 
 
-async def test_missing_battery_template.opp, mqtt_mock):
+async def test_missing_battery_template(opp, mqtt_mock):
     """Test to make sure missing template is not allowed."""
     config = deepcopy(DEFAULT_CONFIG)
     config.pop(mqttvacuum.CONF_BATTERY_LEVEL_TEMPLATE)
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
     state = opp.states.get("vacuum.mqtttest")
     assert state is None
 
 
-async def test_missing_charging_template.opp, mqtt_mock):
+async def test_missing_charging_template(opp, mqtt_mock):
     """Test to make sure missing template is not allowed."""
     config = deepcopy(DEFAULT_CONFIG)
     config.pop(mqttvacuum.CONF_CHARGING_TEMPLATE)
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
     state = opp.states.get("vacuum.mqtttest")
     assert state is None
 
 
-async def test_missing_cleaning_template.opp, mqtt_mock):
+async def test_missing_cleaning_template(opp, mqtt_mock):
     """Test to make sure missing template is not allowed."""
     config = deepcopy(DEFAULT_CONFIG)
     config.pop(mqttvacuum.CONF_CLEANING_TEMPLATE)
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
     state = opp.states.get("vacuum.mqtttest")
     assert state is None
 
 
-async def test_missing_docked_template.opp, mqtt_mock):
+async def test_missing_docked_template(opp, mqtt_mock):
     """Test to make sure missing template is not allowed."""
     config = deepcopy(DEFAULT_CONFIG)
     config.pop(mqttvacuum.CONF_DOCKED_TEMPLATE)
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
     state = opp.states.get("vacuum.mqtttest")
     assert state is None
 
 
-async def test_missing_error_template.opp, mqtt_mock):
+async def test_missing_error_template(opp, mqtt_mock):
     """Test to make sure missing template is not allowed."""
     config = deepcopy(DEFAULT_CONFIG)
     config.pop(mqttvacuum.CONF_ERROR_TEMPLATE)
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
     state = opp.states.get("vacuum.mqtttest")
     assert state is None
 
 
-async def test_missing_fan_speed_template.opp, mqtt_mock):
+async def test_missing_fan_speed_template(opp, mqtt_mock):
     """Test to make sure missing template is not allowed."""
     config = deepcopy(DEFAULT_CONFIG)
     config.pop(mqttvacuum.CONF_FAN_SPEED_TEMPLATE)
 
-    assert await async_setup_component.opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
+    assert await async_setup_component(opp, vacuum.DOMAIN, {vacuum.DOMAIN: config})
     await opp.async_block_till_done()
 
     state = opp.states.get("vacuum.mqtttest")
     assert state is None
 
 
-async def test_availability_when_connection_lost.opp, mqtt_mock):
+async def test_availability_when_connection_lost(opp, mqtt_mock):
     """Test availability after MQTT disconnection."""
     await help_test_availability_when_connection_lost(
         opp. mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
-async def test_availability_without_topic.opp, mqtt_mock):
+async def test_availability_without_topic(opp, mqtt_mock):
     """Test availability without defined availability topic."""
     await help_test_availability_without_topic(
         opp. mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
-async def test_default_availability_payload.opp, mqtt_mock):
+async def test_default_availability_payload(opp, mqtt_mock):
     """Test availability by default payload with defined topic."""
     await help_test_default_availability_payload(
         opp. mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
-async def test_custom_availability_payload.opp, mqtt_mock):
+async def test_custom_availability_payload(opp, mqtt_mock):
     """Test availability by custom payload with defined topic."""
     await help_test_custom_availability_payload(
         opp. mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
-async def test_setting_attribute_via_mqtt_json_message.opp, mqtt_mock):
+async def test_setting_attribute_via_mqtt_json_message(opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_via_mqtt_json_message(
         opp. mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
-async def test_setting_attribute_with_template.opp, mqtt_mock):
+async def test_setting_attribute_with_template(opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_with_template(
         opp. mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
-async def test_update_with_json_attrs_not_dict.opp, mqtt_mock, caplog):
+async def test_update_with_json_attrs_not_dict(opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_not_dict(
         opp. mqtt_mock, caplog, vacuum.DOMAIN, DEFAULT_CONFIG_2
@@ -602,14 +602,14 @@ async def test_update_with_json_attrs_bad_JSON.opp, mqtt_mock, caplog):
     )
 
 
-async def test_discovery_update_attr.opp, mqtt_mock, caplog):
+async def test_discovery_update_attr(opp, mqtt_mock, caplog):
     """Test update of discovered MQTTAttributes."""
     await help_test_discovery_update_attr(
         opp. mqtt_mock, caplog, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
-async def test_unique_id.opp, mqtt_mock):
+async def test_unique_id(opp, mqtt_mock):
     """Test unique id option only creates one vacuum per unique_id."""
     config = {
         vacuum.DOMAIN: [
@@ -627,16 +627,16 @@ async def test_unique_id.opp, mqtt_mock):
             },
         ]
     }
-    await help_test_unique_id.opp, mqtt_mock, vacuum.DOMAIN, config)
+    await help_test_unique_id(opp, mqtt_mock, vacuum.DOMAIN, config)
 
 
-async def test_discovery_removal_vacuum.opp, mqtt_mock, caplog):
+async def test_discovery_removal_vacuum(opp, mqtt_mock, caplog):
     """Test removal of discovered vacuum."""
     data = json.dumps(DEFAULT_CONFIG_2[vacuum.DOMAIN])
-    await help_test_discovery_removal.opp, mqtt_mock, caplog, vacuum.DOMAIN, data)
+    await help_test_discovery_removal(opp, mqtt_mock, caplog, vacuum.DOMAIN, data)
 
 
-async def test_discovery_update_vacuum.opp, mqtt_mock, caplog):
+async def test_discovery_update_vacuum(opp, mqtt_mock, caplog):
     """Test update of discovered vacuum."""
     data1 = '{ "name": "Beer",' '  "command_topic": "test_topic" }'
     data2 = '{ "name": "Milk",' '  "command_topic": "test_topic" }'
@@ -645,7 +645,7 @@ async def test_discovery_update_vacuum.opp, mqtt_mock, caplog):
     )
 
 
-async def test_discovery_update_unchanged_vacuum.opp, mqtt_mock, caplog):
+async def test_discovery_update_unchanged_vacuum(opp, mqtt_mock, caplog):
     """Test update of discovered vacuum."""
     data1 = '{ "name": "Beer", "command_topic": "test_topic" }'
     with patch(
@@ -657,7 +657,7 @@ async def test_discovery_update_unchanged_vacuum.opp, mqtt_mock, caplog):
 
 
 @pytest.mark.no_fail_on_log_exception
-async def test_discovery_broken.opp, mqtt_mock, caplog):
+async def test_discovery_broken(opp, mqtt_mock, caplog):
     """Test handling of bad discovery message."""
     data1 = '{ "name": "Beer",' '  "command_topic": "test_topic#" }'
     data2 = '{ "name": "Milk",' '  "command_topic": "test_topic" }'
@@ -666,35 +666,35 @@ async def test_discovery_broken.opp, mqtt_mock, caplog):
     )
 
 
-async def test_entity_device_info_with_connection.opp, mqtt_mock):
+async def test_entity_device_info_with_connection(opp, mqtt_mock):
     """Test MQTT vacuum device registry integration."""
     await help_test_entity_device_info_with_connection(
         opp. mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
-async def test_entity_device_info_with_identifier.opp, mqtt_mock):
+async def test_entity_device_info_with_identifier(opp, mqtt_mock):
     """Test MQTT vacuum device registry integration."""
     await help_test_entity_device_info_with_identifier(
         opp. mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
-async def test_entity_device_info_update.opp, mqtt_mock):
+async def test_entity_device_info_update(opp, mqtt_mock):
     """Test device registry update."""
     await help_test_entity_device_info_update(
         opp. mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
-async def test_entity_device_info_remove.opp, mqtt_mock):
+async def test_entity_device_info_remove(opp, mqtt_mock):
     """Test device registry remove."""
     await help_test_entity_device_info_remove(
         opp. mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
-async def test_entity_id_update_subscriptions.opp, mqtt_mock):
+async def test_entity_id_update_subscriptions(opp, mqtt_mock):
     """Test MQTT subscriptions are managed when entity_id is updated."""
     config = {
         vacuum.DOMAIN: {
@@ -711,14 +711,14 @@ async def test_entity_id_update_subscriptions.opp, mqtt_mock):
     )
 
 
-async def test_entity_id_update_discovery_update.opp, mqtt_mock):
+async def test_entity_id_update_discovery_update(opp, mqtt_mock):
     """Test MQTT discovery update when entity_id is updated."""
     await help_test_entity_id_update_discovery_update(
         opp. mqtt_mock, vacuum.DOMAIN, DEFAULT_CONFIG_2
     )
 
 
-async def test_entity_debug_info_message.opp, mqtt_mock):
+async def test_entity_debug_info_message(opp, mqtt_mock):
     """Test MQTT debug info."""
     config = {
         vacuum.DOMAIN: {

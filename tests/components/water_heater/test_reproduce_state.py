@@ -15,7 +15,7 @@ from openpeerpower.core import State
 from tests.common import async_mock_service
 
 
-async def test_reproducing_states.opp, caplog):
+async def test_reproducing_states(opp, caplog):
     """Test reproducing Water heater states."""
     opp.states.async_set("water_heater.entity_off", STATE_OFF, {})
     opp.states.async_set("water_heater.entity_on", STATE_ON, {ATTR_TEMPERATURE: 45})
@@ -27,11 +27,11 @@ async def test_reproducing_states.opp, caplog):
         {ATTR_AWAY_MODE: True, ATTR_TEMPERATURE: 45},
     )
 
-    turn_on_calls = async_mock_service.opp, "water_heater", SERVICE_TURN_ON)
-    turn_off_calls = async_mock_service.opp, "water_heater", SERVICE_TURN_OFF)
-    set_op_calls = async_mock_service.opp, "water_heater", SERVICE_SET_OPERATION_MODE)
-    set_temp_calls = async_mock_service.opp, "water_heater", SERVICE_SET_TEMPERATURE)
-    set_away_calls = async_mock_service.opp, "water_heater", SERVICE_SET_AWAY_MODE)
+    turn_on_calls = async_mock_service(opp, "water_heater", SERVICE_TURN_ON)
+    turn_off_calls = async_mock_service(opp, "water_heater", SERVICE_TURN_OFF)
+    set_op_calls = async_mock_service(opp, "water_heater", SERVICE_SET_OPERATION_MODE)
+    set_temp_calls = async_mock_service(opp, "water_heater", SERVICE_SET_TEMPERATURE)
+    set_away_calls = async_mock_service(opp, "water_heater", SERVICE_SET_AWAY_MODE)
 
     # These calls should do nothing as entities already in desired state
     await opp.helpers.state.async_reproduce_state(

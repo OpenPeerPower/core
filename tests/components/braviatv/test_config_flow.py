@@ -117,7 +117,7 @@ async def test_import_duplicate_error(opp):
         },
         title="TV-Model",
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch("bravia_tv.BraviaRC.connect", return_value=True), patch(
         "bravia_tv.BraviaRC.is_connected", return_value=True
@@ -191,7 +191,7 @@ async def test_duplicate_error(opp):
         },
         title="TV-Model",
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch("bravia_tv.BraviaRC.connect", return_value=True), patch(
         "bravia_tv.BraviaRC.is_connected", return_value=True
@@ -251,7 +251,7 @@ async def test_options_flow.opp):
         },
         title="TV-Model",
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch("bravia_tv.BraviaRC.connect", return_value=True), patch(
         "bravia_tv.BraviaRC.is_connected", return_value=True

@@ -101,7 +101,7 @@ async def test_init_gatecontroller(gatecontroller, opp, config):
     """Test gateController default state."""
 
     _, entity_id = gatecontroller
-    entry = await async_setup_entity.opp, config, entity_id)
+    entry = await async_setup_entity(opp, config, entity_id)
     assert entry.unique_id == "BleBox-gateController-2bee34e750b8-position"
 
     state = opp.states.get(entity_id)
@@ -131,7 +131,7 @@ async def test_init_shutterbox(shutterbox, opp, config):
     """Test gateBox default state."""
 
     _, entity_id = shutterbox
-    entry = await async_setup_entity.opp, config, entity_id)
+    entry = await async_setup_entity(opp, config, entity_id)
     assert entry.unique_id == "BleBox-shutterBox-2bee34e750b8-position"
 
     state = opp.states.get(entity_id)
@@ -161,7 +161,7 @@ async def test_init_gatebox(gatebox, opp, config):
     """Test cover default state."""
 
     _, entity_id = gatebox
-    entry = await async_setup_entity.opp, config, entity_id)
+    entry = await async_setup_entity(opp, config, entity_id)
     assert entry.unique_id == "BleBox-gateBox-1afe34db9437-position"
 
     state = opp.states.get(entity_id)
@@ -204,8 +204,8 @@ async def test_open(feature, opp, config):
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
     feature_mock.async_open = AsyncMock(side_effect=open_gate)
 
-    await async_setup_entity.opp, config, entity_id)
-    assert.opp.states.get(entity_id).state == STATE_CLOSED
+    await async_setup_entity(opp, config, entity_id)
+    assert opp.states.get(entity_id).state == STATE_CLOSED
 
     feature_mock.async_update = AsyncMock()
     await opp.services.async_call(
@@ -214,7 +214,7 @@ async def test_open(feature, opp, config):
         {"entity_id": entity_id},
         blocking=True,
     )
-    assert.opp.states.get(entity_id).state == STATE_OPENING
+    assert opp.states.get(entity_id).state == STATE_OPENING
 
 
 @pytest.mark.parametrize("feature", ALL_COVER_FIXTURES, indirect=["feature"])
@@ -232,14 +232,14 @@ async def test_close(feature, opp, config):
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
     feature_mock.async_close = AsyncMock(side_effect=close)
 
-    await async_setup_entity.opp, config, entity_id)
-    assert.opp.states.get(entity_id).state == STATE_OPEN
+    await async_setup_entity(opp, config, entity_id)
+    assert opp.states.get(entity_id).state == STATE_OPEN
 
     feature_mock.async_update = AsyncMock()
     await opp.services.async_call(
         "cover", SERVICE_CLOSE_COVER, {"entity_id": entity_id}, blocking=True
     )
-    assert.opp.states.get(entity_id).state == STATE_CLOSING
+    assert opp.states.get(entity_id).state == STATE_CLOSING
 
 
 def opening_to_stop_feature_mock(feature_mock):
@@ -262,14 +262,14 @@ async def test_stop(feature, opp, config):
     feature_mock, entity_id = feature
     opening_to_stop_feature_mock(feature_mock)
 
-    await async_setup_entity.opp, config, entity_id)
-    assert.opp.states.get(entity_id).state == STATE_OPENING
+    await async_setup_entity(opp, config, entity_id)
+    assert opp.states.get(entity_id).state == STATE_OPENING
 
     feature_mock.async_update = AsyncMock()
     await opp.services.async_call(
         "cover", SERVICE_STOP_COVER, {"entity_id": entity_id}, blocking=True
     )
-    assert.opp.states.get(entity_id).state == STATE_OPEN
+    assert opp.states.get(entity_id).state == STATE_OPEN
 
 
 @pytest.mark.parametrize("feature", ALL_COVER_FIXTURES, indirect=["feature"])
@@ -284,7 +284,7 @@ async def test_update(feature, opp, config):
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
 
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
 
     state = opp.states.get(entity_id)
     assert state.attributes[ATTR_CURRENT_POSITION] == 71  # 100 - 29
@@ -310,8 +310,8 @@ async def test_set_position(feature, opp, config):
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
     feature_mock.async_set_position = AsyncMock(side_effect=set_position)
 
-    await async_setup_entity.opp, config, entity_id)
-    assert.opp.states.get(entity_id).state == STATE_CLOSED
+    await async_setup_entity(opp, config, entity_id)
+    assert opp.states.get(entity_id).state == STATE_CLOSED
 
     feature_mock.async_update = AsyncMock()
     await opp.services.async_call(
@@ -320,7 +320,7 @@ async def test_set_position(feature, opp, config):
         {"entity_id": entity_id, ATTR_POSITION: 1},
         blocking=True,
     )  # almost closed
-    assert.opp.states.get(entity_id).state == STATE_OPENING
+    assert opp.states.get(entity_id).state == STATE_OPENING
 
 
 async def test_unknown_position(shutterbox, opp, config):
@@ -334,7 +334,7 @@ async def test_unknown_position(shutterbox, opp, config):
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
 
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
 
     state = opp.states.get(entity_id)
     assert state.state == STATE_OPEN
@@ -348,7 +348,7 @@ async def test_with_stop(gatebox, opp, config):
     opening_to_stop_feature_mock(feature_mock)
     feature_mock.has_stop = True
 
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
 
     state = opp.states.get(entity_id)
     supported_features = state.attributes[ATTR_SUPPORTED_FEATURES]
@@ -362,7 +362,7 @@ async def test_with_no_stop(gatebox, opp, config):
     opening_to_stop_feature_mock(feature_mock)
     feature_mock.has_stop = False
 
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
 
     state = opp.states.get(entity_id)
     supported_features = state.attributes[ATTR_SUPPORTED_FEATURES]
@@ -377,7 +377,7 @@ async def test_update_failure(feature, opp, config, caplog):
 
     feature_mock, entity_id = feature
     feature_mock.async_update = AsyncMock(side_effect=blebox_uniapi.error.ClientError)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
 
     assert f"Updating '{feature_mock.full_name}' failed: " in caplog.text
 
@@ -392,8 +392,8 @@ async def test_opening_state(feature, opp, config):
         feature_mock.state = 1  # opening
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
-    assert.opp.states.get(entity_id).state == STATE_OPENING
+    await async_setup_entity(opp, config, entity_id)
+    assert opp.states.get(entity_id).state == STATE_OPENING
 
 
 @pytest.mark.parametrize("feature", ALL_COVER_FIXTURES, indirect=["feature"])
@@ -406,8 +406,8 @@ async def test_closing_state(feature, opp, config):
         feature_mock.state = 0  # closing
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
-    assert.opp.states.get(entity_id).state == STATE_CLOSING
+    await async_setup_entity(opp, config, entity_id)
+    assert opp.states.get(entity_id).state == STATE_CLOSING
 
 
 @pytest.mark.parametrize("feature", ALL_COVER_FIXTURES, indirect=["feature"])
@@ -420,5 +420,5 @@ async def test_closed_state(feature, opp, config):
         feature_mock.state = 3  # closed
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
-    assert.opp.states.get(entity_id).state == STATE_CLOSED
+    await async_setup_entity(opp, config, entity_id)
+    assert opp.states.get(entity_id).state == STATE_CLOSED

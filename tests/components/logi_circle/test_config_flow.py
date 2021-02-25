@@ -190,7 +190,7 @@ async def test_gen_auth_url(
     flow = config_flow.LogiCircleFlowHandler()
     flow.opp = opp
     flow.flow_impl = "test-auth-url"
-    await async_setup_component.opp, "http", {})
+    await async_setup_component(opp, "http", {})
 
     result = flow._get_authorization_url()  # pylint: disable=protected-access
     assert result == "http://authorize.url"

@@ -34,7 +34,7 @@ async def test_setup_adds_proper_devices.opp):
             "devices": [{"name": "Switch1", "address": "a1"}],
         },
     }
-    assert await async_setup_component.opp, switch.DOMAIN, good_config)
+    assert await async_setup_component(opp, switch.DOMAIN, good_config)
 
 
 async def test_name(switch_mock):

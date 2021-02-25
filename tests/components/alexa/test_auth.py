@@ -29,7 +29,7 @@ async def run_auth_get_access_token(
     await auth.async_get_access_token()
 
 
-async def test_auth_get_access_token_expired.opp, aioclient_mock):
+async def test_auth_get_access_token_expired(opp, aioclient_mock):
     """Test the auth get access token function."""
     client_id = "client123"
     client_secret = "shhhhh"
@@ -63,7 +63,7 @@ async def test_auth_get_access_token_expired.opp, aioclient_mock):
     assert token_call_json[CONF_CLIENT_SECRET] == client_secret
 
 
-async def test_auth_get_access_token_not_expired.opp, aioclient_mock):
+async def test_auth_get_access_token_not_expired(opp, aioclient_mock):
     """Test the auth get access token function."""
     client_id = "client123"
     client_secret = "shhhhh"

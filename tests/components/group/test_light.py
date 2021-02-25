@@ -84,22 +84,22 @@ async def test_state_reporting(opp):
     opp.states.async_set("light.test1", STATE_ON)
     opp.states.async_set("light.test2", STATE_UNAVAILABLE)
     await opp.async_block_till_done()
-    assert.opp.states.get("light.light_group").state == STATE_ON
+    assert opp.states.get("light.light_group").state == STATE_ON
 
     opp.states.async_set("light.test1", STATE_ON)
     opp.states.async_set("light.test2", STATE_OFF)
     await opp.async_block_till_done()
-    assert.opp.states.get("light.light_group").state == STATE_ON
+    assert opp.states.get("light.light_group").state == STATE_ON
 
     opp.states.async_set("light.test1", STATE_OFF)
     opp.states.async_set("light.test2", STATE_OFF)
     await opp.async_block_till_done()
-    assert.opp.states.get("light.light_group").state == STATE_OFF
+    assert opp.states.get("light.light_group").state == STATE_OFF
 
     opp.states.async_set("light.test1", STATE_UNAVAILABLE)
     opp.states.async_set("light.test2", STATE_UNAVAILABLE)
     await opp.async_block_till_done()
-    assert.opp.states.get("light.light_group").state == STATE_UNAVAILABLE
+    assert opp.states.get("light.light_group").state == STATE_UNAVAILABLE
 
 
 async def test_brightness(opp):
@@ -525,7 +525,7 @@ async def test_service_calls(opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.get("light.light_group").state == STATE_ON
+    assert opp.states.get("light.light_group").state == STATE_ON
     await opp.services.async_call(
         LIGHT_DOMAIN,
         SERVICE_TOGGLE,
@@ -533,9 +533,9 @@ async def test_service_calls(opp):
         blocking=True,
     )
 
-    assert.opp.states.get("light.bed_light").state == STATE_OFF
-    assert.opp.states.get("light.ceiling_lights").state == STATE_OFF
-    assert.opp.states.get("light.kitchen_lights").state == STATE_OFF
+    assert opp.states.get("light.bed_light").state == STATE_OFF
+    assert opp.states.get("light.ceiling_lights").state == STATE_OFF
+    assert opp.states.get("light.kitchen_lights").state == STATE_OFF
 
     await opp.services.async_call(
         LIGHT_DOMAIN,
@@ -544,9 +544,9 @@ async def test_service_calls(opp):
         blocking=True,
     )
 
-    assert.opp.states.get("light.bed_light").state == STATE_ON
-    assert.opp.states.get("light.ceiling_lights").state == STATE_ON
-    assert.opp.states.get("light.kitchen_lights").state == STATE_ON
+    assert opp.states.get("light.bed_light").state == STATE_ON
+    assert opp.states.get("light.ceiling_lights").state == STATE_ON
+    assert opp.states.get("light.kitchen_lights").state == STATE_ON
 
     await opp.services.async_call(
         LIGHT_DOMAIN,
@@ -555,9 +555,9 @@ async def test_service_calls(opp):
         blocking=True,
     )
 
-    assert.opp.states.get("light.bed_light").state == STATE_OFF
-    assert.opp.states.get("light.ceiling_lights").state == STATE_OFF
-    assert.opp.states.get("light.kitchen_lights").state == STATE_OFF
+    assert opp.states.get("light.bed_light").state == STATE_OFF
+    assert opp.states.get("light.ceiling_lights").state == STATE_OFF
+    assert opp.states.get("light.kitchen_lights").state == STATE_OFF
 
     await opp.services.async_call(
         LIGHT_DOMAIN,
@@ -661,7 +661,7 @@ async def test_reload(opp):
     await opp.async_start()
 
     await opp.async_block_till_done()
-    assert.opp.states.get("light.light_group").state == STATE_ON
+    assert opp.states.get("light.light_group").state == STATE_ON
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -677,9 +677,9 @@ async def test_reload(opp):
         )
         await opp.async_block_till_done()
 
-    assert.opp.states.get("light.light_group") is None
-    assert.opp.states.get("light.master_hall_lights_g") is not None
-    assert.opp.states.get("light.outside_patio_lights_g") is not None
+    assert opp.states.get("light.light_group") is None
+    assert opp.states.get("light.master_hall_lights_g") is not None
+    assert opp.states.get("light.outside_patio_lights_g") is not None
 
 
 async def test_reload_with_platform_not_setup_opp):
@@ -719,9 +719,9 @@ async def test_reload_with_platform_not_setup_opp):
         )
         await opp.async_block_till_done()
 
-    assert.opp.states.get("light.light_group") is None
-    assert.opp.states.get("light.master_hall_lights_g") is not None
-    assert.opp.states.get("light.outside_patio_lights_g") is not None
+    assert opp.states.get("light.light_group") is None
+    assert opp.states.get("light.master_hall_lights_g") is not None
+    assert opp.states.get("light.outside_patio_lights_g") is not None
 
 
 async def test_reload_with_base_integration_platform_not_setup_opp):
@@ -756,11 +756,11 @@ async def test_reload_with_base_integration_platform_not_setup_opp):
         )
         await opp.async_block_till_done()
 
-    assert.opp.states.get("light.light_group") is None
-    assert.opp.states.get("light.master_hall_lights_g") is not None
-    assert.opp.states.get("light.outside_patio_lights_g") is not None
-    assert.opp.states.get("light.master_hall_lights_g").state == STATE_ON
-    assert.opp.states.get("light.outside_patio_lights_g").state == STATE_OFF
+    assert opp.states.get("light.light_group") is None
+    assert opp.states.get("light.master_hall_lights_g") is not None
+    assert opp.states.get("light.outside_patio_lights_g") is not None
+    assert opp.states.get("light.master_hall_lights_g").state == STATE_ON
+    assert opp.states.get("light.outside_patio_lights_g").state == STATE_OFF
 
 
 async def test_nested_group(opp):

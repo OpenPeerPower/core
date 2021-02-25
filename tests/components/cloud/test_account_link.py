@@ -20,7 +20,7 @@ TEST_DOMAIN = "oauth2_test"
 def flow_handler.opp):
     """Return a registered config flow."""
 
-    mock_platform.opp, f"{TEST_DOMAIN}.config_flow")
+    mock_platform(opp, f"{TEST_DOMAIN}.config_flow")
 
     class TestFlowHandler(config_entry_oauth2_flow.AbstractOAuth2FlowHandler):
         """Test flow handler."""
@@ -54,7 +54,7 @@ async def test_setup_provide_implementation.opp):
             == {}
         )
         assert (
-            await config_entry_oauth2_flow.async_get_implementations.opp, "too_new")
+            await config_entry_oauth2_flow.async_get_implementations(opp, "too_new")
             == {}
         )
         implementations = await config_entry_oauth2_flow.async_get_implementations(
@@ -89,7 +89,7 @@ async def test_get_services_cached.opp):
         assert await account_link._get_services.opp) == 3
 
         services = 4
-        async_fire_time_changed.opp, utcnow())
+        async_fire_time_changed(opp, utcnow())
         await opp.async_block_till_done()
 
         # Check cache purged
@@ -108,7 +108,7 @@ async def test_get_services_error(opp):
         assert account_link.DATA_SERVICES not in.opp.data
 
 
-async def test_implementation.opp, flow_handler):
+async def test_implementation(opp, flow_handler):
     """Test Cloud OAuth2 implementation."""
     opp.data["cloud"] = None
 
@@ -116,7 +116,7 @@ async def test_implementation.opp, flow_handler):
     assert impl.name == "Open Peer Power Cloud"
     assert impl.domain == "cloud"
 
-    flow_handler.async_register_implementation.opp, impl)
+    flow_handler.async_register_implementation(opp, impl)
 
     flow_finished = asyncio.Future()
 

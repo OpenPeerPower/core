@@ -8,10 +8,10 @@ from openpeerpower.components.ozw.const import DOMAIN
 from tests.common import MockConfigEntry
 
 
-async def setup_ozw.opp, entry=None, fixture=None):
+async def setup_ozw(opp, entry=None, fixture=None):
     """Set up OZW and load a dump."""
     mqtt_entry = MockConfigEntry(domain="mqtt", state=config_entries.ENTRY_STATE_LOADED)
-    mqtt_entry.add_to.opp.opp)
+    mqtt_entry.add_to_opp(opp)
 
     if entry is None:
         entry = MockConfigEntry(
@@ -20,7 +20,7 @@ async def setup_ozw.opp, entry=None, fixture=None):
             connection_class=config_entries.CONN_CLASS_LOCAL_PUSH,
         )
 
-        entry.add_to.opp.opp)
+        entry.add_to_opp(opp)
 
     with patch("openpeerpower.components.mqtt.async_subscribe") as mock_subscribe:
         mock_subscribe.return_value = Mock()

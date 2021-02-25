@@ -36,7 +36,7 @@ class FilterTest:
 
 
 @pytest.fixture(autouse=True)
-def mock_batch_timeout.opp, monkeypatch):
+def mock_batch_timeout(opp, monkeypatch):
     """Mock the event bus listener and the batch timeout for tests."""
     opp.bus.listen = MagicMock()
     monkeypatch.setattr(
@@ -111,7 +111,7 @@ def _get_write_api_mock_v2(mock_influx_client):
     ],
     indirect=["mock_client"],
 )
-async def test_setup_config_full.opp, mock_client, config_ext, get_write_api):
+async def test_setup_config_full(opp, mock_client, config_ext, get_write_api):
     """Test the setup with full configuration."""
     config = {
         "influxdb": {
@@ -124,9 +124,9 @@ async def test_setup_config_full.opp, mock_client, config_ext, get_write_api):
     }
     config["influxdb"].update(config_ext)
 
-    assert await async_setup_component.opp, influxdb.DOMAIN, config)
+    assert await async_setup_component(opp, influxdb.DOMAIN, config)
     await opp.async_block_till_done()
-    assert.opp.bus.listen.called
+    assert opp.bus.listen.called
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
     assert get_write_api(mock_client).call_count == 1
 
@@ -256,10 +256,10 @@ async def test_setup_config_ssl(
 
     with patch("os.access", return_value=True):
         with patch("os.path.isfile", return_value=True):
-            assert await async_setup_component.opp, influxdb.DOMAIN, config)
+            assert await async_setup_component(opp, influxdb.DOMAIN, config)
             await opp.async_block_till_done()
 
-            assert.opp.bus.listen.called
+            assert opp.bus.listen.called
             assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
             assert expected_client_args.items() <= mock_client.call_args.kwargs.items()
 
@@ -277,9 +277,9 @@ async def test_setup_minimal_config(opp, mock_client, config_ext, get_write_api)
     config = {"influxdb": {}}
     config["influxdb"].update(config_ext)
 
-    assert await async_setup_component.opp, influxdb.DOMAIN, config)
+    assert await async_setup_component(opp, influxdb.DOMAIN, config)
     await opp.async_block_till_done()
-    assert.opp.bus.listen.called
+    assert opp.bus.listen.called
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
     assert get_write_api(mock_client).call_count == 1
 
@@ -322,7 +322,7 @@ async def test_invalid_config(opp, mock_client, config_ext, get_write_api):
     config = {"influxdb": {}}
     config["influxdb"].update(config_ext)
 
-    assert not await async_setup_component.opp, influxdb.DOMAIN, config)
+    assert not await async_setup_component(opp, influxdb.DOMAIN, config)
 
 
 async def _setup_opp, mock_influx_client, config_ext, get_write_api):
@@ -334,7 +334,7 @@ async def _setup_opp, mock_influx_client, config_ext, get_write_api):
         }
     }
     config["influxdb"].update(config_ext)
-    assert await async_setup_component.opp, influxdb.DOMAIN, config)
+    assert await async_setup_component(opp, influxdb.DOMAIN, config)
     await opp.async_block_till_done()
     # A call is made to the write API during setup to test the connection.
     # Therefore we reset the write API mock here before the test begins.
@@ -584,7 +584,7 @@ async def test_event_listener_states(
         write_api.reset_mock()
 
 
-def execute_filter_test.opp, tests, handler_method, write_api, get_mock_call):
+def execute_filter_test(opp, tests, handler_method, write_api, get_mock_call):
     """Execute all tests for a given filtering test."""
     for test in tests:
         domain, entity_id = split_entity_id(test.id)
@@ -646,7 +646,7 @@ async def test_event_listener_denylist(
         FilterTest("fake.ok", True),
         FilterTest("fake.denylisted", False),
     ]
-    execute_filter_test.opp, tests, handler_method, write_api, get_mock_call)
+    execute_filter_test(opp, tests, handler_method, write_api, get_mock_call)
 
 
 @pytest.mark.parametrize(
@@ -680,7 +680,7 @@ async def test_event_listener_denylist_domain(
         FilterTest("fake.ok", True),
         FilterTest("another_fake.denylisted", False),
     ]
-    execute_filter_test.opp, tests, handler_method, write_api, get_mock_call)
+    execute_filter_test(opp, tests, handler_method, write_api, get_mock_call)
 
 
 @pytest.mark.parametrize(
@@ -714,7 +714,7 @@ async def test_event_listener_denylist_glob(
         FilterTest("fake.ok", True),
         FilterTest("fake.excluded_entity", False),
     ]
-    execute_filter_test.opp, tests, handler_method, write_api, get_mock_call)
+    execute_filter_test(opp, tests, handler_method, write_api, get_mock_call)
 
 
 @pytest.mark.parametrize(
@@ -748,7 +748,7 @@ async def test_event_listener_allowlist(
         FilterTest("fake.included", True),
         FilterTest("fake.excluded", False),
     ]
-    execute_filter_test.opp, tests, handler_method, write_api, get_mock_call)
+    execute_filter_test(opp, tests, handler_method, write_api, get_mock_call)
 
 
 @pytest.mark.parametrize(
@@ -782,7 +782,7 @@ async def test_event_listener_allowlist_domain(
         FilterTest("fake.ok", True),
         FilterTest("another_fake.excluded", False),
     ]
-    execute_filter_test.opp, tests, handler_method, write_api, get_mock_call)
+    execute_filter_test(opp, tests, handler_method, write_api, get_mock_call)
 
 
 @pytest.mark.parametrize(
@@ -816,7 +816,7 @@ async def test_event_listener_allowlist_glob(
         FilterTest("fake.included_entity", True),
         FilterTest("fake.denied", False),
     ]
-    execute_filter_test.opp, tests, handler_method, write_api, get_mock_call)
+    execute_filter_test(opp, tests, handler_method, write_api, get_mock_call)
 
 
 @pytest.mark.parametrize(
@@ -866,7 +866,7 @@ async def test_event_listener_filtered_allowlist(
         FilterTest("fake.excluded_entity", False),
         FilterTest("another_fake.included_entity", False),
     ]
-    execute_filter_test.opp, tests, handler_method, write_api, get_mock_call)
+    execute_filter_test(opp, tests, handler_method, write_api, get_mock_call)
 
 
 @pytest.mark.parametrize(
@@ -906,7 +906,7 @@ async def test_event_listener_filtered_denylist(
         FilterTest("another_fake.denied", False),
         FilterTest("fake.excluded_entity", False),
     ]
-    execute_filter_test.opp, tests, handler_method, write_api, get_mock_call)
+    execute_filter_test(opp, tests, handler_method, write_api, get_mock_call)
 
 
 @pytest.mark.parametrize(
@@ -1620,7 +1620,7 @@ async def test_connection_failure_on_startup(
     config = {"influxdb": config_ext}
 
     with patch(f"{INFLUX_PATH}.event_helper") as event_helper:
-        assert await async_setup_component.opp, influxdb.DOMAIN, config)
+        assert await async_setup_component(opp, influxdb.DOMAIN, config)
         await opp.async_block_till_done()
 
         assert (

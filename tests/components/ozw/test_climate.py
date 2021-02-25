@@ -20,9 +20,9 @@ from openpeerpower.components.climate.const import (
 from .common import setup_ozw
 
 
-async def test_climate.opp, climate_data, sent_messages, climate_msg, caplog):
+async def test_climate(opp, climate_data, sent_messages, climate_msg, caplog):
     """Test setting up config entry."""
-    receive_message = await setup_ozw.opp, fixture=climate_data)
+    receive_message = await setup_ozw(opp, fixture=climate_data)
 
     # Test multi-setpoint thermostat (node 7 in dump)
     # mode is heat, this should be single setpoint

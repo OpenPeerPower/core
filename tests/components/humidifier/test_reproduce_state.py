@@ -22,15 +22,15 @@ ENTITY_1 = "humidifier.test1"
 ENTITY_2 = "humidifier.test2"
 
 
-async def test_reproducing_on_off_states.opp, caplog):
+async def test_reproducing_on_off_states(opp, caplog):
     """Test reproducing humidifier states."""
     opp.states.async_set(ENTITY_1, "off", {ATTR_MODE: MODE_NORMAL, ATTR_HUMIDITY: 45})
     opp.states.async_set(ENTITY_2, "on", {ATTR_MODE: MODE_NORMAL, ATTR_HUMIDITY: 45})
 
-    turn_on_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
-    turn_off_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_OFF)
-    mode_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_MODE)
-    humidity_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_HUMIDITY)
+    turn_on_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_ON)
+    turn_off_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_OFF)
+    mode_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_MODE)
+    humidity_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_HUMIDITY)
 
     # These calls should do nothing as entities already in desired state
     await opp.helpers.state.async_reproduce_state(
@@ -81,10 +81,10 @@ async def test_multiple_attrs.opp):
     """Test turn on with multiple attributes."""
     opp.states.async_set(ENTITY_1, STATE_OFF, {})
 
-    turn_on_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
-    turn_off_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_OFF)
-    mode_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_MODE)
-    humidity_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_HUMIDITY)
+    turn_on_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_ON)
+    turn_off_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_OFF)
+    mode_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_MODE)
+    humidity_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_HUMIDITY)
 
     await async_reproduce_states(
         opp. [State(ENTITY_1, STATE_ON, {ATTR_MODE: MODE_NORMAL, ATTR_HUMIDITY: 45})]
@@ -105,10 +105,10 @@ async def test_turn_off_multiple_attrs.opp):
     """Test set mode and humidity for off state."""
     opp.states.async_set(ENTITY_1, STATE_ON, {})
 
-    turn_on_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
-    turn_off_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_OFF)
-    mode_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_MODE)
-    humidity_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_HUMIDITY)
+    turn_on_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_ON)
+    turn_off_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_OFF)
+    mode_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_MODE)
+    humidity_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_HUMIDITY)
 
     await async_reproduce_states(
         opp. [State(ENTITY_1, STATE_OFF, {ATTR_MODE: MODE_NORMAL, ATTR_HUMIDITY: 45})]
@@ -128,10 +128,10 @@ async def test_multiple_modes.opp):
     opp.states.async_set(ENTITY_1, STATE_OFF, {})
     opp.states.async_set(ENTITY_2, STATE_OFF, {})
 
-    turn_on_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
-    turn_off_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_OFF)
-    mode_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_MODE)
-    humidity_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_HUMIDITY)
+    turn_on_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_ON)
+    turn_off_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_OFF)
+    mode_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_MODE)
+    humidity_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_HUMIDITY)
 
     await async_reproduce_states(
         opp,
@@ -167,12 +167,12 @@ async def test_state_with_none.opp):
     """Test that none is not a humidifier state."""
     opp.states.async_set(ENTITY_1, STATE_OFF, {})
 
-    turn_on_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
-    turn_off_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_OFF)
-    mode_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_MODE)
-    humidity_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_HUMIDITY)
+    turn_on_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_ON)
+    turn_off_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_OFF)
+    mode_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_MODE)
+    humidity_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_HUMIDITY)
 
-    await async_reproduce_states.opp, [State(ENTITY_1, None)])
+    await async_reproduce_states(opp, [State(ENTITY_1, None)])
 
     await opp.async_block_till_done()
 
@@ -186,10 +186,10 @@ async def test_state_with_context.opp):
     """Test that context is forwarded."""
     opp.states.async_set(ENTITY_1, STATE_OFF, {})
 
-    turn_on_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
-    turn_off_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_OFF)
-    mode_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_MODE)
-    humidity_calls = async_mock_service.opp, DOMAIN, SERVICE_SET_HUMIDITY)
+    turn_on_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_ON)
+    turn_off_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_OFF)
+    mode_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_MODE)
+    humidity_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_HUMIDITY)
 
     context = Context()
 
@@ -217,17 +217,17 @@ async def test_state_with_context.opp):
     "service,attribute",
     [(SERVICE_SET_MODE, ATTR_MODE), (SERVICE_SET_HUMIDITY, ATTR_HUMIDITY)],
 )
-async def test_attribute.opp, service, attribute):
+async def test_attribute(opp, service, attribute):
     """Test that service call is made for each attribute."""
     opp.states.async_set(ENTITY_1, STATE_ON, {})
 
-    turn_on_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_ON)
-    turn_off_calls = async_mock_service.opp, DOMAIN, SERVICE_TURN_OFF)
-    calls_1 = async_mock_service.opp, DOMAIN, service)
+    turn_on_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_ON)
+    turn_off_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_OFF)
+    calls_1 = async_mock_service(opp, DOMAIN, service)
 
     value = "dummy"
 
-    await async_reproduce_states.opp, [State(ENTITY_1, STATE_ON, {attribute: value})])
+    await async_reproduce_states(opp, [State(ENTITY_1, STATE_ON, {attribute: value})])
 
     await opp.async_block_till_done()
 

@@ -390,7 +390,7 @@ async def test_services(opp, calls):
     """Test the automation services for turning entities on/off."""
     entity_id = "automation.hello"
 
-    assert.opp.states.get(entity_id) is None
+    assert opp.states.get(entity_id) is None
     assert not automation.is_on(opp, entity_id)
 
     assert await async_setup_component(
@@ -405,7 +405,7 @@ async def test_services(opp, calls):
         },
     )
 
-    assert.opp.states.get(entity_id) is not None
+    assert opp.states.get(entity_id) is not None
     assert automation.is_on(opp, entity_id)
 
     opp.bus.async_fire("test_event")
@@ -484,8 +484,8 @@ async def test_reload_config_service(opp, calls, opp_admin_user, opp_read_only_u
             }
         },
     )
-    assert.opp.states.get("automation.hello") is not None
-    assert.opp.states.get("automation.bye") is None
+    assert opp.states.get("automation.hello") is not None
+    assert opp.states.get("automation.bye") is None
     listeners = opp.bus.async_listeners()
     assert listeners.get("test_event") == 1
     assert listeners.get("test_event2") is None
@@ -533,8 +533,8 @@ async def test_reload_config_service(opp, calls, opp_admin_user, opp_read_only_u
 
     assert len(test_reload_event) == 1
 
-    assert.opp.states.get("automation.hello") is None
-    assert.opp.states.get("automation.bye") is not None
+    assert opp.states.get("automation.hello") is None
+    assert opp.states.get("automation.bye") is not None
     listeners = opp.bus.async_listeners()
     assert listeners.get("test_event") is None
     assert listeners.get("test_event2") == 1
@@ -566,7 +566,7 @@ async def test_reload_config_when_invalid_config(opp, calls):
                 }
             },
         )
-    assert.opp.states.get("automation.hello") is not None
+    assert opp.states.get("automation.hello") is not None
 
     opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
@@ -581,7 +581,7 @@ async def test_reload_config_when_invalid_config(opp, calls):
     ):
         await opp.services.async_call(automation.DOMAIN, SERVICE_RELOAD, blocking=True)
 
-    assert.opp.states.get("automation.hello") is None
+    assert opp.states.get("automation.hello") is None
 
     opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
@@ -604,7 +604,7 @@ async def test_reload_config_handles_load_fails(opp, calls):
             }
         },
     )
-    assert.opp.states.get("automation.hello") is not None
+    assert opp.states.get("automation.hello") is not None
 
     opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
@@ -618,7 +618,7 @@ async def test_reload_config_handles_load_fails(opp, calls):
     ):
         await opp.services.async_call(automation.DOMAIN, SERVICE_RELOAD, blocking=True)
 
-    assert.opp.states.get("automation.hello") is not None
+    assert opp.states.get("automation.hello") is not None
 
     opp.bus.async_fire("test_event")
     await opp.async_block_till_done()

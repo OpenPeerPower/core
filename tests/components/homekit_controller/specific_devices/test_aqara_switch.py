@@ -16,8 +16,8 @@ from tests.components.homekit_controller.common import (
 
 async def test_aqara_switch_setup_opp):
     """Test that a Aqara Switch can be correctly setup in HA."""
-    accessories = await setup_accessories_from_file.opp, "aqara_switch.json")
-    config_entry, pairing = await setup_test_accessories.opp, accessories)
+    accessories = await setup_accessories_from_file(opp, "aqara_switch.json")
+    config_entry, pairing = await setup_test_accessories(opp, accessories)
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
@@ -48,5 +48,5 @@ async def test_aqara_switch_setup_opp):
             }
         )
 
-    triggers = await async_get_device_automations.opp, "trigger", battery.device_id)
+    triggers = await async_get_device_automations(opp, "trigger", battery.device_id)
     assert_lists_same(triggers, expected)

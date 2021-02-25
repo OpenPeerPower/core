@@ -28,13 +28,13 @@ async def test_methods.opp):
     """Test if methods call the services as expected."""
     # Test is_on
     opp.states.async_set("light.test", STATE_ON)
-    assert light.is_on.opp, "light.test")
+    assert light.is_on(opp, "light.test")
 
     opp.states.async_set("light.test", STATE_OFF)
-    assert not light.is_on.opp, "light.test")
+    assert not light.is_on(opp, "light.test")
 
     # Test turn_on
-    turn_on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+    turn_on_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
 
     await opp.services.async_call(
         light.DOMAIN,
@@ -67,7 +67,7 @@ async def test_methods.opp):
     assert call.data.get(light.ATTR_WHITE_VALUE) == "white_val"
 
     # Test turn_off
-    turn_off_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_OFF)
+    turn_off_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_OFF)
 
     await opp.services.async_call(
         light.DOMAIN,
@@ -88,7 +88,7 @@ async def test_methods.opp):
     assert call.data[light.ATTR_TRANSITION] == "transition_val"
 
     # Test toggle
-    toggle_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TOGGLE)
+    toggle_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TOGGLE)
 
     await opp.services.async_call(
         light.DOMAIN,
@@ -106,7 +106,7 @@ async def test_methods.opp):
     assert call.data[light.ATTR_TRANSITION] == "transition_val"
 
 
-async def test_services.opp, mock_light_profiles):
+async def test_services(opp, mock_light_profiles):
     """Test the provided services."""
     platform = getattr.opp.components, "test.light")
 
@@ -119,9 +119,9 @@ async def test_services.opp, mock_light_profiles):
     ent1, ent2, ent3 = platform.ENTITIES
 
     # Test init
-    assert light.is_on.opp, ent1.entity_id)
-    assert not light.is_on.opp, ent2.entity_id)
-    assert not light.is_on.opp, ent3.entity_id)
+    assert light.is_on(opp, ent1.entity_id)
+    assert not light.is_on(opp, ent2.entity_id)
+    assert not light.is_on(opp, ent3.entity_id)
 
     # Test basic turn_on, turn_off, toggle services
     await opp.services.async_call(
@@ -131,17 +131,17 @@ async def test_services.opp, mock_light_profiles):
         light.DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ent2.entity_id}, blocking=True
     )
 
-    assert not light.is_on.opp, ent1.entity_id)
-    assert light.is_on.opp, ent2.entity_id)
+    assert not light.is_on(opp, ent1.entity_id)
+    assert light.is_on(opp, ent2.entity_id)
 
     # turn on all lights
     await opp.services.async_call(
         light.DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_MATCH_ALL}, blocking=True
     )
 
-    assert light.is_on.opp, ent1.entity_id)
-    assert light.is_on.opp, ent2.entity_id)
-    assert light.is_on.opp, ent3.entity_id)
+    assert light.is_on(opp, ent1.entity_id)
+    assert light.is_on(opp, ent2.entity_id)
+    assert light.is_on(opp, ent3.entity_id)
 
     # turn off all lights
     await opp.services.async_call(
@@ -151,9 +151,9 @@ async def test_services.opp, mock_light_profiles):
         blocking=True,
     )
 
-    assert not light.is_on.opp, ent1.entity_id)
-    assert not light.is_on.opp, ent2.entity_id)
-    assert not light.is_on.opp, ent3.entity_id)
+    assert not light.is_on(opp, ent1.entity_id)
+    assert not light.is_on(opp, ent2.entity_id)
+    assert not light.is_on(opp, ent3.entity_id)
 
     # turn off all lights by setting brightness to 0
     await opp.services.async_call(
@@ -166,27 +166,27 @@ async def test_services.opp, mock_light_profiles):
         blocking=True,
     )
 
-    assert not light.is_on.opp, ent1.entity_id)
-    assert not light.is_on.opp, ent2.entity_id)
-    assert not light.is_on.opp, ent3.entity_id)
+    assert not light.is_on(opp, ent1.entity_id)
+    assert not light.is_on(opp, ent2.entity_id)
+    assert not light.is_on(opp, ent3.entity_id)
 
     # toggle all lights
     await opp.services.async_call(
         light.DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: ENTITY_MATCH_ALL}, blocking=True
     )
 
-    assert light.is_on.opp, ent1.entity_id)
-    assert light.is_on.opp, ent2.entity_id)
-    assert light.is_on.opp, ent3.entity_id)
+    assert light.is_on(opp, ent1.entity_id)
+    assert light.is_on(opp, ent2.entity_id)
+    assert light.is_on(opp, ent3.entity_id)
 
     # toggle all lights
     await opp.services.async_call(
         light.DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: ENTITY_MATCH_ALL}, blocking=True
     )
 
-    assert not light.is_on.opp, ent1.entity_id)
-    assert not light.is_on.opp, ent2.entity_id)
-    assert not light.is_on.opp, ent3.entity_id)
+    assert not light.is_on(opp, ent1.entity_id)
+    assert not light.is_on(opp, ent2.entity_id)
+    assert not light.is_on(opp, ent3.entity_id)
 
     # Ensure all attributes process correctly
     await opp.services.async_call(
@@ -267,9 +267,9 @@ async def test_services.opp, mock_light_profiles):
         blocking=True,
     )
 
-    assert not light.is_on.opp, ent1.entity_id)
-    assert not light.is_on.opp, ent2.entity_id)
-    assert not light.is_on.opp, ent3.entity_id)
+    assert not light.is_on(opp, ent1.entity_id)
+    assert not light.is_on(opp, ent2.entity_id)
+    assert not light.is_on(opp, ent3.entity_id)
 
     _, data = ent1.last_call("turn_off")
     assert data == {light.ATTR_TRANSITION: 10}
@@ -529,13 +529,13 @@ async def test_light_profiles(
 
     _, data = ent1.last_call(last_call)
     if last_call == "turn_on":
-        assert light.is_on.opp, ent1.entity_id)
+        assert light.is_on(opp, ent1.entity_id)
     else:
-        assert not light.is_on.opp, ent1.entity_id)
+        assert not light.is_on(opp, ent1.entity_id)
     assert data == expected_data
 
 
-async def test_default_profiles_group.opp, mock_light_profiles):
+async def test_default_profiles_group(opp, mock_light_profiles):
     """Test default turn-on light profile for all lights."""
     platform = getattr.opp.components, "test.light")
     platform.init()
@@ -657,11 +657,11 @@ async def test_default_profiles_light(
     }
 
 
-async def test_light_context.opp, opp_admin_user):
+async def test_light_context(opp, opp_admin_user):
     """Test that light context works."""
     platform = getattr.opp.components, "test.light")
     platform.init()
-    assert await async_setup_component.opp, "light", {"light": {"platform": "test"}})
+    assert await async_setup_component(opp, "light", {"light": {"platform": "test"}})
     await opp.async_block_till_done()
 
     state = opp.states.get("light.ceiling")
@@ -681,11 +681,11 @@ async def test_light_context.opp, opp_admin_user):
     assert state2.context.user_id == opp_admin_user.id
 
 
-async def test_light_turn_on_auth.opp, opp_admin_user):
+async def test_light_turn_on_auth(opp, opp_admin_user):
     """Test that light context works."""
     platform = getattr.opp.components, "test.light")
     platform.init()
-    assert await async_setup_component.opp, "light", {"light": {"platform": "test"}})
+    assert await async_setup_component(opp, "light", {"light": {"platform": "test"}})
     await opp.async_block_till_done()
 
     state = opp.states.get("light.ceiling")
@@ -710,7 +710,7 @@ async def test_light_brightness_step.opp):
     entity = platform.ENTITIES[0]
     entity.supported_features = light.SUPPORT_BRIGHTNESS
     entity.brightness = 100
-    assert await async_setup_component.opp, "light", {"light": {"platform": "test"}})
+    assert await async_setup_component(opp, "light", {"light": {"platform": "test"}})
     await opp.async_block_till_done()
 
     state = opp.states.get(entity.entity_id)
@@ -745,7 +745,7 @@ async def test_light_brightness_pct_conversion.opp):
     entity = platform.ENTITIES[0]
     entity.supported_features = light.SUPPORT_BRIGHTNESS
     entity.brightness = 100
-    assert await async_setup_component.opp, "light", {"light": {"platform": "test"}})
+    assert await async_setup_component(opp, "light", {"light": {"platform": "test"}})
     await opp.async_block_till_done()
 
     state = opp.states.get(entity.entity_id)

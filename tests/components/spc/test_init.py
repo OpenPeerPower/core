@@ -60,13 +60,13 @@ async def test_update_alarm_device(opp):
 
     entity_id = "alarm_control_panel.house"
 
-    assert.opp.states.get(entity_id).state == STATE_ALARM_ARMED_AWAY
-    assert.opp.states.get(entity_id).attributes["changed_by"] == "Sven"
+    assert opp.states.get(entity_id).state == STATE_ALARM_ARMED_AWAY
+    assert opp.states.get(entity_id).attributes["changed_by"] == "Sven"
 
     area_mock.mode = AreaMode.UNSET
     area_mock.last_changed_by = "Anna"
     await opp.data[DATA_API]._async_callback(area_mock)
     await opp.async_block_till_done()
 
-    assert.opp.states.get(entity_id).state == STATE_ALARM_DISARMED
-    assert.opp.states.get(entity_id).attributes["changed_by"] == "Anna"
+    assert opp.states.get(entity_id).state == STATE_ALARM_DISARMED
+    assert opp.states.get(entity_id).attributes["changed_by"] == "Anna"

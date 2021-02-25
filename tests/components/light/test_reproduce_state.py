@@ -18,7 +18,7 @@ VALID_RGB_COLOR = {"rgb_color": (255, 63, 111)}
 VALID_XY_COLOR = {"xy_color": (0.59, 0.274)}
 
 
-async def test_reproducing_states.opp, caplog):
+async def test_reproducing_states(opp, caplog):
     """Test reproducing Light states."""
     opp.states.async_set("light.entity_off", "off", {})
     opp.states.async_set("light.entity_bright", "on", VALID_BRIGHTNESS)
@@ -34,8 +34,8 @@ async def test_reproducing_states.opp, caplog):
     opp.states.async_set("light.entity_rgb", "on", VALID_RGB_COLOR)
     opp.states.async_set("light.entity_xy", "on", VALID_XY_COLOR)
 
-    turn_on_calls = async_mock_service.opp, "light", "turn_on")
-    turn_off_calls = async_mock_service.opp, "light", "turn_off")
+    turn_on_calls = async_mock_service(opp, "light", "turn_on")
+    turn_off_calls = async_mock_service(opp, "light", "turn_off")
 
     # These calls should do nothing as entities already in desired state
     await opp.helpers.state.async_reproduce_state(
@@ -156,10 +156,10 @@ async def test_reproducing_states.opp, caplog):
     assert turn_off_calls[0].data == {"entity_id": "light.entity_xy"}
 
 
-async def test_deprecation_warning.opp, caplog):
+async def test_deprecation_warning(opp, caplog):
     """Test deprecation warning."""
     opp.states.async_set("light.entity_off", "off", {})
-    turn_on_calls = async_mock_service.opp, "light", "turn_on")
+    turn_on_calls = async_mock_service(opp, "light", "turn_on")
     await opp.helpers.state.async_reproduce_state(
         [State("light.entity_off", "on", {"brightness_pct": 80})]
     )

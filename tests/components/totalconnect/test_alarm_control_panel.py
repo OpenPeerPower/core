@@ -37,7 +37,7 @@ async def test_attributes.opp):
         "openpeerpower.components.totalconnect.TotalConnectClient.TotalConnectClient.request",
         return_value=RESPONSE_DISARMED,
     ) as mock_request:
-        await setup_platform.opp, ALARM_DOMAIN)
+        await setup_platform(opp, ALARM_DOMAIN)
         state = opp.states.get(ENTITY_ID)
         assert state.state == STATE_ALARM_DISARMED
         mock_request.assert_called_once()
@@ -51,7 +51,7 @@ async def test_arm_home_success.opp):
         "openpeerpower.components.totalconnect.TotalConnectClient.TotalConnectClient.request",
         side_effect=responses,
     ):
-        await setup_platform.opp, ALARM_DOMAIN)
+        await setup_platform(opp, ALARM_DOMAIN)
         assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
 
         await opp.services.async_call(
@@ -69,7 +69,7 @@ async def test_arm_home_failure.opp):
         "openpeerpower.components.totalconnect.TotalConnectClient.TotalConnectClient.request",
         side_effect=responses,
     ):
-        await setup_platform.opp, ALARM_DOMAIN)
+        await setup_platform(opp, ALARM_DOMAIN)
         assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
 
         with pytest.raises(Exception) as e:
@@ -88,7 +88,7 @@ async def test_arm_away_success.opp):
         "openpeerpower.components.totalconnect.TotalConnectClient.TotalConnectClient.request",
         side_effect=responses,
     ):
-        await setup_platform.opp, ALARM_DOMAIN)
+        await setup_platform(opp, ALARM_DOMAIN)
         assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
 
         await opp.services.async_call(
@@ -105,7 +105,7 @@ async def test_arm_away_failure.opp):
         "openpeerpower.components.totalconnect.TotalConnectClient.TotalConnectClient.request",
         side_effect=responses,
     ):
-        await setup_platform.opp, ALARM_DOMAIN)
+        await setup_platform(opp, ALARM_DOMAIN)
         assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
 
         with pytest.raises(Exception) as e:
@@ -124,7 +124,7 @@ async def test_disarm_success.opp):
         "openpeerpower.components.totalconnect.TotalConnectClient.TotalConnectClient.request",
         side_effect=responses,
     ):
-        await setup_platform.opp, ALARM_DOMAIN)
+        await setup_platform(opp, ALARM_DOMAIN)
         assert STATE_ALARM_ARMED_AWAY == opp.states.get(ENTITY_ID).state
 
         await opp.services.async_call(
@@ -141,7 +141,7 @@ async def test_disarm_failure.opp):
         "openpeerpower.components.totalconnect.TotalConnectClient.TotalConnectClient.request",
         side_effect=responses,
     ):
-        await setup_platform.opp, ALARM_DOMAIN)
+        await setup_platform(opp, ALARM_DOMAIN)
         assert STATE_ALARM_ARMED_AWAY == opp.states.get(ENTITY_ID).state
 
         with pytest.raises(Exception) as e:

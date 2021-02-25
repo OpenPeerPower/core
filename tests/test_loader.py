@@ -57,7 +57,7 @@ def test_component_loader(opp):
     """Test loading components."""
     components = loader.Components.opp)
     assert components.http.CONFIG_SCHEMA is http.CONFIG_SCHEMA
-    assert.opp.components.http.CONFIG_SCHEMA is http.CONFIG_SCHEMA
+    assert opp.components.http.CONFIG_SCHEMA is http.CONFIG_SCHEMA
 
 
 def test_component_loader_non_existing(opp):

@@ -35,7 +35,7 @@ async def test_invalid_credentials.opp):
     with requests_mock.Mocker() as mock_req:
         url = re.compile(API_URL + "devicetypes")
         mock_req.get(url, text="{}", status_code=401)
-        assert await async_setup_component.opp, "sensor", VALID_CONFIG)
+        assert await async_setup_component(opp, "sensor", VALID_CONFIG)
         await opp.async_block_till_done()
     assert len.opp.states.async_entity_ids()) == 0
 
@@ -52,7 +52,7 @@ async def test_valid_credentials.opp):
         url3 = re.compile(API_URL + "devices/fake_id/messages*")
         mock_req.get(url3, text=VALID_MESSAGE)
 
-        assert await async_setup_component.opp, "sensor", VALID_CONFIG)
+        assert await async_setup_component(opp, "sensor", VALID_CONFIG)
         await opp.async_block_till_done()
 
         assert len.opp.states.async_entity_ids()) == 1

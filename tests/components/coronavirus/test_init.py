@@ -42,8 +42,8 @@ async def test_migration(opp):
     sensor_worldwide = ent_reg.async_get("sensor.worldwide_confirmed")
     assert sensor_worldwide.unique_id == "__worldwide-confirmed"
 
-    assert.opp.states.get("sensor.netherlands_confirmed").state == "10"
-    assert.opp.states.get("sensor.worldwide_confirmed").state == "11"
+    assert opp.states.get("sensor.netherlands_confirmed").state == "10"
+    assert opp.states.get("sensor.worldwide_confirmed").state == "11"
 
     assert nl_entry.unique_id == "Netherlands"
     assert worldwide_entry.unique_id == OPTION_WORLDWIDE

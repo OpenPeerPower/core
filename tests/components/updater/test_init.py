@@ -51,7 +51,7 @@ async def test_new_version_shows_entity_true(
     assert await async_setup_component(opp, updater.DOMAIN, {updater.DOMAIN: {}})
 
     await opp.async_block_till_done()
-    assert.opp.states.is_state("binary_sensor.updater", "on")
+    assert opp.states.is_state("binary_sensor.updater", "on")
     assert (
         opp.states.get("binary_sensor.updater").attributes["newest_version"]
         == NEW_VERSION
@@ -73,7 +73,7 @@ async def test_same_version_shows_entity_false(
 
     await opp.async_block_till_done()
 
-    assert.opp.states.is_state("binary_sensor.updater", "off")
+    assert opp.states.is_state("binary_sensor.updater", "off")
     assert (
         opp.states.get("binary_sensor.updater").attributes["newest_version"]
         == MOCK_VERSION
@@ -91,7 +91,7 @@ async def test_disable_reporting(opp, mock_get_uuid, mock_get_newest_version):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.is_state("binary_sensor.updater", "off")
+    assert opp.states.is_state("binary_sensor.updater", "off")
     await updater.get_newest_version(opp, MOCK_HUUID, MOCK_CONFIG)
     call = mock_get_newest_version.mock_calls[0][1]
     assert call[0] is.opp
@@ -161,7 +161,7 @@ async def test_new_version_shows_entity_after_hour(oppio(
 
     await opp.async_block_till_done()
 
-    assert.opp.states.is_state("binary_sensor.updater", "on")
+    assert opp.states.is_state("binary_sensor.updater", "on")
     assert (
         opp.states.get("binary_sensor.updater").attributes["newest_version"] == "999.0"
     )

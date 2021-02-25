@@ -29,9 +29,9 @@ def create_motion_sensor_service(accessory):
     cur_state.value = 0
 
 
-async def test_motion_sensor_read_state.opp, utcnow):
+async def test_motion_sensor_read_state(opp, utcnow):
     """Test that we can read the state of a HomeKit motion sensor accessory."""
-    helper = await setup_test_component.opp, create_motion_sensor_service)
+    helper = await setup_test_component(opp, create_motion_sensor_service)
 
     helper.characteristics[MOTION_DETECTED].value = False
     state = await helper.poll_and_get_state()
@@ -52,9 +52,9 @@ def create_contact_sensor_service(accessory):
     cur_state.value = 0
 
 
-async def test_contact_sensor_read_state.opp, utcnow):
+async def test_contact_sensor_read_state(opp, utcnow):
     """Test that we can read the state of a HomeKit contact accessory."""
-    helper = await setup_test_component.opp, create_contact_sensor_service)
+    helper = await setup_test_component(opp, create_contact_sensor_service)
 
     helper.characteristics[CONTACT_STATE].value = 0
     state = await helper.poll_and_get_state()
@@ -75,9 +75,9 @@ def create_smoke_sensor_service(accessory):
     cur_state.value = 0
 
 
-async def test_smoke_sensor_read_state.opp, utcnow):
+async def test_smoke_sensor_read_state(opp, utcnow):
     """Test that we can read the state of a HomeKit contact accessory."""
-    helper = await setup_test_component.opp, create_smoke_sensor_service)
+    helper = await setup_test_component(opp, create_smoke_sensor_service)
 
     helper.characteristics[SMOKE_DETECTED].value = 0
     state = await helper.poll_and_get_state()
@@ -98,9 +98,9 @@ def create_carbon_monoxide_sensor_service(accessory):
     cur_state.value = 0
 
 
-async def test_carbon_monoxide_sensor_read_state.opp, utcnow):
+async def test_carbon_monoxide_sensor_read_state(opp, utcnow):
     """Test that we can read the state of a HomeKit contact accessory."""
-    helper = await setup_test_component.opp, create_carbon_monoxide_sensor_service)
+    helper = await setup_test_component(opp, create_carbon_monoxide_sensor_service)
 
     helper.characteristics[CARBON_MONOXIDE_DETECTED].value = 0
     state = await helper.poll_and_get_state()
@@ -121,9 +121,9 @@ def create_occupancy_sensor_service(accessory):
     cur_state.value = 0
 
 
-async def test_occupancy_sensor_read_state.opp, utcnow):
+async def test_occupancy_sensor_read_state(opp, utcnow):
     """Test that we can read the state of a HomeKit occupancy sensor accessory."""
-    helper = await setup_test_component.opp, create_occupancy_sensor_service)
+    helper = await setup_test_component(opp, create_occupancy_sensor_service)
 
     helper.characteristics[OCCUPANCY_DETECTED].value = False
     state = await helper.poll_and_get_state()
@@ -144,9 +144,9 @@ def create_leak_sensor_service(accessory):
     cur_state.value = 0
 
 
-async def test_leak_sensor_read_state.opp, utcnow):
+async def test_leak_sensor_read_state(opp, utcnow):
     """Test that we can read the state of a HomeKit leak sensor accessory."""
-    helper = await setup_test_component.opp, create_leak_sensor_service)
+    helper = await setup_test_component(opp, create_leak_sensor_service)
 
     helper.characteristics[LEAK_DETECTED].value = 0
     state = await helper.poll_and_get_state()

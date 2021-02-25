@@ -23,7 +23,7 @@ async def test_plex_play_media(
     config,
 ):
     """Test playing media via the Plex integration."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     media_player = "media_player.zone_a"
     media_content_id = (
         '{"library_name": "Music", "artist_name": "Artist", "album_name": "Album"}'

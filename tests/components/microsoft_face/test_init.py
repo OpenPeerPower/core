@@ -21,7 +21,7 @@ from openpeerpower.setup import setup_component
 from tests.common import assert_setup_component, get_test_open_peer_power, load_fixture
 
 
-def create_group.opp, name):
+def create_group(opp, name):
     """Create a new person group.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -30,7 +30,7 @@ def create_group.opp, name):
     opp.services.call(DOMAIN, SERVICE_CREATE_GROUP, data)
 
 
-def delete_group.opp, name):
+def delete_group(opp, name):
     """Delete a person group.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -39,7 +39,7 @@ def delete_group.opp, name):
     opp.services.call(DOMAIN, SERVICE_DELETE_GROUP, data)
 
 
-def train_group.opp, group):
+def train_group(opp, group):
     """Train a person group.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -48,7 +48,7 @@ def train_group.opp, group):
     opp.services.call(DOMAIN, SERVICE_TRAIN_GROUP, data)
 
 
-def create_person.opp, group, name):
+def create_person(opp, group, name):
     """Create a person in a group.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -57,7 +57,7 @@ def create_person.opp, group, name):
     opp.services.call(DOMAIN, SERVICE_CREATE_PERSON, data)
 
 
-def delete_person.opp, group, name):
+def delete_person(opp, group, name):
     """Delete a person in a group.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -66,7 +66,7 @@ def delete_person.opp, group, name):
     opp.services.call(DOMAIN, SERVICE_DELETE_PERSON, data)
 
 
-def face_person.opp, group, person, camera_entity):
+def face_person(opp, group, person, camera_entity):
     """Add a new face picture to a person.
 
     This is a legacy helper method. Do not use it for new tests.

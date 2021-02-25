@@ -43,7 +43,7 @@ async def test_reload_notify.opp):
         )
         await opp.async_block_till_done()
 
-    assert.opp.services.has_service(notify.DOMAIN, DOMAIN)
+    assert opp.services.has_service(notify.DOMAIN, DOMAIN)
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -62,7 +62,7 @@ async def test_reload_notify.opp):
         await opp.async_block_till_done()
 
     assert not.opp.services.has_service(notify.DOMAIN, DOMAIN)
-    assert.opp.services.has_service(notify.DOMAIN, "smtp_reloaded")
+    assert opp.services.has_service(notify.DOMAIN, "smtp_reloaded")
 
 
 def _get_fixtures_base_path():
@@ -144,7 +144,7 @@ def test_send_message(message_data, data, content_type, opp, message):
         assert content_type in result
 
 
-def test_send_text_message.opp, message):
+def test_send_text_message(opp, message):
     """Verify if we can send simple text message."""
     expected = (
         '^Content-Type: text/plain; charset="us-ascii"\n'

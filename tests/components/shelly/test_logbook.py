@@ -13,11 +13,11 @@ from openpeerpower.setup import async_setup_component
 from tests.components.logbook.test_init import MockLazyEventPartialState
 
 
-async def test_humanify_shelly_click_event.opp, coap_wrapper):
+async def test_humanify_shelly_click_event(opp, coap_wrapper):
     """Test humanifying Shelly click event."""
     assert coap_wrapper
     opp.config.components.add("recorder")
-    assert await async_setup_component.opp, "logbook", {})
+    assert await async_setup_component(opp, "logbook", {})
     entity_attr_cache = logbook.EntityAttributeCache.opp)
 
     event1, event2 = list(

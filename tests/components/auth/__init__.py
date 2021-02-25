@@ -29,7 +29,7 @@ async def async_setup_auth(
         opp. provider_configs, module_configs
     )
     ensure_auth_manager_loaded.opp.auth)
-    await async_setup_component.opp, "auth", {})
+    await async_setup_component(opp, "auth", {})
     if setup_api:
-        await async_setup_component.opp, "api", {})
+        await async_setup_component(opp, "api", {})
     return await aiohttp_client.opp.http.app)

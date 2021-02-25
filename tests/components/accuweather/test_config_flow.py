@@ -107,7 +107,7 @@ async def test_integration_already_exists(opp):
             domain=DOMAIN,
             unique_id="123456",
             data=VALID_CONFIG,
-        ).add_to.opp.opp)
+        ).add_to_opp(opp)
 
         result = await opp.config_entries.flow.async_init(
             DOMAIN,
@@ -149,7 +149,7 @@ async def test_options_flow.opp):
         unique_id="123456",
         data=VALID_CONFIG,
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "accuweather.AccuWeather._async_get_data",

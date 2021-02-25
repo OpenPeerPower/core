@@ -14,7 +14,7 @@ from .test_gateway import DECONZ_WEB_REQUEST, setup_deconz_integration
 from tests.components.logbook.test_init import MockLazyEventPartialState
 
 
-async def test_humanifying_deconz_event.opp, aioclient_mock):
+async def test_humanifying_deconz_event(opp, aioclient_mock):
     """Test humanifying deCONZ event."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = {
@@ -56,10 +56,10 @@ async def test_humanifying_deconz_event.opp, aioclient_mock):
     config_entry = await setup_deconz_integration(
         opp. aioclient_mock, get_state_response=data
     )
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
 
     opp.config.components.add("recorder")
-    assert await async_setup_component.opp, "logbook", {})
+    assert await async_setup_component(opp, "logbook", {})
     entity_attr_cache = logbook.EntityAttributeCache.opp)
 
     events = list(

@@ -14,7 +14,7 @@ from tests.common import load_fixture
 
 async def test_async_browse_media.opp):
     """Test browse media."""
-    assert await async_setup_component.opp, DOMAIN, {})
+    assert await async_setup_component(opp, DOMAIN, {})
 
     # Prepare cached Netatmo event date
     opp.data[DOMAIN] = {}
@@ -27,7 +27,7 @@ async def test_async_browse_media.opp):
         "12:34:56:78:90:ac": "MyOutdoorCamera",
     }
 
-    assert await async_setup_component.opp, const.DOMAIN, {})
+    assert await async_setup_component(opp, const.DOMAIN, {})
     await opp.async_block_till_done()
 
     # Test camera not exists

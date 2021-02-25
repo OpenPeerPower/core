@@ -81,9 +81,9 @@ async def test_add_devices_then_register(opp):
     device3.unique_id = "unique3"
     new_device_func([device3])
     await opp.async_block_till_done()
-    assert.opp.states.get("light.name")
-    assert.opp.states.get("switch.name2")
-    assert.opp.states.get("switch.name3")
+    assert opp.states.get("light.name")
+    assert opp.states.get("switch.name2")
+    assert opp.states.get("switch.name3")
 
 
 async def test_register_then_add_devices(opp):
@@ -109,8 +109,8 @@ async def test_register_then_add_devices(opp):
     device2.unique_id = "unique2"
     new_device_func([device1, device2])
     await opp.async_block_till_done()
-    assert.opp.states.get("light.name")
-    assert.opp.states.get("switch.name2")
+    assert opp.states.get("light.name")
+    assert opp.states.get("switch.name2")
 
 
 async def test_notifications(opp):

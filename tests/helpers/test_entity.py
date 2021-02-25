@@ -547,7 +547,7 @@ async def test_set_context(opp):
     ent.entity_id = "hello.world"
     ent.async_set_context(context)
     await ent.async_update_op_state()
-    assert.opp.states.get("hello.world").context == context
+    assert opp.states.get("hello.world").context == context
 
 
 async def test_set_context_expired(opp):
@@ -564,7 +564,7 @@ async def test_set_context_expired(opp):
         ent.async_set_context(context)
         await ent.async_update_op_state()
 
-    assert.opp.states.get("hello.world").context != context
+    assert opp.states.get("hello.world").context != context
     assert ent._context is None
     assert ent._context_set is None
 
@@ -587,12 +587,12 @@ async def test_warn_disabled(opp, caplog):
 
     caplog.clear()
     ent.async_write_op_state()
-    assert.opp.states.get("hello.world") is None
+    assert opp.states.get("hello.world") is None
     assert "Entity hello.world is incorrectly being triggered" in caplog.text
 
     caplog.clear()
     ent.async_write_op_state()
-    assert.opp.states.get("hello.world") is None
+    assert opp.states.get("hello.world") is None
     assert caplog.text == ""
 
 
@@ -614,14 +614,14 @@ async def test_disabled_in_entity_registry(opp):
 
     ent.add_to_platform_start(opp, MagicMock(platform_name="test-platform"), None)
     await ent.add_to_platform_finish()
-    assert.opp.states.get("hello.world") is not None
+    assert opp.states.get("hello.world") is not None
 
     entry2 = registry.async_update_entity("hello.world", disabled_by="user")
     await opp.async_block_till_done()
     assert entry2 != entry
     assert ent.registry_entry == entry2
     assert ent.enabled is False
-    assert.opp.states.get("hello.world") is None
+    assert opp.states.get("hello.world") is None
 
     entry3 = registry.async_update_entity("hello.world", disabled_by=None)
     await opp.async_block_till_done()

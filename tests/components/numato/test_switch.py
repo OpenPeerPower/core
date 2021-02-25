@@ -12,18 +12,18 @@ MOCKUP_ENTITY_IDS = {
 }
 
 
-async def test_failing_setups_no_entities.opp, numato_fixture, monkeypatch):
+async def test_failing_setups_no_entities(opp, numato_fixture, monkeypatch):
     """When port setup fails, no entity shall be created."""
     monkeypatch.setattr(numato_fixture.NumatoDeviceMock, "setup", mockup_raise)
-    assert await async_setup_component.opp, "numato", NUMATO_CFG)
+    assert await async_setup_component(opp, "numato", NUMATO_CFG)
     await opp.async_block_till_done()
     for entity_id in MOCKUP_ENTITY_IDS:
         assert entity_id not in.opp.states.async_entity_ids()
 
 
-async def test_regular.opp_operations.opp, numato_fixture):
+async def test_regular.opp_operations(opp, numato_fixture):
     """Test regular operations from within Open Peer Power."""
-    assert await async_setup_component.opp, "numato", NUMATO_CFG)
+    assert await async_setup_component(opp, "numato", NUMATO_CFG)
     await opp.async_block_till_done()  # wait until services are registered
     await opp.services.async_call(
         switch.DOMAIN,
@@ -31,7 +31,7 @@ async def test_regular.opp_operations.opp, numato_fixture):
         {ATTR_ENTITY_ID: "switch.numato_switch_mock_port5"},
         blocking=True,
     )
-    assert.opp.states.get("switch.numato_switch_mock_port5").state == "on"
+    assert opp.states.get("switch.numato_switch_mock_port5").state == "on"
     assert numato_fixture.devices[0].values[5] == 1
     await opp.services.async_call(
         switch.DOMAIN,
@@ -39,7 +39,7 @@ async def test_regular.opp_operations.opp, numato_fixture):
         {ATTR_ENTITY_ID: "switch.numato_switch_mock_port6"},
         blocking=True,
     )
-    assert.opp.states.get("switch.numato_switch_mock_port6").state == "on"
+    assert opp.states.get("switch.numato_switch_mock_port6").state == "on"
     assert numato_fixture.devices[0].values[6] == 1
     await opp.services.async_call(
         switch.DOMAIN,
@@ -47,7 +47,7 @@ async def test_regular.opp_operations.opp, numato_fixture):
         {ATTR_ENTITY_ID: "switch.numato_switch_mock_port5"},
         blocking=True,
     )
-    assert.opp.states.get("switch.numato_switch_mock_port5").state == "off"
+    assert opp.states.get("switch.numato_switch_mock_port5").state == "off"
     assert numato_fixture.devices[0].values[5] == 0
     await opp.services.async_call(
         switch.DOMAIN,
@@ -55,17 +55,17 @@ async def test_regular.opp_operations.opp, numato_fixture):
         {ATTR_ENTITY_ID: "switch.numato_switch_mock_port6"},
         blocking=True,
     )
-    assert.opp.states.get("switch.numato_switch_mock_port6").state == "off"
+    assert opp.states.get("switch.numato_switch_mock_port6").state == "off"
     assert numato_fixture.devices[0].values[6] == 0
 
 
-async def test_failing.opp_operations.opp, numato_fixture, monkeypatch):
+async def test_failing.opp_operations(opp, numato_fixture, monkeypatch):
     """Test failing operations called from within Open Peer Power.
 
     Switches remain in their initial 'off' state when the device can't
     be written to.
     """
-    assert await async_setup_component.opp, "numato", NUMATO_CFG)
+    assert await async_setup_component(opp, "numato", NUMATO_CFG)
 
     await opp.async_block_till_done()  # wait until services are registered
     monkeypatch.setattr(numato_fixture.devices[0], "write", mockup_raise)
@@ -75,7 +75,7 @@ async def test_failing.opp_operations.opp, numato_fixture, monkeypatch):
         {ATTR_ENTITY_ID: "switch.numato_switch_mock_port5"},
         blocking=True,
     )
-    assert.opp.states.get("switch.numato_switch_mock_port5").state == "off"
+    assert opp.states.get("switch.numato_switch_mock_port5").state == "off"
     assert not numato_fixture.devices[0].values[5]
     await opp.services.async_call(
         switch.DOMAIN,
@@ -83,7 +83,7 @@ async def test_failing.opp_operations.opp, numato_fixture, monkeypatch):
         {ATTR_ENTITY_ID: "switch.numato_switch_mock_port6"},
         blocking=True,
     )
-    assert.opp.states.get("switch.numato_switch_mock_port6").state == "off"
+    assert opp.states.get("switch.numato_switch_mock_port6").state == "off"
     assert not numato_fixture.devices[0].values[6]
     await opp.services.async_call(
         switch.DOMAIN,
@@ -91,7 +91,7 @@ async def test_failing.opp_operations.opp, numato_fixture, monkeypatch):
         {ATTR_ENTITY_ID: "switch.numato_switch_mock_port5"},
         blocking=True,
     )
-    assert.opp.states.get("switch.numato_switch_mock_port5").state == "off"
+    assert opp.states.get("switch.numato_switch_mock_port5").state == "off"
     assert not numato_fixture.devices[0].values[5]
     await opp.services.async_call(
         switch.DOMAIN,
@@ -99,14 +99,14 @@ async def test_failing.opp_operations.opp, numato_fixture, monkeypatch):
         {ATTR_ENTITY_ID: "switch.numato_switch_mock_port6"},
         blocking=True,
     )
-    assert.opp.states.get("switch.numato_switch_mock_port6").state == "off"
+    assert opp.states.get("switch.numato_switch_mock_port6").state == "off"
     assert not numato_fixture.devices[0].values[6]
 
 
-async def test_switch_setup_without_discovery_info.opp, config, numato_fixture):
+async def test_switch_setup_without_discovery_info(opp, config, numato_fixture):
     """Test handling of empty discovery_info."""
     numato_fixture.discover()
-    await discovery.async_load_platform.opp, "switch", "numato", None, config)
+    await discovery.async_load_platform(opp, "switch", "numato", None, config)
     for entity_id in MOCKUP_ENTITY_IDS:
         assert entity_id not in.opp.states.async_entity_ids()
     await opp.async_block_till_done()  # wait for numato platform to be loaded

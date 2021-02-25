@@ -36,7 +36,7 @@ async def calls.opp, fixture):
 @pytest.fixture
 async def fixture.opp, aiohttp_client):
     """Initialize a Open Peer Power server for testing this module."""
-    await async_setup_component.opp, dialogflow.DOMAIN, {"dialogflow": {}})
+    await async_setup_component(opp, dialogflow.DOMAIN, {"dialogflow": {}})
     await async_setup_component(
         opp,
         intent_script.DOMAIN,

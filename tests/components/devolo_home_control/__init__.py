@@ -14,6 +14,6 @@ def configure_integration.opp: OpenPeerPower) -> MockConfigEntry:
         "mydevolo_url": "https://test_mydevolo_url.test",
     }
     entry = MockConfigEntry(domain=DOMAIN, data=config, unique_id="123456")
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     return entry

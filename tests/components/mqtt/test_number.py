@@ -62,14 +62,14 @@ async def test_run_number_setup_opp, mqtt_mock):
     )
     await opp.async_block_till_done()
 
-    async_fire_mqtt_message.opp, topic, "10")
+    async_fire_mqtt_message(opp, topic, "10")
 
     await opp.async_block_till_done()
 
     state = opp.states.get("number.test_number")
     assert state.state == "10"
 
-    async_fire_mqtt_message.opp, topic, "20.5")
+    async_fire_mqtt_message(opp, topic, "20.5")
 
     await opp.async_block_till_done()
 
@@ -77,7 +77,7 @@ async def test_run_number_setup_opp, mqtt_mock):
     assert state.state == "20.5"
 
 
-async def test_run_number_service_optimistic.opp, mqtt_mock):
+async def test_run_number_service_optimistic(opp, mqtt_mock):
     """Test that set_value service works in optimistic mode."""
     topic = "test/number"
 
@@ -144,7 +144,7 @@ async def test_run_number_service_optimistic.opp, mqtt_mock):
     assert state.state == "42.1"
 
 
-async def test_run_number_service.opp, mqtt_mock):
+async def test_run_number_service(opp, mqtt_mock):
     """Test that set_value service works in non optimistic mode."""
     cmd_topic = "test/number/set"
     state_topic = "test/number"
@@ -163,7 +163,7 @@ async def test_run_number_service.opp, mqtt_mock):
     )
     await opp.async_block_till_done()
 
-    async_fire_mqtt_message.opp, state_topic, "32")
+    async_fire_mqtt_message(opp, state_topic, "32")
     state = opp.states.get("number.test_number")
     assert state.state == "32"
 
@@ -178,49 +178,49 @@ async def test_run_number_service.opp, mqtt_mock):
     assert state.state == "32"
 
 
-async def test_availability_when_connection_lost.opp, mqtt_mock):
+async def test_availability_when_connection_lost(opp, mqtt_mock):
     """Test availability after MQTT disconnection."""
     await help_test_availability_when_connection_lost(
         opp. mqtt_mock, number.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_availability_without_topic.opp, mqtt_mock):
+async def test_availability_without_topic(opp, mqtt_mock):
     """Test availability without defined availability topic."""
     await help_test_availability_without_topic(
         opp. mqtt_mock, number.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_default_availability_payload.opp, mqtt_mock):
+async def test_default_availability_payload(opp, mqtt_mock):
     """Test availability by default payload with defined topic."""
     await help_test_default_availability_payload(
         opp. mqtt_mock, number.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_custom_availability_payload.opp, mqtt_mock):
+async def test_custom_availability_payload(opp, mqtt_mock):
     """Test availability by custom payload with defined topic."""
     await help_test_custom_availability_payload(
         opp. mqtt_mock, number.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_setting_attribute_via_mqtt_json_message.opp, mqtt_mock):
+async def test_setting_attribute_via_mqtt_json_message(opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_via_mqtt_json_message(
         opp. mqtt_mock, number.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_setting_attribute_with_template.opp, mqtt_mock):
+async def test_setting_attribute_with_template(opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_with_template(
         opp. mqtt_mock, number.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_update_with_json_attrs_not_dict.opp, mqtt_mock, caplog):
+async def test_update_with_json_attrs_not_dict(opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_not_dict(
         opp. mqtt_mock, caplog, number.DOMAIN, DEFAULT_CONFIG
@@ -234,14 +234,14 @@ async def test_update_with_json_attrs_bad_JSON.opp, mqtt_mock, caplog):
     )
 
 
-async def test_discovery_update_attr.opp, mqtt_mock, caplog):
+async def test_discovery_update_attr(opp, mqtt_mock, caplog):
     """Test update of discovered MQTTAttributes."""
     await help_test_discovery_update_attr(
         opp. mqtt_mock, caplog, number.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_unique_id.opp, mqtt_mock):
+async def test_unique_id(opp, mqtt_mock):
     """Test unique id option only creates one number per unique_id."""
     config = {
         number.DOMAIN: [
@@ -261,16 +261,16 @@ async def test_unique_id.opp, mqtt_mock):
             },
         ]
     }
-    await help_test_unique_id.opp, mqtt_mock, number.DOMAIN, config)
+    await help_test_unique_id(opp, mqtt_mock, number.DOMAIN, config)
 
 
-async def test_discovery_removal_number.opp, mqtt_mock, caplog):
+async def test_discovery_removal_number(opp, mqtt_mock, caplog):
     """Test removal of discovered number."""
     data = json.dumps(DEFAULT_CONFIG[number.DOMAIN])
-    await help_test_discovery_removal.opp, mqtt_mock, caplog, number.DOMAIN, data)
+    await help_test_discovery_removal(opp, mqtt_mock, caplog, number.DOMAIN, data)
 
 
-async def test_discovery_update_number.opp, mqtt_mock, caplog):
+async def test_discovery_update_number(opp, mqtt_mock, caplog):
     """Test update of discovered number."""
     data1 = (
         '{ "name": "Beer", "state_topic": "test-topic", "command_topic": "test-topic"}'
@@ -284,7 +284,7 @@ async def test_discovery_update_number.opp, mqtt_mock, caplog):
     )
 
 
-async def test_discovery_update_unchanged_number.opp, mqtt_mock, caplog):
+async def test_discovery_update_unchanged_number(opp, mqtt_mock, caplog):
     """Test update of discovered number."""
     data1 = (
         '{ "name": "Beer", "state_topic": "test-topic", "command_topic": "test-topic"}'
@@ -298,7 +298,7 @@ async def test_discovery_update_unchanged_number.opp, mqtt_mock, caplog):
 
 
 @pytest.mark.no_fail_on_log_exception
-async def test_discovery_broken.opp, mqtt_mock, caplog):
+async def test_discovery_broken(opp, mqtt_mock, caplog):
     """Test handling of bad discovery message."""
     data1 = '{ "name": "Beer" }'
     data2 = (
@@ -310,49 +310,49 @@ async def test_discovery_broken.opp, mqtt_mock, caplog):
     )
 
 
-async def test_entity_device_info_with_connection.opp, mqtt_mock):
+async def test_entity_device_info_with_connection(opp, mqtt_mock):
     """Test MQTT number device registry integration."""
     await help_test_entity_device_info_with_connection(
         opp. mqtt_mock, number.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_entity_device_info_with_identifier.opp, mqtt_mock):
+async def test_entity_device_info_with_identifier(opp, mqtt_mock):
     """Test MQTT number device registry integration."""
     await help_test_entity_device_info_with_identifier(
         opp. mqtt_mock, number.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_entity_device_info_update.opp, mqtt_mock):
+async def test_entity_device_info_update(opp, mqtt_mock):
     """Test device registry update."""
     await help_test_entity_device_info_update(
         opp. mqtt_mock, number.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_entity_device_info_remove.opp, mqtt_mock):
+async def test_entity_device_info_remove(opp, mqtt_mock):
     """Test device registry remove."""
     await help_test_entity_device_info_remove(
         opp. mqtt_mock, number.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_entity_id_update_subscriptions.opp, mqtt_mock):
+async def test_entity_id_update_subscriptions(opp, mqtt_mock):
     """Test MQTT subscriptions are managed when entity_id is updated."""
     await help_test_entity_id_update_subscriptions(
         opp. mqtt_mock, number.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_entity_id_update_discovery_update.opp, mqtt_mock):
+async def test_entity_id_update_discovery_update(opp, mqtt_mock):
     """Test MQTT discovery update when entity_id is updated."""
     await help_test_entity_id_update_discovery_update(
         opp. mqtt_mock, number.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_entity_debug_info_message.opp, mqtt_mock):
+async def test_entity_debug_info_message(opp, mqtt_mock):
     """Test MQTT debug info."""
     await help_test_entity_debug_info_message(
         opp. mqtt_mock, number.DOMAIN, DEFAULT_CONFIG, payload=b"1"

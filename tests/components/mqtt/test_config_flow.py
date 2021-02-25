@@ -28,7 +28,7 @@ def mock_try_connection():
         yield mock_try
 
 
-async def test_user_connection_works.opp, mock_try_connection, mock_finish_setup):
+async def test_user_connection_works(opp, mock_try_connection, mock_finish_setup):
     """Test we can finish a config flow."""
     mock_try_connection.return_value = True
 
@@ -53,7 +53,7 @@ async def test_user_connection_works.opp, mock_try_connection, mock_finish_setup
     assert len(mock_finish_setup.mock_calls) == 1
 
 
-async def test_user_connection_fails.opp, mock_try_connection, mock_finish_setup):
+async def test_user_connection_fails(opp, mock_try_connection, mock_finish_setup):
     """Test if connection cannot be made."""
     mock_try_connection.return_value = False
 
@@ -75,9 +75,9 @@ async def test_user_connection_fails.opp, mock_try_connection, mock_finish_setup
     assert len(mock_finish_setup.mock_calls) == 0
 
 
-async def test_manual_config_set.opp, mock_try_connection, mock_finish_setup):
+async def test_manual_config_set(opp, mock_try_connection, mock_finish_setup):
     """Test we ignore entry if manual config available."""
-    assert await async_setup_component.opp, "mqtt", {"mqtt": {"broker": "bla"}})
+    assert await async_setup_component(opp, "mqtt", {"mqtt": {"broker": "bla"}})
     await opp.async_block_till_done()
     assert len(mock_finish_setup.mock_calls) == 1
 
@@ -91,7 +91,7 @@ async def test_manual_config_set.opp, mock_try_connection, mock_finish_setup):
 
 async def test_user_single_instance.opp):
     """Test we only allow a single config flow."""
-    MockConfigEntry(domain="mqtt").add_to.opp.opp)
+    MockConfigEntry(domain="mqtt").add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         "mqtt", context={"source": "user"}
@@ -102,7 +102,7 @@ async def test_user_single_instance.opp):
 
 async def test.oppio_single_instance.opp):
     """Test we only allow a single config flow."""
-    MockConfigEntry(domain="mqtt").add_to.opp.opp)
+    MockConfigEntry(domain="mqtt").add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         "mqtt", context={"source":  opp.o"}
@@ -111,7 +111,7 @@ async def test.oppio_single_instance.opp):
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test.oppio_confirm.opp, mock_try_connection, mock_finish_setup):
+async def test.oppio_confirm(opp, mock_try_connection, mock_finish_setup):
     """Test we can finish a config flow."""
     mock_try_connection.return_value = True
 
@@ -150,7 +150,7 @@ async def test.oppio_confirm.opp, mock_try_connection, mock_finish_setup):
     assert len(mock_finish_setup.mock_calls) == 1
 
 
-async def test_option_flow.opp, mqtt_mock, mock_try_connection):
+async def test_option_flow(opp, mqtt_mock, mock_try_connection):
     """Test config flow options."""
     mock_try_connection.return_value = True
     config_entry = opp.config_entries.async_entries(mqtt.DOMAIN)[0]
@@ -222,7 +222,7 @@ async def test_option_flow.opp, mqtt_mock, mock_try_connection):
     assert mqtt_mock.async_connect.call_count == 1
 
 
-async def test_disable_birth_will.opp, mqtt_mock, mock_try_connection):
+async def test_disable_birth_will(opp, mqtt_mock, mock_try_connection):
     """Test disabling birth and will."""
     mock_try_connection.return_value = True
     config_entry = opp.config_entries.async_entries(mqtt.DOMAIN)[0]
@@ -448,10 +448,10 @@ async def test_option_flow_default_suggested_values(
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
 
-async def test_options_user_connection_fails.opp, mock_try_connection):
+async def test_options_user_connection_fails(opp, mock_try_connection):
     """Test if connection cannot be made."""
     config_entry = MockConfigEntry(domain=mqtt.DOMAIN)
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     config_entry.data = {
         mqtt.CONF_BROKER: "test-broker",
         mqtt.CONF_PORT: 1234,
@@ -479,10 +479,10 @@ async def test_options_user_connection_fails.opp, mock_try_connection):
     }
 
 
-async def test_options_bad_birth_message_fails.opp, mock_try_connection):
+async def test_options_bad_birth_message_fails(opp, mock_try_connection):
     """Test bad birth message."""
     config_entry = MockConfigEntry(domain=mqtt.DOMAIN)
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     config_entry.data = {
         mqtt.CONF_BROKER: "test-broker",
         mqtt.CONF_PORT: 1234,
@@ -515,10 +515,10 @@ async def test_options_bad_birth_message_fails.opp, mock_try_connection):
     }
 
 
-async def test_options_bad_will_message_fails.opp, mock_try_connection):
+async def test_options_bad_will_message_fails(opp, mock_try_connection):
     """Test bad will message."""
     config_entry = MockConfigEntry(domain=mqtt.DOMAIN)
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     config_entry.data = {
         mqtt.CONF_BROKER: "test-broker",
         mqtt.CONF_PORT: 1234,

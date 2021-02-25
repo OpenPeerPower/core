@@ -63,7 +63,7 @@ def assistant_client(loop, opp, aiohttp_client):
 def.opp_fixture(loop, opp):
     """Set up a Open Peer Power instance for these tests."""
     # We need to do this to get access to openpeerpower/turn_(on,off)
-    loop.run_until_complete(setup.async_setup_component.opp, core.DOMAIN, {}))
+    loop.run_until_complete(setup.async_setup_component(opp, core.DOMAIN, {}))
 
     loop.run_until_complete(
         setup.async_setup_component(
@@ -88,7 +88,7 @@ def.opp_fixture(loop, opp):
     )
 
     loop.run_until_complete(
-        setup.async_setup_component.opp, fan.DOMAIN, {"fan": [{"platform": "demo"}]})
+        setup.async_setup_component(opp, fan.DOMAIN, {"fan": [{"platform": "demo"}]})
     )
 
     loop.run_until_complete(
@@ -104,7 +104,7 @@ def.opp_fixture(loop, opp):
     )
 
     loop.run_until_complete(
-        setup.async_setup_component.opp, lock.DOMAIN, {"lock": [{"platform": "demo"}]})
+        setup.async_setup_component(opp, lock.DOMAIN, {"lock": [{"platform": "demo"}]})
     )
 
     loop.run_until_complete(
@@ -457,7 +457,7 @@ async def test_execute_request.opp_fixture, assistant_client, auth_header):
     bed = opp_fixture.states.get("light.bed_light")
     assert bed.attributes.get(light.ATTR_COLOR_TEMP) == 212
 
-    assert.opp_fixture.states.get("switch.decorative_lights").state == "off"
+    assert opp_fixture.states.get("switch.decorative_lights").state == "off"
 
     walkman = opp_fixture.states.get("media_player.walkman")
     assert walkman.state == "playing"

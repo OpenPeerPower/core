@@ -21,7 +21,7 @@ CONNECTION_EXCEPTIONS = [
 ]
 
 
-async def async_setup_test_fixture.opp, mock_get_station, initial_value):
+async def async_setup_test_fixture(opp, mock_get_station, initial_value):
     """Create a dummy config entry for testing polling."""
     mock_get_station.return_value = initial_value
 
@@ -33,9 +33,9 @@ async def async_setup_test_fixture.opp, mock_get_station, initial_value):
         title="Viking Recorder",
         connection_class=config_entries.CONN_CLASS_CLOUD_PUSH,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
-    assert await async_setup_component.opp, "eafm", {})
+    assert await async_setup_component(opp, "eafm", {})
     assert entry.state == config_entries.ENTRY_STATE_LOADED
     await opp.async_block_till_done()
 
@@ -48,13 +48,13 @@ async def async_setup_test_fixture.opp, mock_get_station, initial_value):
             mock_get_station.return_value = value
 
         next_update = dt_util.utcnow() + datetime.timedelta(60 * 15)
-        async_fire_time_changed.opp, next_update)
+        async_fire_time_changed(opp, next_update)
         await opp.async_block_till_done()
 
     return entry, poll
 
 
-async def test_reading_measures_not_list.opp, mock_get_station):
+async def test_reading_measures_not_list(opp, mock_get_station):
     """
     Test that a measure can be a dict not a list.
 
@@ -80,7 +80,7 @@ async def test_reading_measures_not_list.opp, mock_get_station):
     assert state.state == "5"
 
 
-async def test_reading_no_unit.opp, mock_get_station):
+async def test_reading_no_unit(opp, mock_get_station):
     """
     Test that a sensor functions even if its unit is not known.
 
@@ -108,7 +108,7 @@ async def test_reading_no_unit.opp, mock_get_station):
     assert state.state == "5"
 
 
-async def test_ignore_invalid_latest_reading.opp, mock_get_station):
+async def test_ignore_invalid_latest_reading(opp, mock_get_station):
     """
     Test that a sensor functions even if its unit is not known.
 
@@ -148,7 +148,7 @@ async def test_ignore_invalid_latest_reading.opp, mock_get_station):
 
 
 @pytest.mark.parametrize("exception", CONNECTION_EXCEPTIONS)
-async def test_reading_unavailable.opp, mock_get_station, exception):
+async def test_reading_unavailable(opp, mock_get_station, exception):
     """Test that a sensor is marked as unavailable if there is a connection error."""
     _, poll = await async_setup_test_fixture(
         opp,
@@ -178,7 +178,7 @@ async def test_reading_unavailable.opp, mock_get_station, exception):
 
 
 @pytest.mark.parametrize("exception", CONNECTION_EXCEPTIONS)
-async def test_recover_from_failure.opp, mock_get_station, exception):
+async def test_recover_from_failure(opp, mock_get_station, exception):
     """Test that a sensor recovers from failures."""
     _, poll = await async_setup_test_fixture(
         opp,
@@ -227,7 +227,7 @@ async def test_recover_from_failure.opp, mock_get_station, exception):
     assert state.state == "56"
 
 
-async def test_reading_is_sampled.opp, mock_get_station):
+async def test_reading_is_sampled(opp, mock_get_station):
     """Test that a sensor is added and polled."""
     await async_setup_test_fixture(
         opp,
@@ -254,7 +254,7 @@ async def test_reading_is_sampled.opp, mock_get_station):
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == "m"
 
 
-async def test_multiple_readings_are_sampled.opp, mock_get_station):
+async def test_multiple_readings_are_sampled(opp, mock_get_station):
     """Test that multiple sensors are added and polled."""
     await async_setup_test_fixture(
         opp,
@@ -295,7 +295,7 @@ async def test_multiple_readings_are_sampled.opp, mock_get_station):
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == "m"
 
 
-async def test_ignore_no_latest_reading.opp, mock_get_station):
+async def test_ignore_no_latest_reading(opp, mock_get_station):
     """Test that a measure is ignored if it has no latest reading."""
     await async_setup_test_fixture(
         opp,
@@ -334,7 +334,7 @@ async def test_ignore_no_latest_reading.opp, mock_get_station):
     assert state is None
 
 
-async def test_mark_existing_as_unavailable_if_no_latest.opp, mock_get_station):
+async def test_mark_existing_as_unavailable_if_no_latest(opp, mock_get_station):
     """Test that a measure is marked as unavailable if it has no latest reading."""
     _, poll = await async_setup_test_fixture(
         opp,
@@ -400,7 +400,7 @@ async def test_mark_existing_as_unavailable_if_no_latest.opp, mock_get_station):
     assert state.state == "5"
 
 
-async def test_unload_entry.opp, mock_get_station):
+async def test_unload_entry(opp, mock_get_station):
     """Test being able to unload an entry."""
     entry, _ = await async_setup_test_fixture(
         opp,

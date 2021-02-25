@@ -14,7 +14,7 @@ from openpeerpower.const import CONF_HOST
 
 async def test_flow_aborts_already_setup_opp, config_entry):
     """Test flow aborts when entry already setup."""
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     flow = HeosFlowHandler()
     flow.opp = opp
     result = await flow.async_step_user()
@@ -32,7 +32,7 @@ async def test_no_host_shows_form.opp):
     assert result["errors"] == {}
 
 
-async def test_cannot_connect_shows_error_form.opp, controller):
+async def test_cannot_connect_shows_error_form(opp, controller):
     """Test form is shown with error when cannot connect."""
     controller.connect.side_effect = HeosError()
     result = await opp.config_entries.flow.async_init(
@@ -47,7 +47,7 @@ async def test_cannot_connect_shows_error_form.opp, controller):
     controller.disconnect.reset_mock()
 
 
-async def test_create_entry_when_host_valid.opp, controller):
+async def test_create_entry_when_host_valid(opp, controller):
     """Test result type is create entry when host is valid."""
     data = {CONF_HOST: "127.0.0.1"}
     with patch("openpeerpower.components.heos.async_setup_entry", return_value=True):
@@ -62,7 +62,7 @@ async def test_create_entry_when_host_valid.opp, controller):
         assert controller.disconnect.call_count == 1
 
 
-async def test_create_entry_when_friendly_name_valid.opp, controller):
+async def test_create_entry_when_friendly_name_valid(opp, controller):
     """Test result type is create entry when friendly name is valid."""
     opp.data[DATA_DISCOVERED_HOSTS] = {"Office (127.0.0.1)": "127.0.0.1"}
     data = {CONF_HOST: "Office (127.0.0.1)"}
@@ -79,7 +79,7 @@ async def test_create_entry_when_friendly_name_valid.opp, controller):
         assert DATA_DISCOVERED_HOSTS not in.opp.data
 
 
-async def test_discovery_shows_create_form.opp, controller, discovery_data):
+async def test_discovery_shows_create_form(opp, controller, discovery_data):
     """Test discovery shows form to confirm setup and subsequent abort."""
 
     await opp.config_entries.flow.async_init(
@@ -89,7 +89,7 @@ async def test_discovery_shows_create_form.opp, controller, discovery_data):
     flows_in_progress = opp.config_entries.flow.async_progress()
     assert flows_in_progress[0]["context"]["unique_id"] == DOMAIN
     assert len(flows_in_progress) == 1
-    assert.opp.data[DATA_DISCOVERED_HOSTS] == {"Office (127.0.0.1)": "127.0.0.1"}
+    assert opp.data[DATA_DISCOVERED_HOSTS] == {"Office (127.0.0.1)": "127.0.0.1"}
 
     port = urlparse(discovery_data[ssdp.ATTR_SSDP_LOCATION]).port
     discovery_data[ssdp.ATTR_SSDP_LOCATION] = f"http://127.0.0.2:{port}/"
@@ -102,7 +102,7 @@ async def test_discovery_shows_create_form.opp, controller, discovery_data):
     flows_in_progress = opp.config_entries.flow.async_progress()
     assert flows_in_progress[0]["context"]["unique_id"] == DOMAIN
     assert len(flows_in_progress) == 1
-    assert.opp.data[DATA_DISCOVERED_HOSTS] == {
+    assert opp.data[DATA_DISCOVERED_HOSTS] == {
         "Office (127.0.0.1)": "127.0.0.1",
         "Bedroom (127.0.0.2)": "127.0.0.2",
     }
@@ -112,7 +112,7 @@ async def test_discovery_flow_aborts_already_setup(
     opp. controller, discovery_data, config_entry
 ):
     """Test discovery flow aborts when entry already setup."""
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     flow = HeosFlowHandler()
     flow.opp = opp
     result = await flow.async_step_ssdp(discovery_data)
@@ -120,7 +120,7 @@ async def test_discovery_flow_aborts_already_setup(
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test_discovery_sets_the_unique_id.opp, controller, discovery_data):
+async def test_discovery_sets_the_unique_id(opp, controller, discovery_data):
     """Test discovery sets the unique id."""
 
     port = urlparse(discovery_data[ssdp.ATTR_SSDP_LOCATION]).port
@@ -134,10 +134,10 @@ async def test_discovery_sets_the_unique_id.opp, controller, discovery_data):
     flows_in_progress = opp.config_entries.flow.async_progress()
     assert flows_in_progress[0]["context"]["unique_id"] == DOMAIN
     assert len(flows_in_progress) == 1
-    assert.opp.data[DATA_DISCOVERED_HOSTS] == {"Bedroom (127.0.0.2)": "127.0.0.2"}
+    assert opp.data[DATA_DISCOVERED_HOSTS] == {"Bedroom (127.0.0.2)": "127.0.0.2"}
 
 
-async def test_import_sets_the_unique_id.opp, controller):
+async def test_import_sets_the_unique_id(opp, controller):
     """Test import sets the unique id."""
 
     with patch("openpeerpower.components.heos.async_setup_entry", return_value=True):

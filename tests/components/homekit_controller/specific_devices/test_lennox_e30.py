@@ -18,8 +18,8 @@ from tests.components.homekit_controller.common import (
 
 async def test_lennox_e30_setup_opp):
     """Test that a Lennox E30 can be correctly setup in HA."""
-    accessories = await setup_accessories_from_file.opp, "lennox_e30.json")
-    config_entry, pairing = await setup_test_accessories.opp, accessories)
+    accessories = await setup_accessories_from_file(opp, "lennox_e30.json")
+    config_entry, pairing = await setup_test_accessories(opp, accessories)
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 

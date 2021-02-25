@@ -25,7 +25,7 @@ async def mock_panel_fixture():
         yield konn_client
 
 
-async def test_flow_works.opp, mock_panel):
+async def test_flow_works(opp, mock_panel):
     """Test config flow ."""
     result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": "user"}
@@ -62,7 +62,7 @@ async def test_flow_works.opp, mock_panel):
     )
 
 
-async def test_pro_flow_works.opp, mock_panel):
+async def test_pro_flow_works(opp, mock_panel):
     """Test config flow ."""
     result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": "user"}
@@ -101,7 +101,7 @@ async def test_pro_flow_works.opp, mock_panel):
     )
 
 
-async def test_ssdp.opp, mock_panel):
+async def test_ssdp(opp, mock_panel):
     """Test a panel being discovered."""
     mock_panel.get_status.return_value = {
         "mac": "11:22:33:44:55:66",
@@ -128,7 +128,7 @@ async def test_ssdp.opp, mock_panel):
     }
 
 
-async def test_import_no_host_user_finish.opp, mock_panel):
+async def test_import_no_host_user_finish(opp, mock_panel):
     """Test importing a panel with no host info."""
     mock_panel.get_status.return_value = {
         "mac": "aa:bb:cc:dd:ee:ff",
@@ -194,7 +194,7 @@ async def test_import_no_host_user_finish.opp, mock_panel):
     assert result["type"] == "create_entry"
 
 
-async def test_import_ssdp_host_user_finish.opp, mock_panel):
+async def test_import_ssdp_host_user_finish(opp, mock_panel):
     """Test importing a pro panel with no host info which ssdp discovers."""
     mock_panel.get_status.return_value = {
         "chipId": "somechipid",
@@ -267,13 +267,13 @@ async def test_import_ssdp_host_user_finish.opp, mock_panel):
     assert result["type"] == "create_entry"
 
 
-async def test_ssdp_already_configured.opp, mock_panel):
+async def test_ssdp_already_configured(opp, mock_panel):
     """Test if a discovered panel has already been configured."""
     MockConfigEntry(
         domain="konnected",
         data={"host": "0.0.0.0", "port": 1234},
         unique_id="112233445566",
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
     mock_panel.get_status.return_value = {
         "mac": "11:22:33:44:55:66",
         "model": "Konnected Pro",
@@ -292,7 +292,7 @@ async def test_ssdp_already_configured.opp, mock_panel):
     assert result["reason"] == "already_configured"
 
 
-async def test_ssdp_host_update.opp, mock_panel):
+async def test_ssdp_host_update(opp, mock_panel):
     """Test if a discovered panel has already been configured but changed host."""
     device_config = config_flow.CONFIG_ENTRY_SCHEMA(
         {
@@ -349,7 +349,7 @@ async def test_ssdp_host_update.opp, mock_panel):
         data=device_config,
         options=device_options,
         unique_id="112233445566",
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
     mock_panel.get_status.return_value = {
         "mac": "11:22:33:44:55:66",
         "model": "Konnected Pro",
@@ -492,7 +492,7 @@ async def test_import_existing_config(opp, mock_panel):
     }
 
 
-async def test_import_existing_config_entry.opp, mock_panel):
+async def test_import_existing_config_entry(opp, mock_panel):
     """Test importing a host that has an existing config entry."""
     MockConfigEntry(
         domain="konnected",
@@ -504,7 +504,7 @@ async def test_import_existing_config_entry.opp, mock_panel):
             "extra": "something",
         },
         unique_id="112233445566",
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     mock_panel.get_status.return_value = {
         "mac": "11:22:33:44:55:66",
@@ -554,7 +554,7 @@ async def test_import_existing_config_entry.opp, mock_panel):
 
     # We should have updated the host info but not the access token
     assert len.opp.config_entries.async_entries("konnected")) == 1
-    assert.opp.config_entries.async_entries("konnected")[0].data == {
+    assert opp.config_entries.async_entries("konnected")[0].data == {
         "host": "1.2.3.4",
         "port": 1234,
         "access_token": "ORIGINALTOKEN",
@@ -661,7 +661,7 @@ async def test_import_pin_config(opp, mock_panel):
     }
 
 
-async def test_option_flow.opp, mock_panel):
+async def test_option_flow(opp, mock_panel):
     """Test config flow options."""
     device_config = config_flow.CONFIG_ENTRY_SCHEMA(
         {
@@ -682,7 +682,7 @@ async def test_option_flow.opp, mock_panel):
         options=device_options,
         unique_id="112233445566",
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(
         entry.entry_id, context={"source": "test"}
@@ -847,7 +847,7 @@ async def test_option_flow.opp, mock_panel):
     }
 
 
-async def test_option_flow_pro.opp, mock_panel):
+async def test_option_flow_pro(opp, mock_panel):
     """Test config flow options for pro board."""
     device_config = config_flow.CONFIG_ENTRY_SCHEMA(
         {
@@ -868,7 +868,7 @@ async def test_option_flow_pro.opp, mock_panel):
         options=device_options,
         unique_id="112233445566",
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(
         entry.entry_id, context={"source": "test"}
@@ -1033,7 +1033,7 @@ async def test_option_flow_pro.opp, mock_panel):
     }
 
 
-async def test_option_flow_import.opp, mock_panel):
+async def test_option_flow_import(opp, mock_panel):
     """Test config flow options imported from configuration.yaml."""
     device_options = config_flow.OPTIONS_SCHEMA(
         {
@@ -1081,7 +1081,7 @@ async def test_option_flow_import.opp, mock_panel):
     entry = MockConfigEntry(
         domain="konnected", data=device_config, unique_id="112233445566"
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(
         entry.entry_id, context={"source": "test"}
@@ -1185,7 +1185,7 @@ async def test_option_flow_import.opp, mock_panel):
     }
 
 
-async def test_option_flow_existing.opp, mock_panel):
+async def test_option_flow_existing(opp, mock_panel):
     """Test config flow options with existing already in place."""
     device_options = config_flow.OPTIONS_SCHEMA(
         {
@@ -1228,7 +1228,7 @@ async def test_option_flow_existing.opp, mock_panel):
         options=device_options,
         unique_id="112233445566",
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(
         entry.entry_id, context={"source": "test"}

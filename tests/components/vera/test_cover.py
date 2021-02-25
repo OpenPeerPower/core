@@ -28,8 +28,8 @@ async def test_cover(
     )
     update_callback = component_data.controller_data[0].update_callback
 
-    assert.opp.states.get(entity_id).state == "closed"
-    assert.opp.states.get(entity_id).attributes["current_position"] == 0
+    assert opp.states.get(entity_id).state == "closed"
+    assert opp.states.get(entity_id).attributes["current_position"] == 0
 
     await opp.services.async_call(
         "cover",
@@ -42,8 +42,8 @@ async def test_cover(
     vera_device.get_level.return_value = 100
     update_callback(vera_device)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == "open"
-    assert.opp.states.get(entity_id).attributes["current_position"] == 100
+    assert opp.states.get(entity_id).state == "open"
+    assert opp.states.get(entity_id).attributes["current_position"] == 100
 
     await opp.services.async_call(
         "cover",
@@ -56,8 +56,8 @@ async def test_cover(
     vera_device.get_level.return_value = 50
     update_callback(vera_device)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == "open"
-    assert.opp.states.get(entity_id).attributes["current_position"] == 50
+    assert opp.states.get(entity_id).state == "open"
+    assert opp.states.get(entity_id).attributes["current_position"] == 50
 
     await opp.services.async_call(
         "cover",
@@ -68,8 +68,8 @@ async def test_cover(
     vera_device.stop.assert_called()
     update_callback(vera_device)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == "open"
-    assert.opp.states.get(entity_id).attributes["current_position"] == 50
+    assert opp.states.get(entity_id).state == "open"
+    assert opp.states.get(entity_id).attributes["current_position"] == 50
 
     await opp.services.async_call(
         "cover",
@@ -82,5 +82,5 @@ async def test_cover(
     vera_device.get_level.return_value = 00
     update_callback(vera_device)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == "closed"
-    assert.opp.states.get(entity_id).attributes["current_position"] == 00
+    assert opp.states.get(entity_id).state == "closed"
+    assert opp.states.get(entity_id).attributes["current_position"] == 00

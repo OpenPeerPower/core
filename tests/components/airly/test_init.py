@@ -15,9 +15,9 @@ from tests.common import MockConfigEntry, load_fixture
 from tests.components.airly import init_integration
 
 
-async def test_async_setup_entry.opp, aioclient_mock):
+async def test_async_setup_entry(opp, aioclient_mock):
     """Test a successful setup entry."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     state = opp.states.get("air_quality.home")
     assert state is not None
@@ -25,7 +25,7 @@ async def test_async_setup_entry.opp, aioclient_mock):
     assert state.state == "14"
 
 
-async def test_config_not_ready.opp, aioclient_mock):
+async def test_config_not_ready(opp, aioclient_mock):
     """Test for setup failure if connection to Airly is missing."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -41,12 +41,12 @@ async def test_config_not_ready.opp, aioclient_mock):
     )
 
     aioclient_mock.get(API_POINT_URL, exc=ConnectionError())
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
 
-async def test_config_without_unique_id.opp, aioclient_mock):
+async def test_config_without_unique_id(opp, aioclient_mock):
     """Test for setup entry without unique_id."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -60,13 +60,13 @@ async def test_config_without_unique_id.opp, aioclient_mock):
     )
 
     aioclient_mock.get(API_POINT_URL, text=load_fixture("airly_valid_station.json"))
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     assert entry.state == ENTRY_STATE_LOADED
     assert entry.unique_id == "123-456"
 
 
-async def test_config_with_turned_off_station.opp, aioclient_mock):
+async def test_config_with_turned_off_station(opp, aioclient_mock):
     """Test for setup entry for a turned off measuring station."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -81,14 +81,14 @@ async def test_config_with_turned_off_station.opp, aioclient_mock):
     )
 
     aioclient_mock.get(API_POINT_URL, text=load_fixture("airly_no_station.json"))
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
 
-async def test_update_interval.opp, aioclient_mock):
+async def test_update_interval(opp, aioclient_mock):
     """Test correct update interval when the number of configured instances changes."""
-    entry = await init_integration.opp, aioclient_mock)
+    entry = await init_integration(opp, aioclient_mock)
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
@@ -111,7 +111,7 @@ async def test_update_interval.opp, aioclient_mock):
         "https://airapi.airly.eu/v2/measurements/point?lat=66.660000&lng=111.110000",
         text=load_fixture("airly_valid_station.json"),
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
@@ -121,9 +121,9 @@ async def test_update_interval.opp, aioclient_mock):
         assert instance.update_interval == timedelta(minutes=30)
 
 
-async def test_unload_entry.opp, aioclient_mock):
+async def test_unload_entry(opp, aioclient_mock):
     """Test successful unload of entry."""
-    entry = await init_integration.opp, aioclient_mock)
+    entry = await init_integration(opp, aioclient_mock)
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED

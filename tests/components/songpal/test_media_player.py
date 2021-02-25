@@ -66,11 +66,11 @@ async def test_setup_platform.opp):
     assert len(all_states) == 0
 
 
-async def test_setup_failed.opp, caplog):
+async def test_setup_failed(opp, caplog):
     """Test failed to set up the entity."""
     mocked_device = _create_mocked_device(throw_exception=True)
     entry = MockConfigEntry(domain=songpal.DOMAIN, data=CONF_DATA)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with _patch_media_player_device(mocked_device):
         await opp.config_entries.async_setup(entry.entry_id)
@@ -85,7 +85,7 @@ async def test_setup_failed.opp, caplog):
     utcnow = dt_util.utcnow()
     type(mocked_device).get_supported_methods = AsyncMock()
     with _patch_media_player_device(mocked_device):
-        async_fire_time_changed.opp, utcnow + timedelta(seconds=30))
+        async_fire_time_changed(opp, utcnow + timedelta(seconds=30))
         await opp.async_block_till_done()
     all_states = opp.states.async_all()
     assert len(all_states) == 1
@@ -97,7 +97,7 @@ async def test_state.opp):
     """Test state of the entity."""
     mocked_device = _create_mocked_device()
     entry = MockConfigEntry(domain=songpal.DOMAIN, data=CONF_DATA)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with _patch_media_player_device(mocked_device):
         await opp.config_entries.async_setup(entry.entry_id)
@@ -130,7 +130,7 @@ async def test_services.opp):
     """Test services."""
     mocked_device = _create_mocked_device()
     entry = MockConfigEntry(domain=songpal.DOMAIN, data=CONF_DATA)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with _patch_media_player_device(mocked_device):
         await opp.config_entries.async_setup(entry.entry_id)
@@ -181,7 +181,7 @@ async def test_services.opp):
     entry2 = MockConfigEntry(
         domain=songpal.DOMAIN, data={CONF_NAME: "d2", CONF_ENDPOINT: ENDPOINT}
     )
-    entry2.add_to.opp.opp)
+    entry2.add_to_opp(opp)
     with _patch_media_player_device(mocked_device2):
         await opp.config_entries.async_setup(entry2.entry_id)
         await opp.async_block_till_done()
@@ -200,7 +200,7 @@ async def test_websocket_events.opp):
     """Test websocket events."""
     mocked_device = _create_mocked_device()
     entry = MockConfigEntry(domain=songpal.DOMAIN, data=CONF_DATA)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with _patch_media_player_device(mocked_device):
         await opp.config_entries.async_setup(entry.entry_id)
@@ -231,14 +231,14 @@ async def test_websocket_events.opp):
     power_change = MagicMock()
     power_change.status = False
     await notification_callbacks[PowerChange](power_change)
-    assert.opp.states.get(ENTITY_ID).state == STATE_OFF
+    assert opp.states.get(ENTITY_ID).state == STATE_OFF
 
 
-async def test_disconnected.opp, caplog):
+async def test_disconnected(opp, caplog):
     """Test disconnected behavior."""
     mocked_device = _create_mocked_device()
     entry = MockConfigEntry(domain=songpal.DOMAIN, data=CONF_DATA)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with _patch_media_player_device(mocked_device):
         await opp.config_entries.async_setup(entry.entry_id)

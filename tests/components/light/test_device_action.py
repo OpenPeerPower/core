@@ -39,13 +39,13 @@ def entity_reg.opp):
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
-async def test_get_actions.opp, device_reg, entity_reg):
+async def test_get_actions(opp, device_reg, entity_reg):
     """Test we get the expected actions from a light."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -95,14 +95,14 @@ async def test_get_actions.opp, device_reg, entity_reg):
             "entity_id": f"{DOMAIN}.test_5678",
         },
     ]
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert actions == expected_actions
 
 
-async def test_get_action_capabilities.opp, device_reg, entity_reg):
+async def test_get_action_capabilities(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a light action."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -114,7 +114,7 @@ async def test_get_action_capabilities.opp, device_reg, entity_reg):
         device_id=device_entry.id,
     )
 
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert len(actions) == 3
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
@@ -123,10 +123,10 @@ async def test_get_action_capabilities.opp, device_reg, entity_reg):
         assert capabilities == {"extra_fields": []}
 
 
-async def test_get_action_capabilities_brightness.opp, device_reg, entity_reg):
+async def test_get_action_capabilities_brightness(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a light action."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -150,7 +150,7 @@ async def test_get_action_capabilities_brightness.opp, device_reg, entity_reg):
             }
         ]
     }
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert len(actions) == 5
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
@@ -162,10 +162,10 @@ async def test_get_action_capabilities_brightness.opp, device_reg, entity_reg):
             assert capabilities == {"extra_fields": []}
 
 
-async def test_get_action_capabilities_flash.opp, device_reg, entity_reg):
+async def test_get_action_capabilities_flash(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a light action."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -189,7 +189,7 @@ async def test_get_action_capabilities_flash.opp, device_reg, entity_reg):
         ]
     }
 
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert len(actions) == 4
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
@@ -201,12 +201,12 @@ async def test_get_action_capabilities_flash.opp, device_reg, entity_reg):
             assert capabilities == {"extra_fields": []}
 
 
-async def test_action.opp, calls):
+async def test_action(opp, calls):
     """Test for turn_on and turn_off actions."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
 
     platform.init()
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     ent1, ent2, ent3 = platform.ENTITIES
@@ -300,50 +300,50 @@ async def test_action.opp, calls):
         },
     )
     await opp.async_block_till_done()
-    assert.opp.states.get(ent1.entity_id).state == STATE_ON
+    assert opp.states.get(ent1.entity_id).state == STATE_ON
     assert len(calls) == 0
 
     opp.bus.async_fire("test_off")
     await opp.async_block_till_done()
-    assert.opp.states.get(ent1.entity_id).state == STATE_OFF
+    assert opp.states.get(ent1.entity_id).state == STATE_OFF
 
     opp.bus.async_fire("test_off")
     await opp.async_block_till_done()
-    assert.opp.states.get(ent1.entity_id).state == STATE_OFF
+    assert opp.states.get(ent1.entity_id).state == STATE_OFF
 
     opp.bus.async_fire("test_on")
     await opp.async_block_till_done()
-    assert.opp.states.get(ent1.entity_id).state == STATE_ON
+    assert opp.states.get(ent1.entity_id).state == STATE_ON
 
     opp.bus.async_fire("test_on")
     await opp.async_block_till_done()
-    assert.opp.states.get(ent1.entity_id).state == STATE_ON
+    assert opp.states.get(ent1.entity_id).state == STATE_ON
 
     opp.bus.async_fire("test_toggle")
     await opp.async_block_till_done()
-    assert.opp.states.get(ent1.entity_id).state == STATE_OFF
+    assert opp.states.get(ent1.entity_id).state == STATE_OFF
 
     opp.bus.async_fire("test_toggle")
     await opp.async_block_till_done()
-    assert.opp.states.get(ent1.entity_id).state == STATE_ON
+    assert opp.states.get(ent1.entity_id).state == STATE_ON
 
     opp.bus.async_fire("test_toggle")
     await opp.async_block_till_done()
-    assert.opp.states.get(ent1.entity_id).state == STATE_OFF
+    assert opp.states.get(ent1.entity_id).state == STATE_OFF
 
     opp.bus.async_fire("test_flash_short")
     await opp.async_block_till_done()
-    assert.opp.states.get(ent1.entity_id).state == STATE_ON
+    assert opp.states.get(ent1.entity_id).state == STATE_ON
 
     opp.bus.async_fire("test_toggle")
     await opp.async_block_till_done()
-    assert.opp.states.get(ent1.entity_id).state == STATE_OFF
+    assert opp.states.get(ent1.entity_id).state == STATE_OFF
 
     opp.bus.async_fire("test_flash_long")
     await opp.async_block_till_done()
-    assert.opp.states.get(ent1.entity_id).state == STATE_ON
+    assert opp.states.get(ent1.entity_id).state == STATE_ON
 
-    turn_on_calls = async_mock_service.opp, DOMAIN, "turn_on")
+    turn_on_calls = async_mock_service(opp, DOMAIN, "turn_on")
 
     opp.bus.async_fire("test_brightness_increase")
     await opp.async_block_till_done()

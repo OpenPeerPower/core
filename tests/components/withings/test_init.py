@@ -137,13 +137,13 @@ async def test_auth_failure(
     )
 
     await component_factory.configure_component(profile_configs=(person0,))
-    assert not async_get_flow_for_user_id.opp, person0.user_id)
+    assert not async_get_flow_for_user_id(opp, person0.user_id)
 
     await component_factory.setup_profile(person0.user_id)
-    data_manager = get_data_manager_by_user_id.opp, person0.user_id)
+    data_manager = get_data_manager_by_user_id(opp, person0.user_id)
     await data_manager.poll_data_update_coordinator.async_refresh()
 
-    flows = async_get_flow_for_user_id.opp, person0.user_id)
+    flows = async_get_flow_for_user_id(opp, person0.user_id)
     assert flows
     assert len(flows) == 1
 
@@ -183,7 +183,7 @@ async def test_set_config_unique_id(
         )
         data_manager.poll_data_update_coordinator.last_update_success = True
         mock.return_value = data_manager
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
 
         await opp.config_entries.async_setup(config_entry.entry_id)
         assert config_entry.unique_id == "my_user_id"
@@ -199,7 +199,7 @@ async def test_set_convert_unique_id_to_string.opp: OpenPeerPower) -> None:
             "profile": "person0",
         },
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     opp.config = {
         OP_DOMAIN: {
@@ -218,9 +218,9 @@ async def test_set_convert_unique_id_to_string.opp: OpenPeerPower) -> None:
         spec=ConfigEntryWithingsApi,
     ):
         await async_process_op_core_config(opp, opp_config.get(OP_DOMAIN))
-        assert await async_setup_component.opp, OP_DOMAIN, {})
-        assert await async_setup_component.opp, webhook.DOMAIN, opp_config)
-        assert await async_setup_component.opp, const.DOMAIN, opp_config)
+        assert await async_setup_component(opp, OP_DOMAIN, {})
+        assert await async_setup_component(opp, webhook.DOMAIN, opp_config)
+        assert await async_setup_component(opp, const.DOMAIN, opp_config)
         await opp.async_block_till_done()
 
         assert config_entry.unique_id == "1234"

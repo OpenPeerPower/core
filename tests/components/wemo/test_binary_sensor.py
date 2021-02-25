@@ -46,20 +46,20 @@ async def test_binary_sensor_registry_state_callback(
     pywemo_device.get_state.return_value = 1
     pywemo_registry.callbacks[pywemo_device.name](pywemo_device, "", "")
     await opp.async_block_till_done()
-    assert.opp.states.get(wemo_entity.entity_id).state == STATE_ON
+    assert opp.states.get(wemo_entity.entity_id).state == STATE_ON
 
     # Off state.
     pywemo_device.get_state.return_value = 0
     pywemo_registry.callbacks[pywemo_device.name](pywemo_device, "", "")
     await opp.async_block_till_done()
-    assert.opp.states.get(wemo_entity.entity_id).state == STATE_OFF
+    assert opp.states.get(wemo_entity.entity_id).state == STATE_OFF
 
 
 async def test_binary_sensor_update_entity(
     opp. pywemo_registry, pywemo_device, wemo_entity
 ):
     """Verify that the binary_sensor performs state updates."""
-    await async_setup_component.opp, OP_DOMAIN, {})
+    await async_setup_component(opp, OP_DOMAIN, {})
 
     # On state.
     pywemo_device.get_state.return_value = 1
@@ -69,7 +69,7 @@ async def test_binary_sensor_update_entity(
         {ATTR_ENTITY_ID: [wemo_entity.entity_id]},
         blocking=True,
     )
-    assert.opp.states.get(wemo_entity.entity_id).state == STATE_ON
+    assert opp.states.get(wemo_entity.entity_id).state == STATE_ON
 
     # Off state.
     pywemo_device.get_state.return_value = 0
@@ -79,4 +79,4 @@ async def test_binary_sensor_update_entity(
         {ATTR_ENTITY_ID: [wemo_entity.entity_id]},
         blocking=True,
     )
-    assert.opp.states.get(wemo_entity.entity_id).state == STATE_OFF
+    assert opp.states.get(wemo_entity.entity_id).state == STATE_OFF

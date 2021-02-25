@@ -4,7 +4,7 @@ from openpeerpower.core import State
 from tests.common import async_mock_service
 
 
-async def test_reproducing_states.opp, caplog):
+async def test_reproducing_states(opp, caplog):
     """Test reproducing Input datetime states."""
     opp.states.async_set(
         "input_datetime.entity_datetime",
@@ -25,7 +25,7 @@ async def test_reproducing_states.opp, caplog):
         {"has_date": False, "has_time": False},
     )
 
-    datetime_calls = async_mock_service.opp, "input_datetime", "set_datetime")
+    datetime_calls = async_mock_service(opp, "input_datetime", "set_datetime")
 
     # These calls should do nothing as entities already in desired state
     await opp.helpers.state.async_reproduce_state(

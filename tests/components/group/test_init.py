@@ -439,7 +439,7 @@ async def test_reloading_groups(opp):
         "group.second_group",
         "group.test_group",
     ]
-    assert.opp.bus.async_listeners()["state_changed"] == 1
+    assert opp.bus.async_listeners()["state_changed"] == 1
     assert len.opp.data[TRACK_STATE_CHANGE_CALLBACKS]["hello.world"]) == 1
     assert len.opp.data[TRACK_STATE_CHANGE_CALLBACKS]["light.bowl"]) == 1
     assert len.opp.data[TRACK_STATE_CHANGE_CALLBACKS]["test.one"]) == 1
@@ -458,7 +458,7 @@ async def test_reloading_groups(opp):
         "group.all_tests",
         "group.hello",
     ]
-    assert.opp.bus.async_listeners()["state_changed"] == 1
+    assert opp.bus.async_listeners()["state_changed"] == 1
     assert len.opp.data[TRACK_STATE_CHANGE_CALLBACKS]["light.bowl"]) == 1
     assert len.opp.data[TRACK_STATE_CHANGE_CALLBACKS]["test.one"]) == 1
     assert len.opp.data[TRACK_STATE_CHANGE_CALLBACKS]["test.two"]) == 1
@@ -475,7 +475,7 @@ async def test_modify_group(opp):
 
     assert await async_setup_component(opp, "group", {"group": group_conf})
     await opp.async_block_till_done()
-    assert.opp.states.get(f"{group.DOMAIN}.modify_group")
+    assert opp.states.get(f"{group.DOMAIN}.modify_group")
 
     # The old way would create a new group modify_group1 because
     # internally it didn't know anything about those created in the config
@@ -485,7 +485,7 @@ async def test_modify_group(opp):
     group_state = opp.states.get(f"{group.DOMAIN}.modify_group")
     assert group_state
 
-    assert.opp.states.async_entity_ids() == ["group.modify_group"]
+    assert opp.states.async_entity_ids() == ["group.modify_group"]
     assert group_state.attributes.get(ATTR_ICON) == "mdi:play"
     assert group_state.attributes.get(ATTR_FRIENDLY_NAME) == "friendly_name"
 
@@ -538,8 +538,8 @@ async def test_service_group_services(opp):
     with assert_setup_component(0, "group"):
         await async_setup_component(opp, "group", {"group": {}})
 
-    assert.opp.services.has_service("group", group.SERVICE_SET)
-    assert.opp.services.has_service("group", group.SERVICE_REMOVE)
+    assert opp.services.has_service("group", group.SERVICE_SET)
+    assert opp.services.has_service("group", group.SERVICE_REMOVE)
 
 
 # pylint: disable=invalid-name
@@ -608,9 +608,9 @@ async def test_group_order(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.group_zero").attributes["order"] == 0
-    assert.opp.states.get("group.group_one").attributes["order"] == 1
-    assert.opp.states.get("group.group_two").attributes["order"] == 2
+    assert opp.states.get("group.group_zero").attributes["order"] == 0
+    assert opp.states.get("group.group_one").attributes["order"] == 1
+    assert opp.states.get("group.group_two").attributes["order"] == 2
 
 
 async def test_group_order_with_dynamic_creation(opp):
@@ -631,9 +631,9 @@ async def test_group_order_with_dynamic_creation(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.group_zero").attributes["order"] == 0
-    assert.opp.states.get("group.group_one").attributes["order"] == 1
-    assert.opp.states.get("group.group_two").attributes["order"] == 2
+    assert opp.states.get("group.group_zero").attributes["order"] == 0
+    assert opp.states.get("group.group_one").attributes["order"] == 1
+    assert opp.states.get("group.group_two").attributes["order"] == 2
 
     await opp.services.async_call(
         group.DOMAIN,
@@ -642,7 +642,7 @@ async def test_group_order_with_dynamic_creation(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.new_group").attributes["order"] == 3
+    assert opp.states.get("group.new_group").attributes["order"] == 3
 
     await opp.services.async_call(
         group.DOMAIN,
@@ -662,7 +662,7 @@ async def test_group_order_with_dynamic_creation(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.new_group2").attributes["order"] == 4
+    assert opp.states.get("group.new_group2").attributes["order"] == 4
 
 
 async def test_group_persons(opp):
@@ -683,7 +683,7 @@ async def test_group_persons(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.group_zero").state == "home"
+    assert opp.states.get("group.group_zero").state == "home"
 
 
 async def test_group_persons_and_device_trackers(opp):
@@ -708,7 +708,7 @@ async def test_group_persons_and_device_trackers(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.group_zero").state == "home"
+    assert opp.states.get("group.group_zero").state == "home"
 
 
 async def test_group_mixed_domains_on(opp):
@@ -733,7 +733,7 @@ async def test_group_mixed_domains_on(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.group_zero").state == "on"
+    assert opp.states.get("group.group_zero").state == "on"
 
 
 async def test_group_mixed_domains_off(opp):
@@ -758,7 +758,7 @@ async def test_group_mixed_domains_off(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.group_zero").state == "off"
+    assert opp.states.get("group.group_zero").state == "off"
 
 
 async def test_group_locks(opp):
@@ -779,7 +779,7 @@ async def test_group_locks(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.group_zero").state == "locked"
+    assert opp.states.get("group.group_zero").state == "locked"
 
 
 async def test_group_sensors(opp):
@@ -800,7 +800,7 @@ async def test_group_sensors(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.group_zero").state == "unknown"
+    assert opp.states.get("group.group_zero").state == "unknown"
 
 
 async def test_group_climate_mixed(opp):
@@ -821,7 +821,7 @@ async def test_group_climate_mixed(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.group_zero").state == STATE_ON
+    assert opp.states.get("group.group_zero").state == STATE_ON
 
 
 async def test_group_climate_all_cool(opp):
@@ -842,7 +842,7 @@ async def test_group_climate_all_cool(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.group_zero").state == STATE_ON
+    assert opp.states.get("group.group_zero").state == STATE_ON
 
 
 async def test_group_climate_all_off(opp):
@@ -863,7 +863,7 @@ async def test_group_climate_all_off(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.group_zero").state == STATE_OFF
+    assert opp.states.get("group.group_zero").state == STATE_OFF
 
 
 async def test_group_alarm(opp):
@@ -888,7 +888,7 @@ async def test_group_alarm(opp):
     await opp.async_block_till_done()
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
-    assert.opp.states.get("group.group_zero").state == STATE_ON
+    assert opp.states.get("group.group_zero").state == STATE_ON
 
 
 async def test_group_alarm_disarmed(opp):
@@ -911,7 +911,7 @@ async def test_group_alarm_disarmed(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.group_zero").state == STATE_OFF
+    assert opp.states.get("group.group_zero").state == STATE_OFF
 
 
 async def test_group_vacuum_off(opp):
@@ -935,7 +935,7 @@ async def test_group_vacuum_off(opp):
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
-    assert.opp.states.get("group.group_zero").state == STATE_OFF
+    assert opp.states.get("group.group_zero").state == STATE_OFF
 
 
 async def test_group_vacuum_on(opp):
@@ -956,7 +956,7 @@ async def test_group_vacuum_on(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.group_zero").state == STATE_ON
+    assert opp.states.get("group.group_zero").state == STATE_ON
 
 
 async def test_device_tracker_not_home(opp):
@@ -978,7 +978,7 @@ async def test_device_tracker_not_home(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.group_zero").state == "not_home"
+    assert opp.states.get("group.group_zero").state == "not_home"
 
 
 async def test_light_removed(opp):
@@ -998,12 +998,12 @@ async def test_light_removed(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.group_zero").state == "on"
+    assert opp.states.get("group.group_zero").state == "on"
 
     opp.states.async_remove("light.three")
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.group_zero").state == "off"
+    assert opp.states.get("group.group_zero").state == "off"
 
 
 async def test_switch_removed(opp):
@@ -1024,18 +1024,18 @@ async def test_switch_removed(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.group_zero").state == "unknown"
+    assert opp.states.get("group.group_zero").state == "unknown"
     assert await async_setup_component(opp, "switch", {})
     await opp.async_block_till_done()
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
-    assert.opp.states.get("group.group_zero").state == "on"
+    assert opp.states.get("group.group_zero").state == "on"
 
     opp.states.async_remove("switch.three")
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.group_zero").state == "off"
+    assert opp.states.get("group.group_zero").state == "off"
 
 
 async def test_lights_added_after_group(opp):
@@ -1061,13 +1061,13 @@ async def test_lights_added_after_group(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.living_room_downlights").state == "unknown"
+    assert opp.states.get("group.living_room_downlights").state == "unknown"
 
     for entity_id in entity_ids:
         opp.states.async_set(entity_id, "off")
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.living_room_downlights").state == "off"
+    assert opp.states.get("group.living_room_downlights").state == "off"
 
 
 async def test_lights_added_before_group(opp):
@@ -1097,7 +1097,7 @@ async def test_lights_added_before_group(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.living_room_downlights").state == "off"
+    assert opp.states.get("group.living_room_downlights").state == "off"
 
 
 async def test_cover_added_after_group(opp):
@@ -1125,13 +1125,13 @@ async def test_cover_added_after_group(opp):
     await opp.async_block_till_done()
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.shades").state == "open"
+    assert opp.states.get("group.shades").state == "open"
 
     for entity_id in entity_ids:
         opp.states.async_set(entity_id, "closed")
 
     await opp.async_block_till_done()
-    assert.opp.states.get("group.shades").state == "closed"
+    assert opp.states.get("group.shades").state == "closed"
 
 
 async def test_group_that_references_a_group_of_lights(opp):
@@ -1164,8 +1164,8 @@ async def test_group_that_references_a_group_of_lights(opp):
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.living_room_downlights").state == "off"
-    assert.opp.states.get("group.grouped_group").state == "off"
+    assert opp.states.get("group.living_room_downlights").state == "off"
+    assert opp.states.get("group.grouped_group").state == "off"
 
 
 async def test_group_that_references_a_group_of_covers(opp):
@@ -1200,8 +1200,8 @@ async def test_group_that_references_a_group_of_covers(opp):
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.living_room_downcover").state == "closed"
-    assert.opp.states.get("group.grouped_group").state == "closed"
+    assert opp.states.get("group.living_room_downcover").state == "closed"
+    assert opp.states.get("group.grouped_group").state == "closed"
 
 
 async def test_group_that_references_two_groups_of_covers(opp):
@@ -1239,9 +1239,9 @@ async def test_group_that_references_two_groups_of_covers(opp):
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.living_room_downcover").state == "closed"
-    assert.opp.states.get("group.living_room_upcover").state == "closed"
-    assert.opp.states.get("group.grouped_group").state == "closed"
+    assert opp.states.get("group.living_room_downcover").state == "closed"
+    assert opp.states.get("group.living_room_upcover").state == "closed"
+    assert opp.states.get("group.grouped_group").state == "closed"
 
 
 async def test_group_that_references_two_types_of_groups(opp):
@@ -1283,9 +1283,9 @@ async def test_group_that_references_two_types_of_groups(opp):
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.covers").state == "closed"
-    assert.opp.states.get("group.device_trackers").state == "home"
-    assert.opp.states.get("group.grouped_group").state == "on"
+    assert opp.states.get("group.covers").state == "closed"
+    assert opp.states.get("group.device_trackers").state == "home"
+    assert opp.states.get("group.grouped_group").state == "on"
 
 
 async def test_plant_group(opp):
@@ -1339,13 +1339,13 @@ async def test_plant_group(opp):
     await opp.async_block_till_done()
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.plants").state == "ok"
-    assert.opp.states.get("group.plant_with_binary_sensors").state == "off"
+    assert opp.states.get("group.plants").state == "ok"
+    assert opp.states.get("group.plant_with_binary_sensors").state == "off"
 
     opp.states.async_set("binary_sensor.planter", "on")
     for entity_id in entity_ids:
         opp.states.async_set(entity_id, "problem")
 
     await opp.async_block_till_done()
-    assert.opp.states.get("group.plants").state == "problem"
-    assert.opp.states.get("group.plant_with_binary_sensors").state == "on"
+    assert opp.states.get("group.plants").state == "problem"
+    assert opp.states.get("group.plant_with_binary_sensors").state == "on"

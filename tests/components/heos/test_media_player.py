@@ -56,16 +56,16 @@ from openpeerpower.const import (
 from openpeerpower.setup import async_setup_component
 
 
-async def setup_platform.opp, config_entry, config):
+async def setup_platform(opp, config_entry, config):
     """Set up the media player platform for testing."""
-    config_entry.add_to.opp.opp)
-    assert await async_setup_component.opp, DOMAIN, config)
+    config_entry.add_to_opp(opp)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
 
 
-async def test_state_attributes.opp, config_entry, config, controller):
+async def test_state_attributes(opp, config_entry, config, controller):
     """Tests the state attributes."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     state = opp.states.get("media_player.test_player")
     assert state.state == STATE_IDLE
     assert state.attributes[ATTR_MEDIA_VOLUME_LEVEL] == 0.25
@@ -100,9 +100,9 @@ async def test_state_attributes.opp, config_entry, config, controller):
     )
 
 
-async def test_updates_from_signals.opp, config_entry, config, controller, favorites):
+async def test_updates_from_signals(opp, config_entry, config, controller, favorites):
     """Tests dispatched signals update player."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
 
     # Test player does not update for other players
@@ -143,7 +143,7 @@ async def test_updates_from_connection_event(
     opp. config_entry, config, controller, caplog
 ):
     """Tests player updates from connection event after connection failure."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     event = asyncio.Event()
 
@@ -189,7 +189,7 @@ async def test_updates_from_sources_updated(
     opp. config_entry, config, controller, input_sources
 ):
     """Tests player updates from changes in sources list."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     event = asyncio.Event()
 
@@ -213,7 +213,7 @@ async def test_updates_from_players_changed(
     opp. config_entry, config, controller, change_data, caplog
 ):
     """Test player updates from changes to available players."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     event = asyncio.Event()
 
@@ -222,21 +222,21 @@ async def test_updates_from_players_changed(
 
     opp.helpers.dispatcher.async_dispatcher_connect(SIGNAL_HEOS_UPDATED, set_signal)
 
-    assert.opp.states.get("media_player.test_player").state == STATE_IDLE
+    assert opp.states.get("media_player.test_player").state == STATE_IDLE
     player.state = const.PLAY_STATE_PLAY
     player.heos.dispatcher.send(
         const.SIGNAL_CONTROLLER_EVENT, const.EVENT_PLAYERS_CHANGED, change_data
     )
     await event.wait()
     await opp.async_block_till_done()
-    assert.opp.states.get("media_player.test_player").state == STATE_PLAYING
+    assert opp.states.get("media_player.test_player").state == STATE_PLAYING
 
 
 async def test_updates_from_players_changed_new_ids(
     opp. config_entry, config, controller, change_data_mapped_ids, caplog
 ):
     """Test player updates from changes to available players."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     device_registry = await opp.helpers.device_registry.async_get_registry()
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
     player = controller.players[1]
@@ -273,9 +273,9 @@ async def test_updates_from_players_changed_new_ids(
     )
 
 
-async def test_updates_from_user_changed.opp, config_entry, config, controller):
+async def test_updates_from_user_changed(opp, config_entry, config, controller):
     """Tests player updates from changes in user."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     event = asyncio.Event()
 
@@ -296,9 +296,9 @@ async def test_updates_from_user_changed.opp, config_entry, config, controller):
     assert state.attributes[ATTR_INPUT_SOURCE_LIST] == source_list
 
 
-async def test_clear_playlist.opp, config_entry, config, controller, caplog):
+async def test_clear_playlist(opp, config_entry, config, controller, caplog):
     """Test the clear playlist service."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
@@ -314,9 +314,9 @@ async def test_clear_playlist.opp, config_entry, config, controller, caplog):
     assert "Unable to clear playlist: Failure (1)" in caplog.text
 
 
-async def test_pause.opp, config_entry, config, controller, caplog):
+async def test_pause(opp, config_entry, config, controller, caplog):
     """Test the pause service."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
@@ -332,9 +332,9 @@ async def test_pause.opp, config_entry, config, controller, caplog):
     assert "Unable to pause: Failure (1)" in caplog.text
 
 
-async def test_play.opp, config_entry, config, controller, caplog):
+async def test_play(opp, config_entry, config, controller, caplog):
     """Test the play service."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
@@ -350,9 +350,9 @@ async def test_play.opp, config_entry, config, controller, caplog):
     assert "Unable to play: Failure (1)" in caplog.text
 
 
-async def test_previous_track.opp, config_entry, config, controller, caplog):
+async def test_previous_track(opp, config_entry, config, controller, caplog):
     """Test the previous track service."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
@@ -368,9 +368,9 @@ async def test_previous_track.opp, config_entry, config, controller, caplog):
     assert "Unable to move to previous track: Failure (1)" in caplog.text
 
 
-async def test_next_track.opp, config_entry, config, controller, caplog):
+async def test_next_track(opp, config_entry, config, controller, caplog):
     """Test the next track service."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
@@ -386,9 +386,9 @@ async def test_next_track.opp, config_entry, config, controller, caplog):
     assert "Unable to move to next track: Failure (1)" in caplog.text
 
 
-async def test_stop.opp, config_entry, config, controller, caplog):
+async def test_stop(opp, config_entry, config, controller, caplog):
     """Test the stop service."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
@@ -404,9 +404,9 @@ async def test_stop.opp, config_entry, config, controller, caplog):
     assert "Unable to stop: Failure (1)" in caplog.text
 
 
-async def test_volume_mute.opp, config_entry, config, controller, caplog):
+async def test_volume_mute(opp, config_entry, config, controller, caplog):
     """Test the volume mute service."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
@@ -422,9 +422,9 @@ async def test_volume_mute.opp, config_entry, config, controller, caplog):
     assert "Unable to set mute: Failure (1)" in caplog.text
 
 
-async def test_shuffle_set.opp, config_entry, config, controller, caplog):
+async def test_shuffle_set(opp, config_entry, config, controller, caplog):
     """Test the shuffle set service."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
@@ -440,9 +440,9 @@ async def test_shuffle_set.opp, config_entry, config, controller, caplog):
     assert "Unable to set shuffle: Failure (1)" in caplog.text
 
 
-async def test_volume_set.opp, config_entry, config, controller, caplog):
+async def test_volume_set(opp, config_entry, config, controller, caplog):
     """Test the volume set service."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     # First pass completes successfully, second pass raises command error
     for _ in range(2):
@@ -458,9 +458,9 @@ async def test_volume_set.opp, config_entry, config, controller, caplog):
     assert "Unable to set volume level: Failure (1)" in caplog.text
 
 
-async def test_select_favorite.opp, config_entry, config, controller, favorites):
+async def test_select_favorite(opp, config_entry, config, controller, favorites):
     """Tests selecting a music service favorite and state."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     # Test set music service preset
     favorite = favorites[1]
@@ -481,9 +481,9 @@ async def test_select_favorite.opp, config_entry, config, controller, favorites)
     assert state.attributes[ATTR_INPUT_SOURCE] == favorite.name
 
 
-async def test_select_radio_favorite.opp, config_entry, config, controller, favorites):
+async def test_select_radio_favorite(opp, config_entry, config, controller, favorites):
     """Tests selecting a radio favorite and state."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     # Test set radio preset
     favorite = favorites[2]
@@ -509,7 +509,7 @@ async def test_select_radio_favorite_command_error(
     opp. config_entry, config, controller, favorites, caplog
 ):
     """Tests command error logged when playing favorite."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     # Test set radio preset
     favorite = favorites[2]
@@ -528,7 +528,7 @@ async def test_select_input_source(
     opp. config_entry, config, controller, input_sources
 ):
     """Tests selecting input source and state."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     # Test proper service called
     input_source = input_sources[0]
@@ -553,9 +553,9 @@ async def test_select_input_source(
     assert state.attributes[ATTR_INPUT_SOURCE] == input_source.name
 
 
-async def test_select_input_unknown.opp, config_entry, config, controller, caplog):
+async def test_select_input_unknown(opp, config_entry, config, controller, caplog):
     """Tests selecting an unknown input."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     await opp.services.async_call(
         MEDIA_PLAYER_DOMAIN,
         SERVICE_SELECT_SOURCE,
@@ -569,7 +569,7 @@ async def test_select_input_command_error(
     opp. config_entry, config, controller, caplog, input_sources
 ):
     """Tests selecting an unknown input."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     input_source = input_sources[0]
     player.play_input_source.side_effect = CommandFailedError(None, "Failure", 1)
@@ -586,16 +586,16 @@ async def test_select_input_command_error(
     assert "Unable to select source: Failure (1)" in caplog.text
 
 
-async def test_unload_config_entry.opp, config_entry, config, controller):
+async def test_unload_config_entry(opp, config_entry, config, controller):
     """Test the player is set unavailable when the config entry is unloaded."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     await config_entry.async_unload.opp)
-    assert.opp.states.get("media_player.test_player").state == STATE_UNAVAILABLE
+    assert opp.states.get("media_player.test_player").state == STATE_UNAVAILABLE
 
 
-async def test_play_media_url.opp, config_entry, config, controller, caplog):
+async def test_play_media_url(opp, config_entry, config, controller, caplog):
     """Test the play media service with type url."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     url = "http://news/podcast.mp3"
     # First pass completes successfully, second pass raises command error
@@ -616,9 +616,9 @@ async def test_play_media_url.opp, config_entry, config, controller, caplog):
     assert "Unable to play media: Failure (1)" in caplog.text
 
 
-async def test_play_media_music.opp, config_entry, config, controller, caplog):
+async def test_play_media_music(opp, config_entry, config, controller, caplog):
     """Test the play media service with type music."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     url = "http://news/podcast.mp3"
     # First pass completes successfully, second pass raises command error
@@ -643,7 +643,7 @@ async def test_play_media_quick_select(
     opp. config_entry, config, controller, caplog, quick_selects
 ):
     """Test the play media service with type quick_select."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     quick_select = list(quick_selects.items())[0]
     index = quick_select[0]
@@ -693,7 +693,7 @@ async def test_play_media_playlist(
     opp. config_entry, config, controller, caplog, playlists
 ):
     """Test the play media service with type playlist."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     playlist = playlists[0]
     # Play without enqueuing
@@ -744,7 +744,7 @@ async def test_play_media_favorite(
     opp. config_entry, config, controller, caplog, favorites
 ):
     """Test the play media service with type favorite."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     player = controller.players[1]
     quick_select = list(favorites.items())[0]
     index = quick_select[0]
@@ -790,9 +790,9 @@ async def test_play_media_favorite(
     assert "Unable to play media: Invalid favorite 'Invalid'" in caplog.text
 
 
-async def test_play_media_invalid_type.opp, config_entry, config, controller, caplog):
+async def test_play_media_invalid_type(opp, config_entry, config, controller, caplog):
     """Test the play media service with an invalid type."""
-    await setup_platform.opp, config_entry, config)
+    await setup_platform(opp, config_entry, config)
     await opp.services.async_call(
         MEDIA_PLAYER_DOMAIN,
         SERVICE_PLAY_MEDIA,

@@ -96,7 +96,7 @@ async def test_turn_on(opp: OpenPeerPower):
     client.brightness = 20
     entity, _, _ = await _create_entries(opp, client)
 
-    assert.opp.states.get(entity.entity_id).state == "off"
+    assert opp.states.get(entity.entity_id).state == "off"
 
     await opp.services.async_call(
         "light", "turn_on", service_data={"entity_id": entity.entity_id}
@@ -116,7 +116,7 @@ async def test_turn_on_with_brightness(opp: OpenPeerPower):
     client.brightness = 20
     entity, _, _ = await _create_entries(opp, client)
 
-    assert.opp.states.get(entity.entity_id).state == "off"
+    assert opp.states.get(entity.entity_id).state == "off"
 
     await opp.services.async_call(
         "light",
@@ -135,7 +135,7 @@ async def test_turn_off(opp: OpenPeerPower):
     """Test support of the light.turn_off service."""
     entity, _, _ = await _create_entries(opp)
 
-    assert.opp.states.get(entity.entity_id).state == "on"
+    assert opp.states.get(entity.entity_id).state == "on"
 
     await opp.services.async_call(
         "light", "turn_off", service_data={"entity_id": entity.entity_id}

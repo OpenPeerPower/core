@@ -9,7 +9,7 @@ from openpeerpower.const import HTTP_NOT_FOUND
 from openpeerpower.helpers import intent
 
 
-async def test_add_item.opp, sl_setup):
+async def test_add_item(opp, sl_setup):
     """Test adding an item intent."""
 
     response = await intent.async_handle(
@@ -19,7 +19,7 @@ async def test_add_item.opp, sl_setup):
     assert response.speech["plain"]["speech"] == "I've added beer to your shopping list"
 
 
-async def test_recent_items_intent.opp, sl_setup):
+async def test_recent_items_intent(opp, sl_setup):
     """Test recent items."""
 
     await intent.async_handle(
@@ -32,7 +32,7 @@ async def test_recent_items_intent.opp, sl_setup):
         opp. "test", " OppShoppingListAddItem", {"item": {"value": "soda"}}
     )
 
-    response = await intent.async_handle.opp, "test", " OppShoppingListLastItems")
+    response = await intent.async_handle(opp, "test", " OppShoppingListLastItems")
 
     assert (
         response.speech["plain"]["speech"]
@@ -40,7 +40,7 @@ async def test_recent_items_intent.opp, sl_setup):
     )
 
 
-async def test_deprecated_api_get_all.opp, opp_client, sl_setup):
+async def test_deprecated_api_get_all(opp, opp_client, sl_setup):
     """Test the API."""
 
     await intent.async_handle(
@@ -62,7 +62,7 @@ async def test_deprecated_api_get_all.opp, opp_client, sl_setup):
     assert not data[1]["complete"]
 
 
-async def test_ws_get_items.opp, opp_ws_client, sl_setup):
+async def test_ws_get_items(opp, opp_ws_client, sl_setup):
     """Test get shopping_list items websocket command."""
 
     await intent.async_handle(
@@ -89,7 +89,7 @@ async def test_ws_get_items.opp, opp_ws_client, sl_setup):
     assert not data[1]["complete"]
 
 
-async def test_deprecated_api_update.opp, opp_client, sl_setup):
+async def test_deprecated_api_update(opp, opp_client, sl_setup):
     """Test the API."""
 
     await intent.async_handle(
@@ -124,7 +124,7 @@ async def test_deprecated_api_update.opp, opp_client, sl_setup):
     assert wine == {"id": wine_id, "name": "wine", "complete": True}
 
 
-async def test_ws_update_item.opp, opp_ws_client, sl_setup):
+async def test_ws_update_item(opp, opp_ws_client, sl_setup):
     """Test update shopping_list item websocket command."""
     await intent.async_handle(
         opp. "test", " OppShoppingListAddItem", {"item": {"value": "beer"}}
@@ -166,7 +166,7 @@ async def test_ws_update_item.opp, opp_ws_client, sl_setup):
     assert wine == {"id": wine_id, "name": "wine", "complete": True}
 
 
-async def test_api_update_fails.opp, opp_client, sl_setup):
+async def test_api_update_fails(opp, opp_client, sl_setup):
     """Test the API."""
 
     await intent.async_handle(
@@ -184,7 +184,7 @@ async def test_api_update_fails.opp, opp_client, sl_setup):
     assert resp.status == 400
 
 
-async def test_ws_update_item_fail.opp, opp_ws_client, sl_setup):
+async def test_ws_update_item_fail(opp, opp_ws_client, sl_setup):
     """Test failure of update shopping_list item websocket command."""
     await intent.async_handle(
         opp. "test", " OppShoppingListAddItem", {"item": {"value": "beer"}}
@@ -207,7 +207,7 @@ async def test_ws_update_item_fail.opp, opp_ws_client, sl_setup):
     assert msg["success"] is False
 
 
-async def test_deprecated_api_clear_completed.opp, opp_client, sl_setup):
+async def test_deprecated_api_clear_completed(opp, opp_client, sl_setup):
     """Test the API."""
 
     await intent.async_handle(
@@ -237,7 +237,7 @@ async def test_deprecated_api_clear_completed.opp, opp_client, sl_setup):
     assert items[0] == {"id": wine_id, "name": "wine", "complete": False}
 
 
-async def test_ws_clear_items.opp, opp_ws_client, sl_setup):
+async def test_ws_clear_items(opp, opp_ws_client, sl_setup):
     """Test clearing shopping_list items websocket command."""
     await intent.async_handle(
         opp. "test", " OppShoppingListAddItem", {"item": {"value": "beer"}}
@@ -266,7 +266,7 @@ async def test_ws_clear_items.opp, opp_ws_client, sl_setup):
     assert items[0] == {"id": wine_id, "name": "wine", "complete": False}
 
 
-async def test_deprecated_api_create.opp, opp_client, sl_setup):
+async def test_deprecated_api_create(opp, opp_client, sl_setup):
     """Test the API."""
 
     client = await opp_client()
@@ -283,7 +283,7 @@ async def test_deprecated_api_create.opp, opp_client, sl_setup):
     assert items[0]["complete"] is False
 
 
-async def test_deprecated_api_create_fail.opp, opp_client, sl_setup):
+async def test_deprecated_api_create_fail(opp, opp_client, sl_setup):
     """Test the API."""
 
     client = await opp_client()
@@ -293,7 +293,7 @@ async def test_deprecated_api_create_fail.opp, opp_client, sl_setup):
     assert len.opp.data["shopping_list"].items) == 0
 
 
-async def test_ws_add_item.opp, opp_ws_client, sl_setup):
+async def test_ws_add_item(opp, opp_ws_client, sl_setup):
     """Test adding shopping_list item websocket command."""
     client = await opp_ws_client.opp)
     await client.send_json({"id": 5, "type": "shopping_list/items/add", "name": "soda"})
@@ -308,7 +308,7 @@ async def test_ws_add_item.opp, opp_ws_client, sl_setup):
     assert items[0]["complete"] is False
 
 
-async def test_ws_add_item_fail.opp, opp_ws_client, sl_setup):
+async def test_ws_add_item_fail(opp, opp_ws_client, sl_setup):
     """Test adding shopping_list item failure websocket command."""
     client = await opp_ws_client.opp)
     await client.send_json({"id": 5, "type": "shopping_list/items/add", "name": 123})
@@ -317,7 +317,7 @@ async def test_ws_add_item_fail.opp, opp_ws_client, sl_setup):
     assert len.opp.data["shopping_list"].items) == 0
 
 
-async def test_ws_reorder_items.opp, opp_ws_client, sl_setup):
+async def test_ws_reorder_items(opp, opp_ws_client, sl_setup):
     """Test reordering shopping_list items websocket command."""
     await intent.async_handle(
         opp. "test", " OppShoppingListAddItem", {"item": {"value": "beer"}}
@@ -343,17 +343,17 @@ async def test_ws_reorder_items.opp, opp_ws_client, sl_setup):
     )
     msg = await client.receive_json()
     assert msg["success"] is True
-    assert.opp.data["shopping_list"].items[0] == {
+    assert opp.data["shopping_list"].items[0] == {
         "id": wine_id,
         "name": "wine",
         "complete": False,
     }
-    assert.opp.data["shopping_list"].items[1] == {
+    assert opp.data["shopping_list"].items[1] == {
         "id": apple_id,
         "name": "apple",
         "complete": False,
     }
-    assert.opp.data["shopping_list"].items[2] == {
+    assert opp.data["shopping_list"].items[2] == {
         "id": beer_id,
         "name": "beer",
         "complete": False,
@@ -379,24 +379,24 @@ async def test_ws_reorder_items.opp, opp_ws_client, sl_setup):
     )
     msg = await client.receive_json()
     assert msg["success"] is True
-    assert.opp.data["shopping_list"].items[0] == {
+    assert opp.data["shopping_list"].items[0] == {
         "id": apple_id,
         "name": "apple",
         "complete": False,
     }
-    assert.opp.data["shopping_list"].items[1] == {
+    assert opp.data["shopping_list"].items[1] == {
         "id": beer_id,
         "name": "beer",
         "complete": False,
     }
-    assert.opp.data["shopping_list"].items[2] == {
+    assert opp.data["shopping_list"].items[2] == {
         "id": wine_id,
         "name": "wine",
         "complete": True,
     }
 
 
-async def test_ws_reorder_items_failure.opp, opp_ws_client, sl_setup):
+async def test_ws_reorder_items_failure(opp, opp_ws_client, sl_setup):
     """Test reordering shopping_list items websocket command."""
     await intent.async_handle(
         opp. "test", " OppShoppingListAddItem", {"item": {"value": "beer"}}

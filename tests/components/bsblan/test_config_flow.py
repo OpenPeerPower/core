@@ -61,7 +61,7 @@ async def test_user_device_exists_abort(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort zeroconf flow if BSBLan device already configured."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN,

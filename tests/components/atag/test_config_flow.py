@@ -31,7 +31,7 @@ async def test_adding_second_device(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test that only one Atag configuration is allowed."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}, data=USER_INPUT
     )

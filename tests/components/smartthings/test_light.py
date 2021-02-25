@@ -71,9 +71,9 @@ def light_devices_fixture(device_factory):
     ]
 
 
-async def test_entity_state.opp, light_devices):
+async def test_entity_state(opp, light_devices):
     """Tests the state attributes properly match the light types."""
-    await setup_platform.opp, LIGHT_DOMAIN, devices=light_devices)
+    await setup_platform(opp, LIGHT_DOMAIN, devices=light_devices)
 
     # Dimmer 1
     state = opp.states.get("light.dimmer_1")
@@ -106,14 +106,14 @@ async def test_entity_state.opp, light_devices):
     assert state.attributes[ATTR_COLOR_TEMP] == 222
 
 
-async def test_entity_and_device_attributes.opp, device_factory):
+async def test_entity_and_device_attributes(opp, device_factory):
     """Test the attributes of the entity are correct."""
     # Arrange
     device = device_factory("Light 1", [Capability.switch, Capability.switch_level])
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
     device_registry = await opp.helpers.device_registry.async_get_registry()
     # Act
-    await setup_platform.opp, LIGHT_DOMAIN, devices=[device])
+    await setup_platform(opp, LIGHT_DOMAIN, devices=[device])
     # Assert
     entry = entity_registry.async_get("light.light_1")
     assert entry
@@ -126,10 +126,10 @@ async def test_entity_and_device_attributes.opp, device_factory):
     assert entry.manufacturer == "Unavailable"
 
 
-async def test_turn_off.opp, light_devices):
+async def test_turn_off(opp, light_devices):
     """Test the light turns of successfully."""
     # Arrange
-    await setup_platform.opp, LIGHT_DOMAIN, devices=light_devices)
+    await setup_platform(opp, LIGHT_DOMAIN, devices=light_devices)
     # Act
     await opp.services.async_call(
         "light", "turn_off", {"entity_id": "light.color_dimmer_2"}, blocking=True
@@ -140,10 +140,10 @@ async def test_turn_off.opp, light_devices):
     assert state.state == "off"
 
 
-async def test_turn_off_with_transition.opp, light_devices):
+async def test_turn_off_with_transition(opp, light_devices):
     """Test the light turns of successfully with transition."""
     # Arrange
-    await setup_platform.opp, LIGHT_DOMAIN, devices=light_devices)
+    await setup_platform(opp, LIGHT_DOMAIN, devices=light_devices)
     # Act
     await opp.services.async_call(
         "light",
@@ -157,10 +157,10 @@ async def test_turn_off_with_transition.opp, light_devices):
     assert state.state == "off"
 
 
-async def test_turn_on.opp, light_devices):
+async def test_turn_on(opp, light_devices):
     """Test the light turns of successfully."""
     # Arrange
-    await setup_platform.opp, LIGHT_DOMAIN, devices=light_devices)
+    await setup_platform(opp, LIGHT_DOMAIN, devices=light_devices)
     # Act
     await opp.services.async_call(
         "light", "turn_on", {ATTR_ENTITY_ID: "light.color_dimmer_1"}, blocking=True
@@ -171,10 +171,10 @@ async def test_turn_on.opp, light_devices):
     assert state.state == "on"
 
 
-async def test_turn_on_with_brightness.opp, light_devices):
+async def test_turn_on_with_brightness(opp, light_devices):
     """Test the light turns on to the specified brightness."""
     # Arrange
-    await setup_platform.opp, LIGHT_DOMAIN, devices=light_devices)
+    await setup_platform(opp, LIGHT_DOMAIN, devices=light_devices)
     # Act
     await opp.services.async_call(
         "light",
@@ -194,7 +194,7 @@ async def test_turn_on_with_brightness.opp, light_devices):
     assert state.attributes[ATTR_BRIGHTNESS] == 74
 
 
-async def test_turn_on_with_minimal_brightness.opp, light_devices):
+async def test_turn_on_with_minimal_brightness(opp, light_devices):
     """
     Test lights set to lowest brightness when converted scale would be zero.
 
@@ -203,7 +203,7 @@ async def test_turn_on_with_minimal_brightness.opp, light_devices):
     set the level to zero, which turns off the lights in SmartThings.
     """
     # Arrange
-    await setup_platform.opp, LIGHT_DOMAIN, devices=light_devices)
+    await setup_platform(opp, LIGHT_DOMAIN, devices=light_devices)
     # Act
     await opp.services.async_call(
         "light",
@@ -219,10 +219,10 @@ async def test_turn_on_with_minimal_brightness.opp, light_devices):
     assert state.attributes[ATTR_BRIGHTNESS] == 3
 
 
-async def test_turn_on_with_color.opp, light_devices):
+async def test_turn_on_with_color(opp, light_devices):
     """Test the light turns on with color."""
     # Arrange
-    await setup_platform.opp, LIGHT_DOMAIN, devices=light_devices)
+    await setup_platform(opp, LIGHT_DOMAIN, devices=light_devices)
     # Act
     await opp.services.async_call(
         "light",
@@ -237,10 +237,10 @@ async def test_turn_on_with_color.opp, light_devices):
     assert state.attributes[ATTR_HS_COLOR] == (180, 50)
 
 
-async def test_turn_on_with_color_temp.opp, light_devices):
+async def test_turn_on_with_color_temp(opp, light_devices):
     """Test the light turns on with color temp."""
     # Arrange
-    await setup_platform.opp, LIGHT_DOMAIN, devices=light_devices)
+    await setup_platform(opp, LIGHT_DOMAIN, devices=light_devices)
     # Act
     await opp.services.async_call(
         "light",
@@ -255,7 +255,7 @@ async def test_turn_on_with_color_temp.opp, light_devices):
     assert state.attributes[ATTR_COLOR_TEMP] == 300
 
 
-async def test_update_from_signal.opp, device_factory):
+async def test_update_from_signal(opp, device_factory):
     """Test the light updates when receiving a signal."""
     # Arrange
     device = device_factory(
@@ -274,10 +274,10 @@ async def test_update_from_signal.opp, device_factory):
             Attribute.color_temperature: 4500,
         },
     )
-    await setup_platform.opp, LIGHT_DOMAIN, devices=[device])
+    await setup_platform(opp, LIGHT_DOMAIN, devices=[device])
     await device.switch_on(True)
     # Act
-    async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
+    async_dispatcher_send(opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
     await opp.async_block_till_done()
     state = opp.states.get("light.color_dimmer_2")
@@ -285,7 +285,7 @@ async def test_update_from_signal.opp, device_factory):
     assert state.state == "on"
 
 
-async def test_unload_config_entry.opp, device_factory):
+async def test_unload_config_entry(opp, device_factory):
     """Test the light is removed when the config entry is unloaded."""
     # Arrange
     device = device_factory(
@@ -304,8 +304,8 @@ async def test_unload_config_entry.opp, device_factory):
             Attribute.color_temperature: 4500,
         },
     )
-    config_entry = await setup_platform.opp, LIGHT_DOMAIN, devices=[device])
+    config_entry = await setup_platform(opp, LIGHT_DOMAIN, devices=[device])
     # Act
     await opp.config_entries.async_forward_entry_unload(config_entry, "light")
     # Assert
-    assert.opp.states.get("light.color_dimmer_2").state == STATE_UNAVAILABLE
+    assert opp.states.get("light.color_dimmer_2").state == STATE_UNAVAILABLE

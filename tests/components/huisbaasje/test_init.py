@@ -20,7 +20,7 @@ from tests.components.huisbaasje.test_data import MOCK_CURRENT_MEASUREMENTS
 
 async def test_setup_opp: OpenPeerPower):
     """Test for successfully setting up the platform."""
-    assert await async_setup_component.opp, huisbaasje.DOMAIN, {})
+    assert await async_setup_component(opp, huisbaasje.DOMAIN, {})
     await opp.async_block_till_done()
     assert huisbaasje.DOMAIN in.opp.config.components
 
@@ -147,7 +147,7 @@ async def test_unload_entry.opp: OpenPeerPower):
         entities = opp.states.async_entity_ids("sensor")
         assert len(entities) == 14
         for entity in entities:
-            assert.opp.states.get(entity).state == STATE_UNAVAILABLE
+            assert opp.states.get(entity).state == STATE_UNAVAILABLE
 
         # Remove config entry
         await opp.config_entries.async_remove(config_entry.entry_id)

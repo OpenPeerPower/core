@@ -58,7 +58,7 @@ async def test_air_quality.opp: OpenPeerPower, device: DysonPureCool) -> None:
     assert attributes[ATTR_AQI] == 40
 
     _async_assign_values(device, MOCKED_UPDATED_VALUES)
-    await async_update_device.opp, device, DysonEnvironmentalSensorV2State)
+    await async_update_device(opp, device, DysonEnvironmentalSensorV2State)
     state = opp.states.get(ENTITY_ID)
     assert state.state == str(MOCKED_UPDATED_VALUES[ATTR_PM_2_5])
     attributes = state.attributes

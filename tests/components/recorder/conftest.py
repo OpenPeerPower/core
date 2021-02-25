@@ -14,7 +14,7 @@ def.opp_recorder():
 
     def setup_recorder(config=None):
         """Set up with params."""
-        init_recorder_component.opp, config)
+        init_recorder_component(opp, config)
         opp.start()
         opp.block_till_done()
         opp.data[DATA_INSTANCE].block_till_done()

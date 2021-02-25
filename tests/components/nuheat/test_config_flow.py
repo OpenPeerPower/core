@@ -12,7 +12,7 @@ from .mocks import _get_mock_thermostat_run
 
 async def test_form_user.opp):
     """Test we get the form with user source."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )

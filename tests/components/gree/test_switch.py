@@ -21,12 +21,12 @@ ENTITY_ID = f"{DOMAIN}.fake_device_1_panel_light"
 
 async def async_setup_gree.opp):
     """Set up the gree switch platform."""
-    MockConfigEntry(domain=GREE_DOMAIN).add_to.opp.opp)
-    await async_setup_component.opp, GREE_DOMAIN, {GREE_DOMAIN: {DOMAIN: {}}})
+    MockConfigEntry(domain=GREE_DOMAIN).add_to_opp(opp)
+    await async_setup_component(opp, GREE_DOMAIN, {GREE_DOMAIN: {DOMAIN: {}}})
     await opp.async_block_till_done()
 
 
-async def test_send_panel_light_on.opp, discovery, device):
+async def test_send_panel_light_on(opp, discovery, device):
     """Test for sending power on command to the device."""
     await async_setup_gree.opp)
 
@@ -42,7 +42,7 @@ async def test_send_panel_light_on.opp, discovery, device):
     assert state.state == STATE_ON
 
 
-async def test_send_panel_light_on_device_timeout.opp, discovery, device):
+async def test_send_panel_light_on_device_timeout(opp, discovery, device):
     """Test for sending power on command to the device with a device timeout."""
     device().push_state_update.side_effect = DeviceTimeoutError
 
@@ -60,7 +60,7 @@ async def test_send_panel_light_on_device_timeout.opp, discovery, device):
     assert state.state == STATE_ON
 
 
-async def test_send_panel_light_off.opp, discovery, device):
+async def test_send_panel_light_off(opp, discovery, device):
     """Test for sending power on command to the device."""
     await async_setup_gree.opp)
 
@@ -76,7 +76,7 @@ async def test_send_panel_light_off.opp, discovery, device):
     assert state.state == STATE_OFF
 
 
-async def test_send_panel_light_toggle.opp, discovery, device):
+async def test_send_panel_light_toggle(opp, discovery, device):
     """Test for sending power on command to the device."""
     await async_setup_gree.opp)
 
@@ -117,7 +117,7 @@ async def test_send_panel_light_toggle.opp, discovery, device):
     assert state.state == STATE_ON
 
 
-async def test_panel_light_name.opp, discovery, device):
+async def test_panel_light_name(opp, discovery, device):
     """Test for name property."""
     await async_setup_gree.opp)
     state = opp.states.get(ENTITY_ID)

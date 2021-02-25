@@ -32,7 +32,7 @@ async def setup_bond_entity(
     patch_bridge=False,
 ):
     """Set up Bond entity."""
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch_start_bpup(), patch_bond_bridge(
         enabled=patch_bridge
@@ -66,7 +66,7 @@ async def setup_platform(
         domain=BOND_DOMAIN,
         data={CONF_HOST: "some host", CONF_ACCESS_TOKEN: "test-token"},
     )
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     with patch("openpeerpower.components.bond.PLATFORMS", [platform]):
         with patch_bond_version(return_value=bond_version), patch_bond_bridge(
@@ -80,7 +80,7 @@ async def setup_platform(
         ), patch_bond_device_state(
             return_value=state
         ):
-            assert await async_setup_component.opp, BOND_DOMAIN, {})
+            assert await async_setup_component(opp, BOND_DOMAIN, {})
             await opp.async_block_till_done()
 
     return mock_entry
@@ -187,16 +187,16 @@ async def help_test_entity_available(
     opp. core.OpenPeerPower, domain: str, device: Dict[str, Any], entity_id: str
 ):
     """Run common test to verify available property."""
-    await setup_platform.opp, domain, device)
+    await setup_platform(opp, domain, device)
 
-    assert.opp.states.get(entity_id).state != STATE_UNAVAILABLE
+    assert opp.states.get(entity_id).state != STATE_UNAVAILABLE
 
     with patch_bond_device_state(side_effect=AsyncIOTimeoutError()):
-        async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+        async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
         await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == STATE_UNAVAILABLE
+    assert opp.states.get(entity_id).state == STATE_UNAVAILABLE
 
     with patch_bond_device_state(return_value={}):
-        async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+        async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
         await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state != STATE_UNAVAILABLE
+    assert opp.states.get(entity_id).state != STATE_UNAVAILABLE

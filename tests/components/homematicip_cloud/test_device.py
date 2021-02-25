@@ -16,7 +16,7 @@ from .helper import (
 )
 
 
-async def test_hmip_load_all_supported_devices.opp, default_mock_hap_factory):
+async def test_hmip_load_all_supported_devices(opp, default_mock_hap_factory):
     """Ensure that all supported devices could be loaded."""
     mock_hap = await default_mock_hap_factory.async_get_mock_hap(
         test_devices=None, test_groups=None
@@ -25,7 +25,7 @@ async def test_hmip_load_all_supported_devices.opp, default_mock_hap_factory):
     assert len(mock_hap.hmip_device_by_entity_id) == 253
 
 
-async def test_hmip_remove_device.opp, default_mock_hap_factory):
+async def test_hmip_remove_device(opp, default_mock_hap_factory):
     """Test Remove of hmip device."""
     entity_id = "light.treppe_ch"
     entity_name = "Treppe CH"
@@ -57,7 +57,7 @@ async def test_hmip_remove_device.opp, default_mock_hap_factory):
     assert len(mock_hap.hmip_device_by_entity_id) == pre_mapping_count - 3
 
 
-async def test_hmip_add_device.opp, default_mock_hap_factory, hmip_config_entry):
+async def test_hmip_add_device(opp, default_mock_hap_factory, hmip_config_entry):
     """Test Remove of hmip device."""
     entity_id = "light.treppe_ch"
     entity_name = "Treppe CH"
@@ -105,7 +105,7 @@ async def test_hmip_add_device.opp, default_mock_hap_factory, hmip_config_entry)
     assert len(new_hap.hmip_device_by_entity_id) == pre_mapping_count
 
 
-async def test_hmip_remove_group.opp, default_mock_hap_factory):
+async def test_hmip_remove_group(opp, default_mock_hap_factory):
     """Test Remove of hmip group."""
     entity_id = "switch.strom_group"
     entity_name = "Strom Group"
@@ -154,13 +154,13 @@ async def test_all_devices_unavailable_when_hap_not_connected(
 
     assert mock_hap.home.connected
 
-    await async_manipulate_test_data.opp, mock_hap.home, "connected", False)
+    await async_manipulate_test_data(opp, mock_hap.home, "connected", False)
 
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_UNAVAILABLE
 
 
-async def test_hap_reconnected.opp, default_mock_hap_factory):
+async def test_hap_reconnected(opp, default_mock_hap_factory):
     """Test reconnect hap."""
     entity_id = "light.treppe_ch"
     entity_name = "Treppe CH"
@@ -178,19 +178,19 @@ async def test_hap_reconnected.opp, default_mock_hap_factory):
 
     assert mock_hap.home.connected
 
-    await async_manipulate_test_data.opp, mock_hap.home, "connected", False)
+    await async_manipulate_test_data(opp, mock_hap.home, "connected", False)
 
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_UNAVAILABLE
 
     mock_hap._accesspoint_connected = False  # pylint: disable=protected-access
-    await async_manipulate_test_data.opp, mock_hap.home, "connected", True)
+    await async_manipulate_test_data(opp, mock_hap.home, "connected", True)
     await opp.async_block_till_done()
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_ON
 
 
-async def test_hap_with_name.opp, mock_connection, hmip_config_entry):
+async def test_hap_with_name(opp, mock_connection, hmip_config_entry):
     """Test hap with name."""
     home_name = "TestName"
     entity_id = f"light.{home_name.lower()}_treppe_ch"
@@ -212,7 +212,7 @@ async def test_hap_with_name.opp, mock_connection, hmip_config_entry):
     assert op_state.attributes["friendly_name"] == entity_name
 
 
-async def test_hmip_reset_energy_counter_services.opp, default_mock_hap_factory):
+async def test_hmip_reset_energy_counter_services(opp, default_mock_hap_factory):
     """Test reset_energy_counter service."""
     entity_id = "switch.pc"
     entity_name = "Pc"
@@ -242,7 +242,7 @@ async def test_hmip_reset_energy_counter_services.opp, default_mock_hap_factory)
     assert len(hmip_device._connection.mock_calls) == 4  # pylint: disable=W0212
 
 
-async def test_hmip_multi_area_device.opp, default_mock_hap_factory):
+async def test_hmip_multi_area_device(opp, default_mock_hap_factory):
     """Test multi area device. Check if devices are created and referenced."""
     entity_id = "binary_sensor.wired_eingangsmodul_32_fach_channel5"
     entity_name = "Wired Eingangsmodul – 32-fach Channel5"

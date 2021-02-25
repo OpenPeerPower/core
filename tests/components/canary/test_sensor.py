@@ -27,9 +27,9 @@ from . import mock_device, mock_location, mock_reading
 from tests.common import async_fire_time_changed, mock_device_registry, mock_registry
 
 
-async def test_sensors_pro.opp, canary) -> None:
+async def test_sensors_pro(opp, canary) -> None:
     """Test the creation and values of the sensors for Canary Pro."""
-    await async_setup_component.opp, "persistent_notification", {})
+    await async_setup_component(opp, "persistent_notification", {})
 
     registry = mock_registry.opp)
     device_registry = mock_device_registry.opp)
@@ -49,7 +49,7 @@ async def test_sensors_pro.opp, canary) -> None:
 
     config = {DOMAIN: {"username": "test-username", "password": "test-password"}}
     with patch("openpeerpower.components.canary.PLATFORMS", ["sensor"]):
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
 
     sensors = {
@@ -95,9 +95,9 @@ async def test_sensors_pro.opp, canary) -> None:
     assert device.model == "Canary Pro"
 
 
-async def test_sensors_attributes_pro.opp, canary) -> None:
+async def test_sensors_attributes_pro(opp, canary) -> None:
     """Test the creation and values of the sensors attributes for Canary Pro."""
-    await async_setup_component.opp, "persistent_notification", {})
+    await async_setup_component(opp, "persistent_notification", {})
 
     online_device_at_home = mock_device(20, "Dining Room", True, "Canary Pro")
 
@@ -114,7 +114,7 @@ async def test_sensors_attributes_pro.opp, canary) -> None:
 
     config = {DOMAIN: {"username": "test-username", "password": "test-password"}}
     with patch("openpeerpower.components.canary.PLATFORMS", ["sensor"]):
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
 
     entity_id = "sensor.home_dining_room_air_quality"
@@ -129,7 +129,7 @@ async def test_sensors_attributes_pro.opp, canary) -> None:
     ]
 
     future = utcnow() + timedelta(seconds=30)
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.helpers.entity_component.async_update_entity(entity_id)
     await opp.async_block_till_done()
 
@@ -144,7 +144,7 @@ async def test_sensors_attributes_pro.opp, canary) -> None:
     ]
 
     future += timedelta(seconds=30)
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.helpers.entity_component.async_update_entity(entity_id)
     await opp.async_block_till_done()
 
@@ -153,9 +153,9 @@ async def test_sensors_attributes_pro.opp, canary) -> None:
     assert state.attributes[ATTR_AIR_QUALITY] == STATE_AIR_QUALITY_NORMAL
 
 
-async def test_sensors_flex.opp, canary) -> None:
+async def test_sensors_flex(opp, canary) -> None:
     """Test the creation and values of the sensors for Canary Flex."""
-    await async_setup_component.opp, "persistent_notification", {})
+    await async_setup_component(opp, "persistent_notification", {})
 
     registry = mock_registry.opp)
     device_registry = mock_device_registry.opp)
@@ -174,7 +174,7 @@ async def test_sensors_flex.opp, canary) -> None:
 
     config = {DOMAIN: {"username": "test-username", "password": "test-password"}}
     with patch("openpeerpower.components.canary.PLATFORMS", ["sensor"]):
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
 
     sensors = {

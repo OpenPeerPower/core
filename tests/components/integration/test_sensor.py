@@ -19,7 +19,7 @@ async def test_state.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
 
     entity_id = config["sensor"]["source"]
     opp.states.async_set(entity_id, 1, {})
@@ -51,7 +51,7 @@ async def test_trapezoidal.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
 
     entity_id = config["sensor"]["source"]
     opp.states.async_set(entity_id, 0, {})
@@ -85,7 +85,7 @@ async def test_left.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
 
     entity_id = config["sensor"]["source"]
     opp.states.async_set(entity_id, 0, {})
@@ -119,7 +119,7 @@ async def test_right.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
 
     entity_id = config["sensor"]["source"]
     opp.states.async_set(entity_id, 0, {})
@@ -152,7 +152,7 @@ async def test_prefix.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
 
     entity_id = config["sensor"]["source"]
     opp.states.async_set(entity_id, 1000, {"unit_of_measurement": POWER_WATT})
@@ -186,7 +186,7 @@ async def test_suffix.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
 
     entity_id = config["sensor"]["source"]
     opp.states.async_set(entity_id, 1000, {})

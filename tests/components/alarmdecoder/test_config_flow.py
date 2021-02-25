@@ -138,7 +138,7 @@ async def test_options_arm_flow.opp: OpenPeerPower):
         CONF_CODE_ARM_REQUIRED: True,
     }
     entry = MockConfigEntry(domain=DOMAIN)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
@@ -176,7 +176,7 @@ async def test_options_zone_flow.opp: OpenPeerPower):
     zone_number = "2"
     zone_settings = {CONF_ZONE_NAME: "Front Entry", CONF_ZONE_TYPE: DEVICE_CLASS_WINDOW}
     entry = MockConfigEntry(domain=DOMAIN)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
@@ -252,7 +252,7 @@ async def test_options_zone_flow_validation.opp: OpenPeerPower):
     zone_number = "2"
     zone_settings = {CONF_ZONE_NAME: "Front Entry", CONF_ZONE_TYPE: DEVICE_CLASS_WINDOW}
     entry = MockConfigEntry(domain=DOMAIN)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
@@ -399,7 +399,7 @@ async def test_options_zone_flow_validation.opp: OpenPeerPower):
         ),
     ],
 )
-async def test_one_device_allowed.opp, protocol, connection):
+async def test_one_device_allowed(opp, protocol, connection):
     """Test that only one AlarmDecoder device is allowed."""
     flow = config_flow.AlarmDecoderFlowHandler()
     flow.opp = opp
@@ -407,7 +407,7 @@ async def test_one_device_allowed.opp, protocol, connection):
     MockConfigEntry(
         domain=DOMAIN,
         data=connection,
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

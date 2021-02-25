@@ -685,7 +685,7 @@ async def test_put_light_state(opp, opp_hue, hue_client):
         hue_client, "light.ceiling_lights", HTTP_OK
     )
     assert ceiling_json["state"][HUE_API_STATE_BRI] == 100
-    assert.opp.states.get("light.ceiling_lights").attributes[light.ATTR_XY_COLOR] == (
+    assert opp.states.get("light.ceiling_lights").attributes[light.ATTR_XY_COLOR] == (
         (0.488, 0.48)
     )
 
@@ -1463,7 +1463,7 @@ async def test_put_than_get_when_service_call_fails(opp, opp_hue, hue_client):
         )
 
     # Ensure we did not actually turn on
-    assert.opp.states.get("light.ceiling_lights").state == STATE_OFF
+    assert opp.states.get("light.ceiling_lights").state == STATE_OFF
 
     # go through api to get the state back, the value returned should NOT match those set in the last PUT request
     # as the waiting to check the state change timed out
@@ -1499,7 +1499,7 @@ async def test_put_light_state_scene(opp, opp_hue, hue_client):
     assert scene_result.status == HTTP_OK
     assert len(scene_result_json) == 1
 
-    assert.opp_hue.states.get("light.kitchen_lights").state == STATE_ON
+    assert opp_hue.states.get("light.kitchen_lights").state == STATE_ON
 
     # Set the brightness on the entity; changing a scene brightness via the hue API will do nothing.
     await opp_hue.services.async_call(
@@ -1513,14 +1513,14 @@ async def test_put_light_state_scene(opp, opp_hue, hue_client):
         opp.hue, hue_client, "scene.light_on", True, brightness=254
     )
 
-    assert.opp_hue.states.get("light.kitchen_lights").state == STATE_ON
+    assert opp_hue.states.get("light.kitchen_lights").state == STATE_ON
     assert (
         opp.hue.states.get("light.kitchen_lights").attributes[light.ATTR_BRIGHTNESS]
         == 127
     )
 
     await perform_put_light_state(opp_hue, hue_client, "scene.light_off", True)
-    assert.opp_hue.states.get("light.kitchen_lights").state == STATE_OFF
+    assert opp_hue.states.get("light.kitchen_lights").state == STATE_OFF
 
 
 async def test_only_change_contrast(opp, opp_hue, hue_client):
@@ -1570,7 +1570,7 @@ async def test_only_change_hue_or_saturation(opp, opp_hue, hue_client):
         opp.hue, hue_client, "light.ceiling_lights", True, hue=4369
     )
 
-    assert.opp_hue.states.get("light.ceiling_lights").attributes[
+    assert opp_hue.states.get("light.ceiling_lights").attributes[
         light.ATTR_HS_COLOR
     ] == (24, 0)
 
@@ -1584,6 +1584,6 @@ async def test_only_change_hue_or_saturation(opp, opp_hue, hue_client):
         opp.hue, hue_client, "light.ceiling_lights", True, saturation=10
     )
 
-    assert.opp_hue.states.get("light.ceiling_lights").attributes[
+    assert opp_hue.states.get("light.ceiling_lights").attributes[
         light.ATTR_HS_COLOR
     ] == (0, 3)

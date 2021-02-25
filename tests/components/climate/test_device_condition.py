@@ -33,13 +33,13 @@ def entity_reg.opp):
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
-async def test_get_conditions.opp, device_reg, entity_reg):
+async def test_get_conditions(opp, device_reg, entity_reg):
     """Test we get the expected conditions from a climate."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -71,14 +71,14 @@ async def test_get_conditions.opp, device_reg, entity_reg):
             "entity_id": f"{DOMAIN}.test_5678",
         },
     ]
-    conditions = await async_get_device_automations.opp, "condition", device_entry.id)
+    conditions = await async_get_device_automations(opp, "condition", device_entry.id)
     assert_lists_same(conditions, expected_conditions)
 
 
-async def test_get_conditions_hvac_only.opp, device_reg, entity_reg):
+async def test_get_conditions_hvac_only(opp, device_reg, entity_reg):
     """Test we get the expected conditions from a climate."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -103,11 +103,11 @@ async def test_get_conditions_hvac_only.opp, device_reg, entity_reg):
             "entity_id": f"{DOMAIN}.test_5678",
         }
     ]
-    conditions = await async_get_device_automations.opp, "condition", device_entry.id)
+    conditions = await async_get_device_automations(opp, "condition", device_entry.id)
     assert_lists_same(conditions, expected_conditions)
 
 
-async def test_if_state.opp, calls):
+async def test_if_state(opp, calls):
     """Test for turn_on and turn_off conditions."""
     opp.states.async_set(
         "climate.entity",

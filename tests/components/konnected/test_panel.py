@@ -95,7 +95,7 @@ async def test_create_and_setup_opp, mock_panel):
         data=device_config,
         options=device_options,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     # override get_status to reflect non-pro board
     mock_panel.get_status.return_value = {
@@ -205,7 +205,7 @@ async def test_create_and_setup_opp, mock_panel):
     }
 
 
-async def test_create_and_setup_pro.opp, mock_panel):
+async def test_create_and_setup_pro(opp, mock_panel):
     """Test that we create a Konnected Pro Panel and save the data."""
     device_config = config_flow.CONFIG_ENTRY_SCHEMA(
         {
@@ -264,7 +264,7 @@ async def test_create_and_setup_pro.opp, mock_panel):
         data=device_config,
         options=device_options,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     # setup the integration and inspect panel behavior
     assert (
@@ -387,7 +387,7 @@ async def test_create_and_setup_pro.opp, mock_panel):
     }
 
 
-async def test_default_options.opp, mock_panel):
+async def test_default_options(opp, mock_panel):
     """Test that we create a Konnected Panel and save the data."""
     device_config = config_flow.CONFIG_ENTRY_SCHEMA(
         {
@@ -443,7 +443,7 @@ async def test_default_options.opp, mock_panel):
         data=device_config,
         options={},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     # override get_status to reflect non-pro board
     mock_panel.get_status.return_value = {
@@ -553,7 +553,7 @@ async def test_default_options.opp, mock_panel):
     }
 
 
-async def test_connect_retry.opp, mock_panel):
+async def test_connect_retry(opp, mock_panel):
     """Test that we create a Konnected Panel and save the data."""
     device_config = config_flow.CONFIG_ENTRY_SCHEMA(
         {
@@ -609,7 +609,7 @@ async def test_connect_retry.opp, mock_panel):
         data=device_config,
         options={},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     # fail first 2 attempts, and succeed the third
     mock_panel.get_status.side_effect = [
@@ -649,20 +649,20 @@ async def test_connect_retry.opp, mock_panel):
 
     # confirm switch is unavailable after initial attempt
     await opp.async_block_till_done()
-    assert.opp.states.get("switch.konnected_445566_actuator_6").state == "unavailable"
+    assert opp.states.get("switch.konnected_445566_actuator_6").state == "unavailable"
 
     # confirm switch is unavailable after second attempt
-    async_fire_time_changed.opp, utcnow() + timedelta(seconds=11))
+    async_fire_time_changed(opp, utcnow() + timedelta(seconds=11))
     await opp.async_block_till_done()
     await opp.helpers.entity_component.async_update_entity(
         "switch.konnected_445566_actuator_6"
     )
-    assert.opp.states.get("switch.konnected_445566_actuator_6").state == "unavailable"
+    assert opp.states.get("switch.konnected_445566_actuator_6").state == "unavailable"
 
     # confirm switch is available after third attempt
-    async_fire_time_changed.opp, utcnow() + timedelta(seconds=21))
+    async_fire_time_changed(opp, utcnow() + timedelta(seconds=21))
     await opp.async_block_till_done()
     await opp.helpers.entity_component.async_update_entity(
         "switch.konnected_445566_actuator_6"
     )
-    assert.opp.states.get("switch.konnected_445566_actuator_6").state == "off"
+    assert opp.states.get("switch.konnected_445566_actuator_6").state == "off"

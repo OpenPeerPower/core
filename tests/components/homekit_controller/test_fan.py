@@ -50,9 +50,9 @@ def create_fanv2_service(accessory):
     swing_mode.value = 0
 
 
-async def test_fan_read_state.opp, utcnow):
+async def test_fan_read_state(opp, utcnow):
     """Test that we can read the state of a HomeKit fan accessory."""
-    helper = await setup_test_component.opp, create_fan_service)
+    helper = await setup_test_component(opp, create_fan_service)
 
     helper.characteristics[V1_ON].value = False
     state = await helper.poll_and_get_state()
@@ -63,9 +63,9 @@ async def test_fan_read_state.opp, utcnow):
     assert state.state == "on"
 
 
-async def test_turn_on.opp, utcnow):
+async def test_turn_on(opp, utcnow):
     """Test that we can turn a fan on."""
-    helper = await setup_test_component.opp, create_fan_service)
+    helper = await setup_test_component(opp, create_fan_service)
 
     await opp.services.async_call(
         "fan",
@@ -95,9 +95,9 @@ async def test_turn_on.opp, utcnow):
     assert helper.characteristics[V1_ROTATION_SPEED].value == 33.0
 
 
-async def test_turn_off.opp, utcnow):
+async def test_turn_off(opp, utcnow):
     """Test that we can turn a fan off."""
-    helper = await setup_test_component.opp, create_fan_service)
+    helper = await setup_test_component(opp, create_fan_service)
 
     helper.characteristics[V1_ON].value = 1
 
@@ -110,9 +110,9 @@ async def test_turn_off.opp, utcnow):
     assert helper.characteristics[V1_ON].value == 0
 
 
-async def test_set_speed.opp, utcnow):
+async def test_set_speed(opp, utcnow):
     """Test that we set fan speed."""
-    helper = await setup_test_component.opp, create_fan_service)
+    helper = await setup_test_component(opp, create_fan_service)
 
     helper.characteristics[V1_ON].value = 1
 
@@ -149,9 +149,9 @@ async def test_set_speed.opp, utcnow):
     assert helper.characteristics[V1_ON].value == 0
 
 
-async def test_set_percentage.opp, utcnow):
+async def test_set_percentage(opp, utcnow):
     """Test that we set fan speed by percentage."""
-    helper = await setup_test_component.opp, create_fan_service)
+    helper = await setup_test_component(opp, create_fan_service)
 
     helper.characteristics[V1_ON].value = 1
 
@@ -172,9 +172,9 @@ async def test_set_percentage.opp, utcnow):
     assert helper.characteristics[V1_ON].value == 0
 
 
-async def test_speed_read.opp, utcnow):
+async def test_speed_read(opp, utcnow):
     """Test that we can read a fans oscillation."""
-    helper = await setup_test_component.opp, create_fan_service)
+    helper = await setup_test_component(opp, create_fan_service)
 
     helper.characteristics[V1_ON].value = 1
     helper.characteristics[V1_ROTATION_SPEED].value = 100
@@ -199,9 +199,9 @@ async def test_speed_read.opp, utcnow):
     assert state.attributes["percentage"] == 0
 
 
-async def test_set_direction.opp, utcnow):
+async def test_set_direction(opp, utcnow):
     """Test that we can set fan spin direction."""
-    helper = await setup_test_component.opp, create_fan_service)
+    helper = await setup_test_component(opp, create_fan_service)
 
     await opp.services.async_call(
         "fan",
@@ -220,9 +220,9 @@ async def test_set_direction.opp, utcnow):
     assert helper.characteristics[V1_ROTATION_DIRECTION].value == 0
 
 
-async def test_direction_read.opp, utcnow):
+async def test_direction_read(opp, utcnow):
     """Test that we can read a fans oscillation."""
-    helper = await setup_test_component.opp, create_fan_service)
+    helper = await setup_test_component(opp, create_fan_service)
 
     helper.characteristics[V1_ROTATION_DIRECTION].value = 0
     state = await helper.poll_and_get_state()
@@ -233,9 +233,9 @@ async def test_direction_read.opp, utcnow):
     assert state.attributes["direction"] == "reverse"
 
 
-async def test_fanv2_read_state.opp, utcnow):
+async def test_fanv2_read_state(opp, utcnow):
     """Test that we can read the state of a HomeKit fan accessory."""
-    helper = await setup_test_component.opp, create_fanv2_service)
+    helper = await setup_test_component(opp, create_fanv2_service)
 
     helper.characteristics[V2_ACTIVE].value = False
     state = await helper.poll_and_get_state()
@@ -246,9 +246,9 @@ async def test_fanv2_read_state.opp, utcnow):
     assert state.state == "on"
 
 
-async def test_v2_turn_on.opp, utcnow):
+async def test_v2_turn_on(opp, utcnow):
     """Test that we can turn a fan on."""
-    helper = await setup_test_component.opp, create_fanv2_service)
+    helper = await setup_test_component(opp, create_fanv2_service)
 
     await opp.services.async_call(
         "fan",
@@ -278,9 +278,9 @@ async def test_v2_turn_on.opp, utcnow):
     assert helper.characteristics[V2_ROTATION_SPEED].value == 33.0
 
 
-async def test_v2_turn_off.opp, utcnow):
+async def test_v2_turn_off(opp, utcnow):
     """Test that we can turn a fan off."""
-    helper = await setup_test_component.opp, create_fanv2_service)
+    helper = await setup_test_component(opp, create_fanv2_service)
 
     helper.characteristics[V2_ACTIVE].value = 1
 
@@ -293,9 +293,9 @@ async def test_v2_turn_off.opp, utcnow):
     assert helper.characteristics[V2_ACTIVE].value == 0
 
 
-async def test_v2_set_speed.opp, utcnow):
+async def test_v2_set_speed(opp, utcnow):
     """Test that we set fan speed."""
-    helper = await setup_test_component.opp, create_fanv2_service)
+    helper = await setup_test_component(opp, create_fanv2_service)
 
     helper.characteristics[V2_ACTIVE].value = 1
 
@@ -332,9 +332,9 @@ async def test_v2_set_speed.opp, utcnow):
     assert helper.characteristics[V2_ACTIVE].value == 0
 
 
-async def test_v2_set_percentage.opp, utcnow):
+async def test_v2_set_percentage(opp, utcnow):
     """Test that we set fan speed by percentage."""
-    helper = await setup_test_component.opp, create_fanv2_service)
+    helper = await setup_test_component(opp, create_fanv2_service)
 
     helper.characteristics[V2_ACTIVE].value = 1
 
@@ -355,9 +355,9 @@ async def test_v2_set_percentage.opp, utcnow):
     assert helper.characteristics[V2_ACTIVE].value == 0
 
 
-async def test_v2_speed_read.opp, utcnow):
+async def test_v2_speed_read(opp, utcnow):
     """Test that we can read a fans oscillation."""
-    helper = await setup_test_component.opp, create_fanv2_service)
+    helper = await setup_test_component(opp, create_fanv2_service)
 
     helper.characteristics[V2_ACTIVE].value = 1
     helper.characteristics[V2_ROTATION_SPEED].value = 100
@@ -382,9 +382,9 @@ async def test_v2_speed_read.opp, utcnow):
     assert state.attributes["percentage"] == 0
 
 
-async def test_v2_set_direction.opp, utcnow):
+async def test_v2_set_direction(opp, utcnow):
     """Test that we can set fan spin direction."""
-    helper = await setup_test_component.opp, create_fanv2_service)
+    helper = await setup_test_component(opp, create_fanv2_service)
 
     await opp.services.async_call(
         "fan",
@@ -403,9 +403,9 @@ async def test_v2_set_direction.opp, utcnow):
     assert helper.characteristics[V2_ROTATION_DIRECTION].value == 0
 
 
-async def test_v2_direction_read.opp, utcnow):
+async def test_v2_direction_read(opp, utcnow):
     """Test that we can read a fans oscillation."""
-    helper = await setup_test_component.opp, create_fanv2_service)
+    helper = await setup_test_component(opp, create_fanv2_service)
 
     helper.characteristics[V2_ROTATION_DIRECTION].value = 0
     state = await helper.poll_and_get_state()
@@ -416,9 +416,9 @@ async def test_v2_direction_read.opp, utcnow):
     assert state.attributes["direction"] == "reverse"
 
 
-async def test_v2_oscillate.opp, utcnow):
+async def test_v2_oscillate(opp, utcnow):
     """Test that we can control a fans oscillation."""
-    helper = await setup_test_component.opp, create_fanv2_service)
+    helper = await setup_test_component(opp, create_fanv2_service)
 
     await opp.services.async_call(
         "fan",
@@ -437,9 +437,9 @@ async def test_v2_oscillate.opp, utcnow):
     assert helper.characteristics[V2_SWING_MODE].value == 0
 
 
-async def test_v2_oscillate_read.opp, utcnow):
+async def test_v2_oscillate_read(opp, utcnow):
     """Test that we can read a fans oscillation."""
-    helper = await setup_test_component.opp, create_fanv2_service)
+    helper = await setup_test_component(opp, create_fanv2_service)
 
     helper.characteristics[V2_SWING_MODE].value = 0
     state = await helper.poll_and_get_state()

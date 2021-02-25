@@ -13,9 +13,9 @@ from tests.common import MockConfigEntry
 SERIAL_DATA = {"serial_id": "12345678", "serial_id_gas": "123456789"}
 
 
-async def test_import_usb.opp, dsmr_connection_send_validate_fixture):
+async def test_import_usb(opp, dsmr_connection_send_validate_fixture):
     """Test we can import."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry_data = {
         "port": "/dev/ttyUSB0",
@@ -42,7 +42,7 @@ async def test_import_usb_failed_connection(
     """Test we can import."""
     (connection_factory, transport, protocol) = dsmr_connection_send_validate_fixture
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry_data = {
         "port": "/dev/ttyUSB0",
@@ -73,11 +73,11 @@ async def test_import_usb_failed_connection(
     assert result["reason"] == "cannot_connect"
 
 
-async def test_import_usb_no_data.opp, dsmr_connection_send_validate_fixture):
+async def test_import_usb_no_data(opp, dsmr_connection_send_validate_fixture):
     """Test we can import."""
     (connection_factory, transport, protocol) = dsmr_connection_send_validate_fixture
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry_data = {
         "port": "/dev/ttyUSB0",
@@ -105,11 +105,11 @@ async def test_import_usb_no_data.opp, dsmr_connection_send_validate_fixture):
     assert result["reason"] == "cannot_communicate"
 
 
-async def test_import_usb_wrong_telegram.opp, dsmr_connection_send_validate_fixture):
+async def test_import_usb_wrong_telegram(opp, dsmr_connection_send_validate_fixture):
     """Test we can import."""
     (connection_factory, transport, protocol) = dsmr_connection_send_validate_fixture
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry_data = {
         "port": "/dev/ttyUSB0",
@@ -131,9 +131,9 @@ async def test_import_usb_wrong_telegram.opp, dsmr_connection_send_validate_fixt
     assert result["reason"] == "cannot_communicate"
 
 
-async def test_import_network.opp, dsmr_connection_send_validate_fixture):
+async def test_import_network(opp, dsmr_connection_send_validate_fixture):
     """Test we can import from network."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry_data = {
         "host": "localhost",
@@ -155,9 +155,9 @@ async def test_import_network.opp, dsmr_connection_send_validate_fixture):
     assert result["data"] == {**entry_data, **SERIAL_DATA}
 
 
-async def test_import_update.opp, dsmr_connection_send_validate_fixture):
+async def test_import_update(opp, dsmr_connection_send_validate_fixture):
     """Test we can import."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry_data = {
         "port": "/dev/ttyUSB0",
@@ -171,7 +171,7 @@ async def test_import_update.opp, dsmr_connection_send_validate_fixture):
         data=entry_data,
         unique_id="/dev/ttyUSB0",
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.dsmr.async_setup_entry", return_value=True
@@ -206,7 +206,7 @@ async def test_import_update.opp, dsmr_connection_send_validate_fixture):
 
 async def test_options_flow.opp):
     """Test options flow."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry_data = {
         "port": "/dev/ttyUSB0",
@@ -220,7 +220,7 @@ async def test_options_flow.opp):
         data=entry_data,
         unique_id="/dev/ttyUSB0",
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 
@@ -244,9 +244,9 @@ async def test_options_flow.opp):
     assert entry.options == {"time_between_update": 15}
 
 
-async def test_import_luxembourg.opp, dsmr_connection_send_validate_fixture):
+async def test_import_luxembourg(opp, dsmr_connection_send_validate_fixture):
     """Test we can import."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry_data = {
         "port": "/dev/ttyUSB0",

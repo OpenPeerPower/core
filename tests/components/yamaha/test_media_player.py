@@ -47,9 +47,9 @@ def device_fixture(main_zone):
         yield device
 
 
-async def test_setup_host.opp, device, main_zone):
+async def test_setup_host(opp, device, main_zone):
     """Test set up integration with host."""
-    assert await async_setup_component.opp, mp.DOMAIN, CONFIG)
+    assert await async_setup_component(opp, mp.DOMAIN, CONFIG)
     await opp.async_block_till_done()
 
     state = opp.states.get("media_player.yamaha_receiver_main_zone")
@@ -58,7 +58,7 @@ async def test_setup_host.opp, device, main_zone):
     assert state.state == "off"
 
 
-async def test_setup_no_host.opp, device, main_zone):
+async def test_setup_no_host(opp, device, main_zone):
     """Test set up integration without host."""
     with patch("rxv.find", return_value=[device]):
         assert await async_setup_component(
@@ -72,7 +72,7 @@ async def test_setup_no_host.opp, device, main_zone):
     assert state.state == "off"
 
 
-async def test_setup_discovery.opp, device, main_zone):
+async def test_setup_discovery(opp, device, main_zone):
     """Test set up integration via discovery."""
     discovery_info = {
         "name": "Yamaha Receiver",
@@ -91,7 +91,7 @@ async def test_setup_discovery.opp, device, main_zone):
     assert state.state == "off"
 
 
-async def test_setup_zone_ignore.opp, device, main_zone):
+async def test_setup_zone_ignore(opp, device, main_zone):
     """Test set up integration without host."""
     assert await async_setup_component(
         opp,
@@ -111,9 +111,9 @@ async def test_setup_zone_ignore.opp, device, main_zone):
     assert state is None
 
 
-async def test_enable_output.opp, device, main_zone):
+async def test_enable_output(opp, device, main_zone):
     """Test enable output service."""
-    assert await async_setup_component.opp, mp.DOMAIN, CONFIG)
+    assert await async_setup_component(opp, mp.DOMAIN, CONFIG)
     await opp.async_block_till_done()
 
     port = "hdmi1"
@@ -130,12 +130,12 @@ async def test_enable_output.opp, device, main_zone):
     assert main_zone.enable_output.call_args == call(port, enabled)
 
 
-async def test_select_scene.opp, device, main_zone, caplog):
+async def test_select_scene(opp, device, main_zone, caplog):
     """Test select scene service."""
     scene_prop = PropertyMock(return_value=None)
     type(main_zone).scene = scene_prop
 
-    assert await async_setup_component.opp, mp.DOMAIN, CONFIG)
+    assert await async_setup_component(opp, mp.DOMAIN, CONFIG)
     await opp.async_block_till_done()
 
     scene = "TV Viewing"

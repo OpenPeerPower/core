@@ -96,19 +96,19 @@ async def test_non_standard_speed_list.opp: core.OpenPeerPower):
 
     with patch_bond_device_state():
         with patch_bond_action() as mock_set_speed_low:
-            await turn_fan_on.opp, "fan.name_1", fan.SPEED_LOW)
+            await turn_fan_on(opp, "fan.name_1", fan.SPEED_LOW)
         mock_set_speed_low.assert_called_once_with(
             "test-device-id", Action.set_speed(2)
         )
 
         with patch_bond_action() as mock_set_speed_medium:
-            await turn_fan_on.opp, "fan.name_1", fan.SPEED_MEDIUM)
+            await turn_fan_on(opp, "fan.name_1", fan.SPEED_MEDIUM)
         mock_set_speed_medium.assert_called_once_with(
             "test-device-id", Action.set_speed(4)
         )
 
         with patch_bond_action() as mock_set_speed_high:
-            await turn_fan_on.opp, "fan.name_1", fan.SPEED_HIGH)
+            await turn_fan_on(opp, "fan.name_1", fan.SPEED_HIGH)
         mock_set_speed_high.assert_called_once_with(
             "test-device-id", Action.set_speed(6)
         )
@@ -125,7 +125,7 @@ async def test_fan_speed_with_no_max_seed.opp: core.OpenPeerPower):
         state={"power": 1, "speed": 14},
     )
 
-    assert.opp.states.get("fan.name_1").attributes["speed"] == fan.SPEED_HIGH
+    assert opp.states.get("fan.name_1").attributes["speed"] == fan.SPEED_HIGH
 
 
 async def test_turn_on_fan_with_speed.opp: core.OpenPeerPower):
@@ -135,7 +135,7 @@ async def test_turn_on_fan_with_speed.opp: core.OpenPeerPower):
     )
 
     with patch_bond_action() as mock_set_speed, patch_bond_device_state():
-        await turn_fan_on.opp, "fan.name_1", fan.SPEED_LOW)
+        await turn_fan_on(opp, "fan.name_1", fan.SPEED_LOW)
 
     mock_set_speed.assert_called_with("test-device-id", Action.set_speed(1))
 
@@ -147,19 +147,19 @@ async def test_turn_on_fan_with_percentage_3_speeds.opp: core.OpenPeerPower):
     )
 
     with patch_bond_action() as mock_set_speed, patch_bond_device_state():
-        await turn_fan_on.opp, "fan.name_1", percentage=10)
+        await turn_fan_on(opp, "fan.name_1", percentage=10)
 
     mock_set_speed.assert_called_with("test-device-id", Action.set_speed(1))
 
     mock_set_speed.reset_mock()
     with patch_bond_action() as mock_set_speed, patch_bond_device_state():
-        await turn_fan_on.opp, "fan.name_1", percentage=50)
+        await turn_fan_on(opp, "fan.name_1", percentage=50)
 
     mock_set_speed.assert_called_with("test-device-id", Action.set_speed(2))
 
     mock_set_speed.reset_mock()
     with patch_bond_action() as mock_set_speed, patch_bond_device_state():
-        await turn_fan_on.opp, "fan.name_1", percentage=100)
+        await turn_fan_on(opp, "fan.name_1", percentage=100)
 
     mock_set_speed.assert_called_with("test-device-id", Action.set_speed(3))
 
@@ -175,19 +175,19 @@ async def test_turn_on_fan_with_percentage_6_speeds.opp: core.OpenPeerPower):
     )
 
     with patch_bond_action() as mock_set_speed, patch_bond_device_state():
-        await turn_fan_on.opp, "fan.name_1", percentage=10)
+        await turn_fan_on(opp, "fan.name_1", percentage=10)
 
     mock_set_speed.assert_called_with("test-device-id", Action.set_speed(1))
 
     mock_set_speed.reset_mock()
     with patch_bond_action() as mock_set_speed, patch_bond_device_state():
-        await turn_fan_on.opp, "fan.name_1", percentage=50)
+        await turn_fan_on(opp, "fan.name_1", percentage=50)
 
     mock_set_speed.assert_called_with("test-device-id", Action.set_speed(3))
 
     mock_set_speed.reset_mock()
     with patch_bond_action() as mock_set_speed, patch_bond_device_state():
-        await turn_fan_on.opp, "fan.name_1", percentage=100)
+        await turn_fan_on(opp, "fan.name_1", percentage=100)
 
     mock_set_speed.assert_called_with("test-device-id", Action.set_speed(6))
 
@@ -199,7 +199,7 @@ async def test_turn_on_fan_without_speed.opp: core.OpenPeerPower):
     )
 
     with patch_bond_action() as mock_turn_on, patch_bond_device_state():
-        await turn_fan_on.opp, "fan.name_1")
+        await turn_fan_on(opp, "fan.name_1")
 
     mock_turn_on.assert_called_with("test-device-id", Action.turn_on())
 
@@ -211,7 +211,7 @@ async def test_turn_on_fan_with_off_speed.opp: core.OpenPeerPower):
     )
 
     with patch_bond_action() as mock_turn_off, patch_bond_device_state():
-        await turn_fan_on.opp, "fan.name_1", fan.SPEED_OFF)
+        await turn_fan_on(opp, "fan.name_1", fan.SPEED_OFF)
 
     mock_turn_off.assert_called_with("test-device-id", Action.turn_off())
 
@@ -254,46 +254,46 @@ async def test_turn_off_fan.opp: core.OpenPeerPower):
 
 async def test_update_reports_fan_on.opp: core.OpenPeerPower):
     """Tests that update command sets correct state when Bond API reports fan power is on."""
-    await setup_platform.opp, FAN_DOMAIN, ceiling_fan("name-1"))
+    await setup_platform(opp, FAN_DOMAIN, ceiling_fan("name-1"))
 
     with patch_bond_device_state(return_value={"power": 1, "speed": 1}):
-        async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+        async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
         await opp.async_block_till_done()
 
-    assert.opp.states.get("fan.name_1").state == "on"
+    assert opp.states.get("fan.name_1").state == "on"
 
 
 async def test_update_reports_fan_off.opp: core.OpenPeerPower):
     """Tests that update command sets correct state when Bond API reports fan power is off."""
-    await setup_platform.opp, FAN_DOMAIN, ceiling_fan("name-1"))
+    await setup_platform(opp, FAN_DOMAIN, ceiling_fan("name-1"))
 
     with patch_bond_device_state(return_value={"power": 0, "speed": 1}):
-        async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+        async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
         await opp.async_block_till_done()
 
-    assert.opp.states.get("fan.name_1").state == "off"
+    assert opp.states.get("fan.name_1").state == "off"
 
 
 async def test_update_reports_direction_forward.opp: core.OpenPeerPower):
     """Tests that update command sets correct direction when Bond API reports fan direction is forward."""
-    await setup_platform.opp, FAN_DOMAIN, ceiling_fan("name-1"))
+    await setup_platform(opp, FAN_DOMAIN, ceiling_fan("name-1"))
 
     with patch_bond_device_state(return_value={"direction": Direction.FORWARD}):
-        async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+        async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
         await opp.async_block_till_done()
 
-    assert.opp.states.get("fan.name_1").attributes[ATTR_DIRECTION] == DIRECTION_FORWARD
+    assert opp.states.get("fan.name_1").attributes[ATTR_DIRECTION] == DIRECTION_FORWARD
 
 
 async def test_update_reports_direction_reverse.opp: core.OpenPeerPower):
     """Tests that update command sets correct direction when Bond API reports fan direction is reverse."""
-    await setup_platform.opp, FAN_DOMAIN, ceiling_fan("name-1"))
+    await setup_platform(opp, FAN_DOMAIN, ceiling_fan("name-1"))
 
     with patch_bond_device_state(return_value={"direction": Direction.REVERSE}):
-        async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+        async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
         await opp.async_block_till_done()
 
-    assert.opp.states.get("fan.name_1").attributes[ATTR_DIRECTION] == DIRECTION_REVERSE
+    assert opp.states.get("fan.name_1").attributes[ATTR_DIRECTION] == DIRECTION_REVERSE
 
 
 async def test_set_fan_direction.opp: core.OpenPeerPower):

@@ -41,7 +41,7 @@ async def test_setup_adds_proper_devices.opp):
         mock_client.return_value.get_devices.return_value = [
             mock.MagicMock(ports=ports)
         ]
-        assert await async_setup_component.opp, COMPONENT.DOMAIN, GOOD_CONFIG)
+        assert await async_setup_component(opp, COMPONENT.DOMAIN, GOOD_CONFIG)
         await opp.async_block_till_done()
         for ident, port in ports.items():
             if ident != "bad":

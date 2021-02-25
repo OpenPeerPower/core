@@ -24,7 +24,7 @@ from tests.common import async_fire_time_changed
 @respx.mock
 async def test_setup_with_endpoint_timeout_with_recovery.opp):
     """Test setup with an endpoint that times out that recovers."""
-    await async_setup_component.opp, "openpeerpower", {})
+    await async_setup_component(opp, "openpeerpower", {})
 
     respx.get("http://localhost").mock(side_effect=asyncio.TimeoutError())
     assert await async_setup_component(
@@ -77,31 +77,31 @@ async def test_setup_with_endpoint_timeout_with_recovery.opp):
     )
 
     # Refresh the coordinator
-    async_fire_time_changed.opp, utcnow() + timedelta(seconds=31))
+    async_fire_time_changed(opp, utcnow() + timedelta(seconds=31))
     await opp.async_block_till_done()
 
     # Wait for platform setup retry
-    async_fire_time_changed.opp, utcnow() + timedelta(seconds=61))
+    async_fire_time_changed(opp, utcnow() + timedelta(seconds=61))
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 4
 
-    assert.opp.states.get("sensor.sensor1").state == "1"
-    assert.opp.states.get("sensor.sensor2").state == "2"
-    assert.opp.states.get("binary_sensor.binary_sensor1").state == "on"
-    assert.opp.states.get("binary_sensor.binary_sensor2").state == "off"
+    assert opp.states.get("sensor.sensor1").state == "1"
+    assert opp.states.get("sensor.sensor2").state == "2"
+    assert opp.states.get("binary_sensor.binary_sensor1").state == "on"
+    assert opp.states.get("binary_sensor.binary_sensor2").state == "off"
 
     # Now the end point flakes out again
     respx.get("http://localhost").mock(side_effect=asyncio.TimeoutError())
 
     # Refresh the coordinator
-    async_fire_time_changed.opp, utcnow() + timedelta(seconds=31))
+    async_fire_time_changed(opp, utcnow() + timedelta(seconds=31))
     await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.sensor1").state == STATE_UNAVAILABLE
-    assert.opp.states.get("sensor.sensor2").state == STATE_UNAVAILABLE
-    assert.opp.states.get("binary_sensor.binary_sensor1").state == STATE_UNAVAILABLE
-    assert.opp.states.get("binary_sensor.binary_sensor2").state == STATE_UNAVAILABLE
+    assert opp.states.get("sensor.sensor1").state == STATE_UNAVAILABLE
+    assert opp.states.get("sensor.sensor2").state == STATE_UNAVAILABLE
+    assert opp.states.get("binary_sensor.binary_sensor1").state == STATE_UNAVAILABLE
+    assert opp.states.get("binary_sensor.binary_sensor2").state == STATE_UNAVAILABLE
 
     # We request a manual refresh when the
     # endpoint is working again
@@ -122,10 +122,10 @@ async def test_setup_with_endpoint_timeout_with_recovery.opp):
         {ATTR_ENTITY_ID: ["sensor.sensor1"]},
         blocking=True,
     )
-    assert.opp.states.get("sensor.sensor1").state == "1"
-    assert.opp.states.get("sensor.sensor2").state == "2"
-    assert.opp.states.get("binary_sensor.binary_sensor1").state == "on"
-    assert.opp.states.get("binary_sensor.binary_sensor2").state == "off"
+    assert opp.states.get("sensor.sensor1").state == "1"
+    assert opp.states.get("sensor.sensor2").state == "2"
+    assert opp.states.get("binary_sensor.binary_sensor1").state == "on"
+    assert opp.states.get("binary_sensor.binary_sensor2").state == "off"
 
 
 @respx.mock
@@ -180,10 +180,10 @@ async def test_setup_minimum_resource_template.opp):
     await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 4
 
-    assert.opp.states.get("sensor.sensor1").state == "1"
-    assert.opp.states.get("sensor.sensor2").state == "2"
-    assert.opp.states.get("binary_sensor.binary_sensor1").state == "on"
-    assert.opp.states.get("binary_sensor.binary_sensor2").state == "off"
+    assert opp.states.get("sensor.sensor1").state == "1"
+    assert opp.states.get("sensor.sensor2").state == "2"
+    assert opp.states.get("binary_sensor.binary_sensor1").state == "on"
+    assert opp.states.get("binary_sensor.binary_sensor2").state == "off"
 
 
 @respx.mock
@@ -217,7 +217,7 @@ async def test_reload.opp):
 
     assert len.opp.states.async_all()) == 1
 
-    assert.opp.states.get("sensor.mockrest")
+    assert opp.states.get("sensor.mockrest")
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -233,9 +233,9 @@ async def test_reload.opp):
         )
         await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.mockreset") is None
-    assert.opp.states.get("sensor.rollout")
-    assert.opp.states.get("sensor.fallover")
+    assert opp.states.get("sensor.mockreset") is None
+    assert opp.states.get("sensor.rollout")
+    assert opp.states.get("sensor.fallover")
 
 
 @respx.mock
@@ -269,7 +269,7 @@ async def test_reload_and_remove_all.opp):
 
     assert len.opp.states.async_all()) == 1
 
-    assert.opp.states.get("sensor.mockrest")
+    assert opp.states.get("sensor.mockrest")
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -285,7 +285,7 @@ async def test_reload_and_remove_all.opp):
         )
         await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.mockreset") is None
+    assert opp.states.get("sensor.mockreset") is None
 
 
 @respx.mock

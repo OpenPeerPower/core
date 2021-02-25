@@ -67,9 +67,9 @@ async def test_missing_credentials(eebrightbox_mock, opp):
 
     await opp.async_block_till_done()
 
-    assert.opp.states.get("device_tracker.hostnameaa") is None
-    assert.opp.states.get("device_tracker.hostname11") is None
-    assert.opp.states.get("device_tracker.hostnameff") is None
+    assert opp.states.get("device_tracker.hostnameaa") is None
+    assert opp.states.get("device_tracker.hostname11") is None
+    assert opp.states.get("device_tracker.hostnameff") is None
 
 
 @patch("openpeerpower.components.ee_brightbox.device_tracker.EEBrightBox")
@@ -87,9 +87,9 @@ async def test_invalid_credentials(eebrightbox_mock, opp):
 
     await opp.async_block_till_done()
 
-    assert.opp.states.get("device_tracker.hostnameaa") is None
-    assert.opp.states.get("device_tracker.hostname11") is None
-    assert.opp.states.get("device_tracker.hostnameff") is None
+    assert opp.states.get("device_tracker.hostnameaa") is None
+    assert opp.states.get("device_tracker.hostname11") is None
+    assert opp.states.get("device_tracker.hostnameff") is None
 
 
 @patch("openpeerpower.components.ee_brightbox.device_tracker.EEBrightBox")
@@ -107,9 +107,9 @@ async def test_get_devices(eebrightbox_mock, opp):
 
     await opp.async_block_till_done()
 
-    assert.opp.states.get("device_tracker.hostnameaa") is not None
-    assert.opp.states.get("device_tracker.hostname11") is not None
-    assert.opp.states.get("device_tracker.hostnameff") is None
+    assert opp.states.get("device_tracker.hostnameaa") is not None
+    assert opp.states.get("device_tracker.hostname11") is not None
+    assert opp.states.get("device_tracker.hostnameff") is None
 
     state = opp.states.get("device_tracker.hostnameaa")
     assert state.attributes["mac"] == "AA:BB:CC:DD:EE:FF"

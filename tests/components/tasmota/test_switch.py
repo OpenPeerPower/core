@@ -30,7 +30,7 @@ from tests.common import async_fire_mqtt_message
 from tests.components.switch import common
 
 
-async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
+async def test_controlling_state_via_mqtt(opp, mqtt_mock, setup_tasmota):
     """Test state update via MQTT."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 1
@@ -47,33 +47,33 @@ async def test_controlling_state_via_mqtt.opp, mqtt_mock, setup_tasmota):
     assert state.state == "unavailable"
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/LWT", "Online")
     state = opp.states.get("switch.test")
     assert state.state == STATE_OFF
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON"}')
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON"}')
 
     state = opp.states.get("switch.test")
     assert state.state == STATE_ON
 
-    async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"OFF"}')
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"OFF"}')
 
     state = opp.states.get("switch.test")
     assert state.state == STATE_OFF
 
-    async_fire_mqtt_message.opp, "tasmota_49A3BC/stat/RESULT", '{"POWER":"ON"}')
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/stat/RESULT", '{"POWER":"ON"}')
 
     state = opp.states.get("switch.test")
     assert state.state == STATE_ON
 
-    async_fire_mqtt_message.opp, "tasmota_49A3BC/stat/RESULT", '{"POWER":"OFF"}')
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/stat/RESULT", '{"POWER":"OFF"}')
 
     state = opp.states.get("switch.test")
     assert state.state == STATE_OFF
 
 
-async def test_sending_mqtt_commands.opp, mqtt_mock, setup_tasmota):
+async def test_sending_mqtt_commands(opp, mqtt_mock, setup_tasmota):
     """Test the sending MQTT commands."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 1
@@ -86,7 +86,7 @@ async def test_sending_mqtt_commands.opp, mqtt_mock, setup_tasmota):
     )
     await opp.async_block_till_done()
 
-    async_fire_mqtt_message.opp, "tasmota_49A3BC/tele/LWT", "Online")
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/LWT", "Online")
     state = opp.states.get("switch.test")
     assert state.state == STATE_OFF
     await opp.async_block_till_done()
@@ -94,7 +94,7 @@ async def test_sending_mqtt_commands.opp, mqtt_mock, setup_tasmota):
     mqtt_mock.async_publish.reset_mock()
 
     # Turn the switch on and verify MQTT message is sent
-    await common.async_turn_on.opp, "switch.test")
+    await common.async_turn_on(opp, "switch.test")
     mqtt_mock.async_publish.assert_called_once_with(
         "tasmota_49A3BC/cmnd/Power1", "ON", 0, False
     )
@@ -105,7 +105,7 @@ async def test_sending_mqtt_commands.opp, mqtt_mock, setup_tasmota):
     assert state.state == STATE_OFF
 
     # Turn the switch off and verify MQTT message is sent
-    await common.async_turn_off.opp, "switch.test")
+    await common.async_turn_off(opp, "switch.test")
     mqtt_mock.async_publish.assert_called_once_with(
         "tasmota_49A3BC/cmnd/Power1", "OFF", 0, False
     )
@@ -114,7 +114,7 @@ async def test_sending_mqtt_commands.opp, mqtt_mock, setup_tasmota):
     assert state.state == STATE_OFF
 
 
-async def test_relay_as_light.opp, mqtt_mock, setup_tasmota):
+async def test_relay_as_light(opp, mqtt_mock, setup_tasmota):
     """Test relay does not show up as switch in light mode."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 1
@@ -145,14 +145,14 @@ async def test_availability_when_connection_lost(
     )
 
 
-async def test_availability.opp, mqtt_mock, setup_tasmota):
+async def test_availability(opp, mqtt_mock, setup_tasmota):
     """Test availability."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 1
-    await help_test_availability.opp, mqtt_mock, switch.DOMAIN, config)
+    await help_test_availability(opp, mqtt_mock, switch.DOMAIN, config)
 
 
-async def test_availability_discovery_update.opp, mqtt_mock, setup_tasmota):
+async def test_availability_discovery_update(opp, mqtt_mock, setup_tasmota):
     """Test availability discovery update."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 1
@@ -173,7 +173,7 @@ async def test_availability_poll_state(
     )
 
 
-async def test_discovery_removal_switch.opp, mqtt_mock, caplog, setup_tasmota):
+async def test_discovery_removal_switch(opp, mqtt_mock, caplog, setup_tasmota):
     """Test removal of discovered switch."""
     config1 = copy.deepcopy(DEFAULT_CONFIG)
     config1["rl"][0] = 1
@@ -185,7 +185,7 @@ async def test_discovery_removal_switch.opp, mqtt_mock, caplog, setup_tasmota):
     )
 
 
-async def test_discovery_removal_relay_as_light.opp, mqtt_mock, caplog, setup_tasmota):
+async def test_discovery_removal_relay_as_light(opp, mqtt_mock, caplog, setup_tasmota):
     """Test removal of discovered relay as light."""
     config1 = copy.deepcopy(DEFAULT_CONFIG)
     config1["rl"][0] = 1
@@ -213,7 +213,7 @@ async def test_discovery_update_unchanged_switch(
         )
 
 
-async def test_discovery_device_remove.opp, mqtt_mock, setup_tasmota):
+async def test_discovery_device_remove(opp, mqtt_mock, setup_tasmota):
     """Test device registry remove."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 1
@@ -223,7 +223,7 @@ async def test_discovery_device_remove.opp, mqtt_mock, setup_tasmota):
     )
 
 
-async def test_entity_id_update_subscriptions.opp, mqtt_mock, setup_tasmota):
+async def test_entity_id_update_subscriptions(opp, mqtt_mock, setup_tasmota):
     """Test MQTT subscriptions are managed when entity_id is updated."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 1
@@ -237,7 +237,7 @@ async def test_entity_id_update_subscriptions.opp, mqtt_mock, setup_tasmota):
     )
 
 
-async def test_entity_id_update_discovery_update.opp, mqtt_mock, setup_tasmota):
+async def test_entity_id_update_discovery_update(opp, mqtt_mock, setup_tasmota):
     """Test MQTT discovery update when entity_id is updated."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 1

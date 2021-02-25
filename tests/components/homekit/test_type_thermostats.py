@@ -66,7 +66,7 @@ from openpeerpower.helpers import entity_registry
 from tests.common import async_mock_service
 
 
-async def test_thermostat.opp, hk_driver, events):
+async def test_thermostat(opp, hk_driver, events):
     """Test if accessory and HA are updated accordingly."""
     entity_id = "climate.test"
 
@@ -324,8 +324,8 @@ async def test_thermostat.opp, hk_driver, events):
     assert acc.char_display_units.value == 0
 
     # Set from HomeKit
-    call_set_temperature = async_mock_service.opp, DOMAIN_CLIMATE, "set_temperature")
-    call_set_hvac_mode = async_mock_service.opp, DOMAIN_CLIMATE, "set_hvac_mode")
+    call_set_temperature = async_mock_service(opp, DOMAIN_CLIMATE, "set_temperature")
+    call_set_hvac_mode = async_mock_service(opp, DOMAIN_CLIMATE, "set_hvac_mode")
 
     char_target_temp_iid = acc.char_target_temp.to_HAP()[HAP_REPR_IID]
     char_heat_cool_iid = acc.char_target_heat_cool.to_HAP()[HAP_REPR_IID]
@@ -406,7 +406,7 @@ async def test_thermostat.opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] == "TargetHeatingCoolingState to 3"
 
 
-async def test_thermostat_auto.opp, hk_driver, events):
+async def test_thermostat_auto(opp, hk_driver, events):
     """Test if accessory and HA are updated accordingly."""
     entity_id = "climate.test"
 
@@ -523,7 +523,7 @@ async def test_thermostat_auto.opp, hk_driver, events):
     assert acc.char_display_units.value == 0
 
     # Set from HomeKit
-    call_set_temperature = async_mock_service.opp, DOMAIN_CLIMATE, "set_temperature")
+    call_set_temperature = async_mock_service(opp, DOMAIN_CLIMATE, "set_temperature")
 
     char_heating_thresh_temp_iid = acc.char_heating_thresh_temp.to_HAP()[HAP_REPR_IID]
     char_cooling_thresh_temp_iid = acc.char_cooling_thresh_temp.to_HAP()[HAP_REPR_IID]
@@ -560,7 +560,7 @@ async def test_thermostat_auto.opp, hk_driver, events):
     )
 
 
-async def test_thermostat_humidity.opp, hk_driver, events):
+async def test_thermostat_humidity(opp, hk_driver, events):
     """Test if accessory and HA are updated accordingly with humidity."""
     entity_id = "climate.test"
 
@@ -593,7 +593,7 @@ async def test_thermostat_humidity.opp, hk_driver, events):
     assert acc.char_target_humidity.value == 35
 
     # Set from HomeKit
-    call_set_humidity = async_mock_service.opp, DOMAIN_CLIMATE, "set_humidity")
+    call_set_humidity = async_mock_service(opp, DOMAIN_CLIMATE, "set_humidity")
 
     char_target_humidity_iid = acc.char_target_humidity.to_HAP()[HAP_REPR_IID]
 
@@ -619,7 +619,7 @@ async def test_thermostat_humidity.opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] == "35%"
 
 
-async def test_thermostat_power_state.opp, hk_driver, events):
+async def test_thermostat_power_state(opp, hk_driver, events):
     """Test if accessory and HA are updated accordingly."""
     entity_id = "climate.test"
 
@@ -692,7 +692,7 @@ async def test_thermostat_power_state.opp, hk_driver, events):
     assert acc.char_target_heat_cool.value == 0
 
     # Set from HomeKit
-    call_set_hvac_mode = async_mock_service.opp, DOMAIN_CLIMATE, "set_hvac_mode")
+    call_set_hvac_mode = async_mock_service(opp, DOMAIN_CLIMATE, "set_hvac_mode")
 
     char_target_heat_cool_iid = acc.char_target_heat_cool.to_HAP()[HAP_REPR_IID]
 
@@ -739,7 +739,7 @@ async def test_thermostat_power_state.opp, hk_driver, events):
     assert acc.char_target_heat_cool.value == 2
 
 
-async def test_thermostat_fahrenheit.opp, hk_driver, events):
+async def test_thermostat_fahrenheit(opp, hk_driver, events):
     """Test if accessory and HA are updated accordingly."""
     entity_id = "climate.test"
 
@@ -780,7 +780,7 @@ async def test_thermostat_fahrenheit.opp, hk_driver, events):
     assert acc.char_display_units.value == 1
 
     # Set from HomeKit
-    call_set_temperature = async_mock_service.opp, DOMAIN_CLIMATE, "set_temperature")
+    call_set_temperature = async_mock_service(opp, DOMAIN_CLIMATE, "set_temperature")
 
     char_cooling_thresh_temp_iid = acc.char_cooling_thresh_temp.to_HAP()[HAP_REPR_IID]
     char_heating_thresh_temp_iid = acc.char_heating_thresh_temp.to_HAP()[HAP_REPR_IID]
@@ -848,7 +848,7 @@ async def test_thermostat_fahrenheit.opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] == "TargetTemperature to 24.0°C"
 
 
-async def test_thermostat_get_temperature_range.opp, hk_driver):
+async def test_thermostat_get_temperature_range(opp, hk_driver):
     """Test if temperature range is evaluated correctly."""
     entity_id = "climate.test"
 
@@ -870,7 +870,7 @@ async def test_thermostat_get_temperature_range.opp, hk_driver):
     assert acc.get_temperature_range() == (15.5, 21.0)
 
 
-async def test_thermostat_temperature_step_whole.opp, hk_driver):
+async def test_thermostat_temperature_step_whole(opp, hk_driver):
     """Test climate device with single digit precision."""
     entity_id = "climate.test"
 
@@ -885,7 +885,7 @@ async def test_thermostat_temperature_step_whole.opp, hk_driver):
     assert acc.char_target_temp.properties[PROP_MIN_STEP] == 0.1
 
 
-async def test_thermostat_restore.opp, hk_driver, events):
+async def test_thermostat_restore(opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
     opp.state = CoreState.not_running
 
@@ -930,7 +930,7 @@ async def test_thermostat_restore.opp, hk_driver, events):
     }
 
 
-async def test_thermostat_hvac_modes.opp, hk_driver):
+async def test_thermostat_hvac_modes(opp, hk_driver):
     """Test if unsupported HVAC modes are deactivated in HomeKit."""
     entity_id = "climate.test"
 
@@ -963,7 +963,7 @@ async def test_thermostat_hvac_modes.opp, hk_driver):
     assert acc.char_target_heat_cool.value == 1
 
 
-async def test_thermostat_hvac_modes_with_auto_heat_cool.opp, hk_driver):
+async def test_thermostat_hvac_modes_with_auto_heat_cool(opp, hk_driver):
     """Test we get heat cool over auto."""
     entity_id = "climate.test"
 
@@ -979,7 +979,7 @@ async def test_thermostat_hvac_modes_with_auto_heat_cool.opp, hk_driver):
             ]
         },
     )
-    call_set_hvac_mode = async_mock_service.opp, DOMAIN_CLIMATE, "set_hvac_mode")
+    call_set_hvac_mode = async_mock_service(opp, DOMAIN_CLIMATE, "set_hvac_mode")
     await opp.async_block_till_done()
 
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
@@ -1026,7 +1026,7 @@ async def test_thermostat_hvac_modes_with_auto_heat_cool.opp, hk_driver):
     assert acc.char_target_heat_cool.value == 3
 
 
-async def test_thermostat_hvac_modes_with_auto_no_heat_cool.opp, hk_driver):
+async def test_thermostat_hvac_modes_with_auto_no_heat_cool(opp, hk_driver):
     """Test we get auto when there is no heat cool."""
     entity_id = "climate.test"
 
@@ -1035,7 +1035,7 @@ async def test_thermostat_hvac_modes_with_auto_no_heat_cool.opp, hk_driver):
         HVAC_MODE_HEAT,
         {ATTR_HVAC_MODES: [HVAC_MODE_AUTO, HVAC_MODE_HEAT, HVAC_MODE_OFF]},
     )
-    call_set_hvac_mode = async_mock_service.opp, DOMAIN_CLIMATE, "set_hvac_mode")
+    call_set_hvac_mode = async_mock_service(opp, DOMAIN_CLIMATE, "set_hvac_mode")
     await opp.async_block_till_done()
 
     acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
@@ -1061,7 +1061,7 @@ async def test_thermostat_hvac_modes_with_auto_no_heat_cool.opp, hk_driver):
     assert acc.char_target_heat_cool.value == 1
 
     char_target_heat_cool_iid = acc.char_target_heat_cool.to_HAP()[HAP_REPR_IID]
-    call_set_hvac_mode = async_mock_service.opp, DOMAIN_CLIMATE, "set_hvac_mode")
+    call_set_hvac_mode = async_mock_service(opp, DOMAIN_CLIMATE, "set_hvac_mode")
     await opp.async_block_till_done()
     hk_driver.set_characteristics(
         {
@@ -1083,7 +1083,7 @@ async def test_thermostat_hvac_modes_with_auto_no_heat_cool.opp, hk_driver):
     assert acc.char_target_heat_cool.value == 3
 
 
-async def test_thermostat_hvac_modes_with_auto_only.opp, hk_driver):
+async def test_thermostat_hvac_modes_with_auto_only(opp, hk_driver):
     """Test if unsupported HVAC modes are deactivated in HomeKit."""
     entity_id = "climate.test"
 
@@ -1116,7 +1116,7 @@ async def test_thermostat_hvac_modes_with_auto_only.opp, hk_driver):
     assert acc.char_target_heat_cool.value == 3
 
     char_target_heat_cool_iid = acc.char_target_heat_cool.to_HAP()[HAP_REPR_IID]
-    call_set_hvac_mode = async_mock_service.opp, DOMAIN_CLIMATE, "set_hvac_mode")
+    call_set_hvac_mode = async_mock_service(opp, DOMAIN_CLIMATE, "set_hvac_mode")
     await opp.async_block_till_done()
     hk_driver.set_characteristics(
         {
@@ -1137,7 +1137,7 @@ async def test_thermostat_hvac_modes_with_auto_only.opp, hk_driver):
     assert call_set_hvac_mode[0].data[ATTR_HVAC_MODE] == HVAC_MODE_AUTO
 
 
-async def test_thermostat_hvac_modes_with_heat_only.opp, hk_driver):
+async def test_thermostat_hvac_modes_with_heat_only(opp, hk_driver):
     """Test if unsupported HVAC modes are deactivated in HomeKit and siri calls get converted to heat."""
     entity_id = "climate.test"
 
@@ -1176,7 +1176,7 @@ async def test_thermostat_hvac_modes_with_heat_only.opp, hk_driver):
     assert acc.char_target_heat_cool.value == HC_HEAT_COOL_HEAT
 
     char_target_heat_cool_iid = acc.char_target_heat_cool.to_HAP()[HAP_REPR_IID]
-    call_set_hvac_mode = async_mock_service.opp, DOMAIN_CLIMATE, "set_hvac_mode")
+    call_set_hvac_mode = async_mock_service(opp, DOMAIN_CLIMATE, "set_hvac_mode")
     await opp.async_block_till_done()
     hk_driver.set_characteristics(
         {
@@ -1197,7 +1197,7 @@ async def test_thermostat_hvac_modes_with_heat_only.opp, hk_driver):
     assert call_set_hvac_mode[0].data[ATTR_HVAC_MODE] == HVAC_MODE_HEAT
 
 
-async def test_thermostat_hvac_modes_with_cool_only.opp, hk_driver):
+async def test_thermostat_hvac_modes_with_cool_only(opp, hk_driver):
     """Test if unsupported HVAC modes are deactivated in HomeKit and siri calls get converted to cool."""
     entity_id = "climate.test"
 
@@ -1236,7 +1236,7 @@ async def test_thermostat_hvac_modes_with_cool_only.opp, hk_driver):
     assert acc.char_target_heat_cool.value == HC_HEAT_COOL_COOL
 
     char_target_heat_cool_iid = acc.char_target_heat_cool.to_HAP()[HAP_REPR_IID]
-    call_set_hvac_mode = async_mock_service.opp, DOMAIN_CLIMATE, "set_hvac_mode")
+    call_set_hvac_mode = async_mock_service(opp, DOMAIN_CLIMATE, "set_hvac_mode")
     hk_driver.set_characteristics(
         {
             HAP_REPR_CHARS: [
@@ -1256,7 +1256,7 @@ async def test_thermostat_hvac_modes_with_cool_only.opp, hk_driver):
     assert call_set_hvac_mode[0].data[ATTR_HVAC_MODE] == HVAC_MODE_COOL
 
 
-async def test_thermostat_hvac_modes_with_heat_cool_only.opp, hk_driver):
+async def test_thermostat_hvac_modes_with_heat_cool_only(opp, hk_driver):
     """Test if unsupported HVAC modes are deactivated in HomeKit and siri calls get converted to heat or cool."""
     entity_id = "climate.test"
 
@@ -1303,7 +1303,7 @@ async def test_thermostat_hvac_modes_with_heat_cool_only.opp, hk_driver):
     assert acc.char_target_heat_cool.value == HC_HEAT_COOL_HEAT
     char_target_temp_iid = acc.char_target_temp.to_HAP()[HAP_REPR_IID]
     char_target_heat_cool_iid = acc.char_target_heat_cool.to_HAP()[HAP_REPR_IID]
-    call_set_hvac_mode = async_mock_service.opp, DOMAIN_CLIMATE, "set_hvac_mode")
+    call_set_hvac_mode = async_mock_service(opp, DOMAIN_CLIMATE, "set_hvac_mode")
     hk_driver.set_characteristics(
         {
             HAP_REPR_CHARS: [
@@ -1350,7 +1350,7 @@ async def test_thermostat_hvac_modes_with_heat_cool_only.opp, hk_driver):
     assert call_set_hvac_mode[1].data[ATTR_HVAC_MODE] == HVAC_MODE_HEAT
 
 
-async def test_thermostat_hvac_modes_without_off.opp, hk_driver):
+async def test_thermostat_hvac_modes_without_off(opp, hk_driver):
     """Test a thermostat that has no off."""
     entity_id = "climate.test"
 
@@ -1387,7 +1387,7 @@ async def test_thermostat_hvac_modes_without_off.opp, hk_driver):
     assert acc.char_target_heat_cool.value == 1
 
 
-async def test_thermostat_without_target_temp_only_range.opp, hk_driver, events):
+async def test_thermostat_without_target_temp_only_range(opp, hk_driver, events):
     """Test a thermostat that only supports a range."""
     entity_id = "climate.test"
 
@@ -1496,7 +1496,7 @@ async def test_thermostat_without_target_temp_only_range.opp, hk_driver, events)
     assert acc.char_display_units.value == 0
 
     # Set from HomeKit
-    call_set_temperature = async_mock_service.opp, DOMAIN_CLIMATE, "set_temperature")
+    call_set_temperature = async_mock_service(opp, DOMAIN_CLIMATE, "set_temperature")
 
     char_target_temp_iid = acc.char_target_temp.to_HAP()[HAP_REPR_IID]
 
@@ -1542,7 +1542,7 @@ async def test_thermostat_without_target_temp_only_range.opp, hk_driver, events)
     assert acc.char_display_units.value == 0
 
     # Set from HomeKit
-    call_set_temperature = async_mock_service.opp, DOMAIN_CLIMATE, "set_temperature")
+    call_set_temperature = async_mock_service(opp, DOMAIN_CLIMATE, "set_temperature")
 
     char_target_temp_iid = acc.char_target_temp.to_HAP()[HAP_REPR_IID]
 
@@ -1569,7 +1569,7 @@ async def test_thermostat_without_target_temp_only_range.opp, hk_driver, events)
     assert events[-1].data[ATTR_VALUE] == "HeatingThresholdTemperature to 27.0°C"
 
 
-async def test_water_heater.opp, hk_driver, events):
+async def test_water_heater(opp, hk_driver, events):
     """Test if accessory and HA are updated accordingly."""
     entity_id = "water_heater.test"
 
@@ -1647,7 +1647,7 @@ async def test_water_heater.opp, hk_driver, events):
     assert acc.char_target_heat_cool.value == 1
 
 
-async def test_water_heater_fahrenheit.opp, hk_driver, events):
+async def test_water_heater_fahrenheit(opp, hk_driver, events):
     """Test if accessory and HA are update accordingly."""
     entity_id = "water_heater.test"
 
@@ -1679,7 +1679,7 @@ async def test_water_heater_fahrenheit.opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] == "140.0°F"
 
 
-async def test_water_heater_get_temperature_range.opp, hk_driver):
+async def test_water_heater_get_temperature_range(opp, hk_driver):
     """Test if temperature range is evaluated correctly."""
     entity_id = "water_heater.test"
 
@@ -1701,7 +1701,7 @@ async def test_water_heater_get_temperature_range.opp, hk_driver):
     assert acc.get_temperature_range() == (15.5, 21.0)
 
 
-async def test_water_heater_restore.opp, hk_driver, events):
+async def test_water_heater_restore(opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
     opp.state = CoreState.not_running
 
@@ -1744,7 +1744,7 @@ async def test_water_heater_restore.opp, hk_driver, events):
     }
 
 
-async def test_thermostat_with_no_modes_when_we_first_see.opp, hk_driver, events):
+async def test_thermostat_with_no_modes_when_we_first_see(opp, hk_driver, events):
     """Test if a thermostat that is not ready when we first see it."""
     entity_id = "climate.test"
 
@@ -1797,7 +1797,7 @@ async def test_thermostat_with_no_modes_when_we_first_see.opp, hk_driver, events
     assert acc.char_display_units.value == 0
 
 
-async def test_thermostat_with_no_off_after_recheck.opp, hk_driver, events):
+async def test_thermostat_with_no_off_after_recheck(opp, hk_driver, events):
     """Test if a thermostat that is not ready when we first see it that actually does not have off."""
     entity_id = "climate.test"
 
@@ -1850,7 +1850,7 @@ async def test_thermostat_with_no_off_after_recheck.opp, hk_driver, events):
     assert acc.char_display_units.value == 0
 
 
-async def test_thermostat_with_temp_clamps.opp, hk_driver, events):
+async def test_thermostat_with_temp_clamps(opp, hk_driver, events):
     """Test that tempatures are clamped to valid values to prevent homekit crash."""
     entity_id = "climate.test"
 

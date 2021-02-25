@@ -340,7 +340,7 @@ async def test_intent_request_with_slots_but_no_value(alexa_client):
     assert text == "You told us your sign is ."
 
 
-async def test_intent_request_without_slots.opp, alexa_client):
+async def test_intent_request_without_slots(opp, alexa_client):
     """Test a request without slots."""
     data = {
         "version": "1.0",

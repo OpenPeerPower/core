@@ -520,7 +520,7 @@ async def test_template_error(opp, caplog):
     await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("binary_sensor.test_binary").state == "off"
+    assert opp.states.get("binary_sensor.test_binary").state == "off"
 
     assert "TemplateError" in caplog.text
     assert "xyz" in caplog.text
@@ -550,7 +550,7 @@ async def test_update_request_with_template(opp):
 
     await opp.async_block_till_done()
 
-    assert.opp.states.get("binary_sensor.test_binary").state == "off"
+    assert opp.states.get("binary_sensor.test_binary").state == "off"
 
     await opp.services.async_call(
         OP_DOMAIN,
@@ -559,7 +559,7 @@ async def test_update_request_with_template(opp):
         blocking=True,
     )
     await opp.async_block_till_done()
-    assert.opp.states.get("binary_sensor.test_binary").state == "off"
+    assert opp.states.get("binary_sensor.test_binary").state == "off"
 
 
 async def test_update_request_without_template(opp):
@@ -590,7 +590,7 @@ async def test_update_request_without_template(opp):
     opp.states.async_set("sensor.test_monitored", "on")
     await opp.async_block_till_done()
 
-    assert.opp.states.get("binary_sensor.test_binary").state == "off"
+    assert opp.states.get("binary_sensor.test_binary").state == "off"
 
     await opp.services.async_call(
         OP_DOMAIN,
@@ -599,7 +599,7 @@ async def test_update_request_without_template(opp):
         blocking=True,
     )
     await opp.async_block_till_done()
-    assert.opp.states.get("binary_sensor.test_binary").state == "off"
+    assert opp.states.get("binary_sensor.test_binary").state == "off"
 
 
 async def test_monitored_sensor_goes_away(opp):
@@ -630,12 +630,12 @@ async def test_monitored_sensor_goes_away(opp):
     opp.states.async_set("sensor.test_monitored", "on")
     await opp.async_block_till_done()
 
-    assert.opp.states.get("binary_sensor.test_binary").state == "on"
+    assert opp.states.get("binary_sensor.test_binary").state == "on"
 
     opp.states.async_remove("sensor.test_monitored")
 
     await opp.async_block_till_done()
-    assert.opp.states.get("binary_sensor.test_binary").state == "on"
+    assert opp.states.get("binary_sensor.test_binary").state == "on"
 
 
 async def test_reload(opp):
@@ -664,7 +664,7 @@ async def test_reload(opp):
 
     assert len.opp.states.async_all()) == 1
 
-    assert.opp.states.get("binary_sensor.test")
+    assert opp.states.get("binary_sensor.test")
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -682,8 +682,8 @@ async def test_reload(opp):
 
     assert len.opp.states.async_all()) == 1
 
-    assert.opp.states.get("binary_sensor.test") is None
-    assert.opp.states.get("binary_sensor.test2")
+    assert opp.states.get("binary_sensor.test") is None
+    assert opp.states.get("binary_sensor.test2")
 
 
 def _get_fixtures_base_path():
@@ -712,7 +712,7 @@ async def test_template_triggers(opp):
     await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("binary_sensor.test_binary").state == STATE_OFF
+    assert opp.states.get("binary_sensor.test_binary").state == STATE_OFF
 
     events = []
     opp.helpers.event.async_track_state_change_event(
@@ -751,7 +751,7 @@ async def test_state_triggers(opp):
     await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("binary_sensor.test_binary").state == STATE_OFF
+    assert opp.states.get("binary_sensor.test_binary").state == STATE_OFF
 
     events = []
     opp.helpers.event.async_track_state_change_event(

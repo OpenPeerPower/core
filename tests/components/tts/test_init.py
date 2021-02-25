@@ -98,31 +98,31 @@ async def test_setup_component_demo.opp):
     config = {tts.DOMAIN: {"platform": "demo"}}
 
     with assert_setup_component(1, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
-    assert.opp.services.has_service(tts.DOMAIN, "demo_say")
-    assert.opp.services.has_service(tts.DOMAIN, "clear_cache")
+    assert opp.services.has_service(tts.DOMAIN, "demo_say")
+    assert opp.services.has_service(tts.DOMAIN, "clear_cache")
 
 
-async def test_setup_component_demo_no_access_cache_folder.opp, mock_init_cache_dir):
+async def test_setup_component_demo_no_access_cache_folder(opp, mock_init_cache_dir):
     """Set up the demo platform with defaults."""
     config = {tts.DOMAIN: {"platform": "demo"}}
 
     mock_init_cache_dir.side_effect = OSError(2, "No access")
-    assert not await async_setup_component.opp, tts.DOMAIN, config)
+    assert not await async_setup_component(opp, tts.DOMAIN, config)
 
     assert not.opp.services.has_service(tts.DOMAIN, "demo_say")
     assert not.opp.services.has_service(tts.DOMAIN, "clear_cache")
 
 
-async def test_setup_component_and_test_service.opp, empty_cache_dir):
+async def test_setup_component_and_test_service(opp, empty_cache_dir):
     """Set up the demo platform and call service."""
-    calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
+    calls = async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 
     config = {tts.DOMAIN: {"platform": "demo"}}
 
     with assert_setup_component(1, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
     await opp.services.async_call(
         tts.DOMAIN,
@@ -150,12 +150,12 @@ async def test_setup_component_and_test_service_with_config_language(
     opp. empty_cache_dir
 ):
     """Set up the demo platform and call service."""
-    calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
+    calls = async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 
     config = {tts.DOMAIN: {"platform": "demo", "language": "de"}}
 
     with assert_setup_component(1, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
     await opp.services.async_call(
         tts.DOMAIN,
@@ -185,12 +185,12 @@ async def test_setup_component_and_test_service_with_config_language_special(
     import openpeerpower.components.demo.tts as demo_tts
 
     demo_tts.SUPPORT_LANGUAGES.append("en_US")
-    calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
+    calls = async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 
     config = {tts.DOMAIN: {"platform": "demo", "language": "en_US"}}
 
     with assert_setup_component(1, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
     await opp.services.async_call(
         tts.DOMAIN,
@@ -218,19 +218,19 @@ async def test_setup_component_and_test_service_with_wrong_conf_language.opp):
     config = {tts.DOMAIN: {"platform": "demo", "language": "ru"}}
 
     with assert_setup_component(0, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
 
 async def test_setup_component_and_test_service_with_service_language(
     opp. empty_cache_dir
 ):
     """Set up the demo platform and call service."""
-    calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
+    calls = async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 
     config = {tts.DOMAIN: {"platform": "demo"}}
 
     with assert_setup_component(1, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
     await opp.services.async_call(
         tts.DOMAIN,
@@ -258,12 +258,12 @@ async def test_setup_component_test_service_with_wrong_service_language(
     opp. empty_cache_dir
 ):
     """Set up the demo platform and call service."""
-    calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
+    calls = async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 
     config = {tts.DOMAIN: {"platform": "demo"}}
 
     with assert_setup_component(1, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
     await opp.services.async_call(
         tts.DOMAIN,
@@ -286,12 +286,12 @@ async def test_setup_component_and_test_service_with_service_options(
     opp. empty_cache_dir
 ):
     """Set up the demo platform and call service with options."""
-    calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
+    calls = async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 
     config = {tts.DOMAIN: {"platform": "demo"}}
 
     with assert_setup_component(1, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
     await opp.services.async_call(
         tts.DOMAIN,
@@ -319,9 +319,9 @@ async def test_setup_component_and_test_service_with_service_options(
     ).is_file()
 
 
-async def test_setup_component_and_test_with_service_options_def.opp, empty_cache_dir):
+async def test_setup_component_and_test_with_service_options_def(opp, empty_cache_dir):
     """Set up the demo platform and call service with default options."""
-    calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
+    calls = async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 
     config = {tts.DOMAIN: {"platform": "demo"}}
 
@@ -329,7 +329,7 @@ async def test_setup_component_and_test_with_service_options_def.opp, empty_cach
         "openpeerpower.components.demo.tts.DemoProvider.default_options",
         new_callable=PropertyMock(return_value={"voice": "alex"}),
     ):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
         await opp.services.async_call(
             tts.DOMAIN,
@@ -360,12 +360,12 @@ async def test_setup_component_and_test_service_with_service_options_wrong(
     opp. empty_cache_dir
 ):
     """Set up the demo platform and call service with wrong options."""
-    calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
+    calls = async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 
     config = {tts.DOMAIN: {"platform": "demo"}}
 
     with assert_setup_component(1, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
     await opp.services.async_call(
         tts.DOMAIN,
@@ -390,12 +390,12 @@ async def test_setup_component_and_test_service_with_service_options_wrong(
 
 async def test_setup_component_and_test_service_with_base_url_set.opp):
     """Set up the demo platform with ``base_url`` set and call service."""
-    calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
+    calls = async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 
     config = {tts.DOMAIN: {"platform": "demo", "base_url": "http://fnord"}}
 
     with assert_setup_component(1, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
     await opp.services.async_call(
         tts.DOMAIN,
@@ -415,14 +415,14 @@ async def test_setup_component_and_test_service_with_base_url_set.opp):
     )
 
 
-async def test_setup_component_and_test_service_clear_cache.opp, empty_cache_dir):
+async def test_setup_component_and_test_service_clear_cache(opp, empty_cache_dir):
     """Set up the demo platform and call service clear cache."""
-    calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
+    calls = async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 
     config = {tts.DOMAIN: {"platform": "demo"}}
 
     with assert_setup_component(1, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
     await opp.services.async_call(
         tts.DOMAIN,
@@ -455,12 +455,12 @@ async def test_setup_component_and_test_service_with_receive_voice(
     opp. demo_provider, opp_client
 ):
     """Set up the demo platform and call service and receive voice."""
-    calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
+    calls = async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 
     config = {tts.DOMAIN: {"platform": "demo"}}
 
     with assert_setup_component(1, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
     client = await opp_client()
 
@@ -493,12 +493,12 @@ async def test_setup_component_and_test_service_with_receive_voice_german(
     opp. demo_provider, opp_client
 ):
     """Set up the demo platform and call service and receive voice."""
-    calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
+    calls = async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 
     config = {tts.DOMAIN: {"platform": "demo", "language": "de"}}
 
     with assert_setup_component(1, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
     client = await opp_client()
 
@@ -526,12 +526,12 @@ async def test_setup_component_and_test_service_with_receive_voice_german(
     assert await req.read() == demo_data
 
 
-async def test_setup_component_and_web_view_wrong_file.opp, opp_client):
+async def test_setup_component_and_web_view_wrong_file(opp, opp_client):
     """Set up the demo platform and receive wrong file from web."""
     config = {tts.DOMAIN: {"platform": "demo"}}
 
     with assert_setup_component(1, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
     client = await opp_client()
 
@@ -541,12 +541,12 @@ async def test_setup_component_and_web_view_wrong_file.opp, opp_client):
     assert req.status == HTTP_NOT_FOUND
 
 
-async def test_setup_component_and_web_view_wrong_filename.opp, opp_client):
+async def test_setup_component_and_web_view_wrong_filename(opp, opp_client):
     """Set up the demo platform and receive wrong filename from web."""
     config = {tts.DOMAIN: {"platform": "demo"}}
 
     with assert_setup_component(1, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
     client = await opp_client()
 
@@ -556,14 +556,14 @@ async def test_setup_component_and_web_view_wrong_filename.opp, opp_client):
     assert req.status == HTTP_NOT_FOUND
 
 
-async def test_setup_component_test_without_cache.opp, empty_cache_dir):
+async def test_setup_component_test_without_cache(opp, empty_cache_dir):
     """Set up demo platform without cache."""
-    calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
+    calls = async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 
     config = {tts.DOMAIN: {"platform": "demo", "cache": False}}
 
     with assert_setup_component(1, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
     await opp.services.async_call(
         tts.DOMAIN,
@@ -585,12 +585,12 @@ async def test_setup_component_test_with_cache_call_service_without_cache(
     opp. empty_cache_dir
 ):
     """Set up demo platform with cache and call service without cache."""
-    calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
+    calls = async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 
     config = {tts.DOMAIN: {"platform": "demo", "cache": True}}
 
     with assert_setup_component(1, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
     await opp.services.async_call(
         tts.DOMAIN,
@@ -613,7 +613,7 @@ async def test_setup_component_test_with_cache_dir(
     opp. empty_cache_dir, demo_provider
 ):
     """Set up demo platform with cache and call service without cache."""
-    calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
+    calls = async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 
     _, demo_data = demo_provider.get_tts_audio("bla", "en")
     cache_file = (
@@ -626,7 +626,7 @@ async def test_setup_component_test_with_cache_dir(
     config = {tts.DOMAIN: {"platform": "demo", "cache": True}}
 
     with assert_setup_component(1, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
     with patch(
         "openpeerpower.components.demo.tts.DemoProvider.get_tts_audio",
@@ -656,7 +656,7 @@ async def test_setup_component_test_with_error_on_get_tts.opp):
         "openpeerpower.components.demo.tts.DemoProvider.get_tts_audio",
         return_value=(None, None),
     ):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
 
 async def test_setup_component_load_cache_retrieve_without_mem_cache(
@@ -674,7 +674,7 @@ async def test_setup_component_load_cache_retrieve_without_mem_cache(
     config = {tts.DOMAIN: {"platform": "demo", "cache": True}}
 
     with assert_setup_component(1, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
     client = await opp_client()
 
@@ -685,11 +685,11 @@ async def test_setup_component_load_cache_retrieve_without_mem_cache(
     assert await req.read() == demo_data
 
 
-async def test_setup_component_and_web_get_url.opp, opp_client):
+async def test_setup_component_and_web_get_url(opp, opp_client):
     """Set up the demo platform and receive file from web."""
     config = {tts.DOMAIN: {"platform": "demo"}}
 
-    await async_setup_component.opp, tts.DOMAIN, config)
+    await async_setup_component(opp, tts.DOMAIN, config)
 
     client = await opp_client()
 
@@ -709,7 +709,7 @@ async def test_setup_component_and_web_get_url_bad_config(opp, opp_client):
     """Set up the demo platform and receive wrong file from web."""
     config = {tts.DOMAIN: {"platform": "demo"}}
 
-    await async_setup_component.opp, tts.DOMAIN, config)
+    await async_setup_component(opp, tts.DOMAIN, config)
 
     client = await opp_client()
 
@@ -720,7 +720,7 @@ async def test_setup_component_and_web_get_url_bad_config(opp, opp_client):
     assert req.status == 400
 
 
-async def test_tags_with_wave.opp, demo_provider):
+async def test_tags_with_wave(opp, demo_provider):
     """Set up the demo platform and call service and receive voice."""
 
     # below data represents an empty wav file

@@ -111,7 +111,7 @@ async def test_setup_opp, mock_zeroconf):
         zeroconf, "HaServiceBrowser", side_effect=service_update_mock
     ) as mock_service_browser:
         mock_zeroconf.get_service_info.side_effect = get_service_info_mock
-        assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
+        assert await async_setup_component(opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
         opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
@@ -130,7 +130,7 @@ async def test_setup_opp, mock_zeroconf):
     assert await opp.components.zeroconf.async_get_instance() is mock_zeroconf
 
 
-async def test_setup_with_overly_long_url_and_name.opp, mock_zeroconf, caplog):
+async def test_setup_with_overly_long_url_and_name(opp, mock_zeroconf, caplog):
     """Test we still setup with long urls and names."""
     with patch.object.opp.config_entries.flow, "async_init"), patch.object(
         zeroconf, "HaServiceBrowser", side_effect=service_update_mock
@@ -143,7 +143,7 @@ async def test_setup_with_overly_long_url_and_name.opp, mock_zeroconf, caplog):
         "\u00dcBER \u00dcber German Umlaut long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string",
     ):
         mock_zeroconf.get_service_info.side_effect = get_service_info_mock
-        assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
+        assert await async_setup_component(opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
         opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await opp.async_block_till_done()
 
@@ -151,7 +151,7 @@ async def test_setup_with_overly_long_url_and_name.opp, mock_zeroconf, caplog):
     assert "German Umlaut" in caplog.text
 
 
-async def test_setup_with_default_interface.opp, mock_zeroconf):
+async def test_setup_with_default_interface(opp, mock_zeroconf):
     """Test default interface config."""
     with patch.object.opp.config_entries.flow, "async_init"), patch.object(
         zeroconf, "HaServiceBrowser", side_effect=service_update_mock
@@ -166,7 +166,7 @@ async def test_setup_with_default_interface.opp, mock_zeroconf):
     assert mock_zeroconf.called_with(interface_choice=InterfaceChoice.Default)
 
 
-async def test_setup_without_default_interface.opp, mock_zeroconf):
+async def test_setup_without_default_interface(opp, mock_zeroconf):
     """Test without default interface config."""
     with patch.object.opp.config_entries.flow, "async_init"), patch.object(
         zeroconf, "HaServiceBrowser", side_effect=service_update_mock
@@ -209,26 +209,26 @@ async def test_setup_with_ipv6.opp, mock_zeroconf):
     assert mock_zeroconf.called_with()
 
 
-async def test_setup_with_ipv6_default.opp, mock_zeroconf):
+async def test_setup_with_ipv6_default(opp, mock_zeroconf):
     """Test without ipv6 as default."""
     with patch.object.opp.config_entries.flow, "async_init"), patch.object(
         zeroconf, "HaServiceBrowser", side_effect=service_update_mock
     ):
         mock_zeroconf.get_service_info.side_effect = get_service_info_mock
-        assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
+        assert await async_setup_component(opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
         opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
     assert mock_zeroconf.called_with()
 
 
-async def test_service_with_invalid_name.opp, mock_zeroconf, caplog):
+async def test_service_with_invalid_name(opp, mock_zeroconf, caplog):
     """Test we do not crash on service with an invalid name."""
     with patch.object(
         zeroconf, "HaServiceBrowser", side_effect=service_update_mock
     ) as mock_service_browser:
         mock_zeroconf.get_service_info.side_effect = BadTypeInNameException
-        assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
+        assert await async_setup_component(opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
         opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
@@ -236,7 +236,7 @@ async def test_service_with_invalid_name.opp, mock_zeroconf, caplog):
     assert "Failed to get info for device name" in caplog.text
 
 
-async def test_zeroconf_match.opp, mock_zeroconf):
+async def test_zeroconf_match(opp, mock_zeroconf):
     """Test configured options for a device are loaded via config entry."""
 
     def http_only_service_update_mock(zeroconf, services, handlers):
@@ -264,7 +264,7 @@ async def test_zeroconf_match.opp, mock_zeroconf):
         mock_zeroconf.get_service_info.side_effect = get_zeroconf_info_mock(
             "FFAADDCC11DD"
         )
-        assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
+        assert await async_setup_component(opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
         opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
@@ -273,7 +273,7 @@ async def test_zeroconf_match.opp, mock_zeroconf):
     assert mock_config_flow.mock_calls[0][1][0] == "shelly"
 
 
-async def test_zeroconf_no_match.opp, mock_zeroconf):
+async def test_zeroconf_no_match(opp, mock_zeroconf):
     """Test configured options for a device are loaded via config entry."""
 
     def http_only_service_update_mock(zeroconf, services, handlers):
@@ -297,7 +297,7 @@ async def test_zeroconf_no_match.opp, mock_zeroconf):
         mock_zeroconf.get_service_info.side_effect = get_zeroconf_info_mock(
             "FFAADDCC11DD"
         )
-        assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
+        assert await async_setup_component(opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
         opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
@@ -305,7 +305,7 @@ async def test_zeroconf_no_match.opp, mock_zeroconf):
     assert len(mock_config_flow.mock_calls) == 0
 
 
-async def test_homekit_match_partial_space.opp, mock_zeroconf):
+async def test_homekit_match_partial_space(opp, mock_zeroconf):
     """Test configured options for a device are loaded via config entry."""
     with patch.dict(
         zc_gen.ZEROCONF,
@@ -323,7 +323,7 @@ async def test_homekit_match_partial_space.opp, mock_zeroconf):
         mock_zeroconf.get_service_info.side_effect = get_homekit_info_mock(
             "LIFX bulb", HOMEKIT_STATUS_UNPAIRED
         )
-        assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
+        assert await async_setup_component(opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
         opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
@@ -332,7 +332,7 @@ async def test_homekit_match_partial_space.opp, mock_zeroconf):
     assert mock_config_flow.mock_calls[0][1][0] == "lifx"
 
 
-async def test_homekit_match_partial_dash.opp, mock_zeroconf):
+async def test_homekit_match_partial_dash(opp, mock_zeroconf):
     """Test configured options for a device are loaded via config entry."""
     with patch.dict(
         zc_gen.ZEROCONF,
@@ -350,7 +350,7 @@ async def test_homekit_match_partial_dash.opp, mock_zeroconf):
         mock_zeroconf.get_service_info.side_effect = get_homekit_info_mock(
             "Rachio-fa46ba", HOMEKIT_STATUS_UNPAIRED
         )
-        assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
+        assert await async_setup_component(opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
         opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
@@ -359,7 +359,7 @@ async def test_homekit_match_partial_dash.opp, mock_zeroconf):
     assert mock_config_flow.mock_calls[0][1][0] == "rachio"
 
 
-async def test_homekit_match_full.opp, mock_zeroconf):
+async def test_homekit_match_full(opp, mock_zeroconf):
     """Test configured options for a device are loaded via config entry."""
     with patch.dict(
         zc_gen.ZEROCONF,
@@ -377,7 +377,7 @@ async def test_homekit_match_full.opp, mock_zeroconf):
         mock_zeroconf.get_service_info.side_effect = get_homekit_info_mock(
             "BSB002", HOMEKIT_STATUS_UNPAIRED
         )
-        assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
+        assert await async_setup_component(opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
         opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
@@ -386,7 +386,7 @@ async def test_homekit_match_full.opp, mock_zeroconf):
     assert mock_config_flow.mock_calls[0][1][0] == "hue"
 
 
-async def test_homekit_already_paired.opp, mock_zeroconf):
+async def test_homekit_already_paired(opp, mock_zeroconf):
     """Test that an already paired device is sent to homekit_controller."""
     with patch.dict(
         zc_gen.ZEROCONF,
@@ -404,7 +404,7 @@ async def test_homekit_already_paired.opp, mock_zeroconf):
         mock_zeroconf.get_service_info.side_effect = get_homekit_info_mock(
             "tado", HOMEKIT_STATUS_PAIRED
         )
-        assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
+        assert await async_setup_component(opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
         opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
@@ -414,7 +414,7 @@ async def test_homekit_already_paired.opp, mock_zeroconf):
     assert mock_config_flow.mock_calls[1][1][0] == "homekit_controller"
 
 
-async def test_homekit_invalid_paring_status.opp, mock_zeroconf):
+async def test_homekit_invalid_paring_status(opp, mock_zeroconf):
     """Test that missing paring data is not sent to homekit_controller."""
     with patch.dict(
         zc_gen.ZEROCONF,
@@ -432,7 +432,7 @@ async def test_homekit_invalid_paring_status.opp, mock_zeroconf):
         mock_zeroconf.get_service_info.side_effect = get_homekit_info_mock(
             "tado", b"invalid"
         )
-        assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
+        assert await async_setup_component(opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
         opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
@@ -441,7 +441,7 @@ async def test_homekit_invalid_paring_status.opp, mock_zeroconf):
     assert mock_config_flow.mock_calls[0][1][0] == "tado"
 
 
-async def test_homekit_not_paired.opp, mock_zeroconf):
+async def test_homekit_not_paired(opp, mock_zeroconf):
     """Test that an not paired device is sent to homekit_controller."""
     with patch.dict(
         zc_gen.ZEROCONF,
@@ -455,7 +455,7 @@ async def test_homekit_not_paired.opp, mock_zeroconf):
         mock_zeroconf.get_service_info.side_effect = get_homekit_info_mock(
             "this_will_not_match_any_integration", HOMEKIT_STATUS_UNPAIRED
         )
-        assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
+        assert await async_setup_component(opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
         opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
 
@@ -488,9 +488,9 @@ async def test_info_from_service_with_addresses.opp):
     assert info is None
 
 
-async def test_get_instance.opp, mock_zeroconf):
+async def test_get_instance(opp, mock_zeroconf):
     """Test we get an instance."""
-    assert await async_setup_component.opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
+    assert await async_setup_component(opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
     assert await opp.components.zeroconf.async_get_instance() is mock_zeroconf
     opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
     await opp.async_block_till_done()

@@ -23,12 +23,12 @@ def storage_setup_opp, opp_storage):
         else:
             opp.storage[DOMAIN] = items
         config = {DOMAIN: {}}
-        return await async_setup_component.opp, DOMAIN, config)
+        return await async_setup_component(opp, DOMAIN, config)
 
     return _storage
 
 
-async def test_ws_list.opp, opp_ws_client, storage_setup):
+async def test_ws_list(opp, opp_ws_client, storage_setup):
     """Test listing tags via WS."""
     assert await storage_setup()
 
@@ -44,10 +44,10 @@ async def test_ws_list.opp, opp_ws_client, storage_setup):
     assert "test tag" in result
 
 
-async def test_ws_update.opp, opp_ws_client, storage_setup):
+async def test_ws_update(opp, opp_ws_client, storage_setup):
     """Test listing tags via WS."""
     assert await storage_setup()
-    await async_scan_tag.opp, "test tag", "some_scanner")
+    await async_scan_tag(opp, "test tag", "some_scanner")
 
     client = await opp_ws_client.opp)
 
@@ -68,7 +68,7 @@ async def test_ws_update.opp, opp_ws_client, storage_setup):
     assert item["name"] == "New name"
 
 
-async def test_tag_scanned.opp, opp_ws_client, storage_setup):
+async def test_tag_scanned(opp, opp_ws_client, storage_setup):
     """Test scanning tags."""
     assert await storage_setup()
 
@@ -85,7 +85,7 @@ async def test_tag_scanned.opp, opp_ws_client, storage_setup):
 
     now = dt_util.utcnow()
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-        await async_scan_tag.opp, "new tag", "some_scanner")
+        await async_scan_tag(opp, "new tag", "some_scanner")
 
     await client.send_json({"id": 7, "type": f"{DOMAIN}/list"})
     resp = await client.receive_json()

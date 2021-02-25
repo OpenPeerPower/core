@@ -66,7 +66,7 @@ async def test_setup_missing_conf.opp):
         "target_sensor": ENT_SENSOR,
     }
     with assert_setup_component(0):
-        await async_setup_component.opp, "climate", {"climate": config})
+        await async_setup_component(opp, "climate", {"climate": config})
 
 
 async def test_valid_conf.opp):
@@ -89,11 +89,11 @@ async def test_valid_conf.opp):
 async def setup_comp_1.opp):
     """Initialize components."""
     opp.config.units = METRIC_SYSTEM
-    assert await async_setup_component.opp, "openpeerpower", {})
+    assert await async_setup_component(opp, "openpeerpower", {})
     await opp.async_block_till_done()
 
 
-async def test_heater_input_boolean.opp, setup_comp_1):
+async def test_heater_input_boolean(opp, setup_comp_1):
     """Test heater switching input_boolean."""
     heater_switch = "input_boolean.test"
     assert await async_setup_component(
@@ -117,14 +117,14 @@ async def test_heater_input_boolean.opp, setup_comp_1):
 
     assert STATE_OFF == opp.states.get(heater_switch).state
 
-    _setup_sensor.opp, 18)
+    _setup_sensor(opp, 18)
     await opp.async_block_till_done()
-    await common.async_set_temperature.opp, 23)
+    await common.async_set_temperature(opp, 23)
 
     assert STATE_ON == opp.states.get(heater_switch).state
 
 
-async def test_heater_switch.opp, setup_comp_1):
+async def test_heater_switch(opp, setup_comp_1):
     """Test heater switching test switch."""
     platform = getattr.opp.components, "test.switch")
     platform.init()
@@ -152,18 +152,18 @@ async def test_heater_switch.opp, setup_comp_1):
     await opp.async_block_till_done()
     assert STATE_OFF == opp.states.get(heater_switch).state
 
-    _setup_sensor.opp, 18)
-    await common.async_set_temperature.opp, 23)
+    _setup_sensor(opp, 18)
+    await common.async_set_temperature(opp, 23)
     await opp.async_block_till_done()
 
     assert STATE_ON == opp.states.get(heater_switch).state
 
 
-async def test_unique_id.opp, setup_comp_1):
+async def test_unique_id(opp, setup_comp_1):
     """Test heater switching input_boolean."""
     unique_id = "some_unique_id"
-    _setup_sensor.opp, 18)
-    _setup_switch.opp, True)
+    _setup_sensor(opp, 18)
+    _setup_switch(opp, True)
     assert await async_setup_component(
         opp,
         DOMAIN,
@@ -186,7 +186,7 @@ async def test_unique_id.opp, setup_comp_1):
     assert entry.unique_id == unique_id
 
 
-def _setup_sensor.opp, temp):
+def _setup_sensor(opp, temp):
     """Set up the test sensor."""
     opp.states.async_set(ENT_SENSOR, temp)
 
@@ -239,7 +239,7 @@ async def test_setup_defaults_to_unknown.opp):
 async def test_setup_gets_current_temp_from_sensor.opp):
     """Test that current temperature is updated on entity addition."""
     opp.config.units = METRIC_SYSTEM
-    _setup_sensor.opp, 18)
+    _setup_sensor(opp, 18)
     await opp.async_block_till_done()
     await async_setup_component(
         opp,
@@ -257,10 +257,10 @@ async def test_setup_gets_current_temp_from_sensor.opp):
         },
     )
     await opp.async_block_till_done()
-    assert.opp.states.get(ENTITY).attributes["current_temperature"] == 18
+    assert opp.states.get(ENTITY).attributes["current_temperature"] == 18
 
 
-async def test_default_setup_params.opp, setup_comp_2):
+async def test_default_setup_params(opp, setup_comp_2):
     """Test the setup with default parameters."""
     state = opp.states.get(ENTITY)
     assert 7 == state.attributes.get("min_temp")
@@ -268,67 +268,67 @@ async def test_default_setup_params.opp, setup_comp_2):
     assert 7 == state.attributes.get("temperature")
 
 
-async def test_get_hvac_modes.opp, setup_comp_2):
+async def test_get_hvac_modes(opp, setup_comp_2):
     """Test that the operation list returns the correct modes."""
     state = opp.states.get(ENTITY)
     modes = state.attributes.get("hvac_modes")
     assert [HVAC_MODE_HEAT, HVAC_MODE_OFF] == modes
 
 
-async def test_set_target_temp.opp, setup_comp_2):
+async def test_set_target_temp(opp, setup_comp_2):
     """Test the setting of the target temperature."""
-    await common.async_set_temperature.opp, 30)
+    await common.async_set_temperature(opp, 30)
     state = opp.states.get(ENTITY)
     assert 30.0 == state.attributes.get("temperature")
     with pytest.raises(vol.Invalid):
-        await common.async_set_temperature.opp, None)
+        await common.async_set_temperature(opp, None)
     state = opp.states.get(ENTITY)
     assert 30.0 == state.attributes.get("temperature")
 
 
-async def test_set_away_mode.opp, setup_comp_2):
+async def test_set_away_mode(opp, setup_comp_2):
     """Test the setting away mode."""
-    await common.async_set_temperature.opp, 23)
-    await common.async_set_preset_mode.opp, PRESET_AWAY)
+    await common.async_set_temperature(opp, 23)
+    await common.async_set_preset_mode(opp, PRESET_AWAY)
     state = opp.states.get(ENTITY)
     assert 16 == state.attributes.get("temperature")
 
 
-async def test_set_away_mode_and_restore_prev_temp.opp, setup_comp_2):
+async def test_set_away_mode_and_restore_prev_temp(opp, setup_comp_2):
     """Test the setting and removing away mode.
 
     Verify original temperature is restored.
     """
-    await common.async_set_temperature.opp, 23)
-    await common.async_set_preset_mode.opp, PRESET_AWAY)
+    await common.async_set_temperature(opp, 23)
+    await common.async_set_preset_mode(opp, PRESET_AWAY)
     state = opp.states.get(ENTITY)
     assert 16 == state.attributes.get("temperature")
-    await common.async_set_preset_mode.opp, PRESET_NONE)
+    await common.async_set_preset_mode(opp, PRESET_NONE)
     state = opp.states.get(ENTITY)
     assert 23 == state.attributes.get("temperature")
 
 
-async def test_set_away_mode_twice_and_restore_prev_temp.opp, setup_comp_2):
+async def test_set_away_mode_twice_and_restore_prev_temp(opp, setup_comp_2):
     """Test the setting away mode twice in a row.
 
     Verify original temperature is restored.
     """
-    await common.async_set_temperature.opp, 23)
-    await common.async_set_preset_mode.opp, PRESET_AWAY)
-    await common.async_set_preset_mode.opp, PRESET_AWAY)
+    await common.async_set_temperature(opp, 23)
+    await common.async_set_preset_mode(opp, PRESET_AWAY)
+    await common.async_set_preset_mode(opp, PRESET_AWAY)
     state = opp.states.get(ENTITY)
     assert 16 == state.attributes.get("temperature")
-    await common.async_set_preset_mode.opp, PRESET_NONE)
+    await common.async_set_preset_mode(opp, PRESET_NONE)
     state = opp.states.get(ENTITY)
     assert 23 == state.attributes.get("temperature")
 
 
-async def test_sensor_bad_value.opp, setup_comp_2):
+async def test_sensor_bad_value(opp, setup_comp_2):
     """Test sensor that have None as state."""
     state = opp.states.get(ENTITY)
     temp = state.attributes.get("current_temperature")
 
-    _setup_sensor.opp, None)
+    _setup_sensor(opp, None)
     await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY)
@@ -375,12 +375,12 @@ async def test_sensor_unavailable.opp):
     assert state.attributes.get("current_temperature") is None
 
 
-async def test_set_target_temp_heater_on.opp, setup_comp_2):
+async def test_set_target_temp_heater_on(opp, setup_comp_2):
     """Test if target temperature turn heater on."""
-    calls = _setup_switch.opp, False)
-    _setup_sensor.opp, 25)
+    calls = _setup_switch(opp, False)
+    _setup_sensor(opp, 25)
     await opp.async_block_till_done()
-    await common.async_set_temperature.opp, 30)
+    await common.async_set_temperature(opp, 30)
     assert 1 == len(calls)
     call = calls[0]
     assert OPP_DOMAIN == call.domain
@@ -388,12 +388,12 @@ async def test_set_target_temp_heater_on.opp, setup_comp_2):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_set_target_temp_heater_off.opp, setup_comp_2):
+async def test_set_target_temp_heater_off(opp, setup_comp_2):
     """Test if target temperature turn heater off."""
-    calls = _setup_switch.opp, True)
-    _setup_sensor.opp, 30)
+    calls = _setup_switch(opp, True)
+    _setup_sensor(opp, 30)
     await opp.async_block_till_done()
-    await common.async_set_temperature.opp, 25)
+    await common.async_set_temperature(opp, 25)
     assert 2 == len(calls)
     call = calls[0]
     assert OPP_DOMAIN == call.domain
@@ -401,20 +401,20 @@ async def test_set_target_temp_heater_off.opp, setup_comp_2):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_temp_change_heater_on_within_tolerance.opp, setup_comp_2):
+async def test_temp_change_heater_on_within_tolerance(opp, setup_comp_2):
     """Test if temperature change doesn't turn on within tolerance."""
-    calls = _setup_switch.opp, False)
-    await common.async_set_temperature.opp, 30)
-    _setup_sensor.opp, 29)
+    calls = _setup_switch(opp, False)
+    await common.async_set_temperature(opp, 30)
+    _setup_sensor(opp, 29)
     await opp.async_block_till_done()
     assert 0 == len(calls)
 
 
-async def test_temp_change_heater_on_outside_tolerance.opp, setup_comp_2):
+async def test_temp_change_heater_on_outside_tolerance(opp, setup_comp_2):
     """Test if temperature change turn heater on outside cold tolerance."""
-    calls = _setup_switch.opp, False)
-    await common.async_set_temperature.opp, 30)
-    _setup_sensor.opp, 27)
+    calls = _setup_switch(opp, False)
+    await common.async_set_temperature(opp, 30)
+    _setup_sensor(opp, 27)
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
@@ -423,20 +423,20 @@ async def test_temp_change_heater_on_outside_tolerance.opp, setup_comp_2):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_temp_change_heater_off_within_tolerance.opp, setup_comp_2):
+async def test_temp_change_heater_off_within_tolerance(opp, setup_comp_2):
     """Test if temperature change doesn't turn off within tolerance."""
-    calls = _setup_switch.opp, True)
-    await common.async_set_temperature.opp, 30)
-    _setup_sensor.opp, 33)
+    calls = _setup_switch(opp, True)
+    await common.async_set_temperature(opp, 30)
+    _setup_sensor(opp, 33)
     await opp.async_block_till_done()
     assert 0 == len(calls)
 
 
-async def test_temp_change_heater_off_outside_tolerance.opp, setup_comp_2):
+async def test_temp_change_heater_off_outside_tolerance(opp, setup_comp_2):
     """Test if temperature change turn heater off outside hot tolerance."""
-    calls = _setup_switch.opp, True)
-    await common.async_set_temperature.opp, 30)
-    _setup_sensor.opp, 35)
+    calls = _setup_switch(opp, True)
+    await common.async_set_temperature(opp, 30)
+    _setup_sensor(opp, 35)
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
@@ -445,11 +445,11 @@ async def test_temp_change_heater_off_outside_tolerance.opp, setup_comp_2):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_running_when_hvac_mode_is_off.opp, setup_comp_2):
+async def test_running_when_hvac_mode_is_off(opp, setup_comp_2):
     """Test that the switch turns off when enabled is set False."""
-    calls = _setup_switch.opp, True)
-    await common.async_set_temperature.opp, 30)
-    await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
+    calls = _setup_switch(opp, True)
+    await common.async_set_temperature(opp, 30)
+    await common.async_set_hvac_mode(opp, HVAC_MODE_OFF)
     assert 1 == len(calls)
     call = calls[0]
     assert OPP_DOMAIN == call.domain
@@ -457,27 +457,27 @@ async def test_running_when_hvac_mode_is_off.opp, setup_comp_2):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_no_state_change_when_hvac_mode_off.opp, setup_comp_2):
+async def test_no_state_change_when_hvac_mode_off(opp, setup_comp_2):
     """Test that the switch doesn't turn on when enabled is False."""
-    calls = _setup_switch.opp, False)
-    await common.async_set_temperature.opp, 30)
-    await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
-    _setup_sensor.opp, 25)
+    calls = _setup_switch(opp, False)
+    await common.async_set_temperature(opp, 30)
+    await common.async_set_hvac_mode(opp, HVAC_MODE_OFF)
+    _setup_sensor(opp, 25)
     await opp.async_block_till_done()
     assert 0 == len(calls)
 
 
-async def test_hvac_mode_heat.opp, setup_comp_2):
+async def test_hvac_mode_heat(opp, setup_comp_2):
     """Test change mode from OFF to HEAT.
 
     Switch turns on when temp below setpoint and mode changes.
     """
-    await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
-    await common.async_set_temperature.opp, 30)
-    _setup_sensor.opp, 25)
+    await common.async_set_hvac_mode(opp, HVAC_MODE_OFF)
+    await common.async_set_temperature(opp, 30)
+    _setup_sensor(opp, 25)
     await opp.async_block_till_done()
-    calls = _setup_switch.opp, False)
-    await common.async_set_hvac_mode.opp, HVAC_MODE_HEAT)
+    calls = _setup_switch(opp, False)
+    await common.async_set_hvac_mode(opp, HVAC_MODE_HEAT)
     assert 1 == len(calls)
     call = calls[0]
     assert OPP_DOMAIN == call.domain
@@ -485,7 +485,7 @@ async def test_hvac_mode_heat.opp, setup_comp_2):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-def _setup_switch.opp, is_on):
+def _setup_switch(opp, is_on):
     """Set up the test switch."""
     opp.states.async_set(ENT_SWITCH, STATE_ON if is_on else STATE_OFF)
     calls = []
@@ -525,12 +525,12 @@ async def setup_comp_3.opp):
     await opp.async_block_till_done()
 
 
-async def test_set_target_temp_ac_off.opp, setup_comp_3):
+async def test_set_target_temp_ac_off(opp, setup_comp_3):
     """Test if target temperature turn ac off."""
-    calls = _setup_switch.opp, True)
-    _setup_sensor.opp, 25)
+    calls = _setup_switch(opp, True)
+    _setup_sensor(opp, 25)
     await opp.async_block_till_done()
-    await common.async_set_temperature.opp, 30)
+    await common.async_set_temperature(opp, 30)
     assert 2 == len(calls)
     call = calls[0]
     assert OPP_DOMAIN == call.domain
@@ -538,28 +538,28 @@ async def test_set_target_temp_ac_off.opp, setup_comp_3):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_turn_away_mode_on_cooling.opp, setup_comp_3):
+async def test_turn_away_mode_on_cooling(opp, setup_comp_3):
     """Test the setting away mode when cooling."""
-    _setup_switch.opp, True)
-    _setup_sensor.opp, 25)
+    _setup_switch(opp, True)
+    _setup_sensor(opp, 25)
     await opp.async_block_till_done()
-    await common.async_set_temperature.opp, 19)
-    await common.async_set_preset_mode.opp, PRESET_AWAY)
+    await common.async_set_temperature(opp, 19)
+    await common.async_set_preset_mode(opp, PRESET_AWAY)
     state = opp.states.get(ENTITY)
     assert 30 == state.attributes.get("temperature")
 
 
-async def test_hvac_mode_cool.opp, setup_comp_3):
+async def test_hvac_mode_cool(opp, setup_comp_3):
     """Test change mode from OFF to COOL.
 
     Switch turns on when temp below setpoint and mode changes.
     """
-    await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
-    await common.async_set_temperature.opp, 25)
-    _setup_sensor.opp, 30)
+    await common.async_set_hvac_mode(opp, HVAC_MODE_OFF)
+    await common.async_set_temperature(opp, 25)
+    _setup_sensor(opp, 30)
     await opp.async_block_till_done()
-    calls = _setup_switch.opp, False)
-    await common.async_set_hvac_mode.opp, HVAC_MODE_COOL)
+    calls = _setup_switch(opp, False)
+    await common.async_set_hvac_mode(opp, HVAC_MODE_COOL)
     assert 1 == len(calls)
     call = calls[0]
     assert OPP_DOMAIN == call.domain
@@ -567,12 +567,12 @@ async def test_hvac_mode_cool.opp, setup_comp_3):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_set_target_temp_ac_on.opp, setup_comp_3):
+async def test_set_target_temp_ac_on(opp, setup_comp_3):
     """Test if target temperature turn ac on."""
-    calls = _setup_switch.opp, False)
-    _setup_sensor.opp, 30)
+    calls = _setup_switch(opp, False)
+    _setup_sensor(opp, 30)
     await opp.async_block_till_done()
-    await common.async_set_temperature.opp, 25)
+    await common.async_set_temperature(opp, 25)
     assert 1 == len(calls)
     call = calls[0]
     assert OPP_DOMAIN == call.domain
@@ -580,20 +580,20 @@ async def test_set_target_temp_ac_on.opp, setup_comp_3):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_temp_change_ac_off_within_tolerance.opp, setup_comp_3):
+async def test_temp_change_ac_off_within_tolerance(opp, setup_comp_3):
     """Test if temperature change doesn't turn ac off within tolerance."""
-    calls = _setup_switch.opp, True)
-    await common.async_set_temperature.opp, 30)
-    _setup_sensor.opp, 29.8)
+    calls = _setup_switch(opp, True)
+    await common.async_set_temperature(opp, 30)
+    _setup_sensor(opp, 29.8)
     await opp.async_block_till_done()
     assert 0 == len(calls)
 
 
-async def test_set_temp_change_ac_off_outside_tolerance.opp, setup_comp_3):
+async def test_set_temp_change_ac_off_outside_tolerance(opp, setup_comp_3):
     """Test if temperature change turn ac off."""
-    calls = _setup_switch.opp, True)
-    await common.async_set_temperature.opp, 30)
-    _setup_sensor.opp, 27)
+    calls = _setup_switch(opp, True)
+    await common.async_set_temperature(opp, 30)
+    _setup_sensor(opp, 27)
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
@@ -602,20 +602,20 @@ async def test_set_temp_change_ac_off_outside_tolerance.opp, setup_comp_3):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_temp_change_ac_on_within_tolerance.opp, setup_comp_3):
+async def test_temp_change_ac_on_within_tolerance(opp, setup_comp_3):
     """Test if temperature change doesn't turn ac on within tolerance."""
-    calls = _setup_switch.opp, False)
-    await common.async_set_temperature.opp, 25)
-    _setup_sensor.opp, 25.2)
+    calls = _setup_switch(opp, False)
+    await common.async_set_temperature(opp, 25)
+    _setup_sensor(opp, 25.2)
     await opp.async_block_till_done()
     assert 0 == len(calls)
 
 
-async def test_temp_change_ac_on_outside_tolerance.opp, setup_comp_3):
+async def test_temp_change_ac_on_outside_tolerance(opp, setup_comp_3):
     """Test if temperature change turn ac on."""
-    calls = _setup_switch.opp, False)
-    await common.async_set_temperature.opp, 25)
-    _setup_sensor.opp, 30)
+    calls = _setup_switch(opp, False)
+    await common.async_set_temperature(opp, 25)
+    _setup_sensor(opp, 30)
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
@@ -626,9 +626,9 @@ async def test_temp_change_ac_on_outside_tolerance.opp, setup_comp_3):
 
 async def test_running_when_operating_mode_is_off_2.opp, setup_comp_3):
     """Test that the switch turns off when enabled is set False."""
-    calls = _setup_switch.opp, True)
-    await common.async_set_temperature.opp, 30)
-    await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
+    calls = _setup_switch(opp, True)
+    await common.async_set_temperature(opp, 30)
+    await common.async_set_hvac_mode(opp, HVAC_MODE_OFF)
     assert 1 == len(calls)
     call = calls[0]
     assert OPP_DOMAIN == call.domain
@@ -638,10 +638,10 @@ async def test_running_when_operating_mode_is_off_2.opp, setup_comp_3):
 
 async def test_no_state_change_when_operation_mode_off_2.opp, setup_comp_3):
     """Test that the switch doesn't turn on when enabled is False."""
-    calls = _setup_switch.opp, False)
-    await common.async_set_temperature.opp, 30)
-    await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
-    _setup_sensor.opp, 35)
+    calls = _setup_switch(opp, False)
+    await common.async_set_temperature(opp, 30)
+    await common.async_set_hvac_mode(opp, HVAC_MODE_OFF)
+    _setup_sensor(opp, 35)
     await opp.async_block_till_done()
     assert 0 == len(calls)
 
@@ -670,16 +670,16 @@ async def setup_comp_4.opp):
     await opp.async_block_till_done()
 
 
-async def test_temp_change_ac_trigger_on_not_long_enough.opp, setup_comp_4):
+async def test_temp_change_ac_trigger_on_not_long_enough(opp, setup_comp_4):
     """Test if temperature change turn ac on."""
-    calls = _setup_switch.opp, False)
-    await common.async_set_temperature.opp, 25)
-    _setup_sensor.opp, 30)
+    calls = _setup_switch(opp, False)
+    await common.async_set_temperature(opp, 25)
+    _setup_sensor(opp, 30)
     await opp.async_block_till_done()
     assert 0 == len(calls)
 
 
-async def test_temp_change_ac_trigger_on_long_enough.opp, setup_comp_4):
+async def test_temp_change_ac_trigger_on_long_enough(opp, setup_comp_4):
     """Test if temperature change turn ac on."""
     fake_changed = datetime.datetime(
         1918, 11, 11, 11, 11, 11, tzinfo=datetime.timezone.utc
@@ -687,9 +687,9 @@ async def test_temp_change_ac_trigger_on_long_enough.opp, setup_comp_4):
     with patch(
         "openpeerpower.helpers.condition.dt_util.utcnow", return_value=fake_changed
     ):
-        calls = _setup_switch.opp, False)
-    await common.async_set_temperature.opp, 25)
-    _setup_sensor.opp, 30)
+        calls = _setup_switch(opp, False)
+    await common.async_set_temperature(opp, 25)
+    _setup_sensor(opp, 30)
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
@@ -698,16 +698,16 @@ async def test_temp_change_ac_trigger_on_long_enough.opp, setup_comp_4):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_temp_change_ac_trigger_off_not_long_enough.opp, setup_comp_4):
+async def test_temp_change_ac_trigger_off_not_long_enough(opp, setup_comp_4):
     """Test if temperature change turn ac on."""
-    calls = _setup_switch.opp, True)
-    await common.async_set_temperature.opp, 30)
-    _setup_sensor.opp, 25)
+    calls = _setup_switch(opp, True)
+    await common.async_set_temperature(opp, 30)
+    _setup_sensor(opp, 25)
     await opp.async_block_till_done()
     assert 0 == len(calls)
 
 
-async def test_temp_change_ac_trigger_off_long_enough.opp, setup_comp_4):
+async def test_temp_change_ac_trigger_off_long_enough(opp, setup_comp_4):
     """Test if temperature change turn ac on."""
     fake_changed = datetime.datetime(
         1918, 11, 11, 11, 11, 11, tzinfo=datetime.timezone.utc
@@ -715,9 +715,9 @@ async def test_temp_change_ac_trigger_off_long_enough.opp, setup_comp_4):
     with patch(
         "openpeerpower.helpers.condition.dt_util.utcnow", return_value=fake_changed
     ):
-        calls = _setup_switch.opp, True)
-    await common.async_set_temperature.opp, 30)
-    _setup_sensor.opp, 25)
+        calls = _setup_switch(opp, True)
+    await common.async_set_temperature(opp, 30)
+    _setup_sensor(opp, 25)
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
@@ -726,14 +726,14 @@ async def test_temp_change_ac_trigger_off_long_enough.opp, setup_comp_4):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_mode_change_ac_trigger_off_not_long_enough.opp, setup_comp_4):
+async def test_mode_change_ac_trigger_off_not_long_enough(opp, setup_comp_4):
     """Test if mode change turns ac off despite minimum cycle."""
-    calls = _setup_switch.opp, True)
-    await common.async_set_temperature.opp, 30)
-    _setup_sensor.opp, 25)
+    calls = _setup_switch(opp, True)
+    await common.async_set_temperature(opp, 30)
+    _setup_sensor(opp, 25)
     await opp.async_block_till_done()
     assert 0 == len(calls)
-    await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
+    await common.async_set_hvac_mode(opp, HVAC_MODE_OFF)
     assert 1 == len(calls)
     call = calls[0]
     assert "openpeerpower" == call.domain
@@ -741,14 +741,14 @@ async def test_mode_change_ac_trigger_off_not_long_enough.opp, setup_comp_4):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_mode_change_ac_trigger_on_not_long_enough.opp, setup_comp_4):
+async def test_mode_change_ac_trigger_on_not_long_enough(opp, setup_comp_4):
     """Test if mode change turns ac on despite minimum cycle."""
-    calls = _setup_switch.opp, False)
-    await common.async_set_temperature.opp, 25)
-    _setup_sensor.opp, 30)
+    calls = _setup_switch(opp, False)
+    await common.async_set_temperature(opp, 25)
+    _setup_sensor(opp, 30)
     await opp.async_block_till_done()
     assert 0 == len(calls)
-    await common.async_set_hvac_mode.opp, HVAC_MODE_HEAT)
+    await common.async_set_hvac_mode(opp, HVAC_MODE_HEAT)
     assert 1 == len(calls)
     call = calls[0]
     assert "openpeerpower" == call.domain
@@ -782,9 +782,9 @@ async def setup_comp_5.opp):
 
 async def test_temp_change_ac_trigger_on_not_long_enough_2.opp, setup_comp_5):
     """Test if temperature change turn ac on."""
-    calls = _setup_switch.opp, False)
-    await common.async_set_temperature.opp, 25)
-    _setup_sensor.opp, 30)
+    calls = _setup_switch(opp, False)
+    await common.async_set_temperature(opp, 25)
+    _setup_sensor(opp, 30)
     await opp.async_block_till_done()
     assert 0 == len(calls)
 
@@ -797,9 +797,9 @@ async def test_temp_change_ac_trigger_on_long_enough_2.opp, setup_comp_5):
     with patch(
         "openpeerpower.helpers.condition.dt_util.utcnow", return_value=fake_changed
     ):
-        calls = _setup_switch.opp, False)
-    await common.async_set_temperature.opp, 25)
-    _setup_sensor.opp, 30)
+        calls = _setup_switch(opp, False)
+    await common.async_set_temperature(opp, 25)
+    _setup_sensor(opp, 30)
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
@@ -810,9 +810,9 @@ async def test_temp_change_ac_trigger_on_long_enough_2.opp, setup_comp_5):
 
 async def test_temp_change_ac_trigger_off_not_long_enough_2.opp, setup_comp_5):
     """Test if temperature change turn ac on."""
-    calls = _setup_switch.opp, True)
-    await common.async_set_temperature.opp, 30)
-    _setup_sensor.opp, 25)
+    calls = _setup_switch(opp, True)
+    await common.async_set_temperature(opp, 30)
+    _setup_sensor(opp, 25)
     await opp.async_block_till_done()
     assert 0 == len(calls)
 
@@ -825,9 +825,9 @@ async def test_temp_change_ac_trigger_off_long_enough_2.opp, setup_comp_5):
     with patch(
         "openpeerpower.helpers.condition.dt_util.utcnow", return_value=fake_changed
     ):
-        calls = _setup_switch.opp, True)
-    await common.async_set_temperature.opp, 30)
-    _setup_sensor.opp, 25)
+        calls = _setup_switch(opp, True)
+    await common.async_set_temperature(opp, 30)
+    _setup_sensor(opp, 25)
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
@@ -838,12 +838,12 @@ async def test_temp_change_ac_trigger_off_long_enough_2.opp, setup_comp_5):
 
 async def test_mode_change_ac_trigger_off_not_long_enough_2.opp, setup_comp_5):
     """Test if mode change turns ac off despite minimum cycle."""
-    calls = _setup_switch.opp, True)
-    await common.async_set_temperature.opp, 30)
-    _setup_sensor.opp, 25)
+    calls = _setup_switch(opp, True)
+    await common.async_set_temperature(opp, 30)
+    _setup_sensor(opp, 25)
     await opp.async_block_till_done()
     assert 0 == len(calls)
-    await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
+    await common.async_set_hvac_mode(opp, HVAC_MODE_OFF)
     assert 1 == len(calls)
     call = calls[0]
     assert "openpeerpower" == call.domain
@@ -853,12 +853,12 @@ async def test_mode_change_ac_trigger_off_not_long_enough_2.opp, setup_comp_5):
 
 async def test_mode_change_ac_trigger_on_not_long_enough_2.opp, setup_comp_5):
     """Test if mode change turns ac on despite minimum cycle."""
-    calls = _setup_switch.opp, False)
-    await common.async_set_temperature.opp, 25)
-    _setup_sensor.opp, 30)
+    calls = _setup_switch(opp, False)
+    await common.async_set_temperature(opp, 25)
+    _setup_sensor(opp, 30)
     await opp.async_block_till_done()
     assert 0 == len(calls)
-    await common.async_set_hvac_mode.opp, HVAC_MODE_HEAT)
+    await common.async_set_hvac_mode(opp, HVAC_MODE_HEAT)
     assert 1 == len(calls)
     call = calls[0]
     assert "openpeerpower" == call.domain
@@ -889,25 +889,25 @@ async def setup_comp_6.opp):
     await opp.async_block_till_done()
 
 
-async def test_temp_change_heater_trigger_off_not_long_enough.opp, setup_comp_6):
+async def test_temp_change_heater_trigger_off_not_long_enough(opp, setup_comp_6):
     """Test if temp change doesn't turn heater off because of time."""
-    calls = _setup_switch.opp, True)
-    await common.async_set_temperature.opp, 25)
-    _setup_sensor.opp, 30)
+    calls = _setup_switch(opp, True)
+    await common.async_set_temperature(opp, 25)
+    _setup_sensor(opp, 30)
     await opp.async_block_till_done()
     assert 0 == len(calls)
 
 
-async def test_temp_change_heater_trigger_on_not_long_enough.opp, setup_comp_6):
+async def test_temp_change_heater_trigger_on_not_long_enough(opp, setup_comp_6):
     """Test if temp change doesn't turn heater on because of time."""
-    calls = _setup_switch.opp, False)
-    await common.async_set_temperature.opp, 30)
-    _setup_sensor.opp, 25)
+    calls = _setup_switch(opp, False)
+    await common.async_set_temperature(opp, 30)
+    _setup_sensor(opp, 25)
     await opp.async_block_till_done()
     assert 0 == len(calls)
 
 
-async def test_temp_change_heater_trigger_on_long_enough.opp, setup_comp_6):
+async def test_temp_change_heater_trigger_on_long_enough(opp, setup_comp_6):
     """Test if temperature change turn heater on after min cycle."""
     fake_changed = datetime.datetime(
         1918, 11, 11, 11, 11, 11, tzinfo=datetime.timezone.utc
@@ -915,9 +915,9 @@ async def test_temp_change_heater_trigger_on_long_enough.opp, setup_comp_6):
     with patch(
         "openpeerpower.helpers.condition.dt_util.utcnow", return_value=fake_changed
     ):
-        calls = _setup_switch.opp, False)
-    await common.async_set_temperature.opp, 30)
-    _setup_sensor.opp, 25)
+        calls = _setup_switch(opp, False)
+    await common.async_set_temperature(opp, 30)
+    _setup_sensor(opp, 25)
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
@@ -926,7 +926,7 @@ async def test_temp_change_heater_trigger_on_long_enough.opp, setup_comp_6):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_temp_change_heater_trigger_off_long_enough.opp, setup_comp_6):
+async def test_temp_change_heater_trigger_off_long_enough(opp, setup_comp_6):
     """Test if temperature change turn heater off after min cycle."""
     fake_changed = datetime.datetime(
         1918, 11, 11, 11, 11, 11, tzinfo=datetime.timezone.utc
@@ -934,9 +934,9 @@ async def test_temp_change_heater_trigger_off_long_enough.opp, setup_comp_6):
     with patch(
         "openpeerpower.helpers.condition.dt_util.utcnow", return_value=fake_changed
     ):
-        calls = _setup_switch.opp, True)
-    await common.async_set_temperature.opp, 25)
-    _setup_sensor.opp, 30)
+        calls = _setup_switch(opp, True)
+    await common.async_set_temperature(opp, 25)
+    _setup_sensor(opp, 30)
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
@@ -945,14 +945,14 @@ async def test_temp_change_heater_trigger_off_long_enough.opp, setup_comp_6):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_mode_change_heater_trigger_off_not_long_enough.opp, setup_comp_6):
+async def test_mode_change_heater_trigger_off_not_long_enough(opp, setup_comp_6):
     """Test if mode change turns heater off despite minimum cycle."""
-    calls = _setup_switch.opp, True)
-    await common.async_set_temperature.opp, 25)
-    _setup_sensor.opp, 30)
+    calls = _setup_switch(opp, True)
+    await common.async_set_temperature(opp, 25)
+    _setup_sensor(opp, 30)
     await opp.async_block_till_done()
     assert 0 == len(calls)
-    await common.async_set_hvac_mode.opp, HVAC_MODE_OFF)
+    await common.async_set_hvac_mode(opp, HVAC_MODE_OFF)
     assert 1 == len(calls)
     call = calls[0]
     assert "openpeerpower" == call.domain
@@ -960,14 +960,14 @@ async def test_mode_change_heater_trigger_off_not_long_enough.opp, setup_comp_6)
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_mode_change_heater_trigger_on_not_long_enough.opp, setup_comp_6):
+async def test_mode_change_heater_trigger_on_not_long_enough(opp, setup_comp_6):
     """Test if mode change turns heater on despite minimum cycle."""
-    calls = _setup_switch.opp, False)
-    await common.async_set_temperature.opp, 30)
-    _setup_sensor.opp, 25)
+    calls = _setup_switch(opp, False)
+    await common.async_set_temperature(opp, 30)
+    _setup_sensor(opp, 25)
     await opp.async_block_till_done()
     assert 0 == len(calls)
-    await common.async_set_hvac_mode.opp, HVAC_MODE_HEAT)
+    await common.async_set_hvac_mode(opp, HVAC_MODE_HEAT)
     assert 1 == len(calls)
     call = calls[0]
     assert "openpeerpower" == call.domain
@@ -1004,19 +1004,19 @@ async def setup_comp_7.opp):
 
 async def test_temp_change_ac_trigger_on_long_enough_3.opp, setup_comp_7):
     """Test if turn on signal is sent at keep-alive intervals."""
-    calls = _setup_switch.opp, True)
+    calls = _setup_switch(opp, True)
     await opp.async_block_till_done()
-    _setup_sensor.opp, 30)
+    _setup_sensor(opp, 30)
     await opp.async_block_till_done()
-    await common.async_set_temperature.opp, 25)
+    await common.async_set_temperature(opp, 25)
     test_time = datetime.datetime.now(pytz.UTC)
-    async_fire_time_changed.opp, test_time)
+    async_fire_time_changed(opp, test_time)
     await opp.async_block_till_done()
     assert 0 == len(calls)
-    async_fire_time_changed.opp, test_time + datetime.timedelta(minutes=5))
+    async_fire_time_changed(opp, test_time + datetime.timedelta(minutes=5))
     await opp.async_block_till_done()
     assert 0 == len(calls)
-    async_fire_time_changed.opp, test_time + datetime.timedelta(minutes=10))
+    async_fire_time_changed(opp, test_time + datetime.timedelta(minutes=10))
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
@@ -1027,19 +1027,19 @@ async def test_temp_change_ac_trigger_on_long_enough_3.opp, setup_comp_7):
 
 async def test_temp_change_ac_trigger_off_long_enough_3.opp, setup_comp_7):
     """Test if turn on signal is sent at keep-alive intervals."""
-    calls = _setup_switch.opp, False)
+    calls = _setup_switch(opp, False)
     await opp.async_block_till_done()
-    _setup_sensor.opp, 20)
+    _setup_sensor(opp, 20)
     await opp.async_block_till_done()
-    await common.async_set_temperature.opp, 25)
+    await common.async_set_temperature(opp, 25)
     test_time = datetime.datetime.now(pytz.UTC)
-    async_fire_time_changed.opp, test_time)
+    async_fire_time_changed(opp, test_time)
     await opp.async_block_till_done()
     assert 0 == len(calls)
-    async_fire_time_changed.opp, test_time + datetime.timedelta(minutes=5))
+    async_fire_time_changed(opp, test_time + datetime.timedelta(minutes=5))
     await opp.async_block_till_done()
     assert 0 == len(calls)
-    async_fire_time_changed.opp, test_time + datetime.timedelta(minutes=10))
+    async_fire_time_changed(opp, test_time + datetime.timedelta(minutes=10))
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
@@ -1075,19 +1075,19 @@ async def setup_comp_8.opp):
 
 async def test_temp_change_heater_trigger_on_long_enough_2.opp, setup_comp_8):
     """Test if turn on signal is sent at keep-alive intervals."""
-    calls = _setup_switch.opp, True)
+    calls = _setup_switch(opp, True)
     await opp.async_block_till_done()
-    _setup_sensor.opp, 20)
+    _setup_sensor(opp, 20)
     await opp.async_block_till_done()
-    await common.async_set_temperature.opp, 25)
+    await common.async_set_temperature(opp, 25)
     test_time = datetime.datetime.now(pytz.UTC)
-    async_fire_time_changed.opp, test_time)
+    async_fire_time_changed(opp, test_time)
     await opp.async_block_till_done()
     assert 0 == len(calls)
-    async_fire_time_changed.opp, test_time + datetime.timedelta(minutes=5))
+    async_fire_time_changed(opp, test_time + datetime.timedelta(minutes=5))
     await opp.async_block_till_done()
     assert 0 == len(calls)
-    async_fire_time_changed.opp, test_time + datetime.timedelta(minutes=10))
+    async_fire_time_changed(opp, test_time + datetime.timedelta(minutes=10))
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
@@ -1098,19 +1098,19 @@ async def test_temp_change_heater_trigger_on_long_enough_2.opp, setup_comp_8):
 
 async def test_temp_change_heater_trigger_off_long_enough_2.opp, setup_comp_8):
     """Test if turn on signal is sent at keep-alive intervals."""
-    calls = _setup_switch.opp, False)
+    calls = _setup_switch(opp, False)
     await opp.async_block_till_done()
-    _setup_sensor.opp, 30)
+    _setup_sensor(opp, 30)
     await opp.async_block_till_done()
-    await common.async_set_temperature.opp, 25)
+    await common.async_set_temperature(opp, 25)
     test_time = datetime.datetime.now(pytz.UTC)
-    async_fire_time_changed.opp, test_time)
+    async_fire_time_changed(opp, test_time)
     await opp.async_block_till_done()
     assert 0 == len(calls)
-    async_fire_time_changed.opp, test_time + datetime.timedelta(minutes=5))
+    async_fire_time_changed(opp, test_time + datetime.timedelta(minutes=5))
     await opp.async_block_till_done()
     assert 0 == len(calls)
-    async_fire_time_changed.opp, test_time + datetime.timedelta(minutes=10))
+    async_fire_time_changed(opp, test_time + datetime.timedelta(minutes=10))
     await opp.async_block_till_done()
     assert 1 == len(calls)
     call = calls[0]
@@ -1144,9 +1144,9 @@ async def setup_comp_9.opp):
     await opp.async_block_till_done()
 
 
-async def test_precision.opp, setup_comp_9):
+async def test_precision(opp, setup_comp_9):
     """Test that setting precision to tenths works as intended."""
-    await common.async_set_temperature.opp, 23.27)
+    await common.async_set_temperature(opp, 23.27)
     state = opp.states.get(ENTITY)
     assert 23.3 == state.attributes.get("temperature")
 
@@ -1255,10 +1255,10 @@ async def test_restore_state_uncoherence_case.opp):
     - Turn the generic thermostat off
     - Restart HA and restore state from DB
     """
-    _mock_restore_cache.opp, temperature=20)
+    _mock_restore_cache(opp, temperature=20)
 
-    calls = _setup_switch.opp, False)
-    _setup_sensor.opp, 15)
+    calls = _setup_switch(opp, False)
+    _setup_sensor(opp, 15)
     await _setup_climate.opp)
     await opp.async_block_till_done()
 
@@ -1267,7 +1267,7 @@ async def test_restore_state_uncoherence_case.opp):
     assert HVAC_MODE_OFF == state.state
     assert 0 == len(calls)
 
-    calls = _setup_switch.opp, False)
+    calls = _setup_switch(opp, False)
     await opp.async_block_till_done()
     state = opp.states.get(ENTITY)
     assert HVAC_MODE_OFF == state.state
@@ -1292,7 +1292,7 @@ async def _setup_climate.opp):
     )
 
 
-def _mock_restore_cache.opp, temperature=20, hvac_mode=HVAC_MODE_OFF):
+def _mock_restore_cache(opp, temperature=20, hvac_mode=HVAC_MODE_OFF):
     mock_restore_cache(
         opp,
         (
@@ -1323,7 +1323,7 @@ async def test_reload.opp):
 
     await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
-    assert.opp.states.get("climate.test") is not None
+    assert opp.states.get("climate.test") is not None
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -1340,8 +1340,8 @@ async def test_reload.opp):
         await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
-    assert.opp.states.get("climate.test") is None
-    assert.opp.states.get("climate.reload")
+    assert opp.states.get("climate.test") is None
+    assert opp.states.get("climate.reload")
 
 
 def _get_fixtures_base_path():

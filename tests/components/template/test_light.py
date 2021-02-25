@@ -1116,17 +1116,17 @@ async def test_available_template_with_entities.opp):
     await opp.async_block_till_done()
 
     # Device State should not be unavailable
-    assert.opp.states.get("light.test_template_light").state != STATE_UNAVAILABLE
+    assert opp.states.get("light.test_template_light").state != STATE_UNAVAILABLE
 
     # When Availability template returns false
     opp.states.async_set(_STATE_AVAILABILITY_BOOLEAN, STATE_OFF)
     await opp.async_block_till_done()
 
     # device state should be unavailable
-    assert.opp.states.get("light.test_template_light").state == STATE_UNAVAILABLE
+    assert opp.states.get("light.test_template_light").state == STATE_UNAVAILABLE
 
 
-async def test_invalid_availability_template_keeps_component_available.opp, caplog):
+async def test_invalid_availability_template_keeps_component_available(opp, caplog):
     """Test that an invalid availability keeps the device available."""
     await setup.async_setup_component(
         opp,
@@ -1162,7 +1162,7 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.get("light.test_template_light").state != STATE_UNAVAILABLE
+    assert opp.states.get("light.test_template_light").state != STATE_UNAVAILABLE
     assert ("UndefinedError: 'x' is undefined") in caplog.text
 
 

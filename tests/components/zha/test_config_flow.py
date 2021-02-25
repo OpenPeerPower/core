@@ -110,7 +110,7 @@ async def test_user_flow_manual.opp):
 
 
 @pytest.mark.parametrize("radio_type", RadioType.list())
-async def test_pick_radio_flow.opp, radio_type):
+async def test_pick_radio_flow(opp, radio_type):
     """Test radio picker."""
 
     result = await opp.config_entries.flow.async_init(
@@ -122,8 +122,8 @@ async def test_pick_radio_flow.opp, radio_type):
 
 async def test_user_flow_existing_config_entry.opp):
     """Test if config entry already exists."""
-    MockConfigEntry(domain=DOMAIN, data={"usb_path": "/dev/ttyUSB1"}).add_to.opp.opp)
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    MockConfigEntry(domain=DOMAIN, data={"usb_path": "/dev/ttyUSB1"}).add_to_opp(opp)
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_USER}
     )
@@ -190,7 +190,7 @@ async def test_user_port_config_fail(probe_mock, opp):
 @patch("bellows.zigbee.application.ControllerApplication.probe", return_value=True)
 async def test_user_port_config(probe_mock, opp):
     """Test port config."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

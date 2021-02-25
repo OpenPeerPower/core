@@ -6,9 +6,9 @@ from . import async_setup_auth
 from tests.common import CLIENT_ID, CLIENT_REDIRECT_URI
 
 
-async def test_fetch_auth_providers.opp, aiohttp_client):
+async def test_fetch_auth_providers(opp, aiohttp_client):
     """Test fetching auth providers."""
-    client = await async_setup_auth.opp, aiohttp_client)
+    client = await async_setup_auth(opp, aiohttp_client)
     resp = await client.get("/auth/providers")
     assert resp.status == 200
     assert await resp.json() == [
@@ -16,9 +16,9 @@ async def test_fetch_auth_providers.opp, aiohttp_client):
     ]
 
 
-async def test_fetch_auth_providers_onboarding.opp, aiohttp_client):
+async def test_fetch_auth_providers_onboarding(opp, aiohttp_client):
     """Test fetching auth providers."""
-    client = await async_setup_auth.opp, aiohttp_client)
+    client = await async_setup_auth(opp, aiohttp_client)
     with patch(
         "openpeerpower.components.onboarding.async_is_user_onboarded",
         return_value=False,
@@ -31,16 +31,16 @@ async def test_fetch_auth_providers_onboarding.opp, aiohttp_client):
     }
 
 
-async def test_cannot_get_flows_in_progress.opp, aiohttp_client):
+async def test_cannot_get_flows_in_progress(opp, aiohttp_client):
     """Test we cannot get flows in progress."""
-    client = await async_setup_auth.opp, aiohttp_client, [])
+    client = await async_setup_auth(opp, aiohttp_client, [])
     resp = await client.get("/auth/login_flow")
     assert resp.status == 405
 
 
-async def test_invalid_username_password.opp, aiohttp_client):
+async def test_invalid_username_password(opp, aiohttp_client):
     """Test we cannot get flows in progress."""
-    client = await async_setup_auth.opp, aiohttp_client)
+    client = await async_setup_auth(opp, aiohttp_client)
     resp = await client.post(
         "/auth/login_flow",
         json={
@@ -85,9 +85,9 @@ async def test_invalid_username_password.opp, aiohttp_client):
     assert step["errors"]["base"] == "invalid_auth"
 
 
-async def test_login_exist_user.opp, aiohttp_client):
+async def test_login_exist_user(opp, aiohttp_client):
     """Test logging in with exist user."""
-    client = await async_setup_auth.opp, aiohttp_client, setup_api=True)
+    client = await async_setup_auth(opp, aiohttp_client, setup_api=True)
     cred = await opp.auth.auth_providers[0].async_get_or_create_credentials(
         {"username": "test-user"}
     )

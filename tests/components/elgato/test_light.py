@@ -26,7 +26,7 @@ async def test_light_state(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the creation and values of the Elgato Key Lights."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
@@ -46,7 +46,7 @@ async def test_light_change_state(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the change of state of a Elgato Key Light device."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
 
     state = opp.states.get("light.frenck")
     assert state.state == STATE_ON
@@ -88,7 +88,7 @@ async def test_light_unavailable(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test error/unavailable handling of an Elgato Key Light."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
     with patch(
         "openpeerpower.components.elgato.light.Elgato.light",
         side_effect=ElgatoError,

@@ -61,5 +61,5 @@ async def test_bad_config(opp):
     """Test invalid configuration."""
     config = {notify_comp.DOMAIN: {"name": "test", "platform": "homematic"}}
     with assert_setup_component(0) as handle_config:
-        assert await async_setup_component.opp, notify_comp.DOMAIN, config)
+        assert await async_setup_component(opp, notify_comp.DOMAIN, config)
     assert not handle_config[notify_comp.DOMAIN]

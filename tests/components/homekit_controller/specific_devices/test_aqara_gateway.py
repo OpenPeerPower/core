@@ -15,8 +15,8 @@ from tests.components.homekit_controller.common import (
 
 async def test_aqara_gateway_setup_opp):
     """Test that a Aqara Gateway can be correctly setup in HA."""
-    accessories = await setup_accessories_from_file.opp, "aqara_gateway.json")
-    config_entry, pairing = await setup_test_accessories.opp, accessories)
+    accessories = await setup_accessories_from_file(opp, "aqara_gateway.json")
+    config_entry, pairing = await setup_test_accessories(opp, accessories)
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 

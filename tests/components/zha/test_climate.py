@@ -131,7 +131,7 @@ ZCL_ATTR_PLUG = {
 
 
 @pytest.fixture
-def device_climate_mock.opp, zigpy_device_mock, zha_device_joined):
+def device_climate_mock(opp, zigpy_device_mock, zha_device_joined):
     """Test regular thermostat device."""
 
     async def _dev(clusters, plug=None, manuf=None):
@@ -143,7 +143,7 @@ def device_climate_mock.opp, zigpy_device_mock, zha_device_joined):
         zigpy_device = zigpy_device_mock(clusters, manufacturer=manuf)
         zigpy_device.endpoints[1].thermostat.PLUGGED_ATTR_READS = plugged_attrs
         zha_device = await zha_device_joined(zigpy_device)
-        await async_enable_traffic.opp, [zha_device])
+        await async_enable_traffic(opp, [zha_device])
         await opp.async_block_till_done()
         return zha_device
 
@@ -192,7 +192,7 @@ def test_sequence_mappings():
             assert Thermostat.SystemMode(HVAC_MODE_2_SYSTEM[hvac_mode]) is not None
 
 
-async def test_climate_local_temp.opp, device_climate):
+async def test_climate_local_temp(opp, device_climate):
     """Test local temperature."""
 
     thrm_cluster = device_climate.device.endpoints[1].thermostat
@@ -201,12 +201,12 @@ async def test_climate_local_temp.opp, device_climate):
     state = opp.states.get(entity_id)
     assert state.attributes[ATTR_CURRENT_TEMPERATURE] is None
 
-    await send_attributes_report.opp, thrm_cluster, {0: 2100})
+    await send_attributes_report(opp, thrm_cluster, {0: 2100})
     state = opp.states.get(entity_id)
     assert state.attributes[ATTR_CURRENT_TEMPERATURE] == 21.0
 
 
-async def test_climate_hvac_action_running_state.opp, device_climate):
+async def test_climate_hvac_action_running_state(opp, device_climate):
     """Test hvac action via running state."""
 
     thrm_cluster = device_climate.device.endpoints[1].thermostat
@@ -252,7 +252,7 @@ async def test_climate_hvac_action_running_state.opp, device_climate):
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_FAN
 
 
-async def test_climate_hvac_action_running_state_zen.opp, device_climate_zen):
+async def test_climate_hvac_action_running_state_zen(opp, device_climate_zen):
     """Test Zen hvac action via running state."""
 
     thrm_cluster = device_climate_zen.device.endpoints[1].thermostat
@@ -316,7 +316,7 @@ async def test_climate_hvac_action_running_state_zen.opp, device_climate_zen):
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_IDLE
 
 
-async def test_climate_hvac_action_pi_demand.opp, device_climate):
+async def test_climate_hvac_action_pi_demand(opp, device_climate):
     """Test hvac action based on pi_heating/cooling_demand attrs."""
 
     thrm_cluster = device_climate.device.endpoints[1].thermostat
@@ -325,16 +325,16 @@ async def test_climate_hvac_action_pi_demand.opp, device_climate):
     state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
 
-    await send_attributes_report.opp, thrm_cluster, {0x0007: 10})
+    await send_attributes_report(opp, thrm_cluster, {0x0007: 10})
     state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_COOL
 
-    await send_attributes_report.opp, thrm_cluster, {0x0008: 20})
+    await send_attributes_report(opp, thrm_cluster, {0x0008: 20})
     state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_HEAT
 
-    await send_attributes_report.opp, thrm_cluster, {0x0007: 0})
-    await send_attributes_report.opp, thrm_cluster, {0x0008: 0})
+    await send_attributes_report(opp, thrm_cluster, {0x0007: 0})
+    await send_attributes_report(opp, thrm_cluster, {0x0008: 0})
 
     state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -363,7 +363,7 @@ async def test_climate_hvac_action_pi_demand.opp, device_climate):
         (Thermostat.SystemMode.Dry, HVAC_MODE_DRY),
     ),
 )
-async def test_hvac_mode.opp, device_climate, sys_mode, hvac_mode):
+async def test_hvac_mode(opp, device_climate, sys_mode, hvac_mode):
     """Test HVAC modee."""
 
     thrm_cluster = device_climate.device.endpoints[1].thermostat
@@ -372,7 +372,7 @@ async def test_hvac_mode.opp, device_climate, sys_mode, hvac_mode):
     state = opp.states.get(entity_id)
     assert state.state == HVAC_MODE_OFF
 
-    await send_attributes_report.opp, thrm_cluster, {0x001C: sys_mode})
+    await send_attributes_report(opp, thrm_cluster, {0x001C: sys_mode})
     state = opp.states.get(entity_id)
     assert state.state == hvac_mode
 
@@ -382,7 +382,7 @@ async def test_hvac_mode.opp, device_climate, sys_mode, hvac_mode):
     state = opp.states.get(entity_id)
     assert state.state == HVAC_MODE_OFF
 
-    await send_attributes_report.opp, thrm_cluster, {0x001C: 0xFF})
+    await send_attributes_report(opp, thrm_cluster, {0x001C: 0xFF})
     state = opp.states.get(entity_id)
     assert state.state == STATE_UNKNOWN
 
@@ -399,7 +399,7 @@ async def test_hvac_mode.opp, device_climate, sys_mode, hvac_mode):
         (0x05, {HVAC_MODE_OFF, HVAC_MODE_COOL, HVAC_MODE_HEAT, HVAC_MODE_HEAT_COOL}),
     ),
 )
-async def test_hvac_modes.opp, device_climate_mock, seq_of_op, modes):
+async def test_hvac_modes(opp, device_climate_mock, seq_of_op, modes):
     """Test HVAC modes from sequence of operations."""
 
     device_climate = await device_climate_mock(
@@ -544,7 +544,7 @@ async def test_target_temperature_low(
         (HVAC_MODE_HEAT_COOL, Thermostat.SystemMode.Auto),
     ),
 )
-async def test_set_hvac_mode.opp, device_climate, hvac_mode, sys_mode):
+async def test_set_hvac_mode(opp, device_climate, hvac_mode, sys_mode):
     """Test setting hvac mode."""
 
     thrm_cluster = device_climate.device.endpoints[1].thermostat
@@ -586,7 +586,7 @@ async def test_set_hvac_mode.opp, device_climate, hvac_mode, sys_mode):
     }
 
 
-async def test_preset_setting.opp, device_climate_sinope):
+async def test_preset_setting(opp, device_climate_sinope):
     """Test preset setting."""
 
     entity_id = await find_entity_id(DOMAIN, device_climate_sinope, opp)
@@ -664,7 +664,7 @@ async def test_preset_setting.opp, device_climate_sinope):
     assert thrm_cluster.write_attributes.call_args[0][0] == {"set_occupancy": 1}
 
 
-async def test_preset_setting_invalid.opp, device_climate_sinope):
+async def test_preset_setting_invalid(opp, device_climate_sinope):
     """Test invalid preset setting."""
 
     entity_id = await find_entity_id(DOMAIN, device_climate_sinope, opp)
@@ -685,7 +685,7 @@ async def test_preset_setting_invalid.opp, device_climate_sinope):
     assert thrm_cluster.write_attributes.call_count == 0
 
 
-async def test_set_temperature_hvac_mode.opp, device_climate):
+async def test_set_temperature_hvac_mode(opp, device_climate):
     """Test setting HVAC mode in temperature service call."""
 
     entity_id = await find_entity_id(DOMAIN, device_climate, opp)
@@ -713,7 +713,7 @@ async def test_set_temperature_hvac_mode.opp, device_climate):
     }
 
 
-async def test_set_temperature_heat_cool.opp, device_climate_mock):
+async def test_set_temperature_heat_cool(opp, device_climate_mock):
     """Test setting temperature service call in heating/cooling HVAC mode."""
 
     with patch.object(
@@ -803,7 +803,7 @@ async def test_set_temperature_heat_cool.opp, device_climate_mock):
     }
 
 
-async def test_set_temperature_heat.opp, device_climate_mock):
+async def test_set_temperature_heat(opp, device_climate_mock):
     """Test setting temperature service call in heating HVAC mode."""
 
     with patch.object(
@@ -886,7 +886,7 @@ async def test_set_temperature_heat.opp, device_climate_mock):
     }
 
 
-async def test_set_temperature_cool.opp, device_climate_mock):
+async def test_set_temperature_cool(opp, device_climate_mock):
     """Test setting temperature service call in cooling HVAC mode."""
 
     with patch.object(
@@ -969,7 +969,7 @@ async def test_set_temperature_cool.opp, device_climate_mock):
     }
 
 
-async def test_set_temperature_wrong_mode.opp, device_climate_mock):
+async def test_set_temperature_wrong_mode(opp, device_climate_mock):
     """Test setting temperature service call for wrong HVAC mode."""
 
     with patch.object(
@@ -1008,7 +1008,7 @@ async def test_set_temperature_wrong_mode.opp, device_climate_mock):
     assert thrm_cluster.write_attributes.await_count == 0
 
 
-async def test_occupancy_reset.opp, device_climate_sinope):
+async def test_occupancy_reset(opp, device_climate_sinope):
     """Test away preset reset."""
 
     entity_id = await find_entity_id(DOMAIN, device_climate_sinope, opp)
@@ -1035,7 +1035,7 @@ async def test_occupancy_reset.opp, device_climate_sinope):
     assert state.attributes[ATTR_PRESET_MODE] == PRESET_NONE
 
 
-async def test_fan_mode.opp, device_climate_fan):
+async def test_fan_mode(opp, device_climate_fan):
     """Test fan mode."""
 
     entity_id = await find_entity_id(DOMAIN, device_climate_fan, opp)
@@ -1064,7 +1064,7 @@ async def test_fan_mode.opp, device_climate_fan):
     assert state.attributes[ATTR_FAN_MODE] == FAN_ON
 
 
-async def test_set_fan_mode_not_supported.opp, device_climate_fan):
+async def test_set_fan_mode_not_supported(opp, device_climate_fan):
     """Test fan setting unsupported mode."""
 
     entity_id = await find_entity_id(DOMAIN, device_climate_fan, opp)
@@ -1079,7 +1079,7 @@ async def test_set_fan_mode_not_supported.opp, device_climate_fan):
     assert fan_cluster.write_attributes.await_count == 0
 
 
-async def test_set_fan_mode.opp, device_climate_fan):
+async def test_set_fan_mode(opp, device_climate_fan):
     """Test fan mode setting."""
 
     entity_id = await find_entity_id(DOMAIN, device_climate_fan, opp)

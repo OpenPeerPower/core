@@ -16,7 +16,7 @@ from .const import (
 from tests.common import MockConfigEntry, load_fixture
 
 
-async def test_form.opp, requests_mock):
+async def test_form(opp, requests_mock):
     """Test we get the form."""
     opp.config.latitude = TEST_LATITUDE_WAVERTREE
     opp.config.longitude = TEST_LONGITUDE_WAVERTREE
@@ -26,7 +26,7 @@ async def test_form.opp, requests_mock):
     all_sites = json.dumps(mock_json["all_sites"])
     requests_mock.get("/public/data/val/wxfcs/all/json/sitelist/", text=all_sites)
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -56,7 +56,7 @@ async def test_form.opp, requests_mock):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_already_configured.opp, requests_mock):
+async def test_form_already_configured(opp, requests_mock):
     """Test we handle duplicate entries."""
     opp.config.latitude = TEST_LATITUDE_WAVERTREE
     opp.config.longitude = TEST_LONGITUDE_WAVERTREE
@@ -76,7 +76,7 @@ async def test_form_already_configured.opp, requests_mock):
         domain=DOMAIN,
         unique_id=f"{TEST_LATITUDE_WAVERTREE}_{TEST_LONGITUDE_WAVERTREE}",
         data=METOFFICE_CONFIG_WAVERTREE,
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -88,7 +88,7 @@ async def test_form_already_configured.opp, requests_mock):
     assert result["reason"] == "already_configured"
 
 
-async def test_form_cannot_connect.opp, requests_mock):
+async def test_form_cannot_connect(opp, requests_mock):
     """Test we handle cannot connect error."""
     opp.config.latitude = TEST_LATITUDE_WAVERTREE
     opp.config.longitude = TEST_LONGITUDE_WAVERTREE

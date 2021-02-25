@@ -18,7 +18,7 @@ async def async_init_integration.opp: OpenPeerPower) -> MockConfigEntry:
         entry = MockConfigEntry(
             domain=DOMAIN, data={CONF_NAME: "mock_name", CONF_PORT: 12345}
         )
-        entry.add_to.opp.opp)
+        entry.add_to_opp(opp)
         assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
         return entry
@@ -28,7 +28,7 @@ async def async_init_entry.opp: OpenPeerPower, entry: MockConfigEntry):
     """Set up the homekit integration in Open Peer Power."""
 
     with patch(f"{PATH_HOMEKIT}.HomeKit.async_start"):
-        entry.add_to.opp.opp)
+        entry.add_to_opp(opp)
         assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
         return entry

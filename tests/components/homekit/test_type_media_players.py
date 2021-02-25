@@ -42,7 +42,7 @@ from openpeerpower.helpers import entity_registry
 from tests.common import async_mock_service
 
 
-async def test_media_player_set_state.opp, hk_driver, events):
+async def test_media_player_set_state(opp, hk_driver, events):
     """Test if accessory and HA are updated accordingly."""
     config = {
         CONF_FEATURE_LIST: {
@@ -103,12 +103,12 @@ async def test_media_player_set_state.opp, hk_driver, events):
     assert acc.chars[FEATURE_PLAY_STOP].value is False
 
     # Set from HomeKit
-    call_turn_on = async_mock_service.opp, DOMAIN, "turn_on")
-    call_turn_off = async_mock_service.opp, DOMAIN, "turn_off")
-    call_media_play = async_mock_service.opp, DOMAIN, "media_play")
-    call_media_pause = async_mock_service.opp, DOMAIN, "media_pause")
-    call_media_stop = async_mock_service.opp, DOMAIN, "media_stop")
-    call_toggle_mute = async_mock_service.opp, DOMAIN, "volume_mute")
+    call_turn_on = async_mock_service(opp, DOMAIN, "turn_on")
+    call_turn_off = async_mock_service(opp, DOMAIN, "turn_off")
+    call_media_play = async_mock_service(opp, DOMAIN, "media_play")
+    call_media_pause = async_mock_service(opp, DOMAIN, "media_pause")
+    call_media_stop = async_mock_service(opp, DOMAIN, "media_stop")
+    call_toggle_mute = async_mock_service(opp, DOMAIN, "volume_mute")
 
     await opp.async_add_executor_job(
         acc.chars[FEATURE_ON_OFF].client_update_value, True
@@ -185,7 +185,7 @@ async def test_media_player_set_state.opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] is None
 
 
-async def test_media_player_television.opp, hk_driver, events, caplog):
+async def test_media_player_television(opp, hk_driver, events, caplog):
     """Test if television accessory and HA are updated accordingly."""
     entity_id = "media_player.television"
 
@@ -245,16 +245,16 @@ async def test_media_player_television.opp, hk_driver, events, caplog):
     assert caplog.records[-2].levelname == "WARNING"
 
     # Set from HomeKit
-    call_turn_on = async_mock_service.opp, DOMAIN, "turn_on")
-    call_turn_off = async_mock_service.opp, DOMAIN, "turn_off")
-    call_media_play = async_mock_service.opp, DOMAIN, "media_play")
-    call_media_pause = async_mock_service.opp, DOMAIN, "media_pause")
-    call_media_play_pause = async_mock_service.opp, DOMAIN, "media_play_pause")
-    call_toggle_mute = async_mock_service.opp, DOMAIN, "volume_mute")
-    call_select_source = async_mock_service.opp, DOMAIN, "select_source")
-    call_volume_up = async_mock_service.opp, DOMAIN, "volume_up")
-    call_volume_down = async_mock_service.opp, DOMAIN, "volume_down")
-    call_volume_set = async_mock_service.opp, DOMAIN, "volume_set")
+    call_turn_on = async_mock_service(opp, DOMAIN, "turn_on")
+    call_turn_off = async_mock_service(opp, DOMAIN, "turn_off")
+    call_media_play = async_mock_service(opp, DOMAIN, "media_play")
+    call_media_pause = async_mock_service(opp, DOMAIN, "media_pause")
+    call_media_play_pause = async_mock_service(opp, DOMAIN, "media_play_pause")
+    call_toggle_mute = async_mock_service(opp, DOMAIN, "volume_mute")
+    call_select_source = async_mock_service(opp, DOMAIN, "select_source")
+    call_volume_up = async_mock_service(opp, DOMAIN, "volume_up")
+    call_volume_down = async_mock_service(opp, DOMAIN, "volume_down")
+    call_volume_set = async_mock_service(opp, DOMAIN, "volume_set")
 
     await opp.async_add_executor_job(acc.char_active.client_update_value, 1)
     await opp.async_block_till_done()
@@ -363,7 +363,7 @@ async def test_media_player_television.opp, hk_driver, events, caplog):
     assert events[0].data[ATTR_KEY_NAME] == KEY_ARROW_RIGHT
 
 
-async def test_media_player_television_basic.opp, hk_driver, events, caplog):
+async def test_media_player_television_basic(opp, hk_driver, events, caplog):
     """Test if basic television accessory and HA are updated accordingly."""
     entity_id = "media_player.television"
 
@@ -417,7 +417,7 @@ async def test_media_player_television_supports_source_select_no_sources(
     assert acc.support_select_source is False
 
 
-async def test_tv_restore.opp, hk_driver, events):
+async def test_tv_restore(opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
     opp.state = CoreState.not_running
 

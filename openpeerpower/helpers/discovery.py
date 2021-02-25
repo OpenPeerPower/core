@@ -187,7 +187,7 @@ async def async_load_platform(
 
     This method is a coroutine.
     """
-    assert.opp_config, "You need to pass in the real.opp config"
+    assert opp_config, "You need to pass in the real.opp config"
 
     setup_success = True
 

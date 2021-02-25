@@ -27,7 +27,7 @@ def remove_test_file():
 async def test_invalid_path.opp):
     """Test that an invalid path is caught."""
     config = {"sensor": {"platform": "folder", CONF_FOLDER_PATHS: "invalid_path"}}
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
     assert len.opp.states.async_entity_ids()) == 0
 
 
@@ -39,7 +39,7 @@ async def test_valid_path.opp):
 
     opp.config.allowlist_external_dirs = {TEST_DIR}
     config = {"sensor": {"platform": "folder", CONF_FOLDER_PATHS: TEST_DIR}}
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
     assert len.opp.states.async_entity_ids()) == 1
     state = opp.states.get("sensor.test_folder")

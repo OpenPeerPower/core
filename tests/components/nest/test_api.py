@@ -31,15 +31,15 @@ FAKE_UPDATED_TOKEN = "fake-updated-token"
 
 async def async_setup_sdm.opp):
     """Set up the integration."""
-    assert await async_setup_component.opp, DOMAIN, CONFIG)
+    assert await async_setup_component(opp, DOMAIN, CONFIG)
     await opp.async_block_till_done()
 
 
-async def test_auth.opp, aioclient_mock):
+async def test_auth(opp, aioclient_mock):
     """Exercise authentication library creates valid credentials."""
 
     expiration_time = time.time() + 86400
-    create_config_entry.opp, expiration_time)
+    create_config_entry(opp, expiration_time)
 
     # Prepare to capture credentials in API request.  Empty payloads just mean
     # no devices or structures are loaded.
@@ -84,11 +84,11 @@ async def test_auth.opp, aioclient_mock):
     assert creds.scopes == SDM_SCOPES
 
 
-async def test_auth_expired_token.opp, aioclient_mock):
+async def test_auth_expired_token(opp, aioclient_mock):
     """Verify behavior of an expired token."""
 
     expiration_time = time.time() - 86400
-    create_config_entry.opp, expiration_time)
+    create_config_entry(opp, expiration_time)
 
     # Prepare a token refresh response
     aioclient_mock.post(

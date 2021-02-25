@@ -13,13 +13,13 @@ from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
 @pytest.fixture(autouse=True)
 def setup_comp.opp):
     """Initialize components."""
-    mock_component.opp, "group")
+    mock_component(opp, "group")
     opp.loop.run_until_complete(
         async_setup_component(
             opp,
@@ -36,7 +36,7 @@ def setup_comp.opp):
     )
 
 
-async def test_if_fires_on_zone_enter.opp, calls):
+async def test_if_fires_on_zone_enter(opp, calls):
     """Test for firing on zone enter."""
     context = Context()
     opp.states.async_set(
@@ -116,7 +116,7 @@ async def test_if_fires_on_zone_enter.opp, calls):
     assert len(calls) == 1
 
 
-async def test_if_not_fires_for_enter_on_zone_leave.opp, calls):
+async def test_if_not_fires_for_enter_on_zone_leave(opp, calls):
     """Test for not firing on zone leave."""
     opp.states.async_set(
         "geo_location.entity",
@@ -151,7 +151,7 @@ async def test_if_not_fires_for_enter_on_zone_leave.opp, calls):
     assert len(calls) == 0
 
 
-async def test_if_fires_on_zone_leave.opp, calls):
+async def test_if_fires_on_zone_leave(opp, calls):
     """Test for firing on zone leave."""
     opp.states.async_set(
         "geo_location.entity",
@@ -186,7 +186,7 @@ async def test_if_fires_on_zone_leave.opp, calls):
     assert len(calls) == 1
 
 
-async def test_if_not_fires_for_leave_on_zone_enter.opp, calls):
+async def test_if_not_fires_for_leave_on_zone_enter(opp, calls):
     """Test for not firing on zone enter."""
     opp.states.async_set(
         "geo_location.entity",
@@ -221,7 +221,7 @@ async def test_if_not_fires_for_leave_on_zone_enter.opp, calls):
     assert len(calls) == 0
 
 
-async def test_if_fires_on_zone_appear.opp, calls):
+async def test_if_fires_on_zone_appear(opp, calls):
     """Test for firing if entity appears in zone."""
     assert await async_setup_component(
         opp,
@@ -270,7 +270,7 @@ async def test_if_fires_on_zone_appear.opp, calls):
     )
 
 
-async def test_if_fires_on_zone_disappear.opp, calls):
+async def test_if_fires_on_zone_disappear(opp, calls):
     """Test for firing if entity disappears from zone."""
     opp.states.async_set(
         "geo_location.entity",

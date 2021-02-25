@@ -106,9 +106,9 @@ async def test_reload_notify(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.services.has_service(notify.DOMAIN, "demo1")
-    assert.opp.services.has_service(notify.DOMAIN, "demo2")
-    assert.opp.services.has_service(notify.DOMAIN, "group_notify")
+    assert opp.services.has_service(notify.DOMAIN, "demo1")
+    assert opp.services.has_service(notify.DOMAIN, "demo2")
+    assert opp.services.has_service(notify.DOMAIN, "group_notify")
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -124,10 +124,10 @@ async def test_reload_notify(opp):
         )
         await opp.async_block_till_done()
 
-    assert.opp.services.has_service(notify.DOMAIN, "demo1")
-    assert.opp.services.has_service(notify.DOMAIN, "demo2")
+    assert opp.services.has_service(notify.DOMAIN, "demo1")
+    assert opp.services.has_service(notify.DOMAIN, "demo2")
     assert not.opp.services.has_service(notify.DOMAIN, "group_notify")
-    assert.opp.services.has_service(notify.DOMAIN, "new_group_notify")
+    assert opp.services.has_service(notify.DOMAIN, "new_group_notify")
 
 
 def _get_fixtures_base_path():

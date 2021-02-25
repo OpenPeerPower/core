@@ -31,7 +31,7 @@ async def test_light(
     )
     update_callback = component_data.controller_data[0].update_callback
 
-    assert.opp.states.get(entity_id).state == "off"
+    assert opp.states.get(entity_id).state == "off"
 
     await opp.services.async_call(
         "light",
@@ -43,7 +43,7 @@ async def test_light(
     vera_device.is_switched_on.return_value = True
     update_callback(vera_device)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == "on"
+    assert opp.states.get(entity_id).state == "on"
 
     await opp.services.async_call(
         "light",
@@ -56,8 +56,8 @@ async def test_light(
     vera_device.get_color.return_value = (255, 76, 255)
     update_callback(vera_device)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == "on"
-    assert.opp.states.get(entity_id).attributes["hs_color"] == (300.0, 70.196)
+    assert opp.states.get(entity_id).state == "on"
+    assert opp.states.get(entity_id).attributes["hs_color"] == (300.0, 70.196)
 
     await opp.services.async_call(
         "light",
@@ -70,8 +70,8 @@ async def test_light(
     vera_device.get_brightness.return_value = 55
     update_callback(vera_device)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == "on"
-    assert.opp.states.get(entity_id).attributes["brightness"] == 55
+    assert opp.states.get(entity_id).state == "on"
+    assert opp.states.get(entity_id).attributes["brightness"] == 55
 
     await opp.services.async_call(
         "light",
@@ -83,4 +83,4 @@ async def test_light(
     vera_device.is_switched_on.return_value = False
     update_callback(vera_device)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == "off"
+    assert opp.states.get(entity_id).state == "off"

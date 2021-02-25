@@ -16,10 +16,10 @@ from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
-async def test_get_triggers.opp, mock_device):
+async def test_get_triggers(opp, mock_device):
     """Test we get the expected triggers."""
     expected_triggers = [
         {
@@ -29,11 +29,11 @@ async def test_get_triggers.opp, mock_device):
             "device_id": mock_device.id,
         },
     ]
-    triggers = await async_get_device_automations.opp, "trigger", mock_device.id)
+    triggers = await async_get_device_automations(opp, "trigger", mock_device.id)
     assert_lists_same(triggers, expected_triggers)
 
 
-async def test_if_fires_on_turn_on_request.opp, calls, mock_entity, mock_device):
+async def test_if_fires_on_turn_on_request(opp, calls, mock_entity, mock_device):
     """Test for turn_on and turn_off triggers firing."""
 
     assert await async_setup_component(

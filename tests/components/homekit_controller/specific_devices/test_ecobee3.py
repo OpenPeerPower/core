@@ -27,8 +27,8 @@ from tests.components.homekit_controller.common import (
 
 async def test_ecobee3_setup_opp):
     """Test that a Ecbobee 3 can be correctly setup in HA."""
-    accessories = await setup_accessories_from_file.opp, "ecobee3.json")
-    config_entry, pairing = await setup_test_accessories.opp, accessories)
+    accessories = await setup_accessories_from_file(opp, "ecobee3.json")
+    config_entry, pairing = await setup_test_accessories(opp, accessories)
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
@@ -92,9 +92,9 @@ async def test_ecobee3_setup_opp):
     assert sensor_device.via_device_id == climate_device.id
 
 
-async def test_ecobee3_setup_from_cache.opp, opp_storage):
+async def test_ecobee3_setup_from_cache(opp, opp_storage):
     """Test that Ecbobee can be correctly setup from its cached entity map."""
-    accessories = await setup_accessories_from_file.opp, "ecobee3.json")
+    accessories = await setup_accessories_from_file(opp, "ecobee3.json")
 
     opp.storage["homekit_controller-entity-map"] = {
         "version": 1,
@@ -110,7 +110,7 @@ async def test_ecobee3_setup_from_cache.opp, opp_storage):
         },
     }
 
-    await setup_test_accessories.opp, accessories)
+    await setup_test_accessories(opp, accessories)
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
@@ -129,7 +129,7 @@ async def test_ecobee3_setup_from_cache.opp, opp_storage):
 
 async def test_ecobee3_setup_connection_failure.opp):
     """Test that Ecbobee can be correctly setup from its cached entity map."""
-    accessories = await setup_accessories_from_file.opp, "ecobee3.json")
+    accessories = await setup_accessories_from_file(opp, "ecobee3.json")
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
@@ -141,7 +141,7 @@ async def test_ecobee3_setup_connection_failure.opp):
 
         # If there is no cached entity map and the accessory connection is
         # failing then we have to fail the config entry setup.
-        config_entry, pairing = await setup_test_accessories.opp, accessories)
+        config_entry, pairing = await setup_test_accessories(opp, accessories)
         assert config_entry.state == ENTRY_STATE_SETUP_RETRY
 
     climate = entity_registry.async_get("climate.homew")
@@ -153,7 +153,7 @@ async def test_ecobee3_setup_connection_failure.opp):
 
     # We just advance time by 5 minutes so that the retry happens, rather
     # than manually invoking async_setup_entry.
-    await time_changed.opp, 5 * 60)
+    await time_changed(opp, 5 * 60)
 
     climate = entity_registry.async_get("climate.homew")
     assert climate.unique_id == "homekit-123456789012-16"
@@ -174,8 +174,8 @@ async def test_ecobee3_add_sensors_at_runtime.opp):
 
     # Set up a base Ecobee 3 with no additional sensors.
     # There shouldn't be any entities but climate visible.
-    accessories = await setup_accessories_from_file.opp, "ecobee3_no_sensors.json")
-    await setup_test_accessories.opp, accessories)
+    accessories = await setup_accessories_from_file(opp, "ecobee3_no_sensors.json")
+    await setup_test_accessories(opp, accessories)
 
     climate = entity_registry.async_get("climate.homew")
     assert climate.unique_id == "homekit-123456789012-16"
@@ -191,8 +191,8 @@ async def test_ecobee3_add_sensors_at_runtime.opp):
 
     # Now added 3 new sensors at runtime - sensors should appear and climate
     # shouldn't be duplicated.
-    accessories = await setup_accessories_from_file.opp, "ecobee3.json")
-    await device_config_changed.opp, accessories)
+    accessories = await setup_accessories_from_file(opp, "ecobee3.json")
+    await device_config_changed(opp, accessories)
 
     occ1 = entity_registry.async_get("binary_sensor.kitchen")
     assert occ1.unique_id == "homekit-AB1C-56"

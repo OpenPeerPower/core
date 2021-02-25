@@ -50,7 +50,7 @@ async def test_auth_events(
 ):
     """Test authenticating."""
 
-    await test_auth_active_with_token.opp, no_auth_websocket_client, opp_access_token)
+    await test_auth_active_with_token(opp, no_auth_websocket_client, opp_access_token)
 
     assert len(track_connected["connected"]) == 1
     assert not track_connected["disconnected"]
@@ -121,11 +121,11 @@ async def test_auth_active_with_token(
     assert auth_msg["type"] == TYPE_AUTH_OK
 
 
-async def test_auth_active_user_inactive.opp, aiohttp_client, opp_access_token):
+async def test_auth_active_user_inactive(opp, aiohttp_client, opp_access_token):
     """Test authenticating with a token."""
     refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
     refresh_token.user.is_active = False
-    assert await async_setup_component.opp, "websocket_api", {})
+    assert await async_setup_component(opp, "websocket_api", {})
     await opp.async_block_till_done()
 
     client = await aiohttp_client.opp.http.app)
@@ -140,9 +140,9 @@ async def test_auth_active_user_inactive.opp, aiohttp_client, opp_access_token):
         assert auth_msg["type"] == TYPE_AUTH_INVALID
 
 
-async def test_auth_active_with_password_not_allow.opp, aiohttp_client):
+async def test_auth_active_with_password_not_allow(opp, aiohttp_client):
     """Test authenticating with a token."""
-    assert await async_setup_component.opp, "websocket_api", {})
+    assert await async_setup_component(opp, "websocket_api", {})
     await opp.async_block_till_done()
 
     client = await aiohttp_client.opp.http.app)
@@ -157,9 +157,9 @@ async def test_auth_active_with_password_not_allow.opp, aiohttp_client):
         assert auth_msg["type"] == TYPE_AUTH_INVALID
 
 
-async def test_auth_legacy_support_with_password.opp, aiohttp_client, legacy_auth):
+async def test_auth_legacy_support_with_password(opp, aiohttp_client, legacy_auth):
     """Test authenticating with a token."""
-    assert await async_setup_component.opp, "websocket_api", {})
+    assert await async_setup_component(opp, "websocket_api", {})
     await opp.async_block_till_done()
 
     client = await aiohttp_client.opp.http.app)
@@ -174,9 +174,9 @@ async def test_auth_legacy_support_with_password.opp, aiohttp_client, legacy_aut
         assert auth_msg["type"] == TYPE_AUTH_INVALID
 
 
-async def test_auth_with_invalid_token.opp, aiohttp_client):
+async def test_auth_with_invalid_token(opp, aiohttp_client):
     """Test authenticating with a token."""
-    assert await async_setup_component.opp, "websocket_api", {})
+    assert await async_setup_component(opp, "websocket_api", {})
     await opp.async_block_till_done()
 
     client = await aiohttp_client.opp.http.app)

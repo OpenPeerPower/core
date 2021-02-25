@@ -54,14 +54,14 @@ class Helper:
         return state
 
 
-async def time_changed.opp, seconds):
+async def time_changed(opp, seconds):
     """Trigger time changed."""
     next_update = dt_util.utcnow() + timedelta(seconds)
-    async_fire_time_changed.opp, next_update)
+    async_fire_time_changed(opp, next_update)
     await opp.async_block_till_done()
 
 
-async def setup_accessories_from_file.opp, path):
+async def setup_accessories_from_file(opp, path):
     """Load an collection of accessory defs from JSON data."""
     accessories_fixture = await opp.async_add_executor_job(
         load_fixture, os.path.join("homekit_controller", path)
@@ -77,12 +77,12 @@ async def setup_platform.opp):
 
     with mock.patch("aiohomekit.Controller") as controller:
         fake_controller = controller.return_value = FakeController()
-        await async_setup_component.opp, DOMAIN, config)
+        await async_setup_component(opp, DOMAIN, config)
 
     return fake_controller
 
 
-async def setup_test_accessories.opp, accessories):
+async def setup_test_accessories(opp, accessories):
     """Load a fake homekit device based on captured JSON profile."""
     fake_controller = await setup_platform.opp)
 
@@ -101,7 +101,7 @@ async def setup_test_accessories.opp, accessories):
         title="test",
         connection_class=config_entries.CONN_CLASS_LOCAL_PUSH,
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
@@ -109,7 +109,7 @@ async def setup_test_accessories.opp, accessories):
     return config_entry, pairing
 
 
-async def device_config_changed.opp, accessories):
+async def device_config_changed(opp, accessories):
     """Discover new devices added to Open Peer Power at runtime."""
     # Update the accessories our FakePairing knows about
     controller = opp.data[CONTROLLER]
@@ -146,7 +146,7 @@ async def device_config_changed.opp, accessories):
     await opp.async_block_till_done()
 
 
-async def setup_test_component.opp, setup_accessory, capitalize=False, suffix=None):
+async def setup_test_component(opp, setup_accessory, capitalize=False, suffix=None):
     """Load a fake homekit accessory based on a homekit accessory model.
 
     If capitalize is True, property names will be in upper case.
@@ -167,6 +167,6 @@ async def setup_test_component.opp, setup_accessory, capitalize=False, suffix=No
 
     assert domain, "Cannot map test homekit services to Open Peer Power domain"
 
-    config_entry, pairing = await setup_test_accessories.opp, [accessory])
+    config_entry, pairing = await setup_test_accessories(opp, [accessory])
     entity = "testdevice" if suffix is None else f"testdevice_{suffix}"
     return Helper.opp, ".".join((domain, entity)), pairing, accessory, config_entry)

@@ -192,10 +192,10 @@ def mirobo_is_on_fixture():
         yield mock_vacuum
 
 
-async def test_xiaomi_exceptions.opp, caplog, mock_mirobo_is_on):
+async def test_xiaomi_exceptions(opp, caplog, mock_mirobo_is_on):
     """Test error logging on exceptions."""
     entity_name = "test_vacuum_cleaner_error"
-    entity_id = await setup_component.opp, entity_name)
+    entity_id = await setup_component(opp, entity_name)
 
     def is_available():
         state = opp.states.get(entity_id)
@@ -224,10 +224,10 @@ async def test_xiaomi_exceptions.opp, caplog, mock_mirobo_is_on):
     assert mock_mirobo_is_on.status.call_count == 1
 
 
-async def test_xiaomi_vacuum_services.opp, caplog, mock_mirobo_is_got_error):
+async def test_xiaomi_vacuum_services(opp, caplog, mock_mirobo_is_got_error):
     """Test vacuum supported features."""
     entity_name = "test_vacuum_cleaner_1"
-    entity_id = await setup_component.opp, entity_name)
+    entity_id = await setup_component(opp, entity_name)
 
     assert "Initializing with host 192.168.1.100 (token 12345...)" in caplog.text
 
@@ -325,10 +325,10 @@ async def test_xiaomi_vacuum_services.opp, caplog, mock_mirobo_is_got_error):
     mock_mirobo_is_got_error.reset_mock()
 
 
-async def test_xiaomi_specific_services.opp, caplog, mock_mirobo_is_on):
+async def test_xiaomi_specific_services(opp, caplog, mock_mirobo_is_on):
     """Test vacuum supported features."""
     entity_name = "test_vacuum_cleaner_2"
-    entity_id = await setup_component.opp, entity_name)
+    entity_id = await setup_component(opp, entity_name)
 
     assert "Initializing with host 192.168.1.100 (token 12345" in caplog.text
 
@@ -422,10 +422,10 @@ async def test_xiaomi_specific_services.opp, caplog, mock_mirobo_is_on):
     mock_mirobo_is_on.reset_mock()
 
 
-async def test_xiaomi_vacuum_fanspeeds.opp, caplog, mock_mirobo_fanspeeds):
+async def test_xiaomi_vacuum_fanspeeds(opp, caplog, mock_mirobo_fanspeeds):
     """Test Xiaomi vacuum fanspeeds."""
     entity_name = "test_vacuum_cleaner_2"
-    entity_id = await setup_component.opp, entity_name)
+    entity_id = await setup_component(opp, entity_name)
 
     assert "Initializing with host 192.168.1.100 (token 12345" in caplog.text
 
@@ -472,10 +472,10 @@ async def test_xiaomi_vacuum_fanspeeds.opp, caplog, mock_mirobo_fanspeeds):
     assert "Fan speed step not recognized" in caplog.text
 
 
-async def test_xiaomi_vacuum_goto_service.opp, caplog, mock_mirobo_is_on):
+async def test_xiaomi_vacuum_goto_service(opp, caplog, mock_mirobo_is_on):
     """Test vacuum supported features."""
     entity_name = "test_vacuum_cleaner_2"
-    entity_id = await setup_component.opp, entity_name)
+    entity_id = await setup_component(opp, entity_name)
 
     data = {"entity_id": entity_id, "x_coord": 25500, "y_coord": 25500}
     await opp.services.async_call(XIAOMI_DOMAIN, SERVICE_GOTO, data, blocking=True)
@@ -485,10 +485,10 @@ async def test_xiaomi_vacuum_goto_service.opp, caplog, mock_mirobo_is_on):
     mock_mirobo_is_on.assert_has_calls(STATUS_CALLS, any_order=True)
 
 
-async def test_xiaomi_vacuum_clean_segment_service.opp, caplog, mock_mirobo_is_on):
+async def test_xiaomi_vacuum_clean_segment_service(opp, caplog, mock_mirobo_is_on):
     """Test vacuum supported features."""
     entity_name = "test_vacuum_cleaner_2"
-    entity_id = await setup_component.opp, entity_name)
+    entity_id = await setup_component(opp, entity_name)
 
     data = {"entity_id": entity_id, "segments": ["1", "2"]}
     await opp.services.async_call(
@@ -505,7 +505,7 @@ async def test_xiaomi_vacuum_clean_segment_service_single_segment(
 ):
     """Test vacuum supported features."""
     entity_name = "test_vacuum_cleaner_2"
-    entity_id = await setup_component.opp, entity_name)
+    entity_id = await setup_component(opp, entity_name)
 
     data = {"entity_id": entity_id, "segments": 1}
     await opp.services.async_call(
@@ -517,7 +517,7 @@ async def test_xiaomi_vacuum_clean_segment_service_single_segment(
     mock_mirobo_is_on.assert_has_calls(STATUS_CALLS, any_order=True)
 
 
-async def setup_component.opp, entity_name):
+async def setup_component(opp, entity_name):
     """Set up vacuum component."""
     entity_id = f"{DOMAIN}.{entity_name}"
 

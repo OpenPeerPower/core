@@ -83,11 +83,11 @@ async def test_hap_setup_works():
 
     assert hap.home is home
     assert len.opp.config_entries.async_forward_entry_setup.mock_calls) == 8
-    assert.opp.config_entries.async_forward_entry_setup.mock_calls[0][1] == (
+    assert opp.config_entries.async_forward_entry_setup.mock_calls[0][1] == (
         entry,
         "alarm_control_panel",
     )
-    assert.opp.config_entries.async_forward_entry_setup.mock_calls[1][1] == (
+    assert opp.config_entries.async_forward_entry_setup.mock_calls[1][1] == (
         entry,
         "binary_sensor",
     )
@@ -111,17 +111,17 @@ async def test_hap_setup_connection_error():
 async def test_hap_reset_unloads_entry_if_setup_opp, default_mock_hap_factory):
     """Test calling reset while the entry has been setup."""
     mock_hap = await default_mock_hap_factory.async_get_mock_hap()
-    assert.opp.data[HMIPC_DOMAIN][HAPID] == mock_hap
+    assert opp.data[HMIPC_DOMAIN][HAPID] == mock_hap
     config_entries = opp.config_entries.async_entries(HMIPC_DOMAIN)
     assert len(config_entries) == 1
     # hap_reset is called during unload
     await opp.config_entries.async_unload(config_entries[0].entry_id)
     # entry is unloaded
     assert config_entries[0].state == ENTRY_STATE_NOT_LOADED
-    assert.opp.data[HMIPC_DOMAIN] == {}
+    assert opp.data[HMIPC_DOMAIN] == {}
 
 
-async def test_hap_create.opp, hmip_config_entry, simple_mock_home):
+async def test_hap_create(opp, hmip_config_entry, simple_mock_home):
     """Mock AsyncHome to execute get_hap."""
     opp.config.components.add(HMIPC_DOMAIN)
     hap = HomematicipHAP.opp, hmip_config_entry)
@@ -130,7 +130,7 @@ async def test_hap_create.opp, hmip_config_entry, simple_mock_home):
         assert await hap.async_setup()
 
 
-async def test_hap_create_exception.opp, hmip_config_entry, mock_connection_init):
+async def test_hap_create_exception(opp, hmip_config_entry, mock_connection_init):
     """Mock AsyncHome to execute get_hap."""
     opp.config.components.add(HMIPC_DOMAIN)
 
@@ -150,7 +150,7 @@ async def test_hap_create_exception.opp, hmip_config_entry, mock_connection_init
         await hap.async_setup()
 
 
-async def test_auth_create.opp, simple_mock_auth):
+async def test_auth_create(opp, simple_mock_auth):
     """Mock AsyncAuth to execute get_auth."""
     config = {HMIPC_HAPID: HAPID, HMIPC_PIN: HAPPIN, HMIPC_NAME: "hmip"}
     hmip_auth = HomematicipAuth.opp, config)
@@ -165,7 +165,7 @@ async def test_auth_create.opp, simple_mock_auth):
         assert hmip_auth.auth.pin == HAPPIN
 
 
-async def test_auth_create_exception.opp, simple_mock_auth):
+async def test_auth_create_exception(opp, simple_mock_auth):
     """Mock AsyncAuth to execute get_auth."""
     config = {HMIPC_HAPID: HAPID, HMIPC_PIN: HAPPIN, HMIPC_NAME: "hmip"}
     hmip_auth = HomematicipAuth.opp, config)
@@ -181,4 +181,4 @@ async def test_auth_create_exception.opp, simple_mock_auth):
         "openpeerpower.components.homematicip_cloud.hap.AsyncAuth",
         return_value=simple_mock_auth,
     ):
-        assert not await hmip_auth.get_auth.opp, HAPID, HAPPIN)
+        assert not await hmip_auth.get_auth(opp, HAPID, HAPPIN)

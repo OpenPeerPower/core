@@ -22,14 +22,14 @@ VALID_CONFIG = {CONF_IP_ADDRESS: "1.2.3.4", CONF_PASSWORD: "00GGX"}
 
 async def test_form_source_user.opp):
     """Test we get config flow setup form as a user."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
     assert result["errors"] == {}
 
-    mock_powerwall = await _mock_powerwall_site_name.opp, "My site")
+    mock_powerwall = await _mock_powerwall_site_name(opp, "My site")
 
     with patch(
         "openpeerpower.components.powerwall.config_flow.Powerwall",
@@ -140,10 +140,10 @@ async def test_form_wrong_version.opp):
 
 async def test_already_configured.opp):
     """Test we abort when already configured."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     config_entry = MockConfigEntry(domain=DOMAIN, data={CONF_IP_ADDRESS: "1.1.1.1"})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -160,10 +160,10 @@ async def test_already_configured.opp):
 
 async def test_already_configured_with_ignored.opp):
     """Test ignored entries do not break checking for existing entries."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     config_entry = MockConfigEntry(domain=DOMAIN, data={}, source="ignore")
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -179,7 +179,7 @@ async def test_already_configured_with_ignored.opp):
 
 async def test_dhcp_discovery.opp):
     """Test we can process the discovery from dhcp."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_DHCP},
@@ -192,7 +192,7 @@ async def test_dhcp_discovery.opp):
     assert result["type"] == "form"
     assert result["errors"] == {}
 
-    mock_powerwall = await _mock_powerwall_site_name.opp, "Some site")
+    mock_powerwall = await _mock_powerwall_site_name(opp, "Some site")
     with patch(
         "openpeerpower.components.powerwall.config_flow.Powerwall",
         return_value=mock_powerwall,
@@ -223,7 +223,7 @@ async def test_form_reauth.opp):
         data=VALID_CONFIG,
         unique_id="1.2.3.4",
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "reauth"}, data=entry.data
@@ -231,7 +231,7 @@ async def test_form_reauth.opp):
     assert result["type"] == "form"
     assert result["errors"] == {}
 
-    mock_powerwall = await _mock_powerwall_site_name.opp, "My site")
+    mock_powerwall = await _mock_powerwall_site_name(opp, "My site")
 
     with patch(
         "openpeerpower.components.powerwall.config_flow.Powerwall",

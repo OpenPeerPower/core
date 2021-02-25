@@ -61,7 +61,7 @@ async def test_setup_minimum.opp):
     """Test old platform setup with minimum configuration."""
     config = {"sensor": {"platform": "onewire"}}
     with assert_setup_component(1, "sensor"):
-        assert await async_setup_component.opp, SENSOR_DOMAIN, config)
+        assert await async_setup_component(opp, SENSOR_DOMAIN, config)
     await opp.async_block_till_done()
 
 
@@ -74,7 +74,7 @@ async def test_setup_sysbus.opp):
         }
     }
     with assert_setup_component(1, "sensor"):
-        assert await async_setup_component.opp, SENSOR_DOMAIN, config)
+        assert await async_setup_component(opp, SENSOR_DOMAIN, config)
     await opp.async_block_till_done()
 
 
@@ -82,7 +82,7 @@ async def test_setup_owserver.opp):
     """Test old platform setup with OWServer configuration."""
     config = {"sensor": {"platform": "onewire", "host": "localhost"}}
     with assert_setup_component(1, "sensor"):
-        assert await async_setup_component.opp, SENSOR_DOMAIN, config)
+        assert await async_setup_component(opp, SENSOR_DOMAIN, config)
     await opp.async_block_till_done()
 
 
@@ -90,7 +90,7 @@ async def test_setup_owserver_with_port.opp):
     """Test old platform setup with OWServer configuration."""
     config = {"sensor": {"platform": "onewire", "host": "localhost", "port": "1234"}}
     with assert_setup_component(1, "sensor"):
-        assert await async_setup_component.opp, SENSOR_DOMAIN, config)
+        assert await async_setup_component(opp, SENSOR_DOMAIN, config)
     await opp.async_block_till_done()
 
 
@@ -98,7 +98,7 @@ async def test_setup_owserver_with_port.opp):
 @patch("openpeerpower.components.onewire.onewirehub.protocol.proxy")
 async def test_sensors_on_owserver_coupler(owproxy, opp, device_id):
     """Test for 1-Wire sensors connected to DS2409 coupler."""
-    await async_setup_component.opp, "persistent_notification", {})
+    await async_setup_component(opp, "persistent_notification", {})
     entity_registry = mock_registry.opp)
 
     mock_coupler = MOCK_COUPLERS[device_id]

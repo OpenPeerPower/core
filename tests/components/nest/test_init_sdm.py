@@ -24,10 +24,10 @@ from .common import CONFIG, async_setup_sdm_platform, create_config_entry
 PLATFORM = "sensor"
 
 
-async def test_setup_success.opp, caplog):
+async def test_setup_success(opp, caplog):
     """Test successful setup."""
     with caplog.at_level(logging.ERROR, logger="openpeerpower.components.nest"):
-        await async_setup_sdm_platform.opp, PLATFORM)
+        await async_setup_sdm_platform(opp, PLATFORM)
         assert not caplog.records
 
     entries = opp.config_entries.async_entries(DOMAIN)
@@ -35,21 +35,21 @@ async def test_setup_success.opp, caplog):
     assert entries[0].state == ENTRY_STATE_LOADED
 
 
-async def async_setup_sdm.opp, config=CONFIG):
+async def async_setup_sdm(opp, config=CONFIG):
     """Prepare test setup."""
     create_config_entry.opp)
     with patch(
         "openpeerpower.helpers.config_entry_oauth2_flow.async_get_config_entry_implementation"
     ):
-        return await async_setup_component.opp, DOMAIN, config)
+        return await async_setup_component(opp, DOMAIN, config)
 
 
-async def test_setup_configuration_failure.opp, caplog):
+async def test_setup_configuration_failure(opp, caplog):
     """Test configuration error."""
     config = CONFIG.copy()
     config[DOMAIN]["subscriber_id"] = "invalid-subscriber-format"
 
-    result = await async_setup_sdm.opp, config)
+    result = await async_setup_sdm(opp, config)
     assert result
 
     entries = opp.config_entries.async_entries(DOMAIN)
@@ -61,7 +61,7 @@ async def test_setup_configuration_failure.opp, caplog):
     assert "Subscription misconfigured. Expected subscriber_id" in caplog.text
 
 
-async def test_setup_susbcriber_failure.opp, caplog):
+async def test_setup_susbcriber_failure(opp, caplog):
     """Test configuration error."""
     with patch(
         "openpeerpower.components.nest.GoogleNestSubscriber.start_async",
@@ -76,7 +76,7 @@ async def test_setup_susbcriber_failure.opp, caplog):
     assert entries[0].state == ENTRY_STATE_SETUP_RETRY
 
 
-async def test_setup_device_manager_failure.opp, caplog):
+async def test_setup_device_manager_failure(opp, caplog):
     """Test configuration error."""
     with patch("openpeerpower.components.nest.GoogleNestSubscriber.start_async"), patch(
         "openpeerpower.components.nest.GoogleNestSubscriber.async_get_device_manager",
@@ -92,13 +92,13 @@ async def test_setup_device_manager_failure.opp, caplog):
     assert entries[0].state == ENTRY_STATE_SETUP_RETRY
 
 
-async def test_subscriber_auth_failure.opp, caplog):
+async def test_subscriber_auth_failure(opp, caplog):
     """Test configuration error."""
     with patch(
         "openpeerpower.components.nest.GoogleNestSubscriber.start_async",
         side_effect=AuthException(),
     ):
-        result = await async_setup_sdm.opp, CONFIG)
+        result = await async_setup_sdm(opp, CONFIG)
         assert result
 
     entries = opp.config_entries.async_entries(DOMAIN)
@@ -110,12 +110,12 @@ async def test_subscriber_auth_failure.opp, caplog):
     assert flows[0]["step_id"] == "reauth_confirm"
 
 
-async def test_setup_missing_subscriber_id.opp, caplog):
+async def test_setup_missing_subscriber_id(opp, caplog):
     """Test successful setup."""
     config = CONFIG
     del config[DOMAIN]["subscriber_id"]
     with caplog.at_level(logging.ERROR, logger="openpeerpower.components.nest"):
-        result = await async_setup_sdm.opp, config)
+        result = await async_setup_sdm(opp, config)
         assert not result
         assert "Configuration option" in caplog.text
 
@@ -127,7 +127,7 @@ async def test_setup_missing_subscriber_id.opp, caplog):
 async def test_empty_config(opp, caplog):
     """Test successful setup."""
     with caplog.at_level(logging.ERROR, logger="openpeerpower.components.nest"):
-        result = await async_setup_component.opp, DOMAIN, {})
+        result = await async_setup_component(opp, DOMAIN, {})
         assert result
         assert not caplog.records
 

@@ -27,9 +27,9 @@ from . import (
 from tests.common import MockConfigEntry
 
 
-async def test_user_form.opp, cfupdate_flow):
+async def test_user_form(opp, cfupdate_flow):
     """Test we get the user initiated form."""
-    await async_setup_component.opp, "persistent_notification", {})
+    await async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={CONF_SOURCE: SOURCE_USER}
@@ -80,7 +80,7 @@ async def test_user_form.opp, cfupdate_flow):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_user_form_cannot_connect.opp, cfupdate_flow):
+async def test_user_form_cannot_connect(opp, cfupdate_flow):
     """Test we handle cannot connect error."""
     instance = cfupdate_flow.return_value
 
@@ -98,7 +98,7 @@ async def test_user_form_cannot_connect.opp, cfupdate_flow):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_user_form_invalid_auth.opp, cfupdate_flow):
+async def test_user_form_invalid_auth(opp, cfupdate_flow):
     """Test we handle invalid auth error."""
     instance = cfupdate_flow.return_value
 
@@ -116,7 +116,7 @@ async def test_user_form_invalid_auth.opp, cfupdate_flow):
     assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_user_form_invalid_zone.opp, cfupdate_flow):
+async def test_user_form_invalid_zone(opp, cfupdate_flow):
     """Test we handle invalid zone error."""
     instance = cfupdate_flow.return_value
 
@@ -134,7 +134,7 @@ async def test_user_form_invalid_zone.opp, cfupdate_flow):
     assert result["errors"] == {"base": "invalid_zone"}
 
 
-async def test_user_form_unexpected_exception.opp, cfupdate_flow):
+async def test_user_form_unexpected_exception(opp, cfupdate_flow):
     """Test we handle unexpected exception."""
     instance = cfupdate_flow.return_value
 
@@ -155,7 +155,7 @@ async def test_user_form_unexpected_exception.opp, cfupdate_flow):
 async def test_user_form_single_instance_allowed.opp):
     """Test that configuring more than one instance is rejected."""
     entry = MockConfigEntry(domain=DOMAIN, data=ENTRY_CONFIG)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

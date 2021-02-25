@@ -11,7 +11,7 @@ async def test_setup_opp):
     with mock.patch(
         "openpeerpower.components.frontend.async_register_built_in_panel"
     ) as mock_register_panel:
-        assert await async_setup_component.opp, "my", {"foo": "bar"})
+        assert await async_setup_component(opp, "my", {"foo": "bar"})
         assert mock_register_panel.call_args == mock.call(
             opp. "my", frontend_url_path=URL_PATH
         )

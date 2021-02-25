@@ -49,7 +49,7 @@ async def async_turn_on(
     await opp.services.async_call(DOMAIN, SERVICE_TURN_ON, data, blocking=True)
 
 
-async def async_turn_off.opp, entity_id=ENTITY_MATCH_ALL) -> None:
+async def async_turn_off(opp, entity_id=ENTITY_MATCH_ALL) -> None:
     """Turn all or specified fan off."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
 
@@ -72,7 +72,7 @@ async def async_oscillate(
     await opp.services.async_call(DOMAIN, SERVICE_OSCILLATE, data, blocking=True)
 
 
-async def async_set_speed.opp, entity_id=ENTITY_MATCH_ALL, speed: str = None) -> None:
+async def async_set_speed(opp, entity_id=ENTITY_MATCH_ALL, speed: str = None) -> None:
     """Set speed for all or specified fan."""
     data = {
         key: value

@@ -91,9 +91,9 @@ async def oauth.opp, aiohttp_client, aioclient_mock, current_request_with_host):
     return OAuthFixture.opp, aiohttp_client, aioclient_mock)
 
 
-async def test_full_flow.opp, oauth):
+async def test_full_flow(opp, oauth):
     """Check full flow."""
-    assert await setup.async_setup_component.opp, DOMAIN, CONFIG)
+    assert await setup.async_setup_component(opp, DOMAIN, CONFIG)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -113,10 +113,10 @@ async def test_full_flow.opp, oauth):
     }
 
 
-async def test_reauth.opp, oauth):
+async def test_reauth(opp, oauth):
     """Test Nest reauthentication."""
 
-    assert await setup.async_setup_component.opp, DOMAIN, CONFIG)
+    assert await setup.async_setup_component(opp, DOMAIN, CONFIG)
 
     old_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -130,7 +130,7 @@ async def test_reauth.opp, oauth):
         },
         unique_id=DOMAIN,
     )
-    old_entry.add_to.opp.opp)
+    old_entry.add_to_opp(opp)
 
     entry = get_config_entry.opp)
     assert entry.data["token"] == {
@@ -167,9 +167,9 @@ async def test_single_config_entry.opp):
     old_entry = MockConfigEntry(
         domain=DOMAIN, data={"auth_implementation": DOMAIN, "sdm": {}}
     )
-    old_entry.add_to.opp.opp)
+    old_entry.add_to_opp(opp)
 
-    assert await setup.async_setup_component.opp, DOMAIN, CONFIG)
+    assert await setup.async_setup_component(opp, DOMAIN, CONFIG)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -178,23 +178,23 @@ async def test_single_config_entry.opp):
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test_unexpected_existing_config_entries.opp, oauth):
+async def test_unexpected_existing_config_entries(opp, oauth):
     """Test Nest reauthentication with multiple existing config entries."""
     # Note that this case will not happen in the future since only a single
     # instance is now allowed, but this may have been allowed in the past.
     # On reauth, only one entry is kept and the others are deleted.
 
-    assert await setup.async_setup_component.opp, DOMAIN, CONFIG)
+    assert await setup.async_setup_component(opp, DOMAIN, CONFIG)
 
     old_entry = MockConfigEntry(
         domain=DOMAIN, data={"auth_implementation": DOMAIN, "sdm": {}}
     )
-    old_entry.add_to.opp.opp)
+    old_entry.add_to_opp(opp)
 
     old_entry = MockConfigEntry(
         domain=DOMAIN, data={"auth_implementation": DOMAIN, "sdm": {}}
     )
-    old_entry.add_to.opp.opp)
+    old_entry.add_to_opp(opp)
 
     entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 2

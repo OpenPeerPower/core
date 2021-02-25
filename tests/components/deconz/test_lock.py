@@ -38,23 +38,23 @@ LOCKS = {
 }
 
 
-async def test_no_locks.opp, aioclient_mock):
+async def test_no_locks(opp, aioclient_mock):
     """Test that no lock entities are created."""
-    await setup_deconz_integration.opp, aioclient_mock)
+    await setup_deconz_integration(opp, aioclient_mock)
     assert len.opp.states.async_all()) == 0
 
 
-async def test_locks.opp, aioclient_mock):
+async def test_locks(opp, aioclient_mock):
     """Test that all supported lock entities are created."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["lights"] = deepcopy(LOCKS)
     config_entry = await setup_deconz_integration(
         opp. aioclient_mock, get_state_response=data
     )
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
 
     assert len.opp.states.async_all()) == 1
-    assert.opp.states.get("lock.door_lock").state == STATE_UNLOCKED
+    assert opp.states.get("lock.door_lock").state == STATE_UNLOCKED
 
     door_lock = opp.states.get("lock.door_lock")
     assert door_lock.state == STATE_UNLOCKED
@@ -69,7 +69,7 @@ async def test_locks.opp, aioclient_mock):
     gateway.api.event_handler(state_changed_event)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("lock.door_lock").state == STATE_LOCKED
+    assert opp.states.get("lock.door_lock").state == STATE_LOCKED
 
     # Verify service calls
 

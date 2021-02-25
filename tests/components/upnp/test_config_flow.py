@@ -119,7 +119,7 @@ async def test_flow_ssdp_discovery_ignored.opp: OpenPeerPowerType):
         },
         options={CONFIG_ENTRY_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     discoveries = [
         {
@@ -250,7 +250,7 @@ async def test_flow_import_already_configured.opp: OpenPeerPowerType):
         },
         options={CONFIG_ENTRY_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     # Discovered via step import.
     result = await opp.config_entries.flow.async_init(
@@ -314,7 +314,7 @@ async def test_options_flow.opp: OpenPeerPowerType):
         },
         options={CONFIG_ENTRY_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     config = {
         # no upnp, ensures no import-flow is started.
@@ -323,7 +323,7 @@ async def test_options_flow.opp: OpenPeerPowerType):
         Device, "async_create_device", AsyncMock(return_value=mock_device)
     ), patch.object(Device, "async_discover", AsyncMock(return_value=discoveries)):
         # Initialisation of component.
-        await async_setup_component.opp, "upnp", config)
+        await async_setup_component(opp, "upnp", config)
         await opp.async_block_till_done()
 
         # DataUpdateCoordinator gets a default of 30 seconds for updates.

@@ -26,16 +26,16 @@ ORIG_TIME_ZONE = dt_util.DEFAULT_TIME_ZONE
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
 @pytest.fixture(autouse=True)
 def setup_comp.opp):
     """Initialize components."""
-    mock_component.opp, "group")
+    mock_component(opp, "group")
     dt_util.set_default_time_zone.opp.config.time_zone)
     opp.loop.run_until_complete(
-        async_setup_component.opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}})
+        async_setup_component(opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}})
     )
 
 
@@ -44,7 +44,7 @@ def teardown():
     dt_util.set_default_time_zone(ORIG_TIME_ZONE)
 
 
-async def test_sunset_trigger.opp, calls, legacy_patchable_time):
+async def test_sunset_trigger(opp, calls, legacy_patchable_time):
     """Test the sunset trigger."""
     now = datetime(2015, 9, 15, 23, tzinfo=dt_util.UTC)
     trigger_time = datetime(2015, 9, 16, 2, tzinfo=dt_util.UTC)
@@ -68,7 +68,7 @@ async def test_sunset_trigger.opp, calls, legacy_patchable_time):
         blocking=True,
     )
 
-    async_fire_time_changed.opp, trigger_time)
+    async_fire_time_changed(opp, trigger_time)
     await opp.async_block_till_done()
     assert len(calls) == 0
 
@@ -80,12 +80,12 @@ async def test_sunset_trigger.opp, calls, legacy_patchable_time):
             blocking=True,
         )
 
-    async_fire_time_changed.opp, trigger_time)
+    async_fire_time_changed(opp, trigger_time)
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_sunrise_trigger.opp, calls, legacy_patchable_time):
+async def test_sunrise_trigger(opp, calls, legacy_patchable_time):
     """Test the sunrise trigger."""
     now = datetime(2015, 9, 13, 23, tzinfo=dt_util.UTC)
     trigger_time = datetime(2015, 9, 16, 14, tzinfo=dt_util.UTC)
@@ -102,12 +102,12 @@ async def test_sunrise_trigger.opp, calls, legacy_patchable_time):
             },
         )
 
-    async_fire_time_changed.opp, trigger_time)
+    async_fire_time_changed(opp, trigger_time)
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_sunset_trigger_with_offset.opp, calls, legacy_patchable_time):
+async def test_sunset_trigger_with_offset(opp, calls, legacy_patchable_time):
     """Test the sunset trigger with offset."""
     now = datetime(2015, 9, 15, 23, tzinfo=dt_util.UTC)
     trigger_time = datetime(2015, 9, 16, 2, 30, tzinfo=dt_util.UTC)
@@ -134,13 +134,13 @@ async def test_sunset_trigger_with_offset.opp, calls, legacy_patchable_time):
             },
         )
 
-    async_fire_time_changed.opp, trigger_time)
+    async_fire_time_changed(opp, trigger_time)
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].data["some"] == "sun - sunset - 0:30:00"
 
 
-async def test_sunrise_trigger_with_offset.opp, calls, legacy_patchable_time):
+async def test_sunrise_trigger_with_offset(opp, calls, legacy_patchable_time):
     """Test the sunrise trigger with offset."""
     now = datetime(2015, 9, 13, 23, tzinfo=dt_util.UTC)
     trigger_time = datetime(2015, 9, 16, 13, 30, tzinfo=dt_util.UTC)
@@ -161,12 +161,12 @@ async def test_sunrise_trigger_with_offset.opp, calls, legacy_patchable_time):
             },
         )
 
-    async_fire_time_changed.opp, trigger_time)
+    async_fire_time_changed(opp, trigger_time)
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_if_action_before_sunrise_no_offset.opp, calls):
+async def test_if_action_before_sunrise_no_offset(opp, calls):
     """
     Test if action was before sunrise.
 
@@ -215,7 +215,7 @@ async def test_if_action_before_sunrise_no_offset.opp, calls):
         assert len(calls) == 2
 
 
-async def test_if_action_after_sunrise_no_offset.opp, calls):
+async def test_if_action_after_sunrise_no_offset(opp, calls):
     """
     Test if action was after sunrise.
 
@@ -264,7 +264,7 @@ async def test_if_action_after_sunrise_no_offset.opp, calls):
         assert len(calls) == 2
 
 
-async def test_if_action_before_sunrise_with_offset.opp, calls):
+async def test_if_action_before_sunrise_with_offset(opp, calls):
     """
     Test if action was before sunrise with offset.
 
@@ -345,7 +345,7 @@ async def test_if_action_before_sunrise_with_offset.opp, calls):
         assert len(calls) == 2
 
 
-async def test_if_action_before_sunset_with_offset.opp, calls):
+async def test_if_action_before_sunset_with_offset(opp, calls):
     """
     Test if action was before sunset with offset.
 
@@ -426,7 +426,7 @@ async def test_if_action_before_sunset_with_offset.opp, calls):
         assert len(calls) == 6
 
 
-async def test_if_action_after_sunrise_with_offset.opp, calls):
+async def test_if_action_after_sunrise_with_offset(opp, calls):
     """
     Test if action was after sunrise with offset.
 
@@ -521,7 +521,7 @@ async def test_if_action_after_sunrise_with_offset.opp, calls):
         assert len(calls) == 6
 
 
-async def test_if_action_after_sunset_with_offset.opp, calls):
+async def test_if_action_after_sunset_with_offset(opp, calls):
     """
     Test if action was after sunset with offset.
 
@@ -574,7 +574,7 @@ async def test_if_action_after_sunset_with_offset.opp, calls):
         assert len(calls) == 2
 
 
-async def test_if_action_before_and_after_during.opp, calls):
+async def test_if_action_before_and_after_during(opp, calls):
     """
     Test if action was after sunset and before sunrise.
 
@@ -634,7 +634,7 @@ async def test_if_action_before_and_after_during.opp, calls):
         assert len(calls) == 3
 
 
-async def test_if_action_before_sunrise_no_offset_kotzebue.opp, calls):
+async def test_if_action_before_sunrise_no_offset_kotzebue(opp, calls):
     """
     Test if action was before sunrise.
 
@@ -690,7 +690,7 @@ async def test_if_action_before_sunrise_no_offset_kotzebue.opp, calls):
         assert len(calls) == 2
 
 
-async def test_if_action_after_sunrise_no_offset_kotzebue.opp, calls):
+async def test_if_action_after_sunrise_no_offset_kotzebue(opp, calls):
     """
     Test if action was after sunrise.
 
@@ -746,7 +746,7 @@ async def test_if_action_after_sunrise_no_offset_kotzebue.opp, calls):
         assert len(calls) == 2
 
 
-async def test_if_action_before_sunset_no_offset_kotzebue.opp, calls):
+async def test_if_action_before_sunset_no_offset_kotzebue(opp, calls):
     """
     Test if action was before sunrise.
 
@@ -802,7 +802,7 @@ async def test_if_action_before_sunset_no_offset_kotzebue.opp, calls):
         assert len(calls) == 2
 
 
-async def test_if_action_after_sunset_no_offset_kotzebue.opp, calls):
+async def test_if_action_after_sunset_no_offset_kotzebue(opp, calls):
     """
     Test if action was after sunrise.
 

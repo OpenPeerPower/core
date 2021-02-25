@@ -19,7 +19,7 @@ INTERVAL = duckdns.INTERVAL
 
 
 @bind.opp
-async def async_set_txt.opp, txt):
+async def async_set_txt(opp, txt):
     """Set the txt record. Pass in None to remove it.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -30,7 +30,7 @@ async def async_set_txt.opp, txt):
 
 
 @pytest.fixture
-def setup_duckdns.opp, aioclient_mock):
+def setup_duckdns(opp, aioclient_mock):
     """Fixture that sets up DuckDNS."""
     aioclient_mock.get(
         duckdns.UPDATE_URL, params={"domains": DOMAIN, "token": TOKEN}, text="OK"
@@ -58,12 +58,12 @@ async def test_setup_opp, aioclient_mock):
     assert result
     assert aioclient_mock.call_count == 1
 
-    async_fire_time_changed.opp, utcnow() + timedelta(minutes=5))
+    async_fire_time_changed(opp, utcnow() + timedelta(minutes=5))
     await opp.async_block_till_done()
     assert aioclient_mock.call_count == 2
 
 
-async def test_setup_backoff.opp, aioclient_mock):
+async def test_setup_backoff(opp, aioclient_mock):
     """Test setup fails if first update fails."""
     aioclient_mock.get(
         duckdns.UPDATE_URL, params={"domains": DOMAIN, "token": TOKEN}, text="KO"
@@ -90,13 +90,13 @@ async def test_setup_backoff.opp, aioclient_mock):
     _LOGGER.debug("Backoff...")
     for idx in range(1, len(intervals)):
         tme += intervals[idx]
-        async_fire_time_changed.opp, tme)
+        async_fire_time_changed(opp, tme)
         await opp.async_block_till_done()
 
         assert aioclient_mock.call_count == idx + 1
 
 
-async def test_service_set_txt.opp, aioclient_mock, setup_duckdns):
+async def test_service_set_txt(opp, aioclient_mock, setup_duckdns):
     """Test set txt service call."""
     # Empty the fixture mock requests
     aioclient_mock.clear_requests()
@@ -108,11 +108,11 @@ async def test_service_set_txt.opp, aioclient_mock, setup_duckdns):
     )
 
     assert aioclient_mock.call_count == 0
-    await async_set_txt.opp, "some-txt")
+    await async_set_txt(opp, "some-txt")
     assert aioclient_mock.call_count == 1
 
 
-async def test_service_clear_txt.opp, aioclient_mock, setup_duckdns):
+async def test_service_clear_txt(opp, aioclient_mock, setup_duckdns):
     """Test clear txt service call."""
     # Empty the fixture mock requests
     aioclient_mock.clear_requests()
@@ -124,7 +124,7 @@ async def test_service_clear_txt.opp, aioclient_mock, setup_duckdns):
     )
 
     assert aioclient_mock.call_count == 0
-    await async_set_txt.opp, None)
+    await async_set_txt(opp, None)
     assert aioclient_mock.call_count == 1
 
 
@@ -151,7 +151,7 @@ async def test_async_track_time_interval_backoff.opp):
         INTERVAL * 12,
     )
 
-    async_track_time_interval_backoff.opp, _return, intervals)
+    async_track_time_interval_backoff(opp, _return, intervals)
     await opp.async_block_till_done()
 
     assert call_count == 1
@@ -159,7 +159,7 @@ async def test_async_track_time_interval_backoff.opp):
     _LOGGER.debug("Backoff...")
     for idx in range(1, len(intervals)):
         tme += intervals[idx]
-        async_fire_time_changed.opp, tme + timedelta(seconds=0.1))
+        async_fire_time_changed(opp, tme + timedelta(seconds=0.1))
         await opp.async_block_till_done()
 
         assert call_count == idx + 1
@@ -167,7 +167,7 @@ async def test_async_track_time_interval_backoff.opp):
     _LOGGER.debug("Max backoff reached - intervals[-1]")
     for _idx in range(1, 10):
         tme += intervals[-1]
-        async_fire_time_changed.opp, tme + timedelta(seconds=0.1))
+        async_fire_time_changed(opp, tme + timedelta(seconds=0.1))
         await opp.async_block_till_done()
 
         assert call_count == idx + 1 + _idx
@@ -176,14 +176,14 @@ async def test_async_track_time_interval_backoff.opp):
     call_count = 0
     ret_val = True
     tme += intervals[-1]
-    async_fire_time_changed.opp, tme + timedelta(seconds=0.1))
+    async_fire_time_changed(opp, tme + timedelta(seconds=0.1))
     await opp.async_block_till_done()
     assert call_count == 1
 
     _LOGGER.debug("No backoff - intervals[0]")
     for _idx in range(2, 10):
         tme += intervals[0]
-        async_fire_time_changed.opp, tme + timedelta(seconds=0.1))
+        async_fire_time_changed(opp, tme + timedelta(seconds=0.1))
         await opp.async_block_till_done()
 
         assert call_count == _idx

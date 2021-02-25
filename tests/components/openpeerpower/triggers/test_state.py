@@ -631,14 +631,14 @@ async def test_if_fires_on_entity_creation_and_removal.opp.calls):
     assert calls[1].context.parent_id == context_2.id
 
     # removal of both, trigger on test.entity_1 ('from' matches, no 'to')
-    assert.opp.states.async_remove("test.entity_1", context=context_1)
-    assert.opp.states.async_remove("test.entity_2", context=context_2)
+    assert opp.states.async_remove("test.entity_1", context=context_1)
+    assert opp.states.async_remove("test.entity_2", context=context_2)
     await opp.async_block_till_done()
     assert len(calls) == 3
     assert calls[2].context.parent_id == context_1.id
 
     # automation with match_all triggers on removal
-    assert.opp.states.async_remove("test.entity_0", context=context_0)
+    assert opp.states.async_remove("test.entity_0", context=context_0)
     await opp.async_block_till_done()
     assert len(calls) == 4
     assert calls[3].context.parent_id == context_0.id

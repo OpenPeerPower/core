@@ -26,7 +26,7 @@ _BATTERY_LEVEL_INPUT_NUMBER = "input_number.battery_level"
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
 # Configuration tests #
@@ -50,7 +50,7 @@ async def test_missing_optional_config(opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_UNKNOWN, None)
+    _verify(opp, STATE_UNKNOWN, None)
 
 
 async def test_missing_start_config(opp, calls):
@@ -71,7 +71,7 @@ async def test_missing_start_config(opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.async_all() == []
+    assert opp.states.async_all() == []
 
 
 async def test_invalid_config(opp, calls):
@@ -92,14 +92,14 @@ async def test_invalid_config(opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.async_all() == []
+    assert opp.states.async_all() == []
 
 
 # End of configuration tests #
 
 
 # Template tests #
-async def test_templates_with_entities.opp, calls):
+async def test_templates_with_entities(opp, calls):
     """Test templates with values from other entities."""
     with assert_setup_component(1, "vacuum"):
         assert await setup.async_setup_component(
@@ -123,16 +123,16 @@ async def test_templates_with_entities.opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_UNKNOWN, None)
+    _verify(opp, STATE_UNKNOWN, None)
 
     opp.states.async_set(_STATE_INPUT_SELECT, STATE_CLEANING)
     opp.states.async_set(_BATTERY_LEVEL_INPUT_NUMBER, 100)
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_CLEANING, 100)
+    _verify(opp, STATE_CLEANING, 100)
 
 
-async def test_templates_with_valid_values.opp, calls):
+async def test_templates_with_valid_values(opp, calls):
     """Test templates with valid values."""
     with assert_setup_component(1, "vacuum"):
         assert await setup.async_setup_component(
@@ -156,10 +156,10 @@ async def test_templates_with_valid_values.opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_CLEANING, 100)
+    _verify(opp, STATE_CLEANING, 100)
 
 
-async def test_templates_invalid_values.opp, calls):
+async def test_templates_invalid_values(opp, calls):
     """Test templates with invalid values."""
     with assert_setup_component(1, "vacuum"):
         assert await setup.async_setup_component(
@@ -183,10 +183,10 @@ async def test_templates_invalid_values.opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_UNKNOWN, None)
+    _verify(opp, STATE_UNKNOWN, None)
 
 
-async def test_invalid_templates.opp, calls):
+async def test_invalid_templates(opp, calls):
     """Test invalid templates."""
     with assert_setup_component(1, "vacuum"):
         assert await setup.async_setup_component(
@@ -211,10 +211,10 @@ async def test_invalid_templates.opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_UNKNOWN, None)
+    _verify(opp, STATE_UNKNOWN, None)
 
 
-async def test_available_template_with_entities.opp, calls):
+async def test_available_template_with_entities(opp, calls):
     """Test availability templates with values from other entities."""
 
     assert await setup.async_setup_component(
@@ -242,17 +242,17 @@ async def test_available_template_with_entities.opp, calls):
     await opp.async_block_till_done()
 
     # Device State should not be unavailable
-    assert.opp.states.get("vacuum.test_template_vacuum").state != STATE_UNAVAILABLE
+    assert opp.states.get("vacuum.test_template_vacuum").state != STATE_UNAVAILABLE
 
     # When Availability template returns false
     opp.states.async_set("availability_state.state", STATE_OFF)
     await opp.async_block_till_done()
 
     # device state should be unavailable
-    assert.opp.states.get("vacuum.test_template_vacuum").state == STATE_UNAVAILABLE
+    assert opp.states.get("vacuum.test_template_vacuum").state == STATE_UNAVAILABLE
 
 
-async def test_invalid_availability_template_keeps_component_available.opp, caplog):
+async def test_invalid_availability_template_keeps_component_available(opp, caplog):
     """Test that an invalid availability keeps the device available."""
     assert await setup.async_setup_component(
         opp,
@@ -274,11 +274,11 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.get("vacuum.test_template_vacuum") != STATE_UNAVAILABLE
+    assert opp.states.get("vacuum.test_template_vacuum") != STATE_UNAVAILABLE
     assert ("UndefinedError: 'x' is undefined") in caplog.text
 
 
-async def test_attribute_templates.opp, calls):
+async def test_attribute_templates(opp, calls):
     """Test attribute_templates template."""
     assert await setup.async_setup_component(
         opp,
@@ -315,7 +315,7 @@ async def test_attribute_templates.opp, calls):
     assert state.attributes["test_attribute"] == "It Works."
 
 
-async def test_invalid_attribute_template.opp, caplog):
+async def test_invalid_attribute_template(opp, caplog):
     """Test that errors are logged if rendering template fails."""
     assert await setup.async_setup_component(
         opp,
@@ -349,137 +349,137 @@ async def test_invalid_attribute_template.opp, caplog):
 
 
 # Function tests #
-async def test_state_services.opp, calls):
+async def test_state_services(opp, calls):
     """Test state services."""
     await _register_components.opp)
 
     # Start vacuum
-    await common.async_start.opp, _TEST_VACUUM)
+    await common.async_start(opp, _TEST_VACUUM)
     await opp.async_block_till_done()
 
     # verify
-    assert.opp.states.get(_STATE_INPUT_SELECT).state == STATE_CLEANING
-    _verify.opp, STATE_CLEANING, None)
+    assert opp.states.get(_STATE_INPUT_SELECT).state == STATE_CLEANING
+    _verify(opp, STATE_CLEANING, None)
 
     # Pause vacuum
-    await common.async_pause.opp, _TEST_VACUUM)
+    await common.async_pause(opp, _TEST_VACUUM)
     await opp.async_block_till_done()
 
     # verify
-    assert.opp.states.get(_STATE_INPUT_SELECT).state == STATE_PAUSED
-    _verify.opp, STATE_PAUSED, None)
+    assert opp.states.get(_STATE_INPUT_SELECT).state == STATE_PAUSED
+    _verify(opp, STATE_PAUSED, None)
 
     # Stop vacuum
-    await common.async_stop.opp, _TEST_VACUUM)
+    await common.async_stop(opp, _TEST_VACUUM)
     await opp.async_block_till_done()
 
     # verify
-    assert.opp.states.get(_STATE_INPUT_SELECT).state == STATE_IDLE
-    _verify.opp, STATE_IDLE, None)
+    assert opp.states.get(_STATE_INPUT_SELECT).state == STATE_IDLE
+    _verify(opp, STATE_IDLE, None)
 
     # Return vacuum to base
-    await common.async_return_to_base.opp, _TEST_VACUUM)
+    await common.async_return_to_base(opp, _TEST_VACUUM)
     await opp.async_block_till_done()
 
     # verify
-    assert.opp.states.get(_STATE_INPUT_SELECT).state == STATE_RETURNING
-    _verify.opp, STATE_RETURNING, None)
+    assert opp.states.get(_STATE_INPUT_SELECT).state == STATE_RETURNING
+    _verify(opp, STATE_RETURNING, None)
 
 
-async def test_unused_services.opp, calls):
+async def test_unused_services(opp, calls):
     """Test calling unused services should not crash."""
     await _register_basic_vacuum.opp)
 
     # Pause vacuum
-    await common.async_pause.opp, _TEST_VACUUM)
+    await common.async_pause(opp, _TEST_VACUUM)
     await opp.async_block_till_done()
 
     # Stop vacuum
-    await common.async_stop.opp, _TEST_VACUUM)
+    await common.async_stop(opp, _TEST_VACUUM)
     await opp.async_block_till_done()
 
     # Return vacuum to base
-    await common.async_return_to_base.opp, _TEST_VACUUM)
+    await common.async_return_to_base(opp, _TEST_VACUUM)
     await opp.async_block_till_done()
 
     # Spot cleaning
-    await common.async_clean_spot.opp, _TEST_VACUUM)
+    await common.async_clean_spot(opp, _TEST_VACUUM)
     await opp.async_block_till_done()
 
     # Locate vacuum
-    await common.async_locate.opp, _TEST_VACUUM)
+    await common.async_locate(opp, _TEST_VACUUM)
     await opp.async_block_till_done()
 
     # Set fan's speed
-    await common.async_set_fan_speed.opp, "medium", _TEST_VACUUM)
+    await common.async_set_fan_speed(opp, "medium", _TEST_VACUUM)
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_UNKNOWN, None)
+    _verify(opp, STATE_UNKNOWN, None)
 
 
-async def test_clean_spot_service.opp, calls):
+async def test_clean_spot_service(opp, calls):
     """Test clean spot service."""
     await _register_components.opp)
 
     # Clean spot
-    await common.async_clean_spot.opp, _TEST_VACUUM)
+    await common.async_clean_spot(opp, _TEST_VACUUM)
     await opp.async_block_till_done()
 
     # verify
-    assert.opp.states.get(_SPOT_CLEANING_INPUT_BOOLEAN).state == STATE_ON
+    assert opp.states.get(_SPOT_CLEANING_INPUT_BOOLEAN).state == STATE_ON
 
 
-async def test_locate_service.opp, calls):
+async def test_locate_service(opp, calls):
     """Test locate service."""
     await _register_components.opp)
 
     # Locate vacuum
-    await common.async_locate.opp, _TEST_VACUUM)
+    await common.async_locate(opp, _TEST_VACUUM)
     await opp.async_block_till_done()
 
     # verify
-    assert.opp.states.get(_LOCATING_INPUT_BOOLEAN).state == STATE_ON
+    assert opp.states.get(_LOCATING_INPUT_BOOLEAN).state == STATE_ON
 
 
-async def test_set_fan_speed.opp, calls):
+async def test_set_fan_speed(opp, calls):
     """Test set valid fan speed."""
     await _register_components.opp)
 
     # Set vacuum's fan speed to high
-    await common.async_set_fan_speed.opp, "high", _TEST_VACUUM)
+    await common.async_set_fan_speed(opp, "high", _TEST_VACUUM)
     await opp.async_block_till_done()
 
     # verify
-    assert.opp.states.get(_FAN_SPEED_INPUT_SELECT).state == "high"
+    assert opp.states.get(_FAN_SPEED_INPUT_SELECT).state == "high"
 
     # Set fan's speed to medium
-    await common.async_set_fan_speed.opp, "medium", _TEST_VACUUM)
+    await common.async_set_fan_speed(opp, "medium", _TEST_VACUUM)
     await opp.async_block_till_done()
 
     # verify
-    assert.opp.states.get(_FAN_SPEED_INPUT_SELECT).state == "medium"
+    assert opp.states.get(_FAN_SPEED_INPUT_SELECT).state == "medium"
 
 
-async def test_set_invalid_fan_speed.opp, calls):
+async def test_set_invalid_fan_speed(opp, calls):
     """Test set invalid fan speed when fan has valid speed."""
     await _register_components.opp)
 
     # Set vacuum's fan speed to high
-    await common.async_set_fan_speed.opp, "high", _TEST_VACUUM)
+    await common.async_set_fan_speed(opp, "high", _TEST_VACUUM)
     await opp.async_block_till_done()
 
     # verify
-    assert.opp.states.get(_FAN_SPEED_INPUT_SELECT).state == "high"
+    assert opp.states.get(_FAN_SPEED_INPUT_SELECT).state == "high"
 
     # Set vacuum's fan speed to 'invalid'
-    await common.async_set_fan_speed.opp, "invalid", _TEST_VACUUM)
+    await common.async_set_fan_speed(opp, "invalid", _TEST_VACUUM)
     await opp.async_block_till_done()
 
     # verify fan speed is unchanged
-    assert.opp.states.get(_FAN_SPEED_INPUT_SELECT).state == "high"
+    assert opp.states.get(_FAN_SPEED_INPUT_SELECT).state == "high"
 
 
-def _verify.opp, expected_state, expected_battery_level):
+def _verify(opp, expected_state, expected_battery_level):
     """Verify vacuum's state and speed."""
     state = opp.states.get(_TEST_VACUUM)
     attributes = state.attributes

@@ -29,10 +29,10 @@ def entity_reg.opp):
     return mock_registry.opp)
 
 
-async def test_get_actions.opp, device_reg, entity_reg):
+async def test_get_actions(opp, device_reg, entity_reg):
     """Test we get the expected actions from a vacuum."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -52,7 +52,7 @@ async def test_get_actions.opp, device_reg, entity_reg):
             "entity_id": "vacuum.test_5678",
         },
     ]
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert_lists_same(actions, expected_actions)
 
 
@@ -85,8 +85,8 @@ async def test_action.opp):
         },
     )
 
-    dock_calls = async_mock_service.opp, "vacuum", "return_to_base")
-    clean_calls = async_mock_service.opp, "vacuum", "start")
+    dock_calls = async_mock_service(opp, "vacuum", "return_to_base")
+    clean_calls = async_mock_service(opp, "vacuum", "start")
 
     opp.bus.async_fire("test_event_dock")
     await opp.async_block_till_done()

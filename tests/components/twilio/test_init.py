@@ -5,7 +5,7 @@ from openpeerpower.config import async_process_op_core_config
 from openpeerpower.core import callback
 
 
-async def test_config_flow_registers_webhook.opp, aiohttp_client):
+async def test_config_flow_registers_webhook(opp, aiohttp_client):
     """Test setting up Twilio and sending webhook."""
     await async_process_op_core_config(
         opp,

@@ -29,7 +29,7 @@ async def test_create_async_httpx_client_with_ssl_and_cookies(opp):
 
     httpx_client = client.create_async_httpx_client(opp, cookies={"bla": True})
     assert isinstance(httpx_client, httpx.AsyncClient)
-    assert.opp.data[client.DATA_ASYNC_CLIENT] != httpx_client
+    assert opp.data[client.DATA_ASYNC_CLIENT] != httpx_client
 
 
 async def test_create_async_httpx_client_without_ssl_and_cookies(opp):
@@ -40,7 +40,7 @@ async def test_create_async_httpx_client_without_ssl_and_cookies(opp):
         opp. verify_ssl=False, cookies={"bla": True}
     )
     assert isinstance(httpx_client, httpx.AsyncClient)
-    assert.opp.data[client.DATA_ASYNC_CLIENT_NOVERIFY] != httpx_client
+    assert opp.data[client.DATA_ASYNC_CLIENT_NOVERIFY] != httpx_client
 
 
 async def test_get_async_client_cleanup(opp):
@@ -52,7 +52,7 @@ async def test_get_async_client_cleanup(opp):
     opp.bus.async_fire(EVENT_OPENPEERPOWER_CLOSE)
     await opp.async_block_till_done()
 
-    assert.opp.data[client.DATA_ASYNC_CLIENT].is_closed
+    assert opp.data[client.DATA_ASYNC_CLIENT].is_closed
 
 
 async def test_get_async_client_cleanup_without_ssl(opp):
@@ -64,7 +64,7 @@ async def test_get_async_client_cleanup_without_ssl(opp):
     opp.bus.async_fire(EVENT_OPENPEERPOWER_CLOSE)
     await opp.async_block_till_done()
 
-    assert.opp.data[client.DATA_ASYNC_CLIENT_NOVERIFY].is_closed
+    assert opp.data[client.DATA_ASYNC_CLIENT_NOVERIFY].is_closed
 
 
 async def test_get_async_client_patched_close(opp):

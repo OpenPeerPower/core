@@ -57,7 +57,7 @@ async def test_unlocking.opp):
 
 async def test_opening.opp):
     """Test the opening of a lock."""
-    calls = async_mock_service.opp, LOCK_DOMAIN, SERVICE_OPEN)
+    calls = async_mock_service(opp, LOCK_DOMAIN, SERVICE_OPEN)
     await opp.services.async_call(
         LOCK_DOMAIN, SERVICE_OPEN, {ATTR_ENTITY_ID: OPENABLE_LOCK}, blocking=True
     )

@@ -13,14 +13,14 @@ EVENT_RFY_ENABLE_SUN_AUTO = "081a00000301010113"
 EVENT_RFY_DISABLE_SUN_AUTO = "081a00000301010114"
 
 
-async def test_one_switch.opp, rfxtrx):
+async def test_one_switch(opp, rfxtrx):
     """Test with 1 switch."""
     entry_data = create_rfx_test_cfg(
         devices={"0b1100cd0213c7f210010f51": {"signal_repetitions": 1}}
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -51,27 +51,27 @@ async def test_one_switch.opp, rfxtrx):
 
 
 @pytest.mark.parametrize("state", ["on", "off"])
-async def test_state_restore.opp, rfxtrx, state):
+async def test_state_restore(opp, rfxtrx, state):
     """State restoration."""
 
     entity_id = "switch.ac_213c7f2_16"
 
-    mock_restore_cache.opp, [State(entity_id, state)])
+    mock_restore_cache(opp, [State(entity_id, state)])
 
     entry_data = create_rfx_test_cfg(
         devices={"0b1100cd0213c7f210010f51": {"signal_repetitions": 1}}
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
 
-    assert.opp.states.get(entity_id).state == state
+    assert opp.states.get(entity_id).state == state
 
 
-async def test_several_switches.opp, rfxtrx):
+async def test_several_switches(opp, rfxtrx):
     """Test with 3 switches."""
     entry_data = create_rfx_test_cfg(
         devices={
@@ -82,7 +82,7 @@ async def test_several_switches.opp, rfxtrx):
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -104,14 +104,14 @@ async def test_several_switches.opp, rfxtrx):
 
 
 @pytest.mark.parametrize("repetitions", [1, 3])
-async def test_repetitions.opp, rfxtrx, repetitions):
+async def test_repetitions(opp, rfxtrx, repetitions):
     """Test signal repetitions."""
     entry_data = create_rfx_test_cfg(
         devices={"0b1100cd0213c7f230010f71": {"signal_repetitions": repetitions}}
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -124,7 +124,7 @@ async def test_repetitions.opp, rfxtrx, repetitions):
     assert rfxtrx.transport.send.call_count == repetitions
 
 
-async def test_discover_switch.opp, rfxtrx_automatic):
+async def test_discover_switch(opp, rfxtrx_automatic):
     """Test with discovery of switches."""
     rfxtrx = rfxtrx_automatic
 
@@ -139,7 +139,7 @@ async def test_discover_switch.opp, rfxtrx_automatic):
     assert state.state == "on"
 
 
-async def test_discover_rfy_sun_switch.opp, rfxtrx_automatic):
+async def test_discover_rfy_sun_switch(opp, rfxtrx_automatic):
     """Test with discovery of switches."""
     rfxtrx = rfxtrx_automatic
 
@@ -154,12 +154,12 @@ async def test_discover_rfy_sun_switch.opp, rfxtrx_automatic):
     assert state.state == "on"
 
 
-async def test_unknown_event_code.opp, rfxtrx):
+async def test_unknown_event_code(opp, rfxtrx):
     """Test with 3 switches."""
     entry_data = create_rfx_test_cfg(devices={"1234567890": {"signal_repetitions": 1}})
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()

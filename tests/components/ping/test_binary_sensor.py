@@ -26,7 +26,7 @@ async def test_reload.opp):
 
     assert len.opp.states.async_all()) == 1
 
-    assert.opp.states.get("binary_sensor.test")
+    assert opp.states.get("binary_sensor.test")
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -44,8 +44,8 @@ async def test_reload.opp):
 
     assert len.opp.states.async_all()) == 1
 
-    assert.opp.states.get("binary_sensor.test") is None
-    assert.opp.states.get("binary_sensor.test2")
+    assert opp.states.get("binary_sensor.test") is None
+    assert opp.states.get("binary_sensor.test2")
 
 
 def _get_fixtures_base_path():

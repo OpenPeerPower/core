@@ -22,8 +22,8 @@ LIGHT_ON = ("lightbulb", "on")
 
 async def test_koogeek_ls1_setup_opp):
     """Test that a Koogeek LS1 can be correctly setup in HA."""
-    accessories = await setup_accessories_from_file.opp, "koogeek_ls1.json")
-    config_entry, pairing = await setup_test_accessories.opp, accessories)
+    accessories = await setup_accessories_from_file(opp, "koogeek_ls1.json")
+    config_entry, pairing = await setup_test_accessories(opp, accessories)
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
@@ -55,14 +55,14 @@ async def test_koogeek_ls1_setup_opp):
 
 
 @pytest.mark.parametrize("failure_cls", [AccessoryDisconnectedError, EncryptionError])
-async def test_recover_from_failure.opp, utcnow, failure_cls):
+async def test_recover_from_failure(opp, utcnow, failure_cls):
     """
     Test that entity actually recovers from a network connection drop.
 
     See https://github.com/open-peer-power/core/issues/18949
     """
-    accessories = await setup_accessories_from_file.opp, "koogeek_ls1.json")
-    config_entry, pairing = await setup_test_accessories.opp, accessories)
+    accessories = await setup_accessories_from_file(opp, "koogeek_ls1.json")
+    config_entry, pairing = await setup_test_accessories(opp, accessories)
 
     helper = Helper(
         opp. "light.koogeek_ls1_20833f", pairing, accessories[0], config_entry
@@ -91,7 +91,7 @@ async def test_recover_from_failure.opp, utcnow, failure_cls):
 
     # Test that entity changes state when network error goes away
     next_update += timedelta(seconds=60)
-    async_fire_time_changed.opp, next_update)
+    async_fire_time_changed(opp, next_update)
     await opp.async_block_till_done()
 
     state = await helper.poll_and_get_state()

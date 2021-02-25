@@ -25,7 +25,7 @@ def mock_low_peak():
         yield
 
 
-async def test_pending_msg_overflow.opp, mock_low_queue, websocket_client):
+async def test_pending_msg_overflow(opp, mock_low_queue, websocket_client):
     """Test get_panels command."""
     for idx in range(10):
         await websocket_client.send_json({"id": idx + 1, "type": "ping"})
@@ -33,7 +33,7 @@ async def test_pending_msg_overflow.opp, mock_low_queue, websocket_client):
     assert msg.type == WSMsgType.close
 
 
-async def test_pending_msg_peak.opp, mock_low_peak, opp_ws_client, caplog):
+async def test_pending_msg_peak(opp, mock_low_peak, opp_ws_client, caplog):
     """Test pending msg overflow command."""
     orig_handler = http.WebSocketHandler
     instance = None
@@ -66,7 +66,7 @@ async def test_pending_msg_peak.opp, mock_low_peak, opp_ws_client, caplog):
     assert "Client unable to keep up with pending messages" in caplog.text
 
 
-async def test_non_json_message.opp, websocket_client, caplog):
+async def test_non_json_message(opp, websocket_client, caplog):
     """Test trying to serialze non JSON objects."""
     bad_data = object()
     opp.states.async_set("test_domain.entity", "testing", {"bad": bad_data})

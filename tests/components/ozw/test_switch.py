@@ -2,9 +2,9 @@
 from .common import setup_ozw
 
 
-async def test_switch.opp, generic_data, sent_messages, switch_msg):
+async def test_switch(opp, generic_data, sent_messages, switch_msg):
     """Test setting up config entry."""
-    receive_message = await setup_ozw.opp, fixture=generic_data)
+    receive_message = await setup_ozw(opp, fixture=generic_data)
 
     # Test loaded
     state = opp.states.get("switch.smart_plug_switch")

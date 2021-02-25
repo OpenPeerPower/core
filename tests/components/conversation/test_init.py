@@ -11,9 +11,9 @@ from tests.common import async_mock_intent, async_mock_service
 
 async def test_calling_intent.opp):
     """Test calling an intent from a conversation."""
-    intents = async_mock_intent.opp, "OrderBeer")
+    intents = async_mock_intent(opp, "OrderBeer")
 
-    result = await async_setup_component.opp, "openpeerpower", {})
+    result = await async_setup_component(opp, "openpeerpower", {})
     assert result
 
     result = await async_setup_component(
@@ -44,7 +44,7 @@ async def test_calling_intent.opp):
 
 async def test_register_before_setup_opp):
     """Test calling an intent from a conversation."""
-    intents = async_mock_intent.opp, "OrderBeer")
+    intents = async_mock_intent(opp, "OrderBeer")
 
     opp.components.conversation.async_register("OrderBeer", ["A {type} beer, please"])
 
@@ -82,7 +82,7 @@ async def test_register_before_setup_opp):
     assert intent.text_input == "I would like the Grolsch beer"
 
 
-async def test_http_processing_intent.opp, opp_client, opp_admin_user):
+async def test_http_processing_intent(opp, opp_client, opp_admin_user):
     """Test processing intent via HTTP API."""
 
     class TestIntentHandler(intent.IntentHandler):
@@ -102,7 +102,7 @@ async def test_http_processing_intent.opp, opp_client, opp_admin_user):
             )
             return response
 
-    intent.async_register.opp, TestIntentHandler())
+    intent.async_register(opp, TestIntentHandler())
 
     result = await async_setup_component(
         opp,
@@ -128,16 +128,16 @@ async def test_http_processing_intent.opp, opp_client, opp_admin_user):
 
 
 @pytest.mark.parametrize("sentence", ("turn on kitchen", "turn kitchen on"))
-async def test_turn_on_intent.opp, sentence):
+async def test_turn_on_intent(opp, sentence):
     """Test calling the turn on intent."""
-    result = await async_setup_component.opp, "openpeerpower", {})
+    result = await async_setup_component(opp, "openpeerpower", {})
     assert result
 
-    result = await async_setup_component.opp, "conversation", {})
+    result = await async_setup_component(opp, "conversation", {})
     assert result
 
     opp.states.async_set("light.kitchen", "off")
-    calls = async_mock_service.opp, OPP_DOMAIN, "turn_on")
+    calls = async_mock_service(opp, OPP_DOMAIN, "turn_on")
 
     await opp.services.async_call(
         "conversation", "process", {conversation.ATTR_TEXT: sentence}
@@ -152,16 +152,16 @@ async def test_turn_on_intent.opp, sentence):
 
 
 @pytest.mark.parametrize("sentence", ("turn off kitchen", "turn kitchen off"))
-async def test_turn_off_intent.opp, sentence):
+async def test_turn_off_intent(opp, sentence):
     """Test calling the turn on intent."""
-    result = await async_setup_component.opp, "openpeerpower", {})
+    result = await async_setup_component(opp, "openpeerpower", {})
     assert result
 
-    result = await async_setup_component.opp, "conversation", {})
+    result = await async_setup_component(opp, "conversation", {})
     assert result
 
     opp.states.async_set("light.kitchen", "on")
-    calls = async_mock_service.opp, OPP_DOMAIN, "turn_off")
+    calls = async_mock_service(opp, OPP_DOMAIN, "turn_off")
 
     await opp.services.async_call(
         "conversation", "process", {conversation.ATTR_TEXT: sentence}
@@ -176,16 +176,16 @@ async def test_turn_off_intent.opp, sentence):
 
 
 @pytest.mark.parametrize("sentence", ("toggle kitchen", "kitchen toggle"))
-async def test_toggle_intent.opp, sentence):
+async def test_toggle_intent(opp, sentence):
     """Test calling the turn on intent."""
-    result = await async_setup_component.opp, "openpeerpower", {})
+    result = await async_setup_component(opp, "openpeerpower", {})
     assert result
 
-    result = await async_setup_component.opp, "conversation", {})
+    result = await async_setup_component(opp, "conversation", {})
     assert result
 
     opp.states.async_set("light.kitchen", "on")
-    calls = async_mock_service.opp, OPP_DOMAIN, "toggle")
+    calls = async_mock_service(opp, OPP_DOMAIN, "toggle")
 
     await opp.services.async_call(
         "conversation", "process", {conversation.ATTR_TEXT: sentence}
@@ -199,15 +199,15 @@ async def test_toggle_intent.opp, sentence):
     assert call.data == {"entity_id": "light.kitchen"}
 
 
-async def test_http_api.opp, opp_client):
+async def test_http_api(opp, opp_client):
     """Test the HTTP conversation API."""
-    assert await async_setup_component.opp, "openpeerpower", {})
-    assert await async_setup_component.opp, "conversation", {})
-    assert await async_setup_component.opp, "intent", {})
+    assert await async_setup_component(opp, "openpeerpower", {})
+    assert await async_setup_component(opp, "conversation", {})
+    assert await async_setup_component(opp, "intent", {})
 
     client = await opp_client()
     opp.states.async_set("light.kitchen", "off")
-    calls = async_mock_service.opp, OPP_DOMAIN, "turn_on")
+    calls = async_mock_service(opp, OPP_DOMAIN, "turn_on")
 
     resp = await client.post(
         "/api/conversation/process", json={"text": "Turn the kitchen on"}
@@ -221,12 +221,12 @@ async def test_http_api.opp, opp_client):
     assert call.data == {"entity_id": "light.kitchen"}
 
 
-async def test_http_api_wrong_data.opp, opp_client):
+async def test_http_api_wrong_data(opp, opp_client):
     """Test the HTTP conversation API."""
-    result = await async_setup_component.opp, "openpeerpower", {})
+    result = await async_setup_component(opp, "openpeerpower", {})
     assert result
 
-    result = await async_setup_component.opp, "conversation", {})
+    result = await async_setup_component(opp, "conversation", {})
     assert result
 
     client = await opp_client()
@@ -238,7 +238,7 @@ async def test_http_api_wrong_data.opp, opp_client):
     assert resp.status == 400
 
 
-async def test_custom_agent.opp, opp_client, opp_admin_user):
+async def test_custom_agent(opp, opp_client, opp_admin_user):
     """Test a custom conversation agent."""
 
     calls = []
@@ -253,9 +253,9 @@ async def test_custom_agent.opp, opp_client, opp_admin_user):
             response.async_set_speech("Test response")
             return response
 
-    conversation.async_set_agent.opp, MyAgent())
+    conversation.async_set_agent(opp, MyAgent())
 
-    assert await async_setup_component.opp, "conversation", {})
+    assert await async_setup_component(opp, "conversation", {})
 
     client = await opp_client()
 

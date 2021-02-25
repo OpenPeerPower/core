@@ -23,7 +23,7 @@ async def _flow_submit.opp):
 
 async def test_form.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -60,7 +60,7 @@ async def test_form_duplicate_login.opp):
         title="Flick Electric: test-username",
         unique_id="flick_electric_test-username",
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.flick_electric.config_flow.SimpleFlickAuth.async_get_access_token",

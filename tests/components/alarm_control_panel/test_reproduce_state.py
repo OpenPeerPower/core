@@ -18,7 +18,7 @@ from openpeerpower.core import State
 from tests.common import async_mock_service
 
 
-async def test_reproducing_states.opp, caplog):
+async def test_reproducing_states(opp, caplog):
     """Test reproducing Alarm control panel states."""
     opp.states.async_set(
         "alarm_control_panel.entity_armed_away", STATE_ALARM_ARMED_AWAY, {}
@@ -53,7 +53,7 @@ async def test_reproducing_states.opp, caplog):
     arm_night_calls = async_mock_service(
         opp. "alarm_control_panel", SERVICE_ALARM_ARM_NIGHT
     )
-    disarm_calls = async_mock_service.opp, "alarm_control_panel", SERVICE_ALARM_DISARM)
+    disarm_calls = async_mock_service(opp, "alarm_control_panel", SERVICE_ALARM_DISARM)
     trigger_calls = async_mock_service(
         opp. "alarm_control_panel", SERVICE_ALARM_TRIGGER
     )

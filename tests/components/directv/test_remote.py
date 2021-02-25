@@ -24,17 +24,17 @@ async def test_setup(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test setup with basic config."""
-    await setup_integration.opp, aioclient_mock)
-    assert.opp.states.get(MAIN_ENTITY_ID)
-    assert.opp.states.get(CLIENT_ENTITY_ID)
-    assert.opp.states.get(UNAVAILABLE_ENTITY_ID)
+    await setup_integration(opp, aioclient_mock)
+    assert opp.states.get(MAIN_ENTITY_ID)
+    assert opp.states.get(CLIENT_ENTITY_ID)
+    assert opp.states.get(UNAVAILABLE_ENTITY_ID)
 
 
 async def test_unique_id(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test unique id."""
-    await setup_integration.opp, aioclient_mock)
+    await setup_integration(opp, aioclient_mock)
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
@@ -52,7 +52,7 @@ async def test_main_services(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the different services."""
-    await setup_integration.opp, aioclient_mock)
+    await setup_integration(opp, aioclient_mock)
 
     with patch("directv.DIRECTV.remote") as remote_mock:
         await opp.services.async_call(

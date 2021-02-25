@@ -26,7 +26,7 @@ async def test_already_setup_opp):
     MockConfigEntry(
         domain=DOMAIN,
         data={},
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     # Should fail, same NAME
     result = await opp.config_entries.flow.async_init(

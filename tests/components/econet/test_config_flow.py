@@ -114,7 +114,7 @@ async def test_already_configured.opp):
     }
     MockConfigEntry(
         domain=DOMAIN, data=config, unique_id="admin@localhost.com"
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}

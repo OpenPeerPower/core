@@ -16,7 +16,7 @@ from openpeerpower.util import dt as dt_util, slugify
 from tests.common import async_fire_time_changed
 
 
-async def test_preserve_new_tracked_device_name.opp, mock_device_tracker_conf):
+async def test_preserve_new_tracked_device_name(opp, mock_device_tracker_conf):
     """Test preserving tracked device name across new seens."""
 
     address = "DE:AD:BE:EF:13:37"
@@ -37,7 +37,7 @@ async def test_preserve_new_tracked_device_name.opp, mock_device_tracker_conf):
             CONF_SCAN_INTERVAL: timedelta(minutes=1),
             CONF_TRACK_NEW: True,
         }
-        result = await async_setup_component.opp, DOMAIN, {DOMAIN: config})
+        result = await async_setup_component(opp, DOMAIN, {DOMAIN: config})
         assert result
 
         # Seen once here; return without name when seen subsequent times

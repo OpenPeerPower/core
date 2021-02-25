@@ -51,7 +51,7 @@ async def test_abort_if_already_setup_opp):
     entry = MockConfigEntry(
         domain=DOMAIN, data=MOCK_CONF, unique_id=MOCK_CONF[CONF_USERNAME]
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}, data=MOCK_CONF
     )

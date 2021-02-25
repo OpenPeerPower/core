@@ -41,7 +41,7 @@ _DIRECTION_INPUT_SELECT = "input_select.direction"
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
 # Configuration tests #
@@ -69,7 +69,7 @@ async def test_missing_optional_config(opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_ON, None, None, None, None, None)
+    _verify(opp, STATE_ON, None, None, None, None, None)
 
 
 async def test_missing_value_template_config(opp, calls):
@@ -95,7 +95,7 @@ async def test_missing_value_template_config(opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.async_all() == []
+    assert opp.states.async_all() == []
 
 
 async def test_missing_turn_on_config(opp, calls):
@@ -121,7 +121,7 @@ async def test_missing_turn_on_config(opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.async_all() == []
+    assert opp.states.async_all() == []
 
 
 async def test_missing_turn_off_config(opp, calls):
@@ -147,7 +147,7 @@ async def test_missing_turn_off_config(opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.async_all() == []
+    assert opp.states.async_all() == []
 
 
 async def test_invalid_config(opp, calls):
@@ -171,14 +171,14 @@ async def test_invalid_config(opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.async_all() == []
+    assert opp.states.async_all() == []
 
 
 # End of configuration tests #
 
 
 # Template tests #
-async def test_templates_with_entities.opp, calls):
+async def test_templates_with_entities(opp, calls):
     """Test tempalates with values from other entities."""
     value_template = """
         {% if is_state('input_boolean.state', 'True') %}
@@ -220,7 +220,7 @@ async def test_templates_with_entities.opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_OFF, None, 0, None, None, None)
+    _verify(opp, STATE_OFF, None, 0, None, None, None)
 
     opp.states.async_set(_STATE_INPUT_BOOLEAN, True)
     opp.states.async_set(_SPEED_INPUT_SELECT, SPEED_MEDIUM)
@@ -228,26 +228,26 @@ async def test_templates_with_entities.opp, calls):
     opp.states.async_set(_DIRECTION_INPUT_SELECT, DIRECTION_FORWARD)
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_ON, SPEED_MEDIUM, 66, True, DIRECTION_FORWARD, None)
+    _verify(opp, STATE_ON, SPEED_MEDIUM, 66, True, DIRECTION_FORWARD, None)
 
     opp.states.async_set(_PERCENTAGE_INPUT_NUMBER, 33)
     await opp.async_block_till_done()
-    _verify.opp, STATE_ON, SPEED_LOW, 33, True, DIRECTION_FORWARD, None)
+    _verify(opp, STATE_ON, SPEED_LOW, 33, True, DIRECTION_FORWARD, None)
 
     opp.states.async_set(_PERCENTAGE_INPUT_NUMBER, 66)
     await opp.async_block_till_done()
-    _verify.opp, STATE_ON, SPEED_MEDIUM, 66, True, DIRECTION_FORWARD, None)
+    _verify(opp, STATE_ON, SPEED_MEDIUM, 66, True, DIRECTION_FORWARD, None)
 
     opp.states.async_set(_PERCENTAGE_INPUT_NUMBER, 100)
     await opp.async_block_till_done()
-    _verify.opp, STATE_ON, SPEED_HIGH, 100, True, DIRECTION_FORWARD, None)
+    _verify(opp, STATE_ON, SPEED_HIGH, 100, True, DIRECTION_FORWARD, None)
 
     opp.states.async_set(_PERCENTAGE_INPUT_NUMBER, "dog")
     await opp.async_block_till_done()
-    _verify.opp, STATE_ON, None, 0, True, DIRECTION_FORWARD, None)
+    _verify(opp, STATE_ON, None, 0, True, DIRECTION_FORWARD, None)
 
 
-async def test_templates_with_entities_and_invalid_percentage.opp, calls):
+async def test_templates_with_entities_and_invalid_percentage(opp, calls):
     """Test templates with values from other entities."""
     opp.states.async_set("sensor.percentage", "0")
 
@@ -274,35 +274,35 @@ async def test_templates_with_entities_and_invalid_percentage.opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_OFF, SPEED_OFF, 0, None, None, None)
+    _verify(opp, STATE_OFF, SPEED_OFF, 0, None, None, None)
 
     opp.states.async_set("sensor.percentage", "33")
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_ON, SPEED_LOW, 33, None, None, None)
+    _verify(opp, STATE_ON, SPEED_LOW, 33, None, None, None)
 
     opp.states.async_set("sensor.percentage", "invalid")
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_ON, None, 0, None, None, None)
+    _verify(opp, STATE_ON, None, 0, None, None, None)
 
     opp.states.async_set("sensor.percentage", "5000")
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_ON, None, 0, None, None, None)
+    _verify(opp, STATE_ON, None, 0, None, None, None)
 
     opp.states.async_set("sensor.percentage", "100")
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
+    _verify(opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
 
     opp.states.async_set("sensor.percentage", "0")
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_OFF, SPEED_OFF, 0, None, None, None)
+    _verify(opp, STATE_OFF, SPEED_OFF, 0, None, None, None)
 
 
-async def test_templates_with_entities_and_preset_modes.opp, calls):
+async def test_templates_with_entities_and_preset_modes(opp, calls):
     """Test templates with values from other entities."""
     opp.states.async_set("sensor.preset_mode", "0")
 
@@ -330,29 +330,29 @@ async def test_templates_with_entities_and_preset_modes.opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_ON, None, None, None, None, None)
+    _verify(opp, STATE_ON, None, None, None, None, None)
 
     opp.states.async_set("sensor.preset_mode", "invalid")
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_ON, None, None, None, None, None)
+    _verify(opp, STATE_ON, None, None, None, None, None)
 
     opp.states.async_set("sensor.preset_mode", "auto")
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_ON, "auto", None, None, None, "auto")
+    _verify(opp, STATE_ON, "auto", None, None, None, "auto")
 
     opp.states.async_set("sensor.preset_mode", "smart")
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_ON, "smart", None, None, None, "smart")
+    _verify(opp, STATE_ON, "smart", None, None, None, "smart")
 
     opp.states.async_set("sensor.preset_mode", "invalid")
     await opp.async_block_till_done()
-    _verify.opp, STATE_ON, None, None, None, None, None)
+    _verify(opp, STATE_ON, None, None, None, None, None)
 
 
-async def test_template_with_unavailable_entities.opp, calls):
+async def test_template_with_unavailable_entities(opp, calls):
     """Test unavailability with value_template."""
 
     with assert_setup_component(1, "fan"):
@@ -376,10 +376,10 @@ async def test_template_with_unavailable_entities.opp, calls):
     await opp.async_block_till_done()
     await opp.async_start()
     await opp.async_block_till_done()
-    assert.opp.states.get(_TEST_FAN).state == STATE_OFF
+    assert opp.states.get(_TEST_FAN).state == STATE_OFF
 
 
-async def test_template_with_unavailable_parameters.opp, calls):
+async def test_template_with_unavailable_parameters(opp, calls):
     """Test unavailability of speed, direction and oscillating parameters."""
 
     with assert_setup_component(1, "fan"):
@@ -407,10 +407,10 @@ async def test_template_with_unavailable_parameters.opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_ON, None, 0, None, None, None)
+    _verify(opp, STATE_ON, None, 0, None, None, None)
 
 
-async def test_availability_template_with_entities.opp, calls):
+async def test_availability_template_with_entities(opp, calls):
     """Test availability tempalates with values from other entities."""
 
     with assert_setup_component(1, "fan"):
@@ -444,17 +444,17 @@ async def test_availability_template_with_entities.opp, calls):
     await opp.async_block_till_done()
 
     # Device State should not be unavailable
-    assert.opp.states.get(_TEST_FAN).state != STATE_UNAVAILABLE
+    assert opp.states.get(_TEST_FAN).state != STATE_UNAVAILABLE
 
     # When Availability template returns false
     opp.states.async_set(_STATE_AVAILABILITY_BOOLEAN, STATE_OFF)
     await opp.async_block_till_done()
 
     # device state should be unavailable
-    assert.opp.states.get(_TEST_FAN).state == STATE_UNAVAILABLE
+    assert opp.states.get(_TEST_FAN).state == STATE_UNAVAILABLE
 
 
-async def test_templates_with_valid_values.opp, calls):
+async def test_templates_with_valid_values(opp, calls):
     """Test templates with valid values."""
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
@@ -481,10 +481,10 @@ async def test_templates_with_valid_values.opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_ON, SPEED_MEDIUM, 66, True, DIRECTION_FORWARD, None)
+    _verify(opp, STATE_ON, SPEED_MEDIUM, 66, True, DIRECTION_FORWARD, None)
 
 
-async def test_templates_invalid_values.opp, calls):
+async def test_templates_invalid_values(opp, calls):
     """Test templates with invalid values."""
     with assert_setup_component(1, "fan"):
         assert await setup.async_setup_component(
@@ -511,10 +511,10 @@ async def test_templates_invalid_values.opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    _verify.opp, STATE_OFF, None, 0, None, None, None)
+    _verify(opp, STATE_OFF, None, 0, None, None, None)
 
 
-async def test_invalid_availability_template_keeps_component_available.opp, caplog):
+async def test_invalid_availability_template_keeps_component_available(opp, caplog):
     """Test that an invalid availability keeps the device available."""
 
     with assert_setup_component(1, "fan"):
@@ -544,7 +544,7 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.get("fan.test_fan").state != STATE_UNAVAILABLE
+    assert opp.states.get("fan.test_fan").state != STATE_UNAVAILABLE
 
     assert "TemplateError" in caplog.text
     assert "x" in caplog.text
@@ -554,352 +554,352 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
 
 
 # Function tests #
-async def test_on_off.opp, calls):
+async def test_on_off(opp, calls):
     """Test turn on and turn off."""
     await _register_components.opp)
 
     # Turn on fan
-    await common.async_turn_on.opp, _TEST_FAN)
+    await common.async_turn_on(opp, _TEST_FAN)
 
     # verify
-    assert.opp.states.get(_STATE_INPUT_BOOLEAN).state == STATE_ON
-    _verify.opp, STATE_ON, None, 0, None, None, None)
+    assert opp.states.get(_STATE_INPUT_BOOLEAN).state == STATE_ON
+    _verify(opp, STATE_ON, None, 0, None, None, None)
 
     # Turn off fan
-    await common.async_turn_off.opp, _TEST_FAN)
+    await common.async_turn_off(opp, _TEST_FAN)
 
     # verify
-    assert.opp.states.get(_STATE_INPUT_BOOLEAN).state == STATE_OFF
-    _verify.opp, STATE_OFF, None, 0, None, None, None)
+    assert opp.states.get(_STATE_INPUT_BOOLEAN).state == STATE_OFF
+    _verify(opp, STATE_OFF, None, 0, None, None, None)
 
 
-async def test_on_with_speed.opp, calls):
+async def test_on_with_speed(opp, calls):
     """Test turn on with speed."""
     await _register_components.opp)
 
     # Turn on fan with high speed
-    await common.async_turn_on.opp, _TEST_FAN, SPEED_HIGH)
+    await common.async_turn_on(opp, _TEST_FAN, SPEED_HIGH)
 
     # verify
-    assert.opp.states.get(_STATE_INPUT_BOOLEAN).state == STATE_ON
+    assert opp.states.get(_STATE_INPUT_BOOLEAN).state == STATE_ON
     assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 100
-    _verify.opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
+    _verify(opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
 
 
-async def test_set_speed.opp, calls):
+async def test_set_speed(opp, calls):
     """Test set valid speed."""
-    await _register_components.opp, preset_modes=["auto", "smart"])
+    await _register_components(opp, preset_modes=["auto", "smart"])
 
     # Turn on fan
-    await common.async_turn_on.opp, _TEST_FAN)
+    await common.async_turn_on(opp, _TEST_FAN)
 
     # Set fan's speed to high
-    await common.async_set_speed.opp, _TEST_FAN, SPEED_HIGH)
+    await common.async_set_speed(opp, _TEST_FAN, SPEED_HIGH)
 
     # verify
-    assert.opp.states.get(_SPEED_INPUT_SELECT).state == SPEED_HIGH
-    _verify.opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
+    assert opp.states.get(_SPEED_INPUT_SELECT).state == SPEED_HIGH
+    _verify(opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
 
     # Set fan's speed to medium
-    await common.async_set_speed.opp, _TEST_FAN, SPEED_MEDIUM)
+    await common.async_set_speed(opp, _TEST_FAN, SPEED_MEDIUM)
 
     # verify
-    assert.opp.states.get(_SPEED_INPUT_SELECT).state == SPEED_MEDIUM
-    _verify.opp, STATE_ON, SPEED_MEDIUM, 66, None, None, None)
+    assert opp.states.get(_SPEED_INPUT_SELECT).state == SPEED_MEDIUM
+    _verify(opp, STATE_ON, SPEED_MEDIUM, 66, None, None, None)
 
     # Set fan's speed to off
-    await common.async_set_speed.opp, _TEST_FAN, SPEED_OFF)
+    await common.async_set_speed(opp, _TEST_FAN, SPEED_OFF)
 
     # verify
-    assert.opp.states.get(_SPEED_INPUT_SELECT).state == SPEED_OFF
-    _verify.opp, STATE_OFF, SPEED_OFF, 0, None, None, None)
+    assert opp.states.get(_SPEED_INPUT_SELECT).state == SPEED_OFF
+    _verify(opp, STATE_OFF, SPEED_OFF, 0, None, None, None)
 
 
-async def test_set_percentage.opp, calls):
+async def test_set_percentage(opp, calls):
     """Test set valid speed percentage."""
     await _register_components.opp)
 
     # Turn on fan
-    await common.async_turn_on.opp, _TEST_FAN)
+    await common.async_turn_on(opp, _TEST_FAN)
 
     # Set fan's percentage speed to 100
-    await common.async_set_percentage.opp, _TEST_FAN, 100)
+    await common.async_set_percentage(opp, _TEST_FAN, 100)
 
     # verify
     assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 100
 
-    _verify.opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
+    _verify(opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
 
     # Set fan's percentage speed to 66
-    await common.async_set_percentage.opp, _TEST_FAN, 66)
+    await common.async_set_percentage(opp, _TEST_FAN, 66)
     assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 66
 
-    _verify.opp, STATE_ON, SPEED_MEDIUM, 66, None, None, None)
+    _verify(opp, STATE_ON, SPEED_MEDIUM, 66, None, None, None)
 
     # Set fan's percentage speed to 0
-    await common.async_set_percentage.opp, _TEST_FAN, 0)
+    await common.async_set_percentage(opp, _TEST_FAN, 0)
     assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 0
 
-    _verify.opp, STATE_OFF, SPEED_OFF, 0, None, None, None)
+    _verify(opp, STATE_OFF, SPEED_OFF, 0, None, None, None)
 
     # Set fan's percentage speed to 50
-    await common.async_turn_on.opp, _TEST_FAN, percentage=50)
+    await common.async_turn_on(opp, _TEST_FAN, percentage=50)
     assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 50
 
-    _verify.opp, STATE_ON, SPEED_MEDIUM, 50, None, None, None)
+    _verify(opp, STATE_ON, SPEED_MEDIUM, 50, None, None, None)
 
 
-async def test_increase_decrease_speed.opp, calls):
+async def test_increase_decrease_speed(opp, calls):
     """Test set valid increase and derease speed."""
     await _register_components.opp)
 
     # Turn on fan
-    await common.async_turn_on.opp, _TEST_FAN)
+    await common.async_turn_on(opp, _TEST_FAN)
 
     # Set fan's percentage speed to 100
-    await common.async_set_percentage.opp, _TEST_FAN, 100)
+    await common.async_set_percentage(opp, _TEST_FAN, 100)
 
     # verify
     assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 100
 
-    _verify.opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
+    _verify(opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
 
     # Set fan's percentage speed to 66
-    await common.async_decrease_speed.opp, _TEST_FAN)
+    await common.async_decrease_speed(opp, _TEST_FAN)
     assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 66
 
-    _verify.opp, STATE_ON, SPEED_MEDIUM, 66, None, None, None)
+    _verify(opp, STATE_ON, SPEED_MEDIUM, 66, None, None, None)
 
     # Set fan's percentage speed to 33
-    await common.async_decrease_speed.opp, _TEST_FAN)
+    await common.async_decrease_speed(opp, _TEST_FAN)
     assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 33
 
-    _verify.opp, STATE_ON, SPEED_LOW, 33, None, None, None)
+    _verify(opp, STATE_ON, SPEED_LOW, 33, None, None, None)
 
     # Set fan's percentage speed to 0
-    await common.async_decrease_speed.opp, _TEST_FAN)
+    await common.async_decrease_speed(opp, _TEST_FAN)
     assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 0
 
-    _verify.opp, STATE_OFF, SPEED_OFF, 0, None, None, None)
+    _verify(opp, STATE_OFF, SPEED_OFF, 0, None, None, None)
 
     # Set fan's percentage speed to 33
-    await common.async_increase_speed.opp, _TEST_FAN)
+    await common.async_increase_speed(opp, _TEST_FAN)
     assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 33
 
-    _verify.opp, STATE_ON, SPEED_LOW, 33, None, None, None)
+    _verify(opp, STATE_ON, SPEED_LOW, 33, None, None, None)
 
 
-async def test_set_invalid_speed_from_initial_stage.opp, calls):
+async def test_set_invalid_speed_from_initial_stage(opp, calls):
     """Test set invalid speed when fan is in initial state."""
     await _register_components.opp)
 
     # Turn on fan
-    await common.async_turn_on.opp, _TEST_FAN)
+    await common.async_turn_on(opp, _TEST_FAN)
 
     # Set fan's speed to 'invalid'
-    await common.async_set_speed.opp, _TEST_FAN, "invalid")
+    await common.async_set_speed(opp, _TEST_FAN, "invalid")
 
     # verify speed is unchanged
-    assert.opp.states.get(_SPEED_INPUT_SELECT).state == ""
-    _verify.opp, STATE_ON, None, 0, None, None, None)
+    assert opp.states.get(_SPEED_INPUT_SELECT).state == ""
+    _verify(opp, STATE_ON, None, 0, None, None, None)
 
 
-async def test_set_invalid_speed.opp, calls):
+async def test_set_invalid_speed(opp, calls):
     """Test set invalid speed when fan has valid speed."""
     await _register_components.opp)
 
     # Turn on fan
-    await common.async_turn_on.opp, _TEST_FAN)
+    await common.async_turn_on(opp, _TEST_FAN)
 
     # Set fan's speed to high
-    await common.async_set_speed.opp, _TEST_FAN, SPEED_HIGH)
+    await common.async_set_speed(opp, _TEST_FAN, SPEED_HIGH)
 
     # verify
-    assert.opp.states.get(_SPEED_INPUT_SELECT).state == SPEED_HIGH
-    _verify.opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
+    assert opp.states.get(_SPEED_INPUT_SELECT).state == SPEED_HIGH
+    _verify(opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
 
     # Set fan's speed to 'invalid'
-    await common.async_set_speed.opp, _TEST_FAN, "invalid")
+    await common.async_set_speed(opp, _TEST_FAN, "invalid")
 
     # verify speed is unchanged
-    assert.opp.states.get(_SPEED_INPUT_SELECT).state == SPEED_HIGH
-    _verify.opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
+    assert opp.states.get(_SPEED_INPUT_SELECT).state == SPEED_HIGH
+    _verify(opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
 
 
-async def test_custom_speed_list.opp, calls):
+async def test_custom_speed_list(opp, calls):
     """Test set custom speed list."""
-    await _register_components.opp, ["1", "2", "3"])
+    await _register_components(opp, ["1", "2", "3"])
 
     # Turn on fan
-    await common.async_turn_on.opp, _TEST_FAN)
+    await common.async_turn_on(opp, _TEST_FAN)
 
     # Set fan's speed to '1'
-    await common.async_set_speed.opp, _TEST_FAN, "1")
+    await common.async_set_speed(opp, _TEST_FAN, "1")
 
     # verify
-    assert.opp.states.get(_SPEED_INPUT_SELECT).state == "1"
-    _verify.opp, STATE_ON, "1", 33, None, None, None)
+    assert opp.states.get(_SPEED_INPUT_SELECT).state == "1"
+    _verify(opp, STATE_ON, "1", 33, None, None, None)
 
     # Set fan's speed to 'medium' which is invalid
-    await common.async_set_speed.opp, _TEST_FAN, SPEED_MEDIUM)
+    await common.async_set_speed(opp, _TEST_FAN, SPEED_MEDIUM)
 
     # verify that speed is unchanged
-    assert.opp.states.get(_SPEED_INPUT_SELECT).state == "1"
-    _verify.opp, STATE_ON, "1", 33, None, None, None)
+    assert opp.states.get(_SPEED_INPUT_SELECT).state == "1"
+    _verify(opp, STATE_ON, "1", 33, None, None, None)
 
 
-async def test_preset_modes.opp, calls):
+async def test_preset_modes(opp, calls):
     """Test preset_modes."""
     await _register_components(
         opp. ["off", "low", "medium", "high", "auto", "smart"], ["auto", "smart"]
     )
 
     # Turn on fan
-    await common.async_turn_on.opp, _TEST_FAN)
+    await common.async_turn_on(opp, _TEST_FAN)
 
     # Set fan's preset_mode to "auto"
-    await common.async_set_preset_mode.opp, _TEST_FAN, "auto")
+    await common.async_set_preset_mode(opp, _TEST_FAN, "auto")
 
     # verify
-    assert.opp.states.get(_PRESET_MODE_INPUT_SELECT).state == "auto"
+    assert opp.states.get(_PRESET_MODE_INPUT_SELECT).state == "auto"
 
     # Set fan's preset_mode to "smart"
-    await common.async_set_preset_mode.opp, _TEST_FAN, "smart")
+    await common.async_set_preset_mode(opp, _TEST_FAN, "smart")
 
     # Verify fan's preset_mode is "smart"
-    assert.opp.states.get(_PRESET_MODE_INPUT_SELECT).state == "smart"
+    assert opp.states.get(_PRESET_MODE_INPUT_SELECT).state == "smart"
 
     # Set fan's preset_mode to "invalid"
-    await common.async_set_preset_mode.opp, _TEST_FAN, "invalid")
+    await common.async_set_preset_mode(opp, _TEST_FAN, "invalid")
 
     # Verify fan's preset_mode is still "smart"
-    assert.opp.states.get(_PRESET_MODE_INPUT_SELECT).state == "smart"
+    assert opp.states.get(_PRESET_MODE_INPUT_SELECT).state == "smart"
 
     # Set fan's preset_mode to "auto"
-    await common.async_turn_on.opp, _TEST_FAN, preset_mode="auto")
+    await common.async_turn_on(opp, _TEST_FAN, preset_mode="auto")
 
     # verify
-    assert.opp.states.get(_PRESET_MODE_INPUT_SELECT).state == "auto"
+    assert opp.states.get(_PRESET_MODE_INPUT_SELECT).state == "auto"
 
 
-async def test_set_osc.opp, calls):
+async def test_set_osc(opp, calls):
     """Test set oscillating."""
     await _register_components.opp)
 
     # Turn on fan
-    await common.async_turn_on.opp, _TEST_FAN)
+    await common.async_turn_on(opp, _TEST_FAN)
 
     # Set fan's osc to True
-    await common.async_oscillate.opp, _TEST_FAN, True)
+    await common.async_oscillate(opp, _TEST_FAN, True)
 
     # verify
-    assert.opp.states.get(_OSC_INPUT).state == "True"
-    _verify.opp, STATE_ON, None, 0, True, None, None)
+    assert opp.states.get(_OSC_INPUT).state == "True"
+    _verify(opp, STATE_ON, None, 0, True, None, None)
 
     # Set fan's osc to False
-    await common.async_oscillate.opp, _TEST_FAN, False)
+    await common.async_oscillate(opp, _TEST_FAN, False)
 
     # verify
-    assert.opp.states.get(_OSC_INPUT).state == "False"
-    _verify.opp, STATE_ON, None, 0, False, None, None)
+    assert opp.states.get(_OSC_INPUT).state == "False"
+    _verify(opp, STATE_ON, None, 0, False, None, None)
 
 
-async def test_set_invalid_osc_from_initial_state.opp, calls):
+async def test_set_invalid_osc_from_initial_state(opp, calls):
     """Test set invalid oscillating when fan is in initial state."""
     await _register_components.opp)
 
     # Turn on fan
-    await common.async_turn_on.opp, _TEST_FAN)
+    await common.async_turn_on(opp, _TEST_FAN)
 
     # Set fan's osc to 'invalid'
     with pytest.raises(vol.Invalid):
-        await common.async_oscillate.opp, _TEST_FAN, "invalid")
+        await common.async_oscillate(opp, _TEST_FAN, "invalid")
 
     # verify
-    assert.opp.states.get(_OSC_INPUT).state == ""
-    _verify.opp, STATE_ON, None, 0, None, None, None)
+    assert opp.states.get(_OSC_INPUT).state == ""
+    _verify(opp, STATE_ON, None, 0, None, None, None)
 
 
-async def test_set_invalid_osc.opp, calls):
+async def test_set_invalid_osc(opp, calls):
     """Test set invalid oscillating when fan has valid osc."""
     await _register_components.opp)
 
     # Turn on fan
-    await common.async_turn_on.opp, _TEST_FAN)
+    await common.async_turn_on(opp, _TEST_FAN)
 
     # Set fan's osc to True
-    await common.async_oscillate.opp, _TEST_FAN, True)
+    await common.async_oscillate(opp, _TEST_FAN, True)
 
     # verify
-    assert.opp.states.get(_OSC_INPUT).state == "True"
-    _verify.opp, STATE_ON, None, 0, True, None, None)
+    assert opp.states.get(_OSC_INPUT).state == "True"
+    _verify(opp, STATE_ON, None, 0, True, None, None)
 
     # Set fan's osc to None
     with pytest.raises(vol.Invalid):
-        await common.async_oscillate.opp, _TEST_FAN, None)
+        await common.async_oscillate(opp, _TEST_FAN, None)
 
     # verify osc is unchanged
-    assert.opp.states.get(_OSC_INPUT).state == "True"
-    _verify.opp, STATE_ON, None, 0, True, None, None)
+    assert opp.states.get(_OSC_INPUT).state == "True"
+    _verify(opp, STATE_ON, None, 0, True, None, None)
 
 
-async def test_set_direction.opp, calls):
+async def test_set_direction(opp, calls):
     """Test set valid direction."""
     await _register_components.opp)
 
     # Turn on fan
-    await common.async_turn_on.opp, _TEST_FAN)
+    await common.async_turn_on(opp, _TEST_FAN)
 
     # Set fan's direction to forward
-    await common.async_set_direction.opp, _TEST_FAN, DIRECTION_FORWARD)
+    await common.async_set_direction(opp, _TEST_FAN, DIRECTION_FORWARD)
 
     # verify
-    assert.opp.states.get(_DIRECTION_INPUT_SELECT).state == DIRECTION_FORWARD
-    _verify.opp, STATE_ON, None, 0, None, DIRECTION_FORWARD, None)
+    assert opp.states.get(_DIRECTION_INPUT_SELECT).state == DIRECTION_FORWARD
+    _verify(opp, STATE_ON, None, 0, None, DIRECTION_FORWARD, None)
 
     # Set fan's direction to reverse
-    await common.async_set_direction.opp, _TEST_FAN, DIRECTION_REVERSE)
+    await common.async_set_direction(opp, _TEST_FAN, DIRECTION_REVERSE)
 
     # verify
-    assert.opp.states.get(_DIRECTION_INPUT_SELECT).state == DIRECTION_REVERSE
-    _verify.opp, STATE_ON, None, 0, None, DIRECTION_REVERSE, None)
+    assert opp.states.get(_DIRECTION_INPUT_SELECT).state == DIRECTION_REVERSE
+    _verify(opp, STATE_ON, None, 0, None, DIRECTION_REVERSE, None)
 
 
-async def test_set_invalid_direction_from_initial_stage.opp, calls):
+async def test_set_invalid_direction_from_initial_stage(opp, calls):
     """Test set invalid direction when fan is in initial state."""
     await _register_components.opp)
 
     # Turn on fan
-    await common.async_turn_on.opp, _TEST_FAN)
+    await common.async_turn_on(opp, _TEST_FAN)
 
     # Set fan's direction to 'invalid'
-    await common.async_set_direction.opp, _TEST_FAN, "invalid")
+    await common.async_set_direction(opp, _TEST_FAN, "invalid")
 
     # verify direction is unchanged
-    assert.opp.states.get(_DIRECTION_INPUT_SELECT).state == ""
-    _verify.opp, STATE_ON, None, 0, None, None, None)
+    assert opp.states.get(_DIRECTION_INPUT_SELECT).state == ""
+    _verify(opp, STATE_ON, None, 0, None, None, None)
 
 
-async def test_set_invalid_direction.opp, calls):
+async def test_set_invalid_direction(opp, calls):
     """Test set invalid direction when fan has valid direction."""
     await _register_components.opp)
 
     # Turn on fan
-    await common.async_turn_on.opp, _TEST_FAN)
+    await common.async_turn_on(opp, _TEST_FAN)
 
     # Set fan's direction to forward
-    await common.async_set_direction.opp, _TEST_FAN, DIRECTION_FORWARD)
+    await common.async_set_direction(opp, _TEST_FAN, DIRECTION_FORWARD)
 
     # verify
-    assert.opp.states.get(_DIRECTION_INPUT_SELECT).state == DIRECTION_FORWARD
-    _verify.opp, STATE_ON, None, 0, None, DIRECTION_FORWARD, None)
+    assert opp.states.get(_DIRECTION_INPUT_SELECT).state == DIRECTION_FORWARD
+    _verify(opp, STATE_ON, None, 0, None, DIRECTION_FORWARD, None)
 
     # Set fan's direction to 'invalid'
-    await common.async_set_direction.opp, _TEST_FAN, "invalid")
+    await common.async_set_direction(opp, _TEST_FAN, "invalid")
 
     # verify direction is unchanged
-    assert.opp.states.get(_DIRECTION_INPUT_SELECT).state == DIRECTION_FORWARD
-    _verify.opp, STATE_ON, None, 0, None, DIRECTION_FORWARD, None)
+    assert opp.states.get(_DIRECTION_INPUT_SELECT).state == DIRECTION_FORWARD
+    _verify(opp, STATE_ON, None, 0, None, DIRECTION_FORWARD, None)
 
 
 def _verify(
@@ -922,7 +922,7 @@ def _verify(
     assert attributes.get(ATTR_PRESET_MODE) == expected_preset_mode
 
 
-async def _register_components.opp, speed_list=None, preset_modes=None):
+async def _register_components(opp, speed_list=None, preset_modes=None):
     """Register basic components for testing."""
     with assert_setup_component(1, "input_boolean"):
         assert await setup.async_setup_component(

@@ -70,7 +70,7 @@ async def test_setup_opp, mock_feed):
     # Patching 'utcnow' to gain more control over the timed update.
     with patch("openpeerpower.util.dt.utcnow", return_value=utcnow):
         with assert_setup_component(1, sensor.DOMAIN):
-            assert await async_setup_component.opp, sensor.DOMAIN, VALID_CONFIG)
+            assert await async_setup_component(opp, sensor.DOMAIN, VALID_CONFIG)
             # Artificially trigger update.
             opp.bus.fire(EVENT_OPENPEERPOWER_START)
             # Collect events.
@@ -94,7 +94,7 @@ async def test_setup_opp, mock_feed):
             # Simulate an update - empty data, but successful update,
             # so no changes to entities.
             mock_feed.return_value.update.return_value = "OK_NO_DATA", None
-            async_fire_time_changed.opp, utcnow + geo_rss_events.SCAN_INTERVAL)
+            async_fire_time_changed(opp, utcnow + geo_rss_events.SCAN_INTERVAL)
             await opp.async_block_till_done()
 
             all_states = opp.states.async_all()
@@ -104,7 +104,7 @@ async def test_setup_opp, mock_feed):
 
             # Simulate an update - empty data, removes all entities
             mock_feed.return_value.update.return_value = "ERROR", None
-            async_fire_time_changed.opp, utcnow + 2 * geo_rss_events.SCAN_INTERVAL)
+            async_fire_time_changed(opp, utcnow + 2 * geo_rss_events.SCAN_INTERVAL)
             await opp.async_block_till_done()
 
             all_states = opp.states.async_all()
@@ -118,7 +118,7 @@ async def test_setup_opp, mock_feed):
             }
 
 
-async def test_setup_with_categories.opp, mock_feed):
+async def test_setup_with_categories(opp, mock_feed):
     """Test the general setup of the platform."""
     # Set up some mock feed entries for this test.
     mock_entry_1 = _generate_mock_feed_entry(

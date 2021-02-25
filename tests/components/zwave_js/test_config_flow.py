@@ -219,9 +219,9 @@ async def test_manual_errors(
 async def test_manual_already_configured(opp):
     """Test that only one unique instance is allowed."""
     entry = MockConfigEntry(domain=DOMAIN, data={}, title=TITLE, unique_id=1234)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -245,7 +245,7 @@ async def test_supervisor_discovery(
     opp. supervisor, addon_running, addon_options, get_addon_discovery_info
 ):
     """Test flow started from Supervisor discovery."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     addon_options["device"] = "/test"
     addon_options["network_key"] = "abc123"
@@ -286,7 +286,7 @@ async def test_supervisor_discovery_cannot_connect(
     opp. supervisor, get_addon_discovery_info
 ):
     """Test Supervisor discovery and cannot connect."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -303,7 +303,7 @@ async def test_clean_discovery_on_user_create(
     opp. supervisor, addon_running, addon_options, get_addon_discovery_info
 ):
     """Test discovery flow is cleaned up when a user flow is finished."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     addon_options["device"] = "/test"
     addon_options["network_key"] = "abc123"
@@ -362,12 +362,12 @@ async def test_abort_discovery_with_existing_entry(
     opp. supervisor, addon_running, addon_options
 ):
     """Test discovery flow is aborted if an entry already exists."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(
         domain=DOMAIN, data={"url": "ws://localhost:3000"}, title=TITLE, unique_id=1234
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -386,7 +386,7 @@ async def test_discovery_addon_not_running(
 ):
     """Test discovery with add-on already installed but not running."""
     addon_options["device"] = None
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -408,7 +408,7 @@ async def test_discovery_addon_not_installed(
 ):
     """Test discovery with add-on not installed."""
     addon_installed.return_value["version"] = None
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -432,9 +432,9 @@ async def test_discovery_addon_not_installed(
     assert result["step_id"] == "start_addon"
 
 
-async def test_not_addon.opp, supervisor):
+async def test_not_addon(opp, supervisor):
     """Test opting out of add-on on Supervisor."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -488,7 +488,7 @@ async def test_addon_running(
     """Test add-on already running on Supervisor."""
     addon_options["device"] = "/test"
     addon_options["network_key"] = "abc123"
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -563,7 +563,7 @@ async def test_addon_running_failures(
     abort_reason,
 ):
     """Test all failures when add-on is running."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -586,9 +586,9 @@ async def test_addon_running_already_configured(
 ):
     """Test that only one unique instance is allowed when add-on is running."""
     entry = MockConfigEntry(domain=DOMAIN, data={}, title=TITLE, unique_id=1234)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -615,7 +615,7 @@ async def test_addon_installed(
     get_addon_discovery_info,
 ):
     """Test add-on already installed but not running on Supervisor."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -669,7 +669,7 @@ async def test_addon_installed_start_failure(
     get_addon_discovery_info,
 ):
     """Test add-on start failure when add-on is installed."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -731,7 +731,7 @@ async def test_addon_installed_failures(
     abort_reason,
 ):
     """Test all failures when add-on is installed."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -767,9 +767,9 @@ async def test_addon_installed_already_configured(
 ):
     """Test that only one unique instance is allowed when add-on is installed."""
     entry = MockConfigEntry(domain=DOMAIN, data={}, title=TITLE, unique_id=1234)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -805,7 +805,7 @@ async def test_addon_not_installed(
 ):
     """Test add-on not installed."""
     addon_installed.return_value["version"] = None
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -852,11 +852,11 @@ async def test_addon_not_installed(
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_install_addon_failure.opp, supervisor, addon_installed, install_addon):
+async def test_install_addon_failure(opp, supervisor, addon_installed, install_addon):
     """Test add-on install failure."""
     addon_installed.return_value["version"] = None
     install_addon.side_effect = OppioAPIError()
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

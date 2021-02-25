@@ -23,7 +23,7 @@ def _mock_rachio_return_value(get=None, info=None):
 
 async def test_form.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -110,7 +110,7 @@ async def test_form_cannot_connect.opp):
 
 async def test_form_homekit.opp):
     """Test that we abort from homekit if rachio is already setup."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -127,7 +127,7 @@ async def test_form_homekit.opp):
     assert flow["context"]["unique_id"] == "AA:BB:CC:DD:EE:FF"
 
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_API_KEY: "api_key"})
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

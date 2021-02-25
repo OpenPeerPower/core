@@ -32,7 +32,7 @@ async def test_signal_messenger_init(opp):
         await opp.async_block_till_done()
 
         # Test that service loads successfully
-        assert.opp.services.has_service(BASE_COMPONENT, "test")
+        assert opp.services.has_service(BASE_COMPONENT, "test")
 
 
 class TestSignalMesssenger(unittest.TestCase):

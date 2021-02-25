@@ -21,7 +21,7 @@ async def test_abort_if_already_setup_opp):
     flow = config_flow.EcobeeFlowHandler()
     flow.opp = opp
 
-    MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
+    MockConfigEntry(domain=DOMAIN).add_to_opp(opp)
 
     result = await flow.async_step_user()
 

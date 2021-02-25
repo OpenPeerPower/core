@@ -129,7 +129,7 @@ async def test_verify_redirect_uri():
         )
 
 
-async def test_find_link_tag.opp, mock_session):
+async def test_find_link_tag(opp, mock_session):
     """Test finding link tag."""
     mock_session.get(
         "http://127.0.0.1:8000",
@@ -145,12 +145,12 @@ async def test_find_link_tag.opp, mock_session):
 </html>
 """,
     )
-    redirect_uris = await indieauth.fetch_redirect_uris.opp, "http://127.0.0.1:8000")
+    redirect_uris = await indieauth.fetch_redirect_uris(opp, "http://127.0.0.1:8000")
 
     assert redirect_uris == [.opp://oauth2_redirect", "http://127.0.0.1:8000/beer"]
 
 
-async def test_find_link_tag_max_size.opp, mock_session):
+async def test_find_link_tag_max_size(opp, mock_session):
     """Test finding link tag."""
     text = "".join(
         [
@@ -160,7 +160,7 @@ async def test_find_link_tag_max_size.opp, mock_session):
         ]
     )
     mock_session.get("http://127.0.0.1:8000", text=text)
-    redirect_uris = await indieauth.fetch_redirect_uris.opp, "http://127.0.0.1:8000")
+    redirect_uris = await indieauth.fetch_redirect_uris(opp, "http://127.0.0.1:8000")
 
     assert redirect_uris == ["http://127.0.0.1:8000/wine"]
 

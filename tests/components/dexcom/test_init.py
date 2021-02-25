@@ -23,7 +23,7 @@ async def test_setup_entry_account_error(opp):
         "openpeerpower.components.dexcom.Dexcom",
         side_effect=AccountError,
     ):
-        entry.add_to.opp.opp)
+        entry.add_to_opp(opp)
         result = await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
@@ -43,7 +43,7 @@ async def test_setup_entry_session_error(opp):
         "openpeerpower.components.dexcom.Dexcom",
         side_effect=SessionError,
     ):
-        entry.add_to.opp.opp)
+        entry.add_to_opp(opp)
         result = await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 

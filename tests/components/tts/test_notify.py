@@ -52,14 +52,14 @@ async def test_setup_platform.opp):
         }
     }
     with assert_setup_component(1, notify.DOMAIN):
-        assert await async_setup_component.opp, notify.DOMAIN, config)
+        assert await async_setup_component(opp, notify.DOMAIN, config)
 
-    assert.opp.services.has_service(notify.DOMAIN, "tts_test")
+    assert opp.services.has_service(notify.DOMAIN, "tts_test")
 
 
 async def test_setup_component_and_test_service.opp):
     """Set up the demo platform and call service."""
-    calls = async_mock_service.opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
+    calls = async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 
     config = {
         tts.DOMAIN: {"platform": "demo"},
@@ -74,10 +74,10 @@ async def test_setup_component_and_test_service.opp):
     }
 
     with assert_setup_component(1, tts.DOMAIN):
-        assert await async_setup_component.opp, tts.DOMAIN, config)
+        assert await async_setup_component(opp, tts.DOMAIN, config)
 
     with assert_setup_component(1, notify.DOMAIN):
-        assert await async_setup_component.opp, notify.DOMAIN, config)
+        assert await async_setup_component(opp, notify.DOMAIN, config)
 
     await opp.services.async_call(
         notify.DOMAIN,

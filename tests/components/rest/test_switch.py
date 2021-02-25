@@ -35,7 +35,7 @@ PARAMS = None
 
 async def test_setup_missing_config(opp):
     """Test setup with configuration missing required entries."""
-    assert not await rest.async_setup_platform.opp, {CONF_PLATFORM: DOMAIN}, None)
+    assert not await rest.async_setup_platform(opp, {CONF_PLATFORM: DOMAIN}, None)
 
 
 async def test_setup_missing_schema.opp):
@@ -47,7 +47,7 @@ async def test_setup_missing_schema.opp):
     )
 
 
-async def test_setup_failed_connect.opp, aioclient_mock):
+async def test_setup_failed_connect(opp, aioclient_mock):
     """Test setup when connection error occurs."""
     aioclient_mock.get("http://localhost", exc=aiohttp.ClientError)
     assert not await rest.async_setup_platform(
@@ -57,7 +57,7 @@ async def test_setup_failed_connect.opp, aioclient_mock):
     )
 
 
-async def test_setup_timeout.opp, aioclient_mock):
+async def test_setup_timeout(opp, aioclient_mock):
     """Test setup when connection timeout occurs."""
     aioclient_mock.get("http://localhost", exc=asyncio.TimeoutError())
     assert not await rest.async_setup_platform(
@@ -67,7 +67,7 @@ async def test_setup_timeout.opp, aioclient_mock):
     )
 
 
-async def test_setup_minimum.opp, aioclient_mock):
+async def test_setup_minimum(opp, aioclient_mock):
     """Test setup with minimum configuration."""
     aioclient_mock.get("http://localhost", status=HTTP_OK)
     with assert_setup_component(1, SWITCH_DOMAIN):
@@ -85,7 +85,7 @@ async def test_setup_minimum.opp, aioclient_mock):
     assert aioclient_mock.call_count == 1
 
 
-async def test_setup_query_params.opp, aioclient_mock):
+async def test_setup_query_params(opp, aioclient_mock):
     """Test setup with query params."""
     aioclient_mock.get("http://localhost/?search=something", status=HTTP_OK)
     with assert_setup_component(1, SWITCH_DOMAIN):
@@ -128,7 +128,7 @@ async def test_setup_opp, aioclient_mock):
     assert_setup_component(1, SWITCH_DOMAIN)
 
 
-async def test_setup_with_state_resource.opp, aioclient_mock):
+async def test_setup_with_state_resource(opp, aioclient_mock):
     """Test setup with valid configuration."""
     aioclient_mock.get("http://localhost", status=HTTP_NOT_FOUND)
     aioclient_mock.get("http://localhost/state", status=HTTP_OK)
@@ -188,7 +188,7 @@ def test_is_on_before_update.opp):
     assert switch.is_on is None
 
 
-async def test_turn_on_success.opp, aioclient_mock):
+async def test_turn_on_success(opp, aioclient_mock):
     """Test turn_on."""
     aioclient_mock.post(RESOURCE, status=HTTP_OK)
     switch, body_on, body_off = _setup_test_switch.opp)
@@ -198,7 +198,7 @@ async def test_turn_on_success.opp, aioclient_mock):
     assert switch.is_on
 
 
-async def test_turn_on_status_not_ok.opp, aioclient_mock):
+async def test_turn_on_status_not_ok(opp, aioclient_mock):
     """Test turn_on when error status returned."""
     aioclient_mock.post(RESOURCE, status=HTTP_INTERNAL_SERVER_ERROR)
     switch, body_on, body_off = _setup_test_switch.opp)
@@ -208,7 +208,7 @@ async def test_turn_on_status_not_ok.opp, aioclient_mock):
     assert switch.is_on is None
 
 
-async def test_turn_on_timeout.opp, aioclient_mock):
+async def test_turn_on_timeout(opp, aioclient_mock):
     """Test turn_on when timeout occurs."""
     aioclient_mock.post(RESOURCE, status=HTTP_INTERNAL_SERVER_ERROR)
     switch, body_on, body_off = _setup_test_switch.opp)
@@ -217,7 +217,7 @@ async def test_turn_on_timeout.opp, aioclient_mock):
     assert switch.is_on is None
 
 
-async def test_turn_off_success.opp, aioclient_mock):
+async def test_turn_off_success(opp, aioclient_mock):
     """Test turn_off."""
     aioclient_mock.post(RESOURCE, status=HTTP_OK)
     switch, body_on, body_off = _setup_test_switch.opp)
@@ -227,7 +227,7 @@ async def test_turn_off_success.opp, aioclient_mock):
     assert not switch.is_on
 
 
-async def test_turn_off_status_not_ok.opp, aioclient_mock):
+async def test_turn_off_status_not_ok(opp, aioclient_mock):
     """Test turn_off when error status returned."""
     aioclient_mock.post(RESOURCE, status=HTTP_INTERNAL_SERVER_ERROR)
     switch, body_on, body_off = _setup_test_switch.opp)
@@ -237,7 +237,7 @@ async def test_turn_off_status_not_ok.opp, aioclient_mock):
     assert switch.is_on is None
 
 
-async def test_turn_off_timeout.opp, aioclient_mock):
+async def test_turn_off_timeout(opp, aioclient_mock):
     """Test turn_off when timeout occurs."""
     aioclient_mock.post(RESOURCE, exc=asyncio.TimeoutError())
     switch, body_on, body_off = _setup_test_switch.opp)
@@ -246,7 +246,7 @@ async def test_turn_off_timeout.opp, aioclient_mock):
     assert switch.is_on is None
 
 
-async def test_update_when_on.opp, aioclient_mock):
+async def test_update_when_on(opp, aioclient_mock):
     """Test update when switch is on."""
     switch, body_on, body_off = _setup_test_switch.opp)
     aioclient_mock.get(RESOURCE, text=body_on.template)
@@ -255,7 +255,7 @@ async def test_update_when_on.opp, aioclient_mock):
     assert switch.is_on
 
 
-async def test_update_when_off.opp, aioclient_mock):
+async def test_update_when_off(opp, aioclient_mock):
     """Test update when switch is off."""
     switch, body_on, body_off = _setup_test_switch.opp)
     aioclient_mock.get(RESOURCE, text=body_off.template)
@@ -264,7 +264,7 @@ async def test_update_when_off.opp, aioclient_mock):
     assert not switch.is_on
 
 
-async def test_update_when_unknown.opp, aioclient_mock):
+async def test_update_when_unknown(opp, aioclient_mock):
     """Test update when unknown status returned."""
     aioclient_mock.get(RESOURCE, text="unknown status")
     switch, body_on, body_off = _setup_test_switch.opp)
@@ -273,7 +273,7 @@ async def test_update_when_unknown.opp, aioclient_mock):
     assert switch.is_on is None
 
 
-async def test_update_timeout.opp, aioclient_mock):
+async def test_update_timeout(opp, aioclient_mock):
     """Test update when timeout occurs."""
     aioclient_mock.get(RESOURCE, exc=asyncio.TimeoutError())
     switch, body_on, body_off = _setup_test_switch.opp)

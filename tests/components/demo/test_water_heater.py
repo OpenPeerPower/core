@@ -42,7 +42,7 @@ async def test_set_only_target_temp_bad_attr.opp):
     state = opp.states.get(ENTITY_WATER_HEATER)
     assert state.attributes.get("temperature") == 119
     with pytest.raises(vol.Invalid):
-        await common.async_set_temperature.opp, None, ENTITY_WATER_HEATER)
+        await common.async_set_temperature(opp, None, ENTITY_WATER_HEATER)
     assert state.attributes.get("temperature") == 119
 
 
@@ -50,7 +50,7 @@ async def test_set_only_target_temp.opp):
     """Test the setting of the target temperature."""
     state = opp.states.get(ENTITY_WATER_HEATER)
     assert state.attributes.get("temperature") == 119
-    await common.async_set_temperature.opp, 110, ENTITY_WATER_HEATER)
+    await common.async_set_temperature(opp, 110, ENTITY_WATER_HEATER)
     state = opp.states.get(ENTITY_WATER_HEATER)
     assert state.attributes.get("temperature") == 110
 
@@ -64,7 +64,7 @@ async def test_set_operation_bad_attr_and_state.opp):
     assert state.attributes.get("operation_mode") == "eco"
     assert state.state == "eco"
     with pytest.raises(vol.Invalid):
-        await common.async_set_operation_mode.opp, None, ENTITY_WATER_HEATER)
+        await common.async_set_operation_mode(opp, None, ENTITY_WATER_HEATER)
     state = opp.states.get(ENTITY_WATER_HEATER)
     assert state.attributes.get("operation_mode") == "eco"
     assert state.state == "eco"
@@ -75,7 +75,7 @@ async def test_set_operation.opp):
     state = opp.states.get(ENTITY_WATER_HEATER)
     assert state.attributes.get("operation_mode") == "eco"
     assert state.state == "eco"
-    await common.async_set_operation_mode.opp, "electric", ENTITY_WATER_HEATER)
+    await common.async_set_operation_mode(opp, "electric", ENTITY_WATER_HEATER)
     state = opp.states.get(ENTITY_WATER_HEATER)
     assert state.attributes.get("operation_mode") == "electric"
     assert state.state == "electric"
@@ -86,20 +86,20 @@ async def test_set_away_mode_bad_attr.opp):
     state = opp.states.get(ENTITY_WATER_HEATER)
     assert state.attributes.get("away_mode") == "off"
     with pytest.raises(vol.Invalid):
-        await common.async_set_away_mode.opp, None, ENTITY_WATER_HEATER)
+        await common.async_set_away_mode(opp, None, ENTITY_WATER_HEATER)
     assert state.attributes.get("away_mode") == "off"
 
 
 async def test_set_away_mode_on.opp):
     """Test setting the away mode on/true."""
-    await common.async_set_away_mode.opp, True, ENTITY_WATER_HEATER)
+    await common.async_set_away_mode(opp, True, ENTITY_WATER_HEATER)
     state = opp.states.get(ENTITY_WATER_HEATER)
     assert state.attributes.get("away_mode") == "on"
 
 
 async def test_set_away_mode_off.opp):
     """Test setting the away mode off/false."""
-    await common.async_set_away_mode.opp, False, ENTITY_WATER_HEATER_CELSIUS)
+    await common.async_set_away_mode(opp, False, ENTITY_WATER_HEATER_CELSIUS)
     state = opp.states.get(ENTITY_WATER_HEATER_CELSIUS)
     assert state.attributes.get("away_mode") == "off"
 
@@ -108,6 +108,6 @@ async def test_set_only_target_temp_with_convert.opp):
     """Test the setting of the target temperature."""
     state = opp.states.get(ENTITY_WATER_HEATER_CELSIUS)
     assert state.attributes.get("temperature") == 113
-    await common.async_set_temperature.opp, 114, ENTITY_WATER_HEATER_CELSIUS)
+    await common.async_set_temperature(opp, 114, ENTITY_WATER_HEATER_CELSIUS)
     state = opp.states.get(ENTITY_WATER_HEATER_CELSIUS)
     assert state.attributes.get("temperature") == 114

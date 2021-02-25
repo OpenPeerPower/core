@@ -208,7 +208,7 @@ async def setup_integration(
         },
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     mock_connection(
         aioclient_mock,

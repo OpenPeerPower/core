@@ -24,7 +24,7 @@ def mock_debugpy():
 
 async def test_default.opp: OpenPeerPower, mock_debugpy) -> None:
     """Test if the default settings work."""
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {}})
 
     mock_debugpy.listen.assert_called_once_with(("0.0.0.0", 5678))
     mock_debugpy.wait_for_client.assert_not_called()
@@ -33,7 +33,7 @@ async def test_default.opp: OpenPeerPower, mock_debugpy) -> None:
 
 async def test_wait_on_startup.opp: OpenPeerPower, mock_debugpy) -> None:
     """Test if the waiting for client is called."""
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_WAIT: True}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_WAIT: True}})
 
     mock_debugpy.listen.assert_called_once_with(("0.0.0.0", 5678))
     mock_debugpy.wait_for_client.assert_called_once()

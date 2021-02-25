@@ -76,19 +76,19 @@ def feature_fixture(request):
     return request.getfixturevalue(request.param)
 
 
-async def async_setup_entities.opp, config, entity_ids):
+async def async_setup_entities(opp, config, entity_ids):
     """Return configured entries with the given entity ids."""
 
     config_entry = mock_config()
-    config_entry.add_to.opp.opp)
-    assert await async_setup_component.opp, DOMAIN, config)
+    config_entry.add_to_opp(opp)
+    assert await async_setup_component(opp, DOMAIN, config)
     await opp.async_block_till_done()
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
     return [entity_registry.async_get(entity_id) for entity_id in entity_ids]
 
 
-async def async_setup_entity.opp, config, entity_id):
+async def async_setup_entity(opp, config, entity_id):
     """Return a configured entry with the given entity_id."""
 
-    return (await async_setup_entities.opp, config, [entity_id]))[0]
+    return (await async_setup_entities(opp, config, [entity_id]))[0]

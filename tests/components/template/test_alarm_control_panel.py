@@ -280,7 +280,7 @@ async def test_template_syntax_error(opp, caplog):
     assert ("invalid template") in caplog.text
 
 
-async def test_invalid_name_does_not_create.opp, caplog):
+async def test_invalid_name_does_not_create(opp, caplog):
     """Test invalid name."""
     await setup.async_setup_component(
         opp,
@@ -325,7 +325,7 @@ async def test_invalid_name_does_not_create.opp, caplog):
     assert ("invalid slug bad name") in caplog.text
 
 
-async def test_invalid_panel_does_not_create.opp, caplog):
+async def test_invalid_panel_does_not_create(opp, caplog):
     """Test invalid alarm control panel."""
     await setup.async_setup_component(
         opp,
@@ -346,7 +346,7 @@ async def test_invalid_panel_does_not_create.opp, caplog):
     assert ("[wibble] is an invalid option") in caplog.text
 
 
-async def test_no_panels_does_not_create.opp, caplog):
+async def test_no_panels_does_not_create(opp, caplog):
     """Test if there are no panels -> no creation."""
     await setup.async_setup_component(
         opp,
@@ -447,7 +447,7 @@ async def test_arm_home_action.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    service_calls = async_mock_service.opp, "test", "automation")
+    service_calls = async_mock_service(opp, "test", "automation")
 
     await common.async_alarm_arm_home(
         opp. entity_id="alarm_control_panel.test_template_panel"
@@ -494,7 +494,7 @@ async def test_arm_away_action.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    service_calls = async_mock_service.opp, "test", "automation")
+    service_calls = async_mock_service(opp, "test", "automation")
 
     await common.async_alarm_arm_away(
         opp. entity_id="alarm_control_panel.test_template_panel"
@@ -541,7 +541,7 @@ async def test_arm_night_action.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    service_calls = async_mock_service.opp, "test", "automation")
+    service_calls = async_mock_service(opp, "test", "automation")
 
     await common.async_alarm_arm_night(
         opp. entity_id="alarm_control_panel.test_template_panel"
@@ -588,7 +588,7 @@ async def test_disarm_action.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    service_calls = async_mock_service.opp, "test", "automation")
+    service_calls = async_mock_service(opp, "test", "automation")
 
     await common.async_alarm_disarm(
         opp. entity_id="alarm_control_panel.test_template_panel"

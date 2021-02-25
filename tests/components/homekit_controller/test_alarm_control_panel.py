@@ -26,9 +26,9 @@ def create_security_system_service(accessory):
     targ_state.value = 50
 
 
-async def test_switch_change_alarm_state.opp, utcnow):
+async def test_switch_change_alarm_state(opp, utcnow):
     """Test that we can turn a HomeKit alarm on and off again."""
-    helper = await setup_test_component.opp, create_security_system_service)
+    helper = await setup_test_component(opp, create_security_system_service)
 
     await opp.services.async_call(
         "alarm_control_panel",
@@ -63,9 +63,9 @@ async def test_switch_change_alarm_state.opp, utcnow):
     assert helper.characteristics[TARGET_STATE].value == 3
 
 
-async def test_switch_read_alarm_state.opp, utcnow):
+async def test_switch_read_alarm_state(opp, utcnow):
     """Test that we can read the state of a HomeKit alarm accessory."""
-    helper = await setup_test_component.opp, create_security_system_service)
+    helper = await setup_test_component(opp, create_security_system_service)
 
     helper.characteristics[CURRENT_STATE].value = 0
     state = await helper.poll_and_get_state()

@@ -21,7 +21,7 @@ def _get_mocked_flume_device_list():
 
 async def test_form.opp):
     """Test we get the form and can setup from user input."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -67,7 +67,7 @@ async def test_form.opp):
 
 async def test_form_import.opp):
     """Test we can import the sensor platform config."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     mock_flume_device_list = _get_mocked_flume_device_list()
 
     with patch(

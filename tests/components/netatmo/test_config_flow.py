@@ -23,7 +23,7 @@ VALID_CONFIG = {}
 
 async def test_abort_if_existing_entry.opp):
     """Check flow abort when an entry already exist."""
-    MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
+    MockConfigEntry(domain=DOMAIN).add_to_opp(opp)
 
     flow = config_flow.NetatmoFlowHandler()
     flow.opp = opp
@@ -141,7 +141,7 @@ async def test_option_flow.opp):
         data=VALID_CONFIG,
         options={},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(config_entry.entry_id)
 
@@ -199,7 +199,7 @@ async def test_option_flow_wrong_coordinates.opp):
         data=VALID_CONFIG,
         options={},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(config_entry.entry_id)
 

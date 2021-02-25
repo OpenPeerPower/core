@@ -46,7 +46,7 @@ async def test_config_not_ready.opp):
         "openpeerpower.components.accuweather.AccuWeather._async_get_data",
         side_effect=ApiError("API Error"),
     ):
-        entry.add_to.opp.opp)
+        entry.add_to_opp(opp)
         await opp.config_entries.async_setup(entry.entry_id)
         assert entry.state == ENTRY_STATE_SETUP_RETRY
 
@@ -81,7 +81,7 @@ async def test_update_interval.opp):
 
         assert mock_current.call_count == 0
 
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
         assert mock_current.call_count == 1
@@ -89,7 +89,7 @@ async def test_update_interval.opp):
 
 async def test_update_interval_forecast.opp):
     """Test correct update interval when forecast is True."""
-    entry = await init_integration.opp, forecast=True)
+    entry = await init_integration(opp, forecast=True)
 
     assert entry.state == ENTRY_STATE_LOADED
 
@@ -108,7 +108,7 @@ async def test_update_interval_forecast.opp):
         assert mock_current.call_count == 0
         assert mock_forecast.call_count == 0
 
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
         assert mock_current.call_count == 1

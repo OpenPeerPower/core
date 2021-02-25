@@ -9,9 +9,9 @@ from openpeerpower.const import ATTR_DEVICE_CLASS
 from .common import setup_ozw
 
 
-async def test_binary_sensor.opp, generic_data, binary_sensor_msg):
+async def test_binary_sensor(opp, generic_data, binary_sensor_msg):
     """Test setting up config entry."""
-    receive_msg = await setup_ozw.opp, fixture=generic_data)
+    receive_msg = await setup_ozw(opp, fixture=generic_data)
 
     # Test Legacy sensor (disabled by default)
     registry = await opp.helpers.entity_registry.async_get_registry()
@@ -43,7 +43,7 @@ async def test_binary_sensor.opp, generic_data, binary_sensor_msg):
     assert state.state == "on"
 
 
-async def test_sensor_enabled.opp, generic_data, binary_sensor_alt_msg):
+async def test_sensor_enabled(opp, generic_data, binary_sensor_alt_msg):
     """Test enabling a legacy binary_sensor."""
 
     registry = await opp.helpers.entity_registry.async_get_registry()
@@ -57,7 +57,7 @@ async def test_sensor_enabled.opp, generic_data, binary_sensor_alt_msg):
     )
     assert entry.disabled is False
 
-    receive_msg = await setup_ozw.opp, fixture=generic_data)
+    receive_msg = await setup_ozw(opp, fixture=generic_data)
     receive_msg(binary_sensor_alt_msg)
     await opp.async_block_till_done()
 

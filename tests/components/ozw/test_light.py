@@ -4,9 +4,9 @@ from openpeerpower.components.ozw.light import byte_to_zwave_brightness
 from .common import setup_ozw
 
 
-async def test_light.opp, light_data, light_msg, light_rgb_msg, sent_messages):
+async def test_light(opp, light_data, light_msg, light_rgb_msg, sent_messages):
     """Test setting up config entry."""
-    receive_message = await setup_ozw.opp, fixture=light_data)
+    receive_message = await setup_ozw(opp, fixture=light_data)
 
     # Test loaded
     state = opp.states.get("light.led_bulb_6_multi_colour_level")
@@ -354,7 +354,7 @@ async def test_pure_rgb_dimmer_light(
     opp. light_data, light_pure_rgb_msg, sent_messages
 ):
     """Test light with no color channels command class."""
-    receive_message = await setup_ozw.opp, fixture=light_data)
+    receive_message = await setup_ozw(opp, fixture=light_data)
 
     # Test loaded
     state = opp.states.get("light.kitchen_rgb_strip_level")
@@ -392,9 +392,9 @@ async def test_pure_rgb_dimmer_light(
     assert state.attributes["hs_color"] == (300.0, 70.196)
 
 
-async def test_no_rgb_light.opp, light_data, light_no_rgb_msg, sent_messages):
+async def test_no_rgb_light(opp, light_data, light_no_rgb_msg, sent_messages):
     """Test setting up config entry."""
-    receive_message = await setup_ozw.opp, fixture=light_data)
+    receive_message = await setup_ozw(opp, fixture=light_data)
 
     # Test loaded no RGBW support (dimmer only)
     state = opp.states.get("light.master_bedroom_l_level")
@@ -435,7 +435,7 @@ async def test_no_ww_light(
     opp. light_no_ww_data, light_msg, light_rgb_msg, sent_messages
 ):
     """Test setting up config entry."""
-    receive_message = await setup_ozw.opp, fixture=light_no_ww_data)
+    receive_message = await setup_ozw(opp, fixture=light_no_ww_data)
 
     # Test loaded no ww support
     state = opp.states.get("light.led_bulb_6_multi_colour_level")
@@ -479,7 +479,7 @@ async def test_no_cw_light(
     opp. light_no_cw_data, light_msg, light_rgb_msg, sent_messages
 ):
     """Test setting up config entry."""
-    receive_message = await setup_ozw.opp, fixture=light_no_cw_data)
+    receive_message = await setup_ozw(opp, fixture=light_no_cw_data)
 
     # Test loaded no cw support
     state = opp.states.get("light.led_bulb_6_multi_colour_level")
@@ -519,9 +519,9 @@ async def test_no_cw_light(
     assert state.attributes["white_value"] == 190
 
 
-async def test_wc_light.opp, light_wc_data, light_msg, light_rgb_msg, sent_messages):
+async def test_wc_light(opp, light_wc_data, light_msg, light_rgb_msg, sent_messages):
     """Test setting up config entry."""
-    receive_message = await setup_ozw.opp, fixture=light_wc_data)
+    receive_message = await setup_ozw(opp, fixture=light_wc_data)
 
     # Test loaded only white LED support
     state = opp.states.get("light.led_bulb_6_multi_colour_level")
@@ -561,9 +561,9 @@ async def test_wc_light.opp, light_wc_data, light_msg, light_rgb_msg, sent_messa
     assert state.attributes["color_temp"] == 190
 
 
-async def test_new_ozw_light.opp, light_new_ozw_data, light_msg, sent_messages):
+async def test_new_ozw_light(opp, light_new_ozw_data, light_msg, sent_messages):
     """Test setting up config entry."""
-    receive_message = await setup_ozw.opp, fixture=light_new_ozw_data)
+    receive_message = await setup_ozw(opp, fixture=light_new_ozw_data)
 
     # Test loaded only white LED support
     state = opp.states.get("light.led_bulb_6_multi_colour_level")

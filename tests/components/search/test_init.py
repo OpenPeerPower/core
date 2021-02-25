@@ -16,7 +16,7 @@ async def test_search.opp):
 
     # Light strip with 2 lights.
     wled_config_entry = MockConfigEntry(domain="wled")
-    wled_config_entry.add_to.opp.opp)
+    wled_config_entry.add_to_opp(opp)
 
     wled_device = device_reg.async_get_or_create(
         config_entry_id=wled_config_entry.entry_id,
@@ -47,7 +47,7 @@ async def test_search.opp):
     kitchen_area = area_reg.async_create("Kitchen")
 
     hue_config_entry = MockConfigEntry(domain="hue")
-    hue_config_entry.add_to.opp.opp)
+    hue_config_entry.add_to_opp(opp)
 
     hue_device = device_reg.async_get_or_create(
         config_entry_id=hue_config_entry.entry_id,
@@ -271,9 +271,9 @@ async def test_search.opp):
         assert searcher.async_search(search_type, search_id) == {}
 
 
-async def test_ws_api.opp, opp_ws_client):
+async def test_ws_api(opp, opp_ws_client):
     """Test WS API."""
-    assert await async_setup_component.opp, "search", {})
+    assert await async_setup_component(opp, "search", {})
 
     area_reg = await opp.helpers.area_registry.async_get_registry()
     device_reg = await opp.helpers.device_registry.async_get_registry()
@@ -281,7 +281,7 @@ async def test_ws_api.opp, opp_ws_client):
     kitchen_area = area_reg.async_create("Kitchen")
 
     hue_config_entry = MockConfigEntry(domain="hue")
-    hue_config_entry.add_to.opp.opp)
+    hue_config_entry.add_to_opp(opp)
 
     hue_device = device_reg.async_get_or_create(
         config_entry_id=hue_config_entry.entry_id,

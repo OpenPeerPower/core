@@ -77,7 +77,7 @@ async def test_state_change_on_notify_errors.opp):
     """Test state change on notify errors."""
     request_id = configurator.async_request_config(opp, "Test Request", lambda _: None)
     error = "Oh no bad bad bad"
-    configurator.async_notify_errors.opp, request_id, error)
+    configurator.async_notify_errors(opp, request_id, error)
 
     states = opp.states.async_all()
     assert 1 == len(states)
@@ -87,13 +87,13 @@ async def test_state_change_on_notify_errors.opp):
 
 async def test_notify_errors_fail_silently_on_bad_request_id.opp):
     """Test if notify errors fails silently with a bad request id."""
-    configurator.async_notify_errors.opp, 2015, "Try this error")
+    configurator.async_notify_errors(opp, 2015, "Try this error")
 
 
 async def test_request_done_works.opp):
     """Test if calling request done works."""
     request_id = configurator.async_request_config(opp, "Test Request", lambda _: None)
-    configurator.async_request_done.opp, request_id)
+    configurator.async_request_done(opp, request_id)
     assert 1 == len.opp.states.async_all())
 
     opp.bus.async_fire(EVENT_TIME_CHANGED)
@@ -103,4 +103,4 @@ async def test_request_done_works.opp):
 
 async def test_request_done_fail_silently_on_bad_request_id.opp):
     """Test that request_done fails silently with a bad request id."""
-    configurator.async_request_done.opp, 2016)
+    configurator.async_request_done(opp, 2016)

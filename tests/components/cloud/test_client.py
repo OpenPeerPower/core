@@ -65,7 +65,7 @@ async def test_handler_alexa.opp):
     assert device["manufacturerName"] == "Open Peer Power"
 
 
-async def test_handler_alexa_disabled.opp, mock_cloud_fixture):
+async def test_handler_alexa_disabled(opp, mock_cloud_fixture):
     """Test handler Alexa when user has disabled it."""
     mock_cloud_fixture._prefs[PREF_ENABLE_ALEXA] = False
     cloud = opp.data["cloud"]
@@ -130,12 +130,12 @@ async def test_handler_google_actions.opp):
     assert device["roomHint"] == "living room"
 
 
-async def test_handler_google_actions_disabled.opp, mock_cloud_fixture):
+async def test_handler_google_actions_disabled(opp, mock_cloud_fixture):
     """Test handler Google Actions when user has disabled it."""
     mock_cloud_fixture._prefs[PREF_ENABLE_GOOGLE] = False
 
     with patch(.opp_nabucasa.Cloud.start"):
-        assert await async_setup_component.opp, "cloud", {})
+        assert await async_setup_component(opp, "cloud", {})
 
     reqid = "5711642932632160983"
     data = {"requestId": reqid, "inputs": [{"intent": "action.devices.SYNC"}]}
@@ -147,10 +147,10 @@ async def test_handler_google_actions_disabled.opp, mock_cloud_fixture):
     assert resp["payload"]["errorCode"] == "deviceTurnedOff"
 
 
-async def test_webhook_msg.opp, caplog):
+async def test_webhook_msg(opp, caplog):
     """Test webhook msg."""
     with patch(.opp_nabucasa.Cloud.start"):
-        setup = await async_setup_component.opp, "cloud", {"cloud": {}})
+        setup = await async_setup_component(opp, "cloud", {"cloud": {}})
         assert setup
     cloud = opp.data["cloud"]
 
@@ -222,7 +222,7 @@ async def test_webhook_msg.opp, caplog):
     assert '{"nonexisting": "payload"}' in caplog.text
 
 
-async def test_google_config_expose_entity.opp, mock_cloud_setup, mock_cloud_login):
+async def test_google_config_expose_entity(opp, mock_cloud_setup, mock_cloud_login):
     """Test Google config exposing entity method uses latest config."""
     cloud_client = opp.data[DOMAIN].client
     state = State("light.kitchen", "on")
@@ -267,7 +267,7 @@ async def test_set_username.opp):
     assert prefs.async_set_username.mock_calls[0][1][0] == "mock-username"
 
 
-async def test_login_recovers_bad_internet.opp, caplog):
+async def test_login_recovers_bad_internet(opp, caplog):
     """Test Alexa can recover bad auth."""
     prefs = Mock(
         alexa_enabled=True,
@@ -283,7 +283,7 @@ async def test_login_recovers_bad_internet.opp, caplog):
     assert len(client._alexa_config.async_enable_proactive_mode.mock_calls) == 1
     assert "Unable to activate Alexa Report State" in caplog.text
 
-    async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=30))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=30))
     await opp.async_block_till_done()
 
     assert len(client._alexa_config.async_enable_proactive_mode.mock_calls) == 2

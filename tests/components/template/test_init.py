@@ -34,7 +34,7 @@ async def test_reloadable.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.state").state == "mytest"
+    assert opp.states.get("sensor.state").state == "mytest"
     assert len.opp.states.async_all()) == 2
 
     yaml_path = path.join(
@@ -53,8 +53,8 @@ async def test_reloadable.opp):
 
     assert len.opp.states.async_all()) == 3
 
-    assert.opp.states.get("sensor.state") is None
-    assert.opp.states.get("sensor.watching_tv_in_master_bedroom").state == "off"
+    assert opp.states.get("sensor.state") is None
+    assert opp.states.get("sensor.watching_tv_in_master_bedroom").state == "off"
     assert float.opp.states.get("sensor.combined_sensor_energy_usage").state) == 0
 
 
@@ -81,7 +81,7 @@ async def test_reloadable_can_remove.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.state").state == "mytest"
+    assert opp.states.get("sensor.state").state == "mytest"
     assert len.opp.states.async_all()) == 2
 
     yaml_path = path.join(
@@ -125,7 +125,7 @@ async def test_reloadable_stops_on_invalid_config(opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.state").state == "mytest"
+    assert opp.states.get("sensor.state").state == "mytest"
     assert len.opp.states.async_all()) == 2
 
     yaml_path = path.join(
@@ -142,7 +142,7 @@ async def test_reloadable_stops_on_invalid_config(opp):
         )
         await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.state").state == "mytest"
+    assert opp.states.get("sensor.state").state == "mytest"
     assert len.opp.states.async_all()) == 2
 
 
@@ -170,7 +170,7 @@ async def test_reloadable_handles_partial_valid_config(opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.state").state == "mytest"
+    assert opp.states.get("sensor.state").state == "mytest"
     assert len.opp.states.async_all()) == 2
 
     yaml_path = path.join(
@@ -189,8 +189,8 @@ async def test_reloadable_handles_partial_valid_config(opp):
 
     assert len.opp.states.async_all()) == 3
 
-    assert.opp.states.get("sensor.state") is None
-    assert.opp.states.get("sensor.watching_tv_in_master_bedroom").state == "off"
+    assert opp.states.get("sensor.state") is None
+    assert opp.states.get("sensor.watching_tv_in_master_bedroom").state == "off"
     assert float.opp.states.get("sensor.combined_sensor_energy_usage").state) == 0
 
 
@@ -231,8 +231,8 @@ async def test_reloadable_multiple_platforms.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.state").state == "mytest"
-    assert.opp.states.get("binary_sensor.state").state == "off"
+    assert opp.states.get("sensor.state").state == "mytest"
+    assert opp.states.get("binary_sensor.state").state == "off"
 
     assert len.opp.states.async_all()) == 3
 
@@ -252,8 +252,8 @@ async def test_reloadable_multiple_platforms.opp):
 
     assert len.opp.states.async_all()) == 3
 
-    assert.opp.states.get("sensor.state") is None
-    assert.opp.states.get("sensor.watching_tv_in_master_bedroom").state == "off"
+    assert opp.states.get("sensor.state") is None
+    assert opp.states.get("sensor.watching_tv_in_master_bedroom").state == "off"
     assert float.opp.states.get("sensor.combined_sensor_energy_usage").state) == 0
 
 
@@ -294,12 +294,12 @@ async def test_reload_sensors_that_reference_other_template_sensors.opp):
     with patch(
         "openpeerpower.helpers.ratelimit.dt_util.utcnow", return_value=next_time
     ):
-        async_fire_time_changed.opp, next_time)
+        async_fire_time_changed(opp, next_time)
         await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.test1").state == "3"
-    assert.opp.states.get("sensor.test2").state == "1"
-    assert.opp.states.get("sensor.test3").state == "2"
+    assert opp.states.get("sensor.test1").state == "3"
+    assert opp.states.get("sensor.test2").state == "1"
+    assert opp.states.get("sensor.test3").state == "2"
 
 
 def _get_fixtures_base_path():

@@ -76,8 +76,8 @@ async def setup_subaru_integration(
     fetch_effect=None,
 ):
     """Create Subaru entry."""
-    assert await async_setup_component.opp, OP_DOMAIN, {})
-    assert await async_setup_component.opp, DOMAIN, {})
+    assert await async_setup_component(opp, OP_DOMAIN, {})
+    assert await async_setup_component(opp, DOMAIN, {})
 
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -85,7 +85,7 @@ async def setup_subaru_integration(
         options=TEST_OPTIONS,
         entry_id=1,
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         MOCK_API_CONNECT,
@@ -134,6 +134,6 @@ async def ev_entry.opp):
     )
     assert DOMAIN in.opp.config_entries.async_domains()
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
-    assert.opp.config_entries.async_get_entry(entry.entry_id)
+    assert opp.config_entries.async_get_entry(entry.entry_id)
     assert entry.state == ENTRY_STATE_LOADED
     return entry

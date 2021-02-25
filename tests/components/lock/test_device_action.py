@@ -30,15 +30,15 @@ def entity_reg.opp):
     return mock_registry.opp)
 
 
-async def test_get_actions_support_open.opp, device_reg, entity_reg):
+async def test_get_actions_support_open(opp, device_reg, entity_reg):
     """Test we get the expected actions from a lock which supports open."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -70,19 +70,19 @@ async def test_get_actions_support_open.opp, device_reg, entity_reg):
             "entity_id": "lock.support_open_lock",
         },
     ]
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert_lists_same(actions, expected_actions)
 
 
-async def test_get_actions_not_support_open.opp, device_reg, entity_reg):
+async def test_get_actions_not_support_open(opp, device_reg, entity_reg):
     """Test we get the expected actions from a lock which doesn't support open."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -108,7 +108,7 @@ async def test_get_actions_not_support_open.opp, device_reg, entity_reg):
             "entity_id": "lock.no_support_open_lock",
         },
     ]
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert_lists_same(actions, expected_actions)
 
 
@@ -151,9 +151,9 @@ async def test_action.opp):
     )
     await opp.async_block_till_done()
 
-    lock_calls = async_mock_service.opp, "lock", "lock")
-    unlock_calls = async_mock_service.opp, "lock", "unlock")
-    open_calls = async_mock_service.opp, "lock", "open")
+    lock_calls = async_mock_service(opp, "lock", "lock")
+    unlock_calls = async_mock_service(opp, "lock", "unlock")
+    open_calls = async_mock_service(opp, "lock", "open")
 
     opp.bus.async_fire("test_event_lock")
     await opp.async_block_till_done()

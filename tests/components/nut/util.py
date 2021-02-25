@@ -35,7 +35,7 @@ async def async_init_integration(
             domain=DOMAIN,
             data={CONF_HOST: "mock", CONF_PORT: "mock", CONF_RESOURCES: resources},
         )
-        entry.add_to.opp.opp)
+        entry.add_to_opp(opp)
 
         await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()

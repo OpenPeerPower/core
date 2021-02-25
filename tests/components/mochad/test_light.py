@@ -17,7 +17,7 @@ def pymochad_mock():
 
 
 @pytest.fixture
-def light_mock.opp, brightness):
+def light_mock(opp, brightness):
     """Mock light."""
     controller_mock = mock.MagicMock()
     dev_dict = {"address": "a1", "name": "fake_light", "brightness_levels": brightness}
@@ -33,7 +33,7 @@ async def test_setup_adds_proper_devices.opp):
             "devices": [{"name": "Light1", "address": "a1"}],
         },
     }
-    assert await async_setup_component.opp, light.DOMAIN, good_config)
+    assert await async_setup_component(opp, light.DOMAIN, good_config)
 
 
 @pytest.mark.parametrize(

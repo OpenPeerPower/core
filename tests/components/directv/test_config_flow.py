@@ -109,7 +109,7 @@ async def test_user_device_exists_abort(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort user flow if DirecTV receiver already configured."""
-    await setup_integration.opp, aioclient_mock, skip_entry_setup=True)
+    await setup_integration(opp, aioclient_mock, skip_entry_setup=True)
 
     user_input = MOCK_USER_INPUT.copy()
     result = await opp.config_entries.flow.async_init(
@@ -126,7 +126,7 @@ async def test_ssdp_device_exists_abort(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort SSDP flow if DirecTV receiver already configured."""
-    await setup_integration.opp, aioclient_mock, skip_entry_setup=True)
+    await setup_integration(opp, aioclient_mock, skip_entry_setup=True)
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO.copy()
     result = await opp.config_entries.flow.async_init(
@@ -143,7 +143,7 @@ async def test_ssdp_with_receiver_id_device_exists_abort(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test we abort SSDP flow if DirecTV receiver already configured."""
-    await setup_integration.opp, aioclient_mock, skip_entry_setup=True)
+    await setup_integration(opp, aioclient_mock, skip_entry_setup=True)
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO.copy()
     discovery_info[ATTR_UPNP_SERIAL] = UPNP_SERIAL

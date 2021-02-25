@@ -63,7 +63,7 @@ def mock_session_send():
         yield mock_session_send
 
 
-def test_config_missing_optional_params.opp, mock_session_send):
+def test_config_missing_optional_params(opp, mock_session_send):
     """Test the setup without optional parameters."""
     config = {
         DOMAIN: tomato.PLATFORM_SCHEMA(
@@ -76,7 +76,7 @@ def test_config_missing_optional_params.opp, mock_session_send):
             }
         )
     }
-    result = tomato.get_scanner.opp, config)
+    result = tomato.get_scanner(opp, config)
     assert result.req.url == "http://tomato-router:80/update.cgi"
     assert result.req.headers == {
         "Content-Length": "32",
@@ -89,7 +89,7 @@ def test_config_missing_optional_params.opp, mock_session_send):
 
 @mock.patch("os.access", return_value=True)
 @mock.patch("os.path.isfile", mock.Mock(return_value=True))
-def test_config_default_nonssl_port.opp, mock_session_send):
+def test_config_default_nonssl_port(opp, mock_session_send):
     """Test the setup without a default port set without ssl enabled."""
     config = {
         DOMAIN: tomato.PLATFORM_SCHEMA(
@@ -102,13 +102,13 @@ def test_config_default_nonssl_port.opp, mock_session_send):
             }
         )
     }
-    result = tomato.get_scanner.opp, config)
+    result = tomato.get_scanner(opp, config)
     assert result.req.url == "http://tomato-router:80/update.cgi"
 
 
 @mock.patch("os.access", return_value=True)
 @mock.patch("os.path.isfile", mock.Mock(return_value=True))
-def test_config_default_ssl_port.opp, mock_session_send):
+def test_config_default_ssl_port(opp, mock_session_send):
     """Test the setup without a default port set with ssl enabled."""
     config = {
         DOMAIN: tomato.PLATFORM_SCHEMA(
@@ -122,13 +122,13 @@ def test_config_default_ssl_port.opp, mock_session_send):
             }
         )
     }
-    result = tomato.get_scanner.opp, config)
+    result = tomato.get_scanner(opp, config)
     assert result.req.url == "https://tomato-router:443/update.cgi"
 
 
 @mock.patch("os.access", return_value=True)
 @mock.patch("os.path.isfile", mock.Mock(return_value=True))
-def test_config_verify_ssl_but_no_ssl_enabled.opp, mock_session_send):
+def test_config_verify_ssl_but_no_ssl_enabled(opp, mock_session_send):
     """Test the setup with a string with ssl_verify but ssl not enabled."""
     config = {
         DOMAIN: tomato.PLATFORM_SCHEMA(
@@ -144,7 +144,7 @@ def test_config_verify_ssl_but_no_ssl_enabled.opp, mock_session_send):
             }
         )
     }
-    result = tomato.get_scanner.opp, config)
+    result = tomato.get_scanner(opp, config)
     assert result.req.url == "http://tomato-router:1234/update.cgi"
     assert result.req.headers == {
         "Content-Length": "32",
@@ -159,7 +159,7 @@ def test_config_verify_ssl_but_no_ssl_enabled.opp, mock_session_send):
 
 @mock.patch("os.access", return_value=True)
 @mock.patch("os.path.isfile", mock.Mock(return_value=True))
-def test_config_valid_verify_ssl_path.opp, mock_session_send):
+def test_config_valid_verify_ssl_path(opp, mock_session_send):
     """Test the setup with a string for ssl_verify.
 
     Representing the absolute path to a CA certificate bundle.
@@ -178,7 +178,7 @@ def test_config_valid_verify_ssl_path.opp, mock_session_send):
             }
         )
     }
-    result = tomato.get_scanner.opp, config)
+    result = tomato.get_scanner(opp, config)
     assert result.req.url == "https://tomato-router:1234/update.cgi"
     assert result.req.headers == {
         "Content-Length": "32",
@@ -193,7 +193,7 @@ def test_config_valid_verify_ssl_path.opp, mock_session_send):
     )
 
 
-def test_config_valid_verify_ssl_bool.opp, mock_session_send):
+def test_config_valid_verify_ssl_bool(opp, mock_session_send):
     """Test the setup with a bool for ssl_verify."""
     config = {
         DOMAIN: tomato.PLATFORM_SCHEMA(
@@ -209,7 +209,7 @@ def test_config_valid_verify_ssl_bool.opp, mock_session_send):
             }
         )
     }
-    result = tomato.get_scanner.opp, config)
+    result = tomato.get_scanner(opp, config)
     assert result.req.url == "https://tomato-router:1234/update.cgi"
     assert result.req.headers == {
         "Content-Length": "32",
@@ -294,7 +294,7 @@ def test_config_errors():
 
 
 @mock.patch("requests.Session.send", side_effect=mock_session_response)
-def test_config_bad_credentials.opp, mock_exception_logger):
+def test_config_bad_credentials(opp, mock_exception_logger):
     """Test the setup with bad credentials."""
     config = {
         DOMAIN: tomato.PLATFORM_SCHEMA(
@@ -308,7 +308,7 @@ def test_config_bad_credentials.opp, mock_exception_logger):
         )
     }
 
-    tomato.get_scanner.opp, config)
+    tomato.get_scanner(opp, config)
 
     assert mock_exception_logger.call_count == 1
     assert mock_exception_logger.mock_calls[0] == mock.call(
@@ -317,7 +317,7 @@ def test_config_bad_credentials.opp, mock_exception_logger):
 
 
 @mock.patch("requests.Session.send", side_effect=mock_session_response)
-def test_bad_response.opp, mock_exception_logger):
+def test_bad_response(opp, mock_exception_logger):
     """Test the setup with bad response from router."""
     config = {
         DOMAIN: tomato.PLATFORM_SCHEMA(
@@ -331,7 +331,7 @@ def test_bad_response.opp, mock_exception_logger):
         )
     }
 
-    tomato.get_scanner.opp, config)
+    tomato.get_scanner(opp, config)
 
     assert mock_exception_logger.call_count == 1
     assert mock_exception_logger.mock_calls[0] == mock.call(
@@ -340,7 +340,7 @@ def test_bad_response.opp, mock_exception_logger):
 
 
 @mock.patch("requests.Session.send", side_effect=mock_session_response)
-def test_scan_devices.opp, mock_exception_logger):
+def test_scan_devices(opp, mock_exception_logger):
     """Test scanning for new devices."""
     config = {
         DOMAIN: tomato.PLATFORM_SCHEMA(
@@ -354,12 +354,12 @@ def test_scan_devices.opp, mock_exception_logger):
         )
     }
 
-    scanner = tomato.get_scanner.opp, config)
+    scanner = tomato.get_scanner(opp, config)
     assert scanner.scan_devices() == ["F4:F5:D8:AA:AA:AA", "58:EF:68:00:00:00"]
 
 
 @mock.patch("requests.Session.send", side_effect=mock_session_response)
-def test_bad_connection.opp, mock_exception_logger):
+def test_bad_connection(opp, mock_exception_logger):
     """Test the router with a connection error."""
     config = {
         DOMAIN: tomato.PLATFORM_SCHEMA(
@@ -379,7 +379,7 @@ def test_bad_connection.opp, mock_exception_logger):
             "http://tomato-router:80/update.cgi",
             exc=requests.exceptions.ConnectionError,
         ),
-        tomato.get_scanner.opp, config)
+        tomato.get_scanner(opp, config)
     assert mock_exception_logger.call_count == 1
     assert mock_exception_logger.mock_calls[0] == mock.call(
         "Failed to connect to the router or invalid http_id supplied"
@@ -387,7 +387,7 @@ def test_bad_connection.opp, mock_exception_logger):
 
 
 @mock.patch("requests.Session.send", side_effect=mock_session_response)
-def test_router_timeout.opp, mock_exception_logger):
+def test_router_timeout(opp, mock_exception_logger):
     """Test the router with a timeout error."""
     config = {
         DOMAIN: tomato.PLATFORM_SCHEMA(
@@ -407,7 +407,7 @@ def test_router_timeout.opp, mock_exception_logger):
             "http://tomato-router:80/update.cgi",
             exc=requests.exceptions.Timeout,
         ),
-        tomato.get_scanner.opp, config)
+        tomato.get_scanner(opp, config)
     assert mock_exception_logger.call_count == 1
     assert mock_exception_logger.mock_calls[0] == mock.call(
         "Connection to the router timed out"
@@ -415,7 +415,7 @@ def test_router_timeout.opp, mock_exception_logger):
 
 
 @mock.patch("requests.Session.send", side_effect=mock_session_response)
-def test_get_device_name.opp, mock_exception_logger):
+def test_get_device_name(opp, mock_exception_logger):
     """Test getting device names."""
     config = {
         DOMAIN: tomato.PLATFORM_SCHEMA(
@@ -429,7 +429,7 @@ def test_get_device_name.opp, mock_exception_logger):
         )
     }
 
-    scanner = tomato.get_scanner.opp, config)
+    scanner = tomato.get_scanner(opp, config)
     assert scanner.get_device_name("F4:F5:D8:AA:AA:AA") == "chromecast"
     assert scanner.get_device_name("58:EF:68:00:00:00") == "wemo"
     assert scanner.get_device_name("AA:BB:CC:00:00:00") is None

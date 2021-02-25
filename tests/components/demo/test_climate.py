@@ -55,7 +55,7 @@ ENTITY_HEATPUMP = "climate.heatpump"
 async def setup_demo_climate.opp):
     """Initialize setup demo climate."""
     opp.config.units = METRIC_SYSTEM
-    assert await async_setup_component.opp, DOMAIN, {"climate": {"platform": "demo"}})
+    assert await async_setup_component(opp, DOMAIN, {"climate": {"platform": "demo"}})
     await opp.async_block_till_done()
 
 

@@ -50,7 +50,7 @@ def mock_controller_connect():
         yield service_mock
 
 
-async def test_user.opp, connect):
+async def test_user(opp, connect):
     """Test user config."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -80,7 +80,7 @@ async def test_user.opp, connect):
         assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_import.opp, connect):
+async def test_import(opp, connect):
     """Test import step."""
     with patch(
         "openpeerpower.components.asuswrt.async_setup_entry",
@@ -103,7 +103,7 @@ async def test_import.opp, connect):
         assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_import_ssh.opp, connect):
+async def test_import_ssh(opp, connect):
     """Test import step with ssh file."""
     config_data = CONFIG_DATA.copy()
     config_data.pop(CONF_PASSWORD)
@@ -200,7 +200,7 @@ async def test_abort_if_already_setup_opp):
     MockConfigEntry(
         domain=DOMAIN,
         data=CONFIG_DATA,
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.asuswrt.config_flow.socket.gethostbyname",
@@ -267,7 +267,7 @@ async def test_options_flow.opp):
         data=CONFIG_DATA,
         options={CONF_REQUIRE_IP: True},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch("openpeerpower.components.asuswrt.async_setup_entry", return_value=True):
         await opp.config_entries.async_setup(config_entry.entry_id)

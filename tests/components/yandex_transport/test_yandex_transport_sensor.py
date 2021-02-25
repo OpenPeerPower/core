@@ -47,16 +47,16 @@ FILTERED_ATTRS = {
 RESULT_STATE = dt_util.utc_from_timestamp(1583421540).isoformat(timespec="seconds")
 
 
-async def assert_setup_sensor.opp, config, count=1):
+async def assert_setup_sensor(opp, config, count=1):
     """Set up the sensor and assert it's been created."""
     with assert_setup_component(count):
-        assert await async_setup_component.opp, sensor.DOMAIN, config)
+        assert await async_setup_component(opp, sensor.DOMAIN, config)
         await opp.async_block_till_done()
 
 
 async def test_setup_platform_valid_config(opp, mock_requester):
     """Test that sensor is set up properly with valid config."""
-    await assert_setup_sensor.opp, TEST_CONFIG)
+    await assert_setup_sensor(opp, TEST_CONFIG)
 
 
 async def test_setup_platform_invalid_config(opp, mock_requester):
@@ -66,23 +66,23 @@ async def test_setup_platform_invalid_config(opp, mock_requester):
     )
 
 
-async def test_name.opp, mock_requester):
+async def test_name(opp, mock_requester):
     """Return the name if set in the configuration."""
-    await assert_setup_sensor.opp, TEST_CONFIG)
+    await assert_setup_sensor(opp, TEST_CONFIG)
     state = opp.states.get("sensor.test_name")
     assert state.name == TEST_CONFIG["sensor"][CONF_NAME]
 
 
-async def test_state.opp, mock_requester):
+async def test_state(opp, mock_requester):
     """Return the contents of _state."""
-    await assert_setup_sensor.opp, TEST_CONFIG)
+    await assert_setup_sensor(opp, TEST_CONFIG)
     state = opp.states.get("sensor.test_name")
     assert state.state == RESULT_STATE
 
 
-async def test_filtered_attributes.opp, mock_requester):
+async def test_filtered_attributes(opp, mock_requester):
     """Return the contents of attributes."""
-    await assert_setup_sensor.opp, TEST_CONFIG)
+    await assert_setup_sensor(opp, TEST_CONFIG)
     state = opp.states.get("sensor.test_name")
     state_attrs = {key: state.attributes[key] for key in FILTERED_ATTRS}
     assert state_attrs == FILTERED_ATTRS

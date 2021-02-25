@@ -63,7 +63,7 @@ def record_worker_sync.opp):
         yield sync
 
 
-async def test_record_stream.opp, opp_client, stream_worker_sync, record_worker_sync):
+async def test_record_stream(opp, opp_client, stream_worker_sync, record_worker_sync):
     """
     Test record stream.
 
@@ -71,13 +71,13 @@ async def test_record_stream.opp, opp_client, stream_worker_sync, record_worker_
     stream worker and save worker to allow for clean shutdown of background
     threads.  The actual save logic is tested in test_recorder_save below.
     """
-    await async_setup_component.opp, "stream", {"stream": {}})
+    await async_setup_component(opp, "stream", {"stream": {}})
 
     stream_worker_sync.pause()
 
     # Setup demo track
     source = generate_h264_video()
-    stream = create_stream.opp, source)
+    stream = create_stream(opp, source)
     with patch.object.opp.config, "is_allowed_path", return_value=True):
         await stream.async_record("/example/path")
 
@@ -102,10 +102,10 @@ async def test_record_lookback(
     opp. opp_client, stream_worker_sync, record_worker_sync
 ):
     """Exercise record with loopback."""
-    await async_setup_component.opp, "stream", {"stream": {}})
+    await async_setup_component(opp, "stream", {"stream": {}})
 
     source = generate_h264_video()
-    stream = create_stream.opp, source)
+    stream = create_stream(opp, source)
 
     # Start an HLS feed to enable lookback
     stream.add_provider("hls")
@@ -119,14 +119,14 @@ async def test_record_lookback(
     stream.stop()
 
 
-async def test_recorder_timeout.opp, opp_client, stream_worker_sync):
+async def test_recorder_timeout(opp, opp_client, stream_worker_sync):
     """
     Test recorder timeout.
 
     Mocks out the cleanup to assert that it is invoked after a timeout.
     This test does not start the recorder save thread.
     """
-    await async_setup_component.opp, "stream", {"stream": {}})
+    await async_setup_component(opp, "stream", {"stream": {}})
 
     stream_worker_sync.pause()
 
@@ -134,7 +134,7 @@ async def test_recorder_timeout.opp, opp_client, stream_worker_sync):
         # Setup demo track
         source = generate_h264_video()
 
-        stream = create_stream.opp, source)
+        stream = create_stream(opp, source)
         with patch.object.opp.config, "is_allowed_path", return_value=True):
             await stream.async_record("/example/path")
         recorder = stream.add_provider("recorder")
@@ -143,7 +143,7 @@ async def test_recorder_timeout.opp, opp_client, stream_worker_sync):
 
         # Wait a minute
         future = dt_util.utcnow() + timedelta(minutes=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
         assert mock_timeout.called
@@ -154,13 +154,13 @@ async def test_recorder_timeout.opp, opp_client, stream_worker_sync):
         await opp.async_block_till_done()
 
 
-async def test_record_path_not_allowed.opp, opp_client):
+async def test_record_path_not_allowed(opp, opp_client):
     """Test where the output path is not allowed by open peer power configuration."""
-    await async_setup_component.opp, "stream", {"stream": {}})
+    await async_setup_component(opp, "stream", {"stream": {}})
 
     # Setup demo track
     source = generate_h264_video()
-    stream = create_stream.opp, source)
+    stream = create_stream(opp, source)
     with patch.object(
         opp.config, "is_allowed_path", return_value=False
     ), pytest.raises(OpenPeerPowerError):
@@ -189,7 +189,7 @@ async def test_record_stream_audio(
     Record stream output should have an audio channel when input has
     a valid codec and audio packets and no audio channel otherwise.
     """
-    await async_setup_component.opp, "stream", {"stream": {}})
+    await async_setup_component(opp, "stream", {"stream": {}})
 
     for a_codec, expected_audio_streams in (
         ("aac", 1),  # aac is a valid mp4 codec
@@ -204,7 +204,7 @@ async def test_record_stream_audio(
         source = generate_h264_video(
             container_format="mov", audio_codec=a_codec
         )  # mov can store PCM
-        stream = create_stream.opp, source)
+        stream = create_stream(opp, source)
         with patch.object.opp.config, "is_allowed_path", return_value=True):
             await stream.async_record("/example/path")
         recorder = stream.add_provider("recorder")

@@ -4,9 +4,9 @@ import pytest
 from .common import setup_ozw
 
 
-async def test_fan.opp, fan_data, fan_msg, sent_messages, caplog):
+async def test_fan(opp, fan_data, fan_msg, sent_messages, caplog):
     """Test fan."""
-    receive_message = await setup_ozw.opp, fixture=fan_data)
+    receive_message = await setup_ozw(opp, fixture=fan_data)
 
     # Test loaded
     state = opp.states.get("fan.in_wall_smart_fan_control_level")

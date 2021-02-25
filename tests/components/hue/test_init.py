@@ -27,7 +27,7 @@ async def test_setup_with_no_config(opp):
     assert len.opp.config_entries.flow.async_progress()) == 0
 
     # No configs stored
-    assert.opp.data[hue.DOMAIN] == {}
+    assert opp.data[hue.DOMAIN] == {}
 
 
 async def test_unload_entry(opp, mock_bridge_setup):
@@ -41,7 +41,7 @@ async def test_unload_entry(opp, mock_bridge_setup):
     mock_bridge_setup.async_reset = AsyncMock(return_value=True)
     assert await hue.async_unload_entry(opp, entry)
     assert len(mock_bridge_setup.async_reset.mock_calls) == 1
-    assert.opp.data[hue.DOMAIN] == {}
+    assert opp.data[hue.DOMAIN] == {}
 
 
 async def test_setting_unique_id(opp, mock_bridge_setup):
@@ -79,7 +79,7 @@ async def test_fixing_unique_id_other_ignored(opp, mock_bridge_setup):
     assert await async_setup_component(opp, hue.DOMAIN, {}) is True
     await opp.async_block_till_done()
     assert entry.unique_id == "mock-id"
-    assert.opp.config_entries.async_entries() == [entry]
+    assert opp.config_entries.async_entries() == [entry]
 
 
 async def test_fixing_unique_id_other_correct(opp, mock_bridge_setup):
@@ -98,7 +98,7 @@ async def test_fixing_unique_id_other_correct(opp, mock_bridge_setup):
     entry.add_to(opp.opp)
     assert await async_setup_component(opp, hue.DOMAIN, {}) is True
     await opp.async_block_till_done()
-    assert.opp.config_entries.async_entries() == [correct_entry]
+    assert opp.config_entries.async_entries() == [correct_entry]
 
 
 async def test_security_vuln_check(opp):

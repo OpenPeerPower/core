@@ -32,7 +32,7 @@ DEFAULT_CONFIG = {
 }
 
 
-async def test_sending_mqtt_commands.opp, mqtt_mock):
+async def test_sending_mqtt_commands(opp, mqtt_mock):
     """Test the sending MQTT commands."""
     fake_state = op.State("scene.test", scene.STATE)
 
@@ -65,21 +65,21 @@ async def test_sending_mqtt_commands.opp, mqtt_mock):
     )
 
 
-async def test_availability_when_connection_lost.opp, mqtt_mock):
+async def test_availability_when_connection_lost(opp, mqtt_mock):
     """Test availability after MQTT disconnection."""
     await help_test_availability_when_connection_lost(
         opp. mqtt_mock, scene.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_availability_without_topic.opp, mqtt_mock):
+async def test_availability_without_topic(opp, mqtt_mock):
     """Test availability without defined availability topic."""
     await help_test_availability_without_topic(
         opp. mqtt_mock, scene.DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_default_availability_payload.opp, mqtt_mock):
+async def test_default_availability_payload(opp, mqtt_mock):
     """Test availability by default payload with defined topic."""
     config = {
         scene.DOMAIN: {
@@ -95,7 +95,7 @@ async def test_default_availability_payload.opp, mqtt_mock):
     )
 
 
-async def test_custom_availability_payload.opp, mqtt_mock):
+async def test_custom_availability_payload(opp, mqtt_mock):
     """Test availability by custom payload with defined topic."""
     config = {
         scene.DOMAIN: {
@@ -111,7 +111,7 @@ async def test_custom_availability_payload.opp, mqtt_mock):
     )
 
 
-async def test_unique_id.opp, mqtt_mock):
+async def test_unique_id(opp, mqtt_mock):
     """Test unique id option only creates one scene per unique_id."""
     config = {
         scene.DOMAIN: [
@@ -129,16 +129,16 @@ async def test_unique_id.opp, mqtt_mock):
             },
         ]
     }
-    await help_test_unique_id.opp, mqtt_mock, scene.DOMAIN, config)
+    await help_test_unique_id(opp, mqtt_mock, scene.DOMAIN, config)
 
 
-async def test_discovery_removal_scene.opp, mqtt_mock, caplog):
+async def test_discovery_removal_scene(opp, mqtt_mock, caplog):
     """Test removal of discovered scene."""
     data = '{ "name": "test",' '  "command_topic": "test_topic" }'
-    await help_test_discovery_removal.opp, mqtt_mock, caplog, scene.DOMAIN, data)
+    await help_test_discovery_removal(opp, mqtt_mock, caplog, scene.DOMAIN, data)
 
 
-async def test_discovery_update_payload.opp, mqtt_mock, caplog):
+async def test_discovery_update_payload(opp, mqtt_mock, caplog):
     """Test update of discovered scene."""
     config1 = copy.deepcopy(DEFAULT_CONFIG[scene.DOMAIN])
     config2 = copy.deepcopy(DEFAULT_CONFIG[scene.DOMAIN])
@@ -159,7 +159,7 @@ async def test_discovery_update_payload.opp, mqtt_mock, caplog):
     )
 
 
-async def test_discovery_update_unchanged_scene.opp, mqtt_mock, caplog):
+async def test_discovery_update_unchanged_scene(opp, mqtt_mock, caplog):
     """Test update of discovered scene."""
     data1 = '{ "name": "Beer",' '  "command_topic": "test_topic" }'
     with patch(
@@ -171,7 +171,7 @@ async def test_discovery_update_unchanged_scene.opp, mqtt_mock, caplog):
 
 
 @pytest.mark.no_fail_on_log_exception
-async def test_discovery_broken.opp, mqtt_mock, caplog):
+async def test_discovery_broken(opp, mqtt_mock, caplog):
     """Test handling of bad discovery message."""
     data1 = '{ "name": "Beer" }'
     data2 = '{ "name": "Milk",' '  "command_topic": "test_topic" }'

@@ -100,24 +100,24 @@ async def test_stop_cover.opp: core.OpenPeerPower):
 
 async def test_update_reports_open_cover.opp: core.OpenPeerPower):
     """Tests that update command sets correct state when Bond API reports cover is open."""
-    await setup_platform.opp, COVER_DOMAIN, shades("name-1"))
+    await setup_platform(opp, COVER_DOMAIN, shades("name-1"))
 
     with patch_bond_device_state(return_value={"open": 1}):
-        async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+        async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
         await opp.async_block_till_done()
 
-    assert.opp.states.get("cover.name_1").state == "open"
+    assert opp.states.get("cover.name_1").state == "open"
 
 
 async def test_update_reports_closed_cover.opp: core.OpenPeerPower):
     """Tests that update command sets correct state when Bond API reports cover is closed."""
-    await setup_platform.opp, COVER_DOMAIN, shades("name-1"))
+    await setup_platform(opp, COVER_DOMAIN, shades("name-1"))
 
     with patch_bond_device_state(return_value={"open": 0}):
-        async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+        async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
         await opp.async_block_till_done()
 
-    assert.opp.states.get("cover.name_1").state == "closed"
+    assert opp.states.get("cover.name_1").state == "closed"
 
 
 async def test_cover_available.opp: core.OpenPeerPower):

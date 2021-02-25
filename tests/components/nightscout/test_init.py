@@ -35,7 +35,7 @@ async def test_async_setup_raises_entry_not_ready.opp):
         domain=DOMAIN,
         data={CONF_URL: "https://some.url:1234"},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.nightscout.NightscoutAPI.get_server_status",

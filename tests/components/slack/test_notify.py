@@ -58,9 +58,9 @@ async def test_setup_opp: OpenPeerPowerType, caplog: LogCaptureFixture):
         return_value=(client := AsyncMock()),
     ) as mock_client:
 
-        await async_setup_component.opp, notify.DOMAIN, config)
+        await async_setup_component(opp, notify.DOMAIN, config)
         await opp.async_block_till_done()
-        assert.opp.services.has_service(notify.DOMAIN, SERVICE_NAME)
+        assert opp.services.has_service(notify.DOMAIN, SERVICE_NAME)
         caplog_records_slack = filter_log_records(caplog)
         assert len(caplog_records_slack) == 0
         mock_client.assert_called_with(token="12345", run_async=True, session=session)
@@ -78,9 +78,9 @@ async def test_setup_clienterror(opp: OpenPeerPowerType, caplog: LogCaptureFixtu
     ), patch(MODULE_PATH + ".WebClient", return_value=(client := AsyncMock())):
 
         client.auth_test.side_effect = [aiohttp.ClientError]
-        await async_setup_component.opp, notify.DOMAIN, config)
+        await async_setup_component(opp, notify.DOMAIN, config)
         await opp.async_block_till_done()
-        assert.opp.services.has_service(notify.DOMAIN, SERVICE_NAME)
+        assert opp.services.has_service(notify.DOMAIN, SERVICE_NAME)
         caplog_records_slack = filter_log_records(caplog)
         assert len(caplog_records_slack) == 1
         record = caplog_records_slack[0]
@@ -98,9 +98,9 @@ async def test_setup_slackApierror(opp: OpenPeerPowerType, caplog: LogCaptureFix
     ), patch(MODULE_PATH + ".WebClient", return_value=(client := AsyncMock())):
 
         client.auth_test.side_effect = [err := SlackApiError("msg", "resp")]
-        await async_setup_component.opp, notify.DOMAIN, config)
+        await async_setup_component(opp, notify.DOMAIN, config)
         await opp.async_block_till_done()
-        assert.opp.services.has_service(notify.DOMAIN, SERVICE_NAME) is False
+        assert opp.services.has_service(notify.DOMAIN, SERVICE_NAME) is False
         caplog_records_slack = filter_log_records(caplog)
         assert len(caplog_records_slack) == 1
         record = caplog_records_slack[0]

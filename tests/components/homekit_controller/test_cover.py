@@ -69,9 +69,9 @@ def create_window_covering_service_with_v_tilt(accessory):
     tilt_target.value = 0
 
 
-async def test_change_window_cover_state.opp, utcnow):
+async def test_change_window_cover_state(opp, utcnow):
     """Test that we can turn a HomeKit alarm on and off again."""
-    helper = await setup_test_component.opp, create_window_covering_service)
+    helper = await setup_test_component(opp, create_window_covering_service)
 
     await opp.services.async_call(
         "cover", "open_cover", {"entity_id": helper.entity_id}, blocking=True
@@ -84,9 +84,9 @@ async def test_change_window_cover_state.opp, utcnow):
     assert helper.characteristics[POSITION_TARGET].value == 0
 
 
-async def test_read_window_cover_state.opp, utcnow):
+async def test_read_window_cover_state(opp, utcnow):
     """Test that we can read the state of a HomeKit alarm accessory."""
-    helper = await setup_test_component.opp, create_window_covering_service)
+    helper = await setup_test_component(opp, create_window_covering_service)
 
     helper.characteristics[POSITION_STATE].value = 0
     state = await helper.poll_and_get_state()
@@ -105,7 +105,7 @@ async def test_read_window_cover_state.opp, utcnow):
     assert state.attributes["obstruction-detected"] is True
 
 
-async def test_read_window_cover_tilt_horizontal.opp, utcnow):
+async def test_read_window_cover_tilt_horizontal(opp, utcnow):
     """Test that horizontal tilt is handled correctly."""
     helper = await setup_test_component(
         opp. create_window_covering_service_with_h_tilt
@@ -116,7 +116,7 @@ async def test_read_window_cover_tilt_horizontal.opp, utcnow):
     assert state.attributes["current_tilt_position"] == 75
 
 
-async def test_read_window_cover_tilt_vertical.opp, utcnow):
+async def test_read_window_cover_tilt_vertical(opp, utcnow):
     """Test that vertical tilt is handled correctly."""
     helper = await setup_test_component(
         opp. create_window_covering_service_with_v_tilt
@@ -127,7 +127,7 @@ async def test_read_window_cover_tilt_vertical.opp, utcnow):
     assert state.attributes["current_tilt_position"] == 75
 
 
-async def test_write_window_cover_tilt_horizontal.opp, utcnow):
+async def test_write_window_cover_tilt_horizontal(opp, utcnow):
     """Test that horizontal tilt is written correctly."""
     helper = await setup_test_component(
         opp. create_window_covering_service_with_h_tilt
@@ -142,7 +142,7 @@ async def test_write_window_cover_tilt_horizontal.opp, utcnow):
     assert helper.characteristics[H_TILT_TARGET].value == 90
 
 
-async def test_write_window_cover_tilt_vertical.opp, utcnow):
+async def test_write_window_cover_tilt_vertical(opp, utcnow):
     """Test that vertical tilt is written correctly."""
     helper = await setup_test_component(
         opp. create_window_covering_service_with_v_tilt
@@ -157,7 +157,7 @@ async def test_write_window_cover_tilt_vertical.opp, utcnow):
     assert helper.characteristics[V_TILT_TARGET].value == 90
 
 
-async def test_window_cover_stop.opp, utcnow):
+async def test_window_cover_stop(opp, utcnow):
     """Test that vertical tilt is written correctly."""
     helper = await setup_test_component(
         opp. create_window_covering_service_with_v_tilt
@@ -188,9 +188,9 @@ def create_garage_door_opener_service(accessory):
     return service
 
 
-async def test_change_door_state.opp, utcnow):
+async def test_change_door_state(opp, utcnow):
     """Test that we can turn open and close a HomeKit garage door."""
-    helper = await setup_test_component.opp, create_garage_door_opener_service)
+    helper = await setup_test_component(opp, create_garage_door_opener_service)
 
     await opp.services.async_call(
         "cover", "open_cover", {"entity_id": helper.entity_id}, blocking=True
@@ -203,9 +203,9 @@ async def test_change_door_state.opp, utcnow):
     assert helper.characteristics[DOOR_TARGET].value == 1
 
 
-async def test_read_door_state.opp, utcnow):
+async def test_read_door_state(opp, utcnow):
     """Test that we can read the state of a HomeKit garage door."""
-    helper = await setup_test_component.opp, create_garage_door_opener_service)
+    helper = await setup_test_component(opp, create_garage_door_opener_service)
 
     helper.characteristics[DOOR_CURRENT].value = 0
     state = await helper.poll_and_get_state()

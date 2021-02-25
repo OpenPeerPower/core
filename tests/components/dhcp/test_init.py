@@ -294,7 +294,7 @@ async def test_setup_and_stop.opp):
     start_call.assert_called_once()
 
 
-async def test_setup_fails_as_root.opp, caplog):
+async def test_setup_fails_as_root(opp, caplog):
     """Test we handle sniff setup failing as root."""
 
     assert await async_setup_component(
@@ -319,7 +319,7 @@ async def test_setup_fails_as_root.opp, caplog):
     assert "Cannot watch for dhcp packets" in caplog.text
 
 
-async def test_setup_fails_non_root.opp, caplog):
+async def test_setup_fails_non_root(opp, caplog):
     """Test we handle sniff setup failing as non-root."""
 
     assert await async_setup_component(
@@ -341,7 +341,7 @@ async def test_setup_fails_non_root.opp, caplog):
     assert "Cannot watch for dhcp packets without root or CAP_NET_RAW" in caplog.text
 
 
-async def test_setup_fails_with_broken_libpcap.opp, caplog):
+async def test_setup_fails_with_broken_libpcap(opp, caplog):
     """Test we abort if libpcap is missing or broken."""
 
     assert await async_setup_component(

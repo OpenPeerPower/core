@@ -34,7 +34,7 @@ async def test_async_send_command(mock_hc, opp, mock_write_config):
         domain=DOMAIN, data={CONF_HOST: "192.0.2.0", CONF_NAME: HUB_NAME}
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
@@ -172,7 +172,7 @@ async def test_async_send_command_custom_delay(mock_hc, opp, mock_write_config):
         },
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
@@ -208,7 +208,7 @@ async def test_change_channel(mock_hc, opp, mock_write_config):
         domain=DOMAIN, data={CONF_HOST: "192.0.2.0", CONF_NAME: HUB_NAME}
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
@@ -233,7 +233,7 @@ async def test_sync(mock_hc, mock_write_config, opp):
         domain=DOMAIN, data={CONF_HOST: "192.0.2.0", CONF_NAME: HUB_NAME}
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
@@ -253,7 +253,7 @@ async def test_sync(mock_hc, mock_write_config, opp):
     mock_write_config.assert_called()
 
 
-async def _send_commands_and_wait.opp, service_data):
+async def _send_commands_and_wait(opp, service_data):
     await opp.services.async_call(
         REMOTE_DOMAIN,
         SERVICE_SEND_COMMAND,

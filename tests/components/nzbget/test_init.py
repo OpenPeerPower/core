@@ -28,7 +28,7 @@ from tests.common import MockConfigEntry
 async def test_import_from_yaml.opp) -> None:
     """Test import from YAML."""
     with _patch_version(), _patch_status(), _patch_history(), _patch_async_setup_entry():
-        assert await async_setup_component.opp, DOMAIN, {DOMAIN: YAML_CONFIG})
+        assert await async_setup_component(opp, DOMAIN, {DOMAIN: YAML_CONFIG})
         await opp.async_block_till_done()
 
     entries = opp.config_entries.async_entries(DOMAIN)
@@ -39,7 +39,7 @@ async def test_import_from_yaml.opp) -> None:
     assert entries[0].data[CONF_PORT] == 6789
 
 
-async def test_unload_entry.opp, nzbget_api):
+async def test_unload_entry(opp, nzbget_api):
     """Test successful unload of entry."""
     entry = await init_integration.opp)
 
@@ -56,7 +56,7 @@ async def test_unload_entry.opp, nzbget_api):
 async def test_async_setup_raises_entry_not_ready.opp):
     """Test that it throws ConfigEntryNotReady when exception occurs during setup."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=ENTRY_CONFIG)
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with _patch_version(), patch(
         "openpeerpower.components.nzbget.coordinator.NZBGetAPI.status",

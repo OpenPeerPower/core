@@ -16,14 +16,14 @@ ORIG_TIME_ZONE = dt_util.DEFAULT_TIME_ZONE
 async def client.opp, opp_ws_client):
     """Fixture that can interact with the config manager API."""
     with patch.object(config, "SECTIONS", ["core"]):
-        assert await async_setup_component.opp, "config", {})
+        assert await async_setup_component(opp, "config", {})
     return await opp_ws_client.opp)
 
 
-async def test_validate_config_ok.opp, opp_client):
+async def test_validate_config_ok(opp, opp_client):
     """Test checking config."""
     with patch.object(config, "SECTIONS", ["core"]):
-        await async_setup_component.opp, "config", {})
+        await async_setup_component(opp, "config", {})
 
     client = await opp_client()
 
@@ -50,16 +50,16 @@ async def test_validate_config_ok.opp, opp_client):
     assert result["errors"] == "beer"
 
 
-async def test_websocket_core_update.opp, client):
+async def test_websocket_core_update(opp, client):
     """Test core config update websocket command."""
-    assert.opp.config.latitude != 60
-    assert.opp.config.longitude != 50
-    assert.opp.config.elevation != 25
-    assert.opp.config.location_name != "Huis"
-    assert.opp.config.units.name != CONF_UNIT_SYSTEM_IMPERIAL
-    assert.opp.config.time_zone.zone != "America/New_York"
-    assert.opp.config.external_url != "https://www.example.com"
-    assert.opp.config.internal_url != "http://example.com"
+    assert opp.config.latitude != 60
+    assert opp.config.longitude != 50
+    assert opp.config.elevation != 25
+    assert opp.config.location_name != "Huis"
+    assert opp.config.units.name != CONF_UNIT_SYSTEM_IMPERIAL
+    assert opp.config.time_zone.zone != "America/New_York"
+    assert opp.config.external_url != "https://www.example.com"
+    assert opp.config.internal_url != "http://example.com"
 
     with patch("openpeerpower.util.dt.set_default_time_zone") as mock_set_tz:
         await client.send_json(
@@ -82,23 +82,23 @@ async def test_websocket_core_update.opp, client):
     assert msg["id"] == 5
     assert msg["type"] == TYPE_RESULT
     assert msg["success"]
-    assert.opp.config.latitude == 60
-    assert.opp.config.longitude == 50
-    assert.opp.config.elevation == 25
-    assert.opp.config.location_name == "Huis"
-    assert.opp.config.units.name == CONF_UNIT_SYSTEM_IMPERIAL
-    assert.opp.config.external_url == "https://www.example.com"
-    assert.opp.config.internal_url == "http://example.local"
+    assert opp.config.latitude == 60
+    assert opp.config.longitude == 50
+    assert opp.config.elevation == 25
+    assert opp.config.location_name == "Huis"
+    assert opp.config.units.name == CONF_UNIT_SYSTEM_IMPERIAL
+    assert opp.config.external_url == "https://www.example.com"
+    assert opp.config.internal_url == "http://example.local"
 
     assert len(mock_set_tz.mock_calls) == 1
     assert mock_set_tz.mock_calls[0][1][0].zone == "America/New_York"
 
 
-async def test_websocket_core_update_not_admin.opp, opp_ws_client, opp_admin_user):
+async def test_websocket_core_update_not_admin(opp, opp_ws_client, opp_admin_user):
     """Test core config fails for non admin."""
     opp.admin_user.groups = []
     with patch.object(config, "SECTIONS", ["core"]):
-        await async_setup_component.opp, "config", {})
+        await async_setup_component(opp, "config", {})
 
     client = await opp_ws_client.opp)
     await client.send_json({"id": 6, "type": "config/core/update", "latitude": 23})
@@ -111,7 +111,7 @@ async def test_websocket_core_update_not_admin.opp, opp_ws_client, opp_admin_use
     assert msg["error"]["code"] == "unauthorized"
 
 
-async def test_websocket_bad_core_update.opp, client):
+async def test_websocket_bad_core_update(opp, client):
     """Test core config update fails with bad parameters."""
     await client.send_json({"id": 7, "type": "config/core/update", "latituude": 23})
 
@@ -137,7 +137,7 @@ async def test_detect_config(opp, client):
     assert msg["result"] == {}
 
 
-async def test_detect_config_fail.opp, client):
+async def test_detect_config_fail(opp, client):
     """Test detect config."""
     with patch(
         "openpeerpower.util.location.async_detect_location_info",

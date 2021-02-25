@@ -101,24 +101,24 @@ async def test_cannot_connect.opp):
         side_effect=SerialException,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG)
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
         await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
-        assert.opp.states.get(ZONE_1_ID) is None
+        assert opp.states.get(ZONE_1_ID) is None
 
 
-async def _setup_monoprice.opp, monoprice):
+async def _setup_monoprice(opp, monoprice):
     with patch(
         "openpeerpower.components.monoprice.get_monoprice",
         new=lambda *a: monoprice,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG)
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
         await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
 
-async def _setup_monoprice_with_options.opp, monoprice):
+async def _setup_monoprice_with_options(opp, monoprice):
     with patch(
         "openpeerpower.components.monoprice.get_monoprice",
         new=lambda *a: monoprice,
@@ -126,42 +126,42 @@ async def _setup_monoprice_with_options.opp, monoprice):
         config_entry = MockConfigEntry(
             domain=DOMAIN, data=MOCK_CONFIG, options=MOCK_OPTIONS
         )
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
         await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
 
-async def _setup_monoprice_not_first_run.opp, monoprice):
+async def _setup_monoprice_not_first_run(opp, monoprice):
     with patch(
         "openpeerpower.components.monoprice.get_monoprice",
         new=lambda *a: monoprice,
     ):
         data = {**MOCK_CONFIG, CONF_NOT_FIRST_RUN: True}
         config_entry = MockConfigEntry(domain=DOMAIN, data=data)
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
         await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
 
-async def _call_media_player_service.opp, name, data):
+async def _call_media_player_service(opp, name, data):
     await opp.services.async_call(
         MEDIA_PLAYER_DOMAIN, name, service_data=data, blocking=True
     )
 
 
-async def _call_openpeerpower_service.opp, name, data):
+async def _call_openpeerpower_service(opp, name, data):
     await opp.services.async_call(
         "openpeerpower", name, service_data=data, blocking=True
     )
 
 
-async def _call_monoprice_service.opp, name, data):
+async def _call_monoprice_service(opp, name, data):
     await opp.services.async_call(DOMAIN, name, service_data=data, blocking=True)
 
 
 async def test_service_calls_with_entity_id.opp):
     """Test snapshot save/restore service calls."""
-    await _setup_monoprice.opp, MockMonoprice())
+    await _setup_monoprice(opp, MockMonoprice())
 
     # Changing media player to new state
     await _call_media_player_service(
@@ -172,7 +172,7 @@ async def test_service_calls_with_entity_id.opp):
     )
 
     # Saving existing values
-    await _call_monoprice_service.opp, SERVICE_SNAPSHOT, {"entity_id": ZONE_1_ID})
+    await _call_monoprice_service(opp, SERVICE_SNAPSHOT, {"entity_id": ZONE_1_ID})
 
     # Changing media player to new state
     await _call_media_player_service(
@@ -184,7 +184,7 @@ async def test_service_calls_with_entity_id.opp):
 
     # Restoring other media player to its previous state
     # The zone should not be restored
-    await _call_monoprice_service.opp, SERVICE_RESTORE, {"entity_id": ZONE_2_ID})
+    await _call_monoprice_service(opp, SERVICE_RESTORE, {"entity_id": ZONE_2_ID})
     await opp.async_block_till_done()
 
     # Checking that values were not (!) restored
@@ -194,7 +194,7 @@ async def test_service_calls_with_entity_id.opp):
     assert state.attributes[ATTR_INPUT_SOURCE] == "three"
 
     # Restoring media player to its previous state
-    await _call_monoprice_service.opp, SERVICE_RESTORE, {"entity_id": ZONE_1_ID})
+    await _call_monoprice_service(opp, SERVICE_RESTORE, {"entity_id": ZONE_1_ID})
     await opp.async_block_till_done()
 
     state = opp.states.get(ZONE_1_ID)
@@ -205,7 +205,7 @@ async def test_service_calls_with_entity_id.opp):
 
 async def test_service_calls_with_all_entities.opp):
     """Test snapshot save/restore service calls."""
-    await _setup_monoprice.opp, MockMonoprice())
+    await _setup_monoprice(opp, MockMonoprice())
 
     # Changing media player to new state
     await _call_media_player_service(
@@ -216,7 +216,7 @@ async def test_service_calls_with_all_entities.opp):
     )
 
     # Saving existing values
-    await _call_monoprice_service.opp, SERVICE_SNAPSHOT, {"entity_id": "all"})
+    await _call_monoprice_service(opp, SERVICE_SNAPSHOT, {"entity_id": "all"})
 
     # Changing media player to new state
     await _call_media_player_service(
@@ -227,7 +227,7 @@ async def test_service_calls_with_all_entities.opp):
     )
 
     # Restoring media player to its previous state
-    await _call_monoprice_service.opp, SERVICE_RESTORE, {"entity_id": "all"})
+    await _call_monoprice_service(opp, SERVICE_RESTORE, {"entity_id": "all"})
     await opp.async_block_till_done()
 
     state = opp.states.get(ZONE_1_ID)
@@ -238,7 +238,7 @@ async def test_service_calls_with_all_entities.opp):
 
 async def test_service_calls_without_relevant_entities.opp):
     """Test snapshot save/restore service calls."""
-    await _setup_monoprice.opp, MockMonoprice())
+    await _setup_monoprice(opp, MockMonoprice())
 
     # Changing media player to new state
     await _call_media_player_service(
@@ -249,7 +249,7 @@ async def test_service_calls_without_relevant_entities.opp):
     )
 
     # Saving existing values
-    await _call_monoprice_service.opp, SERVICE_SNAPSHOT, {"entity_id": "all"})
+    await _call_monoprice_service(opp, SERVICE_SNAPSHOT, {"entity_id": "all"})
 
     # Changing media player to new state
     await _call_media_player_service(
@@ -260,7 +260,7 @@ async def test_service_calls_without_relevant_entities.opp):
     )
 
     # Restoring media player to its previous state
-    await _call_monoprice_service.opp, SERVICE_RESTORE, {"entity_id": "light.demo"})
+    await _call_monoprice_service(opp, SERVICE_RESTORE, {"entity_id": "light.demo"})
     await opp.async_block_till_done()
 
     state = opp.states.get(ZONE_1_ID)
@@ -271,10 +271,10 @@ async def test_service_calls_without_relevant_entities.opp):
 
 async def test_restore_without_snapshort.opp):
     """Test restore when snapshot wasn't called."""
-    await _setup_monoprice.opp, MockMonoprice())
+    await _setup_monoprice(opp, MockMonoprice())
 
     with patch.object(MockMonoprice, "restore_zone") as method_call:
-        await _call_monoprice_service.opp, SERVICE_RESTORE, {"entity_id": ZONE_1_ID})
+        await _call_monoprice_service(opp, SERVICE_RESTORE, {"entity_id": ZONE_1_ID})
         await opp.async_block_till_done()
 
         assert not method_call.called
@@ -283,7 +283,7 @@ async def test_restore_without_snapshort.opp):
 async def test_update.opp):
     """Test updating values from monoprice."""
     monoprice = MockMonoprice()
-    await _setup_monoprice.opp, monoprice)
+    await _setup_monoprice(opp, monoprice)
 
     # Changing media player to new state
     await _call_media_player_service(
@@ -296,7 +296,7 @@ async def test_update.opp):
     monoprice.set_source(11, 3)
     monoprice.set_volume(11, 38)
 
-    await async_update_entity.opp, ZONE_1_ID)
+    await async_update_entity(opp, ZONE_1_ID)
     await opp.async_block_till_done()
 
     state = opp.states.get(ZONE_1_ID)
@@ -308,7 +308,7 @@ async def test_update.opp):
 async def test_failed_update.opp):
     """Test updating failure from monoprice."""
     monoprice = MockMonoprice()
-    await _setup_monoprice.opp, monoprice)
+    await _setup_monoprice(opp, monoprice)
 
     # Changing media player to new state
     await _call_media_player_service(
@@ -322,7 +322,7 @@ async def test_failed_update.opp):
     monoprice.set_volume(11, 38)
 
     with patch.object(MockMonoprice, "zone_status", side_effect=SerialException):
-        await async_update_entity.opp, ZONE_1_ID)
+        await async_update_entity(opp, ZONE_1_ID)
         await opp.async_block_till_done()
 
     state = opp.states.get(ZONE_1_ID)
@@ -334,7 +334,7 @@ async def test_failed_update.opp):
 async def test_empty_update.opp):
     """Test updating with no state from monoprice."""
     monoprice = MockMonoprice()
-    await _setup_monoprice.opp, monoprice)
+    await _setup_monoprice(opp, monoprice)
 
     # Changing media player to new state
     await _call_media_player_service(
@@ -348,7 +348,7 @@ async def test_empty_update.opp):
     monoprice.set_volume(11, 38)
 
     with patch.object(MockMonoprice, "zone_status", return_value=None):
-        await async_update_entity.opp, ZONE_1_ID)
+        await async_update_entity(opp, ZONE_1_ID)
         await opp.async_block_till_done()
 
     state = opp.states.get(ZONE_1_ID)
@@ -359,7 +359,7 @@ async def test_empty_update.opp):
 
 async def test_supported_features.opp):
     """Test supported features property."""
-    await _setup_monoprice.opp, MockMonoprice())
+    await _setup_monoprice(opp, MockMonoprice())
 
     state = opp.states.get(ZONE_1_ID)
     assert (
@@ -375,7 +375,7 @@ async def test_supported_features.opp):
 
 async def test_source_list.opp):
     """Test source list property."""
-    await _setup_monoprice.opp, MockMonoprice())
+    await _setup_monoprice(opp, MockMonoprice())
 
     state = opp.states.get(ZONE_1_ID)
     # Note, the list is sorted!
@@ -384,7 +384,7 @@ async def test_source_list.opp):
 
 async def test_source_list_with_options.opp):
     """Test source list property."""
-    await _setup_monoprice_with_options.opp, MockMonoprice())
+    await _setup_monoprice_with_options(opp, MockMonoprice())
 
     state = opp.states.get(ZONE_1_ID)
     # Note, the list is sorted!
@@ -394,7 +394,7 @@ async def test_source_list_with_options.opp):
 async def test_select_source.opp):
     """Test source selection methods."""
     monoprice = MockMonoprice()
-    await _setup_monoprice.opp, monoprice)
+    await _setup_monoprice(opp, monoprice)
 
     await _call_media_player_service(
         opp,
@@ -415,11 +415,11 @@ async def test_select_source.opp):
 async def test_unknown_source.opp):
     """Test behavior when device has unknown source."""
     monoprice = MockMonoprice()
-    await _setup_monoprice.opp, monoprice)
+    await _setup_monoprice(opp, monoprice)
 
     monoprice.set_source(11, 5)
 
-    await async_update_entity.opp, ZONE_1_ID)
+    await async_update_entity(opp, ZONE_1_ID)
     await opp.async_block_till_done()
 
     state = opp.states.get(ZONE_1_ID)
@@ -430,19 +430,19 @@ async def test_unknown_source.opp):
 async def test_turn_on_off.opp):
     """Test turning on the zone."""
     monoprice = MockMonoprice()
-    await _setup_monoprice.opp, monoprice)
+    await _setup_monoprice(opp, monoprice)
 
-    await _call_media_player_service.opp, SERVICE_TURN_OFF, {"entity_id": ZONE_1_ID})
+    await _call_media_player_service(opp, SERVICE_TURN_OFF, {"entity_id": ZONE_1_ID})
     assert not monoprice.zones[11].power
 
-    await _call_media_player_service.opp, SERVICE_TURN_ON, {"entity_id": ZONE_1_ID})
+    await _call_media_player_service(opp, SERVICE_TURN_ON, {"entity_id": ZONE_1_ID})
     assert monoprice.zones[11].power
 
 
 async def test_mute_volume.opp):
     """Test mute functionality."""
     monoprice = MockMonoprice()
-    await _setup_monoprice.opp, monoprice)
+    await _setup_monoprice(opp, monoprice)
 
     await _call_media_player_service(
         opp. SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 0.5}
@@ -461,7 +461,7 @@ async def test_mute_volume.opp):
 async def test_volume_up_down.opp):
     """Test increasing volume by one."""
     monoprice = MockMonoprice()
-    await _setup_monoprice.opp, monoprice)
+    await _setup_monoprice(opp, monoprice)
 
     await _call_media_player_service(
         opp. SERVICE_VOLUME_SET, {"entity_id": ZONE_1_ID, "volume_level": 0.0}
@@ -474,7 +474,7 @@ async def test_volume_up_down.opp):
     # should not go below zero
     assert monoprice.zones[11].volume == 0
 
-    await _call_media_player_service.opp, SERVICE_VOLUME_UP, {"entity_id": ZONE_1_ID})
+    await _call_media_player_service(opp, SERVICE_VOLUME_UP, {"entity_id": ZONE_1_ID})
     assert monoprice.zones[11].volume == 1
 
     await _call_media_player_service(
@@ -482,7 +482,7 @@ async def test_volume_up_down.opp):
     )
     assert monoprice.zones[11].volume == 38
 
-    await _call_media_player_service.opp, SERVICE_VOLUME_UP, {"entity_id": ZONE_1_ID})
+    await _call_media_player_service(opp, SERVICE_VOLUME_UP, {"entity_id": ZONE_1_ID})
     # should not go above 38
     assert monoprice.zones[11].volume == 38
 
@@ -495,7 +495,7 @@ async def test_volume_up_down.opp):
 async def test_first_run_with_available_zones.opp):
     """Test first run with all zones available."""
     monoprice = MockMonoprice()
-    await _setup_monoprice.opp, monoprice)
+    await _setup_monoprice(opp, monoprice)
 
     registry = await opp.helpers.entity_registry.async_get_registry()
 
@@ -508,7 +508,7 @@ async def test_first_run_with_failing_zones.opp):
     monoprice = MockMonoprice()
 
     with patch.object(MockMonoprice, "zone_status", side_effect=SerialException):
-        await _setup_monoprice.opp, monoprice)
+        await _setup_monoprice(opp, monoprice)
 
     registry = await opp.helpers.entity_registry.async_get_registry()
 
@@ -525,7 +525,7 @@ async def test_not_first_run_with_failing_zone.opp):
     monoprice = MockMonoprice()
 
     with patch.object(MockMonoprice, "zone_status", side_effect=SerialException):
-        await _setup_monoprice_not_first_run.opp, monoprice)
+        await _setup_monoprice_not_first_run(opp, monoprice)
 
     registry = await opp.helpers.entity_registry.async_get_registry()
 

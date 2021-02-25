@@ -76,7 +76,7 @@ async def test_saving_with_delay(opp, store, opp_storage):
 
     async_fire_time_changed(opp, dt.utcnow() + timedelta(seconds=1))
     await opp.async_block_till_done()
-    assert.opp_storage[store.key] == {
+    assert opp_storage[store.key] == {
         "version": MOCK_VERSION,
         "key": MOCK_KEY,
         "data": MOCK_DATA,
@@ -99,7 +99,7 @@ async def test_saving_on_final_write(opp, opp_storage):
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_FINAL_WRITE)
     await opp.async_block_till_done()
-    assert.opp_storage[store.key] == {
+    assert opp_storage[store.key] == {
         "version": MOCK_VERSION,
         "key": MOCK_KEY,
         "data": MOCK_DATA,
@@ -146,14 +146,14 @@ async def test_not_saving_while_stopping(opp, opp_storage):
 async def test_loading_while_delay(opp, store, opp_storage):
     """Test we load new data even if not written yet."""
     await store.async_save({"delay": "no"})
-    assert.opp_storage[store.key] == {
+    assert opp_storage[store.key] == {
         "version": MOCK_VERSION,
         "key": MOCK_KEY,
         "data": {"delay": "no"},
     }
 
     store.async_delay_save(lambda: {"delay": "yes"}, 1)
-    assert.opp_storage[store.key] == {
+    assert opp_storage[store.key] == {
         "version": MOCK_VERSION,
         "key": MOCK_KEY,
         "data": {"delay": "no"},
@@ -168,7 +168,7 @@ async def test_writing_while_writing_delay(opp, store, opp_storage):
     store.async_delay_save(lambda: {"delay": "yes"}, 1)
     assert store.key not in.opp_storage
     await store.async_save({"delay": "no"})
-    assert.opp_storage[store.key] == {
+    assert opp_storage[store.key] == {
         "version": MOCK_VERSION,
         "key": MOCK_KEY,
         "data": {"delay": "no"},
@@ -176,7 +176,7 @@ async def test_writing_while_writing_delay(opp, store, opp_storage):
 
     async_fire_time_changed(opp, dt.utcnow() + timedelta(seconds=1))
     await opp.async_block_till_done()
-    assert.opp_storage[store.key] == {
+    assert opp_storage[store.key] == {
         "version": MOCK_VERSION,
         "key": MOCK_KEY,
         "data": {"delay": "no"},
@@ -194,7 +194,7 @@ async def test_multiple_delay_save_calls(opp, store, opp_storage):
 
     assert store.key not in.opp_storage
     await store.async_save({"delay": "no"})
-    assert.opp_storage[store.key] == {
+    assert opp_storage[store.key] == {
         "version": MOCK_VERSION,
         "key": MOCK_KEY,
         "data": {"delay": "no"},
@@ -202,7 +202,7 @@ async def test_multiple_delay_save_calls(opp, store, opp_storage):
 
     async_fire_time_changed(opp, dt.utcnow() + timedelta(seconds=1))
     await opp.async_block_till_done()
-    assert.opp_storage[store.key] == {
+    assert opp_storage[store.key] == {
         "version": MOCK_VERSION,
         "key": MOCK_KEY,
         "data": {"delay": "no"},
@@ -219,7 +219,7 @@ async def test_multiple_save_calls(opp, store, opp_storage):
 
     tasks = [store.async_save({"savecount": savecount}) for savecount in range(6)]
     await asyncio.gather(*tasks)
-    assert.opp_storage[store.key] == {
+    assert opp_storage[store.key] == {
         "version": MOCK_VERSION,
         "key": MOCK_KEY,
         "data": {"savecount": 5},
@@ -249,7 +249,7 @@ async def test_migrator_existing_config(opp, store, opp_storage):
 
     assert len(mock_remove.mock_calls) == 1
     assert data == {"old": "config"}
-    assert.opp_storage[store.key] == {
+    assert opp_storage[store.key] == {
         "key": MOCK_KEY,
         "version": MOCK_VERSION,
         "data": data,
@@ -274,7 +274,7 @@ async def test_migrator_transforming_config(opp, store, opp_storage):
 
     assert len(mock_remove.mock_calls) == 1
     assert data == {"new": "config"}
-    assert.opp_storage[store.key] == {
+    assert opp_storage[store.key] == {
         "key": MOCK_KEY,
         "version": MOCK_VERSION,
         "data": data,

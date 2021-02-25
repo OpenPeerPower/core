@@ -82,29 +82,29 @@ def mock_now():
         yield now_dt
 
 
-async def test_bad_api_key.opp, caplog):
+async def test_bad_api_key(opp, caplog):
     """Catch bad api key."""
     with mock.patch(
         "simplehound.core.cloud.detect", side_effect=hound.SimplehoundException
     ):
-        await async_setup_component.opp, ip.DOMAIN, VALID_CONFIG)
+        await async_setup_component(opp, ip.DOMAIN, VALID_CONFIG)
         await opp.async_block_till_done()
         assert "Sighthound error" in caplog.text
         assert not.opp.states.get(VALID_ENTITY_ID)
 
 
-async def test_setup_platform.opp, mock_detections):
+async def test_setup_platform(opp, mock_detections):
     """Set up platform with one entity."""
-    await async_setup_component.opp, ip.DOMAIN, VALID_CONFIG)
+    await async_setup_component(opp, ip.DOMAIN, VALID_CONFIG)
     await opp.async_block_till_done()
-    assert.opp.states.get(VALID_ENTITY_ID)
+    assert opp.states.get(VALID_ENTITY_ID)
 
 
-async def test_process_image.opp, mock_image, mock_detections):
+async def test_process_image(opp, mock_image, mock_detections):
     """Process an image."""
-    await async_setup_component.opp, ip.DOMAIN, VALID_CONFIG)
+    await async_setup_component(opp, ip.DOMAIN, VALID_CONFIG)
     await opp.async_block_till_done()
-    assert.opp.states.get(VALID_ENTITY_ID)
+    assert opp.states.get(VALID_ENTITY_ID)
 
     person_events = []
 
@@ -130,9 +130,9 @@ async def test_catch_bad_image(
     """Process an image."""
     valid_config_save_file = deepcopy(VALID_CONFIG)
     valid_config_save_file[ip.DOMAIN].update({sh.CONF_SAVE_FILE_FOLDER: TEST_DIR})
-    await async_setup_component.opp, ip.DOMAIN, valid_config_save_file)
+    await async_setup_component(opp, ip.DOMAIN, valid_config_save_file)
     await opp.async_block_till_done()
-    assert.opp.states.get(VALID_ENTITY_ID)
+    assert opp.states.get(VALID_ENTITY_ID)
 
     data = {ATTR_ENTITY_ID: VALID_ENTITY_ID}
     await opp.services.async_call(ip.DOMAIN, ip.SERVICE_SCAN, service_data=data)
@@ -140,13 +140,13 @@ async def test_catch_bad_image(
     assert "Sighthound unable to process image" in caplog.text
 
 
-async def test_save_image.opp, mock_image, mock_detections):
+async def test_save_image(opp, mock_image, mock_detections):
     """Save a processed image."""
     valid_config_save_file = deepcopy(VALID_CONFIG)
     valid_config_save_file[ip.DOMAIN].update({sh.CONF_SAVE_FILE_FOLDER: TEST_DIR})
-    await async_setup_component.opp, ip.DOMAIN, valid_config_save_file)
+    await async_setup_component(opp, ip.DOMAIN, valid_config_save_file)
     await opp.async_block_till_done()
-    assert.opp.states.get(VALID_ENTITY_ID)
+    assert opp.states.get(VALID_ENTITY_ID)
 
     with mock.patch(
         "openpeerpower.components.sighthound.image_processing.Image.open"
@@ -165,14 +165,14 @@ async def test_save_image.opp, mock_image, mock_detections):
         assert pil_img.save.call_args_list[0] == mock.call(latest_save_path)
 
 
-async def test_save_timestamped_image.opp, mock_image, mock_detections, mock_now):
+async def test_save_timestamped_image(opp, mock_image, mock_detections, mock_now):
     """Save a processed image."""
     valid_config_save_ts_file = deepcopy(VALID_CONFIG)
     valid_config_save_ts_file[ip.DOMAIN].update({sh.CONF_SAVE_FILE_FOLDER: TEST_DIR})
     valid_config_save_ts_file[ip.DOMAIN].update({sh.CONF_SAVE_TIMESTAMPTED_FILE: True})
-    await async_setup_component.opp, ip.DOMAIN, valid_config_save_ts_file)
+    await async_setup_component(opp, ip.DOMAIN, valid_config_save_ts_file)
     await opp.async_block_till_done()
-    assert.opp.states.get(VALID_ENTITY_ID)
+    assert opp.states.get(VALID_ENTITY_ID)
 
     with mock.patch(
         "openpeerpower.components.sighthound.image_processing.Image.open"

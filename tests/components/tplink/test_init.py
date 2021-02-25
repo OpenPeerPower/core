@@ -47,7 +47,7 @@ async def test_configuring_tplink_causes_discovery.opp):
     """Test that specifying empty config does discovery."""
     with patch("openpeerpower.components.tplink.common.Discover.discover") as discover:
         discover.return_value = {"host": 1234}
-        await async_setup_component.opp, tplink.DOMAIN, {tplink.DOMAIN: {}})
+        await async_setup_component(opp, tplink.DOMAIN, {tplink.DOMAIN: {}})
         await opp.async_block_till_done()
 
     assert len(discover.mock_calls) == 1
@@ -61,7 +61,7 @@ async def test_configuring_tplink_causes_discovery.opp):
     ],
 )
 @pytest.mark.parametrize("count", [1, 2, 3])
-async def test_configuring_device_types.opp, name, cls, platform, count):
+async def test_configuring_device_types(opp, name, cls, platform, count):
     """Test that light or switch platform list is filled correctly."""
     with patch(
         "openpeerpower.components.tplink.common.Discover.discover"
@@ -75,7 +75,7 @@ async def test_configuring_device_types.opp, name, cls, platform, count):
             f"123.123.123.{c}": cls("123.123.123.123") for c in range(count)
         }
         discover.return_value = discovery_data
-        await async_setup_component.opp, tplink.DOMAIN, {tplink.DOMAIN: {}})
+        await async_setup_component(opp, tplink.DOMAIN, {tplink.DOMAIN: {}})
         await opp.async_block_till_done()
 
     assert len(discover.mock_calls) == 1
@@ -163,7 +163,7 @@ async def test_is_dimmable.opp):
         dimmable_switch = SmartPlug("123.123.123.123")
         discover.return_value = {"host": dimmable_switch}
 
-        await async_setup_component.opp, tplink.DOMAIN, {tplink.DOMAIN: {}})
+        await async_setup_component(opp, tplink.DOMAIN, {tplink.DOMAIN: {}})
         await opp.async_block_till_done()
 
     assert len(discover.mock_calls) == 1
@@ -213,7 +213,7 @@ async def test_platforms_are_initialized.opp):
         "openpeerpower.components.tplink.common.SmartPlug.is_dimmable", False
     ):
         # patching is_dimmable is necessray to avoid misdetection as light.
-        await async_setup_component.opp, tplink.DOMAIN, config)
+        await async_setup_component(opp, tplink.DOMAIN, config)
         await opp.async_block_till_done()
 
     assert discover.call_count == 0
@@ -227,18 +227,18 @@ async def test_no_config_creates_no_entry.opp):
         "openpeerpower.components.tplink.async_setup_entry",
         return_value=mock_coro(True),
     ) as mock_setup:
-        await async_setup_component.opp, tplink.DOMAIN, {})
+        await async_setup_component(opp, tplink.DOMAIN, {})
         await opp.async_block_till_done()
 
     assert mock_setup.call_count == 0
 
 
 @pytest.mark.parametrize("platform", ["switch", "light"])
-async def test_unload.opp, platform):
+async def test_unload(opp, platform):
     """Test that the async_unload_entry works."""
     # As we have currently no configuration, we just to pass the domain here.
     entry = MockConfigEntry(domain=tplink.DOMAIN)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.tplink.common.SmartDevice._query_helper"
@@ -252,11 +252,11 @@ async def test_unload.opp, platform):
                 CONF_DISCOVERY: False,
             }
         }
-        assert await async_setup_component.opp, tplink.DOMAIN, config)
+        assert await async_setup_component(opp, tplink.DOMAIN, config)
         await opp.async_block_till_done()
 
         assert len(light_setup.mock_calls) == 1
         assert tplink.DOMAIN in.opp.data
 
-    assert await tplink.async_unload_entry.opp, entry)
+    assert await tplink.async_unload_entry(opp, entry)
     assert not.opp.data[tplink.DOMAIN]

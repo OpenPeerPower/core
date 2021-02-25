@@ -63,7 +63,7 @@ ENTITY_ID = f"{alert.DOMAIN}.{NAME}"
 
 
 @callback
-def async_turn_on.opp, entity_id):
+def async_turn_on(opp, entity_id):
     """Async reset the alert.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -73,7 +73,7 @@ def async_turn_on.opp, entity_id):
 
 
 @callback
-def async_turn_off.opp, entity_id):
+def async_turn_off(opp, entity_id):
     """Async acknowledge the alert.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -83,7 +83,7 @@ def async_turn_off.opp, entity_id):
 
 
 @callback
-def async_toggle.opp, entity_id):
+def async_toggle(opp, entity_id):
     """Async toggle acknowledgment of alert.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -111,32 +111,32 @@ async def test_is_on.opp):
     """Test is_on method."""
     opp.states.async_set(ENTITY_ID, STATE_ON)
     await opp.async_block_till_done()
-    assert alert.is_on.opp, ENTITY_ID)
+    assert alert.is_on(opp, ENTITY_ID)
     opp.states.async_set(ENTITY_ID, STATE_OFF)
     await opp.async_block_till_done()
-    assert not alert.is_on.opp, ENTITY_ID)
+    assert not alert.is_on(opp, ENTITY_ID)
 
 
 async def test_setup_opp):
     """Test setup method."""
-    assert await async_setup_component.opp, alert.DOMAIN, TEST_CONFIG)
+    assert await async_setup_component(opp, alert.DOMAIN, TEST_CONFIG)
     assert STATE_IDLE == opp.states.get(ENTITY_ID).state
 
 
-async def test_fire.opp, mock_notifier):
+async def test_fire(opp, mock_notifier):
     """Test the alert firing."""
-    assert await async_setup_component.opp, alert.DOMAIN, TEST_CONFIG)
+    assert await async_setup_component(opp, alert.DOMAIN, TEST_CONFIG)
     opp.states.async_set("sensor.test", STATE_ON)
     await opp.async_block_till_done()
     assert STATE_ON == opp.states.get(ENTITY_ID).state
 
 
-async def test_silence.opp, mock_notifier):
+async def test_silence(opp, mock_notifier):
     """Test silencing the alert."""
-    assert await async_setup_component.opp, alert.DOMAIN, TEST_CONFIG)
+    assert await async_setup_component(opp, alert.DOMAIN, TEST_CONFIG)
     opp.states.async_set("sensor.test", STATE_ON)
     await opp.async_block_till_done()
-    async_turn_off.opp, ENTITY_ID)
+    async_turn_off(opp, ENTITY_ID)
     await opp.async_block_till_done()
     assert STATE_OFF == opp.states.get(ENTITY_ID).state
 
@@ -149,29 +149,29 @@ async def test_silence.opp, mock_notifier):
     assert STATE_ON == opp.states.get(ENTITY_ID).state
 
 
-async def test_reset.opp, mock_notifier):
+async def test_reset(opp, mock_notifier):
     """Test resetting the alert."""
-    assert await async_setup_component.opp, alert.DOMAIN, TEST_CONFIG)
+    assert await async_setup_component(opp, alert.DOMAIN, TEST_CONFIG)
     opp.states.async_set("sensor.test", STATE_ON)
     await opp.async_block_till_done()
-    async_turn_off.opp, ENTITY_ID)
+    async_turn_off(opp, ENTITY_ID)
     await opp.async_block_till_done()
     assert STATE_OFF == opp.states.get(ENTITY_ID).state
-    async_turn_on.opp, ENTITY_ID)
+    async_turn_on(opp, ENTITY_ID)
     await opp.async_block_till_done()
     assert STATE_ON == opp.states.get(ENTITY_ID).state
 
 
-async def test_toggle.opp, mock_notifier):
+async def test_toggle(opp, mock_notifier):
     """Test toggling alert."""
-    assert await async_setup_component.opp, alert.DOMAIN, TEST_CONFIG)
+    assert await async_setup_component(opp, alert.DOMAIN, TEST_CONFIG)
     opp.states.async_set("sensor.test", STATE_ON)
     await opp.async_block_till_done()
     assert STATE_ON == opp.states.get(ENTITY_ID).state
-    async_toggle.opp, ENTITY_ID)
+    async_toggle(opp, ENTITY_ID)
     await opp.async_block_till_done()
     assert STATE_OFF == opp.states.get(ENTITY_ID).state
-    async_toggle.opp, ENTITY_ID)
+    async_toggle(opp, ENTITY_ID)
     await opp.async_block_till_done()
     assert STATE_ON == opp.states.get(ENTITY_ID).state
 
@@ -189,7 +189,7 @@ async def test_notification_no_done_message.opp):
 
     opp.services.async_register(notify.DOMAIN, NOTIFIER, record_event)
 
-    assert await async_setup_component.opp, alert.DOMAIN, config)
+    assert await async_setup_component(opp, alert.DOMAIN, config)
     assert len(events) == 0
 
     opp.states.async_set("sensor.test", STATE_ON)
@@ -212,7 +212,7 @@ async def test_notification.opp):
 
     opp.services.async_register(notify.DOMAIN, NOTIFIER, record_event)
 
-    assert await async_setup_component.opp, alert.DOMAIN, TEST_CONFIG)
+    assert await async_setup_component(opp, alert.DOMAIN, TEST_CONFIG)
     assert len(events) == 0
 
     opp.states.async_set("sensor.test", STATE_ON)
@@ -224,9 +224,9 @@ async def test_notification.opp):
     assert len(events) == 2
 
 
-async def test_sending_non_templated_notification.opp, mock_notifier):
+async def test_sending_non_templated_notification(opp, mock_notifier):
     """Test notifications."""
-    assert await async_setup_component.opp, alert.DOMAIN, TEST_CONFIG)
+    assert await async_setup_component(opp, alert.DOMAIN, TEST_CONFIG)
 
     opp.states.async_set(TEST_ENTITY, STATE_ON)
     await opp.async_block_till_done()
@@ -235,11 +235,11 @@ async def test_sending_non_templated_notification.opp, mock_notifier):
     assert last_event.data[notify.ATTR_MESSAGE] == NAME
 
 
-async def test_sending_templated_notification.opp, mock_notifier):
+async def test_sending_templated_notification(opp, mock_notifier):
     """Test templated notification."""
     config = deepcopy(TEST_CONFIG)
     config[alert.DOMAIN][NAME][alert.CONF_ALERT_MESSAGE] = TEMPLATE
-    assert await async_setup_component.opp, alert.DOMAIN, config)
+    assert await async_setup_component(opp, alert.DOMAIN, config)
 
     opp.states.async_set(TEST_ENTITY, STATE_ON)
     await opp.async_block_till_done()
@@ -248,11 +248,11 @@ async def test_sending_templated_notification.opp, mock_notifier):
     assert last_event.data[notify.ATTR_MESSAGE] == TEST_ENTITY
 
 
-async def test_sending_templated_done_notification.opp, mock_notifier):
+async def test_sending_templated_done_notification(opp, mock_notifier):
     """Test templated notification."""
     config = deepcopy(TEST_CONFIG)
     config[alert.DOMAIN][NAME][alert.CONF_DONE_MESSAGE] = TEMPLATE
-    assert await async_setup_component.opp, alert.DOMAIN, config)
+    assert await async_setup_component(opp, alert.DOMAIN, config)
 
     opp.states.async_set(TEST_ENTITY, STATE_ON)
     await opp.async_block_till_done()
@@ -263,11 +263,11 @@ async def test_sending_templated_done_notification.opp, mock_notifier):
     assert last_event.data[notify.ATTR_MESSAGE] == TEST_ENTITY
 
 
-async def test_sending_titled_notification.opp, mock_notifier):
+async def test_sending_titled_notification(opp, mock_notifier):
     """Test notifications."""
     config = deepcopy(TEST_CONFIG)
     config[alert.DOMAIN][NAME][alert.CONF_TITLE] = TITLE
-    assert await async_setup_component.opp, alert.DOMAIN, config)
+    assert await async_setup_component(opp, alert.DOMAIN, config)
 
     opp.states.async_set(TEST_ENTITY, STATE_ON)
     await opp.async_block_till_done()
@@ -276,11 +276,11 @@ async def test_sending_titled_notification.opp, mock_notifier):
     assert last_event.data[notify.ATTR_TITLE] == TEST_TITLE
 
 
-async def test_sending_data_notification.opp, mock_notifier):
+async def test_sending_data_notification(opp, mock_notifier):
     """Test notifications."""
     config = deepcopy(TEST_CONFIG)
     config[alert.DOMAIN][NAME][alert.CONF_DATA] = TEST_DATA
-    assert await async_setup_component.opp, alert.DOMAIN, config)
+    assert await async_setup_component(opp, alert.DOMAIN, config)
 
     opp.states.async_set(TEST_ENTITY, STATE_ON)
     await opp.async_block_till_done()
@@ -302,7 +302,7 @@ async def test_skipfirst.opp):
 
     opp.services.async_register(notify.DOMAIN, NOTIFIER, record_event)
 
-    assert await async_setup_component.opp, alert.DOMAIN, config)
+    assert await async_setup_component(opp, alert.DOMAIN, config)
     assert len(events) == 0
 
     opp.states.async_set("sensor.test", STATE_ON)

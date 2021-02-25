@@ -276,5 +276,5 @@ def mock_get_addon_discovery_info():
 async def mock_mqtt_fixture.opp):
     """Mock the MQTT integration."""
     mqtt_entry = MockConfigEntry(domain="mqtt", state=ENTRY_STATE_LOADED)
-    mqtt_entry.add_to.opp.opp)
+    mqtt_entry.add_to_opp(opp)
     return mqtt_entry

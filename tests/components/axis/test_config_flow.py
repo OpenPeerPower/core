@@ -51,7 +51,7 @@ from tests.common import MockConfigEntry
 
 async def test_flow_manual_configuration.opp):
     """Test that config flow works."""
-    MockConfigEntry(domain=AXIS_DOMAIN, source=SOURCE_IGNORE).add_to.opp.opp)
+    MockConfigEntry(domain=AXIS_DOMAIN, source=SOURCE_IGNORE).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         AXIS_DOMAIN, context={"source": SOURCE_USER}
@@ -176,12 +176,12 @@ async def test_flow_create_entry_multiple_existing_entries_of_same_model.opp):
         domain=AXIS_DOMAIN,
         data={CONF_NAME: "M1065-LW 0", CONF_MODEL: "M1065-LW"},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     entry2 = MockConfigEntry(
         domain=AXIS_DOMAIN,
         data={CONF_NAME: "M1065-LW 1", CONF_MODEL: "M1065-LW"},
     )
-    entry2.add_to.opp.opp)
+    entry2.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         AXIS_DOMAIN, context={"source": SOURCE_USER}
@@ -306,7 +306,7 @@ async def test_reauth_flow_update_configuration.opp):
         ),
     ],
 )
-async def test_discovery_flow.opp, source: str, discovery_info: dict):
+async def test_discovery_flow(opp, source: str, discovery_info: dict):
     """Test the different discovery flows for new devices work."""
     result = await opp.config_entries.flow.async_init(
         AXIS_DOMAIN, data=discovery_info, context={"source": source}

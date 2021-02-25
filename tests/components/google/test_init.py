@@ -23,14 +23,14 @@ def mock_google_setup_opp):
         yield
 
 
-async def test_setup_component.opp, google_setup):
+async def test_setup_component(opp, google_setup):
     """Test setup component."""
     config = {"google": {CONF_CLIENT_ID: "id", CONF_CLIENT_SECRET: "secret"}}
 
-    assert await async_setup_component.opp, "google", config)
+    assert await async_setup_component(opp, "google", config)
 
 
-async def test_get_calendar_info.opp, test_calendar):
+async def test_get_calendar_info(opp, test_calendar):
     """Test getting the calendar info."""
     calendar_info = await opp.async_add_executor_job(
         google.get_calendar_info, opp, test_calendar
@@ -48,7 +48,7 @@ async def test_get_calendar_info.opp, test_calendar):
     }
 
 
-async def test_found_calendar.opp, google_setup, mock_next_event, test_calendar):
+async def test_found_calendar(opp, google_setup, mock_next_event, test_calendar):
     """Test when a calendar is found."""
     config = {
         "google": {
@@ -57,11 +57,11 @@ async def test_found_calendar.opp, google_setup, mock_next_event, test_calendar)
             "track_new_calendar": True,
         }
     }
-    assert await async_setup_component.opp, "google", config)
-    assert.opp.data[google.DATA_INDEX] == {}
+    assert await async_setup_component(opp, "google", config)
+    assert opp.data[google.DATA_INDEX] == {}
 
     await opp.services.async_call(
         "google", google.SERVICE_FOUND_CALENDARS, test_calendar, blocking=True
     )
 
-    assert.opp.data[google.DATA_INDEX].get(test_calendar["id"]) is not None
+    assert opp.data[google.DATA_INDEX].get(test_calendar["id"]) is not None

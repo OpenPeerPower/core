@@ -72,7 +72,7 @@ def mock_start_server_failed():
         yield server
 
 
-async def test_form.opp, dummy_tcp_server):
+async def test_form(opp, dummy_tcp_server):
     """Test how we get the form."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -88,7 +88,7 @@ async def test_form.opp, dummy_tcp_server):
     assert result2["type"] == RESULT_TYPE_CREATE_ENTRY
 
 
-async def test_form_addr_in_use.opp, addr_in_use):
+async def test_form_addr_in_use(opp, addr_in_use):
     """Test how we handle addr_in_use error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -102,7 +102,7 @@ async def test_form_addr_in_use.opp, addr_in_use):
     assert result2["reason"] == "addr_in_use"
 
 
-async def test_form_start_server_failed.opp, start_server_failed):
+async def test_form_start_server_failed(opp, start_server_failed):
     """Test how we handle start_server_failed error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -119,7 +119,7 @@ async def test_form_start_server_failed.opp, start_server_failed):
 async def test_option_flow.opp):
     """Test option flow."""
     entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     assert not entry.options
 

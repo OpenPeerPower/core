@@ -116,7 +116,7 @@ def mock_controller_client_empty():
         yield service_mock
 
 
-async def test_user.opp, client_single):
+async def test_user(opp, client_single):
     """Test user config."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -137,7 +137,7 @@ async def test_user.opp, client_single):
     assert result["data"][CONF_LONGITUDE] == str(CITY_1_LON)
 
 
-async def test_user_list.opp, client_multiple):
+async def test_user_list(opp, client_multiple):
     """Test user config."""
 
     # test with all provided with search returning more than 1 place
@@ -160,7 +160,7 @@ async def test_user_list.opp, client_multiple):
     assert result["data"][CONF_LONGITUDE] == str(CITY_3_LON)
 
 
-async def test_import.opp, client_multiple):
+async def test_import(opp, client_multiple):
     """Test import step."""
     # import with all
     result = await opp.config_entries.flow.async_init(
@@ -175,7 +175,7 @@ async def test_import.opp, client_multiple):
     assert result["data"][CONF_LONGITUDE] == str(CITY_2_LON)
 
 
-async def test_search_failed.opp, client_empty):
+async def test_search_failed(opp, client_empty):
     """Test error displayed if no result in search."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -193,7 +193,7 @@ async def test_abort_if_already_setup_opp, client_single):
         domain=DOMAIN,
         data={CONF_LATITUDE: CITY_1_LAT, CONF_LONGITUDE: CITY_1_LON},
         unique_id=f"{CITY_1_LAT}, {CITY_1_LON}",
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     # Should fail, same CITY same postal code (import)
     result = await opp.config_entries.flow.async_init(
@@ -221,7 +221,7 @@ async def test_options_flow.opp: OpenPeerPowerType):
         data={CONF_LATITUDE: CITY_1_LAT, CONF_LONGITUDE: CITY_1_LON},
         unique_id=f"{CITY_1_LAT}, {CITY_1_LON}",
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     assert config_entry.options == {}
 

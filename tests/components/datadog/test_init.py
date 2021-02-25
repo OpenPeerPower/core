@@ -36,7 +36,7 @@ async def test_datadog_setup_full(opp):
         assert mock_init.call_count == 1
         assert mock_init.call_args == mock.call(statsd_host="host", statsd_port=123)
 
-    assert.opp.bus.listen.called
+    assert opp.bus.listen.called
     assert EVENT_LOGBOOK_ENTRY == opp.bus.listen.call_args_list[0][0][0]
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[1][0][0]
 
@@ -62,7 +62,7 @@ async def test_datadog_setup_defaults(opp):
 
         assert mock_init.call_count == 1
         assert mock_init.call_args == mock.call(statsd_host="host", statsd_port=8125)
-    assert.opp.bus.listen.called
+    assert opp.bus.listen.called
 
 
 async def test_logbook_entry(opp):
@@ -78,7 +78,7 @@ async def test_logbook_entry(opp):
             {datadog.DOMAIN: {"host": "host", "rate": datadog.DEFAULT_RATE}},
         )
 
-        assert.opp.bus.listen.called
+        assert opp.bus.listen.called
         handler_method = opp.bus.listen.call_args_list[0][0][1]
 
         event = {
@@ -118,7 +118,7 @@ async def test_state_changed(opp):
             },
         )
 
-        assert.opp.bus.listen.called
+        assert opp.bus.listen.called
         handler_method = opp.bus.listen.call_args_list[1][0][1]
 
         valid = {"1": 1, "1.0": 1.0, STATE_ON: 1, STATE_OFF: 0}

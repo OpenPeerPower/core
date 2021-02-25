@@ -233,9 +233,9 @@ async def test_dynamically_handle_segments(
     """Test if a new/deleted segment is dynamically added/removed."""
     await init_integration(opp, aioclient_mock)
 
-    assert.opp.states.get("light.wled_rgb_light_master")
-    assert.opp.states.get("light.wled_rgb_light_segment_0")
-    assert.opp.states.get("light.wled_rgb_light_segment_1")
+    assert opp.states.get("light.wled_rgb_light_master")
+    assert opp.states.get("light.wled_rgb_light_segment_0")
+    assert opp.states.get("light.wled_rgb_light_segment_1")
 
     data = json.loads(load_fixture("wled/rgb_single_segment.json"))
     device = WLEDDevice(data)
@@ -247,7 +247,7 @@ async def test_dynamically_handle_segments(
     ):
         async_fire_time_changed(opp, dt_util.utcnow() + SCAN_INTERVAL)
         await opp.async_block_till_done()
-        assert.opp.states.get("light.wled_rgb_light_segment_0")
+        assert opp.states.get("light.wled_rgb_light_segment_0")
         assert not.opp.states.get("light.wled_rgb_light_segment_1")
         assert not.opp.states.get("light.wled_rgb_light_master")
 
@@ -255,9 +255,9 @@ async def test_dynamically_handle_segments(
     async_fire_time_changed(opp, dt_util.utcnow() + SCAN_INTERVAL)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("light.wled_rgb_light_master")
-    assert.opp.states.get("light.wled_rgb_light_segment_0")
-    assert.opp.states.get("light.wled_rgb_light_segment_1")
+    assert opp.states.get("light.wled_rgb_light_master")
+    assert opp.states.get("light.wled_rgb_light_segment_0")
+    assert opp.states.get("light.wled_rgb_light_segment_1")
 
 
 async def test_single_segment_behavior(

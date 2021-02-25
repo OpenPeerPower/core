@@ -20,7 +20,7 @@ CONFIG = {CONF_URL: "https://some.url:1234"}
 
 async def test_form.opp):
     """Test we get the user initiated form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )

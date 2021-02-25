@@ -28,10 +28,10 @@ def entity_reg.opp):
     return mock_registry.opp)
 
 
-async def test_aid_generation.opp, device_reg, entity_reg):
+async def test_aid_generation(opp, device_reg, entity_reg):
     """Test generating aids."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -98,10 +98,10 @@ async def test_aid_generation.opp, device_reg, entity_reg):
         )
 
 
-async def test_no_aid_collision.opp, device_reg, entity_reg):
+async def test_no_aid_collision(opp, device_reg, entity_reg):
     """Test generating aids."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -130,7 +130,7 @@ async def test_aid_generation_no_unique_ids_handles_collision(
 ):
     """Test colliding aids is stable."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     aid_storage = AccessoryAidStorage.opp, config_entry)
     await aid_storage.async_initialize()
 

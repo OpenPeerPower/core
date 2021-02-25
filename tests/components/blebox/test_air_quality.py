@@ -35,7 +35,7 @@ async def test_init(airsensor, opp, config):
     """Test airSensor default state."""
 
     _, entity_id = airsensor
-    entry = await async_setup_entity.opp, config, entity_id)
+    entry = await async_setup_entity(opp, config, entity_id)
     assert entry.unique_id == "BleBox-airSensor-1afe34db9437-0.air"
 
     state = opp.states.get(entity_id)
@@ -70,7 +70,7 @@ async def test_update(airsensor, opp, config):
         feature_mock.pm10 = 333
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
 
     state = opp.states.get(entity_id)
 
@@ -88,6 +88,6 @@ async def test_update_failure(airsensor, opp, config, caplog):
 
     feature_mock, entity_id = airsensor
     feature_mock.async_update = AsyncMock(side_effect=blebox_uniapi.error.ClientError)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
 
     assert f"Updating '{feature_mock.full_name}' failed: " in caplog.text

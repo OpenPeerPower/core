@@ -31,9 +31,9 @@ def create_air_quality_sensor_service(accessory):
     cur_state.value = 6666
 
 
-async def test_air_quality_sensor_read_state.opp, utcnow):
+async def test_air_quality_sensor_read_state(opp, utcnow):
     """Test reading the state of a HomeKit temperature sensor accessory."""
-    helper = await setup_test_component.opp, create_air_quality_sensor_service)
+    helper = await setup_test_component(opp, create_air_quality_sensor_service)
 
     state = await helper.poll_and_get_state()
     assert state.state == "4444"

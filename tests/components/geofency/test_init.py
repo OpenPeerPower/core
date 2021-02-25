@@ -119,7 +119,7 @@ def mock_dev_track(mock_device_tracker_conf):
 @pytest.fixture
 async def geofency_client(loop, opp, aiohttp_client):
     """Geofency mock client (unauthenticated)."""
-    assert await async_setup_component.opp, "persistent_notification", {})
+    assert await async_setup_component(opp, "persistent_notification", {})
 
     assert await async_setup_component(
         opp. DOMAIN, {DOMAIN: {CONF_MOBILE_BEACONS: ["Car 1"]}}
@@ -149,7 +149,7 @@ async def setup_zones(loop, opp):
 
 
 @pytest.fixture
-async def webhook_id.opp, geofency_client):
+async def webhook_id(opp, geofency_client):
     """Initialize the Geofency component and get the webhook_id."""
     await async_process_op_core_config(
         opp,
@@ -185,7 +185,7 @@ async def test_data_validation(geofency_client, webhook_id):
         assert req.status == HTTP_UNPROCESSABLE_ENTITY
 
 
-async def test_gps_enter_and_exit_home.opp, geofency_client, webhook_id):
+async def test_gps_enter_and_exit_home(opp, geofency_client, webhook_id):
     """Test GPS based zone enter and exit."""
     url = f"/api/webhook/{webhook_id}"
 
@@ -230,7 +230,7 @@ async def test_gps_enter_and_exit_home.opp, geofency_client, webhook_id):
     assert len(ent_reg.entities) == 1
 
 
-async def test_beacon_enter_and_exit_home.opp, geofency_client, webhook_id):
+async def test_beacon_enter_and_exit_home(opp, geofency_client, webhook_id):
     """Test iBeacon based zone enter and exit - a.k.a stationary iBeacon."""
     url = f"/api/webhook/{webhook_id}"
 
@@ -251,7 +251,7 @@ async def test_beacon_enter_and_exit_home.opp, geofency_client, webhook_id):
     assert STATE_NOT_HOME == state_name
 
 
-async def test_beacon_enter_and_exit_car.opp, geofency_client, webhook_id):
+async def test_beacon_enter_and_exit_car(opp, geofency_client, webhook_id):
     """Test use of mobile iBeacon."""
     url = f"/api/webhook/{webhook_id}"
 
@@ -291,7 +291,7 @@ async def test_beacon_enter_and_exit_car.opp, geofency_client, webhook_id):
     assert STATE_HOME == state_name
 
 
-async def test_load_unload_entry.opp, geofency_client, webhook_id):
+async def test_load_unload_entry(opp, geofency_client, webhook_id):
     """Test that the appropriate dispatch signals are added and removed."""
     url = f"/api/webhook/{webhook_id}"
 

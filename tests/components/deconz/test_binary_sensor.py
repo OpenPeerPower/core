@@ -64,27 +64,27 @@ SENSORS = {
 }
 
 
-async def test_no_binary_sensors.opp, aioclient_mock):
+async def test_no_binary_sensors(opp, aioclient_mock):
     """Test that no sensors in deconz results in no sensor entities."""
-    await setup_deconz_integration.opp, aioclient_mock)
+    await setup_deconz_integration(opp, aioclient_mock)
     assert len.opp.states.async_all()) == 0
 
 
-async def test_binary_sensors.opp, aioclient_mock):
+async def test_binary_sensors(opp, aioclient_mock):
     """Test successful creation of binary sensor entities."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = deepcopy(SENSORS)
     config_entry = await setup_deconz_integration(
         opp. aioclient_mock, get_state_response=data
     )
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
 
     assert len.opp.states.async_all()) == 3
     presence_sensor = opp.states.get("binary_sensor.presence_sensor")
     assert presence_sensor.state == STATE_OFF
     assert presence_sensor.attributes["device_class"] == DEVICE_CLASS_MOTION
-    assert.opp.states.get("binary_sensor.temperature_sensor") is None
-    assert.opp.states.get("binary_sensor.clip_presence_sensor") is None
+    assert opp.states.get("binary_sensor.temperature_sensor") is None
+    assert opp.states.get("binary_sensor.clip_presence_sensor") is None
     vibration_sensor = opp.states.get("binary_sensor.vibration_sensor")
     assert vibration_sensor.state == STATE_ON
     assert vibration_sensor.attributes["device_class"] == DEVICE_CLASS_VIBRATION
@@ -99,18 +99,18 @@ async def test_binary_sensors.opp, aioclient_mock):
     gateway.api.event_handler(state_changed_event)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("binary_sensor.presence_sensor").state == STATE_ON
+    assert opp.states.get("binary_sensor.presence_sensor").state == STATE_ON
 
     await opp.config_entries.async_unload(config_entry.entry_id)
 
-    assert.opp.states.get("binary_sensor.presence_sensor").state == STATE_UNAVAILABLE
+    assert opp.states.get("binary_sensor.presence_sensor").state == STATE_UNAVAILABLE
 
     await opp.config_entries.async_remove(config_entry.entry_id)
     await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 0
 
 
-async def test_allow_clip_sensor.opp, aioclient_mock):
+async def test_allow_clip_sensor(opp, aioclient_mock):
     """Test that CLIP sensors can be allowed."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = deepcopy(SENSORS)
@@ -122,10 +122,10 @@ async def test_allow_clip_sensor.opp, aioclient_mock):
     )
 
     assert len.opp.states.async_all()) == 4
-    assert.opp.states.get("binary_sensor.presence_sensor").state == STATE_OFF
-    assert.opp.states.get("binary_sensor.temperature_sensor") is None
-    assert.opp.states.get("binary_sensor.clip_presence_sensor").state == STATE_OFF
-    assert.opp.states.get("binary_sensor.vibration_sensor").state == STATE_ON
+    assert opp.states.get("binary_sensor.presence_sensor").state == STATE_OFF
+    assert opp.states.get("binary_sensor.temperature_sensor") is None
+    assert opp.states.get("binary_sensor.clip_presence_sensor").state == STATE_OFF
+    assert opp.states.get("binary_sensor.vibration_sensor").state == STATE_ON
 
     # Disallow clip sensors
 
@@ -135,7 +135,7 @@ async def test_allow_clip_sensor.opp, aioclient_mock):
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 3
-    assert.opp.states.get("binary_sensor.clip_presence_sensor") is None
+    assert opp.states.get("binary_sensor.clip_presence_sensor") is None
 
     # Allow clip sensors
 
@@ -145,13 +145,13 @@ async def test_allow_clip_sensor.opp, aioclient_mock):
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 4
-    assert.opp.states.get("binary_sensor.clip_presence_sensor").state == STATE_OFF
+    assert opp.states.get("binary_sensor.clip_presence_sensor").state == STATE_OFF
 
 
-async def test_add_new_binary_sensor.opp, aioclient_mock):
+async def test_add_new_binary_sensor(opp, aioclient_mock):
     """Test that adding a new binary sensor works."""
-    config_entry = await setup_deconz_integration.opp, aioclient_mock)
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    config_entry = await setup_deconz_integration(opp, aioclient_mock)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
     assert len.opp.states.async_all()) == 0
 
     state_added_event = {
@@ -165,17 +165,17 @@ async def test_add_new_binary_sensor.opp, aioclient_mock):
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
-    assert.opp.states.get("binary_sensor.presence_sensor").state == STATE_OFF
+    assert opp.states.get("binary_sensor.presence_sensor").state == STATE_OFF
 
 
-async def test_add_new_binary_sensor_ignored.opp, aioclient_mock):
+async def test_add_new_binary_sensor_ignored(opp, aioclient_mock):
     """Test that adding a new binary sensor is not allowed."""
     config_entry = await setup_deconz_integration(
         opp,
         aioclient_mock,
         options={CONF_MASTER_GATEWAY: True, CONF_ALLOW_NEW_DEVICES: False},
     )
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
     assert len.opp.states.async_all()) == 0
 
     state_added_event = {
@@ -208,4 +208,4 @@ async def test_add_new_binary_sensor_ignored.opp, aioclient_mock):
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 1
-    assert.opp.states.get("binary_sensor.presence_sensor")
+    assert opp.states.get("binary_sensor.presence_sensor")

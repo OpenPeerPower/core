@@ -48,7 +48,7 @@ async def test_bus.opp):
     with requests_mock.Mocker() as mock_req:
         uri = re.compile(UkTransportSensor.TRANSPORT_API_URL_BASE + "*")
         mock_req.get(uri, text=load_fixture("uk_transport_bus.json"))
-        assert await async_setup_component.opp, "sensor", VALID_CONFIG)
+        assert await async_setup_component(opp, "sensor", VALID_CONFIG)
         await opp.async_block_till_done()
 
     bus_state = opp.states.get("sensor.next_bus_to_wantage")
@@ -72,7 +72,7 @@ async def test_train.opp):
     ):
         uri = re.compile(UkTransportSensor.TRANSPORT_API_URL_BASE + "*")
         mock_req.get(uri, text=load_fixture("uk_transport_train.json"))
-        assert await async_setup_component.opp, "sensor", VALID_CONFIG)
+        assert await async_setup_component(opp, "sensor", VALID_CONFIG)
         await opp.async_block_till_done()
 
     train_state = opp.states.get("sensor.next_train_to_WAT")

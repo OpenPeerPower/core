@@ -46,7 +46,7 @@ async def test_valid_config2.opp):
 
 async def test_invalid_config(opp):
     """Test configuration."""
-    assert not await async_setup_component.opp, "rfxtrx", {"rfxtrx": {}})
+    assert not await async_setup_component(opp, "rfxtrx", {"rfxtrx": {}})
 
     assert not await async_setup_component(
         opp,
@@ -61,7 +61,7 @@ async def test_invalid_config(opp):
     )
 
 
-async def test_fire_event.opp, rfxtrx):
+async def test_fire_event(opp, rfxtrx):
     """Test fire event."""
     entry_data = create_rfx_test_cfg(
         device="/dev/serial/by-id/usb-RFXCOM_RFXtrx433_A1Y0NJGR-if00-port0",
@@ -73,7 +73,7 @@ async def test_fire_event.opp, rfxtrx):
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -126,12 +126,12 @@ async def test_fire_event.opp, rfxtrx):
     ]
 
 
-async def test_send.opp, rfxtrx):
+async def test_send(opp, rfxtrx):
     """Test configuration."""
     entry_data = create_rfx_test_cfg(device="/dev/null", devices={})
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()

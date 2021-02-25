@@ -45,19 +45,19 @@ async def test_setup_discovery(opp: OpenPeerPower):
         assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
-    assert.opp.states.get(ENTITY_BINARY_SENSOR) is not None
-    assert.opp.states.get(ENTITY_LIGHT) is not None
+    assert opp.states.get(ENTITY_BINARY_SENSOR) is not None
+    assert opp.states.get(ENTITY_LIGHT) is not None
 
     # Unload
     assert await opp.config_entries.async_unload(config_entry.entry_id)
-    assert.opp.states.get(ENTITY_BINARY_SENSOR).state == STATE_UNAVAILABLE
-    assert.opp.states.get(ENTITY_LIGHT).state == STATE_UNAVAILABLE
+    assert opp.states.get(ENTITY_BINARY_SENSOR).state == STATE_UNAVAILABLE
+    assert opp.states.get(ENTITY_LIGHT).state == STATE_UNAVAILABLE
 
     # Remove
     assert await opp.config_entries.async_remove(config_entry.entry_id)
     await opp.async_block_till_done()
-    assert.opp.states.get(ENTITY_BINARY_SENSOR) is None
-    assert.opp.states.get(ENTITY_LIGHT) is None
+    assert opp.states.get(ENTITY_BINARY_SENSOR) is None
+    assert opp.states.get(ENTITY_LIGHT) is None
 
 
 async def test_setup_import(opp: OpenPeerPower):
@@ -83,9 +83,9 @@ async def test_setup_import(opp: OpenPeerPower):
         )
         await opp.async_block_till_done()
 
-    assert.opp.states.get(f"binary_sensor.{name}_nightlight") is not None
-    assert.opp.states.get(f"light.{name}") is not None
-    assert.opp.states.get(f"light.{name}_nightlight") is not None
+    assert opp.states.get(f"binary_sensor.{name}_nightlight") is not None
+    assert opp.states.get(f"light.{name}") is not None
+    assert opp.states.get(f"light.{name}_nightlight") is not None
 
 
 async def test_unique_ids_device(opp: OpenPeerPower):

@@ -23,9 +23,9 @@ from . import mock_device, mock_location, mock_mode
 from tests.common import mock_registry
 
 
-async def test_alarm_control_panel.opp, canary) -> None:
+async def test_alarm_control_panel(opp, canary) -> None:
     """Test the creation and values of the alarm_control_panel for Canary."""
-    await async_setup_component.opp, "persistent_notification", {})
+    await async_setup_component(opp, "persistent_notification", {})
 
     registry = mock_registry.opp)
     online_device_at_home = mock_device(20, "Dining Room", True, "Canary Pro")
@@ -44,7 +44,7 @@ async def test_alarm_control_panel.opp, canary) -> None:
 
     config = {DOMAIN: {"username": "test-username", "password": "test-password"}}
     with patch("openpeerpower.components.canary.PLATFORMS", ["alarm_control_panel"]):
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.home"
@@ -107,9 +107,9 @@ async def test_alarm_control_panel.opp, canary) -> None:
     assert state.state == STATE_ALARM_ARMED_NIGHT
 
 
-async def test_alarm_control_panel_services.opp, canary) -> None:
+async def test_alarm_control_panel_services(opp, canary) -> None:
     """Test the services of the alarm_control_panel for Canary."""
-    await async_setup_component.opp, "persistent_notification", {})
+    await async_setup_component(opp, "persistent_notification", {})
 
     online_device_at_home = mock_device(20, "Dining Room", True, "Canary Pro")
 
@@ -126,7 +126,7 @@ async def test_alarm_control_panel_services.opp, canary) -> None:
 
     config = {DOMAIN: {"username": "test-username", "password": "test-password"}}
     with patch("openpeerpower.components.canary.PLATFORMS", ["alarm_control_panel"]):
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
 
     entity_id = "alarm_control_panel.home"

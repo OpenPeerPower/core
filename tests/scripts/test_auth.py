@@ -100,7 +100,7 @@ async def test_change_password_invalid_user(opp, provider, capsys, opp_storage):
         opp. provider, Mock(username="invalid-user", new_password="new-pass")
     )
 
-    assert.opp_auth.STORAGE_KEY not in.opp_storage
+    assert opp_auth.STORAGE_KEY not in.opp_storage
     captured = capsys.readouterr()
     assert captured.out == "User not found\n"
     data.validate_login("test-user", "test-pass")

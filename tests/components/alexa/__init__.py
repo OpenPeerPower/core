@@ -101,9 +101,9 @@ async def assert_request_calls_service(
         request["directive"]["header"]["instance"] = instance
 
     domain, service_name = service.split(".")
-    calls = async_mock_service.opp, domain, service_name)
+    calls = async_mock_service(opp, domain, service_name)
 
-    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request, context)
+    msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request, context)
     await opp.async_block_till_done()
 
     assert len(calls) == 1
@@ -125,9 +125,9 @@ async def assert_request_fails(
         request["directive"]["payload"] = payload
 
     domain, service_name = service_not_called.split(".")
-    call = async_mock_service.opp, domain, service_name)
+    call = async_mock_service(opp, domain, service_name)
 
-    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+    msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request)
     await opp.async_block_till_done()
 
     assert not call
@@ -177,14 +177,14 @@ async def assert_scene_controller_works(
         assert "timestamp" in response["event"]["payload"]
 
 
-async def reported_properties.opp, endpoint):
+async def reported_properties(opp, endpoint):
     """Use ReportState to get properties and return them.
 
     The result is a ReportedProperties instance, which has methods to make
     assertions about the properties.
     """
     request = get_new_request("Alexa", "ReportState", endpoint)
-    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+    msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request)
     await opp.async_block_till_done()
     return ReportedProperties(msg["context"]["properties"])
 

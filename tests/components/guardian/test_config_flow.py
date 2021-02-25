@@ -58,7 +58,7 @@ async def test_get_pin_from_uid():
     assert pin == "3456"
 
 
-async def test_step_user.opp, ping_client):
+async def test_step_user(opp, ping_client):
     """Test the user step."""
     conf = {CONF_IP_ADDRESS: "192.168.1.100", CONF_PORT: 7777}
 
@@ -80,7 +80,7 @@ async def test_step_user.opp, ping_client):
     }
 
 
-async def test_step_zeroconf.opp, ping_client):
+async def test_step_zeroconf(opp, ping_client):
     """Test the zeroconf step."""
     zeroconf_data = {
         "host": "192.168.1.100",

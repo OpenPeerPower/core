@@ -121,7 +121,7 @@ def fixture_mock_client():
     ProfileMock.reset()
 
 
-async def _setup_seventeentrack.opp, config=None, summary_data=None):
+async def _setup_seventeentrack(opp, config=None, summary_data=None):
     """Set up component using config."""
     if not config:
         config = VALID_CONFIG_MINIMAL
@@ -129,38 +129,38 @@ async def _setup_seventeentrack.opp, config=None, summary_data=None):
         summary_data = {}
 
     ProfileMock.summary_data = summary_data
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
 
 
-async def _goto_future.opp, future=None):
+async def _goto_future(opp, future=None):
     """Move to future."""
     if not future:
         future = utcnow() + datetime.timedelta(minutes=10)
     with patch("openpeerpower.util.utcnow", return_value=future):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
 
 async def test_full_valid_config(opp):
     """Ensure everything starts correctly."""
-    assert await async_setup_component.opp, "sensor", VALID_CONFIG_FULL)
+    assert await async_setup_component(opp, "sensor", VALID_CONFIG_FULL)
     await opp.async_block_till_done()
     assert len.opp.states.async_entity_ids()) == len(ProfileMock.summary_data.keys())
 
 
 async def test_valid_config(opp):
     """Ensure everything starts correctly."""
-    assert await async_setup_component.opp, "sensor", VALID_CONFIG_MINIMAL)
+    assert await async_setup_component(opp, "sensor", VALID_CONFIG_MINIMAL)
     await opp.async_block_till_done()
     assert len.opp.states.async_entity_ids()) == len(ProfileMock.summary_data.keys())
 
 
 async def test_invalid_config(opp):
     """Ensure nothing is created when config is wrong."""
-    assert await async_setup_component.opp, "sensor", INVALID_CONFIG)
+    assert await async_setup_component(opp, "sensor", INVALID_CONFIG)
 
     assert not.opp.states.async_entity_ids()
 
@@ -173,7 +173,7 @@ async def test_add_package.opp):
     ProfileMock.package_list = [package]
 
     await _setup_seventeentrack.opp)
-    assert.opp.states.get("sensor.seventeentrack_package_456") is not None
+    assert opp.states.get("sensor.seventeentrack_package_456") is not None
     assert len.opp.states.async_entity_ids()) == 1
 
     package2 = Package(
@@ -183,7 +183,7 @@ async def test_add_package.opp):
 
     await _goto_future.opp)
 
-    assert.opp.states.get("sensor.seventeentrack_package_789") is not None
+    assert opp.states.get("sensor.seventeentrack_package_789") is not None
     assert len.opp.states.async_entity_ids()) == 2
 
 
@@ -200,16 +200,16 @@ async def test_remove_package.opp):
 
     await _setup_seventeentrack.opp)
 
-    assert.opp.states.get("sensor.seventeentrack_package_456") is not None
-    assert.opp.states.get("sensor.seventeentrack_package_789") is not None
+    assert opp.states.get("sensor.seventeentrack_package_456") is not None
+    assert opp.states.get("sensor.seventeentrack_package_789") is not None
     assert len.opp.states.async_entity_ids()) == 2
 
     ProfileMock.package_list = [package2]
 
     await _goto_future.opp)
 
-    assert.opp.states.get("sensor.seventeentrack_package_456") is None
-    assert.opp.states.get("sensor.seventeentrack_package_789") is not None
+    assert opp.states.get("sensor.seventeentrack_package_456") is None
+    assert opp.states.get("sensor.seventeentrack_package_789") is not None
     assert len.opp.states.async_entity_ids()) == 1
 
 
@@ -222,7 +222,7 @@ async def test_friendly_name_changed.opp):
 
     await _setup_seventeentrack.opp)
 
-    assert.opp.states.get("sensor.seventeentrack_package_456") is not None
+    assert opp.states.get("sensor.seventeentrack_package_456") is not None
     assert len.opp.states.async_entity_ids()) == 1
 
     package = Package(
@@ -232,7 +232,7 @@ async def test_friendly_name_changed.opp):
 
     await _goto_future.opp)
 
-    assert.opp.states.get("sensor.seventeentrack_package_456") is not None
+    assert opp.states.get("sensor.seventeentrack_package_456") is not None
     entity = opp.data["entity_components"]["sensor"].get_entity(
         "sensor.seventeentrack_package_456"
     )
@@ -248,7 +248,7 @@ async def test_delivered_not_shown.opp):
     ProfileMock.package_list = [package]
 
     opp.components.persistent_notification = MagicMock()
-    await _setup_seventeentrack.opp, VALID_CONFIG_FULL_NO_DELIVERED)
+    await _setup_seventeentrack(opp, VALID_CONFIG_FULL_NO_DELIVERED)
     await _goto_future.opp)
 
     assert not.opp.states.async_entity_ids()
@@ -263,9 +263,9 @@ async def test_delivered_shown.opp):
     ProfileMock.package_list = [package]
 
     opp.components.persistent_notification = MagicMock()
-    await _setup_seventeentrack.opp, VALID_CONFIG_FULL)
+    await _setup_seventeentrack(opp, VALID_CONFIG_FULL)
 
-    assert.opp.states.get("sensor.seventeentrack_package_456") is not None
+    assert opp.states.get("sensor.seventeentrack_package_456") is not None
     assert len.opp.states.async_entity_ids()) == 1
     opp.components.persistent_notification.create.assert_not_called()
 
@@ -277,9 +277,9 @@ async def test_becomes_delivered_not_shown_notification.opp):
     )
     ProfileMock.package_list = [package]
 
-    await _setup_seventeentrack.opp, VALID_CONFIG_FULL_NO_DELIVERED)
+    await _setup_seventeentrack(opp, VALID_CONFIG_FULL_NO_DELIVERED)
 
-    assert.opp.states.get("sensor.seventeentrack_package_456") is not None
+    assert opp.states.get("sensor.seventeentrack_package_456") is not None
     assert len.opp.states.async_entity_ids()) == 1
 
     package_delivered = Package(
@@ -296,7 +296,7 @@ async def test_becomes_delivered_not_shown_notification.opp):
 
 async def test_summary_correctly_updated.opp):
     """Ensure summary entities are not duplicated."""
-    await _setup_seventeentrack.opp, summary_data=DEFAULT_SUMMARY)
+    await _setup_seventeentrack(opp, summary_data=DEFAULT_SUMMARY)
 
     assert len.opp.states.async_entity_ids()) == 7
     for state in.opp.states.async_all():

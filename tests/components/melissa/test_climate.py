@@ -74,7 +74,7 @@ async def test_setup_platform.opp):
         add_entities = Mock()
         discovery_info = {}
 
-        await melissa.async_setup_platform.opp, config, add_entities, discovery_info)
+        await melissa.async_setup_platform(opp, config, add_entities, discovery_info)
         add_entities.assert_called_once_with(thermostats)
 
 

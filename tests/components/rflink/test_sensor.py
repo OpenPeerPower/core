@@ -38,7 +38,7 @@ CONFIG = {
 async def test_default_setup_opp, monkeypatch):
     """Test all basic functionality of the rflink sensor component."""
     # setup mocking rflink module
-    event_callback, create, _, _ = await mock_rflink.opp, CONFIG, DOMAIN, monkeypatch)
+    event_callback, create, _, _ = await mock_rflink(opp, CONFIG, DOMAIN, monkeypatch)
 
     # make sure arguments are passed
     assert create.call_args_list[0][1]["ignore"]
@@ -55,7 +55,7 @@ async def test_default_setup_opp, monkeypatch):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.test").state == "1"
+    assert opp.states.get("sensor.test").state == "1"
 
     # test event for new unconfigured sensor
     event_callback(
@@ -71,7 +71,7 @@ async def test_default_setup_opp, monkeypatch):
     assert new_sensor.attributes["icon"] == "mdi:thermometer"
 
 
-async def test_disable_automatic_add.opp, monkeypatch):
+async def test_disable_automatic_add(opp, monkeypatch):
     """If disabled new devices should not be automatically added."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -79,7 +79,7 @@ async def test_disable_automatic_add.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    event_callback, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    event_callback, _, _, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
     # test event for new unconfigured sensor
     event_callback(
@@ -91,7 +91,7 @@ async def test_disable_automatic_add.opp, monkeypatch):
     assert not.opp.states.get("sensor.test2")
 
 
-async def test_entity_availability.opp, monkeypatch):
+async def test_entity_availability(opp, monkeypatch):
     """If Rflink device is disconnected, entities should become unavailable."""
     # Make sure Rflink mock does not 'recover' to quickly from the
     # disconnect or else the unavailability cannot be measured
@@ -105,7 +105,7 @@ async def test_entity_availability.opp, monkeypatch):
     )
 
     # Entities are available by default
-    assert.opp.states.get("sensor.test").state == STATE_UNKNOWN
+    assert opp.states.get("sensor.test").state == STATE_UNKNOWN
 
     # Mock a disconnect of the Rflink device
     disconnect_callback()
@@ -114,7 +114,7 @@ async def test_entity_availability.opp, monkeypatch):
     await opp.async_block_till_done()
 
     # Entity should be unavailable
-    assert.opp.states.get("sensor.test").state == "unavailable"
+    assert opp.states.get("sensor.test").state == "unavailable"
 
     # Reconnect the Rflink device
     disconnect_callback()
@@ -123,10 +123,10 @@ async def test_entity_availability.opp, monkeypatch):
     await opp.async_block_till_done()
 
     # Entities should be available again
-    assert.opp.states.get("sensor.test").state == STATE_UNKNOWN
+    assert opp.states.get("sensor.test").state == STATE_UNKNOWN
 
 
-async def test_aliases.opp, monkeypatch):
+async def test_aliases(opp, monkeypatch):
     """Validate the response to sensor's alias (with aliases)."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -143,7 +143,7 @@ async def test_aliases.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    event_callback, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    event_callback, _, _, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
     # test default state of sensor loaded from config
     config_sensor = opp.states.get("sensor.test_02")
@@ -168,13 +168,13 @@ async def test_aliases.opp, monkeypatch):
     assert updated_sensor.attributes[ATTR_UNIT_OF_MEASUREMENT] == PERCENTAGE
 
 
-async def test_race_condition.opp, monkeypatch):
+async def test_race_condition(opp, monkeypatch):
     """Test race condition for unknown components."""
     config = {"rflink": {"port": "/dev/ttyABC0"}, DOMAIN: {"platform": "rflink"}}
     tmp_entity = TMP_ENTITY.format("test3")
 
     # setup mocking rflink module
-    event_callback, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    event_callback, _, _, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
     # test event for new unconfigured sensor
     event_callback({"id": "test3", "sensor": "battery", "value": "ok", "unit": ""})

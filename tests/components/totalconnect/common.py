@@ -103,14 +103,14 @@ RESPONSE_DISARM_FAILURE = {
 }
 
 
-async def setup_platform.opp, platform):
+async def setup_platform(opp, platform):
     """Set up the TotalConnect platform."""
     # first set up a config entry and add it to.opp
     mock_entry = MockConfigEntry(
         domain=DOMAIN,
         data={CONF_USERNAME: "user@email.com", CONF_PASSWORD: "password"},
     )
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     responses = [RESPONSE_AUTHENTICATE, RESPONSE_DISARMED]
 
@@ -123,7 +123,7 @@ async def setup_platform.opp, platform):
         "openpeerpower.components.totalconnect.TotalConnectClient.TotalConnectClient.get_zone_details",
         return_value=True,
     ):
-        assert await async_setup_component.opp, DOMAIN, {})
+        assert await async_setup_component(opp, DOMAIN, {})
         assert mock_request.call_count == 2
     await opp.async_block_till_done()
 

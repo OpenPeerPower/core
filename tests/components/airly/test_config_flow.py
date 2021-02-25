@@ -35,7 +35,7 @@ async def test_show_form.opp):
     assert result["step_id"] == SOURCE_USER
 
 
-async def test_invalid_api_key.opp, aioclient_mock):
+async def test_invalid_api_key(opp, aioclient_mock):
     """Test that errors are shown when API key is invalid."""
     aioclient_mock.get(
         API_POINT_URL,
@@ -51,7 +51,7 @@ async def test_invalid_api_key.opp, aioclient_mock):
     assert result["errors"] == {"base": "invalid_api_key"}
 
 
-async def test_invalid_location.opp, aioclient_mock):
+async def test_invalid_location(opp, aioclient_mock):
     """Test that errors are shown when location is invalid."""
     aioclient_mock.get(API_POINT_URL, text=load_fixture("airly_no_station.json"))
 
@@ -70,7 +70,7 @@ async def test_invalid_location.opp, aioclient_mock):
 async def test_duplicate_error(opp, aioclient_mock):
     """Test that errors are shown when duplicates are added."""
     aioclient_mock.get(API_POINT_URL, text=load_fixture("airly_valid_station.json"))
-    MockConfigEntry(domain=DOMAIN, unique_id="123-456", data=CONFIG).add_to.opp.opp)
+    MockConfigEntry(domain=DOMAIN, unique_id="123-456", data=CONFIG).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
@@ -80,7 +80,7 @@ async def test_duplicate_error(opp, aioclient_mock):
     assert result["reason"] == "already_configured"
 
 
-async def test_create_entry.opp, aioclient_mock):
+async def test_create_entry(opp, aioclient_mock):
     """Test that the user step works."""
     aioclient_mock.get(API_POINT_URL, text=load_fixture("airly_valid_station.json"))
 
@@ -97,7 +97,7 @@ async def test_create_entry.opp, aioclient_mock):
     assert result["data"][CONF_USE_NEAREST] is False
 
 
-async def test_create_entry_with_nearest_method.opp, aioclient_mock):
+async def test_create_entry_with_nearest_method(opp, aioclient_mock):
     """Test that the user step works with nearest method."""
 
     aioclient_mock.get(API_POINT_URL, text=load_fixture("airly_no_station.json"))

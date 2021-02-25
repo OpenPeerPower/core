@@ -42,7 +42,7 @@ async def test_flow_works_with_authcode(opp, aioclient_mock):
         assert result["title"] == EMAIL
 
 
-async def test_flow_works_with_2fa.opp, aioclient_mock):
+async def test_flow_works_with_2fa(opp, aioclient_mock):
     """Test config flow with 2fa."""
     from openpeerpower.components.hangouts.hangups_utils import Google2FAError
 
@@ -66,7 +66,7 @@ async def test_flow_works_with_2fa.opp, aioclient_mock):
         assert result["title"] == EMAIL
 
 
-async def test_flow_with_unknown_2fa.opp, aioclient_mock):
+async def test_flow_with_unknown_2fa(opp, aioclient_mock):
     """Test config flow with invalid 2fa method."""
     from openpeerpower.components.hangouts.hangups_utils import GoogleAuthError
 
@@ -104,7 +104,7 @@ async def test_flow_invalid_login(opp, aioclient_mock):
         assert result["errors"]["base"] == "invalid_login"
 
 
-async def test_flow_invalid_2fa.opp, aioclient_mock):
+async def test_flow_invalid_2fa(opp, aioclient_mock):
     """Test config flow with 2fa."""
     from openpeerpower.components.hangouts.hangups_utils import Google2FAError
 

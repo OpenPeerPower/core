@@ -2,7 +2,7 @@
 from openpeerpower.components import http, websocket_api
 
 
-async def test_async_response_request_context.opp, websocket_client):
+async def test_async_response_request_context(opp, websocket_client):
     """Test we can access current request."""
 
     def handle_request(request, connection, msg):
@@ -13,23 +13,23 @@ async def test_async_response_request_context.opp, websocket_client):
 
     @websocket_api.websocket_command({"type": "test-get-request-executor"})
     @websocket_api.async_response
-    async def executor_get_request.opp, connection, msg):
+    async def executor_get_request(opp, connection, msg):
         handle_request(
             await opp.async_add_executor_job(http.current_request.get), connection, msg
         )
 
     @websocket_api.websocket_command({"type": "test-get-request-async"})
     @websocket_api.async_response
-    async def async_get_request.opp, connection, msg):
+    async def async_get_request(opp, connection, msg):
         handle_request(http.current_request.get(), connection, msg)
 
     @websocket_api.websocket_command({"type": "test-get-request"})
-    def get_request.opp, connection, msg):
+    def get_request(opp, connection, msg):
         handle_request(http.current_request.get(), connection, msg)
 
-    websocket_api.async_register_command.opp, executor_get_request)
-    websocket_api.async_register_command.opp, async_get_request)
-    websocket_api.async_register_command.opp, get_request)
+    websocket_api.async_register_command(opp, executor_get_request)
+    websocket_api.async_register_command(opp, async_get_request)
+    websocket_api.async_register_command(opp, get_request)
 
     await websocket_client.send_json(
         {

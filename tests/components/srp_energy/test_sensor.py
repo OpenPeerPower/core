@@ -29,7 +29,7 @@ async def test_async_setup_entry.opp):
     )
     opp.data[SRP_ENERGY_DOMAIN] = fake_srp_energy_client
 
-    await async_setup_entry.opp, fake_config, fake_async_add_entities)
+    await async_setup_entry(opp, fake_config, fake_async_add_entities)
 
 
 async def test_async_setup_entry_timeout_error(opp):
@@ -49,7 +49,7 @@ async def test_async_setup_entry_timeout_error(opp):
     opp.data[SRP_ENERGY_DOMAIN] = fake_srp_energy_client
     fake_srp_energy_client.usage.side_effect = TimeoutError()
 
-    await async_setup_entry.opp, fake_config, fake_async_add_entities)
+    await async_setup_entry(opp, fake_config, fake_async_add_entities)
     assert not fake_async_add_entities.call_args[0][0][
         0
     ].coordinator.last_update_success
@@ -72,7 +72,7 @@ async def test_async_setup_entry_connect_error(opp):
     opp.data[SRP_ENERGY_DOMAIN] = fake_srp_energy_client
     fake_srp_energy_client.usage.side_effect = ValueError()
 
-    await async_setup_entry.opp, fake_config, fake_async_add_entities)
+    await async_setup_entry(opp, fake_config, fake_async_add_entities)
     assert not fake_async_add_entities.call_args[0][0][
         0
     ].coordinator.last_update_success

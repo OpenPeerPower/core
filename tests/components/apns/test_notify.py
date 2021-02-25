@@ -55,7 +55,7 @@ async def test_apns_setup_full(mock_access, mock_isfile, opp):
     }
 
     with assert_setup_component(1) as handle_config:
-        assert await async_setup_component.opp, notify.DOMAIN, config)
+        assert await async_setup_component(opp, notify.DOMAIN, config)
     assert handle_config[notify.DOMAIN]
 
 
@@ -69,7 +69,7 @@ async def test_apns_setup_missing_name.opp):
         }
     }
     with assert_setup_component(0) as handle_config:
-        assert await async_setup_component.opp, notify.DOMAIN, config)
+        assert await async_setup_component(opp, notify.DOMAIN, config)
     assert not handle_config[notify.DOMAIN]
 
 
@@ -83,7 +83,7 @@ async def test_apns_setup_missing_certificate.opp):
         }
     }
     with assert_setup_component(0) as handle_config:
-        assert await async_setup_component.opp, notify.DOMAIN, config)
+        assert await async_setup_component(opp, notify.DOMAIN, config)
     assert not handle_config[notify.DOMAIN]
 
 
@@ -97,7 +97,7 @@ async def test_apns_setup_missing_topic.opp):
         }
     }
     with assert_setup_component(0) as handle_config:
-        assert await async_setup_component.opp, notify.DOMAIN, config)
+        assert await async_setup_component(opp, notify.DOMAIN, config)
     assert not handle_config[notify.DOMAIN]
 
 

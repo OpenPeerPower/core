@@ -49,12 +49,12 @@ async def config_entry_fixture.opp):
             zha_const.CONF_RADIO_TYPE: "ezsp",
         },
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     return entry
 
 
 @pytest.fixture
-def setup_zop.opp, config_entry, zigpy_app_controller):
+def setup_zop(opp, config_entry, zigpy_app_controller):
     """Set up ZHA component."""
     zha_config = {zha_const.CONF_ENABLE_QUIRKS: False}
 
@@ -129,7 +129,7 @@ def zigpy_device_mock(zigpy_app_controller):
 
 
 @pytest.fixture
-def zha_device_joined.opp, setup_zha):
+def zha_device_joined(opp, setup_zha):
     """Return a newly joined ZHA device."""
 
     async def _zha_device(zigpy_dev):
@@ -143,7 +143,7 @@ def zha_device_joined.opp, setup_zha):
 
 
 @pytest.fixture
-def zha_device_restored.opp, zigpy_app_controller, setup_zha, opp_storage):
+def zha_device_restored(opp, zigpy_app_controller, setup_zha, opp_storage):
     """Return a restored ZHA device."""
 
     async def _zha_device(zigpy_dev, last_seen=None):
@@ -180,7 +180,7 @@ def zha_device_joined_restored(request):
 
 
 @pytest.fixture
-def zha_device_mock.opp, zigpy_device_mock):
+def zha_device_mock(opp, zigpy_device_mock):
     """Return a zha Device factory."""
 
     def _zha_device(

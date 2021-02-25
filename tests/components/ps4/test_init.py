@@ -111,7 +111,7 @@ async def test_ps4_integration_setup_opp):
     """Test PS4 integration is setup."""
     await ps4.async_setup_opp, {})
     await opp.async_block_till_done()
-    assert.opp.data[PS4_DATA].protocol is not None
+    assert opp.data[PS4_DATA].protocol is not None
 
 
 async def test_creating_entry_sets_up_media_player(opp):

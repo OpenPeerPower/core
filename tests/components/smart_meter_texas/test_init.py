@@ -20,31 +20,31 @@ from .conftest import TEST_ENTITY_ID, setup_integration
 
 async def test_setup_with_no_config(opp):
     """Test that no config is successful."""
-    assert await async_setup_component.opp, DOMAIN, {}) is True
+    assert await async_setup_component(opp, DOMAIN, {}) is True
     await opp.async_block_till_done()
 
     # Assert no flows were started.
     assert len.opp.config_entries.flow.async_progress()) == 0
 
 
-async def test_auth_failure.opp, config_entry, aioclient_mock):
+async def test_auth_failure(opp, config_entry, aioclient_mock):
     """Test if user's username or password is not accepted."""
-    await setup_integration.opp, config_entry, aioclient_mock, auth_fail=True)
+    await setup_integration(opp, config_entry, aioclient_mock, auth_fail=True)
 
     assert config_entry.state == ENTRY_STATE_SETUP_ERROR
 
 
-async def test_api_timeout.opp, config_entry, aioclient_mock):
+async def test_api_timeout(opp, config_entry, aioclient_mock):
     """Test that a timeout results in ConfigEntryNotReady."""
-    await setup_integration.opp, config_entry, aioclient_mock, auth_timeout=True)
+    await setup_integration(opp, config_entry, aioclient_mock, auth_timeout=True)
 
     assert config_entry.state == ENTRY_STATE_SETUP_RETRY
 
 
-async def test_update_failure.opp, config_entry, aioclient_mock):
+async def test_update_failure(opp, config_entry, aioclient_mock):
     """Test that the coordinator handles a bad response."""
-    await setup_integration.opp, config_entry, aioclient_mock, bad_reading=True)
-    await async_setup_component.opp, OP_DOMAIN, {})
+    await setup_integration(opp, config_entry, aioclient_mock, bad_reading=True)
+    await async_setup_component(opp, OP_DOMAIN, {})
     await opp.async_block_till_done()
     with patch("smart_meter_texas.Meter.read_meter") as updater:
         await opp.services.async_call(
@@ -57,9 +57,9 @@ async def test_update_failure.opp, config_entry, aioclient_mock):
         updater.assert_called_once()
 
 
-async def test_unload_config_entry.opp, config_entry, aioclient_mock):
+async def test_unload_config_entry(opp, config_entry, aioclient_mock):
     """Test entry unloading."""
-    await setup_integration.opp, config_entry, aioclient_mock)
+    await setup_integration(opp, config_entry, aioclient_mock)
 
     config_entries = opp.config_entries.async_entries(DOMAIN)
     assert len(config_entries) == 1

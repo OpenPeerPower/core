@@ -10,7 +10,7 @@ async def test_version_sensor.opp):
     """Test the Version sensor."""
     config = {"sensor": {"platform": "version"}}
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
 
 
 async def test_version.opp):
@@ -18,7 +18,7 @@ async def test_version.opp):
     config = {"sensor": {"platform": "version", "name": "test"}}
 
     with patch("openpeerpower.const.__version__", MOCK_VERSION):
-        assert await async_setup_component.opp, "sensor", config)
+        assert await async_setup_component(opp, "sensor", config)
         await opp.async_block_till_done()
 
     state = opp.states.get("sensor.test")

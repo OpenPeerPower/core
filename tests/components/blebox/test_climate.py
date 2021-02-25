@@ -57,7 +57,7 @@ async def test_init(saunabox, opp, config):
     """Test default state."""
 
     _, entity_id = saunabox
-    entry = await async_setup_entity.opp, config, entity_id)
+    entry = await async_setup_entity(opp, config, entity_id)
     assert entry.unique_id == "BleBox-saunaBox-1afe34db9437-thermostat"
 
     state = opp.states.get(entity_id)
@@ -100,7 +100,7 @@ async def test_update(saunabox, opp, config):
         feature_mock.current = 40.9
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
 
     state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
@@ -118,7 +118,7 @@ async def test_on_when_below_desired(saunabox, opp, config):
         feature_mock.is_on = False
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
     def turn_on():
@@ -152,7 +152,7 @@ async def test_on_when_above_desired(saunabox, opp, config):
         feature_mock.is_on = False
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
     def turn_on():
@@ -188,7 +188,7 @@ async def test_off(saunabox, opp, config):
         feature_mock.is_heating = False
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
     def turn_off():
@@ -223,7 +223,7 @@ async def test_set_thermo(saunabox, opp, config):
         feature_mock.is_heating = False
 
     feature_mock.async_update = AsyncMock(side_effect=update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
     def set_temp(temp):
@@ -254,6 +254,6 @@ async def test_update_failure(saunabox, opp, config, caplog):
 
     feature_mock, entity_id = saunabox
     feature_mock.async_update = AsyncMock(side_effect=blebox_uniapi.error.ClientError)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
 
     assert f"Updating '{feature_mock.full_name}' failed: " in caplog.text

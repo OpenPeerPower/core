@@ -30,26 +30,26 @@ DEFAULT_CONFIG_DEVICE_INFO_MAC = {
 }
 
 
-async def help_test_availability_when_connection_lost.opp, mqtt_mock, domain, config):
+async def help_test_availability_when_connection_lost(opp, mqtt_mock, domain, config):
     """Test availability after MQTT disconnection."""
-    assert await async_setup_component.opp, domain, config)
+    assert await async_setup_component(opp, domain, config)
     await opp.async_block_till_done()
 
     state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
 
     mqtt_mock.connected = False
-    async_dispatcher_send.opp, MQTT_DISCONNECTED)
+    async_dispatcher_send(opp, MQTT_DISCONNECTED)
     await opp.async_block_till_done()
 
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
 
-async def help_test_availability_without_topic.opp, mqtt_mock, domain, config):
+async def help_test_availability_without_topic(opp, mqtt_mock, domain, config):
     """Test availability without defined availability topic."""
     assert "availability_topic" not in config[domain]
-    assert await async_setup_component.opp, domain, config)
+    assert await async_setup_component(opp, domain, config)
     await opp.async_block_till_done()
 
     state = opp.states.get(f"{domain}.test")
@@ -82,25 +82,25 @@ async def help_test_default_availability_payload(
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
-    async_fire_mqtt_message.opp, "availability-topic", "online")
+    async_fire_mqtt_message(opp, "availability-topic", "online")
 
     state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
     if no_assumed_state:
         assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "availability-topic", "offline")
+    async_fire_mqtt_message(opp, "availability-topic", "offline")
 
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     if state_topic:
-        async_fire_mqtt_message.opp, state_topic, state_message)
+        async_fire_mqtt_message(opp, state_topic, state_message)
 
         state = opp.states.get(f"{domain}.test")
         assert state.state == STATE_UNAVAILABLE
 
-        async_fire_mqtt_message.opp, "availability-topic", "online")
+        async_fire_mqtt_message(opp, "availability-topic", "online")
 
         state = opp.states.get(f"{domain}.test")
         assert state.state != STATE_UNAVAILABLE
@@ -135,37 +135,37 @@ async def help_test_default_availability_list_payload(
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
-    async_fire_mqtt_message.opp, "availability-topic1", "online")
+    async_fire_mqtt_message(opp, "availability-topic1", "online")
 
     state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
     if no_assumed_state:
         assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "availability-topic1", "offline")
+    async_fire_mqtt_message(opp, "availability-topic1", "offline")
 
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
-    async_fire_mqtt_message.opp, "availability-topic2", "online")
+    async_fire_mqtt_message(opp, "availability-topic2", "online")
 
     state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
     if no_assumed_state:
         assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "availability-topic2", "offline")
+    async_fire_mqtt_message(opp, "availability-topic2", "offline")
 
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     if state_topic:
-        async_fire_mqtt_message.opp, state_topic, state_message)
+        async_fire_mqtt_message(opp, state_topic, state_message)
 
         state = opp.states.get(f"{domain}.test")
         assert state.state == STATE_UNAVAILABLE
 
-        async_fire_mqtt_message.opp, "availability-topic1", "online")
+        async_fire_mqtt_message(opp, "availability-topic1", "online")
 
         state = opp.states.get(f"{domain}.test")
         assert state.state != STATE_UNAVAILABLE
@@ -201,38 +201,38 @@ async def help_test_default_availability_list_payload_all(
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
-    async_fire_mqtt_message.opp, "availability-topic1", "online")
+    async_fire_mqtt_message(opp, "availability-topic1", "online")
 
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
     if no_assumed_state:
         assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "availability-topic2", "online")
+    async_fire_mqtt_message(opp, "availability-topic2", "online")
 
     state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
 
-    async_fire_mqtt_message.opp, "availability-topic2", "offline")
+    async_fire_mqtt_message(opp, "availability-topic2", "offline")
 
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
     if no_assumed_state:
         assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "availability-topic2", "online")
+    async_fire_mqtt_message(opp, "availability-topic2", "online")
 
     state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
 
-    async_fire_mqtt_message.opp, "availability-topic1", "offline")
+    async_fire_mqtt_message(opp, "availability-topic1", "offline")
 
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
     if no_assumed_state:
         assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "availability-topic1", "online")
+    async_fire_mqtt_message(opp, "availability-topic1", "online")
 
     state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
@@ -268,31 +268,31 @@ async def help_test_default_availability_list_payload_any(
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
-    async_fire_mqtt_message.opp, "availability-topic1", "online")
+    async_fire_mqtt_message(opp, "availability-topic1", "online")
 
     state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
     if no_assumed_state:
         assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "availability-topic2", "online")
+    async_fire_mqtt_message(opp, "availability-topic2", "online")
 
     state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
 
-    async_fire_mqtt_message.opp, "availability-topic2", "offline")
+    async_fire_mqtt_message(opp, "availability-topic2", "offline")
 
     state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
     if no_assumed_state:
         assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "availability-topic1", "offline")
+    async_fire_mqtt_message(opp, "availability-topic1", "offline")
 
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
-    async_fire_mqtt_message.opp, "availability-topic1", "online")
+    async_fire_mqtt_message(opp, "availability-topic1", "online")
 
     state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
@@ -363,25 +363,25 @@ async def help_test_custom_availability_payload(
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
-    async_fire_mqtt_message.opp, "availability-topic", "good")
+    async_fire_mqtt_message(opp, "availability-topic", "good")
 
     state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
     if no_assumed_state:
         assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "availability-topic", "nogood")
+    async_fire_mqtt_message(opp, "availability-topic", "nogood")
 
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     if state_topic:
-        async_fire_mqtt_message.opp, state_topic, state_message)
+        async_fire_mqtt_message(opp, state_topic, state_message)
 
         state = opp.states.get(f"{domain}.test")
         assert state.state == STATE_UNAVAILABLE
 
-        async_fire_mqtt_message.opp, "availability-topic", "good")
+        async_fire_mqtt_message(opp, "availability-topic", "good")
 
         state = opp.states.get(f"{domain}.test")
         assert state.state != STATE_UNAVAILABLE
@@ -414,55 +414,55 @@ async def help_test_discovery_update_availability(
     data2 = json.dumps(config2[domain])
     data3 = json.dumps(config3[domain])
 
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data1)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data1)
     await opp.async_block_till_done()
 
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
-    async_fire_mqtt_message.opp, "availability-topic1", "online")
+    async_fire_mqtt_message(opp, "availability-topic1", "online")
     state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
 
-    async_fire_mqtt_message.opp, "availability-topic1", "offline")
+    async_fire_mqtt_message(opp, "availability-topic1", "offline")
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     # Change availability_topic
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data2)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data2)
     await opp.async_block_till_done()
 
     # Verify we are no longer subscribing to the old topic
-    async_fire_mqtt_message.opp, "availability-topic1", "online")
+    async_fire_mqtt_message(opp, "availability-topic1", "online")
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     # Verify we are subscribing to the new topic
-    async_fire_mqtt_message.opp, "availability-topic2", "online")
+    async_fire_mqtt_message(opp, "availability-topic2", "online")
     state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
 
     # Verify we are subscribing to the new topic
-    async_fire_mqtt_message.opp, "availability-topic3", "offline")
+    async_fire_mqtt_message(opp, "availability-topic3", "offline")
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     # Change availability_topic
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data3)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data3)
     await opp.async_block_till_done()
 
     # Verify we are no longer subscribing to the old topic
-    async_fire_mqtt_message.opp, "availability-topic2", "online")
+    async_fire_mqtt_message(opp, "availability-topic2", "online")
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     # Verify we are no longer subscribing to the old topic
-    async_fire_mqtt_message.opp, "availability-topic3", "online")
+    async_fire_mqtt_message(opp, "availability-topic3", "online")
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
     # Verify we are subscribing to the new topic
-    async_fire_mqtt_message.opp, "availability-topic4", "online")
+    async_fire_mqtt_message(opp, "availability-topic4", "online")
     state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
 
@@ -484,13 +484,13 @@ async def help_test_setting_attribute_via_mqtt_json_message(
     )
     await opp.async_block_till_done()
 
-    async_fire_mqtt_message.opp, "attr-topic", '{ "val": "100" }')
+    async_fire_mqtt_message(opp, "attr-topic", '{ "val": "100" }')
     state = opp.states.get(f"{domain}.test")
 
     assert state.attributes.get("val") == "100"
 
 
-async def help_test_setting_attribute_with_template.opp, mqtt_mock, domain, config):
+async def help_test_setting_attribute_with_template(opp, mqtt_mock, domain, config):
     """Test the setting of attribute via MQTT with JSON payload.
 
     This is a test helper for the MqttAttributes mixin.
@@ -532,7 +532,7 @@ async def help_test_update_with_json_attrs_not_dict(
     )
     await opp.async_block_till_done()
 
-    async_fire_mqtt_message.opp, "attr-topic", '[ "list", "of", "things"]')
+    async_fire_mqtt_message(opp, "attr-topic", '[ "list", "of", "things"]')
     state = opp.states.get(f"{domain}.test")
 
     assert state.attributes.get("val") is None
@@ -556,14 +556,14 @@ async def help_test_update_with_json_attrs_bad_JSON(
     )
     await opp.async_block_till_done()
 
-    async_fire_mqtt_message.opp, "attr-topic", "This is not JSON")
+    async_fire_mqtt_message(opp, "attr-topic", "This is not JSON")
 
     state = opp.states.get(f"{domain}.test")
     assert state.attributes.get("val") is None
     assert "Erroneous JSON: This is not JSON" in caplog.text
 
 
-async def help_test_discovery_update_attr.opp, mqtt_mock, caplog, domain, config):
+async def help_test_discovery_update_attr(opp, mqtt_mock, caplog, domain, config):
     """Test update of discovered MQTTAttributes.
 
     This is a test helper for the MqttAttributes mixin.
@@ -576,47 +576,47 @@ async def help_test_discovery_update_attr.opp, mqtt_mock, caplog, domain, config
     data1 = json.dumps(config1[domain])
     data2 = json.dumps(config2[domain])
 
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data1)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data1)
     await opp.async_block_till_done()
-    async_fire_mqtt_message.opp, "attr-topic1", '{ "val": "100" }')
+    async_fire_mqtt_message(opp, "attr-topic1", '{ "val": "100" }')
     state = opp.states.get(f"{domain}.test")
     assert state.attributes.get("val") == "100"
 
     # Change json_attributes_topic
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data2)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data2)
     await opp.async_block_till_done()
 
     # Verify we are no longer subscribing to the old topic
-    async_fire_mqtt_message.opp, "attr-topic1", '{ "val": "50" }')
+    async_fire_mqtt_message(opp, "attr-topic1", '{ "val": "50" }')
     state = opp.states.get(f"{domain}.test")
     assert state.attributes.get("val") == "100"
 
     # Verify we are subscribing to the new topic
-    async_fire_mqtt_message.opp, "attr-topic2", '{ "val": "75" }')
+    async_fire_mqtt_message(opp, "attr-topic2", '{ "val": "75" }')
     state = opp.states.get(f"{domain}.test")
     assert state.attributes.get("val") == "75"
 
 
-async def help_test_unique_id.opp, mqtt_mock, domain, config):
+async def help_test_unique_id(opp, mqtt_mock, domain, config):
     """Test unique id option only creates one entity per unique_id."""
-    assert await async_setup_component.opp, domain, config)
+    assert await async_setup_component(opp, domain, config)
     await opp.async_block_till_done()
     assert len.opp.states.async_entity_ids(domain)) == 1
 
 
-async def help_test_discovery_removal.opp, mqtt_mock, caplog, domain, data):
+async def help_test_discovery_removal(opp, mqtt_mock, caplog, domain, data):
     """Test removal of discovered component.
 
     This is a test helper for the MqttDiscoveryUpdate mixin.
     """
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
     await opp.async_block_till_done()
 
     state = opp.states.get(f"{domain}.test")
     assert state is not None
     assert state.name == "test"
 
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", "")
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", "")
     await opp.async_block_till_done()
 
     state = opp.states.get(f"{domain}.test")
@@ -637,7 +637,7 @@ async def help_test_discovery_update(
 
     This is a test helper for the MqttDiscoveryUpdate mixin.
     """
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", discovery_data1)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", discovery_data1)
     await opp.async_block_till_done()
 
     state = opp.states.get(f"{domain}.beer")
@@ -647,7 +647,7 @@ async def help_test_discovery_update(
     if state_data1:
         for (mqtt_messages, expected_state, attributes) in state_data1:
             for (topic, data) in mqtt_messages:
-                async_fire_mqtt_message.opp, topic, data)
+                async_fire_mqtt_message(opp, topic, data)
             state = opp.states.get(f"{domain}.beer")
             if expected_state:
                 assert state.state == expected_state
@@ -655,7 +655,7 @@ async def help_test_discovery_update(
                 for (attr, value) in attributes:
                     assert state.attributes.get(attr) == value
 
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", discovery_data2)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", discovery_data2)
     await opp.async_block_till_done()
 
     state = opp.states.get(f"{domain}.beer")
@@ -665,7 +665,7 @@ async def help_test_discovery_update(
     if state_data2:
         for (mqtt_messages, expected_state, attributes) in state_data2:
             for (topic, data) in mqtt_messages:
-                async_fire_mqtt_message.opp, topic, data)
+                async_fire_mqtt_message(opp, topic, data)
             state = opp.states.get(f"{domain}.beer")
             if expected_state:
                 assert state.state == expected_state
@@ -684,28 +684,28 @@ async def help_test_discovery_update_unchanged(
 
     This is a test helper for the MqttDiscoveryUpdate mixin.
     """
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data1)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data1)
     await opp.async_block_till_done()
 
     state = opp.states.get(f"{domain}.beer")
     assert state is not None
     assert state.name == "Beer"
 
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data1)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data1)
     await opp.async_block_till_done()
 
     assert not discovery_update.called
 
 
-async def help_test_discovery_broken.opp, mqtt_mock, caplog, domain, data1, data2):
+async def help_test_discovery_broken(opp, mqtt_mock, caplog, domain, data1, data2):
     """Test handling of bad discovery message."""
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data1)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data1)
     await opp.async_block_till_done()
 
     state = opp.states.get(f"{domain}.beer")
     assert state is None
 
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data2)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data2)
     await opp.async_block_till_done()
 
     state = opp.states.get(f"{domain}.milk")
@@ -715,7 +715,7 @@ async def help_test_discovery_broken.opp, mqtt_mock, caplog, domain, data1, data
     assert state is None
 
 
-async def help_test_entity_device_info_with_identifier.opp, mqtt_mock, domain, config):
+async def help_test_entity_device_info_with_identifier(opp, mqtt_mock, domain, config):
     """Test device registry integration.
 
     This is a test helper for the MqttDiscoveryUpdate mixin.
@@ -728,7 +728,7 @@ async def help_test_entity_device_info_with_identifier.opp, mqtt_mock, domain, c
     registry = await opp.helpers.device_registry.async_get_registry()
 
     data = json.dumps(config)
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
     await opp.async_block_till_done()
 
     device = registry.async_get_device({("mqtt", "helloworld")})
@@ -740,7 +740,7 @@ async def help_test_entity_device_info_with_identifier.opp, mqtt_mock, domain, c
     assert device.sw_version == "0.1-beta"
 
 
-async def help_test_entity_device_info_with_connection.opp, mqtt_mock, domain, config):
+async def help_test_entity_device_info_with_connection(opp, mqtt_mock, domain, config):
     """Test device registry integration.
 
     This is a test helper for the MqttDiscoveryUpdate mixin.
@@ -753,7 +753,7 @@ async def help_test_entity_device_info_with_connection.opp, mqtt_mock, domain, c
     registry = await opp.helpers.device_registry.async_get_registry()
 
     data = json.dumps(config)
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
     await opp.async_block_till_done()
 
     device = registry.async_get_device(set(), {("mac", "02:5b:26:a8:dc:12")})
@@ -765,7 +765,7 @@ async def help_test_entity_device_info_with_connection.opp, mqtt_mock, domain, c
     assert device.sw_version == "0.1-beta"
 
 
-async def help_test_entity_device_info_remove.opp, mqtt_mock, domain, config):
+async def help_test_entity_device_info_remove(opp, mqtt_mock, domain, config):
     """Test device registry remove."""
     # Add device settings to config
     config = copy.deepcopy(config[domain])
@@ -776,14 +776,14 @@ async def help_test_entity_device_info_remove.opp, mqtt_mock, domain, config):
     ent_registry = await opp.helpers.entity_registry.async_get_registry()
 
     data = json.dumps(config)
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
     await opp.async_block_till_done()
 
     device = dev_registry.async_get_device({("mqtt", "helloworld")})
     assert device is not None
     assert ent_registry.async_get_entity_id(domain, mqtt.DOMAIN, "veryunique")
 
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", "")
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", "")
     await opp.async_block_till_done()
 
     device = dev_registry.async_get_device({("mqtt", "helloworld")})
@@ -791,7 +791,7 @@ async def help_test_entity_device_info_remove.opp, mqtt_mock, domain, config):
     assert not ent_registry.async_get_entity_id(domain, mqtt.DOMAIN, "veryunique")
 
 
-async def help_test_entity_device_info_update.opp, mqtt_mock, domain, config):
+async def help_test_entity_device_info_update(opp, mqtt_mock, domain, config):
     """Test device registry update.
 
     This is a test helper for the MqttDiscoveryUpdate mixin.
@@ -804,7 +804,7 @@ async def help_test_entity_device_info_update.opp, mqtt_mock, domain, config):
     registry = await opp.helpers.device_registry.async_get_registry()
 
     data = json.dumps(config)
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
     await opp.async_block_till_done()
 
     device = registry.async_get_device({("mqtt", "helloworld")})
@@ -813,7 +813,7 @@ async def help_test_entity_device_info_update.opp, mqtt_mock, domain, config):
 
     config["device"]["name"] = "Milk"
     data = json.dumps(config)
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
     await opp.async_block_till_done()
 
     device = registry.async_get_device({("mqtt", "helloworld")})
@@ -835,7 +835,7 @@ async def help_test_entity_id_update_subscriptions(
         config[domain]["state_topic"] = "test-topic"
         topics = ["avty-topic", "test-topic"]
     assert len(topics) > 0
-    registry = mock_registry.opp, {})
+    registry = mock_registry(opp, {})
     assert await async_setup_component(
         opp,
         domain,
@@ -875,17 +875,17 @@ async def help_test_entity_id_update_discovery_update(
         config[domain]["availability_topic"] = "avty-topic"
         topic = "avty-topic"
 
-    ent_registry = mock_registry.opp, {})
+    ent_registry = mock_registry(opp, {})
 
     data = json.dumps(config[domain])
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
     await opp.async_block_till_done()
 
-    async_fire_mqtt_message.opp, topic, "online")
+    async_fire_mqtt_message(opp, topic, "online")
     state = opp.states.get(f"{domain}.test")
     assert state.state != STATE_UNAVAILABLE
 
-    async_fire_mqtt_message.opp, topic, "offline")
+    async_fire_mqtt_message(opp, topic, "offline")
     state = opp.states.get(f"{domain}.test")
     assert state.state == STATE_UNAVAILABLE
 
@@ -894,16 +894,16 @@ async def help_test_entity_id_update_discovery_update(
 
     config[domain]["availability_topic"] = f"{topic}_2"
     data = json.dumps(config[domain])
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
     await opp.async_block_till_done()
     assert len.opp.states.async_entity_ids(domain)) == 1
 
-    async_fire_mqtt_message.opp, f"{topic}_2", "online")
+    async_fire_mqtt_message(opp, f"{topic}_2", "online")
     state = opp.states.get(f"{domain}.milk")
     assert state.state != STATE_UNAVAILABLE
 
 
-async def help_test_entity_debug_info.opp, mqtt_mock, domain, config):
+async def help_test_entity_debug_info(opp, mqtt_mock, domain, config):
     """Test debug_info.
 
     This is a test helper for MQTT debug_info.
@@ -916,13 +916,13 @@ async def help_test_entity_debug_info.opp, mqtt_mock, domain, config):
     registry = await opp.helpers.device_registry.async_get_registry()
 
     data = json.dumps(config)
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
     await opp.async_block_till_done()
 
     device = registry.async_get_device({("mqtt", "helloworld")})
     assert device is not None
 
-    debug_info_data = await debug_info.info_for_device.opp, device.id)
+    debug_info_data = await debug_info.info_for_device(opp, device.id)
     assert len(debug_info_data["entities"]) == 1
     assert (
         debug_info_data["entities"][0]["discovery_data"]["topic"]
@@ -936,7 +936,7 @@ async def help_test_entity_debug_info.opp, mqtt_mock, domain, config):
     assert len(debug_info_data["triggers"]) == 0
 
 
-async def help_test_entity_debug_info_max_messages.opp, mqtt_mock, domain, config):
+async def help_test_entity_debug_info_max_messages(opp, mqtt_mock, domain, config):
     """Test debug_info message overflow.
 
     This is a test helper for MQTT debug_info.
@@ -949,13 +949,13 @@ async def help_test_entity_debug_info_max_messages.opp, mqtt_mock, domain, confi
     registry = await opp.helpers.device_registry.async_get_registry()
 
     data = json.dumps(config)
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
     await opp.async_block_till_done()
 
     device = registry.async_get_device({("mqtt", "helloworld")})
     assert device is not None
 
-    debug_info_data = await debug_info.info_for_device.opp, device.id)
+    debug_info_data = await debug_info.info_for_device(opp, device.id)
     assert len(debug_info_data["entities"][0]["subscriptions"]) == 1
     assert {"topic": "test-topic", "messages": []} in debug_info_data["entities"][0][
         "subscriptions"
@@ -965,9 +965,9 @@ async def help_test_entity_debug_info_max_messages.opp, mqtt_mock, domain, confi
     with patch("openpeerpower.util.dt.utcnow") as dt_utcnow:
         dt_utcnow.return_value = start_dt
         for i in range(0, debug_info.STORED_MESSAGES + 1):
-            async_fire_mqtt_message.opp, "test-topic", f"{i}")
+            async_fire_mqtt_message(opp, "test-topic", f"{i}")
 
-    debug_info_data = await debug_info.info_for_device.opp, device.id)
+    debug_info_data = await debug_info.info_for_device(opp, device.id)
     assert len(debug_info_data["entities"][0]["subscriptions"]) == 1
     assert (
         len(debug_info_data["entities"][0]["subscriptions"][0]["messages"])
@@ -1011,13 +1011,13 @@ async def help_test_entity_debug_info_message(
     registry = await opp.helpers.device_registry.async_get_registry()
 
     data = json.dumps(config)
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
     await opp.async_block_till_done()
 
     device = registry.async_get_device({("mqtt", "helloworld")})
     assert device is not None
 
-    debug_info_data = await debug_info.info_for_device.opp, device.id)
+    debug_info_data = await debug_info.info_for_device(opp, device.id)
     assert len(debug_info_data["entities"][0]["subscriptions"]) >= 1
     assert {"topic": topic, "messages": []} in debug_info_data["entities"][0][
         "subscriptions"
@@ -1026,9 +1026,9 @@ async def help_test_entity_debug_info_message(
     start_dt = datetime(2019, 1, 1, 0, 0, 0)
     with patch("openpeerpower.util.dt.utcnow") as dt_utcnow:
         dt_utcnow.return_value = start_dt
-        async_fire_mqtt_message.opp, topic, payload)
+        async_fire_mqtt_message(opp, topic, payload)
 
-    debug_info_data = await debug_info.info_for_device.opp, device.id)
+    debug_info_data = await debug_info.info_for_device(opp, device.id)
     assert len(debug_info_data["entities"][0]["subscriptions"]) >= 1
     assert {
         "topic": topic,
@@ -1044,7 +1044,7 @@ async def help_test_entity_debug_info_message(
     } in debug_info_data["entities"][0]["subscriptions"]
 
 
-async def help_test_entity_debug_info_remove.opp, mqtt_mock, domain, config):
+async def help_test_entity_debug_info_remove(opp, mqtt_mock, domain, config):
     """Test debug_info.
 
     This is a test helper for MQTT debug_info.
@@ -1057,13 +1057,13 @@ async def help_test_entity_debug_info_remove.opp, mqtt_mock, domain, config):
     registry = await opp.helpers.device_registry.async_get_registry()
 
     data = json.dumps(config)
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
     await opp.async_block_till_done()
 
     device = registry.async_get_device({("mqtt", "helloworld")})
     assert device is not None
 
-    debug_info_data = await debug_info.info_for_device.opp, device.id)
+    debug_info_data = await debug_info.info_for_device(opp, device.id)
     assert len(debug_info_data["entities"]) == 1
     assert (
         debug_info_data["entities"][0]["discovery_data"]["topic"]
@@ -1078,16 +1078,16 @@ async def help_test_entity_debug_info_remove.opp, mqtt_mock, domain, config):
     assert debug_info_data["entities"][0]["entity_id"] == f"{domain}.test"
     entity_id = debug_info_data["entities"][0]["entity_id"]
 
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", "")
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", "")
     await opp.async_block_till_done()
 
-    debug_info_data = await debug_info.info_for_device.opp, device.id)
+    debug_info_data = await debug_info.info_for_device(opp, device.id)
     assert len(debug_info_data["entities"]) == 0
     assert len(debug_info_data["triggers"]) == 0
     assert entity_id not in.opp.data[debug_info.DATA_MQTT_DEBUG_INFO]["entities"]
 
 
-async def help_test_entity_debug_info_update_entity_id.opp, mqtt_mock, domain, config):
+async def help_test_entity_debug_info_update_entity_id(opp, mqtt_mock, domain, config):
     """Test debug_info.
 
     This is a test helper for MQTT debug_info.
@@ -1098,16 +1098,16 @@ async def help_test_entity_debug_info_update_entity_id.opp, mqtt_mock, domain, c
     config["unique_id"] = "veryunique"
 
     dev_registry = await opp.helpers.device_registry.async_get_registry()
-    ent_registry = mock_registry.opp, {})
+    ent_registry = mock_registry(opp, {})
 
     data = json.dumps(config)
-    async_fire_mqtt_message.opp, f"openpeerpower/{domain}/bla/config", data)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
     await opp.async_block_till_done()
 
     device = dev_registry.async_get_device({("mqtt", "helloworld")})
     assert device is not None
 
-    debug_info_data = await debug_info.info_for_device.opp, device.id)
+    debug_info_data = await debug_info.info_for_device(opp, device.id)
     assert len(debug_info_data["entities"]) == 1
     assert (
         debug_info_data["entities"][0]["discovery_data"]["topic"]
@@ -1125,7 +1125,7 @@ async def help_test_entity_debug_info_update_entity_id.opp, mqtt_mock, domain, c
     await opp.async_block_till_done()
     await opp.async_block_till_done()
 
-    debug_info_data = await debug_info.info_for_device.opp, device.id)
+    debug_info_data = await debug_info.info_for_device(opp, device.id)
     assert len(debug_info_data["entities"]) == 1
     assert (
         debug_info_data["entities"][0]["discovery_data"]["topic"]

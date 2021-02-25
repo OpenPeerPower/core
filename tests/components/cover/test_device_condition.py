@@ -40,17 +40,17 @@ def entity_reg.opp):
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
-async def test_get_conditions.opp, device_reg, entity_reg):
+async def test_get_conditions(opp, device_reg, entity_reg):
     """Test we get the expected conditions from a cover."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[0]
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -58,7 +58,7 @@ async def test_get_conditions.opp, device_reg, entity_reg):
     entity_reg.async_get_or_create(
         DOMAIN, "test", ent.unique_id, device_id=device_entry.id
     )
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
 
     expected_conditions = [
         {
@@ -90,18 +90,18 @@ async def test_get_conditions.opp, device_reg, entity_reg):
             "entity_id": f"{DOMAIN}.test_{ent.unique_id}",
         },
     ]
-    conditions = await async_get_device_automations.opp, "condition", device_entry.id)
+    conditions = await async_get_device_automations(opp, "condition", device_entry.id)
     assert_lists_same(conditions, expected_conditions)
 
 
-async def test_get_conditions_set_pos.opp, device_reg, entity_reg):
+async def test_get_conditions_set_pos(opp, device_reg, entity_reg):
     """Test we get the expected conditions from a cover."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[1]
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -109,7 +109,7 @@ async def test_get_conditions_set_pos.opp, device_reg, entity_reg):
     entity_reg.async_get_or_create(
         DOMAIN, "test", ent.unique_id, device_id=device_entry.id
     )
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
 
     expected_conditions = [
         {
@@ -148,18 +148,18 @@ async def test_get_conditions_set_pos.opp, device_reg, entity_reg):
             "entity_id": f"{DOMAIN}.test_{ent.unique_id}",
         },
     ]
-    conditions = await async_get_device_automations.opp, "condition", device_entry.id)
+    conditions = await async_get_device_automations(opp, "condition", device_entry.id)
     assert_lists_same(conditions, expected_conditions)
 
 
-async def test_get_conditions_set_tilt_pos.opp, device_reg, entity_reg):
+async def test_get_conditions_set_tilt_pos(opp, device_reg, entity_reg):
     """Test we get the expected conditions from a cover."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[2]
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -167,7 +167,7 @@ async def test_get_conditions_set_tilt_pos.opp, device_reg, entity_reg):
     entity_reg.async_get_or_create(
         DOMAIN, "test", ent.unique_id, device_id=device_entry.id
     )
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
 
     expected_conditions = [
         {
@@ -206,18 +206,18 @@ async def test_get_conditions_set_tilt_pos.opp, device_reg, entity_reg):
             "entity_id": f"{DOMAIN}.test_{ent.unique_id}",
         },
     ]
-    conditions = await async_get_device_automations.opp, "condition", device_entry.id)
+    conditions = await async_get_device_automations(opp, "condition", device_entry.id)
     assert_lists_same(conditions, expected_conditions)
 
 
-async def test_get_condition_capabilities.opp, device_reg, entity_reg):
+async def test_get_condition_capabilities(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a cover condition."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[0]
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -226,9 +226,9 @@ async def test_get_condition_capabilities.opp, device_reg, entity_reg):
         DOMAIN, "test", ent.unique_id, device_id=device_entry.id
     )
 
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
 
-    conditions = await async_get_device_automations.opp, "condition", device_entry.id)
+    conditions = await async_get_device_automations(opp, "condition", device_entry.id)
     assert len(conditions) == 4
     for condition in conditions:
         capabilities = await async_get_device_automation_capabilities(
@@ -237,14 +237,14 @@ async def test_get_condition_capabilities.opp, device_reg, entity_reg):
         assert capabilities == {"extra_fields": []}
 
 
-async def test_get_condition_capabilities_set_pos.opp, device_reg, entity_reg):
+async def test_get_condition_capabilities_set_pos(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a cover condition."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[1]
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -253,7 +253,7 @@ async def test_get_condition_capabilities_set_pos.opp, device_reg, entity_reg):
         DOMAIN, "test", ent.unique_id, device_id=device_entry.id
     )
 
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
 
     expected_capabilities = {
         "extra_fields": [
@@ -275,7 +275,7 @@ async def test_get_condition_capabilities_set_pos.opp, device_reg, entity_reg):
             },
         ]
     }
-    conditions = await async_get_device_automations.opp, "condition", device_entry.id)
+    conditions = await async_get_device_automations(opp, "condition", device_entry.id)
     assert len(conditions) == 5
     for condition in conditions:
         capabilities = await async_get_device_automation_capabilities(
@@ -287,14 +287,14 @@ async def test_get_condition_capabilities_set_pos.opp, device_reg, entity_reg):
             assert capabilities == {"extra_fields": []}
 
 
-async def test_get_condition_capabilities_set_tilt_pos.opp, device_reg, entity_reg):
+async def test_get_condition_capabilities_set_tilt_pos(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a cover condition."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[2]
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -303,7 +303,7 @@ async def test_get_condition_capabilities_set_tilt_pos.opp, device_reg, entity_r
         DOMAIN, "test", ent.unique_id, device_id=device_entry.id
     )
 
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
 
     expected_capabilities = {
         "extra_fields": [
@@ -325,7 +325,7 @@ async def test_get_condition_capabilities_set_tilt_pos.opp, device_reg, entity_r
             },
         ]
     }
-    conditions = await async_get_device_automations.opp, "condition", device_entry.id)
+    conditions = await async_get_device_automations(opp, "condition", device_entry.id)
     assert len(conditions) == 5
     for condition in conditions:
         capabilities = await async_get_device_automation_capabilities(
@@ -337,7 +337,7 @@ async def test_get_condition_capabilities_set_tilt_pos.opp, device_reg, entity_r
             assert capabilities == {"extra_fields": []}
 
 
-async def test_if_state.opp, calls):
+async def test_if_state(opp, calls):
     """Test for turn_on and turn_off conditions."""
     opp.states.async_set("cover.entity", STATE_OPEN)
 
@@ -449,12 +449,12 @@ async def test_if_state.opp, calls):
     assert calls[3].data["some"] == "is_closing - event - test_event4"
 
 
-async def test_if_position.opp, calls):
+async def test_if_position(opp, calls):
     """Test for position conditions."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[1]
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     assert await async_setup_component(
@@ -553,12 +553,12 @@ async def test_if_position.opp, calls):
     assert calls[4].data["some"] == "is_pos_gt_45 - event - test_event1"
 
 
-async def test_if_tilt_position.opp, calls):
+async def test_if_tilt_position(opp, calls):
     """Test for tilt position conditions."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[2]
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     assert await async_setup_component(

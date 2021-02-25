@@ -21,7 +21,7 @@ def _get_mock_tado_api(getMe=None):
 
 async def test_form.opp):
     """Test we can setup though the user path."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -124,7 +124,7 @@ async def test_no_homes.opp):
 
 async def test_form_homekit.opp):
     """Test that we abort from homekit if tado is already setup."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -143,7 +143,7 @@ async def test_form_homekit.opp):
     entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_USERNAME: "mock", CONF_PASSWORD: "mock"}
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

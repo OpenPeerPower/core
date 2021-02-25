@@ -16,15 +16,15 @@ from tests.common import async_fire_time_changed
 
 async def test_config_no_config(opp):
     """Component setup succeeds when there are no config entry for the domain."""
-    assert await async_setup_component.opp, DOMAIN, {})
+    assert await async_setup_component(opp, DOMAIN, {})
 
 
 async def test_config_no_static.opp):
     """Component setup succeeds when there are no static config entries."""
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_DISCOVERY: False}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_DISCOVERY: False}})
 
 
-async def test_static_duplicate_static_entry.opp, pywemo_device):
+async def test_static_duplicate_static_entry(opp, pywemo_device):
     """Duplicate static entries are merged into a single entity."""
     static_config_entry = f"{MOCK_HOST}:{MOCK_PORT}"
     assert await async_setup_component(
@@ -46,7 +46,7 @@ async def test_static_duplicate_static_entry.opp, pywemo_device):
     assert len(entity_entries) == 1
 
 
-async def test_static_config_with_port.opp, pywemo_device):
+async def test_static_config_with_port(opp, pywemo_device):
     """Static device with host and port is added and removed."""
     assert await async_setup_component(
         opp,
@@ -64,7 +64,7 @@ async def test_static_config_with_port.opp, pywemo_device):
     assert len(entity_entries) == 1
 
 
-async def test_static_config_without_port.opp, pywemo_device):
+async def test_static_config_without_port(opp, pywemo_device):
     """Static device with host and no port is added and removed."""
     assert await async_setup_component(
         opp,
@@ -97,7 +97,7 @@ async def test_static_config_with_invalid_host.opp):
     assert not setup_success
 
 
-async def test_discovery.opp, pywemo_registry):
+async def test_discovery(opp, pywemo_registry):
     """Verify that discovery dispatches devices to the platform for setup."""
 
     def create_device(uuid, location):

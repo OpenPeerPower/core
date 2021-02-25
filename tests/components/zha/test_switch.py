@@ -101,7 +101,7 @@ async def device_switch_2.opp, zigpy_device_mock, zha_device_joined):
     return zha_device
 
 
-async def test_switch.opp, zha_device_joined_restored, zigpy_device):
+async def test_switch(opp, zha_device_joined_restored, zigpy_device):
     """Test zha switch platform."""
 
     zha_device = await zha_device_joined_restored(zigpy_device)
@@ -109,24 +109,24 @@ async def test_switch.opp, zha_device_joined_restored, zigpy_device):
     entity_id = await find_entity_id(DOMAIN, zha_device, opp)
     assert entity_id is not None
 
-    assert.opp.states.get(entity_id).state == STATE_OFF
-    await async_enable_traffic.opp, [zha_device], enabled=False)
+    assert opp.states.get(entity_id).state == STATE_OFF
+    await async_enable_traffic(opp, [zha_device], enabled=False)
     # test that the switch was created and that its state is unavailable
-    assert.opp.states.get(entity_id).state == STATE_UNAVAILABLE
+    assert opp.states.get(entity_id).state == STATE_UNAVAILABLE
 
     # allow traffic to flow through the gateway and device
-    await async_enable_traffic.opp, [zha_device])
+    await async_enable_traffic(opp, [zha_device])
 
     # test that the state has changed from unavailable to off
-    assert.opp.states.get(entity_id).state == STATE_OFF
+    assert opp.states.get(entity_id).state == STATE_OFF
 
     # turn on at switch
-    await send_attributes_report.opp, cluster, {1: 0, 0: 1, 2: 2})
-    assert.opp.states.get(entity_id).state == STATE_ON
+    await send_attributes_report(opp, cluster, {1: 0, 0: 1, 2: 2})
+    assert opp.states.get(entity_id).state == STATE_ON
 
     # turn off at switch
-    await send_attributes_report.opp, cluster, {1: 1, 0: 0, 2: 2})
-    assert.opp.states.get(entity_id).state == STATE_OFF
+    await send_attributes_report(opp, cluster, {1: 1, 0: 0, 2: 2})
+    assert opp.states.get(entity_id).state == STATE_OFF
 
     # turn on from HA
     with patch(
@@ -157,7 +157,7 @@ async def test_switch.opp, zha_device_joined_restored, zigpy_device):
         )
 
     # test joining a new switch to the network and HA
-    await async_test_rejoin.opp, zigpy_device, [cluster], (1,))
+    await async_test_rejoin(opp, zigpy_device, [cluster], (1,))
 
 
 async def test_zha_group_switch_entity(
@@ -187,25 +187,25 @@ async def test_zha_group_switch_entity(
         assert member.group == zha_group
         assert member.endpoint is not None
 
-    entity_id = async_find_group_entity_id.opp, DOMAIN, zha_group)
-    assert.opp.states.get(entity_id) is not None
+    entity_id = async_find_group_entity_id(opp, DOMAIN, zha_group)
+    assert opp.states.get(entity_id) is not None
 
     group_cluster_on_off = zha_group.endpoint[general.OnOff.cluster_id]
     dev1_cluster_on_off = device_switch_1.device.endpoints[1].on_off
     dev2_cluster_on_off = device_switch_2.device.endpoints[1].on_off
 
-    await async_enable_traffic.opp, [device_switch_1, device_switch_2], enabled=False)
+    await async_enable_traffic(opp, [device_switch_1, device_switch_2], enabled=False)
     await opp.async_block_till_done()
 
     # test that the lights were created and that they are off
-    assert.opp.states.get(entity_id).state == STATE_UNAVAILABLE
+    assert opp.states.get(entity_id).state == STATE_UNAVAILABLE
 
     # allow traffic to flow through the gateway and device
-    await async_enable_traffic.opp, [device_switch_1, device_switch_2])
+    await async_enable_traffic(opp, [device_switch_1, device_switch_2])
     await opp.async_block_till_done()
 
     # test that the lights were created and are off
-    assert.opp.states.get(entity_id).state == STATE_OFF
+    assert opp.states.get(entity_id).state == STATE_OFF
 
     # turn on from HA
     with patch(
@@ -220,7 +220,7 @@ async def test_zha_group_switch_entity(
         assert group_cluster_on_off.request.call_args == call(
             False, ON, (), expect_reply=True, manufacturer=None, tries=1, tsn=None
         )
-    assert.opp.states.get(entity_id).state == STATE_ON
+    assert opp.states.get(entity_id).state == STATE_ON
 
     # turn off from HA
     with patch(
@@ -235,30 +235,30 @@ async def test_zha_group_switch_entity(
         assert group_cluster_on_off.request.call_args == call(
             False, OFF, (), expect_reply=True, manufacturer=None, tries=1, tsn=None
         )
-    assert.opp.states.get(entity_id).state == STATE_OFF
+    assert opp.states.get(entity_id).state == STATE_OFF
 
     # test some of the group logic to make sure we key off states correctly
-    await send_attributes_report.opp, dev1_cluster_on_off, {0: 1})
-    await send_attributes_report.opp, dev2_cluster_on_off, {0: 1})
+    await send_attributes_report(opp, dev1_cluster_on_off, {0: 1})
+    await send_attributes_report(opp, dev2_cluster_on_off, {0: 1})
     await opp.async_block_till_done()
 
     # test that group light is on
-    assert.opp.states.get(entity_id).state == STATE_ON
+    assert opp.states.get(entity_id).state == STATE_ON
 
-    await send_attributes_report.opp, dev1_cluster_on_off, {0: 0})
+    await send_attributes_report(opp, dev1_cluster_on_off, {0: 0})
     await opp.async_block_till_done()
 
     # test that group light is still on
-    assert.opp.states.get(entity_id).state == STATE_ON
+    assert opp.states.get(entity_id).state == STATE_ON
 
-    await send_attributes_report.opp, dev2_cluster_on_off, {0: 0})
+    await send_attributes_report(opp, dev2_cluster_on_off, {0: 0})
     await opp.async_block_till_done()
 
     # test that group light is now off
-    assert.opp.states.get(entity_id).state == STATE_OFF
+    assert opp.states.get(entity_id).state == STATE_OFF
 
-    await send_attributes_report.opp, dev1_cluster_on_off, {0: 1})
+    await send_attributes_report(opp, dev1_cluster_on_off, {0: 1})
     await opp.async_block_till_done()
 
     # test that group light is now back on
-    assert.opp.states.get(entity_id).state == STATE_ON
+    assert opp.states.get(entity_id).state == STATE_ON

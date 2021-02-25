@@ -106,9 +106,9 @@ def volume_fixture():
         yield volume
 
 
-async def setup_soundtouch.opp, config):
+async def setup_soundtouch(opp, config):
     """Set up soundtouch integration."""
-    assert await async_setup_component.opp, "media_player", {"media_player": config})
+    assert await async_setup_component(opp, "media_player", {"media_player": config})
     await opp.async_block_till_done()
     await opp.async_start()
 
@@ -320,7 +320,7 @@ async def test_ensure_setup_discovery_no_duplicate(
     mocked_status, mocked_volume, opp, one_device
 ):
     """Test setup OK if device already exists."""
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert len.opp.states.async_all()) == 1
@@ -354,7 +354,7 @@ async def test_ensure_setup_discovery_no_duplicate(
 
 async def test_playing_media(mocked_status, mocked_volume, opp, one_device):
     """Test playing media info."""
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -372,7 +372,7 @@ async def test_playing_media(mocked_status, mocked_volume, opp, one_device):
 async def test_playing_unknown_media(mocked_status, mocked_volume, opp, one_device):
     """Test playing media info."""
     mocked_status.side_effect = MockStatusUnknown
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -385,7 +385,7 @@ async def test_playing_unknown_media(mocked_status, mocked_volume, opp, one_devi
 async def test_playing_radio(mocked_status, mocked_volume, opp, one_device):
     """Test playing radio info."""
     mocked_status.side_effect = MockStatusPlayingRadio
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -399,7 +399,7 @@ async def test_playing_radio(mocked_status, mocked_volume, opp, one_device):
 async def test_playing_aux(mocked_status, mocked_volume, opp, one_device):
     """Test playing AUX info."""
     mocked_status.side_effect = MockStatusPlayingAux
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -413,7 +413,7 @@ async def test_playing_aux(mocked_status, mocked_volume, opp, one_device):
 async def test_playing_bluetooth(mocked_status, mocked_volume, opp, one_device):
     """Test playing Bluetooth info."""
     mocked_status.side_effect = MockStatusPlayingBluetooth
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -430,7 +430,7 @@ async def test_playing_bluetooth(mocked_status, mocked_volume, opp, one_device):
 async def test_get_volume_level(mocked_status, mocked_volume, opp, one_device):
     """Test volume level."""
     mocked_volume.side_effect = MockVolume
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -443,7 +443,7 @@ async def test_get_volume_level(mocked_status, mocked_volume, opp, one_device):
 async def test_get_state_off(mocked_status, mocked_volume, opp, one_device):
     """Test state device is off."""
     mocked_status.side_effect = MockStatusStandby
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -456,7 +456,7 @@ async def test_get_state_off(mocked_status, mocked_volume, opp, one_device):
 async def test_get_state_pause(mocked_status, mocked_volume, opp, one_device):
     """Test state device is paused."""
     mocked_status.side_effect = MockStatusPause
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -469,7 +469,7 @@ async def test_get_state_pause(mocked_status, mocked_volume, opp, one_device):
 async def test_is_muted(mocked_status, mocked_volume, opp, one_device):
     """Test device volume is muted."""
     mocked_volume.side_effect = MockVolumeMuted
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -481,7 +481,7 @@ async def test_is_muted(mocked_status, mocked_volume, opp, one_device):
 
 async def test_media_commands(mocked_status, mocked_volume, opp, one_device):
     """Test supported media commands."""
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -496,7 +496,7 @@ async def test_should_turn_off(
     mocked_power_off, mocked_status, mocked_volume, opp, one_device
 ):
     """Test device is turned off."""
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -518,7 +518,7 @@ async def test_should_turn_on(
 ):
     """Test device is turned on."""
     mocked_status.side_effect = MockStatusStandby
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -539,7 +539,7 @@ async def test_volume_up(
     mocked_volume_up, mocked_status, mocked_volume, opp, one_device
 ):
     """Test volume up."""
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -560,7 +560,7 @@ async def test_volume_down(
     mocked_volume_down, mocked_status, mocked_volume, opp, one_device
 ):
     """Test volume down."""
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -581,7 +581,7 @@ async def test_set_volume_level(
     mocked_set_volume, mocked_status, mocked_volume, opp, one_device
 ):
     """Test set volume level."""
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -600,7 +600,7 @@ async def test_set_volume_level(
 @patch("libsoundtouch.device.SoundTouchDevice.mute")
 async def test_mute(mocked_mute, mocked_status, mocked_volume, opp, one_device):
     """Test mute volume."""
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -619,7 +619,7 @@ async def test_mute(mocked_mute, mocked_status, mocked_volume, opp, one_device):
 @patch("libsoundtouch.device.SoundTouchDevice.play")
 async def test_play(mocked_play, mocked_status, mocked_volume, opp, one_device):
     """Test play command."""
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -638,7 +638,7 @@ async def test_play(mocked_play, mocked_status, mocked_volume, opp, one_device):
 @patch("libsoundtouch.device.SoundTouchDevice.pause")
 async def test_pause(mocked_pause, mocked_status, mocked_volume, opp, one_device):
     """Test pause command."""
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -659,7 +659,7 @@ async def test_play_pause(
     mocked_play_pause, mocked_status, mocked_volume, opp, one_device
 ):
     """Test play/pause."""
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -686,7 +686,7 @@ async def test_next_previous_track(
     one_device,
 ):
     """Test next/previous track."""
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -717,7 +717,7 @@ async def test_play_media(
     mocked_presets, mocked_select_preset, mocked_status, mocked_volume, opp, one_device
 ):
     """Test play preset 1."""
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -755,7 +755,7 @@ async def test_play_media_url(
     mocked_play_url, mocked_status, mocked_volume, opp, one_device
 ):
     """Test play preset 1."""
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
     assert mocked_status.call_count == 2
@@ -779,7 +779,7 @@ async def test_select_source_aux(
     mocked_select_source_aux, mocked_status, mocked_volume, opp, one_device
 ):
     """Test select AUX."""
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert mocked_select_source_aux.call_count == 0
     await opp.services.async_call(
@@ -797,7 +797,7 @@ async def test_select_source_bluetooth(
     mocked_select_source_bluetooth, mocked_status, mocked_volume, opp, one_device
 ):
     """Test select Bluetooth."""
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert mocked_select_source_bluetooth.call_count == 0
     await opp.services.async_call(
@@ -821,7 +821,7 @@ async def test_select_source_invalid_source(
     one_device,
 ):
     """Test select unsupported source."""
-    await setup_soundtouch.opp, DEVICE_1_CONFIG)
+    await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert mocked_select_source_aux.call_count == 0
     assert mocked_select_source_bluetooth.call_count == 0
@@ -846,7 +846,7 @@ async def test_play_everywhere(
 ):
     """Test play everywhere."""
     mocked_device = two_zones
-    await setup_soundtouch.opp, [DEVICE_1_CONFIG, DEVICE_2_CONFIG])
+    await setup_soundtouch(opp, [DEVICE_1_CONFIG, DEVICE_2_CONFIG])
 
     assert mocked_device.call_count == 2
     assert mocked_status.call_count == 4
@@ -891,7 +891,7 @@ async def test_create_zone(
 ):
     """Test creating a zone."""
     mocked_device = two_zones
-    await setup_soundtouch.opp, [DEVICE_1_CONFIG, DEVICE_2_CONFIG])
+    await setup_soundtouch(opp, [DEVICE_1_CONFIG, DEVICE_2_CONFIG])
 
     assert mocked_device.call_count == 2
     assert mocked_status.call_count == 4
@@ -934,7 +934,7 @@ async def test_remove_zone_slave(
 ):
     """Test adding a slave to an existing zone."""
     mocked_device = two_zones
-    await setup_soundtouch.opp, [DEVICE_1_CONFIG, DEVICE_2_CONFIG])
+    await setup_soundtouch(opp, [DEVICE_1_CONFIG, DEVICE_2_CONFIG])
 
     assert mocked_device.call_count == 2
     assert mocked_status.call_count == 4
@@ -981,7 +981,7 @@ async def test_add_zone_slave(
 ):
     """Test removing a slave from a zone."""
     mocked_device = two_zones
-    await setup_soundtouch.opp, [DEVICE_1_CONFIG, DEVICE_2_CONFIG])
+    await setup_soundtouch(opp, [DEVICE_1_CONFIG, DEVICE_2_CONFIG])
 
     assert mocked_device.call_count == 2
     assert mocked_status.call_count == 4
@@ -1028,7 +1028,7 @@ async def test_zone_attributes(
 ):
     """Test play everywhere."""
     mocked_device = two_zones
-    await setup_soundtouch.opp, [DEVICE_1_CONFIG, DEVICE_2_CONFIG])
+    await setup_soundtouch(opp, [DEVICE_1_CONFIG, DEVICE_2_CONFIG])
 
     assert mocked_device.call_count == 2
     assert mocked_status.call_count == 4

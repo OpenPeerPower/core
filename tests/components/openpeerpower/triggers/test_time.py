@@ -26,7 +26,7 @@ def calls.opp,
 
 
 @pytest.fixture(autouse=True)
-def setup_comp.opp,
+def setup_comp(opp,
     """Initialize components."""
     mock_component.opp."group")
 
@@ -362,7 +362,7 @@ async def test_if_action_list_weekday.opp.calls):
     assert len(calls) == 2
 
 
-async def test_untrack_time_change.opp,
+async def test_untrack_time_change(opp,
     """Test for removing tracked time changes."""
     mock_track_time_change = Mock()
     with patch(

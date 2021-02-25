@@ -31,7 +31,7 @@ def config_entry(config_data):
 @pytest.fixture
 async def setup_component.opp):
     """Set up the component."""
-    assert await async_setup_component.opp, DOMAIN, {}) is True
+    assert await async_setup_component(opp, DOMAIN, {}) is True
 
 
 @pytest.fixture(name="spa")
@@ -75,8 +75,8 @@ def mock_api(account, spa):
 
 
 @pytest.fixture
-async def setup_entry.opp, config_entry):
+async def setup_entry(opp, config_entry):
     """Initialize the config entry."""
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()

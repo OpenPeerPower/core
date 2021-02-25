@@ -25,7 +25,7 @@ def simple_queue():
         yield simple_queue_fixed
 
 
-async def _async_block_until_queue_empty.opp, sq):
+async def _async_block_until_queue_empty(opp, sq):
     # Unfortunately we are stuck with polling
     await opp.async_block_till_done()
     while not sq.empty():
@@ -35,7 +35,7 @@ async def _async_block_until_queue_empty.opp, sq):
     await opp.async_block_till_done()
 
 
-async def get_error_log.opp, opp_client, expected_count):
+async def get_error_log(opp, opp_client, expected_count):
     """Fetch all entries from system_log via the API."""
 
     client = await opp_client()
@@ -72,51 +72,51 @@ def get_frame(name):
     return (name, 5, None, None)
 
 
-async def test_normal_logs.opp, simple_queue, opp_client):
+async def test_normal_logs(opp, simple_queue, opp_client):
     """Test that debug and info are not logged."""
-    await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
+    await async_setup_component(opp, system_log.DOMAIN, BASIC_CONFIG)
 
     _LOGGER.debug("debug")
     _LOGGER.info("info")
-    await _async_block_until_queue_empty.opp, simple_queue)
+    await _async_block_until_queue_empty(opp, simple_queue)
 
     # Assert done by get_error_log
-    await get_error_log.opp, opp_client, 0)
+    await get_error_log(opp, opp_client, 0)
 
 
-async def test_exception.opp, simple_queue, opp_client):
+async def test_exception(opp, simple_queue, opp_client):
     """Test that exceptions are logged and retrieved correctly."""
-    await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
+    await async_setup_component(opp, system_log.DOMAIN, BASIC_CONFIG)
     _generate_and_log_exception("exception message", "log message")
-    await _async_block_until_queue_empty.opp, simple_queue)
+    await _async_block_until_queue_empty(opp, simple_queue)
 
-    log = (await get_error_log.opp, opp_client, 1))[0]
+    log = (await get_error_log(opp, opp_client, 1))[0]
     assert_log(log, "exception message", "log message", "ERROR")
 
 
-async def test_warning.opp, simple_queue, opp_client):
+async def test_warning(opp, simple_queue, opp_client):
     """Test that warning are logged and retrieved correctly."""
-    await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
+    await async_setup_component(opp, system_log.DOMAIN, BASIC_CONFIG)
     _LOGGER.warning("warning message")
-    await _async_block_until_queue_empty.opp, simple_queue)
+    await _async_block_until_queue_empty(opp, simple_queue)
 
-    log = (await get_error_log.opp, opp_client, 1))[0]
+    log = (await get_error_log(opp, opp_client, 1))[0]
     assert_log(log, "", "warning message", "WARNING")
 
 
 async def test_error(opp, simple_queue, opp_client):
     """Test that errors are logged and retrieved correctly."""
-    await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
+    await async_setup_component(opp, system_log.DOMAIN, BASIC_CONFIG)
     _LOGGER.error("error message")
-    await _async_block_until_queue_empty.opp, simple_queue)
+    await _async_block_until_queue_empty(opp, simple_queue)
 
-    log = (await get_error_log.opp, opp_client, 1))[0]
+    log = (await get_error_log(opp, opp_client, 1))[0]
     assert_log(log, "", "error message", "ERROR")
 
 
-async def test_config_not_fire_event.opp, simple_queue):
+async def test_config_not_fire_event(opp, simple_queue):
     """Test that errors are not posted as events with default config."""
-    await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
+    await async_setup_component(opp, system_log.DOMAIN, BASIC_CONFIG)
     events = []
 
     @callback
@@ -127,12 +127,12 @@ async def test_config_not_fire_event.opp, simple_queue):
     opp.bus.async_listen(system_log.EVENT_SYSTEM_LOG, event_listener)
 
     _LOGGER.error("error message")
-    await _async_block_until_queue_empty.opp, simple_queue)
+    await _async_block_until_queue_empty(opp, simple_queue)
 
     assert len(events) == 0
 
 
-async def test_error_posted_as_event.opp, simple_queue):
+async def test_error_posted_as_event(opp, simple_queue):
     """Test that error are posted as events."""
     await async_setup_component(
         opp. system_log.DOMAIN, {"system_log": {"max_entries": 2, "fire_event": True}}
@@ -147,31 +147,31 @@ async def test_error_posted_as_event.opp, simple_queue):
     opp.bus.async_listen(system_log.EVENT_SYSTEM_LOG, event_listener)
 
     _LOGGER.error("error message")
-    await _async_block_until_queue_empty.opp, simple_queue)
+    await _async_block_until_queue_empty(opp, simple_queue)
 
     assert len(events) == 1
     assert_log(events[0].data, "", "error message", "ERROR")
 
 
-async def test_critical.opp, simple_queue, opp_client):
+async def test_critical(opp, simple_queue, opp_client):
     """Test that critical are logged and retrieved correctly."""
-    await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
+    await async_setup_component(opp, system_log.DOMAIN, BASIC_CONFIG)
     _LOGGER.critical("critical message")
-    await _async_block_until_queue_empty.opp, simple_queue)
+    await _async_block_until_queue_empty(opp, simple_queue)
 
-    log = (await get_error_log.opp, opp_client, 1))[0]
+    log = (await get_error_log(opp, opp_client, 1))[0]
     assert_log(log, "", "critical message", "CRITICAL")
 
 
-async def test_remove_older_logs.opp, simple_queue, opp_client):
+async def test_remove_older_logs(opp, simple_queue, opp_client):
     """Test that older logs are rotated out."""
-    await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
+    await async_setup_component(opp, system_log.DOMAIN, BASIC_CONFIG)
     _LOGGER.error("error message 1")
     _LOGGER.error("error message 2")
     _LOGGER.error("error message 3")
-    await _async_block_until_queue_empty.opp, simple_queue)
+    await _async_block_until_queue_empty(opp, simple_queue)
 
-    log = await get_error_log.opp, opp_client, 2)
+    log = await get_error_log(opp, opp_client, 2)
     assert_log(log[0], "", "error message 3", "ERROR")
     assert_log(log[1], "", "error message 2", "ERROR")
 
@@ -181,24 +181,24 @@ def log_msg(nr=2):
     _LOGGER.error("error message %s", nr)
 
 
-async def test_dedupe_logs.opp, simple_queue, opp_client):
+async def test_dedupe_logs(opp, simple_queue, opp_client):
     """Test that duplicate log entries are dedupe."""
-    await async_setup_component.opp, system_log.DOMAIN, {})
+    await async_setup_component(opp, system_log.DOMAIN, {})
     _LOGGER.error("error message 1")
     log_msg()
     log_msg("2-2")
     _LOGGER.error("error message 3")
-    await _async_block_until_queue_empty.opp, simple_queue)
+    await _async_block_until_queue_empty(opp, simple_queue)
 
-    log = await get_error_log.opp, opp_client, 3)
+    log = await get_error_log(opp, opp_client, 3)
     assert_log(log[0], "", "error message 3", "ERROR")
     assert log[1]["count"] == 2
     assert_log(log[1], "", ["error message 2", "error message 2-2"], "ERROR")
 
     log_msg()
-    await _async_block_until_queue_empty.opp, simple_queue)
+    await _async_block_until_queue_empty(opp, simple_queue)
 
-    log = await get_error_log.opp, opp_client, 3)
+    log = await get_error_log(opp, opp_client, 3)
     assert_log(log[0], "", ["error message 2", "error message 2-2"], "ERROR")
     assert log[0]["timestamp"] > log[0]["first_occurred"]
 
@@ -206,9 +206,9 @@ async def test_dedupe_logs.opp, simple_queue, opp_client):
     log_msg("2-4")
     log_msg("2-5")
     log_msg("2-6")
-    await _async_block_until_queue_empty.opp, simple_queue)
+    await _async_block_until_queue_empty(opp, simple_queue)
 
-    log = await get_error_log.opp, opp_client, 3)
+    log = await get_error_log(opp, opp_client, 3)
     assert_log(
         log[0],
         "",
@@ -223,22 +223,22 @@ async def test_dedupe_logs.opp, simple_queue, opp_client):
     )
 
 
-async def test_clear_logs.opp, simple_queue, opp_client):
+async def test_clear_logs(opp, simple_queue, opp_client):
     """Test that the log can be cleared via a service call."""
-    await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
+    await async_setup_component(opp, system_log.DOMAIN, BASIC_CONFIG)
     _LOGGER.error("error message")
-    await _async_block_until_queue_empty.opp, simple_queue)
+    await _async_block_until_queue_empty(opp, simple_queue)
 
     await opp.services.async_call(system_log.DOMAIN, system_log.SERVICE_CLEAR, {})
-    await _async_block_until_queue_empty.opp, simple_queue)
+    await _async_block_until_queue_empty(opp, simple_queue)
 
     # Assert done by get_error_log
-    await get_error_log.opp, opp_client, 0)
+    await get_error_log(opp, opp_client, 0)
 
 
 async def test_write_log.opp):
     """Test that error propagates to logger."""
-    await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
+    await async_setup_component(opp, system_log.DOMAIN, BASIC_CONFIG)
     logger = MagicMock()
     with patch("logging.getLogger", return_value=logger) as mock_logging:
         await opp.services.async_call(
@@ -251,7 +251,7 @@ async def test_write_log.opp):
 
 async def test_write_choose_logger.opp):
     """Test that correct logger is chosen."""
-    await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
+    await async_setup_component(opp, system_log.DOMAIN, BASIC_CONFIG)
     with patch("logging.getLogger") as mock_logging:
         await opp.services.async_call(
             system_log.DOMAIN,
@@ -264,7 +264,7 @@ async def test_write_choose_logger.opp):
 
 async def test_write_choose_level.opp):
     """Test that correct logger is chosen."""
-    await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
+    await async_setup_component(opp, system_log.DOMAIN, BASIC_CONFIG)
     logger = MagicMock()
     with patch("logging.getLogger", return_value=logger):
         await opp.services.async_call(
@@ -276,17 +276,17 @@ async def test_write_choose_level.opp):
     assert logger.method_calls[0] == ("debug", ("test_message",))
 
 
-async def test_unknown_path.opp, simple_queue, opp_client):
+async def test_unknown_path(opp, simple_queue, opp_client):
     """Test error logged from unknown path."""
-    await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
+    await async_setup_component(opp, system_log.DOMAIN, BASIC_CONFIG)
     _LOGGER.findCaller = MagicMock(return_value=("unknown_path", 0, None, None))
     _LOGGER.error("error message")
-    await _async_block_until_queue_empty.opp, simple_queue)
-    log = (await get_error_log.opp, opp_client, 1))[0]
+    await _async_block_until_queue_empty(opp, simple_queue)
+    log = (await get_error_log(opp, opp_client, 1))[0]
     assert log["source"] == ["unknown_path", 0]
 
 
-async def async_log_error_from_test_path.opp, path, sq):
+async def async_log_error_from_test_path(opp, path, sq):
     """Log error while mocking the path."""
     call_path = "internal_path.py"
     with patch.object(
@@ -304,12 +304,12 @@ async def async_log_error_from_test_path.opp, path, sq):
             ),
         ):
             _LOGGER.error("error message")
-            await _async_block_until_queue_empty.opp, sq)
+            await _async_block_until_queue_empty(opp, sq)
 
 
-async def test_openpeerpower_path.opp, simple_queue, opp_client):
+async def test_openpeerpower_path(opp, simple_queue, opp_client):
     """Test error logged from Open Peer Power path."""
-    await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
+    await async_setup_component(opp, system_log.DOMAIN, BASIC_CONFIG)
     with patch(
         "openpeerpower.components.system_log.OPENPEERPOWER_PATH",
         new=["venv_path/openpeerpower"],
@@ -317,16 +317,16 @@ async def test_openpeerpower_path.opp, simple_queue, opp_client):
         await async_log_error_from_test_path(
             opp. "venv_path/openpeerpower/component/component.py", simple_queue
         )
-        log = (await get_error_log.opp, opp_client, 1))[0]
+        log = (await get_error_log(opp, opp_client, 1))[0]
     assert log["source"] == ["component/component.py", 5]
 
 
-async def test_config_path.opp, simple_queue, opp_client):
+async def test_config_path(opp, simple_queue, opp_client):
     """Test error logged from config path."""
-    await async_setup_component.opp, system_log.DOMAIN, BASIC_CONFIG)
+    await async_setup_component(opp, system_log.DOMAIN, BASIC_CONFIG)
     with patch.object.opp.config, "config_dir", new="config"):
         await async_log_error_from_test_path(
             opp. "config/custom_component/test.py", simple_queue
         )
-        log = (await get_error_log.opp, opp_client, 1))[0]
+        log = (await get_error_log(opp, opp_client, 1))[0]
     assert log["source"] == ["custom_component/test.py", 5]

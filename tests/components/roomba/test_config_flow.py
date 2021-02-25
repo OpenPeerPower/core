@@ -69,7 +69,7 @@ def _mocked_connection_refused_on_getpassword(*_):
 
 async def test_form_user_discovery_and_password_fetch.opp):
     """Test we can discovery and fetch the password."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     mocked_roomba = _create_mocked_roomba(
         roomba_connected=True,
@@ -131,10 +131,10 @@ async def test_form_user_discovery_and_password_fetch.opp):
 
 async def test_form_user_discovery_skips_known.opp):
     """Test discovery proceeds to manual if all discovered are already known."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(domain=DOMAIN, data=VALID_CONFIG, unique_id="blid")
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery", _mocked_discovery
@@ -151,10 +151,10 @@ async def test_form_user_discovery_skips_known.opp):
 
 async def test_form_user_failed_discovery_aborts_already_configured.opp):
     """Test if we manually configure an existing host we abort."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(domain=DOMAIN, data=VALID_CONFIG, unique_id="blid")
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery",
@@ -180,7 +180,7 @@ async def test_form_user_failed_discovery_aborts_already_configured.opp):
 
 async def test_form_user_discovery_manual_and_auto_password_fetch.opp):
     """Test discovery skipped and we can auto fetch the password."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     mocked_roomba = _create_mocked_roomba(
         roomba_connected=True,
@@ -252,7 +252,7 @@ async def test_form_user_discovery_manual_and_auto_password_fetch_but_cannot_con
     opp,
 ):
     """Test discovery skipped and we can auto fetch the password then we fail to connect."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     mocked_roomba = _create_mocked_roomba(
         connect=RoombaConnectionError,
@@ -315,7 +315,7 @@ async def test_form_user_discovery_manual_and_auto_password_fetch_but_cannot_con
 
 async def test_form_user_discovery_fails_and_auto_password_fetch.opp):
     """Test discovery fails and we can auto fetch the password."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     mocked_roomba = _create_mocked_roomba(
         roomba_connected=True,
@@ -377,7 +377,7 @@ async def test_form_user_discovery_fails_and_auto_password_fetch.opp):
 
 async def test_form_user_discovery_fails_and_password_fetch_fails.opp):
     """Test discovery fails and password fetch fails."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     mocked_roomba = _create_mocked_roomba(
         roomba_connected=True,
@@ -448,7 +448,7 @@ async def test_form_user_discovery_fails_and_password_fetch_fails_and_cannot_con
     opp,
 ):
     """Test discovery fails and password fetch fails then we cannot connect."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     mocked_roomba = _create_mocked_roomba(
         connect=RoombaConnectionError,
@@ -510,7 +510,7 @@ async def test_form_user_discovery_fails_and_password_fetch_fails_and_cannot_con
 
 async def test_form_user_discovery_and_password_fetch_gets_connection_refused.opp):
     """Test we can discovery and fetch the password manually."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     mocked_roomba = _create_mocked_roomba(
         roomba_connected=True,
@@ -579,7 +579,7 @@ async def test_form_user_discovery_and_password_fetch_gets_connection_refused.op
 
 async def test_dhcp_discovery_and_roomba_discovery_finds.opp):
     """Test we can process the discovery from dhcp and roomba discovery matches the device."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     mocked_roomba = _create_mocked_roomba(
         roomba_connected=True,
@@ -639,7 +639,7 @@ async def test_dhcp_discovery_and_roomba_discovery_finds.opp):
 
 async def test_dhcp_discovery_falls_back_to_manual.opp):
     """Test we can process the discovery from dhcp but roomba discovery cannot find the device."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     mocked_roomba = _create_mocked_roomba(
         roomba_connected=True,
@@ -715,10 +715,10 @@ async def test_dhcp_discovery_falls_back_to_manual.opp):
 
 async def test_dhcp_discovery_with_ignored.opp):
     """Test ignored entries do not break checking for existing entries."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     config_entry = MockConfigEntry(domain=DOMAIN, data={}, source="ignore")
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery", _mocked_discovery
@@ -739,10 +739,10 @@ async def test_dhcp_discovery_with_ignored.opp):
 
 async def test_dhcp_discovery_already_configured_host.opp):
     """Test we abort if the host is already configured."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     config_entry = MockConfigEntry(domain=DOMAIN, data={CONF_HOST: "1.1.1.1"})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery", _mocked_discovery
@@ -764,12 +764,12 @@ async def test_dhcp_discovery_already_configured_host.opp):
 
 async def test_dhcp_discovery_already_configured_blid.opp):
     """Test we abort if the blid is already configured."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     config_entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_BLID: "blid"}, unique_id="blid"
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery", _mocked_discovery
@@ -791,12 +791,12 @@ async def test_dhcp_discovery_already_configured_blid.opp):
 
 async def test_dhcp_discovery_not_irobot.opp):
     """Test we abort if the discovered device is not an irobot device."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     config_entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_BLID: "blid"}, unique_id="blid"
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.roomba.config_flow.RoombaDiscovery", _mocked_discovery

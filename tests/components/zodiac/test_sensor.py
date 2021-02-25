@@ -33,12 +33,12 @@ DAY3 = datetime(2020, 4, 21, tzinfo=dt_util.UTC)
         (DAY3, SIGN_TAURUS, ELEMENT_EARTH, MODALITY_FIXED),
     ],
 )
-async def test_zodiac_day.opp, now, sign, element, modality):
+async def test_zodiac_day(opp, now, sign, element, modality):
     """Test the zodiac sensor."""
     config = {DOMAIN: {}}
 
     with patch("openpeerpower.components.zodiac.sensor.utcnow", return_value=now):
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
 
     state = opp.states.get("sensor.zodiac")

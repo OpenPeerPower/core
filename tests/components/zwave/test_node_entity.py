@@ -7,7 +7,7 @@ from openpeerpower.const import ATTR_ENTITY_ID
 import tests.mock.zwave as mock_zwave
 
 
-async def test_maybe_schedule_update.opp, mock_openzwave):
+async def test_maybe_schedule_update(opp, mock_openzwave):
     """Test maybe schedule update."""
     base_entity = node_entity.ZWaveBaseEntity()
     base_entity.entity_id = "zwave.bla"
@@ -30,7 +30,7 @@ async def test_maybe_schedule_update.opp, mock_openzwave):
         assert len(mock_call_later.mock_calls) == 2
 
 
-async def test_node_event_activated.opp, mock_openzwave):
+async def test_node_event_activated(opp, mock_openzwave):
     """Test Node event activated event."""
     mock_receivers = []
 
@@ -72,7 +72,7 @@ async def test_node_event_activated.opp, mock_openzwave):
     assert events[0].data[const.ATTR_BASIC_LEVEL] == value
 
 
-async def test_scene_activated.opp, mock_openzwave):
+async def test_scene_activated(opp, mock_openzwave):
     """Test scene activated event."""
     mock_receivers = []
 
@@ -114,7 +114,7 @@ async def test_scene_activated.opp, mock_openzwave):
     assert events[0].data[const.ATTR_SCENE_ID] == scene_id
 
 
-async def test_central_scene_activated.opp, mock_openzwave):
+async def test_central_scene_activated(opp, mock_openzwave):
     """Test central scene activated event."""
     mock_receivers = []
 
@@ -165,7 +165,7 @@ async def test_central_scene_activated.opp, mock_openzwave):
     assert events[0].data[const.ATTR_SCENE_DATA] == scene_data
 
 
-async def test_application_version.opp, mock_openzwave):
+async def test_application_version(opp, mock_openzwave):
     """Test application version."""
     mock_receivers = {}
 
@@ -232,7 +232,7 @@ async def test_application_version.opp, mock_openzwave):
     )
 
 
-async def test_network_node_changed_from_value.opp, mock_openzwave):
+async def test_network_node_changed_from_value(opp, mock_openzwave):
     """Test for network_node_changed."""
     zwave_network = MagicMock()
     node = mock_zwave.MockNode()
@@ -243,7 +243,7 @@ async def test_network_node_changed_from_value.opp, mock_openzwave):
         mock.assert_called_once_with()
 
 
-async def test_network_node_changed_from_node.opp, mock_openzwave):
+async def test_network_node_changed_from_node(opp, mock_openzwave):
     """Test for network_node_changed."""
     zwave_network = MagicMock()
     node = mock_zwave.MockNode()
@@ -253,7 +253,7 @@ async def test_network_node_changed_from_node.opp, mock_openzwave):
         mock.assert_called_once_with()
 
 
-async def test_network_node_changed_from_another_node.opp, mock_openzwave):
+async def test_network_node_changed_from_another_node(opp, mock_openzwave):
     """Test for network_node_changed."""
     zwave_network = MagicMock()
     node = mock_zwave.MockNode()
@@ -264,7 +264,7 @@ async def test_network_node_changed_from_another_node.opp, mock_openzwave):
         assert not mock.called
 
 
-async def test_network_node_changed_from_notification.opp, mock_openzwave):
+async def test_network_node_changed_from_notification(opp, mock_openzwave):
     """Test for network_node_changed."""
     zwave_network = MagicMock()
     node = mock_zwave.MockNode()
@@ -274,7 +274,7 @@ async def test_network_node_changed_from_notification.opp, mock_openzwave):
         mock.assert_called_once_with()
 
 
-async def test_network_node_changed_from_another_notification.opp, mock_openzwave):
+async def test_network_node_changed_from_another_notification(opp, mock_openzwave):
     """Test for network_node_changed."""
     zwave_network = MagicMock()
     node = mock_zwave.MockNode()
@@ -284,7 +284,7 @@ async def test_network_node_changed_from_another_notification.opp, mock_openzwav
         assert not mock.called
 
 
-async def test_node_changed.opp, mock_openzwave):
+async def test_node_changed(opp, mock_openzwave):
     """Test node_changed function."""
     zwave_network = MagicMock()
     node = mock_zwave.MockNode(
@@ -624,7 +624,7 @@ async def test_node_changed.opp, mock_openzwave):
     assert "wake_up_interval" not in entity.device_state_attributes
 
 
-async def test_name.opp, mock_openzwave):
+async def test_name(opp, mock_openzwave):
     """Test name property."""
     zwave_network = MagicMock()
     node = mock_zwave.MockNode()
@@ -632,7 +632,7 @@ async def test_name.opp, mock_openzwave):
     assert entity.name == "Mock Node"
 
 
-async def test_state_before_update.opp, mock_openzwave):
+async def test_state_before_update(opp, mock_openzwave):
     """Test state before update was called."""
     zwave_network = MagicMock()
     node = mock_zwave.MockNode()
@@ -640,7 +640,7 @@ async def test_state_before_update.opp, mock_openzwave):
     assert entity.state is None
 
 
-async def test_state_not_ready.opp, mock_openzwave):
+async def test_state_not_ready(opp, mock_openzwave):
     """Test state property."""
     zwave_network = MagicMock()
     node = mock_zwave.MockNode(
@@ -667,7 +667,7 @@ async def test_state_not_ready.opp, mock_openzwave):
     assert entity.state == "sleeping"
 
 
-async def test_state_ready.opp, mock_openzwave):
+async def test_state_ready(opp, mock_openzwave):
     """Test state property."""
     zwave_network = MagicMock()
     node = mock_zwave.MockNode(
@@ -695,7 +695,7 @@ async def test_state_ready.opp, mock_openzwave):
     assert entity.state == "sleeping"
 
 
-async def test_not_polled.opp, mock_openzwave):
+async def test_not_polled(opp, mock_openzwave):
     """Test should_poll property."""
     zwave_network = MagicMock()
     node = mock_zwave.MockNode()
@@ -703,7 +703,7 @@ async def test_not_polled.opp, mock_openzwave):
     assert not entity.should_poll
 
 
-async def test_unique_id.opp, mock_openzwave):
+async def test_unique_id(opp, mock_openzwave):
     """Test unique_id."""
     zwave_network = MagicMock()
     node = mock_zwave.MockNode()
@@ -711,7 +711,7 @@ async def test_unique_id.opp, mock_openzwave):
     assert entity.unique_id == "node-567"
 
 
-async def test_unique_id_missing_data.opp, mock_openzwave):
+async def test_unique_id_missing_data(opp, mock_openzwave):
     """Test unique_id."""
     zwave_network = MagicMock()
     node = mock_zwave.MockNode()

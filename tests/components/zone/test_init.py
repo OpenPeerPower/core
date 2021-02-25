@@ -61,9 +61,9 @@ async def test_setup_no_zones_still_adds_home_zone(opp):
     assert await setup.async_setup_component(opp, zone.DOMAIN, {"zone": None})
     assert len.opp.states.async_entity_ids("zone")) == 1
     state = opp.states.get("zone.home")
-    assert.opp.config.location_name == state.name
-    assert.opp.config.latitude == state.attributes["latitude"]
-    assert.opp.config.longitude == state.attributes["longitude"]
+    assert opp.config.location_name == state.name
+    assert opp.config.latitude == state.attributes["latitude"]
+    assert opp.config.longitude == state.attributes["longitude"]
     assert not state.attributes.get("passive", False)
 
 

@@ -35,7 +35,7 @@ CONFIG_THEMES = {
 @pytest.fixture
 async def ignore_frontend_deps.opp):
     """Frontend dependencies."""
-    frontend = await async_get_integration.opp, "frontend")
+    frontend = await async_get_integration(opp, "frontend")
     for dep in frontend.dependencies:
         if dep not in ("http", "websocket_api"):
             opp.config.components.add(dep)
@@ -62,25 +62,25 @@ async def frontend_themes.opp):
 
 
 @pytest.fixture
-async def mock_http_client.opp, aiohttp_client, frontend):
+async def mock_http_client(opp, aiohttp_client, frontend):
     """Start the Open Peer Power HTTP component."""
     return await aiohttp_client.opp.http.app)
 
 
 @pytest.fixture
-async def themes_ws_client.opp, opp_ws_client, frontend_themes):
+async def themes_ws_client(opp, opp_ws_client, frontend_themes):
     """Start the Open Peer Power HTTP component."""
     return await opp_ws_client.opp)
 
 
 @pytest.fixture
-async def ws_client.opp, opp_ws_client, frontend):
+async def ws_client(opp, opp_ws_client, frontend):
     """Start the Open Peer Power HTTP component."""
     return await opp_ws_client.opp)
 
 
 @pytest.fixture
-async def mock_http_client_with_urls.opp, aiohttp_client, ignore_frontend_deps):
+async def mock_http_client_with_urls(opp, aiohttp_client, ignore_frontend_deps):
     """Start the Open Peer Power HTTP component."""
     assert await async_setup_component(
         opp,
@@ -141,7 +141,7 @@ async def test_we_cannot_POST_to_root(mock_http_client):
     assert resp.status == 405
 
 
-async def test_themes_api.opp, themes_ws_client):
+async def test_themes_api(opp, themes_ws_client):
     """Test that /api/themes returns correct data."""
     await themes_ws_client.send_json({"id": 5, "type": "frontend/get_themes"})
     msg = await themes_ws_client.receive_json()
@@ -164,7 +164,7 @@ async def test_themes_api.opp, themes_ws_client):
     }
 
 
-async def test_themes_persist.opp, opp_storage, opp_ws_client, ignore_frontend_deps):
+async def test_themes_persist(opp, opp_storage, opp_ws_client, ignore_frontend_deps):
     """Test that theme settings are restores after restart."""
     opp.storage[THEMES_STORAGE_KEY] = {
         "key": THEMES_STORAGE_KEY,
@@ -175,7 +175,7 @@ async def test_themes_persist.opp, opp_storage, opp_ws_client, ignore_frontend_d
         },
     }
 
-    assert await async_setup_component.opp, "frontend", CONFIG_THEMES)
+    assert await async_setup_component(opp, "frontend", CONFIG_THEMES)
     themes_ws_client = await opp_ws_client.opp)
 
     await themes_ws_client.send_json({"id": 5, "type": "frontend/get_themes"})
@@ -185,7 +185,7 @@ async def test_themes_persist.opp, opp_storage, opp_ws_client, ignore_frontend_d
     assert msg["result"]["default_dark_theme"] == "dark"
 
 
-async def test_themes_save_storage.opp, opp_storage, frontend_themes):
+async def test_themes_save_storage(opp, opp_storage, frontend_themes):
     """Test that theme settings are restores after restart."""
 
     await opp.services.async_call(
@@ -197,17 +197,17 @@ async def test_themes_save_storage.opp, opp_storage, frontend_themes):
     )
 
     # To trigger the call_later
-    async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=60))
+    async_fire_time_changed(opp, dt.utcnow() + timedelta(seconds=60))
     # To execute the save
     await opp.async_block_till_done()
 
-    assert.opp_storage[THEMES_STORAGE_KEY]["data"] == {
+    assert opp_storage[THEMES_STORAGE_KEY]["data"] == {
         "frontend_default_theme": "happy",
         "frontend_default_dark_theme": "dark",
     }
 
 
-async def test_themes_set_theme.opp, themes_ws_client):
+async def test_themes_set_theme(opp, themes_ws_client):
     """Test frontend.set_theme service."""
     await opp.services.async_call(
         DOMAIN, "set_theme", {"name": "happy"}, blocking=True
@@ -239,7 +239,7 @@ async def test_themes_set_theme.opp, themes_ws_client):
     assert msg["result"]["default_theme"] == "default"
 
 
-async def test_themes_set_theme_wrong_name.opp, themes_ws_client):
+async def test_themes_set_theme_wrong_name(opp, themes_ws_client):
     """Test frontend.set_theme service called with wrong name."""
 
     await opp.services.async_call(
@@ -253,7 +253,7 @@ async def test_themes_set_theme_wrong_name.opp, themes_ws_client):
     assert msg["result"]["default_theme"] == "default"
 
 
-async def test_themes_set_dark_theme.opp, themes_ws_client):
+async def test_themes_set_dark_theme(opp, themes_ws_client):
     """Test frontend.set_theme service called with dark mode."""
 
     await opp.services.async_call(
@@ -284,7 +284,7 @@ async def test_themes_set_dark_theme.opp, themes_ws_client):
     assert msg["result"]["default_dark_theme"] is None
 
 
-async def test_themes_set_dark_theme_wrong_name.opp, frontend, themes_ws_client):
+async def test_themes_set_dark_theme_wrong_name(opp, frontend, themes_ws_client):
     """Test frontend.set_theme service called with mode dark and wrong name."""
     await opp.services.async_call(
         DOMAIN, "set_theme", {"name": "wrong", "mode": "dark"}, blocking=True
@@ -297,7 +297,7 @@ async def test_themes_set_dark_theme_wrong_name.opp, frontend, themes_ws_client)
     assert msg["result"]["default_dark_theme"] is None
 
 
-async def test_themes_reload_themes.opp, frontend, themes_ws_client):
+async def test_themes_reload_themes(opp, frontend, themes_ws_client):
     """Test frontend.reload_themes service."""
 
     with patch(
@@ -317,7 +317,7 @@ async def test_themes_reload_themes.opp, frontend, themes_ws_client):
     assert msg["result"]["default_theme"] == "default"
 
 
-async def test_missing_themes.opp, ws_client):
+async def test_missing_themes(opp, ws_client):
     """Test that themes API works when themes are not defined."""
     await ws_client.send_json({"id": 5, "type": "frontend/get_themes"})
 
@@ -330,9 +330,9 @@ async def test_missing_themes.opp, ws_client):
     assert msg["result"]["themes"] == {}
 
 
-async def test_get_panels.opp, opp_ws_client, mock_http_client):
+async def test_get_panels(opp, opp_ws_client, mock_http_client):
     """Test get_panels command."""
-    events = async_capture_events.opp, EVENT_PANELS_UPDATED)
+    events = async_capture_events(opp, EVENT_PANELS_UPDATED)
 
     resp = await mock_http_client.get("/map")
     assert resp.status == HTTP_NOT_FOUND
@@ -368,7 +368,7 @@ async def test_get_panels.opp, opp_ws_client, mock_http_client):
     assert len(events) == 2
 
 
-async def test_get_panels_non_admin.opp, ws_client, opp_admin_user):
+async def test_get_panels_non_admin(opp, ws_client, opp_admin_user):
     """Test get_panels command."""
     opp.admin_user.groups = []
 
@@ -390,7 +390,7 @@ async def test_get_panels_non_admin.opp, ws_client, opp_admin_user):
     assert "map" not in msg["result"]
 
 
-async def test_get_translations.opp, ws_client):
+async def test_get_translations(opp, ws_client):
     """Test get_translations command."""
     with patch(
         "openpeerpower.components.frontend.async_get_translations",
@@ -416,13 +416,13 @@ async def test_get_translations.opp, ws_client):
 
 async def test_auth_load.opp):
     """Test auth component loaded by default."""
-    frontend = await async_get_integration.opp, "frontend")
+    frontend = await async_get_integration(opp, "frontend")
     assert "auth" in frontend.dependencies
 
 
 async def test_onboarding_load.opp):
     """Test onboarding component loaded by default."""
-    frontend = await async_get_integration.opp, "frontend")
+    frontend = await async_get_integration(opp, "frontend")
     assert "onboarding" in frontend.dependencies
 
 
@@ -449,9 +449,9 @@ async def test_auth_authorize(mock_http_client):
     assert "public" in resp.headers.get("cache-control")
 
 
-async def test_get_version.opp, ws_client):
+async def test_get_version(opp, ws_client):
     """Test get_version command."""
-    frontend = await async_get_integration.opp, "frontend")
+    frontend = await async_get_integration(opp, "frontend")
     cur_version = next(
         req.split("==", 1)[1]
         for req in frontend.requirements
@@ -467,7 +467,7 @@ async def test_get_version.opp, ws_client):
     assert msg["result"] == {"version": cur_version}
 
 
-async def test_static_paths.opp, mock_http_client):
+async def test_static_paths(opp, mock_http_client):
     """Test static paths."""
     resp = await mock_http_client.get(
         "/.well-known/change-password", allow_redirects=False

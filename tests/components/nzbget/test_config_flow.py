@@ -28,7 +28,7 @@ from tests.common import MockConfigEntry
 
 async def test_user_form.opp):
     """Test we get the user initiated form."""
-    await async_setup_component.opp, "persistent_notification", {})
+    await async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -53,7 +53,7 @@ async def test_user_form.opp):
 
 async def test_user_form_show_advanced_options.opp):
     """Test we get the user initiated form with advanced options shown."""
-    await async_setup_component.opp, "persistent_notification", {})
+    await async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER, "show_advanced_options": True}
@@ -122,7 +122,7 @@ async def test_user_form_unexpected_exception.opp):
 async def test_user_form_single_instance_allowed.opp):
     """Test that configuring more than one instance is rejected."""
     entry = MockConfigEntry(domain=DOMAIN, data=ENTRY_CONFIG)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -133,14 +133,14 @@ async def test_user_form_single_instance_allowed.opp):
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test_options_flow.opp, nzbget_api):
+async def test_options_flow(opp, nzbget_api):
     """Test updating options."""
     entry = MockConfigEntry(
         domain=DOMAIN,
         data=ENTRY_CONFIG,
         options={CONF_SCAN_INTERVAL: 5},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch("openpeerpower.components.nzbget.PLATFORMS", []):
         await opp.config_entries.async_setup(entry.entry_id)

@@ -49,7 +49,7 @@ async def init_integration(
         "openpeerpower.components.srp_energy.SrpEnergyClient.usage", return_value=usage
     ):
 
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
         await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 

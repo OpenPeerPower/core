@@ -24,7 +24,7 @@ def _get_mock_powerview_userdata(userdata=None, get_resources=None):
 
 async def test_user_form.opp):
     """Test we get the user form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -71,10 +71,10 @@ async def test_user_form.opp):
 
 async def test_form_homekit.opp):
     """Test we get the form with homekit source."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     ignored_config_entry = MockConfigEntry(domain=DOMAIN, data={}, source="ignore")
-    ignored_config_entry.add_to.opp.opp)
+    ignored_config_entry.add_to_opp(opp)
 
     mock_powerview_userdata = _get_mock_powerview_userdata()
     with patch(

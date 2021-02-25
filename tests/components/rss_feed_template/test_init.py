@@ -23,7 +23,7 @@ def mock_http_client(loop, opp, opp_client):
         }
     }
 
-    loop.run_until_complete(async_setup_component.opp, "rss_feed_template", config))
+    loop.run_until_complete(async_setup_component(opp, "rss_feed_template", config))
     return loop.run_until_complete.opp_client())
 
 

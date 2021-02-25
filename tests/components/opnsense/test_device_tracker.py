@@ -17,7 +17,7 @@ def mocked_opnsense():
         yield mocked_opn
 
 
-async def test_get_scanner.opp, mocked_opnsense, mock_device_tracker_conf):
+async def test_get_scanner(opp, mocked_opnsense, mock_device_tracker_conf):
     """Test creating an opnsense scanner."""
     interface_client = mock.MagicMock()
     mocked_opnsense.InterfaceClient.return_value = interface_client

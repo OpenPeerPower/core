@@ -96,7 +96,7 @@ async def test_import_plm(opp: OpenPeerPowerType):
         )
         await opp.async_block_till_done()
         await asyncio.sleep(0.01)
-    assert.opp.config_entries.async_entries(DOMAIN)
+    assert opp.config_entries.async_entries(DOMAIN)
     data = opp.config_entries.async_entries(DOMAIN)[0].data
     assert data[CONF_DEVICE] == MOCK_IMPORT_CONFIG_PLM[CONF_PORT]
     assert CONF_PORT not in data
@@ -121,7 +121,7 @@ async def test_import_hub1.opp: OpenPeerPowerType):
         )
         await opp.async_block_till_done()
         await asyncio.sleep(0.01)
-        assert.opp.config_entries.async_entries(DOMAIN)
+        assert opp.config_entries.async_entries(DOMAIN)
     data = opp.config_entries.async_entries(DOMAIN)[0].data
     assert data[CONF_HOST] == MOCK_IMPORT_FULL_CONFIG_HUB_V1[CONF_HOST]
     assert data[CONF_PORT] == PORT_HUB_V1
@@ -148,7 +148,7 @@ async def test_import_hub2.opp: OpenPeerPowerType):
         )
         await opp.async_block_till_done()
         await asyncio.sleep(0.01)
-        assert.opp.config_entries.async_entries(DOMAIN)
+        assert opp.config_entries.async_entries(DOMAIN)
     data = opp.config_entries.async_entries(DOMAIN)[0].data
     assert data[CONF_HOST] == MOCK_IMPORT_FULL_CONFIG_HUB_V2[CONF_HOST]
     assert data[CONF_PORT] == PORT_HUB_V2

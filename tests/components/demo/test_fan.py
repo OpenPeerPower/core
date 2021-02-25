@@ -33,12 +33,12 @@ PERCENTAGE_MODEL_FANS = ["fan.percentage_full_fan", "fan.percentage_limited_fan"
 @pytest.fixture(autouse=True)
 async def setup_comp.opp):
     """Initialize components."""
-    assert await async_setup_component.opp, fan.DOMAIN, {"fan": {"platform": "demo"}})
+    assert await async_setup_component(opp, fan.DOMAIN, {"fan": {"platform": "demo"}})
     await opp.async_block_till_done()
 
 
 @pytest.mark.parametrize("fan_entity_id", LIMITED_AND_FULL_FAN_ENTITY_IDS)
-async def test_turn_on.opp, fan_entity_id):
+async def test_turn_on(opp, fan_entity_id):
     """Test turning on the device."""
     state = opp.states.get(fan_entity_id)
     assert state.state == STATE_OFF
@@ -51,7 +51,7 @@ async def test_turn_on.opp, fan_entity_id):
 
 
 @pytest.mark.parametrize("fan_entity_id", FULL_FAN_ENTITY_IDS)
-async def test_turn_on_with_speed_and_percentage.opp, fan_entity_id):
+async def test_turn_on_with_speed_and_percentage(opp, fan_entity_id):
     """Test turning on the device."""
     state = opp.states.get(fan_entity_id)
     assert state.state == STATE_OFF
@@ -134,7 +134,7 @@ async def test_turn_on_with_speed_and_percentage.opp, fan_entity_id):
 
 
 @pytest.mark.parametrize("fan_entity_id", FANS_WITH_PRESET_MODE_ONLY)
-async def test_turn_on_with_preset_mode_only.opp, fan_entity_id):
+async def test_turn_on_with_preset_mode_only(opp, fan_entity_id):
     """Test turning on the device with a preset_mode and no speed setting."""
     state = opp.states.get(fan_entity_id)
     assert state.state == STATE_OFF
@@ -186,7 +186,7 @@ async def test_turn_on_with_preset_mode_only.opp, fan_entity_id):
 
 
 @pytest.mark.parametrize("fan_entity_id", FANS_WITH_PRESET_MODES)
-async def test_turn_on_with_preset_mode_and_speed.opp, fan_entity_id):
+async def test_turn_on_with_preset_mode_and_speed(opp, fan_entity_id):
     """Test turning on the device with a preset_mode and speed."""
     state = opp.states.get(fan_entity_id)
     assert state.state == STATE_OFF
@@ -268,7 +268,7 @@ async def test_turn_on_with_preset_mode_and_speed.opp, fan_entity_id):
 
 
 @pytest.mark.parametrize("fan_entity_id", LIMITED_AND_FULL_FAN_ENTITY_IDS)
-async def test_turn_off.opp, fan_entity_id):
+async def test_turn_off(opp, fan_entity_id):
     """Test turning off the device."""
     state = opp.states.get(fan_entity_id)
     assert state.state == STATE_OFF
@@ -287,7 +287,7 @@ async def test_turn_off.opp, fan_entity_id):
 
 
 @pytest.mark.parametrize("fan_entity_id", LIMITED_AND_FULL_FAN_ENTITY_IDS)
-async def test_turn_off_without_entity_id.opp, fan_entity_id):
+async def test_turn_off_without_entity_id(opp, fan_entity_id):
     """Test turning off all fans."""
     state = opp.states.get(fan_entity_id)
     assert state.state == STATE_OFF
@@ -306,7 +306,7 @@ async def test_turn_off_without_entity_id.opp, fan_entity_id):
 
 
 @pytest.mark.parametrize("fan_entity_id", FULL_FAN_ENTITY_IDS)
-async def test_set_direction.opp, fan_entity_id):
+async def test_set_direction(opp, fan_entity_id):
     """Test setting the direction of the device."""
     state = opp.states.get(fan_entity_id)
     assert state.state == STATE_OFF
@@ -322,7 +322,7 @@ async def test_set_direction.opp, fan_entity_id):
 
 
 @pytest.mark.parametrize("fan_entity_id", FULL_FAN_ENTITY_IDS)
-async def test_set_speed.opp, fan_entity_id):
+async def test_set_speed(opp, fan_entity_id):
     """Test setting the speed of the device."""
     state = opp.states.get(fan_entity_id)
     assert state.state == STATE_OFF
@@ -338,7 +338,7 @@ async def test_set_speed.opp, fan_entity_id):
 
 
 @pytest.mark.parametrize("fan_entity_id", FANS_WITH_PRESET_MODES)
-async def test_set_preset_mode.opp, fan_entity_id):
+async def test_set_preset_mode(opp, fan_entity_id):
     """Test setting the preset mode of the device."""
     state = opp.states.get(fan_entity_id)
     assert state.state == STATE_OFF
@@ -357,7 +357,7 @@ async def test_set_preset_mode.opp, fan_entity_id):
 
 
 @pytest.mark.parametrize("fan_entity_id", LIMITED_AND_FULL_FAN_ENTITY_IDS)
-async def test_set_preset_mode_invalid.opp, fan_entity_id):
+async def test_set_preset_mode_invalid(opp, fan_entity_id):
     """Test setting a invalid preset mode for the device."""
     state = opp.states.get(fan_entity_id)
     assert state.state == STATE_OFF
@@ -382,7 +382,7 @@ async def test_set_preset_mode_invalid.opp, fan_entity_id):
 
 
 @pytest.mark.parametrize("fan_entity_id", FULL_FAN_ENTITY_IDS)
-async def test_set_percentage.opp, fan_entity_id):
+async def test_set_percentage(opp, fan_entity_id):
     """Test setting the percentage speed of the device."""
     state = opp.states.get(fan_entity_id)
     assert state.state == STATE_OFF
@@ -399,7 +399,7 @@ async def test_set_percentage.opp, fan_entity_id):
 
 
 @pytest.mark.parametrize("fan_entity_id", LIMITED_AND_FULL_FAN_ENTITY_IDS)
-async def test_increase_decrease_speed.opp, fan_entity_id):
+async def test_increase_decrease_speed(opp, fan_entity_id):
     """Test increasing and decreasing the percentage speed of the device."""
     state = opp.states.get(fan_entity_id)
     assert state.state == STATE_OFF
@@ -487,7 +487,7 @@ async def test_increase_decrease_speed.opp, fan_entity_id):
 
 
 @pytest.mark.parametrize("fan_entity_id", PERCENTAGE_MODEL_FANS)
-async def test_increase_decrease_speed_with_percentage_step.opp, fan_entity_id):
+async def test_increase_decrease_speed_with_percentage_step(opp, fan_entity_id):
     """Test increasing speed with a percentage step."""
     await opp.services.async_call(
         fan.DOMAIN,
@@ -521,7 +521,7 @@ async def test_increase_decrease_speed_with_percentage_step.opp, fan_entity_id):
 
 
 @pytest.mark.parametrize("fan_entity_id", FULL_FAN_ENTITY_IDS)
-async def test_oscillate.opp, fan_entity_id):
+async def test_oscillate(opp, fan_entity_id):
     """Test oscillating the fan."""
     state = opp.states.get(fan_entity_id)
     assert state.state == STATE_OFF
@@ -547,11 +547,11 @@ async def test_oscillate.opp, fan_entity_id):
 
 
 @pytest.mark.parametrize("fan_entity_id", LIMITED_AND_FULL_FAN_ENTITY_IDS)
-async def test_is_on.opp, fan_entity_id):
+async def test_is_on(opp, fan_entity_id):
     """Test is on service call."""
-    assert not fan.is_on.opp, fan_entity_id)
+    assert not fan.is_on(opp, fan_entity_id)
 
     await opp.services.async_call(
         fan.DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: fan_entity_id}, blocking=True
     )
-    assert fan.is_on.opp, fan_entity_id)
+    assert fan.is_on(opp, fan_entity_id)

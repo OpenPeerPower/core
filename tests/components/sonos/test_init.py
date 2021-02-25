@@ -49,7 +49,7 @@ async def test_not_configuring_sonos_not_creates_entry.opp):
     with patch(
         "openpeerpower.components.sonos.async_setup_entry", return_value=mock_coro(True)
     ) as mock_setup, patch("pysonos.discover", return_value=True):
-        await async_setup_component.opp, sonos.DOMAIN, {})
+        await async_setup_component(opp, sonos.DOMAIN, {})
         await opp.async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 0

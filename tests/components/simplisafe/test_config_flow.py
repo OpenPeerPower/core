@@ -34,7 +34,7 @@ async def test_duplicate_error(opp):
         domain=DOMAIN,
         unique_id="user@email.com",
         data={CONF_USERNAME: "user@email.com", CONF_TOKEN: "12345", CONF_CODE: "1234"},
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=conf
@@ -44,7 +44,7 @@ async def test_duplicate_error(opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_invalid_credentials.opp):
+async def test_invalid_credentials(opp):
     """Test that invalid credentials throws an error."""
     conf = {CONF_USERNAME: "user@email.com", CONF_PASSWORD: "password"}
 
@@ -58,7 +58,7 @@ async def test_invalid_credentials.opp):
         assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_options_flow.opp):
+async def test_options_flow(opp):
     """Test config flow options."""
     conf = {CONF_USERNAME: "user@email.com", CONF_PASSWORD: "password"}
 
@@ -68,7 +68,7 @@ async def test_options_flow.opp):
         data=conf,
         options={CONF_CODE: "1234"},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.simplisafe.async_setup_entry", return_value=True
@@ -87,7 +87,7 @@ async def test_options_flow.opp):
         assert config_entry.options == {CONF_CODE: "4321"}
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -97,13 +97,13 @@ async def test_show_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_step_reauth.opp):
+async def test_step_reauth(opp):
     """Test that the reauth step works."""
     MockConfigEntry(
         domain=DOMAIN,
         unique_id="user@email.com",
         data={CONF_USERNAME: "user@email.com", CONF_TOKEN: "12345", CONF_CODE: "1234"},
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -127,10 +127,10 @@ async def test_step_reauth.opp):
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "reauth_successful"
 
-    assert len.opp.config_entries.async_entries()) == 1
+    assert len(opp.config_entries.async_entries()) == 1
 
 
-async def test_step_user.opp):
+async def test_step_user(opp):
     """Test that the user step works (without MFA)."""
     conf = {
         CONF_USERNAME: "user@email.com",
@@ -156,7 +156,7 @@ async def test_step_user.opp):
         }
 
 
-async def test_step_user_mfa.opp):
+async def test_step_user_mfa(opp):
     """Test that the user step works when MFA is in the middle."""
     conf = {
         CONF_USERNAME: "user@email.com",

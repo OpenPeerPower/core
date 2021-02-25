@@ -7,10 +7,10 @@ from openpeerpower.setup import async_setup_component
 
 async def test_remote_connection_sensor.opp):
     """Test the remote connection sensor."""
-    assert await async_setup_component.opp, "cloud", {"cloud": {}})
+    assert await async_setup_component(opp, "cloud", {"cloud": {}})
     await opp.async_block_till_done()
 
-    assert.opp.states.get("binary_sensor.remote_ui") is None
+    assert opp.states.get("binary_sensor.remote_ui") is None
 
     # Fake connection/discovery
     await opp.helpers.discovery.async_load_platform(

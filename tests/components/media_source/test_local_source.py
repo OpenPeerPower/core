@@ -15,7 +15,7 @@ async def test_async_browse_media.opp):
     )
     await opp.async_block_till_done()
 
-    assert await async_setup_component.opp, const.DOMAIN, {})
+    assert await async_setup_component(opp, const.DOMAIN, {})
     await opp.async_block_till_done()
 
     # Test path not exists
@@ -63,7 +63,7 @@ async def test_async_browse_media.opp):
     assert media
 
 
-async def test_media_view.opp, opp_client):
+async def test_media_view(opp, opp_client):
     """Test media view."""
     local_media = opp.config.path("media")
     await async_process_op_core_config(
@@ -71,7 +71,7 @@ async def test_media_view.opp, opp_client):
     )
     await opp.async_block_till_done()
 
-    assert await async_setup_component.opp, const.DOMAIN, {})
+    assert await async_setup_component(opp, const.DOMAIN, {})
     await opp.async_block_till_done()
 
     client = await opp_client()

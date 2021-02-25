@@ -25,7 +25,7 @@ from tests.common import (
 )
 
 
-async def test_get_triggers.opp, coap_wrapper):
+async def test_get_triggers(opp, coap_wrapper):
     """Test we get the expected triggers from a shelly."""
     assert coap_wrapper
     expected_triggers = [
@@ -52,24 +52,24 @@ async def test_get_triggers.opp, coap_wrapper):
     assert_lists_same(triggers, expected_triggers)
 
 
-async def test_get_triggers_for_invalid_device_id.opp, device_reg, coap_wrapper):
+async def test_get_triggers_for_invalid_device_id(opp, device_reg, coap_wrapper):
     """Test error raised for invalid shelly device_id."""
     assert coap_wrapper
     config_entry = MockConfigEntry(domain=DOMAIN, data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     invalid_device = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
     )
 
     with pytest.raises(InvalidDeviceAutomationConfig):
-        await async_get_device_automations.opp, "trigger", invalid_device.id)
+        await async_get_device_automations(opp, "trigger", invalid_device.id)
 
 
-async def test_if_fires_on_click_event.opp, calls, coap_wrapper):
+async def test_if_fires_on_click_event(opp, calls, coap_wrapper):
     """Test for click_event trigger firing."""
     assert coap_wrapper
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     assert await async_setup_component(
         opp,
@@ -105,10 +105,10 @@ async def test_if_fires_on_click_event.opp, calls, coap_wrapper):
     assert calls[0].data["some"] == "test_trigger_single_click"
 
 
-async def test_validate_trigger_config_no_device.opp, calls, coap_wrapper):
+async def test_validate_trigger_config_no_device(opp, calls, coap_wrapper):
     """Test for click_event with no device."""
     assert coap_wrapper
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     assert await async_setup_component(
         opp,
@@ -139,10 +139,10 @@ async def test_validate_trigger_config_no_device.opp, calls, coap_wrapper):
     assert calls[0].data["some"] == "test_trigger_single_click"
 
 
-async def test_validate_trigger_invalid_triggers.opp, coap_wrapper):
+async def test_validate_trigger_invalid_triggers(opp, coap_wrapper):
     """Test for click_event with invalid triggers."""
     assert coap_wrapper
-    notification_calls = async_mock_service.opp, "persistent_notification", "create")
+    notification_calls = async_mock_service(opp, "persistent_notification", "create")
 
     assert await async_setup_component(
         opp,

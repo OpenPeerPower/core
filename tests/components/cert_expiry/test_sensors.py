@@ -30,7 +30,7 @@ async def test_async_setup_entry(mock_now, opp):
         "openpeerpower.components.cert_expiry.get_cert_expiry_timestamp",
         return_value=timestamp,
     ):
-        entry.add_to.opp.opp)
+        entry.add_to_opp(opp)
         assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
@@ -54,7 +54,7 @@ async def test_async_setup_entry_bad_cert.opp):
         "openpeerpower.components.cert_expiry.helper.get_cert",
         side_effect=ssl.SSLError("some error"),
     ):
-        entry.add_to.opp.opp)
+        entry.add_to_opp(opp)
         assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
@@ -77,14 +77,14 @@ async def test_async_setup_entry_host_unavailable.opp):
         "openpeerpower.components.cert_expiry.helper.get_cert",
         side_effect=socket.gaierror,
     ):
-        entry.add_to.opp.opp)
+        entry.add_to_opp(opp)
         assert await opp.config_entries.async_setup(entry.entry_id) is False
         await opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
     next_update = utcnow() + timedelta(seconds=45)
-    async_fire_time_changed.opp, next_update)
+    async_fire_time_changed(opp, next_update)
     with patch(
         "openpeerpower.components.cert_expiry.helper.get_cert",
         side_effect=socket.gaierror,
@@ -110,7 +110,7 @@ async def test_update_sensor.opp):
         "openpeerpower.components.cert_expiry.get_cert_expiry_timestamp",
         return_value=timestamp,
     ):
-        entry.add_to.opp.opp)
+        entry.add_to_opp(opp)
         assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
@@ -126,7 +126,7 @@ async def test_update_sensor.opp):
         "openpeerpower.components.cert_expiry.get_cert_expiry_timestamp",
         return_value=timestamp,
     ):
-        async_fire_time_changed.opp, utcnow() + timedelta(hours=24))
+        async_fire_time_changed(opp, utcnow() + timedelta(hours=24))
         await opp.async_block_till_done()
 
     state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
@@ -152,7 +152,7 @@ async def test_update_sensor_network_errors.opp):
         "openpeerpower.components.cert_expiry.get_cert_expiry_timestamp",
         return_value=timestamp,
     ):
-        entry.add_to.opp.opp)
+        entry.add_to_opp(opp)
         assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
@@ -169,7 +169,7 @@ async def test_update_sensor_network_errors.opp):
         "openpeerpower.components.cert_expiry.helper.get_cert",
         side_effect=socket.gaierror,
     ):
-        async_fire_time_changed.opp, utcnow() + timedelta(hours=24))
+        async_fire_time_changed(opp, utcnow() + timedelta(hours=24))
         await opp.async_block_till_done()
 
     next_update = starting_time + timedelta(hours=48)
@@ -181,7 +181,7 @@ async def test_update_sensor_network_errors.opp):
         "openpeerpower.components.cert_expiry.get_cert_expiry_timestamp",
         return_value=timestamp,
     ):
-        async_fire_time_changed.opp, utcnow() + timedelta(hours=48))
+        async_fire_time_changed(opp, utcnow() + timedelta(hours=48))
         await opp.async_block_till_done()
 
         state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
@@ -197,7 +197,7 @@ async def test_update_sensor_network_errors.opp):
         "openpeerpower.components.cert_expiry.helper.get_cert",
         side_effect=ssl.SSLError("something bad"),
     ):
-        async_fire_time_changed.opp, utcnow() + timedelta(hours=72))
+        async_fire_time_changed(opp, utcnow() + timedelta(hours=72))
         await opp.async_block_till_done()
 
     state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
@@ -211,7 +211,7 @@ async def test_update_sensor_network_errors.opp):
     with patch("openpeerpower.util.dt.utcnow", return_value=next_update), patch(
         "openpeerpower.components.cert_expiry.helper.get_cert", side_effect=Exception()
     ):
-        async_fire_time_changed.opp, utcnow() + timedelta(hours=96))
+        async_fire_time_changed(opp, utcnow() + timedelta(hours=96))
         await opp.async_block_till_done()
 
     state = opp.states.get("sensor.cert_expiry_timestamp_example_com")

@@ -1,7 +1,7 @@
 """Test mobile app device tracker."""
 
 
-async def test_sending_location.opp, create_registrations, webhook_client):
+async def test_sending_location(opp, create_registrations, webhook_client):
     """Test sending a location via a webhook."""
     resp = await webhook_client.post(
         "/api/webhook/{}".format(create_registrations[1]["webhook_id"]),
@@ -68,7 +68,7 @@ async def test_sending_location.opp, create_registrations, webhook_client):
     assert state.attributes["vertical_accuracy"] == 8
 
 
-async def test_restoring_location.opp, create_registrations, webhook_client):
+async def test_restoring_location(opp, create_registrations, webhook_client):
     """Test sending a location via a webhook."""
     resp = await webhook_client.post(
         "/api/webhook/{}".format(create_registrations[1]["webhook_id"]),

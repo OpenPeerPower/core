@@ -29,10 +29,10 @@ ENTITY_COVER = "cover.test_template_cover"
 @pytest.fixture(name="calls")
 def calls_fixture.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
-async def test_template_state_text.opp, calls):
+async def test_template_state_text(opp, calls):
     """Test the state text of a template."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
@@ -75,7 +75,7 @@ async def test_template_state_text.opp, calls):
     assert state.state == STATE_CLOSED
 
 
-async def test_template_state_boolean.opp, calls):
+async def test_template_state_boolean(opp, calls):
     """Test the value_template attribute."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
@@ -109,7 +109,7 @@ async def test_template_state_boolean.opp, calls):
     assert state.state == STATE_OPEN
 
 
-async def test_template_position.opp, calls):
+async def test_template_position(opp, calls):
     """Test the position_template attribute."""
     opp.states.async_set("cover.test", STATE_OPEN)
     with assert_setup_component(1, "cover"):
@@ -165,7 +165,7 @@ async def test_template_position.opp, calls):
     assert state.state == STATE_CLOSED
 
 
-async def test_template_tilt.opp, calls):
+async def test_template_tilt(opp, calls):
     """Test the tilt_template attribute."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
@@ -200,7 +200,7 @@ async def test_template_tilt.opp, calls):
     assert state.attributes.get("current_tilt_position") == 42.0
 
 
-async def test_template_out_of_bounds.opp, calls):
+async def test_template_out_of_bounds(opp, calls):
     """Test template out-of-bounds condition."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
@@ -236,7 +236,7 @@ async def test_template_out_of_bounds.opp, calls):
     assert state.attributes.get("current_position") is None
 
 
-async def test_template_mutex.opp, calls):
+async def test_template_mutex(opp, calls):
     """Test that only value or position template can be used."""
     with assert_setup_component(0, "cover"):
         assert await setup.async_setup_component(
@@ -270,10 +270,10 @@ async def test_template_mutex.opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.async_all() == []
+    assert opp.states.async_all() == []
 
 
-async def test_template_open_or_position.opp, caplog):
+async def test_template_open_or_position(opp, caplog):
     """Test that at least one of open_cover or set_position is used."""
     assert await setup.async_setup_component(
         opp,
@@ -287,11 +287,11 @@ async def test_template_open_or_position.opp, caplog):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.async_all() == []
+    assert opp.states.async_all() == []
     assert "Invalid config for [cover.template]" in caplog.text
 
 
-async def test_template_open_and_close.opp, calls):
+async def test_template_open_and_close(opp, calls):
     """Test that if open_cover is specified, close_cover is too."""
     with assert_setup_component(0, "cover"):
         assert await setup.async_setup_component(
@@ -317,10 +317,10 @@ async def test_template_open_and_close.opp, calls):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.async_all() == []
+    assert opp.states.async_all() == []
 
 
-async def test_template_non_numeric.opp, calls):
+async def test_template_non_numeric(opp, calls):
     """Test that tilt_template values are numeric."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
@@ -360,7 +360,7 @@ async def test_template_non_numeric.opp, calls):
     assert state.attributes.get("current_position") is None
 
 
-async def test_open_action.opp, calls):
+async def test_open_action(opp, calls):
     """Test the open_cover command."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
@@ -398,7 +398,7 @@ async def test_open_action.opp, calls):
     assert len(calls) == 1
 
 
-async def test_close_stop_action.opp, calls):
+async def test_close_stop_action(opp, calls):
     """Test the close-cover and stop_cover commands."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
@@ -442,7 +442,7 @@ async def test_close_stop_action.opp, calls):
     assert len(calls) == 2
 
 
-async def test_set_position.opp, calls):
+async def test_set_position(opp, calls):
     """Test the set_position command."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
@@ -518,7 +518,7 @@ async def test_set_position.opp, calls):
     assert state.attributes.get("current_position") == 25.0
 
 
-async def test_set_tilt_position.opp, calls):
+async def test_set_tilt_position(opp, calls):
     """Test the set_tilt_position command."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
@@ -560,7 +560,7 @@ async def test_set_tilt_position.opp, calls):
     assert len(calls) == 1
 
 
-async def test_open_tilt_action.opp, calls):
+async def test_open_tilt_action(opp, calls):
     """Test the open_cover_tilt command."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
@@ -599,7 +599,7 @@ async def test_open_tilt_action.opp, calls):
     assert len(calls) == 1
 
 
-async def test_close_tilt_action.opp, calls):
+async def test_close_tilt_action(opp, calls):
     """Test the close_cover_tilt command."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
@@ -638,7 +638,7 @@ async def test_close_tilt_action.opp, calls):
     assert len(calls) == 1
 
 
-async def test_set_position_optimistic.opp, calls):
+async def test_set_position_optimistic(opp, calls):
     """Test optimistic position mode."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
@@ -701,7 +701,7 @@ async def test_set_position_optimistic.opp, calls):
     assert state.state == STATE_OPEN
 
 
-async def test_set_tilt_position_optimistic.opp, calls):
+async def test_set_tilt_position_optimistic(opp, calls):
     """Test the optimistic tilt_position mode."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
@@ -766,7 +766,7 @@ async def test_set_tilt_position_optimistic.opp, calls):
     assert state.attributes.get("current_tilt_position") == 100.0
 
 
-async def test_icon_template.opp, calls):
+async def test_icon_template(opp, calls):
     """Test icon template."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
@@ -810,7 +810,7 @@ async def test_icon_template.opp, calls):
     assert state.attributes["icon"] == "mdi:check"
 
 
-async def test_entity_picture_template.opp, calls):
+async def test_entity_picture_template(opp, calls):
     """Test icon template."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
@@ -854,7 +854,7 @@ async def test_entity_picture_template.opp, calls):
     assert state.attributes["entity_picture"] == "/local/cover.png"
 
 
-async def test_availability_template.opp, calls):
+async def test_availability_template(opp, calls):
     """Test availability template."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
@@ -888,15 +888,15 @@ async def test_availability_template.opp, calls):
     opp.states.async_set("availability_state.state", STATE_OFF)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("cover.test_template_cover").state == STATE_UNAVAILABLE
+    assert opp.states.get("cover.test_template_cover").state == STATE_UNAVAILABLE
 
     opp.states.async_set("availability_state.state", STATE_ON)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("cover.test_template_cover").state != STATE_UNAVAILABLE
+    assert opp.states.get("cover.test_template_cover").state != STATE_UNAVAILABLE
 
 
-async def test_availability_without_availability_template.opp, calls):
+async def test_availability_without_availability_template(opp, calls):
     """Test that component is available if there is no."""
     assert await setup.async_setup_component(
         opp,
@@ -929,7 +929,7 @@ async def test_availability_without_availability_template.opp, calls):
     assert state.state != STATE_UNAVAILABLE
 
 
-async def test_invalid_availability_template_keeps_component_available.opp, caplog):
+async def test_invalid_availability_template_keeps_component_available(opp, caplog):
     """Test that an invalid availability keeps the device available."""
     assert await setup.async_setup_component(
         opp,
@@ -959,11 +959,11 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.get("cover.test_template_cover") != STATE_UNAVAILABLE
+    assert opp.states.get("cover.test_template_cover") != STATE_UNAVAILABLE
     assert ("UndefinedError: 'x' is undefined") in caplog.text
 
 
-async def test_device_class.opp, calls):
+async def test_device_class(opp, calls):
     """Test device class."""
     with assert_setup_component(1, "cover"):
         assert await setup.async_setup_component(
@@ -998,7 +998,7 @@ async def test_device_class.opp, calls):
     assert state.attributes.get("device_class") == "door"
 
 
-async def test_invalid_device_class.opp, calls):
+async def test_invalid_device_class(opp, calls):
     """Test device class."""
     with assert_setup_component(0, "cover"):
         assert await setup.async_setup_component(
@@ -1113,13 +1113,13 @@ async def test_state_gets_lowercased.opp):
 
     assert len.opp.states.async_all()) == 2
 
-    assert.opp.states.get("cover.garage_door").state == STATE_OPEN
+    assert opp.states.get("cover.garage_door").state == STATE_OPEN
     opp.states.async_set("binary_sensor.garage_door_sensor", "on")
     await opp.async_block_till_done()
-    assert.opp.states.get("cover.garage_door").state == STATE_CLOSED
+    assert opp.states.get("cover.garage_door").state == STATE_CLOSED
 
 
-async def test_self_referencing_icon_with_no_template_is_not_a_loop.opp, caplog):
+async def test_self_referencing_icon_with_no_template_is_not_a_loop(opp, caplog):
     """Test a self referencing icon with no value template is not a loop."""
 
     icon_template_str = """{% if is_state('cover.office', 'open') %}

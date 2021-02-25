@@ -71,7 +71,7 @@ def mock_call_later_fixture():
 async def test_minimal_config(opp):
     """Test the minimal config and defaults of component."""
     config = {azure_event_hub.DOMAIN: MIN_CONFIG}
-    assert await async_setup_component.opp, azure_event_hub.DOMAIN, config)
+    assert await async_setup_component(opp, azure_event_hub.DOMAIN, config)
 
 
 async def test_full_config(opp):
@@ -91,7 +91,7 @@ async def test_full_config(opp):
         }
     }
     config[azure_event_hub.DOMAIN].update(MIN_CONFIG)
-    assert await async_setup_component.opp, azure_event_hub.DOMAIN, config)
+    assert await async_setup_component(opp, azure_event_hub.DOMAIN, config)
 
 
 async def _setup_opp, mock_call_later, filter_config):
@@ -99,13 +99,13 @@ async def _setup_opp, mock_call_later, filter_config):
     config = {azure_event_hub.DOMAIN: {"filter": filter_config}}
     config[azure_event_hub.DOMAIN].update(MIN_CONFIG)
 
-    assert await async_setup_component.opp, azure_event_hub.DOMAIN, config)
+    assert await async_setup_component(opp, azure_event_hub.DOMAIN, config)
     await opp.async_block_till_done()
     mock_call_later.assert_called_once()
     return mock_call_later.call_args[0][2]
 
 
-async def _run_filter_tests.opp, tests, process_queue, mock_batch):
+async def _run_filter_tests(opp, tests, process_queue, mock_batch):
     """Run a series of filter tests on azure event hub."""
     for test in tests:
         opp.states.async_set(test.id, STATE_ON)
@@ -119,7 +119,7 @@ async def _run_filter_tests.opp, tests, process_queue, mock_batch):
             mock_batch.add.assert_not_called()
 
 
-async def test_allowlist.opp, mock_batch, mock_call_later):
+async def test_allowlist(opp, mock_batch, mock_call_later):
     """Test an allowlist only config."""
     process_queue = await _setup(
         opp,
@@ -140,10 +140,10 @@ async def test_allowlist.opp, mock_batch, mock_call_later):
         FilterTest("binary_sensor.excluded", False),
     ]
 
-    await _run_filter_tests.opp, tests, process_queue, mock_batch)
+    await _run_filter_tests(opp, tests, process_queue, mock_batch)
 
 
-async def test_denylist.opp, mock_batch, mock_call_later):
+async def test_denylist(opp, mock_batch, mock_call_later):
     """Test a denylist only config."""
     process_queue = await _setup(
         opp,
@@ -164,10 +164,10 @@ async def test_denylist.opp, mock_batch, mock_call_later):
         FilterTest("binary_sensor.excluded", False),
     ]
 
-    await _run_filter_tests.opp, tests, process_queue, mock_batch)
+    await _run_filter_tests(opp, tests, process_queue, mock_batch)
 
 
-async def test_filtered_allowlist.opp, mock_batch, mock_call_later):
+async def test_filtered_allowlist(opp, mock_batch, mock_call_later):
     """Test an allowlist config with a filtering denylist."""
     process_queue = await _setup(
         opp,
@@ -189,10 +189,10 @@ async def test_filtered_allowlist.opp, mock_batch, mock_call_later):
         FilterTest("climate.included_test", False),
     ]
 
-    await _run_filter_tests.opp, tests, process_queue, mock_batch)
+    await _run_filter_tests(opp, tests, process_queue, mock_batch)
 
 
-async def test_filtered_denylist.opp, mock_batch, mock_call_later):
+async def test_filtered_denylist(opp, mock_batch, mock_call_later):
     """Test a denylist config with a filtering allowlist."""
     process_queue = await _setup(
         opp,
@@ -214,4 +214,4 @@ async def test_filtered_denylist.opp, mock_batch, mock_call_later):
         FilterTest("light.included", True),
     ]
 
-    await _run_filter_tests.opp, tests, process_queue, mock_batch)
+    await _run_filter_tests(opp, tests, process_queue, mock_batch)

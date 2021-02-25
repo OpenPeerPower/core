@@ -16,7 +16,7 @@ async def test_sensors.opp):
     mock_powerwall = await _mock_powerwall_with_fixtures.opp)
 
     config_entry = MockConfigEntry(domain=DOMAIN, data={CONF_IP_ADDRESS: "1.2.3.4"})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     with patch(
         "openpeerpower.components.powerwall.config_flow.Powerwall",
         return_value=mock_powerwall,

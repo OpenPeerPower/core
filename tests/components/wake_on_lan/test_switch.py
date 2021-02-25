@@ -98,7 +98,7 @@ async def test_valid_hostname_windows.opp):
     assert STATE_ON == state.state
 
 
-async def test_broadcast_config_ip_and_port.opp, mock_send_magic_packet):
+async def test_broadcast_config_ip_and_port(opp, mock_send_magic_packet):
     """Test with broadcast address and broadcast port config."""
     mac = "00-01-02-03-04-05"
     broadcast_address = "255.255.255.255"
@@ -135,7 +135,7 @@ async def test_broadcast_config_ip_and_port.opp, mock_send_magic_packet):
         )
 
 
-async def test_broadcast_config_ip.opp, mock_send_magic_packet):
+async def test_broadcast_config_ip(opp, mock_send_magic_packet):
     """Test with only broadcast address."""
 
     mac = "00-01-02-03-04-05"
@@ -169,7 +169,7 @@ async def test_broadcast_config_ip.opp, mock_send_magic_packet):
         mock_send_magic_packet.assert_called_with(mac, ip_address=broadcast_address)
 
 
-async def test_broadcast_config_port.opp, mock_send_magic_packet):
+async def test_broadcast_config_port(opp, mock_send_magic_packet):
     """Test with only broadcast port config."""
 
     mac = "00-01-02-03-04-05"
@@ -213,7 +213,7 @@ async def test_off_script.opp):
         },
     )
     await opp.async_block_till_done()
-    calls = async_mock_service.opp, "shell_command", "turn_off_target")
+    calls = async_mock_service(opp, "shell_command", "turn_off_target")
 
     state = opp.states.get("switch.wake_on_lan")
     assert STATE_OFF == state.state

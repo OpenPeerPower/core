@@ -19,11 +19,11 @@ from tests.common import load_fixture
 
 async def _mock_powerwall_with_fixtures.opp):
     """Mock data used to build powerwall state."""
-    meters = await _async_load_json_fixture.opp, "meters.json")
-    sitemaster = await _async_load_json_fixture.opp, "sitemaster.json")
-    site_info = await _async_load_json_fixture.opp, "site_info.json")
-    status = await _async_load_json_fixture.opp, "status.json")
-    device_type = await _async_load_json_fixture.opp, "device_type.json")
+    meters = await _async_load_json_fixture(opp, "meters.json")
+    sitemaster = await _async_load_json_fixture(opp, "sitemaster.json")
+    site_info = await _async_load_json_fixture(opp, "site_info.json")
+    status = await _async_load_json_fixture(opp, "status.json")
+    device_type = await _async_load_json_fixture(opp, "device_type.json")
 
     return _mock_powerwall_return_value(
         site_info=SiteInfo(site_info),
@@ -60,10 +60,10 @@ def _mock_powerwall_return_value(
     return powerwall_mock
 
 
-async def _mock_powerwall_site_name.opp, site_name):
+async def _mock_powerwall_site_name(opp, site_name):
     powerwall_mock = MagicMock(Powerwall("1.2.3.4"))
 
-    site_info_resp = SiteInfo(await _async_load_json_fixture.opp, "site_info.json"))
+    site_info_resp = SiteInfo(await _async_load_json_fixture(opp, "site_info.json"))
     # Sets site_info_resp.site_name to return site_name
     site_info_resp.response["site_name"] = site_name
     powerwall_mock.get_site_info = Mock(return_value=site_info_resp)
@@ -77,7 +77,7 @@ def _mock_powerwall_side_effect(site_info=None):
     return powerwall_mock
 
 
-async def _async_load_json_fixture.opp, path):
+async def _async_load_json_fixture(opp, path):
     fixture = await opp.async_add_executor_job(
         load_fixture, os.path.join("powerwall", path)
     )

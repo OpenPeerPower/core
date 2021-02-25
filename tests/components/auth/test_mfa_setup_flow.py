@@ -7,7 +7,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import CLIENT_ID, MockUser, ensure_auth_manager_loaded
 
 
-async def test_ws_setup_depose_mfa.opp, opp_ws_client):
+async def test_ws_setup_depose_mfa(opp, opp_ws_client):
     """Test set up mfa module for current user."""
     opp.auth = await auth_manager_from_config(
         opp,
@@ -32,9 +32,9 @@ async def test_ws_setup_depose_mfa.opp, opp_ws_client):
         ],
     )
     ensure_auth_manager_loaded.opp.auth)
-    await async_setup_component.opp, "auth", {"http": {}})
+    await async_setup_component(opp, "auth", {"http": {}})
 
-    user = MockUser(id="mock-user").add_to.opp.opp)
+    user = MockUser(id="mock-user").add_to_opp(opp)
     cred = await opp.auth.auth_providers[0].async_get_or_create_credentials(
         {"username": "test-user"}
     )
@@ -42,7 +42,7 @@ async def test_ws_setup_depose_mfa.opp, opp_ws_client):
     refresh_token = await opp.auth.async_create_refresh_token(user, CLIENT_ID)
     access_token = opp.auth.async_create_access_token(refresh_token)
 
-    client = await opp_ws_client.opp, access_token)
+    client = await opp_ws_client(opp, access_token)
 
     await client.send_json({"id": 10, "type": mfa_setup_flow.WS_TYPE_SETUP_MFA})
 

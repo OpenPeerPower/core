@@ -31,14 +31,14 @@ def entity_reg.opp):
     return mock_registry.opp)
 
 
-async def test_get_actions.opp, device_reg, entity_reg):
+async def test_get_actions(opp, device_reg, entity_reg):
     """Test we get the expected actions from a cover."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[0]
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -46,7 +46,7 @@ async def test_get_actions.opp, device_reg, entity_reg):
     entity_reg.async_get_or_create(
         DOMAIN, "test", ent.unique_id, device_id=device_entry.id
     )
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     expected_actions = [
@@ -69,18 +69,18 @@ async def test_get_actions.opp, device_reg, entity_reg):
             "entity_id": ent.entity_id,
         },
     ]
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert_lists_same(actions, expected_actions)
 
 
-async def test_get_actions_tilt.opp, device_reg, entity_reg):
+async def test_get_actions_tilt(opp, device_reg, entity_reg):
     """Test we get the expected actions from a cover."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[3]
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -88,7 +88,7 @@ async def test_get_actions_tilt.opp, device_reg, entity_reg):
     entity_reg.async_get_or_create(
         DOMAIN, "test", ent.unique_id, device_id=device_entry.id
     )
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     expected_actions = [
@@ -123,18 +123,18 @@ async def test_get_actions_tilt.opp, device_reg, entity_reg):
             "entity_id": ent.entity_id,
         },
     ]
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert_lists_same(actions, expected_actions)
 
 
-async def test_get_actions_set_pos.opp, device_reg, entity_reg):
+async def test_get_actions_set_pos(opp, device_reg, entity_reg):
     """Test we get the expected actions from a cover."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[1]
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -142,7 +142,7 @@ async def test_get_actions_set_pos.opp, device_reg, entity_reg):
     entity_reg.async_get_or_create(
         DOMAIN, "test", ent.unique_id, device_id=device_entry.id
     )
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     expected_actions = [
@@ -153,18 +153,18 @@ async def test_get_actions_set_pos.opp, device_reg, entity_reg):
             "entity_id": ent.entity_id,
         },
     ]
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert_lists_same(actions, expected_actions)
 
 
-async def test_get_actions_set_tilt_pos.opp, device_reg, entity_reg):
+async def test_get_actions_set_tilt_pos(opp, device_reg, entity_reg):
     """Test we get the expected actions from a cover."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[2]
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -172,7 +172,7 @@ async def test_get_actions_set_tilt_pos.opp, device_reg, entity_reg):
     entity_reg.async_get_or_create(
         DOMAIN, "test", ent.unique_id, device_id=device_entry.id
     )
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     expected_actions = [
@@ -201,18 +201,18 @@ async def test_get_actions_set_tilt_pos.opp, device_reg, entity_reg):
             "entity_id": ent.entity_id,
         },
     ]
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert_lists_same(actions, expected_actions)
 
 
-async def test_get_action_capabilities.opp, device_reg, entity_reg):
+async def test_get_action_capabilities(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a cover action."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[0]
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -221,10 +221,10 @@ async def test_get_action_capabilities.opp, device_reg, entity_reg):
         DOMAIN, "test", ent.unique_id, device_id=device_entry.id
     )
 
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert len(actions) == 3  # open, close, stop
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
@@ -233,14 +233,14 @@ async def test_get_action_capabilities.opp, device_reg, entity_reg):
         assert capabilities == {"extra_fields": []}
 
 
-async def test_get_action_capabilities_set_pos.opp, device_reg, entity_reg):
+async def test_get_action_capabilities_set_pos(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a cover action."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[1]
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -249,7 +249,7 @@ async def test_get_action_capabilities_set_pos.opp, device_reg, entity_reg):
         DOMAIN, "test", ent.unique_id, device_id=device_entry.id
     )
 
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     expected_capabilities = {
@@ -264,7 +264,7 @@ async def test_get_action_capabilities_set_pos.opp, device_reg, entity_reg):
             }
         ]
     }
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert len(actions) == 1  # set_position
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
@@ -276,14 +276,14 @@ async def test_get_action_capabilities_set_pos.opp, device_reg, entity_reg):
             assert capabilities == {"extra_fields": []}
 
 
-async def test_get_action_capabilities_set_tilt_pos.opp, device_reg, entity_reg):
+async def test_get_action_capabilities_set_tilt_pos(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a cover action."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[2]
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -292,7 +292,7 @@ async def test_get_action_capabilities_set_tilt_pos.opp, device_reg, entity_reg)
         DOMAIN, "test", ent.unique_id, device_id=device_entry.id
     )
 
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     expected_capabilities = {
@@ -307,7 +307,7 @@ async def test_get_action_capabilities_set_tilt_pos.opp, device_reg, entity_reg)
             }
         ]
     }
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert len(actions) == 4  # open, close, stop, set_tilt_position
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
@@ -323,7 +323,7 @@ async def test_action.opp):
     """Test for cover actions."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
 
     assert await async_setup_component(
         opp,
@@ -362,9 +362,9 @@ async def test_action.opp):
     )
     await opp.async_block_till_done()
 
-    open_calls = async_mock_service.opp, "cover", "open_cover")
-    close_calls = async_mock_service.opp, "cover", "close_cover")
-    stop_calls = async_mock_service.opp, "cover", "stop_cover")
+    open_calls = async_mock_service(opp, "cover", "open_cover")
+    close_calls = async_mock_service(opp, "cover", "close_cover")
+    stop_calls = async_mock_service(opp, "cover", "stop_cover")
 
     opp.bus.async_fire("test_event_open")
     await opp.async_block_till_done()
@@ -389,7 +389,7 @@ async def test_action_tilt.opp):
     """Test for cover tilt actions."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
 
     assert await async_setup_component(
         opp,
@@ -419,8 +419,8 @@ async def test_action_tilt.opp):
     )
     await opp.async_block_till_done()
 
-    open_calls = async_mock_service.opp, "cover", "open_cover_tilt")
-    close_calls = async_mock_service.opp, "cover", "close_cover_tilt")
+    open_calls = async_mock_service(opp, "cover", "open_cover_tilt")
+    close_calls = async_mock_service(opp, "cover", "close_cover_tilt")
 
     opp.bus.async_fire("test_event_open")
     await opp.async_block_till_done()
@@ -442,7 +442,7 @@ async def test_action_set_position.opp):
     """Test for cover set position actions."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
 
     assert await async_setup_component(
         opp,
@@ -480,8 +480,8 @@ async def test_action_set_position.opp):
     )
     await opp.async_block_till_done()
 
-    cover_pos_calls = async_mock_service.opp, "cover", "set_cover_position")
-    tilt_pos_calls = async_mock_service.opp, "cover", "set_cover_tilt_position")
+    cover_pos_calls = async_mock_service(opp, "cover", "set_cover_position")
+    tilt_pos_calls = async_mock_service(opp, "cover", "set_cover_tilt_position")
 
     opp.bus.async_fire("test_event_set_pos")
     await opp.async_block_till_done()

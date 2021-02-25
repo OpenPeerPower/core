@@ -15,7 +15,7 @@ async def test_open_cover_intent.opp):
     await cover_intent.async_setup_intents.opp)
 
     opp.states.async_set("cover.garage_door", "closed")
-    calls = async_mock_service.opp, "cover", SERVICE_OPEN_COVER)
+    calls = async_mock_service(opp, "cover", SERVICE_OPEN_COVER)
 
     response = await intent.async_handle(
         opp. "test", " OppOpenCover", {"name": {"value": "garage door"}}
@@ -35,7 +35,7 @@ async def test_close_cover_intent.opp):
     await cover_intent.async_setup_intents.opp)
 
     opp.states.async_set("cover.garage_door", "open")
-    calls = async_mock_service.opp, "cover", SERVICE_CLOSE_COVER)
+    calls = async_mock_service(opp, "cover", SERVICE_CLOSE_COVER)
 
     response = await intent.async_handle(
         opp. "test", " OppCloseCover", {"name": {"value": "garage door"}}

@@ -15,7 +15,7 @@ PASSWORD = "abcdefgh"
 
 
 @pytest.fixture
-def setup_namecheapdns.opp, aioclient_mock):
+def setup_namecheapdns(opp, aioclient_mock):
     """Fixture that sets up NamecheapDNS."""
     aioclient_mock.get(
         namecheapdns.UPDATE_URL,
@@ -48,12 +48,12 @@ async def test_setup_opp, aioclient_mock):
     assert result
     assert aioclient_mock.call_count == 1
 
-    async_fire_time_changed.opp, utcnow() + timedelta(minutes=5))
+    async_fire_time_changed(opp, utcnow() + timedelta(minutes=5))
     await opp.async_block_till_done()
     assert aioclient_mock.call_count == 2
 
 
-async def test_setup_fails_if_update_fails.opp, aioclient_mock):
+async def test_setup_fails_if_update_fails(opp, aioclient_mock):
     """Test setup fails if first update fails."""
     aioclient_mock.get(
         namecheapdns.UPDATE_URL,

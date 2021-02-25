@@ -31,11 +31,11 @@ ENTITY_2 = "climate.test2"
 
 
 @pytest.mark.parametrize("state", [HVAC_MODE_AUTO, HVAC_MODE_HEAT, HVAC_MODE_OFF])
-async def test_with_hvac_mode.opp, state):
+async def test_with_hvac_mode(opp, state):
     """Test that state different hvac states."""
-    calls = async_mock_service.opp, DOMAIN, SERVICE_SET_HVAC_MODE)
+    calls = async_mock_service(opp, DOMAIN, SERVICE_SET_HVAC_MODE)
 
-    await async_reproduce_states.opp, [State(ENTITY_1, state)])
+    await async_reproduce_states(opp, [State(ENTITY_1, state)])
 
     await opp.async_block_till_done()
 
@@ -45,7 +45,7 @@ async def test_with_hvac_mode.opp, state):
 
 async def test_multiple_state.opp):
     """Test that multiple states gets calls."""
-    calls_1 = async_mock_service.opp, DOMAIN, SERVICE_SET_HVAC_MODE)
+    calls_1 = async_mock_service(opp, DOMAIN, SERVICE_SET_HVAC_MODE)
 
     await async_reproduce_states(
         opp. [State(ENTITY_1, HVAC_MODE_HEAT), State(ENTITY_2, HVAC_MODE_AUTO)]
@@ -67,9 +67,9 @@ async def test_multiple_state.opp):
 
 async def test_state_with_none.opp):
     """Test that none is not a hvac state."""
-    calls = async_mock_service.opp, DOMAIN, SERVICE_SET_HVAC_MODE)
+    calls = async_mock_service(opp, DOMAIN, SERVICE_SET_HVAC_MODE)
 
-    await async_reproduce_states.opp, [State(ENTITY_1, None)])
+    await async_reproduce_states(opp, [State(ENTITY_1, None)])
 
     await opp.async_block_till_done()
 
@@ -78,7 +78,7 @@ async def test_state_with_none.opp):
 
 async def test_state_with_context.opp):
     """Test that context is forwarded."""
-    calls = async_mock_service.opp, DOMAIN, SERVICE_SET_HVAC_MODE)
+    calls = async_mock_service(opp, DOMAIN, SERVICE_SET_HVAC_MODE)
 
     context = Context()
 
@@ -105,13 +105,13 @@ async def test_state_with_context.opp):
         (SERVICE_SET_TEMPERATURE, ATTR_TARGET_TEMP_LOW),
     ],
 )
-async def test_attribute.opp, service, attribute):
+async def test_attribute(opp, service, attribute):
     """Test that service call is made for each attribute."""
-    calls_1 = async_mock_service.opp, DOMAIN, service)
+    calls_1 = async_mock_service(opp, DOMAIN, service)
 
     value = "dummy"
 
-    await async_reproduce_states.opp, [State(ENTITY_1, None, {attribute: value})])
+    await async_reproduce_states(opp, [State(ENTITY_1, None, {attribute: value})])
 
     await opp.async_block_till_done()
 

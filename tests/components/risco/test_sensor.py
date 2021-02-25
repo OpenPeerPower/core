@@ -116,7 +116,7 @@ async def test_cannot_connect.opp):
         side_effect=CannotConnectError,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=TEST_CONFIG)
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
         await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
@@ -133,7 +133,7 @@ async def test_unauthorized.opp):
         side_effect=UnauthorizedError,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=TEST_CONFIG)
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
         await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
@@ -142,7 +142,7 @@ async def test_unauthorized.opp):
         assert not registry.async_is_registered(id)
 
 
-def _check_state.opp, category, entity_id):
+def _check_state(opp, category, entity_id):
     event_index = CATEGORIES_TO_EVENTS[category]
     event = TEST_EVENTS[event_index]
     state = opp.states.get(entity_id)
@@ -178,7 +178,7 @@ async def test_setup_opp, two_zone_alarm):  # noqa: F811
     ), patch(
         "openpeerpower.components.risco.Store.async_save",
     ) as save_mock:
-        await setup_risco.opp, TEST_EVENTS)
+        await setup_risco(opp, TEST_EVENTS)
         for id in ENTITY_IDS.values():
             assert registry.async_is_registered(id)
 
@@ -186,7 +186,7 @@ async def test_setup_opp, two_zone_alarm):  # noqa: F811
             {LAST_EVENT_TIMESTAMP_KEY: TEST_EVENTS[0].time}
         )
         for category, entity_id in ENTITY_IDS.items():
-            _check_state.opp, category, entity_id)
+            _check_state(opp, category, entity_id)
 
     with patch(
         "openpeerpower.components.risco.RiscoAPI.get_events", return_value=[]
@@ -194,9 +194,9 @@ async def test_setup_opp, two_zone_alarm):  # noqa: F811
         "openpeerpower.components.risco.Store.async_load",
         return_value={LAST_EVENT_TIMESTAMP_KEY: TEST_EVENTS[0].time},
     ):
-        async_fire_time_changed.opp, dt.utcnow() + timedelta(seconds=65))
+        async_fire_time_changed(opp, dt.utcnow() + timedelta(seconds=65))
         await opp.async_block_till_done()
         events_mock.assert_awaited_once_with(TEST_EVENTS[0].time, 10)
 
     for category, entity_id in ENTITY_IDS.items():
-        _check_state.opp, category, entity_id)
+        _check_state(opp, category, entity_id)

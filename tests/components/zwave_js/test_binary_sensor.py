@@ -13,7 +13,7 @@ from .common import (
 )
 
 
-async def test_low_battery_sensor.opp, multisensor_6, integration):
+async def test_low_battery_sensor(opp, multisensor_6, integration):
     """Test boolean binary sensor of type low battery."""
     state = opp.states.get(LOW_BATTERY_BINARY_SENSOR)
 
@@ -22,7 +22,7 @@ async def test_low_battery_sensor.opp, multisensor_6, integration):
     assert state.attributes["device_class"] == DEVICE_CLASS_BATTERY
 
 
-async def test_enabled_legacy_sensor.opp, ecolink_door_sensor, integration):
+async def test_enabled_legacy_sensor(opp, ecolink_door_sensor, integration):
     """Test enabled legacy boolean binary sensor."""
     node = ecolink_door_sensor
     # this node has Notification CC not (fully) implemented
@@ -57,7 +57,7 @@ async def test_enabled_legacy_sensor.opp, ecolink_door_sensor, integration):
     assert state.state == STATE_ON
 
 
-async def test_disabled_legacy_sensor.opp, multisensor_6, integration):
+async def test_disabled_legacy_sensor(opp, multisensor_6, integration):
     """Test disabled legacy boolean binary sensor."""
     # this node has Notification CC implemented so legacy binary sensor should be disabled
 
@@ -78,7 +78,7 @@ async def test_disabled_legacy_sensor.opp, multisensor_6, integration):
     assert updated_entry.disabled is False
 
 
-async def test_notification_sensor.opp, multisensor_6, integration):
+async def test_notification_sensor(opp, multisensor_6, integration):
     """Test binary sensor created from Notification CC."""
     state = opp.states.get(NOTIFICATION_MOTION_BINARY_SENSOR)
 
@@ -87,7 +87,7 @@ async def test_notification_sensor.opp, multisensor_6, integration):
     assert state.attributes["device_class"] == DEVICE_CLASS_MOTION
 
 
-async def test_property_sensor_door_status.opp, lock_august_pro, integration):
+async def test_property_sensor_door_status(opp, lock_august_pro, integration):
     """Test property binary sensor with sensor mapping (doorStatus)."""
     node = lock_august_pro
 

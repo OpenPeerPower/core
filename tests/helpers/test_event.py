@@ -1232,8 +1232,8 @@ async def test_track_template_result_with_group(opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("group.power_sensors")
-    assert.opp.states.get("group.power_sensors").state
+    assert opp.states.get("group.power_sensors")
+    assert opp.states.get("group.power_sensors").state
 
     specific_runs = []
     template_complex_str = r"""

@@ -85,7 +85,7 @@ async def test_service_setup_opp):
         "openpeerpower.core.ServiceRegistry.async_register", return_value=Mock(True)
     ) as async_register:
         await async_setup_services.opp)
-        assert.opp.data[DECONZ_SERVICES] is True
+        assert opp.data[DECONZ_SERVICES] is True
         assert async_register.call_count == 3
 
 
@@ -106,7 +106,7 @@ async def test_service_unload.opp):
         "openpeerpower.core.ServiceRegistry.async_remove", return_value=Mock(True)
     ) as async_remove:
         await async_unload_services.opp)
-        assert.opp.data[DECONZ_SERVICES] is False
+        assert opp.data[DECONZ_SERVICES] is False
         assert async_remove.call_count == 3
 
 
@@ -120,9 +120,9 @@ async def test_service_unload_not_registered.opp):
         async_remove.assert_not_called()
 
 
-async def test_configure_service_with_field.opp, aioclient_mock):
+async def test_configure_service_with_field(opp, aioclient_mock):
     """Test that service invokes pydeconz with the correct path and data."""
-    config_entry = await setup_deconz_integration.opp, aioclient_mock)
+    config_entry = await setup_deconz_integration(opp, aioclient_mock)
 
     data = {
         SERVICE_FIELD: "/lights/2",
@@ -138,10 +138,10 @@ async def test_configure_service_with_field.opp, aioclient_mock):
     assert aioclient_mock.mock_calls[1][2] == {"on": True, "attr1": 10, "attr2": 20}
 
 
-async def test_configure_service_with_entity.opp, aioclient_mock):
+async def test_configure_service_with_entity(opp, aioclient_mock):
     """Test that service invokes pydeconz with the correct path and data."""
-    config_entry = await setup_deconz_integration.opp, aioclient_mock)
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    config_entry = await setup_deconz_integration(opp, aioclient_mock)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
 
     gateway.deconz_ids["light.test"] = "/lights/1"
     data = {
@@ -157,10 +157,10 @@ async def test_configure_service_with_entity.opp, aioclient_mock):
     assert aioclient_mock.mock_calls[1][2] == {"on": True, "attr1": 10, "attr2": 20}
 
 
-async def test_configure_service_with_entity_and_field.opp, aioclient_mock):
+async def test_configure_service_with_entity_and_field(opp, aioclient_mock):
     """Test that service invokes pydeconz with the correct path and data."""
-    config_entry = await setup_deconz_integration.opp, aioclient_mock)
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    config_entry = await setup_deconz_integration(opp, aioclient_mock)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
 
     gateway.deconz_ids["light.test"] = "/lights/1"
     data = {
@@ -177,9 +177,9 @@ async def test_configure_service_with_entity_and_field.opp, aioclient_mock):
     assert aioclient_mock.mock_calls[1][2] == {"on": True, "attr1": 10, "attr2": 20}
 
 
-async def test_configure_service_with_faulty_field.opp, aioclient_mock):
+async def test_configure_service_with_faulty_field(opp, aioclient_mock):
     """Test that service invokes pydeconz with the correct path and data."""
-    await setup_deconz_integration.opp, aioclient_mock)
+    await setup_deconz_integration(opp, aioclient_mock)
 
     data = {SERVICE_FIELD: "light/2", SERVICE_DATA: {}}
 
@@ -190,9 +190,9 @@ async def test_configure_service_with_faulty_field.opp, aioclient_mock):
         await opp.async_block_till_done()
 
 
-async def test_configure_service_with_faulty_entity.opp, aioclient_mock):
+async def test_configure_service_with_faulty_entity(opp, aioclient_mock):
     """Test that service invokes pydeconz with the correct path and data."""
-    await setup_deconz_integration.opp, aioclient_mock)
+    await setup_deconz_integration(opp, aioclient_mock)
 
     data = {
         SERVICE_ENTITY: "light.nonexisting",
@@ -207,10 +207,10 @@ async def test_configure_service_with_faulty_entity.opp, aioclient_mock):
         put_state.assert_not_called()
 
 
-async def test_service_refresh_devices.opp, aioclient_mock):
+async def test_service_refresh_devices(opp, aioclient_mock):
     """Test that service can refresh devices."""
-    config_entry = await setup_deconz_integration.opp, aioclient_mock)
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    config_entry = await setup_deconz_integration(opp, aioclient_mock)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
     aioclient_mock.clear_requests()
 
     data = {CONF_BRIDGE_ID: BRIDGEID}
@@ -234,7 +234,7 @@ async def test_service_refresh_devices.opp, aioclient_mock):
     }
 
 
-async def test_remove_orphaned_entries_service.opp, aioclient_mock):
+async def test_remove_orphaned_entries_service(opp, aioclient_mock):
     """Test service works and also don't remove more than expected."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["lights"] = deepcopy(LIGHT)

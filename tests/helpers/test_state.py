@@ -112,7 +112,7 @@ async def test_reproduce_with_no_entity(opp):
     await opp.async_block_till_done()
 
     assert len(calls) == 0
-    assert.opp.states.get("light.test") is None
+    assert opp.states.get("light.test") is None
 
 
 async def test_reproduce_turn_on(opp):
@@ -181,7 +181,7 @@ async def test_reproduce_bad_state(opp):
     await opp.async_block_till_done()
 
     assert len(calls) == 0
-    assert.opp.states.get("light.test").state == "off"
+    assert opp.states.get("light.test").state == "off"
 
 
 async def test_as_number_states(opp):

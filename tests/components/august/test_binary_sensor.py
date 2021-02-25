@@ -23,7 +23,7 @@ async def test_doorsense.opp):
     lock_one = await _mock_lock_from_fixture(
         opp. "get_lock.online_with_doorsense.json"
     )
-    await _create_august_with_devices.opp, [lock_one])
+    await _create_august_with_devices(opp, [lock_one])
 
     binary_sensor_online_with_doorsense_name = opp.states.get(
         "binary_sensor.online_with_doorsense_name_open"
@@ -54,8 +54,8 @@ async def test_doorsense.opp):
 
 async def test_create_doorbell.opp):
     """Test creation of a doorbell."""
-    doorbell_one = await _mock_doorbell_from_fixture.opp, "get_doorbell.json")
-    await _create_august_with_devices.opp, [doorbell_one])
+    doorbell_one = await _mock_doorbell_from_fixture(opp, "get_doorbell.json")
+    await _create_august_with_devices(opp, [doorbell_one])
 
     binary_sensor_k98gidt45gul_name_motion = opp.states.get(
         "binary_sensor.k98gidt45gul_name_motion"
@@ -77,8 +77,8 @@ async def test_create_doorbell.opp):
 
 async def test_create_doorbell_offline.opp):
     """Test creation of a doorbell that is offline."""
-    doorbell_one = await _mock_doorbell_from_fixture.opp, "get_doorbell.offline.json")
-    await _create_august_with_devices.opp, [doorbell_one])
+    doorbell_one = await _mock_doorbell_from_fixture(opp, "get_doorbell.offline.json")
+    await _create_august_with_devices(opp, [doorbell_one])
 
     binary_sensor_tmt100_name_motion = opp.states.get(
         "binary_sensor.tmt100_name_motion"
@@ -94,11 +94,11 @@ async def test_create_doorbell_offline.opp):
 
 async def test_create_doorbell_with_motion.opp):
     """Test creation of a doorbell."""
-    doorbell_one = await _mock_doorbell_from_fixture.opp, "get_doorbell.json")
+    doorbell_one = await _mock_doorbell_from_fixture(opp, "get_doorbell.json")
     activities = await _mock_activities_from_fixture(
         opp. "get_activity.doorbell_motion.json"
     )
-    await _create_august_with_devices.opp, [doorbell_one], activities=activities)
+    await _create_august_with_devices(opp, [doorbell_one], activities=activities)
 
     binary_sensor_k98gidt45gul_name_motion = opp.states.get(
         "binary_sensor.k98gidt45gul_name_motion"
@@ -116,8 +116,8 @@ async def test_create_doorbell_with_motion.opp):
 
 async def test_doorbell_device_registry.opp):
     """Test creation of a lock with doorsense and bridge ands up in the registry."""
-    doorbell_one = await _mock_doorbell_from_fixture.opp, "get_doorbell.offline.json")
-    await _create_august_with_devices.opp, [doorbell_one])
+    doorbell_one = await _mock_doorbell_from_fixture(opp, "get_doorbell.offline.json")
+    await _create_august_with_devices(opp, [doorbell_one])
 
     device_registry = await opp.helpers.device_registry.async_get_registry()
 

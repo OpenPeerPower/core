@@ -11,7 +11,7 @@ from tests.components.august.mocks import _mock_august_authentication, _mock_get
 
 async def test_refresh_access_token.opp):
     """Test token refreshes."""
-    await _patched_refresh_access_token.opp, "new_token", 5678)
+    await _patched_refresh_access_token(opp, "new_token", 5678)
 
 
 @patch("openpeerpower.components.august.gateway.ApiAsync.async_get_operable_locks")

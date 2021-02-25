@@ -79,7 +79,7 @@ def get_calendar_info(calendar):
 @pytest.fixture(autouse=True)
 def mock_google_setup_opp, test_calendar):
     """Mock the google set up functions."""
-    opp.loop.run_until_complete(async_setup_component.opp, "group", {"group": {}}))
+    opp.loop.run_until_complete(async_setup_component(opp, "group", {"group": {}}))
     calendar = get_calendar_info(test_calendar)
     calendars = {calendar[CONF_CAL_ID]: calendar}
     patch_google_auth = patch(
@@ -89,7 +89,7 @@ def mock_google_setup_opp, test_calendar):
         "openpeerpower.components.google.load_config", return_value=calendars
     )
     patch_google_services = patch("openpeerpower.components.google.setup_services")
-    async_mock_service.opp, "google", SERVICE_SCAN_CALENDARS)
+    async_mock_service(opp, "google", SERVICE_SCAN_CALENDARS)
 
     with patch_google_auth, patch_google_load, patch_google_services:
         yield
@@ -121,7 +121,7 @@ def mock_google_service():
         yield mock_service
 
 
-async def test_all_day_event.opp, mock_next_event):
+async def test_all_day_event(opp, mock_next_event):
     """Test that we can create an event trigger on device."""
     week_from_today = dt_util.dt.date.today() + dt_util.dt.timedelta(days=7)
     end_event = week_from_today + dt_util.dt.timedelta(days=1)
@@ -132,7 +132,7 @@ async def test_all_day_event.opp, mock_next_event):
     event["end"]["date"] = end
     mock_next_event.return_value.event = event
 
-    assert await async_setup_component.opp, "google", {"google": GOOGLE_CONFIG})
+    assert await async_setup_component(opp, "google", {"google": GOOGLE_CONFIG})
     await opp.async_block_till_done()
 
     state = opp.states.get(TEST_ENTITY)
@@ -150,7 +150,7 @@ async def test_all_day_event.opp, mock_next_event):
     }
 
 
-async def test_future_event.opp, mock_next_event):
+async def test_future_event(opp, mock_next_event):
     """Test that we can create an event trigger on device."""
     one_hour_from_now = dt_util.now() + dt_util.dt.timedelta(minutes=30)
     end_event = one_hour_from_now + dt_util.dt.timedelta(minutes=60)
@@ -161,7 +161,7 @@ async def test_future_event.opp, mock_next_event):
     event["end"]["dateTime"] = end
     mock_next_event.return_value.event = event
 
-    assert await async_setup_component.opp, "google", {"google": GOOGLE_CONFIG})
+    assert await async_setup_component(opp, "google", {"google": GOOGLE_CONFIG})
     await opp.async_block_till_done()
 
     state = opp.states.get(TEST_ENTITY)
@@ -179,7 +179,7 @@ async def test_future_event.opp, mock_next_event):
     }
 
 
-async def test_in_progress_event.opp, mock_next_event):
+async def test_in_progress_event(opp, mock_next_event):
     """Test that we can create an event trigger on device."""
     middle_of_event = dt_util.now() - dt_util.dt.timedelta(minutes=30)
     end_event = middle_of_event + dt_util.dt.timedelta(minutes=60)
@@ -190,7 +190,7 @@ async def test_in_progress_event.opp, mock_next_event):
     event["end"]["dateTime"] = end
     mock_next_event.return_value.event = event
 
-    assert await async_setup_component.opp, "google", {"google": GOOGLE_CONFIG})
+    assert await async_setup_component(opp, "google", {"google": GOOGLE_CONFIG})
     await opp.async_block_till_done()
 
     state = opp.states.get(TEST_ENTITY)
@@ -208,7 +208,7 @@ async def test_in_progress_event.opp, mock_next_event):
     }
 
 
-async def test_offset_in_progress_event.opp, mock_next_event):
+async def test_offset_in_progress_event(opp, mock_next_event):
     """Test that we can create an event trigger on device."""
     middle_of_event = dt_util.now() + dt_util.dt.timedelta(minutes=14)
     end_event = middle_of_event + dt_util.dt.timedelta(minutes=60)
@@ -221,7 +221,7 @@ async def test_offset_in_progress_event.opp, mock_next_event):
     event["summary"] = f"{event_summary} !!-15"
     mock_next_event.return_value.event = event
 
-    assert await async_setup_component.opp, "google", {"google": GOOGLE_CONFIG})
+    assert await async_setup_component(opp, "google", {"google": GOOGLE_CONFIG})
     await opp.async_block_till_done()
 
     state = opp.states.get(TEST_ENTITY)
@@ -240,7 +240,7 @@ async def test_offset_in_progress_event.opp, mock_next_event):
 
 
 @pytest.mark.skip
-async def test_all_day_offset_in_progress_event.opp, mock_next_event):
+async def test_all_day_offset_in_progress_event(opp, mock_next_event):
     """Test that we can create an event trigger on device."""
     tomorrow = dt_util.dt.date.today() + dt_util.dt.timedelta(days=1)
     end_event = tomorrow + dt_util.dt.timedelta(days=1)
@@ -253,7 +253,7 @@ async def test_all_day_offset_in_progress_event.opp, mock_next_event):
     event["summary"] = f"{event_summary} !!-25:0"
     mock_next_event.return_value.event = event
 
-    assert await async_setup_component.opp, "google", {"google": GOOGLE_CONFIG})
+    assert await async_setup_component(opp, "google", {"google": GOOGLE_CONFIG})
     await opp.async_block_till_done()
 
     state = opp.states.get(TEST_ENTITY)
@@ -271,7 +271,7 @@ async def test_all_day_offset_in_progress_event.opp, mock_next_event):
     }
 
 
-async def test_all_day_offset_event.opp, mock_next_event):
+async def test_all_day_offset_event(opp, mock_next_event):
     """Test that we can create an event trigger on device."""
     tomorrow = dt_util.dt.date.today() + dt_util.dt.timedelta(days=2)
     end_event = tomorrow + dt_util.dt.timedelta(days=1)
@@ -285,7 +285,7 @@ async def test_all_day_offset_event.opp, mock_next_event):
     event["summary"] = f"{event_summary} !!-{offset_hours}:0"
     mock_next_event.return_value.event = event
 
-    assert await async_setup_component.opp, "google", {"google": GOOGLE_CONFIG})
+    assert await async_setup_component(opp, "google", {"google": GOOGLE_CONFIG})
     await opp.async_block_till_done()
 
     state = opp.states.get(TEST_ENTITY)
@@ -308,7 +308,7 @@ async def test_update_error(opp, google_service):
     google_service.return_value.get = Mock(
         side_effect=httplib2.ServerNotFoundError("unit test")
     )
-    assert await async_setup_component.opp, "google", {"google": GOOGLE_CONFIG})
+    assert await async_setup_component(opp, "google", {"google": GOOGLE_CONFIG})
     await opp.async_block_till_done()
 
     state = opp.states.get(TEST_ENTITY)

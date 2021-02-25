@@ -11,7 +11,7 @@ from openpeerpower.const import (
 from . import init_integration
 
 
-async def test_download_switch.opp, nzbget_api) -> None:
+async def test_download_switch(opp, nzbget_api) -> None:
     """Test the creation and values of the download switch."""
     instance = nzbget_api.return_value
 
@@ -39,7 +39,7 @@ async def test_download_switch.opp, nzbget_api) -> None:
     assert state.state == STATE_OFF
 
 
-async def test_download_switch_services.opp, nzbget_api) -> None:
+async def test_download_switch_services(opp, nzbget_api) -> None:
     """Test download switch services."""
     instance = nzbget_api.return_value
 

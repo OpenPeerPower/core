@@ -45,7 +45,7 @@ from openpeerpower.helpers import entity_registry
 from tests.common import async_mock_service
 
 
-async def test_garage_door_open_close.opp, hk_driver, events):
+async def test_garage_door_open_close(opp, hk_driver, events):
     """Test if accessory and HA are updated accordingly."""
     entity_id = "cover.garage_door"
 
@@ -87,8 +87,8 @@ async def test_garage_door_open_close.opp, hk_driver, events):
     assert acc.char_target_state.value == HK_DOOR_OPEN
 
     # Set from HomeKit
-    call_close_cover = async_mock_service.opp, DOMAIN, "close_cover")
-    call_open_cover = async_mock_service.opp, DOMAIN, "open_cover")
+    call_close_cover = async_mock_service(opp, DOMAIN, "close_cover")
+    call_open_cover = async_mock_service(opp, DOMAIN, "open_cover")
 
     await opp.async_add_executor_job(acc.char_target_state.client_update_value, 1)
     await opp.async_block_till_done()
@@ -129,7 +129,7 @@ async def test_garage_door_open_close.opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] is None
 
 
-async def test_windowcovering_set_cover_position.opp, hk_driver, events):
+async def test_windowcovering_set_cover_position(opp, hk_driver, events):
     """Test if accessory and HA are updated accordingly."""
     entity_id = "cover.window"
 
@@ -176,7 +176,7 @@ async def test_windowcovering_set_cover_position.opp, hk_driver, events):
     assert acc.char_position_state.value == 2
 
     # Set from HomeKit
-    call_set_cover_position = async_mock_service.opp, DOMAIN, "set_cover_position")
+    call_set_cover_position = async_mock_service(opp, DOMAIN, "set_cover_position")
 
     await opp.async_add_executor_job(acc.char_target_position.client_update_value, 25)
     await opp.async_block_till_done()
@@ -199,7 +199,7 @@ async def test_windowcovering_set_cover_position.opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] == 75
 
 
-async def test_window_instantiate.opp, hk_driver, events):
+async def test_window_instantiate(opp, hk_driver, events):
     """Test if Window accessory is instantiated correctly."""
     entity_id = "cover.window"
 
@@ -216,7 +216,7 @@ async def test_window_instantiate.opp, hk_driver, events):
     assert acc.char_target_position.value == 0
 
 
-async def test_windowcovering_cover_set_tilt.opp, hk_driver, events):
+async def test_windowcovering_cover_set_tilt(opp, hk_driver, events):
     """Test if accessory and HA update slat tilt accordingly."""
     entity_id = "cover.window"
 
@@ -283,7 +283,7 @@ async def test_windowcovering_cover_set_tilt.opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] == 75
 
 
-async def test_windowcovering_open_close.opp, hk_driver, events):
+async def test_windowcovering_open_close(opp, hk_driver, events):
     """Test if accessory and HA are updated accordingly."""
     entity_id = "cover.window"
 
@@ -330,8 +330,8 @@ async def test_windowcovering_open_close.opp, hk_driver, events):
     assert acc.char_position_state.value == 2
 
     # Set from HomeKit
-    call_close_cover = async_mock_service.opp, DOMAIN, "close_cover")
-    call_open_cover = async_mock_service.opp, DOMAIN, "open_cover")
+    call_close_cover = async_mock_service(opp, DOMAIN, "close_cover")
+    call_open_cover = async_mock_service(opp, DOMAIN, "open_cover")
 
     await opp.async_add_executor_job(acc.char_target_position.client_update_value, 25)
     await opp.async_block_till_done()
@@ -364,7 +364,7 @@ async def test_windowcovering_open_close.opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] is None
 
 
-async def test_windowcovering_open_close_stop.opp, hk_driver, events):
+async def test_windowcovering_open_close_stop(opp, hk_driver, events):
     """Test if accessory and HA are updated accordingly."""
     entity_id = "cover.window"
 
@@ -376,9 +376,9 @@ async def test_windowcovering_open_close_stop.opp, hk_driver, events):
     await opp.async_block_till_done()
 
     # Set from HomeKit
-    call_close_cover = async_mock_service.opp, DOMAIN, "close_cover")
-    call_open_cover = async_mock_service.opp, DOMAIN, "open_cover")
-    call_stop_cover = async_mock_service.opp, DOMAIN, "stop_cover")
+    call_close_cover = async_mock_service(opp, DOMAIN, "close_cover")
+    call_open_cover = async_mock_service(opp, DOMAIN, "open_cover")
+    call_stop_cover = async_mock_service(opp, DOMAIN, "stop_cover")
 
     await opp.async_add_executor_job(acc.char_target_position.client_update_value, 25)
     await opp.async_block_till_done()
@@ -427,7 +427,7 @@ async def test_windowcovering_open_close_with_position_and_stop(
     await opp.async_block_till_done()
 
     # Set from HomeKit
-    call_stop_cover = async_mock_service.opp, DOMAIN, "stop_cover")
+    call_stop_cover = async_mock_service(opp, DOMAIN, "stop_cover")
 
     await opp.async_add_executor_job(acc.char_hold_position.client_update_value, 0)
     await opp.async_block_till_done()
@@ -442,7 +442,7 @@ async def test_windowcovering_open_close_with_position_and_stop(
     assert events[-1].data[ATTR_VALUE] is None
 
 
-async def test_windowcovering_basic_restore.opp, hk_driver, events):
+async def test_windowcovering_basic_restore(opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
     opp.state = CoreState.not_running
 
@@ -480,7 +480,7 @@ async def test_windowcovering_basic_restore.opp, hk_driver, events):
     assert acc.char_position_state is not None
 
 
-async def test_windowcovering_restore.opp, hk_driver, events):
+async def test_windowcovering_restore(opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
     opp.state = CoreState.not_running
 
@@ -518,7 +518,7 @@ async def test_windowcovering_restore.opp, hk_driver, events):
     assert acc.char_position_state is not None
 
 
-async def test_garage_door_with_linked_obstruction_sensor.opp, hk_driver, events):
+async def test_garage_door_with_linked_obstruction_sensor(opp, hk_driver, events):
     """Test if accessory and HA are updated accordingly with a linked obstruction sensor."""
     linked_obstruction_sensor_entity_id = "binary_sensor.obstruction"
     entity_id = "cover.garage_door"

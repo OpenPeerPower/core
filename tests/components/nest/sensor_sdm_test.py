@@ -15,9 +15,9 @@ PLATFORM = "sensor"
 THERMOSTAT_TYPE = "sdm.devices.types.THERMOSTAT"
 
 
-async def async_setup_sensor.opp, devices={}, structures={}):
+async def async_setup_sensor(opp, devices={}, structures={}):
     """Set up the platform and prerequisites."""
-    return await async_setup_sdm_platform.opp, PLATFORM, devices, structures)
+    return await async_setup_sdm_platform(opp, PLATFORM, devices, structures)
 
 
 async def test_thermostat_device.opp):
@@ -42,7 +42,7 @@ async def test_thermostat_device.opp):
             auth=None,
         )
     }
-    await async_setup_sensor.opp, devices)
+    await async_setup_sensor(opp, devices)
 
     temperature = opp.states.get("sensor.my_sensor_temperature")
     assert temperature is not None
@@ -88,7 +88,7 @@ async def test_device_no_sensor_traits.opp):
             auth=None,
         )
     }
-    await async_setup_sensor.opp, devices)
+    await async_setup_sensor(opp, devices)
 
     temperature = opp.states.get("sensor.my_sensor_temperature")
     assert temperature is None
@@ -116,7 +116,7 @@ async def test_device_name_from_structure.opp):
             auth=None,
         )
     }
-    await async_setup_sensor.opp, devices)
+    await async_setup_sensor(opp, devices)
 
     temperature = opp.states.get("sensor.some_room_temperature")
     assert temperature is not None
@@ -142,7 +142,7 @@ async def test_event_updates_sensor.opp):
             auth=None,
         )
     }
-    subscriber = await async_setup_sensor.opp, devices)
+    subscriber = await async_setup_sensor(opp, devices)
 
     temperature = opp.states.get("sensor.my_sensor_temperature")
     assert temperature is not None
@@ -191,7 +191,7 @@ async def test_device_with_unknown_type.opp):
             auth=None,
         )
     }
-    await async_setup_sensor.opp, devices)
+    await async_setup_sensor(opp, devices)
 
     temperature = opp.states.get("sensor.my_sensor_temperature")
     assert temperature is not None

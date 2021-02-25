@@ -163,25 +163,25 @@ def mock_now():
     return dt_util.utcnow()
 
 
-async def setup_samsungtv.opp, config):
+async def setup_samsungtv(opp, config):
     """Set up mock Samsung TV."""
-    await async_setup_component.opp, SAMSUNGTV_DOMAIN, config)
+    await async_setup_component(opp, SAMSUNGTV_DOMAIN, config)
     await opp.async_block_till_done()
 
 
-async def test_setup_with_turnon.opp, remote):
+async def test_setup_with_turnon(opp, remote):
     """Test setup of platform."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
-    assert.opp.states.get(ENTITY_ID)
+    await setup_samsungtv(opp, MOCK_CONFIG)
+    assert opp.states.get(ENTITY_ID)
 
 
-async def test_setup_without_turnon.opp, remote):
+async def test_setup_without_turnon(opp, remote):
     """Test setup of platform."""
-    await setup_samsungtv.opp, MOCK_CONFIG_NOTURNON)
-    assert.opp.states.get(ENTITY_ID_NOTURNON)
+    await setup_samsungtv(opp, MOCK_CONFIG_NOTURNON)
+    assert opp.states.get(ENTITY_ID_NOTURNON)
 
 
-async def test_setup_websocket.opp, remotews, mock_now):
+async def test_setup_websocket(opp, remotews, mock_now):
     """Test setup of platform."""
     with patch("openpeerpower.components.samsungtv.bridge.SamsungTVWS") as remote_class:
         enter = Mock()
@@ -191,11 +191,11 @@ async def test_setup_websocket.opp, remotews, mock_now):
         remote.__exit__ = Mock()
         remote_class.return_value = remote
 
-        await setup_samsungtv.opp, MOCK_CONFIGWS)
+        await setup_samsungtv(opp, MOCK_CONFIGWS)
 
         assert remote_class.call_count == 1
         assert remote_class.call_args_list == [call(**MOCK_CALLS_WS)]
-        assert.opp.states.get(ENTITY_ID)
+        assert opp.states.get(ENTITY_ID)
 
 
 async def test_setup_websocket_2.opp, mock_now):
@@ -207,20 +207,20 @@ async def test_setup_websocket_2.opp, mock_now):
         data=MOCK_ENTRY_WS,
         unique_id=entity_id,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     config_entries = opp.config_entries.async_entries(SAMSUNGTV_DOMAIN)
     assert len(config_entries) == 1
     assert entry is config_entries[0]
 
-    assert await async_setup_component.opp, SAMSUNGTV_DOMAIN, {})
+    assert await async_setup_component(opp, SAMSUNGTV_DOMAIN, {})
     await opp.async_block_till_done()
 
     next_update = mock_now + timedelta(minutes=5)
     with patch(
         "openpeerpower.components.samsungtv.bridge.SamsungTVWS"
     ) as remote, patch("openpeerpower.util.dt.utcnow", return_value=next_update):
-        async_fire_time_changed.opp, next_update)
+        async_fire_time_changed(opp, next_update)
         await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
@@ -229,22 +229,22 @@ async def test_setup_websocket_2.opp, mock_now):
     assert remote.call_args_list == [call(**MOCK_CALLS_ENTRY_WS)]
 
 
-async def test_update_on.opp, remote, mock_now):
+async def test_update_on(opp, remote, mock_now):
     """Testing update tv on."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
 
     next_update = mock_now + timedelta(minutes=5)
     with patch("openpeerpower.util.dt.utcnow", return_value=next_update):
-        async_fire_time_changed.opp, next_update)
+        async_fire_time_changed(opp, next_update)
         await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
 
 
-async def test_update_off.opp, remote, mock_now):
+async def test_update_off(opp, remote, mock_now):
     """Testing update tv off."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
 
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",
@@ -253,16 +253,16 @@ async def test_update_off.opp, remote, mock_now):
 
         next_update = mock_now + timedelta(minutes=5)
         with patch("openpeerpower.util.dt.utcnow", return_value=next_update):
-            async_fire_time_changed.opp, next_update)
+            async_fire_time_changed(opp, next_update)
             await opp.async_block_till_done()
 
         state = opp.states.get(ENTITY_ID)
         assert state.state == STATE_OFF
 
 
-async def test_update_access_denied.opp, remote, mock_now):
+async def test_update_access_denied(opp, remote, mock_now):
     """Testing update tv access denied exception."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
 
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",
@@ -270,7 +270,7 @@ async def test_update_access_denied.opp, remote, mock_now):
     ):
         next_update = mock_now + timedelta(minutes=5)
         with patch("openpeerpower.util.dt.utcnow", return_value=next_update):
-            async_fire_time_changed.opp, next_update)
+            async_fire_time_changed(opp, next_update)
             await opp.async_block_till_done()
 
     assert [
@@ -280,13 +280,13 @@ async def test_update_access_denied.opp, remote, mock_now):
     ]
 
 
-async def test_update_connection_failure.opp, remotews, mock_now):
+async def test_update_connection_failure(opp, remotews, mock_now):
     """Testing update tv connection failure exception."""
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",
         side_effect=[OSError("Boom"), DEFAULT_MOCK],
     ):
-        await setup_samsungtv.opp, MOCK_CONFIGWS)
+        await setup_samsungtv(opp, MOCK_CONFIGWS)
 
         with patch(
             "openpeerpower.components.samsungtv.bridge.SamsungTVWS",
@@ -294,7 +294,7 @@ async def test_update_connection_failure.opp, remotews, mock_now):
         ):
             next_update = mock_now + timedelta(minutes=5)
             with patch("openpeerpower.util.dt.utcnow", return_value=next_update):
-                async_fire_time_changed.opp, next_update)
+                async_fire_time_changed(opp, next_update)
             await opp.async_block_till_done()
 
     assert [
@@ -304,9 +304,9 @@ async def test_update_connection_failure.opp, remotews, mock_now):
     ]
 
 
-async def test_update_unhandled_response.opp, remote, mock_now):
+async def test_update_unhandled_response(opp, remote, mock_now):
     """Testing update tv unhandled response exception."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
 
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",
@@ -315,16 +315,16 @@ async def test_update_unhandled_response.opp, remote, mock_now):
 
         next_update = mock_now + timedelta(minutes=5)
         with patch("openpeerpower.util.dt.utcnow", return_value=next_update):
-            async_fire_time_changed.opp, next_update)
+            async_fire_time_changed(opp, next_update)
             await opp.async_block_till_done()
 
         state = opp.states.get(ENTITY_ID)
         assert state.state == STATE_ON
 
 
-async def test_send_key.opp, remote):
+async def test_send_key(opp, remote):
     """Test for send key."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     assert await opp.services.async_call(
         DOMAIN, SERVICE_VOLUME_UP, {ATTR_ENTITY_ID: ENTITY_ID}, True
     )
@@ -337,9 +337,9 @@ async def test_send_key.opp, remote):
     assert state.state == STATE_ON
 
 
-async def test_send_key_broken_pipe.opp, remote):
+async def test_send_key_broken_pipe(opp, remote):
     """Testing broken pipe Exception."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     remote.control = Mock(side_effect=BrokenPipeError("Boom"))
     assert await opp.services.async_call(
         DOMAIN, SERVICE_VOLUME_UP, {ATTR_ENTITY_ID: ENTITY_ID}, True
@@ -348,9 +348,9 @@ async def test_send_key_broken_pipe.opp, remote):
     assert state.state == STATE_ON
 
 
-async def test_send_key_connection_closed_retry_succeed.opp, remote):
+async def test_send_key_connection_closed_retry_succeed(opp, remote):
     """Test retry on connection closed."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     remote.control = Mock(
         side_effect=[exceptions.ConnectionClosed("Boom"), DEFAULT_MOCK, DEFAULT_MOCK]
     )
@@ -369,9 +369,9 @@ async def test_send_key_connection_closed_retry_succeed.opp, remote):
     assert state.state == STATE_ON
 
 
-async def test_send_key_unhandled_response.opp, remote):
+async def test_send_key_unhandled_response(opp, remote):
     """Testing unhandled response exception."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     remote.control = Mock(side_effect=exceptions.UnhandledResponse("Boom"))
     assert await opp.services.async_call(
         DOMAIN, SERVICE_VOLUME_UP, {ATTR_ENTITY_ID: ENTITY_ID}, True
@@ -380,9 +380,9 @@ async def test_send_key_unhandled_response.opp, remote):
     assert state.state == STATE_ON
 
 
-async def test_send_key_websocketexception.opp, remote):
+async def test_send_key_websocketexception(opp, remote):
     """Testing unhandled response exception."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     remote.control = Mock(side_effect=WebSocketException("Boom"))
     assert await opp.services.async_call(
         DOMAIN, SERVICE_VOLUME_UP, {ATTR_ENTITY_ID: ENTITY_ID}, True
@@ -393,7 +393,7 @@ async def test_send_key_websocketexception.opp, remote):
 
 async def test_send_key_os_error(opp, remote):
     """Testing broken pipe Exception."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     remote.control = Mock(side_effect=OSError("Boom"))
     assert await opp.services.async_call(
         DOMAIN, SERVICE_VOLUME_UP, {ATTR_ENTITY_ID: ENTITY_ID}, True
@@ -402,16 +402,16 @@ async def test_send_key_os_error(opp, remote):
     assert state.state == STATE_ON
 
 
-async def test_name.opp, remote):
+async def test_name(opp, remote):
     """Test for name property."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     state = opp.states.get(ENTITY_ID)
     assert state.attributes[ATTR_FRIENDLY_NAME] == "fake"
 
 
-async def test_state_with_turnon.opp, remote, delay):
+async def test_state_with_turnon(opp, remote, delay):
     """Test for state property."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     assert await opp.services.async_call(
         DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_ID}, True
     )
@@ -426,9 +426,9 @@ async def test_state_with_turnon.opp, remote, delay):
     assert state.state == STATE_OFF
 
 
-async def test_state_without_turnon.opp, remote):
+async def test_state_without_turnon(opp, remote):
     """Test for state property."""
-    await setup_samsungtv.opp, MOCK_CONFIG_NOTURNON)
+    await setup_samsungtv(opp, MOCK_CONFIG_NOTURNON)
     assert await opp.services.async_call(
         DOMAIN, SERVICE_VOLUME_UP, {ATTR_ENTITY_ID: ENTITY_ID_NOTURNON}, True
     )
@@ -441,36 +441,36 @@ async def test_state_without_turnon.opp, remote):
     assert state.state == STATE_OFF
 
 
-async def test_supported_features_with_turnon.opp, remote):
+async def test_supported_features_with_turnon(opp, remote):
     """Test for supported_features property."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     state = opp.states.get(ENTITY_ID)
     assert (
         state.attributes[ATTR_SUPPORTED_FEATURES] == SUPPORT_SAMSUNGTV | SUPPORT_TURN_ON
     )
 
 
-async def test_supported_features_without_turnon.opp, remote):
+async def test_supported_features_without_turnon(opp, remote):
     """Test for supported_features property."""
-    await setup_samsungtv.opp, MOCK_CONFIG_NOTURNON)
+    await setup_samsungtv(opp, MOCK_CONFIG_NOTURNON)
     state = opp.states.get(ENTITY_ID_NOTURNON)
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == SUPPORT_SAMSUNGTV
 
 
-async def test_device_class.opp, remote):
+async def test_device_class(opp, remote):
     """Test for device_class property."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     state = opp.states.get(ENTITY_ID)
     assert state.attributes[ATTR_DEVICE_CLASS] == DEVICE_CLASS_TV
 
 
-async def test_turn_off_websocket.opp, remotews):
+async def test_turn_off_websocket(opp, remotews):
     """Test for turn_off."""
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",
         side_effect=[OSError("Boom"), DEFAULT_MOCK],
     ):
-        await setup_samsungtv.opp, MOCK_CONFIGWS)
+        await setup_samsungtv(opp, MOCK_CONFIGWS)
         assert await opp.services.async_call(
             DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_ID}, True
         )
@@ -479,9 +479,9 @@ async def test_turn_off_websocket.opp, remotews):
         assert remotews.send_key.call_args_list == [call("KEY_POWER")]
 
 
-async def test_turn_off_legacy.opp, remote):
+async def test_turn_off_legacy(opp, remote):
     """Test for turn_off."""
-    await setup_samsungtv.opp, MOCK_CONFIG_NOTURNON)
+    await setup_samsungtv(opp, MOCK_CONFIG_NOTURNON)
     assert await opp.services.async_call(
         DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_ID_NOTURNON}, True
     )
@@ -493,7 +493,7 @@ async def test_turn_off_legacy.opp, remote):
 async def test_turn_off_os_error(opp, remote, caplog):
     """Test for turn_off with OSError."""
     caplog.set_level(logging.DEBUG)
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     remote.close = Mock(side_effect=OSError("BOOM"))
     assert await opp.services.async_call(
         DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_ID}, True
@@ -501,9 +501,9 @@ async def test_turn_off_os_error(opp, remote, caplog):
     assert "Could not establish connection" in caplog.text
 
 
-async def test_volume_up.opp, remote):
+async def test_volume_up(opp, remote):
     """Test for volume_up."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     assert await opp.services.async_call(
         DOMAIN, SERVICE_VOLUME_UP, {ATTR_ENTITY_ID: ENTITY_ID}, True
     )
@@ -514,9 +514,9 @@ async def test_volume_up.opp, remote):
     assert remote.close.call_args_list == [call()]
 
 
-async def test_volume_down.opp, remote):
+async def test_volume_down(opp, remote):
     """Test for volume_down."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     assert await opp.services.async_call(
         DOMAIN, SERVICE_VOLUME_DOWN, {ATTR_ENTITY_ID: ENTITY_ID}, True
     )
@@ -527,9 +527,9 @@ async def test_volume_down.opp, remote):
     assert remote.close.call_args_list == [call()]
 
 
-async def test_mute_volume.opp, remote):
+async def test_mute_volume(opp, remote):
     """Test for mute_volume."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     assert await opp.services.async_call(
         DOMAIN,
         SERVICE_VOLUME_MUTE,
@@ -543,9 +543,9 @@ async def test_mute_volume.opp, remote):
     assert remote.close.call_args_list == [call()]
 
 
-async def test_media_play.opp, remote):
+async def test_media_play(opp, remote):
     """Test for media_play."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     assert await opp.services.async_call(
         DOMAIN, SERVICE_MEDIA_PLAY, {ATTR_ENTITY_ID: ENTITY_ID}, True
     )
@@ -556,9 +556,9 @@ async def test_media_play.opp, remote):
     assert remote.close.call_args_list == [call()]
 
 
-async def test_media_pause.opp, remote):
+async def test_media_pause(opp, remote):
     """Test for media_pause."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     assert await opp.services.async_call(
         DOMAIN, SERVICE_MEDIA_PAUSE, {ATTR_ENTITY_ID: ENTITY_ID}, True
     )
@@ -569,9 +569,9 @@ async def test_media_pause.opp, remote):
     assert remote.close.call_args_list == [call()]
 
 
-async def test_media_next_track.opp, remote):
+async def test_media_next_track(opp, remote):
     """Test for media_next_track."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     assert await opp.services.async_call(
         DOMAIN, SERVICE_MEDIA_NEXT_TRACK, {ATTR_ENTITY_ID: ENTITY_ID}, True
     )
@@ -582,9 +582,9 @@ async def test_media_next_track.opp, remote):
     assert remote.close.call_args_list == [call()]
 
 
-async def test_media_previous_track.opp, remote):
+async def test_media_previous_track(opp, remote):
     """Test for media_previous_track."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     assert await opp.services.async_call(
         DOMAIN, SERVICE_MEDIA_PREVIOUS_TRACK, {ATTR_ENTITY_ID: ENTITY_ID}, True
     )
@@ -595,18 +595,18 @@ async def test_media_previous_track.opp, remote):
     assert remote.close.call_args_list == [call()]
 
 
-async def test_turn_on_with_turnon.opp, remote, delay):
+async def test_turn_on_with_turnon(opp, remote, delay):
     """Test turn on."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     assert await opp.services.async_call(
         DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_ID}, True
     )
     assert delay.call_count == 1
 
 
-async def test_turn_on_without_turnon.opp, remote):
+async def test_turn_on_without_turnon(opp, remote):
     """Test turn on."""
-    await setup_samsungtv.opp, MOCK_CONFIG_NOTURNON)
+    await setup_samsungtv(opp, MOCK_CONFIG_NOTURNON)
     assert await opp.services.async_call(
         DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_ID_NOTURNON}, True
     )
@@ -614,7 +614,7 @@ async def test_turn_on_without_turnon.opp, remote):
     assert remote.control.call_count == 0
 
 
-async def test_play_media.opp, remote):
+async def test_play_media(opp, remote):
     """Test for play_media."""
     asyncio_sleep = asyncio.sleep
     sleeps = []
@@ -623,7 +623,7 @@ async def test_play_media.opp, remote):
         sleeps.append(duration)
         await asyncio_sleep(0, loop=loop)
 
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     with patch("asyncio.sleep", new=sleep):
         assert await opp.services.async_call(
             DOMAIN,
@@ -648,11 +648,11 @@ async def test_play_media.opp, remote):
         assert len(sleeps) == 3
 
 
-async def test_play_media_invalid_type.opp, remote):
+async def test_play_media_invalid_type(opp, remote):
     """Test for play_media with invalid media type."""
     with patch("openpeerpower.components.samsungtv.bridge.Remote") as remote:
         url = "https://example.com"
-        await setup_samsungtv.opp, MOCK_CONFIG)
+        await setup_samsungtv(opp, MOCK_CONFIG)
         remote.reset_mock()
         assert await opp.services.async_call(
             DOMAIN,
@@ -670,11 +670,11 @@ async def test_play_media_invalid_type.opp, remote):
         assert remote.call_count == 1
 
 
-async def test_play_media_channel_as_string.opp, remote):
+async def test_play_media_channel_as_string(opp, remote):
     """Test for play_media with invalid channel as string."""
     with patch("openpeerpower.components.samsungtv.bridge.Remote") as remote:
         url = "https://example.com"
-        await setup_samsungtv.opp, MOCK_CONFIG)
+        await setup_samsungtv(opp, MOCK_CONFIG)
         remote.reset_mock()
         assert await opp.services.async_call(
             DOMAIN,
@@ -692,10 +692,10 @@ async def test_play_media_channel_as_string.opp, remote):
         assert remote.call_count == 1
 
 
-async def test_play_media_channel_as_non_positive.opp, remote):
+async def test_play_media_channel_as_non_positive(opp, remote):
     """Test for play_media with invalid channel as non positive integer."""
     with patch("openpeerpower.components.samsungtv.bridge.Remote") as remote:
-        await setup_samsungtv.opp, MOCK_CONFIG)
+        await setup_samsungtv(opp, MOCK_CONFIG)
         remote.reset_mock()
         assert await opp.services.async_call(
             DOMAIN,
@@ -713,9 +713,9 @@ async def test_play_media_channel_as_non_positive.opp, remote):
         assert remote.call_count == 1
 
 
-async def test_select_source.opp, remote):
+async def test_select_source(opp, remote):
     """Test for select_source."""
-    await setup_samsungtv.opp, MOCK_CONFIG)
+    await setup_samsungtv(opp, MOCK_CONFIG)
     assert await opp.services.async_call(
         DOMAIN,
         SERVICE_SELECT_SOURCE,
@@ -729,10 +729,10 @@ async def test_select_source.opp, remote):
     assert remote.close.call_args_list == [call()]
 
 
-async def test_select_source_invalid_source.opp, remote):
+async def test_select_source_invalid_source(opp, remote):
     """Test for select_source with invalid source."""
     with patch("openpeerpower.components.samsungtv.bridge.Remote") as remote:
-        await setup_samsungtv.opp, MOCK_CONFIG)
+        await setup_samsungtv(opp, MOCK_CONFIG)
         remote.reset_mock()
         assert await opp.services.async_call(
             DOMAIN,

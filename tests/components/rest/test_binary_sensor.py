@@ -309,7 +309,7 @@ async def test_setup_with_exception.opp):
     state = opp.states.get("binary_sensor.foo")
     assert state.state == STATE_OFF
 
-    await async_setup_component.opp, "openpeerpower", {})
+    await async_setup_component(opp, "openpeerpower", {})
     await opp.async_block_till_done()
 
     respx.clear()
@@ -350,7 +350,7 @@ async def test_reload.opp):
 
     assert len.opp.states.async_all()) == 1
 
-    assert.opp.states.get("binary_sensor.mockrest")
+    assert opp.states.get("binary_sensor.mockrest")
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -366,8 +366,8 @@ async def test_reload.opp):
         )
         await opp.async_block_till_done()
 
-    assert.opp.states.get("binary_sensor.mockreset") is None
-    assert.opp.states.get("binary_sensor.rollout")
+    assert opp.states.get("binary_sensor.mockreset") is None
+    assert opp.states.get("binary_sensor.rollout")
 
 
 @respx.mock

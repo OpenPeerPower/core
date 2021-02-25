@@ -41,7 +41,7 @@ def test_schema():
     tts.PLATFORM_SCHEMA({"platform": "cloud"})
 
 
-async def test_prefs_default_voice.opp, cloud_with_prefs, cloud_prefs):
+async def test_prefs_default_voice(opp, cloud_with_prefs, cloud_prefs):
     """Test cloud provider uses the preferences."""
     assert cloud_prefs.tts_default_voice == ("en-US", "female")
 

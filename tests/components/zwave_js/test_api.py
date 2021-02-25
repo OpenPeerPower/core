@@ -9,7 +9,7 @@ from openpeerpower.components.zwave_js.const import DOMAIN
 from openpeerpower.helpers.device_registry import async_get_registry
 
 
-async def test_websocket_api.opp, integration, multisensor_6, opp_ws_client):
+async def test_websocket_api(opp, integration, multisensor_6, opp_ws_client):
     """Test the network and node status websocket commands."""
     entry = integration
     ws_client = await opp_ws_client.opp)
@@ -76,7 +76,7 @@ async def test_add_node(
     assert msg["event"]["event"] == "node added"
 
 
-async def test_cancel_inclusion_exclusion.opp, integration, client, opp_ws_client):
+async def test_cancel_inclusion_exclusion(opp, integration, client, opp_ws_client):
     """Test cancelling the inclusion and exclusion process."""
     entry = integration
     ws_client = await opp_ws_client.opp)

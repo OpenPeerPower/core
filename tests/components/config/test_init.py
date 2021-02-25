@@ -11,13 +11,13 @@ from tests.common import mock_component
 
 async def test_config_setup_opp, loop):
     """Test it sets up.oppbian."""
-    await async_setup_component.opp, "config", {})
+    await async_setup_component(opp, "config", {})
     assert "config" in.opp.config.components
 
 
-async def test_load_on_demand_already_loaded.opp, aiohttp_client):
+async def test_load_on_demand_already_loaded(opp, aiohttp_client):
     """Test getting suites."""
-    mock_component.opp, "zwave")
+    mock_component(opp, "zwave")
 
     with patch.object(config, "SECTIONS", []), patch.object(
         config, "ON_DEMAND", ["zwave"]
@@ -25,18 +25,18 @@ async def test_load_on_demand_already_loaded.opp, aiohttp_client):
         "openpeerpower.components.config.zwave.async_setup", return_value=True
     ) as stp:
 
-        await async_setup_component.opp, "config", {})
+        await async_setup_component(opp, "config", {})
 
     await opp.async_block_till_done()
     assert stp.called
 
 
-async def test_load_on_demand_on_load.opp, aiohttp_client):
+async def test_load_on_demand_on_load(opp, aiohttp_client):
     """Test getting suites."""
     with patch.object(config, "SECTIONS", []), patch.object(
         config, "ON_DEMAND", ["zwave"]
     ):
-        await async_setup_component.opp, "config", {})
+        await async_setup_component(opp, "config", {})
 
     assert "config.zwave" not in.opp.config.components
 

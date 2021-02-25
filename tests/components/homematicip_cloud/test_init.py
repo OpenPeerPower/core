@@ -65,7 +65,7 @@ async def test_config_already_registered_not_passed_to_config_entry(
     """Test that an already registered accesspoint does not get imported."""
 
     mock_config = {HMIPC_AUTHTOKEN: "123", HMIPC_HAPID: "ABC123", HMIPC_NAME: "name"}
-    MockConfigEntry(domain=HMIPC_DOMAIN, data=mock_config).add_to.opp.opp)
+    MockConfigEntry(domain=HMIPC_DOMAIN, data=mock_config).add_to_opp(opp)
 
     # one config_entry exists
     config_entries = opp.config_entries.async_entries(HMIPC_DOMAIN)
@@ -107,21 +107,21 @@ async def test_load_entry_fails_due_to_connection_error(
     opp. hmip_config_entry, mock_connection_init
 ):
     """Test load entry fails due to connection error."""
-    hmip_config_entry.add_to.opp.opp)
+    hmip_config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.homematicip_cloud.hap.AsyncHome.get_current_state",
         side_effect=HmipConnectionError,
     ):
-        assert await async_setup_component.opp, HMIPC_DOMAIN, {})
+        assert await async_setup_component(opp, HMIPC_DOMAIN, {})
 
-    assert.opp.data[HMIPC_DOMAIN][hmip_config_entry.unique_id]
+    assert opp.data[HMIPC_DOMAIN][hmip_config_entry.unique_id]
     assert hmip_config_entry.state == ENTRY_STATE_SETUP_RETRY
 
 
-async def test_load_entry_fails_due_to_generic_exception.opp, hmip_config_entry):
+async def test_load_entry_fails_due_to_generic_exception(opp, hmip_config_entry):
     """Test load entry fails due to generic exception."""
-    hmip_config_entry.add_to.opp.opp)
+    hmip_config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.homematicip_cloud.hap.AsyncHome.get_current_state",
@@ -129,16 +129,16 @@ async def test_load_entry_fails_due_to_generic_exception.opp, hmip_config_entry)
     ), patch(
         "homematicip.aio.connection.AsyncConnection.init",
     ):
-        assert await async_setup_component.opp, HMIPC_DOMAIN, {})
+        assert await async_setup_component(opp, HMIPC_DOMAIN, {})
 
-    assert.opp.data[HMIPC_DOMAIN][hmip_config_entry.unique_id]
+    assert opp.data[HMIPC_DOMAIN][hmip_config_entry.unique_id]
     assert hmip_config_entry.state == ENTRY_STATE_SETUP_ERROR
 
 
 async def test_unload_entry.opp):
     """Test being able to unload an entry."""
     mock_config = {HMIPC_AUTHTOKEN: "123", HMIPC_HAPID: "ABC123", HMIPC_NAME: "name"}
-    MockConfigEntry(domain=HMIPC_DOMAIN, data=mock_config).add_to.opp.opp)
+    MockConfigEntry(domain=HMIPC_DOMAIN, data=mock_config).add_to_opp(opp)
 
     with patch("openpeerpower.components.homematicip_cloud.HomematicipHAP") as mock_hap:
         instance = mock_hap.return_value
@@ -150,11 +150,11 @@ async def test_unload_entry.opp):
         instance.home.currentAPVersion = "mock-ap-version"
         instance.async_reset = AsyncMock(return_value=True)
 
-        assert await async_setup_component.opp, HMIPC_DOMAIN, {})
+        assert await async_setup_component(opp, HMIPC_DOMAIN, {})
 
     assert mock_hap.return_value.mock_calls[0][0] == "async_setup"
 
-    assert.opp.data[HMIPC_DOMAIN]["ABC123"]
+    assert opp.data[HMIPC_DOMAIN]["ABC123"]
     config_entries = opp.config_entries.async_entries(HMIPC_DOMAIN)
     assert len(config_entries) == 1
     assert config_entries[0].state == ENTRY_STATE_LOADED
@@ -162,10 +162,10 @@ async def test_unload_entry.opp):
     assert config_entries[0].state == ENTRY_STATE_NOT_LOADED
     assert mock_hap.return_value.mock_calls[2][0] == "async_reset"
     # entry is unloaded
-    assert.opp.data[HMIPC_DOMAIN] == {}
+    assert opp.data[HMIPC_DOMAIN] == {}
 
 
-async def test_hmip_dump_hap_config_services.opp, mock_hap_with_service):
+async def test_hmip_dump_hap_config_services(opp, mock_hap_with_service):
     """Test dump configuration services."""
 
     with patch("pathlib.Path.write_text", return_value=Mock()) as write_mock:
@@ -181,7 +181,7 @@ async def test_hmip_dump_hap_config_services.opp, mock_hap_with_service):
 async def test_setup_services_and_unload_services.opp):
     """Test setup services and unload services."""
     mock_config = {HMIPC_AUTHTOKEN: "123", HMIPC_HAPID: "ABC123", HMIPC_NAME: "name"}
-    MockConfigEntry(domain=HMIPC_DOMAIN, data=mock_config).add_to.opp.opp)
+    MockConfigEntry(domain=HMIPC_DOMAIN, data=mock_config).add_to_opp(opp)
 
     with patch("openpeerpower.components.homematicip_cloud.HomematicipHAP") as mock_hap:
         instance = mock_hap.return_value
@@ -193,7 +193,7 @@ async def test_setup_services_and_unload_services.opp):
         instance.home.currentAPVersion = "mock-ap-version"
         instance.async_reset = AsyncMock(return_value=True)
 
-        assert await async_setup_component.opp, HMIPC_DOMAIN, {})
+        assert await async_setup_component(opp, HMIPC_DOMAIN, {})
 
     # Check services are created
     hmipc_services = opp.services.async_services()[HMIPC_DOMAIN]
@@ -212,10 +212,10 @@ async def test_setup_two_haps_unload_one_by_one.opp):
 
     # Setup AP1
     mock_config = {HMIPC_AUTHTOKEN: "123", HMIPC_HAPID: "ABC123", HMIPC_NAME: "name"}
-    MockConfigEntry(domain=HMIPC_DOMAIN, data=mock_config).add_to.opp.opp)
+    MockConfigEntry(domain=HMIPC_DOMAIN, data=mock_config).add_to_opp(opp)
     # Setup AP2
     mock_config2 = {HMIPC_AUTHTOKEN: "123", HMIPC_HAPID: "ABC1234", HMIPC_NAME: "name2"}
-    MockConfigEntry(domain=HMIPC_DOMAIN, data=mock_config2).add_to.opp.opp)
+    MockConfigEntry(domain=HMIPC_DOMAIN, data=mock_config2).add_to_opp(opp)
 
     with patch("openpeerpower.components.homematicip_cloud.HomematicipHAP") as mock_hap:
         instance = mock_hap.return_value
@@ -227,7 +227,7 @@ async def test_setup_two_haps_unload_one_by_one.opp):
         instance.home.currentAPVersion = "mock-ap-version"
         instance.async_reset = AsyncMock(return_value=True)
 
-        assert await async_setup_component.opp, HMIPC_DOMAIN, {})
+        assert await async_setup_component(opp, HMIPC_DOMAIN, {})
 
     hmipc_services = opp.services.async_services()[HMIPC_DOMAIN]
     assert len(hmipc_services) == 8

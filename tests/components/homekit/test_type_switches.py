@@ -35,7 +35,7 @@ import openpeerpower.util.dt as dt_util
 from tests.common import async_fire_time_changed, async_mock_service
 
 
-async def test_outlet_set_state.opp, hk_driver, events):
+async def test_outlet_set_state(opp, hk_driver, events):
     """Test if Outlet accessory and HA are updated accordingly."""
     entity_id = "switch.outlet_test"
 
@@ -60,8 +60,8 @@ async def test_outlet_set_state.opp, hk_driver, events):
     assert acc.char_on.value is False
 
     # Set from HomeKit
-    call_turn_on = async_mock_service.opp, "switch", "turn_on")
-    call_turn_off = async_mock_service.opp, "switch", "turn_off")
+    call_turn_on = async_mock_service(opp, "switch", "turn_on")
+    call_turn_off = async_mock_service(opp, "switch", "turn_off")
 
     await opp.async_add_executor_job(acc.char_on.client_update_value, True)
     await opp.async_block_till_done()
@@ -88,7 +88,7 @@ async def test_outlet_set_state.opp, hk_driver, events):
         ("switch.test", {}),
     ],
 )
-async def test_switch_set_state.opp, hk_driver, entity_id, attrs, events):
+async def test_switch_set_state(opp, hk_driver, entity_id, attrs, events):
     """Test if accessory and HA are updated accordingly."""
     domain = split_entity_id(entity_id)[0]
 
@@ -113,8 +113,8 @@ async def test_switch_set_state.opp, hk_driver, entity_id, attrs, events):
     assert acc.char_on.value is False
 
     # Set from HomeKit
-    call_turn_on = async_mock_service.opp, domain, "turn_on")
-    call_turn_off = async_mock_service.opp, domain, "turn_off")
+    call_turn_on = async_mock_service(opp, domain, "turn_on")
+    call_turn_off = async_mock_service(opp, domain, "turn_off")
 
     await opp.async_add_executor_job(acc.char_on.client_update_value, True)
     await opp.async_block_till_done()
@@ -131,7 +131,7 @@ async def test_switch_set_state.opp, hk_driver, entity_id, attrs, events):
     assert events[-1].data[ATTR_VALUE] is None
 
 
-async def test_valve_set_state.opp, hk_driver, events):
+async def test_valve_set_state(opp, hk_driver, events):
     """Test if Valve accessory and HA are updated accordingly."""
     entity_id = "switch.valve_test"
 
@@ -178,8 +178,8 @@ async def test_valve_set_state.opp, hk_driver, events):
     assert acc.char_in_use.value == 0
 
     # Set from HomeKit
-    call_turn_on = async_mock_service.opp, "switch", "turn_on")
-    call_turn_off = async_mock_service.opp, "switch", "turn_off")
+    call_turn_on = async_mock_service(opp, "switch", "turn_on")
+    call_turn_off = async_mock_service(opp, "switch", "turn_off")
 
     await opp.async_add_executor_job(acc.char_active.client_update_value, 1)
     await opp.async_block_till_done()
@@ -234,7 +234,7 @@ async def test_vacuum_set_state_with_returnhome_and_start_support(
     assert acc.char_on.value == 0
 
     # Set from HomeKit
-    call_start = async_mock_service.opp, VACUUM_DOMAIN, SERVICE_START)
+    call_start = async_mock_service(opp, VACUUM_DOMAIN, SERVICE_START)
     call_return_to_base = async_mock_service(
         opp. VACUUM_DOMAIN, SERVICE_RETURN_TO_BASE
     )
@@ -282,8 +282,8 @@ async def test_vacuum_set_state_without_returnhome_and_start_support(
     assert acc.char_on.value == 0
 
     # Set from HomeKit
-    call_turn_on = async_mock_service.opp, VACUUM_DOMAIN, SERVICE_TURN_ON)
-    call_turn_off = async_mock_service.opp, VACUUM_DOMAIN, SERVICE_TURN_OFF)
+    call_turn_on = async_mock_service(opp, VACUUM_DOMAIN, SERVICE_TURN_ON)
+    call_turn_off = async_mock_service(opp, VACUUM_DOMAIN, SERVICE_TURN_OFF)
 
     await opp.async_add_executor_job(acc.char_on.client_update_value, 1)
     await opp.async_block_till_done()
@@ -302,7 +302,7 @@ async def test_vacuum_set_state_without_returnhome_and_start_support(
     assert events[-1].data[ATTR_VALUE] is None
 
 
-async def test_reset_switch.opp, hk_driver, events):
+async def test_reset_switch(opp, hk_driver, events):
     """Test if switch accessory is reset correctly."""
     domain = "scene"
     entity_id = "scene.test"
@@ -316,8 +316,8 @@ async def test_reset_switch.opp, hk_driver, events):
     assert acc.activate_only is True
     assert acc.char_on.value is False
 
-    call_turn_on = async_mock_service.opp, domain, "turn_on")
-    call_turn_off = async_mock_service.opp, domain, "turn_off")
+    call_turn_on = async_mock_service(opp, domain, "turn_on")
+    call_turn_off = async_mock_service(opp, domain, "turn_off")
 
     await opp.async_add_executor_job(acc.char_on.client_update_value, True)
     await opp.async_block_till_done()
@@ -328,7 +328,7 @@ async def test_reset_switch.opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] is None
 
     future = dt_util.utcnow() + timedelta(seconds=1)
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.async_block_till_done()
     assert acc.char_on.value is False
     assert len(events) == 1
@@ -340,7 +340,7 @@ async def test_reset_switch.opp, hk_driver, events):
     assert len(events) == 1
 
 
-async def test_reset_switch_reload.opp, hk_driver, events):
+async def test_reset_switch_reload(opp, hk_driver, events):
     """Test reset switch after script reload."""
     entity_id = "script.test"
 

@@ -43,14 +43,14 @@ def mock_comfoconnect_command():
 
 
 @pytest.fixture
-async def setup_sensor.opp, mock_bridge_discover, mock_comfoconnect_command):
+async def setup_sensor(opp, mock_bridge_discover, mock_comfoconnect_command):
     """Set up demo sensor component."""
     with assert_setup_component(1, DOMAIN):
-        await async_setup_component.opp, DOMAIN, VALID_CONFIG)
+        await async_setup_component(opp, DOMAIN, VALID_CONFIG)
         await opp.async_block_till_done()
 
 
-async def test_sensors.opp, setup_sensor):
+async def test_sensors(opp, setup_sensor):
     """Test the sensors."""
     state = opp.states.get("sensor.comfoairq_inside_humidity")
     assert state is not None

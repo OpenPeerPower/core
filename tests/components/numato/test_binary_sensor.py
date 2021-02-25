@@ -11,16 +11,16 @@ MOCKUP_ENTITY_IDS = {
 }
 
 
-async def test_failing_setups_no_entities.opp, numato_fixture, monkeypatch):
+async def test_failing_setups_no_entities(opp, numato_fixture, monkeypatch):
     """When port setup fails, no entity shall be created."""
     monkeypatch.setattr(numato_fixture.NumatoDeviceMock, "setup", mockup_raise)
-    assert await async_setup_component.opp, "numato", NUMATO_CFG)
+    assert await async_setup_component(opp, "numato", NUMATO_CFG)
     await opp.async_block_till_done()
     for entity_id in MOCKUP_ENTITY_IDS:
         assert entity_id not in.opp.states.async_entity_ids()
 
 
-async def test_setup_callbacks.opp, numato_fixture, monkeypatch):
+async def test_setup_callbacks(opp, numato_fixture, monkeypatch):
     """During setup a callback shall be registered."""
 
     numato_fixture.discover()
@@ -34,12 +34,12 @@ async def test_setup_callbacks.opp, numato_fixture, monkeypatch):
     monkeypatch.setattr(
         numato_fixture.devices[0], "add_event_detect", mock_add_event_detect
     )
-    assert await async_setup_component.opp, "numato", NUMATO_CFG)
+    assert await async_setup_component(opp, "numato", NUMATO_CFG)
 
 
-async def test.opp_binary_sensor_notification.opp, numato_fixture):
+async def test.opp_binary_sensor_notification(opp, numato_fixture):
     """Test regular operations from within Open Peer Power."""
-    assert await async_setup_component.opp, "numato", NUMATO_CFG)
+    assert await async_setup_component(opp, "numato", NUMATO_CFG)
     await opp.async_block_till_done()  # wait until services are registered
     assert (
         opp.states.get("binary_sensor.numato_binary_sensor_mock_port2").state == "on"
@@ -51,10 +51,10 @@ async def test.opp_binary_sensor_notification.opp, numato_fixture):
     )
 
 
-async def test_binary_sensor_setup_without_discovery_info.opp, config, numato_fixture):
+async def test_binary_sensor_setup_without_discovery_info(opp, config, numato_fixture):
     """Test handling of empty discovery_info."""
     numato_fixture.discover()
-    await discovery.async_load_platform.opp, "binary_sensor", "numato", None, config)
+    await discovery.async_load_platform(opp, "binary_sensor", "numato", None, config)
     for entity_id in MOCKUP_ENTITY_IDS:
         assert entity_id not in.opp.states.async_entity_ids()
     await opp.async_block_till_done()  # wait for numato platform to be loaded

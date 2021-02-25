@@ -131,14 +131,14 @@ async def test_config_entry_migration.opp):
         title="Home",
         data={CONF_LATITUDE: 0, CONF_LONGITUDE: 0, CONF_MODE: "daily"},
     )
-    ipma_entry.add_to.opp.opp)
+    ipma_entry.add_to_opp(opp)
 
     ipma_entry2 = MockConfigEntry(
         domain=DOMAIN,
         title="Home",
         data={CONF_LATITUDE: 0, CONF_LONGITUDE: 0, CONF_MODE: "hourly"},
     )
-    ipma_entry2.add_to.opp.opp)
+    ipma_entry2.add_to_opp(opp)
 
     mock_registry(
         opp,
@@ -162,7 +162,7 @@ async def test_config_entry_migration.opp):
         "openpeerpower.components.ipma.weather.async_get_location",
         return_value=MockLocation(),
     ):
-        assert await async_setup_component.opp, DOMAIN, {})
+        assert await async_setup_component(opp, DOMAIN, {})
         await opp.async_block_till_done()
 
         ent_reg = await entity_registry.async_get_registry.opp)

@@ -31,7 +31,7 @@ def mock_setup():
         yield
 
 
-async def test_flow_works.opp, mock_setup):
+async def test_flow_works(opp, mock_setup):
     """Test user config."""
     result = await opp.config_entries.flow.async_init(
         speedtestdotnet.DOMAIN, context={"source": "user"}
@@ -46,7 +46,7 @@ async def test_flow_works.opp, mock_setup):
     assert result["title"] == "SpeedTest"
 
 
-async def test_import_fails.opp, mock_setup):
+async def test_import_fails(opp, mock_setup):
     """Test import step fails if server_id is not valid."""
 
     with patch("speedtest.Speedtest") as mock_api:
@@ -65,7 +65,7 @@ async def test_import_fails.opp, mock_setup):
         assert result["reason"] == "wrong_server_id"
 
 
-async def test_import_success.opp, mock_setup):
+async def test_import_success(opp, mock_setup):
     """Test import step is successful if server_id is valid."""
 
     with patch("speedtest.Speedtest"):
@@ -95,7 +95,7 @@ async def test_options.opp):
         data={},
         options={},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch("speedtest.Speedtest") as mock_api:
         mock_api.return_value.get_servers.return_value = MOCK_SERVERS
@@ -130,7 +130,7 @@ async def test_integration_already_configured.opp):
         data={},
         options={},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     result = await opp.config_entries.flow.async_init(
         speedtestdotnet.DOMAIN, context={"source": "user"}
     )

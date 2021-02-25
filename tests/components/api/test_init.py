@@ -16,13 +16,13 @@ from tests.common import async_mock_service
 
 
 @pytest.fixture
-def mock_api_client.opp, opp_client):
+def mock_api_client(opp, opp_client):
     """Start the Open Peer Power HTTP component and return admin API client."""
-    opp.loop.run_until_complete(async_setup_component.opp, "api", {}))
+    opp.loop.run_until_complete(async_setup_component(opp, "api", {}))
     return.opp.loop.run_until_complete.opp_client())
 
 
-async def test_api_list_state_entities.opp, mock_api_client):
+async def test_api_list_state_entities(opp, mock_api_client):
     """Test if the debug interface allows us to list state entities."""
     opp.states.async_set("test.entity", "hello")
     resp = await mock_api_client.get(const.URL_API_STATES)
@@ -33,7 +33,7 @@ async def test_api_list_state_entities.opp, mock_api_client):
     assert remote_data == opp.states.async_all()
 
 
-async def test_api_get_state.opp, mock_api_client):
+async def test_api_get_state(opp, mock_api_client):
     """Test if the debug interface allows us to get a state."""
     opp.states.async_set("hello.world", "nice", {"attr": 1})
     resp = await mock_api_client.get("/api/states/hello.world")
@@ -49,13 +49,13 @@ async def test_api_get_state.opp, mock_api_client):
     assert data.attributes == state.attributes
 
 
-async def test_api_get_non_existing_state.opp, mock_api_client):
+async def test_api_get_non_existing_state(opp, mock_api_client):
     """Test if the debug interface allows us to get a state."""
     resp = await mock_api_client.get("/api/states/does_not_exist")
     assert resp.status == const.HTTP_NOT_FOUND
 
 
-async def test_api_state_change.opp, mock_api_client):
+async def test_api_state_change(opp, mock_api_client):
     """Test if we can change the state of an entity that exists."""
     opp.states.async_set("test.test", "not_to_be_set")
 
@@ -63,11 +63,11 @@ async def test_api_state_change.opp, mock_api_client):
         "/api/states/test.test", json={"state": "debug_state_change2"}
     )
 
-    assert.opp.states.get("test.test").state == "debug_state_change2"
+    assert opp.states.get("test.test").state == "debug_state_change2"
 
 
 # pylint: disable=invalid-name
-async def test_api_state_change_of_non_existing_entity.opp, mock_api_client):
+async def test_api_state_change_of_non_existing_entity(opp, mock_api_client):
     """Test if changing a state of a non existing entity is possible."""
     new_state = "debug_state_change"
 
@@ -77,11 +77,11 @@ async def test_api_state_change_of_non_existing_entity.opp, mock_api_client):
 
     assert resp.status == 201
 
-    assert.opp.states.get("test_entity.that_does_not_exist").state == new_state
+    assert opp.states.get("test_entity.that_does_not_exist").state == new_state
 
 
 # pylint: disable=invalid-name
-async def test_api_state_change_with_bad_data.opp, mock_api_client):
+async def test_api_state_change_with_bad_data(opp, mock_api_client):
     """Test if API sends appropriate error if we omit state."""
     resp = await mock_api_client.post(
         "/api/states/test_entity.that_does_not_exist", json={}
@@ -91,7 +91,7 @@ async def test_api_state_change_with_bad_data.opp, mock_api_client):
 
 
 # pylint: disable=invalid-name
-async def test_api_state_change_to_zero_value.opp, mock_api_client):
+async def test_api_state_change_to_zero_value(opp, mock_api_client):
     """Test if changing a state to a zero value is possible."""
     resp = await mock_api_client.post(
         "/api/states/test_entity.with_zero_state", json={"state": 0}
@@ -107,7 +107,7 @@ async def test_api_state_change_to_zero_value.opp, mock_api_client):
 
 
 # pylint: disable=invalid-name
-async def test_api_state_change_push.opp, mock_api_client):
+async def test_api_state_change_push(opp, mock_api_client):
     """Test if we can push a change the state of an entity."""
     opp.states.async_set("test.test", "not_to_be_set")
 
@@ -132,7 +132,7 @@ async def test_api_state_change_push.opp, mock_api_client):
 
 
 # pylint: disable=invalid-name
-async def test_api_fire_event_with_no_data.opp, mock_api_client):
+async def test_api_fire_event_with_no_data(opp, mock_api_client):
     """Test if the API allows us to fire an event."""
     test_value = []
 
@@ -150,7 +150,7 @@ async def test_api_fire_event_with_no_data.opp, mock_api_client):
 
 
 # pylint: disable=invalid-name
-async def test_api_fire_event_with_data.opp, mock_api_client):
+async def test_api_fire_event_with_data(opp, mock_api_client):
     """Test if the API allows us to fire an event."""
     test_value = []
 
@@ -173,7 +173,7 @@ async def test_api_fire_event_with_data.opp, mock_api_client):
 
 
 # pylint: disable=invalid-name
-async def test_api_fire_event_with_invalid_json.opp, mock_api_client):
+async def test_api_fire_event_with_invalid_json(opp, mock_api_client):
     """Test if the API allows us to fire an event."""
     test_value = []
 
@@ -217,17 +217,17 @@ async def test_api_get_config(opp, mock_api_client):
     if "allowlist_external_urls" in result:
         result["allowlist_external_urls"] = set(result["allowlist_external_urls"])
 
-    assert.opp.config.as_dict() == result
+    assert opp.config.as_dict() == result
 
 
-async def test_api_get_components.opp, mock_api_client):
+async def test_api_get_components(opp, mock_api_client):
     """Test the return of the components."""
     resp = await mock_api_client.get(const.URL_API_COMPONENTS)
     result = await resp.json()
     assert set(result) == opp.config.components
 
 
-async def test_api_get_event_listeners.opp, mock_api_client):
+async def test_api_get_event_listeners(opp, mock_api_client):
     """Test if we can get the list of events being listened for."""
     resp = await mock_api_client.get(const.URL_API_EVENTS)
     data = await resp.json()
@@ -240,7 +240,7 @@ async def test_api_get_event_listeners.opp, mock_api_client):
     assert len(local) == 0
 
 
-async def test_api_get_services.opp, mock_api_client):
+async def test_api_get_services(opp, mock_api_client):
     """Test if we can get a dict describing current services."""
     resp = await mock_api_client.get(const.URL_API_SERVICES)
     data = await resp.json()
@@ -252,7 +252,7 @@ async def test_api_get_services.opp, mock_api_client):
         assert serv_domain["services"] == local
 
 
-async def test_api_call_service_no_data.opp, mock_api_client):
+async def test_api_call_service_no_data(opp, mock_api_client):
     """Test if the API allows us to call a service."""
     test_value = []
 
@@ -268,7 +268,7 @@ async def test_api_call_service_no_data.opp, mock_api_client):
     assert len(test_value) == 1
 
 
-async def test_api_call_service_with_data.opp, mock_api_client):
+async def test_api_call_service_with_data(opp, mock_api_client):
     """Test if the API allows us to call a service."""
     test_value = []
 
@@ -291,7 +291,7 @@ async def test_api_call_service_with_data.opp, mock_api_client):
     assert len(test_value) == 1
 
 
-async def test_api_template.opp, mock_api_client):
+async def test_api_template(opp, mock_api_client):
     """Test the template API."""
     opp.states.async_set("sensor.temperature", 10)
 
@@ -316,7 +316,7 @@ async def test_api_template_error(opp, mock_api_client):
     assert resp.status == 400
 
 
-async def test_stream.opp, mock_api_client):
+async def test_stream(opp, mock_api_client):
     """Test the stream."""
     listen_count = _listen_count.opp)
 
@@ -331,7 +331,7 @@ async def test_stream.opp, mock_api_client):
     assert data["event_type"] == "test_event"
 
 
-async def test_stream_with_restricted.opp, mock_api_client):
+async def test_stream_with_restricted(opp, mock_api_client):
     """Test the stream with restrictions."""
     listen_count = _listen_count.opp)
 
@@ -376,10 +376,10 @@ def _listen_count.opp):
     return sum.opp.bus.async_listeners().values())
 
 
-async def test_api_error_log.opp, aiohttp_client, opp_access_token, opp_admin_user):
+async def test_api_error_log(opp, aiohttp_client, opp_access_token, opp_admin_user):
     """Test if we can fetch the error log."""
     opp.data[DATA_LOGGING] = "/some/path"
-    await async_setup_component.opp, "api", {})
+    await async_setup_component(opp, "api", {})
     client = await aiohttp_client.opp.http.app)
 
     resp = await client.get(const.URL_API_ERROR_LOG)
@@ -408,7 +408,7 @@ async def test_api_error_log.opp, aiohttp_client, opp_access_token, opp_admin_us
     assert resp.status == 401
 
 
-async def test_api_fire_event_context.opp, mock_api_client, opp_access_token):
+async def test_api_fire_event_context(opp, mock_api_client, opp_access_token):
     """Test if the API sets right context if we fire an event."""
     test_value = []
 
@@ -431,9 +431,9 @@ async def test_api_fire_event_context.opp, mock_api_client, opp_access_token):
     assert test_value[0].context.user_id == refresh_token.user.id
 
 
-async def test_api_call_service_context.opp, mock_api_client, opp_access_token):
+async def test_api_call_service_context(opp, mock_api_client, opp_access_token):
     """Test if the API sets right context if we call a service."""
-    calls = async_mock_service.opp, "test_domain", "test_service")
+    calls = async_mock_service(opp, "test_domain", "test_service")
 
     await mock_api_client.post(
         "/api/services/test_domain/test_service",
@@ -447,7 +447,7 @@ async def test_api_call_service_context.opp, mock_api_client, opp_access_token):
     assert calls[0].context.user_id == refresh_token.user.id
 
 
-async def test_api_set_state_context.opp, mock_api_client, opp_access_token):
+async def test_api_set_state_context(opp, mock_api_client, opp_access_token):
     """Test if the API sets right context if we set state."""
     await mock_api_client.post(
         "/api/states/light.kitchen",
@@ -461,14 +461,14 @@ async def test_api_set_state_context.opp, mock_api_client, opp_access_token):
     assert state.context.user_id == refresh_token.user.id
 
 
-async def test_event_stream_requires_admin.opp, mock_api_client, opp_admin_user):
+async def test_event_stream_requires_admin(opp, mock_api_client, opp_admin_user):
     """Test user needs to be admin to access event stream."""
     opp.admin_user.groups = []
     resp = await mock_api_client.get("/api/stream")
     assert resp.status == 401
 
 
-async def test_states_view_filters.opp, mock_api_client, opp_admin_user):
+async def test_states_view_filters(opp, mock_api_client, opp_admin_user):
     """Test filtering only visible states."""
     opp.admin_user.mock_policy({"entities": {"entity_ids": {"test.entity": True}}})
     opp.states.async_set("test.entity", "hello")
@@ -480,35 +480,35 @@ async def test_states_view_filters.opp, mock_api_client, opp_admin_user):
     assert json[0]["entity_id"] == "test.entity"
 
 
-async def test_get_entity_state_read_perm.opp, mock_api_client, opp_admin_user):
+async def test_get_entity_state_read_perm(opp, mock_api_client, opp_admin_user):
     """Test getting a state requires read permission."""
     opp.admin_user.mock_policy({})
     resp = await mock_api_client.get("/api/states/light.test")
     assert resp.status == 401
 
 
-async def test_post_entity_state_admin.opp, mock_api_client, opp_admin_user):
+async def test_post_entity_state_admin(opp, mock_api_client, opp_admin_user):
     """Test updating state requires admin."""
     opp.admin_user.groups = []
     resp = await mock_api_client.post("/api/states/light.test")
     assert resp.status == 401
 
 
-async def test_delete_entity_state_admin.opp, mock_api_client, opp_admin_user):
+async def test_delete_entity_state_admin(opp, mock_api_client, opp_admin_user):
     """Test deleting entity requires admin."""
     opp.admin_user.groups = []
     resp = await mock_api_client.delete("/api/states/light.test")
     assert resp.status == 401
 
 
-async def test_post_event_admin.opp, mock_api_client, opp_admin_user):
+async def test_post_event_admin(opp, mock_api_client, opp_admin_user):
     """Test sending event requires admin."""
     opp.admin_user.groups = []
     resp = await mock_api_client.post("/api/events/state_changed")
     assert resp.status == 401
 
 
-async def test_rendering_template_admin.opp, mock_api_client, opp_admin_user):
+async def test_rendering_template_admin(opp, mock_api_client, opp_admin_user):
     """Test rendering a template requires admin."""
     opp.admin_user.groups = []
     resp = await mock_api_client.post(const.URL_API_TEMPLATE)
@@ -528,13 +528,13 @@ async def test_rendering_template_legacy_user(
     assert resp.status == 401
 
 
-async def test_api_call_service_not_found.opp, mock_api_client):
+async def test_api_call_service_not_found(opp, mock_api_client):
     """Test if the API fails 400 if unknown service."""
     resp = await mock_api_client.post("/api/services/test_domain/test_service")
     assert resp.status == 400
 
 
-async def test_api_call_service_bad_data.opp, mock_api_client):
+async def test_api_call_service_bad_data(opp, mock_api_client):
     """Test if the API fails 400 if unknown service."""
     test_value = []
 

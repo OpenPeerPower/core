@@ -265,9 +265,9 @@ async def test_open_covers(opp, setup_comp):
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_POSITION] == 100
 
-    assert.opp.states.get(DEMO_COVER).state == STATE_OPEN
-    assert.opp.states.get(DEMO_COVER_POS).attributes[ATTR_CURRENT_POSITION] == 100
-    assert.opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_POSITION] == 100
+    assert opp.states.get(DEMO_COVER).state == STATE_OPEN
+    assert opp.states.get(DEMO_COVER_POS).attributes[ATTR_CURRENT_POSITION] == 100
+    assert opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_POSITION] == 100
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
@@ -286,9 +286,9 @@ async def test_close_covers(opp, setup_comp):
     assert state.state == STATE_CLOSED
     assert state.attributes[ATTR_CURRENT_POSITION] == 0
 
-    assert.opp.states.get(DEMO_COVER).state == STATE_CLOSED
-    assert.opp.states.get(DEMO_COVER_POS).attributes[ATTR_CURRENT_POSITION] == 0
-    assert.opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_POSITION] == 0
+    assert opp.states.get(DEMO_COVER).state == STATE_CLOSED
+    assert opp.states.get(DEMO_COVER_POS).attributes[ATTR_CURRENT_POSITION] == 0
+    assert opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_POSITION] == 0
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
@@ -319,9 +319,9 @@ async def test_toggle_covers(opp, setup_comp):
     assert state.state == STATE_CLOSED
     assert state.attributes[ATTR_CURRENT_POSITION] == 0
 
-    assert.opp.states.get(DEMO_COVER).state == STATE_CLOSED
-    assert.opp.states.get(DEMO_COVER_POS).attributes[ATTR_CURRENT_POSITION] == 0
-    assert.opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_POSITION] == 0
+    assert opp.states.get(DEMO_COVER).state == STATE_CLOSED
+    assert opp.states.get(DEMO_COVER_POS).attributes[ATTR_CURRENT_POSITION] == 0
+    assert opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_POSITION] == 0
 
     # Toggle again will open covers
     await opp.services.async_call(
@@ -336,9 +336,9 @@ async def test_toggle_covers(opp, setup_comp):
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_POSITION] == 100
 
-    assert.opp.states.get(DEMO_COVER).state == STATE_OPEN
-    assert.opp.states.get(DEMO_COVER_POS).attributes[ATTR_CURRENT_POSITION] == 100
-    assert.opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_POSITION] == 100
+    assert opp.states.get(DEMO_COVER).state == STATE_OPEN
+    assert opp.states.get(DEMO_COVER_POS).attributes[ATTR_CURRENT_POSITION] == 100
+    assert opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_POSITION] == 100
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
@@ -362,9 +362,9 @@ async def test_stop_covers(opp, setup_comp):
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_POSITION] == 100
 
-    assert.opp.states.get(DEMO_COVER).state == STATE_OPEN
-    assert.opp.states.get(DEMO_COVER_POS).attributes[ATTR_CURRENT_POSITION] == 20
-    assert.opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_POSITION] == 80
+    assert opp.states.get(DEMO_COVER).state == STATE_OPEN
+    assert opp.states.get(DEMO_COVER_POS).attributes[ATTR_CURRENT_POSITION] == 20
+    assert opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_POSITION] == 80
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
@@ -385,9 +385,9 @@ async def test_set_cover_position(opp, setup_comp):
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_POSITION] == 50
 
-    assert.opp.states.get(DEMO_COVER).state == STATE_CLOSED
-    assert.opp.states.get(DEMO_COVER_POS).attributes[ATTR_CURRENT_POSITION] == 50
-    assert.opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_POSITION] == 50
+    assert opp.states.get(DEMO_COVER).state == STATE_CLOSED
+    assert opp.states.get(DEMO_COVER_POS).attributes[ATTR_CURRENT_POSITION] == 50
+    assert opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_POSITION] == 50
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
@@ -425,7 +425,7 @@ async def test_close_tilts(opp, setup_comp):
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 0
 
-    assert.opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 0
+    assert opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 0
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
@@ -461,7 +461,7 @@ async def test_toggle_tilts(opp, setup_comp):
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 0
 
-    assert.opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 0
+    assert opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 0
 
     # Toggle again will tilt open
     await opp.services.async_call(
@@ -502,7 +502,7 @@ async def test_stop_tilts(opp, setup_comp):
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 60
 
-    assert.opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 60
+    assert opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 60
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
@@ -523,7 +523,7 @@ async def test_set_tilt_positions(opp, setup_comp):
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 80
 
-    assert.opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 80
+    assert opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 80
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_POS, 2)])
@@ -534,9 +534,9 @@ async def test_is_opening_closing(opp, setup_comp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get(DEMO_COVER_POS).state == STATE_OPENING
-    assert.opp.states.get(DEMO_COVER_TILT).state == STATE_OPENING
-    assert.opp.states.get(COVER_GROUP).state == STATE_OPENING
+    assert opp.states.get(DEMO_COVER_POS).state == STATE_OPENING
+    assert opp.states.get(DEMO_COVER_TILT).state == STATE_OPENING
+    assert opp.states.get(COVER_GROUP).state == STATE_OPENING
 
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
@@ -547,18 +547,18 @@ async def test_is_opening_closing(opp, setup_comp):
         DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: COVER_GROUP}, blocking=True
     )
 
-    assert.opp.states.get(DEMO_COVER_POS).state == STATE_CLOSING
-    assert.opp.states.get(DEMO_COVER_TILT).state == STATE_CLOSING
-    assert.opp.states.get(COVER_GROUP).state == STATE_CLOSING
+    assert opp.states.get(DEMO_COVER_POS).state == STATE_CLOSING
+    assert opp.states.get(DEMO_COVER_TILT).state == STATE_CLOSING
+    assert opp.states.get(COVER_GROUP).state == STATE_CLOSING
 
     opp.states.async_set(DEMO_COVER_POS, STATE_OPENING, {ATTR_SUPPORTED_FEATURES: 11})
     await opp.async_block_till_done()
 
-    assert.opp.states.get(DEMO_COVER_POS).state == STATE_OPENING
-    assert.opp.states.get(COVER_GROUP).state == STATE_OPENING
+    assert opp.states.get(DEMO_COVER_POS).state == STATE_OPENING
+    assert opp.states.get(COVER_GROUP).state == STATE_OPENING
 
     opp.states.async_set(DEMO_COVER_POS, STATE_CLOSING, {ATTR_SUPPORTED_FEATURES: 11})
     await opp.async_block_till_done()
 
-    assert.opp.states.get(DEMO_COVER_POS).state == STATE_CLOSING
-    assert.opp.states.get(COVER_GROUP).state == STATE_CLOSING
+    assert opp.states.get(DEMO_COVER_POS).state == STATE_CLOSING
+    assert opp.states.get(COVER_GROUP).state == STATE_CLOSING

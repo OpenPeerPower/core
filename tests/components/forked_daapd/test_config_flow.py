@@ -67,7 +67,7 @@ async def test_show_form.opp):
     assert result["step_id"] == SOURCE_USER
 
 
-async def test_config_flow.opp, config_entry):
+async def test_config_flow(opp, config_entry):
     """Test that the user step works."""
     with patch(
         "openpeerpower.components.forked_daapd.config_flow.ForkedDaapdAPI.test_connection",
@@ -99,10 +99,10 @@ async def test_config_flow.opp, config_entry):
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
 
-async def test_zeroconf_updates_title.opp, config_entry):
+async def test_zeroconf_updates_title(opp, config_entry):
     """Test that zeroconf updates title and aborts with same host."""
-    MockConfigEntry(domain=DOMAIN, data={CONF_HOST: "different host"}).add_to.opp.opp)
-    config_entry.add_to.opp.opp)
+    MockConfigEntry(domain=DOMAIN, data={CONF_HOST: "different host"}).add_to_opp(opp)
+    config_entry.add_to_opp(opp)
     assert len.opp.config_entries.async_entries(DOMAIN)) == 2
     discovery_info = {
         "host": "192.168.1.1",
@@ -118,7 +118,7 @@ async def test_zeroconf_updates_title.opp, config_entry):
     assert len.opp.config_entries.async_entries(DOMAIN)) == 2
 
 
-async def test_config_flow_no_websocket.opp, config_entry):
+async def test_config_flow_no_websocket(opp, config_entry):
     """Test config flow setup without websocket enabled on server."""
     with patch(
         "openpeerpower.components.forked_daapd.config_flow.ForkedDaapdAPI.test_connection",
@@ -193,7 +193,7 @@ async def test_config_flow_zeroconf_valid.opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
 
-async def test_options_flow.opp, config_entry):
+async def test_options_flow(opp, config_entry):
     """Test config flow options."""
 
     with patch(
@@ -201,7 +201,7 @@ async def test_options_flow.opp, config_entry):
         autospec=True,
     ) as mock_get_request:
         mock_get_request.return_value = SAMPLE_CONFIG
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
         await config_entry.async_setup_opp)
         await opp.async_block_till_done()
 

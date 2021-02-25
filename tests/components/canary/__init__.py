@@ -59,7 +59,7 @@ async def init_integration(
 ) -> MockConfigEntry:
     """Set up the Canary integration in Open Peer Power."""
     entry = MockConfigEntry(domain=DOMAIN, data=data, options=options)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     if not skip_entry_setup:
         await opp.config_entries.async_setup(entry.entry_id)

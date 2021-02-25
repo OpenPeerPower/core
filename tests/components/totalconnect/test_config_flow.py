@@ -57,7 +57,7 @@ async def test_abort_if_already_setup_opp):
         domain=DOMAIN,
         data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
         unique_id=USERNAME,
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     # Should fail, same USERNAME (import)
     with patch(

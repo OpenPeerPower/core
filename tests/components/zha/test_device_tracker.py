@@ -41,7 +41,7 @@ def zigpy_device_dt(zigpy_device_mock):
     return zigpy_device_mock(endpoints)
 
 
-async def test_device_tracker.opp, zha_device_joined_restored, zigpy_device_dt):
+async def test_device_tracker(opp, zha_device_joined_restored, zigpy_device_dt):
     """Test zha device tracker platform."""
 
     zha_device = await zha_device_joined_restored(zigpy_device_dt)
@@ -49,21 +49,21 @@ async def test_device_tracker.opp, zha_device_joined_restored, zigpy_device_dt):
     entity_id = await find_entity_id(DOMAIN, zha_device, opp)
     assert entity_id is not None
 
-    assert.opp.states.get(entity_id).state == STATE_HOME
-    await async_enable_traffic.opp, [zha_device], enabled=False)
+    assert opp.states.get(entity_id).state == STATE_HOME
+    await async_enable_traffic(opp, [zha_device], enabled=False)
     # test that the device tracker was created and that it is unavailable
-    assert.opp.states.get(entity_id).state == STATE_UNAVAILABLE
+    assert opp.states.get(entity_id).state == STATE_UNAVAILABLE
 
     zigpy_device_dt.last_seen = time.time() - 120
     next_update = dt_util.utcnow() + timedelta(seconds=30)
-    async_fire_time_changed.opp, next_update)
+    async_fire_time_changed(opp, next_update)
     await opp.async_block_till_done()
 
     # allow traffic to flow through the gateway and device
-    await async_enable_traffic.opp, [zha_device])
+    await async_enable_traffic(opp, [zha_device])
 
     # test that the state has changed from unavailable to not home
-    assert.opp.states.get(entity_id).state == STATE_NOT_HOME
+    assert opp.states.get(entity_id).state == STATE_NOT_HOME
 
     # turn state flip
     await send_attributes_report(
@@ -72,10 +72,10 @@ async def test_device_tracker.opp, zha_device_joined_restored, zigpy_device_dt):
 
     zigpy_device_dt.last_seen = time.time() + 10
     next_update = dt_util.utcnow() + timedelta(seconds=30)
-    async_fire_time_changed.opp, next_update)
+    async_fire_time_changed(opp, next_update)
     await opp.async_block_till_done()
 
-    assert.opp.states.get(entity_id).state == STATE_HOME
+    assert opp.states.get(entity_id).state == STATE_HOME
 
     entity = opp.data[DOMAIN].get_entity(entity_id)
 
@@ -84,5 +84,5 @@ async def test_device_tracker.opp, zha_device_joined_restored, zigpy_device_dt):
     assert entity.battery_level == 100
 
     # test adding device tracker to the network and HA
-    await async_test_rejoin.opp, zigpy_device_dt, [cluster], (2,))
-    assert.opp.states.get(entity_id).state == STATE_HOME
+    await async_test_rejoin(opp, zigpy_device_dt, [cluster], (2,))
+    assert opp.states.get(entity_id).state == STATE_HOME

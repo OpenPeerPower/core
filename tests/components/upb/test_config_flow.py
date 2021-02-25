@@ -22,9 +22,9 @@ def mocked_upb(sync_complete=True, config_ok=True):
     )
 
 
-async def valid_tcp_flow.opp, sync_complete=True, config_ok=True):
+async def valid_tcp_flow(opp, sync_complete=True, config_ok=True):
     """Get result dict that are standard for most tests."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     with mocked_upb(sync_complete, config_ok), patch(
         "openpeerpower.components.upb.async_setup_entry", return_value=True
     ):
@@ -40,7 +40,7 @@ async def valid_tcp_flow.opp, sync_complete=True, config_ok=True):
 
 async def test_full_upb_flow_with_serial_port.opp):
     """Test a full UPB config flow with serial port."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with mocked_upb(), patch(
         "openpeerpower.components.upb.async_setup", return_value=True
@@ -89,7 +89,7 @@ async def test_form_cannot_connect.opp):
         "openpeerpower.components.upb.config_flow.async_timeout.timeout",
         side_effect=TimeoutError,
     ):
-        result = await valid_tcp_flow.opp, sync_complete=False)
+        result = await valid_tcp_flow(opp, sync_complete=False)
 
     assert result["type"] == "form"
     assert result["errors"] == {"base": "cannot_connect"}
@@ -97,7 +97,7 @@ async def test_form_cannot_connect.opp):
 
 async def test_form_missing_upb_file.opp):
     """Test we handle cannot connect error."""
-    result = await valid_tcp_flow.opp, config_ok=False)
+    result = await valid_tcp_flow(opp, config_ok=False)
     assert result["type"] == "form"
     assert result["errors"] == {"base": "invalid_upb_file"}
 
@@ -113,7 +113,7 @@ async def test_form_user_with_already_configured.opp):
 
 async def test_form_import.opp):
     """Test we get the form with import source."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with mocked_upb(), patch(
         "openpeerpower.components.upb.async_setup", return_value=True
@@ -137,7 +137,7 @@ async def test_form_import.opp):
 
 async def test_form_junk_input.opp):
     """Test we get the form with import source."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with mocked_upb():
         result = await opp.config_entries.flow.async_init(

@@ -73,7 +73,7 @@ async def test.oppio.opp):
 
 async def test_abort_if_existing_entry.opp):
     """Check flow abort when an entry already exist."""
-    MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
+    MockConfigEntry(domain=DOMAIN).add_to_opp(opp)
 
     flow = config_flow.AlmondFlowHandler()
     flow.opp = opp

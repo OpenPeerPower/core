@@ -61,7 +61,7 @@ async def test_login_error(opp, requests_mock):
     assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_success.opp, requests_mock):
+async def test_success(opp, requests_mock):
     """Test successful flow provides entry creation data."""
     requests_mock.request(ANY, ANY, text='{"account":{"username":"user"}}')
     result = await opp.config_entries.flow.async_init(
@@ -79,7 +79,7 @@ async def test_options.opp):
     config_entry = MockConfigEntry(
         domain=DOMAIN, data=FIXTURE_USER_INPUT, options=FIXTURE_USER_INPUT_OPTIONS
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(config_entry.entry_id)
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM

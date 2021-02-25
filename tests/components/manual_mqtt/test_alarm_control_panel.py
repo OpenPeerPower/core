@@ -24,7 +24,7 @@ from tests.components.alarm_control_panel import common
 CODE = "HELLO_CODE"
 
 
-async def test_fail_setup_without_state_topic.opp, mqtt_mock):
+async def test_fail_setup_without_state_topic(opp, mqtt_mock):
     """Test for failing with no state topic."""
     with assert_setup_component(0) as config:
         assert await async_setup_component(
@@ -40,7 +40,7 @@ async def test_fail_setup_without_state_topic.opp, mqtt_mock):
         assert not config[alarm_control_panel.DOMAIN]
 
 
-async def test_fail_setup_without_command_topic.opp, mqtt_mock):
+async def test_fail_setup_without_command_topic(opp, mqtt_mock):
     """Test failing with no command topic."""
     with assert_setup_component(0):
         assert await async_setup_component(
@@ -55,7 +55,7 @@ async def test_fail_setup_without_command_topic.opp, mqtt_mock):
         )
 
 
-async def test_arm_home_no_pending.opp, mqtt_mock):
+async def test_arm_home_no_pending(opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -78,13 +78,13 @@ async def test_arm_home_no_pending.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_home.opp, CODE)
+    await common.async_alarm_arm_home(opp, CODE)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_HOME == opp.states.get(entity_id).state
 
 
-async def test_arm_home_no_pending_when_code_not_req.opp, mqtt_mock):
+async def test_arm_home_no_pending_when_code_not_req(opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -108,13 +108,13 @@ async def test_arm_home_no_pending_when_code_not_req.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_home.opp, 0)
+    await common.async_alarm_arm_home(opp, 0)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_HOME == opp.states.get(entity_id).state
 
 
-async def test_arm_home_with_pending.opp, mqtt_mock):
+async def test_arm_home_with_pending(opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -137,7 +137,7 @@ async def test_arm_home_with_pending.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_home.opp, CODE, entity_id)
+    await common.async_alarm_arm_home(opp, CODE, entity_id)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
@@ -150,13 +150,13 @@ async def test_arm_home_with_pending.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_HOME == opp.states.get(entity_id).state
 
 
-async def test_arm_home_with_invalid_code.opp, mqtt_mock):
+async def test_arm_home_with_invalid_code(opp, mqtt_mock):
     """Attempt to arm home without a valid code."""
     assert await async_setup_component(
         opp,
@@ -179,13 +179,13 @@ async def test_arm_home_with_invalid_code.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_home.opp, f"{CODE}2")
+    await common.async_alarm_arm_home(opp, f"{CODE}2")
     await opp.async_block_till_done()
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_arm_away_no_pending.opp, mqtt_mock):
+async def test_arm_away_no_pending(opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -208,13 +208,13 @@ async def test_arm_away_no_pending.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_away.opp, CODE, entity_id)
+    await common.async_alarm_arm_away(opp, CODE, entity_id)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
 
 
-async def test_arm_away_no_pending_when_code_not_req.opp, mqtt_mock):
+async def test_arm_away_no_pending_when_code_not_req(opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -238,13 +238,13 @@ async def test_arm_away_no_pending_when_code_not_req.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_away.opp, 0, entity_id)
+    await common.async_alarm_arm_away(opp, 0, entity_id)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
 
 
-async def test_arm_home_with_template_code.opp, mqtt_mock):
+async def test_arm_home_with_template_code(opp, mqtt_mock):
     """Attempt to arm with a template-based code."""
     assert await async_setup_component(
         opp,
@@ -267,14 +267,14 @@ async def test_arm_home_with_template_code.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_home.opp, "abc")
+    await common.async_alarm_arm_home(opp, "abc")
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert STATE_ALARM_ARMED_HOME == state.state
 
 
-async def test_arm_away_with_pending.opp, mqtt_mock):
+async def test_arm_away_with_pending(opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -297,7 +297,7 @@ async def test_arm_away_with_pending.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_away.opp, CODE)
+    await common.async_alarm_arm_away(opp, CODE)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
@@ -310,13 +310,13 @@ async def test_arm_away_with_pending.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
 
 
-async def test_arm_away_with_invalid_code.opp, mqtt_mock):
+async def test_arm_away_with_invalid_code(opp, mqtt_mock):
     """Attempt to arm away without a valid code."""
     assert await async_setup_component(
         opp,
@@ -339,13 +339,13 @@ async def test_arm_away_with_invalid_code.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_away.opp, f"{CODE}2")
+    await common.async_alarm_arm_away(opp, f"{CODE}2")
     await opp.async_block_till_done()
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_arm_night_no_pending.opp, mqtt_mock):
+async def test_arm_night_no_pending(opp, mqtt_mock):
     """Test arm night method."""
     assert await async_setup_component(
         opp,
@@ -368,13 +368,13 @@ async def test_arm_night_no_pending.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_night.opp, CODE, entity_id)
+    await common.async_alarm_arm_night(opp, CODE, entity_id)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_NIGHT == opp.states.get(entity_id).state
 
 
-async def test_arm_night_no_pending_when_code_not_req.opp, mqtt_mock):
+async def test_arm_night_no_pending_when_code_not_req(opp, mqtt_mock):
     """Test arm night method."""
     assert await async_setup_component(
         opp,
@@ -398,13 +398,13 @@ async def test_arm_night_no_pending_when_code_not_req.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_night.opp, 0, entity_id)
+    await common.async_alarm_arm_night(opp, 0, entity_id)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_NIGHT == opp.states.get(entity_id).state
 
 
-async def test_arm_night_with_pending.opp, mqtt_mock):
+async def test_arm_night_with_pending(opp, mqtt_mock):
     """Test arm night method."""
     assert await async_setup_component(
         opp,
@@ -427,7 +427,7 @@ async def test_arm_night_with_pending.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_night.opp, CODE)
+    await common.async_alarm_arm_night(opp, CODE)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
@@ -440,19 +440,19 @@ async def test_arm_night_with_pending.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_NIGHT == opp.states.get(entity_id).state
 
     # Do not go to the pending state when updating to the same state
-    await common.async_alarm_arm_night.opp, CODE, entity_id)
+    await common.async_alarm_arm_night(opp, CODE, entity_id)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_NIGHT == opp.states.get(entity_id).state
 
 
-async def test_arm_night_with_invalid_code.opp, mqtt_mock):
+async def test_arm_night_with_invalid_code(opp, mqtt_mock):
     """Attempt to arm night without a valid code."""
     assert await async_setup_component(
         opp,
@@ -475,13 +475,13 @@ async def test_arm_night_with_invalid_code.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_night.opp, f"{CODE}2")
+    await common.async_alarm_arm_night(opp, f"{CODE}2")
     await opp.async_block_till_done()
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_trigger_no_pending.opp, mqtt_mock):
+async def test_trigger_no_pending(opp, mqtt_mock):
     """Test triggering when no pending submitted method."""
     assert await async_setup_component(
         opp,
@@ -503,7 +503,7 @@ async def test_trigger_no_pending.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp, entity_id=entity_id)
+    await common.async_alarm_trigger(opp, entity_id=entity_id)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
@@ -513,13 +513,13 @@ async def test_trigger_no_pending.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
 
 
-async def test_trigger_with_delay.opp, mqtt_mock):
+async def test_trigger_with_delay(opp, mqtt_mock):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
         opp,
@@ -543,12 +543,12 @@ async def test_trigger_with_delay.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_away.opp, CODE)
+    await common.async_alarm_arm_away(opp, CODE)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp, entity_id=entity_id)
+    await common.async_alarm_trigger(opp, entity_id=entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
@@ -560,14 +560,14 @@ async def test_trigger_with_delay.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert STATE_ALARM_TRIGGERED == state.state
 
 
-async def test_trigger_zero_trigger_time.opp, mqtt_mock):
+async def test_trigger_zero_trigger_time(opp, mqtt_mock):
     """Test disabled trigger."""
     assert await async_setup_component(
         opp,
@@ -596,7 +596,7 @@ async def test_trigger_zero_trigger_time.opp, mqtt_mock):
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_trigger_zero_trigger_time_with_pending.opp, mqtt_mock):
+async def test_trigger_zero_trigger_time_with_pending(opp, mqtt_mock):
     """Test disabled trigger."""
     assert await async_setup_component(
         opp,
@@ -625,7 +625,7 @@ async def test_trigger_zero_trigger_time_with_pending.opp, mqtt_mock):
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_trigger_with_pending.opp, mqtt_mock):
+async def test_trigger_with_pending(opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -661,7 +661,7 @@ async def test_trigger_with_pending.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
@@ -671,13 +671,13 @@ async def test_trigger_with_pending.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_trigger_with_disarm_after_trigger.opp, mqtt_mock):
+async def test_trigger_with_disarm_after_trigger(opp, mqtt_mock):
     """Test disarm after trigger."""
     assert await async_setup_component(
         opp,
@@ -700,7 +700,7 @@ async def test_trigger_with_disarm_after_trigger.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp, entity_id=entity_id)
+    await common.async_alarm_trigger(opp, entity_id=entity_id)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
@@ -710,13 +710,13 @@ async def test_trigger_with_disarm_after_trigger.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_trigger_with_zero_specific_trigger_time.opp, mqtt_mock):
+async def test_trigger_with_zero_specific_trigger_time(opp, mqtt_mock):
     """Test trigger method."""
     assert await async_setup_component(
         opp,
@@ -740,13 +740,13 @@ async def test_trigger_with_zero_specific_trigger_time.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp, entity_id=entity_id)
+    await common.async_alarm_trigger(opp, entity_id=entity_id)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_trigger_with_unused_zero_specific_trigger_time.opp, mqtt_mock):
+async def test_trigger_with_unused_zero_specific_trigger_time(opp, mqtt_mock):
     """Test disarm after trigger."""
     assert await async_setup_component(
         opp,
@@ -770,7 +770,7 @@ async def test_trigger_with_unused_zero_specific_trigger_time.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp, entity_id=entity_id)
+    await common.async_alarm_trigger(opp, entity_id=entity_id)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
@@ -780,13 +780,13 @@ async def test_trigger_with_unused_zero_specific_trigger_time.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_trigger_with_specific_trigger_time.opp, mqtt_mock):
+async def test_trigger_with_specific_trigger_time(opp, mqtt_mock):
     """Test disarm after trigger."""
     assert await async_setup_component(
         opp,
@@ -809,7 +809,7 @@ async def test_trigger_with_specific_trigger_time.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp, entity_id=entity_id)
+    await common.async_alarm_trigger(opp, entity_id=entity_id)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
@@ -819,13 +819,13 @@ async def test_trigger_with_specific_trigger_time.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_back_to_back_trigger_with_no_disarm_after_trigger.opp, mqtt_mock):
+async def test_back_to_back_trigger_with_no_disarm_after_trigger(opp, mqtt_mock):
     """Test no disarm after back to back trigger."""
     assert await async_setup_component(
         opp,
@@ -848,27 +848,12 @@ async def test_back_to_back_trigger_with_no_disarm_after_trigger.opp, mqtt_mock)
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_away.opp, CODE, entity_id)
+    await common.async_alarm_arm_away(opp, CODE, entity_id)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp, entity_id=entity_id)
-    await opp.async_block_till_done()
-
-    assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
-
-    future = dt_util.utcnow() + timedelta(seconds=5)
-    with patch(
-        ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
-        return_value=future,
-    ):
-        async_fire_time_changed.opp, future)
-        await opp.async_block_till_done()
-
-    assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
-
-    await common.async_alarm_trigger.opp, entity_id=entity_id)
+    await common.async_alarm_trigger(opp, entity_id=entity_id)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
@@ -878,13 +863,28 @@ async def test_back_to_back_trigger_with_no_disarm_after_trigger.opp, mqtt_mock)
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
+        await opp.async_block_till_done()
+
+    assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
+
+    await common.async_alarm_trigger(opp, entity_id=entity_id)
+    await opp.async_block_till_done()
+
+    assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
+
+    future = dt_util.utcnow() + timedelta(seconds=5)
+    with patch(
+        ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
+        return_value=future,
+    ):
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
 
 
-async def test_disarm_while_pending_trigger.opp, mqtt_mock):
+async def test_disarm_while_pending_trigger(opp, mqtt_mock):
     """Test disarming while pending state."""
     assert await async_setup_component(
         opp,
@@ -911,7 +911,7 @@ async def test_disarm_while_pending_trigger.opp, mqtt_mock):
 
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
 
-    await common.async_alarm_disarm.opp, entity_id=entity_id)
+    await common.async_alarm_disarm(opp, entity_id=entity_id)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
@@ -921,13 +921,13 @@ async def test_disarm_while_pending_trigger.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_disarm_during_trigger_with_invalid_code.opp, mqtt_mock):
+async def test_disarm_during_trigger_with_invalid_code(opp, mqtt_mock):
     """Test disarming while code is invalid."""
     assert await async_setup_component(
         opp,
@@ -955,7 +955,7 @@ async def test_disarm_during_trigger_with_invalid_code.opp, mqtt_mock):
 
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
 
-    await common.async_alarm_disarm.opp, entity_id=entity_id)
+    await common.async_alarm_disarm(opp, entity_id=entity_id)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
@@ -965,13 +965,13 @@ async def test_disarm_during_trigger_with_invalid_code.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
 
 
-async def test_trigger_with_unused_specific_delay.opp, mqtt_mock):
+async def test_trigger_with_unused_specific_delay(opp, mqtt_mock):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
         opp,
@@ -996,12 +996,12 @@ async def test_trigger_with_unused_specific_delay.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_away.opp, CODE)
+    await common.async_alarm_arm_away(opp, CODE)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp, entity_id=entity_id)
+    await common.async_alarm_trigger(opp, entity_id=entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
@@ -1013,14 +1013,14 @@ async def test_trigger_with_unused_specific_delay.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state.state == STATE_ALARM_TRIGGERED
 
 
-async def test_trigger_with_specific_delay.opp, mqtt_mock):
+async def test_trigger_with_specific_delay(opp, mqtt_mock):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
         opp,
@@ -1045,12 +1045,12 @@ async def test_trigger_with_specific_delay.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_away.opp, CODE)
+    await common.async_alarm_arm_away(opp, CODE)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp, entity_id=entity_id)
+    await common.async_alarm_trigger(opp, entity_id=entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
@@ -1062,14 +1062,14 @@ async def test_trigger_with_specific_delay.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state.state == STATE_ALARM_TRIGGERED
 
 
-async def test_trigger_with_pending_and_delay.opp, mqtt_mock):
+async def test_trigger_with_pending_and_delay(opp, mqtt_mock):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
         opp,
@@ -1094,12 +1094,12 @@ async def test_trigger_with_pending_and_delay.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_away.opp, CODE)
+    await common.async_alarm_arm_away(opp, CODE)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp, entity_id=entity_id)
+    await common.async_alarm_trigger(opp, entity_id=entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
@@ -1111,7 +1111,7 @@ async def test_trigger_with_pending_and_delay.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
@@ -1123,14 +1123,14 @@ async def test_trigger_with_pending_and_delay.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state.state == STATE_ALARM_TRIGGERED
 
 
-async def test_trigger_with_pending_and_specific_delay.opp, mqtt_mock):
+async def test_trigger_with_pending_and_specific_delay(opp, mqtt_mock):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
         opp,
@@ -1156,12 +1156,12 @@ async def test_trigger_with_pending_and_specific_delay.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_away.opp, CODE)
+    await common.async_alarm_arm_away(opp, CODE)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp, entity_id=entity_id)
+    await common.async_alarm_trigger(opp, entity_id=entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
@@ -1173,7 +1173,7 @@ async def test_trigger_with_pending_and_specific_delay.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
@@ -1185,14 +1185,14 @@ async def test_trigger_with_pending_and_specific_delay.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert state.state == STATE_ALARM_TRIGGERED
 
 
-async def test_armed_home_with_specific_pending.opp, mqtt_mock):
+async def test_armed_home_with_specific_pending(opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -1222,13 +1222,13 @@ async def test_armed_home_with_specific_pending.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_HOME == opp.states.get(entity_id).state
 
 
-async def test_armed_away_with_specific_pending.opp, mqtt_mock):
+async def test_armed_away_with_specific_pending(opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -1258,13 +1258,13 @@ async def test_armed_away_with_specific_pending.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
 
 
-async def test_armed_night_with_specific_pending.opp, mqtt_mock):
+async def test_armed_night_with_specific_pending(opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -1294,13 +1294,13 @@ async def test_armed_night_with_specific_pending.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_NIGHT == opp.states.get(entity_id).state
 
 
-async def test_trigger_with_specific_pending.opp, mqtt_mock):
+async def test_trigger_with_specific_pending(opp, mqtt_mock):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -1332,7 +1332,7 @@ async def test_trigger_with_specific_pending.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
@@ -1342,13 +1342,13 @@ async def test_trigger_with_specific_pending.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_arm_away_after_disabled_disarmed.opp, legacy_patchable_time, mqtt_mock):
+async def test_arm_away_after_disabled_disarmed(opp, legacy_patchable_time, mqtt_mock):
     """Test pending state with and without zero trigger time."""
     assert await async_setup_component(
         opp,
@@ -1374,7 +1374,7 @@ async def test_arm_away_after_disabled_disarmed.opp, legacy_patchable_time, mqtt
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_away.opp, CODE)
+    await common.async_alarm_arm_away(opp, CODE)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
@@ -1382,7 +1382,7 @@ async def test_arm_away_after_disabled_disarmed.opp, legacy_patchable_time, mqtt
     assert STATE_ALARM_DISARMED == state.attributes["pre_pending_state"]
     assert STATE_ALARM_ARMED_AWAY == state.attributes["post_pending_state"]
 
-    await common.async_alarm_trigger.opp, entity_id=entity_id)
+    await common.async_alarm_trigger(opp, entity_id=entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
@@ -1395,13 +1395,13 @@ async def test_arm_away_after_disabled_disarmed.opp, legacy_patchable_time, mqtt
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
         assert STATE_ALARM_ARMED_AWAY == state.state
 
-        await common.async_alarm_trigger.opp, entity_id=entity_id)
+        await common.async_alarm_trigger(opp, entity_id=entity_id)
         await opp.async_block_till_done()
 
         state = opp.states.get(entity_id)
@@ -1414,14 +1414,14 @@ async def test_arm_away_after_disabled_disarmed.opp, legacy_patchable_time, mqtt
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert STATE_ALARM_TRIGGERED == state.state
 
 
-async def test_disarm_with_template_code.opp, mqtt_mock):
+async def test_disarm_with_template_code(opp, mqtt_mock):
     """Attempt to disarm with a valid or invalid template-based code."""
     assert await async_setup_component(
         opp,
@@ -1444,26 +1444,26 @@ async def test_disarm_with_template_code.opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_arm_home.opp, "def")
+    await common.async_alarm_arm_home(opp, "def")
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert STATE_ALARM_ARMED_HOME == state.state
 
-    await common.async_alarm_disarm.opp, "def")
+    await common.async_alarm_disarm(opp, "def")
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert STATE_ALARM_ARMED_HOME == state.state
 
-    await common.async_alarm_disarm.opp, "abc")
+    await common.async_alarm_disarm(opp, "abc")
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert STATE_ALARM_DISARMED == state.state
 
 
-async def test_arm_home_via_command_topic.opp, mqtt_mock):
+async def test_arm_home_via_command_topic(opp, mqtt_mock):
     """Test arming home via command topic."""
     assert await async_setup_component(
         opp,
@@ -1486,7 +1486,7 @@ async def test_arm_home_via_command_topic.opp, mqtt_mock):
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
     # Fire the arm command via MQTT; ensure state changes to pending
-    async_fire_mqtt_message.opp, "alarm/command", "ARM_HOME")
+    async_fire_mqtt_message(opp, "alarm/command", "ARM_HOME")
     await opp.async_block_till_done()
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
 
@@ -1496,13 +1496,13 @@ async def test_arm_home_via_command_topic.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_HOME == opp.states.get(entity_id).state
 
 
-async def test_arm_away_via_command_topic.opp, mqtt_mock):
+async def test_arm_away_via_command_topic(opp, mqtt_mock):
     """Test arming away via command topic."""
     assert await async_setup_component(
         opp,
@@ -1525,7 +1525,7 @@ async def test_arm_away_via_command_topic.opp, mqtt_mock):
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
     # Fire the arm command via MQTT; ensure state changes to pending
-    async_fire_mqtt_message.opp, "alarm/command", "ARM_AWAY")
+    async_fire_mqtt_message(opp, "alarm/command", "ARM_AWAY")
     await opp.async_block_till_done()
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
 
@@ -1535,13 +1535,13 @@ async def test_arm_away_via_command_topic.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
 
 
-async def test_arm_night_via_command_topic.opp, mqtt_mock):
+async def test_arm_night_via_command_topic(opp, mqtt_mock):
     """Test arming night via command topic."""
     assert await async_setup_component(
         opp,
@@ -1564,7 +1564,7 @@ async def test_arm_night_via_command_topic.opp, mqtt_mock):
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
     # Fire the arm command via MQTT; ensure state changes to pending
-    async_fire_mqtt_message.opp, "alarm/command", "ARM_NIGHT")
+    async_fire_mqtt_message(opp, "alarm/command", "ARM_NIGHT")
     await opp.async_block_till_done()
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
 
@@ -1574,13 +1574,13 @@ async def test_arm_night_via_command_topic.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     assert STATE_ALARM_ARMED_NIGHT == opp.states.get(entity_id).state
 
 
-async def test_disarm_pending_via_command_topic.opp, mqtt_mock):
+async def test_disarm_pending_via_command_topic(opp, mqtt_mock):
     """Test disarming pending alarm via command topic."""
     assert await async_setup_component(
         opp,
@@ -1608,13 +1608,13 @@ async def test_disarm_pending_via_command_topic.opp, mqtt_mock):
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
 
     # Now that we're pending, receive a command to disarm
-    async_fire_mqtt_message.opp, "alarm/command", "DISARM")
+    async_fire_mqtt_message(opp, "alarm/command", "DISARM")
     await opp.async_block_till_done()
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_state_changes_are_published_to_mqtt.opp, mqtt_mock):
+async def test_state_changes_are_published_to_mqtt(opp, mqtt_mock):
     """Test publishing of MQTT messages when state changes."""
     assert await async_setup_component(
         opp,
@@ -1652,7 +1652,7 @@ async def test_state_changes_are_published_to_mqtt.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
     mqtt_mock.async_publish.assert_called_once_with(
         "alarm/state", STATE_ALARM_ARMED_HOME, 0, True
@@ -1672,7 +1672,7 @@ async def test_state_changes_are_published_to_mqtt.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
     mqtt_mock.async_publish.assert_called_once_with(
         "alarm/state", STATE_ALARM_ARMED_AWAY, 0, True
@@ -1692,7 +1692,7 @@ async def test_state_changes_are_published_to_mqtt.opp, mqtt_mock):
         ("openpeerpower.components.manual_mqtt.alarm_control_panel." "dt_util.utcnow"),
         return_value=future,
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
     mqtt_mock.async_publish.assert_called_once_with(
         "alarm/state", STATE_ALARM_ARMED_NIGHT, 0, True

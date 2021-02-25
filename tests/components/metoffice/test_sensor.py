@@ -23,7 +23,7 @@ from tests.common import MockConfigEntry, load_fixture
     "datapoint.Forecast.datetime.datetime",
     NewDateTime,
 )
-async def test_one_sensor_site_running.opp, requests_mock, legacy_patchable_time):
+async def test_one_sensor_site_running(opp, requests_mock, legacy_patchable_time):
     """Test the Met Office sensor platform."""
     # all metoffice test data encapsulated in here
     mock_json = json.loads(load_fixture("metoffice.json"))
@@ -40,7 +40,7 @@ async def test_one_sensor_site_running.opp, requests_mock, legacy_patchable_time
         domain=DOMAIN,
         data=METOFFICE_CONFIG_WAVERTREE,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
@@ -65,7 +65,7 @@ async def test_one_sensor_site_running.opp, requests_mock, legacy_patchable_time
     "datapoint.Forecast.datetime.datetime",
     NewDateTime,
 )
-async def test_two_sensor_sites_running.opp, requests_mock, legacy_patchable_time):
+async def test_two_sensor_sites_running(opp, requests_mock, legacy_patchable_time):
     """Test we handle two sets of sensors running for two different sites."""
 
     # all metoffice test data encapsulated in here
@@ -86,13 +86,13 @@ async def test_two_sensor_sites_running.opp, requests_mock, legacy_patchable_tim
         domain=DOMAIN,
         data=METOFFICE_CONFIG_WAVERTREE,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     entry2 = MockConfigEntry(
         domain=DOMAIN,
         data=METOFFICE_CONFIG_KINGSLYNN,
     )
-    entry2.add_to.opp.opp)
+    entry2.add_to_opp(opp)
     await opp.config_entries.async_setup(entry2.entry_id)
     await opp.async_block_till_done()
 

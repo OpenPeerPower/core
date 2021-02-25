@@ -43,25 +43,25 @@ async def test_setup_entry.opp: OpenPeerPower):
         await opp.async_block_till_done()
 
         # Assert data is loaded
-        assert.opp.states.get("sensor.huisbaasje_current_power").state == "1012.0"
-        assert.opp.states.get("sensor.huisbaasje_current_power_in").state == "1012.0"
+        assert opp.states.get("sensor.huisbaasje_current_power").state == "1012.0"
+        assert opp.states.get("sensor.huisbaasje_current_power_in").state == "1012.0"
         assert (
             opp.states.get("sensor.huisbaasje_current_power_in_low").state == "unknown"
         )
-        assert.opp.states.get("sensor.huisbaasje_current_power_out").state == "unknown"
+        assert opp.states.get("sensor.huisbaasje_current_power_out").state == "unknown"
         assert (
             opp.states.get("sensor.huisbaasje_current_power_out_low").state
             == "unknown"
         )
-        assert.opp.states.get("sensor.huisbaasje_current_gas").state == "0.0"
-        assert.opp.states.get("sensor.huisbaasje_energy_today").state == "3.3"
-        assert.opp.states.get("sensor.huisbaasje_energy_this_week").state == "17.5"
-        assert.opp.states.get("sensor.huisbaasje_energy_this_month").state == "103.3"
-        assert.opp.states.get("sensor.huisbaasje_energy_this_year").state == "673.0"
-        assert.opp.states.get("sensor.huisbaasje_gas_today").state == "1.1"
-        assert.opp.states.get("sensor.huisbaasje_gas_this_week").state == "5.6"
-        assert.opp.states.get("sensor.huisbaasje_gas_this_month").state == "39.1"
-        assert.opp.states.get("sensor.huisbaasje_gas_this_year").state == "116.7"
+        assert opp.states.get("sensor.huisbaasje_current_gas").state == "0.0"
+        assert opp.states.get("sensor.huisbaasje_energy_today").state == "3.3"
+        assert opp.states.get("sensor.huisbaasje_energy_this_week").state == "17.5"
+        assert opp.states.get("sensor.huisbaasje_energy_this_month").state == "103.3"
+        assert opp.states.get("sensor.huisbaasje_energy_this_year").state == "673.0"
+        assert opp.states.get("sensor.huisbaasje_gas_today").state == "1.1"
+        assert opp.states.get("sensor.huisbaasje_gas_this_week").state == "5.6"
+        assert opp.states.get("sensor.huisbaasje_gas_this_month").state == "39.1"
+        assert opp.states.get("sensor.huisbaasje_gas_this_year").state == "116.7"
 
         # Assert mocks are called
         assert len(mock_authenticate.mock_calls) == 1
@@ -100,19 +100,19 @@ async def test_setup_entry_absent_measurement.opp: OpenPeerPower):
         await opp.async_block_till_done()
 
         # Assert data is loaded
-        assert.opp.states.get("sensor.huisbaasje_current_power").state == "1012.0"
-        assert.opp.states.get("sensor.huisbaasje_current_power_in").state == "unknown"
+        assert opp.states.get("sensor.huisbaasje_current_power").state == "1012.0"
+        assert opp.states.get("sensor.huisbaasje_current_power_in").state == "unknown"
         assert (
             opp.states.get("sensor.huisbaasje_current_power_in_low").state == "unknown"
         )
-        assert.opp.states.get("sensor.huisbaasje_current_power_out").state == "unknown"
+        assert opp.states.get("sensor.huisbaasje_current_power_out").state == "unknown"
         assert (
             opp.states.get("sensor.huisbaasje_current_power_out_low").state
             == "unknown"
         )
-        assert.opp.states.get("sensor.huisbaasje_current_gas").state == "unknown"
-        assert.opp.states.get("sensor.huisbaasje_energy_today").state == "3.3"
-        assert.opp.states.get("sensor.huisbaasje_gas_today").state == "unknown"
+        assert opp.states.get("sensor.huisbaasje_current_gas").state == "unknown"
+        assert opp.states.get("sensor.huisbaasje_energy_today").state == "3.3"
+        assert opp.states.get("sensor.huisbaasje_gas_today").state == "unknown"
 
         # Assert mocks are called
         assert len(mock_authenticate.mock_calls) == 1

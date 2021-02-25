@@ -32,7 +32,7 @@ FAKE_TOKEN = "some-token"
 FAKE_REFRESH_TOKEN = "some-refresh-token"
 
 
-def create_config_entry.opp, token_expiration_time=None):
+def create_config_entry(opp, token_expiration_time=None):
     """Create a ConfigEntry and add it to Open Peer Power."""
     if token_expiration_time is None:
         token_expiration_time = time.time() + 86400
@@ -47,7 +47,7 @@ def create_config_entry.opp, token_expiration_time=None):
             "expires_at": token_expiration_time,
         },
     }
-    MockConfigEntry(domain=DOMAIN, data=config_entry_data).add_to.opp.opp)
+    MockConfigEntry(domain=DOMAIN, data=config_entry_data).add_to_opp(opp)
 
 
 class FakeDeviceManager(DeviceManager):
@@ -99,7 +99,7 @@ class FakeSubscriber(GoogleNestSubscriber):
         await self._callback(event_message)
 
 
-async def async_setup_sdm_platform.opp, platform, devices={}, structures={}):
+async def async_setup_sdm_platform(opp, platform, devices={}, structures={}):
     """Set up the platform and prerequisites."""
     create_config_entry.opp)
     device_manager = FakeDeviceManager(devices=devices, structures=structures)
@@ -109,6 +109,6 @@ async def async_setup_sdm_platform.opp, platform, devices={}, structures={}):
     ), patch("openpeerpower.components.nest.PLATFORMS", [platform]), patch(
         "openpeerpower.components.nest.GoogleNestSubscriber", return_value=subscriber
     ):
-        assert await async_setup_component.opp, DOMAIN, CONFIG)
+        assert await async_setup_component(opp, DOMAIN, CONFIG)
         await opp.async_block_till_done()
     return subscriber

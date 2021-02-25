@@ -35,7 +35,7 @@ async def test_default_state.opp):
 
 async def test_light_service_calls.opp):
     """Test service calls to light."""
-    await async_setup_component.opp, "switch", {"switch": [{"platform": "demo"}]})
+    await async_setup_component(opp, "switch", {"switch": [{"platform": "demo"}]})
     await async_setup_component(
         opp,
         "light",
@@ -43,28 +43,28 @@ async def test_light_service_calls.opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("light.light_switch").state == "on"
+    assert opp.states.get("light.light_switch").state == "on"
 
-    await common.async_toggle.opp, "light.light_switch")
+    await common.async_toggle(opp, "light.light_switch")
 
-    assert.opp.states.get("switch.decorative_lights").state == "off"
-    assert.opp.states.get("light.light_switch").state == "off"
+    assert opp.states.get("switch.decorative_lights").state == "off"
+    assert opp.states.get("light.light_switch").state == "off"
 
-    await common.async_turn_on.opp, "light.light_switch")
+    await common.async_turn_on(opp, "light.light_switch")
 
-    assert.opp.states.get("switch.decorative_lights").state == "on"
-    assert.opp.states.get("light.light_switch").state == "on"
+    assert opp.states.get("switch.decorative_lights").state == "on"
+    assert opp.states.get("light.light_switch").state == "on"
 
-    await common.async_turn_off.opp, "light.light_switch")
+    await common.async_turn_off(opp, "light.light_switch")
     await opp.async_block_till_done()
 
-    assert.opp.states.get("switch.decorative_lights").state == "off"
-    assert.opp.states.get("light.light_switch").state == "off"
+    assert opp.states.get("switch.decorative_lights").state == "off"
+    assert opp.states.get("light.light_switch").state == "off"
 
 
 async def test_switch_service_calls.opp):
     """Test service calls to switch."""
-    await async_setup_component.opp, "switch", {"switch": [{"platform": "demo"}]})
+    await async_setup_component(opp, "switch", {"switch": [{"platform": "demo"}]})
     await async_setup_component(
         opp,
         "light",
@@ -72,16 +72,16 @@ async def test_switch_service_calls.opp):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("light.light_switch").state == "on"
+    assert opp.states.get("light.light_switch").state == "on"
 
-    await switch_common.async_turn_off.opp, "switch.decorative_lights")
+    await switch_common.async_turn_off(opp, "switch.decorative_lights")
     await opp.async_block_till_done()
 
-    assert.opp.states.get("switch.decorative_lights").state == "off"
-    assert.opp.states.get("light.light_switch").state == "off"
+    assert opp.states.get("switch.decorative_lights").state == "off"
+    assert opp.states.get("light.light_switch").state == "off"
 
-    await switch_common.async_turn_on.opp, "switch.decorative_lights")
+    await switch_common.async_turn_on(opp, "switch.decorative_lights")
     await opp.async_block_till_done()
 
-    assert.opp.states.get("switch.decorative_lights").state == "on"
-    assert.opp.states.get("light.light_switch").state == "on"
+    assert opp.states.get("switch.decorative_lights").state == "on"
+    assert opp.states.get("light.light_switch").state == "on"

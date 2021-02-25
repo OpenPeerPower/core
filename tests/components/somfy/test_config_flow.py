@@ -18,7 +18,7 @@ CLIENT_SECRET_VALUE = "5678"
 @pytest.fixture()
 async def mock_impl.opp):
     """Mock implementation."""
-    await setup.async_setup_component.opp, "http", {})
+    await setup.async_setup_component(opp, "http", {})
 
     impl = config_entry_oauth2_flow.LocalOAuth2Implementation(
         opp,
@@ -28,7 +28,7 @@ async def mock_impl.opp):
         "https://accounts.somfy.com/oauth/oauth/v2/auth",
         "https://accounts.somfy.com/oauth/oauth/v2/token",
     )
-    config_flow.SomfyFlowHandler.async_register_implementation.opp, impl)
+    config_flow.SomfyFlowHandler.async_register_implementation(opp, impl)
     return impl
 
 
@@ -45,7 +45,7 @@ async def test_abort_if_existing_entry.opp):
     """Check flow abort when an entry already exist."""
     flow = config_flow.SomfyFlowHandler()
     flow.opp = opp
-    MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
+    MockConfigEntry(domain=DOMAIN).add_to_opp(opp)
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -123,7 +123,7 @@ async def test_full_flow(
     assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
 
 
-async def test_abort_if_authorization_timeout.opp, mock_impl):
+async def test_abort_if_authorization_timeout(opp, mock_impl):
     """Check Somfy authorization timeout."""
     flow = config_flow.SomfyFlowHandler()
     flow.opp = opp

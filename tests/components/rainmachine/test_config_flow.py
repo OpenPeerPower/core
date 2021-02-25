@@ -67,7 +67,7 @@ async def test_options_flow.opp):
         data=conf,
         options={CONF_ZONE_RUN_TIME: 900},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.rainmachine.async_setup_entry", return_value=True

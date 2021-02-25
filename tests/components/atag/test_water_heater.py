@@ -18,7 +18,7 @@ async def test_water_heater(
 ) -> None:
     """Test the creation of Atag water heater."""
     with patch("pyatag.entities.DHW.status"):
-        entry = await init_integration.opp, aioclient_mock)
+        entry = await init_integration(opp, aioclient_mock)
         registry = await opp.helpers.entity_registry.async_get_registry()
 
         assert registry.async_is_registered(WATER_HEATER_ID)
@@ -30,7 +30,7 @@ async def test_setting_target_temperature(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test setting the water heater device."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
     with patch("pyatag.entities.DHW.set_temp") as mock_set_temp:
         await opp.services.async_call(
             WATER_HEATER,

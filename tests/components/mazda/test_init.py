@@ -93,7 +93,7 @@ async def test_update_auth_failure(opp: OpenPeerPower):
 async def test_unload_config_entry(opp: OpenPeerPower) -> None:
     """Test the Mazda configuration entry unloading."""
     entry = await init_integration(opp)
-    assert.opp.data[DOMAIN]
+    assert opp.data[DOMAIN]
 
     await opp.config_entries.async_unload(entry.entry_id)
     await opp.async_block_till_done()

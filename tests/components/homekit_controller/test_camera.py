@@ -14,16 +14,16 @@ def create_camera(accessory):
     accessory.add_service(ServicesTypes.CAMERA_RTP_STREAM_MANAGEMENT)
 
 
-async def test_read_state.opp, utcnow):
+async def test_read_state(opp, utcnow):
     """Test reading the state of a HomeKit camera."""
-    helper = await setup_test_component.opp, create_camera)
+    helper = await setup_test_component(opp, create_camera)
 
     state = await helper.poll_and_get_state()
     assert state.state == "idle"
 
 
-async def test_get_image.opp, utcnow):
+async def test_get_image(opp, utcnow):
     """Test getting a JPEG from a camera."""
-    helper = await setup_test_component.opp, create_camera)
-    image = await camera.async_get_image.opp, helper.entity_id)
+    helper = await setup_test_component(opp, create_camera)
+    image = await camera.async_get_image(opp, helper.entity_id)
     assert image.content == base64.b64decode(FAKE_CAMERA_IMAGE)

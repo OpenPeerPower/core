@@ -72,7 +72,7 @@ PATCH_ASYNC_SETUP_ENTRY = "openpeerpower.components.isy994.async_setup_entry"
 
 async def test_form.opp: OpenPeerPowerType):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -161,8 +161,8 @@ async def test_form_cannot_connect.opp: OpenPeerPowerType):
 
 async def test_form_existing_config_entry.opp: OpenPeerPowerType):
     """Test if config entry already exists."""
-    MockConfigEntry(domain=DOMAIN, unique_id=MOCK_UUID).add_to.opp.opp)
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    MockConfigEntry(domain=DOMAIN, unique_id=MOCK_UUID).add_to_opp(opp)
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -259,13 +259,13 @@ async def test_import_flow_all_fields.opp: OpenPeerPowerType) -> None:
 
 async def test_form_ssdp_already_configured.opp: OpenPeerPowerType) -> None:
     """Test ssdp abort when the serial number is already configured."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     MockConfigEntry(
         domain=DOMAIN,
         data={CONF_HOST: f"http://{MOCK_HOSTNAME}{ISY_URL_POSTFIX}"},
         unique_id=MOCK_UUID,
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -281,7 +281,7 @@ async def test_form_ssdp_already_configured.opp: OpenPeerPowerType) -> None:
 
 async def test_form_ssdp.opp: OpenPeerPowerType):
     """Test we can setup from ssdp."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

@@ -156,7 +156,7 @@ async def test_existing_node_ready(
     )
 
 
-async def test_existing_node_not_ready.opp, client, multisensor_6, device_registry):
+async def test_existing_node_not_ready(opp, client, multisensor_6, device_registry):
     """Test we handle a non ready node that exists during integration setup."""
     node = multisensor_6
     node.data = deepcopy(node.data)  # Copy to allow modification in tests.

@@ -13,7 +13,7 @@ async def test_unsupported_domain.opp):
 
     opp.states.async_set("woz.boop", "on", {"friendly_name": "Boop Woz"})
 
-    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+    msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request)
 
     assert "event" in msg
     msg = msg["event"]
@@ -27,7 +27,7 @@ async def test_serialize_discovery.opp):
 
     opp.states.async_set("switch.bla", "on", {"friendly_name": "Boop Woz"})
 
-    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+    msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request)
 
     assert "event" in msg
     msg = msg["event"]
@@ -41,7 +41,7 @@ async def test_serialize_discovery.opp):
     }
 
 
-async def test_serialize_discovery_recovers.opp, caplog):
+async def test_serialize_discovery_recovers(opp, caplog):
     """Test we handle an interface raising unexpectedly during serialize discovery."""
     request = get_new_request("Alexa.Discovery", "Discover")
 
@@ -51,7 +51,7 @@ async def test_serialize_discovery_recovers.opp, caplog):
         "openpeerpower.components.alexa.capabilities.AlexaPowerController.serialize_discovery",
         side_effect=TypeError,
     ):
-        msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+        msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request)
 
     assert "event" in msg
     msg = msg["event"]

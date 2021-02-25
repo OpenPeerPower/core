@@ -33,7 +33,7 @@ from tests.mock.zwave import MockEntityValues, MockNode, MockValue, value_change
 
 
 @pytest.fixture
-def device.opp, mock_openzwave):
+def device(opp, mock_openzwave):
     """Fixture to provide a precreated climate device."""
     node = MockNode()
     values = MockEntityValues(
@@ -55,13 +55,13 @@ def device.opp, mock_openzwave):
         operating_state=MockValue(data=CURRENT_HVAC_HEAT, node=node),
         fan_action=MockValue(data=7, node=node),
     )
-    device = climate.get_device.opp, node=node, values=values, node_config={})
+    device = climate.get_device(opp, node=node, values=values, node_config={})
 
     yield device
 
 
 @pytest.fixture
-def device_zxt_120.opp, mock_openzwave):
+def device_zxt_120(opp, mock_openzwave):
     """Fixture to provide a precreated climate device."""
     node = MockNode(manufacturer_id="5254", product_id="8377")
 
@@ -85,13 +85,13 @@ def device_zxt_120.opp, mock_openzwave):
         fan_action=MockValue(data=7, node=node),
         zxt_120_swing_mode=MockValue(data="test3", data_items=[6, 7, 8], node=node),
     )
-    device = climate.get_device.opp, node=node, values=values, node_config={})
+    device = climate.get_device(opp, node=node, values=values, node_config={})
 
     yield device
 
 
 @pytest.fixture
-def device_mapping.opp, mock_openzwave):
+def device_mapping(opp, mock_openzwave):
     """Fixture to provide a precreated climate device. Test state mapping."""
     node = MockNode()
     values = MockEntityValues(
@@ -108,13 +108,13 @@ def device_mapping.opp, mock_openzwave):
         operating_state=MockValue(data="heating", node=node),
         fan_action=MockValue(data=7, node=node),
     )
-    device = climate.get_device.opp, node=node, values=values, node_config={})
+    device = climate.get_device(opp, node=node, values=values, node_config={})
 
     yield device
 
 
 @pytest.fixture
-def device_unknown.opp, mock_openzwave):
+def device_unknown(opp, mock_openzwave):
     """Fixture to provide a precreated climate device. Test state unknown."""
     node = MockNode()
     values = MockEntityValues(
@@ -131,13 +131,13 @@ def device_unknown.opp, mock_openzwave):
         operating_state=MockValue(data="test4", node=node),
         fan_action=MockValue(data=7, node=node),
     )
-    device = climate.get_device.opp, node=node, values=values, node_config={})
+    device = climate.get_device(opp, node=node, values=values, node_config={})
 
     yield device
 
 
 @pytest.fixture
-def device_heat_cool.opp, mock_openzwave):
+def device_heat_cool(opp, mock_openzwave):
     """Fixture to provide a precreated climate device. Test state heat only."""
     node = MockNode()
     values = MockEntityValues(
@@ -160,13 +160,13 @@ def device_heat_cool.opp, mock_openzwave):
         operating_state=MockValue(data="test4", node=node),
         fan_action=MockValue(data=7, node=node),
     )
-    device = climate.get_device.opp, node=node, values=values, node_config={})
+    device = climate.get_device(opp, node=node, values=values, node_config={})
 
     yield device
 
 
 @pytest.fixture
-def device_heat_cool_range.opp, mock_openzwave):
+def device_heat_cool_range(opp, mock_openzwave):
     """Fixture to provide a precreated climate device. Target range mode."""
     node = MockNode()
     values = MockEntityValues(
@@ -188,13 +188,13 @@ def device_heat_cool_range.opp, mock_openzwave):
         operating_state=MockValue(data="test4", node=node),
         fan_action=MockValue(data=7, node=node),
     )
-    device = climate.get_device.opp, node=node, values=values, node_config={})
+    device = climate.get_device(opp, node=node, values=values, node_config={})
 
     yield device
 
 
 @pytest.fixture
-def device_heat_cool_away.opp, mock_openzwave):
+def device_heat_cool_away(opp, mock_openzwave):
     """Fixture to provide a precreated climate device. Target range mode."""
     node = MockNode()
     values = MockEntityValues(
@@ -219,13 +219,13 @@ def device_heat_cool_away.opp, mock_openzwave):
         operating_state=MockValue(data="test4", node=node),
         fan_action=MockValue(data=7, node=node),
     )
-    device = climate.get_device.opp, node=node, values=values, node_config={})
+    device = climate.get_device(opp, node=node, values=values, node_config={})
 
     yield device
 
 
 @pytest.fixture
-def device_heat_eco.opp, mock_openzwave):
+def device_heat_eco(opp, mock_openzwave):
     """Fixture to provide a precreated climate device. heat/heat eco."""
     node = MockNode()
     values = MockEntityValues(
@@ -242,13 +242,13 @@ def device_heat_eco.opp, mock_openzwave):
         operating_state=MockValue(data="test4", node=node),
         fan_action=MockValue(data=7, node=node),
     )
-    device = climate.get_device.opp, node=node, values=values, node_config={})
+    device = climate.get_device(opp, node=node, values=values, node_config={})
 
     yield device
 
 
 @pytest.fixture
-def device_aux_heat.opp, mock_openzwave):
+def device_aux_heat(opp, mock_openzwave):
     """Fixture to provide a precreated climate device. aux heat."""
     node = MockNode()
     values = MockEntityValues(
@@ -265,13 +265,13 @@ def device_aux_heat.opp, mock_openzwave):
         operating_state=MockValue(data="test4", node=node),
         fan_action=MockValue(data=7, node=node),
     )
-    device = climate.get_device.opp, node=node, values=values, node_config={})
+    device = climate.get_device(opp, node=node, values=values, node_config={})
 
     yield device
 
 
 @pytest.fixture
-def device_single_setpoint.opp, mock_openzwave):
+def device_single_setpoint(opp, mock_openzwave):
     """Fixture to provide a precreated climate device.
 
     SETPOINT_THERMOSTAT device class.
@@ -288,13 +288,13 @@ def device_single_setpoint.opp, mock_openzwave):
         operating_state=MockValue(data=CURRENT_HVAC_HEAT, node=node),
         fan_action=MockValue(data=7, node=node),
     )
-    device = climate.get_device.opp, node=node, values=values, node_config={})
+    device = climate.get_device(opp, node=node, values=values, node_config={})
 
     yield device
 
 
 @pytest.fixture
-def device_single_setpoint_with_mode.opp, mock_openzwave):
+def device_single_setpoint_with_mode(opp, mock_openzwave):
     """Fixture to provide a precreated climate device.
 
     SETPOINT_THERMOSTAT device class with COMMAND_CLASS_THERMOSTAT_MODE command class
@@ -316,18 +316,18 @@ def device_single_setpoint_with_mode.opp, mock_openzwave):
         operating_state=MockValue(data=CURRENT_HVAC_HEAT, node=node),
         fan_action=MockValue(data=7, node=node),
     )
-    device = climate.get_device.opp, node=node, values=values, node_config={})
+    device = climate.get_device(opp, node=node, values=values, node_config={})
 
     yield device
 
 
-def test_get_device_detects_none.opp, mock_openzwave):
+def test_get_device_detects_none(opp, mock_openzwave):
     """Test get_device returns None."""
     node = MockNode()
     value = MockValue(data=0, node=node)
     values = MockEntityValues(primary=value)
 
-    device = climate.get_device.opp, node=node, values=values, node_config={})
+    device = climate.get_device(opp, node=node, values=values, node_config={})
     assert device is None
 
 

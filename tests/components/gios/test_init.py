@@ -36,7 +36,7 @@ async def test_config_not_ready.opp):
         "openpeerpower.components.gios.Gios._get_stations",
         side_effect=ConnectionError(),
     ):
-        entry.add_to.opp.opp)
+        entry.add_to_opp(opp)
         await opp.config_entries.async_setup(entry.entry_id)
         assert entry.state == ENTRY_STATE_SETUP_RETRY
 

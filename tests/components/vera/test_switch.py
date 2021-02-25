@@ -29,7 +29,7 @@ async def test_switch(
     )
     update_callback = component_data.controller_data[0].update_callback
 
-    assert.opp.states.get(entity_id).state == "off"
+    assert opp.states.get(entity_id).state == "off"
 
     await opp.services.async_call(
         "switch",
@@ -41,7 +41,7 @@ async def test_switch(
     vera_device.is_switched_on.return_value = True
     update_callback(vera_device)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == "on"
+    assert opp.states.get(entity_id).state == "on"
 
     await opp.services.async_call(
         "switch",
@@ -53,4 +53,4 @@ async def test_switch(
     vera_device.is_switched_on.return_value = False
     update_callback(vera_device)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == "off"
+    assert opp.states.get(entity_id).state == "off"

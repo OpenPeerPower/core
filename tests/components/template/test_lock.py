@@ -11,7 +11,7 @@ from tests.common import assert_setup_component, async_mock_service
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
 async def test_template_state.opp):
@@ -140,7 +140,7 @@ async def test_template_syntax_error(opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.async_all() == []
+    assert opp.states.async_all() == []
 
 
 async def test_invalid_name_does_not_create.opp):
@@ -170,7 +170,7 @@ async def test_invalid_name_does_not_create.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.async_all() == []
+    assert opp.states.async_all() == []
 
 
 async def test_invalid_lock_does_not_create.opp):
@@ -186,7 +186,7 @@ async def test_invalid_lock_does_not_create.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.async_all() == []
+    assert opp.states.async_all() == []
 
 
 async def test_missing_template_does_not_create.opp):
@@ -215,10 +215,10 @@ async def test_missing_template_does_not_create.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.async_all() == []
+    assert opp.states.async_all() == []
 
 
-async def test_template_static.opp, caplog):
+async def test_template_static(opp, caplog):
     """Test that we allow static templates."""
     with assert_setup_component(1, lock.DOMAIN):
         assert await setup.async_setup_component(
@@ -253,7 +253,7 @@ async def test_template_static.opp, caplog):
     assert state.state == lock.STATE_LOCKED
 
 
-async def test_lock_action.opp, calls):
+async def test_lock_action(opp, calls):
     """Test lock action."""
     assert await setup.async_setup_component(
         opp,
@@ -289,7 +289,7 @@ async def test_lock_action.opp, calls):
     assert len(calls) == 1
 
 
-async def test_unlock_action.opp, calls):
+async def test_unlock_action(opp, calls):
     """Test unlock action."""
     assert await setup.async_setup_component(
         opp,
@@ -354,17 +354,17 @@ async def test_available_template_with_entities.opp):
     await opp.async_block_till_done()
 
     # Device State should not be unavailable
-    assert.opp.states.get("lock.template_lock").state != STATE_UNAVAILABLE
+    assert opp.states.get("lock.template_lock").state != STATE_UNAVAILABLE
 
     # When Availability template returns false
     opp.states.async_set("availability_state.state", STATE_OFF)
     await opp.async_block_till_done()
 
     # device state should be unavailable
-    assert.opp.states.get("lock.template_lock").state == STATE_UNAVAILABLE
+    assert opp.states.get("lock.template_lock").state == STATE_UNAVAILABLE
 
 
-async def test_invalid_availability_template_keeps_component_available.opp, caplog):
+async def test_invalid_availability_template_keeps_component_available(opp, caplog):
     """Test that an invalid availability keeps the device available."""
     await setup.async_setup_component(
         opp,
@@ -387,7 +387,7 @@ async def test_invalid_availability_template_keeps_component_available.opp, capl
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert.opp.states.get("lock.template_lock").state != STATE_UNAVAILABLE
+    assert opp.states.get("lock.template_lock").state != STATE_UNAVAILABLE
     assert ("UndefinedError: 'x' is undefined") in caplog.text
 
 

@@ -265,7 +265,7 @@ async def test_options_flow.opp):
         options=FIXTURE_OPTIONS,
         unique_id="1234",
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch("openpeerpower.components.hvv_departures.PLATFORMS", new=[]), patch(
         "openpeerpower.components.hvv_departures.hub.GTI.init",
@@ -316,7 +316,7 @@ async def test_options_flow_invalid_auth.opp):
         options=FIXTURE_OPTIONS,
         unique_id="1234",
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch("openpeerpower.components.hvv_departures.PLATFORMS", new=[]), patch(
         "openpeerpower.components.hvv_departures.hub.GTI.init", return_value=True
@@ -357,7 +357,7 @@ async def test_options_flow_cannot_connect.opp):
         options=FIXTURE_OPTIONS,
         unique_id="1234",
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch("openpeerpower.components.hvv_departures.PLATFORMS", new=[]), patch(
         "openpeerpower.components.hvv_departures.hub.GTI.init", return_value=True

@@ -95,7 +95,7 @@ async def test_import_works.opp: OpenPeerPowerType, connect):
 async def test_options.opp):
     """Test updating options."""
     entry = MockConfigEntry(domain=keenetic.DOMAIN, data=MOCK_DATA)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     with patch(
         "openpeerpower.components.keenetic_ndms2.async_setup", return_value=True
     ) as mock_setup, patch(
@@ -136,13 +136,13 @@ async def test_options.opp):
     assert result2["data"] == MOCK_OPTIONS
 
 
-async def test_host_already_configured.opp, connect):
+async def test_host_already_configured(opp, connect):
     """Test host already configured."""
 
     entry = MockConfigEntry(
         domain=keenetic.DOMAIN, data=MOCK_DATA, options=MOCK_OPTIONS
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         keenetic.DOMAIN, context={"source": "user"}

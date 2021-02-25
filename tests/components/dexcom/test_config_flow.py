@@ -13,7 +13,7 @@ from tests.components.dexcom import CONFIG
 
 async def test_form.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -106,7 +106,7 @@ async def test_option_flow_default.opp):
         data=CONFIG,
         options=None,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 
@@ -130,7 +130,7 @@ async def test_option_flow.opp):
         data=CONFIG,
         options={CONF_UNIT_OF_MEASUREMENT: MG_DL},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 

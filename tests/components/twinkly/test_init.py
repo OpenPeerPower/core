@@ -41,7 +41,7 @@ async def test_setup_entry(opp: OpenPeerPower):
     ):
         await async_setup_entry(opp, config_entry)
 
-    assert.opp.data[TWINKLY_DOMAIN][id] is not None
+    assert opp.data[TWINKLY_DOMAIN][id] is not None
 
 
 async def test_unload_entry(opp: OpenPeerPower):
@@ -64,4 +64,4 @@ async def test_unload_entry(opp: OpenPeerPower):
 
     await async_unload_entry(opp, config_entry)
 
-    assert.opp.data[TWINKLY_DOMAIN].get(id) is None
+    assert opp.data[TWINKLY_DOMAIN].get(id) is None

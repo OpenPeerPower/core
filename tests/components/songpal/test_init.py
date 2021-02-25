@@ -29,7 +29,7 @@ def _patch_media_setup():
 async def test_setup_empty.opp):
     """Test setup without any configuration."""
     with _patch_media_setup() as setup:
-        assert await async_setup_component.opp, songpal.DOMAIN, {}) is True
+        assert await async_setup_component(opp, songpal.DOMAIN, {}) is True
         await opp.async_block_till_done()
     setup.assert_not_called()
 
@@ -53,15 +53,15 @@ async def test_setup_opp):
 async def test_unload.opp):
     """Test unload entity."""
     entry = MockConfigEntry(domain=songpal.DOMAIN, data=CONF_DATA)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     mocked_device = _create_mocked_device()
 
     with _patch_config_flow_device(mocked_device), _patch_media_player_device(
         mocked_device
     ):
-        assert await async_setup_component.opp, songpal.DOMAIN, {}) is True
+        assert await async_setup_component(opp, songpal.DOMAIN, {}) is True
         await opp.async_block_till_done()
     mocked_device.listen_notifications.assert_called_once()
-    assert await songpal.async_unload_entry.opp, entry)
+    assert await songpal.async_unload_entry(opp, entry)
     await opp.async_block_till_done()
     mocked_device.stop_listen_notifications.assert_called_once()

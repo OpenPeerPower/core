@@ -114,21 +114,21 @@ async def test_cover(m1, opp, zha_device_joined_restored, zigpy_cover_device):
     entity_id = await find_entity_id(DOMAIN, zha_device, opp)
     assert entity_id is not None
 
-    await async_enable_traffic.opp, [zha_device], enabled=False)
+    await async_enable_traffic(opp, [zha_device], enabled=False)
     # test that the cover was created and that it is unavailable
-    assert.opp.states.get(entity_id).state == STATE_UNAVAILABLE
+    assert opp.states.get(entity_id).state == STATE_UNAVAILABLE
 
     # allow traffic to flow through the gateway and device
-    await async_enable_traffic.opp, [zha_device])
+    await async_enable_traffic(opp, [zha_device])
     await opp.async_block_till_done()
 
     # test that the state has changed from unavailable to off
-    await send_attributes_report.opp, cluster, {0: 0, 8: 100, 1: 1})
-    assert.opp.states.get(entity_id).state == STATE_CLOSED
+    await send_attributes_report(opp, cluster, {0: 0, 8: 100, 1: 1})
+    assert opp.states.get(entity_id).state == STATE_CLOSED
 
     # test to see if it opens
-    await send_attributes_report.opp, cluster, {0: 1, 8: 0, 1: 100})
-    assert.opp.states.get(entity_id).state == STATE_OPEN
+    await send_attributes_report(opp, cluster, {0: 1, 8: 0, 1: 100})
+    assert opp.states.get(entity_id).state == STATE_OPEN
 
     # close from UI
     with patch(
@@ -187,11 +187,11 @@ async def test_cover(m1, opp, zha_device_joined_restored, zigpy_cover_device):
         assert cluster.request.call_args[1]["expect_reply"] is True
 
     # test rejoin
-    await async_test_rejoin.opp, zigpy_cover_device, [cluster], (1,))
-    assert.opp.states.get(entity_id).state == STATE_OPEN
+    await async_test_rejoin(opp, zigpy_cover_device, [cluster], (1,))
+    assert opp.states.get(entity_id).state == STATE_OPEN
 
 
-async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
+async def test_shade(opp, zha_device_joined_restored, zigpy_shade_device):
     """Test zha cover platform for shade device type."""
 
     # load up cover domain
@@ -202,21 +202,21 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
     entity_id = await find_entity_id(DOMAIN, zha_device, opp)
     assert entity_id is not None
 
-    await async_enable_traffic.opp, [zha_device], enabled=False)
+    await async_enable_traffic(opp, [zha_device], enabled=False)
     # test that the cover was created and that it is unavailable
-    assert.opp.states.get(entity_id).state == STATE_UNAVAILABLE
+    assert opp.states.get(entity_id).state == STATE_UNAVAILABLE
 
     # allow traffic to flow through the gateway and device
-    await async_enable_traffic.opp, [zha_device])
+    await async_enable_traffic(opp, [zha_device])
     await opp.async_block_till_done()
 
     # test that the state has changed from unavailable to off
-    await send_attributes_report.opp, cluster_on_off, {8: 0, 0: False, 1: 1})
-    assert.opp.states.get(entity_id).state == STATE_CLOSED
+    await send_attributes_report(opp, cluster_on_off, {8: 0, 0: False, 1: 1})
+    assert opp.states.get(entity_id).state == STATE_CLOSED
 
     # test to see if it opens
-    await send_attributes_report.opp, cluster_on_off, {8: 0, 0: True, 1: 1})
-    assert.opp.states.get(entity_id).state == STATE_OPEN
+    await send_attributes_report(opp, cluster_on_off, {8: 0, 0: True, 1: 1})
+    assert opp.states.get(entity_id).state == STATE_OPEN
 
     # close from UI command fails
     with patch("zigpy.zcl.Cluster.request", side_effect=asyncio.TimeoutError):
@@ -226,7 +226,7 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
         assert cluster_on_off.request.call_count == 1
         assert cluster_on_off.request.call_args[0][0] is False
         assert cluster_on_off.request.call_args[0][1] == 0x0000
-        assert.opp.states.get(entity_id).state == STATE_OPEN
+        assert opp.states.get(entity_id).state == STATE_OPEN
 
     with patch(
         "zigpy.zcl.Cluster.request", AsyncMock(return_value=[0x1, zcl_f.Status.SUCCESS])
@@ -237,11 +237,11 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
         assert cluster_on_off.request.call_count == 1
         assert cluster_on_off.request.call_args[0][0] is False
         assert cluster_on_off.request.call_args[0][1] == 0x0000
-        assert.opp.states.get(entity_id).state == STATE_CLOSED
+        assert opp.states.get(entity_id).state == STATE_CLOSED
 
     # open from UI command fails
     assert ATTR_CURRENT_POSITION not in.opp.states.get(entity_id).attributes
-    await send_attributes_report.opp, cluster_level, {0: 0})
+    await send_attributes_report(opp, cluster_level, {0: 0})
     with patch("zigpy.zcl.Cluster.request", side_effect=asyncio.TimeoutError):
         await opp.services.async_call(
             DOMAIN, SERVICE_OPEN_COVER, {"entity_id": entity_id}, blocking=True
@@ -249,7 +249,7 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
         assert cluster_on_off.request.call_count == 1
         assert cluster_on_off.request.call_args[0][0] is False
         assert cluster_on_off.request.call_args[0][1] == 0x0001
-        assert.opp.states.get(entity_id).state == STATE_CLOSED
+        assert opp.states.get(entity_id).state == STATE_CLOSED
 
     # open from UI succeeds
     with patch(
@@ -261,7 +261,7 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
         assert cluster_on_off.request.call_count == 1
         assert cluster_on_off.request.call_args[0][0] is False
         assert cluster_on_off.request.call_args[0][1] == 0x0001
-        assert.opp.states.get(entity_id).state == STATE_OPEN
+        assert opp.states.get(entity_id).state == STATE_OPEN
 
     # set position UI command fails
     with patch("zigpy.zcl.Cluster.request", side_effect=asyncio.TimeoutError):
@@ -275,7 +275,7 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
         assert cluster_level.request.call_args[0][0] is False
         assert cluster_level.request.call_args[0][1] == 0x0004
         assert int(cluster_level.request.call_args[0][3] * 100 / 255) == 47
-        assert.opp.states.get(entity_id).attributes[ATTR_CURRENT_POSITION] == 0
+        assert opp.states.get(entity_id).attributes[ATTR_CURRENT_POSITION] == 0
 
     # set position UI success
     with patch(
@@ -291,11 +291,11 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
         assert cluster_level.request.call_args[0][0] is False
         assert cluster_level.request.call_args[0][1] == 0x0004
         assert int(cluster_level.request.call_args[0][3] * 100 / 255) == 47
-        assert.opp.states.get(entity_id).attributes[ATTR_CURRENT_POSITION] == 47
+        assert opp.states.get(entity_id).attributes[ATTR_CURRENT_POSITION] == 47
 
     # report position change
-    await send_attributes_report.opp, cluster_level, {8: 0, 0: 100, 1: 1})
-    assert.opp.states.get(entity_id).attributes[ATTR_CURRENT_POSITION] == int(
+    await send_attributes_report(opp, cluster_level, {8: 0, 0: 100, 1: 1})
+    assert opp.states.get(entity_id).attributes[ATTR_CURRENT_POSITION] == int(
         100 * 100 / 255
     )
 
@@ -303,7 +303,7 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
     await async_test_rejoin(
         opp. zigpy_shade_device, [cluster_level, cluster_on_off], (1,)
     )
-    assert.opp.states.get(entity_id).state == STATE_OPEN
+    assert opp.states.get(entity_id).state == STATE_OPEN
 
     # test cover stop
     with patch("zigpy.zcl.Cluster.request", side_effect=asyncio.TimeoutError):
@@ -318,7 +318,7 @@ async def test_shade.opp, zha_device_joined_restored, zigpy_shade_device):
         assert cluster_level.request.call_args[0][1] in (0x0003, 0x0007)
 
 
-async def test_restore_state.opp, zha_device_restored, zigpy_shade_device):
+async def test_restore_state(opp, zha_device_restored, zigpy_shade_device):
     """Ensure states are restored on startup."""
 
     mock_restore_cache(
@@ -339,11 +339,11 @@ async def test_restore_state.opp, zha_device_restored, zigpy_shade_device):
     assert entity_id is not None
 
     # test that the cover was created and that it is unavailable
-    assert.opp.states.get(entity_id).state == STATE_OPEN
-    assert.opp.states.get(entity_id).attributes[ATTR_CURRENT_POSITION] == 50
+    assert opp.states.get(entity_id).state == STATE_OPEN
+    assert opp.states.get(entity_id).attributes[ATTR_CURRENT_POSITION] == 50
 
 
-async def test_keen_vent.opp, zha_device_joined_restored, zigpy_keen_vent):
+async def test_keen_vent(opp, zha_device_joined_restored, zigpy_keen_vent):
     """Test keen vent."""
 
     # load up cover domain
@@ -354,17 +354,17 @@ async def test_keen_vent.opp, zha_device_joined_restored, zigpy_keen_vent):
     entity_id = await find_entity_id(DOMAIN, zha_device, opp)
     assert entity_id is not None
 
-    await async_enable_traffic.opp, [zha_device], enabled=False)
+    await async_enable_traffic(opp, [zha_device], enabled=False)
     # test that the cover was created and that it is unavailable
-    assert.opp.states.get(entity_id).state == STATE_UNAVAILABLE
+    assert opp.states.get(entity_id).state == STATE_UNAVAILABLE
 
     # allow traffic to flow through the gateway and device
-    await async_enable_traffic.opp, [zha_device])
+    await async_enable_traffic(opp, [zha_device])
     await opp.async_block_till_done()
 
     # test that the state has changed from unavailable to off
-    await send_attributes_report.opp, cluster_on_off, {8: 0, 0: False, 1: 1})
-    assert.opp.states.get(entity_id).state == STATE_CLOSED
+    await send_attributes_report(opp, cluster_on_off, {8: 0, 0: False, 1: 1})
+    assert opp.states.get(entity_id).state == STATE_CLOSED
 
     # open from UI command fails
     p1 = patch.object(cluster_on_off, "request", side_effect=asyncio.TimeoutError)
@@ -378,7 +378,7 @@ async def test_keen_vent.opp, zha_device_joined_restored, zigpy_keen_vent):
         assert cluster_on_off.request.call_args[0][0] is False
         assert cluster_on_off.request.call_args[0][1] == 0x0001
         assert cluster_level.request.call_count == 1
-        assert.opp.states.get(entity_id).state == STATE_CLOSED
+        assert opp.states.get(entity_id).state == STATE_CLOSED
 
     # open from UI command success
     p1 = patch.object(cluster_on_off, "request", AsyncMock(return_value=[1, 0]))
@@ -393,11 +393,11 @@ async def test_keen_vent.opp, zha_device_joined_restored, zigpy_keen_vent):
         assert cluster_on_off.request.call_args[0][0] is False
         assert cluster_on_off.request.call_args[0][1] == 0x0001
         assert cluster_level.request.call_count == 1
-        assert.opp.states.get(entity_id).state == STATE_OPEN
-        assert.opp.states.get(entity_id).attributes[ATTR_CURRENT_POSITION] == 100
+        assert opp.states.get(entity_id).state == STATE_OPEN
+        assert opp.states.get(entity_id).attributes[ATTR_CURRENT_POSITION] == 100
 
 
-async def test_cover_remote.opp, zha_device_joined_restored, zigpy_cover_remote):
+async def test_cover_remote(opp, zha_device_joined_restored, zigpy_cover_remote):
     """Test zha cover remote."""
 
     # load up cover domain
@@ -406,7 +406,7 @@ async def test_cover_remote.opp, zha_device_joined_restored, zigpy_cover_remote)
     cluster = zigpy_cover_remote.endpoints[1].out_clusters[
         closures.WindowCovering.cluster_id
     ]
-    zha_events = async_capture_events.opp, "zha_event")
+    zha_events = async_capture_events(opp, "zha_event")
 
     # up command
     hdr = make_zcl_header(0, global_command=False)

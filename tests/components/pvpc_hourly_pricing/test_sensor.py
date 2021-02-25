@@ -40,20 +40,20 @@ async def test_sensor_availability(
         return mock_data["return_time"]
 
     with patch("openpeerpower.util.dt.utcnow", new=mock_now):
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
         caplog.clear()
         assert pvpc_aioclient_mock.call_count == 2
 
-        await _process_time_step.opp, mock_data, "price_21h", 0.13896)
-        await _process_time_step.opp, mock_data, "price_22h", 0.06893)
+        await _process_time_step(opp, mock_data, "price_21h", 0.13896)
+        await _process_time_step(opp, mock_data, "price_22h", 0.06893)
         assert pvpc_aioclient_mock.call_count == 4
-        await _process_time_step.opp, mock_data, "price_23h", 0.06935)
+        await _process_time_step(opp, mock_data, "price_23h", 0.06935)
         assert pvpc_aioclient_mock.call_count == 5
 
         # sensor has no more prices, state is "unavailable" from now on
-        await _process_time_step.opp, mock_data, value="unavailable")
-        await _process_time_step.opp, mock_data, value="unavailable")
+        await _process_time_step(opp, mock_data, value="unavailable")
+        await _process_time_step(opp, mock_data, value="unavailable")
         num_errors = sum(
             1
             for x in caplog.records
@@ -69,20 +69,20 @@ async def test_sensor_availability(
         with caplog.at_level(logging.WARNING):
             # silent mode
             for _ in range(21):
-                await _process_time_step.opp, mock_data, value="unavailable")
+                await _process_time_step(opp, mock_data, value="unavailable")
             assert pvpc_aioclient_mock.call_count == 30
             assert len(caplog.messages) == 0
 
             # warning about data access recovered
-            await _process_time_step.opp, mock_data, value="unavailable")
+            await _process_time_step(opp, mock_data, value="unavailable")
             assert pvpc_aioclient_mock.call_count == 31
             assert len(caplog.messages) == 1
             assert caplog.records[0].levelno == logging.WARNING
 
             # working ok again
-            await _process_time_step.opp, mock_data, "price_00h", value=0.06821)
+            await _process_time_step(opp, mock_data, "price_00h", value=0.06821)
             assert pvpc_aioclient_mock.call_count == 32
-            await _process_time_step.opp, mock_data, "price_01h", value=0.06627)
+            await _process_time_step(opp, mock_data, "price_01h", value=0.06627)
             assert pvpc_aioclient_mock.call_count == 33
             assert len(caplog.messages) == 1
             assert caplog.records[0].levelno == logging.WARNING

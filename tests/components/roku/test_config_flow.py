@@ -29,7 +29,7 @@ async def test_duplicate_error(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test that errors are shown when duplicates are added."""
-    await setup_integration.opp, aioclient_mock, skip_entry_setup=True)
+    await setup_integration(opp, aioclient_mock, skip_entry_setup=True)
     mock_connection(aioclient_mock)
 
     user_input = {CONF_HOST: HOST}
@@ -61,7 +61,7 @@ async def test_form(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the user step."""
-    await async_setup_component.opp, "persistent_notification", {})
+    await async_setup_component(opp, "persistent_notification", {})
     mock_connection(aioclient_mock)
 
     result = await opp.config_entries.flow.async_init(

@@ -157,7 +157,7 @@ async def test_setup_platform(opp, mock_healthybox):
     """Set up platform with one entity."""
     await async_setup_component(opp, ip.DOMAIN, VALID_CONFIG)
     await opp.async_block_till_done()
-    assert.opp.states.get(VALID_ENTITY_ID)
+    assert opp.states.get(VALID_ENTITY_ID)
 
 
 async def test_setup_platform_with_auth(opp, mock_healthybox):
@@ -168,14 +168,14 @@ async def test_setup_platform_with_auth(opp, mock_healthybox):
 
     await async_setup_component(opp, ip.DOMAIN, valid_config_auth)
     await opp.async_block_till_done()
-    assert.opp.states.get(VALID_ENTITY_ID)
+    assert opp.states.get(VALID_ENTITY_ID)
 
 
 async def test_process_image(opp, mock_healthybox, mock_image):
     """Test successful processing of an image."""
     await async_setup_component(opp, ip.DOMAIN, VALID_CONFIG)
     await opp.async_block_till_done()
-    assert.opp.states.get(VALID_ENTITY_ID)
+    assert opp.states.get(VALID_ENTITY_ID)
 
     face_events = []
 
@@ -219,7 +219,7 @@ async def test_process_image_errors(opp, mock_healthybox, mock_image, caplog):
     """Test process_image errors."""
     await async_setup_component(opp, ip.DOMAIN, VALID_CONFIG)
     await opp.async_block_till_done()
-    assert.opp.states.get(VALID_ENTITY_ID)
+    assert opp.states.get(VALID_ENTITY_ID)
 
     # Test connection error.
     with requests_mock.Mocker() as mock_req:
@@ -251,7 +251,7 @@ async def test_teach_service(
     """Test teaching of facebox."""
     await async_setup_component(opp, ip.DOMAIN, VALID_CONFIG)
     await opp.async_block_till_done()
-    assert.opp.states.get(VALID_ENTITY_ID)
+    assert opp.states.get(VALID_ENTITY_ID)
 
     # Patch out 'is_allowed_path' as the mock files aren't allowed
     opp.config.is_allowed_path = Mock(return_value=True)
@@ -325,6 +325,6 @@ async def test_setup_platform_with_name(opp, mock_healthybox):
 
     await async_setup_component(opp, ip.DOMAIN, valid_config_named)
     await opp.async_block_till_done()
-    assert.opp.states.get(named_entity_id)
+    assert opp.states.get(named_entity_id)
     state = opp.states.get(named_entity_id)
     assert state.attributes.get(CONF_FRIENDLY_NAME) == MOCK_NAME

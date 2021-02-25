@@ -18,7 +18,7 @@ DATA = {
 
 async def test_form.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -50,7 +50,7 @@ async def test_form.opp):
 async def test_form_cannot_connect.opp):
     """Test if invalid response or no connection returned from the API."""
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -71,7 +71,7 @@ async def test_form_cannot_connect.opp):
 
 async def test_with_unknown_error(opp):
     """Test with unknown error response from the API."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -93,7 +93,7 @@ async def test_with_unknown_error(opp):
 async def test_option_flow.opp):
     """Test option flow."""
     entry = MockConfigEntry(domain=DOMAIN, data=DATA)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     assert not entry.options
 

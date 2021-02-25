@@ -30,7 +30,7 @@ async def test_setup_missing_config(opp):
     """Test setup with missing configuration."""
     with mock.patch("openpeerpower.components.mfi.sensor.MFiClient") as mock_client:
         config = {"sensor": {"platform": "mfi"}}
-        assert await async_setup_component.opp, "sensor", config)
+        assert await async_setup_component(opp, "sensor", config)
         assert not mock_client.called
 
 
@@ -38,14 +38,14 @@ async def test_setup_failed_login.opp):
     """Test setup with login failure."""
     with mock.patch("openpeerpower.components.mfi.sensor.MFiClient") as mock_client:
         mock_client.side_effect = FailedToLogin
-        assert not PLATFORM.setup_platform.opp, dict(GOOD_CONFIG), None)
+        assert not PLATFORM.setup_platform(opp, dict(GOOD_CONFIG), None)
 
 
 async def test_setup_failed_connect.opp):
     """Test setup with connection failure."""
     with mock.patch("openpeerpower.components.mfi.sensor.MFiClient") as mock_client:
         mock_client.side_effect = requests.exceptions.ConnectionError
-        assert not PLATFORM.setup_platform.opp, dict(GOOD_CONFIG), None)
+        assert not PLATFORM.setup_platform(opp, dict(GOOD_CONFIG), None)
 
 
 async def test_setup_minimum.opp):
@@ -53,7 +53,7 @@ async def test_setup_minimum.opp):
     with mock.patch("openpeerpower.components.mfi.sensor.MFiClient") as mock_client:
         config = dict(GOOD_CONFIG)
         del config[THING]["port"]
-        assert await async_setup_component.opp, COMPONENT.DOMAIN, config)
+        assert await async_setup_component(opp, COMPONENT.DOMAIN, config)
         await opp.async_block_till_done()
         assert mock_client.call_count == 1
         assert mock_client.call_args == mock.call(
@@ -66,7 +66,7 @@ async def test_setup_with_port.opp):
     with mock.patch("openpeerpower.components.mfi.sensor.MFiClient") as mock_client:
         config = dict(GOOD_CONFIG)
         config[THING]["port"] = 6123
-        assert await async_setup_component.opp, COMPONENT.DOMAIN, config)
+        assert await async_setup_component(opp, COMPONENT.DOMAIN, config)
         await opp.async_block_till_done()
         assert mock_client.call_count == 1
         assert mock_client.call_args == mock.call(
@@ -81,7 +81,7 @@ async def test_setup_with_tls_disabled.opp):
         del config[THING]["port"]
         config[THING]["ssl"] = False
         config[THING]["verify_ssl"] = False
-        assert await async_setup_component.opp, COMPONENT.DOMAIN, config)
+        assert await async_setup_component(opp, COMPONENT.DOMAIN, config)
         await opp.async_block_till_done()
         assert mock_client.call_count == 1
         assert mock_client.call_args == mock.call(
@@ -104,7 +104,7 @@ async def test_setup_adds_proper_devices.opp):
         mock_client.return_value.get_devices.return_value = [
             mock.MagicMock(ports=ports)
         ]
-        assert await async_setup_component.opp, COMPONENT.DOMAIN, GOOD_CONFIG)
+        assert await async_setup_component(opp, COMPONENT.DOMAIN, GOOD_CONFIG)
         await opp.async_block_till_done()
         for ident, port in ports.items():
             if ident != "bad":
@@ -119,7 +119,7 @@ def port_fixture():
 
 
 @pytest.fixture(name="sensor")
-def sensor_fixture.opp, port):
+def sensor_fixture(opp, port):
     """Sensor fixture."""
     return mfi.MfiSensor(port, opp)
 

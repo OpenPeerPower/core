@@ -18,14 +18,14 @@ from openpeerpower.helpers.dispatcher import async_dispatcher_send
 from .conftest import setup_platform
 
 
-async def test_entity_and_device_attributes.opp, device_factory):
+async def test_entity_and_device_attributes(opp, device_factory):
     """Test the attributes of the entity are correct."""
     # Arrange
     device = device_factory("Switch_1", [Capability.switch], {Attribute.switch: "on"})
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
     device_registry = await opp.helpers.device_registry.async_get_registry()
     # Act
-    await setup_platform.opp, SWITCH_DOMAIN, devices=[device])
+    await setup_platform(opp, SWITCH_DOMAIN, devices=[device])
     # Assert
     entry = entity_registry.async_get("switch.switch_1")
     assert entry
@@ -38,11 +38,11 @@ async def test_entity_and_device_attributes.opp, device_factory):
     assert entry.manufacturer == "Unavailable"
 
 
-async def test_turn_off.opp, device_factory):
+async def test_turn_off(opp, device_factory):
     """Test the switch turns of successfully."""
     # Arrange
     device = device_factory("Switch_1", [Capability.switch], {Attribute.switch: "on"})
-    await setup_platform.opp, SWITCH_DOMAIN, devices=[device])
+    await setup_platform(opp, SWITCH_DOMAIN, devices=[device])
     # Act
     await opp.services.async_call(
         "switch", "turn_off", {"entity_id": "switch.switch_1"}, blocking=True
@@ -53,7 +53,7 @@ async def test_turn_off.opp, device_factory):
     assert state.state == "off"
 
 
-async def test_turn_on.opp, device_factory):
+async def test_turn_on(opp, device_factory):
     """Test the switch turns of successfully."""
     # Arrange
     device = device_factory(
@@ -61,7 +61,7 @@ async def test_turn_on.opp, device_factory):
         [Capability.switch, Capability.power_meter, Capability.energy_meter],
         {Attribute.switch: "off", Attribute.power: 355, Attribute.energy: 11.422},
     )
-    await setup_platform.opp, SWITCH_DOMAIN, devices=[device])
+    await setup_platform(opp, SWITCH_DOMAIN, devices=[device])
     # Act
     await opp.services.async_call(
         "switch", "turn_on", {"entity_id": "switch.switch_1"}, blocking=True
@@ -74,14 +74,14 @@ async def test_turn_on.opp, device_factory):
     assert state.attributes[ATTR_TODAY_ENERGY_KWH] == 11.422
 
 
-async def test_update_from_signal.opp, device_factory):
+async def test_update_from_signal(opp, device_factory):
     """Test the switch updates when receiving a signal."""
     # Arrange
     device = device_factory("Switch_1", [Capability.switch], {Attribute.switch: "off"})
-    await setup_platform.opp, SWITCH_DOMAIN, devices=[device])
+    await setup_platform(opp, SWITCH_DOMAIN, devices=[device])
     await device.switch_on(True)
     # Act
-    async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
+    async_dispatcher_send(opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
     await opp.async_block_till_done()
     state = opp.states.get("switch.switch_1")
@@ -89,12 +89,12 @@ async def test_update_from_signal.opp, device_factory):
     assert state.state == "on"
 
 
-async def test_unload_config_entry.opp, device_factory):
+async def test_unload_config_entry(opp, device_factory):
     """Test the switch is removed when the config entry is unloaded."""
     # Arrange
     device = device_factory("Switch 1", [Capability.switch], {Attribute.switch: "on"})
-    config_entry = await setup_platform.opp, SWITCH_DOMAIN, devices=[device])
+    config_entry = await setup_platform(opp, SWITCH_DOMAIN, devices=[device])
     # Act
     await opp.config_entries.async_forward_entry_unload(config_entry, "switch")
     # Assert
-    assert.opp.states.get("switch.switch_1").state == STATE_UNAVAILABLE
+    assert opp.states.get("switch.switch_1").state == STATE_UNAVAILABLE

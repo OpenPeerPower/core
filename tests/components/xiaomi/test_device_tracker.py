@@ -157,7 +157,7 @@ async def test_config(xiaomi_mock, opp):
             }
         )
     }
-    xiaomi.get_scanner.opp, config)
+    xiaomi.get_scanner(opp, config)
     assert xiaomi_mock.call_count == 1
     assert xiaomi_mock.call_args == call(config[DOMAIN])
     call_arg = xiaomi_mock.call_args[0][0]
@@ -183,7 +183,7 @@ async def test_config_full(xiaomi_mock, opp):
             }
         )
     }
-    xiaomi.get_scanner.opp, config)
+    xiaomi.get_scanner(opp, config)
     assert xiaomi_mock.call_count == 1
     assert xiaomi_mock.call_args == call(config[DOMAIN])
     call_arg = xiaomi_mock.call_args[0][0]
@@ -207,7 +207,7 @@ async def test_invalid_credential(mock_get, mock_post, opp):
             }
         )
     }
-    assert get_scanner.opp, config) is None
+    assert get_scanner(opp, config) is None
 
 
 @patch("requests.get", side_effect=mocked_requests)
@@ -224,7 +224,7 @@ async def test_valid_credential(mock_get, mock_post, opp):
             }
         )
     }
-    scanner = get_scanner.opp, config)
+    scanner = get_scanner(opp, config)
     assert scanner is not None
     assert 2 == len(scanner.scan_devices())
     assert "Device1" == scanner.get_device_name("23:83:BF:F6:38:A0")
@@ -248,7 +248,7 @@ async def test_token_timed_out(mock_get, mock_post, opp):
             }
         )
     }
-    scanner = get_scanner.opp, config)
+    scanner = get_scanner(opp, config)
     assert scanner is not None
     assert 2 == len(scanner.scan_devices())
     assert "Device1" == scanner.get_device_name("23:83:BF:F6:38:A0")

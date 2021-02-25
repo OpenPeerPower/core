@@ -25,7 +25,7 @@ async def test_unload_config_entry(
 ) -> None:
     """Test the WLED configuration entry unloading."""
     entry = await init_integration(opp, aioclient_mock)
-    assert.opp.data[DOMAIN]
+    assert opp.data[DOMAIN]
 
     await opp.config_entries.async_unload(entry.entry_id)
     await opp.async_block_till_done()
@@ -36,5 +36,5 @@ async def test_setting_unique_id(opp, aioclient_mock):
     """Test we set unique ID if not set yet."""
     entry = await init_integration(opp, aioclient_mock)
 
-    assert.opp.data[DOMAIN]
+    assert opp.data[DOMAIN]
     assert entry.unique_id == "aabbccddeeff"

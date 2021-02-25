@@ -105,7 +105,7 @@ def make_stream_url_response(
     )
 
 
-async def async_setup_camera.opp, traits={}, auth=None):
+async def async_setup_camera(opp, traits={}, auth=None):
     """Set up the platform and prerequisites."""
     devices = {}
     if traits:
@@ -117,13 +117,13 @@ async def async_setup_camera.opp, traits={}, auth=None):
             },
             auth=auth,
         )
-    return await async_setup_sdm_platform.opp, PLATFORM, devices)
+    return await async_setup_sdm_platform(opp, PLATFORM, devices)
 
 
-async def fire_alarm.opp, point_in_time):
+async def fire_alarm(opp, point_in_time):
     """Fire an alarm and wait for callbacks to run."""
     with patch("openpeerpower.util.dt.utcnow", return_value=point_in_time):
-        async_fire_time_changed.opp, point_in_time)
+        async_fire_time_changed(opp, point_in_time)
         await opp.async_block_till_done()
 
 
@@ -137,7 +137,7 @@ async def async_get_image.opp):
         autopatch=True,
         return_value=IMAGE_BYTES_FROM_STREAM,
     ):
-        return await camera.async_get_image.opp, "camera.my_camera")
+        return await camera.async_get_image(opp, "camera.my_camera")
 
 
 async def test_no_devices.opp):
@@ -161,7 +161,7 @@ async def test_ineligible_device.opp):
 
 async def test_camera_device.opp):
     """Test a basic camera with a live stream."""
-    await async_setup_camera.opp, DEVICE_TRAITS)
+    await async_setup_camera(opp, DEVICE_TRAITS)
 
     assert len.opp.states.async_all()) == 1
     camera = opp.states.get("camera.my_camera")
@@ -181,24 +181,24 @@ async def test_camera_device.opp):
     assert device.identifiers == {("nest", DEVICE_ID)}
 
 
-async def test_camera_stream.opp, auth):
+async def test_camera_stream(opp, auth):
     """Test a basic camera and fetch its live stream."""
     auth.responses = [make_stream_url_response()]
-    await async_setup_camera.opp, DEVICE_TRAITS, auth=auth)
+    await async_setup_camera(opp, DEVICE_TRAITS, auth=auth)
 
     assert len.opp.states.async_all()) == 1
     cam = opp.states.get("camera.my_camera")
     assert cam is not None
     assert cam.state == STATE_IDLE
 
-    stream_source = await camera.async_get_stream_source.opp, "camera.my_camera")
+    stream_source = await camera.async_get_stream_source(opp, "camera.my_camera")
     assert stream_source == "rtsp://some/url?auth=g.0.streamingToken"
 
     image = await async_get_image.opp)
     assert image.content == IMAGE_BYTES_FROM_STREAM
 
 
-async def test_camera_stream_missing_trait.opp, auth):
+async def test_camera_stream_missing_trait(opp, auth):
     """Test fetching a video stream when not supported by the API."""
     traits = {
         "sdm.devices.traits.Info": {
@@ -212,14 +212,14 @@ async def test_camera_stream_missing_trait.opp, auth):
         },
     }
 
-    await async_setup_camera.opp, traits, auth=auth)
+    await async_setup_camera(opp, traits, auth=auth)
 
     assert len.opp.states.async_all()) == 1
     cam = opp.states.get("camera.my_camera")
     assert cam is not None
     assert cam.state == STATE_IDLE
 
-    stream_source = await camera.async_get_stream_source.opp, "camera.my_camera")
+    stream_source = await camera.async_get_stream_source(opp, "camera.my_camera")
     assert stream_source is None
 
     # Unable to get an image from the live stream
@@ -227,7 +227,7 @@ async def test_camera_stream_missing_trait.opp, auth):
         await async_get_image.opp)
 
 
-async def test_refresh_expired_stream_token.opp, auth):
+async def test_refresh_expired_stream_token(opp, auth):
     """Test a camera stream expiration and refresh."""
     now = utcnow()
     stream_1_expiration = now + datetime.timedelta(seconds=90)
@@ -246,7 +246,7 @@ async def test_refresh_expired_stream_token.opp, auth):
         DEVICE_TRAITS,
         auth=auth,
     )
-    assert await async_setup_component.opp, "stream", {})
+    assert await async_setup_component(opp, "stream", {})
 
     assert len.opp.states.async_all()) == 1
     cam = opp.states.get("camera.my_camera")
@@ -255,37 +255,37 @@ async def test_refresh_expired_stream_token.opp, auth):
 
     # Request a stream for the camera entity to exercise nest cam + camera interaction
     # and shutdown on url expiration
-    await camera.async_request_stream.opp, cam.entity_id, "hls")
+    await camera.async_request_stream(opp, cam.entity_id, "hls")
 
-    stream_source = await camera.async_get_stream_source.opp, "camera.my_camera")
+    stream_source = await camera.async_get_stream_source(opp, "camera.my_camera")
     assert stream_source == "rtsp://some/url?auth=g.1.streamingToken"
 
     # Fire alarm before stream_1_expiration. The stream url is not refreshed
     next_update = now + datetime.timedelta(seconds=25)
-    await fire_alarm.opp, next_update)
-    stream_source = await camera.async_get_stream_source.opp, "camera.my_camera")
+    await fire_alarm(opp, next_update)
+    stream_source = await camera.async_get_stream_source(opp, "camera.my_camera")
     assert stream_source == "rtsp://some/url?auth=g.1.streamingToken"
 
     # Alarm is near stream_1_expiration which causes the stream extension
     next_update = now + datetime.timedelta(seconds=65)
-    await fire_alarm.opp, next_update)
-    stream_source = await camera.async_get_stream_source.opp, "camera.my_camera")
+    await fire_alarm(opp, next_update)
+    stream_source = await camera.async_get_stream_source(opp, "camera.my_camera")
     assert stream_source == "rtsp://some/url?auth=g.2.streamingToken"
 
     # Next alarm is well before stream_2_expiration, no change
     next_update = now + datetime.timedelta(seconds=100)
-    await fire_alarm.opp, next_update)
-    stream_source = await camera.async_get_stream_source.opp, "camera.my_camera")
+    await fire_alarm(opp, next_update)
+    stream_source = await camera.async_get_stream_source(opp, "camera.my_camera")
     assert stream_source == "rtsp://some/url?auth=g.2.streamingToken"
 
     # Alarm is near stream_2_expiration, causing it to be extended
     next_update = now + datetime.timedelta(seconds=155)
-    await fire_alarm.opp, next_update)
-    stream_source = await camera.async_get_stream_source.opp, "camera.my_camera")
+    await fire_alarm(opp, next_update)
+    stream_source = await camera.async_get_stream_source(opp, "camera.my_camera")
     assert stream_source == "rtsp://some/url?auth=g.3.streamingToken"
 
 
-async def test_stream_response_already_expired.opp, auth):
+async def test_stream_response_already_expired(opp, auth):
     """Test a API response returning an expired stream url."""
     now = utcnow()
     stream_1_expiration = now + datetime.timedelta(seconds=-90)
@@ -294,7 +294,7 @@ async def test_stream_response_already_expired.opp, auth):
         make_stream_url_response(stream_1_expiration, token_num=1),
         make_stream_url_response(stream_2_expiration, token_num=2),
     ]
-    await async_setup_camera.opp, DEVICE_TRAITS, auth=auth)
+    await async_setup_camera(opp, DEVICE_TRAITS, auth=auth)
 
     assert len.opp.states.async_all()) == 1
     cam = opp.states.get("camera.my_camera")
@@ -302,17 +302,17 @@ async def test_stream_response_already_expired.opp, auth):
     assert cam.state == STATE_IDLE
 
     # The stream is expired, but we return it anyway
-    stream_source = await camera.async_get_stream_source.opp, "camera.my_camera")
+    stream_source = await camera.async_get_stream_source(opp, "camera.my_camera")
     assert stream_source == "rtsp://some/url?auth=g.1.streamingToken"
 
-    await fire_alarm.opp, now)
+    await fire_alarm(opp, now)
 
     # Second attempt sees that the stream is expired and refreshes
-    stream_source = await camera.async_get_stream_source.opp, "camera.my_camera")
+    stream_source = await camera.async_get_stream_source(opp, "camera.my_camera")
     assert stream_source == "rtsp://some/url?auth=g.2.streamingToken"
 
 
-async def test_camera_removed.opp, auth):
+async def test_camera_removed(opp, auth):
     """Test case where entities are removed and stream tokens expired."""
     subscriber = await async_setup_camera(
         opp,
@@ -330,7 +330,7 @@ async def test_camera_removed.opp, auth):
         make_stream_url_response(),
         aiohttp.web.json_response({"results": {}}),
     ]
-    stream_source = await camera.async_get_stream_source.opp, "camera.my_camera")
+    stream_source = await camera.async_get_stream_source(opp, "camera.my_camera")
     assert stream_source == "rtsp://some/url?auth=g.0.streamingToken"
 
     # Fetch an event image, exercising cleanup on remove
@@ -349,7 +349,7 @@ async def test_camera_removed.opp, auth):
     assert len.opp.states.async_all()) == 0
 
 
-async def test_refresh_expired_stream_failure.opp, auth):
+async def test_refresh_expired_stream_failure(opp, auth):
     """Tests a failure when refreshing the stream."""
     now = utcnow()
     stream_1_expiration = now + datetime.timedelta(seconds=90)
@@ -361,34 +361,34 @@ async def test_refresh_expired_stream_failure.opp, auth):
         # Next attempt to get a stream fetches a new url
         make_stream_url_response(expiration=stream_2_expiration, token_num=2),
     ]
-    await async_setup_camera.opp, DEVICE_TRAITS, auth=auth)
+    await async_setup_camera(opp, DEVICE_TRAITS, auth=auth)
 
     assert len.opp.states.async_all()) == 1
     cam = opp.states.get("camera.my_camera")
     assert cam is not None
     assert cam.state == STATE_IDLE
 
-    stream_source = await camera.async_get_stream_source.opp, "camera.my_camera")
+    stream_source = await camera.async_get_stream_source(opp, "camera.my_camera")
     assert stream_source == "rtsp://some/url?auth=g.1.streamingToken"
 
     # Fire alarm when stream is nearing expiration, causing it to be extended.
     # The stream expires.
     next_update = now + datetime.timedelta(seconds=65)
-    await fire_alarm.opp, next_update)
+    await fire_alarm(opp, next_update)
 
     # The stream is entirely refreshed
-    stream_source = await camera.async_get_stream_source.opp, "camera.my_camera")
+    stream_source = await camera.async_get_stream_source(opp, "camera.my_camera")
     assert stream_source == "rtsp://some/url?auth=g.2.streamingToken"
 
 
-async def test_camera_image_from_last_event.opp, auth):
+async def test_camera_image_from_last_event(opp, auth):
     """Test an image generated from an event."""
     # The subscriber receives a message related to an image event. The camera
     # holds on to the event message. When the test asks for a capera snapshot
     # it exchanges the event id for an image url and fetches the image.
-    subscriber = await async_setup_camera.opp, DEVICE_TRAITS, auth=auth)
+    subscriber = await async_setup_camera(opp, DEVICE_TRAITS, auth=auth)
     assert len.opp.states.async_all()) == 1
-    assert.opp.states.get("camera.my_camera")
+    assert opp.states.get("camera.my_camera")
 
     # Simulate a pubsub message received by the subscriber with a motion event.
     await subscriber.async_receive_event(make_motion_event())
@@ -415,14 +415,14 @@ async def test_camera_image_from_last_event.opp, auth):
     assert auth.headers == IMAGE_AUTHORIZATION_HEADERS
 
 
-async def test_camera_image_from_event_not_supported.opp, auth):
+async def test_camera_image_from_event_not_supported(opp, auth):
     """Test fallback to stream image when event images are not supported."""
     # Create a device that does not support the CameraEventImgae trait
     traits = DEVICE_TRAITS.copy()
     del traits["sdm.devices.traits.CameraEventImage"]
-    subscriber = await async_setup_camera.opp, traits, auth=auth)
+    subscriber = await async_setup_camera(opp, traits, auth=auth)
     assert len.opp.states.async_all()) == 1
-    assert.opp.states.get("camera.my_camera")
+    assert opp.states.get("camera.my_camera")
 
     await subscriber.async_receive_event(make_motion_event())
     await opp.async_block_till_done()
@@ -434,11 +434,11 @@ async def test_camera_image_from_event_not_supported.opp, auth):
     assert image.content == IMAGE_BYTES_FROM_STREAM
 
 
-async def test_generate_event_image_url_failure.opp, auth):
+async def test_generate_event_image_url_failure(opp, auth):
     """Test fallback to stream on failure to create an image url."""
-    subscriber = await async_setup_camera.opp, DEVICE_TRAITS, auth=auth)
+    subscriber = await async_setup_camera(opp, DEVICE_TRAITS, auth=auth)
     assert len.opp.states.async_all()) == 1
-    assert.opp.states.get("camera.my_camera")
+    assert opp.states.get("camera.my_camera")
 
     await subscriber.async_receive_event(make_motion_event())
     await opp.async_block_till_done()
@@ -454,11 +454,11 @@ async def test_generate_event_image_url_failure.opp, auth):
     assert image.content == IMAGE_BYTES_FROM_STREAM
 
 
-async def test_fetch_event_image_failure.opp, auth):
+async def test_fetch_event_image_failure(opp, auth):
     """Test fallback to a stream on image download failure."""
-    subscriber = await async_setup_camera.opp, DEVICE_TRAITS, auth=auth)
+    subscriber = await async_setup_camera(opp, DEVICE_TRAITS, auth=auth)
     assert len.opp.states.async_all()) == 1
-    assert.opp.states.get("camera.my_camera")
+    assert opp.states.get("camera.my_camera")
 
     await subscriber.async_receive_event(make_motion_event())
     await opp.async_block_till_done()
@@ -476,11 +476,11 @@ async def test_fetch_event_image_failure.opp, auth):
     assert image.content == IMAGE_BYTES_FROM_STREAM
 
 
-async def test_event_image_expired.opp, auth):
+async def test_event_image_expired(opp, auth):
     """Test fallback for an event event image that has expired."""
-    subscriber = await async_setup_camera.opp, DEVICE_TRAITS, auth=auth)
+    subscriber = await async_setup_camera(opp, DEVICE_TRAITS, auth=auth)
     assert len.opp.states.async_all()) == 1
-    assert.opp.states.get("camera.my_camera")
+    assert opp.states.get("camera.my_camera")
 
     # Simulate a pubsub message has already expired
     event_timestamp = utcnow() - datetime.timedelta(seconds=40)
@@ -494,11 +494,11 @@ async def test_event_image_expired.opp, auth):
     assert image.content == IMAGE_BYTES_FROM_STREAM
 
 
-async def test_event_image_becomes_expired.opp, auth):
+async def test_event_image_becomes_expired(opp, auth):
     """Test fallback for an event event image that has been cleaned up on expiration."""
-    subscriber = await async_setup_camera.opp, DEVICE_TRAITS, auth=auth)
+    subscriber = await async_setup_camera(opp, DEVICE_TRAITS, auth=auth)
     assert len.opp.states.async_all()) == 1
-    assert.opp.states.get("camera.my_camera")
+    assert opp.states.get("camera.my_camera")
 
     event_timestamp = utcnow()
     await subscriber.async_receive_event(make_motion_event(timestamp=event_timestamp))
@@ -519,7 +519,7 @@ async def test_event_image_becomes_expired.opp, auth):
 
     # Event image is still valid before expiration
     next_update = event_timestamp + datetime.timedelta(seconds=25)
-    await fire_alarm.opp, next_update)
+    await fire_alarm(opp, next_update)
 
     image = await async_get_image.opp)
     assert image.content == IMAGE_BYTES_FROM_EVENT
@@ -530,17 +530,17 @@ async def test_event_image_becomes_expired.opp, auth):
     # alarm behavior only. That is, the library may still think the event is
     # active even though Open Peer Power does not due to patching time.
     next_update = event_timestamp + datetime.timedelta(seconds=180)
-    await fire_alarm.opp, next_update)
+    await fire_alarm(opp, next_update)
 
     image = await async_get_image.opp)
     assert image.content == b"updated image bytes"
 
 
-async def test_multiple_event_images.opp, auth):
+async def test_multiple_event_images(opp, auth):
     """Test fallback for an event event image that has been cleaned up on expiration."""
-    subscriber = await async_setup_camera.opp, DEVICE_TRAITS, auth=auth)
+    subscriber = await async_setup_camera(opp, DEVICE_TRAITS, auth=auth)
     assert len.opp.states.async_all()) == 1
-    assert.opp.states.get("camera.my_camera")
+    assert opp.states.get("camera.my_camera")
 
     event_timestamp = utcnow()
     await subscriber.async_receive_event(make_motion_event(timestamp=event_timestamp))

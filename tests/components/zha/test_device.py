@@ -94,10 +94,10 @@ async def ota_zha_device(zha_device_restored, zigpy_device_mock):
     return zha_device
 
 
-def _send_time_changed.opp, seconds):
+def _send_time_changed(opp, seconds):
     """Send a time changed event."""
     now = dt_util.utcnow() + timedelta(seconds=seconds)
-    async_fire_time_changed.opp, now)
+    async_fire_time_changed(opp, now)
 
 
 @patch(
@@ -111,13 +111,13 @@ async def test_check_available_success(
 
     # pylint: disable=protected-access
     zha_device = await zha_device_restored(device_with_basic_channel)
-    await async_enable_traffic.opp, [zha_device])
+    await async_enable_traffic(opp, [zha_device])
     basic_ch = device_with_basic_channel.endpoints[3].basic
 
     basic_ch.read_attributes.reset_mock()
     device_with_basic_channel.last_seen = None
     assert zha_device.available is True
-    _send_time_changed.opp, zha_core_device.CONSIDER_UNAVAILABLE_MAINS + 2)
+    _send_time_changed(opp, zha_core_device.CONSIDER_UNAVAILABLE_MAINS + 2)
     await opp.async_block_till_done()
     assert zha_device.available is False
     assert basic_ch.read_attributes.await_count == 0
@@ -133,21 +133,21 @@ async def test_check_available_success(
     basic_ch.read_attributes.side_effect = _update_last_seen
 
     # successfully ping zigpy device, but zha_device is not yet available
-    _send_time_changed.opp, 91)
+    _send_time_changed(opp, 91)
     await opp.async_block_till_done()
     assert basic_ch.read_attributes.await_count == 1
     assert basic_ch.read_attributes.await_args[0][0] == ["manufacturer"]
     assert zha_device.available is False
 
     # There was traffic from the device: pings, but not yet available
-    _send_time_changed.opp, 91)
+    _send_time_changed(opp, 91)
     await opp.async_block_till_done()
     assert basic_ch.read_attributes.await_count == 2
     assert basic_ch.read_attributes.await_args[0][0] == ["manufacturer"]
     assert zha_device.available is False
 
     # There was traffic from the device: don't try to ping, marked as available
-    _send_time_changed.opp, 91)
+    _send_time_changed(opp, 91)
     await opp.async_block_till_done()
     assert basic_ch.read_attributes.await_count == 2
     assert basic_ch.read_attributes.await_args[0][0] == ["manufacturer"]
@@ -165,7 +165,7 @@ async def test_check_available_unsuccessful(
 
     # pylint: disable=protected-access
     zha_device = await zha_device_restored(device_with_basic_channel)
-    await async_enable_traffic.opp, [zha_device])
+    await async_enable_traffic(opp, [zha_device])
     basic_ch = device_with_basic_channel.endpoints[3].basic
 
     assert zha_device.available is True
@@ -176,21 +176,21 @@ async def test_check_available_unsuccessful(
     )
 
     # unsuccessfuly ping zigpy device, but zha_device is still available
-    _send_time_changed.opp, 91)
+    _send_time_changed(opp, 91)
     await opp.async_block_till_done()
     assert basic_ch.read_attributes.await_count == 1
     assert basic_ch.read_attributes.await_args[0][0] == ["manufacturer"]
     assert zha_device.available is True
 
     # still no traffic, but zha_device is still available
-    _send_time_changed.opp, 91)
+    _send_time_changed(opp, 91)
     await opp.async_block_till_done()
     assert basic_ch.read_attributes.await_count == 2
     assert basic_ch.read_attributes.await_args[0][0] == ["manufacturer"]
     assert zha_device.available is True
 
     # not even trying to update, device is unavailble
-    _send_time_changed.opp, 91)
+    _send_time_changed(opp, 91)
     await opp.async_block_till_done()
     assert basic_ch.read_attributes.await_count == 2
     assert basic_ch.read_attributes.await_args[0][0] == ["manufacturer"]
@@ -208,7 +208,7 @@ async def test_check_available_no_basic_channel(
 
     # pylint: disable=protected-access
     zha_device = await zha_device_restored(device_without_basic_channel)
-    await async_enable_traffic.opp, [zha_device])
+    await async_enable_traffic(opp, [zha_device])
 
     assert zha_device.available is True
 
@@ -217,13 +217,13 @@ async def test_check_available_no_basic_channel(
     )
 
     assert "does not have a mandatory basic cluster" not in caplog.text
-    _send_time_changed.opp, 91)
+    _send_time_changed(opp, 91)
     await opp.async_block_till_done()
     assert zha_device.available is False
     assert "does not have a mandatory basic cluster" in caplog.text
 
 
-async def test_ota_sw_version.opp, ota_zha_device):
+async def test_ota_sw_version(opp, ota_zha_device):
     """Test device entry gets sw_version updated via OTA channel."""
 
     ota_ch = ota_zha_device.channels.pools[0].client_channels["1:0x0019"]
@@ -295,9 +295,9 @@ async def test_device_restore_availability(
 
     await opp.async_block_till_done()
     # ensure the switch entity was created
-    assert.opp.states.get(entity_id).state is not None
+    assert opp.states.get(entity_id).state is not None
     assert zha_device.available is is_available
     if is_available:
-        assert.opp.states.get(entity_id).state == STATE_OFF
+        assert opp.states.get(entity_id).state == STATE_OFF
     else:
-        assert.opp.states.get(entity_id).state == STATE_UNAVAILABLE
+        assert opp.states.get(entity_id).state == STATE_UNAVAILABLE

@@ -238,8 +238,8 @@ async def test_attach_entity_component_collection(opp):
         ],
     )
 
-    assert.opp.states.get("test.mock_1").name == "Mock 1"
-    assert.opp.states.get("test.mock_1").state == "initial"
+    assert opp.states.get("test.mock_1").name == "Mock 1"
+    assert opp.states.get("test.mock_1").state == "initial"
 
     await coll.notify_changes(
         [
@@ -251,14 +251,14 @@ async def test_attach_entity_component_collection(opp):
         ],
     )
 
-    assert.opp.states.get("test.mock_1").name == "Mock 1 updated"
-    assert.opp.states.get("test.mock_1").state == "second"
+    assert opp.states.get("test.mock_1").name == "Mock 1 updated"
+    assert opp.states.get("test.mock_1").state == "second"
 
     await coll.notify_changes(
         [collection.CollectionChangeSet(collection.CHANGE_REMOVED, "mock_id", None)],
     )
 
-    assert.opp.states.get("test.mock_1") is None
+    assert opp.states.get("test.mock_1") is None
 
 
 async def test_storage_collection_websocket(opp, opp_ws_client):

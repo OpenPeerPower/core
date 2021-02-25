@@ -55,12 +55,12 @@ async def test_constructor_loads_info_from_config(opp):
     )
 
 
-async def test_remote_services.opp, mock_cloud_fixture, opp_read_only_user):
+async def test_remote_services(opp, mock_cloud_fixture, opp_read_only_user):
     """Setup cloud component and test services."""
     cloud = opp.data[DOMAIN]
 
-    assert.opp.services.has_service(DOMAIN, "remote_connect")
-    assert.opp.services.has_service(DOMAIN, "remote_disconnect")
+    assert opp.services.has_service(DOMAIN, "remote_connect")
+    assert opp.services.has_service(DOMAIN, "remote_disconnect")
 
     with patch(.opp_nabucasa.remote.RemoteUI.connect") as mock_connect:
         await opp.services.async_call(DOMAIN, "remote_connect", blocking=True)
@@ -96,7 +96,7 @@ async def test_remote_services.opp, mock_cloud_fixture, opp_read_only_user):
     assert mock_disconnect.called is False
 
 
-async def test_startup_shutdown_events.opp, mock_cloud_fixture):
+async def test_startup_shutdown_events(opp, mock_cloud_fixture):
     """Test if the cloud will start on startup event."""
     with patch(.opp_nabucasa.Cloud.stop") as mock_stop:
         opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
@@ -105,7 +105,7 @@ async def test_startup_shutdown_events.opp, mock_cloud_fixture):
     assert mock_stop.called
 
 
-async def test_setup_existing_cloud_user.opp, opp_storage):
+async def test_setup_existing_cloud_user(opp, opp_storage):
     """Test setup with API push default data."""
     user = await opp.auth.async_create_system_user("Cloud test")
     opp.storage[STORAGE_KEY] = {"version": 1, "data": {"cloud_user": user.id}}
@@ -126,10 +126,10 @@ async def test_setup_existing_cloud_user.opp, opp_storage):
         )
         assert result
 
-    assert.opp_storage[STORAGE_KEY]["data"]["cloud_user"] == user.id
+    assert opp_storage[STORAGE_KEY]["data"]["cloud_user"] == user.id
 
 
-async def test_on_connect.opp, mock_cloud_fixture):
+async def test_on_connect(opp, mock_cloud_fixture):
     """Test cloud on connect triggers."""
     cl = opp.data["cloud"]
 
@@ -150,7 +150,7 @@ async def test_on_connect.opp, mock_cloud_fixture):
     assert len(mock_load.mock_calls) == 0
 
 
-async def test_remote_ui_url.opp, mock_cloud_fixture):
+async def test_remote_ui_url(opp, mock_cloud_fixture):
     """Test getting remote ui url."""
     cl = opp.data["cloud"]
 

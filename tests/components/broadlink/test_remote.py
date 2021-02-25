@@ -39,7 +39,7 @@ async def test_remote_setup_works(opp):
 
         remote = remotes.pop()
         assert remote.original_name == f"{device.name} Remote"
-        assert.opp.states.get(remote.entity_id).state == STATE_ON
+        assert opp.states.get(remote.entity_id).state == STATE_ON
         assert mock_api.auth.call_count == 1
 
 
@@ -91,7 +91,7 @@ async def test_remote_turn_off_turn_on(opp):
             {"entity_id": remote.entity_id},
             blocking=True,
         )
-        assert.opp.states.get(remote.entity_id).state == STATE_OFF
+        assert opp.states.get(remote.entity_id).state == STATE_OFF
 
         await opp.services.async_call(
             REMOTE_DOMAIN,
@@ -107,7 +107,7 @@ async def test_remote_turn_off_turn_on(opp):
             {"entity_id": remote.entity_id},
             blocking=True,
         )
-        assert.opp.states.get(remote.entity_id).state == STATE_ON
+        assert opp.states.get(remote.entity_id).state == STATE_ON
 
         await opp.services.async_call(
             REMOTE_DOMAIN,

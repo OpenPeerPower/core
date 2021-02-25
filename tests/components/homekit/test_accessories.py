@@ -47,7 +47,7 @@ from openpeerpower.helpers.event import TRACK_STATE_CHANGE_CALLBACKS
 from tests.common import async_mock_service
 
 
-async def test_accessory_cancels_track_state_change_on_stop.opp, hk_driver):
+async def test_accessory_cancels_track_state_change_on_stop(opp, hk_driver):
     """Ensure homekit state changed listeners are unsubscribed on reload."""
     entity_id = "sensor.accessory"
     opp.states.async_set(entity_id, None)
@@ -63,7 +63,7 @@ async def test_accessory_cancels_track_state_change_on_stop.opp, hk_driver):
     assert entity_id not in.opp.data[TRACK_STATE_CHANGE_CALLBACKS]
 
 
-async def test_home_accessory.opp, hk_driver):
+async def test_home_accessory(opp, hk_driver):
     """Test HomeAccessory class."""
     entity_id = "sensor.accessory"
     entity_id2 = "light.accessory"
@@ -142,7 +142,7 @@ async def test_home_accessory.opp, hk_driver):
     assert serv.get_characteristic(CHAR_MODEL).value == "Test Model"
 
 
-async def test_battery_service.opp, hk_driver, caplog):
+async def test_battery_service(opp, hk_driver, caplog):
     """Test battery service."""
     entity_id = "homekit.accessory"
     opp.states.async_set(entity_id, None, {ATTR_BATTERY_LEVEL: 50})
@@ -232,7 +232,7 @@ async def test_battery_service.opp, hk_driver, caplog):
     assert acc._char_charging.value == 0
 
 
-async def test_linked_battery_sensor.opp, hk_driver, caplog):
+async def test_linked_battery_sensor(opp, hk_driver, caplog):
     """Test battery service with linked_battery_sensor."""
     entity_id = "homekit.accessory"
     linked_battery = "sensor.battery"
@@ -319,7 +319,7 @@ async def test_linked_battery_sensor.opp, hk_driver, caplog):
     assert acc._char_charging.value == 0
 
 
-async def test_linked_battery_charging_sensor.opp, hk_driver, caplog):
+async def test_linked_battery_charging_sensor(opp, hk_driver, caplog):
     """Test battery service with linked_battery_charging_sensor."""
     entity_id = "homekit.accessory"
     linked_battery_charging_sensor = "binary_sensor.battery_charging"
@@ -426,7 +426,7 @@ async def test_linked_battery_sensor_and_linked_battery_charging_sensor(
     assert acc._char_charging.value == 0
 
 
-async def test_missing_linked_battery_charging_sensor.opp, hk_driver, caplog):
+async def test_missing_linked_battery_charging_sensor(opp, hk_driver, caplog):
     """Test battery service with linked_battery_charging_sensor that is mapping to a missing entity."""
     entity_id = "homekit.accessory"
     linked_battery_charging_sensor = "binary_sensor.battery_charging"
@@ -462,7 +462,7 @@ async def test_missing_linked_battery_charging_sensor.opp, hk_driver, caplog):
         await opp.async_block_till_done()
 
 
-async def test_missing_linked_battery_sensor.opp, hk_driver, caplog):
+async def test_missing_linked_battery_sensor(opp, hk_driver, caplog):
     """Test battery service with missing linked_battery_sensor."""
     entity_id = "homekit.accessory"
     linked_battery = "sensor.battery"
@@ -505,7 +505,7 @@ async def test_missing_linked_battery_sensor.opp, hk_driver, caplog):
     assert acc._char_charging is None
 
 
-async def test_battery_appears_after_startup.opp, hk_driver, caplog):
+async def test_battery_appears_after_startup(opp, hk_driver, caplog):
     """Test battery level appears after homekit is started."""
     entity_id = "homekit.accessory"
     opp.states.async_set(entity_id, None, {})
@@ -538,14 +538,14 @@ async def test_battery_appears_after_startup.opp, hk_driver, caplog):
     assert acc._char_battery is None
 
 
-async def test_call_service.opp, hk_driver, events):
+async def test_call_service(opp, hk_driver, events):
     """Test call_service method."""
     entity_id = "homekit.accessory"
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
 
     acc = HomeAccessory.opp, hk_driver, "Home Accessory", entity_id, 2, {})
-    call_service = async_mock_service.opp, "cover", "open_cover")
+    call_service = async_mock_service(opp, "cover", "open_cover")
 
     test_domain = "cover"
     test_service = "open_cover"

@@ -53,8 +53,8 @@ async def mock_rflink(
         "openpeerpower.components.rflink.create_rflink_connection", mock_create
     )
 
-    await async_setup_component.opp, "rflink", config)
-    await async_setup_component.opp, domain, config)
+    await async_setup_component(opp, "rflink", config)
+    await async_setup_component(opp, domain, config)
     await opp.async_block_till_done()
 
     # hook into mock config for injecting events
@@ -66,7 +66,7 @@ async def mock_rflink(
     return event_callback, mock_create, protocol, disconnect_callback
 
 
-async def test_version_banner.opp, monkeypatch):
+async def test_version_banner(opp, monkeypatch):
     """Test sending unknown commands doesn't cause issues."""
     # use sensor domain during testing main platform
     domain = "sensor"
@@ -79,7 +79,7 @@ async def test_version_banner.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    event_callback, _, _, _ = await mock_rflink.opp, config, domain, monkeypatch)
+    event_callback, _, _, _ = await mock_rflink(opp, config, domain, monkeypatch)
 
     event_callback(
         {
@@ -91,7 +91,7 @@ async def test_version_banner.opp, monkeypatch):
     )
 
 
-async def test_send_no_wait.opp, monkeypatch):
+async def test_send_no_wait(opp, monkeypatch):
     """Test command sending without ack."""
     domain = "switch"
     config = {
@@ -105,7 +105,7 @@ async def test_send_no_wait.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    _, _, protocol, _ = await mock_rflink.opp, config, domain, monkeypatch)
+    _, _, protocol, _ = await mock_rflink(opp, config, domain, monkeypatch)
 
     opp.async_create_task(
         opp.services.async_call(
@@ -117,7 +117,7 @@ async def test_send_no_wait.opp, monkeypatch):
     assert protocol.send_command.call_args_list[0][0][1] == "off"
 
 
-async def test_cover_send_no_wait.opp, monkeypatch):
+async def test_cover_send_no_wait(opp, monkeypatch):
     """Test command sending to a cover device without ack."""
     domain = "cover"
     config = {
@@ -131,7 +131,7 @@ async def test_cover_send_no_wait.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    _, _, protocol, _ = await mock_rflink.opp, config, domain, monkeypatch)
+    _, _, protocol, _ = await mock_rflink(opp, config, domain, monkeypatch)
 
     opp.async_create_task(
         opp.services.async_call(
@@ -143,13 +143,13 @@ async def test_cover_send_no_wait.opp, monkeypatch):
     assert protocol.send_command.call_args_list[0][0][1] == "STOP"
 
 
-async def test_send_command.opp, monkeypatch):
+async def test_send_command(opp, monkeypatch):
     """Test send_command service."""
     domain = "rflink"
     config = {"rflink": {"port": "/dev/ttyABC0"}}
 
     # setup mocking rflink module
-    _, _, protocol, _ = await mock_rflink.opp, config, domain, monkeypatch)
+    _, _, protocol, _ = await mock_rflink(opp, config, domain, monkeypatch)
 
     opp.async_create_task(
         opp.services.async_call(
@@ -163,13 +163,13 @@ async def test_send_command.opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[0][0][1] == "on"
 
 
-async def test_send_command_invalid_arguments.opp, monkeypatch):
+async def test_send_command_invalid_arguments(opp, monkeypatch):
     """Test send_command service."""
     domain = "rflink"
     config = {"rflink": {"port": "/dev/ttyABC0"}}
 
     # setup mocking rflink module
-    _, _, protocol, _ = await mock_rflink.opp, config, domain, monkeypatch)
+    _, _, protocol, _ = await mock_rflink(opp, config, domain, monkeypatch)
 
     # one argument missing
     with pytest.raises(MultipleInvalid):
@@ -196,7 +196,7 @@ async def test_send_command_invalid_arguments.opp, monkeypatch):
     assert not success, "send command should not succeed for unknown command"
 
 
-async def test_reconnecting_after_disconnect.opp, monkeypatch):
+async def test_reconnecting_after_disconnect(opp, monkeypatch):
     """An unexpected disconnect should cause a reconnect."""
     domain = "sensor"
     config = {
@@ -220,7 +220,7 @@ async def test_reconnecting_after_disconnect.opp, monkeypatch):
     assert mock_create.call_count == 2
 
 
-async def test_reconnecting_after_failure.opp, monkeypatch):
+async def test_reconnecting_after_failure(opp, monkeypatch):
     """A failure to reconnect should be retried."""
     domain = "sensor"
     config = {
@@ -247,7 +247,7 @@ async def test_reconnecting_after_failure.opp, monkeypatch):
     assert mock_create.call_count == 3
 
 
-async def test_error_when_not_connected.opp, monkeypatch):
+async def test_error_when_not_connected(opp, monkeypatch):
     """Sending command should error when not connected."""
     domain = "switch"
     config = {
@@ -298,14 +298,14 @@ async def test_async_send_command_error(opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[0][0][1] == SERVICE_TURN_OFF
 
 
-async def test_race_condition.opp, monkeypatch):
+async def test_race_condition(opp, monkeypatch):
     """Test race condition for unknown components."""
     domain = "light"
     config = {"rflink": {"port": "/dev/ttyABC0"}, domain: {"platform": "rflink"}}
     tmp_entity = TMP_ENTITY.format("test3")
 
     # setup mocking rflink module
-    event_callback, _, _, _ = await mock_rflink.opp, config, domain, monkeypatch)
+    event_callback, _, _, _ = await mock_rflink(opp, config, domain, monkeypatch)
 
     # test event for new unconfigured sensor
     event_callback({"id": "test3", "command": "off"})
@@ -334,7 +334,7 @@ async def test_race_condition.opp, monkeypatch):
     assert new_sensor.state == "on"
 
 
-async def test_not_connected.opp, monkeypatch):
+async def test_not_connected(opp, monkeypatch):
     """Test Error when sending commands to a disconnected device."""
     import pytest
 

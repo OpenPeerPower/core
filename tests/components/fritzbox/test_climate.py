@@ -49,7 +49,7 @@ ENTITY_ID = f"{DOMAIN}.fake_name"
 
 async def setup_fritzbox.opp: OpenPeerPowerType, config: dict):
     """Set up mock AVM Fritz!Box."""
-    assert await async_setup_component.opp, FB_DOMAIN, config) is True
+    assert await async_setup_component(opp, FB_DOMAIN, config) is True
     await opp.async_block_till_done()
 
 
@@ -58,7 +58,7 @@ async def test_setup_opp: OpenPeerPowerType, fritz: Mock):
     device = FritzDeviceClimateMock()
     fritz().get_devices.return_value = [device]
 
-    await setup_fritzbox.opp, MOCK_CONFIG)
+    await setup_fritzbox(opp, MOCK_CONFIG)
     state = opp.states.get(ENTITY_ID)
 
     assert state
@@ -86,7 +86,7 @@ async def test_target_temperature_on.opp: OpenPeerPowerType, fritz: Mock):
     fritz().get_devices.return_value = [device]
     device.target_temperature = 127.0
 
-    await setup_fritzbox.opp, MOCK_CONFIG)
+    await setup_fritzbox(opp, MOCK_CONFIG)
     state = opp.states.get(ENTITY_ID)
     assert state
     assert state.attributes[ATTR_TEMPERATURE] == 30
@@ -98,7 +98,7 @@ async def test_target_temperature_off.opp: OpenPeerPowerType, fritz: Mock):
     fritz().get_devices.return_value = [device]
     device.target_temperature = 126.5
 
-    await setup_fritzbox.opp, MOCK_CONFIG)
+    await setup_fritzbox(opp, MOCK_CONFIG)
     state = opp.states.get(ENTITY_ID)
     assert state
     assert state.attributes[ATTR_TEMPERATURE] == 0
@@ -109,7 +109,7 @@ async def test_update.opp: OpenPeerPowerType, fritz: Mock):
     device = FritzDeviceClimateMock()
     fritz().get_devices.return_value = [device]
 
-    await setup_fritzbox.opp, MOCK_CONFIG)
+    await setup_fritzbox(opp, MOCK_CONFIG)
     state = opp.states.get(ENTITY_ID)
 
     assert state
@@ -122,7 +122,7 @@ async def test_update.opp: OpenPeerPowerType, fritz: Mock):
     device.target_temperature = 20
 
     next_update = dt_util.utcnow() + timedelta(seconds=200)
-    async_fire_time_changed.opp, next_update)
+    async_fire_time_changed(opp, next_update)
     await opp.async_block_till_done()
     state = opp.states.get(ENTITY_ID)
 
@@ -138,12 +138,12 @@ async def test_update_error(opp: OpenPeerPowerType, fritz: Mock):
     device.update.side_effect = HTTPError("Boom")
     fritz().get_devices.return_value = [device]
 
-    await setup_fritzbox.opp, MOCK_CONFIG)
+    await setup_fritzbox(opp, MOCK_CONFIG)
     assert device.update.call_count == 0
     assert fritz().login.call_count == 1
 
     next_update = dt_util.utcnow() + timedelta(seconds=200)
-    async_fire_time_changed.opp, next_update)
+    async_fire_time_changed(opp, next_update)
     await opp.async_block_till_done()
 
     assert device.update.call_count == 1
@@ -155,7 +155,7 @@ async def test_set_temperature_temperature.opp: OpenPeerPowerType, fritz: Mock):
     device = FritzDeviceClimateMock()
     fritz().get_devices.return_value = [device]
 
-    await setup_fritzbox.opp, MOCK_CONFIG)
+    await setup_fritzbox(opp, MOCK_CONFIG)
 
     assert await opp.services.async_call(
         DOMAIN,
@@ -171,7 +171,7 @@ async def test_set_temperature_mode_off.opp: OpenPeerPowerType, fritz: Mock):
     device = FritzDeviceClimateMock()
     fritz().get_devices.return_value = [device]
 
-    await setup_fritzbox.opp, MOCK_CONFIG)
+    await setup_fritzbox(opp, MOCK_CONFIG)
 
     assert await opp.services.async_call(
         DOMAIN,
@@ -191,7 +191,7 @@ async def test_set_temperature_mode_heat.opp: OpenPeerPowerType, fritz: Mock):
     device = FritzDeviceClimateMock()
     fritz().get_devices.return_value = [device]
 
-    await setup_fritzbox.opp, MOCK_CONFIG)
+    await setup_fritzbox(opp, MOCK_CONFIG)
 
     assert await opp.services.async_call(
         DOMAIN,
@@ -211,7 +211,7 @@ async def test_set_hvac_mode_off.opp: OpenPeerPowerType, fritz: Mock):
     device = FritzDeviceClimateMock()
     fritz().get_devices.return_value = [device]
 
-    await setup_fritzbox.opp, MOCK_CONFIG)
+    await setup_fritzbox(opp, MOCK_CONFIG)
 
     assert await opp.services.async_call(
         DOMAIN,
@@ -227,7 +227,7 @@ async def test_set_hvac_mode_heat.opp: OpenPeerPowerType, fritz: Mock):
     device = FritzDeviceClimateMock()
     fritz().get_devices.return_value = [device]
 
-    await setup_fritzbox.opp, MOCK_CONFIG)
+    await setup_fritzbox(opp, MOCK_CONFIG)
 
     assert await opp.services.async_call(
         DOMAIN,
@@ -243,7 +243,7 @@ async def test_set_preset_mode_comfort.opp: OpenPeerPowerType, fritz: Mock):
     device = FritzDeviceClimateMock()
     fritz().get_devices.return_value = [device]
 
-    await setup_fritzbox.opp, MOCK_CONFIG)
+    await setup_fritzbox(opp, MOCK_CONFIG)
 
     assert await opp.services.async_call(
         DOMAIN,
@@ -259,7 +259,7 @@ async def test_set_preset_mode_eco.opp: OpenPeerPowerType, fritz: Mock):
     device = FritzDeviceClimateMock()
     fritz().get_devices.return_value = [device]
 
-    await setup_fritzbox.opp, MOCK_CONFIG)
+    await setup_fritzbox(opp, MOCK_CONFIG)
 
     assert await opp.services.async_call(
         DOMAIN,
@@ -277,7 +277,7 @@ async def test_preset_mode_update.opp: OpenPeerPowerType, fritz: Mock):
     device.eco_temperature = 99
     fritz().get_devices.return_value = [device]
 
-    await setup_fritzbox.opp, MOCK_CONFIG)
+    await setup_fritzbox(opp, MOCK_CONFIG)
     state = opp.states.get(ENTITY_ID)
 
     assert state
@@ -286,7 +286,7 @@ async def test_preset_mode_update.opp: OpenPeerPowerType, fritz: Mock):
     device.target_temperature = 98
 
     next_update = dt_util.utcnow() + timedelta(seconds=200)
-    async_fire_time_changed.opp, next_update)
+    async_fire_time_changed(opp, next_update)
     await opp.async_block_till_done()
     state = opp.states.get(ENTITY_ID)
 
@@ -297,7 +297,7 @@ async def test_preset_mode_update.opp: OpenPeerPowerType, fritz: Mock):
     device.target_temperature = 99
 
     next_update = dt_util.utcnow() + timedelta(seconds=200)
-    async_fire_time_changed.opp, next_update)
+    async_fire_time_changed(opp, next_update)
     await opp.async_block_till_done()
     state = opp.states.get(ENTITY_ID)
 

@@ -33,7 +33,7 @@ def zigpy_dev_basic(zigpy_device_mock):
 
 
 @pytest.fixture
-async def zha_dev_basic.opp, zha_device_restored, zigpy_dev_basic):
+async def zha_dev_basic(opp, zha_device_restored, zigpy_dev_basic):
     """ZHA device with just a basic cluster."""
 
     zha_device = await zha_device_restored(zigpy_dev_basic)
@@ -109,7 +109,7 @@ async def device_light_2.opp, zigpy_device_mock, zha_device_joined):
     return zha_device
 
 
-async def test_device_left.opp, zigpy_dev_basic, zha_dev_basic):
+async def test_device_left(opp, zigpy_dev_basic, zha_dev_basic):
     """Device leaving the network should become unavailable."""
 
     assert zha_dev_basic.available is True
@@ -119,7 +119,7 @@ async def test_device_left.opp, zigpy_dev_basic, zha_dev_basic):
     assert zha_dev_basic.available is False
 
 
-async def test_gateway_group_methods.opp, device_light_1, device_light_2, coordinator):
+async def test_gateway_group_methods(opp, device_light_1, device_light_2, coordinator):
     """Test creating a group with 2 members."""
     zha_gateway = get_zha_gateway.opp)
     assert zha_gateway is not None
@@ -139,8 +139,8 @@ async def test_gateway_group_methods.opp, device_light_1, device_light_2, coordi
     for member in zha_group.members:
         assert member.device.ieee in member_ieee_addresses
 
-    entity_id = async_find_group_entity_id.opp, LIGHT_DOMAIN, zha_group)
-    assert.opp.states.get(entity_id) is not None
+    entity_id = async_find_group_entity_id(opp, LIGHT_DOMAIN, zha_group)
+    assert opp.states.get(entity_id) is not None
 
     # test get group by name
     assert zha_group == zha_gateway.async_get_group_by_name(zha_group.name)
@@ -176,11 +176,11 @@ async def test_gateway_group_methods.opp, device_light_1, device_light_2, coordi
             assert member.device.ieee in [device_light_1.ieee]
 
 
-async def test_updating_device_store.opp, zigpy_dev_basic, zha_dev_basic):
+async def test_updating_device_store(opp, zigpy_dev_basic, zha_dev_basic):
     """Test saving data after a delay."""
     zha_gateway = get_zha_gateway.opp)
     assert zha_gateway is not None
-    await async_enable_traffic.opp, [zha_dev_basic])
+    await async_enable_traffic(opp, [zha_dev_basic])
 
     assert zha_dev_basic.last_seen is not None
     entry = zha_gateway.zha_storage.async_get_or_create_device(zha_dev_basic)
@@ -213,17 +213,17 @@ async def test_updating_device_store.opp, zigpy_dev_basic, zha_dev_basic):
     assert entry.last_seen == last_seen
 
 
-async def test_cleaning_up_storage.opp, zigpy_dev_basic, zha_dev_basic, opp_storage):
+async def test_cleaning_up_storage(opp, zigpy_dev_basic, zha_dev_basic, opp_storage):
     """Test cleaning up zha storage and remove stale devices."""
     zha_gateway = get_zha_gateway.opp)
     assert zha_gateway is not None
-    await async_enable_traffic.opp, [zha_dev_basic])
+    await async_enable_traffic(opp, [zha_dev_basic])
 
     assert zha_dev_basic.last_seen is not None
     await zha_gateway.zha_storage.async_save()
     await opp.async_block_till_done()
 
-    assert.opp_storage["zop.storage"]["data"]["devices"]
+    assert opp_storage["zop.storage"]["data"]["devices"]
     device = opp_storage["zop.storage"]["data"]["devices"][0]
     assert device["ieee"] == str(zha_dev_basic.ieee)
 

@@ -11,7 +11,7 @@ from tests.common import MockConfigEntry
 
 async def test_form.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -68,9 +68,9 @@ async def test_form_one_entry_per_email_allowed.opp):
         domain=DOMAIN,
         unique_id="test-plum-username",
         data={"username": "test-plum-username", "password": "test-plum-password"},
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -94,7 +94,7 @@ async def test_form_one_entry_per_email_allowed.opp):
 
 async def test_import.opp):
     """Test configuring the flow using configuration.yaml."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "openpeerpower.components.plum_lightpad.utils.Plum.loadCloudData"

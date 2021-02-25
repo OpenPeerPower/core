@@ -66,7 +66,7 @@ def _get_config_entry_from_unique_id(
 async def test_setup_config_entry(opp: OpenPeerPowerType) -> None:
     """Test setting up the component via config entries."""
     await setup_test_config_entry(opp, hyperion_client=create_mock_client())
-    assert.opp.states.get(TEST_ENTITY_ID_1) is not None
+    assert opp.states.get(TEST_ENTITY_ID_1) is not None
 
 
 async def test_setup_config_entry_not_ready_connect_fail(
@@ -76,7 +76,7 @@ async def test_setup_config_entry_not_ready_connect_fail(
     client = create_mock_client()
     client.async_client_connect = AsyncMock(return_value=False)
     await setup_test_config_entry(opp, hyperion_client=client)
-    assert.opp.states.get(TEST_ENTITY_ID_1) is None
+    assert opp.states.get(TEST_ENTITY_ID_1) is None
 
 
 async def test_setup_config_entry_not_ready_switch_instance_fail(
@@ -87,7 +87,7 @@ async def test_setup_config_entry_not_ready_switch_instance_fail(
     client.async_client_switch_instance = AsyncMock(return_value=False)
     await setup_test_config_entry(opp, hyperion_client=client)
     assert client.async_client_disconnect.called
-    assert.opp.states.get(TEST_ENTITY_ID_1) is None
+    assert opp.states.get(TEST_ENTITY_ID_1) is None
 
 
 async def test_setup_config_entry_not_ready_load_state_fail(
@@ -104,7 +104,7 @@ async def test_setup_config_entry_not_ready_load_state_fail(
 
     await setup_test_config_entry(opp, hyperion_client=client)
     assert client.async_client_disconnect.called
-    assert.opp.states.get(TEST_ENTITY_ID_1) is None
+    assert opp.states.get(TEST_ENTITY_ID_1) is None
 
 
 async def test_setup_config_entry_dynamic_instances(opp: OpenPeerPowerType) -> None:
@@ -126,8 +126,8 @@ async def test_setup_config_entry_dynamic_instances(opp: OpenPeerPowerType) -> N
         await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
-    assert.opp.states.get(TEST_ENTITY_ID_1) is not None
-    assert.opp.states.get(TEST_ENTITY_ID_2) is not None
+    assert opp.states.get(TEST_ENTITY_ID_1) is not None
+    assert opp.states.get(TEST_ENTITY_ID_2) is not None
 
     assert master_client.set_callbacks.called
 
@@ -152,9 +152,9 @@ async def test_setup_config_entry_dynamic_instances(opp: OpenPeerPowerType) -> N
         )
         await opp.async_block_till_done()
 
-    assert.opp.states.get(TEST_ENTITY_ID_1) is None
-    assert.opp.states.get(TEST_ENTITY_ID_2) is not None
-    assert.opp.states.get(TEST_ENTITY_ID_3) is not None
+    assert opp.states.get(TEST_ENTITY_ID_1) is None
+    assert opp.states.get(TEST_ENTITY_ID_2) is not None
+    assert opp.states.get(TEST_ENTITY_ID_3) is not None
 
     # Instance 1 is stopped, it should still be registered.
     assert registry.async_is_registered(TEST_ENTITY_ID_1)
@@ -176,9 +176,9 @@ async def test_setup_config_entry_dynamic_instances(opp: OpenPeerPowerType) -> N
         )
         await opp.async_block_till_done()
 
-    assert.opp.states.get(TEST_ENTITY_ID_1) is None
-    assert.opp.states.get(TEST_ENTITY_ID_2) is not None
-    assert.opp.states.get(TEST_ENTITY_ID_3) is not None
+    assert opp.states.get(TEST_ENTITY_ID_1) is None
+    assert opp.states.get(TEST_ENTITY_ID_2) is not None
+    assert opp.states.get(TEST_ENTITY_ID_3) is not None
 
     # Instance 1 is removed, it should not still be registered.
     assert not registry.async_is_registered(TEST_ENTITY_ID_1)
@@ -200,9 +200,9 @@ async def test_setup_config_entry_dynamic_instances(opp: OpenPeerPowerType) -> N
         )
         await opp.async_block_till_done()
 
-    assert.opp.states.get(TEST_ENTITY_ID_1) is None
-    assert.opp.states.get(TEST_ENTITY_ID_2) is not None
-    assert.opp.states.get(TEST_ENTITY_ID_3) is not None
+    assert opp.states.get(TEST_ENTITY_ID_1) is None
+    assert opp.states.get(TEST_ENTITY_ID_2) is not None
+    assert opp.states.get(TEST_ENTITY_ID_3) is not None
 
     # == Inject a new instances update (re-add instance 1, running)
     with patch(
@@ -217,9 +217,9 @@ async def test_setup_config_entry_dynamic_instances(opp: OpenPeerPowerType) -> N
         )
         await opp.async_block_till_done()
 
-    assert.opp.states.get(TEST_ENTITY_ID_1) is not None
-    assert.opp.states.get(TEST_ENTITY_ID_2) is not None
-    assert.opp.states.get(TEST_ENTITY_ID_3) is not None
+    assert opp.states.get(TEST_ENTITY_ID_1) is not None
+    assert opp.states.get(TEST_ENTITY_ID_2) is not None
+    assert opp.states.get(TEST_ENTITY_ID_3) is not None
 
 
 async def test_light_basic_properies(opp: OpenPeerPowerType) -> None:
@@ -715,7 +715,7 @@ async def test_unload_entry(opp: OpenPeerPowerType) -> None:
     """Test unload."""
     client = create_mock_client()
     await setup_test_config_entry(opp, hyperion_client=client)
-    assert.opp.states.get(TEST_ENTITY_ID_1) is not None
+    assert opp.states.get(TEST_ENTITY_ID_1) is not None
     assert client.async_client_connect.call_count == 2
     assert not client.async_client_disconnect.called
     entry = _get_config_entry_from_unique_id(opp, TEST_SYSINFO_ID)
@@ -730,7 +730,7 @@ async def test_version_log_warning(caplog, opp: OpenPeerPowerType) -> None:  # t
     client = create_mock_client()
     client.async_sysinfo_version = AsyncMock(return_value="2.0.0-alpop.7")
     await setup_test_config_entry(opp, hyperion_client=client)
-    assert.opp.states.get(TEST_ENTITY_ID_1) is not None
+    assert opp.states.get(TEST_ENTITY_ID_1) is not None
     assert "Please consider upgrading" in caplog.text
 
 
@@ -739,7 +739,7 @@ async def test_version_no_log_warning(caplog, opp: OpenPeerPowerType) -> None:  
     client = create_mock_client()
     client.async_sysinfo_version = AsyncMock(return_value="2.0.0-alpop.9")
     await setup_test_config_entry(opp, hyperion_client=client)
-    assert.opp.states.get(TEST_ENTITY_ID_1) is not None
+    assert opp.states.get(TEST_ENTITY_ID_1) is not None
     assert "Please consider upgrading" not in caplog.text
 
 

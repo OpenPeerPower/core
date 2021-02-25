@@ -111,7 +111,7 @@ async def test_cannot_connect.opp):
         side_effect=CannotConnectError,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=TEST_CONFIG)
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
         await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
         registry = await opp.helpers.entity_registry.async_get_registry()
@@ -127,7 +127,7 @@ async def test_unauthorized.opp):
         side_effect=UnauthorizedError,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=TEST_CONFIG)
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
         await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
         registry = await opp.helpers.entity_registry.async_get_registry()
@@ -157,19 +157,19 @@ async def test_setup_opp, two_part_alarm):
     assert device.manufacturer == "Risco"
 
 
-async def _check_state.opp, alarm, property, state, entity_id, partition_id):
+async def _check_state(opp, alarm, property, state, entity_id, partition_id):
     with patch.object(alarm.partitions[partition_id], property, return_value=True):
-        await async_update_entity.opp, entity_id)
+        await async_update_entity(opp, entity_id)
         await opp.async_block_till_done()
 
-        assert.opp.states.get(entity_id).state == state
+        assert opp.states.get(entity_id).state == state
 
 
-async def test_states.opp, two_part_alarm):
+async def test_states(opp, two_part_alarm):
     """Test the various alarm states."""
-    await setup_risco.opp, [], CUSTOM_MAPPING_OPTIONS)
+    await setup_risco(opp, [], CUSTOM_MAPPING_OPTIONS)
 
-    assert.opp.states.get(FIRST_ENTITY_ID).state == STATE_UNKNOWN
+    assert opp.states.get(FIRST_ENTITY_ID).state == STATE_UNKNOWN
     for partition_id, entity_id in {0: FIRST_ENTITY_ID, 1: SECOND_ENTITY_ID}.items():
         await _check_state(
             opp,
@@ -227,7 +227,7 @@ async def _test_service_call(
     opp. service, method, entity_id, partition_id, *args, **kwargs
 ):
     with patch(f"openpeerpower.components.risco.RiscoAPI.{method}") as set_mock:
-        await _call_alarm_service.opp, service, entity_id, **kwargs)
+        await _call_alarm_service(opp, service, entity_id, **kwargs)
         set_mock.assert_awaited_once_with(partition_id, *args)
 
 
@@ -235,11 +235,11 @@ async def _test_no_service_call(
     opp. service, method, entity_id, partition_id, **kwargs
 ):
     with patch(f"openpeerpower.components.risco.RiscoAPI.{method}") as set_mock:
-        await _call_alarm_service.opp, service, entity_id, **kwargs)
+        await _call_alarm_service(opp, service, entity_id, **kwargs)
         set_mock.assert_not_awaited()
 
 
-async def _call_alarm_service.opp, service, entity_id, **kwargs):
+async def _call_alarm_service(opp, service, entity_id, **kwargs):
     data = {"entity_id": entity_id, **kwargs}
 
     await opp.services.async_call(
@@ -247,18 +247,18 @@ async def _call_alarm_service.opp, service, entity_id, **kwargs):
     )
 
 
-async def test_sets_custom_mapping.opp, two_part_alarm):
+async def test_sets_custom_mapping(opp, two_part_alarm):
     """Test settings the various modes when mapping some states."""
-    await setup_risco.opp, [], CUSTOM_MAPPING_OPTIONS)
+    await setup_risco(opp, [], CUSTOM_MAPPING_OPTIONS)
 
     registry = await opp.helpers.entity_registry.async_get_registry()
     entity = registry.async_get(FIRST_ENTITY_ID)
     assert entity.supported_features == EXPECTED_FEATURES
 
-    await _test_service_call.opp, SERVICE_ALARM_DISARM, "disarm", FIRST_ENTITY_ID, 0)
-    await _test_service_call.opp, SERVICE_ALARM_DISARM, "disarm", SECOND_ENTITY_ID, 1)
-    await _test_service_call.opp, SERVICE_ALARM_ARM_AWAY, "arm", FIRST_ENTITY_ID, 0)
-    await _test_service_call.opp, SERVICE_ALARM_ARM_AWAY, "arm", SECOND_ENTITY_ID, 1)
+    await _test_service_call(opp, SERVICE_ALARM_DISARM, "disarm", FIRST_ENTITY_ID, 0)
+    await _test_service_call(opp, SERVICE_ALARM_DISARM, "disarm", SECOND_ENTITY_ID, 1)
+    await _test_service_call(opp, SERVICE_ALARM_ARM_AWAY, "arm", FIRST_ENTITY_ID, 0)
+    await _test_service_call(opp, SERVICE_ALARM_ARM_AWAY, "arm", SECOND_ENTITY_ID, 1)
     await _test_service_call(
         opp. SERVICE_ALARM_ARM_HOME, "partial_arm", FIRST_ENTITY_ID, 0
     )
@@ -273,9 +273,9 @@ async def test_sets_custom_mapping.opp, two_part_alarm):
     )
 
 
-async def test_sets_full_custom_mapping.opp, two_part_alarm):
+async def test_sets_full_custom_mapping(opp, two_part_alarm):
     """Test settings the various modes when mapping all states."""
-    await setup_risco.opp, [], FULL_CUSTOM_MAPPING)
+    await setup_risco(opp, [], FULL_CUSTOM_MAPPING)
 
     registry = await opp.helpers.entity_registry.async_get_registry()
     entity = registry.async_get(FIRST_ENTITY_ID)
@@ -283,10 +283,10 @@ async def test_sets_full_custom_mapping.opp, two_part_alarm):
         entity.supported_features == EXPECTED_FEATURES | SUPPORT_ALARM_ARM_CUSTOM_BYPASS
     )
 
-    await _test_service_call.opp, SERVICE_ALARM_DISARM, "disarm", FIRST_ENTITY_ID, 0)
-    await _test_service_call.opp, SERVICE_ALARM_DISARM, "disarm", SECOND_ENTITY_ID, 1)
-    await _test_service_call.opp, SERVICE_ALARM_ARM_AWAY, "arm", FIRST_ENTITY_ID, 0)
-    await _test_service_call.opp, SERVICE_ALARM_ARM_AWAY, "arm", SECOND_ENTITY_ID, 1)
+    await _test_service_call(opp, SERVICE_ALARM_DISARM, "disarm", FIRST_ENTITY_ID, 0)
+    await _test_service_call(opp, SERVICE_ALARM_DISARM, "disarm", SECOND_ENTITY_ID, 1)
+    await _test_service_call(opp, SERVICE_ALARM_ARM_AWAY, "arm", FIRST_ENTITY_ID, 0)
+    await _test_service_call(opp, SERVICE_ALARM_ARM_AWAY, "arm", SECOND_ENTITY_ID, 1)
     await _test_service_call(
         opp. SERVICE_ALARM_ARM_HOME, "partial_arm", FIRST_ENTITY_ID, 0
     )
@@ -307,9 +307,9 @@ async def test_sets_full_custom_mapping.opp, two_part_alarm):
     )
 
 
-async def test_sets_with_correct_code.opp, two_part_alarm):
+async def test_sets_with_correct_code(opp, two_part_alarm):
     """Test settings the various modes when code is required."""
-    await setup_risco.opp, [], {**CUSTOM_MAPPING_OPTIONS, **CODES_REQUIRED_OPTIONS})
+    await setup_risco(opp, [], {**CUSTOM_MAPPING_OPTIONS, **CODES_REQUIRED_OPTIONS})
 
     code = {"code": 1234}
     await _test_service_call(
@@ -349,9 +349,9 @@ async def test_sets_with_correct_code.opp, two_part_alarm):
     )
 
 
-async def test_sets_with_incorrect_code.opp, two_part_alarm):
+async def test_sets_with_incorrect_code(opp, two_part_alarm):
     """Test settings the various modes when code is required and incorrect."""
-    await setup_risco.opp, [], {**CUSTOM_MAPPING_OPTIONS, **CODES_REQUIRED_OPTIONS})
+    await setup_risco(opp, [], {**CUSTOM_MAPPING_OPTIONS, **CODES_REQUIRED_OPTIONS})
 
     code = {"code": 4321}
     await _test_no_service_call(

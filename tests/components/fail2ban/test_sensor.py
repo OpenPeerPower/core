@@ -63,7 +63,7 @@ async def test_setup_opp):
     config = {"sensor": {"platform": "fail2ban", "jails": ["jail_one"]}}
     mock_fh = mock_open()
     with patch("openpeerpower.components.fail2ban.sensor.open", mock_fh, create=True):
-        assert await async_setup_component.opp, "sensor", config)
+        assert await async_setup_component(opp, "sensor", config)
         await opp.async_block_till_done()
     assert_setup_component(1, "sensor")
 
@@ -74,7 +74,7 @@ async def test_multi_jails.opp):
     config = {"sensor": {"platform": "fail2ban", "jails": ["jail_one", "jail_two"]}}
     mock_fh = mock_open()
     with patch("openpeerpower.components.fail2ban.sensor.open", mock_fh, create=True):
-        assert await async_setup_component.opp, "sensor", config)
+        assert await async_setup_component(opp, "sensor", config)
         await opp.async_block_till_done()
     assert_setup_component(2, "sensor")
 

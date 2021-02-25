@@ -356,17 +356,17 @@ async def test_loading_configuration_from_storage(opp, opp_storage):
         opp. {"allowlist_external_dirs": "/etc"}
     )
 
-    assert.opp.config.latitude == 55
-    assert.opp.config.longitude == 13
-    assert.opp.config.elevation == 10
-    assert.opp.config.location_name == "Home"
-    assert.opp.config.units.name == CONF_UNIT_SYSTEM_METRIC
-    assert.opp.config.time_zone.zone == "Europe/Copenhagen"
-    assert.opp.config.external_url == "https://www.example.com"
-    assert.opp.config.internal_url == "http://example.local"
+    assert opp.config.latitude == 55
+    assert opp.config.longitude == 13
+    assert opp.config.elevation == 10
+    assert opp.config.location_name == "Home"
+    assert opp.config.units.name == CONF_UNIT_SYSTEM_METRIC
+    assert opp.config.time_zone.zone == "Europe/Copenhagen"
+    assert opp.config.external_url == "https://www.example.com"
+    assert opp.config.internal_url == "http://example.local"
     assert len.opp.config.allowlist_external_dirs) == 3
     assert "/etc" in.opp.config.allowlist_external_dirs
-    assert.opp.config.config_source == SOURCE_STORAGE
+    assert opp.config.config_source == SOURCE_STORAGE
 
 
 async def test_loading_configuration_from_storage_with_yaml_only(opp, opp_storage):
@@ -387,16 +387,16 @@ async def test_loading_configuration_from_storage_with_yaml_only(opp, opp_storag
         opp. {"media_dirs": {"mymedia": "/usr"}, "allowlist_external_dirs": "/etc"}
     )
 
-    assert.opp.config.latitude == 55
-    assert.opp.config.longitude == 13
-    assert.opp.config.elevation == 10
-    assert.opp.config.location_name == "Home"
-    assert.opp.config.units.name == CONF_UNIT_SYSTEM_METRIC
-    assert.opp.config.time_zone.zone == "Europe/Copenhagen"
+    assert opp.config.latitude == 55
+    assert opp.config.longitude == 13
+    assert opp.config.elevation == 10
+    assert opp.config.location_name == "Home"
+    assert opp.config.units.name == CONF_UNIT_SYSTEM_METRIC
+    assert opp.config.time_zone.zone == "Europe/Copenhagen"
     assert len.opp.config.allowlist_external_dirs) == 3
     assert "/etc" in.opp.config.allowlist_external_dirs
-    assert.opp.config.media_dirs == {"mymedia": "/usr"}
-    assert.opp.config.config_source == SOURCE_STORAGE
+    assert opp.config.media_dirs == {"mymedia": "/usr"}
+    assert opp.config.config_source == SOURCE_STORAGE
 
 
 async def test_updating_configuration(opp, opp_storage):
@@ -423,8 +423,8 @@ async def test_updating_configuration(opp, opp_storage):
 
     new_core_data = copy.deepcopy(core_data)
     new_core_data["data"]["latitude"] = 50
-    assert.opp_storage["core.config"] == new_core_data
-    assert.opp.config.latitude == 50
+    assert opp_storage["core.config"] == new_core_data
+    assert opp.config.latitude == 50
 
 
 async def test_override_stored_configuration(opp, opp_storage):
@@ -445,15 +445,15 @@ async def test_override_stored_configuration(opp, opp_storage):
         opp. {"latitude": 60, "allowlist_external_dirs": "/etc"}
     )
 
-    assert.opp.config.latitude == 60
-    assert.opp.config.longitude == 13
-    assert.opp.config.elevation == 10
-    assert.opp.config.location_name == "Home"
-    assert.opp.config.units.name == CONF_UNIT_SYSTEM_METRIC
-    assert.opp.config.time_zone.zone == "Europe/Copenhagen"
+    assert opp.config.latitude == 60
+    assert opp.config.longitude == 13
+    assert opp.config.elevation == 10
+    assert opp.config.location_name == "Home"
+    assert opp.config.units.name == CONF_UNIT_SYSTEM_METRIC
+    assert opp.config.time_zone.zone == "Europe/Copenhagen"
     assert len.opp.config.allowlist_external_dirs) == 3
     assert "/etc" in.opp.config.allowlist_external_dirs
-    assert.opp.config.config_source == config_util.SOURCE_YAML
+    assert opp.config.config_source == config_util.SOURCE_YAML
 
 
 async def test_loading_configuration(opp):
@@ -475,20 +475,20 @@ async def test_loading_configuration(opp):
         },
     )
 
-    assert.opp.config.latitude == 60
-    assert.opp.config.longitude == 50
-    assert.opp.config.elevation == 25
-    assert.opp.config.location_name == "Huis"
-    assert.opp.config.units.name == CONF_UNIT_SYSTEM_IMPERIAL
-    assert.opp.config.time_zone.zone == "America/New_York"
-    assert.opp.config.external_url == "https://www.example.com"
-    assert.opp.config.internal_url == "http://example.local"
+    assert opp.config.latitude == 60
+    assert opp.config.longitude == 50
+    assert opp.config.elevation == 25
+    assert opp.config.location_name == "Huis"
+    assert opp.config.units.name == CONF_UNIT_SYSTEM_IMPERIAL
+    assert opp.config.time_zone.zone == "America/New_York"
+    assert opp.config.external_url == "https://www.example.com"
+    assert opp.config.internal_url == "http://example.local"
     assert len.opp.config.allowlist_external_dirs) == 3
     assert "/etc" in.opp.config.allowlist_external_dirs
     assert "/usr" in.opp.config.allowlist_external_dirs
-    assert.opp.config.media_dirs == {"mymedia": "/usr"}
-    assert.opp.config.config_source == config_util.SOURCE_YAML
-    assert.opp.config.legacy_templates is True
+    assert opp.config.media_dirs == {"mymedia": "/usr"}
+    assert opp.config.config_source == config_util.SOURCE_YAML
+    assert opp.config.legacy_templates is True
 
 
 async def test_loading_configuration_temperature_unit(opp):
@@ -507,15 +507,15 @@ async def test_loading_configuration_temperature_unit(opp):
         },
     )
 
-    assert.opp.config.latitude == 60
-    assert.opp.config.longitude == 50
-    assert.opp.config.elevation == 25
-    assert.opp.config.location_name == "Huis"
-    assert.opp.config.units.name == CONF_UNIT_SYSTEM_METRIC
-    assert.opp.config.time_zone.zone == "America/New_York"
-    assert.opp.config.external_url == "https://www.example.com"
-    assert.opp.config.internal_url == "http://example.local"
-    assert.opp.config.config_source == config_util.SOURCE_YAML
+    assert opp.config.latitude == 60
+    assert opp.config.longitude == 50
+    assert opp.config.elevation == 25
+    assert opp.config.location_name == "Huis"
+    assert opp.config.units.name == CONF_UNIT_SYSTEM_METRIC
+    assert opp.config.time_zone.zone == "America/New_York"
+    assert opp.config.external_url == "https://www.example.com"
+    assert opp.config.internal_url == "http://example.local"
+    assert opp.config.config_source == config_util.SOURCE_YAML
 
 
 async def test_loading_configuration_default_media_dirs_docker(opp):
@@ -528,10 +528,10 @@ async def test_loading_configuration_default_media_dirs_docker(opp):
             },
         )
 
-    assert.opp.config.location_name == "Huis"
+    assert opp.config.location_name == "Huis"
     assert len.opp.config.allowlist_external_dirs) == 2
     assert "/media" in.opp.config.allowlist_external_dirs
-    assert.opp.config.media_dirs == {"local": "/media"}
+    assert opp.config.media_dirs == {"local": "/media"}
 
 
 async def test_loading_configuration_from_packages(opp):
@@ -822,7 +822,7 @@ async def test_merge_customize(opp):
     }
     await config_util.async_process_op_core_config(opp, core_config)
 
-    assert.opp.data[config_util.DATA_CUSTOMIZE].get("b.b") == {"friendly_name": "BB"}
+    assert opp.data[config_util.DATA_CUSTOMIZE].get("b.b") == {"friendly_name": "BB"}
 
 
 async def test_auth_provider_config(opp):
@@ -845,11 +845,11 @@ async def test_auth_provider_config(opp):
     await config_util.async_process_op_core_config(opp, core_config)
 
     assert len.opp.auth.auth_providers) == 2
-    assert.opp.auth.auth_providers[0].type == "openpeerpower"
-    assert.opp.auth.auth_providers[1].type == "legacy_api_password"
+    assert opp.auth.auth_providers[0].type == "openpeerpower"
+    assert opp.auth.auth_providers[1].type == "legacy_api_password"
     assert len.opp.auth.auth_mfa_modules) == 2
-    assert.opp.auth.auth_mfa_modules[0].id == "totp"
-    assert.opp.auth.auth_mfa_modules[1].id == "second"
+    assert opp.auth.auth_mfa_modules[0].id == "totp"
+    assert opp.auth.auth_mfa_modules[1].id == "second"
 
 
 async def test_auth_provider_config_default(opp):
@@ -867,9 +867,9 @@ async def test_auth_provider_config_default(opp):
     await config_util.async_process_op_core_config(opp, core_config)
 
     assert len.opp.auth.auth_providers) == 1
-    assert.opp.auth.auth_providers[0].type == "openpeerpower"
+    assert opp.auth.auth_providers[0].type == "openpeerpower"
     assert len.opp.auth.auth_mfa_modules) == 1
-    assert.opp.auth.auth_mfa_modules[0].id == "totp"
+    assert opp.auth.auth_mfa_modules[0].id == "totp"
 
 
 async def test_disallowed_auth_provider_config(opp):

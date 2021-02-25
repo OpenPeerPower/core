@@ -80,7 +80,7 @@ async def test_abort_if_already_setup_opp: OpenPeerPowerType):
         domain=NEATO_DOMAIN,
         data={"auth_implementation": "neato", "token": {"some": "data"}},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     # Should fail
     result = await opp.config_entries.flow.async_init(
@@ -107,7 +107,7 @@ async def test_reauth(
         entry_id="my_entry",
         domain=NEATO_DOMAIN,
         data={"username": "abcdef", "password": "123456", "vendor": "neato"},
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     # Should show form
     result = await opp.config_entries.flow.async_init(

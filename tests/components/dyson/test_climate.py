@@ -143,7 +143,7 @@ async def test_state_purehotcoollink(
 
     device.state.heat_state = HeatState.HEAT_STATE_OFF.value
     device.state.focus_mode = FocusMode.FOCUS_OFF
-    await async_update_device.opp, device, DysonPureHotCoolState)
+    await async_update_device(opp, device, DysonPureHotCoolState)
     state = opp.states.get(ENTITY_ID)
     assert state.state == HVAC_MODE_HEAT
     attributes = state.attributes
@@ -151,7 +151,7 @@ async def test_state_purehotcoollink(
     assert attributes[ATTR_FAN_MODE] == FAN_DIFFUSE
 
     device.state.heat_mode = HeatMode.HEAT_OFF.value
-    await async_update_device.opp, device, DysonPureHotCoolState)
+    await async_update_device(opp, device, DysonPureHotCoolState)
     state = opp.states.get(ENTITY_ID)
     assert state.state == HVAC_MODE_COOL
     attributes = state.attributes
@@ -171,7 +171,7 @@ async def test_state_purehotcool.opp: OpenPeerPower, device: DysonPureHotCool) -
 
     device.state.heat_state = HeatState.HEAT_STATE_OFF.value
     device.state.auto_mode = AutoMode.AUTO_OFF.value
-    await async_update_device.opp, device, DysonPureHotCoolV2State)
+    await async_update_device(opp, device, DysonPureHotCoolV2State)
     state = opp.states.get(ENTITY_ID)
     assert state.state == HVAC_MODE_HEAT
     attributes = state.attributes
@@ -181,7 +181,7 @@ async def test_state_purehotcool.opp: OpenPeerPower, device: DysonPureHotCool) -
     device.state.heat_mode = HeatMode.HEAT_OFF.value
     device.state.fan_state = FanState.FAN_ON.value
     device.state.speed = FanSpeed.FAN_SPEED_1.value
-    await async_update_device.opp, device, DysonPureHotCoolV2State)
+    await async_update_device(opp, device, DysonPureHotCoolV2State)
     state = opp.states.get(ENTITY_ID)
     assert state.state == HVAC_MODE_COOL
     attributes = state.attributes
@@ -189,7 +189,7 @@ async def test_state_purehotcool.opp: OpenPeerPower, device: DysonPureHotCool) -
     assert attributes[ATTR_FAN_MODE] == FAN_LOW
 
     device.state.fan_power = FanPower.POWER_OFF.value
-    await async_update_device.opp, device, DysonPureHotCoolV2State)
+    await async_update_device(opp, device, DysonPureHotCoolV2State)
     state = opp.states.get(ENTITY_ID)
     assert state.state == HVAC_MODE_OFF
     attributes = state.attributes
@@ -336,7 +336,7 @@ async def test_set_hvac_mode_purehotcool(
 ) -> None:
     """Test setting HVAC mode of a PureHotCool entity turns on the device when it's off."""
     device.state.fan_power = fan_power
-    await async_update_device.opp, device)
+    await async_update_device(opp, device)
     await opp.services.async_call(
         PLATFORM_DOMAIN,
         SERVICE_SET_HVAC_MODE,

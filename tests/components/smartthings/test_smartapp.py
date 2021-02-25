@@ -14,18 +14,18 @@ from openpeerpower.components.smartthings.const import (
 from tests.common import MockConfigEntry
 
 
-async def test_update_app.opp, app):
+async def test_update_app(opp, app):
     """Test update_app does not save if app is current."""
-    await smartapp.update_app.opp, app)
+    await smartapp.update_app(opp, app)
     assert app.save.call_count == 0
 
 
-async def test_update_app_updated_needed.opp, app):
+async def test_update_app_updated_needed(opp, app):
     """Test update_app updates when an app is needed."""
     mock_app = Mock(AppEntity)
     mock_app.app_name = "Test"
 
-    await smartapp.update_app.opp, mock_app)
+    await smartapp.update_app(opp, mock_app)
 
     assert mock_app.save.call_count == 1
     assert mock_app.app_name == "Test"
@@ -45,7 +45,7 @@ async def test_smartapp_update_saves_token(
     entry = MockConfigEntry(
         domain=DOMAIN, data={"installed_app_id": str(uuid4()), "app_id": str(uuid4())}
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     app = Mock()
     app.app_id = entry.data["app_id"]
     request = Mock()
@@ -55,21 +55,21 @@ async def test_smartapp_update_saves_token(
     request.location_id = location.location_id
 
     # Act
-    await smartapp.smartapp_update.opp, request, None, app)
+    await smartapp.smartapp_update(opp, request, None, app)
     # Assert
     assert entry.data[CONF_REFRESH_TOKEN] == request.refresh_token
 
 
-async def test_smartapp_uninstall.opp, config_entry):
+async def test_smartapp_uninstall(opp, config_entry):
     """Test the config entry is unloaded when the app is uninstalled."""
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     app = Mock()
     app.app_id = config_entry.data["app_id"]
     request = Mock()
     request.installed_app_id = config_entry.data["installed_app_id"]
 
     with patch.object.opp.config_entries, "async_remove") as remove:
-        await smartapp.smartapp_uninstall.opp, request, None, app)
+        await smartapp.smartapp_uninstall(opp, request, None, app)
         assert remove.call_count == 1
 
 
@@ -81,7 +81,7 @@ async def test_smartapp_webhook.opp):
     request = Mock()
     request.headers = []
     request.json = AsyncMock(return_value={})
-    result = await smartapp.smartapp_webhook.opp, "", request)
+    result = await smartapp.smartapp_webhook(opp, "", request)
 
     assert result.body == b"{}"
 

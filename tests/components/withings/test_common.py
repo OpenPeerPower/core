@@ -32,7 +32,7 @@ async def test_config_entry_withings_api.opp: OpenPeerPower) -> None:
     config_entry = MockConfigEntry(
         data={"token": {"access_token": "mock_access_token", "expires_at": 1111111}}
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     implementation_mock = MagicMock(spec=AbstractOAuth2Implementation)
     implementation_mock.async_refresh_token.return_value = {
@@ -80,7 +80,7 @@ async def test_webhook_post(
 
     await component_factory.configure_component(profile_configs=(person0,))
     await component_factory.setup_profile(person0.user_id)
-    data_manager = get_data_manager_by_user_id.opp, user_id)
+    data_manager = get_data_manager_by_user_id(opp, user_id)
 
     client: TestClient = await aiohttp_client.opp.http.app)
 
@@ -113,7 +113,7 @@ async def test_webhook_head(
 
     await component_factory.configure_component(profile_configs=(person0,))
     await component_factory.setup_profile(person0.user_id)
-    data_manager = get_data_manager_by_user_id.opp, person0.user_id)
+    data_manager = get_data_manager_by_user_id(opp, person0.user_id)
 
     client: TestClient = await aiohttp_client.opp.http.app)
     resp = await client.head(urlparse(data_manager.webhook_config.url).path)
@@ -130,7 +130,7 @@ async def test_webhook_put(
 
     await component_factory.configure_component(profile_configs=(person0,))
     await component_factory.setup_profile(person0.user_id)
-    data_manager = get_data_manager_by_user_id.opp, person0.user_id)
+    data_manager = get_data_manager_by_user_id(opp, person0.user_id)
 
     client: TestClient = await aiohttp_client.opp.http.app)
     resp = await client.put(urlparse(data_manager.webhook_config.url).path)

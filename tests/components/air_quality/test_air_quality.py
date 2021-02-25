@@ -16,7 +16,7 @@ async def test_state.opp):
     """Test Air Quality state."""
     config = {"air_quality": {"platform": "demo"}}
 
-    assert await async_setup_component.opp, "air_quality", config)
+    assert await async_setup_component(opp, "air_quality", config)
     await opp.async_block_till_done()
 
     state = opp.states.get("air_quality.demo_air_quality_home")
@@ -29,7 +29,7 @@ async def test_attributes.opp):
     """Test Air Quality attributes."""
     config = {"air_quality": {"platform": "demo"}}
 
-    assert await async_setup_component.opp, "air_quality", config)
+    assert await async_setup_component(opp, "air_quality", config)
     await opp.async_block_till_done()
 
     state = opp.states.get("air_quality.demo_air_quality_office")

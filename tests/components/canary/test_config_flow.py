@@ -21,9 +21,9 @@ from openpeerpower.setup import async_setup_component
 from . import USER_INPUT, _patch_async_setup, _patch_async_setup_entry, init_integration
 
 
-async def test_user_form.opp, canary_config_flow):
+async def test_user_form(opp, canary_config_flow):
     """Test we get the user initiated form."""
-    await async_setup_component.opp, "persistent_notification", {})
+    await async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -46,7 +46,7 @@ async def test_user_form.opp, canary_config_flow):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_user_form_cannot_connect.opp, canary_config_flow):
+async def test_user_form_cannot_connect(opp, canary_config_flow):
     """Test we handle errors that should trigger the cannot connect error."""
     canary_config_flow.side_effect = HTTPError()
 
@@ -73,7 +73,7 @@ async def test_user_form_cannot_connect.opp, canary_config_flow):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_user_form_unexpected_exception.opp, canary_config_flow):
+async def test_user_form_unexpected_exception(opp, canary_config_flow):
     """Test we handle unexpected exception."""
     canary_config_flow.side_effect = Exception()
 
@@ -90,9 +90,9 @@ async def test_user_form_unexpected_exception.opp, canary_config_flow):
     assert result["reason"] == "unknown"
 
 
-async def test_user_form_single_instance_allowed.opp, canary_config_flow):
+async def test_user_form_single_instance_allowed(opp, canary_config_flow):
     """Test that configuring more than one instance is rejected."""
-    await init_integration.opp, skip_entry_setup=True)
+    await init_integration(opp, skip_entry_setup=True)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -103,7 +103,7 @@ async def test_user_form_single_instance_allowed.opp, canary_config_flow):
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test_options_flow.opp, canary):
+async def test_options_flow(opp, canary):
     """Test updating options."""
     with patch("openpeerpower.components.canary.PLATFORMS", []):
         entry = await init_integration.opp)

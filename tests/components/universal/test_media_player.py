@@ -866,10 +866,10 @@ async def test_state_template(opp):
     await opp.async_start()
 
     await opp.async_block_till_done()
-    assert.opp.states.get("media_player.tv").state == STATE_ON
+    assert opp.states.get("media_player.tv").state == STATE_ON
     opp.states.async_set("sensor.test_sensor", STATE_OFF)
     await opp.async_block_till_done()
-    assert.opp.states.get("media_player.tv").state == STATE_OFF
+    assert opp.states.get("media_player.tv").state == STATE_OFF
 
 
 async def test_device_class(opp):
@@ -888,7 +888,7 @@ async def test_device_class(opp):
         },
     )
     await opp.async_block_till_done()
-    assert.opp.states.get("media_player.tv").attributes["device_class"] == "tv"
+    assert opp.states.get("media_player.tv").attributes["device_class"] == "tv"
 
 
 async def test_invalid_state_template(opp):
@@ -911,10 +911,10 @@ async def test_invalid_state_template(opp):
     await opp.async_start()
 
     await opp.async_block_till_done()
-    assert.opp.states.get("media_player.tv").state == STATE_UNKNOWN
+    assert opp.states.get("media_player.tv").state == STATE_UNKNOWN
     opp.states.async_set("sensor.test_sensor", "off")
     await opp.async_block_till_done()
-    assert.opp.states.get("media_player.tv").state == STATE_UNKNOWN
+    assert opp.states.get("media_player.tv").state == STATE_UNKNOWN
 
 
 async def test_master_state_with_template(opp):
@@ -1017,9 +1017,9 @@ async def test_reload(opp):
 
     assert len.opp.states.async_all()) == 5
 
-    assert.opp.states.get("media_player.tv") is None
-    assert.opp.states.get("media_player.master_bed_tv").state == "on"
-    assert.opp.states.get("media_player.master_bed_tv").attributes["source"] == "act2"
+    assert opp.states.get("media_player.tv") is None
+    assert opp.states.get("media_player.master_bed_tv").state == "on"
+    assert opp.states.get("media_player.master_bed_tv").attributes["source"] == "act2"
     assert (
         "device_class" not in.opp.states.get("media_player.master_bed_tv").attributes
     )

@@ -12,7 +12,7 @@ from tests.common import MockConfigEntry
 
 async def test_form.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -50,7 +50,7 @@ async def test_form.opp):
 @pytest.mark.credentials_invalid
 async def test_form_invalid_credentials.opp):
     """Test if we get the error message on invalid credentials."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -71,7 +71,7 @@ async def test_form_already_configured.opp):
         "openpeerpower.components.devolo_home_control.config_flow.Mydevolo.uuid",
         return_value="123456",
     ):
-        MockConfigEntry(domain=DOMAIN, unique_id="123456", data={}).add_to.opp.opp)
+        MockConfigEntry(domain=DOMAIN, unique_id="123456", data={}).add_to_opp(opp)
         result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_USER},

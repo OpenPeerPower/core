@@ -21,7 +21,7 @@ async def test_manually_configured_platform.opp):
     assert not.opp.data.get(HMIPC_DOMAIN)
 
 
-async def test_hmip_cover_shutter.opp, default_mock_hap_factory):
+async def test_hmip_cover_shutter(opp, default_mock_hap_factory):
     """Test HomematicipCoverShutte."""
     entity_id = "cover.broll_1"
     entity_name = "BROLL_1"
@@ -44,7 +44,7 @@ async def test_hmip_cover_shutter.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 1
     assert hmip_device.mock_calls[-1][0] == "set_shutter_level"
     assert hmip_device.mock_calls[-1][1] == (0, 1)
-    await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 0)
+    await async_manipulate_test_data(opp, hmip_device, "shutterLevel", 0)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OPEN
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 100
@@ -58,7 +58,7 @@ async def test_hmip_cover_shutter.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 3
     assert hmip_device.mock_calls[-1][0] == "set_shutter_level"
     assert hmip_device.mock_calls[-1][1] == (0.5, 1)
-    await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 0.5)
+    await async_manipulate_test_data(opp, hmip_device, "shutterLevel", 0.5)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OPEN
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 50
@@ -69,7 +69,7 @@ async def test_hmip_cover_shutter.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 5
     assert hmip_device.mock_calls[-1][0] == "set_shutter_level"
     assert hmip_device.mock_calls[-1][1] == (1, 1)
-    await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 1)
+    await async_manipulate_test_data(opp, hmip_device, "shutterLevel", 1)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_CLOSED
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 0
@@ -81,12 +81,12 @@ async def test_hmip_cover_shutter.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_shutter_stop"
     assert hmip_device.mock_calls[-1][1] == (1,)
 
-    await async_manipulate_test_data.opp, hmip_device, "shutterLevel", None)
+    await async_manipulate_test_data(opp, hmip_device, "shutterLevel", None)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_UNKNOWN
 
 
-async def test_hmip_cover_slats.opp, default_mock_hap_factory):
+async def test_hmip_cover_slats(opp, default_mock_hap_factory):
     """Test HomematicipCoverSlats."""
     entity_id = "cover.sofa_links"
     entity_name = "Sofa links"
@@ -110,8 +110,8 @@ async def test_hmip_cover_slats.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 1
     assert hmip_device.mock_calls[-1][0] == "set_slats_level"
     assert hmip_device.mock_calls[-1][1] == (0, 1)
-    await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 0)
-    await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 0)
+    await async_manipulate_test_data(opp, hmip_device, "shutterLevel", 0)
+    await async_manipulate_test_data(opp, hmip_device, "slatsLevel", 0)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OPEN
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 100
@@ -126,7 +126,7 @@ async def test_hmip_cover_slats.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 4
     assert hmip_device.mock_calls[-1][0] == "set_slats_level"
     assert hmip_device.mock_calls[-1][1] == (0.5, 1)
-    await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 0.5)
+    await async_manipulate_test_data(opp, hmip_device, "slatsLevel", 0.5)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OPEN
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 100
@@ -138,7 +138,7 @@ async def test_hmip_cover_slats.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 6
     assert hmip_device.mock_calls[-1][0] == "set_slats_level"
     assert hmip_device.mock_calls[-1][1] == (1, 1)
-    await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 1)
+    await async_manipulate_test_data(opp, hmip_device, "slatsLevel", 1)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OPEN
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 100
@@ -151,16 +151,16 @@ async def test_hmip_cover_slats.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_shutter_stop"
     assert hmip_device.mock_calls[-1][1] == (1,)
 
-    await async_manipulate_test_data.opp, hmip_device, "slatsLevel", None)
+    await async_manipulate_test_data(opp, hmip_device, "slatsLevel", None)
     op_state = opp.states.get(entity_id)
     assert not op_state.attributes.get(ATTR_CURRENT_TILT_POSITION)
 
-    await async_manipulate_test_data.opp, hmip_device, "shutterLevel", None)
+    await async_manipulate_test_data(opp, hmip_device, "shutterLevel", None)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_UNKNOWN
 
 
-async def test_hmip_multi_cover_slats.opp, default_mock_hap_factory):
+async def test_hmip_multi_cover_slats(opp, default_mock_hap_factory):
     """Test HomematicipCoverSlats."""
     entity_id = "cover.wohnzimmer_fenster"
     entity_name = "Wohnzimmer Fenster"
@@ -173,8 +173,8 @@ async def test_hmip_multi_cover_slats.opp, default_mock_hap_factory):
         opp. mock_hap, entity_id, entity_name, device_model
     )
 
-    await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 1, channel=4)
-    await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 1, channel=4)
+    await async_manipulate_test_data(opp, hmip_device, "shutterLevel", 1, channel=4)
+    await async_manipulate_test_data(opp, hmip_device, "slatsLevel", 1, channel=4)
     op_state = opp.states.get(entity_id)
 
     assert op_state.state == STATE_CLOSED
@@ -188,8 +188,8 @@ async def test_hmip_multi_cover_slats.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 1
     assert hmip_device.mock_calls[-1][0] == "set_slats_level"
     assert hmip_device.mock_calls[-1][1] == (0, 4)
-    await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 0, channel=4)
-    await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 0, channel=4)
+    await async_manipulate_test_data(opp, hmip_device, "shutterLevel", 0, channel=4)
+    await async_manipulate_test_data(opp, hmip_device, "slatsLevel", 0, channel=4)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OPEN
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 100
@@ -204,7 +204,7 @@ async def test_hmip_multi_cover_slats.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 4
     assert hmip_device.mock_calls[-1][0] == "set_slats_level"
     assert hmip_device.mock_calls[-1][1] == (0.5, 4)
-    await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 0.5, channel=4)
+    await async_manipulate_test_data(opp, hmip_device, "slatsLevel", 0.5, channel=4)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OPEN
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 100
@@ -216,7 +216,7 @@ async def test_hmip_multi_cover_slats.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 6
     assert hmip_device.mock_calls[-1][0] == "set_slats_level"
     assert hmip_device.mock_calls[-1][1] == (1, 4)
-    await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 1, channel=4)
+    await async_manipulate_test_data(opp, hmip_device, "slatsLevel", 1, channel=4)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OPEN
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 100
@@ -229,16 +229,16 @@ async def test_hmip_multi_cover_slats.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_shutter_stop"
     assert hmip_device.mock_calls[-1][1] == (4,)
 
-    await async_manipulate_test_data.opp, hmip_device, "slatsLevel", None, channel=4)
+    await async_manipulate_test_data(opp, hmip_device, "slatsLevel", None, channel=4)
     op_state = opp.states.get(entity_id)
     assert not op_state.attributes.get(ATTR_CURRENT_TILT_POSITION)
 
-    await async_manipulate_test_data.opp, hmip_device, "shutterLevel", None, channel=4)
+    await async_manipulate_test_data(opp, hmip_device, "shutterLevel", None, channel=4)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_UNKNOWN
 
 
-async def test_hmip_blind_module.opp, default_mock_hap_factory):
+async def test_hmip_blind_module(opp, default_mock_hap_factory):
     """Test HomematicipBlindModule."""
     entity_id = "cover.sonnenschutz_balkontur"
     entity_name = "Sonnenschutz Balkontür"
@@ -266,8 +266,8 @@ async def test_hmip_blind_module.opp, default_mock_hap_factory):
         "secondaryShadingLevel": 0,
     }
 
-    await async_manipulate_test_data.opp, hmip_device, "primaryShadingLevel", 0)
-    await async_manipulate_test_data.opp, hmip_device, "secondaryShadingLevel", 0)
+    await async_manipulate_test_data(opp, hmip_device, "primaryShadingLevel", 0)
+    await async_manipulate_test_data(opp, hmip_device, "secondaryShadingLevel", 0)
     await opp.services.async_call(
         "cover", "open_cover", {"entity_id": entity_id}, blocking=True
     )
@@ -281,8 +281,8 @@ async def test_hmip_blind_module.opp, default_mock_hap_factory):
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 100
     assert op_state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 
-    await async_manipulate_test_data.opp, hmip_device, "primaryShadingLevel", 0.5)
-    await async_manipulate_test_data.opp, hmip_device, "secondaryShadingLevel", 0.5)
+    await async_manipulate_test_data(opp, hmip_device, "primaryShadingLevel", 0.5)
+    await async_manipulate_test_data(opp, hmip_device, "secondaryShadingLevel", 0.5)
     await opp.services.async_call(
         "cover",
         "set_cover_tilt_position",
@@ -304,8 +304,8 @@ async def test_hmip_blind_module.opp, default_mock_hap_factory):
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 50
     assert op_state.attributes[ATTR_CURRENT_TILT_POSITION] == 50
 
-    await async_manipulate_test_data.opp, hmip_device, "primaryShadingLevel", 1)
-    await async_manipulate_test_data.opp, hmip_device, "secondaryShadingLevel", 1)
+    await async_manipulate_test_data(opp, hmip_device, "primaryShadingLevel", 1)
+    await async_manipulate_test_data(opp, hmip_device, "secondaryShadingLevel", 1)
     await opp.services.async_call(
         "cover", "close_cover", {"entity_id": entity_id}, blocking=True
     )
@@ -339,16 +339,16 @@ async def test_hmip_blind_module.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "stop"
     assert hmip_device.mock_calls[-1][1] == ()
 
-    await async_manipulate_test_data.opp, hmip_device, "secondaryShadingLevel", None)
+    await async_manipulate_test_data(opp, hmip_device, "secondaryShadingLevel", None)
     op_state = opp.states.get(entity_id)
     assert not op_state.attributes.get(ATTR_CURRENT_TILT_POSITION)
 
-    await async_manipulate_test_data.opp, hmip_device, "primaryShadingLevel", None)
+    await async_manipulate_test_data(opp, hmip_device, "primaryShadingLevel", None)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_UNKNOWN
 
 
-async def test_hmip_garage_door_tormatic.opp, default_mock_hap_factory):
+async def test_hmip_garage_door_tormatic(opp, default_mock_hap_factory):
     """Test HomematicipCoverShutte."""
     entity_id = "cover.garage_door_module"
     entity_name = "Garage Door Module"
@@ -371,7 +371,7 @@ async def test_hmip_garage_door_tormatic.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 1
     assert hmip_device.mock_calls[-1][0] == "send_door_command"
     assert hmip_device.mock_calls[-1][1] == (DoorCommand.OPEN,)
-    await async_manipulate_test_data.opp, hmip_device, "doorState", DoorState.OPEN)
+    await async_manipulate_test_data(opp, hmip_device, "doorState", DoorState.OPEN)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OPEN
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 100
@@ -382,7 +382,7 @@ async def test_hmip_garage_door_tormatic.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 3
     assert hmip_device.mock_calls[-1][0] == "send_door_command"
     assert hmip_device.mock_calls[-1][1] == (DoorCommand.CLOSE,)
-    await async_manipulate_test_data.opp, hmip_device, "doorState", DoorState.CLOSED)
+    await async_manipulate_test_data(opp, hmip_device, "doorState", DoorState.CLOSED)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_CLOSED
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 0
@@ -395,7 +395,7 @@ async def test_hmip_garage_door_tormatic.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][1] == (DoorCommand.STOP,)
 
 
-async def test_hmip_garage_door_hoermann.opp, default_mock_hap_factory):
+async def test_hmip_garage_door_hoermann(opp, default_mock_hap_factory):
     """Test HomematicipCoverShutte."""
     entity_id = "cover.garage_door"
     entity_name = "Garage door"
@@ -418,7 +418,7 @@ async def test_hmip_garage_door_hoermann.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 1
     assert hmip_device.mock_calls[-1][0] == "send_door_command"
     assert hmip_device.mock_calls[-1][1] == (DoorCommand.OPEN,)
-    await async_manipulate_test_data.opp, hmip_device, "doorState", DoorState.OPEN)
+    await async_manipulate_test_data(opp, hmip_device, "doorState", DoorState.OPEN)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OPEN
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 100
@@ -429,7 +429,7 @@ async def test_hmip_garage_door_hoermann.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 3
     assert hmip_device.mock_calls[-1][0] == "send_door_command"
     assert hmip_device.mock_calls[-1][1] == (DoorCommand.CLOSE,)
-    await async_manipulate_test_data.opp, hmip_device, "doorState", DoorState.CLOSED)
+    await async_manipulate_test_data(opp, hmip_device, "doorState", DoorState.CLOSED)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_CLOSED
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 0
@@ -442,7 +442,7 @@ async def test_hmip_garage_door_hoermann.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][1] == (DoorCommand.STOP,)
 
 
-async def test_hmip_cover_shutter_group.opp, default_mock_hap_factory):
+async def test_hmip_cover_shutter_group(opp, default_mock_hap_factory):
     """Test HomematicipCoverShutteGroup."""
     entity_id = "cover.rollos_shuttergroup"
     entity_name = "Rollos ShutterGroup"
@@ -463,7 +463,7 @@ async def test_hmip_cover_shutter_group.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 1
     assert hmip_device.mock_calls[-1][0] == "set_shutter_level"
     assert hmip_device.mock_calls[-1][1] == (0,)
-    await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 0)
+    await async_manipulate_test_data(opp, hmip_device, "shutterLevel", 0)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OPEN
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 100
@@ -477,7 +477,7 @@ async def test_hmip_cover_shutter_group.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 3
     assert hmip_device.mock_calls[-1][0] == "set_shutter_level"
     assert hmip_device.mock_calls[-1][1] == (0.5,)
-    await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 0.5)
+    await async_manipulate_test_data(opp, hmip_device, "shutterLevel", 0.5)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OPEN
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 50
@@ -488,7 +488,7 @@ async def test_hmip_cover_shutter_group.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 5
     assert hmip_device.mock_calls[-1][0] == "set_shutter_level"
     assert hmip_device.mock_calls[-1][1] == (1,)
-    await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 1)
+    await async_manipulate_test_data(opp, hmip_device, "shutterLevel", 1)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_CLOSED
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 0
@@ -500,12 +500,12 @@ async def test_hmip_cover_shutter_group.opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_shutter_stop"
     assert hmip_device.mock_calls[-1][1] == ()
 
-    await async_manipulate_test_data.opp, hmip_device, "shutterLevel", None)
+    await async_manipulate_test_data(opp, hmip_device, "shutterLevel", None)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_UNKNOWN
 
 
-async def test_hmip_cover_slats_group.opp, default_mock_hap_factory):
+async def test_hmip_cover_slats_group(opp, default_mock_hap_factory):
     """Test slats with HomematicipCoverShutteGroup."""
     entity_id = "cover.rollos_shuttergroup"
     entity_name = "Rollos ShutterGroup"
@@ -515,7 +515,7 @@ async def test_hmip_cover_slats_group.opp, default_mock_hap_factory):
     op_state, hmip_device = get_and_check_entity_basics(
         opp. mock_hap, entity_id, entity_name, device_model
     )
-    await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 1)
+    await async_manipulate_test_data(opp, hmip_device, "slatsLevel", 1)
     op_state = opp.states.get(entity_id)
 
     assert op_state.state == STATE_CLOSED
@@ -536,8 +536,8 @@ async def test_hmip_cover_slats_group.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 2
     assert hmip_device.mock_calls[-1][0] == "set_slats_level"
     assert hmip_device.mock_calls[-1][1] == (0,)
-    await async_manipulate_test_data.opp, hmip_device, "shutterLevel", 0.5)
-    await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 0)
+    await async_manipulate_test_data(opp, hmip_device, "shutterLevel", 0.5)
+    await async_manipulate_test_data(opp, hmip_device, "slatsLevel", 0)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OPEN
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 50
@@ -552,7 +552,7 @@ async def test_hmip_cover_slats_group.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 5
     assert hmip_device.mock_calls[-1][0] == "set_slats_level"
     assert hmip_device.mock_calls[-1][1] == (0.5,)
-    await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 0.5)
+    await async_manipulate_test_data(opp, hmip_device, "slatsLevel", 0.5)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OPEN
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 50
@@ -564,7 +564,7 @@ async def test_hmip_cover_slats_group.opp, default_mock_hap_factory):
     assert len(hmip_device.mock_calls) == service_call_counter + 7
     assert hmip_device.mock_calls[-1][0] == "set_slats_level"
     assert hmip_device.mock_calls[-1][1] == (1,)
-    await async_manipulate_test_data.opp, hmip_device, "slatsLevel", 1)
+    await async_manipulate_test_data(opp, hmip_device, "slatsLevel", 1)
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OPEN
     assert op_state.attributes[ATTR_CURRENT_POSITION] == 50

@@ -10,10 +10,10 @@ from openpeerpower.setup import async_setup_component
 from tests.common import assert_setup_component, async_capture_events
 
 
-async def test_lovelace_from_storage.opp, opp_ws_client, opp_storage):
+async def test_lovelace_from_storage(opp, opp_ws_client, opp_storage):
     """Test we load lovelace config from storage."""
-    assert await async_setup_component.opp, "lovelace", {})
-    assert.opp.data[frontend.DATA_PANELS]["lovelace"].config == {"mode": "storage"}
+    assert await async_setup_component(opp, "lovelace", {})
+    assert opp.data[frontend.DATA_PANELS]["lovelace"].config == {"mode": "storage"}
 
     client = await opp_ws_client.opp)
 
@@ -24,14 +24,14 @@ async def test_lovelace_from_storage.opp, opp_ws_client, opp_storage):
     assert response["error"]["code"] == "config_not_found"
 
     # Store new config
-    events = async_capture_events.opp, const.EVENT_LOVELACE_UPDATED)
+    events = async_capture_events(opp, const.EVENT_LOVELACE_UPDATED)
 
     await client.send_json(
         {"id": 6, "type": "lovelace/config/save", "config": {"yo": "hello"}}
     )
     response = await client.receive_json()
     assert response["success"]
-    assert.opp_storage[dashboard.CONFIG_STORAGE_KEY_DEFAULT]["data"] == {
+    assert opp_storage[dashboard.CONFIG_STORAGE_KEY_DEFAULT]["data"] == {
         "config": {"yo": "hello"}
     }
     assert len(events) == 1
@@ -65,7 +65,7 @@ async def test_lovelace_from_storage_save_before_load(
     opp. opp_ws_client, opp_storage
 ):
     """Test we can load lovelace config from storage."""
-    assert await async_setup_component.opp, "lovelace", {})
+    assert await async_setup_component(opp, "lovelace", {})
     client = await opp_ws_client.opp)
 
     # Store new config
@@ -74,14 +74,14 @@ async def test_lovelace_from_storage_save_before_load(
     )
     response = await client.receive_json()
     assert response["success"]
-    assert.opp_storage[dashboard.CONFIG_STORAGE_KEY_DEFAULT]["data"] == {
+    assert opp_storage[dashboard.CONFIG_STORAGE_KEY_DEFAULT]["data"] == {
         "config": {"yo": "hello"}
     }
 
 
-async def test_lovelace_from_storage_delete.opp, opp_ws_client, opp_storage):
+async def test_lovelace_from_storage_delete(opp, opp_ws_client, opp_storage):
     """Test we delete lovelace config from storage."""
-    assert await async_setup_component.opp, "lovelace", {})
+    assert await async_setup_component(opp, "lovelace", {})
     client = await opp_ws_client.opp)
 
     # Store new config
@@ -90,7 +90,7 @@ async def test_lovelace_from_storage_delete.opp, opp_ws_client, opp_storage):
     )
     response = await client.receive_json()
     assert response["success"]
-    assert.opp_storage[dashboard.CONFIG_STORAGE_KEY_DEFAULT]["data"] == {
+    assert opp_storage[dashboard.CONFIG_STORAGE_KEY_DEFAULT]["data"] == {
         "config": {"yo": "hello"}
     }
 
@@ -107,10 +107,10 @@ async def test_lovelace_from_storage_delete.opp, opp_ws_client, opp_storage):
     assert response["error"]["code"] == "config_not_found"
 
 
-async def test_lovelace_from_yaml.opp, opp_ws_client):
+async def test_lovelace_from_yaml(opp, opp_ws_client):
     """Test we load lovelace config from yaml."""
-    assert await async_setup_component.opp, "lovelace", {"lovelace": {"mode": "YAML"}})
-    assert.opp.data[frontend.DATA_PANELS]["lovelace"].config == {"mode": "yaml"}
+    assert await async_setup_component(opp, "lovelace", {"lovelace": {"mode": "YAML"}})
+    assert opp.data[frontend.DATA_PANELS]["lovelace"].config == {"mode": "yaml"}
 
     client = await opp_ws_client.opp)
 
@@ -129,7 +129,7 @@ async def test_lovelace_from_yaml.opp, opp_ws_client):
     assert not response["success"]
 
     # Patch data
-    events = async_capture_events.opp, const.EVENT_LOVELACE_UPDATED)
+    events = async_capture_events(opp, const.EVENT_LOVELACE_UPDATED)
 
     with patch(
         "openpeerpower.components.lovelace.dashboard.load_yaml",
@@ -158,7 +158,7 @@ async def test_lovelace_from_yaml.opp, opp_ws_client):
 
 
 @pytest.mark.parametrize("url_path", ("test-panel", "test-panel-no-sidebar"))
-async def test_dashboard_from_yaml.opp, opp_ws_client, url_path):
+async def test_dashboard_from_yaml(opp, opp_ws_client, url_path):
     """Test we load lovelace dashboard config from yaml."""
     assert await async_setup_component(
         opp,
@@ -183,8 +183,8 @@ async def test_dashboard_from_yaml.opp, opp_ws_client, url_path):
             }
         },
     )
-    assert.opp.data[frontend.DATA_PANELS]["test-panel"].config == {"mode": "yaml"}
-    assert.opp.data[frontend.DATA_PANELS]["test-panel-no-sidebar"].config == {
+    assert opp.data[frontend.DATA_PANELS]["test-panel"].config == {"mode": "yaml"}
+    assert opp.data[frontend.DATA_PANELS]["test-panel-no-sidebar"].config == {
         "mode": "yaml"
     }
 
@@ -231,7 +231,7 @@ async def test_dashboard_from_yaml.opp, opp_ws_client, url_path):
     assert not response["success"]
 
     # Patch data
-    events = async_capture_events.opp, const.EVENT_LOVELACE_UPDATED)
+    events = async_capture_events(opp, const.EVENT_LOVELACE_UPDATED)
 
     with patch(
         "openpeerpower.components.lovelace.dashboard.load_yaml",
@@ -286,10 +286,10 @@ async def test_wrong_key_dashboard_from_yaml.opp):
         )
 
 
-async def test_storage_dashboards.opp, opp_ws_client, opp_storage):
+async def test_storage_dashboards(opp, opp_ws_client, opp_storage):
     """Test we load lovelace config from storage."""
-    assert await async_setup_component.opp, "lovelace", {})
-    assert.opp.data[frontend.DATA_PANELS]["lovelace"].config == {"mode": "storage"}
+    assert await async_setup_component(opp, "lovelace", {})
+    assert opp.data[frontend.DATA_PANELS]["lovelace"].config == {"mode": "storage"}
 
     client = await opp_ws_client.opp)
 
@@ -351,7 +351,7 @@ async def test_storage_dashboards.opp, opp_ws_client, opp_storage):
     assert response["error"]["code"] == "config_not_found"
 
     # Store new config
-    events = async_capture_events.opp, const.EVENT_LOVELACE_UPDATED)
+    events = async_capture_events(opp, const.EVENT_LOVELACE_UPDATED)
 
     await client.send_json(
         {
@@ -363,7 +363,7 @@ async def test_storage_dashboards.opp, opp_ws_client, opp_storage):
     )
     response = await client.receive_json()
     assert response["success"]
-    assert.opp_storage[dashboard.CONFIG_STORAGE_KEY.format(dashboard_id)]["data"] == {
+    assert opp_storage[dashboard.CONFIG_STORAGE_KEY.format(dashboard_id)]["data"] == {
         "config": {"yo": "hello"}
     }
     assert len(events) == 1
@@ -427,7 +427,7 @@ async def test_storage_dashboards.opp, opp_ws_client, opp_storage):
     assert dashboard.CONFIG_STORAGE_KEY.format(dashboard_id) not in.opp_storage
 
 
-async def test_storage_dashboard_migrate.opp, opp_ws_client, opp_storage):
+async def test_storage_dashboard_migrate(opp, opp_ws_client, opp_storage):
     """Test changing url path from storage config."""
     opp.storage[dashboard.DASHBOARDS_STORAGE_KEY] = {
         "key": "lovelace_dashboards",
@@ -456,7 +456,7 @@ async def test_storage_dashboard_migrate.opp, opp_ws_client, opp_storage):
         },
     }
 
-    assert await async_setup_component.opp, "lovelace", {})
+    assert await async_setup_component(opp, "lovelace", {})
 
     client = await opp_ws_client.opp)
 
@@ -480,7 +480,7 @@ async def test_storage_dashboard_migrate.opp, opp_ws_client, opp_storage):
     )
 
 
-async def test_websocket_list_dashboards.opp, opp_ws_client):
+async def test_websocket_list_dashboards(opp, opp_ws_client):
     """Test listing dashboards both storage + YAML."""
     assert await async_setup_component(
         opp,

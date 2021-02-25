@@ -31,26 +31,26 @@ FAR_MESSAGE = {"id": DEVICE_ID, "name": NAME, "distance": 10}
 REALLY_FAR_MESSAGE = {"id": DEVICE_ID, "name": NAME, "distance": 20}
 
 
-async def send_message.opp, topic, message):
+async def send_message(opp, topic, message):
     """Test the sending of a message."""
-    async_fire_mqtt_message.opp, topic, json.dumps(message))
+    async_fire_mqtt_message(opp, topic, json.dumps(message))
     await opp.async_block_till_done()
     await opp.async_block_till_done()
 
 
-async def assert_state.opp, room):
+async def assert_state(opp, room):
     """Test the assertion of a room state."""
     state = opp.states.get(SENSOR_STATE)
     assert state.state == room
 
 
-async def assert_distance.opp, distance):
+async def assert_distance(opp, distance):
     """Test the assertion of a distance state."""
     state = opp.states.get(SENSOR_STATE)
     assert state.attributes.get("distance") == distance
 
 
-async def test_room_update.opp, mqtt_mock):
+async def test_room_update(opp, mqtt_mock):
     """Test the updating between rooms."""
     assert await async_setup_component(
         opp,
@@ -68,20 +68,20 @@ async def test_room_update.opp, mqtt_mock):
     )
     await opp.async_block_till_done()
 
-    await send_message.opp, BEDROOM_TOPIC, FAR_MESSAGE)
-    await assert_state.opp, BEDROOM)
-    await assert_distance.opp, 10)
+    await send_message(opp, BEDROOM_TOPIC, FAR_MESSAGE)
+    await assert_state(opp, BEDROOM)
+    await assert_distance(opp, 10)
 
-    await send_message.opp, LIVING_ROOM_TOPIC, NEAR_MESSAGE)
-    await assert_state.opp, LIVING_ROOM)
-    await assert_distance.opp, 1)
+    await send_message(opp, LIVING_ROOM_TOPIC, NEAR_MESSAGE)
+    await assert_state(opp, LIVING_ROOM)
+    await assert_distance(opp, 1)
 
-    await send_message.opp, BEDROOM_TOPIC, FAR_MESSAGE)
-    await assert_state.opp, LIVING_ROOM)
-    await assert_distance.opp, 1)
+    await send_message(opp, BEDROOM_TOPIC, FAR_MESSAGE)
+    await assert_state(opp, LIVING_ROOM)
+    await assert_distance(opp, 1)
 
     time = dt.utcnow() + datetime.timedelta(seconds=7)
     with patch("openpeerpower.helpers.condition.dt_util.utcnow", return_value=time):
-        await send_message.opp, BEDROOM_TOPIC, FAR_MESSAGE)
-        await assert_state.opp, BEDROOM)
-        await assert_distance.opp, 10)
+        await send_message(opp, BEDROOM_TOPIC, FAR_MESSAGE)
+        await assert_state(opp, BEDROOM)
+        await assert_distance(opp, 10)

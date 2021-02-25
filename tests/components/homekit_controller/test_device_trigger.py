@@ -20,7 +20,7 @@ from tests.components.homekit_controller.common import setup_test_component
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
 def create_remote(accessory):
@@ -78,9 +78,9 @@ def create_doorbell(accessory):
     battery.add_char(CharacteristicsTypes.BATTERY_LEVEL)
 
 
-async def test_enumerate_remote.opp, utcnow):
+async def test_enumerate_remote(opp, utcnow):
     """Test that remote is correctly enumerated."""
-    await setup_test_component.opp, create_remote)
+    await setup_test_component(opp, create_remote)
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
     entry = entity_registry.async_get("sensor.testdevice_battery")
@@ -110,13 +110,13 @@ async def test_enumerate_remote.opp, utcnow):
                 }
             )
 
-    triggers = await async_get_device_automations.opp, "trigger", device.id)
+    triggers = await async_get_device_automations(opp, "trigger", device.id)
     assert_lists_same(triggers, expected)
 
 
-async def test_enumerate_button.opp, utcnow):
+async def test_enumerate_button(opp, utcnow):
     """Test that a button is correctly enumerated."""
-    await setup_test_component.opp, create_button)
+    await setup_test_component(opp, create_button)
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
     entry = entity_registry.async_get("sensor.testdevice_battery")
@@ -145,13 +145,13 @@ async def test_enumerate_button.opp, utcnow):
             }
         )
 
-    triggers = await async_get_device_automations.opp, "trigger", device.id)
+    triggers = await async_get_device_automations(opp, "trigger", device.id)
     assert_lists_same(triggers, expected)
 
 
-async def test_enumerate_doorbell.opp, utcnow):
+async def test_enumerate_doorbell(opp, utcnow):
     """Test that a button is correctly enumerated."""
-    await setup_test_component.opp, create_doorbell)
+    await setup_test_component(opp, create_doorbell)
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
     entry = entity_registry.async_get("sensor.testdevice_battery")
@@ -180,13 +180,13 @@ async def test_enumerate_doorbell.opp, utcnow):
             }
         )
 
-    triggers = await async_get_device_automations.opp, "trigger", device.id)
+    triggers = await async_get_device_automations(opp, "trigger", device.id)
     assert_lists_same(triggers, expected)
 
 
-async def test_handle_events.opp, utcnow, calls):
+async def test_handle_events(opp, utcnow, calls):
     """Test that events are handled."""
-    helper = await setup_test_component.opp, create_remote)
+    helper = await setup_test_component(opp, create_remote)
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
     entry = entity_registry.async_get("sensor.testdevice_battery")

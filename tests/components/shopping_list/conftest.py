@@ -22,7 +22,7 @@ async def sl_setup_opp):
     """Set up the shopping list."""
 
     entry = MockConfigEntry(domain="shopping_list")
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     assert await opp.config_entries.async_setup(entry.entry_id)
 

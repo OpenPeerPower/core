@@ -397,11 +397,11 @@ async def test_device_override(
         override = {"device_config": {"00:11:22:33:44:55:66:77-1": {"type": override}}}
 
     await setup_zha(override)
-    assert.opp_disable_services.states.get(entity_id) is None
+    assert opp_disable_services.states.get(entity_id) is None
     zha_gateway = get_zha_gateway.opp_disable_services)
     await zha_gateway.async_device_initialized(zigpy_device)
     await opp_disable_services.async_block_till_done()
-    assert.opp_disable_services.states.get(entity_id) is not None
+    assert opp_disable_services.states.get(entity_id) is not None
 
 
 async def test_group_probe_cleanup_called(

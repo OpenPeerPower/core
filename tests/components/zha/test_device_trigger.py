@@ -48,11 +48,11 @@ def _same_lists(list_a, list_b):
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
 @pytest.fixture
-async def mock_devices.opp, zigpy_device_mock, zha_device_joined_restored):
+async def mock_devices(opp, zigpy_device_mock, zha_device_joined_restored):
     """IAS device fixture."""
 
     zigpy_device = zigpy_device_mock(
@@ -71,7 +71,7 @@ async def mock_devices.opp, zigpy_device_mock, zha_device_joined_restored):
     return zigpy_device, zha_device
 
 
-async def test_triggers.opp, mock_devices):
+async def test_triggers(opp, mock_devices):
     """Test zha device triggers."""
 
     zigpy_device, zha_device = mock_devices
@@ -89,7 +89,7 @@ async def test_triggers.opp, mock_devices):
     ha_device_registry = await async_get_registry.opp)
     reg_device = ha_device_registry.async_get_device({("zha", ieee_address)})
 
-    triggers = await async_get_device_automations.opp, "trigger", reg_device.id)
+    triggers = await async_get_device_automations(opp, "trigger", reg_device.id)
 
     expected_triggers = [
         {
@@ -138,7 +138,7 @@ async def test_triggers.opp, mock_devices):
     assert _same_lists(triggers, expected_triggers)
 
 
-async def test_no_triggers.opp, mock_devices):
+async def test_no_triggers(opp, mock_devices):
     """Test zha device with no triggers."""
 
     _, zha_device = mock_devices
@@ -147,7 +147,7 @@ async def test_no_triggers.opp, mock_devices):
     ha_device_registry = await async_get_registry.opp)
     reg_device = ha_device_registry.async_get_device({("zha", ieee_address)})
 
-    triggers = await async_get_device_automations.opp, "trigger", reg_device.id)
+    triggers = await async_get_device_automations(opp, "trigger", reg_device.id)
     assert triggers == [
         {
             "device_id": reg_device.id,
@@ -159,7 +159,7 @@ async def test_no_triggers.opp, mock_devices):
     ]
 
 
-async def test_if_fires_on_event.opp, mock_devices, calls):
+async def test_if_fires_on_event(opp, mock_devices, calls):
     """Test for remote triggers firing."""
 
     zigpy_device, zha_device = mock_devices
@@ -224,7 +224,7 @@ async def test_device_offline_fires(
     )
 
     zha_device = await zha_device_restored(zigpy_device, last_seen=time.time())
-    await async_enable_traffic.opp, [zha_device])
+    await async_enable_traffic(opp, [zha_device])
     await opp.async_block_till_done()
 
     assert await async_setup_component(
@@ -258,17 +258,17 @@ async def test_device_offline_fires(
 
     # there are 3 checkins to perform before marking the device unavailable
     future = dt_util.utcnow() + timedelta(seconds=90)
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.async_block_till_done()
 
     future = dt_util.utcnow() + timedelta(seconds=90)
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.async_block_till_done()
 
     future = dt_util.utcnow() + timedelta(
         seconds=zha_core_device.CONSIDER_UNAVAILABLE_BATTERY + 100
     )
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.async_block_till_done()
 
     assert zha_device.available is False
@@ -276,7 +276,7 @@ async def test_device_offline_fires(
     assert calls[0].data["message"] == "service called"
 
 
-async def test_exception_no_triggers.opp, mock_devices, calls, caplog):
+async def test_exception_no_triggers(opp, mock_devices, calls, caplog):
     """Test for exception on event triggers firing."""
 
     _, zha_device = mock_devices
@@ -310,7 +310,7 @@ async def test_exception_no_triggers.opp, mock_devices, calls, caplog):
     assert "Invalid config for [automation]" in caplog.text
 
 
-async def test_exception_bad_trigger.opp, mock_devices, calls, caplog):
+async def test_exception_bad_trigger(opp, mock_devices, calls, caplog):
     """Test for exception on event triggers firing."""
 
     zigpy_device, zha_device = mock_devices

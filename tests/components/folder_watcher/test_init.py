@@ -45,9 +45,9 @@ def test_event():
         handler.on_created(
             Mock(is_directory=False, src_path="/hello/world.txt", event_type="created")
         )
-        assert.opp.bus.fire.called
-        assert.opp.bus.fire.mock_calls[0][1][0] == folder_watcher.DOMAIN
-        assert.opp.bus.fire.mock_calls[0][1][1] == {
+        assert opp.bus.fire.called
+        assert opp.bus.fire.mock_calls[0][1][0] == folder_watcher.DOMAIN
+        assert opp.bus.fire.mock_calls[0][1][1] == {
             "event_type": "created",
             "path": "/hello/world.txt",
             "file": "world.txt",

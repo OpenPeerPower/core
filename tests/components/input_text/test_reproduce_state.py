@@ -8,7 +8,7 @@ INVALID_TEXT1 = "This text is too long!"
 INVALID_TEXT2 = "Short"
 
 
-async def test_reproducing_states.opp, caplog):
+async def test_reproducing_states(opp, caplog):
     """Test reproducing Input text states."""
 
     # Setup entity for testing
@@ -32,7 +32,7 @@ async def test_reproducing_states.opp, caplog):
     )
 
     # Test that entity is in desired state
-    assert.opp.states.get("input_text.test_text").state == VALID_TEXT1
+    assert opp.states.get("input_text.test_text").state == VALID_TEXT1
 
     # Try reproducing with different state
     await opp.helpers.state.async_reproduce_state(
@@ -44,7 +44,7 @@ async def test_reproducing_states.opp, caplog):
     )
 
     # Test that the state was changed
-    assert.opp.states.get("input_text.test_text").state == VALID_TEXT2
+    assert opp.states.get("input_text.test_text").state == VALID_TEXT2
 
     # Test setting state to invalid state (length too long)
     await opp.helpers.state.async_reproduce_state(
@@ -52,7 +52,7 @@ async def test_reproducing_states.opp, caplog):
     )
 
     # The entity state should be unchanged
-    assert.opp.states.get("input_text.test_text").state == VALID_TEXT2
+    assert opp.states.get("input_text.test_text").state == VALID_TEXT2
 
     # Test setting state to invalid state (length too short)
     await opp.helpers.state.async_reproduce_state(
@@ -60,4 +60,4 @@ async def test_reproducing_states.opp, caplog):
     )
 
     # The entity state should be unchanged
-    assert.opp.states.get("input_text.test_text").state == VALID_TEXT2
+    assert opp.states.get("input_text.test_text").state == VALID_TEXT2

@@ -696,8 +696,8 @@ async def test_automation_with_sub_condition(opp, calls):
         },
     )
     await opp.async_block_till_done()
-    assert.opp.states.get(ent1.entity_id).state == STATE_ON
-    assert.opp.states.get(ent2.entity_id).state == STATE_OFF
+    assert opp.states.get(ent1.entity_id).state == STATE_ON
+    assert opp.states.get(ent2.entity_id).state == STATE_OFF
     assert len(calls) == 0
 
     opp.bus.async_fire("test_event1")

@@ -70,12 +70,12 @@ def storage_setup_opp, opp_storage):
             }
         if config is None:
             config = {DOMAIN: {}}
-        return await async_setup_component.opp, DOMAIN, config)
+        return await async_setup_component(opp, DOMAIN, config)
 
     return _storage
 
 
-async def async_set_date_and_time.opp, entity_id, dt_value):
+async def async_set_date_and_time(opp, entity_id, dt_value):
     """Set date and / or time of input_datetime."""
     await opp.services.async_call(
         DOMAIN,
@@ -89,7 +89,7 @@ async def async_set_date_and_time.opp, entity_id, dt_value):
     )
 
 
-async def async_set_datetime.opp, entity_id, dt_value):
+async def async_set_datetime(opp, entity_id, dt_value):
     """Set date and / or time of input_datetime."""
     await opp.services.async_call(
         DOMAIN,
@@ -99,7 +99,7 @@ async def async_set_datetime.opp, entity_id, dt_value):
     )
 
 
-async def async_set_timestamp.opp, entity_id, timestamp):
+async def async_set_timestamp(opp, entity_id, timestamp):
     """Set date and / or time of input_datetime."""
     await opp.services.async_call(
         DOMAIN,
@@ -133,7 +133,7 @@ async def test_set_datetime.opp):
 
     dt_obj = datetime.datetime(2017, 9, 7, 19, 46, 30, tzinfo=datetime.timezone.utc)
 
-    await async_set_date_and_time.opp, entity_id, dt_obj)
+    await async_set_date_and_time(opp, entity_id, dt_obj)
 
     state = opp.states.get(entity_id)
     assert state.state == dt_obj.strftime(FMT_DATETIME)
@@ -159,7 +159,7 @@ async def test_set_datetime_2.opp):
 
     dt_obj = datetime.datetime(2017, 9, 7, 19, 46, 30, tzinfo=datetime.timezone.utc)
 
-    await async_set_datetime.opp, entity_id, dt_obj)
+    await async_set_datetime(opp, entity_id, dt_obj)
 
     state = opp.states.get(entity_id)
     assert state.state == dt_obj.strftime(FMT_DATETIME)
@@ -185,7 +185,7 @@ async def test_set_datetime_3.opp):
 
     dt_obj = datetime.datetime(2017, 9, 7, 19, 46, 30, tzinfo=datetime.timezone.utc)
 
-    await async_set_timestamp.opp, entity_id, dt_util.as_utc(dt_obj).timestamp())
+    await async_set_timestamp(opp, entity_id, dt_util.as_utc(dt_obj).timestamp())
 
     state = opp.states.get(entity_id)
     assert state.state == dt_obj.strftime(FMT_DATETIME)
@@ -211,7 +211,7 @@ async def test_set_datetime_time.opp):
 
     dt_obj = datetime.datetime(2017, 9, 7, 19, 46, 30)
 
-    await async_set_date_and_time.opp, entity_id, dt_obj)
+    await async_set_date_and_time(opp, entity_id, dt_obj)
 
     state = opp.states.get(entity_id)
     assert state.state == dt_obj.strftime(FMT_TIME)
@@ -292,7 +292,7 @@ async def test_set_datetime_date.opp):
     dt_obj = datetime.datetime(2017, 9, 7, 19, 46)
     date_portion = dt_obj.date()
 
-    await async_set_date_and_time.opp, entity_id, dt_obj)
+    await async_set_date_and_time(opp, entity_id, dt_obj)
 
     state = opp.states.get(entity_id)
     assert state.state == str(date_portion)
@@ -389,7 +389,7 @@ async def test_default_value.opp):
     assert state_datetime.attributes.get("timestamp") is not None
 
 
-async def test_input_datetime_context.opp, opp_admin_user):
+async def test_input_datetime_context(opp, opp_admin_user):
     """Test that input_datetime context works."""
     assert await async_setup_component(
         opp. "input_datetime", {"input_datetime": {"only_date": {"has_date": True}}}
@@ -412,7 +412,7 @@ async def test_input_datetime_context.opp, opp_admin_user):
     assert state2.context.user_id == opp_admin_user.id
 
 
-async def test_reload.opp, opp_admin_user, opp_read_only_user):
+async def test_reload(opp, opp_admin_user, opp_read_only_user):
     """Test reload service."""
     count_start = len.opp.states.async_entity_ids())
     ent_reg = await entity_registry.async_get_registry.opp)
@@ -486,7 +486,7 @@ async def test_reload.opp, opp_admin_user, opp_read_only_user):
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, "dt3") is None
 
 
-async def test_load_from_storage.opp, storage_setup):
+async def test_load_from_storage(opp, storage_setup):
     """Test set up from storage."""
     assert await storage_setup()
     state = opp.states.get(f"{DOMAIN}.datetime_from_storage")
@@ -494,7 +494,7 @@ async def test_load_from_storage.opp, storage_setup):
     assert state.attributes.get(ATTR_EDITABLE)
 
 
-async def test_editable_state_attribute.opp, storage_setup):
+async def test_editable_state_attribute(opp, storage_setup):
     """Test editable attribute."""
     assert await storage_setup(
         config={
@@ -518,7 +518,7 @@ async def test_editable_state_attribute.opp, storage_setup):
     assert not state.attributes[ATTR_EDITABLE]
 
 
-async def test_ws_list.opp, opp_ws_client, storage_setup):
+async def test_ws_list(opp, opp_ws_client, storage_setup):
     """Test listing via WS."""
     assert await storage_setup(config={DOMAIN: {"from_yaml": {CONF_HAS_DATE: True}}})
 
@@ -538,7 +538,7 @@ async def test_ws_list.opp, opp_ws_client, storage_setup):
     assert result[storage_ent][ATTR_NAME] == "datetime from storage"
 
 
-async def test_ws_delete.opp, opp_ws_client, storage_setup):
+async def test_ws_delete(opp, opp_ws_client, storage_setup):
     """Test WS delete cleans up entity registry."""
     assert await storage_setup()
 
@@ -563,7 +563,7 @@ async def test_ws_delete.opp, opp_ws_client, storage_setup):
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
 
-async def test_update.opp, opp_ws_client, storage_setup):
+async def test_update(opp, opp_ws_client, storage_setup):
     """Test updating min/max updates the state."""
 
     assert await storage_setup()
@@ -596,7 +596,7 @@ async def test_update.opp, opp_ws_client, storage_setup):
     assert state.attributes[ATTR_FRIENDLY_NAME] == "even newer name"
 
 
-async def test_ws_create.opp, opp_ws_client, storage_setup):
+async def test_ws_create(opp, opp_ws_client, storage_setup):
     """Test create WS."""
     assert await storage_setup(items=[])
 
@@ -632,7 +632,7 @@ async def test_ws_create.opp, opp_ws_client, storage_setup):
 async def test_setup_no_config(opp, opp_admin_user):
     """Test component setup with no config."""
     count_start = len.opp.states.async_entity_ids())
-    assert await async_setup_component.opp, DOMAIN, {})
+    assert await async_setup_component(opp, DOMAIN, {})
 
     with patch(
         "openpeerpower.config.load_yaml_config_file", autospec=True, return_value={}

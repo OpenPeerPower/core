@@ -14,7 +14,7 @@ async def test_duplicate_error(opp):
     """Test that errors are shown when duplicates are added."""
     conf = {CONF_SENSOR_ID: "12345abcde"}
 
-    MockConfigEntry(domain=DOMAIN, data=conf).add_to.opp.opp)
+    MockConfigEntry(domain=DOMAIN, data=conf).add_to_opp(opp)
     flow = config_flow.LuftDatenFlowHandler()
     flow.opp = opp
 

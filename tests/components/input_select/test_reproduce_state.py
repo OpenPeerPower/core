@@ -38,7 +38,7 @@ async def test_reproducing_states(opp, caplog):
     )
 
     # Test that entity is in desired state
-    assert.opp.states.get(ENTITY).state == VALID_OPTION1
+    assert opp.states.get(ENTITY).state == VALID_OPTION1
 
     # Try reproducing with different state
     await opp.helpers.state.async_reproduce_state(
@@ -50,13 +50,13 @@ async def test_reproducing_states(opp, caplog):
     )
 
     # Test that we got the desired result
-    assert.opp.states.get(ENTITY).state == VALID_OPTION3
+    assert opp.states.get(ENTITY).state == VALID_OPTION3
 
     # Test setting state to invalid state
     await opp.helpers.state.async_reproduce_state([State(ENTITY, INVALID_OPTION)])
 
     # The entity state should be unchanged
-    assert.opp.states.get(ENTITY).state == VALID_OPTION3
+    assert opp.states.get(ENTITY).state == VALID_OPTION3
 
     # Test setting a different option set
     await opp.helpers.state.async_reproduce_state(
@@ -64,5 +64,5 @@ async def test_reproducing_states(opp, caplog):
     )
 
     # These should fail if options weren't changed to VALID_OPTION_SET2
-    assert.opp.states.get(ENTITY).attributes["options"] == VALID_OPTION_SET2
-    assert.opp.states.get(ENTITY).state == VALID_OPTION5
+    assert opp.states.get(ENTITY).attributes["options"] == VALID_OPTION_SET2
+    assert opp.states.get(ENTITY).state == VALID_OPTION5

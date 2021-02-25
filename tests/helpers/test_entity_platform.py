@@ -512,7 +512,7 @@ async def test_registry_respect_entity_disabled(opp):
     entity = MockEntity(unique_id="1234")
     await platform.async_add_entities([entity])
     assert entity.entity_id == "test_domain.world"
-    assert.opp.states.async_entity_ids() == []
+    assert opp.states.async_entity_ids() == []
 
 
 async def test_entity_registry_updates_name(opp):
@@ -647,8 +647,8 @@ async def test_entity_registry_updates_entity_id(opp):
     await opp.async_block_till_done()
     await opp.async_block_till_done()
 
-    assert.opp.states.get("test_domain.world") is None
-    assert.opp.states.get("test_domain.planet") is not None
+    assert opp.states.get("test_domain.world") is None
+    assert opp.states.get("test_domain.planet") is not None
 
 
 async def test_entity_registry_updates_invalid_entity_id(opp):
@@ -696,9 +696,9 @@ async def test_entity_registry_updates_invalid_entity_id(opp):
     await opp.async_block_till_done()
     await opp.async_block_till_done()
 
-    assert.opp.states.get("test_domain.world") is not None
-    assert.opp.states.get("invalid_entity_id") is None
-    assert.opp.states.get("diff_domain.world") is None
+    assert opp.states.get("test_domain.world") is not None
+    assert opp.states.get("invalid_entity_id") is None
+    assert opp.states.get("diff_domain.world") is None
 
 
 async def test_device_info_called(opp):

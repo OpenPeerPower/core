@@ -11,7 +11,7 @@ from openpeerpower.setup import async_setup_component
 import openpeerpower.util.dt as dt_util
 
 
-async def test_setting_rising.opp, legacy_patchable_time):
+async def test_setting_rising(opp, legacy_patchable_time):
     """Test retrieving sun setting and rising."""
     utc_now = datetime(2016, 11, 1, 8, 0, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.helpers.condition.dt_util.utcnow", return_value=utc_now):
@@ -102,7 +102,7 @@ async def test_setting_rising.opp, legacy_patchable_time):
     )
 
 
-async def test_state_change.opp, legacy_patchable_time):
+async def test_state_change(opp, legacy_patchable_time):
     """Test if the state changes at next setting/rising."""
     now = datetime(2016, 6, 1, 8, 0, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.helpers.condition.dt_util.utcnow", return_value=now):

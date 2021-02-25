@@ -35,12 +35,12 @@ ENTRY2_BRIDGEID = "23456DEF"
 ENTRY2_UUID = "789ACE"
 
 
-async def setup_entry.opp, entry):
+async def setup_entry(opp, entry):
     """Test that setup entry works."""
     with patch.object(DeconzGateway, "async_setup", return_value=True), patch.object(
         DeconzGateway, "async_update_device_registry", return_value=True
     ):
-        assert await async_setup_entry.opp, entry) is True
+        assert await async_setup_entry(opp, entry) is True
 
 
 async def test_setup_entry_fails.opp):
@@ -57,18 +57,18 @@ async def test_setup_entry_no_available_bridge.opp):
     assert not.opp.data[DECONZ_DOMAIN]
 
 
-async def test_setup_entry_successful.opp, aioclient_mock):
+async def test_setup_entry_successful(opp, aioclient_mock):
     """Test setup entry is successful."""
-    config_entry = await setup_deconz_integration.opp, aioclient_mock)
+    config_entry = await setup_deconz_integration(opp, aioclient_mock)
 
-    assert.opp.data[DECONZ_DOMAIN]
+    assert opp.data[DECONZ_DOMAIN]
     assert config_entry.unique_id in.opp.data[DECONZ_DOMAIN]
-    assert.opp.data[DECONZ_DOMAIN][config_entry.unique_id].master
+    assert opp.data[DECONZ_DOMAIN][config_entry.unique_id].master
 
 
-async def test_setup_entry_multiple_gateways.opp, aioclient_mock):
+async def test_setup_entry_multiple_gateways(opp, aioclient_mock):
     """Test setup entry is successful with multiple gateways."""
-    config_entry = await setup_deconz_integration.opp, aioclient_mock)
+    config_entry = await setup_deconz_integration(opp, aioclient_mock)
     aioclient_mock.clear_requests()
 
     data = deepcopy(DECONZ_WEB_REQUEST)
@@ -82,22 +82,22 @@ async def test_setup_entry_multiple_gateways.opp, aioclient_mock):
     )
 
     assert len.opp.data[DECONZ_DOMAIN]) == 2
-    assert.opp.data[DECONZ_DOMAIN][config_entry.unique_id].master
+    assert opp.data[DECONZ_DOMAIN][config_entry.unique_id].master
     assert not.opp.data[DECONZ_DOMAIN][config_entry2.unique_id].master
 
 
-async def test_unload_entry.opp, aioclient_mock):
+async def test_unload_entry(opp, aioclient_mock):
     """Test being able to unload an entry."""
-    config_entry = await setup_deconz_integration.opp, aioclient_mock)
-    assert.opp.data[DECONZ_DOMAIN]
+    config_entry = await setup_deconz_integration(opp, aioclient_mock)
+    assert opp.data[DECONZ_DOMAIN]
 
-    assert await async_unload_entry.opp, config_entry)
+    assert await async_unload_entry(opp, config_entry)
     assert not.opp.data[DECONZ_DOMAIN]
 
 
-async def test_unload_entry_multiple_gateways.opp, aioclient_mock):
+async def test_unload_entry_multiple_gateways(opp, aioclient_mock):
     """Test being able to unload an entry and master gateway gets moved."""
-    config_entry = await setup_deconz_integration.opp, aioclient_mock)
+    config_entry = await setup_deconz_integration(opp, aioclient_mock)
     aioclient_mock.clear_requests()
 
     data = deepcopy(DECONZ_WEB_REQUEST)
@@ -112,10 +112,10 @@ async def test_unload_entry_multiple_gateways.opp, aioclient_mock):
 
     assert len.opp.data[DECONZ_DOMAIN]) == 2
 
-    assert await async_unload_entry.opp, config_entry)
+    assert await async_unload_entry(opp, config_entry)
 
     assert len.opp.data[DECONZ_DOMAIN]) == 1
-    assert.opp.data[DECONZ_DOMAIN][config_entry2.unique_id].master
+    assert opp.data[DECONZ_DOMAIN][config_entry2.unique_id].master
 
 
 async def test_update_group_unique_id.opp):
@@ -151,7 +151,7 @@ async def test_update_group_unique_id.opp):
         config_entry=entry,
     )
 
-    await async_update_group_unique_id.opp, entry)
+    await async_update_group_unique_id(opp, entry)
 
     assert entry.data == {CONF_API_KEY: "1", CONF_HOST: "2", CONF_PORT: "3"}
 
@@ -182,7 +182,7 @@ async def test_update_group_unique_id_no_legacy_group_id.opp):
         config_entry=entry,
     )
 
-    await async_update_group_unique_id.opp, entry)
+    await async_update_group_unique_id(opp, entry)
 
     old_entity = registry.async_get(f"{LIGHT_DOMAIN}.old")
     assert old_entity.unique_id == f"{old_unique_id}-OLD"

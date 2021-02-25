@@ -48,7 +48,7 @@ def mock_api_unknown_error():
 
 async def test_setup_with_no_config(opp):
     """Test that we do not discover anything or try to set up a Transmission client."""
-    assert await async_setup_component.opp, transmission.DOMAIN, {}) is True
+    assert await async_setup_component(opp, transmission.DOMAIN, {}) is True
     assert transmission.DOMAIN not in.opp.data
 
 
@@ -70,16 +70,16 @@ async def test_setup_with_config(opp, api):
             transmission.CONF_PORT: 9091,
         },
     }
-    assert await async_setup_component.opp, transmission.DOMAIN, config) is True
+    assert await async_setup_component(opp, transmission.DOMAIN, config) is True
 
 
-async def test_successful_config_entry.opp, api):
+async def test_successful_config_entry(opp, api):
     """Test that configured transmission is configured successfully."""
 
     entry = MOCK_ENTRY
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
-    assert await transmission.async_setup_entry.opp, entry) is True
+    assert await transmission.async_setup_entry(opp, entry) is True
     assert entry.options == {
         transmission.CONF_SCAN_INTERVAL: transmission.DEFAULT_SCAN_INTERVAL,
         transmission.CONF_LIMIT: transmission.DEFAULT_LIMIT,
@@ -91,7 +91,7 @@ async def test_setup_failed.opp):
     """Test transmission failed due to an error."""
 
     entry = MOCK_ENTRY
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     # test connection error raising ConfigEntryNotReady
     with patch(
@@ -99,7 +99,7 @@ async def test_setup_failed.opp):
         side_effect=TransmissionError("111: Connection refused"),
     ), pytest.raises(ConfigEntryNotReady):
 
-        await transmission.async_setup_entry.opp, entry)
+        await transmission.async_setup_entry(opp, entry)
 
     # test Authentication error returning false
 
@@ -107,19 +107,19 @@ async def test_setup_failed.opp):
         "transmissionrpc.Client", side_effect=TransmissionError("401: Unauthorized")
     ):
 
-        assert await transmission.async_setup_entry.opp, entry) is False
+        assert await transmission.async_setup_entry(opp, entry) is False
 
 
-async def test_unload_entry.opp, api):
+async def test_unload_entry(opp, api):
     """Test removing transmission client."""
     entry = MOCK_ENTRY
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch.object(
         opp.config_entries, "async_forward_entry_unload", return_value=mock_coro(True)
     ) as unload_entry:
-        assert await transmission.async_setup_entry.opp, entry)
+        assert await transmission.async_setup_entry(opp, entry)
 
-        assert await transmission.async_unload_entry.opp, entry)
+        assert await transmission.async_unload_entry(opp, entry)
         assert unload_entry.call_count == 2
         assert entry.entry_id not in.opp.data[transmission.DOMAIN]

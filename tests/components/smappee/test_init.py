@@ -24,7 +24,7 @@ async def test_unload_config_entry.opp):
             unique_id="smappee1006000212",
             source=SOURCE_ZEROCONF,
         )
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
         assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
         entry = opp.config_entries.async_entries(DOMAIN)[0]

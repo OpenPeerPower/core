@@ -38,7 +38,7 @@ async def mock_cloud_setup_opp):
 
 
 @pytest.fixture
-def mock_cloud_login.opp, mock_cloud_setup):
+def mock_cloud_login(opp, mock_cloud_setup):
     """Mock cloud is logged in."""
     opp.data[const.DOMAIN].id_token = jwt.encode(
         {
@@ -51,7 +51,7 @@ def mock_cloud_login.opp, mock_cloud_setup):
 
 
 @pytest.fixture
-def mock_expired_cloud_login.opp, mock_cloud_setup):
+def mock_expired_cloud_login(opp, mock_cloud_setup):
     """Mock cloud is logged in."""
     opp.data[const.DOMAIN].id_token = jwt.encode(
         {

@@ -11,7 +11,7 @@ from tests.common import async_fire_mqtt_message
 
 
 @pytest.fixture(autouse=True)
-def setup_comp.opp, mqtt_mock):
+def setup_comp(opp, mqtt_mock):
     """Set up mqtt component."""
     pass
 
@@ -19,7 +19,7 @@ def setup_comp.opp, mqtt_mock):
 async def test_ensure_device_tracker_platform_validation.opp):
     """Test if platform validation was done."""
 
-    async def mock_setup_scanner.opp, config, see, discovery_info=None):
+    async def mock_setup_scanner(opp, config, see, discovery_info=None):
         """Check that Qos was added by validation."""
         assert "qos" in config
 
@@ -37,7 +37,7 @@ async def test_ensure_device_tracker_platform_validation.opp):
         assert mock_sp.call_count == 1
 
 
-async def test_new_message.opp, mock_device_tracker_conf):
+async def test_new_message(opp, mock_device_tracker_conf):
     """Test new message."""
     dev_id = "paulus"
     entity_id = f"{DOMAIN}.{dev_id}"
@@ -48,12 +48,12 @@ async def test_new_message.opp, mock_device_tracker_conf):
     assert await async_setup_component(
         opp. DOMAIN, {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: topic}}}
     )
-    async_fire_mqtt_message.opp, topic, location)
+    async_fire_mqtt_message(opp, topic, location)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == location
+    assert opp.states.get(entity_id).state == location
 
 
-async def test_single_level_wildcard_topic.opp, mock_device_tracker_conf):
+async def test_single_level_wildcard_topic(opp, mock_device_tracker_conf):
     """Test single level wildcard topic."""
     dev_id = "paulus"
     entity_id = f"{DOMAIN}.{dev_id}"
@@ -67,12 +67,12 @@ async def test_single_level_wildcard_topic.opp, mock_device_tracker_conf):
         DOMAIN,
         {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: subscription}}},
     )
-    async_fire_mqtt_message.opp, topic, location)
+    async_fire_mqtt_message(opp, topic, location)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == location
+    assert opp.states.get(entity_id).state == location
 
 
-async def test_multi_level_wildcard_topic.opp, mock_device_tracker_conf):
+async def test_multi_level_wildcard_topic(opp, mock_device_tracker_conf):
     """Test multi level wildcard topic."""
     dev_id = "paulus"
     entity_id = f"{DOMAIN}.{dev_id}"
@@ -86,12 +86,12 @@ async def test_multi_level_wildcard_topic.opp, mock_device_tracker_conf):
         DOMAIN,
         {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: subscription}}},
     )
-    async_fire_mqtt_message.opp, topic, location)
+    async_fire_mqtt_message(opp, topic, location)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == location
+    assert opp.states.get(entity_id).state == location
 
 
-async def test_single_level_wildcard_topic_not_matching.opp, mock_device_tracker_conf):
+async def test_single_level_wildcard_topic_not_matching(opp, mock_device_tracker_conf):
     """Test not matching single level wildcard topic."""
     dev_id = "paulus"
     entity_id = f"{DOMAIN}.{dev_id}"
@@ -105,12 +105,12 @@ async def test_single_level_wildcard_topic_not_matching.opp, mock_device_tracker
         DOMAIN,
         {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: subscription}}},
     )
-    async_fire_mqtt_message.opp, topic, location)
+    async_fire_mqtt_message(opp, topic, location)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id) is None
+    assert opp.states.get(entity_id) is None
 
 
-async def test_multi_level_wildcard_topic_not_matching.opp, mock_device_tracker_conf):
+async def test_multi_level_wildcard_topic_not_matching(opp, mock_device_tracker_conf):
     """Test not matching multi level wildcard topic."""
     dev_id = "paulus"
     entity_id = f"{DOMAIN}.{dev_id}"
@@ -124,9 +124,9 @@ async def test_multi_level_wildcard_topic_not_matching.opp, mock_device_tracker_
         DOMAIN,
         {DOMAIN: {CONF_PLATFORM: "mqtt", "devices": {dev_id: subscription}}},
     )
-    async_fire_mqtt_message.opp, topic, location)
+    async_fire_mqtt_message(opp, topic, location)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id) is None
+    assert opp.states.get(entity_id) is None
 
 
 async def test_matching_custom_payload_for_home_and_not_home(
@@ -152,13 +152,13 @@ async def test_matching_custom_payload_for_home_and_not_home(
             }
         },
     )
-    async_fire_mqtt_message.opp, topic, payload_home)
+    async_fire_mqtt_message(opp, topic, payload_home)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == STATE_HOME
+    assert opp.states.get(entity_id).state == STATE_HOME
 
-    async_fire_mqtt_message.opp, topic, payload_not_home)
+    async_fire_mqtt_message(opp, topic, payload_not_home)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == STATE_NOT_HOME
+    assert opp.states.get(entity_id).state == STATE_NOT_HOME
 
 
 async def test_not_matching_custom_payload_for_home_and_not_home(
@@ -185,13 +185,13 @@ async def test_not_matching_custom_payload_for_home_and_not_home(
             }
         },
     )
-    async_fire_mqtt_message.opp, topic, payload_not_matching)
+    async_fire_mqtt_message(opp, topic, payload_not_matching)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state != STATE_HOME
-    assert.opp.states.get(entity_id).state != STATE_NOT_HOME
+    assert opp.states.get(entity_id).state != STATE_HOME
+    assert opp.states.get(entity_id).state != STATE_NOT_HOME
 
 
-async def test_matching_source_type.opp, mock_device_tracker_conf):
+async def test_matching_source_type(opp, mock_device_tracker_conf):
     """Test setting source type."""
     dev_id = "paulus"
     entity_id = f"{DOMAIN}.{dev_id}"
@@ -212,6 +212,6 @@ async def test_matching_source_type.opp, mock_device_tracker_conf):
         },
     )
 
-    async_fire_mqtt_message.opp, topic, location)
+    async_fire_mqtt_message(opp, topic, location)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).attributes["source_type"] == SOURCE_TYPE_BLUETOOTH
+    assert opp.states.get(entity_id).attributes["source_type"] == SOURCE_TYPE_BLUETOOTH

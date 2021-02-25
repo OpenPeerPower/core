@@ -41,7 +41,7 @@ async def test_duplicate_error(opp):
 
     MockConfigEntry(
         domain=DOMAIN, unique_id="39.128712, -104.9812612", data=conf
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=conf

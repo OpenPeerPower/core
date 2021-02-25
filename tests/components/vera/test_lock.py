@@ -28,7 +28,7 @@ async def test_lock(
     )
     update_callback = component_data.controller_data[0].update_callback
 
-    assert.opp.states.get(entity_id).state == STATE_UNLOCKED
+    assert opp.states.get(entity_id).state == STATE_UNLOCKED
 
     await opp.services.async_call(
         "lock",
@@ -40,7 +40,7 @@ async def test_lock(
     vera_device.is_locked.return_value = True
     update_callback(vera_device)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == STATE_LOCKED
+    assert opp.states.get(entity_id).state == STATE_LOCKED
 
     await opp.services.async_call(
         "lock",
@@ -52,4 +52,4 @@ async def test_lock(
     vera_device.is_locked.return_value = False
     update_callback(vera_device)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == STATE_UNLOCKED
+    assert opp.states.get(entity_id).state == STATE_UNLOCKED

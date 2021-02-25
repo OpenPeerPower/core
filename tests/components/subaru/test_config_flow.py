@@ -41,12 +41,12 @@ async def test_user_form_init(user_form):
     assert expected == user_form
 
 
-async def test_user_form_repeat_identifier.opp, user_form):
+async def test_user_form_repeat_identifier(opp, user_form):
     """Test we handle repeat identifiers."""
     entry = MockConfigEntry(
         domain=DOMAIN, title=TEST_USERNAME, data=TEST_CREDS, options=None
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch(
         MOCK_API_CONNECT,
@@ -61,7 +61,7 @@ async def test_user_form_repeat_identifier.opp, user_form):
     assert result["reason"] == "already_configured"
 
 
-async def test_user_form_cannot_connect.opp, user_form):
+async def test_user_form_cannot_connect(opp, user_form):
     """Test we handle cannot connect error."""
     with patch(
         MOCK_API_CONNECT,
@@ -76,7 +76,7 @@ async def test_user_form_cannot_connect.opp, user_form):
     assert result["reason"] == "cannot_connect"
 
 
-async def test_user_form_invalid_auth.opp, user_form):
+async def test_user_form_invalid_auth(opp, user_form):
     """Test we handle invalid auth."""
     with patch(
         MOCK_API_CONNECT,
@@ -91,7 +91,7 @@ async def test_user_form_invalid_auth.opp, user_form):
     assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_user_form_pin_not_required.opp, user_form):
+async def test_user_form_pin_not_required(opp, user_form):
     """Test successful login when no PIN is required."""
     with patch(MOCK_API_CONNECT, return_value=True,) as mock_connect, patch(
         MOCK_API_IS_PIN_REQUIRED,
@@ -134,7 +134,7 @@ async def test_pin_form_init(pin_form):
     assert expected == pin_form
 
 
-async def test_pin_form_bad_pin_format.opp, pin_form):
+async def test_pin_form_bad_pin_format(opp, pin_form):
     """Test we handle invalid pin."""
     with patch(MOCK_API_TEST_PIN,) as mock_test_pin, patch(
         MOCK_API_UPDATE_SAVED_PIN,
@@ -149,7 +149,7 @@ async def test_pin_form_bad_pin_format.opp, pin_form):
     assert result["errors"] == {"base": "bad_pin_format"}
 
 
-async def test_pin_form_success.opp, pin_form):
+async def test_pin_form_success(opp, pin_form):
     """Test successful PIN entry."""
     with patch(MOCK_API_TEST_PIN, return_value=True,) as mock_test_pin, patch(
         MOCK_API_UPDATE_SAVED_PIN,
@@ -176,7 +176,7 @@ async def test_pin_form_success.opp, pin_form):
     assert result == expected
 
 
-async def test_pin_form_incorrect_pin.opp, pin_form):
+async def test_pin_form_incorrect_pin(opp, pin_form):
     """Test we handle invalid pin."""
     with patch(
         MOCK_API_TEST_PIN,
@@ -208,7 +208,7 @@ async def test_option_flow_form(options_form):
     assert expected == options_form
 
 
-async def test_option_flow.opp, options_form):
+async def test_option_flow(opp, options_form):
     """Test config flow options."""
     result = await opp.config_entries.options.async_configure(
         options_form["flow_id"],
@@ -231,7 +231,7 @@ async def user_form.opp):
 
 
 @pytest.fixture
-async def pin_form.opp, user_form):
+async def pin_form(opp, user_form):
     """Return second form (PIN input) for Subaru config flow."""
     with patch(MOCK_API_CONNECT, return_value=True,), patch(
         MOCK_API_IS_PIN_REQUIRED,
@@ -246,5 +246,5 @@ async def pin_form.opp, user_form):
 async def options_form.opp):
     """Return options form for Subaru config flow."""
     entry = MockConfigEntry(domain=DOMAIN, data={}, options=None)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     return await opp.config_entries.options.async_init(entry.entry_id)

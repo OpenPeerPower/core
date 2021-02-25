@@ -32,18 +32,18 @@ async def test_mapping_integrity():
         assert device_class in DEVICE_CLASSES, device_class
 
 
-async def test_entity_state.opp, device_factory):
+async def test_entity_state(opp, device_factory):
     """Tests the state attributes properly match the light types."""
     device = device_factory(
         "Motion Sensor 1", [Capability.motion_sensor], {Attribute.motion: "inactive"}
     )
-    await setup_platform.opp, BINARY_SENSOR_DOMAIN, devices=[device])
+    await setup_platform(opp, BINARY_SENSOR_DOMAIN, devices=[device])
     state = opp.states.get("binary_sensor.motion_sensor_1_motion")
     assert state.state == "off"
     assert state.attributes[ATTR_FRIENDLY_NAME] == f"{device.label} {Attribute.motion}"
 
 
-async def test_entity_and_device_attributes.opp, device_factory):
+async def test_entity_and_device_attributes(opp, device_factory):
     """Test the attributes of the entity are correct."""
     # Arrange
     device = device_factory(
@@ -52,7 +52,7 @@ async def test_entity_and_device_attributes.opp, device_factory):
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
     device_registry = await opp.helpers.device_registry.async_get_registry()
     # Act
-    await setup_platform.opp, BINARY_SENSOR_DOMAIN, devices=[device])
+    await setup_platform(opp, BINARY_SENSOR_DOMAIN, devices=[device])
     # Assert
     entry = entity_registry.async_get("binary_sensor.motion_sensor_1_motion")
     assert entry
@@ -64,18 +64,18 @@ async def test_entity_and_device_attributes.opp, device_factory):
     assert entry.manufacturer == "Unavailable"
 
 
-async def test_update_from_signal.opp, device_factory):
+async def test_update_from_signal(opp, device_factory):
     """Test the binary_sensor updates when receiving a signal."""
     # Arrange
     device = device_factory(
         "Motion Sensor 1", [Capability.motion_sensor], {Attribute.motion: "inactive"}
     )
-    await setup_platform.opp, BINARY_SENSOR_DOMAIN, devices=[device])
+    await setup_platform(opp, BINARY_SENSOR_DOMAIN, devices=[device])
     device.status.apply_attribute_update(
         "main", Capability.motion_sensor, Attribute.motion, "active"
     )
     # Act
-    async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
+    async_dispatcher_send(opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
     await opp.async_block_till_done()
     state = opp.states.get("binary_sensor.motion_sensor_1_motion")
@@ -83,13 +83,13 @@ async def test_update_from_signal.opp, device_factory):
     assert state.state == "on"
 
 
-async def test_unload_config_entry.opp, device_factory):
+async def test_unload_config_entry(opp, device_factory):
     """Test the binary_sensor is removed when the config entry is unloaded."""
     # Arrange
     device = device_factory(
         "Motion Sensor 1", [Capability.motion_sensor], {Attribute.motion: "inactive"}
     )
-    config_entry = await setup_platform.opp, BINARY_SENSOR_DOMAIN, devices=[device])
+    config_entry = await setup_platform(opp, BINARY_SENSOR_DOMAIN, devices=[device])
     # Act
     await opp.config_entries.async_forward_entry_unload(config_entry, "binary_sensor")
     # Assert

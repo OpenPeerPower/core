@@ -7,9 +7,9 @@ from .common import setup_ozw
 VALUE_ID = "Value"
 
 
-async def test_cover.opp, cover_data, sent_messages, cover_msg):
+async def test_cover(opp, cover_data, sent_messages, cover_msg):
     """Test setting up config entry."""
-    receive_message = await setup_ozw.opp, fixture=cover_data)
+    receive_message = await setup_ozw(opp, fixture=cover_data)
     # Test loaded
     state = opp.states.get("cover.roller_shutter_3_instance_1_level")
     assert state is not None
@@ -133,9 +133,9 @@ async def test_cover.opp, cover_data, sent_messages, cover_msg):
     assert msg["payload"] == {"Value": 0, "ValueIDKey": 625573905}
 
 
-async def test_barrier.opp, cover_gdo_data, sent_messages, cover_gdo_msg):
+async def test_barrier(opp, cover_gdo_data, sent_messages, cover_gdo_msg):
     """Test setting up config entry."""
-    receive_message = await setup_ozw.opp, fixture=cover_gdo_data)
+    receive_message = await setup_ozw(opp, fixture=cover_gdo_data)
     # Test loaded
     state = opp.states.get("cover.gd00z_4_barrier_state")
     assert state is not None

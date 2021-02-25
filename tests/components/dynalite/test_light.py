@@ -47,17 +47,17 @@ async def test_light_setup_opp, mock_device):
 async def test_unload_config_entry(opp, mock_device):
     """Test when a config entry is unloaded from HA."""
     await create_entity_from_device(opp, mock_device)
-    assert.opp.states.get("light.name")
+    assert opp.states.get("light.name")
     entry_id = await get_entry_id_from(opp.opp)
     assert await opp.config_entries.async_unload(entry_id)
     await opp.async_block_till_done()
-    assert.opp.states.get("light.name").state == STATE_UNAVAILABLE
+    assert opp.states.get("light.name").state == STATE_UNAVAILABLE
 
 
 async def test_remove_config_entry(opp, mock_device):
     """Test when a config entry is removed from HA."""
     await create_entity_from_device(opp, mock_device)
-    assert.opp.states.get("light.name")
+    assert opp.states.get("light.name")
     entry_id = await get_entry_id_from(opp.opp)
     assert await opp.config_entries.async_remove(entry_id)
     await opp.async_block_till_done()

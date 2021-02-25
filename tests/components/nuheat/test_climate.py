@@ -28,7 +28,7 @@ async def test_climate_thermostat_run.opp):
         return_value=mock_nuheat,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG_ENTRY)
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
         assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
@@ -61,7 +61,7 @@ async def test_climate_thermostat_schedule_hold_unavailable.opp):
         return_value=mock_nuheat,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG_ENTRY)
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
         assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
@@ -91,7 +91,7 @@ async def test_climate_thermostat_schedule_hold_available.opp):
         return_value=mock_nuheat,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG_ENTRY)
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
         assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
@@ -125,7 +125,7 @@ async def test_climate_thermostat_schedule_temporary_hold.opp):
         return_value=mock_nuheat,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG_ENTRY)
-        config_entry.add_to.opp.opp)
+        config_entry.add_to_opp(opp)
         assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
@@ -162,7 +162,7 @@ async def test_climate_thermostat_schedule_temporary_hold.opp):
     assert state.attributes["temperature"] == 50.0
 
     # and the api poll returns it to the mock
-    async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=3))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=3))
     await opp.async_block_till_done()
     state = opp.states.get("climate.temp_bathroom")
     assert state.attributes["preset_mode"] == "Run Schedule"

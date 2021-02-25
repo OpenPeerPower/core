@@ -34,7 +34,7 @@ def netdisco_mock():
         yield
 
 
-async def mock_discovery.opp, discoveries, config=BASE_CONFIG):
+async def mock_discovery(opp, discoveries, config=BASE_CONFIG):
     """Mock discoveries."""
     with patch("openpeerpower.components.zeroconf.async_get_instance"), patch(
         "openpeerpower.components.zeroconf.async_setup", return_value=True
@@ -44,12 +44,12 @@ async def mock_discovery.opp, discoveries, config=BASE_CONFIG):
         "openpeerpower.components.discovery.async_load_platform",
         return_value=mock_coro(),
     ) as mock_platform:
-        assert await async_setup_component.opp, "discovery", config)
+        assert await async_setup_component(opp, "discovery", config)
         await opp.async_block_till_done()
         await opp.async_start()
         opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
-        async_fire_time_changed.opp, utcnow())
+        async_fire_time_changed(opp, utcnow())
         # Work around an issue where our loop.call_soon not get caught
         await opp.async_block_till_done()
         await opp.async_block_till_done()
@@ -64,7 +64,7 @@ async def test_unknown_service.opp):
         """Fake discovery."""
         return [("this_service_will_never_be_supported", {"info": "some"})]
 
-    mock_discover, mock_platform = await mock_discovery.opp, discover)
+    mock_discover, mock_platform = await mock_discovery(opp, discover)
 
     assert not mock_discover.called
     assert not mock_platform.called
@@ -77,7 +77,7 @@ async def test_load_platform.opp):
         """Fake discovery."""
         return [(SERVICE, SERVICE_INFO)]
 
-    mock_discover, mock_platform = await mock_discovery.opp, discover)
+    mock_discover, mock_platform = await mock_discovery(opp, discover)
 
     assert not mock_discover.called
     assert mock_platform.called
@@ -93,7 +93,7 @@ async def test_load_component.opp):
         """Fake discovery."""
         return [(SERVICE_NO_PLATFORM, SERVICE_INFO)]
 
-    mock_discover, mock_platform = await mock_discovery.opp, discover)
+    mock_discover, mock_platform = await mock_discovery(opp, discover)
 
     assert mock_discover.called
     assert not mock_platform.called
@@ -113,7 +113,7 @@ async def test_ignore_service.opp):
         """Fake discovery."""
         return [(SERVICE_NO_PLATFORM, SERVICE_INFO)]
 
-    mock_discover, mock_platform = await mock_discovery.opp, discover, IGNORE_CONFIG)
+    mock_discover, mock_platform = await mock_discovery(opp, discover, IGNORE_CONFIG)
 
     assert not mock_discover.called
     assert not mock_platform.called
@@ -129,7 +129,7 @@ async def test_discover_duplicates.opp):
             (SERVICE_NO_PLATFORM, SERVICE_INFO),
         ]
 
-    mock_discover, mock_platform = await mock_discovery.opp, discover)
+    mock_discover, mock_platform = await mock_discovery(opp, discover)
 
     assert mock_discover.called
     assert mock_discover.call_count == 1
@@ -154,7 +154,7 @@ async def test_discover_config_flow.opp):
     with patch.dict(
         discovery.CONFIG_ENTRY_HANDLERS, {"mock-service": "mock-component"}
     ), patch("openpeerpower.data_entry_flow.FlowManager.async_init") as m_init:
-        await mock_discovery.opp, discover)
+        await mock_discovery(opp, discover)
 
     assert len(m_init.mock_calls) == 1
     args, kwargs = m_init.mock_calls[0][1:]

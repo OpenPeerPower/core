@@ -62,13 +62,13 @@ def storage_setup_opp, opp_storage, opp_admin_user):
             ]
         },
     }
-    assert.opp.loop.run_until_complete(async_setup_component.opp, DOMAIN, {}))
+    assert opp.loop.run_until_complete(async_setup_component(opp, DOMAIN, {}))
 
 
 async def test_minimal_setup_opp):
     """Test minimal config with only name."""
     config = {DOMAIN: {"id": "1234", "name": "test person"}}
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
 
     state = opp.states.get("person.test_person")
     assert state.state == STATE_UNKNOWN
@@ -82,20 +82,20 @@ async def test_minimal_setup_opp):
 async def test_setup_no_id.opp):
     """Test config with no id."""
     config = {DOMAIN: {"name": "test user"}}
-    assert not await async_setup_component.opp, DOMAIN, config)
+    assert not await async_setup_component(opp, DOMAIN, config)
 
 
 async def test_setup_no_name.opp):
     """Test config with no name."""
     config = {DOMAIN: {"id": "1234"}}
-    assert not await async_setup_component.opp, DOMAIN, config)
+    assert not await async_setup_component(opp, DOMAIN, config)
 
 
-async def test_setup_user_id.opp, opp_admin_user):
+async def test_setup_user_id(opp, opp_admin_user):
     """Test config with user id."""
     user_id = opp_admin_user.id
     config = {DOMAIN: {"id": "1234", "name": "test person", "user_id": user_id}}
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
 
     state = opp.states.get("person.test_person")
     assert state.state == STATE_UNKNOWN
@@ -106,7 +106,7 @@ async def test_setup_user_id.opp, opp_admin_user):
     assert state.attributes.get(ATTR_USER_ID) == user_id
 
 
-async def test_valid_invalid_user_ids.opp, opp_admin_user):
+async def test_valid_invalid_user_ids(opp, opp_admin_user):
     """Test a person with valid user id and a person with invalid user id ."""
     user_id = opp_admin_user.id
     config = {
@@ -115,7 +115,7 @@ async def test_valid_invalid_user_ids.opp, opp_admin_user):
             {"id": "5678", "name": "test bad user", "user_id": "bad_user_id"},
         ]
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
 
     state = opp.states.get("person.test_valid_user")
     assert state.state == STATE_UNKNOWN
@@ -128,7 +128,7 @@ async def test_valid_invalid_user_ids.opp, opp_admin_user):
     assert state is None
 
 
-async def test_setup_tracker.opp, opp_admin_user):
+async def test_setup_tracker(opp, opp_admin_user):
     """Test set up person with one device tracker."""
     opp.state = CoreState.not_running
     user_id = opp_admin_user.id
@@ -140,7 +140,7 @@ async def test_setup_tracker.opp, opp_admin_user):
             "device_trackers": DEVICE_TRACKER,
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
 
     state = opp.states.get("person.tracked_person")
     assert state.state == STATE_UNKNOWN
@@ -184,7 +184,7 @@ async def test_setup_tracker.opp, opp_admin_user):
     assert state.attributes.get(ATTR_USER_ID) == user_id
 
 
-async def test_setup_two_trackers.opp, opp_admin_user):
+async def test_setup_two_trackers(opp, opp_admin_user):
     """Test set up person with two device trackers."""
     opp.state = CoreState.not_running
     user_id = opp_admin_user.id
@@ -196,7 +196,7 @@ async def test_setup_two_trackers.opp, opp_admin_user):
             "device_trackers": [DEVICE_TRACKER, DEVICE_TRACKER_2],
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
 
     state = opp.states.get("person.tracked_person")
     assert state.state == STATE_UNKNOWN
@@ -270,7 +270,7 @@ async def test_setup_two_trackers.opp, opp_admin_user):
     assert state.attributes.get(ATTR_SOURCE) == DEVICE_TRACKER
 
 
-async def test_ignore_unavailable_states.opp, opp_admin_user):
+async def test_ignore_unavailable_states(opp, opp_admin_user):
     """Test set up person with two device trackers, one unavailable."""
     opp.state = CoreState.not_running
     user_id = opp_admin_user.id
@@ -282,7 +282,7 @@ async def test_ignore_unavailable_states.opp, opp_admin_user):
             "device_trackers": [DEVICE_TRACKER, DEVICE_TRACKER_2],
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
 
     state = opp.states.get("person.tracked_person")
     assert state.state == STATE_UNKNOWN
@@ -313,7 +313,7 @@ async def test_ignore_unavailable_states.opp, opp_admin_user):
     assert state.state == "not_home"
 
 
-async def test_restore_home_state.opp, opp_admin_user):
+async def test_restore_home_state(opp, opp_admin_user):
     """Test that the state is restored for a person on startup."""
     user_id = opp_admin_user.id
     attrs = {
@@ -324,9 +324,9 @@ async def test_restore_home_state.opp, opp_admin_user):
         ATTR_USER_ID: user_id,
     }
     state = State("person.tracked_person", "home", attrs)
-    mock_restore_cache.opp, (state,))
+    mock_restore_cache(opp, (state,))
     opp.state = CoreState.not_running
-    mock_component.opp, "recorder")
+    mock_component(opp, "recorder")
     config = {
         DOMAIN: {
             "id": "1234",
@@ -336,7 +336,7 @@ async def test_restore_home_state.opp, opp_admin_user):
             "picture": "/bla",
         }
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
 
     state = opp.states.get("person.tracked_person")
     assert state.state == "home"
@@ -349,7 +349,7 @@ async def test_restore_home_state.opp, opp_admin_user):
     assert state.attributes.get(ATTR_ENTITY_PICTURE) == "/bla"
 
 
-async def test_duplicate_ids.opp, opp_admin_user):
+async def test_duplicate_ids(opp, opp_admin_user):
     """Test we don't allow duplicate IDs."""
     config = {
         DOMAIN: [
@@ -357,17 +357,17 @@ async def test_duplicate_ids.opp, opp_admin_user):
             {"id": "1234", "name": "test user 2"},
         ]
     }
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
 
     assert len.opp.states.async_entity_ids("person")) == 1
-    assert.opp.states.get("person.test_user_1") is not None
-    assert.opp.states.get("person.test_user_2") is None
+    assert opp.states.get("person.test_user_1") is not None
+    assert opp.states.get("person.test_user_2") is None
 
 
 async def test_create_person_during_run.opp):
     """Test that person is updated if created while.opp is running."""
     config = {DOMAIN: {}}
-    assert await async_setup_component.opp, DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
     opp.states.async_set(DEVICE_TRACKER, "home")
     await opp.async_block_till_done()
 
@@ -380,7 +380,7 @@ async def test_create_person_during_run.opp):
     assert state.state == "home"
 
 
-async def test_load_person_storage.opp, opp_admin_user, storage_setup):
+async def test_load_person_storage(opp, opp_admin_user, storage_setup):
     """Test set up person from storage."""
     state = opp.states.get("person.tracked_person")
     assert state.state == STATE_UNKNOWN
@@ -404,7 +404,7 @@ async def test_load_person_storage.opp, opp_admin_user, storage_setup):
     assert state.attributes.get(ATTR_USER_ID) == opp_admin_user.id
 
 
-async def test_load_person_storage_two_nonlinked.opp, opp_storage):
+async def test_load_person_storage_two_nonlinked(opp, opp_storage):
     """Test loading two users with both not having a user linked."""
     opp.storage[DOMAIN] = {
         "key": DOMAIN,
@@ -426,14 +426,14 @@ async def test_load_person_storage_two_nonlinked.opp, opp_storage):
             ]
         },
     }
-    await async_setup_component.opp, DOMAIN, {})
+    await async_setup_component(opp, DOMAIN, {})
 
     assert len.opp.states.async_entity_ids("person")) == 2
-    assert.opp.states.get("person.tracked_person_1") is not None
-    assert.opp.states.get("person.tracked_person_2") is not None
+    assert opp.states.get("person.tracked_person_1") is not None
+    assert opp.states.get("person.tracked_person_2") is not None
 
 
-async def test_ws_list.opp, opp_ws_client, storage_setup):
+async def test_ws_list(opp, opp_ws_client, storage_setup):
     """Test listing via WS."""
     manager = opp.data[DOMAIN][1]
 
@@ -447,7 +447,7 @@ async def test_ws_list.opp, opp_ws_client, storage_setup):
     assert len(resp["result"]["config"]) == 0
 
 
-async def test_ws_create.opp, opp_ws_client, storage_setup, opp_read_only_user):
+async def test_ws_create(opp, opp_ws_client, storage_setup, opp_read_only_user):
     """Test creating via WS."""
     manager = opp.data[DOMAIN][1]
 
@@ -498,7 +498,7 @@ async def test_ws_create_requires_admin(
     assert not resp["success"]
 
 
-async def test_ws_update.opp, opp_ws_client, storage_setup):
+async def test_ws_update(opp, opp_ws_client, storage_setup):
     """Test updating via WS."""
     manager = opp.data[DOMAIN][1]
 
@@ -572,7 +572,7 @@ async def test_ws_update_require_admin(
     assert original == not_updated
 
 
-async def test_ws_delete.opp, opp_ws_client, storage_setup):
+async def test_ws_delete(opp, opp_ws_client, storage_setup):
     """Test deleting via WS."""
     manager = opp.data[DOMAIN][1]
 
@@ -619,7 +619,7 @@ async def test_ws_delete_require_admin(
     assert len(persons) == 1
 
 
-async def test_create_invalid_user_id.opp, storage_collection):
+async def test_create_invalid_user_id(opp, storage_collection):
     """Test we do not allow invalid user ID during creation."""
     with pytest.raises(ValueError):
         await storage_collection.async_create_item(
@@ -627,7 +627,7 @@ async def test_create_invalid_user_id.opp, storage_collection):
         )
 
 
-async def test_create_duplicate_user_id.opp, opp_admin_user, storage_collection):
+async def test_create_duplicate_user_id(opp, opp_admin_user, storage_collection):
     """Test we do not allow duplicate user ID during creation."""
     await storage_collection.async_create_item(
         {"name": "Hello", "user_id":.opp_admin_user.id}
@@ -639,7 +639,7 @@ async def test_create_duplicate_user_id.opp, opp_admin_user, storage_collection)
         )
 
 
-async def test_update_double_user_id.opp, opp_admin_user, storage_collection):
+async def test_update_double_user_id(opp, opp_admin_user, storage_collection):
     """Test we do not allow double user ID during update."""
     await storage_collection.async_create_item(
         {"name": "Hello", "user_id":.opp_admin_user.id}
@@ -652,7 +652,7 @@ async def test_update_double_user_id.opp, opp_admin_user, storage_collection):
         )
 
 
-async def test_update_invalid_user_id.opp, storage_collection):
+async def test_update_invalid_user_id(opp, storage_collection):
     """Test updating to invalid user ID."""
     person = await storage_collection.async_create_item({"name": "Hello"})
 
@@ -678,7 +678,7 @@ async def test_update_person_when_user_removed(
     assert storage_collection.data[person["id"]]["user_id"] is None
 
 
-async def test_removing_device_tracker.opp, storage_setup):
+async def test_removing_device_tracker(opp, storage_setup):
     """Test we automatically remove removed device trackers."""
     storage_collection = opp.data[DOMAIN][1]
     reg = await entity_registry.async_get_registry.opp)
@@ -696,7 +696,7 @@ async def test_removing_device_tracker.opp, storage_setup):
     assert storage_collection.data[person["id"]]["device_trackers"] == []
 
 
-async def test_add_user_device_tracker.opp, storage_setup, opp_read_only_user):
+async def test_add_user_device_tracker(opp, storage_setup, opp_read_only_user):
     """Test adding a device tracker to a person tied to a user."""
     storage_collection = opp.data[DOMAIN][1]
     pers = await storage_collection.async_create_item(
@@ -717,7 +717,7 @@ async def test_add_user_device_tracker.opp, storage_setup, opp_read_only_user):
     ]
 
 
-async def test_reload.opp, opp_admin_user):
+async def test_reload(opp, opp_admin_user):
     """Test reloading the YAML config."""
     assert await async_setup_component(
         opp,

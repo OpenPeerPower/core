@@ -139,9 +139,9 @@ class TestPersistentNotification:
         notifications.clear()
 
 
-async def test_ws_get_notifications.opp, opp_ws_client):
+async def test_ws_get_notifications(opp, opp_ws_client):
     """Test websocket endpoint for retrieving persistent notifications."""
-    await async_setup_component.opp, pn.DOMAIN, {})
+    await async_setup_component(opp, pn.DOMAIN, {})
 
     client = await opp_ws_client.opp)
 

@@ -120,7 +120,7 @@ async def test_setup_opp):
             [mock_entry_1, mock_entry_2, mock_entry_3],
         )
         with assert_setup_component(1, geo_location.DOMAIN):
-            assert await async_setup_component.opp, geo_location.DOMAIN, CONFIG)
+            assert await async_setup_component(opp, geo_location.DOMAIN, CONFIG)
             await opp.async_block_till_done()
             # Artificially trigger update.
             opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -190,7 +190,7 @@ async def test_setup_opp):
                 "OK",
                 [mock_entry_1, mock_entry_4, mock_entry_3],
             )
-            async_fire_time_changed.opp, utcnow + SCAN_INTERVAL)
+            async_fire_time_changed(opp, utcnow + SCAN_INTERVAL)
             await opp.async_block_till_done()
 
             all_states = opp.states.async_all()
@@ -199,7 +199,7 @@ async def test_setup_opp):
             # Simulate an update - empty data, but successful update,
             # so no changes to entities.
             mock_feed.return_value.update.return_value = "OK_NO_DATA", None
-            async_fire_time_changed.opp, utcnow + 2 * SCAN_INTERVAL)
+            async_fire_time_changed(opp, utcnow + 2 * SCAN_INTERVAL)
             await opp.async_block_till_done()
 
             all_states = opp.states.async_all()
@@ -207,7 +207,7 @@ async def test_setup_opp):
 
             # Simulate an update - empty data, removes all entities
             mock_feed.return_value.update.return_value = "ERROR", None
-            async_fire_time_changed.opp, utcnow + 3 * SCAN_INTERVAL)
+            async_fire_time_changed(opp, utcnow + 3 * SCAN_INTERVAL)
             await opp.async_block_till_done()
 
             all_states = opp.states.async_all()

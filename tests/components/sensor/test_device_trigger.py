@@ -39,16 +39,16 @@ def entity_reg.opp):
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
-async def test_get_triggers.opp, device_reg, entity_reg):
+async def test_get_triggers(opp, device_reg, entity_reg):
     """Test we get the expected triggers from a sensor."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -61,7 +61,7 @@ async def test_get_triggers.opp, device_reg, entity_reg):
             device_id=device_entry.id,
         )
 
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     expected_triggers = [
@@ -76,18 +76,18 @@ async def test_get_triggers.opp, device_reg, entity_reg):
         for trigger in ENTITY_TRIGGERS[device_class]
         if device_class != "none"
     ]
-    triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
+    triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     assert len(triggers) == 12
     assert triggers == expected_triggers
 
 
-async def test_get_trigger_capabilities.opp, device_reg, entity_reg):
+async def test_get_trigger_capabilities(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a sensor trigger."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -99,7 +99,7 @@ async def test_get_trigger_capabilities.opp, device_reg, entity_reg):
         device_id=device_entry.id,
     )
 
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     expected_capabilities = {
@@ -119,7 +119,7 @@ async def test_get_trigger_capabilities.opp, device_reg, entity_reg):
             {"name": "for", "optional": True, "type": "positive_time_period_dict"},
         ]
     }
-    triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
+    triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     assert len(triggers) == 1
     for trigger in triggers:
         capabilities = await async_get_device_automation_capabilities(
@@ -128,15 +128,15 @@ async def test_get_trigger_capabilities.opp, device_reg, entity_reg):
         assert capabilities == expected_capabilities
 
 
-async def test_get_trigger_capabilities_none.opp, device_reg, entity_reg):
+async def test_get_trigger_capabilities_none(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a sensor trigger."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     triggers = [
@@ -164,11 +164,11 @@ async def test_get_trigger_capabilities_none.opp, device_reg, entity_reg):
         assert capabilities == expected_capabilities
 
 
-async def test_if_fires_not_on_above_below.opp, calls, caplog):
+async def test_if_fires_not_on_above_below(opp, calls, caplog):
     """Test for value triggers firing."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     sensor1 = platform.ENTITIES["battery"]
@@ -194,11 +194,11 @@ async def test_if_fires_not_on_above_below.opp, calls, caplog):
     assert "must contain at least one of below, above" in caplog.text
 
 
-async def test_if_fires_on_state_above.opp, calls):
+async def test_if_fires_on_state_above(opp, calls):
     """Test for value triggers firing."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     sensor1 = platform.ENTITIES["battery"]
@@ -237,7 +237,7 @@ async def test_if_fires_on_state_above.opp, calls):
         },
     )
     await opp.async_block_till_done()
-    assert.opp.states.get(sensor1.entity_id).state == STATE_UNKNOWN
+    assert opp.states.get(sensor1.entity_id).state == STATE_UNKNOWN
     assert len(calls) == 0
 
     opp.states.async_set(sensor1.entity_id, 9)
@@ -252,11 +252,11 @@ async def test_if_fires_on_state_above.opp, calls):
     )
 
 
-async def test_if_fires_on_state_below.opp, calls):
+async def test_if_fires_on_state_below(opp, calls):
     """Test for value triggers firing."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     sensor1 = platform.ENTITIES["battery"]
@@ -295,7 +295,7 @@ async def test_if_fires_on_state_below.opp, calls):
         },
     )
     await opp.async_block_till_done()
-    assert.opp.states.get(sensor1.entity_id).state == STATE_UNKNOWN
+    assert opp.states.get(sensor1.entity_id).state == STATE_UNKNOWN
     assert len(calls) == 0
 
     opp.states.async_set(sensor1.entity_id, 11)
@@ -310,11 +310,11 @@ async def test_if_fires_on_state_below.opp, calls):
     )
 
 
-async def test_if_fires_on_state_between.opp, calls):
+async def test_if_fires_on_state_between(opp, calls):
     """Test for value triggers firing."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     sensor1 = platform.ENTITIES["battery"]
@@ -354,7 +354,7 @@ async def test_if_fires_on_state_between.opp, calls):
         },
     )
     await opp.async_block_till_done()
-    assert.opp.states.get(sensor1.entity_id).state == STATE_UNKNOWN
+    assert opp.states.get(sensor1.entity_id).state == STATE_UNKNOWN
     assert len(calls) == 0
 
     opp.states.async_set(sensor1.entity_id, 9)
@@ -380,12 +380,12 @@ async def test_if_fires_on_state_between.opp, calls):
     )
 
 
-async def test_if_fires_on_state_change_with_for.opp, calls):
+async def test_if_fires_on_state_change_with_for(opp, calls):
     """Test for triggers firing with delay."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
 
     platform.init()
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     sensor1 = platform.ENTITIES["battery"]
@@ -425,14 +425,14 @@ async def test_if_fires_on_state_change_with_for.opp, calls):
         },
     )
     await opp.async_block_till_done()
-    assert.opp.states.get(sensor1.entity_id).state == STATE_UNKNOWN
+    assert opp.states.get(sensor1.entity_id).state == STATE_UNKNOWN
     assert len(calls) == 0
 
     opp.states.async_set(sensor1.entity_id, 10)
     opp.states.async_set(sensor1.entity_id, 11)
     await opp.async_block_till_done()
     assert len(calls) == 0
-    async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert len(calls) == 1
     await opp.async_block_till_done()

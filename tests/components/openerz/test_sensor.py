@@ -23,7 +23,7 @@ async def test_sensor_state.opp):
         pickup_instance.find_next_pickup.return_value = "2020-12-12"
         patched_connector.return_value = pickup_instance
 
-        await async_setup_component.opp, SENSOR_DOMAIN, MOCK_CONFIG)
+        await async_setup_component(opp, SENSOR_DOMAIN, MOCK_CONFIG)
         await opp.async_block_till_done()
 
         entity_id = "sensor.test_name"

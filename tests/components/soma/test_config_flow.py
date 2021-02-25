@@ -25,7 +25,7 @@ async def test_import_abort.opp):
     """Test configuration from YAML aborting with existing entity."""
     flow = config_flow.SomaFlowHandler()
     flow.opp = opp
-    MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
+    MockConfigEntry(domain=DOMAIN).add_to_opp(opp)
     result = await flow.async_step_import()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_setup"

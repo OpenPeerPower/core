@@ -13,7 +13,7 @@ UPDATE_URL = freedns.UPDATE_URL
 
 
 @pytest.fixture
-def setup_freedns.opp, aioclient_mock):
+def setup_freedns(opp, aioclient_mock):
     """Fixture that sets up FreeDNS."""
     params = {}
     params[ACCESS_TOKEN] = ""
@@ -56,12 +56,12 @@ async def test_setup_opp, aioclient_mock):
     assert result
     assert aioclient_mock.call_count == 1
 
-    async_fire_time_changed.opp, utcnow() + UPDATE_INTERVAL)
+    async_fire_time_changed(opp, utcnow() + UPDATE_INTERVAL)
     await opp.async_block_till_done()
     assert aioclient_mock.call_count == 2
 
 
-async def test_setup_fails_if_wrong_token.opp, aioclient_mock):
+async def test_setup_fails_if_wrong_token(opp, aioclient_mock):
     """Test setup fails if first update fails through wrong token."""
     params = {}
     params[ACCESS_TOKEN] = ""

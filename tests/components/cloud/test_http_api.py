@@ -33,7 +33,7 @@ def mock_auth_fixture():
 
 
 @pytest.fixture(name="mock_cloud_login")
-def mock_cloud_login_fixture.opp, setup_api):
+def mock_cloud_login_fixture(opp, setup_api):
     """Mock cloud is logged in."""
     opp.data[DOMAIN].id_token = jwt.encode(
         {
@@ -46,7 +46,7 @@ def mock_cloud_login_fixture.opp, setup_api):
 
 
 @pytest.fixture(autouse=True, name="setup_api")
-def setup_api_fixture.opp, aioclient_mock):
+def setup_api_fixture(opp, aioclient_mock):
     """Initialize HTTP API."""
     opp.loop.run_until_complete(
         mock_cloud(
@@ -69,7 +69,7 @@ def setup_api_fixture.opp, aioclient_mock):
 
 
 @pytest.fixture(name="cloud_client")
-def cloud_client_fixture.opp, opp_client):
+def cloud_client_fixture(opp, opp_client):
     """Fixture that can fetch from the cloud client."""
     with patch(.opp_nabucasa.Cloud.write_user_info"):
         yield.opp.loop.run_until_complete.opp_client())
@@ -104,7 +104,7 @@ async def test_google_actions_sync_fails(mock_cognito, mock_cloud_login, cloud_c
         assert len(mock_request_sync.mock_calls) == 1
 
 
-async def test_login_view.opp, cloud_client):
+async def test_login_view(opp, cloud_client):
     """Test logging in."""
     opp.data["cloud"] = MagicMock(login=AsyncMock())
 
@@ -178,7 +178,7 @@ async def test_login_view_unknown_error(cloud_client):
     assert req.status == 502
 
 
-async def test_logout_view.opp, cloud_client):
+async def test_logout_view(opp, cloud_client):
     """Test logging out."""
     cloud = opp.data["cloud"] = MagicMock()
     cloud.logout = AsyncMock(return_value=None)
@@ -189,7 +189,7 @@ async def test_logout_view.opp, cloud_client):
     assert len(cloud.logout.mock_calls) == 1
 
 
-async def test_logout_view_request_timeout.opp, cloud_client):
+async def test_logout_view_request_timeout(opp, cloud_client):
     """Test timeout while logging out."""
     cloud = opp.data["cloud"] = MagicMock()
     cloud.logout.side_effect = asyncio.TimeoutError
@@ -385,7 +385,7 @@ async def test_websocket_status(
     }
 
 
-async def test_websocket_status_not_logged_in.opp, opp_ws_client):
+async def test_websocket_status_not_logged_in(opp, opp_ws_client):
     """Test querying the status."""
     client = await opp_ws_client.opp)
     await client.send_json({"id": 5, "type": "cloud/status"})
@@ -461,7 +461,7 @@ async def test_websocket_subscription_fail(
     assert response["error"]["code"] == "request_failed"
 
 
-async def test_websocket_subscription_not_logged_in.opp, opp_ws_client):
+async def test_websocket_subscription_not_logged_in(opp, opp_ws_client):
     """Test querying the status."""
     client = await opp_ws_client.opp)
     with patch(
@@ -546,7 +546,7 @@ async def test_websocket_update_preferences_no_token(
     assert response["error"]["code"] == "alexa_relink"
 
 
-async def test_enabling_webhook.opp, opp_ws_client, setup_api, mock_cloud_login):
+async def test_enabling_webhook(opp, opp_ws_client, setup_api, mock_cloud_login):
     """Test we call right code to enable webhooks."""
     client = await opp_ws_client.opp)
     with patch(
@@ -562,7 +562,7 @@ async def test_enabling_webhook.opp, opp_ws_client, setup_api, mock_cloud_login)
     assert mock_enable.mock_calls[0][1][0] == "mock-webhook-id"
 
 
-async def test_disabling_webhook.opp, opp_ws_client, setup_api, mock_cloud_login):
+async def test_disabling_webhook(opp, opp_ws_client, setup_api, mock_cloud_login):
     """Test we call right code to disable webhooks."""
     client = await opp_ws_client.opp)
     with patch(.opp_nabucasa.cloudhooks.Cloudhooks.async_delete") as mock_disable:
@@ -576,7 +576,7 @@ async def test_disabling_webhook.opp, opp_ws_client, setup_api, mock_cloud_login
     assert mock_disable.mock_calls[0][1][0] == "mock-webhook-id"
 
 
-async def test_enabling_remote.opp, opp_ws_client, setup_api, mock_cloud_login):
+async def test_enabling_remote(opp, opp_ws_client, setup_api, mock_cloud_login):
     """Test we call right code to enable remote UI."""
     client = await opp_ws_client.opp)
     cloud = opp.data[DOMAIN]
@@ -590,7 +590,7 @@ async def test_enabling_remote.opp, opp_ws_client, setup_api, mock_cloud_login):
     assert len(mock_connect.mock_calls) == 1
 
 
-async def test_disabling_remote.opp, opp_ws_client, setup_api, mock_cloud_login):
+async def test_disabling_remote(opp, opp_ws_client, setup_api, mock_cloud_login):
     """Test we call right code to disable remote UI."""
     client = await opp_ws_client.opp)
     cloud = opp.data[DOMAIN]
@@ -698,7 +698,7 @@ async def test_enabling_remote_trusted_networks_other(
     assert len(mock_connect.mock_calls) == 1
 
 
-async def test_list_google_entities.opp, opp_ws_client, setup_api, mock_cloud_login):
+async def test_list_google_entities(opp, opp_ws_client, setup_api, mock_cloud_login):
     """Test that we can list Google entities."""
     client = await opp_ws_client.opp)
     entity = GoogleEntity(
@@ -730,7 +730,7 @@ async def test_list_google_entities.opp, opp_ws_client, setup_api, mock_cloud_lo
     }
 
 
-async def test_update_google_entity.opp, opp_ws_client, setup_api, mock_cloud_login):
+async def test_update_google_entity(opp, opp_ws_client, setup_api, mock_cloud_login):
     """Test that we can update config of a Google entity."""
     client = await opp_ws_client.opp)
     await client.send_json(
@@ -823,7 +823,7 @@ async def test_enabling_remote_trusted_proxies_local6(
     assert len(mock_connect.mock_calls) == 0
 
 
-async def test_list_alexa_entities.opp, opp_ws_client, setup_api, mock_cloud_login):
+async def test_list_alexa_entities(opp, opp_ws_client, setup_api, mock_cloud_login):
     """Test that we can list Alexa entities."""
     client = await opp_ws_client.opp)
     entity = LightCapabilities(
@@ -845,7 +845,7 @@ async def test_list_alexa_entities.opp, opp_ws_client, setup_api, mock_cloud_log
     }
 
 
-async def test_update_alexa_entity.opp, opp_ws_client, setup_api, mock_cloud_login):
+async def test_update_alexa_entity(opp, opp_ws_client, setup_api, mock_cloud_login):
     """Test that we can update config of an Alexa entity."""
     client = await opp_ws_client.opp)
     await client.send_json(
@@ -928,7 +928,7 @@ async def test_enable_alexa_state_report_fail(
     assert response["error"]["code"] == "alexa_relink"
 
 
-async def test_thingtalk_convert.opp, opp_ws_client, setup_api):
+async def test_thingtalk_convert(opp, opp_ws_client, setup_api):
     """Test that we can convert a query."""
     client = await opp_ws_client.opp)
 
@@ -945,7 +945,7 @@ async def test_thingtalk_convert.opp, opp_ws_client, setup_api):
     assert response["result"] == {"hello": "world"}
 
 
-async def test_thingtalk_convert_timeout.opp, opp_ws_client, setup_api):
+async def test_thingtalk_convert_timeout(opp, opp_ws_client, setup_api):
     """Test that we can convert a query."""
     client = await opp_ws_client.opp)
 
@@ -962,7 +962,7 @@ async def test_thingtalk_convert_timeout.opp, opp_ws_client, setup_api):
     assert response["error"]["code"] == "timeout"
 
 
-async def test_thingtalk_convert_internal.opp, opp_ws_client, setup_api):
+async def test_thingtalk_convert_internal(opp, opp_ws_client, setup_api):
     """Test that we can convert a query."""
     client = await opp_ws_client.opp)
 
@@ -980,7 +980,7 @@ async def test_thingtalk_convert_internal.opp, opp_ws_client, setup_api):
     assert response["error"]["message"] == "Did not understand"
 
 
-async def test_tts_info.opp, opp_ws_client, setup_api):
+async def test_tts_info(opp, opp_ws_client, setup_api):
     """Test that we can get TTS info."""
     # Verify the format is as expected
     assert voice.MAP_VOICE[("en-US", voice.Gender.FEMALE)] == "JennyNeural"

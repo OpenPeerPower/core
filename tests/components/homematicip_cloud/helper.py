@@ -31,7 +31,7 @@ HOME_JSON = "homematicip_cloud.json"
 FIXTURE_DATA = load_fixture(HOME_JSON)
 
 
-def get_and_check_entity_basics.opp, mock_hap, entity_id, entity_name, device_model):
+def get_and_check_entity_basics(opp, mock_hap, entity_id, entity_name, device_model):
     """Get and test basic device."""
     op_state = opp.states.get(entity_id)
     assert op_state is not None

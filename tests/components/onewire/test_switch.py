@@ -68,7 +68,7 @@ async def test_owserver_switch(owproxy, opp, device_id):
 
     This test forces all entities to be enabled.
     """
-    await async_setup_component.opp, "persistent_notification", {})
+    await async_setup_component(opp, "persistent_notification", {})
     entity_registry = mock_registry.opp)
 
     mock_device_sensor = MOCK_DEVICE_SENSORS[device_id]

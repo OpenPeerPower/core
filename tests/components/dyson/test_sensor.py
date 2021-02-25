@@ -139,7 +139,7 @@ async def test_sensors(
 
     # Test data update
     _async_assign_values(device, MOCKED_UPDATED_VALUES)
-    await async_update_device.opp, device)
+    await async_update_device(opp, device)
     for sensor in sensors:
         state = opp.states.get(_async_get_entity_id(sensor))
         assert state.state == str(MOCKED_UPDATED_VALUES[sensor])
@@ -150,9 +150,9 @@ async def test_sensors_off.opp: OpenPeerPower, device: DysonPureCoolLink) -> Non
     """Test the case where temperature and humidity are not available."""
     device.environmental_state.temperature = 0
     device.environmental_state.humidity = 0
-    await async_update_device.opp, device)
-    assert.opp.states.get(f"{ENTITY_ID_PREFIX}_temperature").state == STATE_OFF
-    assert.opp.states.get(f"{ENTITY_ID_PREFIX}_humidity").state == STATE_OFF
+    await async_update_device(opp, device)
+    assert opp.states.get(f"{ENTITY_ID_PREFIX}_temperature").state == STATE_OFF
+    assert opp.states.get(f"{ENTITY_ID_PREFIX}_humidity").state == STATE_OFF
 
 
 @pytest.mark.parametrize(

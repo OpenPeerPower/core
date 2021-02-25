@@ -7,15 +7,15 @@ from openpeerpower.components.cloud import const
 from openpeerpower.setup import async_setup_component
 
 
-async def mock_cloud.opp, config=None):
+async def mock_cloud(opp, config=None):
     """Mock cloud."""
-    assert await async_setup_component.opp, cloud.DOMAIN, {"cloud": config or {}})
+    assert await async_setup_component(opp, cloud.DOMAIN, {"cloud": config or {}})
     cloud_inst = opp.data["cloud"]
     with patch(.opp_nabucasa.Cloud.run_executor", AsyncMock(return_value=None)):
         await cloud_inst.start()
 
 
-def mock_cloud_prefs.opp, prefs={}):
+def mock_cloud_prefs(opp, prefs={}):
     """Fixture for cloud component."""
     prefs_to_set = {
         const.PREF_ENABLE_ALEXA: True,

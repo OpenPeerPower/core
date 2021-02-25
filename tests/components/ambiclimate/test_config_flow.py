@@ -17,9 +17,9 @@ async def init_config_flow.opp):
         opp,
         {"external_url": "https://example.com"},
     )
-    await async_setup_component.opp, "http", {})
+    await async_setup_component(opp, "http", {})
 
-    config_flow.register_flow_implementation.opp, "id", "secret")
+    config_flow.register_flow_implementation(opp, "id", "secret")
     flow = config_flow.AmbiclimateFlowHandler()
 
     flow.opp = opp
@@ -53,7 +53,7 @@ async def test_abort_if_already_setup_opp):
 
 async def test_full_flow_implementation.opp):
     """Test registering an implementation and finishing flow works."""
-    config_flow.register_flow_implementation.opp, None, None)
+    config_flow.register_flow_implementation(opp, None, None)
     flow = await init_config_flow.opp)
 
     result = await flow.async_step_user()
@@ -92,7 +92,7 @@ async def test_full_flow_implementation.opp):
 
 async def test_abort_invalid_code.opp):
     """Test if no code is given to step_code."""
-    config_flow.register_flow_implementation.opp, None, None)
+    config_flow.register_flow_implementation(opp, None, None)
     flow = await init_config_flow.opp)
 
     with patch("ambiclimate.AmbiclimateOAuth.get_access_token", return_value=None):
@@ -103,7 +103,7 @@ async def test_abort_invalid_code.opp):
 
 async def test_already_setup_opp):
     """Test when already setup."""
-    config_flow.register_flow_implementation.opp, None, None)
+    config_flow.register_flow_implementation(opp, None, None)
     flow = await init_config_flow.opp)
 
     with patch.object.opp.config_entries, "async_entries", return_value=True):

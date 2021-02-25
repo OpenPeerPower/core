@@ -93,7 +93,7 @@ async def test_sensor_without_forecast.opp):
 
 async def test_sensor_with_forecast.opp):
     """Test states of the sensor with forecast."""
-    await init_integration.opp, forecast=True)
+    await init_integration(opp, forecast=True)
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     state = opp.states.get("sensor.home_hours_of_sun_0d")
@@ -335,7 +335,7 @@ async def test_sensor_enabled_without_forecast.opp):
         disabled_by=None,
     )
 
-    await init_integration.opp, forecast=True)
+    await init_integration(opp, forecast=True)
 
     state = opp.states.get("sensor.home_apparent_temperature")
     assert state
@@ -602,7 +602,7 @@ async def test_availability.opp):
         "openpeerpower.components.accuweather.AccuWeather.async_get_current_conditions",
         side_effect=ConnectionError(),
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
         state = opp.states.get("sensor.home_cloud_ceiling")
@@ -616,7 +616,7 @@ async def test_availability.opp):
             load_fixture("accuweather/current_conditions_data.json")
         ),
     ):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
         state = opp.states.get("sensor.home_cloud_ceiling")
@@ -627,9 +627,9 @@ async def test_availability.opp):
 
 async def test_manual_update_entity.opp):
     """Test manual update entity via service homeasasistant/update_entity."""
-    await init_integration.opp, forecast=True)
+    await init_integration(opp, forecast=True)
 
-    await async_setup_component.opp, "openpeerpower", {})
+    await async_setup_component(opp, "openpeerpower", {})
 
     current = json.loads(load_fixture("accuweather/current_conditions_data.json"))
     forecast = json.loads(load_fixture("accuweather/forecast_data.json"))

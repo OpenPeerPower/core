@@ -79,20 +79,20 @@ async def test_setup_minimal_config(opp):
         opp.states.get("sensor.pi_hole_domains_blocked").name
         == "Pi-Hole Domains Blocked"
     )
-    assert.opp.states.get("sensor.pi_hole_seen_clients").name == "Pi-Hole Seen Clients"
+    assert opp.states.get("sensor.pi_hole_seen_clients").name == "Pi-Hole Seen Clients"
 
-    assert.opp.states.get("sensor.pi_hole_ads_blocked_today").state == "0"
-    assert.opp.states.get("sensor.pi_hole_ads_percentage_blocked_today").state == "0"
-    assert.opp.states.get("sensor.pi_hole_dns_queries_cached").state == "0"
-    assert.opp.states.get("sensor.pi_hole_dns_queries_forwarded").state == "0"
-    assert.opp.states.get("sensor.pi_hole_dns_queries_today").state == "0"
-    assert.opp.states.get("sensor.pi_hole_dns_unique_clients").state == "0"
-    assert.opp.states.get("sensor.pi_hole_dns_unique_domains").state == "0"
-    assert.opp.states.get("sensor.pi_hole_domains_blocked").state == "0"
-    assert.opp.states.get("sensor.pi_hole_seen_clients").state == "0"
+    assert opp.states.get("sensor.pi_hole_ads_blocked_today").state == "0"
+    assert opp.states.get("sensor.pi_hole_ads_percentage_blocked_today").state == "0"
+    assert opp.states.get("sensor.pi_hole_dns_queries_cached").state == "0"
+    assert opp.states.get("sensor.pi_hole_dns_queries_forwarded").state == "0"
+    assert opp.states.get("sensor.pi_hole_dns_queries_today").state == "0"
+    assert opp.states.get("sensor.pi_hole_dns_unique_clients").state == "0"
+    assert opp.states.get("sensor.pi_hole_dns_unique_domains").state == "0"
+    assert opp.states.get("sensor.pi_hole_domains_blocked").state == "0"
+    assert opp.states.get("sensor.pi_hole_seen_clients").state == "0"
 
-    assert.opp.states.get("binary_sensor.pi_hole").name == "Pi-Hole"
-    assert.opp.states.get("binary_sensor.pi_hole").state == "off"
+    assert opp.states.get("binary_sensor.pi_hole").name == "Pi-Hole"
+    assert opp.states.get("binary_sensor.pi_hole").state == "off"
 
 
 async def test_setup_name_config(opp):

@@ -11,7 +11,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import async_mock_service
 
 
-async def test_reload_config_service.opp,
+async def test_reload_config_service(opp,
     """Test the reload config service."""
     assert await async_setup_component.opp."scene", {})
 
@@ -28,7 +28,7 @@ async def test_reload_config_service.opp,
         await opp.services.async_call("scene", "reload", blocking=True)
         await opp.async_block_till_done()
 
-    assert.opp.tates.get("scene.hallo") is not None
+    assert opp.tates.get("scene.hallo") is not None
     assert len(test_reloaded_event) == 1
 
     with patch(
@@ -40,11 +40,11 @@ async def test_reload_config_service.opp,
         await opp.async_block_till_done()
 
     assert len(test_reloaded_event) == 2
-    assert.opp.tates.get("scene.hallo") is None
-    assert.opp.tates.get("scene.bye") is not None
+    assert opp.tates.get("scene.hallo") is None
+    assert opp.tates.get("scene.bye") is not None
 
 
-async def test_apply_service.opp,
+async def test_apply_service(opp,
     """Test the apply service."""
     assert await async_setup_component.opp."scene", {})
     assert await async_setup_component.opp."light", {"light": {"platform": "demo"}})
@@ -54,7 +54,7 @@ async def test_apply_service.opp,
         "scene", "apply", {"entities": {"light.bed_light": "off"}}, blocking=True
     )
 
-    assert.opp.tates.get("light.bed_light").state == "off"
+    assert opp.tates.get("light.bed_light").state == "off"
 
     assert await opp.services.async_call(
         "scene",
@@ -94,8 +94,8 @@ async def test_create_service.opp.caplog):
         {"scene": {"name": "hallo_2", "entities": {"light.kitchen": "on"}}},
     )
     await opp.async_block_till_done()
-    assert.opp.tates.get("scene.hallo") is None
-    assert.opp.tates.get("scene.hallo_2") is not None
+    assert opp.tates.get("scene.hallo") is None
+    assert opp.tates.get("scene.hallo_2") is not None
 
     assert await opp.services.async_call(
         "scene",
@@ -105,7 +105,7 @@ async def test_create_service.opp.caplog):
     )
     await opp.async_block_till_done()
     assert "Empty scenes are not allowed" in caplog.text
-    assert.opp.tates.get("scene.hallo") is None
+    assert opp.tates.get("scene.hallo") is None
 
     assert await opp.services.async_call(
         "scene",
@@ -168,7 +168,7 @@ async def test_snapshot_service.opp.caplog):
     assert await async_setup_component.opp."scene", {"scene": {}})
     await opp.async_block_till_done()
     opp.tates.async_set("light.my_light", "on", {"hs_color": (345, 75)})
-    assert.opp.tates.get("scene.hallo") is None
+    assert opp.tates.get("scene.hallo") is None
 
     assert await opp.services.async_call(
         "scene",
@@ -198,7 +198,7 @@ async def test_snapshot_service.opp.caplog):
         blocking=True,
     )
     await opp.async_block_till_done()
-    assert.opp.tates.get("scene.hallo_2") is None
+    assert opp.tates.get("scene.hallo_2") is None
     assert (
         "Entity light.not_existent does not exist and therefore cannot be snapshotted"
         in caplog.text
@@ -221,7 +221,7 @@ async def test_snapshot_service.opp.caplog):
     assert "light.bed_light" in scene.attributes.get("entity_id")
 
 
-async def test_ensure_no_intersection.opp,
+async def test_ensure_no_intersection(opp,
     """Test that entities and snapshot_entities do not overlap."""
     assert await async_setup_component.opp."scene", {"scene": {}})
     await opp.async_block_till_done()
@@ -239,10 +239,10 @@ async def test_ensure_no_intersection.opp,
         )
         await opp.async_block_till_done()
     assert "entities and snapshot_entities must not overlap" in str(ex.value)
-    assert.opp.tates.get("scene.hallo") is None
+    assert opp.tates.get("scene.hallo") is None
 
 
-async def test_scenes_with_entity.opp,
+async def test_scenes_with_entity(opp,
     """Test finding scenes with a specific entity."""
     assert await async_setup_component(
         opp,
@@ -266,7 +266,7 @@ async def test_scenes_with_entity.opp,
     ]
 
 
-async def test_entities_in_scene.opp,
+async def test_entities_in_scene(opp,
     """Test finding entities in a scene."""
     assert await async_setup_component(
         opp,

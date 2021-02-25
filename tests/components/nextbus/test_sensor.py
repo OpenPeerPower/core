@@ -46,10 +46,10 @@ BASIC_RESULTS = {
 }
 
 
-async def assert_setup_sensor.opp, config, count=1):
+async def assert_setup_sensor(opp, config, count=1):
     """Set up the sensor and assert it's been created."""
     with assert_setup_component(count):
-        assert await async_setup_component.opp, sensor.DOMAIN, config)
+        assert await async_setup_component(opp, sensor.DOMAIN, config)
         await opp.async_block_till_done()
 
 
@@ -88,15 +88,15 @@ def mock_nextbus_lists(mock_nextbus):
 
 async def test_valid_config(opp, mock_nextbus, mock_nextbus_lists):
     """Test that sensor is set up properly with valid config."""
-    await assert_setup_sensor.opp, CONFIG_BASIC)
+    await assert_setup_sensor(opp, CONFIG_BASIC)
 
 
 async def test_invalid_config(opp, mock_nextbus, mock_nextbus_lists):
     """Checks that component is not setup when missing information."""
-    await assert_setup_sensor.opp, CONFIG_INVALID_MISSING, count=0)
+    await assert_setup_sensor(opp, CONFIG_INVALID_MISSING, count=0)
 
 
-async def test_validate_tags.opp, mock_nextbus, mock_nextbus_lists):
+async def test_validate_tags(opp, mock_nextbus, mock_nextbus_lists):
     """Test that additional validation against the API is successful."""
     # with self.subTest('Valid everything'):
     assert nextbus.validate_tags(mock_nextbus(), VALID_AGENCY, VALID_ROUTE, VALID_STOP)
@@ -116,7 +116,7 @@ async def test_verify_valid_state(
     opp. mock_nextbus, mock_nextbus_lists, mock_nextbus_predictions
 ):
     """Verify all attributes are set from a valid response."""
-    await assert_setup_sensor.opp, CONFIG_BASIC)
+    await assert_setup_sensor(opp, CONFIG_BASIC)
     mock_nextbus_predictions.assert_called_once_with(
         [{"stop_tag": VALID_STOP, "route_tag": VALID_ROUTE}], VALID_AGENCY
     )
@@ -152,7 +152,7 @@ async def test_message_dict(
         }
     }
 
-    await assert_setup_sensor.opp, CONFIG_BASIC)
+    await assert_setup_sensor(opp, CONFIG_BASIC)
 
     state = opp.states.get(SENSOR_ID_SHORT)
     assert state is not None
@@ -180,7 +180,7 @@ async def test_message_list(
         }
     }
 
-    await assert_setup_sensor.opp, CONFIG_BASIC)
+    await assert_setup_sensor(opp, CONFIG_BASIC)
 
     state = opp.states.get(SENSOR_ID_SHORT)
     assert state is not None
@@ -214,7 +214,7 @@ async def test_direction_list(
         }
     }
 
-    await assert_setup_sensor.opp, CONFIG_BASIC)
+    await assert_setup_sensor(opp, CONFIG_BASIC)
 
     state = opp.states.get(SENSOR_ID_SHORT)
     assert state is not None
@@ -233,7 +233,7 @@ async def test_custom_name(
     config = deepcopy(CONFIG_BASIC)
     config["sensor"]["name"] = "Custom Name"
 
-    await assert_setup_sensor.opp, config)
+    await assert_setup_sensor(opp, config)
     state = opp.states.get("sensor.custom_name")
     assert state is not None
 
@@ -244,7 +244,7 @@ async def test_no_predictions(
     """Verify there are no exceptions when no predictions are returned."""
     mock_nextbus_predictions.return_value = {}
 
-    await assert_setup_sensor.opp, CONFIG_BASIC)
+    await assert_setup_sensor(opp, CONFIG_BASIC)
 
     state = opp.states.get(SENSOR_ID_SHORT)
     assert state is not None
@@ -264,7 +264,7 @@ async def test_verify_no_upcoming(
         }
     }
 
-    await assert_setup_sensor.opp, CONFIG_BASIC)
+    await assert_setup_sensor(opp, CONFIG_BASIC)
 
     state = opp.states.get(SENSOR_ID_SHORT)
     assert state is not None

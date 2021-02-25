@@ -81,9 +81,9 @@ def create_dehumidifier_service(accessory):
     return service
 
 
-async def test_humidifier_active_state.opp, utcnow):
+async def test_humidifier_active_state(opp, utcnow):
     """Test that we can turn a HomeKit humidifier on and off again."""
-    helper = await setup_test_component.opp, create_humidifier_service)
+    helper = await setup_test_component(opp, create_humidifier_service)
 
     await opp.services.async_call(
         DOMAIN, "turn_on", {"entity_id": helper.entity_id}, blocking=True
@@ -98,9 +98,9 @@ async def test_humidifier_active_state.opp, utcnow):
     assert helper.characteristics[ACTIVE].value == 0
 
 
-async def test_dehumidifier_active_state.opp, utcnow):
+async def test_dehumidifier_active_state(opp, utcnow):
     """Test that we can turn a HomeKit dehumidifier on and off again."""
-    helper = await setup_test_component.opp, create_dehumidifier_service)
+    helper = await setup_test_component(opp, create_dehumidifier_service)
 
     await opp.services.async_call(
         DOMAIN, "turn_on", {"entity_id": helper.entity_id}, blocking=True
@@ -115,9 +115,9 @@ async def test_dehumidifier_active_state.opp, utcnow):
     assert helper.characteristics[ACTIVE].value == 0
 
 
-async def test_humidifier_read_humidity.opp, utcnow):
+async def test_humidifier_read_humidity(opp, utcnow):
     """Test that we can read the state of a HomeKit humidifier accessory."""
-    helper = await setup_test_component.opp, create_humidifier_service)
+    helper = await setup_test_component(opp, create_humidifier_service)
 
     helper.characteristics[ACTIVE].value = True
     helper.characteristics[RELATIVE_HUMIDITY_HUMIDIFIER_THRESHOLD].value = 75
@@ -136,9 +136,9 @@ async def test_humidifier_read_humidity.opp, utcnow):
     assert state.attributes["humidity"] == 10
 
 
-async def test_dehumidifier_read_humidity.opp, utcnow):
+async def test_dehumidifier_read_humidity(opp, utcnow):
     """Test that we can read the state of a HomeKit dehumidifier accessory."""
-    helper = await setup_test_component.opp, create_dehumidifier_service)
+    helper = await setup_test_component(opp, create_dehumidifier_service)
 
     helper.characteristics[ACTIVE].value = True
     helper.characteristics[RELATIVE_HUMIDITY_DEHUMIDIFIER_THRESHOLD].value = 75
@@ -157,9 +157,9 @@ async def test_dehumidifier_read_humidity.opp, utcnow):
     assert state.attributes["humidity"] == 40
 
 
-async def test_humidifier_set_humidity.opp, utcnow):
+async def test_humidifier_set_humidity(opp, utcnow):
     """Test that we can set the state of a HomeKit humidifier accessory."""
-    helper = await setup_test_component.opp, create_humidifier_service)
+    helper = await setup_test_component(opp, create_humidifier_service)
 
     await opp.services.async_call(
         DOMAIN,
@@ -170,9 +170,9 @@ async def test_humidifier_set_humidity.opp, utcnow):
     assert helper.characteristics[RELATIVE_HUMIDITY_HUMIDIFIER_THRESHOLD].value == 20
 
 
-async def test_dehumidifier_set_humidity.opp, utcnow):
+async def test_dehumidifier_set_humidity(opp, utcnow):
     """Test that we can set the state of a HomeKit dehumidifier accessory."""
-    helper = await setup_test_component.opp, create_dehumidifier_service)
+    helper = await setup_test_component(opp, create_dehumidifier_service)
 
     await opp.services.async_call(
         DOMAIN,
@@ -183,9 +183,9 @@ async def test_dehumidifier_set_humidity.opp, utcnow):
     assert helper.characteristics[RELATIVE_HUMIDITY_DEHUMIDIFIER_THRESHOLD].value == 20
 
 
-async def test_humidifier_set_mode.opp, utcnow):
+async def test_humidifier_set_mode(opp, utcnow):
     """Test that we can set the mode of a HomeKit humidifier accessory."""
-    helper = await setup_test_component.opp, create_humidifier_service)
+    helper = await setup_test_component(opp, create_humidifier_service)
 
     await opp.services.async_call(
         DOMAIN,
@@ -206,9 +206,9 @@ async def test_humidifier_set_mode.opp, utcnow):
     assert helper.characteristics[ACTIVE].value == 1
 
 
-async def test_dehumidifier_set_mode.opp, utcnow):
+async def test_dehumidifier_set_mode(opp, utcnow):
     """Test that we can set the mode of a HomeKit dehumidifier accessory."""
-    helper = await setup_test_component.opp, create_dehumidifier_service)
+    helper = await setup_test_component(opp, create_dehumidifier_service)
 
     await opp.services.async_call(
         DOMAIN,
@@ -229,9 +229,9 @@ async def test_dehumidifier_set_mode.opp, utcnow):
     assert helper.characteristics[ACTIVE].value == 1
 
 
-async def test_humidifier_read_only_mode.opp, utcnow):
+async def test_humidifier_read_only_mode(opp, utcnow):
     """Test that we can read the state of a HomeKit humidifier accessory."""
-    helper = await setup_test_component.opp, create_humidifier_service)
+    helper = await setup_test_component(opp, create_humidifier_service)
 
     state = await helper.poll_and_get_state()
     assert state.attributes["mode"] == "normal"
@@ -253,9 +253,9 @@ async def test_humidifier_read_only_mode.opp, utcnow):
     assert state.attributes["mode"] == "normal"
 
 
-async def test_dehumidifier_read_only_mode.opp, utcnow):
+async def test_dehumidifier_read_only_mode(opp, utcnow):
     """Test that we can read the state of a HomeKit dehumidifier accessory."""
-    helper = await setup_test_component.opp, create_dehumidifier_service)
+    helper = await setup_test_component(opp, create_dehumidifier_service)
 
     state = await helper.poll_and_get_state()
     assert state.attributes["mode"] == "normal"
@@ -277,9 +277,9 @@ async def test_dehumidifier_read_only_mode.opp, utcnow):
     assert state.attributes["mode"] == "normal"
 
 
-async def test_humidifier_target_humidity_modes.opp, utcnow):
+async def test_humidifier_target_humidity_modes(opp, utcnow):
     """Test that we can read the state of a HomeKit humidifier accessory."""
-    helper = await setup_test_component.opp, create_humidifier_service)
+    helper = await setup_test_component(opp, create_humidifier_service)
 
     helper.characteristics[RELATIVE_HUMIDITY_HUMIDIFIER_THRESHOLD].value = 37
     helper.characteristics[RELATIVE_HUMIDITY_CURRENT].value = 51
@@ -305,9 +305,9 @@ async def test_humidifier_target_humidity_modes.opp, utcnow):
     assert state.attributes["humidity"] == 37
 
 
-async def test_dehumidifier_target_humidity_modes.opp, utcnow):
+async def test_dehumidifier_target_humidity_modes(opp, utcnow):
     """Test that we can read the state of a HomeKit dehumidifier accessory."""
-    helper = await setup_test_component.opp, create_dehumidifier_service)
+    helper = await setup_test_component(opp, create_dehumidifier_service)
 
     helper.characteristics[RELATIVE_HUMIDITY_DEHUMIDIFIER_THRESHOLD].value = 73
     helper.characteristics[RELATIVE_HUMIDITY_CURRENT].value = 51

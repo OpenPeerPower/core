@@ -23,7 +23,7 @@ async def test_unique_id_migration(mock_hc, opp, mock_write_config):
         domain=DOMAIN, data={CONF_HOST: "192.0.2.0", CONF_NAME: HUB_NAME}
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     mock_registry(
         opp,
         {
@@ -57,7 +57,7 @@ async def test_unique_id_migration(mock_hc, opp, mock_write_config):
             ),
         },
     )
-    assert await async_setup_component.opp, DOMAIN, {})
+    assert await async_setup_component(opp, DOMAIN, {})
     await opp.async_block_till_done()
 
     ent_reg = await entity_registry.async_get_registry.opp)

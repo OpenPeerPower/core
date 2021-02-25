@@ -10,18 +10,18 @@ from . import BASIC_CONFIG
 from tests.common import async_fire_time_changed
 
 
-async def test_report_state.opp, caplog, legacy_patchable_time):
+async def test_report_state(opp, caplog, legacy_patchable_time):
     """Test report state works."""
-    assert await async_setup_component.opp, "switch", {})
+    assert await async_setup_component(opp, "switch", {})
     opp.states.async_set("light.ceiling", "off")
     opp.states.async_set("switch.ac", "on")
 
     with patch.object(
         BASIC_CONFIG, "async_report_state_all", AsyncMock()
     ) as mock_report, patch.object(report_state, "INITIAL_REPORT_DELAY", 0):
-        unsub = report_state.async_enable_report_state.opp, BASIC_CONFIG)
+        unsub = report_state.async_enable_report_state(opp, BASIC_CONFIG)
 
-        async_fire_time_changed.opp, utcnow())
+        async_fire_time_changed(opp, utcnow())
         await opp.async_block_till_done()
 
     # Test that enabling report state does a report on all entities

@@ -5,10 +5,10 @@ from openpeerpower.bootstrap import async_setup_component
 from openpeerpower.components import config
 
 
-async def test_delete_script.opp, opp_client):
+async def test_delete_script(opp, opp_client):
     """Test deleting a script."""
     with patch.object(config, "SECTIONS", ["script"]):
-        await async_setup_component.opp, "config", {})
+        await async_setup_component(opp, "config", {})
 
     client = await opp_client()
 

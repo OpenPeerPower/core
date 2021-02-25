@@ -68,7 +68,7 @@ def state_fixture(state_1):
 
 
 @pytest.fixture(name="player")
-def player_fixture.opp, state):
+def player_fixture(opp, state):
     """Get standard player."""
     player = ArcamFmj(MOCK_NAME, state, MOCK_UUID)
     player.entity_id = MOCK_ENTITY_ID
@@ -78,12 +78,12 @@ def player_fixture.opp, state):
 
 
 @pytest.fixture(name="player_setup")
-async def player_setup_fixture.opp, state_1, state_2, client):
+async def player_setup_fixture(opp, state_1, state_2, client):
     """Get standard player."""
     config_entry = MockConfigEntry(
         domain="arcam_fmj", data=MOCK_CONFIG_ENTRY, title=MOCK_NAME
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     def state_mock(cli, zone):
         if zone == 1:

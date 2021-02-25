@@ -52,7 +52,7 @@ from tests.components.light.conftest import mock_light_profiles  # noqa
 COMPONENT_PREFIX = "openpeerpower.components.smartthings."
 
 
-async def setup_platform.opp, platform: str, *, devices=None, scenes=None):
+async def setup_platform(opp, platform: str, *, devices=None, scenes=None):
     """Set up the SmartThings platform and prerequisites."""
     opp.config.components.add(DOMAIN)
     config_entry = ConfigEntry(
@@ -75,14 +75,14 @@ async def setup_platform.opp, platform: str, *, devices=None, scenes=None):
 
 
 @pytest.fixture(autouse=True)
-async def setup_component.opp, config_file, opp_storage):
+async def setup_component(opp, config_file, opp_storage):
     """Load the SmartThing component."""
     opp.storage[STORAGE_KEY] = {"data": config_file, "version": STORAGE_VERSION}
     await async_process_op_core_config(
         opp,
         {"external_url": "https://test.local"},
     )
-    await async_setup_component.opp, "smartthings", {})
+    await async_setup_component(opp, "smartthings", {})
 
 
 def _create_location():
@@ -105,7 +105,7 @@ def locations_fixture(location):
 
 
 @pytest.fixture(name="app")
-async def app_fixture.opp, config_file):
+async def app_fixture(opp, config_file):
     """Fixture for a single app."""
     app = Mock(AppEntity)
     app.app_name = APP_NAME_PREFIX + str(uuid4())
@@ -214,7 +214,7 @@ def device_fixture(location):
 
 
 @pytest.fixture(name="config_entry")
-def config_entry_fixture.opp, installed_app, location):
+def config_entry_fixture(opp, installed_app, location):
     """Fixture representing a config entry."""
     data = {
         CONF_ACCESS_TOKEN: str(uuid4()),

@@ -11,14 +11,14 @@ from tests.common import MockConfigEntry, mock_restore_cache
 from tests.components.rfxtrx.conftest import create_rfx_test_cfg
 
 
-async def test_one_light.opp, rfxtrx):
+async def test_one_light(opp, rfxtrx):
     """Test with 1 light."""
     entry_data = create_rfx_test_cfg(
         devices={"0b1100cd0213c7f210020f51": {"signal_repetitions": 1}}
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -90,7 +90,7 @@ async def test_one_light.opp, rfxtrx):
 
 
 @pytest.mark.parametrize("state,brightness", [["on", 100], ["on", 50], ["off", None]])
-async def test_state_restore.opp, rfxtrx, state, brightness):
+async def test_state_restore(opp, rfxtrx, state, brightness):
     """State restoration."""
 
     entity_id = "light.ac_213c7f2_16"
@@ -104,16 +104,16 @@ async def test_state_restore.opp, rfxtrx, state, brightness):
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
 
-    assert.opp.states.get(entity_id).state == state
-    assert.opp.states.get(entity_id).attributes.get(ATTR_BRIGHTNESS) == brightness
+    assert opp.states.get(entity_id).state == state
+    assert opp.states.get(entity_id).attributes.get(ATTR_BRIGHTNESS) == brightness
 
 
-async def test_several_lights.opp, rfxtrx):
+async def test_several_lights(opp, rfxtrx):
     """Test with 3 lights."""
     entry_data = create_rfx_test_cfg(
         devices={
@@ -124,7 +124,7 @@ async def test_several_lights.opp, rfxtrx):
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -163,14 +163,14 @@ async def test_several_lights.opp, rfxtrx):
 
 
 @pytest.mark.parametrize("repetitions", [1, 3])
-async def test_repetitions.opp, rfxtrx, repetitions):
+async def test_repetitions(opp, rfxtrx, repetitions):
     """Test signal repetitions."""
     entry_data = create_rfx_test_cfg(
         devices={"0b1100cd0213c7f230020f71": {"signal_repetitions": repetitions}}
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -183,7 +183,7 @@ async def test_repetitions.opp, rfxtrx, repetitions):
     assert rfxtrx.transport.send.call_count == repetitions
 
 
-async def test_discover_light.opp, rfxtrx_automatic):
+async def test_discover_light(opp, rfxtrx_automatic):
     """Test with discovery of lights."""
     rfxtrx = rfxtrx_automatic
 

@@ -10,8 +10,8 @@ from tests.components.homekit_controller.common import (
 
 async def test_hue_bridge_setup_opp):
     """Test that a Hue hub can be correctly setup in HA via HomeKit."""
-    accessories = await setup_accessories_from_file.opp, "hue_bridge.json")
-    config_entry, pairing = await setup_test_accessories.opp, accessories)
+    accessories = await setup_accessories_from_file(opp, "hue_bridge.json")
+    config_entry, pairing = await setup_test_accessories(opp, accessories)
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
@@ -61,5 +61,5 @@ async def test_hue_bridge_setup_opp):
             }
         )
 
-    triggers = await async_get_device_automations.opp, "trigger", device.id)
+    triggers = await async_get_device_automations(opp, "trigger", device.id)
     assert_lists_same(triggers, expected)

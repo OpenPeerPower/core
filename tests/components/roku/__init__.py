@@ -177,7 +177,7 @@ async def setup_integration(
     """Set up the Roku integration in Open Peer Power."""
     entry = MockConfigEntry(domain=DOMAIN, unique_id=unique_id, data={CONF_HOST: host})
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     if not skip_entry_setup:
         mock_connection(

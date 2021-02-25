@@ -7,14 +7,14 @@ from openpeerpower.setup import async_setup_component
 from tests.common import get_system_health_info
 
 
-async def test_ipma_system_health.opp, aioclient_mock):
+async def test_ipma_system_health(opp, aioclient_mock):
     """Test ipma system health."""
     aioclient_mock.get(IPMA_API_URL, json={"result": "ok", "data": {}})
 
     opp.config.components.add("ipma")
-    assert await async_setup_component.opp, "system_health", {})
+    assert await async_setup_component(opp, "system_health", {})
 
-    info = await get_system_health_info.opp, "ipma")
+    info = await get_system_health_info(opp, "ipma")
 
     for key, val in info.items():
         if asyncio.iscoroutine(val):

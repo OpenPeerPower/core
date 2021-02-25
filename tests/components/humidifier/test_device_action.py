@@ -31,10 +31,10 @@ def entity_reg.opp):
     return mock_registry.opp)
 
 
-async def test_get_actions.opp, device_reg, entity_reg):
+async def test_get_actions(opp, device_reg, entity_reg):
     """Test we get the expected actions from a humidifier."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -76,14 +76,14 @@ async def test_get_actions.opp, device_reg, entity_reg):
             "entity_id": "humidifier.test_5678",
         },
     ]
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert_lists_same(actions, expected_actions)
 
 
-async def test_get_action_no_modes.opp, device_reg, entity_reg):
+async def test_get_action_no_modes(opp, device_reg, entity_reg):
     """Test we get the expected actions from a humidifier."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -119,14 +119,14 @@ async def test_get_action_no_modes.opp, device_reg, entity_reg):
             "entity_id": "humidifier.test_5678",
         },
     ]
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert_lists_same(actions, expected_actions)
 
 
-async def test_get_action_no_state.opp, device_reg, entity_reg):
+async def test_get_action_no_state(opp, device_reg, entity_reg):
     """Test we get the expected actions from a humidifier."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -158,7 +158,7 @@ async def test_get_action_no_state.opp, device_reg, entity_reg):
             "entity_id": "humidifier.test_5678",
         },
     ]
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert_lists_same(actions, expected_actions)
 
 
@@ -238,11 +238,11 @@ async def test_action.opp):
         },
     )
 
-    set_humidity_calls = async_mock_service.opp, "humidifier", "set_humidity")
-    set_mode_calls = async_mock_service.opp, "humidifier", "set_mode")
-    turn_on_calls = async_mock_service.opp, "humidifier", "turn_on")
-    turn_off_calls = async_mock_service.opp, "humidifier", "turn_off")
-    toggle_calls = async_mock_service.opp, "humidifier", "toggle")
+    set_humidity_calls = async_mock_service(opp, "humidifier", "set_humidity")
+    set_mode_calls = async_mock_service(opp, "humidifier", "set_mode")
+    turn_on_calls = async_mock_service(opp, "humidifier", "turn_on")
+    turn_off_calls = async_mock_service(opp, "humidifier", "turn_off")
+    toggle_calls = async_mock_service(opp, "humidifier", "toggle")
 
     assert len(set_humidity_calls) == 0
     assert len(set_mode_calls) == 0

@@ -24,17 +24,17 @@ from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
 @pytest.fixture(autouse=True)
 def setup_comp.opp):
     """Initialize components."""
-    mock_component.opp, "group")
+    mock_component(opp, "group")
     opp.states.async_set("test.entity", "hello")
 
 
-async def test_if_fires_on_change_bool.opp, calls):
+async def test_if_fires_on_change_bool(opp, calls):
     """Test for firing on boolean change."""
     assert await async_setup_component(
         opp,
@@ -68,7 +68,7 @@ async def test_if_fires_on_change_bool.opp, calls):
     assert len(calls) == 1
 
 
-async def test_if_fires_on_change_str.opp, calls):
+async def test_if_fires_on_change_str(opp, calls):
     """Test for firing on change."""
     assert await async_setup_component(
         opp,
@@ -91,7 +91,7 @@ async def test_if_fires_on_change_str.opp, calls):
     assert len(calls) == 1
 
 
-async def test_if_fires_on_change_str_crazy.opp, calls):
+async def test_if_fires_on_change_str_crazy(opp, calls):
     """Test for firing on change."""
     assert await async_setup_component(
         opp,
@@ -135,7 +135,7 @@ async def test_if_not_fires_when_true_at_setup_opp, calls):
     assert len(calls) == 0
 
 
-async def test_if_not_fires_because_fail.opp, calls):
+async def test_if_not_fires_because_fail(opp, calls):
     """Test for not firing after TemplateError."""
     opp.states.async_set("test.number", "1")
 
@@ -168,7 +168,7 @@ async def test_if_not_fires_because_fail.opp, calls):
     assert len(calls) == 1
 
 
-async def test_if_not_fires_on_change_bool.opp, calls):
+async def test_if_not_fires_on_change_bool(opp, calls):
     """Test for not firing on boolean change."""
     assert await async_setup_component(
         opp,
@@ -189,7 +189,7 @@ async def test_if_not_fires_on_change_bool.opp, calls):
     assert len(calls) == 0
 
 
-async def test_if_not_fires_on_change_str.opp, calls):
+async def test_if_not_fires_on_change_str(opp, calls):
     """Test for not firing on string change."""
     assert await async_setup_component(
         opp,
@@ -207,7 +207,7 @@ async def test_if_not_fires_on_change_str.opp, calls):
     assert len(calls) == 0
 
 
-async def test_if_not_fires_on_change_str_crazy.opp, calls):
+async def test_if_not_fires_on_change_str_crazy(opp, calls):
     """Test for not firing on string change."""
     assert await async_setup_component(
         opp,
@@ -228,7 +228,7 @@ async def test_if_not_fires_on_change_str_crazy.opp, calls):
     assert len(calls) == 0
 
 
-async def test_if_fires_on_no_change.opp, calls):
+async def test_if_fires_on_no_change(opp, calls):
     """Test for firing on no change."""
     assert await async_setup_component(
         opp,
@@ -249,7 +249,7 @@ async def test_if_fires_on_no_change.opp, calls):
     assert cur_len == len(calls)
 
 
-async def test_if_fires_on_two_change.opp, calls):
+async def test_if_fires_on_two_change(opp, calls):
     """Test for firing on two changes."""
     assert await async_setup_component(
         opp,
@@ -276,7 +276,7 @@ async def test_if_fires_on_two_change.opp, calls):
     assert len(calls) == 1
 
 
-async def test_if_fires_on_change_with_template.opp, calls):
+async def test_if_fires_on_change_with_template(opp, calls):
     """Test for firing on change with template."""
     assert await async_setup_component(
         opp,
@@ -297,7 +297,7 @@ async def test_if_fires_on_change_with_template.opp, calls):
     assert len(calls) == 1
 
 
-async def test_if_not_fires_on_change_with_template.opp, calls):
+async def test_if_not_fires_on_change_with_template(opp, calls):
     """Test for not firing on change with template."""
     assert await async_setup_component(
         opp,
@@ -320,7 +320,7 @@ async def test_if_not_fires_on_change_with_template.opp, calls):
     assert len(calls) == 0
 
 
-async def test_if_fires_on_change_with_template_advanced.opp, calls):
+async def test_if_fires_on_change_with_template_advanced(opp, calls):
     """Test for firing on change with template advanced."""
     context = Context()
     assert await async_setup_component(
@@ -360,7 +360,7 @@ async def test_if_fires_on_change_with_template_advanced.opp, calls):
     assert "template - test.entity - hello - world - None" == calls[0].data["some"]
 
 
-async def test_if_fires_on_no_change_with_template_advanced.opp, calls):
+async def test_if_fires_on_no_change_with_template_advanced(opp, calls):
     """Test for firing on no change with template advanced."""
     assert await async_setup_component(
         opp,
@@ -434,7 +434,7 @@ async def test_if_fires_on_change_with_template_2.opp, calls):
     assert len(calls) == 2
 
 
-async def test_if_action.opp, calls):
+async def test_if_action(opp, calls):
     """Test for firing if action."""
     assert await async_setup_component(
         opp,
@@ -469,7 +469,7 @@ async def test_if_action.opp, calls):
     assert len(calls) == 1
 
 
-async def test_if_fires_on_change_with_bad_template.opp, calls):
+async def test_if_fires_on_change_with_bad_template(opp, calls):
     """Test for firing on change with bad template."""
     with assert_setup_component(0, automation.DOMAIN):
         assert await async_setup_component(
@@ -505,7 +505,7 @@ async def test_if_fires_on_change_with_bad_template_2.opp, calls):
     assert len(calls) == 0
 
 
-async def test_wait_template_with_trigger.opp, calls):
+async def test_wait_template_with_trigger(opp, calls):
     """Test using wait template with 'trigger.entity_id'."""
     assert await async_setup_component(
         opp,
@@ -553,7 +553,7 @@ async def test_wait_template_with_trigger.opp, calls):
     assert calls[0].data["some"] == "template - test.entity - hello - world - None"
 
 
-async def test_if_fires_on_change_with_for.opp, calls):
+async def test_if_fires_on_change_with_for(opp, calls):
     """Test for firing on change with for."""
     assert await async_setup_component(
         opp,
@@ -573,12 +573,12 @@ async def test_if_fires_on_change_with_for.opp, calls):
     opp.states.async_set("test.entity", "world")
     await opp.async_block_till_done()
     assert len(calls) == 0
-    async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_if_fires_on_change_with_for_advanced.opp, calls):
+async def test_if_fires_on_change_with_for_advanced(opp, calls):
     """Test for firing on change with for advanced."""
     context = Context()
     assert await async_setup_component(
@@ -615,7 +615,7 @@ async def test_if_fires_on_change_with_for_advanced.opp, calls):
     opp.states.async_set("test.entity", "world", context=context)
     await opp.async_block_till_done()
     assert len(calls) == 0
-    async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].context.parent_id == context.id
@@ -644,7 +644,7 @@ async def test_if_fires_on_change_with_for_0.opp, calls):
     assert len(calls) == 1
 
 
-async def test_if_fires_on_change_with_for_0_advanced.opp, calls):
+async def test_if_fires_on_change_with_for_0_advanced(opp, calls):
     """Test for firing on change with for: 0 advanced."""
     context = Context()
     assert await async_setup_component(
@@ -720,14 +720,14 @@ async def test_if_fires_on_change_with_for_2.opp, calls):
     opp.states.async_set("test.entity", "world", context=context)
     await opp.async_block_till_done()
     assert len(calls) == 0
-    async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert len(calls) == 1
     assert calls[0].context.parent_id == context.id
     assert calls[0].data["some"] == "template - test.entity - hello - world - 0:00:05"
 
 
-async def test_if_not_fires_on_change_with_for.opp, calls):
+async def test_if_not_fires_on_change_with_for(opp, calls):
     """Test for firing on change with for."""
     assert await async_setup_component(
         opp,
@@ -747,18 +747,18 @@ async def test_if_not_fires_on_change_with_for.opp, calls):
     opp.states.async_set("test.entity", "world")
     await opp.async_block_till_done()
     assert len(calls) == 0
-    async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=4))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=4))
     await opp.async_block_till_done()
     assert len(calls) == 0
     opp.states.async_set("test.entity", "hello")
     await opp.async_block_till_done()
     assert len(calls) == 0
-    async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=6))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=6))
     await opp.async_block_till_done()
     assert len(calls) == 0
 
 
-async def test_if_not_fires_when_turned_off_with_for.opp, calls):
+async def test_if_not_fires_when_turned_off_with_for(opp, calls):
     """Test for firing on change with for."""
     assert await async_setup_component(
         opp,
@@ -778,7 +778,7 @@ async def test_if_not_fires_when_turned_off_with_for.opp, calls):
     opp.states.async_set("test.entity", "world")
     await opp.async_block_till_done()
     assert len(calls) == 0
-    async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=4))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=4))
     await opp.async_block_till_done()
     assert len(calls) == 0
     await opp.services.async_call(
@@ -788,7 +788,7 @@ async def test_if_not_fires_when_turned_off_with_for.opp, calls):
         blocking=True,
     )
     assert len(calls) == 0
-    async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=6))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=6))
     await opp.async_block_till_done()
     assert len(calls) == 0
 
@@ -813,7 +813,7 @@ async def test_if_fires_on_change_with_for_template_1.opp, calls):
     opp.states.async_set("test.entity", "world")
     await opp.async_block_till_done()
     assert len(calls) == 0
-    async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert len(calls) == 1
 
@@ -838,7 +838,7 @@ async def test_if_fires_on_change_with_for_template_2.opp, calls):
     opp.states.async_set("test.entity", "world")
     await opp.async_block_till_done()
     assert len(calls) == 0
-    async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert len(calls) == 1
 
@@ -863,7 +863,7 @@ async def test_if_fires_on_change_with_for_template_3.opp, calls):
     opp.states.async_set("test.entity", "world")
     await opp.async_block_till_done()
     assert len(calls) == 0
-    async_fire_time_changed.opp, dt_util.utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert len(calls) == 1
 
@@ -891,7 +891,7 @@ async def test_invalid_for_template_1.opp, calls):
         assert mock_logger.error.called
 
 
-async def test_if_fires_on_time_change.opp, calls):
+async def test_if_fires_on_time_change(opp, calls):
     """Test for firing on time changes."""
     start_time = dt_util.utcnow() + timedelta(hours=24)
     time_that_will_not_match_right_away = start_time.replace(minute=1, second=0)
@@ -917,14 +917,14 @@ async def test_if_fires_on_time_change.opp, calls):
     # Trigger once (match template)
     first_time = start_time.replace(minute=2, second=0)
     with patch("openpeerpower.util.dt.utcnow", return_value=first_time):
-        async_fire_time_changed.opp, first_time)
+        async_fire_time_changed(opp, first_time)
         await opp.async_block_till_done()
     assert len(calls) == 1
 
     # Trigger again (match template)
     second_time = start_time.replace(minute=4, second=0)
     with patch("openpeerpower.util.dt.utcnow", return_value=second_time):
-        async_fire_time_changed.opp, second_time)
+        async_fire_time_changed(opp, second_time)
         await opp.async_block_till_done()
     await opp.async_block_till_done()
     assert len(calls) == 1
@@ -932,7 +932,7 @@ async def test_if_fires_on_time_change.opp, calls):
     # Trigger again (do not match template)
     third_time = start_time.replace(minute=5, second=0)
     with patch("openpeerpower.util.dt.utcnow", return_value=third_time):
-        async_fire_time_changed.opp, third_time)
+        async_fire_time_changed(opp, third_time)
         await opp.async_block_till_done()
     await opp.async_block_till_done()
     assert len(calls) == 1
@@ -940,7 +940,7 @@ async def test_if_fires_on_time_change.opp, calls):
     # Trigger again (match template)
     forth_time = start_time.replace(minute=8, second=0)
     with patch("openpeerpower.util.dt.utcnow", return_value=forth_time):
-        async_fire_time_changed.opp, forth_time)
+        async_fire_time_changed(opp, forth_time)
         await opp.async_block_till_done()
     await opp.async_block_till_done()
     assert len(calls) == 2

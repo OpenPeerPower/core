@@ -78,7 +78,7 @@ async def test_flow_entry_already_exists(opp):
         domain="met",
         data={"name": "home", CONF_LATITUDE: 0, CONF_LONGITUDE: 0, CONF_ELEVATION: 0},
     )
-    first_entry.add_to.opp.opp)
+    first_entry.add_to_opp(opp)
 
     test_data = {
         "name": "home",

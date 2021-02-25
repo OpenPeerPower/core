@@ -4,11 +4,11 @@ from .common import MQTTMessage, setup_ozw
 from tests.common import async_capture_events
 
 
-async def test_scenes.opp, generic_data, sent_messages):
+async def test_scenes(opp, generic_data, sent_messages):
     """Test setting up config entry."""
 
-    receive_message = await setup_ozw.opp, fixture=generic_data)
-    events = async_capture_events.opp, "ozw.scene_activated")
+    receive_message = await setup_ozw(opp, fixture=generic_data)
+    events = async_capture_events(opp, "ozw.scene_activated")
 
     # Publish fake scene event on mqtt
     message = MQTTMessage(

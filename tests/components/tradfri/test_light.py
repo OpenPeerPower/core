@@ -196,9 +196,9 @@ async def test_light_available(opp, mock_gateway, api_factory):
     mock_gateway.mock_devices.append(light2)
     await setup_integration(opp)
 
-    assert.opp.states.get("light.tradfri_light_1").state == "on"
+    assert opp.states.get("light.tradfri_light_1").state == "on"
 
-    assert.opp.states.get("light.tradfri_light_2").state == "unavailable"
+    assert opp.states.get("light.tradfri_light_2").state == "unavailable"
 
 
 def create_all_turn_on_cases():

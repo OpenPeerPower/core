@@ -213,7 +213,7 @@ async def test_import_plm(opp: OpenPeerPowerType):
     result = await _import_config(opp, MOCK_IMPORT_CONFIG_PLM)
 
     assert result["type"] == "create_entry"
-    assert.opp.config_entries.async_entries(DOMAIN)
+    assert opp.config_entries.async_entries(DOMAIN)
     for entry in.opp.config_entries.async_entries(DOMAIN):
         assert entry.data == MOCK_IMPORT_CONFIG_PLM
 
@@ -242,7 +242,7 @@ async def test_import_min_hub_v2.opp: OpenPeerPowerType):
     )
 
     assert result["type"] == "create_entry"
-    assert.opp.config_entries.async_entries(DOMAIN)
+    assert opp.config_entries.async_entries(DOMAIN)
     for entry in.opp.config_entries.async_entries(DOMAIN):
         assert entry.data[CONF_HOST] == MOCK_HOSTNAME
         assert entry.data[CONF_PORT] == 25105
@@ -260,7 +260,7 @@ async def test_import_min_hub_v1.opp: OpenPeerPowerType):
     )
 
     assert result["type"] == "create_entry"
-    assert.opp.config_entries.async_entries(DOMAIN)
+    assert opp.config_entries.async_entries(DOMAIN)
     for entry in.opp.config_entries.async_entries(DOMAIN):
         assert entry.data[CONF_HOST] == MOCK_HOSTNAME
         assert entry.data[CONF_PORT] == 9761

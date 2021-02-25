@@ -82,7 +82,7 @@ from tests.common import MockConfigEntry, async_fire_time_changed
 async def _add_config_entry_to.opp(
     opp: OpenPeerPowerType, config_entry: MockConfigEntry
 ) -> None:
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     assert await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
 
@@ -117,7 +117,7 @@ def _get_attr_and_assert_base_attr(
     assert attr["friendly_name"] == NAME
     assert attr["device_class"] == device_class
 
-    assert.opp.states.get(ENTITY_ID).state == power_state
+    assert opp.states.get(ENTITY_ID).state == power_state
     return attr
 
 
@@ -157,7 +157,7 @@ async def _test_setup_tv(
     ):
         await _add_config_entry_to.opp.opp, config_entry)
 
-        attr = _get_attr_and_assert_base_attr.opp, DEVICE_CLASS_TV, op_power_state)
+        attr = _get_attr_and_assert_base_attr(opp, DEVICE_CLASS_TV, op_power_state)
         if op_power_state == STATE_ON:
             _assert_sources_and_volume(attr, VIZIO_DEVICE_CLASS_TV)
             assert "sound_mode" not in attr
@@ -218,7 +218,7 @@ async def _cm_for_test_setup_tv_with_apps(
         ):
             await _add_config_entry_to.opp.opp, config_entry)
 
-            attr = _get_attr_and_assert_base_attr.opp, DEVICE_CLASS_TV, STATE_ON)
+            attr = _get_attr_and_assert_base_attr(opp, DEVICE_CLASS_TV, STATE_ON)
             assert (
                 attr["volume_level"]
                 == float(int(MAX_VOLUME[VIZIO_DEVICE_CLASS_TV] / 2))
@@ -286,7 +286,7 @@ async def test_speaker_on(
     vizio_update: pytest.fixture,
 ) -> None:
     """Test Vizio Speaker entity setup when on."""
-    await _test_setup_speaker.opp, True)
+    await _test_setup_speaker(opp, True)
 
 
 async def test_speaker_off(
@@ -295,7 +295,7 @@ async def test_speaker_off(
     vizio_update: pytest.fixture,
 ) -> None:
     """Test Vizio Speaker entity setup when off."""
-    await _test_setup_speaker.opp, False)
+    await _test_setup_speaker(opp, False)
 
 
 async def test_speaker_unavailable(
@@ -304,7 +304,7 @@ async def test_speaker_unavailable(
     vizio_update: pytest.fixture,
 ) -> None:
     """Test Vizio Speaker entity setup when unavailable."""
-    await _test_setup_speaker.opp, None)
+    await _test_setup_speaker(opp, None)
 
 
 async def test_init_tv_on(
@@ -313,7 +313,7 @@ async def test_init_tv_on(
     vizio_update: pytest.fixture,
 ) -> None:
     """Test Vizio TV entity setup when on."""
-    await _test_setup_tv.opp, True)
+    await _test_setup_tv(opp, True)
 
 
 async def test_init_tv_off(
@@ -322,7 +322,7 @@ async def test_init_tv_off(
     vizio_update: pytest.fixture,
 ) -> None:
     """Test Vizio TV entity setup when off."""
-    await _test_setup_tv.opp, False)
+    await _test_setup_tv(opp, False)
 
 
 async def test_init_tv_unavailable(
@@ -331,21 +331,21 @@ async def test_init_tv_unavailable(
     vizio_update: pytest.fixture,
 ) -> None:
     """Test Vizio TV entity setup when unavailable."""
-    await _test_setup_tv.opp, None)
+    await _test_setup_tv(opp, None)
 
 
 async def test_setup_failure_speaker(
     opp: OpenPeerPowerType, vizio_connect: pytest.fixture
 ) -> None:
     """Test speaker entity setup failure."""
-    await _test_setup_failure.opp, MOCK_SPEAKER_CONFIG)
+    await _test_setup_failure(opp, MOCK_SPEAKER_CONFIG)
 
 
 async def test_setup_failure_tv(
     opp: OpenPeerPowerType, vizio_connect: pytest.fixture
 ) -> None:
     """Test TV entity setup failure."""
-    await _test_setup_failure.opp, MOCK_USER_VALID_TV_CONFIG)
+    await _test_setup_failure(opp, MOCK_USER_VALID_TV_CONFIG)
 
 
 async def test_services(
@@ -354,10 +354,10 @@ async def test_services(
     vizio_update: pytest.fixture,
 ) -> None:
     """Test all Vizio media player entity services."""
-    await _test_setup_tv.opp, True)
+    await _test_setup_tv(opp, True)
 
-    await _test_service.opp, MP_DOMAIN, "pow_on", SERVICE_TURN_ON, None)
-    await _test_service.opp, MP_DOMAIN, "pow_off", SERVICE_TURN_OFF, None)
+    await _test_service(opp, MP_DOMAIN, "pow_on", SERVICE_TURN_ON, None)
+    await _test_service(opp, MP_DOMAIN, "pow_off", SERVICE_TURN_OFF, None)
     await _test_service(
         opp,
         MP_DOMAIN,
@@ -402,8 +402,8 @@ async def test_services(
         {ATTR_MEDIA_VOLUME_LEVEL: 0},
         num=(15 - 0),
     )
-    await _test_service.opp, MP_DOMAIN, "ch_up", SERVICE_MEDIA_NEXT_TRACK, None)
-    await _test_service.opp, MP_DOMAIN, "ch_down", SERVICE_MEDIA_PREVIOUS_TRACK, None)
+    await _test_service(opp, MP_DOMAIN, "ch_up", SERVICE_MEDIA_NEXT_TRACK, None)
+    await _test_service(opp, MP_DOMAIN, "ch_down", SERVICE_MEDIA_PREVIOUS_TRACK, None)
     await _test_service(
         opp,
         MP_DOMAIN,
@@ -443,7 +443,7 @@ async def test_options_update(
     vizio_update: pytest.fixture,
 ) -> None:
     """Test when config entry update event fires."""
-    await _test_setup_speaker.opp, True)
+    await _test_setup_speaker(opp, True)
     config_entry = opp.config_entries.async_entries(DOMAIN)[0]
     assert config_entry.options
     new_options = config_entry.options.copy()
@@ -470,7 +470,7 @@ async def _test_update_availability_switch(
 
     # Setup device as if time is right now
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-        await _test_setup_speaker.opp, initial_power_state)
+        await _test_setup_speaker(opp, initial_power_state)
 
     # Clear captured logs so that only availability state changes are captured for
     # future assertion
@@ -485,12 +485,12 @@ async def _test_update_availability_switch(
         ), patch("openpeerpower.util.dt.utcnow", return_value=future), patch(
             "openpeerpower.util.utcnow", return_value=future
         ):
-            async_fire_time_changed.opp, future)
+            async_fire_time_changed(opp, future)
             await opp.async_block_till_done()
             if final_power_state is None:
-                assert.opp.states.get(ENTITY_ID).state == STATE_UNAVAILABLE
+                assert opp.states.get(ENTITY_ID).state == STATE_UNAVAILABLE
             else:
-                assert.opp.states.get(ENTITY_ID).state != STATE_UNAVAILABLE
+                assert opp.states.get(ENTITY_ID).state != STATE_UNAVAILABLE
 
     # Ensure connection status messages from vizio.media_player appear exactly once
     # (on availability state change)
@@ -509,7 +509,7 @@ async def test_update_unavailable_to_available(
     caplog: pytest.fixture,
 ) -> None:
     """Test device becomes available after being unavailable."""
-    await _test_update_availability_switch.opp, None, True, caplog)
+    await _test_update_availability_switch(opp, None, True, caplog)
 
 
 async def test_update_available_to_unavailable(
@@ -519,7 +519,7 @@ async def test_update_available_to_unavailable(
     caplog: pytest.fixture,
 ) -> None:
     """Test device becomes unavailable after being available."""
-    await _test_update_availability_switch.opp, True, None, caplog)
+    await _test_update_availability_switch(opp, True, None, caplog)
 
 
 async def test_setup_with_apps(
@@ -714,7 +714,7 @@ async def test_setup_tv_without_mute(
     ):
         await _add_config_entry_to.opp.opp, config_entry)
 
-        attr = _get_attr_and_assert_base_attr.opp, DEVICE_CLASS_TV, STATE_ON)
+        attr = _get_attr_and_assert_base_attr(opp, DEVICE_CLASS_TV, STATE_ON)
         _assert_sources_and_volume(attr, VIZIO_DEVICE_CLASS_TV)
         assert "sound_mode" not in attr
         assert "is_volume_muted" not in attr
@@ -744,7 +744,7 @@ async def test_apps_update(
                 "openpeerpower.components.vizio.gen_apps_list_from_url",
                 return_value=APP_LIST,
             ):
-                async_fire_time_changed.opp, dt_util.now() + timedelta(days=2))
+                async_fire_time_changed(opp, dt_util.now() + timedelta(days=2))
                 await opp.async_block_till_done()
                 # Check source list, remove TV inputs, and verify that the integration is
                 # now using the APP_LIST list

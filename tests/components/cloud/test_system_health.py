@@ -10,7 +10,7 @@ from openpeerpower.util.dt import utcnow
 from tests.common import get_system_health_info
 
 
-async def test_cloud_system_health.opp, aioclient_mock):
+async def test_cloud_system_health(opp, aioclient_mock):
     """Test cloud system health."""
     aioclient_mock.get("https://cloud.bla.com/status", text="")
     aioclient_mock.get("https://cert-server", text="")
@@ -19,7 +19,7 @@ async def test_cloud_system_health.opp, aioclient_mock):
         exc=ClientError,
     )
     opp.config.components.add("cloud")
-    assert await async_setup_component.opp, "system_health", {})
+    assert await async_setup_component(opp, "system_health", {})
     now = utcnow()
 
     opp.data["cloud"] = Mock(
@@ -40,7 +40,7 @@ async def test_cloud_system_health.opp, aioclient_mock):
         ),
     )
 
-    info = await get_system_health_info.opp, "cloud")
+    info = await get_system_health_info(opp, "cloud")
 
     for key, val in info.items():
         if asyncio.iscoroutine(val):

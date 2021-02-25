@@ -59,7 +59,7 @@ async def test_thermostat.opp):
     type(nest).structures = PropertyMock(return_value=[structure])
 
     config_entry = MockConfigEntry(domain=DOMAIN, data=CONFIG_ENTRY_DATA)
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     with patch("openpeerpower.components.nest.legacy.Nest", return_value=nest), patch(
         "openpeerpower.components.nest.legacy.sensor._VALID_SENSOR_TYPES",
         ["humidity", "temperature"],
@@ -67,7 +67,7 @@ async def test_thermostat.opp):
         "openpeerpower.components.nest.legacy.binary_sensor._VALID_BINARY_SENSOR_TYPES",
         {"fan": None},
     ):
-        assert await async_setup_component.opp, DOMAIN, CONFIG)
+        assert await async_setup_component(opp, DOMAIN, CONFIG)
         await opp.async_block_till_done()
 
     climate = opp.states.get("climate.my_thermostat")

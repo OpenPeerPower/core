@@ -36,11 +36,11 @@ async def mock_entry.opp):
 
 
 @pytest.fixture
-async def mock_light.opp, mock_entry):
+async def mock_light(opp, mock_entry):
     """Create a mock light entity."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     light = MagicMock(spec=pyzerproc.Light)
     light.address = "AA:BB:CC:DD:EE:FF"
@@ -63,11 +63,11 @@ async def mock_light.opp, mock_entry):
     return light
 
 
-async def test_init.opp, mock_entry):
+async def test_init(opp, mock_entry):
     """Test platform setup."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     mock_light_1 = MagicMock(spec=pyzerproc.Light)
     mock_light_1.address = "AA:BB:CC:DD:EE:FF"
@@ -119,11 +119,11 @@ async def test_init.opp, mock_entry):
     assert mock_light_2.disconnect.called
 
 
-async def test_discovery_exception.opp, mock_entry):
+async def test_discovery_exception(opp, mock_entry):
     """Test platform setup."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.zerproc.light.pyzerproc.discover",
@@ -136,11 +136,11 @@ async def test_discovery_exception.opp, mock_entry):
     assert len.opp.data[DOMAIN]["addresses"]) == 0
 
 
-async def test_connect_exception.opp, mock_entry):
+async def test_connect_exception(opp, mock_entry):
     """Test platform setup."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     mock_light_1 = MagicMock(spec=pyzerproc.Light)
     mock_light_1.address = "AA:BB:CC:DD:EE:FF"
@@ -166,7 +166,7 @@ async def test_connect_exception.opp, mock_entry):
     assert len.opp.data[DOMAIN]["addresses"]) == 1
 
 
-async def test_remove_entry.opp, mock_light, mock_entry):
+async def test_remove_entry(opp, mock_light, mock_entry):
     """Test platform setup."""
     with patch.object(mock_light, "disconnect") as mock_disconnect:
         await opp.config_entries.async_remove(mock_entry.entry_id)
@@ -174,7 +174,7 @@ async def test_remove_entry.opp, mock_light, mock_entry):
     assert mock_disconnect.called
 
 
-async def test_remove_entry_exceptions_caught.opp, mock_light, mock_entry):
+async def test_remove_entry_exceptions_caught(opp, mock_light, mock_entry):
     """Assert that disconnect exceptions are caught."""
     with patch.object(
         mock_light, "disconnect", side_effect=pyzerproc.ZerprocException("Mock error")
@@ -184,7 +184,7 @@ async def test_remove_entry_exceptions_caught.opp, mock_light, mock_entry):
     assert mock_disconnect.called
 
 
-async def test_light_turn_on.opp, mock_light):
+async def test_light_turn_on(opp, mock_light):
     """Test ZerprocLight turn_on."""
     utcnow = dt_util.utcnow()
     with patch.object(mock_light, "turn_on") as mock_turn_on:
@@ -215,7 +215,7 @@ async def test_light_turn_on.opp, mock_light):
             return_value=pyzerproc.LightState(True, (175, 150, 220)),
         ):
             utcnow = utcnow + SCAN_INTERVAL
-            async_fire_time_changed.opp, utcnow)
+            async_fire_time_changed(opp, utcnow)
             await opp.async_block_till_done()
 
         with patch.object(mock_light, "set_color") as mock_set_color:
@@ -246,7 +246,7 @@ async def test_light_turn_on.opp, mock_light):
             return_value=pyzerproc.LightState(True, (75, 75, 75)),
         ):
             utcnow = utcnow + SCAN_INTERVAL
-            async_fire_time_changed.opp, utcnow)
+            async_fire_time_changed(opp, utcnow)
             await opp.async_block_till_done()
 
         with patch.object(mock_light, "set_color") as mock_set_color:
@@ -276,7 +276,7 @@ async def test_light_turn_on.opp, mock_light):
         mock_set_color.assert_called_with(162, 200, 50)
 
 
-async def test_light_turn_off.opp, mock_light):
+async def test_light_turn_off(opp, mock_light):
     """Test ZerprocLight turn_on."""
     with patch.object(mock_light, "turn_off") as mock_turn_off:
         await opp.services.async_call(
@@ -289,7 +289,7 @@ async def test_light_turn_off.opp, mock_light):
     mock_turn_off.assert_called()
 
 
-async def test_light_update.opp, mock_light):
+async def test_light_update(opp, mock_light):
     """Test ZerprocLight update."""
     utcnow = dt_util.utcnow()
 
@@ -308,7 +308,7 @@ async def test_light_update.opp, mock_light):
             mock_light, "get_state", side_effect=pyzerproc.ZerprocException("TEST")
         ):
             utcnow = utcnow + SCAN_INTERVAL
-            async_fire_time_changed.opp, utcnow)
+            async_fire_time_changed(opp, utcnow)
             await opp.async_block_till_done()
 
         state = opp.states.get("light.ledblue_ccddeeff")
@@ -325,7 +325,7 @@ async def test_light_update.opp, mock_light):
             return_value=pyzerproc.LightState(False, (200, 128, 100)),
         ):
             utcnow = utcnow + SCAN_INTERVAL
-            async_fire_time_changed.opp, utcnow)
+            async_fire_time_changed(opp, utcnow)
             await opp.async_block_till_done()
 
         state = opp.states.get("light.ledblue_ccddeeff")
@@ -342,7 +342,7 @@ async def test_light_update.opp, mock_light):
             return_value=pyzerproc.LightState(True, (175, 150, 220)),
         ):
             utcnow = utcnow + SCAN_INTERVAL
-            async_fire_time_changed.opp, utcnow)
+            async_fire_time_changed(opp, utcnow)
             await opp.async_block_till_done()
 
         state = opp.states.get("light.ledblue_ccddeeff")

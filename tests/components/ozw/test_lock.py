@@ -2,9 +2,9 @@
 from .common import setup_ozw
 
 
-async def test_lock.opp, lock_data, sent_messages, lock_msg, caplog):
+async def test_lock(opp, lock_data, sent_messages, lock_msg, caplog):
     """Test lock."""
-    receive_message = await setup_ozw.opp, fixture=lock_data)
+    receive_message = await setup_ozw(opp, fixture=lock_data)
 
     # Test loaded
     state = opp.states.get("lock.danalock_v3_btze_locked")

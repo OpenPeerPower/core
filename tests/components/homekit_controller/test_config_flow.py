@@ -66,7 +66,7 @@ VALID_PAIRING_CODES = [
 ]
 
 
-def _setup_flow_handler.opp, pairing=None):
+def _setup_flow_handler(opp, pairing=None):
     flow = config_flow.HomekitControllerFlowHandler()
     flow.opp = opp
     flow.context = {}
@@ -103,7 +103,7 @@ def test_valid_pairing_codes(pairing_code):
     assert len(valid_pin[2]) == 3
 
 
-def get_flow_context.opp, result):
+def get_flow_context(opp, result):
     """Get the flow context from the result of async_init or async_configure."""
     flow = next(
         flow
@@ -170,7 +170,7 @@ def setup_mock_accessory(controller):
 
 @pytest.mark.parametrize("upper_case_props", [True, False])
 @pytest.mark.parametrize("missing_csharp", [True, False])
-async def test_discovery_works.opp, controller, upper_case_props, missing_csharp):
+async def test_discovery_works(opp, controller, upper_case_props, missing_csharp):
     """Test a device being discovered."""
     device = setup_mock_accessory(controller)
     discovery_info = get_device_discovery_info(device, upper_case_props, missing_csharp)
@@ -181,7 +181,7 @@ async def test_discovery_works.opp, controller, upper_case_props, missing_csharp
     )
     assert result["type"] == "form"
     assert result["step_id"] == "pair"
-    assert get_flow_context.opp, result) == {
+    assert get_flow_context(opp, result) == {
         "hkid": "00:00:00:00:00:00",
         "source": "zeroconf",
         "title_placeholders": {"name": "TestDevice"},
@@ -202,7 +202,7 @@ async def test_discovery_works.opp, controller, upper_case_props, missing_csharp
     assert result["data"] == {}
 
 
-async def test_abort_duplicate_flow.opp, controller):
+async def test_abort_duplicate_flow(opp, controller):
     """Already paired."""
     device = setup_mock_accessory(controller)
     discovery_info = get_device_discovery_info(device)
@@ -237,7 +237,7 @@ async def test_pair_already_paired_1.opp, controller):
     assert result["reason"] == "already_paired"
 
 
-async def test_id_missing.opp, controller):
+async def test_id_missing(opp, controller):
     """Test id is missing."""
     device = setup_mock_accessory(controller)
     discovery_info = get_device_discovery_info(device)
@@ -253,7 +253,7 @@ async def test_id_missing.opp, controller):
     assert result["reason"] == "invalid_properties"
 
 
-async def test_discovery_ignored_model.opp, controller):
+async def test_discovery_ignored_model(opp, controller):
     """Already paired."""
     device = setup_mock_accessory(controller)
     discovery_info = get_device_discovery_info(device)
@@ -268,7 +268,7 @@ async def test_discovery_ignored_model.opp, controller):
     assert result["reason"] == "ignored_model"
 
 
-async def test_discovery_ignored_hk_bridge.opp, controller):
+async def test_discovery_ignored_hk_bridge(opp, controller):
     """Already paired."""
     device = setup_mock_accessory(controller)
     discovery_info = get_device_discovery_info(device)
@@ -300,13 +300,13 @@ async def test_discovery_ignored_hk_bridge.opp, controller):
     assert result["reason"] == "ignored_model"
 
 
-async def test_discovery_invalid_config_entry.opp, controller):
+async def test_discovery_invalid_config_entry(opp, controller):
     """There is already a config entry for the pairing id but it's invalid."""
     MockConfigEntry(
         domain="homekit_controller",
         data={"AccessoryPairingID": "00:00:00:00:00:00"},
         unique_id="00:00:00:00:00:00",
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     # We just added a mock config entry so it must be visible in.opp
     assert len.opp.config_entries.async_entries()) == 1
@@ -329,13 +329,13 @@ async def test_discovery_invalid_config_entry.opp, controller):
     assert result["type"] == "form"
 
 
-async def test_discovery_already_configured.opp, controller):
+async def test_discovery_already_configured(opp, controller):
     """Already configured."""
     MockConfigEntry(
         domain="homekit_controller",
         data={"AccessoryPairingID": "00:00:00:00:00:00"},
         unique_id="00:00:00:00:00:00",
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     device = setup_mock_accessory(controller)
     discovery_info = get_device_discovery_info(device)
@@ -352,7 +352,7 @@ async def test_discovery_already_configured.opp, controller):
 
 
 @pytest.mark.parametrize("exception,expected", PAIRING_START_ABORT_ERRORS)
-async def test_pair_abort_errors_on_start.opp, controller, exception, expected):
+async def test_pair_abort_errors_on_start(opp, controller, exception, expected):
     """Test various pairing errors."""
 
     device = setup_mock_accessory(controller)
@@ -372,7 +372,7 @@ async def test_pair_abort_errors_on_start.opp, controller, exception, expected):
 
 
 @pytest.mark.parametrize("exception,expected", PAIRING_TRY_LATER_ERRORS)
-async def test_pair_try_later_errors_on_start.opp, controller, exception, expected):
+async def test_pair_try_later_errors_on_start(opp, controller, exception, expected):
     """Test various pairing errors."""
 
     device = setup_mock_accessory(controller)
@@ -407,7 +407,7 @@ async def test_pair_try_later_errors_on_start.opp, controller, exception, expect
 
 
 @pytest.mark.parametrize("exception,expected", PAIRING_START_FORM_ERRORS)
-async def test_pair_form_errors_on_start.opp, controller, exception, expected):
+async def test_pair_form_errors_on_start(opp, controller, exception, expected):
     """Test various pairing errors."""
 
     device = setup_mock_accessory(controller)
@@ -418,7 +418,7 @@ async def test_pair_form_errors_on_start.opp, controller, exception, expected):
         "homekit_controller", context={"source": "zeroconf"}, data=discovery_info
     )
 
-    assert get_flow_context.opp, result) == {
+    assert get_flow_context(opp, result) == {
         "hkid": "00:00:00:00:00:00",
         "title_placeholders": {"name": "TestDevice"},
         "unique_id": "00:00:00:00:00:00",
@@ -434,7 +434,7 @@ async def test_pair_form_errors_on_start.opp, controller, exception, expected):
     assert result["type"] == "form"
     assert result["errors"]["pairing_code"] == expected
 
-    assert get_flow_context.opp, result) == {
+    assert get_flow_context(opp, result) == {
         "hkid": "00:00:00:00:00:00",
         "title_placeholders": {"name": "TestDevice"},
         "unique_id": "00:00:00:00:00:00",
@@ -456,7 +456,7 @@ async def test_pair_form_errors_on_start.opp, controller, exception, expected):
 
 
 @pytest.mark.parametrize("exception,expected", PAIRING_FINISH_ABORT_ERRORS)
-async def test_pair_abort_errors_on_finish.opp, controller, exception, expected):
+async def test_pair_abort_errors_on_finish(opp, controller, exception, expected):
     """Test various pairing errors."""
     device = setup_mock_accessory(controller)
     discovery_info = get_device_discovery_info(device)
@@ -466,7 +466,7 @@ async def test_pair_abort_errors_on_finish.opp, controller, exception, expected)
         "homekit_controller", context={"source": "zeroconf"}, data=discovery_info
     )
 
-    assert get_flow_context.opp, result) == {
+    assert get_flow_context(opp, result) == {
         "hkid": "00:00:00:00:00:00",
         "title_placeholders": {"name": "TestDevice"},
         "unique_id": "00:00:00:00:00:00",
@@ -480,7 +480,7 @@ async def test_pair_abort_errors_on_finish.opp, controller, exception, expected)
         result = await opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["type"] == "form"
-    assert get_flow_context.opp, result) == {
+    assert get_flow_context(opp, result) == {
         "hkid": "00:00:00:00:00:00",
         "title_placeholders": {"name": "TestDevice"},
         "unique_id": "00:00:00:00:00:00",
@@ -496,7 +496,7 @@ async def test_pair_abort_errors_on_finish.opp, controller, exception, expected)
 
 
 @pytest.mark.parametrize("exception,expected", PAIRING_FINISH_FORM_ERRORS)
-async def test_pair_form_errors_on_finish.opp, controller, exception, expected):
+async def test_pair_form_errors_on_finish(opp, controller, exception, expected):
     """Test various pairing errors."""
     device = setup_mock_accessory(controller)
     discovery_info = get_device_discovery_info(device)
@@ -506,7 +506,7 @@ async def test_pair_form_errors_on_finish.opp, controller, exception, expected):
         "homekit_controller", context={"source": "zeroconf"}, data=discovery_info
     )
 
-    assert get_flow_context.opp, result) == {
+    assert get_flow_context(opp, result) == {
         "hkid": "00:00:00:00:00:00",
         "title_placeholders": {"name": "TestDevice"},
         "unique_id": "00:00:00:00:00:00",
@@ -520,7 +520,7 @@ async def test_pair_form_errors_on_finish.opp, controller, exception, expected):
         result = await opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["type"] == "form"
-    assert get_flow_context.opp, result) == {
+    assert get_flow_context(opp, result) == {
         "hkid": "00:00:00:00:00:00",
         "title_placeholders": {"name": "TestDevice"},
         "unique_id": "00:00:00:00:00:00",
@@ -534,7 +534,7 @@ async def test_pair_form_errors_on_finish.opp, controller, exception, expected):
     assert result["type"] == "form"
     assert result["errors"]["pairing_code"] == expected
 
-    assert get_flow_context.opp, result) == {
+    assert get_flow_context(opp, result) == {
         "hkid": "00:00:00:00:00:00",
         "title_placeholders": {"name": "TestDevice"},
         "unique_id": "00:00:00:00:00:00",
@@ -542,7 +542,7 @@ async def test_pair_form_errors_on_finish.opp, controller, exception, expected):
     }
 
 
-async def test_user_works.opp, controller):
+async def test_user_works(opp, controller):
     """Test user initiated disovers devices."""
     setup_mock_accessory(controller)
 
@@ -553,7 +553,7 @@ async def test_user_works.opp, controller):
 
     assert result["type"] == "form"
     assert result["step_id"] == "user"
-    assert get_flow_context.opp, result) == {
+    assert get_flow_context(opp, result) == {
         "source": "user",
     }
 
@@ -563,7 +563,7 @@ async def test_user_works.opp, controller):
     assert result["type"] == "form"
     assert result["step_id"] == "pair"
 
-    assert get_flow_context.opp, result) == {
+    assert get_flow_context(opp, result) == {
         "source": "user",
         "unique_id": "00:00:00:00:00:00",
         "title_placeholders": {"name": "TestDevice"},
@@ -576,7 +576,7 @@ async def test_user_works.opp, controller):
     assert result["title"] == "Koogeek-LS1-20833F"
 
 
-async def test_user_no_devices.opp, controller):
+async def test_user_no_devices(opp, controller):
     """Test user initiated pairing where no devices discovered."""
     result = await opp.config_entries.flow.async_init(
         "homekit_controller", context={"source": "user"}
@@ -585,7 +585,7 @@ async def test_user_no_devices.opp, controller):
     assert result["reason"] == "no_devices"
 
 
-async def test_user_no_unpaired_devices.opp, controller):
+async def test_user_no_unpaired_devices(opp, controller):
     """Test user initiated pairing where no unpaired devices discovered."""
     device = setup_mock_accessory(controller)
 
@@ -602,7 +602,7 @@ async def test_user_no_unpaired_devices.opp, controller):
     assert result["reason"] == "no_devices"
 
 
-async def test_unignore_works.opp, controller):
+async def test_unignore_works(opp, controller):
     """Test rediscovery triggered disovers work."""
     device = setup_mock_accessory(controller)
 
@@ -614,7 +614,7 @@ async def test_unignore_works.opp, controller):
     )
     assert result["type"] == "form"
     assert result["step_id"] == "pair"
-    assert get_flow_context.opp, result) == {
+    assert get_flow_context(opp, result) == {
         "hkid": "00:00:00:00:00:00",
         "title_placeholders": {"name": "TestDevice"},
         "unique_id": "00:00:00:00:00:00",
@@ -634,7 +634,7 @@ async def test_unignore_works.opp, controller):
     assert result["title"] == "Koogeek-LS1-20833F"
 
 
-async def test_unignore_ignores_missing_devices.opp, controller):
+async def test_unignore_ignores_missing_devices(opp, controller):
     """Test rediscovery triggered disovers handle devices that have gone away."""
     setup_mock_accessory(controller)
 

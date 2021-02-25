@@ -76,7 +76,7 @@ def setup_mock_foscam_camera(mock_foscam_camera):
 
 async def test_user_valid.opp):
     """Test valid config from user input."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -111,7 +111,7 @@ async def test_user_valid.opp):
 
 async def test_user_invalid_auth.opp):
     """Test we handle invalid auth from user input."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -140,7 +140,7 @@ async def test_user_invalid_auth.opp):
 
 async def test_user_cannot_connect.opp):
     """Test we handle cannot connect error from user input."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -169,7 +169,7 @@ async def test_user_cannot_connect.opp):
 
 async def test_user_invalid_response.opp):
     """Test we handle invalid response error from user input."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -200,13 +200,13 @@ async def test_user_invalid_response.opp):
 
 async def test_user_already_configured.opp):
     """Test we handle already configured from user input."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(
         domain=config_flow.DOMAIN,
         data=VALID_CONFIG,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -232,7 +232,7 @@ async def test_user_already_configured.opp):
 
 async def test_user_unknown_exception.opp):
     """Test we handle unknown exceptions from user input."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -258,7 +258,7 @@ async def test_user_unknown_exception.opp):
 
 async def test_import_user_valid.opp):
     """Test valid config from import."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "openpeerpower.components.foscam.config_flow.FoscamCamera",
@@ -288,7 +288,7 @@ async def test_import_user_valid.opp):
 
 async def test_import_user_valid_with_name.opp):
     """Test valid config with extra name from import."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "openpeerpower.components.foscam.config_flow.FoscamCamera",
@@ -322,7 +322,7 @@ async def test_import_user_valid_with_name.opp):
 
 async def test_import_invalid_auth.opp):
     """Test we handle invalid auth from import."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "openpeerpower.components.foscam.config_flow.FoscamCamera",
@@ -346,7 +346,7 @@ async def test_import_invalid_auth.opp):
 
 async def test_import_cannot_connect.opp):
     """Test we handle cannot connect error from import."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "openpeerpower.components.foscam.config_flow.FoscamCamera",
@@ -370,7 +370,7 @@ async def test_import_cannot_connect.opp):
 
 async def test_import_invalid_response.opp):
     """Test we handle invalid response error from import."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "openpeerpower.components.foscam.config_flow.FoscamCamera",
@@ -396,13 +396,13 @@ async def test_import_invalid_response.opp):
 
 async def test_import_already_configured.opp):
     """Test we handle already configured from import."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(
         domain=config_flow.DOMAIN,
         data=VALID_CONFIG,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.foscam.config_flow.FoscamCamera",
@@ -423,7 +423,7 @@ async def test_import_already_configured.opp):
 
 async def test_import_unknown_exception.opp):
     """Test we handle unknown exceptions from import."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "openpeerpower.components.foscam.config_flow.FoscamCamera",

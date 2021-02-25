@@ -59,7 +59,7 @@ async def init_config_flow.opp):
     return flow
 
 
-async def test_user.opp, webhook_id, secret):
+async def test_user(opp, webhook_id, secret):
     """Test user step."""
     flow = await init_config_flow.opp)
 
@@ -76,7 +76,7 @@ async def test_user.opp, webhook_id, secret):
     assert result["description_placeholders"][CONF_WEBHOOK_URL] == WEBHOOK_URL
 
 
-async def test_import.opp, webhook_id, secret):
+async def test_import(opp, webhook_id, secret):
     """Test import step."""
     flow = await init_config_flow.opp)
 
@@ -97,17 +97,17 @@ async def test_import_setup_opp):
     )
 
     assert not.opp.config_entries.async_entries(DOMAIN)
-    assert await async_setup_component.opp, DOMAIN, {"owntracks": {}})
+    assert await async_setup_component(opp, DOMAIN, {"owntracks": {}})
     await opp.async_block_till_done()
-    assert.opp.config_entries.async_entries(DOMAIN)
+    assert opp.config_entries.async_entries(DOMAIN)
 
 
 async def test_abort_if_already_setup_opp):
     """Test that we can't add more than one instance."""
     flow = await init_config_flow.opp)
 
-    MockConfigEntry(domain=DOMAIN, data={}).add_to.opp.opp)
-    assert.opp.config_entries.async_entries(DOMAIN)
+    MockConfigEntry(domain=DOMAIN, data={}).add_to_opp(opp)
+    assert opp.config_entries.async_entries(DOMAIN)
 
     # Should fail, already setup (import)
     result = await flow.async_step_import({})
@@ -120,7 +120,7 @@ async def test_abort_if_already_setup_opp):
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test_user_not_supports_encryption.opp, not_supports_encryption):
+async def test_user_not_supports_encryption(opp, not_supports_encryption):
     """Test user step."""
     flow = await init_config_flow.opp)
 

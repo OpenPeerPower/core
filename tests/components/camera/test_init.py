@@ -36,15 +36,15 @@ async def mock_camera_fixture.opp):
 @pytest.fixture(name="mock_stream")
 def mock_stream_fixture.opp):
     """Initialize a demo camera platform with streaming."""
-    assert.opp.loop.run_until_complete(
-        async_setup_component.opp, "stream", {"stream": {}})
+    assert opp.loop.run_until_complete(
+        async_setup_component(opp, "stream", {"stream": {}})
     )
 
 
 @pytest.fixture(name="setup_camera_prefs")
 def setup_camera_prefs_fixture.opp):
     """Initialize HTTP API."""
-    return common.mock_camera_prefs.opp, "camera.demo_camera")
+    return common.mock_camera_prefs(opp, "camera.demo_camera")
 
 
 @pytest.fixture(name="image_mock_url")
@@ -56,7 +56,7 @@ async def image_mock_url_fixture.opp):
     await opp.async_block_till_done()
 
 
-async def test_get_image_from_camera.opp, image_mock_url):
+async def test_get_image_from_camera(opp, image_mock_url):
     """Grab an image from camera entity."""
 
     with patch(
@@ -64,53 +64,53 @@ async def test_get_image_from_camera.opp, image_mock_url):
         autospec=True,
         return_value=b"Test",
     ) as mock_camera:
-        image = await camera.async_get_image.opp, "camera.demo_camera")
+        image = await camera.async_get_image(opp, "camera.demo_camera")
 
     assert mock_camera.called
     assert image.content == b"Test"
 
 
-async def test_get_stream_source_from_camera.opp, mock_camera):
+async def test_get_stream_source_from_camera(opp, mock_camera):
     """Fetch stream source from camera entity."""
 
     with patch(
         "openpeerpower.components.camera.Camera.stream_source",
         return_value="rtsp://127.0.0.1/stream",
     ) as mock_camera_stream_source:
-        stream_source = await camera.async_get_stream_source.opp, "camera.demo_camera")
+        stream_source = await camera.async_get_stream_source(opp, "camera.demo_camera")
 
     assert mock_camera_stream_source.called
     assert stream_source == "rtsp://127.0.0.1/stream"
 
 
-async def test_get_image_without_exists_camera.opp, image_mock_url):
+async def test_get_image_without_exists_camera(opp, image_mock_url):
     """Try to get image without exists camera."""
     with patch(
         "openpeerpower.helpers.entity_component.EntityComponent.get_entity",
         return_value=None,
     ), pytest.raises(OpenPeerPowerError):
-        await camera.async_get_image.opp, "camera.demo_camera")
+        await camera.async_get_image(opp, "camera.demo_camera")
 
 
-async def test_get_image_with_timeout.opp, image_mock_url):
+async def test_get_image_with_timeout(opp, image_mock_url):
     """Try to get image with timeout."""
     with patch(
         "openpeerpower.components.demo.camera.DemoCamera.async_camera_image",
         side_effect=asyncio.TimeoutError,
     ), pytest.raises(OpenPeerPowerError):
-        await camera.async_get_image.opp, "camera.demo_camera")
+        await camera.async_get_image(opp, "camera.demo_camera")
 
 
-async def test_get_image_fails.opp, image_mock_url):
+async def test_get_image_fails(opp, image_mock_url):
     """Try to get image with timeout."""
     with patch(
         "openpeerpower.components.demo.camera.DemoCamera.async_camera_image",
         return_value=None,
     ), pytest.raises(OpenPeerPowerError):
-        await camera.async_get_image.opp, "camera.demo_camera")
+        await camera.async_get_image(opp, "camera.demo_camera")
 
 
-async def test_snapshot_service.opp, mock_camera):
+async def test_snapshot_service(opp, mock_camera):
     """Test snapshot service."""
     mopen = mock_open()
 
@@ -134,9 +134,9 @@ async def test_snapshot_service.opp, mock_camera):
         assert mock_write.mock_calls[0][1][0] == b"Test"
 
 
-async def test_websocket_camera_thumbnail.opp, opp_ws_client, mock_camera):
+async def test_websocket_camera_thumbnail(opp, opp_ws_client, mock_camera):
     """Test camera_thumbnail websocket command."""
-    await async_setup_component.opp, "camera", {})
+    await async_setup_component(opp, "camera", {})
 
     client = await opp_ws_client.opp)
     await client.send_json(
@@ -156,7 +156,7 @@ async def test_websocket_stream_no_source(
     opp. opp_ws_client, mock_camera, mock_stream
 ):
     """Test camera/stream websocket command with camera with no source."""
-    await async_setup_component.opp, "camera", {})
+    await async_setup_component(opp, "camera", {})
 
     # Request playlist through WebSocket
     client = await opp_ws_client.opp)
@@ -171,9 +171,9 @@ async def test_websocket_stream_no_source(
     assert not msg["success"]
 
 
-async def test_websocket_camera_stream.opp, opp_ws_client, mock_camera, mock_stream):
+async def test_websocket_camera_stream(opp, opp_ws_client, mock_camera, mock_stream):
     """Test camera/stream websocket command."""
-    await async_setup_component.opp, "camera", {})
+    await async_setup_component(opp, "camera", {})
 
     with patch(
         "openpeerpower.components.camera.Stream.endpoint_url",
@@ -197,9 +197,9 @@ async def test_websocket_camera_stream.opp, opp_ws_client, mock_camera, mock_str
         assert msg["result"]["url"][-13:] == "playlist.m3u8"
 
 
-async def test_websocket_get_prefs.opp, opp_ws_client, mock_camera):
+async def test_websocket_get_prefs(opp, opp_ws_client, mock_camera):
     """Test get camera preferences websocket command."""
-    await async_setup_component.opp, "camera", {})
+    await async_setup_component(opp, "camera", {})
 
     # Request preferences through websocket
     client = await opp_ws_client.opp)
@@ -216,7 +216,7 @@ async def test_websocket_update_prefs(
     opp. opp_ws_client, mock_camera, setup_camera_prefs
 ):
     """Test updating preference."""
-    await async_setup_component.opp, "camera", {})
+    await async_setup_component(opp, "camera", {})
     assert setup_camera_prefs[PREF_PRELOAD_STREAM]
     client = await opp_ws_client.opp)
     await client.send_json(
@@ -237,7 +237,7 @@ async def test_websocket_update_prefs(
     )
 
 
-async def test_play_stream_service_no_source.opp, mock_camera, mock_stream):
+async def test_play_stream_service_no_source(opp, mock_camera, mock_stream):
     """Test camera play_stream service."""
     data = {
         ATTR_ENTITY_ID: "camera.demo_camera",
@@ -250,13 +250,13 @@ async def test_play_stream_service_no_source.opp, mock_camera, mock_stream):
         )
 
 
-async def test_handle_play_stream_service.opp, mock_camera, mock_stream):
+async def test_handle_play_stream_service(opp, mock_camera, mock_stream):
     """Test camera play_stream service."""
     await async_process_op_core_config(
         opp,
         {"external_url": "https://example.com"},
     )
-    await async_setup_component.opp, "media_player", {})
+    await async_setup_component(opp, "media_player", {})
     with patch(
         "openpeerpower.components.camera.Stream.endpoint_url",
     ) as mock_request_stream, patch(
@@ -278,7 +278,7 @@ async def test_handle_play_stream_service.opp, mock_camera, mock_stream):
         assert mock_request_stream.called
 
 
-async def test_no_preload_stream.opp, mock_stream):
+async def test_no_preload_stream(opp, mock_stream):
     """Test camera preload preference."""
     demo_prefs = CameraEntityPreferences({PREF_PRELOAD_STREAM: False})
     with patch(
@@ -291,13 +291,13 @@ async def test_no_preload_stream.opp, mock_stream):
         new_callable=PropertyMock,
     ) as mock_stream_source:
         mock_stream_source.return_value = io.BytesIO()
-        await async_setup_component.opp, "camera", {DOMAIN: {"platform": "demo"}})
+        await async_setup_component(opp, "camera", {DOMAIN: {"platform": "demo"}})
         opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
         await opp.async_block_till_done()
         assert not mock_request_stream.called
 
 
-async def test_preload_stream.opp, mock_stream):
+async def test_preload_stream(opp, mock_stream):
     """Test camera preload preference."""
     demo_prefs = CameraEntityPreferences({PREF_PRELOAD_STREAM: True})
     with patch(
@@ -318,7 +318,7 @@ async def test_preload_stream.opp, mock_stream):
         assert mock_create_stream.called
 
 
-async def test_record_service_invalid_path.opp, mock_camera):
+async def test_record_service_invalid_path(opp, mock_camera):
     """Test record service with invalid path."""
     with patch.object(
         opp.config, "is_allowed_path", return_value=False
@@ -335,7 +335,7 @@ async def test_record_service_invalid_path.opp, mock_camera):
         )
 
 
-async def test_record_service.opp, mock_camera, mock_stream):
+async def test_record_service(opp, mock_camera, mock_stream):
     """Test record service."""
     with patch(
         "openpeerpower.components.demo.camera.DemoCamera.stream_source",

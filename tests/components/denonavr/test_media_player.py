@@ -70,7 +70,7 @@ async def setup_denonavr.opp):
         data=entry_data,
     )
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -81,7 +81,7 @@ async def setup_denonavr.opp):
     assert state.name == TEST_NAME
 
 
-async def test_get_command.opp, client):
+async def test_get_command(opp, client):
     """Test generic command functionality."""
     await setup_denonavr.opp)
 

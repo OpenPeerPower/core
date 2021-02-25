@@ -48,12 +48,12 @@ async def rfxtrx_fixture.opp):
 
 
 @pytest.fixture(name="rfxtrx_automatic")
-async def rfxtrx_automatic_fixture.opp, rfxtrx):
+async def rfxtrx_automatic_fixture(opp, rfxtrx):
     """Fixture that starts up with automatic additions."""
     entry_data = create_rfx_test_cfg(automatic_add=True, devices={})
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -71,7 +71,7 @@ async def timestep.opp):
         async def delay(seconds):
             """Trigger delay in system."""
             mock_utcnow.return_value += timedelta(seconds=seconds)
-            async_fire_time_changed.opp, mock_utcnow.return_value)
+            async_fire_time_changed(opp, mock_utcnow.return_value)
             await opp.async_block_till_done()
 
         yield delay

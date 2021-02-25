@@ -23,7 +23,7 @@ async def test_jewish_calendar_min_config(opp):
         opp. jewish_calendar.DOMAIN, {"jewish_calendar": {}}
     )
     await opp.async_block_till_done()
-    assert.opp.states.get("sensor.jewish_calendar_date") is not None
+    assert opp.states.get("sensor.jewish_calendar_date") is not None
 
 
 async def test_jewish_calendar_hebrew(opp):
@@ -32,7 +32,7 @@ async def test_jewish_calendar_hebrew(opp):
         opp. jewish_calendar.DOMAIN, {"jewish_calendar": {"language": "hebrew"}}
     )
     await opp.async_block_till_done()
-    assert.opp.states.get("sensor.jewish_calendar_date") is not None
+    assert opp.states.get("sensor.jewish_calendar_date") is not None
 
 
 TEST_PARAMS = [
@@ -546,7 +546,7 @@ async def test_shabbat_times_sensor(
             else result_value
         )
 
-        assert.opp.states.get(f"sensor.test_{sensor_type}").state == str(
+        assert opp.states.get(f"sensor.test_{sensor_type}").state == str(
             result_value
         ), f"Value for {sensor_type}"
 
@@ -604,7 +604,7 @@ async def test_omer_sensor(opp, legacy_patchable_time, test_time, result):
         async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.test_day_of_the_omer").state == result
+    assert opp.states.get("sensor.test_day_of_the_omer").state == result
 
 
 DAFYOMI_PARAMS = [
@@ -638,4 +638,4 @@ async def test_dafyomi_sensor(opp, legacy_patchable_time, test_time, result):
         async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.test_daf_yomi").state == result
+    assert opp.states.get("sensor.test_daf_yomi").state == result

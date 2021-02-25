@@ -6,7 +6,7 @@ VALID_NUMBER1 = "19.0"
 VALID_NUMBER2 = "99.9"
 
 
-async def test_reproducing_states.opp, caplog):
+async def test_reproducing_states(opp, caplog):
     """Test reproducing Input number states."""
 
     assert await async_setup_component(
@@ -28,7 +28,7 @@ async def test_reproducing_states.opp, caplog):
         ],
     )
 
-    assert.opp.states.get("input_number.test_number").state == VALID_NUMBER1
+    assert opp.states.get("input_number.test_number").state == VALID_NUMBER1
 
     # Test reproducing with different state
     await opp.helpers.state.async_reproduce_state(
@@ -39,7 +39,7 @@ async def test_reproducing_states.opp, caplog):
         ],
     )
 
-    assert.opp.states.get("input_number.test_number").state == VALID_NUMBER2
+    assert opp.states.get("input_number.test_number").state == VALID_NUMBER2
 
     # Test setting state to number out of range
     await opp.helpers.state.async_reproduce_state(
@@ -47,7 +47,7 @@ async def test_reproducing_states.opp, caplog):
     )
 
     # The entity states should be unchanged after trying to set them to out-of-range number
-    assert.opp.states.get("input_number.test_number").state == VALID_NUMBER2
+    assert opp.states.get("input_number.test_number").state == VALID_NUMBER2
 
     await opp.helpers.state.async_reproduce_state(
         [

@@ -4,7 +4,7 @@ from openpeerpower.core import State
 from tests.common import async_mock_service
 
 
-async def test_reproducing_states.opp, caplog):
+async def test_reproducing_states(opp, caplog):
     """Test reproducing Fan states."""
     opp.states.async_set("fan.entity_off", "off", {})
     opp.states.async_set("fan.entity_on", "on", {})
@@ -12,11 +12,11 @@ async def test_reproducing_states.opp, caplog):
     opp.states.async_set("fan.entity_oscillating", "on", {"oscillating": True})
     opp.states.async_set("fan.entity_direction", "on", {"direction": "forward"})
 
-    turn_on_calls = async_mock_service.opp, "fan", "turn_on")
-    turn_off_calls = async_mock_service.opp, "fan", "turn_off")
-    set_direction_calls = async_mock_service.opp, "fan", "set_direction")
-    oscillate_calls = async_mock_service.opp, "fan", "oscillate")
-    set_speed_calls = async_mock_service.opp, "fan", "set_speed")
+    turn_on_calls = async_mock_service(opp, "fan", "turn_on")
+    turn_off_calls = async_mock_service(opp, "fan", "turn_off")
+    set_direction_calls = async_mock_service(opp, "fan", "set_direction")
+    oscillate_calls = async_mock_service(opp, "fan", "oscillate")
+    set_speed_calls = async_mock_service(opp, "fan", "set_speed")
 
     # These calls should do nothing as entities already in desired state
     await opp.helpers.state.async_reproduce_state(

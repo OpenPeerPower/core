@@ -21,7 +21,7 @@ from tests.common import MockConfigEntry
 
 async def test_user_form.opp: core.OpenPeerPower):
     """Test we get the user initiated form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -51,7 +51,7 @@ async def test_user_form.opp: core.OpenPeerPower):
 
 async def test_user_form_with_non_bridge.opp: core.OpenPeerPower):
     """Test setup a smart by bond fan."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -167,9 +167,9 @@ async def test_user_form_one_entry_per_device_allowed.opp: core.OpenPeerPower):
         domain=DOMAIN,
         unique_id="already-registered-bond-id",
         data={CONF_HOST: "some host", CONF_ACCESS_TOKEN: "test-token"},
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -193,7 +193,7 @@ async def test_user_form_one_entry_per_device_allowed.opp: core.OpenPeerPower):
 
 async def test_zeroconf_form.opp: core.OpenPeerPower):
     """Test we get the discovery form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_ZEROCONF},
@@ -223,14 +223,14 @@ async def test_zeroconf_form.opp: core.OpenPeerPower):
 
 async def test_zeroconf_already_configured.opp: core.OpenPeerPower):
     """Test starting a flow from discovery when already configured."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(
         domain=DOMAIN,
         unique_id="already-registered-bond-id",
         data={CONF_HOST: "stored-host", CONF_ACCESS_TOKEN: "test-token"},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with _patch_async_setup() as mock_setup, _patch_async_setup_entry() as mock_setup_entry:
         result = await opp.config_entries.flow.async_init(

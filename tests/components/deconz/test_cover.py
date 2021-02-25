@@ -73,27 +73,27 @@ COVERS = {
 }
 
 
-async def test_no_covers.opp, aioclient_mock):
+async def test_no_covers(opp, aioclient_mock):
     """Test that no cover entities are created."""
-    await setup_deconz_integration.opp, aioclient_mock)
+    await setup_deconz_integration(opp, aioclient_mock)
     assert len.opp.states.async_all()) == 0
 
 
-async def test_cover.opp, aioclient_mock):
+async def test_cover(opp, aioclient_mock):
     """Test that all supported cover entities are created."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["lights"] = deepcopy(COVERS)
     config_entry = await setup_deconz_integration(
         opp. aioclient_mock, get_state_response=data
     )
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
 
     assert len.opp.states.async_all()) == 5
-    assert.opp.states.get("cover.level_controllable_cover").state == STATE_OPEN
-    assert.opp.states.get("cover.window_covering_device").state == STATE_CLOSED
-    assert.opp.states.get("cover.unsupported_cover") is None
-    assert.opp.states.get("cover.deconz_old_brightness_cover").state == STATE_OPEN
-    assert.opp.states.get("cover.window_covering_controller").state == STATE_CLOSED
+    assert opp.states.get("cover.level_controllable_cover").state == STATE_OPEN
+    assert opp.states.get("cover.window_covering_device").state == STATE_CLOSED
+    assert opp.states.get("cover.unsupported_cover") is None
+    assert opp.states.get("cover.deconz_old_brightness_cover").state == STATE_OPEN
+    assert opp.states.get("cover.window_covering_controller").state == STATE_CLOSED
 
     # Event signals cover is closed
 
@@ -107,7 +107,7 @@ async def test_cover.opp, aioclient_mock):
     gateway.api.event_handler(state_changed_event)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("cover.level_controllable_cover").state == STATE_CLOSED
+    assert opp.states.get("cover.level_controllable_cover").state == STATE_CLOSED
 
     # Verify service calls for cover
 
@@ -198,7 +198,7 @@ async def test_cover.opp, aioclient_mock):
     assert aioclient_mock.mock_calls[8][2] == {"bri_inc": 0}
 
     # Test that a reported cover position of 255 (deconz-rest-api < 2.05.73) is interpreted correctly.
-    assert.opp.states.get("cover.deconz_old_brightness_cover").state == STATE_OPEN
+    assert opp.states.get("cover.deconz_old_brightness_cover").state == STATE_OPEN
 
     state_changed_event = {
         "t": "event",
@@ -226,7 +226,7 @@ async def test_cover.opp, aioclient_mock):
     assert len.opp.states.async_all()) == 0
 
 
-async def test_tilt_cover.opp, aioclient_mock):
+async def test_tilt_cover(opp, aioclient_mock):
     """Test that tilting a cover works."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["lights"] = {

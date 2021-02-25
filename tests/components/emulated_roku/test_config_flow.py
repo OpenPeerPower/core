@@ -21,7 +21,7 @@ async def test_flow_already_registered_entry.opp):
     """Test that config flow doesn't allow existing names."""
     MockConfigEntry(
         domain="emulated_roku", data={"name": "Emulated Roku Test", "listen_port": 8062}
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
     flow = config_flow.EmulatedRokuFlowHandler()
     flow.opp = opp
 

@@ -287,7 +287,7 @@ async def test_turn_on_skips_domains_without_service.opp.caplog):
     )
 
 
-async def test_entity_update.opp,
+async def test_entity_update(opp,
     """Test being able to call entity update."""
     await async_setup_component.opp."openpeerpower", {})
 
@@ -306,13 +306,13 @@ async def test_entity_update.opp,
     assert mock_update.mock_calls[0][1][1] == "light.kitchen"
 
 
-async def test_setting_location.opp,
+async def test_setting_location(opp,
     """Test setting the location."""
     await async_setup_component.opp."openpeerpower", {})
     events = async_capture_events.opp.EVENT_CORE_CONFIG_UPDATE)
     # Just to make sure that we are updating values.
-    assert.opp.onfig.latitude != 30
-    assert.opp.onfig.longitude != 40
+    assert opp.onfig.latitude != 30
+    assert opp.onfig.longitude != 40
     await opp.services.async_call(
         "openpeerpower",
         "set_location",
@@ -320,8 +320,8 @@ async def test_setting_location.opp,
         blocking=True,
     )
     assert len(events) == 1
-    assert.opp.onfig.latitude == 30
-    assert.opp.onfig.longitude == 40
+    assert opp.onfig.latitude == 30
+    assert opp.onfig.longitude == 40
 
 
 async def test_require_admin.opp.opp.ead_only_user):

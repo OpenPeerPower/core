@@ -20,7 +20,7 @@ async def test_setup_with_config(opp):
         }
     }
     with patch("speedtest.Speedtest"):
-        assert await async_setup_component.opp, speedtestdotnet.DOMAIN, config)
+        assert await async_setup_component(opp, speedtestdotnet.DOMAIN, config)
 
 
 async def test_successful_config_entry.opp):
@@ -30,7 +30,7 @@ async def test_successful_config_entry.opp):
         domain=speedtestdotnet.DOMAIN,
         data={},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch("speedtest.Speedtest"), patch(
         "openpeerpower.config_entries.ConfigEntries.async_forward_entry_setup",
@@ -52,7 +52,7 @@ async def test_setup_failed.opp):
         domain=speedtestdotnet.DOMAIN,
         data={},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch("speedtest.Speedtest", side_effect=speedtest.ConfigRetrievalError):
 
@@ -67,7 +67,7 @@ async def test_unload_entry.opp):
         domain=speedtestdotnet.DOMAIN,
         data={},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch("speedtest.Speedtest"):
         await opp.config_entries.async_setup(entry.entry_id)

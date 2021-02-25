@@ -251,7 +251,7 @@ async def test_user_host_already_configured(
         options={CONF_VOLUME_STEP: VOLUME_STEP},
         unique_id=UNIQUE_ID,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     fail_entry = MOCK_SPEAKER_CONFIG.copy()
     fail_entry[CONF_NAME] = "newtestname"
 
@@ -272,7 +272,7 @@ async def test_user_serial_number_already_exists(
     # Set up new entry
     MockConfigEntry(
         domain=DOMAIN, data=MOCK_SPEAKER_CONFIG, unique_id=UNIQUE_ID
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     # Set up new entry with same unique_id but different host and name
     fail_entry = MOCK_SPEAKER_CONFIG.copy()
@@ -393,7 +393,7 @@ async def test_user_ignore(
         options={CONF_VOLUME_STEP: VOLUME_STEP},
         source=SOURCE_IGNORE,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=MOCK_SPEAKER_CONFIG
@@ -455,7 +455,7 @@ async def test_import_entity_already_configured(
         data=vol.Schema(VIZIO_SCHEMA)(MOCK_SPEAKER_CONFIG),
         options={CONF_VOLUME_STEP: VOLUME_STEP},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     fail_entry = vol.Schema(VIZIO_SCHEMA)(MOCK_SPEAKER_CONFIG.copy())
 
     result = await opp.config_entries.flow.async_init(
@@ -677,7 +677,7 @@ async def test_import_error(
         options={CONF_VOLUME_STEP: VOLUME_STEP},
         unique_id=UNIQUE_ID,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     fail_entry = MOCK_SPEAKER_CONFIG.copy()
     fail_entry[CONF_HOST] = "0.0.0.0"
 
@@ -710,7 +710,7 @@ async def test_import_ignore(
         options={CONF_VOLUME_STEP: VOLUME_STEP},
         source=SOURCE_IGNORE,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -765,7 +765,7 @@ async def test_zeroconf_flow_already_configured(
         options={CONF_VOLUME_STEP: VOLUME_STEP},
         unique_id=UNIQUE_ID,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     # Try rediscovering same device
     discovery_info = MOCK_ZEROCONF_SERVICE_INFO.copy()
@@ -791,7 +791,7 @@ async def test_zeroconf_flow_with_port_in_host(
         options={CONF_VOLUME_STEP: VOLUME_STEP},
         unique_id=UNIQUE_ID,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     # Try rediscovering same device, this time with port already in host
     discovery_info = MOCK_ZEROCONF_SERVICE_INFO.copy()
@@ -846,7 +846,7 @@ async def test_zeroconf_ignore(
         options={CONF_VOLUME_STEP: VOLUME_STEP},
         source=SOURCE_IGNORE,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     discovery_info = MOCK_ZEROCONF_SERVICE_INFO.copy()
     result = await opp.config_entries.flow.async_init(
@@ -886,7 +886,7 @@ async def test_zeroconf_abort_when_ignored(
         source=SOURCE_IGNORE,
         unique_id=UNIQUE_ID,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     discovery_info = MOCK_ZEROCONF_SERVICE_INFO.copy()
     result = await opp.config_entries.flow.async_init(
@@ -913,7 +913,7 @@ async def test_zeroconf_flow_already_configured_hostname(
         options={CONF_VOLUME_STEP: VOLUME_STEP},
         unique_id=UNIQUE_ID,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     # Try rediscovering same device
     discovery_info = MOCK_ZEROCONF_SERVICE_INFO.copy()
@@ -938,7 +938,7 @@ async def test_import_flow_already_configured_hostname(
     entry = MockConfigEntry(
         domain=DOMAIN, data=config, options={CONF_VOLUME_STEP: VOLUME_STEP}
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

@@ -191,7 +191,7 @@ async def test_turning_off_and_on.opp):
     )
     state = opp.states.get(TEST_ENTITY_ID)
     assert state.state == STATE_OFF
-    assert not mp.is_on.opp, TEST_ENTITY_ID)
+    assert not mp.is_on(opp, TEST_ENTITY_ID)
 
     await opp.services.async_call(
         mp.DOMAIN,
@@ -201,7 +201,7 @@ async def test_turning_off_and_on.opp):
     )
     state = opp.states.get(TEST_ENTITY_ID)
     assert state.state == STATE_PLAYING
-    assert mp.is_on.opp, TEST_ENTITY_ID)
+    assert mp.is_on(opp, TEST_ENTITY_ID)
 
     await opp.services.async_call(
         mp.DOMAIN,
@@ -211,7 +211,7 @@ async def test_turning_off_and_on.opp):
     )
     state = opp.states.get(TEST_ENTITY_ID)
     assert state.state == STATE_OFF
-    assert not mp.is_on.opp, TEST_ENTITY_ID)
+    assert not mp.is_on(opp, TEST_ENTITY_ID)
 
 
 async def test_playing_pausing.opp):
@@ -364,7 +364,7 @@ async def test_play_media.opp):
     assert state.attributes.get(mp.ATTR_MEDIA_CONTENT_ID) == "some_id"
 
 
-async def test_seek.opp, mock_media_seek):
+async def test_seek(opp, mock_media_seek):
     """Test seek."""
     assert await async_setup_component(
         opp. mp.DOMAIN, {"media_player": {"platform": "demo"}}
@@ -400,7 +400,7 @@ async def test_seek.opp, mock_media_seek):
     assert mock_media_seek.called
 
 
-async def test_media_image_proxy.opp, opp_client):
+async def test_media_image_proxy(opp, opp_client):
     """Test the media server image proxy server ."""
     assert await async_setup_component(
         opp. mp.DOMAIN, {"media_player": {"platform": "demo"}}

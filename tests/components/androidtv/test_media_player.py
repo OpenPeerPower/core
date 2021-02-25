@@ -122,7 +122,7 @@ def _setup(config):
     return patch_key, entity_id
 
 
-async def _test_reconnect.opp, caplog, config):
+async def _test_reconnect(opp, caplog, config):
     """Test that the error and reconnection attempts are logged correctly.
 
     "Handles device/service unavailable. Log a warning once when
@@ -137,7 +137,7 @@ async def _test_reconnect.opp, caplog, config):
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[
         patch_key
     ], patchers.PATCH_KEYGEN, patchers.PATCH_ANDROIDTV_OPEN, patchers.PATCH_SIGNER:
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
 
         await opp.helpers.entity_component.async_update_entity(entity_id)
@@ -185,7 +185,7 @@ async def _test_reconnect.opp, caplog, config):
     return True
 
 
-async def _test_adb_shell_returns_none.opp, config):
+async def _test_adb_shell_returns_none(opp, config):
     """Test the case that the ADB shell command returns `None`.
 
     The state should be `None` and the device should be unavailable.
@@ -197,7 +197,7 @@ async def _test_adb_shell_returns_none.opp, config):
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[
         patch_key
     ], patchers.PATCH_KEYGEN, patchers.PATCH_ANDROIDTV_OPEN, patchers.PATCH_SIGNER:
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
         await opp.helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
@@ -215,14 +215,14 @@ async def _test_adb_shell_returns_none.opp, config):
     return True
 
 
-async def test_reconnect_androidtv_python_adb.opp, caplog):
+async def test_reconnect_androidtv_python_adb(opp, caplog):
     """Test that the error and reconnection attempts are logged correctly.
 
     * Device type: Android TV
     * ADB connection method: Python ADB implementation
 
     """
-    assert await _test_reconnect.opp, caplog, CONFIG_ANDROIDTV_PYTHON_ADB)
+    assert await _test_reconnect(opp, caplog, CONFIG_ANDROIDTV_PYTHON_ADB)
 
 
 async def test_adb_shell_returns_none_androidtv_python_adb.opp):
@@ -232,17 +232,17 @@ async def test_adb_shell_returns_none_androidtv_python_adb.opp):
     * ADB connection method: Python ADB implementation
 
     """
-    assert await _test_adb_shell_returns_none.opp, CONFIG_ANDROIDTV_PYTHON_ADB)
+    assert await _test_adb_shell_returns_none(opp, CONFIG_ANDROIDTV_PYTHON_ADB)
 
 
-async def test_reconnect_firetv_python_adb.opp, caplog):
+async def test_reconnect_firetv_python_adb(opp, caplog):
     """Test that the error and reconnection attempts are logged correctly.
 
     * Device type: Fire TV
     * ADB connection method: Python ADB implementation
 
     """
-    assert await _test_reconnect.opp, caplog, CONFIG_FIRETV_PYTHON_ADB)
+    assert await _test_reconnect(opp, caplog, CONFIG_FIRETV_PYTHON_ADB)
 
 
 async def test_adb_shell_returns_none_firetv_python_adb.opp):
@@ -252,17 +252,17 @@ async def test_adb_shell_returns_none_firetv_python_adb.opp):
     * ADB connection method: Python ADB implementation
 
     """
-    assert await _test_adb_shell_returns_none.opp, CONFIG_FIRETV_PYTHON_ADB)
+    assert await _test_adb_shell_returns_none(opp, CONFIG_FIRETV_PYTHON_ADB)
 
 
-async def test_reconnect_androidtv_adb_server.opp, caplog):
+async def test_reconnect_androidtv_adb_server(opp, caplog):
     """Test that the error and reconnection attempts are logged correctly.
 
     * Device type: Android TV
     * ADB connection method: ADB server
 
     """
-    assert await _test_reconnect.opp, caplog, CONFIG_ANDROIDTV_ADB_SERVER)
+    assert await _test_reconnect(opp, caplog, CONFIG_ANDROIDTV_ADB_SERVER)
 
 
 async def test_adb_shell_returns_none_androidtv_adb_server.opp):
@@ -272,17 +272,17 @@ async def test_adb_shell_returns_none_androidtv_adb_server.opp):
     * ADB connection method: ADB server
 
     """
-    assert await _test_adb_shell_returns_none.opp, CONFIG_ANDROIDTV_ADB_SERVER)
+    assert await _test_adb_shell_returns_none(opp, CONFIG_ANDROIDTV_ADB_SERVER)
 
 
-async def test_reconnect_firetv_adb_server.opp, caplog):
+async def test_reconnect_firetv_adb_server(opp, caplog):
     """Test that the error and reconnection attempts are logged correctly.
 
     * Device type: Fire TV
     * ADB connection method: ADB server
 
     """
-    assert await _test_reconnect.opp, caplog, CONFIG_FIRETV_ADB_SERVER)
+    assert await _test_reconnect(opp, caplog, CONFIG_FIRETV_ADB_SERVER)
 
 
 async def test_adb_shell_returns_none_firetv_adb_server.opp):
@@ -292,7 +292,7 @@ async def test_adb_shell_returns_none_firetv_adb_server.opp):
     * ADB connection method: ADB server
 
     """
-    assert await _test_adb_shell_returns_none.opp, CONFIG_FIRETV_ADB_SERVER)
+    assert await _test_adb_shell_returns_none(opp, CONFIG_FIRETV_ADB_SERVER)
 
 
 async def test_setup_with_adbkey.opp):
@@ -306,7 +306,7 @@ async def test_setup_with_adbkey.opp):
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[
         patch_key
     ], patchers.PATCH_ANDROIDTV_OPEN, patchers.PATCH_SIGNER, patchers.PATCH_ISFILE, patchers.PATCH_ACCESS:
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
         await opp.helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
@@ -314,7 +314,7 @@ async def test_setup_with_adbkey.opp):
         assert state.state == STATE_OFF
 
 
-async def _test_sources.opp, config0):
+async def _test_sources(opp, config0):
     """Test that sources (i.e., apps) are handled correctly for Android TV and Fire TV devices."""
     config = copy.deepcopy(config0)
     config[DOMAIN][CONF_APPS] = {
@@ -327,7 +327,7 @@ async def _test_sources.opp, config0):
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
         await opp.helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
@@ -391,15 +391,15 @@ async def _test_sources.opp, config0):
 
 async def test_androidtv_sources.opp):
     """Test that sources (i.e., apps) are handled correctly for Android TV devices."""
-    assert await _test_sources.opp, CONFIG_ANDROIDTV_ADB_SERVER)
+    assert await _test_sources(opp, CONFIG_ANDROIDTV_ADB_SERVER)
 
 
 async def test_firetv_sources.opp):
     """Test that sources (i.e., apps) are handled correctly for Fire TV devices."""
-    assert await _test_sources.opp, CONFIG_FIRETV_ADB_SERVER)
+    assert await _test_sources(opp, CONFIG_FIRETV_ADB_SERVER)
 
 
-async def _test_exclude_sources.opp, config0, expected_sources):
+async def _test_exclude_sources(opp, config0, expected_sources):
     """Test that sources (i.e., apps) are handled correctly when the `exclude_unnamed_apps` config parameter is provided."""
     config = copy.deepcopy(config0)
     config[DOMAIN][CONF_APPS] = {
@@ -412,7 +412,7 @@ async def _test_exclude_sources.opp, config0, expected_sources):
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
         await opp.helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
@@ -464,17 +464,17 @@ async def test_androidtv_exclude_sources.opp):
     """Test that sources (i.e., apps) are handled correctly for Android TV devices when the `exclude_unnamed_apps` config parameter is provided as true."""
     config = copy.deepcopy(CONFIG_ANDROIDTV_ADB_SERVER)
     config[DOMAIN][CONF_EXCLUDE_UNNAMED_APPS] = True
-    assert await _test_exclude_sources.opp, config, ["TEST 1"])
+    assert await _test_exclude_sources(opp, config, ["TEST 1"])
 
 
 async def test_firetv_exclude_sources.opp):
     """Test that sources (i.e., apps) are handled correctly for Fire TV devices when the `exclude_unnamed_apps` config parameter is provided as true."""
     config = copy.deepcopy(CONFIG_FIRETV_ADB_SERVER)
     config[DOMAIN][CONF_EXCLUDE_UNNAMED_APPS] = True
-    assert await _test_exclude_sources.opp, config, ["TEST 1"])
+    assert await _test_exclude_sources(opp, config, ["TEST 1"])
 
 
-async def _test_select_source.opp, config0, source, expected_arg, method_patch):
+async def _test_select_source(opp, config0, source, expected_arg, method_patch):
     """Test that the methods for launching and stopping apps are called correctly when selecting a source."""
     config = copy.deepcopy(config0)
     config[DOMAIN][CONF_APPS] = {
@@ -487,7 +487,7 @@ async def _test_select_source.opp, config0, source, expected_arg, method_patch):
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
         await opp.helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
@@ -696,7 +696,7 @@ async def test_firetv_select_source_stop_hidden.opp):
     )
 
 
-async def _test_setup_fail.opp, config):
+async def _test_setup_fail(opp, config):
     """Test that the entity is not created when the ADB connection is not established."""
     patch_key, entity_id = _setup(config)
 
@@ -705,7 +705,7 @@ async def _test_setup_fail.opp, config):
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[
         patch_key
     ], patchers.PATCH_KEYGEN, patchers.PATCH_ANDROIDTV_OPEN, patchers.PATCH_SIGNER:
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
         await opp.helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
@@ -716,12 +716,12 @@ async def _test_setup_fail.opp, config):
 
 async def test_setup_fail_androidtv.opp):
     """Test that the Android TV entity is not created when the ADB connection is not established."""
-    assert await _test_setup_fail.opp, CONFIG_ANDROIDTV_PYTHON_ADB)
+    assert await _test_setup_fail(opp, CONFIG_ANDROIDTV_PYTHON_ADB)
 
 
 async def test_setup_fail_firetv.opp):
     """Test that the Fire TV entity is not created when the ADB connection is not established."""
-    assert await _test_setup_fail.opp, CONFIG_FIRETV_PYTHON_ADB)
+    assert await _test_setup_fail(opp, CONFIG_FIRETV_PYTHON_ADB)
 
 
 async def test_setup_two_devices.opp):
@@ -738,7 +738,7 @@ async def test_setup_two_devices.opp):
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
 
         for entity_id in ["media_player.android_tv", "media_player.fire_tv"]:
@@ -755,17 +755,17 @@ async def test_setup_same_device_twice.opp):
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-        assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
+        assert await async_setup_component(opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
         await opp.async_block_till_done()
         state = opp.states.get(entity_id)
         assert state is not None
 
-    assert.opp.services.has_service(ANDROIDTV_DOMAIN, SERVICE_ADB_COMMAND)
+    assert opp.services.has_service(ANDROIDTV_DOMAIN, SERVICE_ADB_COMMAND)
 
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-        assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
+        assert await async_setup_component(opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
         await opp.async_block_till_done()
 
 
@@ -778,7 +778,7 @@ async def test_adb_command.opp):
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-        assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
+        assert await async_setup_component(opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
         await opp.async_block_till_done()
 
     with patch(
@@ -806,7 +806,7 @@ async def test_adb_command_unicode_decode_error(opp):
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-        assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
+        assert await async_setup_component(opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
         await opp.async_block_till_done()
 
     with patch(
@@ -836,7 +836,7 @@ async def test_adb_command_key.opp):
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-        assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
+        assert await async_setup_component(opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
         await opp.async_block_till_done()
 
     with patch(
@@ -865,7 +865,7 @@ async def test_adb_command_get_properties.opp):
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-        assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
+        assert await async_setup_component(opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
         await opp.async_block_till_done()
 
     with patch(
@@ -894,7 +894,7 @@ async def test_learn_sendevent.opp):
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-        assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
+        assert await async_setup_component(opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
         await opp.async_block_till_done()
 
         with patch(
@@ -921,7 +921,7 @@ async def test_update_lock_not_acquired.opp):
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-        assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
+        assert await async_setup_component(opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
         await opp.async_block_till_done()
 
     with patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
@@ -956,7 +956,7 @@ async def test_download.opp):
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-        assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
+        assert await async_setup_component(opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
         await opp.async_block_till_done()
 
     # Failed download because path is not whitelisted
@@ -999,7 +999,7 @@ async def test_upload.opp):
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-        assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
+        assert await async_setup_component(opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
         await opp.async_block_till_done()
 
     # Failed upload because path is not whitelisted
@@ -1040,7 +1040,7 @@ async def test_androidtv_volume_set.opp):
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-        assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
+        assert await async_setup_component(opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
         await opp.async_block_till_done()
 
     with patch(
@@ -1056,7 +1056,7 @@ async def test_androidtv_volume_set.opp):
         patch_set_volume_level.assert_called_with(0.5)
 
 
-async def test_get_image.opp, opp_ws_client):
+async def test_get_image(opp, opp_ws_client):
     """Test taking a screen capture.
 
     This is based on `test_get_image` in tests/components/media_player/test_init.py.
@@ -1066,7 +1066,7 @@ async def test_get_image.opp, opp_ws_client):
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[
         patch_key
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-        assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
+        assert await async_setup_component(opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
         await opp.async_block_till_done()
 
     with patchers.patch_shell("11")[patch_key]:
@@ -1150,17 +1150,17 @@ async def test_services_androidtv.opp):
             await _test_service(
                 opp. entity_id, SERVICE_MEDIA_NEXT_TRACK, "media_next_track"
             )
-            await _test_service.opp, entity_id, SERVICE_MEDIA_PAUSE, "media_pause")
-            await _test_service.opp, entity_id, SERVICE_MEDIA_PLAY, "media_play")
+            await _test_service(opp, entity_id, SERVICE_MEDIA_PAUSE, "media_pause")
+            await _test_service(opp, entity_id, SERVICE_MEDIA_PLAY, "media_play")
             await _test_service(
                 opp. entity_id, SERVICE_MEDIA_PLAY_PAUSE, "media_play_pause"
             )
             await _test_service(
                 opp. entity_id, SERVICE_MEDIA_PREVIOUS_TRACK, "media_previous_track"
             )
-            await _test_service.opp, entity_id, SERVICE_MEDIA_STOP, "media_stop")
-            await _test_service.opp, entity_id, SERVICE_TURN_OFF, "turn_off")
-            await _test_service.opp, entity_id, SERVICE_TURN_ON, "turn_on")
+            await _test_service(opp, entity_id, SERVICE_MEDIA_STOP, "media_stop")
+            await _test_service(opp, entity_id, SERVICE_TURN_OFF, "turn_off")
+            await _test_service(opp, entity_id, SERVICE_TURN_ON, "turn_on")
             await _test_service(
                 opp. entity_id, SERVICE_VOLUME_DOWN, "volume_down", return_value=0.1
             )
@@ -1193,13 +1193,13 @@ async def test_services_firetv.opp):
 
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[patch_key]:
         with patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-            assert await async_setup_component.opp, DOMAIN, config)
+            assert await async_setup_component(opp, DOMAIN, config)
             await opp.async_block_till_done()
 
         with patchers.patch_shell(SHELL_RESPONSE_STANDBY)[patch_key]:
-            await _test_service.opp, entity_id, SERVICE_MEDIA_STOP, "back")
-            await _test_service.opp, entity_id, SERVICE_TURN_OFF, "adb_shell")
-            await _test_service.opp, entity_id, SERVICE_TURN_ON, "adb_shell")
+            await _test_service(opp, entity_id, SERVICE_MEDIA_STOP, "back")
+            await _test_service(opp, entity_id, SERVICE_TURN_OFF, "adb_shell")
+            await _test_service(opp, entity_id, SERVICE_TURN_ON, "adb_shell")
 
 
 async def test_connection_closed_on_op_stop.opp):
@@ -1233,7 +1233,7 @@ async def test_exception.opp):
     ], patchers.patch_shell(SHELL_RESPONSE_OFF)[
         patch_key
     ], patchers.PATCH_KEYGEN, patchers.PATCH_ANDROIDTV_OPEN, patchers.PATCH_SIGNER:
-        assert await async_setup_component.opp, DOMAIN, CONFIG_ANDROIDTV_PYTHON_ADB)
+        assert await async_setup_component(opp, DOMAIN, CONFIG_ANDROIDTV_PYTHON_ADB)
         await opp.async_block_till_done()
 
         await opp.helpers.entity_component.async_update_entity(entity_id)

@@ -11,9 +11,9 @@ from .common import setup_ozw
 from tests.common import MockConfigEntry
 
 
-async def test_init_entry.opp, generic_data):
+async def test_init_entry(opp, generic_data):
     """Test setting up config entry."""
-    await setup_ozw.opp, fixture=generic_data)
+    await setup_ozw(opp, fixture=generic_data)
 
     # Verify integration + platform loaded.
     assert "ozw" in.opp.config.components
@@ -22,8 +22,8 @@ async def test_init_entry.opp, generic_data):
         assert f"{platform}.{DOMAIN}" in.opp.config.components, f"{platform}.{DOMAIN}"
 
     # Verify services registered
-    assert.opp.services.has_service(DOMAIN, const.SERVICE_ADD_NODE)
-    assert.opp.services.has_service(DOMAIN, const.SERVICE_REMOVE_NODE)
+    assert opp.services.has_service(DOMAIN, const.SERVICE_ADD_NODE)
+    assert opp.services.has_service(DOMAIN, const.SERVICE_REMOVE_NODE)
 
 
 async def test_setup_entry_without_mqtt.opp):
@@ -33,12 +33,12 @@ async def test_setup_entry_without_mqtt.opp):
         title="OpenZWave",
         connection_class=config_entries.CONN_CLASS_LOCAL_PUSH,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     assert not await opp.config_entries.async_setup(entry.entry_id)
 
 
-async def test_publish_without_mqtt.opp, caplog):
+async def test_publish_without_mqtt(opp, caplog):
     """Test publish without mqtt integration setup."""
     with patch("openpeerpower.components.ozw.OZWOptions") as ozw_options:
         await setup_ozw.opp)
@@ -59,17 +59,17 @@ async def test_publish_without_mqtt.opp, caplog):
     assert "MQTT integration is not set up" in caplog.text
 
 
-async def test_unload_entry.opp, generic_data, switch_msg, caplog):
+async def test_unload_entry(opp, generic_data, switch_msg, caplog):
     """Test unload the config entry."""
     entry = MockConfigEntry(
         domain=DOMAIN,
         title="Z-Wave",
         connection_class=config_entries.CONN_CLASS_LOCAL_PUSH,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
 
-    receive_message = await setup_ozw.opp, entry=entry, fixture=generic_data)
+    receive_message = await setup_ozw(opp, entry=entry, fixture=generic_data)
 
     assert entry.state == config_entries.ENTRY_STATE_LOADED
     assert len.opp.states.async_entity_ids("switch")) == 1
@@ -80,8 +80,8 @@ async def test_unload_entry.opp, generic_data, switch_msg, caplog):
     entities = opp.states.async_entity_ids("switch")
     assert len(entities) == 1
     for entity in entities:
-        assert.opp.states.get(entity).state == STATE_UNAVAILABLE
-        assert.opp.states.get(entity).attributes.get(ATTR_RESTORED)
+        assert opp.states.get(entity).state == STATE_UNAVAILABLE
+        assert opp.states.get(entity).attributes.get(ATTR_RESTORED)
 
     # Send a message for a switch from the broker to check that
     # all entity topic subscribers are unsubscribed.
@@ -90,14 +90,14 @@ async def test_unload_entry.opp, generic_data, switch_msg, caplog):
 
     assert len.opp.states.async_entity_ids("switch")) == 1
     for entity in entities:
-        assert.opp.states.get(entity).state == STATE_UNAVAILABLE
-        assert.opp.states.get(entity).attributes.get(ATTR_RESTORED)
+        assert opp.states.get(entity).state == STATE_UNAVAILABLE
+        assert opp.states.get(entity).attributes.get(ATTR_RESTORED)
 
     # Load the integration again and check that there are no errors when
     # adding the entities.
     # This asserts that we have unsubscribed the entity addition signals
     # when unloading the integration previously.
-    await setup_ozw.opp, entry=entry, fixture=generic_data)
+    await setup_ozw(opp, entry=entry, fixture=generic_data)
     await opp.async_block_till_done()
 
     assert entry.state == config_entries.ENTRY_STATE_LOADED
@@ -106,7 +106,7 @@ async def test_unload_entry.opp, generic_data, switch_msg, caplog):
         assert record.levelname != "ERROR"
 
 
-async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
+async def test_remove_entry(opp, stop_addon, uninstall_addon, caplog):
     """Test remove the config entry."""
     # test successful remove without created add-on
     entry = MockConfigEntry(
@@ -115,7 +115,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
         connection_class=config_entries.CONN_CLASS_LOCAL_PUSH,
         data={"integration_created_addon": False},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
@@ -131,7 +131,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
         connection_class=config_entries.CONN_CLASS_LOCAL_PUSH,
         data={"integration_created_addon": True},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
     await opp.config_entries.async_remove(entry.entry_id)
@@ -144,7 +144,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
     uninstall_addon.reset_mock()
 
     # test add-on stop failure
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     stop_addon.side_effect = OppioAPIError()
 
@@ -160,7 +160,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
     uninstall_addon.reset_mock()
 
     # test add-on uninstall failure
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     uninstall_addon.side_effect = OppioAPIError()
 
@@ -173,7 +173,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
     assert "Failed to uninstall the OpenZWave add-on" in caplog.text
 
 
-async def test_setup_entry_with_addon.opp, get_addon_discovery_info):
+async def test_setup_entry_with_addon(opp, get_addon_discovery_info):
     """Test set up entry using OpenZWave add-on."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -181,7 +181,7 @@ async def test_setup_entry_with_addon.opp, get_addon_discovery_info):
         connection_class=config_entries.CONN_CLASS_LOCAL_PUSH,
         data={"use_addon": True},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch("openpeerpower.components.ozw.MQTTClient", autospec=True) as mock_client:
         assert await opp.config_entries.async_setup(entry.entry_id)
@@ -196,11 +196,11 @@ async def test_setup_entry_with_addon.opp, get_addon_discovery_info):
         assert f"{platform}.{DOMAIN}" in.opp.config.components, f"{platform}.{DOMAIN}"
 
     # Verify services registered
-    assert.opp.services.has_service(DOMAIN, const.SERVICE_ADD_NODE)
-    assert.opp.services.has_service(DOMAIN, const.SERVICE_REMOVE_NODE)
+    assert opp.services.has_service(DOMAIN, const.SERVICE_ADD_NODE)
+    assert opp.services.has_service(DOMAIN, const.SERVICE_REMOVE_NODE)
 
 
-async def test_setup_entry_without_addon_info.opp, get_addon_discovery_info):
+async def test_setup_entry_without_addon_info(opp, get_addon_discovery_info):
     """Test set up entry using OpenZWave add-on but missing discovery info."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -208,7 +208,7 @@ async def test_setup_entry_without_addon_info.opp, get_addon_discovery_info):
         connection_class=config_entries.CONN_CLASS_LOCAL_PUSH,
         data={"use_addon": True},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     get_addon_discovery_info.return_value = None
 
@@ -229,7 +229,7 @@ async def test_unload_entry_with_addon(
         connection_class=config_entries.CONN_CLASS_LOCAL_PUSH,
         data={"use_addon": True},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
 

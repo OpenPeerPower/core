@@ -363,7 +363,7 @@ async def test_reload(opp):
 
     assert len.opp.states.async_all()) == 3
 
-    assert.opp.states.get("sensor.test")
+    assert opp.states.get("sensor.test")
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -381,8 +381,8 @@ async def test_reload(opp):
 
     assert len.opp.states.async_all()) == 3
 
-    assert.opp.states.get("sensor.test") is None
-    assert.opp.states.get("sensor.second_test")
+    assert opp.states.get("sensor.test") is None
+    assert opp.states.get("sensor.second_test")
 
 
 def _get_fixtures_base_path():

@@ -13,7 +13,7 @@ from openpeerpower.setup import async_setup_component
 @pytest.fixture(name="camera_client")
 def camera_client_fixture(opp, opp_client):
     """Fixture to fetch camera streams."""
-    assert.opp.loop.run_until_complete(
+    assert opp.loop.run_until_complete(
         async_setup_component(
             opp,
             "camera",
@@ -73,8 +73,8 @@ async def test_get_clientsession_cleanup(opp):
     opp.bus.async_fire(EVENT_OPENPEERPOWER_CLOSE)
     await opp.async_block_till_done()
 
-    assert.opp.data[client.DATA_CLIENTSESSION].closed
-    assert.opp.data[client.DATA_CONNECTOR].closed
+    assert opp.data[client.DATA_CLIENTSESSION].closed
+    assert opp.data[client.DATA_CONNECTOR].closed
 
 
 async def test_get_clientsession_cleanup_without_ssl(opp):
@@ -89,8 +89,8 @@ async def test_get_clientsession_cleanup_without_ssl(opp):
     opp.bus.async_fire(EVENT_OPENPEERPOWER_CLOSE)
     await opp.async_block_till_done()
 
-    assert.opp.data[client.DATA_CLIENTSESSION_NOTVERIFY].closed
-    assert.opp.data[client.DATA_CONNECTOR_NOTVERIFY].closed
+    assert opp.data[client.DATA_CLIENTSESSION_NOTVERIFY].closed
+    assert opp.data[client.DATA_CONNECTOR_NOTVERIFY].closed
 
 
 async def test_get_clientsession_patched_close(opp):

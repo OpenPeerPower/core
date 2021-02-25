@@ -11,9 +11,9 @@ from openpeerpower.const import ATTR_DEVICE_CLASS
 from .common import setup_ozw
 
 
-async def test_sensor.opp, generic_data):
+async def test_sensor(opp, generic_data):
     """Test setting up config entry."""
-    await setup_ozw.opp, fixture=generic_data)
+    await setup_ozw(opp, fixture=generic_data)
 
     # Test standard sensor
     state = opp.states.get("sensor.smart_plug_electric_v")
@@ -52,7 +52,7 @@ async def test_sensor.opp, generic_data):
     assert updated_entry.disabled is False
 
 
-async def test_sensor_enabled.opp, generic_data, sensor_msg):
+async def test_sensor_enabled(opp, generic_data, sensor_msg):
     """Test enabling an advanced sensor."""
 
     registry = await opp.helpers.entity_registry.async_get_registry()
@@ -66,7 +66,7 @@ async def test_sensor_enabled.opp, generic_data, sensor_msg):
     )
     assert entry.disabled is False
 
-    receive_msg = await setup_ozw.opp, fixture=generic_data)
+    receive_msg = await setup_ozw(opp, fixture=generic_data)
     receive_msg(sensor_msg)
     await opp.async_block_till_done()
 
@@ -76,7 +76,7 @@ async def test_sensor_enabled.opp, generic_data, sensor_msg):
     assert state.attributes["label"] == "Clear"
 
 
-async def test_string_sensor.opp, string_sensor_data):
+async def test_string_sensor(opp, string_sensor_data):
     """Test so the returned type is a string sensor."""
 
     registry = await opp.helpers.entity_registry.async_get_registry()
@@ -89,7 +89,7 @@ async def test_string_sensor.opp, string_sensor_data):
         disabled_by=None,
     )
 
-    await setup_ozw.opp, fixture=string_sensor_data)
+    await setup_ozw(opp, fixture=string_sensor_data)
     await opp.async_block_till_done()
 
     state = opp.states.get(entry.entity_id)

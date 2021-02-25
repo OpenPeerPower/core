@@ -194,7 +194,7 @@ async def test_reauth_flow.opp: OpenPeerPower) -> None:
         mock_config = MockConfigEntry(
             domain=DOMAIN, unique_id=UNIQUE_ID, data=FIXTURE_USER_INPUT
         )
-        mock_config.add_to.opp.opp)
+        mock_config.add_to_opp(opp)
 
         result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": "reauth"}, data=FIXTURE_USER_INPUT

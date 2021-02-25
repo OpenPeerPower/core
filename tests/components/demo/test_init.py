@@ -28,7 +28,7 @@ def demo_cleanup.opp):
 
 async def test_setting_up_demo.opp):
     """Test if we can set up the demo and dump it to JSON."""
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {}})
     await opp.async_block_till_done()
     await opp.async_start()
 

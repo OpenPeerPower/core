@@ -57,7 +57,7 @@ async def test_flow_entry_already_exists(opp):
         data={CONF_ACCESS_TOKEN: "valid"},
         unique_id="tibber",
     )
-    first_entry.add_to.opp.opp)
+    first_entry.add_to_opp(opp)
 
     test_data = {
         CONF_ACCESS_TOKEN: "valid",

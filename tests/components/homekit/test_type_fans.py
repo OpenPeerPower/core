@@ -33,7 +33,7 @@ from openpeerpower.helpers import entity_registry
 from tests.common import async_mock_service
 
 
-async def test_fan_basic.opp, hk_driver, events):
+async def test_fan_basic(opp, hk_driver, events):
     """Test fan with char state."""
     entity_id = "fan.demo"
 
@@ -66,8 +66,8 @@ async def test_fan_basic.opp, hk_driver, events):
     assert acc.char_active.value == 0
 
     # Set from HomeKit
-    call_turn_on = async_mock_service.opp, DOMAIN, "turn_on")
-    call_turn_off = async_mock_service.opp, DOMAIN, "turn_off")
+    call_turn_on = async_mock_service(opp, DOMAIN, "turn_on")
+    call_turn_off = async_mock_service(opp, DOMAIN, "turn_off")
 
     char_active_iid = acc.char_active.to_HAP()[HAP_REPR_IID]
 
@@ -111,7 +111,7 @@ async def test_fan_basic.opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] is None
 
 
-async def test_fan_direction.opp, hk_driver, events):
+async def test_fan_direction(opp, hk_driver, events):
     """Test fan with direction."""
     entity_id = "fan.demo"
 
@@ -135,7 +135,7 @@ async def test_fan_direction.opp, hk_driver, events):
     assert acc.char_direction.value == 1
 
     # Set from HomeKit
-    call_set_direction = async_mock_service.opp, DOMAIN, "set_direction")
+    call_set_direction = async_mock_service(opp, DOMAIN, "set_direction")
 
     char_direction_iid = acc.char_direction.to_HAP()[HAP_REPR_IID]
 
@@ -179,7 +179,7 @@ async def test_fan_direction.opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] == DIRECTION_REVERSE
 
 
-async def test_fan_oscillate.opp, hk_driver, events):
+async def test_fan_oscillate(opp, hk_driver, events):
     """Test fan with oscillate."""
     entity_id = "fan.demo"
 
@@ -203,7 +203,7 @@ async def test_fan_oscillate.opp, hk_driver, events):
     assert acc.char_swing.value == 1
 
     # Set from HomeKit
-    call_oscillate = async_mock_service.opp, DOMAIN, "oscillate")
+    call_oscillate = async_mock_service(opp, DOMAIN, "oscillate")
 
     char_swing_iid = acc.char_swing.to_HAP()[HAP_REPR_IID]
 
@@ -248,7 +248,7 @@ async def test_fan_oscillate.opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] is True
 
 
-async def test_fan_speed.opp, hk_driver, events):
+async def test_fan_speed(opp, hk_driver, events):
     """Test fan with speed."""
     entity_id = "fan.demo"
 
@@ -278,7 +278,7 @@ async def test_fan_speed.opp, hk_driver, events):
     assert acc.char_speed.value == 100
 
     # Set from HomeKit
-    call_set_percentage = async_mock_service.opp, DOMAIN, "set_percentage")
+    call_set_percentage = async_mock_service(opp, DOMAIN, "set_percentage")
 
     char_speed_iid = acc.char_speed.to_HAP()[HAP_REPR_IID]
     char_active_iid = acc.char_active.to_HAP()[HAP_REPR_IID]
@@ -329,7 +329,7 @@ async def test_fan_speed.opp, hk_driver, events):
     assert acc.char_active.value == 1
 
 
-async def test_fan_set_all_one_shot.opp, hk_driver, events):
+async def test_fan_set_all_one_shot(opp, hk_driver, events):
     """Test fan with speed."""
     entity_id = "fan.demo"
 
@@ -368,14 +368,14 @@ async def test_fan_set_all_one_shot.opp, hk_driver, events):
         },
     )
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == STATE_OFF
+    assert opp.states.get(entity_id).state == STATE_OFF
 
     # Set from HomeKit
-    call_set_percentage = async_mock_service.opp, DOMAIN, "set_percentage")
-    call_oscillate = async_mock_service.opp, DOMAIN, "oscillate")
-    call_set_direction = async_mock_service.opp, DOMAIN, "set_direction")
-    call_turn_on = async_mock_service.opp, DOMAIN, "turn_on")
-    call_turn_off = async_mock_service.opp, DOMAIN, "turn_off")
+    call_set_percentage = async_mock_service(opp, DOMAIN, "set_percentage")
+    call_oscillate = async_mock_service(opp, DOMAIN, "oscillate")
+    call_set_direction = async_mock_service(opp, DOMAIN, "set_direction")
+    call_turn_on = async_mock_service(opp, DOMAIN, "turn_on")
+    call_turn_off = async_mock_service(opp, DOMAIN, "turn_off")
 
     char_active_iid = acc.char_active.to_HAP()[HAP_REPR_IID]
     char_direction_iid = acc.char_direction.to_HAP()[HAP_REPR_IID]
@@ -522,7 +522,7 @@ async def test_fan_set_all_one_shot.opp, hk_driver, events):
     assert len(call_set_direction) == 2
 
 
-async def test_fan_restore.opp, hk_driver, events):
+async def test_fan_restore(opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
     opp.state = CoreState.not_running
 
@@ -562,7 +562,7 @@ async def test_fan_restore.opp, hk_driver, events):
     assert acc.char_swing is not None
 
 
-async def test_fan_preset_modes.opp, hk_driver, events):
+async def test_fan_preset_modes(opp, hk_driver, events):
     """Test fan with direction."""
     entity_id = "fan.demo"
 
@@ -599,8 +599,8 @@ async def test_fan_preset_modes.opp, hk_driver, events):
     assert acc.preset_mode_chars["auto"].value == 0
     assert acc.preset_mode_chars["smart"].value == 1
     # Set from HomeKit
-    call_set_preset_mode = async_mock_service.opp, DOMAIN, "set_preset_mode")
-    call_turn_on = async_mock_service.opp, DOMAIN, "turn_on")
+    call_set_preset_mode = async_mock_service(opp, DOMAIN, "set_preset_mode")
+    call_turn_on = async_mock_service(opp, DOMAIN, "turn_on")
 
     char_auto_iid = acc.preset_mode_chars["auto"].to_HAP()[HAP_REPR_IID]
 

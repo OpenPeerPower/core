@@ -604,7 +604,7 @@ async def test_setup_safe_mode_if_no_frontend(
         )
 
     assert "safe_mode" in.opp.config.components
-    assert.opp.config.config_dir == get_test_config_dir()
-    assert.opp.config.skip_pip
-    assert.opp.config.internal_url == "http://192.168.1.100:8123"
-    assert.opp.config.external_url == "https://abcdef.ui.nabu.casa"
+    assert opp.config.config_dir == get_test_config_dir()
+    assert opp.config.skip_pip
+    assert opp.config.internal_url == "http://192.168.1.100:8123"
+    assert opp.config.external_url == "https://abcdef.ui.nabu.casa"

@@ -67,7 +67,7 @@ async def test_default_setup_opp, monkeypatch):
     event_callback({"id": "protocol_0_0", "command": "off"})
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.test").state == "off"
+    assert opp.states.get(f"{DOMAIN}.test").state == "off"
 
     # should respond to group command
     event_callback({"id": "protocol_0_0", "command": "allon"})
@@ -80,20 +80,20 @@ async def test_default_setup_opp, monkeypatch):
     event_callback({"id": "protocol_0_0", "command": "alloff"})
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.test").state == "off"
+    assert opp.states.get(f"{DOMAIN}.test").state == "off"
 
     # test following aliases
     # mock incoming command event for this device alias
     event_callback({"id": "test_alias_0_0", "command": "on"})
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.test").state == "on"
+    assert opp.states.get(f"{DOMAIN}.test").state == "on"
 
     # test event for new unconfigured sensor
     event_callback({"id": "protocol2_0_1", "command": "on"})
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.protocol2_0_1").state == "on"
+    assert opp.states.get(f"{DOMAIN}.protocol2_0_1").state == "on"
 
     # test changing state from HA propagates to RFLink
     opp.async_create_task(
@@ -102,7 +102,7 @@ async def test_default_setup_opp, monkeypatch):
         )
     )
     await opp.async_block_till_done()
-    assert.opp.states.get(f"{DOMAIN}.test").state == "off"
+    assert opp.states.get(f"{DOMAIN}.test").state == "off"
     assert protocol.send_command_ack.call_args_list[0][0][0] == "protocol_0_0"
     assert protocol.send_command_ack.call_args_list[0][0][1] == "off"
 
@@ -112,7 +112,7 @@ async def test_default_setup_opp, monkeypatch):
         )
     )
     await opp.async_block_till_done()
-    assert.opp.states.get(f"{DOMAIN}.test").state == "on"
+    assert opp.states.get(f"{DOMAIN}.test").state == "on"
     assert protocol.send_command_ack.call_args_list[1][0][1] == "on"
 
     # protocols supporting dimming and on/off should create hybrid light entity
@@ -154,7 +154,7 @@ async def test_default_setup_opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[5][0][1] == "7"
 
 
-async def test_firing_bus_event.opp, monkeypatch):
+async def test_firing_bus_event(opp, monkeypatch):
     """Incoming RFLink command events should be put on the HA event bus."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -171,7 +171,7 @@ async def test_firing_bus_event.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    event_callback, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    event_callback, _, _, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
     calls = []
 
@@ -189,7 +189,7 @@ async def test_firing_bus_event.opp, monkeypatch):
     assert calls[0].data == {"state": "off", "entity_id": f"{DOMAIN}.test"}
 
 
-async def test_signal_repetitions.opp, monkeypatch):
+async def test_signal_repetitions(opp, monkeypatch):
     """Command should be sent amount of configured repetitions."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -251,7 +251,7 @@ async def test_signal_repetitions.opp, monkeypatch):
     assert protocol.send_command_ack.call_count == 8
 
 
-async def test_signal_repetitions_alternation.opp, monkeypatch):
+async def test_signal_repetitions_alternation(opp, monkeypatch):
     """Simultaneously switching entities must alternate repetitions."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -265,7 +265,7 @@ async def test_signal_repetitions_alternation.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    _, _, protocol, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    _, _, protocol, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
     await opp.services.async_call(
         DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
@@ -282,7 +282,7 @@ async def test_signal_repetitions_alternation.opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[3][0][0] == "protocol_0_1"
 
 
-async def test_signal_repetitions_cancelling.opp, monkeypatch):
+async def test_signal_repetitions_cancelling(opp, monkeypatch):
     """Cancel outstanding repetitions when state changed."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -293,7 +293,7 @@ async def test_signal_repetitions_cancelling.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    _, _, protocol, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    _, _, protocol, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
     await opp.services.async_call(
         DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
@@ -311,7 +311,7 @@ async def test_signal_repetitions_cancelling.opp, monkeypatch):
     ]
 
 
-async def test_type_toggle.opp, monkeypatch):
+async def test_type_toggle(opp, monkeypatch):
     """Test toggle type lights (on/on)."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -322,22 +322,22 @@ async def test_type_toggle.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    event_callback, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    event_callback, _, _, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
     # default value = 'off'
-    assert.opp.states.get(f"{DOMAIN}.toggle_test").state == "off"
+    assert opp.states.get(f"{DOMAIN}.toggle_test").state == "off"
 
     # test sending 'on' command, must set state = 'on'
     event_callback({"id": "toggle_0_0", "command": "on"})
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.toggle_test").state == "on"
+    assert opp.states.get(f"{DOMAIN}.toggle_test").state == "on"
 
     # test sending 'on' command again, must set state = 'off'
     event_callback({"id": "toggle_0_0", "command": "on"})
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.toggle_test").state == "off"
+    assert opp.states.get(f"{DOMAIN}.toggle_test").state == "off"
 
     # test async_turn_off, must set state = 'on' ('off' + toggle)
     opp.async_create_task(
@@ -347,7 +347,7 @@ async def test_type_toggle.opp, monkeypatch):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.toggle_test").state == "on"
+    assert opp.states.get(f"{DOMAIN}.toggle_test").state == "on"
 
     # test async_turn_on, must set state = 'off' (yes, sounds crazy)
     opp.async_create_task(
@@ -357,10 +357,10 @@ async def test_type_toggle.opp, monkeypatch):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.toggle_test").state == "off"
+    assert opp.states.get(f"{DOMAIN}.toggle_test").state == "off"
 
 
-async def test_group_alias.opp, monkeypatch):
+async def test_group_alias(opp, monkeypatch):
     """Group aliases should only respond to group commands (allon/alloff)."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -373,24 +373,24 @@ async def test_group_alias.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    event_callback, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    event_callback, _, _, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
-    assert.opp.states.get(f"{DOMAIN}.test").state == "off"
+    assert opp.states.get(f"{DOMAIN}.test").state == "off"
 
     # test sending group command to group alias
     event_callback({"id": "test_group_0_0", "command": "allon"})
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.test").state == "on"
+    assert opp.states.get(f"{DOMAIN}.test").state == "on"
 
     # test sending group command to group alias
     event_callback({"id": "test_group_0_0", "command": "off"})
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{DOMAIN}.test").state == "on"
+    assert opp.states.get(f"{DOMAIN}.test").state == "on"
 
 
-async def test_nogroup_alias.opp, monkeypatch):
+async def test_nogroup_alias(opp, monkeypatch):
     """Non group aliases should not respond to group commands."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -406,24 +406,24 @@ async def test_nogroup_alias.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    event_callback, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    event_callback, _, _, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
-    assert.opp.states.get(f"{DOMAIN}.test").state == "off"
+    assert opp.states.get(f"{DOMAIN}.test").state == "off"
 
     # test sending group command to nogroup alias
     event_callback({"id": "test_nogroup_0_0", "command": "allon"})
     await opp.async_block_till_done()
     # should not affect state
-    assert.opp.states.get(f"{DOMAIN}.test").state == "off"
+    assert opp.states.get(f"{DOMAIN}.test").state == "off"
 
     # test sending group command to nogroup alias
     event_callback({"id": "test_nogroup_0_0", "command": "on"})
     await opp.async_block_till_done()
     # should affect state
-    assert.opp.states.get(f"{DOMAIN}.test").state == "on"
+    assert opp.states.get(f"{DOMAIN}.test").state == "on"
 
 
-async def test_nogroup_device_id.opp, monkeypatch):
+async def test_nogroup_device_id(opp, monkeypatch):
     """Device id that do not respond to group commands (allon/alloff)."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -434,24 +434,24 @@ async def test_nogroup_device_id.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    event_callback, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    event_callback, _, _, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
-    assert.opp.states.get(f"{DOMAIN}.test").state == "off"
+    assert opp.states.get(f"{DOMAIN}.test").state == "off"
 
     # test sending group command to nogroup
     event_callback({"id": "test_nogroup_0_0", "command": "allon"})
     await opp.async_block_till_done()
     # should not affect state
-    assert.opp.states.get(f"{DOMAIN}.test").state == "off"
+    assert opp.states.get(f"{DOMAIN}.test").state == "off"
 
     # test sending group command to nogroup
     event_callback({"id": "test_nogroup_0_0", "command": "on"})
     await opp.async_block_till_done()
     # should affect state
-    assert.opp.states.get(f"{DOMAIN}.test").state == "on"
+    assert opp.states.get(f"{DOMAIN}.test").state == "on"
 
 
-async def test_disable_automatic_add.opp, monkeypatch):
+async def test_disable_automatic_add(opp, monkeypatch):
     """If disabled new devices should not be automatically added."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -459,7 +459,7 @@ async def test_disable_automatic_add.opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    event_callback, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    event_callback, _, _, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
     # test event for new unconfigured sensor
     event_callback({"id": "protocol_0_0", "command": "off"})
@@ -469,7 +469,7 @@ async def test_disable_automatic_add.opp, monkeypatch):
     assert not.opp.states.get(f"{DOMAIN}.protocol_0_0")
 
 
-async def test_restore_state.opp, monkeypatch):
+async def test_restore_state(opp, monkeypatch):
     """Ensure states are restored on startup."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
@@ -498,7 +498,7 @@ async def test_restore_state.opp, monkeypatch):
     opp.state = CoreState.starting
 
     # setup mocking rflink module
-    _, _, _, _ = await mock_rflink.opp, config, DOMAIN, monkeypatch)
+    _, _, _, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
     # hybrid light must restore brightness
     state = opp.states.get(f"{DOMAIN}.l1")

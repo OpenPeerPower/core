@@ -315,7 +315,7 @@ async def test_abort_if_already_setup_opp: OpenPeerPowerType, service: MagicMock
         domain=DOMAIN,
         data={CONF_HOST: HOST, CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
         unique_id=SERIAL,
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     # Should fail, same HOST:PORT (import)
     result = await opp.config_entries.flow.async_init(
@@ -398,7 +398,7 @@ async def test_form_ssdp_already_configured(
     opp: OpenPeerPowerType, service: MagicMock
 ):
     """Test ssdp abort when the serial number is already configured."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     MockConfigEntry(
         domain=DOMAIN,
@@ -409,7 +409,7 @@ async def test_form_ssdp_already_configured(
             CONF_MAC: MACS,
         },
         unique_id=SERIAL,
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -425,7 +425,7 @@ async def test_form_ssdp_already_configured(
 
 async def test_form_ssdp.opp: OpenPeerPowerType, service: MagicMock):
     """Test we can setup from ssdp."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -471,7 +471,7 @@ async def test_options_flow.opp: OpenPeerPowerType, service: MagicMock):
         },
         unique_id=SERIAL,
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     assert config_entry.options == {}
 

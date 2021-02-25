@@ -53,9 +53,9 @@ def create_lightbulb_service_with_color_temp(accessory):
     return service
 
 
-async def test_switch_change_light_state.opp, utcnow):
+async def test_switch_change_light_state(opp, utcnow):
     """Test that we can turn a HomeKit light on and off again."""
-    helper = await setup_test_component.opp, create_lightbulb_service_with_hs)
+    helper = await setup_test_component(opp, create_lightbulb_service_with_hs)
 
     await opp.services.async_call(
         "light",
@@ -75,9 +75,9 @@ async def test_switch_change_light_state.opp, utcnow):
     assert helper.characteristics[LIGHT_ON].value == 0
 
 
-async def test_switch_change_light_state_color_temp.opp, utcnow):
+async def test_switch_change_light_state_color_temp(opp, utcnow):
     """Test that we can turn change color_temp."""
-    helper = await setup_test_component.opp, create_lightbulb_service_with_color_temp)
+    helper = await setup_test_component(opp, create_lightbulb_service_with_color_temp)
 
     await opp.services.async_call(
         "light",
@@ -90,9 +90,9 @@ async def test_switch_change_light_state_color_temp.opp, utcnow):
     assert helper.characteristics[LIGHT_COLOR_TEMP].value == 400
 
 
-async def test_switch_read_light_state.opp, utcnow):
+async def test_switch_read_light_state(opp, utcnow):
     """Test that we can read the state of a HomeKit light accessory."""
-    helper = await setup_test_component.opp, create_lightbulb_service_with_hs)
+    helper = await setup_test_component(opp, create_lightbulb_service_with_hs)
 
     # Initial state is that the light is off
     state = await helper.poll_and_get_state()
@@ -114,9 +114,9 @@ async def test_switch_read_light_state.opp, utcnow):
     assert state.state == "off"
 
 
-async def test_switch_push_light_state.opp, utcnow):
+async def test_switch_push_light_state(opp, utcnow):
     """Test that we can read the state of a HomeKit light accessory."""
-    helper = await setup_test_component.opp, create_lightbulb_service_with_hs)
+    helper = await setup_test_component(opp, create_lightbulb_service_with_hs)
 
     # Initial state is that the light is off
     state = opp.states.get(LIGHT_BULB_ENTITY_ID)
@@ -143,9 +143,9 @@ async def test_switch_push_light_state.opp, utcnow):
     assert state.state == "off"
 
 
-async def test_switch_read_light_state_color_temp.opp, utcnow):
+async def test_switch_read_light_state_color_temp(opp, utcnow):
     """Test that we can read the color_temp of a  light accessory."""
-    helper = await setup_test_component.opp, create_lightbulb_service_with_color_temp)
+    helper = await setup_test_component(opp, create_lightbulb_service_with_color_temp)
 
     # Initial state is that the light is off
     state = await helper.poll_and_get_state()
@@ -162,9 +162,9 @@ async def test_switch_read_light_state_color_temp.opp, utcnow):
     assert state.attributes["color_temp"] == 400
 
 
-async def test_switch_push_light_state_color_temp.opp, utcnow):
+async def test_switch_push_light_state_color_temp(opp, utcnow):
     """Test that we can read the state of a HomeKit light accessory."""
-    helper = await setup_test_component.opp, create_lightbulb_service_with_color_temp)
+    helper = await setup_test_component(opp, create_lightbulb_service_with_color_temp)
 
     # Initial state is that the light is off
     state = opp.states.get(LIGHT_BULB_ENTITY_ID)
@@ -185,9 +185,9 @@ async def test_switch_push_light_state_color_temp.opp, utcnow):
     assert state.attributes["color_temp"] == 400
 
 
-async def test_light_becomes_unavailable_but_recovers.opp, utcnow):
+async def test_light_becomes_unavailable_but_recovers(opp, utcnow):
     """Test transition to and from unavailable state."""
-    helper = await setup_test_component.opp, create_lightbulb_service_with_color_temp)
+    helper = await setup_test_component(opp, create_lightbulb_service_with_color_temp)
 
     # Initial state is that the light is off
     state = await helper.poll_and_get_state()
@@ -210,9 +210,9 @@ async def test_light_becomes_unavailable_but_recovers.opp, utcnow):
     assert state.attributes["color_temp"] == 400
 
 
-async def test_light_unloaded_removed.opp, utcnow):
+async def test_light_unloaded_removed(opp, utcnow):
     """Test entity and HKDevice are correctly unloaded and removed."""
-    helper = await setup_test_component.opp, create_lightbulb_service_with_color_temp)
+    helper = await setup_test_component(opp, create_lightbulb_service_with_color_temp)
 
     # Initial state is that the light is off
     state = await helper.poll_and_get_state()
@@ -222,7 +222,7 @@ async def test_light_unloaded_removed.opp, utcnow):
     assert unload_result is True
 
     # Make sure entity is set to unavailable state
-    assert.opp.states.get(helper.entity_id).state == STATE_UNAVAILABLE
+    assert opp.states.get(helper.entity_id).state == STATE_UNAVAILABLE
 
     # Make sure HKDevice is no longer set to poll this accessory
     conn = opp.data[KNOWN_DEVICES]["00:00:00:00:00:00"]
@@ -232,4 +232,4 @@ async def test_light_unloaded_removed.opp, utcnow):
     await opp.async_block_till_done()
 
     # Make sure entity is removed
-    assert.opp.states.get(helper.entity_id).state == STATE_UNAVAILABLE
+    assert opp.states.get(helper.entity_id).state == STATE_UNAVAILABLE

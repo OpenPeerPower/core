@@ -256,7 +256,7 @@ async def test_smartswitch(
     """Test function."""
     sys_info = dimmer_switch_mock_data.sys_info
 
-    await async_setup_component.opp, OP_DOMAIN, {})
+    await async_setup_component(opp, OP_DOMAIN, {})
     await opp.async_block_till_done()
 
     await async_setup_component(
@@ -271,7 +271,7 @@ async def test_smartswitch(
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("light.dimmer1")
+    assert opp.states.get("light.dimmer1")
 
     await opp.services.async_call(
         LIGHT_DOMAIN,
@@ -280,9 +280,9 @@ async def test_smartswitch(
         blocking=True,
     )
     await opp.async_block_till_done()
-    await update_entity.opp, "light.dimmer1")
+    await update_entity(opp, "light.dimmer1")
 
-    assert.opp.states.get("light.dimmer1").state == "off"
+    assert opp.states.get("light.dimmer1").state == "off"
     assert sys_info["relay_state"] == 0
 
     await opp.services.async_call(
@@ -292,7 +292,7 @@ async def test_smartswitch(
         blocking=True,
     )
     await opp.async_block_till_done()
-    await update_entity.opp, "light.dimmer1")
+    await update_entity(opp, "light.dimmer1")
 
     state = opp.states.get("light.dimmer1")
     assert state.state == "on"
@@ -306,7 +306,7 @@ async def test_smartswitch(
         blocking=True,
     )
     await opp.async_block_till_done()
-    await update_entity.opp, "light.dimmer1")
+    await update_entity(opp, "light.dimmer1")
 
     state = opp.states.get("light.dimmer1")
     assert state.state == "on"
@@ -323,7 +323,7 @@ async def test_smartswitch(
         blocking=True,
     )
     await opp.async_block_till_done()
-    await update_entity.opp, "light.dimmer1")
+    await update_entity(opp, "light.dimmer1")
 
     state = opp.states.get("light.dimmer1")
     assert state.state == "off"
@@ -335,7 +335,7 @@ async def test_smartswitch(
         blocking=True,
     )
     await opp.async_block_till_done()
-    await update_entity.opp, "light.dimmer1")
+    await update_entity(opp, "light.dimmer1")
 
     state = opp.states.get("light.dimmer1")
     assert state.state == "on"
@@ -348,7 +348,7 @@ async def test_light.opp: OpenPeerPower, light_mock_data: LightMockData) -> None
     light_state = light_mock_data.light_state
     set_light_state = light_mock_data.set_light_state
 
-    await async_setup_component.opp, OP_DOMAIN, {})
+    await async_setup_component(opp, OP_DOMAIN, {})
     await opp.async_block_till_done()
 
     await async_setup_component(
@@ -363,7 +363,7 @@ async def test_light.opp: OpenPeerPower, light_mock_data: LightMockData) -> None
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("light.light1")
+    assert opp.states.get("light.light1")
 
     await opp.services.async_call(
         LIGHT_DOMAIN,
@@ -372,9 +372,9 @@ async def test_light.opp: OpenPeerPower, light_mock_data: LightMockData) -> None
         blocking=True,
     )
     await opp.async_block_till_done()
-    await update_entity.opp, "light.light1")
+    await update_entity(opp, "light.light1")
 
-    assert.opp.states.get("light.light1").state == "off"
+    assert opp.states.get("light.light1").state == "off"
     assert light_state["on_off"] == 0
 
     await opp.services.async_call(
@@ -384,7 +384,7 @@ async def test_light.opp: OpenPeerPower, light_mock_data: LightMockData) -> None
         blocking=True,
     )
     await opp.async_block_till_done()
-    await update_entity.opp, "light.light1")
+    await update_entity(opp, "light.light1")
 
     state = opp.states.get("light.light1")
     assert state.state == "on"
@@ -400,7 +400,7 @@ async def test_light.opp: OpenPeerPower, light_mock_data: LightMockData) -> None
         blocking=True,
     )
     await opp.async_block_till_done()
-    await update_entity.opp, "light.light1")
+    await update_entity(opp, "light.light1")
 
     state = opp.states.get("light.light1")
     assert state.state == "on"
@@ -428,7 +428,7 @@ async def test_light.opp: OpenPeerPower, light_mock_data: LightMockData) -> None
         blocking=True,
     )
     await opp.async_block_till_done()
-    await update_entity.opp, "light.light1")
+    await update_entity(opp, "light.light1")
 
     state = opp.states.get("light.light1")
     assert state.state == "off"
@@ -440,7 +440,7 @@ async def test_light.opp: OpenPeerPower, light_mock_data: LightMockData) -> None
         blocking=True,
     )
     await opp.async_block_till_done()
-    await update_entity.opp, "light.light1")
+    await update_entity(opp, "light.light1")
 
     state = opp.states.get("light.light1")
     assert state.state == "on"
@@ -452,7 +452,7 @@ async def test_light.opp: OpenPeerPower, light_mock_data: LightMockData) -> None
     assert light_state["saturation"] == 78
 
     set_light_state({"brightness": 91, "dft_on_state": {"brightness": 91}})
-    await update_entity.opp, "light.light1")
+    await update_entity(opp, "light.light1")
 
     state = opp.states.get("light.light1")
     assert state.attributes["brightness"] == 232
@@ -494,7 +494,7 @@ async def test_get_light_state_retry(
     light_mock_data.set_light_state_mock.side_effect = set_light_state_side_effect
 
     # Setup component.
-    await async_setup_component.opp, OP_DOMAIN, {})
+    await async_setup_component(opp, OP_DOMAIN, {})
     await opp.async_block_till_done()
 
     await async_setup_component(
@@ -516,7 +516,7 @@ async def test_get_light_state_retry(
         blocking=True,
     )
     await opp.async_block_till_done()
-    await update_entity.opp, "light.light1")
+    await update_entity(opp, "light.light1")
 
     assert light_mock_data.get_sysinfo_mock.call_count > 1
     assert light_mock_data.get_light_state_mock.call_count > 1
@@ -532,7 +532,7 @@ async def test_update_failure(
 ):
     """Test that update failures are logged."""
 
-    await async_setup_component.opp, OP_DOMAIN, {})
+    await async_setup_component(opp, OP_DOMAIN, {})
     await opp.async_block_till_done()
 
     await async_setup_component(
@@ -574,7 +574,7 @@ async def test_update_failure(
         caplog.clear()
         caplog.set_level(logging.DEBUG)
 
-        await update_entity.opp, "light.light1")
+        await update_entity(opp, "light.light1")
         assert (
             f"Retrying in {SLEEP_TIME} seconds for 123.123.123.123|light1"
             in caplog.text
@@ -593,7 +593,7 @@ async def test_async_setup_entry_unavailable(
         "openpeerpower.components.tplink.common.SmartDevice.get_sysinfo",
         side_effect=SmartDeviceException,
     ):
-        await async_setup_component.opp, OP_DOMAIN, {})
+        await async_setup_component(opp, OP_DOMAIN, {})
         await opp.async_block_till_done()
 
         await async_setup_component(
@@ -611,6 +611,6 @@ async def test_async_setup_entry_unavailable(
         assert not.opp.states.get("light.light1")
 
     future = utcnow() + timedelta(seconds=30)
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.async_block_till_done()
-    assert.opp.states.get("light.light1")
+    assert opp.states.get("light.light1")

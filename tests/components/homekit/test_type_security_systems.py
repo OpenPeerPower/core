@@ -25,7 +25,7 @@ from openpeerpower.const import (
 from tests.common import async_mock_service
 
 
-async def test_switch_set_state.opp, hk_driver, events):
+async def test_switch_set_state(opp, hk_driver, events):
     """Test if accessory and HA are updated accordingly."""
     code = "1234"
     config = {ATTR_CODE: code}
@@ -74,10 +74,10 @@ async def test_switch_set_state.opp, hk_driver, events):
     assert acc.char_current_state.value == 4
 
     # Set from HomeKit
-    call_arm_home = async_mock_service.opp, DOMAIN, "alarm_arm_home")
-    call_arm_away = async_mock_service.opp, DOMAIN, "alarm_arm_away")
-    call_arm_night = async_mock_service.opp, DOMAIN, "alarm_arm_night")
-    call_disarm = async_mock_service.opp, DOMAIN, "alarm_disarm")
+    call_arm_home = async_mock_service(opp, DOMAIN, "alarm_arm_home")
+    call_arm_away = async_mock_service(opp, DOMAIN, "alarm_arm_away")
+    call_arm_night = async_mock_service(opp, DOMAIN, "alarm_arm_night")
+    call_disarm = async_mock_service(opp, DOMAIN, "alarm_disarm")
 
     await opp.async_add_executor_job(acc.char_target_state.client_update_value, 0)
     await opp.async_block_till_done()
@@ -117,7 +117,7 @@ async def test_switch_set_state.opp, hk_driver, events):
 
 
 @pytest.mark.parametrize("config", [{}, {ATTR_CODE: None}])
-async def test_no_alarm_code.opp, hk_driver, config, events):
+async def test_no_alarm_code(opp, hk_driver, config, events):
     """Test accessory if security_system doesn't require an alarm_code."""
     entity_id = "alarm_control_panel.test"
 
@@ -126,7 +126,7 @@ async def test_no_alarm_code.opp, hk_driver, config, events):
     acc = SecuritySystem.opp, hk_driver, "SecuritySystem", entity_id, 2, config)
 
     # Set from HomeKit
-    call_arm_home = async_mock_service.opp, DOMAIN, "alarm_arm_home")
+    call_arm_home = async_mock_service(opp, DOMAIN, "alarm_arm_home")
 
     await opp.async_add_executor_job(acc.char_target_state.client_update_value, 0)
     await opp.async_block_till_done()
@@ -138,7 +138,7 @@ async def test_no_alarm_code.opp, hk_driver, config, events):
     assert events[-1].data[ATTR_VALUE] is None
 
 
-async def test_supported_states.opp, hk_driver, events):
+async def test_supported_states(opp, hk_driver, events):
     """Test different supported states."""
     code = "1234"
     config = {ATTR_CODE: code}

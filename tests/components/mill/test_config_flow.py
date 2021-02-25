@@ -56,7 +56,7 @@ async def test_flow_entry_already_exists(opp):
         data=test_data,
         unique_id=test_data[CONF_USERNAME],
     )
-    first_entry.add_to.opp.opp)
+    first_entry.add_to_opp(opp)
 
     with patch("mill.Mill.connect", return_value=True):
         result = await opp.config_entries.flow.async_init(
@@ -80,7 +80,7 @@ async def test_connection_error(opp):
         data=test_data,
         unique_id=test_data[CONF_USERNAME],
     )
-    first_entry.add_to.opp.opp)
+    first_entry.add_to_opp(opp)
 
     with patch("mill.Mill.connect", return_value=False):
         result = await opp.config_entries.flow.async_init(

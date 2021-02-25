@@ -52,9 +52,9 @@ async def test_august_is_offline.opp):
         data=_mock_get_config()[DOMAIN],
         title="August august",
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     with patch(
         "august.authenticator_async.AuthenticatorAsync.async_authenticate",
         side_effect=asyncio.TimeoutError,
@@ -137,7 +137,7 @@ async def test_lock_has_doorsense.opp):
     """Check to see if a lock has doorsense."""
     doorsenselock = await _mock_doorsense_enabled_august_lock_detail.opp)
     nodoorsenselock = await _mock_doorsense_missing_august_lock_detail.opp)
-    await _create_august_with_devices.opp, [doorsenselock, nodoorsenselock])
+    await _create_august_with_devices(opp, [doorsenselock, nodoorsenselock])
 
     binary_sensor_online_with_doorsense_name_open = opp.states.get(
         "binary_sensor.online_with_doorsense_name_open"
@@ -152,7 +152,7 @@ async def test_lock_has_doorsense.opp):
 async def test_set_up_from_yaml.opp):
     """Test to make sure config is imported from yaml."""
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     with patch(
         "openpeerpower.components.august.async_setup_august",
         return_value=True,
@@ -160,7 +160,7 @@ async def test_set_up_from_yaml.opp):
         "openpeerpower.components.august.config_flow.AugustGateway.async_authenticate",
         return_value=True,
     ):
-        assert await async_setup_component.opp, DOMAIN, _mock_get_config())
+        assert await async_setup_component(opp, DOMAIN, _mock_get_config())
     await opp.async_block_till_done()
     assert len(mock_setup_august.mock_calls) == 1
     call = mock_setup_august.call_args
@@ -186,10 +186,10 @@ async def test_auth_fails.opp):
         data=_mock_get_config()[DOMAIN],
         title="August august",
     )
-    config_entry.add_to.opp.opp)
-    assert.opp.config_entries.flow.async_progress() == []
+    config_entry.add_to_opp(opp)
+    assert opp.config_entries.flow.async_progress() == []
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     with patch(
         "august.authenticator_async.AuthenticatorAsync.async_authenticate",
         side_effect=ClientResponseError(None, None, status=401),
@@ -212,10 +212,10 @@ async def test_bad_password.opp):
         data=_mock_get_config()[DOMAIN],
         title="August august",
     )
-    config_entry.add_to.opp.opp)
-    assert.opp.config_entries.flow.async_progress() == []
+    config_entry.add_to_opp(opp)
+    assert opp.config_entries.flow.async_progress() == []
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     with patch(
         "august.authenticator_async.AuthenticatorAsync.async_authenticate",
         return_value=_mock_august_authentication(
@@ -240,10 +240,10 @@ async def test_http_failure.opp):
         data=_mock_get_config()[DOMAIN],
         title="August august",
     )
-    config_entry.add_to.opp.opp)
-    assert.opp.config_entries.flow.async_progress() == []
+    config_entry.add_to_opp(opp)
+    assert opp.config_entries.flow.async_progress() == []
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     with patch(
         "august.authenticator_async.AuthenticatorAsync.async_authenticate",
         side_effect=ClientResponseError(None, None, status=500),
@@ -253,7 +253,7 @@ async def test_http_failure.opp):
 
     assert config_entry.state == ENTRY_STATE_SETUP_RETRY
 
-    assert.opp.config_entries.flow.async_progress() == []
+    assert opp.config_entries.flow.async_progress() == []
 
 
 async def test_unknown_auth_state.opp):
@@ -264,10 +264,10 @@ async def test_unknown_auth_state.opp):
         data=_mock_get_config()[DOMAIN],
         title="August august",
     )
-    config_entry.add_to.opp.opp)
-    assert.opp.config_entries.flow.async_progress() == []
+    config_entry.add_to_opp(opp)
+    assert opp.config_entries.flow.async_progress() == []
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     with patch(
         "august.authenticator_async.AuthenticatorAsync.async_authenticate",
         return_value=_mock_august_authentication("original_token", 1234, None),
@@ -290,10 +290,10 @@ async def test_requires_validation_state.opp):
         data=_mock_get_config()[DOMAIN],
         title="August august",
     )
-    config_entry.add_to.opp.opp)
-    assert.opp.config_entries.flow.async_progress() == []
+    config_entry.add_to_opp(opp)
+    assert opp.config_entries.flow.async_progress() == []
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     with patch(
         "august.authenticator_async.AuthenticatorAsync.async_authenticate",
         return_value=_mock_august_authentication(
@@ -305,4 +305,4 @@ async def test_requires_validation_state.opp):
 
     assert config_entry.state == ENTRY_STATE_SETUP_ERROR
 
-    assert.opp.config_entries.flow.async_progress() == []
+    assert opp.config_entries.flow.async_progress() == []

@@ -33,13 +33,13 @@ def entity_reg.opp):
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
-async def test_get_triggers.opp, device_reg, entity_reg):
+async def test_get_triggers(opp, device_reg, entity_reg):
     """Test we get the expected triggers from a fan."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -61,11 +61,11 @@ async def test_get_triggers.opp, device_reg, entity_reg):
             "entity_id": f"{DOMAIN}.test_5678",
         },
     ]
-    triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
+    triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     assert_lists_same(triggers, expected_triggers)
 
 
-async def test_if_fires_on_state_change.opp, calls):
+async def test_if_fires_on_state_change(opp, calls):
     """Test for turn_on and turn_off triggers firing."""
     opp.states.async_set("fan.entity", STATE_OFF)
 

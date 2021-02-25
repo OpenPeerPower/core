@@ -8,7 +8,7 @@ async def test_scenes(opp, hank_binary_switch, integration, client):
     """Test scene events."""
     # just pick a random node to fake the value notification events
     node = hank_binary_switch
-    events = async_capture_events.opp, "zwave_js_event")
+    events = async_capture_events(opp, "zwave_js_event")
 
     # Publish fake Basic Set value notification
     event = Event(
@@ -130,11 +130,11 @@ async def test_scenes(opp, hank_binary_switch, integration, client):
     assert events[2].data["value"] == "KeyPressed3x"
 
 
-async def test_notifications.opp, hank_binary_switch, integration, client):
+async def test_notifications(opp, hank_binary_switch, integration, client):
     """Test notification events."""
     # just pick a random node to fake the value notification events
     node = hank_binary_switch
-    events = async_capture_events.opp, "zwave_js_event")
+    events = async_capture_events(opp, "zwave_js_event")
 
     # Publish fake Basic Set value notification
     event = Event(

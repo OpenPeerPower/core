@@ -38,7 +38,7 @@ async def test_camera.opp):
     assert cam.state == STATE_IDLE
     assert cam.name == NAME
 
-    camera_entity = camera._get_camera_from_entity_id.opp, entity_id)
+    camera_entity = camera._get_camera_from_entity_id(opp, entity_id)
     assert camera_entity.image_source == "http://1.2.3.4:80/axis-cgi/jpg/image.cgi"
     assert camera_entity.mjpeg_source == "http://1.2.3.4:80/axis-cgi/mjpg/video.cgi"
     assert (
@@ -60,7 +60,7 @@ async def test_camera_with_stream_profile.opp):
     assert cam.state == STATE_IDLE
     assert cam.name == NAME
 
-    camera_entity = camera._get_camera_from_entity_id.opp, entity_id)
+    camera_entity = camera._get_camera_from_entity_id(opp, entity_id)
     assert camera_entity.image_source == "http://1.2.3.4:80/axis-cgi/jpg/image.cgi"
     assert (
         camera_entity.mjpeg_source

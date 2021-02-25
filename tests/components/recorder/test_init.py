@@ -58,7 +58,7 @@ async def test_shutdown_before_startup_finishes.opp):
     assert run_info.end is not None
 
 
-def test_saving_state.opp, opp_recorder):
+def test_saving_state(opp, opp_recorder):
     """Test saving and restoring a state."""
    opp =  opp_recorder()
 
@@ -76,10 +76,10 @@ def test_saving_state.opp, opp_recorder):
         assert db_states[0].event_id > 0
         state = db_states[0].to_native()
 
-    assert state == _state_empty_context.opp, entity_id)
+    assert state == _state_empty_context(opp, entity_id)
 
 
-def test_saving_state_with_exception.opp, opp_recorder, caplog):
+def test_saving_state_with_exception(opp, opp_recorder, caplog):
     """Test saving and restoring a state."""
    opp =  opp_recorder()
 
@@ -117,7 +117,7 @@ def test_saving_state_with_exception.opp, opp_recorder, caplog):
     assert "Error saving events" not in caplog.text
 
 
-def test_saving_event.opp, opp_recorder):
+def test_saving_event(opp, opp_recorder):
     """Test saving and restoring an event."""
    opp =  opp_recorder()
 
@@ -158,7 +158,7 @@ def test_saving_event.opp, opp_recorder):
     )
 
 
-def _add_entities.opp, entity_ids):
+def _add_entities(opp, entity_ids):
     """Add entities."""
     attributes = {"test_attr": 5, "test_attr_10": "nice"}
     for idx, entity_id in enumerate(entity_ids):
@@ -169,7 +169,7 @@ def _add_entities.opp, entity_ids):
         return [st.to_native() for st in session.query(States)]
 
 
-def _add_events.opp, events):
+def _add_events(opp, events):
     with session_scope.opp.opp) as session:
         session.query(Events).delete(synchronize_session=False)
     for event_type in events:
@@ -180,7 +180,7 @@ def _add_events.opp, events):
         return [ev.to_native() for ev in session.query(Events)]
 
 
-def _state_empty_context.opp, entity_id):
+def _state_empty_context(opp, entity_id):
     # We don't restore context unless we need it by joining the
     # events table on the event_id for state_changed events
     state = opp.states.get(entity_id)
@@ -192,9 +192,9 @@ def _state_empty_context.opp, entity_id):
 def test_saving_state_include_domains.opp_recorder):
     """Test saving and restoring a state."""
    opp =  opp_recorder({"include": {"domains": "test2"}})
-    states = _add_entities.opp, ["test.recorder", "test2.recorder"])
+    states = _add_entities(opp, ["test.recorder", "test2.recorder"])
     assert len(states) == 1
-    assert _state_empty_context.opp, "test2.recorder") == states[0]
+    assert _state_empty_context(opp, "test2.recorder") == states[0]
 
 
 def test_saving_state_include_domains_globs.opp_recorder):
@@ -206,16 +206,16 @@ def test_saving_state_include_domains_globs.opp_recorder):
         opp. ["test.recorder", "test2.recorder", "test3.included_entity"]
     )
     assert len(states) == 2
-    assert _state_empty_context.opp, "test2.recorder") == states[0]
-    assert _state_empty_context.opp, "test3.included_entity") == states[1]
+    assert _state_empty_context(opp, "test2.recorder") == states[0]
+    assert _state_empty_context(opp, "test3.included_entity") == states[1]
 
 
 def test_saving_state_incl_entities.opp_recorder):
     """Test saving and restoring a state."""
    opp =  opp_recorder({"include": {"entities": "test2.recorder"}})
-    states = _add_entities.opp, ["test.recorder", "test2.recorder"])
+    states = _add_entities(opp, ["test.recorder", "test2.recorder"])
     assert len(states) == 1
-    assert _state_empty_context.opp, "test2.recorder") == states[0]
+    assert _state_empty_context(opp, "test2.recorder") == states[0]
 
 
 def test_saving_event_exclude_event_type.opp_recorder):
@@ -234,7 +234,7 @@ def test_saving_event_exclude_event_type.opp_recorder):
             }
         }
     )
-    events = _add_events.opp, ["test", "test2"])
+    events = _add_events(opp, ["test", "test2"])
     assert len(events) == 1
     assert events[0].event_type == "test2"
 
@@ -242,9 +242,9 @@ def test_saving_event_exclude_event_type.opp_recorder):
 def test_saving_state_exclude_domains.opp_recorder):
     """Test saving and restoring a state."""
    opp =  opp_recorder({"exclude": {"domains": "test"}})
-    states = _add_entities.opp, ["test.recorder", "test2.recorder"])
+    states = _add_entities(opp, ["test.recorder", "test2.recorder"])
     assert len(states) == 1
-    assert _state_empty_context.opp, "test2.recorder") == states[0]
+    assert _state_empty_context(opp, "test2.recorder") == states[0]
 
 
 def test_saving_state_exclude_domains_globs.opp_recorder):
@@ -256,15 +256,15 @@ def test_saving_state_exclude_domains_globs.opp_recorder):
         opp. ["test.recorder", "test2.recorder", "test2.excluded_entity"]
     )
     assert len(states) == 1
-    assert _state_empty_context.opp, "test2.recorder") == states[0]
+    assert _state_empty_context(opp, "test2.recorder") == states[0]
 
 
 def test_saving_state_exclude_entities.opp_recorder):
     """Test saving and restoring a state."""
    opp =  opp_recorder({"exclude": {"entities": "test.recorder"}})
-    states = _add_entities.opp, ["test.recorder", "test2.recorder"])
+    states = _add_entities(opp, ["test.recorder", "test2.recorder"])
     assert len(states) == 1
-    assert _state_empty_context.opp, "test2.recorder") == states[0]
+    assert _state_empty_context(opp, "test2.recorder") == states[0]
 
 
 def test_saving_state_exclude_domain_include_entity.opp_recorder):
@@ -272,7 +272,7 @@ def test_saving_state_exclude_domain_include_entity.opp_recorder):
    opp =  opp_recorder(
         {"include": {"entities": "test.recorder"}, "exclude": {"domains": "test"}}
     )
-    states = _add_entities.opp, ["test.recorder", "test2.recorder"])
+    states = _add_entities(opp, ["test.recorder", "test2.recorder"])
     assert len(states) == 2
 
 
@@ -295,10 +295,10 @@ def test_saving_state_include_domain_exclude_entity.opp_recorder):
    opp =  opp_recorder(
         {"exclude": {"entities": "test.recorder"}, "include": {"domains": "test"}}
     )
-    states = _add_entities.opp, ["test.recorder", "test2.recorder", "test.ok"])
+    states = _add_entities(opp, ["test.recorder", "test2.recorder", "test.ok"])
     assert len(states) == 1
-    assert _state_empty_context.opp, "test.ok") == states[0]
-    assert _state_empty_context.opp, "test.ok").state == "state2"
+    assert _state_empty_context(opp, "test.ok") == states[0]
+    assert _state_empty_context(opp, "test.ok").state == "state2"
 
 
 def test_saving_state_include_domain_glob_exclude_entity.opp_recorder):
@@ -313,11 +313,11 @@ def test_saving_state_include_domain_glob_exclude_entity.opp_recorder):
         opp. ["test.recorder", "test2.recorder", "test.ok", "test2.included_entity"]
     )
     assert len(states) == 1
-    assert _state_empty_context.opp, "test.ok") == states[0]
-    assert _state_empty_context.opp, "test.ok").state == "state2"
+    assert _state_empty_context(opp, "test.ok") == states[0]
+    assert _state_empty_context(opp, "test.ok").state == "state2"
 
 
-def test_saving_state_and_removing_entity.opp, opp_recorder):
+def test_saving_state_and_removing_entity(opp, opp_recorder):
     """Test saving the state of a removed entity."""
    opp =  opp_recorder()
     entity_id = "lock.mine"
@@ -375,7 +375,7 @@ async def test_defaults_set.opp):
         return True
 
     with patch("openpeerpower.components.recorder.async_setup", side_effect=mock_setup):
-        assert await async_setup_component.opp, "history", {})
+        assert await async_setup_component(opp, "history", {})
 
     assert recorder_config is not None
     # pylint: disable=unsubscriptable-object
@@ -383,9 +383,9 @@ async def test_defaults_set.opp):
     assert recorder_config["purge_keep_days"] == 10
 
 
-def run_tasks_at_time.opp, test_time):
+def run_tasks_at_time(opp, test_time):
     """Advance the clock and wait for any callbacks to finish."""
-    fire_time_changed.opp, test_time)
+    fire_time_changed(opp, test_time)
     opp.block_till_done()
     opp.data[DATA_INSTANCE].block_till_done()
 
@@ -406,33 +406,33 @@ def test_auto_purge.opp_recorder):
     # The clock is started at 4:15am then advanced forward below
     now = dt_util.utcnow()
     test_time = tz.localize(datetime(now.year + 2, 1, 1, 4, 15, 0))
-    run_tasks_at_time.opp, test_time)
+    run_tasks_at_time(opp, test_time)
 
     with patch(
         "openpeerpower.components.recorder.purge.purge_old_data", return_value=True
     ) as purge_old_data:
         # Advance one day, and the purge task should run
         test_time = test_time + timedelta(days=1)
-        run_tasks_at_time.opp, test_time)
+        run_tasks_at_time(opp, test_time)
         assert len(purge_old_data.mock_calls) == 1
 
         purge_old_data.reset_mock()
 
         # Advance one day, and the purge task should run again
         test_time = test_time + timedelta(days=1)
-        run_tasks_at_time.opp, test_time)
+        run_tasks_at_time(opp, test_time)
         assert len(purge_old_data.mock_calls) == 1
 
         purge_old_data.reset_mock()
 
         # Advance less than one full day.  The alarm should not yet fire.
         test_time = test_time + timedelta(hours=23)
-        run_tasks_at_time.opp, test_time)
+        run_tasks_at_time(opp, test_time)
         assert len(purge_old_data.mock_calls) == 0
 
         # Advance to the next day and fire the alarm again
         test_time = test_time + timedelta(hours=1)
-        run_tasks_at_time.opp, test_time)
+        run_tasks_at_time(opp, test_time)
         assert len(purge_old_data.mock_calls) == 1
 
     dt_util.set_default_time_zone(original_tz)
@@ -510,10 +510,10 @@ def test_run_information.opp_recorder):
     assert isinstance(run_info, RecorderRuns)
     assert run_info.closed_incorrect is False
 
-    run_info = run_information.opp, before_start_recording)
+    run_info = run_information(opp, before_start_recording)
     assert run_info is None
 
-    run_info = run_information.opp, dt_util.utcnow())
+    run_info = run_information(opp, dt_util.utcnow())
     assert isinstance(run_info, RecorderRuns)
     assert run_info.closed_incorrect is False
 
@@ -522,7 +522,7 @@ class CannotSerializeMe:
     """A class that the JSONEncoder cannot serialize."""
 
 
-async def test_database_corruption_while_running.opp, tmpdir, caplog):
+async def test_database_corruption_while_running(opp, tmpdir, caplog):
     """Test we can recover from sqlite3 db corruption."""
 
     def _create_tmpdir_for_test_db():
@@ -531,7 +531,7 @@ async def test_database_corruption_while_running.opp, tmpdir, caplog):
     test_db_file = await opp.async_add_executor_job(_create_tmpdir_for_test_db)
     dburl = f"{SQLITE_URL_PREFIX}//{test_db_file}"
 
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_DB_URL: dburl}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_DB_URL: dburl}})
     await opp.async_block_till_done()
     caplog.clear()
 

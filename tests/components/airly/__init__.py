@@ -9,7 +9,7 @@ API_POINT_URL = (
 )
 
 
-async def init_integration.opp, aioclient_mock) -> MockConfigEntry:
+async def init_integration(opp, aioclient_mock) -> MockConfigEntry:
     """Set up the Airly integration in Open Peer Power."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -24,7 +24,7 @@ async def init_integration.opp, aioclient_mock) -> MockConfigEntry:
     )
 
     aioclient_mock.get(API_POINT_URL, text=load_fixture("airly_valid_station.json"))
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 

@@ -18,7 +18,7 @@ def mock_all(aioclient_mock):
     )
 
 
-async def test.oppio_addon_panel_startup.opp, aioclient_mock, oppio_env):
+async def test.oppio_addon_panel_startup(opp, aioclient_mock, oppio_env):
     """Test startup and panel setup after event."""
     aioclient_mock.get(
         "http://127.0.0.1/ingress/panels",
@@ -48,7 +48,7 @@ async def test.oppio_addon_panel_startup.opp, aioclient_mock, oppio_env):
     with patch(
         "openpeerpower.components.oppio.addon_panel._register_panel",
     ) as mock_panel:
-        await async_setup_component.opp,  opp.o", {})
+        await async_setup_component(opp,  opp.o", {})
         await opp.async_block_till_done()
 
         assert aioclient_mock.call_count == 3
@@ -60,7 +60,7 @@ async def test.oppio_addon_panel_startup.opp, aioclient_mock, oppio_env):
         )
 
 
-async def test.oppio_addon_panel_api.opp, aioclient_mock, oppio_env, opp_client):
+async def test.oppio_addon_panel_api(opp, aioclient_mock, oppio_env, opp_client):
     """Test panel api after event."""
     aioclient_mock.get(
         "http://127.0.0.1/ingress/panels",
@@ -90,7 +90,7 @@ async def test.oppio_addon_panel_api.opp, aioclient_mock, oppio_env, opp_client)
     with patch(
         "openpeerpower.components.oppio.addon_panel._register_panel",
     ) as mock_panel:
-        await async_setup_component.opp,  opp.o", {})
+        await async_setup_component(opp,  opp.o", {})
         await opp.async_block_till_done()
 
         assert aioclient_mock.call_count == 3

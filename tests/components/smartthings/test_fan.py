@@ -27,14 +27,14 @@ from openpeerpower.helpers.dispatcher import async_dispatcher_send
 from .conftest import setup_platform
 
 
-async def test_entity_state.opp, device_factory):
+async def test_entity_state(opp, device_factory):
     """Tests the state attributes properly match the fan types."""
     device = device_factory(
         "Fan 1",
         capabilities=[Capability.switch, Capability.fan_speed],
         status={Attribute.switch: "on", Attribute.fan_speed: 2},
     )
-    await setup_platform.opp, FAN_DOMAIN, devices=[device])
+    await setup_platform(opp, FAN_DOMAIN, devices=[device])
 
     # Dimmer 1
     state = opp.states.get("fan.fan_1")
@@ -49,7 +49,7 @@ async def test_entity_state.opp, device_factory):
     ]
 
 
-async def test_entity_and_device_attributes.opp, device_factory):
+async def test_entity_and_device_attributes(opp, device_factory):
     """Test the attributes of the entity are correct."""
     # Arrange
     device = device_factory(
@@ -58,7 +58,7 @@ async def test_entity_and_device_attributes.opp, device_factory):
         status={Attribute.switch: "on", Attribute.fan_speed: 2},
     )
     # Act
-    await setup_platform.opp, FAN_DOMAIN, devices=[device])
+    await setup_platform(opp, FAN_DOMAIN, devices=[device])
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
     device_registry = await opp.helpers.device_registry.async_get_registry()
     # Assert
@@ -73,7 +73,7 @@ async def test_entity_and_device_attributes.opp, device_factory):
     assert entry.manufacturer == "Unavailable"
 
 
-async def test_turn_off.opp, device_factory):
+async def test_turn_off(opp, device_factory):
     """Test the fan turns of successfully."""
     # Arrange
     device = device_factory(
@@ -81,7 +81,7 @@ async def test_turn_off.opp, device_factory):
         capabilities=[Capability.switch, Capability.fan_speed],
         status={Attribute.switch: "on", Attribute.fan_speed: 2},
     )
-    await setup_platform.opp, FAN_DOMAIN, devices=[device])
+    await setup_platform(opp, FAN_DOMAIN, devices=[device])
     # Act
     await opp.services.async_call(
         "fan", "turn_off", {"entity_id": "fan.fan_1"}, blocking=True
@@ -92,7 +92,7 @@ async def test_turn_off.opp, device_factory):
     assert state.state == "off"
 
 
-async def test_turn_on.opp, device_factory):
+async def test_turn_on(opp, device_factory):
     """Test the fan turns of successfully."""
     # Arrange
     device = device_factory(
@@ -100,7 +100,7 @@ async def test_turn_on.opp, device_factory):
         capabilities=[Capability.switch, Capability.fan_speed],
         status={Attribute.switch: "off", Attribute.fan_speed: 0},
     )
-    await setup_platform.opp, FAN_DOMAIN, devices=[device])
+    await setup_platform(opp, FAN_DOMAIN, devices=[device])
     # Act
     await opp.services.async_call(
         "fan", "turn_on", {ATTR_ENTITY_ID: "fan.fan_1"}, blocking=True
@@ -111,7 +111,7 @@ async def test_turn_on.opp, device_factory):
     assert state.state == "on"
 
 
-async def test_turn_on_with_speed.opp, device_factory):
+async def test_turn_on_with_speed(opp, device_factory):
     """Test the fan turns on to the specified speed."""
     # Arrange
     device = device_factory(
@@ -119,7 +119,7 @@ async def test_turn_on_with_speed.opp, device_factory):
         capabilities=[Capability.switch, Capability.fan_speed],
         status={Attribute.switch: "off", Attribute.fan_speed: 0},
     )
-    await setup_platform.opp, FAN_DOMAIN, devices=[device])
+    await setup_platform(opp, FAN_DOMAIN, devices=[device])
     # Act
     await opp.services.async_call(
         "fan",
@@ -134,7 +134,7 @@ async def test_turn_on_with_speed.opp, device_factory):
     assert state.attributes[ATTR_SPEED] == SPEED_HIGH
 
 
-async def test_set_speed.opp, device_factory):
+async def test_set_speed(opp, device_factory):
     """Test setting to specific fan speed."""
     # Arrange
     device = device_factory(
@@ -142,7 +142,7 @@ async def test_set_speed.opp, device_factory):
         capabilities=[Capability.switch, Capability.fan_speed],
         status={Attribute.switch: "off", Attribute.fan_speed: 0},
     )
-    await setup_platform.opp, FAN_DOMAIN, devices=[device])
+    await setup_platform(opp, FAN_DOMAIN, devices=[device])
     # Act
     await opp.services.async_call(
         "fan",
@@ -157,7 +157,7 @@ async def test_set_speed.opp, device_factory):
     assert state.attributes[ATTR_SPEED] == SPEED_HIGH
 
 
-async def test_update_from_signal.opp, device_factory):
+async def test_update_from_signal(opp, device_factory):
     """Test the fan updates when receiving a signal."""
     # Arrange
     device = device_factory(
@@ -165,10 +165,10 @@ async def test_update_from_signal.opp, device_factory):
         capabilities=[Capability.switch, Capability.fan_speed],
         status={Attribute.switch: "off", Attribute.fan_speed: 0},
     )
-    await setup_platform.opp, FAN_DOMAIN, devices=[device])
+    await setup_platform(opp, FAN_DOMAIN, devices=[device])
     await device.switch_on(True)
     # Act
-    async_dispatcher_send.opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
+    async_dispatcher_send(opp, SIGNAL_SMARTTHINGS_UPDATE, [device.device_id])
     # Assert
     await opp.async_block_till_done()
     state = opp.states.get("fan.fan_1")
@@ -176,7 +176,7 @@ async def test_update_from_signal.opp, device_factory):
     assert state.state == "on"
 
 
-async def test_unload_config_entry.opp, device_factory):
+async def test_unload_config_entry(opp, device_factory):
     """Test the fan is removed when the config entry is unloaded."""
     # Arrange
     device = device_factory(
@@ -184,8 +184,8 @@ async def test_unload_config_entry.opp, device_factory):
         capabilities=[Capability.switch, Capability.fan_speed],
         status={Attribute.switch: "off", Attribute.fan_speed: 0},
     )
-    config_entry = await setup_platform.opp, FAN_DOMAIN, devices=[device])
+    config_entry = await setup_platform(opp, FAN_DOMAIN, devices=[device])
     # Act
     await opp.config_entries.async_forward_entry_unload(config_entry, "fan")
     # Assert
-    assert.opp.states.get("fan.fan_1").state == STATE_UNAVAILABLE
+    assert opp.states.get("fan.fan_1").state == STATE_UNAVAILABLE

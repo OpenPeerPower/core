@@ -25,7 +25,7 @@ async def test_setup_correct_reading(opp):
             opp. "sensor", {"sensor": DTE_ENERGY_BRIDGE_CONFIG}
         )
         await opp.async_block_till_done()
-    assert.opp.states.get("sensor.current_energy_usage").state == "0.411"
+    assert opp.states.get("sensor.current_energy_usage").state == "0.411"
 
 
 async def test_setup_incorrect_units_reading(opp):
@@ -39,7 +39,7 @@ async def test_setup_incorrect_units_reading(opp):
             opp. "sensor", {"sensor": DTE_ENERGY_BRIDGE_CONFIG}
         )
         await opp.async_block_till_done()
-    assert.opp.states.get("sensor.current_energy_usage").state == "0.411"
+    assert opp.states.get("sensor.current_energy_usage").state == "0.411"
 
 
 async def test_setup_bad_format_reading(opp):
@@ -53,4 +53,4 @@ async def test_setup_bad_format_reading(opp):
             opp. "sensor", {"sensor": DTE_ENERGY_BRIDGE_CONFIG}
         )
         await opp.async_block_till_done()
-    assert.opp.states.get("sensor.current_energy_usage").state == "unknown"
+    assert opp.states.get("sensor.current_energy_usage").state == "unknown"

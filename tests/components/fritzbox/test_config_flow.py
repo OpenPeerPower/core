@@ -100,7 +100,7 @@ async def test_user_already_configured.opp: OpenPeerPowerType, fritz: Mock):
 async def test_reauth_success.opp: OpenPeerPowerType, fritz: Mock):
     """Test starting a reauthentication flow."""
     mock_config = MockConfigEntry(domain=DOMAIN, data=MOCK_USER_DATA)
-    mock_config.add_to.opp.opp)
+    mock_config.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_REAUTH}, data=mock_config
@@ -127,7 +127,7 @@ async def test_reauth_auth_failed.opp: OpenPeerPowerType, fritz: Mock):
     fritz().login.side_effect = LoginError("Boom")
 
     mock_config = MockConfigEntry(domain=DOMAIN, data=MOCK_USER_DATA)
-    mock_config.add_to.opp.opp)
+    mock_config.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_REAUTH}, data=mock_config
@@ -153,7 +153,7 @@ async def test_reauth_not_successful.opp: OpenPeerPowerType, fritz: Mock):
     fritz().login.side_effect = OSError("Boom")
 
     mock_config = MockConfigEntry(domain=DOMAIN, data=MOCK_USER_DATA)
-    mock_config.add_to.opp.opp)
+    mock_config.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_REAUTH}, data=mock_config

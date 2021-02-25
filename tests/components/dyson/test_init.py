@@ -56,13 +56,13 @@ async def test_setup_manual.opp: OpenPeerPower):
     ) as devices_method, patch(
         f"{BASE_PATH}.DYSON_PLATFORMS", ["fan", "vacuum"]
     ):  # Patch platforms to get rid of sensors
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
     login.assert_called_once_with()
     devices_method.assert_called_once_with()
 
     # Only one fan and zero vacuum is set up successfully
-    assert.opp.states.async_entity_ids() == [f"fan.{ENTITY_NAME}"]
+    assert opp.states.async_entity_ids() == [f"fan.{ENTITY_NAME}"]
     device1.connect.assert_called_once_with(IP_ADDRESS)
     device2.connect.assert_called_once_with(IP_ADDRESS)
     device3.connect.assert_called_once_with(IP_ADDRESS)
@@ -87,14 +87,14 @@ async def test_setup_autoconnect.opp: OpenPeerPower):
     ), patch(
         f"{BASE_PATH}.DYSON_PLATFORMS", ["fan"]
     ):  # Patch platforms to get rid of sensors
-        assert await async_setup_component.opp, DOMAIN, config)
+        assert await async_setup_component(opp, DOMAIN, config)
         await opp.async_block_till_done()
 
-    assert.opp.states.async_entity_ids_count() == 1
+    assert opp.states.async_entity_ids_count() == 1
 
 
 async def test_login_failed.opp: OpenPeerPower):
     """Test login failure during setup."""
     with patch(f"{BASE_PATH}.DysonAccount.login", return_value=False):
-        assert not await async_setup_component.opp, DOMAIN, CONFIG)
+        assert not await async_setup_component(opp, DOMAIN, CONFIG)
         await opp.async_block_till_done()

@@ -81,7 +81,7 @@ async def test_configuring_hisense_w4a1_not_creates_entry_for_empty_import.opp):
         "openpeerpower.components.hisense_aehw4a1.async_setup_entry",
         return_value=True,
     ) as mock_setup:
-        await async_setup_component.opp, hisense_aehw4a1.DOMAIN, {})
+        await async_setup_component(opp, hisense_aehw4a1.DOMAIN, {})
         await opp.async_block_till_done()
 
     assert len(mock_setup.mock_calls) == 0

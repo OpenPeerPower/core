@@ -28,9 +28,9 @@ def create_lock_service(accessory):
     return service
 
 
-async def test_switch_change_lock_state.opp, utcnow):
+async def test_switch_change_lock_state(opp, utcnow):
     """Test that we can turn a HomeKit lock on and off again."""
-    helper = await setup_test_component.opp, create_lock_service)
+    helper = await setup_test_component(opp, create_lock_service)
 
     await opp.services.async_call(
         "lock", "lock", {"entity_id": "lock.testdevice"}, blocking=True
@@ -43,9 +43,9 @@ async def test_switch_change_lock_state.opp, utcnow):
     assert helper.characteristics[LOCK_TARGET_STATE].value == 0
 
 
-async def test_switch_read_lock_state.opp, utcnow):
+async def test_switch_read_lock_state(opp, utcnow):
     """Test that we can read the state of a HomeKit lock accessory."""
-    helper = await setup_test_component.opp, create_lock_service)
+    helper = await setup_test_component(opp, create_lock_service)
 
     helper.characteristics[LOCK_CURRENT_STATE].value = 0
     helper.characteristics[LOCK_TARGET_STATE].value = 0

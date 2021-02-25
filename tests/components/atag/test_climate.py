@@ -32,7 +32,7 @@ async def test_climate(
 ) -> None:
     """Test the creation and values of Atag climate device."""
     with patch("pyatag.entities.Climate.status"):
-        entry = await init_integration.opp, aioclient_mock)
+        entry = await init_integration(opp, aioclient_mock)
         registry = await opp.helpers.entity_registry.async_get_registry()
 
         assert registry.async_is_registered(CLIMATE_ID)
@@ -48,7 +48,7 @@ async def test_setting_climate(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test setting the climate device."""
-    await init_integration.opp, aioclient_mock)
+    await init_integration(opp, aioclient_mock)
     with patch("pyatag.entities.Climate.set_temp") as mock_set_temp:
         await opp.services.async_call(
             CLIMATE,
@@ -89,16 +89,16 @@ async def test_incorrect_modes(
         "pyatag.entities.Climate.hvac_mode",
         new_callable=PropertyMock(return_value="bug"),
     ):
-        await init_integration.opp, aioclient_mock)
-        assert.opp.states.get(CLIMATE_ID).state == STATE_UNKNOWN
+        await init_integration(opp, aioclient_mock)
+        assert opp.states.get(CLIMATE_ID).state == STATE_UNKNOWN
 
 
 async def test_update_service(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the updater service is called."""
-    await init_integration.opp, aioclient_mock)
-    await async_setup_component.opp, OP_DOMAIN, {})
+    await init_integration(opp, aioclient_mock)
+    await async_setup_component(opp, OP_DOMAIN, {})
     with patch("pyatag.AtagOne.update") as updater:
         await opp.services.async_call(
             OP_DOMAIN,

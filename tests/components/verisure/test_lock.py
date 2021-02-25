@@ -69,10 +69,10 @@ def mock_hub(config, get_response=LOCKS[0]):
             yield hub
 
 
-async def setup_verisure_locks.opp, config):
+async def setup_verisure_locks(opp, config):
     """Set up mock verisure locks."""
     with mock_hub(config):
-        await async_setup_component.opp, VERISURE_DOMAIN, config)
+        await async_setup_component(opp, VERISURE_DOMAIN, config)
         await opp.async_block_till_done()
         # lock.door_lock, ethernet_status
         assert len.opp.states.async_all()) == 2
@@ -80,7 +80,7 @@ async def setup_verisure_locks.opp, config):
 
 async def test_verisure_no_default_code.opp):
     """Test configs without a default lock code."""
-    await setup_verisure_locks.opp, NO_DEFAULT_LOCK_CODE_CONFIG)
+    await setup_verisure_locks(opp, NO_DEFAULT_LOCK_CODE_CONFIG)
     with mock_hub(NO_DEFAULT_LOCK_CODE_CONFIG, STATE_UNLOCKED) as hub:
 
         mock = hub.session.set_lock_state
@@ -114,7 +114,7 @@ async def test_verisure_no_default_code.opp):
 
 async def test_verisure_default_code.opp):
     """Test configs with a default lock code."""
-    await setup_verisure_locks.opp, DEFAULT_LOCK_CODE_CONFIG)
+    await setup_verisure_locks(opp, DEFAULT_LOCK_CODE_CONFIG)
     with mock_hub(DEFAULT_LOCK_CODE_CONFIG, STATE_UNLOCKED) as hub:
         mock = hub.session.set_lock_state
         await opp.services.async_call(

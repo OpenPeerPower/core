@@ -94,7 +94,7 @@ async def test_setup_minimum.opp):
 @respx.mock
 async def test_manual_update.opp):
     """Test setup with minimum configuration."""
-    await async_setup_component.opp, "openpeerpower", {})
+    await async_setup_component(opp, "openpeerpower", {})
     respx.get("http://localhost").respond(status_code=200, json={"data": "first"})
     assert await async_setup_component(
         opp,
@@ -111,7 +111,7 @@ async def test_manual_update.opp):
     )
     await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
-    assert.opp.states.get("sensor.mysensor").state == "first"
+    assert opp.states.get("sensor.mysensor").state == "first"
 
     respx.get("http://localhost").respond(status_code=200, json={"data": "second"})
     await opp.services.async_call(
@@ -120,7 +120,7 @@ async def test_manual_update.opp):
         {ATTR_ENTITY_ID: ["sensor.mysensor"]},
         blocking=True,
     )
-    assert.opp.states.get("sensor.mysensor").state == "second"
+    assert opp.states.get("sensor.mysensor").state == "second"
 
 
 @respx.mock
@@ -184,12 +184,12 @@ async def test_setup_get.opp):
             }
         },
     )
-    await async_setup_component.opp, "openpeerpower", {})
+    await async_setup_component(opp, "openpeerpower", {})
 
     await opp.async_block_till_done()
     assert len.opp.states.async_all()) == 1
 
-    assert.opp.states.get("sensor.foo").state == ""
+    assert opp.states.get("sensor.foo").state == ""
     await opp.services.async_call(
         "openpeerpower",
         SERVICE_UPDATE_ENTITY,
@@ -197,7 +197,7 @@ async def test_setup_get.opp):
         blocking=True,
     )
     await opp.async_block_till_done()
-    assert.opp.states.get("sensor.foo").state == ""
+    assert opp.states.get("sensor.foo").state == ""
 
 
 @respx.mock
@@ -376,7 +376,7 @@ async def test_update_with_no_template.opp):
 
 
 @respx.mock
-async def test_update_with_json_attrs_no_data.opp, caplog):
+async def test_update_with_json_attrs_no_data(opp, caplog):
     """Test attributes when no JSON result fetched."""
 
     respx.get("http://localhost").respond(
@@ -412,7 +412,7 @@ async def test_update_with_json_attrs_no_data.opp, caplog):
 
 
 @respx.mock
-async def test_update_with_json_attrs_not_dict.opp, caplog):
+async def test_update_with_json_attrs_not_dict(opp, caplog):
     """Test attributes get extracted from a JSON result."""
 
     respx.get("http://localhost").respond(
@@ -640,7 +640,7 @@ async def test_update_with_application_xml_convert_json_attrs_with_jsonattr_temp
 
 
 @respx.mock
-async def test_update_with_xml_convert_bad_xml.opp, caplog):
+async def test_update_with_xml_convert_bad_xml(opp, caplog):
     """Test attributes get extracted from a XML result with bad xml."""
 
     respx.get("http://localhost").respond(
@@ -675,7 +675,7 @@ async def test_update_with_xml_convert_bad_xml.opp, caplog):
 
 
 @respx.mock
-async def test_update_with_failed_get.opp, caplog):
+async def test_update_with_failed_get(opp, caplog):
     """Test attributes get extracted from a XML result with bad xml."""
 
     respx.get("http://localhost").respond(
@@ -733,7 +733,7 @@ async def test_reload.opp):
 
     assert len.opp.states.async_all()) == 1
 
-    assert.opp.states.get("sensor.mockrest")
+    assert opp.states.get("sensor.mockrest")
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -749,8 +749,8 @@ async def test_reload.opp):
         )
         await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.mockreset") is None
-    assert.opp.states.get("sensor.rollout")
+    assert opp.states.get("sensor.mockreset") is None
+    assert opp.states.get("sensor.rollout")
 
 
 def _get_fixtures_base_path():

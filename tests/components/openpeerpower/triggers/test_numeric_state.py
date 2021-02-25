@@ -30,7 +30,7 @@ def calls.opp,
 
 
 @pytest.fixture(autouse=True)
-async def setup_comp.opp,
+async def setup_comp(opp,
     """Initialize components."""
     mock_component.opp."group")
     await async_setup_component(

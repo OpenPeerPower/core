@@ -33,12 +33,12 @@ async def test_statsd_setup_full.opp):
     config = {"statsd": {"host": "host", "port": 123, "rate": 1, "prefix": "foo"}}
     opp.bus.listen = MagicMock()
     with patch("statsd.StatsClient") as mock_init:
-        assert await async_setup_component.opp, statsd.DOMAIN, config)
+        assert await async_setup_component(opp, statsd.DOMAIN, config)
 
         assert mock_init.call_count == 1
         assert mock_init.call_args == mock.call(host="host", port=123, prefix="foo")
 
-    assert.opp.bus.listen.called
+    assert opp.bus.listen.called
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
 
 
@@ -51,22 +51,22 @@ async def test_statsd_setup_defaults.opp):
 
     opp.bus.listen = MagicMock()
     with patch("statsd.StatsClient") as mock_init:
-        assert await async_setup_component.opp, statsd.DOMAIN, config)
+        assert await async_setup_component(opp, statsd.DOMAIN, config)
 
         assert mock_init.call_count == 1
         assert mock_init.call_args == mock.call(host="host", port=8125, prefix= opp")
-    assert.opp.bus.listen.called
+    assert opp.bus.listen.called
 
 
-async def test_event_listener_defaults.opp, mock_client):
+async def test_event_listener_defaults(opp, mock_client):
     """Test event listener."""
     config = {"statsd": {"host": "host", "value_mapping": {"custom": 3}}}
 
     config["statsd"][statsd.CONF_RATE] = statsd.DEFAULT_RATE
 
     opp.bus.listen = MagicMock()
-    await async_setup_component.opp, statsd.DOMAIN, config)
-    assert.opp.bus.listen.called
+    await async_setup_component(opp, statsd.DOMAIN, config)
+    assert opp.bus.listen.called
     handler_method = opp.bus.listen.call_args_list[0][0][1]
 
     valid = {"1": 1, "1.0": 1.0, "custom": 3, STATE_ON: 1, STATE_OFF: 0}
@@ -93,15 +93,15 @@ async def test_event_listener_defaults.opp, mock_client):
         assert mock_client.incr.called
 
 
-async def test_event_listener_attr_details.opp, mock_client):
+async def test_event_listener_attr_details(opp, mock_client):
     """Test event listener."""
     config = {"statsd": {"host": "host", "log_attributes": True}}
 
     config["statsd"][statsd.CONF_RATE] = statsd.DEFAULT_RATE
 
     opp.bus.listen = MagicMock()
-    await async_setup_component.opp, statsd.DOMAIN, config)
-    assert.opp.bus.listen.called
+    await async_setup_component(opp, statsd.DOMAIN, config)
+    assert opp.bus.listen.called
     handler_method = opp.bus.listen.call_args_list[0][0][1]
 
     valid = {"1": 1, "1.0": 1.0, STATE_ON: 1, STATE_OFF: 0}

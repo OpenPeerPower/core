@@ -57,7 +57,7 @@ def scanner.opp):
             },
         },
     ):
-        assert.opp.loop.run_until_complete(
+        assert opp.loop.run_until_complete(
             async_setup_component(
                 opp,
                 device_tracker.DOMAIN,
@@ -65,7 +65,7 @@ def scanner.opp):
             )
         )
 
-    assert.opp.loop.run_until_complete(
+    assert opp.loop.run_until_complete(
         async_setup_component(
             opp. light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
         )
@@ -74,7 +74,7 @@ def scanner.opp):
     return scanner
 
 
-async def test_lights_on_when_sun_sets.opp, scanner):
+async def test_lights_on_when_sun_sets(opp, scanner):
     """Test lights go on when there is someone home and the sun sets."""
     test_time = datetime(2017, 4, 5, 1, 2, 3, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=test_time):
@@ -91,7 +91,7 @@ async def test_lights_on_when_sun_sets.opp, scanner):
 
     test_time = test_time.replace(hour=3)
     with patch("openpeerpower.util.dt.utcnow", return_value=test_time):
-        async_fire_time_changed.opp, test_time)
+        async_fire_time_changed(opp, test_time)
         await opp.async_block_till_done()
 
     assert all(
@@ -127,7 +127,7 @@ async def test_lights_turn_off_when_everyone_leaves.opp):
     )
 
 
-async def test_lights_turn_on_when_coming_home_after_sun_set.opp, scanner):
+async def test_lights_turn_on_when_coming_home_after_sun_set(opp, scanner):
     """Test lights turn on when coming home after sun set."""
     test_time = datetime(2017, 4, 5, 3, 2, 3, tzinfo=dt_util.UTC)
     with patch("openpeerpower.util.dt.utcnow", return_value=test_time):
@@ -149,7 +149,7 @@ async def test_lights_turn_on_when_coming_home_after_sun_set.opp, scanner):
     )
 
 
-async def test_lights_turn_on_when_coming_home_after_sun_set_person.opp, scanner):
+async def test_lights_turn_on_when_coming_home_after_sun_set_person(opp, scanner):
     """Test lights turn on when coming home after sun set."""
     device_1 = f"{DOMAIN}.device_1"
     device_2 = f"{DOMAIN}.device_2"
@@ -164,11 +164,11 @@ async def test_lights_turn_on_when_coming_home_after_sun_set_person.opp, scanner
         await opp.async_block_till_done()
 
         assert all(
-            not light.is_on.opp, ent_id)
+            not light.is_on(opp, ent_id)
             for ent_id in.opp.states.async_entity_ids("light")
         )
-        assert.opp.states.get(device_1).state == "not_home"
-        assert.opp.states.get(device_2).state == "not_home"
+        assert opp.states.get(device_1).state == "not_home"
+        assert opp.states.get(device_2).state == "not_home"
 
         assert await async_setup_component(
             opp,
@@ -176,9 +176,9 @@ async def test_lights_turn_on_when_coming_home_after_sun_set_person.opp, scanner
             {"person": [{"id": "me", "name": "Me", "device_trackers": [device_1]}]},
         )
 
-        assert await async_setup_component.opp, "group", {})
+        assert await async_setup_component(opp, "group", {})
         await opp.async_block_till_done()
-        await group.Group.async_create_group.opp, "person_me", ["person.me"])
+        await group.Group.async_create_group(opp, "person_me", ["person.me"])
 
         assert await async_setup_component(
             opp,
@@ -190,9 +190,9 @@ async def test_lights_turn_on_when_coming_home_after_sun_set_person.opp, scanner
             opp.states.get(ent_id).state == STATE_OFF
             for ent_id in.opp.states.async_entity_ids("light")
         )
-        assert.opp.states.get(device_1).state == "not_home"
-        assert.opp.states.get(device_2).state == "not_home"
-        assert.opp.states.get("person.me").state == "not_home"
+        assert opp.states.get(device_1).state == "not_home"
+        assert opp.states.get(device_2).state == "not_home"
+        assert opp.states.get("person.me").state == "not_home"
 
         # Unrelated device has no impact
         opp.states.async_set(device_2, STATE_HOME)
@@ -202,9 +202,9 @@ async def test_lights_turn_on_when_coming_home_after_sun_set_person.opp, scanner
             opp.states.get(ent_id).state == STATE_OFF
             for ent_id in.opp.states.async_entity_ids("light")
         )
-        assert.opp.states.get(device_1).state == "not_home"
-        assert.opp.states.get(device_2).state == "home"
-        assert.opp.states.get("person.me").state == "not_home"
+        assert opp.states.get(device_1).state == "not_home"
+        assert opp.states.get(device_2).state == "home"
+        assert opp.states.get("person.me").state == "not_home"
 
         # person home switches on
         opp.states.async_set(device_1, STATE_HOME)
@@ -215,9 +215,9 @@ async def test_lights_turn_on_when_coming_home_after_sun_set_person.opp, scanner
             opp.states.get(ent_id).state == light.STATE_ON
             for ent_id in.opp.states.async_entity_ids("light")
         )
-        assert.opp.states.get(device_1).state == "home"
-        assert.opp.states.get(device_2).state == "home"
-        assert.opp.states.get("person.me").state == "home"
+        assert opp.states.get(device_1).state == "home"
+        assert opp.states.get(device_2).state == "home"
+        assert opp.states.get("person.me").state == "home"
 
 
 async def test_initialize_start.opp):

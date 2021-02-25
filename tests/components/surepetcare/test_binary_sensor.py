@@ -15,13 +15,13 @@ EXPECTED_ENTITY_IDS = {
 }
 
 
-async def test_binary_sensors.opp, surepetcare) -> None:
+async def test_binary_sensors(opp, surepetcare) -> None:
     """Test the generation of unique ids."""
     instance = surepetcare.return_value
     instance._resource[MESTART_RESOURCE] = {"data": MOCK_API_DATA}
 
     with _patch_sensor_setup():
-        assert await async_setup_component.opp, DOMAIN, MOCK_CONFIG)
+        assert await async_setup_component(opp, DOMAIN, MOCK_CONFIG)
         await opp.async_block_till_done()
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()

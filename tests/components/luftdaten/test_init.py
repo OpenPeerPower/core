@@ -20,7 +20,7 @@ async def test_config_with_sensor_passed_to_config_entry.opp):
     ) as mock_config_entries, patch.object(
         luftdaten, "configured_sensors", return_value=[]
     ):
-        assert await async_setup_component.opp, DOMAIN, conf) is True
+        assert await async_setup_component(opp, DOMAIN, conf) is True
 
     assert len(mock_config_entries.flow.mock_calls) == 0
 
@@ -34,6 +34,6 @@ async def test_config_already_registered_not_passed_to_config_entry.opp):
     ) as mock_config_entries, patch.object(
         luftdaten, "configured_sensors", return_value=["12345abcde"]
     ):
-        assert await async_setup_component.opp, DOMAIN, conf) is True
+        assert await async_setup_component(opp, DOMAIN, conf) is True
 
     assert len(mock_config_entries.flow.mock_calls) == 0

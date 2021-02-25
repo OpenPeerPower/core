@@ -30,20 +30,20 @@ async def test_setup_with_config(opp, legacy_patchable_time):
         return_value=PRAYER_TIMES,
     ):
         assert (
-            await async_setup_component.opp, islamic_prayer_times.DOMAIN, config)
+            await async_setup_component(opp, islamic_prayer_times.DOMAIN, config)
             is True
         )
         await opp.async_block_till_done()
 
 
-async def test_successful_config_entry.opp, legacy_patchable_time):
+async def test_successful_config_entry(opp, legacy_patchable_time):
     """Test that Islamic Prayer Times is configured successfully."""
 
     entry = MockConfigEntry(
         domain=islamic_prayer_times.DOMAIN,
         data={},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch(
         "prayer_times_calculator.PrayerTimesCalculator.fetch_prayer_times",
@@ -58,14 +58,14 @@ async def test_successful_config_entry.opp, legacy_patchable_time):
         }
 
 
-async def test_setup_failed.opp, legacy_patchable_time):
+async def test_setup_failed(opp, legacy_patchable_time):
     """Test Islamic Prayer Times failed due to an error."""
 
     entry = MockConfigEntry(
         domain=islamic_prayer_times.DOMAIN,
         data={},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     # test request error raising ConfigEntryNotReady
     with patch(
@@ -77,13 +77,13 @@ async def test_setup_failed.opp, legacy_patchable_time):
         assert entry.state == config_entries.ENTRY_STATE_SETUP_RETRY
 
 
-async def test_unload_entry.opp, legacy_patchable_time):
+async def test_unload_entry(opp, legacy_patchable_time):
     """Test removing Islamic Prayer Times."""
     entry = MockConfigEntry(
         domain=islamic_prayer_times.DOMAIN,
         data={},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch(
         "prayer_times_calculator.PrayerTimesCalculator.fetch_prayer_times",
@@ -97,10 +97,10 @@ async def test_unload_entry.opp, legacy_patchable_time):
         assert islamic_prayer_times.DOMAIN not in.opp.data
 
 
-async def test_islamic_prayer_times_timestamp_format.opp, legacy_patchable_time):
+async def test_islamic_prayer_times_timestamp_format(opp, legacy_patchable_time):
     """Test Islamic prayer times timestamp format."""
     entry = MockConfigEntry(domain=islamic_prayer_times.DOMAIN, data={})
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch(
         "prayer_times_calculator.PrayerTimesCalculator.fetch_prayer_times",
@@ -115,10 +115,10 @@ async def test_islamic_prayer_times_timestamp_format.opp, legacy_patchable_time)
         )
 
 
-async def test_update.opp, legacy_patchable_time):
+async def test_update(opp, legacy_patchable_time):
     """Test sensors are updated with new prayer times."""
     entry = MockConfigEntry(domain=islamic_prayer_times.DOMAIN, data={})
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch(
         "prayer_times_calculator.PrayerTimesCalculator.fetch_prayer_times"
@@ -137,7 +137,7 @@ async def test_update.opp, legacy_patchable_time):
 
         future = pt_data.prayer_times_info["Midnight"] + timedelta(days=1, minutes=1)
 
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
         assert (
             opp.data[islamic_prayer_times.DOMAIN].prayer_times_info

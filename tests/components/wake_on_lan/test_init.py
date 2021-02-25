@@ -15,7 +15,7 @@ async def test_send_magic_packet.opp):
         bc_ip = "192.168.255.255"
         bc_port = 999
 
-        await async_setup_component.opp, DOMAIN, {})
+        await async_setup_component(opp, DOMAIN, {})
 
         await opp.services.async_call(
             DOMAIN,

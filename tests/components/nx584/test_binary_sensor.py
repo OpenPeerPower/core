@@ -57,7 +57,7 @@ def test_nx584_sensor_setup_defaults(mock_nx, mock_watcher, opp, fake_zones):
         "exclude_zones": [],
         "zone_types": {},
     }
-    assert nx584.setup_platform.opp, config, add_entities)
+    assert nx584.setup_platform(opp, config, add_entities)
     mock_nx.assert_has_calls([mock.call(zone, "opening") for zone in fake_zones])
     assert add_entities.called
     assert nx584_client.Client.call_count == 1
@@ -76,7 +76,7 @@ def test_nx584_sensor_setup_full_config(mock_nx, mock_watcher, opp, fake_zones):
         "zone_types": {3: "motion"},
     }
     add_entities = mock.MagicMock()
-    assert nx584.setup_platform.opp, config, add_entities)
+    assert nx584.setup_platform(opp, config, add_entities)
     mock_nx.assert_has_calls(
         [
             mock.call(fake_zones[0], "opening"),
@@ -89,9 +89,9 @@ def test_nx584_sensor_setup_full_config(mock_nx, mock_watcher, opp, fake_zones):
     assert mock_watcher.called
 
 
-async def _test_assert_graceful_fail.opp, config):
+async def _test_assert_graceful_fail(opp, config):
     """Test the failing."""
-    assert not await async_setup_component.opp, "nx584", config)
+    assert not await async_setup_component(opp, "nx584", config)
 
 
 @pytest.mark.usefixtures("client")
@@ -106,7 +106,7 @@ async def _test_assert_graceful_fail.opp, config):
 )
 async def test_nx584_sensor_setup_bad_config(opp, config):
     """Test the setup with bad configuration."""
-    await _test_assert_graceful_fail.opp, config)
+    await _test_assert_graceful_fail(opp, config)
 
 
 @pytest.mark.usefixtures("client")
@@ -117,17 +117,17 @@ async def test_nx584_sensor_setup_bad_config(opp, config):
         pytest.param(IndexError, id="no_partitions"),
     ],
 )
-async def test_nx584_sensor_setup_with_exceptions.opp, exception_type):
+async def test_nx584_sensor_setup_with_exceptions(opp, exception_type):
     """Test the setup handles exceptions."""
     nx584_client.Client.return_value.list_zones.side_effect = exception_type
-    await _test_assert_graceful_fail.opp, {})
+    await _test_assert_graceful_fail(opp, {})
 
 
 @pytest.mark.usefixtures("client")
 async def test_nx584_sensor_setup_version_too_old.opp):
     """Test if version is too old."""
     nx584_client.Client.return_value.get_version.return_value = "1.0"
-    await _test_assert_graceful_fail.opp, {})
+    await _test_assert_graceful_fail(opp, {})
 
 
 @pytest.mark.usefixtures("client")
@@ -135,7 +135,7 @@ def test_nx584_sensor_setup_no_zones.opp):
     """Test the setup with no zones."""
     nx584_client.Client.return_value.list_zones.return_value = []
     add_entities = mock.MagicMock()
-    assert nx584.setup_platform.opp, {}, add_entities)
+    assert nx584.setup_platform(opp, {}, add_entities)
     assert not add_entities.called
 
 

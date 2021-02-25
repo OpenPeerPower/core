@@ -24,7 +24,7 @@ from . import (
 from tests.common import MockConfigEntry
 
 
-def _flow_next.opp, flow_id):
+def _flow_next(opp, flow_id):
     return next(
         flow
         for flow in.opp.config_entries.flow.async_progress()
@@ -63,7 +63,7 @@ async def test_flow_user_already_configured.opp):
         data={CONF_HOST: "1.2.3.4", CONF_NAME: "Yeti"},
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     service_info = {
         "host": "1.2.3.4",

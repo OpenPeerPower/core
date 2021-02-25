@@ -392,7 +392,7 @@ async def test_device_types(opp: OpenPeerPower):
         config_entry.add_to(opp.opp)
         await _async_setup(config_entry)
 
-        assert.opp.states.get(entity_id).state == "off"
+        assert opp.states.get(entity_id).state == "off"
         state = opp.states.get(f"{entity_id}_nightlight")
         assert state.state == "on"
         nightlight_properties["friendly_name"] = f"{name} nightlight"
@@ -574,7 +574,7 @@ async def test_effects(opp: OpenPeerPower):
         assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
-    assert.opp.states.get(ENTITY_LIGHT).attributes.get(
+    assert opp.states.get(ENTITY_LIGHT).attributes.get(
         "effect_list"
     ) == YEELIGHT_COLOR_EFFECT_LIST + ["mock_effect"]
 

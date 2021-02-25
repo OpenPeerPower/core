@@ -7,7 +7,7 @@ from voluptuous.error import MultipleInvalid
 from openpeerpower.components.eafm import const
 
 
-async def test_flow_no_discovered_stations.opp, mock_get_stations):
+async def test_flow_no_discovered_stations(opp, mock_get_stations):
     """Test config flow discovers no station."""
     mock_get_stations.return_value = []
     result = await opp.config_entries.flow.async_init(
@@ -17,7 +17,7 @@ async def test_flow_no_discovered_stations.opp, mock_get_stations):
     assert result["reason"] == "no_stations"
 
 
-async def test_flow_invalid_station.opp, mock_get_stations):
+async def test_flow_invalid_station(opp, mock_get_stations):
     """Test config flow errors on invalid station."""
     mock_get_stations.return_value = [
         {"label": "My station", "stationReference": "L12345"}
@@ -34,7 +34,7 @@ async def test_flow_invalid_station.opp, mock_get_stations):
         )
 
 
-async def test_flow_works.opp, mock_get_stations, mock_get_station):
+async def test_flow_works(opp, mock_get_stations, mock_get_station):
     """Test config flow discovers no station."""
     mock_get_stations.return_value = [
         {"label": "My station", "stationReference": "L12345"}

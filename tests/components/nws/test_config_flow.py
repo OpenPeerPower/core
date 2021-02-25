@@ -7,12 +7,12 @@ from openpeerpower import config_entries, setup
 from openpeerpower.components.nws.const import DOMAIN
 
 
-async def test_form.opp, mock_simple_nws_config):
+async def test_form(opp, mock_simple_nws_config):
     """Test we get the form."""
     opp.config.latitude = 35
     opp.config.longitude = -90
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -42,7 +42,7 @@ async def test_form.opp, mock_simple_nws_config):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_cannot_connect.opp, mock_simple_nws_config):
+async def test_form_cannot_connect(opp, mock_simple_nws_config):
     """Test we handle cannot connect error."""
     mock_instance = mock_simple_nws_config.return_value
     mock_instance.set_station.side_effect = aiohttp.ClientError
@@ -78,7 +78,7 @@ async def test_form_unknown_error(opp, mock_simple_nws_config):
     assert result2["errors"] == {"base": "unknown"}
 
 
-async def test_form_already_configured.opp, mock_simple_nws_config):
+async def test_form_already_configured(opp, mock_simple_nws_config):
     """Test we handle duplicate entries."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

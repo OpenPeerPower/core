@@ -17,7 +17,7 @@ async def test_config_entry_not_ready(
         "http://127.0.0.1:9123/elgato/accessory-info", exc=aiohttp.ClientError
     )
 
-    entry = await init_integration.opp, aioclient_mock)
+    entry = await init_integration(opp, aioclient_mock)
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
 
@@ -25,8 +25,8 @@ async def test_unload_config_entry(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the Elgato Key Light configuration entry unloading."""
-    entry = await init_integration.opp, aioclient_mock)
-    assert.opp.data[DOMAIN]
+    entry = await init_integration(opp, aioclient_mock)
+    assert opp.data[DOMAIN]
 
     await opp.config_entries.async_unload(entry.entry_id)
     await opp.async_block_till_done()

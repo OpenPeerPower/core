@@ -26,7 +26,7 @@ def tag_setup_opp, opp_storage):
         else:
             opp.storage[DOMAIN] = items
         config = {DOMAIN: {}}
-        return await async_setup_component.opp, DOMAIN, config)
+        return await async_setup_component(opp, DOMAIN, config)
 
     return _storage
 
@@ -34,10 +34,10 @@ def tag_setup_opp, opp_storage):
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
-async def test_triggers.opp, tag_setup, calls):
+async def test_triggers(opp, tag_setup, calls):
     """Test tag triggers."""
     assert await tag_setup()
     assert await async_setup_component(
@@ -59,7 +59,7 @@ async def test_triggers.opp, tag_setup, calls):
 
     await opp.async_block_till_done()
 
-    await async_scan_tag.opp, "abc123", None)
+    await async_scan_tag(opp, "abc123", None)
     await opp.async_block_till_done()
 
     assert len(calls) == 1
@@ -72,13 +72,13 @@ async def test_triggers.opp, tag_setup, calls):
         blocking=True,
     )
 
-    await async_scan_tag.opp, "abc123", None)
+    await async_scan_tag(opp, "abc123", None)
     await opp.async_block_till_done()
 
     assert len(calls) == 1
 
 
-async def test_exception_bad_trigger.opp, calls, caplog):
+async def test_exception_bad_trigger(opp, calls, caplog):
     """Test for exception on event triggers firing."""
 
     await async_setup_component(
@@ -100,7 +100,7 @@ async def test_exception_bad_trigger.opp, calls, caplog):
     assert "Invalid config for [automation]" in caplog.text
 
 
-async def test_multiple_tags_and_devices_trigger.opp, tag_setup, calls):
+async def test_multiple_tags_and_devices_trigger(opp, tag_setup, calls):
     """Test multiple tags and devices triggers."""
     assert await tag_setup()
     assert await async_setup_component(
@@ -126,18 +126,18 @@ async def test_multiple_tags_and_devices_trigger.opp, tag_setup, calls):
     await opp.async_block_till_done()
 
     # Should not trigger
-    await async_scan_tag.opp, tag_id="abc123", device_id=None)
-    await async_scan_tag.opp, tag_id="abc123", device_id="invalid")
+    await async_scan_tag(opp, tag_id="abc123", device_id=None)
+    await async_scan_tag(opp, tag_id="abc123", device_id="invalid")
     await opp.async_block_till_done()
 
     # Should trigger
-    await async_scan_tag.opp, tag_id="abc123", device_id="ghi789")
+    await async_scan_tag(opp, tag_id="abc123", device_id="ghi789")
     await opp.async_block_till_done()
-    await async_scan_tag.opp, tag_id="abc123", device_id="jkl0123")
+    await async_scan_tag(opp, tag_id="abc123", device_id="jkl0123")
     await opp.async_block_till_done()
-    await async_scan_tag.opp, "def456", device_id="ghi789")
+    await async_scan_tag(opp, "def456", device_id="ghi789")
     await opp.async_block_till_done()
-    await async_scan_tag.opp, "def456", device_id="jkl0123")
+    await async_scan_tag(opp, "def456", device_id="jkl0123")
     await opp.async_block_till_done()
 
     assert len(calls) == 4

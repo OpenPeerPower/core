@@ -41,11 +41,11 @@ ENTITY_COVER = "cover.living_room_window"
 async def setup_comp.opp):
     """Set up demo cover component."""
     with assert_setup_component(1, DOMAIN):
-        await async_setup_component.opp, DOMAIN, CONFIG)
+        await async_setup_component(opp, DOMAIN, CONFIG)
         await opp.async_block_till_done()
 
 
-async def test_supported_features.opp, setup_comp):
+async def test_supported_features(opp, setup_comp):
     """Test cover supported features."""
     state = opp.states.get("cover.garage_door")
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 3
@@ -57,7 +57,7 @@ async def test_supported_features.opp, setup_comp):
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == 255
 
 
-async def test_close_cover.opp, setup_comp):
+async def test_close_cover(opp, setup_comp):
     """Test closing the cover."""
     state = opp.states.get(ENTITY_COVER)
     assert state.state == STATE_OPEN
@@ -70,7 +70,7 @@ async def test_close_cover.opp, setup_comp):
     assert state.state == STATE_CLOSING
     for _ in range(7):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_COVER)
@@ -78,7 +78,7 @@ async def test_close_cover.opp, setup_comp):
     assert state.attributes[ATTR_CURRENT_POSITION] == 0
 
 
-async def test_open_cover.opp, setup_comp):
+async def test_open_cover(opp, setup_comp):
     """Test opening the cover."""
     state = opp.states.get(ENTITY_COVER)
     assert state.state == STATE_OPEN
@@ -90,7 +90,7 @@ async def test_open_cover.opp, setup_comp):
     assert state.state == STATE_OPENING
     for _ in range(7):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_COVER)
@@ -98,7 +98,7 @@ async def test_open_cover.opp, setup_comp):
     assert state.attributes[ATTR_CURRENT_POSITION] == 100
 
 
-async def test_toggle_cover.opp, setup_comp):
+async def test_toggle_cover(opp, setup_comp):
     """Test toggling the cover."""
     # Start open
     await opp.services.async_call(
@@ -106,7 +106,7 @@ async def test_toggle_cover.opp, setup_comp):
     )
     for _ in range(7):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_COVER)
@@ -118,7 +118,7 @@ async def test_toggle_cover.opp, setup_comp):
     )
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_COVER)
@@ -130,7 +130,7 @@ async def test_toggle_cover.opp, setup_comp):
     )
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_COVER)
@@ -138,7 +138,7 @@ async def test_toggle_cover.opp, setup_comp):
     assert state.attributes[ATTR_CURRENT_POSITION] == 100
 
 
-async def test_set_cover_position.opp, setup_comp):
+async def test_set_cover_position(opp, setup_comp):
     """Test moving the cover to a specific position."""
     state = opp.states.get(ENTITY_COVER)
     assert state.attributes[ATTR_CURRENT_POSITION] == 70
@@ -150,14 +150,14 @@ async def test_set_cover_position.opp, setup_comp):
     )
     for _ in range(6):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_COVER)
     assert state.attributes[ATTR_CURRENT_POSITION] == 10
 
 
-async def test_stop_cover.opp, setup_comp):
+async def test_stop_cover(opp, setup_comp):
     """Test stopping the cover."""
     state = opp.states.get(ENTITY_COVER)
     assert state.attributes[ATTR_CURRENT_POSITION] == 70
@@ -165,18 +165,18 @@ async def test_stop_cover.opp, setup_comp):
         DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: ENTITY_COVER}, blocking=True
     )
     future = dt_util.utcnow() + timedelta(seconds=1)
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.async_block_till_done()
     await opp.services.async_call(
         DOMAIN, SERVICE_STOP_COVER, {ATTR_ENTITY_ID: ENTITY_COVER}, blocking=True
     )
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.async_block_till_done()
     state = opp.states.get(ENTITY_COVER)
     assert state.attributes[ATTR_CURRENT_POSITION] == 80
 
 
-async def test_close_cover_tilt.opp, setup_comp):
+async def test_close_cover_tilt(opp, setup_comp):
     """Test closing the cover tilt."""
     state = opp.states.get(ENTITY_COVER)
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 50
@@ -185,14 +185,14 @@ async def test_close_cover_tilt.opp, setup_comp):
     )
     for _ in range(7):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_COVER)
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 0
 
 
-async def test_open_cover_tilt.opp, setup_comp):
+async def test_open_cover_tilt(opp, setup_comp):
     """Test opening the cover tilt."""
     state = opp.states.get(ENTITY_COVER)
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 50
@@ -201,14 +201,14 @@ async def test_open_cover_tilt.opp, setup_comp):
     )
     for _ in range(7):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_COVER)
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 
 
-async def test_toggle_cover_tilt.opp, setup_comp):
+async def test_toggle_cover_tilt(opp, setup_comp):
     """Test toggling the cover tilt."""
     # Start open
     await opp.services.async_call(
@@ -216,7 +216,7 @@ async def test_toggle_cover_tilt.opp, setup_comp):
     )
     for _ in range(7):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_COVER)
@@ -227,7 +227,7 @@ async def test_toggle_cover_tilt.opp, setup_comp):
     )
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_COVER)
@@ -238,14 +238,14 @@ async def test_toggle_cover_tilt.opp, setup_comp):
     )
     for _ in range(10):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_COVER)
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 
 
-async def test_set_cover_tilt_position.opp, setup_comp):
+async def test_set_cover_tilt_position(opp, setup_comp):
     """Test moving the cover til to a specific position."""
     state = opp.states.get(ENTITY_COVER)
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 50
@@ -257,14 +257,14 @@ async def test_set_cover_tilt_position.opp, setup_comp):
     )
     for _ in range(7):
         future = dt_util.utcnow() + timedelta(seconds=1)
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY_COVER)
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 90
 
 
-async def test_stop_cover_tilt.opp, setup_comp):
+async def test_stop_cover_tilt(opp, setup_comp):
     """Test stopping the cover tilt."""
     state = opp.states.get(ENTITY_COVER)
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 50
@@ -272,12 +272,12 @@ async def test_stop_cover_tilt.opp, setup_comp):
         DOMAIN, SERVICE_CLOSE_COVER_TILT, {ATTR_ENTITY_ID: ENTITY_COVER}, blocking=True
     )
     future = dt_util.utcnow() + timedelta(seconds=1)
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.async_block_till_done()
     await opp.services.async_call(
         DOMAIN, SERVICE_STOP_COVER_TILT, {ATTR_ENTITY_ID: ENTITY_COVER}, blocking=True
     )
-    async_fire_time_changed.opp, future)
+    async_fire_time_changed(opp, future)
     await opp.async_block_till_done()
     state = opp.states.get(ENTITY_COVER)
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 40

@@ -43,7 +43,7 @@ async def test_options.opp):
         data={},
         options={CONF_CALC_METHOD: "isna"},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 
@@ -78,7 +78,7 @@ async def test_integration_already_configured.opp):
         data={},
         options={},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     result = await opp.config_entries.flow.async_init(
         islamic_prayer_times.DOMAIN, context={"source": "user"}
     )

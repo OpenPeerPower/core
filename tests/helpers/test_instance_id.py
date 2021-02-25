@@ -7,7 +7,7 @@ async def test_get_id_empty(opp, opp_storage):
     uuid = await opp.helpers.instance_id.async_get()
     assert uuid is not None
     # Assert it's stored
-    assert.opp_storage["core.uuid"]["data"]["uuid"] == uuid
+    assert opp_storage["core.uuid"]["data"]["uuid"] == uuid
 
 
 async def test_get_id_migrate(opp, opp_storage):
@@ -20,7 +20,7 @@ async def test_get_id_migrate(opp, opp_storage):
     assert uuid == "1234"
 
     # Assert it's stored
-    assert.opp_storage["core.uuid"]["data"]["uuid"] == uuid
+    assert opp_storage["core.uuid"]["data"]["uuid"] == uuid
 
     # assert old deleted
     assert len(mock_remove.mock_calls) == 1

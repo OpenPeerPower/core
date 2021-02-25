@@ -205,7 +205,7 @@ async def test_sbb_trust_state.opp: core.OpenPeerPower):
 
 async def test_trust_state_not_specified.opp: core.OpenPeerPower):
     """Assumed state should be True if Trust State is not specified."""
-    await setup_platform.opp, LIGHT_DOMAIN, ceiling_fan("name-1"))
+    await setup_platform(opp, LIGHT_DOMAIN, ceiling_fan("name-1"))
 
     device = opp.states.get("light.name_1")
     assert device.attributes.get(ATTR_ASSUMED_STATE) is True
@@ -411,68 +411,68 @@ async def test_turn_off_down_light.opp: core.OpenPeerPower):
 
 async def test_update_reports_light_is_on.opp: core.OpenPeerPower):
     """Tests that update command sets correct state when Bond API reports the light is on."""
-    await setup_platform.opp, LIGHT_DOMAIN, ceiling_fan("name-1"))
+    await setup_platform(opp, LIGHT_DOMAIN, ceiling_fan("name-1"))
 
     with patch_bond_device_state(return_value={"light": 1}):
-        async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+        async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
         await opp.async_block_till_done()
 
-    assert.opp.states.get("light.name_1").state == "on"
+    assert opp.states.get("light.name_1").state == "on"
 
 
 async def test_update_reports_light_is_off.opp: core.OpenPeerPower):
     """Tests that update command sets correct state when Bond API reports the light is off."""
-    await setup_platform.opp, LIGHT_DOMAIN, ceiling_fan("name-1"))
+    await setup_platform(opp, LIGHT_DOMAIN, ceiling_fan("name-1"))
 
     with patch_bond_device_state(return_value={"light": 0}):
-        async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+        async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
         await opp.async_block_till_done()
 
-    assert.opp.states.get("light.name_1").state == "off"
+    assert opp.states.get("light.name_1").state == "off"
 
 
 async def test_update_reports_up_light_is_on.opp: core.OpenPeerPower):
     """Tests that update command sets correct state when Bond API reports the up light is on."""
-    await setup_platform.opp, LIGHT_DOMAIN, up_light_ceiling_fan("name-1"))
+    await setup_platform(opp, LIGHT_DOMAIN, up_light_ceiling_fan("name-1"))
 
     with patch_bond_device_state(return_value={"up_light": 1, "light": 1}):
-        async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+        async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
         await opp.async_block_till_done()
 
-    assert.opp.states.get("light.name_1_up_light").state == "on"
+    assert opp.states.get("light.name_1_up_light").state == "on"
 
 
 async def test_update_reports_up_light_is_off.opp: core.OpenPeerPower):
     """Tests that update command sets correct state when Bond API reports the up light is off."""
-    await setup_platform.opp, LIGHT_DOMAIN, up_light_ceiling_fan("name-1"))
+    await setup_platform(opp, LIGHT_DOMAIN, up_light_ceiling_fan("name-1"))
 
     with patch_bond_device_state(return_value={"up_light": 0, "light": 0}):
-        async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+        async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
         await opp.async_block_till_done()
 
-    assert.opp.states.get("light.name_1_up_light").state == "off"
+    assert opp.states.get("light.name_1_up_light").state == "off"
 
 
 async def test_update_reports_down_light_is_on.opp: core.OpenPeerPower):
     """Tests that update command sets correct state when Bond API reports the down light is on."""
-    await setup_platform.opp, LIGHT_DOMAIN, down_light_ceiling_fan("name-1"))
+    await setup_platform(opp, LIGHT_DOMAIN, down_light_ceiling_fan("name-1"))
 
     with patch_bond_device_state(return_value={"down_light": 1, "light": 1}):
-        async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+        async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
         await opp.async_block_till_done()
 
-    assert.opp.states.get("light.name_1_down_light").state == "on"
+    assert opp.states.get("light.name_1_down_light").state == "on"
 
 
 async def test_update_reports_down_light_is_off.opp: core.OpenPeerPower):
     """Tests that update command sets correct state when Bond API reports the down light is off."""
-    await setup_platform.opp, LIGHT_DOMAIN, down_light_ceiling_fan("name-1"))
+    await setup_platform(opp, LIGHT_DOMAIN, down_light_ceiling_fan("name-1"))
 
     with patch_bond_device_state(return_value={"down_light": 0, "light": 0}):
-        async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+        async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
         await opp.async_block_till_done()
 
-    assert.opp.states.get("light.name_1_down_light").state == "off"
+    assert opp.states.get("light.name_1_down_light").state == "off"
 
 
 async def test_turn_on_fireplace_with_brightness.opp: core.OpenPeerPower):
@@ -531,13 +531,13 @@ async def test_turn_off_fireplace.opp: core.OpenPeerPower):
 
 async def test_flame_converted_to_brightness.opp: core.OpenPeerPower):
     """Tests that reported flame level (0..100) converted to HA brightness (0...255)."""
-    await setup_platform.opp, LIGHT_DOMAIN, fireplace("name-1"))
+    await setup_platform(opp, LIGHT_DOMAIN, fireplace("name-1"))
 
     with patch_bond_device_state(return_value={"power": 1, "flame": 50}):
-        async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+        async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
         await opp.async_block_till_done()
 
-    assert.opp.states.get("light.name_1").attributes[ATTR_BRIGHTNESS] == 128
+    assert opp.states.get("light.name_1").attributes[ATTR_BRIGHTNESS] == 128
 
 
 async def test_light_available.opp: core.OpenPeerPower):
@@ -549,10 +549,10 @@ async def test_light_available.opp: core.OpenPeerPower):
 
 async def test_parse_brightness.opp: core.OpenPeerPower):
     """Tests that reported brightness level (0..100) converted to HA brightness (0...255)."""
-    await setup_platform.opp, LIGHT_DOMAIN, dimmable_ceiling_fan("name-1"))
+    await setup_platform(opp, LIGHT_DOMAIN, dimmable_ceiling_fan("name-1"))
 
     with patch_bond_device_state(return_value={"light": 1, "brightness": 50}):
-        async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+        async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
         await opp.async_block_till_done()
 
-    assert.opp.states.get("light.name_1").attributes[ATTR_BRIGHTNESS] == 128
+    assert opp.states.get("light.name_1").attributes[ATTR_BRIGHTNESS] == 128

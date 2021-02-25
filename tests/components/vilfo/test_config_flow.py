@@ -10,7 +10,7 @@ from openpeerpower.const import CONF_ACCESS_TOKEN, CONF_HOST, CONF_ID, CONF_MAC
 
 async def test_form.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     mock_mac = "FF-00-00-00-00-00"
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

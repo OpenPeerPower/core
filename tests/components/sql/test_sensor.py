@@ -23,7 +23,7 @@ async def test_query.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
 
     state = opp.states.get("sensor.count_tables")
@@ -50,7 +50,7 @@ async def test_invalid_query.opp):
         }
     }
 
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
 
     state = opp.states.get("sensor.count_tables")

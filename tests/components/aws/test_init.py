@@ -33,7 +33,7 @@ class MockAioSession:
 async def test_empty_config(opp):
     """Test a default config will be create for empty config."""
     with async_patch("aiobotocore.AioSession", new=MockAioSession):
-        await async_setup_component.opp, "aws", {"aws": {}})
+        await async_setup_component(opp, "aws", {"aws": {}})
         await opp.async_block_till_done()
 
     sessions = opp.data[aws.DATA_SESSIONS]
@@ -71,7 +71,7 @@ async def test_empty_credential.opp):
     session = sessions.get("default")
     assert isinstance(session, MockAioSession)
 
-    assert.opp.services.has_service("notify", "new_lambda_test") is True
+    assert opp.services.has_service("notify", "new_lambda_test") is True
     await opp.services.async_call(
         "notify", "new_lambda_test", {"message": "test", "target": "ARN"}, blocking=True
     )
@@ -106,7 +106,7 @@ async def test_profile_credential.opp):
     session = sessions.get("test")
     assert isinstance(session, MockAioSession)
 
-    assert.opp.services.has_service("notify", "sns_test") is True
+    assert opp.services.has_service("notify", "sns_test") is True
     await opp.services.async_call(
         "notify",
         "sns_test",
@@ -151,7 +151,7 @@ async def test_access_key_credential.opp):
     session = sessions.get("key")
     assert isinstance(session, MockAioSession)
 
-    assert.opp.services.has_service("notify", "sns_test") is True
+    assert opp.services.has_service("notify", "sns_test") is True
     await opp.services.async_call(
         "notify",
         "sns_test",
@@ -189,7 +189,7 @@ async def test_notify_credential.opp):
     assert len(sessions) == 1
     assert isinstance(sessions.get("default"), MockAioSession)
 
-    assert.opp.services.has_service("notify", "sqs_test") is True
+    assert opp.services.has_service("notify", "sqs_test") is True
     await opp.services.async_call(
         "notify", "sqs_test", {"message": "test", "target": "ARN"}, blocking=True
     )
@@ -221,7 +221,7 @@ async def test_notify_credential_profile.opp):
     assert len(sessions) == 1
     assert isinstance(sessions.get("default"), MockAioSession)
 
-    assert.opp.services.has_service("notify", "sqs_test") is True
+    assert opp.services.has_service("notify", "sqs_test") is True
     await opp.services.async_call(
         "notify", "sqs_test", {"message": "test", "target": "ARN"}, blocking=True
     )

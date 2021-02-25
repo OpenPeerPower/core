@@ -13,7 +13,7 @@ from tests.common import MockConfigEntry
 
 async def test_async_setup_no_domain_config(opp: OpenPeerPower):
     """Test setup without configuration is noop."""
-    result = await async_setup_component.opp, DOMAIN, {})
+    result = await async_setup_component(opp, DOMAIN, {})
 
     assert result is True
     assert DOMAIN not in.opp.data
@@ -50,7 +50,7 @@ async def test_async_setup_entry_sets_up_light.opp: OpenPeerPower):
         domain=DOMAIN,
         data={"username": "test-plum-username", "password": "test-plum-password"},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.plum_lightpad.utils.Plum.loadCloudData"
@@ -72,7 +72,7 @@ async def test_async_setup_entry_handles_auth_error(opp: OpenPeerPower):
         domain=DOMAIN,
         data={"username": "test-plum-username", "password": "test-plum-password"},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.plum_lightpad.utils.Plum.loadCloudData",
@@ -92,7 +92,7 @@ async def test_async_setup_entry_handles_http_error(opp: OpenPeerPower):
         domain=DOMAIN,
         data={"username": "test-plum-username", "password": "test-plum-password"},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.plum_lightpad.utils.Plum.loadCloudData",

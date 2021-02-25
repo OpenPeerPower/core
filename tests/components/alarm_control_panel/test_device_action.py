@@ -38,10 +38,10 @@ def entity_reg.opp):
     return mock_registry.opp)
 
 
-async def test_get_actions.opp, device_reg, entity_reg):
+async def test_get_actions(opp, device_reg, entity_reg):
     """Test we get the expected actions from a alarm_control_panel."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -82,14 +82,14 @@ async def test_get_actions.opp, device_reg, entity_reg):
             "entity_id": "alarm_control_panel.test_5678",
         },
     ]
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert_lists_same(actions, expected_actions)
 
 
-async def test_get_actions_arm_night_only.opp, device_reg, entity_reg):
+async def test_get_actions_arm_night_only(opp, device_reg, entity_reg):
     """Test we get the expected actions from a alarm_control_panel."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -112,17 +112,17 @@ async def test_get_actions_arm_night_only.opp, device_reg, entity_reg):
             "entity_id": "alarm_control_panel.test_5678",
         },
     ]
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert_lists_same(actions, expected_actions)
 
 
-async def test_get_action_capabilities.opp, device_reg, entity_reg):
+async def test_get_action_capabilities(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a sensor trigger."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -133,7 +133,7 @@ async def test_get_action_capabilities.opp, device_reg, entity_reg):
         platform.ENTITIES["no_arm_code"].unique_id,
         device_id=device_entry.id,
     )
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     expected_capabilities = {
@@ -145,7 +145,7 @@ async def test_get_action_capabilities.opp, device_reg, entity_reg):
         },
         "trigger": {"extra_fields": []},
     }
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert len(actions) == 5
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
@@ -154,13 +154,13 @@ async def test_get_action_capabilities.opp, device_reg, entity_reg):
         assert capabilities == expected_capabilities[action["type"]]
 
 
-async def test_get_action_capabilities_arm_code.opp, device_reg, entity_reg):
+async def test_get_action_capabilities_arm_code(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a sensor trigger."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
 
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -171,7 +171,7 @@ async def test_get_action_capabilities_arm_code.opp, device_reg, entity_reg):
         platform.ENTITIES["arm_code"].unique_id,
         device_id=device_entry.id,
     )
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     expected_capabilities = {
@@ -189,7 +189,7 @@ async def test_get_action_capabilities_arm_code.opp, device_reg, entity_reg):
         },
         "trigger": {"extra_fields": []},
     }
-    actions = await async_get_device_automations.opp, "action", device_entry.id)
+    actions = await async_get_device_automations(opp, "action", device_entry.id)
     assert len(actions) == 5
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
@@ -269,7 +269,7 @@ async def test_action.opp):
             ]
         },
     )
-    assert await async_setup_component.opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
 
     assert (

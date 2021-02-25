@@ -276,7 +276,7 @@ def mock_default_vapix_requests(respx: respx, host: str = DEFAULT_HOST) -> None:
     respx.post(f"http://{host}:80/local/vmd/control.cgi").respond(json=VMD4_RESPONSE)
 
 
-async def setup_axis_integration.opp, config=ENTRY_CONFIG, options=ENTRY_OPTIONS):
+async def setup_axis_integration(opp, config=ENTRY_CONFIG, options=ENTRY_OPTIONS):
     """Create the Axis device."""
     config_entry = MockConfigEntry(
         domain=AXIS_DOMAIN,
@@ -286,7 +286,7 @@ async def setup_axis_integration.opp, config=ENTRY_CONFIG, options=ENTRY_OPTIONS
         version=3,
         unique_id=FORMATTED_MAC,
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch("axis.rtsp.RTSPClient.start", return_value=True), respx.mock:
         mock_default_vapix_requests(respx)
@@ -339,7 +339,7 @@ async def test_device_info.opp):
     assert device.api.vapix.serial_number == "00408C123456"
 
 
-async def test_device_support_mqtt.opp, mqtt_mock):
+async def test_device_support_mqtt(opp, mqtt_mock):
     """Successful setup."""
     api_discovery = deepcopy(API_DISCOVERY_RESPONSE)
     api_discovery["data"]["apiList"].append(API_DISCOVERY_MQTT)
@@ -353,7 +353,7 @@ async def test_device_support_mqtt.opp, mqtt_mock):
     message = b'{"timestamp": 1590258472044, "topic": "onvif:Device/axis:Sensor/PIR", "message": {"source": {"sensor": "0"}, "key": {}, "data": {"state": "1"}}}'
 
     assert len.opp.states.async_entity_ids(BINARY_SENSOR_DOMAIN)) == 0
-    async_fire_mqtt_message.opp, topic, message)
+    async_fire_mqtt_message(opp, topic, message)
     await opp.async_block_till_done()
     assert len.opp.states.async_entity_ids(BINARY_SENSOR_DOMAIN)) == 1
 
@@ -409,7 +409,7 @@ async def test_device_not_accessible.opp):
     """Failed setup schedules a retry of setup."""
     with patch.object(axis.device, "get_device", side_effect=axis.errors.CannotConnect):
         await setup_axis_integration.opp)
-    assert.opp.data[AXIS_DOMAIN] == {}
+    assert opp.data[AXIS_DOMAIN] == {}
 
 
 async def test_device_trigger_reauth_flow.opp):
@@ -419,14 +419,14 @@ async def test_device_trigger_reauth_flow.opp):
     ), patch.object.opp.config_entries.flow, "async_init") as mock_flow_init:
         await setup_axis_integration.opp)
         mock_flow_init.assert_called_once()
-    assert.opp.data[AXIS_DOMAIN] == {}
+    assert opp.data[AXIS_DOMAIN] == {}
 
 
 async def test_device_unknown_error(opp):
     """Unknown errors are handled."""
     with patch.object(axis.device, "get_device", side_effect=Exception):
         await setup_axis_integration.opp)
-    assert.opp.data[AXIS_DOMAIN] == {}
+    assert opp.data[AXIS_DOMAIN] == {}
 
 
 async def test_new_event_sends_signal.opp):
@@ -463,7 +463,7 @@ async def test_get_device_fails.opp):
     with patch(
         "axis.vapix.Vapix.request", side_effect=axislib.Unauthorized
     ), pytest.raises(axis.errors.AuthenticationRequired):
-        await axis.device.get_device.opp, host="", port="", username="", password="")
+        await axis.device.get_device(opp, host="", port="", username="", password="")
 
 
 async def test_get_device_device_unavailable.opp):
@@ -471,7 +471,7 @@ async def test_get_device_device_unavailable.opp):
     with patch(
         "axis.vapix.Vapix.request", side_effect=axislib.RequestError
     ), pytest.raises(axis.errors.CannotConnect):
-        await axis.device.get_device.opp, host="", port="", username="", password="")
+        await axis.device.get_device(opp, host="", port="", username="", password="")
 
 
 async def test_get_device_unknown_error(opp):
@@ -479,4 +479,4 @@ async def test_get_device_unknown_error(opp):
     with patch(
         "axis.vapix.Vapix.request", side_effect=axislib.AxisException
     ), pytest.raises(axis.errors.AuthenticationRequired):
-        await axis.device.get_device.opp, host="", port="", username="", password="")
+        await axis.device.get_device(opp, host="", port="", username="", password="")

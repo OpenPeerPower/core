@@ -281,7 +281,7 @@ DPI_APPS = [
 ]
 
 
-async def test_no_clients.opp, aioclient_mock):
+async def test_no_clients(opp, aioclient_mock):
     """Test the update_clients function when no clients are found."""
     await setup_unifi_integration(
         opp,
@@ -297,7 +297,7 @@ async def test_no_clients.opp, aioclient_mock):
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 0
 
 
-async def test_controller_not_client.opp, aioclient_mock):
+async def test_controller_not_client(opp, aioclient_mock):
     """Test that the controller doesn't become a switch."""
     await setup_unifi_integration(
         opp,
@@ -312,7 +312,7 @@ async def test_controller_not_client.opp, aioclient_mock):
     assert cloudkey is None
 
 
-async def test_not_admin.opp, aioclient_mock):
+async def test_not_admin(opp, aioclient_mock):
     """Test that switch platform only work on an admin account."""
     description = deepcopy(DESCRIPTION)
     description[0]["site_role"] = "not admin"
@@ -328,7 +328,7 @@ async def test_not_admin.opp, aioclient_mock):
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 0
 
 
-async def test_switches.opp, aioclient_mock):
+async def test_switches(opp, aioclient_mock):
     """Test the update_items function with some clients."""
     config_entry = await setup_unifi_integration(
         opp,
@@ -420,7 +420,7 @@ async def test_switches.opp, aioclient_mock):
     assert aioclient_mock.mock_calls[13][2] == {"enabled": True}
 
 
-async def test_remove_switches.opp, aioclient_mock):
+async def test_remove_switches(opp, aioclient_mock):
     """Test the update_items function with some clients."""
     config_entry = await setup_unifi_integration(
         opp,
@@ -454,7 +454,7 @@ async def test_remove_switches.opp, aioclient_mock):
     assert block_switch is None
 
 
-async def test_block_switches.opp, aioclient_mock):
+async def test_block_switches(opp, aioclient_mock):
     """Test the update_items function with some clients."""
     config_entry = await setup_unifi_integration(
         opp,
@@ -526,7 +526,7 @@ async def test_block_switches.opp, aioclient_mock):
     }
 
 
-async def test_new_client_discovered_on_block_control.opp, aioclient_mock):
+async def test_new_client_discovered_on_block_control(opp, aioclient_mock):
     """Test if 2nd update has a new client."""
     config_entry = await setup_unifi_integration(
         opp,
@@ -566,7 +566,7 @@ async def test_new_client_discovered_on_block_control.opp, aioclient_mock):
     assert blocked is not None
 
 
-async def test_option_block_clients.opp, aioclient_mock):
+async def test_option_block_clients(opp, aioclient_mock):
     """Test the changes to option reflects accordingly."""
     config_entry = await setup_unifi_integration(
         opp,
@@ -609,7 +609,7 @@ async def test_option_block_clients.opp, aioclient_mock):
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 0
 
 
-async def test_option_remove_switches.opp, aioclient_mock):
+async def test_option_remove_switches(opp, aioclient_mock):
     """Test removal of DPI switch when options updated."""
     config_entry = await setup_unifi_integration(
         opp,
@@ -634,7 +634,7 @@ async def test_option_remove_switches.opp, aioclient_mock):
     assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 0
 
 
-async def test_new_client_discovered_on_poe_control.opp, aioclient_mock):
+async def test_new_client_discovered_on_poe_control(opp, aioclient_mock):
     """Test if 2nd update has a new client."""
     config_entry = await setup_unifi_integration(
         opp,
@@ -689,7 +689,7 @@ async def test_new_client_discovered_on_poe_control.opp, aioclient_mock):
     }
 
 
-async def test_ignore_multiple_poe_clients_on_same_port.opp, aioclient_mock):
+async def test_ignore_multiple_poe_clients_on_same_port(opp, aioclient_mock):
     """Ignore when there are multiple POE driven clients on same port.
 
     If there is a non-UniFi switch powered by POE,
@@ -710,7 +710,7 @@ async def test_ignore_multiple_poe_clients_on_same_port.opp, aioclient_mock):
     assert switch_2 is None
 
 
-async def test_restoring_client.opp, aioclient_mock):
+async def test_restoring_client(opp, aioclient_mock):
     """Test the update_items function with some clients."""
     config_entry = config_entries.ConfigEntry(
         version=1,

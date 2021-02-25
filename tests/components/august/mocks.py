@@ -53,7 +53,7 @@ def _mock_authenticator(auth_state):
 
 @patch("openpeerpower.components.august.gateway.ApiAsync")
 @patch("openpeerpower.components.august.gateway.AuthenticatorAsync.async_authenticate")
-async def _mock_setup_august.opp, api_instance, authenticate_mock, api_mock):
+async def _mock_setup_august(opp, api_instance, authenticate_mock, api_mock):
     """Set up august integration."""
     authenticate_mock.side_effect = MagicMock(
         return_value=_mock_august_authentication(
@@ -61,7 +61,7 @@ async def _mock_setup_august.opp, api_instance, authenticate_mock, api_mock):
         )
     )
     api_mock.return_value = api_instance
-    assert await async_setup_component.opp, DOMAIN, _mock_get_config())
+    assert await async_setup_component(opp, DOMAIN, _mock_get_config())
     await opp.async_block_till_done()
     return True
 
@@ -151,10 +151,10 @@ async def _create_august_with_devices(
             "unlock_return_activities"
         ] = unlock_return_activities_side_effect
 
-    return await _mock_setup_august_with_api_side_effects.opp, api_call_side_effects)
+    return await _mock_setup_august_with_api_side_effects(opp, api_call_side_effects)
 
 
-async def _mock_setup_august_with_api_side_effects.opp, api_call_side_effects):
+async def _mock_setup_august_with_api_side_effects(opp, api_call_side_effects):
     api_instance = MagicMock(name="Api")
 
     if api_call_side_effects["get_lock_detail"]:
@@ -192,7 +192,7 @@ async def _mock_setup_august_with_api_side_effects.opp, api_call_side_effects):
             side_effect=api_call_side_effects["unlock_return_activities"]
         )
 
-    return await _mock_setup_august.opp, api_instance)
+    return await _mock_setup_august(opp, api_instance)
 
 
 def _mock_august_authentication(token_text, token_timestamp, state):
@@ -255,15 +255,15 @@ def _mock_august_lock_data(lockid="mocklockid1", houseid="mockhouseid1"):
 
 
 async def _mock_operative_august_lock_detail.opp):
-    return await _mock_lock_from_fixture.opp, "get_lock.online.json")
+    return await _mock_lock_from_fixture(opp, "get_lock.online.json")
 
 
 async def _mock_inoperative_august_lock_detail.opp):
-    return await _mock_lock_from_fixture.opp, "get_lock.offline.json")
+    return await _mock_lock_from_fixture(opp, "get_lock.offline.json")
 
 
-async def _mock_activities_from_fixture.opp, path):
-    json_dict = await _load_json_fixture.opp, path)
+async def _mock_activities_from_fixture(opp, path):
+    json_dict = await _load_json_fixture(opp, path)
     activities = []
     for activity_json in json_dict:
         activity = _activity_from_dict(activity_json)
@@ -273,17 +273,17 @@ async def _mock_activities_from_fixture.opp, path):
     return activities
 
 
-async def _mock_lock_from_fixture.opp, path):
-    json_dict = await _load_json_fixture.opp, path)
+async def _mock_lock_from_fixture(opp, path):
+    json_dict = await _load_json_fixture(opp, path)
     return LockDetail(json_dict)
 
 
-async def _mock_doorbell_from_fixture.opp, path):
-    json_dict = await _load_json_fixture.opp, path)
+async def _mock_doorbell_from_fixture(opp, path):
+    json_dict = await _load_json_fixture(opp, path)
     return DoorbellDetail(json_dict)
 
 
-async def _load_json_fixture.opp, path):
+async def _load_json_fixture(opp, path):
     fixture = await opp.async_add_executor_job(
         load_fixture, os.path.join("august", path)
     )
@@ -291,11 +291,11 @@ async def _load_json_fixture.opp, path):
 
 
 async def _mock_doorsense_enabled_august_lock_detail.opp):
-    return await _mock_lock_from_fixture.opp, "get_lock.online_with_doorsense.json")
+    return await _mock_lock_from_fixture(opp, "get_lock.online_with_doorsense.json")
 
 
 async def _mock_doorsense_missing_august_lock_detail.opp):
-    return await _mock_lock_from_fixture.opp, "get_lock.online_missing_doorsense.json")
+    return await _mock_lock_from_fixture(opp, "get_lock.online_missing_doorsense.json")
 
 
 def _mock_lock_operation_activity(lock, action, offset):

@@ -38,9 +38,9 @@ async def mock_entry.opp):
 
 
 @pytest.fixture
-async def mock_light.opp, mock_entry):
+async def mock_light(opp, mock_entry):
     """Create a mock light entity."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     light = MagicMock(spec=pykulersky.Light)
     light.address = "AA:BB:CC:11:22:33"
@@ -61,7 +61,7 @@ async def mock_light.opp, mock_entry):
         ), patch.object(light, "connect") as mock_connect, patch.object(
             light, "get_color", return_value=(0, 0, 0, 0)
         ):
-            mock_entry.add_to.opp.opp)
+            mock_entry.add_to_opp(opp)
             await opp.config_entries.async_setup(mock_entry.entry_id)
             await opp.async_block_till_done()
 
@@ -71,7 +71,7 @@ async def mock_light.opp, mock_entry):
         yield light
 
 
-async def test_init.opp, mock_light):
+async def test_init(opp, mock_light):
     """Test platform setup."""
     state = opp.states.get("light.bedroom")
     assert state.state == STATE_OFF
@@ -91,9 +91,9 @@ async def test_init.opp, mock_light):
     assert mock_disconnect.called
 
 
-async def test_discovery_lock.opp, mock_entry):
+async def test_discovery_lock(opp, mock_entry):
     """Test discovery lock."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     discovery_finished = None
     first_discovery_started = asyncio.Event()
@@ -112,7 +112,7 @@ async def test_discovery_lock.opp, mock_entry):
     ), patch(
         "openpeerpower.components.kulersky.light.async_track_time_interval",
     ) as mock_track_time_interval:
-        mock_entry.add_to.opp.opp)
+        mock_entry.add_to_opp(opp)
         await opp.config_entries.async_setup(mock_entry.entry_id)
         await opp.async_block_till_done()
 
@@ -143,7 +143,7 @@ async def test_discovery_lock.opp, mock_entry):
 
 async def test_discovery_connection_error(opp, mock_entry):
     """Test that invalid devices are skipped."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     light = MagicMock(spec=pykulersky.Light)
     light.address = "AA:BB:CC:11:22:33"
@@ -164,7 +164,7 @@ async def test_discovery_connection_error(opp, mock_entry):
             light, "connect", side_effect=pykulersky.PykulerskyException
         ):
             mockdevice.return_value = light
-            mock_entry.add_to.opp.opp)
+            mock_entry.add_to_opp(opp)
             await opp.config_entries.async_setup(mock_entry.entry_id)
             await opp.async_block_till_done()
 
@@ -173,7 +173,7 @@ async def test_discovery_connection_error(opp, mock_entry):
     assert state is None
 
 
-async def test_remove_entry.opp, mock_light, mock_entry):
+async def test_remove_entry(opp, mock_light, mock_entry):
     """Test platform setup."""
     with patch.object(mock_light, "disconnect") as mock_disconnect:
         await opp.config_entries.async_remove(mock_entry.entry_id)
@@ -181,9 +181,9 @@ async def test_remove_entry.opp, mock_light, mock_entry):
     assert mock_disconnect.called
 
 
-async def test_update_exception.opp, mock_light):
+async def test_update_exception(opp, mock_light):
     """Test platform setup."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch.object(
         mock_light, "get_color", side_effect=pykulersky.PykulerskyException
@@ -194,7 +194,7 @@ async def test_update_exception.opp, mock_light):
     assert state.state == STATE_UNAVAILABLE
 
 
-async def test_light_turn_on.opp, mock_light):
+async def test_light_turn_on(opp, mock_light):
     """Test KulerSkyLight turn_on."""
     with patch.object(mock_light, "set_color") as mock_set_color, patch.object(
         mock_light, "get_color", return_value=(255, 255, 255, 255)
@@ -246,7 +246,7 @@ async def test_light_turn_on.opp, mock_light):
     mock_set_color.assert_called_with(50, 45, 25, 180)
 
 
-async def test_light_turn_off.opp, mock_light):
+async def test_light_turn_off(opp, mock_light):
     """Test KulerSkyLight turn_on."""
     with patch.object(mock_light, "set_color") as mock_set_color, patch.object(
         mock_light, "get_color", return_value=(0, 0, 0, 0)
@@ -261,7 +261,7 @@ async def test_light_turn_off.opp, mock_light):
     mock_set_color.assert_called_with(0, 0, 0, 0)
 
 
-async def test_light_update.opp, mock_light):
+async def test_light_update(opp, mock_light):
     """Test KulerSkyLight update."""
     utcnow = dt_util.utcnow()
 
@@ -279,7 +279,7 @@ async def test_light_update.opp, mock_light):
         mock_light, "get_color", side_effect=pykulersky.PykulerskyException("TEST")
     ):
         utcnow = utcnow + SCAN_INTERVAL
-        async_fire_time_changed.opp, utcnow)
+        async_fire_time_changed(opp, utcnow)
         await opp.async_block_till_done()
 
     state = opp.states.get("light.bedroom")
@@ -297,7 +297,7 @@ async def test_light_update.opp, mock_light):
         return_value=(80, 160, 200, 240),
     ):
         utcnow = utcnow + SCAN_INTERVAL
-        async_fire_time_changed.opp, utcnow)
+        async_fire_time_changed(opp, utcnow)
         await opp.async_block_till_done()
 
     state = opp.states.get("light.bedroom")

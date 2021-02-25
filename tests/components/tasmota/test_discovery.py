@@ -12,7 +12,7 @@ from .test_common import DEFAULT_CONFIG, DEFAULT_CONFIG_9_0_0_3
 from tests.common import async_fire_mqtt_message
 
 
-async def test_subscribing_config_topic.opp, mqtt_mock, setup_tasmota):
+async def test_subscribing_config_topic(opp, mqtt_mock, setup_tasmota):
     """Test setting up discovery."""
     discovery_topic = DEFAULT_PREFIX
 
@@ -22,7 +22,7 @@ async def test_subscribing_config_topic.opp, mqtt_mock, setup_tasmota):
     assert call_args[2] == 0
 
 
-async def test_future_discovery_message.opp, mqtt_mock, caplog):
+async def test_future_discovery_message(opp, mqtt_mock, caplog):
     """Test we handle backwards compatible discovery messages."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["future_option"] = "BEST_SINCE_SLICED_BREAD"
@@ -41,7 +41,7 @@ async def test_future_discovery_message.opp, mqtt_mock, caplog):
         assert mock_tasmota_get_device_config.called
 
 
-async def test_valid_discovery_message.opp, mqtt_mock, caplog):
+async def test_valid_discovery_message(opp, mqtt_mock, caplog):
     """Test discovery callback called."""
     config = copy.deepcopy(DEFAULT_CONFIG)
 
@@ -58,32 +58,32 @@ async def test_valid_discovery_message.opp, mqtt_mock, caplog):
         assert mock_tasmota_get_device_config.called
 
 
-async def test_invalid_topic.opp, mqtt_mock):
+async def test_invalid_topic(opp, mqtt_mock):
     """Test receiving discovery message on wrong topic."""
     with patch(
         "openpeerpower.components.tasmota.discovery.tasmota_get_device_config"
     ) as mock_tasmota_get_device_config:
         await setup_tasmota_helper.opp)
 
-        async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/123456/configuration", "{}")
+        async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/123456/configuration", "{}")
         await opp.async_block_till_done()
         assert not mock_tasmota_get_device_config.called
 
 
-async def test_invalid_message.opp, mqtt_mock, caplog):
+async def test_invalid_message(opp, mqtt_mock, caplog):
     """Test receiving an invalid message."""
     with patch(
         "openpeerpower.components.tasmota.discovery.tasmota_get_device_config"
     ) as mock_tasmota_get_device_config:
         await setup_tasmota_helper.opp)
 
-        async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/123456/config", "asd")
+        async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/123456/config", "asd")
         await opp.async_block_till_done()
         assert "Invalid discovery message" in caplog.text
         assert not mock_tasmota_get_device_config.called
 
 
-async def test_invalid_mac.opp, mqtt_mock, caplog):
+async def test_invalid_mac(opp, mqtt_mock, caplog):
     """Test topic is not matching device MAC."""
     config = copy.deepcopy(DEFAULT_CONFIG)
 
@@ -245,7 +245,7 @@ async def test_device_remove(
     assert device_entry is None
 
 
-async def test_device_remove_stale.opp, mqtt_mock, caplog, device_reg, setup_tasmota):
+async def test_device_remove_stale(opp, mqtt_mock, caplog, device_reg, setup_tasmota):
     """Test removing a stale (undiscovered) device does not throw."""
     mac = "00000049A3BC"
 
@@ -311,7 +311,7 @@ async def test_device_rediscover(
     assert device_entry1.id == device_entry.id
 
 
-async def test_entity_duplicate_discovery.opp, mqtt_mock, caplog, setup_tasmota):
+async def test_entity_duplicate_discovery(opp, mqtt_mock, caplog, setup_tasmota):
     """Test entities are not duplicated."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 1
@@ -341,7 +341,7 @@ async def test_entity_duplicate_discovery.opp, mqtt_mock, caplog, setup_tasmota)
     )
 
 
-async def test_entity_duplicate_removal.opp, mqtt_mock, caplog, setup_tasmota):
+async def test_entity_duplicate_removal(opp, mqtt_mock, caplog, setup_tasmota):
     """Test removing entity twice."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 1
@@ -354,11 +354,11 @@ async def test_entity_duplicate_removal.opp, mqtt_mock, caplog, setup_tasmota):
     )
     await opp.async_block_till_done()
     config["rl"][0] = 0
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
     assert f"Removing entity: switch ('{mac}', 'switch', 'relay', 0)" in caplog.text
 
     caplog.clear()
-    async_fire_mqtt_message.opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
+    async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
     assert "Removing entity: switch" not in caplog.text

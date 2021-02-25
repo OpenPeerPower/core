@@ -127,7 +127,7 @@ MOCK_DEVICE_SENSORS = {
 
 
 @pytest.mark.parametrize("device_id", MOCK_DEVICE_SENSORS.keys())
-async def test_onewiredirect_setup_valid_device.opp, device_id):
+async def test_onewiredirect_setup_valid_device(opp, device_id):
     """Test that sysbus config entry works correctly."""
     entity_registry = mock_registry.opp)
     device_registry = mock_device_registry.opp)
@@ -149,7 +149,7 @@ async def test_onewiredirect_setup_valid_device.opp, device_id):
         "pi1wire.OneWire.get_temperature",
         side_effect=read_side_effect,
     ):
-        assert await async_setup_component.opp, SENSOR_DOMAIN, MOCK_CONFIG)
+        assert await async_setup_component(opp, SENSOR_DOMAIN, MOCK_CONFIG)
         await opp.async_block_till_done()
 
     assert len(entity_registry.entities) == len(expected_sensors)

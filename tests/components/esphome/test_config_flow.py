@@ -47,7 +47,7 @@ def mock_api_connection_error():
         yield mock_error
 
 
-async def test_user_connection_works.opp, mock_client):
+async def test_user_connection_works(opp, mock_client):
     """Test we can finish a config flow."""
     result = await opp.config_entries.flow.async_init(
         "esphome",
@@ -127,7 +127,7 @@ async def test_user_connection_error(opp, mock_api_connection_error, mock_client
     assert len(mock_client.disconnect.mock_calls) == 1
 
 
-async def test_user_with_password.opp, mock_client):
+async def test_user_with_password(opp, mock_client):
     """Test user step with password."""
     mock_client.device_info = AsyncMock(return_value=MockDeviceInfo(True, "test"))
 
@@ -153,7 +153,7 @@ async def test_user_with_password.opp, mock_client):
     assert mock_client.password == "password1"
 
 
-async def test_user_invalid_password.opp, mock_api_connection_error, mock_client):
+async def test_user_invalid_password(opp, mock_api_connection_error, mock_client):
     """Test user step with invalid password."""
     mock_client.device_info = AsyncMock(return_value=MockDeviceInfo(True, "test"))
 
@@ -177,7 +177,7 @@ async def test_user_invalid_password.opp, mock_api_connection_error, mock_client
     assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_discovery_initiation.opp, mock_client):
+async def test_discovery_initiation(opp, mock_client):
     """Test discovery importing works."""
     mock_client.device_info = AsyncMock(return_value=MockDeviceInfo(False, "test8266"))
 
@@ -204,14 +204,14 @@ async def test_discovery_initiation.opp, mock_client):
     assert result["result"].unique_id == "test8266"
 
 
-async def test_discovery_already_configured_hostname.opp, mock_client):
+async def test_discovery_already_configured_hostname(opp, mock_client):
     """Test discovery aborts if already configured via hostname."""
     entry = MockConfigEntry(
         domain=DOMAIN,
         data={CONF_HOST: "test8266.local", CONF_PORT: 6053, CONF_PASSWORD: ""},
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     service_info = {
         "host": "192.168.43.183",
@@ -229,14 +229,14 @@ async def test_discovery_already_configured_hostname.opp, mock_client):
     assert entry.unique_id == "test8266"
 
 
-async def test_discovery_already_configured_ip.opp, mock_client):
+async def test_discovery_already_configured_ip(opp, mock_client):
     """Test discovery aborts if already configured via static IP."""
     entry = MockConfigEntry(
         domain=DOMAIN,
         data={CONF_HOST: "192.168.43.183", CONF_PORT: 6053, CONF_PASSWORD: ""},
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     service_info = {
         "host": "192.168.43.183",
@@ -254,13 +254,13 @@ async def test_discovery_already_configured_ip.opp, mock_client):
     assert entry.unique_id == "test8266"
 
 
-async def test_discovery_already_configured_name.opp, mock_client):
+async def test_discovery_already_configured_name(opp, mock_client):
     """Test discovery aborts if already configured via name."""
     entry = MockConfigEntry(
         domain=DOMAIN,
         data={CONF_HOST: "192.168.43.183", CONF_PORT: 6053, CONF_PASSWORD: ""},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     mock_entry_data = MagicMock()
     mock_entry_data.device_info.name = "test8266"
@@ -283,7 +283,7 @@ async def test_discovery_already_configured_name.opp, mock_client):
     assert entry.data[CONF_HOST] == "192.168.43.184"
 
 
-async def test_discovery_duplicate_data.opp, mock_client):
+async def test_discovery_duplicate_data(opp, mock_client):
     """Test discovery aborts if same mDNS packet arrives."""
     service_info = {
         "host": "192.168.43.183",
@@ -307,14 +307,14 @@ async def test_discovery_duplicate_data.opp, mock_client):
     assert result["reason"] == "already_in_progress"
 
 
-async def test_discovery_updates_unique_id.opp, mock_client):
+async def test_discovery_updates_unique_id(opp, mock_client):
     """Test a duplicate discovery host aborts and updates existing entry."""
     entry = MockConfigEntry(
         domain=DOMAIN,
         data={CONF_HOST: "192.168.43.183", CONF_PORT: 6053, CONF_PASSWORD: ""},
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     service_info = {
         "host": "192.168.43.183",

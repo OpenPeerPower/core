@@ -11,7 +11,7 @@ async def test_sensors(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the creation of ATAG sensors."""
-    entry = await init_integration.opp, aioclient_mock)
+    entry = await init_integration(opp, aioclient_mock)
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     for item in SENSORS:

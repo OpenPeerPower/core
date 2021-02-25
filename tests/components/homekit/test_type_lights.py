@@ -29,7 +29,7 @@ from openpeerpower.helpers import entity_registry
 from tests.common import async_mock_service
 
 
-async def test_light_basic.opp, hk_driver, events):
+async def test_light_basic(opp, hk_driver, events):
     """Test light with char state."""
     entity_id = "light.demo"
 
@@ -59,8 +59,8 @@ async def test_light_basic.opp, hk_driver, events):
     assert acc.char_on.value == 0
 
     # Set from HomeKit
-    call_turn_on = async_mock_service.opp, DOMAIN, "turn_on")
-    call_turn_off = async_mock_service.opp, DOMAIN, "turn_off")
+    call_turn_on = async_mock_service(opp, DOMAIN, "turn_on")
+    call_turn_off = async_mock_service(opp, DOMAIN, "turn_off")
 
     char_on_iid = acc.char_on.to_HAP()[HAP_REPR_IID]
 
@@ -98,7 +98,7 @@ async def test_light_basic.opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] == "Set state to 0"
 
 
-async def test_light_brightness.opp, hk_driver, events):
+async def test_light_brightness(opp, hk_driver, events):
     """Test light with brightness."""
     entity_id = "light.demo"
 
@@ -126,8 +126,8 @@ async def test_light_brightness.opp, hk_driver, events):
     assert acc.char_brightness.value == 40
 
     # Set from HomeKit
-    call_turn_on = async_mock_service.opp, DOMAIN, "turn_on")
-    call_turn_off = async_mock_service.opp, DOMAIN, "turn_off")
+    call_turn_on = async_mock_service(opp, DOMAIN, "turn_on")
+    call_turn_off = async_mock_service(opp, DOMAIN, "turn_off")
 
     hk_driver.set_characteristics(
         {
@@ -216,7 +216,7 @@ async def test_light_brightness.opp, hk_driver, events):
     assert acc.char_brightness.value == 1
 
 
-async def test_light_color_temperature.opp, hk_driver, events):
+async def test_light_color_temperature(opp, hk_driver, events):
     """Test light with color temperature."""
     entity_id = "light.demo"
 
@@ -236,7 +236,7 @@ async def test_light_color_temperature.opp, hk_driver, events):
     assert acc.char_color_temperature.value == 190
 
     # Set from HomeKit
-    call_turn_on = async_mock_service.opp, DOMAIN, "turn_on")
+    call_turn_on = async_mock_service(opp, DOMAIN, "turn_on")
 
     char_color_temperature_iid = acc.char_color_temperature.to_HAP()[HAP_REPR_IID]
 
@@ -263,7 +263,7 @@ async def test_light_color_temperature.opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] == "color temperature at 250"
 
 
-async def test_light_color_temperature_and_rgb_color.opp, hk_driver, events):
+async def test_light_color_temperature_and_rgb_color(opp, hk_driver, events):
     """Test light with color temperature and rgb color not exposing temperature."""
     entity_id = "light.demo"
 
@@ -298,7 +298,7 @@ async def test_light_color_temperature_and_rgb_color.opp, hk_driver, events):
     assert acc.char_saturation.value == 61
 
 
-async def test_light_rgb_color.opp, hk_driver, events):
+async def test_light_rgb_color(opp, hk_driver, events):
     """Test light with rgb_color."""
     entity_id = "light.demo"
 
@@ -320,7 +320,7 @@ async def test_light_rgb_color.opp, hk_driver, events):
     assert acc.char_saturation.value == 90
 
     # Set from HomeKit
-    call_turn_on = async_mock_service.opp, DOMAIN, "turn_on")
+    call_turn_on = async_mock_service(opp, DOMAIN, "turn_on")
 
     char_hue_iid = acc.char_hue.to_HAP()[HAP_REPR_IID]
     char_saturation_iid = acc.char_saturation.to_HAP()[HAP_REPR_IID]
@@ -350,7 +350,7 @@ async def test_light_rgb_color.opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] == "set color at (145, 75)"
 
 
-async def test_light_restore.opp, hk_driver, events):
+async def test_light_restore(opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
     opp.state = CoreState.not_running
 
@@ -383,7 +383,7 @@ async def test_light_restore.opp, hk_driver, events):
     assert acc.char_on.value == 0
 
 
-async def test_light_set_brightness_and_color.opp, hk_driver, events):
+async def test_light_set_brightness_and_color(opp, hk_driver, events):
     """Test light with all chars in one go."""
     entity_id = "light.demo"
 
@@ -421,7 +421,7 @@ async def test_light_set_brightness_and_color.opp, hk_driver, events):
     assert acc.char_saturation.value == 9
 
     # Set from HomeKit
-    call_turn_on = async_mock_service.opp, DOMAIN, "turn_on")
+    call_turn_on = async_mock_service(opp, DOMAIN, "turn_on")
 
     hk_driver.set_characteristics(
         {
@@ -459,7 +459,7 @@ async def test_light_set_brightness_and_color.opp, hk_driver, events):
     )
 
 
-async def test_light_set_brightness_and_color_temp.opp, hk_driver, events):
+async def test_light_set_brightness_and_color_temp(opp, hk_driver, events):
     """Test light with all chars in one go."""
     entity_id = "light.demo"
 
@@ -495,7 +495,7 @@ async def test_light_set_brightness_and_color_temp.opp, hk_driver, events):
     assert acc.char_color_temperature.value == 224
 
     # Set from HomeKit
-    call_turn_on = async_mock_service.opp, DOMAIN, "turn_on")
+    call_turn_on = async_mock_service(opp, DOMAIN, "turn_on")
 
     hk_driver.set_characteristics(
         {

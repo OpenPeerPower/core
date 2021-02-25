@@ -10,7 +10,7 @@ from openpeerpower.const import CONF_EMAIL, CONF_PASSWORD
 
 async def test_form.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -98,7 +98,7 @@ async def test_form_unknown_error(opp):
 
 async def test_import.opp):
     """Test import."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     imported_conf = {
         CONF_EMAIL: "mock@example.com",

@@ -79,9 +79,9 @@ def mock_start_addon():
         yield start_addon
 
 
-async def test_user_not_supervisor_create_entry.opp, mqtt):
+async def test_user_not_supervisor_create_entry(opp, mqtt):
     """Test the user step creates an entry not on Supervisor."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
         "openpeerpower.components.ozw.async_setup", return_value=True
@@ -118,7 +118,7 @@ async def test_mqtt_not_setup_opp):
 async def test_one_instance_allowed.opp):
     """Test that only one instance is allowed."""
     entry = MockConfigEntry(domain=DOMAIN, data={}, title=TITLE)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -127,9 +127,9 @@ async def test_one_instance_allowed.opp):
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test_not_addon.opp, supervisor, mqtt):
+async def test_not_addon(opp, supervisor, mqtt):
     """Test opting out of add-on on Supervisor."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -158,11 +158,11 @@ async def test_not_addon.opp, supervisor, mqtt):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_addon_running.opp, supervisor, addon_running, addon_options):
+async def test_addon_running(opp, supervisor, addon_running, addon_options):
     """Test add-on already running on Supervisor."""
     addon_options["device"] = "/test"
     addon_options["network_key"] = "abc123"
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -191,10 +191,10 @@ async def test_addon_running.opp, supervisor, addon_running, addon_options):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_addon_info_failure.opp, supervisor, addon_info):
+async def test_addon_info_failure(opp, supervisor, addon_info):
     """Test add-on info failure."""
     addon_info.side_effect = OppioAPIError()
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -212,7 +212,7 @@ async def test_addon_installed(
     opp. supervisor, addon_installed, addon_options, set_addon_options, start_addon
 ):
     """Test add-on already installed but not running on Supervisor."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -249,7 +249,7 @@ async def test_set_addon_config_failure(
 ):
     """Test add-on set config failure."""
     set_addon_options.side_effect = OppioAPIError()
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -271,7 +271,7 @@ async def test_start_addon_failure(
 ):
     """Test add-on start failure."""
     start_addon.side_effect = OppioAPIError()
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -299,7 +299,7 @@ async def test_addon_not_installed(
 ):
     """Test add-on not installed."""
     addon_installed.return_value["version"] = None
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -341,11 +341,11 @@ async def test_addon_not_installed(
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_install_addon_failure.opp, supervisor, addon_installed, install_addon):
+async def test_install_addon_failure(opp, supervisor, addon_installed, install_addon):
     """Test add-on install failure."""
     addon_installed.return_value["version"] = None
     install_addon.side_effect = OppioAPIError()
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -365,9 +365,9 @@ async def test_install_addon_failure.opp, supervisor, addon_installed, install_a
     assert result["reason"] == "addon_install_failed"
 
 
-async def test_supervisor_discovery.opp, supervisor, addon_running, addon_options):
+async def test_supervisor_discovery(opp, supervisor, addon_running, addon_options):
     """Test flow started from Supervisor discovery."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     addon_options["device"] = "/test"
     addon_options["network_key"] = "abc123"
@@ -403,7 +403,7 @@ async def test_clean_discovery_on_user_create(
     opp. supervisor, addon_running, addon_options
 ):
     """Test discovery flow is cleaned up when a user flow is finished."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     addon_options["device"] = "/test"
     addon_options["network_key"] = "abc123"
@@ -448,7 +448,7 @@ async def test_abort_discovery_with_user_flow(
     opp. supervisor, addon_running, addon_options
 ):
     """Test discovery flow is aborted if a user flow is in progress."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -469,10 +469,10 @@ async def test_abort_discovery_with_existing_entry(
     opp. supervisor, addon_running, addon_options
 ):
     """Test discovery flow is aborted if an entry already exists."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(domain=DOMAIN, data={}, title=TITLE, unique_id=DOMAIN)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -489,7 +489,7 @@ async def test_discovery_addon_not_running(
 ):
     """Test discovery with add-on already installed but not running."""
     addon_options["device"] = None
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -511,7 +511,7 @@ async def test_discovery_addon_not_installed(
 ):
     """Test discovery with add-on not installed."""
     addon_installed.return_value["version"] = None
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -540,7 +540,7 @@ async def test_import_addon_installed(
 ):
     """Test add-on already installed but not running on Supervisor."""
     opp.config.components.add("mqtt")
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

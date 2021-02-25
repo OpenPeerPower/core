@@ -761,7 +761,7 @@ async def test_owserver_setup_valid_device(owproxy, opp, device_id, platform):
 
     As they would be on a clean setup: all binary-sensors and switches disabled.
     """
-    await async_setup_component.opp, "persistent_notification", {})
+    await async_setup_component(opp, "persistent_notification", {})
     entity_registry = mock_registry.opp)
     device_registry = mock_device_registry.opp)
 

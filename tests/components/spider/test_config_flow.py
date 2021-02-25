@@ -25,9 +25,9 @@ def spider_fixture() -> Mock:
         yield spider
 
 
-async def test_user.opp, spider):
+async def test_user(opp, spider):
     """Test user config."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -55,9 +55,9 @@ async def test_user.opp, spider):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_import.opp, spider):
+async def test_import(opp, spider):
     """Test import step."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     with patch(
         "openpeerpower.components.spider.async_setup",
         return_value=True,
@@ -84,7 +84,7 @@ async def test_import.opp, spider):
 
 async def test_abort_if_already_setup_opp, spider):
     """Test we abort if Spider is already setup."""
-    MockConfigEntry(domain=DOMAIN, data=SPIDER_USER_DATA).add_to.opp.opp)
+    MockConfigEntry(domain=DOMAIN, data=SPIDER_USER_DATA).add_to_opp(opp)
 
     # Should fail, config exist (import)
     result = await opp.config_entries.flow.async_init(

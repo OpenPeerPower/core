@@ -118,7 +118,7 @@ async def setup_integration(
         data={CONF_HOST: HOST, CONF_RECEIVER_ID: RECEIVER_ID},
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     if not skip_entry_setup:
         await opp.config_entries.async_setup(entry.entry_id)

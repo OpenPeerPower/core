@@ -20,7 +20,7 @@ TEST_LOGIN = {CONF_USERNAME: "test-username", CONF_PASSWORD: "test-password"}
 
 async def test_form.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -67,7 +67,7 @@ async def test_form_invalid_auth.opp):
 @pytest.mark.parametrize(
     "side_effect", [asyncio.TimeoutError, ClientError, SmartMeterTexasAPIError]
 )
-async def test_form_cannot_connect.opp, side_effect):
+async def test_form_cannot_connect(opp, side_effect):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -110,7 +110,7 @@ async def test_form_duplicate_account.opp):
         domain=DOMAIN,
         unique_id="user123",
         data={"username": "user123", "password": "password123"},
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     with patch(
         "smart_meter_texas.Client.authenticate",

@@ -257,7 +257,7 @@ async def test_import_flow_success.opp):
     }
 
 
-async def config_flow_device_success.opp, model_to_test):
+async def config_flow_device_success(opp, model_to_test):
     """Test a successful config flow for a device (base class)."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -291,7 +291,7 @@ async def config_flow_device_success.opp, model_to_test):
     }
 
 
-async def zeroconf_device_success.opp, zeroconf_name_to_test, model_to_test):
+async def zeroconf_device_success(opp, zeroconf_name_to_test, model_to_test):
     """Test a successful zeroconf discovery of a device  (base class)."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -334,11 +334,11 @@ async def zeroconf_device_success.opp, zeroconf_name_to_test, model_to_test):
 async def test_config_flow_plug_success.opp):
     """Test a successful config flow for a plug."""
     test_plug_model = const.MODELS_SWITCH[0]
-    await config_flow_device_success.opp, test_plug_model)
+    await config_flow_device_success(opp, test_plug_model)
 
 
 async def test_zeroconf_plug_success.opp):
     """Test a successful zeroconf discovery of a plug."""
     test_plug_model = const.MODELS_SWITCH[0]
     test_zeroconf_name = const.MODELS_SWITCH[0].replace(".", "-")
-    await zeroconf_device_success.opp, test_zeroconf_name, test_plug_model)
+    await zeroconf_device_success(opp, test_zeroconf_name, test_plug_model)

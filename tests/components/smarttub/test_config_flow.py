@@ -47,7 +47,7 @@ async def test_form.opp):
     assert result2["reason"] == "reauth_successful"
 
 
-async def test_form_invalid_auth.opp, smarttub_api):
+async def test_form_invalid_auth(opp, smarttub_api):
     """Test we handle invalid auth."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

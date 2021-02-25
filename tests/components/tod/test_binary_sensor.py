@@ -48,7 +48,7 @@ async def test_setup_opp):
         ]
     }
     with assert_setup_component(2):
-        assert await async_setup_component.opp, "binary_sensor", config)
+        assert await async_setup_component(opp, "binary_sensor", config)
 
 
 async def test_setup_no_sensors.opp):
@@ -76,7 +76,7 @@ async def test_in_period_on_start.opp):
         "openpeerpower.components.tod.binary_sensor.dt_util.utcnow",
         return_value=test_time,
     ):
-        await async_setup_component.opp, "binary_sensor", config)
+        await async_setup_component(opp, "binary_sensor", config)
         await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.evening")
@@ -95,7 +95,7 @@ async def test_midnight_turnover_before_midnight_inside_period.opp):
         "openpeerpower.components.tod.binary_sensor.dt_util.utcnow",
         return_value=test_time,
     ):
-        await async_setup_component.opp, "binary_sensor", config)
+        await async_setup_component(opp, "binary_sensor", config)
         await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.night")
@@ -116,7 +116,7 @@ async def test_midnight_turnover_after_midnight_inside_period.opp):
         "openpeerpower.components.tod.binary_sensor.dt_util.utcnow",
         return_value=test_time,
     ):
-        await async_setup_component.opp, "binary_sensor", config)
+        await async_setup_component(opp, "binary_sensor", config)
         await opp.async_block_till_done()
 
         state = opp.states.get("binary_sensor.night")
@@ -152,7 +152,7 @@ async def test_midnight_turnover_before_midnight_outside_period.opp):
         "openpeerpower.components.tod.binary_sensor.dt_util.utcnow",
         return_value=test_time,
     ):
-        await async_setup_component.opp, "binary_sensor", config)
+        await async_setup_component(opp, "binary_sensor", config)
         await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.night")
@@ -174,7 +174,7 @@ async def test_midnight_turnover_after_midnight_outside_period.opp):
         "openpeerpower.components.tod.binary_sensor.dt_util.utcnow",
         return_value=test_time,
     ):
-        await async_setup_component.opp, "binary_sensor", config)
+        await async_setup_component(opp, "binary_sensor", config)
         await opp.async_block_till_done()
 
     state = opp.states.get("binary_sensor.night")
@@ -214,10 +214,10 @@ async def test_from_sunrise_to_sunset.opp):
         pytz.UTC
     )
     sunrise = dt_util.as_local(
-        get_astral_event_date.opp, "sunrise", dt_util.as_utc(test_time))
+        get_astral_event_date(opp, "sunrise", dt_util.as_utc(test_time))
     )
     sunset = dt_util.as_local(
-        get_astral_event_date.opp, "sunset", dt_util.as_utc(test_time))
+        get_astral_event_date(opp, "sunset", dt_util.as_utc(test_time))
     )
     config = {
         "binary_sensor": [
@@ -235,7 +235,7 @@ async def test_from_sunrise_to_sunset.opp):
         "openpeerpower.components.tod.binary_sensor.dt_util.utcnow",
         return_value=testtime,
     ):
-        await async_setup_component.opp, "binary_sensor", config)
+        await async_setup_component(opp, "binary_sensor", config)
         await opp.async_block_till_done()
 
         await opp.async_block_till_done()
@@ -314,8 +314,8 @@ async def test_from_sunset_to_sunrise.opp):
     test_time = opp.config.time_zone.localize(datetime(2019, 1, 12)).astimezone(
         pytz.UTC
     )
-    sunset = dt_util.as_local(get_astral_event_date.opp, "sunset", test_time))
-    sunrise = dt_util.as_local(get_astral_event_next.opp, "sunrise", sunset))
+    sunset = dt_util.as_local(get_astral_event_date(opp, "sunset", test_time))
+    sunrise = dt_util.as_local(get_astral_event_next(opp, "sunrise", sunset))
     # assert sunset == sunrise
     config = {
         "binary_sensor": [
@@ -333,7 +333,7 @@ async def test_from_sunset_to_sunrise.opp):
         "openpeerpower.components.tod.binary_sensor.dt_util.utcnow",
         return_value=testtime,
     ):
-        await async_setup_component.opp, "binary_sensor", config)
+        await async_setup_component(opp, "binary_sensor", config)
         await opp.async_block_till_done()
 
         await opp.async_block_till_done()
@@ -431,7 +431,7 @@ async def test_offset.opp):
         "openpeerpower.components.tod.binary_sensor.dt_util.utcnow",
         return_value=testtime,
     ):
-        await async_setup_component.opp, "binary_sensor", config)
+        await async_setup_component(opp, "binary_sensor", config)
         await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
@@ -505,7 +505,7 @@ async def test_offset_overnight.opp):
         "openpeerpower.components.tod.binary_sensor.dt_util.utcnow",
         return_value=testtime,
     ):
-        await async_setup_component.opp, "binary_sensor", config)
+        await async_setup_component(opp, "binary_sensor", config)
         await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
@@ -532,10 +532,10 @@ async def test_norwegian_case_winter.opp):
         pytz.UTC
     )
     sunrise = dt_util.as_local(
-        get_astral_event_next.opp, "sunrise", dt_util.as_utc(test_time))
+        get_astral_event_next(opp, "sunrise", dt_util.as_utc(test_time))
     )
     sunset = dt_util.as_local(
-        get_astral_event_next.opp, "sunset", dt_util.as_utc(test_time))
+        get_astral_event_next(opp, "sunset", dt_util.as_utc(test_time))
     )
     config = {
         "binary_sensor": [
@@ -553,7 +553,7 @@ async def test_norwegian_case_winter.opp):
         "openpeerpower.components.tod.binary_sensor.dt_util.utcnow",
         return_value=testtime,
     ):
-        await async_setup_component.opp, "binary_sensor", config)
+        await async_setup_component(opp, "binary_sensor", config)
         await opp.async_block_till_done()
 
         await opp.async_block_till_done()
@@ -649,10 +649,10 @@ async def test_norwegian_case_summer.opp):
     )
 
     sunrise = dt_util.as_local(
-        get_astral_event_next.opp, "sunrise", dt_util.as_utc(test_time))
+        get_astral_event_next(opp, "sunrise", dt_util.as_utc(test_time))
     )
     sunset = dt_util.as_local(
-        get_astral_event_next.opp, "sunset", dt_util.as_utc(test_time))
+        get_astral_event_next(opp, "sunset", dt_util.as_utc(test_time))
     )
     config = {
         "binary_sensor": [
@@ -670,7 +670,7 @@ async def test_norwegian_case_summer.opp):
         "openpeerpower.components.tod.binary_sensor.dt_util.utcnow",
         return_value=testtime,
     ):
-        await async_setup_component.opp, "binary_sensor", config)
+        await async_setup_component(opp, "binary_sensor", config)
         await opp.async_block_till_done()
 
         await opp.async_block_till_done()
@@ -762,11 +762,11 @@ async def test_sun_offset.opp):
         pytz.UTC
     )
     sunrise = dt_util.as_local(
-        get_astral_event_date.opp, "sunrise", dt_util.as_utc(test_time))
+        get_astral_event_date(opp, "sunrise", dt_util.as_utc(test_time))
         + timedelta(hours=-1, minutes=-30)
     )
     sunset = dt_util.as_local(
-        get_astral_event_date.opp, "sunset", dt_util.as_utc(test_time))
+        get_astral_event_date(opp, "sunset", dt_util.as_utc(test_time))
         + timedelta(hours=1, minutes=30)
     )
     config = {
@@ -787,7 +787,7 @@ async def test_sun_offset.opp):
         "openpeerpower.components.tod.binary_sensor.dt_util.utcnow",
         return_value=testtime,
     ):
-        await async_setup_component.opp, "binary_sensor", config)
+        await async_setup_component(opp, "binary_sensor", config)
         await opp.async_block_till_done()
 
         await opp.async_block_till_done()
@@ -862,7 +862,7 @@ async def test_sun_offset.opp):
 
     test_time = test_time + timedelta(days=1)
     sunrise = dt_util.as_local(
-        get_astral_event_date.opp, "sunrise", dt_util.as_utc(test_time))
+        get_astral_event_date(opp, "sunrise", dt_util.as_utc(test_time))
         + timedelta(hours=-1, minutes=-30)
     )
     testtime = sunrise
@@ -898,7 +898,7 @@ async def test_dst.opp):
         "openpeerpower.components.tod.binary_sensor.dt_util.utcnow",
         return_value=testtime,
     ):
-        await async_setup_component.opp, "binary_sensor", config)
+        await async_setup_component(opp, "binary_sensor", config)
         await opp.async_block_till_done()
 
         await opp.async_block_till_done()

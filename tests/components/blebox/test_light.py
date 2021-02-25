@@ -53,7 +53,7 @@ async def test_dimmer_init(dimmer, opp, config):
     """Test cover default state."""
 
     _, entity_id = dimmer
-    entry = await async_setup_entity.opp, config, entity_id)
+    entry = await async_setup_entity(opp, config, entity_id)
     assert entry.unique_id == "BleBox-dimmerBox-1afe34e750b8-brightness"
 
     state = opp.states.get(entity_id)
@@ -84,7 +84,7 @@ async def test_dimmer_update(dimmer, opp, config):
         feature_mock.brightness = 53
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
 
     state = opp.states.get(entity_id)
     assert state.attributes[ATTR_BRIGHTNESS] == 53
@@ -102,7 +102,7 @@ async def test_dimmer_on(dimmer, opp, config):
         feature_mock.sensible_on_value = 254
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
     state = opp.states.get(entity_id)
@@ -137,7 +137,7 @@ async def test_dimmer_on_with_brightness(dimmer, opp, config):
         feature_mock.sensible_on_value = 254
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
     state = opp.states.get(entity_id)
@@ -176,7 +176,7 @@ async def test_dimmer_off(dimmer, opp, config):
         feature_mock.is_on = True
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
     state = opp.states.get(entity_id)
@@ -224,7 +224,7 @@ async def test_wlightbox_s_init(wlightbox_s, opp, config):
     """Test cover default state."""
 
     _, entity_id = wlightbox_s
-    entry = await async_setup_entity.opp, config, entity_id)
+    entry = await async_setup_entity(opp, config, entity_id)
     assert entry.unique_id == "BleBox-wLightBoxS-1afe34e750b8-color"
 
     state = opp.states.get(entity_id)
@@ -257,7 +257,7 @@ async def test_wlightbox_s_update(wlightbox_s, opp, config):
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
 
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
 
     state = opp.states.get(entity_id)
     assert state.state == STATE_ON
@@ -274,7 +274,7 @@ async def test_wlightbox_s_on(wlightbox_s, opp, config):
         feature_mock.sensible_on_value = 254
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
     state = opp.states.get(entity_id)
@@ -324,7 +324,7 @@ async def test_wlightbox_init(wlightbox, opp, config):
     """Test cover default state."""
 
     _, entity_id = wlightbox
-    entry = await async_setup_entity.opp, config, entity_id)
+    entry = await async_setup_entity(opp, config, entity_id)
     assert entry.unique_id == "BleBox-wLightBox-1afe34e750b8-color"
 
     state = opp.states.get(entity_id)
@@ -360,7 +360,7 @@ async def test_wlightbox_update(wlightbox, opp, config):
         feature_mock.white_value = 0x3A
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
 
     state = opp.states.get(entity_id)
     assert state.attributes[ATTR_HS_COLOR] == (352.32, 100.0)
@@ -377,7 +377,7 @@ async def test_wlightbox_on_via_just_whiteness(wlightbox, opp, config):
         feature_mock.is_on = False
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
     state = opp.states.get(entity_id)
@@ -423,7 +423,7 @@ async def test_wlightbox_on_via_reset_whiteness(wlightbox, opp, config):
         feature_mock.is_on = False
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
     state = opp.states.get(entity_id)
@@ -469,7 +469,7 @@ async def test_wlightbox_on_via_just_hsl_color(wlightbox, opp, config):
         feature_mock.rgbw_hex = "00000000"
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
     state = opp.states.get(entity_id)
@@ -515,7 +515,7 @@ async def test_wlightbox_on_to_last_color(wlightbox, opp, config):
         feature_mock.is_on = False
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
     state = opp.states.get(entity_id)
@@ -552,7 +552,7 @@ async def test_wlightbox_off(wlightbox, opp, config):
         feature_mock.is_on = True
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
     state = opp.states.get(entity_id)
@@ -586,7 +586,7 @@ async def test_update_failure(feature, opp, config, caplog):
 
     feature_mock, entity_id = feature
     feature_mock.async_update = AsyncMock(side_effect=blebox_uniapi.error.ClientError)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
 
     assert f"Updating '{feature_mock.full_name}' failed: " in caplog.text
 
@@ -599,7 +599,7 @@ async def test_turn_on_failure(feature, opp, config, caplog):
 
     feature_mock, entity_id = feature
     feature_mock.async_on = AsyncMock(side_effect=blebox_uniapi.error.BadOnValueError)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
 
     feature_mock.sensible_on_value = 123
     await opp.services.async_call(

@@ -13,8 +13,8 @@ async def test_setup_config_full.opp):
     """Test setup with all data."""
     config = {"logentries": {"token": "secret"}}
     opp.bus.listen = MagicMock()
-    assert await async_setup_component.opp, logentries.DOMAIN, config)
-    assert.opp.bus.listen.called
+    assert await async_setup_component(opp, logentries.DOMAIN, config)
+    assert opp.bus.listen.called
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
 
 
@@ -22,8 +22,8 @@ async def test_setup_config_defaults.opp):
     """Test setup with defaults."""
     config = {"logentries": {"token": "token"}}
     opp.bus.listen = MagicMock()
-    assert await async_setup_component.opp, logentries.DOMAIN, config)
-    assert.opp.bus.listen.called
+    assert await async_setup_component(opp, logentries.DOMAIN, config)
+    assert opp.bus.listen.called
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
 
 
@@ -41,14 +41,14 @@ def mock_requests():
         yield mock_requests
 
 
-async def test_event_listener.opp, mock_dump, mock_requests):
+async def test_event_listener(opp, mock_dump, mock_requests):
     """Test event listener."""
     mock_dump.side_effect = lambda x: x
     mock_post = mock_requests.post
     mock_requests.exceptions.RequestException = Exception
     config = {"logentries": {"token": "token"}}
     opp.bus.listen = MagicMock()
-    assert await async_setup_component.opp, logentries.DOMAIN, config)
+    assert await async_setup_component(opp, logentries.DOMAIN, config)
     handler_method = opp.bus.listen.call_args_list[0][0][1]
 
     valid = {"1": 1, "1.0": 1.0, STATE_ON: 1, STATE_OFF: 0, "foo": "foo"}

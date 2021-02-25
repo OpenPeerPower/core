@@ -155,17 +155,17 @@ async def test_setup(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test setup with basic config."""
-    await setup_integration.opp, aioclient_mock)
-    assert.opp.states.get(MAIN_ENTITY_ID)
-    assert.opp.states.get(CLIENT_ENTITY_ID)
-    assert.opp.states.get(UNAVAILABLE_ENTITY_ID)
+    await setup_integration(opp, aioclient_mock)
+    assert opp.states.get(MAIN_ENTITY_ID)
+    assert opp.states.get(CLIENT_ENTITY_ID)
+    assert opp.states.get(UNAVAILABLE_ENTITY_ID)
 
 
 async def test_unique_id(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test unique id."""
-    await setup_integration.opp, aioclient_mock)
+    await setup_integration(opp, aioclient_mock)
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
@@ -186,7 +186,7 @@ async def test_supported_features(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test supported features."""
-    await setup_integration.opp, aioclient_mock)
+    await setup_integration(opp, aioclient_mock)
 
     # Features supported for main DVR
     state = opp.states.get(MAIN_ENTITY_ID)
@@ -221,7 +221,7 @@ async def test_check_attributes(
     aioclient_mock: AiohttpClientMocker,
 ) -> None:
     """Test attributes."""
-    await setup_integration.opp, aioclient_mock)
+    await setup_integration(opp, aioclient_mock)
 
     state = opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_PLAYING
@@ -328,7 +328,7 @@ async def test_attributes_paused(
     aioclient_mock: AiohttpClientMocker,
 ):
     """Test attributes while paused."""
-    await setup_integration.opp, aioclient_mock)
+    await setup_integration(opp, aioclient_mock)
 
     state = opp.states.get(CLIENT_ENTITY_ID)
     last_updated = state.attributes.get(ATTR_MEDIA_POSITION_UPDATED_AT)
@@ -338,7 +338,7 @@ async def test_attributes_paused(
     with patch(
         "openpeerpower.util.dt.utcnow", return_value=mock_now + timedelta(minutes=5)
     ):
-        await async_media_pause.opp, CLIENT_ENTITY_ID)
+        await async_media_pause(opp, CLIENT_ENTITY_ID)
         await opp.async_block_till_done()
 
     state = opp.states.get(CLIENT_ENTITY_ID)
@@ -352,44 +352,44 @@ async def test_main_services(
     aioclient_mock: AiohttpClientMocker,
 ) -> None:
     """Test the different services."""
-    await setup_integration.opp, aioclient_mock)
+    await setup_integration(opp, aioclient_mock)
 
     with patch("directv.DIRECTV.remote") as remote_mock:
-        await async_turn_off.opp, MAIN_ENTITY_ID)
+        await async_turn_off(opp, MAIN_ENTITY_ID)
         await opp.async_block_till_done()
         remote_mock.assert_called_once_with("poweroff", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
-        await async_turn_on.opp, MAIN_ENTITY_ID)
+        await async_turn_on(opp, MAIN_ENTITY_ID)
         await opp.async_block_till_done()
         remote_mock.assert_called_once_with("poweron", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
-        await async_media_pause.opp, MAIN_ENTITY_ID)
+        await async_media_pause(opp, MAIN_ENTITY_ID)
         await opp.async_block_till_done()
         remote_mock.assert_called_once_with("pause", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
-        await async_media_play.opp, MAIN_ENTITY_ID)
+        await async_media_play(opp, MAIN_ENTITY_ID)
         await opp.async_block_till_done()
         remote_mock.assert_called_once_with("play", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
-        await async_media_next_track.opp, MAIN_ENTITY_ID)
+        await async_media_next_track(opp, MAIN_ENTITY_ID)
         await opp.async_block_till_done()
         remote_mock.assert_called_once_with("ffwd", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
-        await async_media_previous_track.opp, MAIN_ENTITY_ID)
+        await async_media_previous_track(opp, MAIN_ENTITY_ID)
         await opp.async_block_till_done()
         remote_mock.assert_called_once_with("rew", "0")
 
     with patch("directv.DIRECTV.remote") as remote_mock:
-        await async_media_stop.opp, MAIN_ENTITY_ID)
+        await async_media_stop(opp, MAIN_ENTITY_ID)
         await opp.async_block_till_done()
         remote_mock.assert_called_once_with("stop", "0")
 
     with patch("directv.DIRECTV.tune") as tune_mock:
-        await async_play_media.opp, "channel", 312, MAIN_ENTITY_ID)
+        await async_play_media(opp, "channel", 312, MAIN_ENTITY_ID)
         await opp.async_block_till_done()
         tune_mock.assert_called_once_with("312", "0")

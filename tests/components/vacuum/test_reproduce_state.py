@@ -26,7 +26,7 @@ FAN_SPEED_LOW = "low"
 FAN_SPEED_HIGH = "high"
 
 
-async def test_reproducing_states.opp, caplog):
+async def test_reproducing_states(opp, caplog):
     """Test reproducing Vacuum states."""
     opp.states.async_set("vacuum.entity_off", STATE_OFF, {})
     opp.states.async_set("vacuum.entity_on", STATE_ON, {})
@@ -39,13 +39,13 @@ async def test_reproducing_states.opp, caplog):
     opp.states.async_set("vacuum.entity_returning", STATE_RETURNING, {})
     opp.states.async_set("vacuum.entity_paused", STATE_PAUSED, {})
 
-    turn_on_calls = async_mock_service.opp, "vacuum", SERVICE_TURN_ON)
-    turn_off_calls = async_mock_service.opp, "vacuum", SERVICE_TURN_OFF)
-    start_calls = async_mock_service.opp, "vacuum", SERVICE_START)
-    pause_calls = async_mock_service.opp, "vacuum", SERVICE_PAUSE)
-    stop_calls = async_mock_service.opp, "vacuum", SERVICE_STOP)
-    return_calls = async_mock_service.opp, "vacuum", SERVICE_RETURN_TO_BASE)
-    fan_speed_calls = async_mock_service.opp, "vacuum", SERVICE_SET_FAN_SPEED)
+    turn_on_calls = async_mock_service(opp, "vacuum", SERVICE_TURN_ON)
+    turn_off_calls = async_mock_service(opp, "vacuum", SERVICE_TURN_OFF)
+    start_calls = async_mock_service(opp, "vacuum", SERVICE_START)
+    pause_calls = async_mock_service(opp, "vacuum", SERVICE_PAUSE)
+    stop_calls = async_mock_service(opp, "vacuum", SERVICE_STOP)
+    return_calls = async_mock_service(opp, "vacuum", SERVICE_RETURN_TO_BASE)
+    fan_speed_calls = async_mock_service(opp, "vacuum", SERVICE_SET_FAN_SPEED)
 
     # These calls should do nothing as entities already in desired state
     await opp.helpers.state.async_reproduce_state(

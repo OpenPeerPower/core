@@ -84,7 +84,7 @@ DPI_GROUPS = [
 ]
 
 
-async def test_flow_works.opp, aioclient_mock, mock_discovery):
+async def test_flow_works(opp, aioclient_mock, mock_discovery):
     """Test config flow."""
     mock_discovery.return_value = "1"
     result = await opp.config_entries.flow.async_init(
@@ -151,7 +151,7 @@ async def test_flow_works.opp, aioclient_mock, mock_discovery):
     }
 
 
-async def test_flow_multiple_sites.opp, aioclient_mock):
+async def test_flow_multiple_sites(opp, aioclient_mock):
     """Test config flow works when finding multiple sites."""
     result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN, context={"source": "user"}
@@ -197,9 +197,9 @@ async def test_flow_multiple_sites.opp, aioclient_mock):
     assert result["data_schema"]({"site": "2"})
 
 
-async def test_flow_raise_already_configured.opp, aioclient_mock):
+async def test_flow_raise_already_configured(opp, aioclient_mock):
     """Test config flow aborts since a connected config entry already exists."""
-    await setup_unifi_integration.opp, aioclient_mock)
+    await setup_unifi_integration(opp, aioclient_mock)
 
     result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN, context={"source": "user"}
@@ -244,17 +244,17 @@ async def test_flow_raise_already_configured.opp, aioclient_mock):
     assert result["reason"] == "already_configured"
 
 
-async def test_flow_aborts_configuration_updated.opp, aioclient_mock):
+async def test_flow_aborts_configuration_updated(opp, aioclient_mock):
     """Test config flow aborts since a connected config entry already exists."""
     entry = MockConfigEntry(
         domain=UNIFI_DOMAIN, data={"host": "1.2.3.4", "site": "office"}, unique_id="2"
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     entry = MockConfigEntry(
         domain=UNIFI_DOMAIN, data={"host": "1.2.3.4", "site": "site_id"}, unique_id="1"
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN, context={"source": "user"}
@@ -298,7 +298,7 @@ async def test_flow_aborts_configuration_updated.opp, aioclient_mock):
     assert result["reason"] == "configuration_updated"
 
 
-async def test_flow_fails_user_credentials_faulty.opp, aioclient_mock):
+async def test_flow_fails_user_credentials_faulty(opp, aioclient_mock):
     """Test config flow."""
     result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN, context={"source": "user"}
@@ -325,7 +325,7 @@ async def test_flow_fails_user_credentials_faulty.opp, aioclient_mock):
     assert result["errors"] == {"base": "faulty_credentials"}
 
 
-async def test_flow_fails_controller_unavailable.opp, aioclient_mock):
+async def test_flow_fails_controller_unavailable(opp, aioclient_mock):
     """Test config flow."""
     result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN, context={"source": "user"}
@@ -352,9 +352,9 @@ async def test_flow_fails_controller_unavailable.opp, aioclient_mock):
     assert result["errors"] == {"base": "service_unavailable"}
 
 
-async def test_reauth_flow_update_configuration.opp, aioclient_mock):
+async def test_reauth_flow_update_configuration(opp, aioclient_mock):
     """Verify reauth flow can update controller configuration."""
-    config_entry = await setup_unifi_integration.opp, aioclient_mock)
+    config_entry = await setup_unifi_integration(opp, aioclient_mock)
     controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
     controller.available = False
 
@@ -406,7 +406,7 @@ async def test_reauth_flow_update_configuration.opp, aioclient_mock):
     assert config_entry.data[CONF_PASSWORD] == "new_pass"
 
 
-async def test_advanced_option_flow.opp, aioclient_mock):
+async def test_advanced_option_flow(opp, aioclient_mock):
     """Test advanced config flow options."""
     config_entry = await setup_unifi_integration(
         opp,
@@ -478,7 +478,7 @@ async def test_advanced_option_flow.opp, aioclient_mock):
     }
 
 
-async def test_simple_option_flow.opp, aioclient_mock):
+async def test_simple_option_flow(opp, aioclient_mock):
     """Test simple config flow options."""
     config_entry = await setup_unifi_integration(
         opp,
@@ -515,7 +515,7 @@ async def test_simple_option_flow.opp, aioclient_mock):
 
 async def test_form_ssdp.opp):
     """Test we get the form with ssdp source."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN,
@@ -543,12 +543,12 @@ async def test_form_ssdp.opp):
 
 async def test_form_ssdp_aborts_if_host_already_exists(opp):
     """Test we abort if the host is already configured."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     entry = MockConfigEntry(
         domain=UNIFI_DOMAIN,
         data={"host": "192.168.208.1", "site": "site_id"},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN,
         context={"source": config_entries.SOURCE_SSDP},
@@ -565,13 +565,13 @@ async def test_form_ssdp_aborts_if_host_already_exists(opp):
 
 async def test_form_ssdp_aborts_if_serial_already_exists(opp):
     """Test we abort if the serial is already configured."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     entry = MockConfigEntry(
         domain=UNIFI_DOMAIN,
         data={"controller": {"host": "1.2.3.4", "site": "site_id"}},
         unique_id="e0:63:da:20:14:a9",
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN,
         context={"source": config_entries.SOURCE_SSDP},
@@ -588,13 +588,13 @@ async def test_form_ssdp_aborts_if_serial_already_exists(opp):
 
 async def test_form_ssdp_gets_form_with_ignored_entry.opp):
     """Test we can still setup if there is an ignored entry."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     entry = MockConfigEntry(
         domain=UNIFI_DOMAIN,
         data={"not_controller_key": None},
         source=config_entries.SOURCE_IGNORE,
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     result = await opp.config_entries.flow.async_init(
         UNIFI_DOMAIN,
         context={"source": config_entries.SOURCE_SSDP},

@@ -315,7 +315,7 @@ def test_setup_scanner():
         }
 
         see = Mock()
-        res = device_tracker.setup_scanner.opp, config, see)
+        res = device_tracker.setup_scanner(opp, config, see)
         opp.bus.fire(EVENT_OPENPEERPOWER_START)
         opp.stop()
 
@@ -340,6 +340,6 @@ def test_setup_scanner_timeout():
 
     see = Mock()
     try:
-        assert not device_tracker.setup_scanner.opp, config, see)
+        assert not device_tracker.setup_scanner(opp, config, see)
     finally:
         opp.stop()

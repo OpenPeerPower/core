@@ -34,7 +34,7 @@ async def test_tv_load_and_unload(
     config_entry = MockConfigEntry(
         domain=DOMAIN, data=MOCK_USER_VALID_TV_CONFIG, unique_id=UNIQUE_ID
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     assert await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
     assert len.opp.states.async_entity_ids(MP_DOMAIN)) == 1
@@ -45,7 +45,7 @@ async def test_tv_load_and_unload(
     entities = opp.states.async_entity_ids(MP_DOMAIN)
     assert len(entities) == 1
     for entity in entities:
-        assert.opp.states.get(entity).state == STATE_UNAVAILABLE
+        assert opp.states.get(entity).state == STATE_UNAVAILABLE
     assert DOMAIN not in.opp.data
 
 
@@ -58,7 +58,7 @@ async def test_speaker_load_and_unload(
     config_entry = MockConfigEntry(
         domain=DOMAIN, data=MOCK_SPEAKER_CONFIG, unique_id=UNIQUE_ID
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     assert await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
     assert len.opp.states.async_entity_ids(MP_DOMAIN)) == 1
@@ -69,5 +69,5 @@ async def test_speaker_load_and_unload(
     entities = opp.states.async_entity_ids(MP_DOMAIN)
     assert len(entities) == 1
     for entity in entities:
-        assert.opp.states.get(entity).state == STATE_UNAVAILABLE
+        assert opp.states.get(entity).state == STATE_UNAVAILABLE
     assert DOMAIN not in.opp.data

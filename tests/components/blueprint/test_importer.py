@@ -154,7 +154,7 @@ def test_extract_blueprint_from_community_topic_wrong_lang():
         )
 
 
-async def test_fetch_blueprint_from_community_url.opp, aioclient_mock, community_post):
+async def test_fetch_blueprint_from_community_url(opp, aioclient_mock, community_post):
     """Test fetching blueprint from url."""
     aioclient_mock.get(
         "https://community.open-peer-power.io/t/test-topic/123.json", text=community_post
@@ -183,7 +183,7 @@ async def test_fetch_blueprint_from_community_url.opp, aioclient_mock, community
         "https://github.com/balloob/open-peer-power-config/blob/main/blueprints/automation/motion_light.yaml",
     ),
 )
-async def test_fetch_blueprint_from_github_url.opp, aioclient_mock, url):
+async def test_fetch_blueprint_from_github_url(opp, aioclient_mock, url):
     """Test fetching blueprint from url."""
     aioclient_mock.get(
         "https://raw.githubusercontent.com/balloob/open-peer-power-config/main/blueprints/automation/motion_light.yaml",
@@ -192,7 +192,7 @@ async def test_fetch_blueprint_from_github_url.opp, aioclient_mock, url):
         ).read_text(),
     )
 
-    imported_blueprint = await importer.fetch_blueprint_from_url.opp, url)
+    imported_blueprint = await importer.fetch_blueprint_from_url(opp, url)
     assert isinstance(imported_blueprint, importer.ImportedBlueprint)
     assert imported_blueprint.blueprint.domain == "automation"
     assert imported_blueprint.blueprint.inputs == {
@@ -203,7 +203,7 @@ async def test_fetch_blueprint_from_github_url.opp, aioclient_mock, url):
     assert imported_blueprint.blueprint.metadata["source_url"] == url
 
 
-async def test_fetch_blueprint_from_github_gist_url.opp, aioclient_mock):
+async def test_fetch_blueprint_from_github_gist_url(opp, aioclient_mock):
     """Test fetching blueprint from url."""
     aioclient_mock.get(
         "https://api.github.com/gists/e717ce85dd0d2f1bdcdfc884ea25a344",
@@ -211,7 +211,7 @@ async def test_fetch_blueprint_from_github_gist_url.opp, aioclient_mock):
     )
 
     url = "https://gist.github.com/balloob/e717ce85dd0d2f1bdcdfc884ea25a344"
-    imported_blueprint = await importer.fetch_blueprint_from_url.opp, url)
+    imported_blueprint = await importer.fetch_blueprint_from_url(opp, url)
     assert isinstance(imported_blueprint, importer.ImportedBlueprint)
     assert imported_blueprint.blueprint.domain == "automation"
     assert imported_blueprint.blueprint.inputs == {

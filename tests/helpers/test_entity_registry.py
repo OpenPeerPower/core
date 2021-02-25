@@ -588,9 +588,9 @@ async def test_restore_states(opp):
 
     await opp.async_block_till_done()
 
-    assert.opp.states.get("light.simple") is None
-    assert.opp.states.get("light.disabled") is None
-    assert.opp.states.get("light.all_info_set") is None
+    assert opp.states.get("light.simple") is None
+    assert opp.states.get("light.disabled") is None
+    assert opp.states.get("light.all_info_set") is None
 
 
 async def test_async_get_device_class_lookup(opp):

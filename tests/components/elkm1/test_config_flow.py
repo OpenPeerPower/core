@@ -26,7 +26,7 @@ def mock_elk(invalid_auth=None, sync_complete=None):
 
 async def test_form_user_with_secure_elk.opp):
     """Test we can setup a secure elk."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -73,7 +73,7 @@ async def test_form_user_with_secure_elk.opp):
 
 async def test_form_user_with_non_secure_elk.opp):
     """Test we can setup a non-secure elk."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -118,7 +118,7 @@ async def test_form_user_with_non_secure_elk.opp):
 
 async def test_form_user_with_serial_elk.opp):
     """Test we can setup a serial elk."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -222,7 +222,7 @@ async def test_form_invalid_auth.opp):
 
 async def test_form_import.opp):
     """Test we get the form with import source."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     mocked_elk = mock_elk(invalid_auth=False, sync_complete=True)
     with patch(

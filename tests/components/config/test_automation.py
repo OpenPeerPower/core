@@ -11,7 +11,7 @@ from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 async def test_get_device_config(opp, opp_client):
     """Test getting device config."""
     with patch.object(config, "SECTIONS", ["automation"]):
-        await async_setup_component.opp, "config", {})
+        await async_setup_component(opp, "config", {})
 
     client = await opp_client()
 
@@ -31,7 +31,7 @@ async def test_get_device_config(opp, opp_client):
 async def test_update_device_config(opp, opp_client):
     """Test updating device config."""
     with patch.object(config, "SECTIONS", ["automation"]):
-        await async_setup_component.opp, "config", {})
+        await async_setup_component(opp, "config", {})
 
     client = await opp_client()
 
@@ -64,10 +64,10 @@ async def test_update_device_config(opp, opp_client):
     assert written[0] == orig_data
 
 
-async def test_bad_formatted_automations.opp, opp_client):
+async def test_bad_formatted_automations(opp, opp_client):
     """Test that we handle automations without ID."""
     with patch.object(config, "SECTIONS", ["automation"]):
-        await async_setup_component.opp, "config", {})
+        await async_setup_component(opp, "config", {})
 
     client = await opp_client()
 
@@ -108,7 +108,7 @@ async def test_bad_formatted_automations.opp, opp_client):
     assert orig_data[1] == {"id": "moon", "trigger": [], "condition": [], "action": []}
 
 
-async def test_delete_automation.opp, opp_client):
+async def test_delete_automation(opp, opp_client):
     """Test deleting an automation."""
     ent_reg = await opp.helpers.entity_registry.async_get_registry()
 
@@ -134,7 +134,7 @@ async def test_delete_automation.opp, opp_client):
     assert len(ent_reg.entities) == 2
 
     with patch.object(config, "SECTIONS", ["automation"]):
-        assert await async_setup_component.opp, "config", {})
+        assert await async_setup_component(opp, "config", {})
 
     client = await opp_client()
 

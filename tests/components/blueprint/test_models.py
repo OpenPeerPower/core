@@ -200,9 +200,9 @@ def test_blueprint_inputs_override_default(blueprint_2):
     assert inputs.async_substitute() == {"example": 1, "example-default": "custom"}
 
 
-async def test_domain_blueprints_get_blueprint_errors.opp, domain_bps):
+async def test_domain_blueprints_get_blueprint_errors(opp, domain_bps):
     """Test domain blueprints."""
-    assert.opp.data["blueprint"]["automation"] is domain_bps
+    assert opp.data["blueprint"]["automation"] is domain_bps
 
     with pytest.raises(errors.FailedToLoad), patch(
         "openpeerpower.util.yaml.load_yaml", side_effect=FileNotFoundError

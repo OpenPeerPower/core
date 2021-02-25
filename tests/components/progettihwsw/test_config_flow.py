@@ -22,7 +22,7 @@ mock_value_step_user = {
 
 async def test_form.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -103,7 +103,7 @@ async def test_form_existing_entry_exception.opp):
             CONF_PORT: 80,
         },
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result2 = await opp.config_entries.flow.async_configure(
         result["flow_id"],

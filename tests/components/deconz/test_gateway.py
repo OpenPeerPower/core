@@ -111,7 +111,7 @@ async def setup_deconz_integration(
         entry_id=entry_id,
         unique_id=unique_id,
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     if aioclient_mock:
         mock_deconz_request(aioclient_mock, config, get_state_response)
@@ -129,8 +129,8 @@ async def test_gateway_setup_opp, aioclient_mock):
         "openpeerpower.config_entries.ConfigEntries.async_forward_entry_setup",
         return_value=True,
     ) as forward_entry_setup:
-        config_entry = await setup_deconz_integration.opp, aioclient_mock)
-        gateway = get_gateway_from_config_entry.opp, config_entry)
+        config_entry = await setup_deconz_integration(opp, aioclient_mock)
+        gateway = get_gateway_from_config_entry(opp, config_entry)
         assert gateway.bridgeid == BRIDGEID
         assert gateway.master is True
         assert gateway.option_allow_clip_sensor is False
@@ -173,13 +173,13 @@ async def test_gateway_setup_fails.opp):
     assert not.opp.data[DECONZ_DOMAIN]
 
 
-async def test_connection_status_signalling.opp, aioclient_mock):
+async def test_connection_status_signalling(opp, aioclient_mock):
     """Make sure that connection status triggers a dispatcher send."""
-    config_entry = await setup_deconz_integration.opp, aioclient_mock)
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    config_entry = await setup_deconz_integration(opp, aioclient_mock)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
 
     event_call = Mock()
-    unsub = async_dispatcher_connect.opp, gateway.signal_reachable, event_call)
+    unsub = async_dispatcher_connect(opp, gateway.signal_reachable, event_call)
 
     gateway.async_connection_status_callback(False)
     await opp.async_block_till_done()
@@ -190,10 +190,10 @@ async def test_connection_status_signalling.opp, aioclient_mock):
     unsub()
 
 
-async def test_update_address.opp, aioclient_mock):
+async def test_update_address(opp, aioclient_mock):
     """Make sure that connection status triggers a dispatcher send."""
-    config_entry = await setup_deconz_integration.opp, aioclient_mock)
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    config_entry = await setup_deconz_integration(opp, aioclient_mock)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
     assert gateway.api.host == "1.2.3.4"
 
     with patch(
@@ -225,13 +225,13 @@ async def test_gateway_trigger_reauth_flow.opp):
         await setup_deconz_integration.opp)
         mock_flow_init.assert_called_once()
 
-    assert.opp.data[DECONZ_DOMAIN] == {}
+    assert opp.data[DECONZ_DOMAIN] == {}
 
 
 async def test_reset_after_successful_setup_opp, aioclient_mock):
     """Make sure that connection status triggers a dispatcher send."""
-    config_entry = await setup_deconz_integration.opp, aioclient_mock)
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    config_entry = await setup_deconz_integration(opp, aioclient_mock)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
 
     result = await gateway.async_reset()
     await opp.async_block_till_done()
@@ -242,7 +242,7 @@ async def test_reset_after_successful_setup_opp, aioclient_mock):
 async def test_get_gateway.opp):
     """Successful call."""
     with patch("pydeconz.DeconzSession.initialize", return_value=True):
-        assert await get_gateway.opp, ENTRY_CONFIG, Mock(), Mock())
+        assert await get_gateway(opp, ENTRY_CONFIG, Mock(), Mock())
 
 
 async def test_get_gateway_fails_unauthorized.opp):
@@ -251,7 +251,7 @@ async def test_get_gateway_fails_unauthorized.opp):
         "pydeconz.DeconzSession.initialize",
         side_effect=pydeconz.errors.Unauthorized,
     ), pytest.raises(AuthenticationRequired):
-        assert await get_gateway.opp, ENTRY_CONFIG, Mock(), Mock()) is False
+        assert await get_gateway(opp, ENTRY_CONFIG, Mock(), Mock()) is False
 
 
 async def test_get_gateway_fails_cannot_connect.opp):
@@ -260,4 +260,4 @@ async def test_get_gateway_fails_cannot_connect.opp):
         "pydeconz.DeconzSession.initialize",
         side_effect=pydeconz.errors.RequestError,
     ), pytest.raises(CannotConnect):
-        assert await get_gateway.opp, ENTRY_CONFIG, Mock(), Mock()) is False
+        assert await get_gateway(opp, ENTRY_CONFIG, Mock(), Mock()) is False

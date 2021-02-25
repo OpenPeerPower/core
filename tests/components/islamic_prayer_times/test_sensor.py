@@ -9,10 +9,10 @@ from . import NOW, PRAYER_TIMES, PRAYER_TIMES_TIMESTAMPS
 from tests.common import MockConfigEntry
 
 
-async def test_islamic_prayer_times_sensors.opp, legacy_patchable_time):
+async def test_islamic_prayer_times_sensors(opp, legacy_patchable_time):
     """Test minimum Islamic prayer times configuration."""
     entry = MockConfigEntry(domain=islamic_prayer_times.DOMAIN, data={})
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch(
         "prayer_times_calculator.PrayerTimesCalculator.fetch_prayer_times",

@@ -32,17 +32,17 @@ def load_smt_fixture(name):
     return json.loads(json_fixture)
 
 
-async def setup_integration.opp, config_entry, aioclient_mock, **kwargs):
+async def setup_integration(opp, config_entry, aioclient_mock, **kwargs):
     """Initialize the Smart Meter Texas integration for testing."""
     mock_connection(aioclient_mock, **kwargs)
     await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
 
 
-async def refresh_data.opp, config_entry, aioclient_mock):
+async def refresh_data(opp, config_entry, aioclient_mock):
     """Request a DataUpdateCoordinator refresh."""
     mock_connection(aioclient_mock)
-    await async_setup_component.opp, OP_DOMAIN, {})
+    await async_setup_component(opp, OP_DOMAIN, {})
     await opp.services.async_call(
         OP_DOMAIN,
         SERVICE_UPDATE_ENTITY,
@@ -98,6 +98,6 @@ def mock_config_entry.opp):
         unique_id="user123",
         data={"username": "user123", "password": "password123"},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     return config_entry

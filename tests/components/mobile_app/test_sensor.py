@@ -3,7 +3,7 @@ from openpeerpower.const import PERCENTAGE, STATE_UNKNOWN
 from openpeerpower.helpers import device_registry
 
 
-async def test_sensor.opp, create_registrations, webhook_client):
+async def test_sensor(opp, create_registrations, webhook_client):
     """Test that sensors can be registered and updated."""
     webhook_id = create_registrations[1]["webhook_id"]
     webhook_url = f"/api/webhook/{webhook_id}"
@@ -85,7 +85,7 @@ async def test_sensor.opp, create_registrations, webhook_client):
     assert restored_entity.attributes == updated_entity.attributes
 
 
-async def test_sensor_must_register.opp, create_registrations, webhook_client):
+async def test_sensor_must_register(opp, create_registrations, webhook_client):
     """Test that sensors must be registered before updating."""
     webhook_id = create_registrations[1]["webhook_id"]
     webhook_url = f"/api/webhook/{webhook_id}"
@@ -104,7 +104,7 @@ async def test_sensor_must_register.opp, create_registrations, webhook_client):
     assert json["battery_state"]["error"]["code"] == "not_registered"
 
 
-async def test_sensor_id_no_dupes.opp, create_registrations, webhook_client, caplog):
+async def test_sensor_id_no_dupes(opp, create_registrations, webhook_client, caplog):
     """Test that a duplicate unique ID in registration updates the sensor."""
     webhook_id = create_registrations[1]["webhook_id"]
     webhook_url = f"/api/webhook/{webhook_id}"
@@ -166,7 +166,7 @@ async def test_sensor_id_no_dupes.opp, create_registrations, webhook_client, cap
     assert entity.state == "99"
 
 
-async def test_register_sensor_no_state.opp, create_registrations, webhook_client):
+async def test_register_sensor_no_state(opp, create_registrations, webhook_client):
     """Test that sensors can be registered, when there is no (unknown) state."""
     webhook_id = create_registrations[1]["webhook_id"]
     webhook_url = f"/api/webhook/{webhook_id}"
@@ -223,7 +223,7 @@ async def test_register_sensor_no_state.opp, create_registrations, webhook_clien
     assert entity.state == STATE_UNKNOWN
 
 
-async def test_update_sensor_no_state.opp, create_registrations, webhook_client):
+async def test_update_sensor_no_state(opp, create_registrations, webhook_client):
     """Test that sensors can be updated, when there is no (unknown) state."""
     webhook_id = create_registrations[1]["webhook_id"]
     webhook_url = f"/api/webhook/{webhook_id}"

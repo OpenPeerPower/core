@@ -44,16 +44,16 @@ SENSORS = {
 }
 
 
-async def test_get_triggers.opp, aioclient_mock):
+async def test_get_triggers(opp, aioclient_mock):
     """Test triggers work."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = deepcopy(SENSORS)
     config_entry = await setup_deconz_integration(
         opp. aioclient_mock, get_state_response=data
     )
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
     device_id = gateway.events[0].device_id
-    triggers = await async_get_device_automations.opp, "trigger", device_id)
+    triggers = await async_get_device_automations(opp, "trigger", device_id)
 
     expected_triggers = [
         {
@@ -110,27 +110,27 @@ async def test_get_triggers.opp, aioclient_mock):
     assert_lists_same(triggers, expected_triggers)
 
 
-async def test_helper_successful.opp, aioclient_mock):
+async def test_helper_successful(opp, aioclient_mock):
     """Verify trigger helper."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["sensors"] = deepcopy(SENSORS)
     config_entry = await setup_deconz_integration(
         opp. aioclient_mock, get_state_response=data
     )
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
     device_id = gateway.events[0].device_id
-    deconz_event = device_trigger._get_deconz_event_from_device_id.opp, device_id)
+    deconz_event = device_trigger._get_deconz_event_from_device_id(opp, device_id)
     assert deconz_event == gateway.events[0]
 
 
-async def test_helper_no_match.opp, aioclient_mock):
+async def test_helper_no_match(opp, aioclient_mock):
     """Verify trigger helper returns None when no event could be matched."""
-    await setup_deconz_integration.opp, aioclient_mock)
-    deconz_event = device_trigger._get_deconz_event_from_device_id.opp, "mock-id")
+    await setup_deconz_integration(opp, aioclient_mock)
+    deconz_event = device_trigger._get_deconz_event_from_device_id(opp, "mock-id")
     assert deconz_event is None
 
 
 async def test_helper_no_gateway_exist.opp):
     """Verify trigger helper returns None when no gateway exist."""
-    deconz_event = device_trigger._get_deconz_event_from_device_id.opp, "mock-id")
+    deconz_event = device_trigger._get_deconz_event_from_device_id(opp, "mock-id")
     assert deconz_event is None

@@ -195,4 +195,4 @@ async def test_scene_controller_sensor(
     vera_device.get_last_scene_time.return_value = "1111"
     update_callback(vera_device)
     await opp.async_block_till_done()
-    assert.opp.states.get(entity_id).state == "id0"
+    assert opp.states.get(entity_id).state == "id0"

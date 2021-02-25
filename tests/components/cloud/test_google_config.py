@@ -15,7 +15,7 @@ from tests.common import async_fire_time_changed
 
 
 @pytest.fixture
-def mock_conf.opp, cloud_prefs):
+def mock_conf(opp, cloud_prefs):
     """Mock Google conf."""
     return CloudGoogleConfig(
         opp,
@@ -80,7 +80,7 @@ async def test_google_update_expose_trigger_sync(
             entity_id="light.kitchen", should_expose=True
         )
         await opp.async_block_till_done()
-        async_fire_time_changed.opp, utcnow())
+        async_fire_time_changed(opp, utcnow())
         await opp.async_block_till_done()
 
     assert len(mock_sync.mock_calls) == 1
@@ -98,13 +98,13 @@ async def test_google_update_expose_trigger_sync(
             entity_id="sensor.temp", should_expose=True
         )
         await opp.async_block_till_done()
-        async_fire_time_changed.opp, utcnow())
+        async_fire_time_changed(opp, utcnow())
         await opp.async_block_till_done()
 
     assert len(mock_sync.mock_calls) == 1
 
 
-async def test_google_entity_registry_sync.opp, mock_cloud_login, cloud_prefs):
+async def test_google_entity_registry_sync(opp, mock_cloud_login, cloud_prefs):
     """Test Google config responds to entity registry."""
     config = CloudGoogleConfig(
         opp. GACTIONS_SCHEMA({}), "mock-user-id", cloud_prefs, opp.data["cloud"]
@@ -194,11 +194,11 @@ async def test_google_config_expose_entity_prefs(mock_conf, cloud_prefs):
     assert not mock_conf.should_expose(state)
 
 
-def test_enabled_requires_valid_sub.opp, mock_expired_cloud_login, cloud_prefs):
+def test_enabled_requires_valid_sub(opp, mock_expired_cloud_login, cloud_prefs):
     """Test that google config enabled requires a valid Cloud sub."""
     assert cloud_prefs.google_enabled
-    assert.opp.data["cloud"].is_logged_in
-    assert.opp.data["cloud"].subscription_expired
+    assert opp.data["cloud"].is_logged_in
+    assert opp.data["cloud"].subscription_expired
 
     config = CloudGoogleConfig(
         opp. GACTIONS_SCHEMA({}), "mock-user-id", cloud_prefs, opp.data["cloud"]

@@ -35,7 +35,7 @@ def entity_reg.opp):
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
 @pytest.fixture(autouse=True)
@@ -70,7 +70,7 @@ async def setup_tasmota_helper.opp):
         title="Tasmota",
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     assert await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()

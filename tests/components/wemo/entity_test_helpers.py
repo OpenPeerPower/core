@@ -18,7 +18,7 @@ from openpeerpower.core import callback
 from openpeerpower.setup import async_setup_component
 
 
-def _perform_registry_callback.opp, pywemo_registry, pywemo_device):
+def _perform_registry_callback(opp, pywemo_registry, pywemo_device):
     """Return a callable method to trigger a state callback from the device."""
 
     @callback
@@ -30,7 +30,7 @@ def _perform_registry_callback.opp, pywemo_registry, pywemo_device):
     return async_callback
 
 
-def _perform_async_update.opp, wemo_entity):
+def _perform_async_update(opp, wemo_entity):
     """Return a callable method to cause.opp to update the state of the entity."""
 
     @callback
@@ -93,9 +93,9 @@ async def test_async_update_locked_callback_and_update(
     When a state update is received via a callback from the device at the same time
     as.opp is calling `async_update`, verify that only one of the updates proceeds.
     """
-    await async_setup_component.opp, OP_DOMAIN, {})
-    callback = _perform_registry_callback.opp, pywemo_registry, pywemo_device)
-    update = _perform_async_update.opp, wemo_entity)
+    await async_setup_component(opp, OP_DOMAIN, {})
+    callback = _perform_registry_callback(opp, pywemo_registry, pywemo_device)
+    update = _perform_async_update(opp, wemo_entity)
     await _async_multiple_call_helper(
         opp. pywemo_registry, wemo_entity, pywemo_device, callback, update, **kwargs
     )
@@ -105,8 +105,8 @@ async def test_async_update_locked_multiple_updates(
     opp. pywemo_registry, wemo_entity, pywemo_device, **kwargs
 ):
     """Test that two.opp async_update state updates do not proceed at the same time."""
-    await async_setup_component.opp, OP_DOMAIN, {})
-    update = _perform_async_update.opp, wemo_entity)
+    await async_setup_component(opp, OP_DOMAIN, {})
+    update = _perform_async_update(opp, wemo_entity)
     await _async_multiple_call_helper(
         opp. pywemo_registry, wemo_entity, pywemo_device, update, update, **kwargs
     )
@@ -116,8 +116,8 @@ async def test_async_update_locked_multiple_callbacks(
     opp. pywemo_registry, wemo_entity, pywemo_device, **kwargs
 ):
     """Test that two device callback state updates do not proceed at the same time."""
-    await async_setup_component.opp, OP_DOMAIN, {})
-    callback = _perform_registry_callback.opp, pywemo_registry, pywemo_device)
+    await async_setup_component(opp, OP_DOMAIN, {})
+    callback = _perform_registry_callback(opp, pywemo_registry, pywemo_device)
     await _async_multiple_call_helper(
         opp. pywemo_registry, wemo_entity, pywemo_device, callback, callback, **kwargs
     )
@@ -127,8 +127,8 @@ async def test_async_locked_update_with_exception(
     opp. wemo_entity, pywemo_device, update_polling_method=None
 ):
     """Test that the entity becomes unavailable when communication is lost."""
-    assert.opp.states.get(wemo_entity.entity_id).state == STATE_OFF
-    await async_setup_component.opp, OP_DOMAIN, {})
+    assert opp.states.get(wemo_entity.entity_id).state == STATE_OFF
+    await async_setup_component(opp, OP_DOMAIN, {})
     update_polling_method = update_polling_method or pywemo_device.get_state
     update_polling_method.side_effect = ActionException
 
@@ -139,13 +139,13 @@ async def test_async_locked_update_with_exception(
         blocking=True,
     )
 
-    assert.opp.states.get(wemo_entity.entity_id).state == STATE_UNAVAILABLE
+    assert opp.states.get(wemo_entity.entity_id).state == STATE_UNAVAILABLE
 
 
-async def test_async_update_with_timeout_and_recovery.opp, wemo_entity, pywemo_device):
+async def test_async_update_with_timeout_and_recovery(opp, wemo_entity, pywemo_device):
     """Test that the entity becomes unavailable after a timeout, and that it recovers."""
-    assert.opp.states.get(wemo_entity.entity_id).state == STATE_OFF
-    await async_setup_component.opp, OP_DOMAIN, {})
+    assert opp.states.get(wemo_entity.entity_id).state == STATE_OFF
+    await async_setup_component(opp, OP_DOMAIN, {})
 
     event = threading.Event()
 
@@ -167,9 +167,9 @@ async def test_async_update_with_timeout_and_recovery.opp, wemo_entity, pywemo_d
             blocking=True,
         )
 
-    assert.opp.states.get(wemo_entity.entity_id).state == STATE_UNAVAILABLE
+    assert opp.states.get(wemo_entity.entity_id).state == STATE_UNAVAILABLE
 
     # Check that the entity recovers and is available after the update succeeds.
     event.set()
     await opp.async_block_till_done()
-    assert.opp.states.get(wemo_entity.entity_id).state == STATE_OFF
+    assert opp.states.get(wemo_entity.entity_id).state == STATE_OFF

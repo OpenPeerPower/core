@@ -23,7 +23,7 @@ from openpeerpower.setup import async_setup_component
 async def test_simulated_sensor_default_config(opp):
     """Test default config."""
     config = {"sensor": {"platform": "simulated"}}
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
 
     assert len.opp.states.async_entity_ids()) == 1

@@ -13,7 +13,7 @@ DATA = {"username": "test-username", "password": "test-password"}
 
 async def test_form.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -44,9 +44,9 @@ async def test_form.opp):
 
 async def test_already_configured.opp):
     """Test config flow when Omnilogic component is already setup."""
-    MockConfigEntry(domain="omnilogic", data=DATA).add_to.opp.opp)
+    MockConfigEntry(domain="omnilogic", data=DATA).add_to_opp(opp)
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -58,7 +58,7 @@ async def test_already_configured.opp):
 async def test_with_invalid_credentials.opp):
     """Test with invalid credentials."""
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -80,7 +80,7 @@ async def test_with_invalid_credentials.opp):
 async def test_form_cannot_connect.opp):
     """Test if invalid response or no connection returned from Hayward."""
 
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -101,7 +101,7 @@ async def test_form_cannot_connect.opp):
 
 async def test_with_unknown_error(opp):
     """Test with unknown error response from Hayward."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -123,7 +123,7 @@ async def test_with_unknown_error(opp):
 async def test_option_flow.opp):
     """Test option flow."""
     entry = MockConfigEntry(domain=DOMAIN, data=DATA)
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     assert not entry.options
 

@@ -185,7 +185,7 @@ class MockPyAv:
         return self.container
 
 
-async def async_decode_stream.opp, packets, py_av=None):
+async def async_decode_stream(opp, packets, py_av=None):
     """Start a stream worker that decodes incoming stream packets into output segments."""
     stream = Stream.opp, STREAM_SOURCE)
     stream.add_provider(STREAM_OUTPUT_FORMAT)
@@ -240,7 +240,7 @@ async def test_skip_out_of_order_packet.opp):
     # This packet is out of order
     packets[OUT_OF_ORDER_PACKET_INDEX].dts = -9090
 
-    decoded_stream = await async_decode_stream.opp, iter(packets))
+    decoded_stream = await async_decode_stream(opp, iter(packets))
     segments = decoded_stream.segments
     # Check sequence numbers
     assert all([segments[i].sequence == i + 1 for i in range(len(segments))])
@@ -275,7 +275,7 @@ async def test_discard_old_packets.opp):
     # Packets after this one are considered out of order
     packets[OUT_OF_ORDER_PACKET_INDEX - 1].dts = 9090
 
-    decoded_stream = await async_decode_stream.opp, iter(packets))
+    decoded_stream = await async_decode_stream(opp, iter(packets))
     segments = decoded_stream.segments
     # Check number of segments
     assert len(segments) == int((OUT_OF_ORDER_PACKET_INDEX - 1) * SEGMENTS_PER_PACKET)
@@ -294,7 +294,7 @@ async def test_packet_overflow.opp):
     # Packet is so far out of order, exceeds max gap and looks like overflow
     packets[OUT_OF_ORDER_PACKET_INDEX].dts = -9000000
 
-    decoded_stream = await async_decode_stream.opp, iter(packets))
+    decoded_stream = await async_decode_stream(opp, iter(packets))
     segments = decoded_stream.segments
     # Check number of segments
     assert len(segments) == int((OUT_OF_ORDER_PACKET_INDEX - 1) * SEGMENTS_PER_PACKET)
@@ -315,7 +315,7 @@ async def test_skip_initial_bad_packets.opp):
     for i in range(0, num_bad_packets):
         packets[i].dts = None
 
-    decoded_stream = await async_decode_stream.opp, iter(packets))
+    decoded_stream = await async_decode_stream(opp, iter(packets))
     segments = decoded_stream.segments
     # Check number of segments
     assert len(segments) == int(
@@ -338,7 +338,7 @@ async def test_too_many_initial_bad_packets_fails.opp):
     for i in range(0, num_bad_packets):
         packets[i].dts = None
 
-    decoded_stream = await async_decode_stream.opp, iter(packets))
+    decoded_stream = await async_decode_stream(opp, iter(packets))
     segments = decoded_stream.segments
     assert len(segments) == 0
     assert len(decoded_stream.video_packets) == 0
@@ -355,7 +355,7 @@ async def test_skip_missing_dts.opp):
     for i in range(bad_packet_start, bad_packet_start + num_bad_packets):
         packets[i].dts = None
 
-    decoded_stream = await async_decode_stream.opp, iter(packets))
+    decoded_stream = await async_decode_stream(opp, iter(packets))
     segments = decoded_stream.segments
     # Check sequence numbers
     assert all([segments[i].sequence == i + 1 for i in range(len(segments))])
@@ -378,7 +378,7 @@ async def test_too_many_bad_packets.opp):
     for i in range(bad_packet_start, bad_packet_start + num_bad_packets):
         packets[i].dts = None
 
-    decoded_stream = await async_decode_stream.opp, iter(packets))
+    decoded_stream = await async_decode_stream(opp, iter(packets))
     segments = decoded_stream.segments
     assert len(segments) == int((bad_packet_start - 1) * SEGMENTS_PER_PACKET)
     assert len(decoded_stream.video_packets) == bad_packet_start
@@ -406,7 +406,7 @@ async def test_audio_packets_not_found.opp):
     num_packets = PACKETS_TO_WAIT_FOR_AUDIO + 1
     packets = PacketSequence(num_packets)  # Contains only video packets
 
-    decoded_stream = await async_decode_stream.opp, iter(packets), py_av=py_av)
+    decoded_stream = await async_decode_stream(opp, iter(packets), py_av=py_av)
     segments = decoded_stream.segments
     assert len(segments) == int((num_packets - 1) * SEGMENTS_PER_PACKET)
     assert len(decoded_stream.video_packets) == num_packets
@@ -427,7 +427,7 @@ async def test_audio_is_first_packet.opp):
     packets[2].dts = packets[3].dts / VIDEO_FRAME_RATE * AUDIO_SAMPLE_RATE
     packets[2].pts = packets[3].pts / VIDEO_FRAME_RATE * AUDIO_SAMPLE_RATE
 
-    decoded_stream = await async_decode_stream.opp, iter(packets), py_av=py_av)
+    decoded_stream = await async_decode_stream(opp, iter(packets), py_av=py_av)
     segments = decoded_stream.segments
     # The audio packets are segmented with the video packets
     assert len(segments) == int((num_packets - 2 - 1) * SEGMENTS_PER_PACKET)
@@ -445,7 +445,7 @@ async def test_audio_packets_found.opp):
     packets[1].dts = packets[0].dts / VIDEO_FRAME_RATE * AUDIO_SAMPLE_RATE
     packets[1].pts = packets[0].pts / VIDEO_FRAME_RATE * AUDIO_SAMPLE_RATE
 
-    decoded_stream = await async_decode_stream.opp, iter(packets), py_av=py_av)
+    decoded_stream = await async_decode_stream(opp, iter(packets), py_av=py_av)
     segments = decoded_stream.segments
     # The audio packet above is buffered with the video packet
     assert len(segments) == int((num_packets - 1 - 1) * SEGMENTS_PER_PACKET)
@@ -463,7 +463,7 @@ async def test_pts_out_of_order.opp):
             packets[i].pts = packets[i - 1].pts - 1
             packets[i].is_keyframe = False
 
-    decoded_stream = await async_decode_stream.opp, iter(packets))
+    decoded_stream = await async_decode_stream(opp, iter(packets))
     segments = decoded_stream.segments
     # Check number of segments
     assert len(segments) == int((TEST_SEQUENCE_LENGTH - 1) * SEGMENTS_PER_PACKET)

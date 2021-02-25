@@ -20,12 +20,12 @@ EVENT_LIGHT_DETECTOR_DARK = "08200100a109001470"
 EVENT_AC_118CDEA_2_ON = "0b1100100118cdea02010f70"
 
 
-async def test_one.opp, rfxtrx):
+async def test_one(opp, rfxtrx):
     """Test with 1 sensor."""
     entry_data = create_rfx_test_cfg(devices={"0b1100cd0213c7f230010f71": {}})
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -49,7 +49,7 @@ async def test_one_pt2262.opp, rfxtrx):
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -69,14 +69,14 @@ async def test_one_pt2262.opp, rfxtrx):
     assert state.state == "off"
 
 
-async def test_pt2262_unconfigured.opp, rfxtrx):
+async def test_pt2262_unconfigured(opp, rfxtrx):
     """Test with discovery for PT2262."""
     entry_data = create_rfx_test_cfg(
         devices={"0913000022670e013970": {}, "09130000226707013970": {}}
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -97,25 +97,25 @@ async def test_pt2262_unconfigured.opp, rfxtrx):
     "state,event",
     [["on", "0b1100cd0213c7f230010f71"], ["off", "0b1100cd0213c7f230000f71"]],
 )
-async def test_state_restore.opp, rfxtrx, state, event):
+async def test_state_restore(opp, rfxtrx, state, event):
     """State restoration."""
 
     entity_id = "binary_sensor.ac_213c7f2_48"
 
-    mock_restore_cache.opp, [State(entity_id, state, attributes={ATTR_EVENT: event})])
+    mock_restore_cache(opp, [State(entity_id, state, attributes={ATTR_EVENT: event})])
 
     entry_data = create_rfx_test_cfg(devices={"0b1100cd0213c7f230010f71": {}})
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
 
-    assert.opp.states.get(entity_id).state == state
+    assert opp.states.get(entity_id).state == state
 
 
-async def test_several.opp, rfxtrx):
+async def test_several(opp, rfxtrx):
     """Test with 3."""
     entry_data = create_rfx_test_cfg(
         devices={
@@ -126,7 +126,7 @@ async def test_several.opp, rfxtrx):
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -147,7 +147,7 @@ async def test_several.opp, rfxtrx):
     assert state.attributes.get("friendly_name") == "AC 1118cdea:2"
 
 
-async def test_discover.opp, rfxtrx_automatic):
+async def test_discover(opp, rfxtrx_automatic):
     """Test with discovery."""
     rfxtrx = rfxtrx_automatic
 
@@ -162,7 +162,7 @@ async def test_discover.opp, rfxtrx_automatic):
     assert state.state == "on"
 
 
-async def test_off_delay_restore.opp, rfxtrx):
+async def test_off_delay_restore(opp, rfxtrx):
     """Make sure binary sensor restore as off, if off delay is active."""
     mock_restore_cache(
         opp,
@@ -178,7 +178,7 @@ async def test_off_delay_restore.opp, rfxtrx):
     entry_data = create_rfx_test_cfg(devices={EVENT_AC_118CDEA_2_ON: {"off_delay": 5}})
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -189,14 +189,14 @@ async def test_off_delay_restore.opp, rfxtrx):
     assert state.state == "off"
 
 
-async def test_off_delay.opp, rfxtrx, timestep):
+async def test_off_delay(opp, rfxtrx, timestep):
     """Test with discovery."""
     entry_data = create_rfx_test_cfg(
         devices={"0b1100100118cdea02010f70": {"off_delay": 5}}
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
@@ -240,48 +240,48 @@ async def test_off_delay.opp, rfxtrx, timestep):
     assert state.state == "off"
 
 
-async def test_panic.opp, rfxtrx_automatic):
+async def test_panic(opp, rfxtrx_automatic):
     """Test panic entities."""
     rfxtrx = rfxtrx_automatic
 
     entity_id = "binary_sensor.kd101_smoke_detector_a10900_32"
 
     await rfxtrx.signal(EVENT_SMOKE_DETECTOR_PANIC)
-    assert.opp.states.get(entity_id).state == "on"
-    assert.opp.states.get(entity_id).attributes.get("device_class") == "smoke"
+    assert opp.states.get(entity_id).state == "on"
+    assert opp.states.get(entity_id).attributes.get("device_class") == "smoke"
 
     await rfxtrx.signal(EVENT_SMOKE_DETECTOR_NO_PANIC)
-    assert.opp.states.get(entity_id).state == "off"
+    assert opp.states.get(entity_id).state == "off"
 
 
-async def test_motion.opp, rfxtrx_automatic):
+async def test_motion(opp, rfxtrx_automatic):
     """Test motion entities."""
     rfxtrx = rfxtrx_automatic
 
     entity_id = "binary_sensor.x10_security_motion_detector_a10900_32"
 
     await rfxtrx.signal(EVENT_MOTION_DETECTOR_MOTION)
-    assert.opp.states.get(entity_id).state == "on"
-    assert.opp.states.get(entity_id).attributes.get("device_class") == "motion"
+    assert opp.states.get(entity_id).state == "on"
+    assert opp.states.get(entity_id).attributes.get("device_class") == "motion"
 
     await rfxtrx.signal(EVENT_MOTION_DETECTOR_NO_MOTION)
-    assert.opp.states.get(entity_id).state == "off"
+    assert opp.states.get(entity_id).state == "off"
 
 
-async def test_light.opp, rfxtrx_automatic):
+async def test_light(opp, rfxtrx_automatic):
     """Test light entities."""
     rfxtrx = rfxtrx_automatic
 
     entity_id = "binary_sensor.x10_security_motion_detector_a10900_32"
 
     await rfxtrx.signal(EVENT_LIGHT_DETECTOR_LIGHT)
-    assert.opp.states.get(entity_id).state == "on"
+    assert opp.states.get(entity_id).state == "on"
 
     await rfxtrx.signal(EVENT_LIGHT_DETECTOR_DARK)
-    assert.opp.states.get(entity_id).state == "off"
+    assert opp.states.get(entity_id).state == "off"
 
 
-async def test_pt2262_duplicate_id.opp, rfxtrx):
+async def test_pt2262_duplicate_id(opp, rfxtrx):
     """Test with 1 sensor."""
     entry_data = create_rfx_test_cfg(
         devices={
@@ -299,7 +299,7 @@ async def test_pt2262_duplicate_id.opp, rfxtrx):
     )
     mock_entry = MockConfigEntry(domain="rfxtrx", unique_id=DOMAIN, data=entry_data)
 
-    mock_entry.add_to.opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()

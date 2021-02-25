@@ -10,13 +10,13 @@ from openpeerpower.setup import async_setup_component
 @pytest.fixture(autouse=True)
 async def setup_bp.opp):
     """Fixture to set up the blueprint component."""
-    assert await async_setup_component.opp, "blueprint", {})
+    assert await async_setup_component(opp, "blueprint", {})
 
     # Trigger registration of automation blueprints
-    await async_setup_component.opp, "automation", {})
+    await async_setup_component(opp, "automation", {})
 
 
-async def test_list_blueprints.opp, opp_ws_client):
+async def test_list_blueprints(opp, opp_ws_client):
     """Test listing blueprints."""
     client = await opp_ws_client.opp)
     await client.send_json({"id": 5, "type": "blueprint/list", "domain": "automation"})
@@ -44,7 +44,7 @@ async def test_list_blueprints.opp, opp_ws_client):
     }
 
 
-async def test_list_blueprints_non_existing_domain.opp, opp_ws_client):
+async def test_list_blueprints_non_existing_domain(opp, opp_ws_client):
     """Test listing blueprints."""
     client = await opp_ws_client.opp)
     await client.send_json(
@@ -59,7 +59,7 @@ async def test_list_blueprints_non_existing_domain.opp, opp_ws_client):
     assert blueprints == {}
 
 
-async def test_import_blueprint.opp, aioclient_mock, opp_ws_client):
+async def test_import_blueprint(opp, aioclient_mock, opp_ws_client):
     """Test importing blueprints."""
     raw_data = Path(
         opp.config.path("blueprints/automation/test_event_service.yaml")
@@ -98,7 +98,7 @@ async def test_import_blueprint.opp, aioclient_mock, opp_ws_client):
     }
 
 
-async def test_save_blueprint.opp, aioclient_mock, opp_ws_client):
+async def test_save_blueprint(opp, aioclient_mock, opp_ws_client):
     """Test saving blueprints."""
     raw_data = Path(
         opp.config.path("blueprints/automation/test_event_service.yaml")
@@ -127,7 +127,7 @@ async def test_save_blueprint.opp, aioclient_mock, opp_ws_client):
         )
 
 
-async def test_save_existing_file.opp, aioclient_mock, opp_ws_client):
+async def test_save_existing_file(opp, aioclient_mock, opp_ws_client):
     """Test saving blueprints."""
 
     client = await opp_ws_client.opp)
@@ -170,7 +170,7 @@ async def test_save_file_error(opp, aioclient_mock, opp_ws_client):
         assert not msg["success"]
 
 
-async def test_save_invalid_blueprint.opp, aioclient_mock, opp_ws_client):
+async def test_save_invalid_blueprint(opp, aioclient_mock, opp_ws_client):
     """Test saving invalid blueprints."""
 
     client = await opp_ws_client.opp)
@@ -195,7 +195,7 @@ async def test_save_invalid_blueprint.opp, aioclient_mock, opp_ws_client):
     }
 
 
-async def test_delete_blueprint.opp, aioclient_mock, opp_ws_client):
+async def test_delete_blueprint(opp, aioclient_mock, opp_ws_client):
     """Test deleting blueprints."""
 
     with patch("pathlib.Path.unlink", return_value=Mock()) as unlink_mock:
@@ -216,7 +216,7 @@ async def test_delete_blueprint.opp, aioclient_mock, opp_ws_client):
         assert msg["success"]
 
 
-async def test_delete_non_exist_file_blueprint.opp, aioclient_mock, opp_ws_client):
+async def test_delete_non_exist_file_blueprint(opp, aioclient_mock, opp_ws_client):
     """Test deleting non existing blueprints."""
 
     client = await opp_ws_client.opp)

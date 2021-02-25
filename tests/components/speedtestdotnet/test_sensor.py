@@ -13,7 +13,7 @@ from tests.common import MockConfigEntry
 async def test_speedtestdotnet_sensors.opp):
     """Test sensors created for speedtestdotnet integration."""
     entry = MockConfigEntry(domain=speedtestdotnet.DOMAIN, data={})
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch("speedtest.Speedtest") as mock_api:
         mock_api.return_value.get_best_server.return_value = MOCK_SERVERS[1][0]

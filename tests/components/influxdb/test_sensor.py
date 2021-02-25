@@ -185,7 +185,7 @@ async def _setup_opp, config_ext, queries, expected_sensors):
     influx_config.update(config_ext)
     influx_config.update(queries)
 
-    assert await async_setup_component.opp, sensor.DOMAIN, config)
+    assert await async_setup_component(opp, sensor.DOMAIN, config)
     await opp.async_block_till_done()
 
     sensors = []
@@ -280,7 +280,7 @@ async def test_full_config(opp, mock_client, config_ext, queries, set_query_mock
 
 
 @pytest.mark.parametrize("config_ext", [(BASE_V1_CONFIG), (BASE_V2_CONFIG)])
-async def test_config_failure.opp, config_ext):
+async def test_config_failure(opp, config_ext):
     """Test an invalid config."""
     config = {"platform": DOMAIN}
     config.update(config_ext)
@@ -544,7 +544,7 @@ async def test_connection_error_at_startup(
 
     # Test sensor is not setup first time due to connection error
     await _setup_opp, config_ext, queries, [])
-    assert.opp.states.get(expected_sensor) is None
+    assert opp.states.get(expected_sensor) is None
     assert (
         len([record for record in caplog.records if record.levelname == "ERROR"]) == 1
     )
@@ -553,9 +553,9 @@ async def test_connection_error_at_startup(
     query_api.reset_mock(side_effect=True)
     set_query_mock(mock_client, return_value=make_resultset(42))
     new_time = dt_util.utcnow() + timedelta(seconds=PLATFORM_NOT_READY_BASE_WAIT_TIME)
-    async_fire_time_changed.opp, new_time)
+    async_fire_time_changed(opp, new_time)
     await opp.async_block_till_done()
-    assert.opp.states.get(expected_sensor) is not None
+    assert opp.states.get(expected_sensor) is not None
 
 
 @pytest.mark.parametrize(
@@ -592,7 +592,7 @@ async def test_data_repository_not_found(
     """Test sensor is not setup when bucket not available."""
     set_query_mock(mock_client)
     await _setup_opp, config_ext, queries, [])
-    assert.opp.states.get("sensor.test") is None
+    assert opp.states.get("sensor.test") is None
     assert (
         len([record for record in caplog.records if record.levelname == "ERROR"]) == 1
     )

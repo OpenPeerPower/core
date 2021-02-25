@@ -87,7 +87,7 @@ async def test_brightness_light.opp):
     events = []
     opp.bus.async_listen(EVENT_CALL_SERVICE, events.append)
 
-    calls = async_mock_service.opp, light.DOMAIN, light.SERVICE_TURN_ON)
+    calls = async_mock_service(opp, light.DOMAIN, light.SERVICE_TURN_ON)
     await trt.execute(
         trait.COMMAND_BRIGHTNESS_ABSOLUTE, BASIC_DATA, {"brightness": 50}, {}
     )
@@ -152,12 +152,12 @@ async def test_onoff_group.opp):
 
     assert trt_off.query_attributes() == {"on": False}
 
-    on_calls = async_mock_service.opp, OP_DOMAIN, SERVICE_TURN_ON)
+    on_calls = async_mock_service(opp, OP_DOMAIN, SERVICE_TURN_ON)
     await trt_on.execute(trait.COMMAND_ONOFF, BASIC_DATA, {"on": True}, {})
     assert len(on_calls) == 1
     assert on_calls[0].data == {ATTR_ENTITY_ID: "group.bla"}
 
-    off_calls = async_mock_service.opp, OP_DOMAIN, SERVICE_TURN_OFF)
+    off_calls = async_mock_service(opp, OP_DOMAIN, SERVICE_TURN_OFF)
     await trt_on.execute(trait.COMMAND_ONOFF, BASIC_DATA, {"on": False}, {})
     assert len(off_calls) == 1
     assert off_calls[0].data == {ATTR_ENTITY_ID: "group.bla"}
@@ -180,12 +180,12 @@ async def test_onoff_input_boolean.opp):
 
     assert trt_off.query_attributes() == {"on": False}
 
-    on_calls = async_mock_service.opp, input_boolean.DOMAIN, SERVICE_TURN_ON)
+    on_calls = async_mock_service(opp, input_boolean.DOMAIN, SERVICE_TURN_ON)
     await trt_on.execute(trait.COMMAND_ONOFF, BASIC_DATA, {"on": True}, {})
     assert len(on_calls) == 1
     assert on_calls[0].data == {ATTR_ENTITY_ID: "input_boolean.bla"}
 
-    off_calls = async_mock_service.opp, input_boolean.DOMAIN, SERVICE_TURN_OFF)
+    off_calls = async_mock_service(opp, input_boolean.DOMAIN, SERVICE_TURN_OFF)
     await trt_on.execute(trait.COMMAND_ONOFF, BASIC_DATA, {"on": False}, {})
     assert len(off_calls) == 1
     assert off_calls[0].data == {ATTR_ENTITY_ID: "input_boolean.bla"}
@@ -211,12 +211,12 @@ async def test_onoff_switch.opp):
     )
     assert trt_assumed.sync_attributes() == {"commandOnlyOnOff": True}
 
-    on_calls = async_mock_service.opp, switch.DOMAIN, SERVICE_TURN_ON)
+    on_calls = async_mock_service(opp, switch.DOMAIN, SERVICE_TURN_ON)
     await trt_on.execute(trait.COMMAND_ONOFF, BASIC_DATA, {"on": True}, {})
     assert len(on_calls) == 1
     assert on_calls[0].data == {ATTR_ENTITY_ID: "switch.bla"}
 
-    off_calls = async_mock_service.opp, switch.DOMAIN, SERVICE_TURN_OFF)
+    off_calls = async_mock_service(opp, switch.DOMAIN, SERVICE_TURN_OFF)
     await trt_on.execute(trait.COMMAND_ONOFF, BASIC_DATA, {"on": False}, {})
     assert len(off_calls) == 1
     assert off_calls[0].data == {ATTR_ENTITY_ID: "switch.bla"}
@@ -236,12 +236,12 @@ async def test_onoff_fan.opp):
     trt_off = trait.OnOffTrait.opp, State("fan.bla", STATE_OFF), BASIC_CONFIG)
     assert trt_off.query_attributes() == {"on": False}
 
-    on_calls = async_mock_service.opp, fan.DOMAIN, SERVICE_TURN_ON)
+    on_calls = async_mock_service(opp, fan.DOMAIN, SERVICE_TURN_ON)
     await trt_on.execute(trait.COMMAND_ONOFF, BASIC_DATA, {"on": True}, {})
     assert len(on_calls) == 1
     assert on_calls[0].data == {ATTR_ENTITY_ID: "fan.bla"}
 
-    off_calls = async_mock_service.opp, fan.DOMAIN, SERVICE_TURN_OFF)
+    off_calls = async_mock_service(opp, fan.DOMAIN, SERVICE_TURN_OFF)
     await trt_on.execute(trait.COMMAND_ONOFF, BASIC_DATA, {"on": False}, {})
     assert len(off_calls) == 1
     assert off_calls[0].data == {ATTR_ENTITY_ID: "fan.bla"}
@@ -262,12 +262,12 @@ async def test_onoff_light.opp):
 
     assert trt_off.query_attributes() == {"on": False}
 
-    on_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+    on_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
     await trt_on.execute(trait.COMMAND_ONOFF, BASIC_DATA, {"on": True}, {})
     assert len(on_calls) == 1
     assert on_calls[0].data == {ATTR_ENTITY_ID: "light.bla"}
 
-    off_calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_OFF)
+    off_calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_OFF)
     await trt_on.execute(trait.COMMAND_ONOFF, BASIC_DATA, {"on": False}, {})
     assert len(off_calls) == 1
     assert off_calls[0].data == {ATTR_ENTITY_ID: "light.bla"}
@@ -288,12 +288,12 @@ async def test_onoff_media_player.opp):
 
     assert trt_off.query_attributes() == {"on": False}
 
-    on_calls = async_mock_service.opp, media_player.DOMAIN, SERVICE_TURN_ON)
+    on_calls = async_mock_service(opp, media_player.DOMAIN, SERVICE_TURN_ON)
     await trt_on.execute(trait.COMMAND_ONOFF, BASIC_DATA, {"on": True}, {})
     assert len(on_calls) == 1
     assert on_calls[0].data == {ATTR_ENTITY_ID: "media_player.bla"}
 
-    off_calls = async_mock_service.opp, media_player.DOMAIN, SERVICE_TURN_OFF)
+    off_calls = async_mock_service(opp, media_player.DOMAIN, SERVICE_TURN_OFF)
 
     await trt_on.execute(trait.COMMAND_ONOFF, BASIC_DATA, {"on": False}, {})
     assert len(off_calls) == 1
@@ -315,12 +315,12 @@ async def test_onoff_humidifier.opp):
 
     assert trt_off.query_attributes() == {"on": False}
 
-    on_calls = async_mock_service.opp, humidifier.DOMAIN, SERVICE_TURN_ON)
+    on_calls = async_mock_service(opp, humidifier.DOMAIN, SERVICE_TURN_ON)
     await trt_on.execute(trait.COMMAND_ONOFF, BASIC_DATA, {"on": True}, {})
     assert len(on_calls) == 1
     assert on_calls[0].data == {ATTR_ENTITY_ID: "humidifier.bla"}
 
-    off_calls = async_mock_service.opp, humidifier.DOMAIN, SERVICE_TURN_OFF)
+    off_calls = async_mock_service(opp, humidifier.DOMAIN, SERVICE_TURN_OFF)
 
     await trt_on.execute(trait.COMMAND_ONOFF, BASIC_DATA, {"on": False}, {})
     assert len(off_calls) == 1
@@ -338,7 +338,7 @@ async def test_dock_vacuum.opp):
 
     assert trt.query_attributes() == {"isDocked": False}
 
-    calls = async_mock_service.opp, vacuum.DOMAIN, vacuum.SERVICE_RETURN_TO_BASE)
+    calls = async_mock_service(opp, vacuum.DOMAIN, vacuum.SERVICE_RETURN_TO_BASE)
     await trt.execute(trait.COMMAND_DOCK, BASIC_DATA, {}, {})
     assert len(calls) == 1
     assert calls[0].data == {ATTR_ENTITY_ID: "vacuum.bla"}
@@ -363,22 +363,22 @@ async def test_startstop_vacuum.opp):
 
     assert trt.query_attributes() == {"isRunning": False, "isPaused": True}
 
-    start_calls = async_mock_service.opp, vacuum.DOMAIN, vacuum.SERVICE_START)
+    start_calls = async_mock_service(opp, vacuum.DOMAIN, vacuum.SERVICE_START)
     await trt.execute(trait.COMMAND_STARTSTOP, BASIC_DATA, {"start": True}, {})
     assert len(start_calls) == 1
     assert start_calls[0].data == {ATTR_ENTITY_ID: "vacuum.bla"}
 
-    stop_calls = async_mock_service.opp, vacuum.DOMAIN, vacuum.SERVICE_STOP)
+    stop_calls = async_mock_service(opp, vacuum.DOMAIN, vacuum.SERVICE_STOP)
     await trt.execute(trait.COMMAND_STARTSTOP, BASIC_DATA, {"start": False}, {})
     assert len(stop_calls) == 1
     assert stop_calls[0].data == {ATTR_ENTITY_ID: "vacuum.bla"}
 
-    pause_calls = async_mock_service.opp, vacuum.DOMAIN, vacuum.SERVICE_PAUSE)
+    pause_calls = async_mock_service(opp, vacuum.DOMAIN, vacuum.SERVICE_PAUSE)
     await trt.execute(trait.COMMAND_PAUSEUNPAUSE, BASIC_DATA, {"pause": True}, {})
     assert len(pause_calls) == 1
     assert pause_calls[0].data == {ATTR_ENTITY_ID: "vacuum.bla"}
 
-    unpause_calls = async_mock_service.opp, vacuum.DOMAIN, vacuum.SERVICE_START)
+    unpause_calls = async_mock_service(opp, vacuum.DOMAIN, vacuum.SERVICE_START)
     await trt.execute(trait.COMMAND_PAUSEUNPAUSE, BASIC_DATA, {"pause": False}, {})
     assert len(unpause_calls) == 1
     assert unpause_calls[0].data == {ATTR_ENTITY_ID: "vacuum.bla"}
@@ -407,7 +407,7 @@ async def test_startstop_cover.opp):
         state.state = state_value
         assert trt.query_attributes() == {"isRunning": True}
 
-    stop_calls = async_mock_service.opp, cover.DOMAIN, cover.SERVICE_STOP_COVER)
+    stop_calls = async_mock_service(opp, cover.DOMAIN, cover.SERVICE_STOP_COVER)
     await trt.execute(trait.COMMAND_STARTSTOP, BASIC_DATA, {"start": False}, {})
     assert len(stop_calls) == 1
     assert stop_calls[0].data == {ATTR_ENTITY_ID: "cover.bla"}
@@ -441,7 +441,7 @@ async def test_startstop_cover_assumed.opp):
         BASIC_CONFIG,
     )
 
-    stop_calls = async_mock_service.opp, cover.DOMAIN, cover.SERVICE_STOP_COVER)
+    stop_calls = async_mock_service(opp, cover.DOMAIN, cover.SERVICE_STOP_COVER)
     await trt.execute(trait.COMMAND_STARTSTOP, BASIC_DATA, {"start": False}, {})
     assert len(stop_calls) == 1
     assert stop_calls[0].data == {ATTR_ENTITY_ID: "cover.bla"}
@@ -477,7 +477,7 @@ async def test_color_setting_color_light.opp):
         trait.COMMAND_COLOR_ABSOLUTE, {"color": {"spectrumRGB": 16715792}}
     )
 
-    calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+    calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
     await trt.execute(
         trait.COMMAND_COLOR_ABSOLUTE,
         BASIC_DATA,
@@ -536,7 +536,7 @@ async def test_color_setting_temperature_light.opp):
     assert trt.can_execute(
         trait.COMMAND_COLOR_ABSOLUTE, {"color": {"temperature": 400}}
     )
-    calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+    calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
 
     with pytest.raises(helpers.SmartHomeError) as err:
         await trt.execute(
@@ -635,7 +635,7 @@ async def test_light_modes.opp):
         params={"updateModeSettings": {"effect": "colorloop"}},
     )
 
-    calls = async_mock_service.opp, light.DOMAIN, SERVICE_TURN_ON)
+    calls = async_mock_service(opp, light.DOMAIN, SERVICE_TURN_ON)
     await trt.execute(
         trait.COMMAND_MODES,
         BASIC_DATA,
@@ -660,7 +660,7 @@ async def test_scene_scene.opp):
     assert trt.query_attributes() == {}
     assert trt.can_execute(trait.COMMAND_ACTIVATE_SCENE, {})
 
-    calls = async_mock_service.opp, scene.DOMAIN, SERVICE_TURN_ON)
+    calls = async_mock_service(opp, scene.DOMAIN, SERVICE_TURN_ON)
     await trt.execute(trait.COMMAND_ACTIVATE_SCENE, BASIC_DATA, {}, {})
     assert len(calls) == 1
     assert calls[0].data == {ATTR_ENTITY_ID: "scene.bla"}
@@ -676,7 +676,7 @@ async def test_scene_script.opp):
     assert trt.query_attributes() == {}
     assert trt.can_execute(trait.COMMAND_ACTIVATE_SCENE, {})
 
-    calls = async_mock_service.opp, script.DOMAIN, SERVICE_TURN_ON)
+    calls = async_mock_service(opp, script.DOMAIN, SERVICE_TURN_ON)
     await trt.execute(trait.COMMAND_ACTIVATE_SCENE, BASIC_DATA, {}, {})
 
     # We don't wait till script execution is done.
@@ -718,13 +718,13 @@ async def test_temperature_setting_climate_onoff.opp):
     }
     assert trt.can_execute(trait.COMMAND_THERMOSTAT_SET_MODE, {})
 
-    calls = async_mock_service.opp, climate.DOMAIN, SERVICE_TURN_ON)
+    calls = async_mock_service(opp, climate.DOMAIN, SERVICE_TURN_ON)
     await trt.execute(
         trait.COMMAND_THERMOSTAT_SET_MODE, BASIC_DATA, {"thermostatMode": "on"}, {}
     )
     assert len(calls) == 1
 
-    calls = async_mock_service.opp, climate.DOMAIN, SERVICE_TURN_OFF)
+    calls = async_mock_service(opp, climate.DOMAIN, SERVICE_TURN_OFF)
     await trt.execute(
         trait.COMMAND_THERMOSTAT_SET_MODE, BASIC_DATA, {"thermostatMode": "off"}, {}
     )
@@ -801,7 +801,7 @@ async def test_temperature_setting_climate_range.opp):
     assert trt.can_execute(trait.COMMAND_THERMOSTAT_TEMPERATURE_SET_RANGE, {})
     assert trt.can_execute(trait.COMMAND_THERMOSTAT_SET_MODE, {})
 
-    calls = async_mock_service.opp, climate.DOMAIN, climate.SERVICE_SET_TEMPERATURE)
+    calls = async_mock_service(opp, climate.DOMAIN, climate.SERVICE_SET_TEMPERATURE)
     await trt.execute(
         trait.COMMAND_THERMOSTAT_TEMPERATURE_SET_RANGE,
         BASIC_DATA,
@@ -818,7 +818,7 @@ async def test_temperature_setting_climate_range.opp):
         climate.ATTR_TARGET_TEMP_LOW: 68,
     }
 
-    calls = async_mock_service.opp, climate.DOMAIN, climate.SERVICE_SET_HVAC_MODE)
+    calls = async_mock_service(opp, climate.DOMAIN, climate.SERVICE_SET_HVAC_MODE)
     await trt.execute(
         trait.COMMAND_THERMOSTAT_SET_MODE, BASIC_DATA, {"thermostatMode": "cool"}, {}
     )
@@ -873,7 +873,7 @@ async def test_temperature_setting_climate_setpoint.opp):
     assert trt.can_execute(trait.COMMAND_THERMOSTAT_TEMPERATURE_SETPOINT, {})
     assert trt.can_execute(trait.COMMAND_THERMOSTAT_SET_MODE, {})
 
-    calls = async_mock_service.opp, climate.DOMAIN, climate.SERVICE_SET_TEMPERATURE)
+    calls = async_mock_service(opp, climate.DOMAIN, climate.SERVICE_SET_TEMPERATURE)
 
     with pytest.raises(helpers.SmartHomeError):
         await trt.execute(
@@ -932,7 +932,7 @@ async def test_temperature_setting_climate_setpoint_auto.opp):
     assert trt.can_execute(trait.COMMAND_THERMOSTAT_TEMPERATURE_SETPOINT, {})
     assert trt.can_execute(trait.COMMAND_THERMOSTAT_SET_MODE, {})
 
-    calls = async_mock_service.opp, climate.DOMAIN, climate.SERVICE_SET_TEMPERATURE)
+    calls = async_mock_service(opp, climate.DOMAIN, climate.SERVICE_SET_TEMPERATURE)
 
     await trt.execute(
         trait.COMMAND_THERMOSTAT_TEMPERATURE_SETPOINT,
@@ -970,7 +970,7 @@ async def test_humidity_setting_humidifier_setpoint.opp):
     }
     assert trt.can_execute(trait.COMMAND_SET_HUMIDITY, {})
 
-    calls = async_mock_service.opp, humidifier.DOMAIN, humidifier.SERVICE_SET_HUMIDITY)
+    calls = async_mock_service(opp, humidifier.DOMAIN, humidifier.SERVICE_SET_HUMIDITY)
 
     await trt.execute(trait.COMMAND_SET_HUMIDITY, BASIC_DATA, {"humidity": 32}, {})
     assert len(calls) == 1
@@ -996,7 +996,7 @@ async def test_lock_unlock_lock.opp):
 
     assert trt.can_execute(trait.COMMAND_LOCKUNLOCK, {"lock": True})
 
-    calls = async_mock_service.opp, lock.DOMAIN, lock.SERVICE_LOCK)
+    calls = async_mock_service(opp, lock.DOMAIN, lock.SERVICE_LOCK)
 
     await trt.execute(trait.COMMAND_LOCKUNLOCK, PIN_DATA, {"lock": True}, {})
 
@@ -1019,7 +1019,7 @@ async def test_lock_unlock_unlock.opp):
 
     assert trt.can_execute(trait.COMMAND_LOCKUNLOCK, {"lock": False})
 
-    calls = async_mock_service.opp, lock.DOMAIN, lock.SERVICE_UNLOCK)
+    calls = async_mock_service(opp, lock.DOMAIN, lock.SERVICE_UNLOCK)
 
     # No challenge data
     with pytest.raises(error.ChallengeNeeded) as err:
@@ -1450,7 +1450,7 @@ async def test_fan_speed.opp):
 
     assert trt.can_execute(trait.COMMAND_FANSPEED, params={"fanSpeed": "medium"})
 
-    calls = async_mock_service.opp, fan.DOMAIN, fan.SERVICE_SET_SPEED)
+    calls = async_mock_service(opp, fan.DOMAIN, fan.SERVICE_SET_SPEED)
     await trt.execute(trait.COMMAND_FANSPEED, BASIC_DATA, {"fanSpeed": "medium"}, {})
 
     assert len(calls) == 1
@@ -1458,7 +1458,7 @@ async def test_fan_speed.opp):
 
     assert trt.can_execute(trait.COMMAND_FANSPEED, params={"fanSpeedPercent": 10})
 
-    calls = async_mock_service.opp, fan.DOMAIN, fan.SERVICE_SET_PERCENTAGE)
+    calls = async_mock_service(opp, fan.DOMAIN, fan.SERVICE_SET_PERCENTAGE)
     await trt.execute(trait.COMMAND_FANSPEED, BASIC_DATA, {"fanSpeedPercent": 10}, {})
 
     assert len(calls) == 1
@@ -1515,7 +1515,7 @@ async def test_climate_fan_speed.opp):
 
     assert trt.can_execute(trait.COMMAND_FANSPEED, params={"fanSpeed": "medium"})
 
-    calls = async_mock_service.opp, climate.DOMAIN, climate.SERVICE_SET_FAN_MODE)
+    calls = async_mock_service(opp, climate.DOMAIN, climate.SERVICE_SET_FAN_MODE)
     await trt.execute(trait.COMMAND_FANSPEED, BASIC_DATA, {"fanSpeed": "medium"}, {})
 
     assert len(calls) == 1
@@ -1595,7 +1595,7 @@ async def test_inputselector.opp):
         (["a", "b", "c"], "a", "b", "c"),
     ],
 )
-async def test_inputselector_nextprev.opp, sources, source, source_next, source_prev):
+async def test_inputselector_nextprev(opp, sources, source, source_next, source_prev):
     """Test input selector trait."""
     trt = trait.InputSelectorTrait(
         opp,
@@ -1643,7 +1643,7 @@ async def test_inputselector_nextprev.opp, sources, source, source_next, source_
 @pytest.mark.parametrize(
     "sources,source", [(None, "a"), (["a", "b"], None), (["a", "b"], "c")]
 )
-async def test_inputselector_nextprev_invalid.opp, sources, source):
+async def test_inputselector_nextprev_invalid(opp, sources, source):
     """Test input selector trait."""
     trt = trait.InputSelectorTrait(
         opp,
@@ -1821,7 +1821,7 @@ async def test_modes_humidifier.opp):
         trait.COMMAND_MODES, params={"updateModeSettings": {"mode": "away"}}
     )
 
-    calls = async_mock_service.opp, humidifier.DOMAIN, humidifier.SERVICE_SET_MODE)
+    calls = async_mock_service(opp, humidifier.DOMAIN, humidifier.SERVICE_SET_MODE)
     await trt.execute(
         trait.COMMAND_MODES,
         BASIC_DATA,
@@ -1933,8 +1933,8 @@ async def test_openclose_cover.opp):
     assert trt.sync_attributes() == {}
     assert trt.query_attributes() == {"openPercent": 75}
 
-    calls_set = async_mock_service.opp, cover.DOMAIN, cover.SERVICE_SET_COVER_POSITION)
-    calls_open = async_mock_service.opp, cover.DOMAIN, cover.SERVICE_OPEN_COVER)
+    calls_set = async_mock_service(opp, cover.DOMAIN, cover.SERVICE_SET_COVER_POSITION)
+    calls_open = async_mock_service(opp, cover.DOMAIN, cover.SERVICE_OPEN_COVER)
 
     await trt.execute(trait.COMMAND_OPENCLOSE, BASIC_DATA, {"openPercent": 50}, {})
     await trt.execute(
@@ -1968,7 +1968,7 @@ async def test_openclose_cover_unknown_state.opp):
     with pytest.raises(helpers.SmartHomeError):
         trt.query_attributes()
 
-    calls = async_mock_service.opp, cover.DOMAIN, cover.SERVICE_OPEN_COVER)
+    calls = async_mock_service(opp, cover.DOMAIN, cover.SERVICE_OPEN_COVER)
     await trt.execute(trait.COMMAND_OPENCLOSE, BASIC_DATA, {"openPercent": 100}, {})
     assert len(calls) == 1
     assert calls[0].data == {ATTR_ENTITY_ID: "cover.bla"}
@@ -2001,7 +2001,7 @@ async def test_openclose_cover_assumed_state.opp):
 
     assert trt.query_attributes() == {}
 
-    calls = async_mock_service.opp, cover.DOMAIN, cover.SERVICE_SET_COVER_POSITION)
+    calls = async_mock_service(opp, cover.DOMAIN, cover.SERVICE_SET_COVER_POSITION)
     await trt.execute(trait.COMMAND_OPENCLOSE, BASIC_DATA, {"openPercent": 40}, {})
     assert len(calls) == 1
     assert calls[0].data == {ATTR_ENTITY_ID: "cover.bla", cover.ATTR_POSITION: 40}
@@ -2059,12 +2059,12 @@ async def test_openclose_cover_no_position.opp):
     assert trt.sync_attributes() == {"discreteOnlyOpenClose": True}
     assert trt.query_attributes() == {"openPercent": 0}
 
-    calls = async_mock_service.opp, cover.DOMAIN, cover.SERVICE_CLOSE_COVER)
+    calls = async_mock_service(opp, cover.DOMAIN, cover.SERVICE_CLOSE_COVER)
     await trt.execute(trait.COMMAND_OPENCLOSE, BASIC_DATA, {"openPercent": 0}, {})
     assert len(calls) == 1
     assert calls[0].data == {ATTR_ENTITY_ID: "cover.bla"}
 
-    calls = async_mock_service.opp, cover.DOMAIN, cover.SERVICE_OPEN_COVER)
+    calls = async_mock_service(opp, cover.DOMAIN, cover.SERVICE_OPEN_COVER)
     await trt.execute(trait.COMMAND_OPENCLOSE, BASIC_DATA, {"openPercent": 100}, {})
     assert len(calls) == 1
     assert calls[0].data == {ATTR_ENTITY_ID: "cover.bla"}
@@ -2087,7 +2087,7 @@ async def test_openclose_cover_no_position.opp):
     "device_class",
     (cover.DEVICE_CLASS_DOOR, cover.DEVICE_CLASS_GARAGE, cover.DEVICE_CLASS_GATE),
 )
-async def test_openclose_cover_secure.opp, device_class):
+async def test_openclose_cover_secure(opp, device_class):
     """Test OpenClose trait support for cover domain."""
     assert helpers.get_google_type(cover.DOMAIN, device_class) is not None
     assert trait.OpenCloseTrait.supported(
@@ -2114,8 +2114,8 @@ async def test_openclose_cover_secure.opp, device_class):
     assert trt.sync_attributes() == {}
     assert trt.query_attributes() == {"openPercent": 75}
 
-    calls = async_mock_service.opp, cover.DOMAIN, cover.SERVICE_SET_COVER_POSITION)
-    calls_close = async_mock_service.opp, cover.DOMAIN, cover.SERVICE_CLOSE_COVER)
+    calls = async_mock_service(opp, cover.DOMAIN, cover.SERVICE_SET_COVER_POSITION)
+    calls_close = async_mock_service(opp, cover.DOMAIN, cover.SERVICE_CLOSE_COVER)
 
     # No challenge data
     with pytest.raises(error.ChallengeNeeded) as err:
@@ -2155,7 +2155,7 @@ async def test_openclose_cover_secure.opp, device_class):
         binary_sensor.DEVICE_CLASS_WINDOW,
     ),
 )
-async def test_openclose_binary_sensor.opp, device_class):
+async def test_openclose_binary_sensor(opp, device_class):
     """Test OpenClose trait support for binary_sensor domain."""
     assert helpers.get_google_type(binary_sensor.DOMAIN, device_class) is not None
     assert trait.OpenCloseTrait.supported(binary_sensor.DOMAIN, 0, device_class)
@@ -2392,7 +2392,7 @@ async def test_temperature_setting_sensor.opp):
         (TEMP_FAHRENHEIT, "F", "unknown", None),
     ],
 )
-async def test_temperature_setting_sensor_data.opp, unit_in, unit_out, state, ambient):
+async def test_temperature_setting_sensor_data(opp, unit_in, unit_out, state, ambient):
     """Test TemperatureSetting trait support for temperature sensor."""
     opp.config.units.temperature_unit = unit_in
 
@@ -2432,7 +2432,7 @@ async def test_humidity_setting_sensor.opp):
 @pytest.mark.parametrize(
     "state,ambient", [("70", 70), ("unavailable", None), ("unknown", None)]
 )
-async def test_humidity_setting_sensor_data.opp, state, ambient):
+async def test_humidity_setting_sensor_data(opp, state, ambient):
     """Test HumiditySetting trait support for humidity sensor."""
     trt = trait.HumiditySettingTrait(
         opp,
@@ -2581,7 +2581,7 @@ async def test_transport_control.opp):
         STATE_UNKNOWN,
     ),
 )
-async def test_media_state.opp, state):
+async def test_media_state(opp, state):
     """Test the MediaStateTrait."""
     assert helpers.get_google_type(media_player.DOMAIN, None) is not None
 

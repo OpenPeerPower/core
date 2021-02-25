@@ -53,14 +53,14 @@ def make_camera(device_id, name=DEVICE_NAME, traits={}):
     )
 
 
-async def async_setup_camera.opp, devices=None):
+async def async_setup_camera(opp, devices=None):
     """Set up the platform and prerequisites for testing available triggers."""
     if not devices:
         devices = {DEVICE_ID: make_camera(device_id=DEVICE_ID)}
-    return await async_setup_sdm_platform.opp, "camera", devices)
+    return await async_setup_sdm_platform(opp, "camera", devices)
 
 
-async def setup_automation.opp, device_id, trigger_type):
+async def setup_automation(opp, device_id, trigger_type):
     """Set up an automation trigger for testing triggering."""
     return await async_setup_component(
         opp,
@@ -87,7 +87,7 @@ async def setup_automation.opp, device_id, trigger_type):
 @pytest.fixture
 def calls.opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp, "test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
 async def test_get_triggers.opp):
@@ -99,7 +99,7 @@ async def test_get_triggers.opp):
             "sdm.devices.traits.CameraPerson": {},
         },
     )
-    await async_setup_camera.opp, {DEVICE_ID: camera})
+    await async_setup_camera(opp, {DEVICE_ID: camera})
 
     device_registry = await opp.helpers.device_registry.async_get_registry()
     device_entry = device_registry.async_get_device({("nest", DEVICE_ID)})
@@ -118,7 +118,7 @@ async def test_get_triggers.opp):
             "device_id": device_entry.id,
         },
     ]
-    triggers = await async_get_device_automations.opp, "trigger", device_entry.id)
+    triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     assert_lists_same(triggers, expected_triggers)
 
 
@@ -138,7 +138,7 @@ async def test_multiple_devices.opp):
             "sdm.devices.traits.DoorbellChime": {},
         },
     )
-    await async_setup_camera.opp, {"device-id-1": camera1, "device-id-2": camera2})
+    await async_setup_camera(opp, {"device-id-1": camera1, "device-id-2": camera2})
 
     registry = await opp.helpers.entity_registry.async_get_registry()
     entry1 = registry.async_get("camera.camera_1")
@@ -146,7 +146,7 @@ async def test_multiple_devices.opp):
     entry2 = registry.async_get("camera.camera_2")
     assert entry2.unique_id == "device-id-2-camera"
 
-    triggers = await async_get_device_automations.opp, "trigger", entry1.device_id)
+    triggers = await async_get_device_automations(opp, "trigger", entry1.device_id)
     assert len(triggers) == 1
     assert triggers[0] == {
         "platform": "device",
@@ -155,7 +155,7 @@ async def test_multiple_devices.opp):
         "device_id": entry1.device_id,
     }
 
-    triggers = await async_get_device_automations.opp, "trigger", entry2.device_id)
+    triggers = await async_get_device_automations(opp, "trigger", entry2.device_id)
     assert len(triggers) == 1
     assert triggers[0] == {
         "platform": "device",
@@ -174,7 +174,7 @@ async def test_triggers_for_invalid_device_id.opp):
             "sdm.devices.traits.CameraPerson": {},
         },
     )
-    await async_setup_camera.opp, {DEVICE_ID: camera})
+    await async_setup_camera(opp, {DEVICE_ID: camera})
 
     device_registry = await opp.helpers.device_registry.async_get_registry()
     device_entry = device_registry.async_get_device({("nest", DEVICE_ID)})
@@ -190,25 +190,25 @@ async def test_triggers_for_invalid_device_id.opp):
     assert device_entry_2 is not None
 
     with pytest.raises(InvalidDeviceAutomationConfig):
-        await async_get_device_automations.opp, "trigger", device_entry_2.id)
+        await async_get_device_automations(opp, "trigger", device_entry_2.id)
 
 
 async def test_no_triggers.opp):
     """Test we get the expected triggers from a nest."""
     camera = make_camera(device_id=DEVICE_ID, traits={})
-    await async_setup_camera.opp, {DEVICE_ID: camera})
+    await async_setup_camera(opp, {DEVICE_ID: camera})
 
     registry = await opp.helpers.entity_registry.async_get_registry()
     entry = registry.async_get("camera.my_camera")
     assert entry.unique_id == "some-device-id-camera"
 
-    triggers = await async_get_device_automations.opp, "trigger", entry.device_id)
+    triggers = await async_get_device_automations(opp, "trigger", entry.device_id)
     assert triggers == []
 
 
-async def test_fires_on_camera_motion.opp, calls):
+async def test_fires_on_camera_motion(opp, calls):
     """Test camera_motion triggers firing."""
-    assert await setup_automation.opp, DEVICE_ID, "camera_motion")
+    assert await setup_automation(opp, DEVICE_ID, "camera_motion")
 
     message = {"device_id": DEVICE_ID, "type": "camera_motion", "timestamp": utcnow()}
     opp.bus.async_fire(NEST_EVENT, message)
@@ -217,9 +217,9 @@ async def test_fires_on_camera_motion.opp, calls):
     assert calls[0].data == DATA_MESSAGE
 
 
-async def test_fires_on_camera_person.opp, calls):
+async def test_fires_on_camera_person(opp, calls):
     """Test camera_person triggers firing."""
-    assert await setup_automation.opp, DEVICE_ID, "camera_person")
+    assert await setup_automation(opp, DEVICE_ID, "camera_person")
 
     message = {"device_id": DEVICE_ID, "type": "camera_person", "timestamp": utcnow()}
     opp.bus.async_fire(NEST_EVENT, message)
@@ -228,9 +228,9 @@ async def test_fires_on_camera_person.opp, calls):
     assert calls[0].data == DATA_MESSAGE
 
 
-async def test_fires_on_camera_sound.opp, calls):
+async def test_fires_on_camera_sound(opp, calls):
     """Test camera_person triggers firing."""
-    assert await setup_automation.opp, DEVICE_ID, "camera_sound")
+    assert await setup_automation(opp, DEVICE_ID, "camera_sound")
 
     message = {"device_id": DEVICE_ID, "type": "camera_sound", "timestamp": utcnow()}
     opp.bus.async_fire(NEST_EVENT, message)
@@ -239,9 +239,9 @@ async def test_fires_on_camera_sound.opp, calls):
     assert calls[0].data == DATA_MESSAGE
 
 
-async def test_fires_on_doorbell_chime.opp, calls):
+async def test_fires_on_doorbell_chime(opp, calls):
     """Test doorbell_chime triggers firing."""
-    assert await setup_automation.opp, DEVICE_ID, "doorbell_chime")
+    assert await setup_automation(opp, DEVICE_ID, "doorbell_chime")
 
     message = {"device_id": DEVICE_ID, "type": "doorbell_chime", "timestamp": utcnow()}
     opp.bus.async_fire(NEST_EVENT, message)
@@ -250,9 +250,9 @@ async def test_fires_on_doorbell_chime.opp, calls):
     assert calls[0].data == DATA_MESSAGE
 
 
-async def test_trigger_for_wrong_device_id.opp, calls):
+async def test_trigger_for_wrong_device_id(opp, calls):
     """Test for turn_on and turn_off triggers firing."""
-    assert await setup_automation.opp, DEVICE_ID, "camera_motion")
+    assert await setup_automation(opp, DEVICE_ID, "camera_motion")
 
     message = {
         "device_id": "wrong-device-id",
@@ -264,9 +264,9 @@ async def test_trigger_for_wrong_device_id.opp, calls):
     assert len(calls) == 0
 
 
-async def test_trigger_for_wrong_event_type.opp, calls):
+async def test_trigger_for_wrong_event_type(opp, calls):
     """Test for turn_on and turn_off triggers firing."""
-    assert await setup_automation.opp, DEVICE_ID, "camera_motion")
+    assert await setup_automation(opp, DEVICE_ID, "camera_motion")
 
     message = {
         "device_id": DEVICE_ID,
@@ -278,7 +278,7 @@ async def test_trigger_for_wrong_event_type.opp, calls):
     assert len(calls) == 0
 
 
-async def test_subscriber_automation.opp, calls):
+async def test_subscriber_automation(opp, calls):
     """Test end to end subscriber triggers automation."""
     camera = make_camera(
         device_id=DEVICE_ID,
@@ -286,12 +286,12 @@ async def test_subscriber_automation.opp, calls):
             "sdm.devices.traits.CameraMotion": {},
         },
     )
-    subscriber = await async_setup_camera.opp, {DEVICE_ID: camera})
+    subscriber = await async_setup_camera(opp, {DEVICE_ID: camera})
 
     device_registry = await opp.helpers.device_registry.async_get_registry()
     device_entry = device_registry.async_get_device({("nest", DEVICE_ID)})
 
-    assert await setup_automation.opp, device_entry.id, "camera_motion")
+    assert await setup_automation(opp, device_entry.id, "camera_motion")
 
     # Simulate a pubsub message received by the subscriber with a motion event
     event = EventMessage(

@@ -31,11 +31,11 @@ class FilterTest:
     should_pass: bool
 
 
-async def prometheus_client.opp, opp_client):
+async def prometheus_client(opp, opp_client):
     """Initialize an.opp_client with Prometheus component."""
-    await async_setup_component.opp, prometheus.DOMAIN, {prometheus.DOMAIN: {}})
+    await async_setup_component(opp, prometheus.DOMAIN, {prometheus.DOMAIN: {}})
 
-    await async_setup_component.opp, sensor.DOMAIN, {"sensor": [{"platform": "demo"}]})
+    await async_setup_component(opp, sensor.DOMAIN, {"sensor": [{"platform": "demo"}]})
 
     await async_setup_component(
         opp. climate.DOMAIN, {"climate": [{"platform": "demo"}]}
@@ -91,9 +91,9 @@ async def prometheus_client.opp, opp_client):
     return await opp_client()
 
 
-async def test_view.opp, opp_client):
+async def test_view(opp, opp_client):
     """Test prometheus metrics view."""
-    client = await prometheus_client.opp, opp_client)
+    client = await prometheus_client(opp, opp_client)
     resp = await client.get(prometheus.API_ENDPOINT)
 
     assert resp.status == 200
@@ -221,9 +221,9 @@ def mock_bus.opp):
 async def test_minimal_config(opp, mock_client):
     """Test the minimal config and defaults of component."""
     config = {prometheus.DOMAIN: {}}
-    assert await async_setup_component.opp, prometheus.DOMAIN, config)
+    assert await async_setup_component(opp, prometheus.DOMAIN, config)
     await opp.async_block_till_done()
-    assert.opp.bus.listen.called
+    assert opp.bus.listen.called
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
 
 
@@ -248,9 +248,9 @@ async def test_full_config(opp, mock_client):
             },
         }
     }
-    assert await async_setup_component.opp, prometheus.DOMAIN, config)
+    assert await async_setup_component(opp, prometheus.DOMAIN, config)
     await opp.async_block_till_done()
-    assert.opp.bus.listen.called
+    assert opp.bus.listen.called
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
 
 
@@ -270,13 +270,13 @@ def make_event(entity_id):
 async def _setup_opp, filter_config):
     """Shared set up for filtering tests."""
     config = {prometheus.DOMAIN: {"filter": filter_config}}
-    assert await async_setup_component.opp, prometheus.DOMAIN, config)
+    assert await async_setup_component(opp, prometheus.DOMAIN, config)
     await opp.async_block_till_done()
     return.opp.bus.listen.call_args_list[0][0][1]
 
 
 @pytest.mark.usefixtures("mock_bus")
-async def test_allowlist.opp, mock_client):
+async def test_allowlist(opp, mock_client):
     """Test an allowlist only config."""
     handler_method = await _setup(
         opp,
@@ -306,7 +306,7 @@ async def test_allowlist.opp, mock_client):
 
 
 @pytest.mark.usefixtures("mock_bus")
-async def test_denylist.opp, mock_client):
+async def test_denylist(opp, mock_client):
     """Test a denylist only config."""
     handler_method = await _setup(
         opp,
@@ -336,7 +336,7 @@ async def test_denylist.opp, mock_client):
 
 
 @pytest.mark.usefixtures("mock_bus")
-async def test_filtered_denylist.opp, mock_client):
+async def test_filtered_denylist(opp, mock_client):
     """Test a denylist config with a filtering allowlist."""
     handler_method = await _setup(
         opp,

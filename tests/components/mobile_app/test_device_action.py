@@ -6,12 +6,12 @@ from openpeerpower.setup import async_setup_component
 from tests.common import async_get_device_automations, patch
 
 
-async def test_get_actions.opp, push_registration):
+async def test_get_actions(opp, push_registration):
     """Test we get the expected actions from a mobile_app."""
     webhook_id = push_registration["webhook_id"]
     device_id = opp.data[DOMAIN][DATA_DEVICES][webhook_id].id
 
-    assert await async_get_device_automations.opp, "action", device_id) == [
+    assert await async_get_device_automations(opp, "action", device_id) == [
         {"domain": DOMAIN, "device_id": device_id, "type": "notify"}
     ]
 
@@ -21,7 +21,7 @@ async def test_get_actions.opp, push_registration):
     assert "extra_fields" in capabilitites
 
 
-async def test_action.opp, push_registration):
+async def test_action(opp, push_registration):
     """Test for turn_on and turn_off actions."""
     webhook_id = push_registration["webhook_id"]
 
@@ -49,10 +49,10 @@ async def test_action.opp, push_registration):
         },
     )
 
-    service_name = util.get_notify_service.opp, webhook_id)
+    service_name = util.get_notify_service(opp, webhook_id)
 
     # Make sure it was actually registered
-    assert.opp.services.has_service("notify", service_name)
+    assert opp.services.has_service("notify", service_name)
 
     with patch(
         "openpeerpower.components.mobile_app.notify.MobileAppNotificationService.async_send_message"

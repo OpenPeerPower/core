@@ -31,7 +31,7 @@ def remove_file():
 async def test_invalid_path.opp):
     """Test that an invalid path is caught."""
     config = {"sensor": {"platform": "filesize", CONF_FILE_PATHS: ["invalid_path"]}}
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
     assert len.opp.states.async_entity_ids()) == 0
 
@@ -41,7 +41,7 @@ async def test_valid_path.opp):
     create_file(TEST_FILE)
     config = {"sensor": {"platform": "filesize", CONF_FILE_PATHS: [TEST_FILE]}}
     opp.config.allowlist_external_dirs = {TEST_DIR}
-    assert await async_setup_component.opp, "sensor", config)
+    assert await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
     assert len.opp.states.async_entity_ids()) == 1
     state = opp.states.get("sensor.mock_file_test_filesize_txt")
@@ -49,7 +49,7 @@ async def test_valid_path.opp):
     assert state.attributes.get("bytes") == 4
 
 
-async def test_reload.opp, tmpdir):
+async def test_reload(opp, tmpdir):
     """Verify we can reload filesize sensors."""
     testfile = f"{tmpdir}/file"
     await opp.async_add_executor_job(create_file, testfile)
@@ -68,7 +68,7 @@ async def test_reload.opp, tmpdir):
 
     assert len.opp.states.async_all()) == 1
 
-    assert.opp.states.get("sensor.file")
+    assert opp.states.get("sensor.file")
 
     yaml_path = os.path.join(
         _get_fixtures_base_path(),
@@ -86,7 +86,7 @@ async def test_reload.opp, tmpdir):
         )
         await opp.async_block_till_done()
 
-    assert.opp.states.get("sensor.file") is None
+    assert opp.states.get("sensor.file") is None
 
 
 def _get_fixtures_base_path():

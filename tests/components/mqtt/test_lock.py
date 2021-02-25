@@ -44,7 +44,7 @@ DEFAULT_CONFIG = {
 }
 
 
-async def test_controlling_state_via_topic.opp, mqtt_mock):
+async def test_controlling_state_via_topic(opp, mqtt_mock):
     """Test the controlling state via topic."""
     assert await async_setup_component(
         opp,
@@ -68,18 +68,18 @@ async def test_controlling_state_via_topic.opp, mqtt_mock):
     assert state.state is STATE_UNLOCKED
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "state-topic", "LOCKED")
+    async_fire_mqtt_message(opp, "state-topic", "LOCKED")
 
     state = opp.states.get("lock.test")
     assert state.state is STATE_LOCKED
 
-    async_fire_mqtt_message.opp, "state-topic", "UNLOCKED")
+    async_fire_mqtt_message(opp, "state-topic", "UNLOCKED")
 
     state = opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
 
 
-async def test_controlling_non_default_state_via_topic.opp, mqtt_mock):
+async def test_controlling_non_default_state_via_topic(opp, mqtt_mock):
     """Test the controlling state via topic."""
     assert await async_setup_component(
         opp,
@@ -103,18 +103,18 @@ async def test_controlling_non_default_state_via_topic.opp, mqtt_mock):
     assert state.state is STATE_UNLOCKED
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
-    async_fire_mqtt_message.opp, "state-topic", "closed")
+    async_fire_mqtt_message(opp, "state-topic", "closed")
 
     state = opp.states.get("lock.test")
     assert state.state is STATE_LOCKED
 
-    async_fire_mqtt_message.opp, "state-topic", "open")
+    async_fire_mqtt_message(opp, "state-topic", "open")
 
     state = opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
 
 
-async def test_controlling_state_via_topic_and_json_message.opp, mqtt_mock):
+async def test_controlling_state_via_topic_and_json_message(opp, mqtt_mock):
     """Test the controlling state via topic and JSON message."""
     assert await async_setup_component(
         opp,
@@ -138,12 +138,12 @@ async def test_controlling_state_via_topic_and_json_message.opp, mqtt_mock):
     state = opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
 
-    async_fire_mqtt_message.opp, "state-topic", '{"val":"LOCKED"}')
+    async_fire_mqtt_message(opp, "state-topic", '{"val":"LOCKED"}')
 
     state = opp.states.get("lock.test")
     assert state.state is STATE_LOCKED
 
-    async_fire_mqtt_message.opp, "state-topic", '{"val":"UNLOCKED"}')
+    async_fire_mqtt_message(opp, "state-topic", '{"val":"UNLOCKED"}')
 
     state = opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
@@ -175,18 +175,18 @@ async def test_controlling_non_default_state_via_topic_and_json_message(
     state = opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
 
-    async_fire_mqtt_message.opp, "state-topic", '{"val":"closed"}')
+    async_fire_mqtt_message(opp, "state-topic", '{"val":"closed"}')
 
     state = opp.states.get("lock.test")
     assert state.state is STATE_LOCKED
 
-    async_fire_mqtt_message.opp, "state-topic", '{"val":"open"}')
+    async_fire_mqtt_message(opp, "state-topic", '{"val":"open"}')
 
     state = opp.states.get("lock.test")
     assert state.state is STATE_UNLOCKED
 
 
-async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
+async def test_sending_mqtt_commands_and_optimistic(opp, mqtt_mock):
     """Test optimistic mode without state topic."""
     assert await async_setup_component(
         opp,
@@ -230,7 +230,7 @@ async def test_sending_mqtt_commands_and_optimistic.opp, mqtt_mock):
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
 
-async def test_sending_mqtt_commands_and_explicit_optimistic.opp, mqtt_mock):
+async def test_sending_mqtt_commands_and_explicit_optimistic(opp, mqtt_mock):
     """Test optimistic mode without state topic."""
     assert await async_setup_component(
         opp,
@@ -276,70 +276,70 @@ async def test_sending_mqtt_commands_and_explicit_optimistic.opp, mqtt_mock):
     assert state.attributes.get(ATTR_ASSUMED_STATE)
 
 
-async def test_availability_when_connection_lost.opp, mqtt_mock):
+async def test_availability_when_connection_lost(opp, mqtt_mock):
     """Test availability after MQTT disconnection."""
     await help_test_availability_when_connection_lost(
         opp. mqtt_mock, LOCK_DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_availability_without_topic.opp, mqtt_mock):
+async def test_availability_without_topic(opp, mqtt_mock):
     """Test availability without defined availability topic."""
     await help_test_availability_without_topic(
         opp. mqtt_mock, LOCK_DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_default_availability_payload.opp, mqtt_mock):
+async def test_default_availability_payload(opp, mqtt_mock):
     """Test availability by default payload with defined topic."""
     await help_test_default_availability_payload(
         opp. mqtt_mock, LOCK_DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_custom_availability_payload.opp, mqtt_mock):
+async def test_custom_availability_payload(opp, mqtt_mock):
     """Test availability by custom payload with defined topic."""
     await help_test_custom_availability_payload(
         opp. mqtt_mock, LOCK_DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_setting_attribute_via_mqtt_json_message.opp, mqtt_mock):
+async def test_setting_attribute_via_mqtt_json_message(opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_via_mqtt_json_message(
         opp. mqtt_mock, LOCK_DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_setting_attribute_with_template.opp, mqtt_mock):
+async def test_setting_attribute_with_template(opp, mqtt_mock):
     """Test the setting of attribute via MQTT with JSON payload."""
     await help_test_setting_attribute_with_template(
         opp. mqtt_mock, LOCK_DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_update_with_json_attrs_not_dict.opp, mqtt_mock, caplog):
+async def test_update_with_json_attrs_not_dict(opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_not_dict(
         opp. mqtt_mock, caplog, LOCK_DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_update_with_json_attrs_bad_json.opp, mqtt_mock, caplog):
+async def test_update_with_json_attrs_bad_json(opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_bad_JSON(
         opp. mqtt_mock, caplog, LOCK_DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_discovery_update_attr.opp, mqtt_mock, caplog):
+async def test_discovery_update_attr(opp, mqtt_mock, caplog):
     """Test update of discovered MQTTAttributes."""
     await help_test_discovery_update_attr(
         opp. mqtt_mock, caplog, LOCK_DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_unique_id.opp, mqtt_mock):
+async def test_unique_id(opp, mqtt_mock):
     """Test unique id option only creates one lock per unique_id."""
     config = {
         LOCK_DOMAIN: [
@@ -359,16 +359,16 @@ async def test_unique_id.opp, mqtt_mock):
             },
         ]
     }
-    await help_test_unique_id.opp, mqtt_mock, LOCK_DOMAIN, config)
+    await help_test_unique_id(opp, mqtt_mock, LOCK_DOMAIN, config)
 
 
-async def test_discovery_removal_lock.opp, mqtt_mock, caplog):
+async def test_discovery_removal_lock(opp, mqtt_mock, caplog):
     """Test removal of discovered lock."""
     data = '{ "name": "test",' '  "command_topic": "test_topic" }'
-    await help_test_discovery_removal.opp, mqtt_mock, caplog, LOCK_DOMAIN, data)
+    await help_test_discovery_removal(opp, mqtt_mock, caplog, LOCK_DOMAIN, data)
 
 
-async def test_discovery_update_lock.opp, mqtt_mock, caplog):
+async def test_discovery_update_lock(opp, mqtt_mock, caplog):
     """Test update of discovered lock."""
     data1 = (
         '{ "name": "Beer",'
@@ -382,10 +382,10 @@ async def test_discovery_update_lock.opp, mqtt_mock, caplog):
         '  "command_topic": "command_topic",'
         '  "availability_topic": "availability_topic2" }'
     )
-    await help_test_discovery_update.opp, mqtt_mock, caplog, LOCK_DOMAIN, data1, data2)
+    await help_test_discovery_update(opp, mqtt_mock, caplog, LOCK_DOMAIN, data1, data2)
 
 
-async def test_discovery_update_unchanged_lock.opp, mqtt_mock, caplog):
+async def test_discovery_update_unchanged_lock(opp, mqtt_mock, caplog):
     """Test update of discovered lock."""
     data1 = (
         '{ "name": "Beer",'
@@ -401,56 +401,56 @@ async def test_discovery_update_unchanged_lock.opp, mqtt_mock, caplog):
 
 
 @pytest.mark.no_fail_on_log_exception
-async def test_discovery_broken.opp, mqtt_mock, caplog):
+async def test_discovery_broken(opp, mqtt_mock, caplog):
     """Test handling of bad discovery message."""
     data1 = '{ "name": "Beer" }'
     data2 = '{ "name": "Milk",' '  "command_topic": "test_topic" }'
-    await help_test_discovery_broken.opp, mqtt_mock, caplog, LOCK_DOMAIN, data1, data2)
+    await help_test_discovery_broken(opp, mqtt_mock, caplog, LOCK_DOMAIN, data1, data2)
 
 
-async def test_entity_device_info_with_connection.opp, mqtt_mock):
+async def test_entity_device_info_with_connection(opp, mqtt_mock):
     """Test MQTT lock device registry integration."""
     await help_test_entity_device_info_with_connection(
         opp. mqtt_mock, LOCK_DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_entity_device_info_with_identifier.opp, mqtt_mock):
+async def test_entity_device_info_with_identifier(opp, mqtt_mock):
     """Test MQTT lock device registry integration."""
     await help_test_entity_device_info_with_identifier(
         opp. mqtt_mock, LOCK_DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_entity_device_info_update.opp, mqtt_mock):
+async def test_entity_device_info_update(opp, mqtt_mock):
     """Test device registry update."""
     await help_test_entity_device_info_update(
         opp. mqtt_mock, LOCK_DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_entity_device_info_remove.opp, mqtt_mock):
+async def test_entity_device_info_remove(opp, mqtt_mock):
     """Test device registry remove."""
     await help_test_entity_device_info_remove(
         opp. mqtt_mock, LOCK_DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_entity_id_update_subscriptions.opp, mqtt_mock):
+async def test_entity_id_update_subscriptions(opp, mqtt_mock):
     """Test MQTT subscriptions are managed when entity_id is updated."""
     await help_test_entity_id_update_subscriptions(
         opp. mqtt_mock, LOCK_DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_entity_id_update_discovery_update.opp, mqtt_mock):
+async def test_entity_id_update_discovery_update(opp, mqtt_mock):
     """Test MQTT discovery update when entity_id is updated."""
     await help_test_entity_id_update_discovery_update(
         opp. mqtt_mock, LOCK_DOMAIN, DEFAULT_CONFIG
     )
 
 
-async def test_entity_debug_info_message.opp, mqtt_mock):
+async def test_entity_debug_info_message(opp, mqtt_mock):
     """Test MQTT debug info."""
     await help_test_entity_debug_info_message(
         opp. mqtt_mock, LOCK_DOMAIN, DEFAULT_CONFIG

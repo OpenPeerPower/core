@@ -10,11 +10,11 @@ from openpeerpower.setup import async_setup_component
 from tests.common import get_system_health_info
 
 
-async def test_accuweather_system_health.opp, aioclient_mock):
+async def test_accuweather_system_health(opp, aioclient_mock):
     """Test AccuWeather system health."""
     aioclient_mock.get("https://dataservice.accuweather.com/", text="")
     opp.config.components.add(DOMAIN)
-    assert await async_setup_component.opp, "system_health", {})
+    assert await async_setup_component(opp, "system_health", {})
 
     opp.data[DOMAIN] = {}
     opp.data[DOMAIN]["0123xyz"] = {}
@@ -22,7 +22,7 @@ async def test_accuweather_system_health.opp, aioclient_mock):
         accuweather=Mock(requests_remaining="42")
     )
 
-    info = await get_system_health_info.opp, DOMAIN)
+    info = await get_system_health_info(opp, DOMAIN)
 
     for key, val in info.items():
         if asyncio.iscoroutine(val):
@@ -34,11 +34,11 @@ async def test_accuweather_system_health.opp, aioclient_mock):
     }
 
 
-async def test_accuweather_system_health_fail.opp, aioclient_mock):
+async def test_accuweather_system_health_fail(opp, aioclient_mock):
     """Test AccuWeather system health."""
     aioclient_mock.get("https://dataservice.accuweather.com/", exc=ClientError)
     opp.config.components.add(DOMAIN)
-    assert await async_setup_component.opp, "system_health", {})
+    assert await async_setup_component(opp, "system_health", {})
 
     opp.data[DOMAIN] = {}
     opp.data[DOMAIN]["0123xyz"] = {}
@@ -46,7 +46,7 @@ async def test_accuweather_system_health_fail.opp, aioclient_mock):
         accuweather=Mock(requests_remaining="0")
     )
 
-    info = await get_system_health_info.opp, DOMAIN)
+    info = await get_system_health_info(opp, DOMAIN)
 
     for key, val in info.items():
         if asyncio.iscoroutine(val):

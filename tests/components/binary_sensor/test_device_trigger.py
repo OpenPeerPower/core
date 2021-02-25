@@ -166,7 +166,7 @@ async def test_if_fires_on_state_change(opp, calls):
         },
     )
     await opp.async_block_till_done()
-    assert.opp.states.get(sensor1.entity_id).state == STATE_ON
+    assert opp.states.get(sensor1.entity_id).state == STATE_ON
     assert len(calls) == 0
 
     opp.states.async_set(sensor1.entity_id, STATE_OFF)
@@ -228,7 +228,7 @@ async def test_if_fires_on_state_change_with_for(opp, calls):
         },
     )
     await opp.async_block_till_done()
-    assert.opp.states.get(sensor1.entity_id).state == STATE_ON
+    assert opp.states.get(sensor1.entity_id).state == STATE_ON
     assert len(calls) == 0
 
     opp.states.async_set(sensor1.entity_id, STATE_OFF)

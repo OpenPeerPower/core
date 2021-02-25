@@ -9,9 +9,9 @@ from openpeerpower.components.point import DOMAIN, config_flow
 from openpeerpower.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET
 
 
-def init_config_flow.opp, side_effect=None):
+def init_config_flow(opp, side_effect=None):
     """Init a configuration flow."""
-    config_flow.register_flow_implementation.opp, DOMAIN, "id", "secret")
+    config_flow.register_flow_implementation(opp, DOMAIN, "id", "secret")
     flow = config_flow.PointFlowHandler()
     flow._get_authorization_url = AsyncMock(  # pylint: disable=protected-access
         return_value="https://example.com", side_effect=side_effect
@@ -71,7 +71,7 @@ async def test_full_flow_implementation(
     opp. mock_pypoint  # pylint: disable=redefined-outer-name
 ):
     """Test registering an implementation and finishing flow works."""
-    config_flow.register_flow_implementation.opp, "test-other", None, None)
+    config_flow.register_flow_implementation(opp, "test-other", None, None)
     flow = init_config_flow.opp)
 
     result = await flow.async_step_user()
@@ -95,7 +95,7 @@ async def test_full_flow_implementation(
     assert result["data"]["token"] == {"access_token": "boo"}
 
 
-async def test_step_import.opp, mock_pypoint):  # pylint: disable=redefined-outer-name
+async def test_step_import(opp, mock_pypoint):  # pylint: disable=redefined-outer-name
     """Test that we trigger import when configuring with client."""
     flow = init_config_flow.opp)
 
@@ -127,7 +127,7 @@ async def test_not_pick_implementation_if_only_one.opp):
 
 async def test_abort_if_timeout_generating_auth_url.opp):
     """Test we abort if generating authorize url fails."""
-    flow = init_config_flow.opp, side_effect=asyncio.TimeoutError)
+    flow = init_config_flow(opp, side_effect=asyncio.TimeoutError)
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -136,7 +136,7 @@ async def test_abort_if_timeout_generating_auth_url.opp):
 
 async def test_abort_if_exception_generating_auth_url.opp):
     """Test we abort if generating authorize url blows up."""
-    flow = init_config_flow.opp, side_effect=ValueError)
+    flow = init_config_flow(opp, side_effect=ValueError)
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT

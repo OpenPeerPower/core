@@ -39,7 +39,7 @@ async def test_init(tempsensor, opp, config):
     """Test sensor default state."""
 
     _, entity_id = tempsensor
-    entry = await async_setup_entity.opp, config, entity_id)
+    entry = await async_setup_entity(opp, config, entity_id)
     assert entry.unique_id == "BleBox-tempSensor-1afe34db9437-0.temperature"
 
     state = opp.states.get(entity_id)
@@ -68,7 +68,7 @@ async def test_update(tempsensor, opp, config):
         feature_mock.current = 25.18
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
 
     state = opp.states.get(entity_id)
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == TEMP_CELSIUS
@@ -82,6 +82,6 @@ async def test_update_failure(tempsensor, opp, config, caplog):
 
     feature_mock, entity_id = tempsensor
     feature_mock.async_update = AsyncMock(side_effect=blebox_uniapi.error.ClientError)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
 
     assert f"Updating '{feature_mock.full_name}' failed: " in caplog.text

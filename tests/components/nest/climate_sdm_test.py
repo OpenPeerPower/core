@@ -44,7 +44,7 @@ from tests.components.climate import common
 PLATFORM = "climate"
 
 
-async def setup_climate.opp, raw_traits=None, auth=None):
+async def setup_climate(opp, raw_traits=None, auth=None):
     """Load Nest climate devices."""
     devices = None
     if raw_traits:
@@ -60,7 +60,7 @@ async def setup_climate.opp, raw_traits=None, auth=None):
                 auth=auth,
             ),
         }
-    return await async_setup_sdm_platform.opp, PLATFORM, devices)
+    return await async_setup_sdm_platform(opp, PLATFORM, devices)
 
 
 async def test_no_devices.opp):
@@ -71,7 +71,7 @@ async def test_no_devices.opp):
 
 async def test_climate_devices.opp):
     """Test no eligible climate devices returned by the api."""
-    await setup_climate.opp, {"sdm.devices.traits.CameraImage": {}})
+    await setup_climate(opp, {"sdm.devices.traits.CameraImage": {}})
     assert len.opp.states.async_all()) == 0
 
 
@@ -369,7 +369,7 @@ async def test_thermostat_eco_heat_only.opp):
     assert thermostat.attributes[ATTR_PRESET_MODES] == [PRESET_ECO, PRESET_NONE]
 
 
-async def test_thermostat_set_hvac_mode.opp, auth):
+async def test_thermostat_set_hvac_mode(opp, auth):
     """Test a thermostat changing hvac modes."""
     subscriber = await setup_climate(
         opp,
@@ -389,7 +389,7 @@ async def test_thermostat_set_hvac_mode.opp, auth):
     assert thermostat.state == HVAC_MODE_OFF
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
 
-    await common.async_set_hvac_mode.opp, HVAC_MODE_HEAT)
+    await common.async_set_hvac_mode(opp, HVAC_MODE_HEAT)
     await opp.async_block_till_done()
 
     assert auth.method == "post"
@@ -455,7 +455,7 @@ async def test_thermostat_set_hvac_mode.opp, auth):
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_HEAT
 
 
-async def test_thermostat_invalid_hvac_mode.opp, auth):
+async def test_thermostat_invalid_hvac_mode(opp, auth):
     """Test setting an hvac_mode that is not supported."""
     await setup_climate(
         opp,
@@ -476,14 +476,14 @@ async def test_thermostat_invalid_hvac_mode.opp, auth):
     assert thermostat.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_OFF
 
     with pytest.raises(ValueError):
-        await common.async_set_hvac_mode.opp, HVAC_MODE_DRY)
+        await common.async_set_hvac_mode(opp, HVAC_MODE_DRY)
         await opp.async_block_till_done()
 
     assert thermostat.state == HVAC_MODE_OFF
     assert auth.method is None  # No communication with API
 
 
-async def test_thermostat_set_eco_preset.opp, auth):
+async def test_thermostat_set_eco_preset(opp, auth):
     """Test a thermostat put into eco mode."""
     subscriber = await setup_climate(
         opp,
@@ -511,7 +511,7 @@ async def test_thermostat_set_eco_preset.opp, auth):
     assert thermostat.attributes[ATTR_PRESET_MODE] == PRESET_NONE
 
     # Turn on eco mode
-    await common.async_set_preset_mode.opp, PRESET_ECO)
+    await common.async_set_preset_mode(opp, PRESET_ECO)
     await opp.async_block_till_done()
 
     assert auth.method == "post"
@@ -557,7 +557,7 @@ async def test_thermostat_set_eco_preset.opp, auth):
     assert thermostat.attributes[ATTR_PRESET_MODE] == PRESET_ECO
 
     # Turn off eco mode
-    await common.async_set_preset_mode.opp, PRESET_NONE)
+    await common.async_set_preset_mode(opp, PRESET_NONE)
     await opp.async_block_till_done()
 
     assert auth.method == "post"
@@ -568,7 +568,7 @@ async def test_thermostat_set_eco_preset.opp, auth):
     }
 
 
-async def test_thermostat_set_cool.opp, auth):
+async def test_thermostat_set_cool(opp, auth):
     """Test a thermostat in cool mode with a temperature change."""
     await setup_climate(
         opp,
@@ -590,7 +590,7 @@ async def test_thermostat_set_cool.opp, auth):
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_COOL
 
-    await common.async_set_temperature.opp, temperature=24.0)
+    await common.async_set_temperature(opp, temperature=24.0)
     await opp.async_block_till_done()
 
     assert auth.method == "post"
@@ -601,7 +601,7 @@ async def test_thermostat_set_cool.opp, auth):
     }
 
 
-async def test_thermostat_set_heat.opp, auth):
+async def test_thermostat_set_heat(opp, auth):
     """Test a thermostat heating mode with a temperature change."""
     await setup_climate(
         opp,
@@ -623,7 +623,7 @@ async def test_thermostat_set_heat.opp, auth):
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_HEAT
 
-    await common.async_set_temperature.opp, temperature=20.0)
+    await common.async_set_temperature(opp, temperature=20.0)
     await opp.async_block_till_done()
 
     assert auth.method == "post"
@@ -634,7 +634,7 @@ async def test_thermostat_set_heat.opp, auth):
     }
 
 
-async def test_thermostat_set_heat_cool.opp, auth):
+async def test_thermostat_set_heat_cool(opp, auth):
     """Test a thermostat in heatcool mode with a temperature change."""
     await setup_climate(
         opp,
@@ -781,7 +781,7 @@ async def test_thermostat_cool_with_fan.opp):
     assert thermostat.attributes[ATTR_FAN_MODES] == [FAN_ON, FAN_OFF]
 
 
-async def test_thermostat_set_fan.opp, auth):
+async def test_thermostat_set_fan(opp, auth):
     """Test a thermostat enabling the fan."""
     await setup_climate(
         opp,
@@ -809,7 +809,7 @@ async def test_thermostat_set_fan.opp, auth):
     assert thermostat.attributes[ATTR_FAN_MODES] == [FAN_ON, FAN_OFF]
 
     # Turn off fan mode
-    await common.async_set_fan_mode.opp, FAN_OFF)
+    await common.async_set_fan_mode(opp, FAN_OFF)
     await opp.async_block_till_done()
 
     assert auth.method == "post"
@@ -853,7 +853,7 @@ async def test_thermostat_fan_empty.opp):
     assert ATTR_FAN_MODES not in thermostat.attributes
 
     # Ignores set_fan_mode since it is lacking SUPPORT_FAN_MODE
-    await common.async_set_fan_mode.opp, FAN_ON)
+    await common.async_set_fan_mode(opp, FAN_ON)
     await opp.async_block_till_done()
 
     assert ATTR_FAN_MODE not in thermostat.attributes
@@ -897,11 +897,11 @@ async def test_thermostat_invalid_fan_mode.opp):
     assert thermostat.attributes[ATTR_FAN_MODES] == [FAN_ON, FAN_OFF]
 
     with pytest.raises(ValueError):
-        await common.async_set_fan_mode.opp, FAN_LOW)
+        await common.async_set_fan_mode(opp, FAN_LOW)
         await opp.async_block_till_done()
 
 
-async def test_thermostat_set_hvac_fan_only.opp, auth):
+async def test_thermostat_set_hvac_fan_only(opp, auth):
     """Test a thermostat enabling the fan via hvac_mode."""
     await setup_climate(
         opp,
@@ -928,7 +928,7 @@ async def test_thermostat_set_hvac_fan_only.opp, auth):
     assert thermostat.attributes[ATTR_FAN_MODE] == FAN_OFF
     assert thermostat.attributes[ATTR_FAN_MODES] == [FAN_ON, FAN_OFF]
 
-    await common.async_set_hvac_mode.opp, HVAC_MODE_FAN_ONLY)
+    await common.async_set_hvac_mode(opp, HVAC_MODE_FAN_ONLY)
     await opp.async_block_till_done()
 
     assert len(auth.captured_requests) == 2
@@ -949,7 +949,7 @@ async def test_thermostat_set_hvac_fan_only.opp, auth):
     }
 
 
-async def test_thermostat_target_temp.opp, auth):
+async def test_thermostat_target_temp(opp, auth):
     """Test a thermostat changing hvac modes and affected on target temps."""
     subscriber = await setup_climate(
         opp,
@@ -1035,11 +1035,11 @@ async def test_thermostat_missing_mode_traits.opp):
     assert ATTR_FAN_MODE not in thermostat.attributes
     assert ATTR_FAN_MODES not in thermostat.attributes
 
-    await common.async_set_temperature.opp, temperature=24.0)
+    await common.async_set_temperature(opp, temperature=24.0)
     await opp.async_block_till_done()
     assert ATTR_TEMPERATURE not in thermostat.attributes
 
-    await common.async_set_preset_mode.opp, PRESET_ECO)
+    await common.async_set_preset_mode(opp, PRESET_ECO)
     await opp.async_block_till_done()
     assert ATTR_PRESET_MODE not in thermostat.attributes
 
@@ -1077,7 +1077,7 @@ async def test_thermostat_missing_temperature_trait.opp):
     assert ATTR_FAN_MODE not in thermostat.attributes
     assert ATTR_FAN_MODES not in thermostat.attributes
 
-    await common.async_set_temperature.opp, temperature=24.0)
+    await common.async_set_temperature(opp, temperature=24.0)
     await opp.async_block_till_done()
     assert thermostat.attributes[ATTR_TEMPERATURE] is None
 
@@ -1107,7 +1107,7 @@ async def test_thermostat_unexpected_hvac_status.opp):
     assert ATTR_FAN_MODES not in thermostat.attributes
 
     with pytest.raises(ValueError):
-        await common.async_set_hvac_mode.opp, HVAC_MODE_DRY)
+        await common.async_set_hvac_mode(opp, HVAC_MODE_DRY)
         await opp.async_block_till_done()
     assert thermostat.state == HVAC_MODE_OFF
 
@@ -1180,7 +1180,7 @@ async def test_thermostat_unexepected_hvac_mode.opp):
     assert ATTR_FAN_MODES not in thermostat.attributes
 
 
-async def test_thermostat_invalid_set_preset_mode.opp, auth):
+async def test_thermostat_invalid_set_preset_mode(opp, auth):
     """Test a thermostat set with an invalid preset mode."""
     await setup_climate(
         opp,
@@ -1205,7 +1205,7 @@ async def test_thermostat_invalid_set_preset_mode.opp, auth):
 
     # Set preset mode that is invalid
     with pytest.raises(ValueError):
-        await common.async_set_preset_mode.opp, PRESET_SLEEP)
+        await common.async_set_preset_mode(opp, PRESET_SLEEP)
         await opp.async_block_till_done()
 
     # No RPC sent

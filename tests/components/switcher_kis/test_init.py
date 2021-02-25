@@ -92,7 +92,7 @@ async def test_set_auto_off_service(
 
     await opp.async_block_till_done()
 
-    assert.opp.services.has_service(DOMAIN, SERVICE_SET_AUTO_OFF_NAME)
+    assert opp.services.has_service(DOMAIN, SERVICE_SET_AUTO_OFF_NAME)
 
     await opp.services.async_call(
         DOMAIN,
@@ -140,7 +140,7 @@ async def test_turn_on_with_timer_service(
 
     await opp.async_block_till_done()
 
-    assert.opp.services.has_service(DOMAIN, SERVICE_TURN_ON_WITH_TIMER_NAME)
+    assert opp.services.has_service(DOMAIN, SERVICE_TURN_ON_WITH_TIMER_NAME)
 
     await opp.services.async_call(
         DOMAIN,

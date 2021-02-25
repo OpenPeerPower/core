@@ -9,7 +9,7 @@ from tests.common import MockConfigEntry
 
 async def test_form_user.opp):
     """Test we can setup by the user."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -37,8 +37,8 @@ async def test_form_user.opp):
 
 async def test_form_user_only_once.opp):
     """Test we can setup by the user only once."""
-    MockConfigEntry(domain=DOMAIN).add_to.opp.opp)
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    MockConfigEntry(domain=DOMAIN).add_to_opp(opp)
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )

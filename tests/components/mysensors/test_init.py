@@ -238,7 +238,7 @@ async def test_import(
         "openpeerpower.components.mysensors.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        result = await async_setup_component.opp, DOMAIN, config)
+        result = await async_setup_component(opp, DOMAIN, config)
         assert result == expected_to_succeed
         await opp.async_block_till_done()
 

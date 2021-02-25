@@ -20,7 +20,7 @@ def entity_reg.opp):
     return mock_registry.opp)
 
 
-async def test_discover_device_tracker.opp, mqtt_mock, caplog):
+async def test_discover_device_tracker(opp, mqtt_mock, caplog):
     """Test discovering an MQTT device tracker component."""
     async_fire_mqtt_message(
         opp,
@@ -37,7 +37,7 @@ async def test_discover_device_tracker.opp, mqtt_mock, caplog):
 
 
 @pytest.mark.no_fail_on_log_exception
-async def test_discovery_broken.opp, mqtt_mock, caplog):
+async def test_discovery_broken(opp, mqtt_mock, caplog):
     """Test handling of bad discovery message."""
     async_fire_mqtt_message(
         opp,
@@ -61,7 +61,7 @@ async def test_discovery_broken.opp, mqtt_mock, caplog):
     assert state.name == "Beer"
 
 
-async def test_non_duplicate_device_tracker_discovery.opp, mqtt_mock, caplog):
+async def test_non_duplicate_device_tracker_discovery(opp, mqtt_mock, caplog):
     """Test for a non duplicate component."""
     async_fire_mqtt_message(
         opp,
@@ -84,7 +84,7 @@ async def test_non_duplicate_device_tracker_discovery.opp, mqtt_mock, caplog):
     assert "Component has already been discovered: device_tracker bla" in caplog.text
 
 
-async def test_device_tracker_removal.opp, mqtt_mock, caplog):
+async def test_device_tracker_removal(opp, mqtt_mock, caplog):
     """Test removal of component through empty discovery message."""
     async_fire_mqtt_message(
         opp,
@@ -95,13 +95,13 @@ async def test_device_tracker_removal.opp, mqtt_mock, caplog):
     state = opp.states.get("device_tracker.beer")
     assert state is not None
 
-    async_fire_mqtt_message.opp, "openpeerpower/device_tracker/bla/config", "")
+    async_fire_mqtt_message(opp, "openpeerpower/device_tracker/bla/config", "")
     await opp.async_block_till_done()
     state = opp.states.get("device_tracker.beer")
     assert state is None
 
 
-async def test_device_tracker_rediscover.opp, mqtt_mock, caplog):
+async def test_device_tracker_rediscover(opp, mqtt_mock, caplog):
     """Test rediscover of removed component."""
     async_fire_mqtt_message(
         opp,
@@ -112,7 +112,7 @@ async def test_device_tracker_rediscover.opp, mqtt_mock, caplog):
     state = opp.states.get("device_tracker.beer")
     assert state is not None
 
-    async_fire_mqtt_message.opp, "openpeerpower/device_tracker/bla/config", "")
+    async_fire_mqtt_message(opp, "openpeerpower/device_tracker/bla/config", "")
     await opp.async_block_till_done()
     state = opp.states.get("device_tracker.beer")
     assert state is None
@@ -127,7 +127,7 @@ async def test_device_tracker_rediscover.opp, mqtt_mock, caplog):
     assert state is not None
 
 
-async def test_duplicate_device_tracker_removal.opp, mqtt_mock, caplog):
+async def test_duplicate_device_tracker_removal(opp, mqtt_mock, caplog):
     """Test for a non duplicate component."""
     async_fire_mqtt_message(
         opp,
@@ -135,11 +135,11 @@ async def test_duplicate_device_tracker_removal.opp, mqtt_mock, caplog):
         '{ "name": "Beer", "state_topic": "test-topic" }',
     )
     await opp.async_block_till_done()
-    async_fire_mqtt_message.opp, "openpeerpower/device_tracker/bla/config", "")
+    async_fire_mqtt_message(opp, "openpeerpower/device_tracker/bla/config", "")
     await opp.async_block_till_done()
     assert "Component has already been discovered: device_tracker bla" in caplog.text
     caplog.clear()
-    async_fire_mqtt_message.opp, "openpeerpower/device_tracker/bla/config", "")
+    async_fire_mqtt_message(opp, "openpeerpower/device_tracker/bla/config", "")
     await opp.async_block_till_done()
 
     assert (
@@ -147,7 +147,7 @@ async def test_duplicate_device_tracker_removal.opp, mqtt_mock, caplog):
     )
 
 
-async def test_device_tracker_discovery_update.opp, mqtt_mock, caplog):
+async def test_device_tracker_discovery_update(opp, mqtt_mock, caplog):
     """Test for a discovery update event."""
     async_fire_mqtt_message(
         opp,
@@ -172,7 +172,7 @@ async def test_device_tracker_discovery_update.opp, mqtt_mock, caplog):
     assert state.name == "Cider"
 
 
-async def test_cleanup_device_tracker.opp, device_reg, entity_reg, mqtt_mock):
+async def test_cleanup_device_tracker(opp, device_reg, entity_reg, mqtt_mock):
     """Test discvered device is cleaned up when removed from registry."""
     async_fire_mqtt_message(
         opp,
@@ -213,7 +213,7 @@ async def test_cleanup_device_tracker.opp, device_reg, entity_reg, mqtt_mock):
     )
 
 
-async def test_setting_device_tracker_value_via_mqtt_message.opp, mqtt_mock, caplog):
+async def test_setting_device_tracker_value_via_mqtt_message(opp, mqtt_mock, caplog):
     """Test the setting of the value via MQTT."""
     async_fire_mqtt_message(
         opp,
@@ -227,11 +227,11 @@ async def test_setting_device_tracker_value_via_mqtt_message.opp, mqtt_mock, cap
 
     assert state.state == STATE_UNKNOWN
 
-    async_fire_mqtt_message.opp, "test-topic", "home")
+    async_fire_mqtt_message(opp, "test-topic", "home")
     state = opp.states.get("device_tracker.test")
     assert state.state == STATE_HOME
 
-    async_fire_mqtt_message.opp, "test-topic", "not_home")
+    async_fire_mqtt_message(opp, "test-topic", "not_home")
     state = opp.states.get("device_tracker.test")
     assert state.state == STATE_NOT_HOME
 
@@ -251,11 +251,11 @@ async def test_setting_device_tracker_value_via_mqtt_message_and_template(
     )
     await opp.async_block_till_done()
 
-    async_fire_mqtt_message.opp, "test-topic", "proxy_for_home")
+    async_fire_mqtt_message(opp, "test-topic", "proxy_for_home")
     state = opp.states.get("device_tracker.test")
     assert state.state == STATE_HOME
 
-    async_fire_mqtt_message.opp, "test-topic", "anything_for_not_home")
+    async_fire_mqtt_message(opp, "test-topic", "anything_for_not_home")
     state = opp.states.get("device_tracker.test")
     assert state.state == STATE_NOT_HOME
 
@@ -278,11 +278,11 @@ async def test_setting_device_tracker_value_via_mqtt_message_and_template2(
     state = opp.states.get("device_tracker.test")
     assert state.state == STATE_UNKNOWN
 
-    async_fire_mqtt_message.opp, "test-topic", "HOME")
+    async_fire_mqtt_message(opp, "test-topic", "HOME")
     state = opp.states.get("device_Tracker.test")
     assert state.state == STATE_HOME
 
-    async_fire_mqtt_message.opp, "test-topic", "NOT_HOME")
+    async_fire_mqtt_message(opp, "test-topic", "NOT_HOME")
     state = opp.states.get("device_tracker.test")
     assert state.state == STATE_NOT_HOME
 
@@ -302,7 +302,7 @@ async def test_setting_device_tracker_location_via_mqtt_message(
 
     assert state.state == STATE_UNKNOWN
 
-    async_fire_mqtt_message.opp, "test-topic", "test-location")
+    async_fire_mqtt_message(opp, "test-topic", "test-location")
     state = opp.states.get("device_tracker.test")
     assert state.state == "test-location"
 
@@ -351,12 +351,12 @@ async def test_setting_device_tracker_location_via_lat_lon_message(
     assert state.attributes["gps_accuracy"] == 1.5
     assert state.state == STATE_NOT_HOME
 
-    async_fire_mqtt_message.opp, "attributes-topic", '{"longitude": -117.22743}')
+    async_fire_mqtt_message(opp, "attributes-topic", '{"longitude": -117.22743}')
     state = opp.states.get("device_tracker.test")
     assert state.attributes["longitude"] == -117.22743
     assert state.state == STATE_UNKNOWN
 
-    async_fire_mqtt_message.opp, "attributes-topic", '{"latitude":32.87336}')
+    async_fire_mqtt_message(opp, "attributes-topic", '{"latitude":32.87336}')
     state = opp.states.get("device_tracker.test")
     assert state.attributes["latitude"] == 32.87336
     assert state.state == STATE_NOT_HOME

@@ -67,7 +67,7 @@ async def mock_camera.opp):
 @pytest.fixture
 async def mock_stream.opp):
     """Initialize a demo camera platform with streaming."""
-    assert await async_setup_component.opp, "stream", {"stream": {}})
+    assert await async_setup_component(opp, "stream", {"stream": {}})
     await opp.async_block_till_done()
 
 
@@ -125,7 +125,7 @@ async def test_wrong_version.opp):
     msg["directive"]["header"]["payloadVersion"] = "2"
 
     with pytest.raises(AssertionError):
-        await smart_home.async_handle_message.opp, DEFAULT_CONFIG, msg)
+        await smart_home.async_handle_message(opp, DEFAULT_CONFIG, msg)
 
 
 async def discovery_test(device, opp, expected_endpoints=1):
@@ -135,7 +135,7 @@ async def discovery_test(device, opp, expected_endpoints=1):
     # setup test devices
     opp.states.async_set(*device)
 
-    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+    msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request)
 
     assert "event" in msg
     msg = msg["event"]
@@ -176,7 +176,7 @@ def assert_endpoint_capabilities(endpoint, *interfaces):
     return capabilities
 
 
-async def test_switch.opp, events):
+async def test_switch(opp, events):
     """Test switch discovery."""
     device = ("switch.test", "on", {"friendly_name": "Test switch"})
     appliance = await discovery_test(device, opp)
@@ -192,11 +192,11 @@ async def test_switch.opp, events):
         "switch#test", "switch.turn_on", "switch.turn_off", opp
     )
 
-    properties = await reported_properties.opp, "switch#test")
+    properties = await reported_properties(opp, "switch#test")
     properties.assert_equal("Alexa.PowerController", "powerState", "ON")
 
 
-async def test_outlet.opp, events):
+async def test_outlet(opp, events):
     """Test switch with device class outlet discovery."""
     device = (
         "switch.test",
@@ -251,7 +251,7 @@ async def test_dimmable_light.opp):
         "Alexa",
     )
 
-    properties = await reported_properties.opp, "light#test_2")
+    properties = await reported_properties(opp, "light#test_2")
     properties.assert_equal("Alexa.PowerController", "powerState", "ON")
     properties.assert_equal("Alexa.BrightnessController", "brightness", 50)
 
@@ -1741,7 +1741,7 @@ async def test_temp_sensor.opp):
     assert properties["retrievable"] is True
     assert {"name": "temperature"} in properties["supported"]
 
-    properties = await reported_properties.opp, "sensor#test_temp")
+    properties = await reported_properties(opp, "sensor#test_temp")
     properties.assert_equal(
         "Alexa.TemperatureSensor", "temperature", {"value": 42.0, "scale": "FAHRENHEIT"}
     )
@@ -1770,7 +1770,7 @@ async def test_contact_sensor.opp):
     assert properties["retrievable"] is True
     assert {"name": "detectionState"} in properties["supported"]
 
-    properties = await reported_properties.opp, "binary_sensor#test_contact")
+    properties = await reported_properties(opp, "binary_sensor#test_contact")
     properties.assert_equal("Alexa.ContactSensor", "detectionState", "DETECTED")
 
     properties.assert_equal("Alexa.EndpointHealth", "connectivity", {"value": "OK"})
@@ -1799,7 +1799,7 @@ async def test_forced_contact_sensor.opp):
     assert properties["retrievable"] is True
     assert {"name": "detectionState"} in properties["supported"]
 
-    properties = await reported_properties.opp, "binary_sensor#test_contact_forced")
+    properties = await reported_properties(opp, "binary_sensor#test_contact_forced")
     properties.assert_equal("Alexa.ContactSensor", "detectionState", "DETECTED")
 
     properties.assert_equal("Alexa.EndpointHealth", "connectivity", {"value": "OK"})
@@ -1828,7 +1828,7 @@ async def test_motion_sensor.opp):
     assert properties["retrievable"] is True
     assert {"name": "detectionState"} in properties["supported"]
 
-    properties = await reported_properties.opp, "binary_sensor#test_motion")
+    properties = await reported_properties(opp, "binary_sensor#test_motion")
     properties.assert_equal("Alexa.MotionSensor", "detectionState", "DETECTED")
 
 
@@ -1855,7 +1855,7 @@ async def test_forced_motion_sensor.opp):
     assert properties["retrievable"] is True
     assert {"name": "detectionState"} in properties["supported"]
 
-    properties = await reported_properties.opp, "binary_sensor#test_motion_forced")
+    properties = await reported_properties(opp, "binary_sensor#test_motion_forced")
     properties.assert_equal("Alexa.MotionSensor", "detectionState", "DETECTED")
 
     properties.assert_equal("Alexa.EndpointHealth", "connectivity", {"value": "OK"})
@@ -1928,7 +1928,7 @@ async def test_thermostat.opp):
         "Alexa",
     )
 
-    properties = await reported_properties.opp, "climate#test_thermostat")
+    properties = await reported_properties(opp, "climate#test_thermostat")
     properties.assert_equal("Alexa.ThermostatController", "thermostatMode", "COOL")
     properties.assert_equal(
         "Alexa.ThermostatController",
@@ -2174,7 +2174,7 @@ async def test_exclude_filters.opp):
         exclude_entities=["cover.deny"],
     )
 
-    msg = await smart_home.async_handle_message.opp, alexa_config, request)
+    msg = await smart_home.async_handle_message(opp, alexa_config, request)
     await opp.async_block_till_done()
 
     msg = msg["event"]
@@ -2205,7 +2205,7 @@ async def test_include_filters.opp):
         exclude_entities=[],
     )
 
-    msg = await smart_home.async_handle_message.opp, alexa_config, request)
+    msg = await smart_home.async_handle_message(opp, alexa_config, request)
     await opp.async_block_till_done()
 
     msg = msg["event"]
@@ -2230,7 +2230,7 @@ async def test_never_exposed_entities.opp):
         exclude_entities=[],
     )
 
-    msg = await smart_home.async_handle_message.opp, alexa_config, request)
+    msg = await smart_home.async_handle_message(opp, alexa_config, request)
     await opp.async_block_till_done()
 
     msg = msg["event"]
@@ -2242,9 +2242,9 @@ async def test_api_entity_not_exists(opp):
     """Test api turn on process without entity."""
     request = get_new_request("Alexa.PowerController", "TurnOn", "switch#test")
 
-    call_switch = async_mock_service.opp, "switch", "turn_on")
+    call_switch = async_mock_service(opp, "switch", "turn_on")
 
-    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+    msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request)
     await opp.async_block_till_done()
 
     assert "event" in msg
@@ -2259,7 +2259,7 @@ async def test_api_entity_not_exists(opp):
 async def test_api_function_not_implemented.opp):
     """Test api call that is not implemented to us."""
     request = get_new_request("Alexa.HAHAAH", "Sweet")
-    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+    msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request)
 
     assert "event" in msg
     msg = msg["event"]
@@ -2283,7 +2283,7 @@ async def test_api_accept_grant.opp):
     }
 
     # setup test devices
-    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+    msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request)
     await opp.async_block_till_done()
 
     assert "event" in msg
@@ -2309,7 +2309,7 @@ async def test_entity_config(opp):
         "scene.test_1": {"description": "Config description"},
     }
 
-    msg = await smart_home.async_handle_message.opp, alexa_config, request)
+    msg = await smart_home.async_handle_message(opp, alexa_config, request)
 
     assert "event" in msg
     msg = msg["event"]
@@ -2332,11 +2332,11 @@ async def test_entity_config(opp):
     assert scene["description"] == "Config description via Open Peer Power (Scene)"
 
 
-async def test_logging_request.opp, events):
+async def test_logging_request(opp, events):
     """Test that we log requests."""
     context = Context()
     request = get_new_request("Alexa.Discovery", "Discover")
-    await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request, context)
+    await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request, context)
 
     # To trigger event listener
     await opp.async_block_till_done()
@@ -2352,11 +2352,11 @@ async def test_logging_request.opp, events):
     assert event.context == context
 
 
-async def test_logging_request_with_entity.opp, events):
+async def test_logging_request_with_entity(opp, events):
     """Test that we log requests."""
     context = Context()
     request = get_new_request("Alexa.PowerController", "TurnOn", "switch#xy")
-    await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request, context)
+    await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request, context)
 
     # To trigger event listener
     await opp.async_block_till_done()
@@ -2379,7 +2379,7 @@ async def test_disabled.opp):
     opp.states.async_set("switch.test", "on", {"friendly_name": "Test switch"})
     request = get_new_request("Alexa.PowerController", "TurnOn", "switch#test")
 
-    call_switch = async_mock_service.opp, "switch", "turn_on")
+    call_switch = async_mock_service(opp, "switch", "turn_on")
 
     msg = await smart_home.async_handle_message(
         opp. DEFAULT_CONFIG, request, enabled=False
@@ -2403,7 +2403,7 @@ async def test_endpoint_good_health.opp):
         {"friendly_name": "Test Contact Sensor", "device_class": "door"},
     )
     await discovery_test(device, opp)
-    properties = await reported_properties.opp, "binary_sensor#test_contact")
+    properties = await reported_properties(opp, "binary_sensor#test_contact")
     properties.assert_equal("Alexa.EndpointHealth", "connectivity", {"value": "OK"})
 
 
@@ -2415,7 +2415,7 @@ async def test_endpoint_bad_health.opp):
         {"friendly_name": "Test Contact Sensor", "device_class": "door"},
     )
     await discovery_test(device, opp)
-    properties = await reported_properties.opp, "binary_sensor#test_contact")
+    properties = await reported_properties(opp, "binary_sensor#test_contact")
     properties.assert_equal(
         "Alexa.EndpointHealth", "connectivity", {"value": "UNREACHABLE"}
     )
@@ -2453,7 +2453,7 @@ async def test_alarm_control_panel_disarmed.opp):
     assert {"value": "ARMED_AWAY"} in configuration["supportedArmStates"]
     assert {"value": "ARMED_NIGHT"} in configuration["supportedArmStates"]
 
-    properties = await reported_properties.opp, "alarm_control_panel#test_1")
+    properties = await reported_properties(opp, "alarm_control_panel#test_1")
     properties.assert_equal("Alexa.SecurityPanelController", "armState", "DISARMED")
 
     _, msg = await assert_request_calls_service(
@@ -2515,7 +2515,7 @@ async def test_alarm_control_panel_armed.opp):
         appliance, "Alexa.SecurityPanelController", "Alexa.EndpointHealth", "Alexa"
     )
 
-    properties = await reported_properties.opp, "alarm_control_panel#test_2")
+    properties = await reported_properties(opp, "alarm_control_panel#test_2")
     properties.assert_equal("Alexa.SecurityPanelController", "armState", "ARMED_AWAY")
 
     call, msg = await assert_request_calls_service(
@@ -2565,7 +2565,7 @@ async def test_range_unsupported_domain.opp):
     request["directive"]["payload"] = {"rangeValue": 1}
     request["directive"]["header"]["instance"] = "switch.speed"
 
-    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request, context)
+    msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request, context)
 
     assert "event" in msg
     msg = msg["event"]
@@ -2584,7 +2584,7 @@ async def test_mode_unsupported_domain.opp):
     request["directive"]["payload"] = {"mode": "testMode"}
     request["directive"]["header"]["instance"] = "switch.direction"
 
-    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request, context)
+    msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request, context)
 
     assert "event" in msg
     msg = msg["event"]
@@ -3323,7 +3323,7 @@ async def test_media_player_eq_bands_not_supported.opp):
         "Alexa.EqualizerController", "SetBands", "media_player#test_bands"
     )
     request["directive"]["payload"] = {"bands": [{"name": "BASS", "value": -2}]}
-    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request, context)
+    msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request, context)
 
     assert "event" in msg
     msg = msg["event"]
@@ -3338,7 +3338,7 @@ async def test_media_player_eq_bands_not_supported.opp):
     request["directive"]["payload"] = {
         "bands": [{"name": "BASS", "levelDelta": 3, "levelDirection": "UP"}]
     }
-    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request, context)
+    msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request, context)
 
     assert "event" in msg
     msg = msg["event"]
@@ -3353,7 +3353,7 @@ async def test_media_player_eq_bands_not_supported.opp):
     request["directive"]["payload"] = {
         "bands": [{"name": "BASS", "levelDelta": 3, "levelDirection": "UP"}]
     }
-    msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request, context)
+    msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request, context)
 
     assert "event" in msg
     msg = msg["event"]
@@ -3398,7 +3398,7 @@ async def test_timer_resume.opp):
     )
     await discovery_test(device, opp)
 
-    properties = await reported_properties.opp, "timer#laundry")
+    properties = await reported_properties(opp, "timer#laundry")
     properties.assert_equal("Alexa.PowerController", "powerState", "ON")
 
     await assert_request_calls_service(
@@ -3415,7 +3415,7 @@ async def test_timer_start.opp):
     )
     await discovery_test(device, opp)
 
-    properties = await reported_properties.opp, "timer#laundry")
+    properties = await reported_properties(opp, "timer#laundry")
     properties.assert_equal("Alexa.PowerController", "powerState", "OFF")
 
     await assert_request_calls_service(
@@ -3432,7 +3432,7 @@ async def test_timer_cancel.opp):
     )
     await discovery_test(device, opp)
 
-    properties = await reported_properties.opp, "timer#laundry")
+    properties = await reported_properties(opp, "timer#laundry")
     properties.assert_equal("Alexa.PowerController", "powerState", "ON")
 
     await assert_request_calls_service(
@@ -3469,7 +3469,7 @@ async def test_vacuum_discovery.opp):
         "Alexa",
     )
 
-    properties = await reported_properties.opp, "vacuum#test_1")
+    properties = await reported_properties(opp, "vacuum#test_1")
     properties.assert_equal("Alexa.PowerController", "powerState", "OFF")
 
     await assert_request_calls_service(
@@ -3694,7 +3694,7 @@ async def test_vacuum_discovery_no_turn_on.opp):
         appliance, "Alexa.PowerController", "Alexa.EndpointHealth", "Alexa"
     )
 
-    properties = await reported_properties.opp, "vacuum#test_5")
+    properties = await reported_properties(opp, "vacuum#test_5")
     properties.assert_equal("Alexa.PowerController", "powerState", "ON")
 
     await assert_request_calls_service(
@@ -3766,7 +3766,7 @@ async def test_vacuum_discovery_no_turn_on_or_off.opp):
     )
 
 
-async def test_camera_discovery.opp, mock_stream):
+async def test_camera_discovery(opp, mock_stream):
     """Test camera discovery."""
     device = (
         "camera.test",
@@ -3826,7 +3826,7 @@ async def test_camera_discovery_without_stream.opp):
         ("https://correctschemaandport.org", 3),
     ],
 )
-async def test_camera.opp_urls.opp, mock_stream, url, result):
+async def test_camera.opp_urls(opp, mock_stream, url, result):
     """Test camera discovery with unsupported urls."""
     device = (
         "camera.test",
@@ -3839,7 +3839,7 @@ async def test_camera.opp_urls.opp, mock_stream, url, result):
     assert len(appliance["capabilities"]) == result
 
 
-async def test_initialize_camera_stream.opp, mock_camera, mock_stream):
+async def test_initialize_camera_stream(opp, mock_camera, mock_stream):
     """Test InitializeCameraStreams handler."""
     request = get_new_request(
         "Alexa.CameraStreamController", "InitializeCameraStreams", "camera#demo_camera"
@@ -3853,7 +3853,7 @@ async def test_initialize_camera_stream.opp, mock_camera, mock_stream):
         "openpeerpower.components.demo.camera.DemoCamera.stream_source",
         return_value="rtsp://example.local",
     ):
-        msg = await smart_home.async_handle_message.opp, DEFAULT_CONFIG, request)
+        msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request)
         await opp.async_block_till_done()
 
     assert "event" in msg

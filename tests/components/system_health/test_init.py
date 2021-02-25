@@ -10,7 +10,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import get_system_health_info, mock_platform
 
 
-async def gather_system_health_info.opp, opp_ws_client):
+async def gather_system_health_info(opp, opp_ws_client):
     """Gather all info."""
     client = await opp_ws_client.opp)
 
@@ -44,72 +44,72 @@ async def gather_system_health_info.opp, opp_ws_client):
     return data
 
 
-async def test_info_endpoint_return_info.opp, opp_ws_client):
+async def test_info_endpoint_return_info(opp, opp_ws_client):
     """Test that the info endpoint works."""
-    assert await async_setup_component.opp, "openpeerpower", {})
+    assert await async_setup_component(opp, "openpeerpower", {})
 
     with patch(
         "openpeerpower.components.openpeerpower.system_health.system_health_info",
         return_value={"hello": True},
     ):
-        assert await async_setup_component.opp, "system_health", {})
+        assert await async_setup_component(opp, "system_health", {})
 
-    data = await gather_system_health_info.opp, opp_ws_client)
+    data = await gather_system_health_info(opp, opp_ws_client)
 
     assert len(data) == 1
     data = data["openpeerpower"]
     assert data == {"info": {"hello": True}}
 
 
-async def test_info_endpoint_register_callback.opp, opp_ws_client):
+async def test_info_endpoint_register_callback(opp, opp_ws_client):
     """Test that the info endpoint allows registering callbacks."""
 
     async def mock_info.opp):
         return {"storage": "YAML"}
 
     opp.components.system_health.async_register_info("lovelace", mock_info)
-    assert await async_setup_component.opp, "system_health", {})
-    data = await gather_system_health_info.opp, opp_ws_client)
+    assert await async_setup_component(opp, "system_health", {})
+    data = await gather_system_health_info(opp, opp_ws_client)
 
     assert len(data) == 1
     data = data["lovelace"]
     assert data == {"info": {"storage": "YAML"}}
 
     # Test our test helper works
-    assert await get_system_health_info.opp, "lovelace") == {"storage": "YAML"}
+    assert await get_system_health_info(opp, "lovelace") == {"storage": "YAML"}
 
 
-async def test_info_endpoint_register_callback_timeout.opp, opp_ws_client):
+async def test_info_endpoint_register_callback_timeout(opp, opp_ws_client):
     """Test that the info endpoint timing out."""
 
     async def mock_info.opp):
         raise asyncio.TimeoutError
 
     opp.components.system_health.async_register_info("lovelace", mock_info)
-    assert await async_setup_component.opp, "system_health", {})
-    data = await gather_system_health_info.opp, opp_ws_client)
+    assert await async_setup_component(opp, "system_health", {})
+    data = await gather_system_health_info(opp, opp_ws_client)
 
     assert len(data) == 1
     data = data["lovelace"]
     assert data == {"info": {"error": {"type": "failed", "error": "timeout"}}}
 
 
-async def test_info_endpoint_register_callback_exc.opp, opp_ws_client):
+async def test_info_endpoint_register_callback_exc(opp, opp_ws_client):
     """Test that the info endpoint requires auth."""
 
     async def mock_info.opp):
         raise Exception("TEST ERROR")
 
     opp.components.system_health.async_register_info("lovelace", mock_info)
-    assert await async_setup_component.opp, "system_health", {})
-    data = await gather_system_health_info.opp, opp_ws_client)
+    assert await async_setup_component(opp, "system_health", {})
+    data = await gather_system_health_info(opp, opp_ws_client)
 
     assert len(data) == 1
     data = data["lovelace"]
     assert data == {"info": {"error": {"type": "failed", "error": "unknown"}}}
 
 
-async def test_platform_loading.opp, opp_ws_client, aioclient_mock):
+async def test_platform_loading(opp, opp_ws_client, aioclient_mock):
     """Test registering via platform."""
     aioclient_mock.get("http://example.com/status", text="")
     aioclient_mock.get("http://example.com/status_fail", exc=ClientError)
@@ -138,8 +138,8 @@ async def test_platform_loading.opp, opp_ws_client, aioclient_mock):
         ),
     )
 
-    assert await async_setup_component.opp, "system_health", {})
-    data = await gather_system_health_info.opp, opp_ws_client)
+    assert await async_setup_component(opp, "system_health", {})
+    data = await gather_system_health_info(opp, opp_ws_client)
 
     assert data["fake_integration"] == {
         "info": {

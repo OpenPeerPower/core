@@ -381,7 +381,7 @@ async def test_flow_non_encrypted_already_configured_abort.opp):
         domain=DOMAIN,
         unique_id="1.2.3.4",
         data={CONF_HOST: "1.2.3.4", CONF_NAME: DEFAULT_NAME, CONF_PORT: DEFAULT_PORT},
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -406,7 +406,7 @@ async def test_flow_encrypted_already_configured_abort.opp):
             CONF_APP_ID: "test-app-id",
             CONF_ENCRYPTION_KEY: "test-encryption-key",
         },
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -662,7 +662,7 @@ async def test_imported_flow_non_encrypted_already_configured_abort.opp):
             CONF_PORT: DEFAULT_PORT,
             CONF_ON_ACTION: "test-on-action",
         },
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -688,7 +688,7 @@ async def test_imported_flow_encrypted_already_configured_abort.opp):
             CONF_APP_ID: "test-app-id",
             CONF_ENCRYPTION_KEY: "test-encryption-key",
         },
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

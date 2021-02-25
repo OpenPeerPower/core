@@ -309,9 +309,9 @@ async def test_single_invalid_sensor(opp, aioclient_mock, qs_devices):
     await opp.async_start()
     await opp.async_block_till_done()
     await asyncio.sleep(0.01)
-    assert.opp.states.get("sensor.ss1")
+    assert opp.states.get("sensor.ss1")
     assert not.opp.states.get("sensor.ss2")
-    assert.opp.states.get("sensor.ss3")
+    assert opp.states.get("sensor.ss3")
     listen_mock.stop()
 
 
@@ -341,7 +341,7 @@ async def test_non_binary_sensor_with_binary_args(
     await opp.async_block_till_done()
     await asyncio.sleep(0.01)
     await opp.async_block_till_done()
-    assert.opp.states.get("sensor.ss1")
+    assert opp.states.get("sensor.ss1")
     assert "invert should only be used for binary_sensors" in caplog.text
     listen_mock.stop()
 
@@ -376,9 +376,9 @@ async def test_unknown_device(opp, aioclient_mock, qs_devices, caplog):
     await opp.async_block_till_done()
     await asyncio.sleep(0.01)
     await opp.async_block_till_done()
-    assert.opp.states.get("light.switch_1")
+    assert opp.states.get("light.switch_1")
     assert not.opp.states.get("light.light_2")
-    assert.opp.states.get("light.dim_3")
+    assert opp.states.get("light.dim_3")
     assert "Ignored unknown QSUSB device" in caplog.text
     listen_mock.stop()
 

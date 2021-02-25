@@ -24,7 +24,7 @@ COMMAND_SINGLE = "single"
 
 
 @pytest.fixture
-async def device_ias.opp, zigpy_device_mock, zha_device_joined_restored):
+async def device_ias(opp, zigpy_device_mock, zha_device_joined_restored):
     """IAS device fixture."""
 
     clusters = [general.Basic, security.IasZone, security.IasWd]
@@ -44,7 +44,7 @@ async def device_ias.opp, zigpy_device_mock, zha_device_joined_restored):
     return zigpy_device, zha_device
 
 
-async def test_get_actions.opp, device_ias):
+async def test_get_actions(opp, device_ias):
     """Test we get the expected actions from a zha device."""
 
     ieee_address = str(device_ias[0].ieee)
@@ -52,7 +52,7 @@ async def test_get_actions.opp, device_ias):
     ha_device_registry = await async_get_registry.opp)
     reg_device = ha_device_registry.async_get_device({(DOMAIN, ieee_address)})
 
-    actions = await async_get_device_automations.opp, "action", reg_device.id)
+    actions = await async_get_device_automations(opp, "action", reg_device.id)
 
     expected_actions = [
         {"domain": DOMAIN, "type": "squawk", "device_id": reg_device.id},
@@ -62,7 +62,7 @@ async def test_get_actions.opp, device_ias):
     assert actions == expected_actions
 
 
-async def test_action.opp, device_ias):
+async def test_action(opp, device_ias):
     """Test for executing a zha device action."""
     zigpy_device, zha_device = device_ias
 
@@ -103,7 +103,7 @@ async def test_action.opp, device_ias):
         )
 
         await opp.async_block_till_done()
-        calls = async_mock_service.opp, DOMAIN, "warning_device_warn")
+        calls = async_mock_service(opp, DOMAIN, "warning_device_warn")
 
         channel = zha_device.channels.pools[0].client_channels["1:0x0006"]
         channel.zha_send_event(COMMAND_SINGLE, [])

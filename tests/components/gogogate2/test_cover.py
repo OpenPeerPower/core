@@ -335,10 +335,10 @@ async def test_open_close_update(gogogate2api_mock, opp: OpenPeerPower) -> None:
     )
     config_entry.add_to(opp.opp)
 
-    assert.opp.states.get("cover.door1") is None
+    assert opp.states.get("cover.door1") is None
     assert await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
-    assert.opp.states.get("cover.door1").state == STATE_OPEN
+    assert opp.states.get("cover.door1").state == STATE_OPEN
 
     api.async_info.return_value = info_response(DoorStatus.CLOSED)
     await opp.services.async_call(
@@ -348,7 +348,7 @@ async def test_open_close_update(gogogate2api_mock, opp: OpenPeerPower) -> None:
     )
     async_fire_time_changed(opp, utcnow() + timedelta(hours=2))
     await opp.async_block_till_done()
-    assert.opp.states.get("cover.door1").state == STATE_CLOSED
+    assert opp.states.get("cover.door1").state == STATE_CLOSED
     api.async_close_door.assert_called_with(1)
 
     api.async_info.return_value = info_response(DoorStatus.OPENED)
@@ -359,13 +359,13 @@ async def test_open_close_update(gogogate2api_mock, opp: OpenPeerPower) -> None:
     )
     async_fire_time_changed(opp, utcnow() + timedelta(hours=2))
     await opp.async_block_till_done()
-    assert.opp.states.get("cover.door1").state == STATE_OPEN
+    assert opp.states.get("cover.door1").state == STATE_OPEN
     api.async_open_door.assert_called_with(1)
 
     api.async_info.return_value = info_response(DoorStatus.UNDEFINED)
     async_fire_time_changed(opp, utcnow() + timedelta(hours=2))
     await opp.async_block_till_done()
-    assert.opp.states.get("cover.door1").state == STATE_UNKNOWN
+    assert opp.states.get("cover.door1").state == STATE_UNKNOWN
 
     assert await opp.config_entries.async_unload(config_entry.entry_id)
     assert not.opp.states.async_entity_ids(DOMAIN)
@@ -392,10 +392,10 @@ async def test_availability(ismartgateapi_mock, opp: OpenPeerPower) -> None:
     )
     config_entry.add_to(opp.opp)
 
-    assert.opp.states.get("cover.door1") is None
+    assert opp.states.get("cover.door1") is None
     assert await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
-    assert.opp.states.get("cover.door1")
+    assert opp.states.get("cover.door1")
     assert (
         opp.states.get("cover.door1").attributes[ATTR_DEVICE_CLASS]
         == DEVICE_CLASS_GARAGE
@@ -409,13 +409,13 @@ async def test_availability(ismartgateapi_mock, opp: OpenPeerPower) -> None:
 
     async_fire_time_changed(opp, utcnow() + timedelta(hours=2))
     await opp.async_block_till_done()
-    assert.opp.states.get("cover.door1").state == STATE_UNAVAILABLE
+    assert opp.states.get("cover.door1").state == STATE_UNAVAILABLE
 
     api.async_info.side_effect = None
     api.async_info.return_value = closed_door_response
     async_fire_time_changed(opp, utcnow() + timedelta(hours=2))
     await opp.async_block_till_done()
-    assert.opp.states.get("cover.door1").state == STATE_CLOSED
+    assert opp.states.get("cover.door1").state == STATE_CLOSED
 
 
 @patch("openpeerpower.components.gogogate2.common.ISmartGateApi")

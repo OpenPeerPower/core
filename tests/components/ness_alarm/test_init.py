@@ -47,13 +47,13 @@ VALID_CONFIG = {
 async def test_setup_platform(opp, mock_nessclient):
     """Test platform setup."""
     await async_setup_component(opp, DOMAIN, VALID_CONFIG)
-    assert.opp.services.has_service(DOMAIN, "panic")
-    assert.opp.services.has_service(DOMAIN, "aux")
+    assert opp.services.has_service(DOMAIN, "panic")
+    assert opp.services.has_service(DOMAIN, "aux")
 
     await opp.async_block_till_done()
-    assert.opp.states.get("alarm_control_panel.alarm_panel") is not None
-    assert.opp.states.get("binary_sensor.zone_1") is not None
-    assert.opp.states.get("binary_sensor.zone_2") is not None
+    assert opp.states.get("alarm_control_panel.alarm_panel") is not None
+    assert opp.states.get("binary_sensor.zone_1") is not None
+    assert opp.states.get("binary_sensor.zone_2") is not None
 
     assert mock_nessclient.keepalive.call_count == 1
     assert mock_nessclient.update.call_count == 1
@@ -86,7 +86,7 @@ async def test_dispatch_state_change(opp, mock_nessclient):
     on_state_change(MockArmingState.ARMING)
 
     await opp.async_block_till_done()
-    assert.opp.states.is_state("alarm_control_panel.alarm_panel", STATE_ALARM_ARMING)
+    assert opp.states.is_state("alarm_control_panel.alarm_panel", STATE_ALARM_ARMING)
 
 
 async def test_alarm_disarm(opp, mock_nessclient):
@@ -166,8 +166,8 @@ async def test_dispatch_zone_change(opp, mock_nessclient):
     on_zone_change(1, True)
 
     await opp.async_block_till_done()
-    assert.opp.states.is_state("binary_sensor.zone_1", "on")
-    assert.opp.states.is_state("binary_sensor.zone_2", "off")
+    assert opp.states.is_state("binary_sensor.zone_1", "on")
+    assert opp.states.is_state("binary_sensor.zone_2", "off")
 
 
 async def test_arming_state_change(opp, mock_nessclient):
@@ -184,13 +184,13 @@ async def test_arming_state_change(opp, mock_nessclient):
 
     await async_setup_component(opp, DOMAIN, VALID_CONFIG)
     await opp.async_block_till_done()
-    assert.opp.states.is_state("alarm_control_panel.alarm_panel", STATE_UNKNOWN)
+    assert opp.states.is_state("alarm_control_panel.alarm_panel", STATE_UNKNOWN)
     on_state_change = mock_nessclient.on_state_change.call_args[0][0]
 
     for arming_state, expected_state in states:
         on_state_change(arming_state)
         await opp.async_block_till_done()
-        assert.opp.states.is_state("alarm_control_panel.alarm_panel", expected_state)
+        assert opp.states.is_state("alarm_control_panel.alarm_panel", expected_state)
 
 
 class MockArmingState(Enum):

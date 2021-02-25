@@ -167,7 +167,7 @@ async def test_abort_if_already_setup_opp):
         domain=DOMAIN,
         data={CONF_HOST: HOST, CONF_PORT: PORT},
         unique_id=f"{HOST}:{PORT}",
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "import"}, data={CONF_HOST: HOST, CONF_PORT: PORT}

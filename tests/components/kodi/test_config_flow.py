@@ -38,7 +38,7 @@ async def user_flow.opp):
     return result["flow_id"]
 
 
-async def test_user_flow.opp, user_flow):
+async def test_user_flow(opp, user_flow):
     """Test a successful user initiated flow."""
     with patch(
         "openpeerpower.components.kodi.config_flow.Kodi.ping",
@@ -70,7 +70,7 @@ async def test_user_flow.opp, user_flow):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_valid_auth.opp, user_flow):
+async def test_form_valid_auth(opp, user_flow):
     """Test we handle valid auth."""
     with patch(
         "openpeerpower.components.kodi.config_flow.Kodi.ping",
@@ -116,7 +116,7 @@ async def test_form_valid_auth.opp, user_flow):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_valid_ws_port.opp, user_flow):
+async def test_form_valid_ws_port(opp, user_flow):
     """Test we handle valid websocket port."""
     with patch(
         "openpeerpower.components.kodi.config_flow.Kodi.ping",
@@ -167,7 +167,7 @@ async def test_form_valid_ws_port.opp, user_flow):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_empty_ws_port.opp, user_flow):
+async def test_form_empty_ws_port(opp, user_flow):
     """Test we handle an empty websocket port input."""
     with patch(
         "openpeerpower.components.kodi.config_flow.Kodi.ping",
@@ -212,7 +212,7 @@ async def test_form_empty_ws_port.opp, user_flow):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_invalid_auth.opp, user_flow):
+async def test_form_invalid_auth(opp, user_flow):
     """Test we handle invalid auth."""
     with patch(
         "openpeerpower.components.kodi.config_flow.Kodi.ping",
@@ -292,7 +292,7 @@ async def test_form_invalid_auth.opp, user_flow):
     assert result["errors"] == {}
 
 
-async def test_form_cannot_connect_http.opp, user_flow):
+async def test_form_cannot_connect_http(opp, user_flow):
     """Test we handle cannot connect over HTTP error."""
     with patch(
         "openpeerpower.components.kodi.config_flow.Kodi.ping",
@@ -308,7 +308,7 @@ async def test_form_cannot_connect_http.opp, user_flow):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_exception_http.opp, user_flow):
+async def test_form_exception_http(opp, user_flow):
     """Test we handle generic exception over HTTP."""
     with patch(
         "openpeerpower.components.kodi.config_flow.Kodi.ping",
@@ -324,7 +324,7 @@ async def test_form_exception_http.opp, user_flow):
     assert result["errors"] == {"base": "unknown"}
 
 
-async def test_form_cannot_connect_ws.opp, user_flow):
+async def test_form_cannot_connect_ws(opp, user_flow):
     """Test we handle cannot connect over WebSocket error."""
     with patch(
         "openpeerpower.components.kodi.config_flow.Kodi.ping",
@@ -376,7 +376,7 @@ async def test_form_cannot_connect_ws.opp, user_flow):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_exception_ws.opp, user_flow):
+async def test_form_exception_ws(opp, user_flow):
     """Test we handle generic exception over WebSocket."""
     with patch(
         "openpeerpower.components.kodi.config_flow.Kodi.ping",
@@ -494,7 +494,7 @@ async def test_discovery_cannot_connect_ws.opp):
     assert result["errors"] == {}
 
 
-async def test_discovery_exception_http.opp, user_flow):
+async def test_discovery_exception_http(opp, user_flow):
     """Test we handle generic exception during discovery validation."""
     with patch(
         "openpeerpower.components.kodi.config_flow.Kodi.ping",
@@ -561,7 +561,7 @@ async def test_discovery_updates_unique_id.opp):
         data={"host": "dummy", "port": 11, "namename": "dummy.local."},
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY

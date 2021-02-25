@@ -62,7 +62,7 @@ def mock_controller_connect():
         yield service_mock
 
 
-async def test_sensors.opp, connect):
+async def test_sensors(opp, connect):
     """Test creating an AsusWRT sensor."""
     entity_reg = await opp.helpers.entity_registry.async_get_registry()
 
@@ -109,42 +109,42 @@ async def test_sensors.opp, connect):
         data=CONFIG_DATA,
         options={CONF_CONSIDER_HOME: 60},
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     # initial devices setup
     assert await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
-    async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+    async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
     await opp.async_block_till_done()
 
-    assert.opp.states.get(f"{device_tracker.DOMAIN}.test").state == STATE_HOME
-    assert.opp.states.get(f"{device_tracker.DOMAIN}.testtwo").state == STATE_HOME
-    assert.opp.states.get(f"{sensor.DOMAIN}.asuswrt_connected_devices").state == "2"
-    assert.opp.states.get(f"{sensor.DOMAIN}.asuswrt_download_speed").state == "160.0"
-    assert.opp.states.get(f"{sensor.DOMAIN}.asuswrt_download").state == "60.0"
-    assert.opp.states.get(f"{sensor.DOMAIN}.asuswrt_upload_speed").state == "80.0"
-    assert.opp.states.get(f"{sensor.DOMAIN}.asuswrt_upload").state == "50.0"
+    assert opp.states.get(f"{device_tracker.DOMAIN}.test").state == STATE_HOME
+    assert opp.states.get(f"{device_tracker.DOMAIN}.testtwo").state == STATE_HOME
+    assert opp.states.get(f"{sensor.DOMAIN}.asuswrt_connected_devices").state == "2"
+    assert opp.states.get(f"{sensor.DOMAIN}.asuswrt_download_speed").state == "160.0"
+    assert opp.states.get(f"{sensor.DOMAIN}.asuswrt_download").state == "60.0"
+    assert opp.states.get(f"{sensor.DOMAIN}.asuswrt_upload_speed").state == "80.0"
+    assert opp.states.get(f"{sensor.DOMAIN}.asuswrt_upload").state == "50.0"
 
     # add one device and remove another
     MOCK_DEVICES.pop("a1:b1:c1:d1:e1:f1")
     MOCK_DEVICES["a3:b3:c3:d3:e3:f3"] = Device(
         "a3:b3:c3:d3:e3:f3", "192.168.1.4", "TestThree"
     )
-    async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+    async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
     await opp.async_block_till_done()
 
     # consider home option set, all devices still home
-    assert.opp.states.get(f"{device_tracker.DOMAIN}.test").state == STATE_HOME
-    assert.opp.states.get(f"{device_tracker.DOMAIN}.testtwo").state == STATE_HOME
-    assert.opp.states.get(f"{device_tracker.DOMAIN}.testthree").state == STATE_HOME
-    assert.opp.states.get(f"{sensor.DOMAIN}.asuswrt_connected_devices").state == "2"
+    assert opp.states.get(f"{device_tracker.DOMAIN}.test").state == STATE_HOME
+    assert opp.states.get(f"{device_tracker.DOMAIN}.testtwo").state == STATE_HOME
+    assert opp.states.get(f"{device_tracker.DOMAIN}.testthree").state == STATE_HOME
+    assert opp.states.get(f"{sensor.DOMAIN}.asuswrt_connected_devices").state == "2"
 
     opp.config_entries.async_update_entry(
         config_entry, options={CONF_CONSIDER_HOME: 0}
     )
     await opp.async_block_till_done()
-    async_fire_time_changed.opp, utcnow() + timedelta(seconds=30))
+    async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
     await opp.async_block_till_done()
 
     # consider home option not set, device "test" not home
-    assert.opp.states.get(f"{device_tracker.DOMAIN}.test").state == STATE_NOT_HOME
+    assert opp.states.get(f"{device_tracker.DOMAIN}.test").state == STATE_NOT_HOME

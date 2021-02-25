@@ -33,7 +33,7 @@ async def test_duplicate_error(opp):
 
     MockConfigEntry(
         domain=DOMAIN, unique_id="67890fghij67890fghij", data=conf
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=conf
@@ -46,7 +46,7 @@ async def test_duplicate_error(opp):
 @pytest.mark.parametrize(
     "get_devices_response", [mock_coro(exception=aioambient.errors.AmbientError)]
 )
-async def test_invalid_api_key.opp, mock_aioambient):
+async def test_invalid_api_key(opp, mock_aioambient):
     """Test that an invalid API/App Key throws an error."""
     conf = {CONF_API_KEY: "12345abcde12345abcde", CONF_APP_KEY: "67890fghij67890fghij"}
 
@@ -59,7 +59,7 @@ async def test_invalid_api_key.opp, mock_aioambient):
 
 
 @pytest.mark.parametrize("get_devices_response", [mock_coro(return_value=[])])
-async def test_no_devices.opp, mock_aioambient):
+async def test_no_devices(opp, mock_aioambient):
     """Test that an account with no associated devices throws an error."""
     conf = {CONF_API_KEY: "12345abcde12345abcde", CONF_APP_KEY: "67890fghij67890fghij"}
 
@@ -87,7 +87,7 @@ async def test_show_form.opp):
     "get_devices_response",
     [mock_coro(return_value=json.loads(load_fixture("ambient_devices.json")))],
 )
-async def test_step_import.opp, mock_aioambient):
+async def test_step_import(opp, mock_aioambient):
     """Test that the import step works."""
     conf = {CONF_API_KEY: "12345abcde12345abcde", CONF_APP_KEY: "67890fghij67890fghij"}
 
@@ -108,7 +108,7 @@ async def test_step_import.opp, mock_aioambient):
     "get_devices_response",
     [mock_coro(return_value=json.loads(load_fixture("ambient_devices.json")))],
 )
-async def test_step_user.opp, mock_aioambient):
+async def test_step_user(opp, mock_aioambient):
     """Test that the user step works."""
     conf = {CONF_API_KEY: "12345abcde12345abcde", CONF_APP_KEY: "67890fghij67890fghij"}
 

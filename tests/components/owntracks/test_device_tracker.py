@@ -281,12 +281,12 @@ BAD_JSON_SUFFIX = "** and it ends here ^^"
 
 
 @pytest.fixture
-def setup_comp.opp, mock_device_tracker_conf, mqtt_mock):
+def setup_comp(opp, mock_device_tracker_conf, mqtt_mock):
     """Initialize components."""
-    assert.opp.loop.run_until_complete(
-        async_setup_component.opp, "persistent_notification", {})
+    assert opp.loop.run_until_complete(
+        async_setup_component(opp, "persistent_notification", {})
     )
-    opp.loop.run_until_complete(async_setup_component.opp, "device_tracker", {}))
+    opp.loop.run_until_complete(async_setup_component(opp, "device_tracker", {}))
 
     opp.states.async_set("zone.inner", "zoning", INNER_ZONE)
 
@@ -296,14 +296,14 @@ def setup_comp.opp, mock_device_tracker_conf, mqtt_mock):
     yield
 
 
-async def setup_owntracks.opp, config, ctx_cls=owntracks.OwnTracksContext):
+async def setup_owntracks(opp, config, ctx_cls=owntracks.OwnTracksContext):
     """Set up OwnTracks."""
     MockConfigEntry(
         domain="owntracks", data={"webhook_id": "owntracks_test", "secret": "abcd"}
-    ).add_to.opp.opp)
+    ).add_to_opp(opp)
 
     with patch.object(owntracks, "OwnTracksContext", ctx_cls):
-        assert await async_setup_component.opp, "owntracks", {"owntracks": config})
+        assert await async_setup_component(opp, "owntracks", {"owntracks": config})
         await opp.async_block_till_done()
 
 
@@ -340,361 +340,361 @@ def context.opp, setup_comp):
     yield get_context
 
 
-async def send_message.opp, topic, message, corrupt=False):
+async def send_message(opp, topic, message, corrupt=False):
     """Test the sending of a message."""
     str_message = json.dumps(message)
     if corrupt:
         mod_message = BAD_JSON_PREFIX + str_message + BAD_JSON_SUFFIX
     else:
         mod_message = str_message
-    async_fire_mqtt_message.opp, topic, mod_message)
+    async_fire_mqtt_message(opp, topic, mod_message)
     await opp.async_block_till_done()
     await opp.async_block_till_done()
 
 
-def assert_location_state.opp, location):
+def assert_location_state(opp, location):
     """Test the assertion of a location state."""
     state = opp.states.get(DEVICE_TRACKER_STATE)
     assert state.state == location
 
 
-def assert_location_latitude.opp, latitude):
+def assert_location_latitude(opp, latitude):
     """Test the assertion of a location latitude."""
     state = opp.states.get(DEVICE_TRACKER_STATE)
     assert state.attributes.get("latitude") == latitude
 
 
-def assert_location_longitude.opp, longitude):
+def assert_location_longitude(opp, longitude):
     """Test the assertion of a location longitude."""
     state = opp.states.get(DEVICE_TRACKER_STATE)
     assert state.attributes.get("longitude") == longitude
 
 
-def assert_location_accuracy.opp, accuracy):
+def assert_location_accuracy(opp, accuracy):
     """Test the assertion of a location accuracy."""
     state = opp.states.get(DEVICE_TRACKER_STATE)
     assert state.attributes.get("gps_accuracy") == accuracy
 
 
-def assert_location_source_type.opp, source_type):
+def assert_location_source_type(opp, source_type):
     """Test the assertion of source_type."""
     state = opp.states.get(DEVICE_TRACKER_STATE)
     assert state.attributes.get("source_type") == source_type
 
 
-def assert_mobile_tracker_state.opp, location, beacon=IBEACON_DEVICE):
+def assert_mobile_tracker_state(opp, location, beacon=IBEACON_DEVICE):
     """Test the assertion of a mobile beacon tracker state."""
     dev_id = MOBILE_BEACON_FMT.format(beacon)
     state = opp.states.get(dev_id)
     assert state.state == location
 
 
-def assert_mobile_tracker_latitude.opp, latitude, beacon=IBEACON_DEVICE):
+def assert_mobile_tracker_latitude(opp, latitude, beacon=IBEACON_DEVICE):
     """Test the assertion of a mobile beacon tracker latitude."""
     dev_id = MOBILE_BEACON_FMT.format(beacon)
     state = opp.states.get(dev_id)
     assert state.attributes.get("latitude") == latitude
 
 
-def assert_mobile_tracker_accuracy.opp, accuracy, beacon=IBEACON_DEVICE):
+def assert_mobile_tracker_accuracy(opp, accuracy, beacon=IBEACON_DEVICE):
     """Test the assertion of a mobile beacon tracker accuracy."""
     dev_id = MOBILE_BEACON_FMT.format(beacon)
     state = opp.states.get(dev_id)
     assert state.attributes.get("gps_accuracy") == accuracy
 
 
-async def test_location_invalid_devid.opp, context):
+async def test_location_invalid_devid(opp, context):
     """Test the update of a location."""
-    await send_message.opp, "owntracks/paulus/nexus-5x", LOCATION_MESSAGE)
+    await send_message(opp, "owntracks/paulus/nexus-5x", LOCATION_MESSAGE)
     state = opp.states.get("device_tracker.paulus_nexus_5x")
     assert state.state == "outer"
 
 
-async def test_location_update.opp, context):
+async def test_location_update(opp, context):
     """Test the update of a location."""
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE)
 
-    assert_location_source_type.opp, "gps")
-    assert_location_latitude.opp, LOCATION_MESSAGE["lat"])
-    assert_location_accuracy.opp, LOCATION_MESSAGE["acc"])
-    assert_location_state.opp, "outer")
+    assert_location_source_type(opp, "gps")
+    assert_location_latitude(opp, LOCATION_MESSAGE["lat"])
+    assert_location_accuracy(opp, LOCATION_MESSAGE["acc"])
+    assert_location_state(opp, "outer")
 
 
-async def test_location_update_no_t_key.opp, context):
+async def test_location_update_no_t_key(opp, context):
     """Test the update of a location when message does not contain 't'."""
     message = LOCATION_MESSAGE.copy()
     message.pop("t")
-    await send_message.opp, LOCATION_TOPIC, message)
+    await send_message(opp, LOCATION_TOPIC, message)
 
-    assert_location_source_type.opp, "gps")
-    assert_location_latitude.opp, LOCATION_MESSAGE["lat"])
-    assert_location_accuracy.opp, LOCATION_MESSAGE["acc"])
-    assert_location_state.opp, "outer")
+    assert_location_source_type(opp, "gps")
+    assert_location_latitude(opp, LOCATION_MESSAGE["lat"])
+    assert_location_accuracy(opp, LOCATION_MESSAGE["acc"])
+    assert_location_state(opp, "outer")
 
 
-async def test_location_inaccurate_gps.opp, context):
+async def test_location_inaccurate_gps(opp, context):
     """Test the location for inaccurate GPS information."""
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE)
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE_INACCURATE)
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE_INACCURATE)
 
     # Ignored inaccurate GPS. Location remains at previous.
-    assert_location_latitude.opp, LOCATION_MESSAGE["lat"])
-    assert_location_longitude.opp, LOCATION_MESSAGE["lon"])
+    assert_location_latitude(opp, LOCATION_MESSAGE["lat"])
+    assert_location_longitude(opp, LOCATION_MESSAGE["lon"])
 
 
-async def test_location_zero_accuracy_gps.opp, context):
+async def test_location_zero_accuracy_gps(opp, context):
     """Ignore the location for zero accuracy GPS information."""
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE)
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE_ZERO_ACCURACY)
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE_ZERO_ACCURACY)
 
     # Ignored inaccurate GPS. Location remains at previous.
-    assert_location_latitude.opp, LOCATION_MESSAGE["lat"])
-    assert_location_longitude.opp, LOCATION_MESSAGE["lon"])
+    assert_location_latitude(opp, LOCATION_MESSAGE["lat"])
+    assert_location_longitude(opp, LOCATION_MESSAGE["lon"])
 
 
 # ------------------------------------------------------------------------
 # GPS based event entry / exit testing
-async def test_event_gps_entry_exit.opp, context):
+async def test_event_gps_entry_exit(opp, context):
     """Test the entry event."""
     # Entering the owntracks circular region named "inner"
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE)
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE)
 
     # Enter uses the zone's gps co-ords
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_accuracy.opp, INNER_ZONE["radius"])
-    assert_location_state.opp, "inner")
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_accuracy(opp, INNER_ZONE["radius"])
+    assert_location_state(opp, "inner")
 
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE)
 
     #  Updates ignored when in a zone
     #  note that LOCATION_MESSAGE is actually pretty far
     #  from INNER_ZONE and has good accuracy. I haven't
     #  received a transition message though so I'm still
     #  associated with the inner zone regardless of GPS.
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_accuracy.opp, INNER_ZONE["radius"])
-    assert_location_state.opp, "inner")
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_accuracy(opp, INNER_ZONE["radius"])
+    assert_location_state(opp, "inner")
 
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE)
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE)
 
     # Exit switches back to GPS
-    assert_location_latitude.opp, REGION_GPS_LEAVE_MESSAGE["lat"])
-    assert_location_accuracy.opp, REGION_GPS_LEAVE_MESSAGE["acc"])
-    assert_location_state.opp, "outer")
+    assert_location_latitude(opp, REGION_GPS_LEAVE_MESSAGE["lat"])
+    assert_location_accuracy(opp, REGION_GPS_LEAVE_MESSAGE["acc"])
+    assert_location_state(opp, "outer")
 
     # Left clean zone state
     assert not context().regions_entered[USER]
 
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE)
 
     # Now sending a location update moves me again.
-    assert_location_latitude.opp, LOCATION_MESSAGE["lat"])
-    assert_location_accuracy.opp, LOCATION_MESSAGE["acc"])
+    assert_location_latitude(opp, LOCATION_MESSAGE["lat"])
+    assert_location_accuracy(opp, LOCATION_MESSAGE["acc"])
 
 
-async def test_event_gps_with_spaces.opp, context):
+async def test_event_gps_with_spaces(opp, context):
     """Test the entry event."""
     message = build_message({"desc": "inner 2"}, REGION_GPS_ENTER_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, message)
-    assert_location_state.opp, "inner 2")
+    await send_message(opp, EVENT_TOPIC, message)
+    assert_location_state(opp, "inner 2")
 
     message = build_message({"desc": "inner 2"}, REGION_GPS_LEAVE_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, message)
+    await send_message(opp, EVENT_TOPIC, message)
 
     # Left clean zone state
     assert not context().regions_entered[USER]
 
 
-async def test_event_gps_entry_inaccurate.opp, context):
+async def test_event_gps_entry_inaccurate(opp, context):
     """Test the event for inaccurate entry."""
     # Set location to the outer zone.
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE)
 
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE_INACCURATE)
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE_INACCURATE)
 
     # I enter the zone even though the message GPS was inaccurate.
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_accuracy.opp, INNER_ZONE["radius"])
-    assert_location_state.opp, "inner")
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_accuracy(opp, INNER_ZONE["radius"])
+    assert_location_state(opp, "inner")
 
 
-async def test_event_gps_entry_exit_inaccurate.opp, context):
+async def test_event_gps_entry_exit_inaccurate(opp, context):
     """Test the event for inaccurate exit."""
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE)
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE)
 
     # Enter uses the zone's gps co-ords
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_accuracy.opp, INNER_ZONE["radius"])
-    assert_location_state.opp, "inner")
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_accuracy(opp, INNER_ZONE["radius"])
+    assert_location_state(opp, "inner")
 
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE_INACCURATE)
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE_INACCURATE)
 
     # Exit doesn't use inaccurate gps
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_accuracy.opp, INNER_ZONE["radius"])
-    assert_location_state.opp, "inner")
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_accuracy(opp, INNER_ZONE["radius"])
+    assert_location_state(opp, "inner")
 
     # But does exit region correctly
     assert not context().regions_entered[USER]
 
 
-async def test_event_gps_entry_exit_zero_accuracy.opp, context):
+async def test_event_gps_entry_exit_zero_accuracy(opp, context):
     """Test entry/exit events with accuracy zero."""
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE_ZERO)
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE_ZERO)
 
     # Enter uses the zone's gps co-ords
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_accuracy.opp, INNER_ZONE["radius"])
-    assert_location_state.opp, "inner")
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_accuracy(opp, INNER_ZONE["radius"])
+    assert_location_state(opp, "inner")
 
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE_ZERO)
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE_ZERO)
 
     # Exit doesn't use zero gps
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_accuracy.opp, INNER_ZONE["radius"])
-    assert_location_state.opp, "inner")
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_accuracy(opp, INNER_ZONE["radius"])
+    assert_location_state(opp, "inner")
 
     # But does exit region correctly
     assert not context().regions_entered[USER]
 
 
-async def test_event_gps_exit_outside_zone_sets_away.opp, context):
+async def test_event_gps_exit_outside_zone_sets_away(opp, context):
     """Test the event for exit zone."""
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE)
-    assert_location_state.opp, "inner")
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE)
+    assert_location_state(opp, "inner")
 
     # Exit message far away GPS location
     message = build_message({"lon": 90.0, "lat": 90.0}, REGION_GPS_LEAVE_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, message)
+    await send_message(opp, EVENT_TOPIC, message)
 
     # Exit forces zone change to away
-    assert_location_state.opp, STATE_NOT_HOME)
+    assert_location_state(opp, STATE_NOT_HOME)
 
 
-async def test_event_gps_entry_exit_right_order.opp, context):
+async def test_event_gps_entry_exit_right_order(opp, context):
     """Test the event for ordering."""
     # Enter inner zone
     # Set location to the outer zone.
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE)
-    assert_location_state.opp, "inner")
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE)
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE)
+    assert_location_state(opp, "inner")
 
     # Enter inner2 zone
     message = build_message({"desc": "inner_2"}, REGION_GPS_ENTER_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, message)
-    assert_location_state.opp, "inner_2")
+    await send_message(opp, EVENT_TOPIC, message)
+    assert_location_state(opp, "inner_2")
 
     # Exit inner_2 - should be in 'inner'
     message = build_message({"desc": "inner_2"}, REGION_GPS_LEAVE_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, message)
-    assert_location_state.opp, "inner")
+    await send_message(opp, EVENT_TOPIC, message)
+    assert_location_state(opp, "inner")
 
     # Exit inner - should be in 'outer'
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE)
-    assert_location_latitude.opp, REGION_GPS_LEAVE_MESSAGE["lat"])
-    assert_location_accuracy.opp, REGION_GPS_LEAVE_MESSAGE["acc"])
-    assert_location_state.opp, "outer")
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE)
+    assert_location_latitude(opp, REGION_GPS_LEAVE_MESSAGE["lat"])
+    assert_location_accuracy(opp, REGION_GPS_LEAVE_MESSAGE["acc"])
+    assert_location_state(opp, "outer")
 
 
-async def test_event_gps_entry_exit_wrong_order.opp, context):
+async def test_event_gps_entry_exit_wrong_order(opp, context):
     """Test the event for wrong order."""
     # Enter inner zone
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE)
-    assert_location_state.opp, "inner")
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE)
+    assert_location_state(opp, "inner")
 
     # Enter inner2 zone
     message = build_message({"desc": "inner_2"}, REGION_GPS_ENTER_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, message)
-    assert_location_state.opp, "inner_2")
+    await send_message(opp, EVENT_TOPIC, message)
+    assert_location_state(opp, "inner_2")
 
     # Exit inner - should still be in 'inner_2'
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE)
-    assert_location_state.opp, "inner_2")
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE)
+    assert_location_state(opp, "inner_2")
 
     # Exit inner_2 - should be in 'outer'
     message = build_message({"desc": "inner_2"}, REGION_GPS_LEAVE_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, message)
-    assert_location_latitude.opp, REGION_GPS_LEAVE_MESSAGE["lat"])
-    assert_location_accuracy.opp, REGION_GPS_LEAVE_MESSAGE["acc"])
-    assert_location_state.opp, "outer")
+    await send_message(opp, EVENT_TOPIC, message)
+    assert_location_latitude(opp, REGION_GPS_LEAVE_MESSAGE["lat"])
+    assert_location_accuracy(opp, REGION_GPS_LEAVE_MESSAGE["acc"])
+    assert_location_state(opp, "outer")
 
 
-async def test_event_gps_entry_unknown_zone.opp, context):
+async def test_event_gps_entry_unknown_zone(opp, context):
     """Test the event for unknown zone."""
     # Just treat as location update
     message = build_message({"desc": "unknown"}, REGION_GPS_ENTER_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, message)
-    assert_location_latitude.opp, REGION_GPS_ENTER_MESSAGE["lat"])
-    assert_location_state.opp, "inner")
+    await send_message(opp, EVENT_TOPIC, message)
+    assert_location_latitude(opp, REGION_GPS_ENTER_MESSAGE["lat"])
+    assert_location_state(opp, "inner")
 
 
-async def test_event_gps_exit_unknown_zone.opp, context):
+async def test_event_gps_exit_unknown_zone(opp, context):
     """Test the event for unknown zone."""
     # Just treat as location update
     message = build_message({"desc": "unknown"}, REGION_GPS_LEAVE_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, message)
-    assert_location_latitude.opp, REGION_GPS_LEAVE_MESSAGE["lat"])
-    assert_location_state.opp, "outer")
+    await send_message(opp, EVENT_TOPIC, message)
+    assert_location_latitude(opp, REGION_GPS_LEAVE_MESSAGE["lat"])
+    assert_location_state(opp, "outer")
 
 
-async def test_event_entry_zone_loading_dash.opp, context):
+async def test_event_entry_zone_loading_dash(opp, context):
     """Test the event for zone landing."""
     # Make sure the leading - is ignored
     # Owntracks uses this to switch on hold
     message = build_message({"desc": "-inner"}, REGION_GPS_ENTER_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, message)
-    assert_location_state.opp, "inner")
+    await send_message(opp, EVENT_TOPIC, message)
+    assert_location_state(opp, "inner")
 
 
-async def test_events_only_on.opp, context):
+async def test_events_only_on(opp, context):
     """Test events_only config suppresses location updates."""
     # Sending a location message that is not home
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE_NOT_HOME)
-    assert_location_state.opp, STATE_NOT_HOME)
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE_NOT_HOME)
+    assert_location_state(opp, STATE_NOT_HOME)
 
     context().events_only = True
 
     # Enter and Leave messages
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE_OUTER)
-    assert_location_state.opp, "outer")
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE_OUTER)
-    assert_location_state.opp, STATE_NOT_HOME)
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE_OUTER)
+    assert_location_state(opp, "outer")
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE_OUTER)
+    assert_location_state(opp, STATE_NOT_HOME)
 
     # Sending a location message that is inside outer zone
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE)
 
     # Ignored location update. Location remains at previous.
-    assert_location_state.opp, STATE_NOT_HOME)
+    assert_location_state(opp, STATE_NOT_HOME)
 
 
-async def test_events_only_off.opp, context):
+async def test_events_only_off(opp, context):
     """Test when events_only is False."""
     # Sending a location message that is not home
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE_NOT_HOME)
-    assert_location_state.opp, STATE_NOT_HOME)
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE_NOT_HOME)
+    assert_location_state(opp, STATE_NOT_HOME)
 
     context().events_only = False
 
     # Enter and Leave messages
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE_OUTER)
-    assert_location_state.opp, "outer")
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE_OUTER)
-    assert_location_state.opp, STATE_NOT_HOME)
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE_OUTER)
+    assert_location_state(opp, "outer")
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE_OUTER)
+    assert_location_state(opp, STATE_NOT_HOME)
 
     # Sending a location message that is inside outer zone
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE)
 
     # Location update processed
-    assert_location_state.opp, "outer")
+    assert_location_state(opp, "outer")
 
 
-async def test_event_source_type_entry_exit.opp, context):
+async def test_event_source_type_entry_exit(opp, context):
     """Test the entry and exit events of source type."""
     # Entering the owntracks circular region named "inner"
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE)
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE)
 
     # source_type should be gps when entering using gps.
-    assert_location_source_type.opp, "gps")
+    assert_location_source_type(opp, "gps")
 
     # owntracks shouldn't send beacon events with acc = 0
     await send_message(
@@ -702,133 +702,133 @@ async def test_event_source_type_entry_exit.opp, context):
     )
 
     # We should be able to enter a beacon zone even inside a gps zone
-    assert_location_source_type.opp, "bluetooth_le")
+    assert_location_source_type(opp, "bluetooth_le")
 
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE)
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE)
 
     # source_type should be gps when leaving using gps.
-    assert_location_source_type.opp, "gps")
+    assert_location_source_type(opp, "gps")
 
     # owntracks shouldn't send beacon events with acc = 0
     await send_message(
         opp. EVENT_TOPIC, build_message({"acc": 1}, REGION_BEACON_LEAVE_MESSAGE)
     )
 
-    assert_location_source_type.opp, "bluetooth_le")
+    assert_location_source_type(opp, "bluetooth_le")
 
 
 # Region Beacon based event entry / exit testing
-async def test_event_region_entry_exit.opp, context):
+async def test_event_region_entry_exit(opp, context):
     """Test the entry event."""
     # Seeing a beacon named "inner"
-    await send_message.opp, EVENT_TOPIC, REGION_BEACON_ENTER_MESSAGE)
+    await send_message(opp, EVENT_TOPIC, REGION_BEACON_ENTER_MESSAGE)
 
     # Enter uses the zone's gps co-ords
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_accuracy.opp, INNER_ZONE["radius"])
-    assert_location_state.opp, "inner")
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_accuracy(opp, INNER_ZONE["radius"])
+    assert_location_state(opp, "inner")
 
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE)
 
     #  Updates ignored when in a zone
     #  note that LOCATION_MESSAGE is actually pretty far
     #  from INNER_ZONE and has good accuracy. I haven't
     #  received a transition message though so I'm still
     #  associated with the inner zone regardless of GPS.
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_accuracy.opp, INNER_ZONE["radius"])
-    assert_location_state.opp, "inner")
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_accuracy(opp, INNER_ZONE["radius"])
+    assert_location_state(opp, "inner")
 
-    await send_message.opp, EVENT_TOPIC, REGION_BEACON_LEAVE_MESSAGE)
+    await send_message(opp, EVENT_TOPIC, REGION_BEACON_LEAVE_MESSAGE)
 
     # Exit switches back to GPS but the beacon has no coords
     # so I am still located at the center of the inner region
     # until I receive a location update.
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_accuracy.opp, INNER_ZONE["radius"])
-    assert_location_state.opp, "inner")
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_accuracy(opp, INNER_ZONE["radius"])
+    assert_location_state(opp, "inner")
 
     # Left clean zone state
     assert not context().regions_entered[USER]
 
     # Now sending a location update moves me again.
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE)
-    assert_location_latitude.opp, LOCATION_MESSAGE["lat"])
-    assert_location_accuracy.opp, LOCATION_MESSAGE["acc"])
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE)
+    assert_location_latitude(opp, LOCATION_MESSAGE["lat"])
+    assert_location_accuracy(opp, LOCATION_MESSAGE["acc"])
 
 
-async def test_event_region_with_spaces.opp, context):
+async def test_event_region_with_spaces(opp, context):
     """Test the entry event."""
     message = build_message({"desc": "inner 2"}, REGION_BEACON_ENTER_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, message)
-    assert_location_state.opp, "inner 2")
+    await send_message(opp, EVENT_TOPIC, message)
+    assert_location_state(opp, "inner 2")
 
     message = build_message({"desc": "inner 2"}, REGION_BEACON_LEAVE_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, message)
+    await send_message(opp, EVENT_TOPIC, message)
 
     # Left clean zone state
     assert not context().regions_entered[USER]
 
 
-async def test_event_region_entry_exit_right_order.opp, context):
+async def test_event_region_entry_exit_right_order(opp, context):
     """Test the event for ordering."""
     # Enter inner zone
     # Set location to the outer zone.
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE)
 
     # See 'inner' region beacon
-    await send_message.opp, EVENT_TOPIC, REGION_BEACON_ENTER_MESSAGE)
-    assert_location_state.opp, "inner")
+    await send_message(opp, EVENT_TOPIC, REGION_BEACON_ENTER_MESSAGE)
+    assert_location_state(opp, "inner")
 
     # See 'inner_2' region beacon
     message = build_message({"desc": "inner_2"}, REGION_BEACON_ENTER_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, message)
-    assert_location_state.opp, "inner_2")
+    await send_message(opp, EVENT_TOPIC, message)
+    assert_location_state(opp, "inner_2")
 
     # Exit inner_2 - should be in 'inner'
     message = build_message({"desc": "inner_2"}, REGION_BEACON_LEAVE_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, message)
-    assert_location_state.opp, "inner")
+    await send_message(opp, EVENT_TOPIC, message)
+    assert_location_state(opp, "inner")
 
     # Exit inner - should be in 'outer'
-    await send_message.opp, EVENT_TOPIC, REGION_BEACON_LEAVE_MESSAGE)
+    await send_message(opp, EVENT_TOPIC, REGION_BEACON_LEAVE_MESSAGE)
 
     # I have not had an actual location update yet and my
     # coordinates are set to the center of the last region I
     # entered which puts me in the inner zone.
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_accuracy.opp, INNER_ZONE["radius"])
-    assert_location_state.opp, "inner")
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_accuracy(opp, INNER_ZONE["radius"])
+    assert_location_state(opp, "inner")
 
 
-async def test_event_region_entry_exit_wrong_order.opp, context):
+async def test_event_region_entry_exit_wrong_order(opp, context):
     """Test the event for wrong order."""
     # Enter inner zone
-    await send_message.opp, EVENT_TOPIC, REGION_BEACON_ENTER_MESSAGE)
-    assert_location_state.opp, "inner")
+    await send_message(opp, EVENT_TOPIC, REGION_BEACON_ENTER_MESSAGE)
+    assert_location_state(opp, "inner")
 
     # Enter inner2 zone
     message = build_message({"desc": "inner_2"}, REGION_BEACON_ENTER_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, message)
-    assert_location_state.opp, "inner_2")
+    await send_message(opp, EVENT_TOPIC, message)
+    assert_location_state(opp, "inner_2")
 
     # Exit inner - should still be in 'inner_2'
-    await send_message.opp, EVENT_TOPIC, REGION_BEACON_LEAVE_MESSAGE)
-    assert_location_state.opp, "inner_2")
+    await send_message(opp, EVENT_TOPIC, REGION_BEACON_LEAVE_MESSAGE)
+    assert_location_state(opp, "inner_2")
 
     # Exit inner_2 - should be in 'outer'
     message = build_message({"desc": "inner_2"}, REGION_BEACON_LEAVE_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, message)
+    await send_message(opp, EVENT_TOPIC, message)
 
     # I have not had an actual location update yet and my
     # coordinates are set to the center of the last region I
     # entered which puts me in the inner_2 zone.
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_accuracy.opp, INNER_ZONE["radius"])
-    assert_location_state.opp, "inner_2")
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_accuracy(opp, INNER_ZONE["radius"])
+    assert_location_state(opp, "inner_2")
 
 
-async def test_event_beacon_unknown_zone_no_location.opp, context):
+async def test_event_beacon_unknown_zone_no_location(opp, context):
     """Test the event for unknown zone."""
     # A beacon which does not match a HA zone is the
     # definition of a mobile beacon. In this case, "unknown"
@@ -840,20 +840,20 @@ async def test_event_beacon_unknown_zone_no_location.opp, context):
     opp.states.async_set(DEVICE_TRACKER_STATE, None)
 
     message = build_message({"desc": "unknown"}, REGION_BEACON_ENTER_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, message)
+    await send_message(opp, EVENT_TOPIC, message)
 
     # My current state is None because I haven't seen a
     # location message or a GPS or Region # Beacon event
     # message. None is the state the test harness set for
     # the Device during test case setup.
-    assert_location_state.opp, "None")
+    assert_location_state(opp, "None")
 
     # We have had no location yet, so the beacon status
     # set to unknown.
-    assert_mobile_tracker_state.opp, "unknown", "unknown")
+    assert_mobile_tracker_state(opp, "unknown", "unknown")
 
 
-async def test_event_beacon_unknown_zone.opp, context):
+async def test_event_beacon_unknown_zone(opp, context):
     """Test the event for unknown zone."""
     # A beacon which does not match a HA zone is the
     # definition of a mobile beacon. In this case, "unknown"
@@ -861,100 +861,100 @@ async def test_event_beacon_unknown_zone.opp, context):
     # that will be tracked at my current location. First I
     # set my location so that my state is 'outer'
 
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE)
-    assert_location_state.opp, "outer")
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE)
+    assert_location_state(opp, "outer")
 
     message = build_message({"desc": "unknown"}, REGION_BEACON_ENTER_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, message)
+    await send_message(opp, EVENT_TOPIC, message)
 
     # My state is still outer and now the unknown beacon
     # has joined me at outer.
-    assert_location_state.opp, "outer")
-    assert_mobile_tracker_state.opp, "outer", "unknown")
+    assert_location_state(opp, "outer")
+    assert_mobile_tracker_state(opp, "outer", "unknown")
 
 
-async def test_event_beacon_entry_zone_loading_dash.opp, context):
+async def test_event_beacon_entry_zone_loading_dash(opp, context):
     """Test the event for beacon zone landing."""
     # Make sure the leading - is ignored
     # Owntracks uses this to switch on hold
 
     message = build_message({"desc": "-inner"}, REGION_BEACON_ENTER_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, message)
-    assert_location_state.opp, "inner")
+    await send_message(opp, EVENT_TOPIC, message)
+    assert_location_state(opp, "inner")
 
 
 # ------------------------------------------------------------------------
 # Mobile Beacon based event entry / exit testing
-async def test_mobile_enter_move_beacon.opp, context):
+async def test_mobile_enter_move_beacon(opp, context):
     """Test the movement of a beacon."""
     # I am in the outer zone.
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE)
 
     # I see the 'keys' beacon. I set the location of the
     # beacon_keys tracker to my current device location.
-    await send_message.opp, EVENT_TOPIC, MOBILE_BEACON_ENTER_EVENT_MESSAGE)
+    await send_message(opp, EVENT_TOPIC, MOBILE_BEACON_ENTER_EVENT_MESSAGE)
 
-    assert_mobile_tracker_latitude.opp, LOCATION_MESSAGE["lat"])
-    assert_mobile_tracker_state.opp, "outer")
+    assert_mobile_tracker_latitude(opp, LOCATION_MESSAGE["lat"])
+    assert_mobile_tracker_state(opp, "outer")
 
     # Location update to outside of defined zones.
     # I am now 'not home' and neither are my keys.
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE_NOT_HOME)
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE_NOT_HOME)
 
-    assert_location_state.opp, STATE_NOT_HOME)
-    assert_mobile_tracker_state.opp, STATE_NOT_HOME)
+    assert_location_state(opp, STATE_NOT_HOME)
+    assert_mobile_tracker_state(opp, STATE_NOT_HOME)
 
     not_home_lat = LOCATION_MESSAGE_NOT_HOME["lat"]
-    assert_location_latitude.opp, not_home_lat)
-    assert_mobile_tracker_latitude.opp, not_home_lat)
+    assert_location_latitude(opp, not_home_lat)
+    assert_mobile_tracker_latitude(opp, not_home_lat)
 
 
-async def test_mobile_enter_exit_region_beacon.opp, context):
+async def test_mobile_enter_exit_region_beacon(opp, context):
     """Test the enter and the exit of a mobile beacon."""
     # I am in the outer zone.
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE)
 
     # I see a new mobile beacon
-    await send_message.opp, EVENT_TOPIC, MOBILE_BEACON_ENTER_EVENT_MESSAGE)
-    assert_mobile_tracker_latitude.opp, OUTER_ZONE["latitude"])
-    assert_mobile_tracker_state.opp, "outer")
+    await send_message(opp, EVENT_TOPIC, MOBILE_BEACON_ENTER_EVENT_MESSAGE)
+    assert_mobile_tracker_latitude(opp, OUTER_ZONE["latitude"])
+    assert_mobile_tracker_state(opp, "outer")
 
     # GPS enter message should move beacon
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE)
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE)
 
-    assert_mobile_tracker_latitude.opp, INNER_ZONE["latitude"])
-    assert_mobile_tracker_state.opp, REGION_GPS_ENTER_MESSAGE["desc"])
+    assert_mobile_tracker_latitude(opp, INNER_ZONE["latitude"])
+    assert_mobile_tracker_state(opp, REGION_GPS_ENTER_MESSAGE["desc"])
 
     # Exit inner zone to outer zone should move beacon to
     # center of outer zone
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE)
-    assert_mobile_tracker_latitude.opp, REGION_GPS_LEAVE_MESSAGE["lat"])
-    assert_mobile_tracker_state.opp, "outer")
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE)
+    assert_mobile_tracker_latitude(opp, REGION_GPS_LEAVE_MESSAGE["lat"])
+    assert_mobile_tracker_state(opp, "outer")
 
 
-async def test_mobile_exit_move_beacon.opp, context):
+async def test_mobile_exit_move_beacon(opp, context):
     """Test the exit move of a beacon."""
     # I am in the outer zone.
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE)
 
     # I see a new mobile beacon
-    await send_message.opp, EVENT_TOPIC, MOBILE_BEACON_ENTER_EVENT_MESSAGE)
-    assert_mobile_tracker_latitude.opp, OUTER_ZONE["latitude"])
-    assert_mobile_tracker_state.opp, "outer")
+    await send_message(opp, EVENT_TOPIC, MOBILE_BEACON_ENTER_EVENT_MESSAGE)
+    assert_mobile_tracker_latitude(opp, OUTER_ZONE["latitude"])
+    assert_mobile_tracker_state(opp, "outer")
 
     # Exit mobile beacon, should set location
-    await send_message.opp, EVENT_TOPIC, MOBILE_BEACON_LEAVE_EVENT_MESSAGE)
+    await send_message(opp, EVENT_TOPIC, MOBILE_BEACON_LEAVE_EVENT_MESSAGE)
 
-    assert_mobile_tracker_latitude.opp, OUTER_ZONE["latitude"])
-    assert_mobile_tracker_state.opp, "outer")
+    assert_mobile_tracker_latitude(opp, OUTER_ZONE["latitude"])
+    assert_mobile_tracker_state(opp, "outer")
 
     # Move after exit should do nothing
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE_NOT_HOME)
-    assert_mobile_tracker_latitude.opp, OUTER_ZONE["latitude"])
-    assert_mobile_tracker_state.opp, "outer")
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE_NOT_HOME)
+    assert_mobile_tracker_latitude(opp, OUTER_ZONE["latitude"])
+    assert_mobile_tracker_state(opp, "outer")
 
 
-async def test_mobile_multiple_async_enter_exit.opp, context):
+async def test_mobile_multiple_async_enter_exit(opp, context):
     """Test the multiple entering."""
     # Test race condition
     for _ in range(0, 20):
@@ -970,24 +970,24 @@ async def test_mobile_multiple_async_enter_exit.opp, context):
     )
 
     await opp.async_block_till_done()
-    await send_message.opp, EVENT_TOPIC, MOBILE_BEACON_LEAVE_EVENT_MESSAGE)
+    await send_message(opp, EVENT_TOPIC, MOBILE_BEACON_LEAVE_EVENT_MESSAGE)
     assert len(context().mobile_beacons_active["greg_phone"]) == 0
 
 
-async def test_mobile_multiple_enter_exit.opp, context):
+async def test_mobile_multiple_enter_exit(opp, context):
     """Test the multiple entering."""
-    await send_message.opp, EVENT_TOPIC, MOBILE_BEACON_ENTER_EVENT_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, MOBILE_BEACON_ENTER_EVENT_MESSAGE)
-    await send_message.opp, EVENT_TOPIC, MOBILE_BEACON_LEAVE_EVENT_MESSAGE)
+    await send_message(opp, EVENT_TOPIC, MOBILE_BEACON_ENTER_EVENT_MESSAGE)
+    await send_message(opp, EVENT_TOPIC, MOBILE_BEACON_ENTER_EVENT_MESSAGE)
+    await send_message(opp, EVENT_TOPIC, MOBILE_BEACON_LEAVE_EVENT_MESSAGE)
 
     assert len(context().mobile_beacons_active["greg_phone"]) == 0
 
 
-async def test_complex_movement.opp, context):
+async def test_complex_movement(opp, context):
     """Test a complex sequence representative of real-world use."""
     # I am in the outer zone.
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE)
-    assert_location_state.opp, "outer")
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE)
+    assert_location_state(opp, "outer")
 
     # gps to inner location and event, as actually happens with OwnTracks
     location_message = build_message(
@@ -997,10 +997,10 @@ async def test_complex_movement.opp, context):
         },
         LOCATION_MESSAGE,
     )
-    await send_message.opp, LOCATION_TOPIC, location_message)
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE)
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_state.opp, "inner")
+    await send_message(opp, LOCATION_TOPIC, location_message)
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE)
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_state(opp, "inner")
 
     # region beacon enter inner event and location as actually happens
     # with OwnTracks
@@ -1011,10 +1011,10 @@ async def test_complex_movement.opp, context):
         },
         LOCATION_MESSAGE,
     )
-    await send_message.opp, EVENT_TOPIC, REGION_BEACON_ENTER_MESSAGE)
-    await send_message.opp, LOCATION_TOPIC, location_message)
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_state.opp, "inner")
+    await send_message(opp, EVENT_TOPIC, REGION_BEACON_ENTER_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, location_message)
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_state(opp, "inner")
 
     # see keys mobile beacon and location message as actually happens
     location_message = build_message(
@@ -1024,12 +1024,12 @@ async def test_complex_movement.opp, context):
         },
         LOCATION_MESSAGE,
     )
-    await send_message.opp, EVENT_TOPIC, MOBILE_BEACON_ENTER_EVENT_MESSAGE)
-    await send_message.opp, LOCATION_TOPIC, location_message)
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_mobile_tracker_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_state.opp, "inner")
-    assert_mobile_tracker_state.opp, "inner")
+    await send_message(opp, EVENT_TOPIC, MOBILE_BEACON_ENTER_EVENT_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, location_message)
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_mobile_tracker_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_state(opp, "inner")
+    assert_mobile_tracker_state(opp, "inner")
 
     # Slightly odd, I leave the location by gps before I lose
     # sight of the region beacon. This is also a little odd in
@@ -1045,12 +1045,12 @@ async def test_complex_movement.opp, context):
         },
         LOCATION_MESSAGE,
     )
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE)
-    await send_message.opp, LOCATION_TOPIC, location_message)
-    assert_location_latitude.opp, REGION_GPS_LEAVE_MESSAGE["lat"])
-    assert_mobile_tracker_latitude.opp, REGION_GPS_LEAVE_MESSAGE["lat"])
-    assert_location_state.opp, "outer")
-    assert_mobile_tracker_state.opp, "outer")
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, location_message)
+    assert_location_latitude(opp, REGION_GPS_LEAVE_MESSAGE["lat"])
+    assert_mobile_tracker_latitude(opp, REGION_GPS_LEAVE_MESSAGE["lat"])
+    assert_location_state(opp, "outer")
+    assert_mobile_tracker_state(opp, "outer")
 
     # region beacon leave inner
     location_message = build_message(
@@ -1060,12 +1060,12 @@ async def test_complex_movement.opp, context):
         },
         LOCATION_MESSAGE,
     )
-    await send_message.opp, EVENT_TOPIC, REGION_BEACON_LEAVE_MESSAGE)
-    await send_message.opp, LOCATION_TOPIC, location_message)
-    assert_location_latitude.opp, location_message["lat"])
-    assert_mobile_tracker_latitude.opp, location_message["lat"])
-    assert_location_state.opp, "outer")
-    assert_mobile_tracker_state.opp, "outer")
+    await send_message(opp, EVENT_TOPIC, REGION_BEACON_LEAVE_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, location_message)
+    assert_location_latitude(opp, location_message["lat"])
+    assert_mobile_tracker_latitude(opp, location_message["lat"])
+    assert_location_state(opp, "outer")
+    assert_mobile_tracker_state(opp, "outer")
 
     # lose keys mobile beacon
     lost_keys_location_message = build_message(
@@ -1075,20 +1075,20 @@ async def test_complex_movement.opp, context):
         },
         LOCATION_MESSAGE,
     )
-    await send_message.opp, LOCATION_TOPIC, lost_keys_location_message)
-    await send_message.opp, EVENT_TOPIC, MOBILE_BEACON_LEAVE_EVENT_MESSAGE)
-    assert_location_latitude.opp, lost_keys_location_message["lat"])
-    assert_mobile_tracker_latitude.opp, lost_keys_location_message["lat"])
-    assert_location_state.opp, "outer")
-    assert_mobile_tracker_state.opp, "outer")
+    await send_message(opp, LOCATION_TOPIC, lost_keys_location_message)
+    await send_message(opp, EVENT_TOPIC, MOBILE_BEACON_LEAVE_EVENT_MESSAGE)
+    assert_location_latitude(opp, lost_keys_location_message["lat"])
+    assert_mobile_tracker_latitude(opp, lost_keys_location_message["lat"])
+    assert_location_state(opp, "outer")
+    assert_mobile_tracker_state(opp, "outer")
 
     # gps leave outer
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE_NOT_HOME)
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE_OUTER)
-    assert_location_latitude.opp, LOCATION_MESSAGE_NOT_HOME["lat"])
-    assert_mobile_tracker_latitude.opp, lost_keys_location_message["lat"])
-    assert_location_state.opp, "not_home")
-    assert_mobile_tracker_state.opp, "outer")
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE_NOT_HOME)
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE_OUTER)
+    assert_location_latitude(opp, LOCATION_MESSAGE_NOT_HOME["lat"])
+    assert_mobile_tracker_latitude(opp, lost_keys_location_message["lat"])
+    assert_location_state(opp, "not_home")
+    assert_mobile_tracker_state(opp, "outer")
 
     # location move not home
     location_message = build_message(
@@ -1098,18 +1098,18 @@ async def test_complex_movement.opp, context):
         },
         LOCATION_MESSAGE_NOT_HOME,
     )
-    await send_message.opp, LOCATION_TOPIC, location_message)
-    assert_location_latitude.opp, location_message["lat"])
-    assert_mobile_tracker_latitude.opp, lost_keys_location_message["lat"])
-    assert_location_state.opp, "not_home")
-    assert_mobile_tracker_state.opp, "outer")
+    await send_message(opp, LOCATION_TOPIC, location_message)
+    assert_location_latitude(opp, location_message["lat"])
+    assert_mobile_tracker_latitude(opp, lost_keys_location_message["lat"])
+    assert_location_state(opp, "not_home")
+    assert_mobile_tracker_state(opp, "outer")
 
 
-async def test_complex_movement_sticky_keys_beacon.opp, context):
+async def test_complex_movement_sticky_keys_beacon(opp, context):
     """Test a complex sequence which was previously broken."""
     # I am not_home
-    await send_message.opp, LOCATION_TOPIC, LOCATION_MESSAGE)
-    assert_location_state.opp, "outer")
+    await send_message(opp, LOCATION_TOPIC, LOCATION_MESSAGE)
+    assert_location_state(opp, "outer")
 
     # gps to inner location and event, as actually happens with OwnTracks
     location_message = build_message(
@@ -1119,10 +1119,10 @@ async def test_complex_movement_sticky_keys_beacon.opp, context):
         },
         LOCATION_MESSAGE,
     )
-    await send_message.opp, LOCATION_TOPIC, location_message)
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE)
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_state.opp, "inner")
+    await send_message(opp, LOCATION_TOPIC, location_message)
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_ENTER_MESSAGE)
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_state(opp, "inner")
 
     # see keys mobile beacon and location message as actually happens
     location_message = build_message(
@@ -1132,12 +1132,12 @@ async def test_complex_movement_sticky_keys_beacon.opp, context):
         },
         LOCATION_MESSAGE,
     )
-    await send_message.opp, EVENT_TOPIC, MOBILE_BEACON_ENTER_EVENT_MESSAGE)
-    await send_message.opp, LOCATION_TOPIC, location_message)
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_mobile_tracker_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_state.opp, "inner")
-    assert_mobile_tracker_state.opp, "inner")
+    await send_message(opp, EVENT_TOPIC, MOBILE_BEACON_ENTER_EVENT_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, location_message)
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_mobile_tracker_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_state(opp, "inner")
+    assert_mobile_tracker_state(opp, "inner")
 
     # region beacon enter inner event and location as actually happens
     # with OwnTracks
@@ -1148,57 +1148,57 @@ async def test_complex_movement_sticky_keys_beacon.opp, context):
         },
         LOCATION_MESSAGE,
     )
-    await send_message.opp, EVENT_TOPIC, REGION_BEACON_ENTER_MESSAGE)
-    await send_message.opp, LOCATION_TOPIC, location_message)
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_state.opp, "inner")
+    await send_message(opp, EVENT_TOPIC, REGION_BEACON_ENTER_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, location_message)
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_state(opp, "inner")
 
     # This sequence of moves would cause keys to follow
     # greg_phone around even after the OwnTracks sent
     # a mobile beacon 'leave' event for the keys.
     # leave keys
-    await send_message.opp, LOCATION_TOPIC, location_message)
-    await send_message.opp, EVENT_TOPIC, MOBILE_BEACON_LEAVE_EVENT_MESSAGE)
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_state.opp, "inner")
-    assert_mobile_tracker_state.opp, "inner")
-    assert_mobile_tracker_latitude.opp, INNER_ZONE["latitude"])
+    await send_message(opp, LOCATION_TOPIC, location_message)
+    await send_message(opp, EVENT_TOPIC, MOBILE_BEACON_LEAVE_EVENT_MESSAGE)
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_state(opp, "inner")
+    assert_mobile_tracker_state(opp, "inner")
+    assert_mobile_tracker_latitude(opp, INNER_ZONE["latitude"])
 
     # leave inner region beacon
-    await send_message.opp, EVENT_TOPIC, REGION_BEACON_LEAVE_MESSAGE)
-    await send_message.opp, LOCATION_TOPIC, location_message)
-    assert_location_state.opp, "inner")
-    assert_mobile_tracker_state.opp, "inner")
-    assert_mobile_tracker_latitude.opp, INNER_ZONE["latitude"])
+    await send_message(opp, EVENT_TOPIC, REGION_BEACON_LEAVE_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, location_message)
+    assert_location_state(opp, "inner")
+    assert_mobile_tracker_state(opp, "inner")
+    assert_mobile_tracker_latitude(opp, INNER_ZONE["latitude"])
 
     # enter inner region beacon
-    await send_message.opp, EVENT_TOPIC, REGION_BEACON_ENTER_MESSAGE)
-    await send_message.opp, LOCATION_TOPIC, location_message)
-    assert_location_latitude.opp, INNER_ZONE["latitude"])
-    assert_location_state.opp, "inner")
-    assert_mobile_tracker_state.opp, "inner")
-    assert_mobile_tracker_latitude.opp, INNER_ZONE["latitude"])
+    await send_message(opp, EVENT_TOPIC, REGION_BEACON_ENTER_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, location_message)
+    assert_location_latitude(opp, INNER_ZONE["latitude"])
+    assert_location_state(opp, "inner")
+    assert_mobile_tracker_state(opp, "inner")
+    assert_mobile_tracker_latitude(opp, INNER_ZONE["latitude"])
 
     # enter keys
-    await send_message.opp, EVENT_TOPIC, MOBILE_BEACON_ENTER_EVENT_MESSAGE)
-    await send_message.opp, LOCATION_TOPIC, location_message)
-    assert_location_state.opp, "inner")
-    assert_mobile_tracker_state.opp, "inner")
-    assert_mobile_tracker_latitude.opp, INNER_ZONE["latitude"])
+    await send_message(opp, EVENT_TOPIC, MOBILE_BEACON_ENTER_EVENT_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, location_message)
+    assert_location_state(opp, "inner")
+    assert_mobile_tracker_state(opp, "inner")
+    assert_mobile_tracker_latitude(opp, INNER_ZONE["latitude"])
 
     # leave keys
-    await send_message.opp, LOCATION_TOPIC, location_message)
-    await send_message.opp, EVENT_TOPIC, MOBILE_BEACON_LEAVE_EVENT_MESSAGE)
-    assert_location_state.opp, "inner")
-    assert_mobile_tracker_state.opp, "inner")
-    assert_mobile_tracker_latitude.opp, INNER_ZONE["latitude"])
+    await send_message(opp, LOCATION_TOPIC, location_message)
+    await send_message(opp, EVENT_TOPIC, MOBILE_BEACON_LEAVE_EVENT_MESSAGE)
+    assert_location_state(opp, "inner")
+    assert_mobile_tracker_state(opp, "inner")
+    assert_mobile_tracker_latitude(opp, INNER_ZONE["latitude"])
 
     # leave inner region beacon
-    await send_message.opp, EVENT_TOPIC, REGION_BEACON_LEAVE_MESSAGE)
-    await send_message.opp, LOCATION_TOPIC, location_message)
-    assert_location_state.opp, "inner")
-    assert_mobile_tracker_state.opp, "inner")
-    assert_mobile_tracker_latitude.opp, INNER_ZONE["latitude"])
+    await send_message(opp, EVENT_TOPIC, REGION_BEACON_LEAVE_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, location_message)
+    assert_location_state(opp, "inner")
+    assert_mobile_tracker_state(opp, "inner")
+    assert_mobile_tracker_latitude(opp, INNER_ZONE["latitude"])
 
     # GPS leave inner region, I'm in the 'outer' region now
     # but on GPS coords
@@ -1209,18 +1209,18 @@ async def test_complex_movement_sticky_keys_beacon.opp, context):
         },
         LOCATION_MESSAGE,
     )
-    await send_message.opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE)
-    await send_message.opp, LOCATION_TOPIC, leave_location_message)
-    assert_location_state.opp, "outer")
-    assert_mobile_tracker_state.opp, "inner")
-    assert_location_latitude.opp, REGION_GPS_LEAVE_MESSAGE["lat"])
-    assert_mobile_tracker_latitude.opp, INNER_ZONE["latitude"])
+    await send_message(opp, EVENT_TOPIC, REGION_GPS_LEAVE_MESSAGE)
+    await send_message(opp, LOCATION_TOPIC, leave_location_message)
+    assert_location_state(opp, "outer")
+    assert_mobile_tracker_state(opp, "inner")
+    assert_location_latitude(opp, REGION_GPS_LEAVE_MESSAGE["lat"])
+    assert_mobile_tracker_latitude(opp, INNER_ZONE["latitude"])
 
 
-async def test_waypoint_import_simple.opp, context):
+async def test_waypoint_import_simple(opp, context):
     """Test a simple import of list of waypoints."""
     waypoints_message = WAYPOINTS_EXPORTED_MESSAGE.copy()
-    await send_message.opp, WAYPOINTS_TOPIC, waypoints_message)
+    await send_message(opp, WAYPOINTS_TOPIC, waypoints_message)
     # Check if it made it into states
     wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[0])
     assert wayp is not None
@@ -1228,10 +1228,10 @@ async def test_waypoint_import_simple.opp, context):
     assert wayp is not None
 
 
-async def test_waypoint_import_block.opp, context):
+async def test_waypoint_import_block(opp, context):
     """Test import of list of waypoints for blocked user."""
     waypoints_message = WAYPOINTS_EXPORTED_MESSAGE.copy()
-    await send_message.opp, WAYPOINTS_TOPIC_BLOCKED, waypoints_message)
+    await send_message(opp, WAYPOINTS_TOPIC_BLOCKED, waypoints_message)
     # Check if it made it into states
     wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[2])
     assert wayp is None
@@ -1239,7 +1239,7 @@ async def test_waypoint_import_block.opp, context):
     assert wayp is None
 
 
-async def test_waypoint_import_no_whitelist.opp, setup_comp):
+async def test_waypoint_import_no_whitelist(opp, setup_comp):
     """Test import of list of waypoints with no whitelist set."""
     await setup_owntracks(
         opp,
@@ -1251,7 +1251,7 @@ async def test_waypoint_import_no_whitelist.opp, setup_comp):
     )
 
     waypoints_message = WAYPOINTS_EXPORTED_MESSAGE.copy()
-    await send_message.opp, WAYPOINTS_TOPIC_BLOCKED, waypoints_message)
+    await send_message(opp, WAYPOINTS_TOPIC_BLOCKED, waypoints_message)
     # Check if it made it into states
     wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[2])
     assert wayp is not None
@@ -1259,10 +1259,10 @@ async def test_waypoint_import_no_whitelist.opp, setup_comp):
     assert wayp is not None
 
 
-async def test_waypoint_import_bad_json.opp, context):
+async def test_waypoint_import_bad_json(opp, context):
     """Test importing a bad JSON payload."""
     waypoints_message = WAYPOINTS_EXPORTED_MESSAGE.copy()
-    await send_message.opp, WAYPOINTS_TOPIC, waypoints_message, True)
+    await send_message(opp, WAYPOINTS_TOPIC, waypoints_message, True)
     # Check if it made it into states
     wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[2])
     assert wayp is None
@@ -1270,46 +1270,46 @@ async def test_waypoint_import_bad_json.opp, context):
     assert wayp is None
 
 
-async def test_waypoint_import_existing.opp, context):
+async def test_waypoint_import_existing(opp, context):
     """Test importing a zone that exists."""
     waypoints_message = WAYPOINTS_EXPORTED_MESSAGE.copy()
-    await send_message.opp, WAYPOINTS_TOPIC, waypoints_message)
+    await send_message(opp, WAYPOINTS_TOPIC, waypoints_message)
     # Get the first waypoint exported
     wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[0])
     # Send an update
     waypoints_message = WAYPOINTS_UPDATED_MESSAGE.copy()
-    await send_message.opp, WAYPOINTS_TOPIC, waypoints_message)
+    await send_message(opp, WAYPOINTS_TOPIC, waypoints_message)
     new_wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[0])
     assert wayp == new_wayp
 
 
-async def test_single_waypoint_import.opp, context):
+async def test_single_waypoint_import(opp, context):
     """Test single waypoint message."""
     waypoint_message = WAYPOINT_MESSAGE.copy()
-    await send_message.opp, WAYPOINT_TOPIC, waypoint_message)
+    await send_message(opp, WAYPOINT_TOPIC, waypoint_message)
     wayp = opp.states.get(WAYPOINT_ENTITY_NAMES[0])
     assert wayp is not None
 
 
-async def test_not_implemented_message.opp, context):
+async def test_not_implemented_message(opp, context):
     """Handle not implemented message type."""
     patch_handler = patch(
         "openpeerpower.components.owntracks.messages.async_handle_not_impl_msg",
         return_value=mock_coro(False),
     )
     patch_handler.start()
-    assert not await send_message.opp, LWT_TOPIC, LWT_MESSAGE)
+    assert not await send_message(opp, LWT_TOPIC, LWT_MESSAGE)
     patch_handler.stop()
 
 
-async def test_unsupported_message.opp, context):
+async def test_unsupported_message(opp, context):
     """Handle not implemented message type."""
     patch_handler = patch(
         "openpeerpower.components.owntracks.messages.async_handle_unsupported_msg",
         return_value=mock_coro(False),
     )
     patch_handler.start()
-    assert not await send_message.opp, BAD_TOPIC, BAD_MESSAGE)
+    assert not await send_message(opp, BAD_TOPIC, BAD_MESSAGE)
     patch_handler.stop()
 
 
@@ -1381,7 +1381,7 @@ def mock_cipher():
 
 
 @pytest.fixture
-def config_context.opp, setup_comp):
+def config_context(opp, setup_comp):
     """Set up the mocked context."""
     patch_load = patch(
         "openpeerpower.components.device_tracker.async_load_config",
@@ -1420,73 +1420,73 @@ def mock_get_cipher_error():
 
 
 @patch("openpeerpower.components.owntracks.messages.get_cipher", mock_cipher)
-async def test_encrypted_payload.opp, setup_comp):
+async def test_encrypted_payload(opp, setup_comp):
     """Test encrypted payload."""
-    await setup_owntracks.opp, {CONF_SECRET: TEST_SECRET_KEY})
-    await send_message.opp, LOCATION_TOPIC, MOCK_ENCRYPTED_LOCATION_MESSAGE)
-    assert_location_latitude.opp, LOCATION_MESSAGE["lat"])
+    await setup_owntracks(opp, {CONF_SECRET: TEST_SECRET_KEY})
+    await send_message(opp, LOCATION_TOPIC, MOCK_ENCRYPTED_LOCATION_MESSAGE)
+    assert_location_latitude(opp, LOCATION_MESSAGE["lat"])
 
 
 @patch("openpeerpower.components.owntracks.messages.get_cipher", mock_cipher)
-async def test_encrypted_payload_topic_key.opp, setup_comp):
+async def test_encrypted_payload_topic_key(opp, setup_comp):
     """Test encrypted payload with a topic key."""
-    await setup_owntracks.opp, {CONF_SECRET: {LOCATION_TOPIC: TEST_SECRET_KEY}})
-    await send_message.opp, LOCATION_TOPIC, MOCK_ENCRYPTED_LOCATION_MESSAGE)
-    assert_location_latitude.opp, LOCATION_MESSAGE["lat"])
+    await setup_owntracks(opp, {CONF_SECRET: {LOCATION_TOPIC: TEST_SECRET_KEY}})
+    await send_message(opp, LOCATION_TOPIC, MOCK_ENCRYPTED_LOCATION_MESSAGE)
+    assert_location_latitude(opp, LOCATION_MESSAGE["lat"])
 
 
 async def test_encrypted_payload_not_supports_encryption(
     opp. setup_comp, not_supports_encryption
 ):
     """Test encrypted payload with no supported encryption."""
-    await setup_owntracks.opp, {CONF_SECRET: TEST_SECRET_KEY})
-    await send_message.opp, LOCATION_TOPIC, MOCK_ENCRYPTED_LOCATION_MESSAGE)
-    assert.opp.states.get(DEVICE_TRACKER_STATE) is None
+    await setup_owntracks(opp, {CONF_SECRET: TEST_SECRET_KEY})
+    await send_message(opp, LOCATION_TOPIC, MOCK_ENCRYPTED_LOCATION_MESSAGE)
+    assert opp.states.get(DEVICE_TRACKER_STATE) is None
 
 
 async def test_encrypted_payload_get_cipher_error(opp, setup_comp, get_cipher_error):
     """Test encrypted payload with no supported encryption."""
-    await setup_owntracks.opp, {CONF_SECRET: TEST_SECRET_KEY})
-    await send_message.opp, LOCATION_TOPIC, MOCK_ENCRYPTED_LOCATION_MESSAGE)
-    assert.opp.states.get(DEVICE_TRACKER_STATE) is None
+    await setup_owntracks(opp, {CONF_SECRET: TEST_SECRET_KEY})
+    await send_message(opp, LOCATION_TOPIC, MOCK_ENCRYPTED_LOCATION_MESSAGE)
+    assert opp.states.get(DEVICE_TRACKER_STATE) is None
 
 
 @patch("openpeerpower.components.owntracks.messages.get_cipher", mock_cipher)
-async def test_encrypted_payload_no_key.opp, setup_comp):
+async def test_encrypted_payload_no_key(opp, setup_comp):
     """Test encrypted payload with no key, ."""
-    assert.opp.states.get(DEVICE_TRACKER_STATE) is None
-    await setup_owntracks.opp, {CONF_SECRET: {}})
-    await send_message.opp, LOCATION_TOPIC, MOCK_ENCRYPTED_LOCATION_MESSAGE)
-    assert.opp.states.get(DEVICE_TRACKER_STATE) is None
+    assert opp.states.get(DEVICE_TRACKER_STATE) is None
+    await setup_owntracks(opp, {CONF_SECRET: {}})
+    await send_message(opp, LOCATION_TOPIC, MOCK_ENCRYPTED_LOCATION_MESSAGE)
+    assert opp.states.get(DEVICE_TRACKER_STATE) is None
 
 
 @patch("openpeerpower.components.owntracks.messages.get_cipher", mock_cipher)
-async def test_encrypted_payload_wrong_key.opp, setup_comp):
+async def test_encrypted_payload_wrong_key(opp, setup_comp):
     """Test encrypted payload with wrong key."""
-    await setup_owntracks.opp, {CONF_SECRET: "wrong key"})
-    await send_message.opp, LOCATION_TOPIC, MOCK_ENCRYPTED_LOCATION_MESSAGE)
-    assert.opp.states.get(DEVICE_TRACKER_STATE) is None
+    await setup_owntracks(opp, {CONF_SECRET: "wrong key"})
+    await send_message(opp, LOCATION_TOPIC, MOCK_ENCRYPTED_LOCATION_MESSAGE)
+    assert opp.states.get(DEVICE_TRACKER_STATE) is None
 
 
 @patch("openpeerpower.components.owntracks.messages.get_cipher", mock_cipher)
-async def test_encrypted_payload_wrong_topic_key.opp, setup_comp):
+async def test_encrypted_payload_wrong_topic_key(opp, setup_comp):
     """Test encrypted payload with wrong  topic key."""
-    await setup_owntracks.opp, {CONF_SECRET: {LOCATION_TOPIC: "wrong key"}})
-    await send_message.opp, LOCATION_TOPIC, MOCK_ENCRYPTED_LOCATION_MESSAGE)
-    assert.opp.states.get(DEVICE_TRACKER_STATE) is None
+    await setup_owntracks(opp, {CONF_SECRET: {LOCATION_TOPIC: "wrong key"}})
+    await send_message(opp, LOCATION_TOPIC, MOCK_ENCRYPTED_LOCATION_MESSAGE)
+    assert opp.states.get(DEVICE_TRACKER_STATE) is None
 
 
 @patch("openpeerpower.components.owntracks.messages.get_cipher", mock_cipher)
-async def test_encrypted_payload_no_topic_key.opp, setup_comp):
+async def test_encrypted_payload_no_topic_key(opp, setup_comp):
     """Test encrypted payload with no topic key."""
     await setup_owntracks(
         opp. {CONF_SECRET: {"owntracks/{}/{}".format(USER, "otherdevice"): "foobar"}}
     )
-    await send_message.opp, LOCATION_TOPIC, MOCK_ENCRYPTED_LOCATION_MESSAGE)
-    assert.opp.states.get(DEVICE_TRACKER_STATE) is None
+    await send_message(opp, LOCATION_TOPIC, MOCK_ENCRYPTED_LOCATION_MESSAGE)
+    assert opp.states.get(DEVICE_TRACKER_STATE) is None
 
 
-async def test_encrypted_payload_libsodium.opp, setup_comp):
+async def test_encrypted_payload_libsodium(opp, setup_comp):
     """Test sending encrypted message payload."""
     try:
         import nacl  # noqa: F401 pylint: disable=unused-import
@@ -1494,41 +1494,41 @@ async def test_encrypted_payload_libsodium.opp, setup_comp):
         pytest.skip("PyNaCl/libsodium is not installed")
         return
 
-    await setup_owntracks.opp, {CONF_SECRET: TEST_SECRET_KEY})
+    await setup_owntracks(opp, {CONF_SECRET: TEST_SECRET_KEY})
 
-    await send_message.opp, LOCATION_TOPIC, ENCRYPTED_LOCATION_MESSAGE)
-    assert_location_latitude.opp, LOCATION_MESSAGE["lat"])
+    await send_message(opp, LOCATION_TOPIC, ENCRYPTED_LOCATION_MESSAGE)
+    assert_location_latitude(opp, LOCATION_MESSAGE["lat"])
 
 
-async def test_customized_mqtt_topic.opp, setup_comp):
+async def test_customized_mqtt_topic(opp, setup_comp):
     """Test subscribing to a custom mqtt topic."""
-    await setup_owntracks.opp, {CONF_MQTT_TOPIC: "mytracks/#"})
+    await setup_owntracks(opp, {CONF_MQTT_TOPIC: "mytracks/#"})
 
     topic = f"mytracks/{USER}/{DEVICE}"
 
-    await send_message.opp, topic, LOCATION_MESSAGE)
-    assert_location_latitude.opp, LOCATION_MESSAGE["lat"])
+    await send_message(opp, topic, LOCATION_MESSAGE)
+    assert_location_latitude(opp, LOCATION_MESSAGE["lat"])
 
 
-async def test_region_mapping.opp, setup_comp):
+async def test_region_mapping(opp, setup_comp):
     """Test region to zone mapping."""
-    await setup_owntracks.opp, {CONF_REGION_MAPPING: {"foo": "inner"}})
+    await setup_owntracks(opp, {CONF_REGION_MAPPING: {"foo": "inner"}})
 
     opp.states.async_set("zone.inner", "zoning", INNER_ZONE)
 
     message = build_message({"desc": "foo"}, REGION_GPS_ENTER_MESSAGE)
     assert message["desc"] == "foo"
 
-    await send_message.opp, EVENT_TOPIC, message)
-    assert_location_state.opp, "inner")
+    await send_message(opp, EVENT_TOPIC, message)
+    assert_location_state(opp, "inner")
 
 
-async def test_restore_state.opp, opp_client):
+async def test_restore_state(opp, opp_client):
     """Test that we can restore state."""
     entry = MockConfigEntry(
         domain="owntracks", data={"webhook_id": "owntracks_test", "secret": "abcd"}
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
@@ -1561,12 +1561,12 @@ async def test_restore_state.opp, opp_client):
     assert state_1.attributes["source_type"] == state_2.attributes["source_type"]
 
 
-async def test_returns_empty_friends.opp, opp_client):
+async def test_returns_empty_friends(opp, opp_client):
     """Test that an empty list of persons' locations is returned."""
     entry = MockConfigEntry(
         domain="owntracks", data={"webhook_id": "owntracks_test", "secret": "abcd"}
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
@@ -1582,12 +1582,12 @@ async def test_returns_empty_friends.opp, opp_client):
     assert await resp.text() == "[]"
 
 
-async def test_returns_array_friends.opp, opp_client):
+async def test_returns_array_friends(opp, opp_client):
     """Test that a list of persons' current locations is returned."""
     otracks = MockConfigEntry(
         domain="owntracks", data={"webhook_id": "owntracks_test", "secret": "abcd"}
     )
-    otracks.add_to.opp.opp)
+    otracks.add_to_opp(opp)
 
     await opp.config_entries.async_setup(otracks.entry_id)
     await opp.async_block_till_done()

@@ -29,7 +29,7 @@ def device_registry.opp):
     return mock_device_registry.opp)
 
 
-async def test_list_entities.opp, client):
+async def test_list_entities(opp, client):
     """Test list entries."""
     entities = OrderedDict()
     entities["test_domain.name"] = RegistryEntry(
@@ -42,7 +42,7 @@ async def test_list_entities.opp, client):
         entity_id="test_domain.no_name", unique_id="6789", platform="test_platform"
     )
 
-    mock_registry.opp, entities)
+    mock_registry(opp, entities)
 
     await client.send_json({"id": 5, "type": "config/entity_registry/list"})
     msg = await client.receive_json()
@@ -71,7 +71,7 @@ async def test_list_entities.opp, client):
     ]
 
 
-async def test_get_entity.opp, client):
+async def test_get_entity(opp, client):
     """Test get entry."""
     mock_registry(
         opp,
@@ -135,7 +135,7 @@ async def test_get_entity.opp, client):
     }
 
 
-async def test_update_entity.opp, client):
+async def test_update_entity(opp, client):
     """Test updating entity."""
     registry = mock_registry(
         opp,
@@ -206,7 +206,7 @@ async def test_update_entity.opp, client):
 
     msg = await client.receive_json()
 
-    assert.opp.states.get("test_domain.world") is None
+    assert opp.states.get("test_domain.world") is None
     assert registry.entities["test_domain.world"].disabled_by == "user"
 
     # UPDATE DISABLED_BY TO NONE
@@ -240,10 +240,10 @@ async def test_update_entity.opp, client):
     }
 
 
-async def test_update_entity_require_restart.opp, client):
+async def test_update_entity_require_restart(opp, client):
     """Test updating entity."""
     config_entry = MockConfigEntry(domain="test_platform")
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
     mock_registry(
         opp,
         {
@@ -294,10 +294,10 @@ async def test_update_entity_require_restart.opp, client):
     }
 
 
-async def test_enable_entity_disabled_device.opp, client, device_registry):
+async def test_enable_entity_disabled_device(opp, client, device_registry):
     """Test enabling entity of disabled device."""
     config_entry = MockConfigEntry(domain="test_platform")
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     device = device_registry.async_get_or_create(
         config_entry_id="1234",
@@ -343,7 +343,7 @@ async def test_enable_entity_disabled_device.opp, client, device_registry):
     assert not msg["success"]
 
 
-async def test_update_entity_no_changes.opp, client):
+async def test_update_entity_no_changes(opp, client):
     """Test update entity with no changes."""
     mock_registry(
         opp,
@@ -426,7 +426,7 @@ async def test_update_nonexisting_entity(client):
     assert not msg["success"]
 
 
-async def test_update_entity_id.opp, client):
+async def test_update_entity_id(opp, client):
     """Test update entity id."""
     mock_registry(
         opp,
@@ -443,7 +443,7 @@ async def test_update_entity_id.opp, client):
     entity = MockEntity(unique_id="1234")
     await platform.async_add_entities([entity])
 
-    assert.opp.states.get("test_domain.world") is not None
+    assert opp.states.get("test_domain.world") is not None
 
     await client.send_json(
         {
@@ -473,11 +473,11 @@ async def test_update_entity_id.opp, client):
         }
     }
 
-    assert.opp.states.get("test_domain.world") is None
-    assert.opp.states.get("test_domain.planet") is not None
+    assert opp.states.get("test_domain.world") is None
+    assert opp.states.get("test_domain.planet") is not None
 
 
-async def test_update_existing_entity_id.opp, client):
+async def test_update_existing_entity_id(opp, client):
     """Test update entity id to an already registered entity id."""
     mock_registry(
         opp,
@@ -514,7 +514,7 @@ async def test_update_existing_entity_id.opp, client):
     assert not msg["success"]
 
 
-async def test_update_invalid_entity_id.opp, client):
+async def test_update_invalid_entity_id(opp, client):
     """Test update entity id to an invalid entity id."""
     mock_registry(
         opp,
@@ -545,7 +545,7 @@ async def test_update_invalid_entity_id.opp, client):
     assert not msg["success"]
 
 
-async def test_remove_entity.opp, client):
+async def test_remove_entity(opp, client):
     """Test removing entity."""
     registry = mock_registry(
         opp,
@@ -574,9 +574,9 @@ async def test_remove_entity.opp, client):
     assert len(registry.entities) == 0
 
 
-async def test_remove_non_existing_entity.opp, client):
+async def test_remove_non_existing_entity(opp, client):
     """Test removing non existing entity."""
-    mock_registry.opp, {})
+    mock_registry(opp, {})
 
     await client.send_json(
         {

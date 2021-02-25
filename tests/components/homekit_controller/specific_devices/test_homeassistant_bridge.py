@@ -18,7 +18,7 @@ async def test_openpeerpower_bridge_fan_setup_opp):
     accessories = await setup_accessories_from_file(
         opp. "open_peer_power_bridge_fan.json"
     )
-    config_entry, pairing = await setup_test_accessories.opp, accessories)
+    config_entry, pairing = await setup_test_accessories(opp, accessories)
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 

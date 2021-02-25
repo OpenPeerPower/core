@@ -62,9 +62,9 @@ def create_tv_service_with_target_media_state(accessory):
     return service
 
 
-async def test_tv_read_state.opp, utcnow):
+async def test_tv_read_state(opp, utcnow):
     """Test that we can read the state of a HomeKit fan accessory."""
-    helper = await setup_test_component.opp, create_tv_service)
+    helper = await setup_test_component(opp, create_tv_service)
 
     helper.characteristics[CURRENT_MEDIA_STATE].value = 0
     state = await helper.poll_and_get_state()
@@ -79,18 +79,18 @@ async def test_tv_read_state.opp, utcnow):
     assert state.state == "idle"
 
 
-async def test_tv_read_sources.opp, utcnow):
+async def test_tv_read_sources(opp, utcnow):
     """Test that we can read the input source of a HomeKit TV."""
-    helper = await setup_test_component.opp, create_tv_service)
+    helper = await setup_test_component(opp, create_tv_service)
 
     state = await helper.poll_and_get_state()
     assert state.attributes["source"] == "HDMI 1"
     assert state.attributes["source_list"] == ["HDMI 1", "HDMI 2"]
 
 
-async def test_play_remote_key.opp, utcnow):
+async def test_play_remote_key(opp, utcnow):
     """Test that we can play media on a media player."""
-    helper = await setup_test_component.opp, create_tv_service)
+    helper = await setup_test_component(opp, create_tv_service)
 
     helper.characteristics[CURRENT_MEDIA_STATE].value = 1
     await helper.poll_and_get_state()
@@ -117,9 +117,9 @@ async def test_play_remote_key.opp, utcnow):
     assert helper.characteristics[REMOTE_KEY].value is None
 
 
-async def test_pause_remote_key.opp, utcnow):
+async def test_pause_remote_key(opp, utcnow):
     """Test that we can pause a media player."""
-    helper = await setup_test_component.opp, create_tv_service)
+    helper = await setup_test_component(opp, create_tv_service)
 
     helper.characteristics[CURRENT_MEDIA_STATE].value = 0
     await helper.poll_and_get_state()
@@ -146,9 +146,9 @@ async def test_pause_remote_key.opp, utcnow):
     assert helper.characteristics[REMOTE_KEY].value is None
 
 
-async def test_play.opp, utcnow):
+async def test_play(opp, utcnow):
     """Test that we can play media on a media player."""
-    helper = await setup_test_component.opp, create_tv_service_with_target_media_state)
+    helper = await setup_test_component(opp, create_tv_service_with_target_media_state)
 
     helper.characteristics[CURRENT_MEDIA_STATE].value = 1
     await helper.poll_and_get_state()
@@ -177,9 +177,9 @@ async def test_play.opp, utcnow):
     assert helper.characteristics[TARGET_MEDIA_STATE].value is None
 
 
-async def test_pause.opp, utcnow):
+async def test_pause(opp, utcnow):
     """Test that we can turn pause a media player."""
-    helper = await setup_test_component.opp, create_tv_service_with_target_media_state)
+    helper = await setup_test_component(opp, create_tv_service_with_target_media_state)
 
     helper.characteristics[CURRENT_MEDIA_STATE].value = 0
     await helper.poll_and_get_state()
@@ -207,9 +207,9 @@ async def test_pause.opp, utcnow):
     assert helper.characteristics[REMOTE_KEY].value is None
 
 
-async def test_stop.opp, utcnow):
+async def test_stop(opp, utcnow):
     """Test that we can  stop a media player."""
-    helper = await setup_test_component.opp, create_tv_service_with_target_media_state)
+    helper = await setup_test_component(opp, create_tv_service_with_target_media_state)
 
     await opp.services.async_call(
         "media_player",
@@ -234,9 +234,9 @@ async def test_stop.opp, utcnow):
     assert helper.characteristics[TARGET_MEDIA_STATE].value is None
 
 
-async def test_tv_set_source.opp, utcnow):
+async def test_tv_set_source(opp, utcnow):
     """Test that we can set the input source of a HomeKit TV."""
-    helper = await setup_test_component.opp, create_tv_service)
+    helper = await setup_test_component(opp, create_tv_service)
 
     await opp.services.async_call(
         "media_player",
@@ -250,9 +250,9 @@ async def test_tv_set_source.opp, utcnow):
     assert state.attributes["source"] == "HDMI 2"
 
 
-async def test_tv_set_source_fail.opp, utcnow):
+async def test_tv_set_source_fail(opp, utcnow):
     """Test that we can set the input source of a HomeKit TV."""
-    helper = await setup_test_component.opp, create_tv_service)
+    helper = await setup_test_component(opp, create_tv_service)
 
     with pytest.raises(ValueError):
         await opp.services.async_call(

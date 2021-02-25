@@ -20,7 +20,7 @@ def registry.opp):
     return mock_device_registry.opp)
 
 
-async def test_list_devices.opp, client, registry):
+async def test_list_devices(opp, client, registry):
     """Test list entries."""
     registry.async_get_or_create(
         config_entry_id="1234",
@@ -75,7 +75,7 @@ async def test_list_devices.opp, client, registry):
     ]
 
 
-async def test_update_device.opp, client, registry):
+async def test_update_device(opp, client, registry):
     """Test update entry."""
     device = registry.async_get_or_create(
         config_entry_id="1234",

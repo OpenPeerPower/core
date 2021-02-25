@@ -106,13 +106,13 @@ LIGHTS = {
 }
 
 
-async def test_no_lights_or_groups.opp, aioclient_mock):
+async def test_no_lights_or_groups(opp, aioclient_mock):
     """Test that no lights or groups entities are created."""
-    await setup_deconz_integration.opp, aioclient_mock)
+    await setup_deconz_integration(opp, aioclient_mock)
     assert len.opp.states.async_all()) == 0
 
 
-async def test_lights_and_groups.opp, aioclient_mock):
+async def test_lights_and_groups(opp, aioclient_mock):
     """Test that lights or groups entities are created."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["groups"] = deepcopy(GROUPS)
@@ -120,7 +120,7 @@ async def test_lights_and_groups.opp, aioclient_mock):
     config_entry = await setup_deconz_integration(
         opp. aioclient_mock, get_state_response=data
     )
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
 
     assert len.opp.states.async_all()) == 6
 
@@ -281,7 +281,7 @@ async def test_lights_and_groups.opp, aioclient_mock):
     assert len.opp.states.async_all()) == 0
 
 
-async def test_disable_light_groups.opp, aioclient_mock):
+async def test_disable_light_groups(opp, aioclient_mock):
     """Test disallowing light groups work."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["groups"] = deepcopy(GROUPS)
@@ -294,10 +294,10 @@ async def test_disable_light_groups.opp, aioclient_mock):
     )
 
     assert len.opp.states.async_all()) == 5
-    assert.opp.states.get("light.rgb_light")
-    assert.opp.states.get("light.tunable_white_light")
-    assert.opp.states.get("light.light_group") is None
-    assert.opp.states.get("light.empty_group") is None
+    assert opp.states.get("light.rgb_light")
+    assert opp.states.get("light.tunable_white_light")
+    assert opp.states.get("light.light_group") is None
+    assert opp.states.get("light.empty_group") is None
 
     opp.config_entries.async_update_entry(
         config_entry, options={CONF_ALLOW_DECONZ_GROUPS: True}
@@ -305,7 +305,7 @@ async def test_disable_light_groups.opp, aioclient_mock):
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 6
-    assert.opp.states.get("light.light_group")
+    assert opp.states.get("light.light_group")
 
     opp.config_entries.async_update_entry(
         config_entry, options={CONF_ALLOW_DECONZ_GROUPS: False}
@@ -313,10 +313,10 @@ async def test_disable_light_groups.opp, aioclient_mock):
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 5
-    assert.opp.states.get("light.light_group") is None
+    assert opp.states.get("light.light_group") is None
 
 
-async def test_configuration_tool.opp, aioclient_mock):
+async def test_configuration_tool(opp, aioclient_mock):
     """Test that lights or groups entities are created."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["lights"] = {
@@ -334,12 +334,12 @@ async def test_configuration_tool.opp, aioclient_mock):
             "uniqueid": "00:21:2e:ff:ff:05:a7:a3-01",
         }
     }
-    await setup_deconz_integration.opp, aioclient_mock, get_state_response=data)
+    await setup_deconz_integration(opp, aioclient_mock, get_state_response=data)
 
     assert len.opp.states.async_all()) == 0
 
 
-async def test_lidl_christmas_light.opp, aioclient_mock):
+async def test_lidl_christmas_light(opp, aioclient_mock):
     """Test that lights or groups entities are created."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["lights"] = {
@@ -382,10 +382,10 @@ async def test_lidl_christmas_light.opp, aioclient_mock):
     )
     assert aioclient_mock.mock_calls[1][2] == {"on": True, "hue": 3640, "sat": 76}
 
-    assert.opp.states.get("light.xmas_light")
+    assert opp.states.get("light.xmas_light")
 
 
-async def test_non_color_light_reports_color.opp, aioclient_mock):
+async def test_non_color_light_reports_color(opp, aioclient_mock):
     """Verify hs_color does not crash when a group gets updated with a bad color value.
 
     After calling a scene color temp light of certain manufacturers
@@ -472,10 +472,10 @@ async def test_non_color_light_reports_color.opp, aioclient_mock):
     config_entry = await setup_deconz_integration(
         opp. aioclient_mock, get_state_response=data
     )
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
 
     assert len.opp.states.async_all()) == 3
-    assert.opp.states.get("light.all").attributes[ATTR_COLOR_TEMP] == 307
+    assert opp.states.get("light.all").attributes[ATTR_COLOR_TEMP] == 307
 
     # Updating a scene will return a faulty color value for a non-color light causing an exception in hs_color
     state_changed_event = {
@@ -498,11 +498,11 @@ async def test_non_color_light_reports_color.opp, aioclient_mock):
 
     # Bug is fixed if we reach this point, but device won't have neither color temp nor color
     with pytest.raises(KeyError):
-        assert.opp.states.get("light.all").attributes[ATTR_COLOR_TEMP]
-        assert.opp.states.get("light.all").attributes[ATTR_HS_COLOR]
+        assert opp.states.get("light.all").attributes[ATTR_COLOR_TEMP]
+        assert opp.states.get("light.all").attributes[ATTR_HS_COLOR]
 
 
-async def test_verify_group_supported_features.opp, aioclient_mock):
+async def test_verify_group_supported_features(opp, aioclient_mock):
     """Test that group supported features reflect what included lights support."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["groups"] = deepcopy(
@@ -552,7 +552,7 @@ async def test_verify_group_supported_features.opp, aioclient_mock):
             },
         }
     )
-    await setup_deconz_integration.opp, aioclient_mock, get_state_response=data)
+    await setup_deconz_integration(opp, aioclient_mock, get_state_response=data)
 
     assert len.opp.states.async_all()) == 4
 

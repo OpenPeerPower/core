@@ -90,7 +90,7 @@ async def test_use_cloud_url(opp, mock_zeroconf):
     assert controller.opp_url == "https://something.nabu.casa"
 
 
-async def test_remove_entry.opp, mock_zeroconf):
+async def test_remove_entry(opp, mock_zeroconf):
     """Test removing config entry removes user."""
     entry = MockConfigEntry(
         connection_class=config_entries.CONN_CLASS_LOCAL_PUSH,
@@ -99,7 +99,7 @@ async def test_remove_entry.opp, mock_zeroconf):
         title="Google Cast",
     )
 
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.cast.media_player._async_setup_platform"

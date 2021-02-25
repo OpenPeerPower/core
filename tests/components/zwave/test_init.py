@@ -26,19 +26,19 @@ from tests.mock.zwave import MockEntityValues, MockNetwork, MockNode, MockValue
 
 
 @pytest.fixture(autouse=True)
-def mock_storage.opp_storage):
-    """Autouse.opp_storage for the TestCase tests."""
+def mock_storage(opp_storage):
+    """Autouse opp_storage for the TestCase tests."""
 
 
 @pytest.fixture
 async def zwave_setup_opp):
     """Zwave setup."""
-    await async_setup_component.opp, "zwave", {"zwave": {}})
+    await async_setup_component(opp, "zwave", {"zwave": {}})
     await opp.async_block_till_done()
 
 
 @pytest.fixture
-async def zwave_setup_ready.opp, zwave_setup):
+async def zwave_setup_ready(opp, zwave_setup):
     """Zwave setup and set network to ready."""
     zwave_network = opp.data[DATA_NETWORK]
     zwave_network.state = MockNetwork.STATE_READY
@@ -80,7 +80,7 @@ def test_config_access_error():
     assert result is None
 
 
-async def test_network_options.opp, mock_openzwave):
+async def test_network_options(opp, mock_openzwave):
     """Test network options."""
     result = await async_setup_component(
         opp,
@@ -96,7 +96,7 @@ async def test_network_options.opp, mock_openzwave):
     assert network.options.config_path == "mock_config_path"
 
 
-async def test_network_key_validation.opp, mock_openzwave):
+async def test_network_key_validation(opp, mock_openzwave):
     """Test network key validation."""
     test_values = [
         (
@@ -113,7 +113,7 @@ async def test_network_key_validation.opp, mock_openzwave):
         assert result["zwave"]["network_key"] == value
 
 
-async def test_erronous_network_key_fails_validation.opp, mock_openzwave):
+async def test_erronous_network_key_fails_validation(opp, mock_openzwave):
     """Test failing erroneous network key validation."""
     test_values = [
         (
@@ -133,44 +133,44 @@ async def test_erronous_network_key_fails_validation.opp, mock_openzwave):
             zwave.CONFIG_SCHEMA({"zwave": {"network_key": value}})
 
 
-async def test_auto_heal_midnight.opp, mock_openzwave, legacy_patchable_time):
+async def test_auto_heal_midnight(opp, mock_openzwave, legacy_patchable_time):
     """Test network auto-heal at midnight."""
-    await async_setup_component.opp, "zwave", {"zwave": {"autoheal": True}})
+    await async_setup_component(opp, "zwave", {"zwave": {"autoheal": True}})
     await opp.async_block_till_done()
 
     network = opp.data[zwave.DATA_NETWORK]
     assert not network.heal.called
 
     time = utc.localize(datetime(2017, 5, 6, 0, 0, 0))
-    async_fire_time_changed.opp, time)
+    async_fire_time_changed(opp, time)
     await opp.async_block_till_done()
     await opp.async_block_till_done()
     assert network.heal.called
     assert len(network.heal.mock_calls) == 1
 
 
-async def test_auto_heal_disabled.opp, mock_openzwave):
+async def test_auto_heal_disabled(opp, mock_openzwave):
     """Test network auto-heal disabled."""
-    await async_setup_component.opp, "zwave", {"zwave": {"autoheal": False}})
+    await async_setup_component(opp, "zwave", {"zwave": {"autoheal": False}})
     await opp.async_block_till_done()
 
     network = opp.data[zwave.DATA_NETWORK]
     assert not network.heal.called
 
     time = utc.localize(datetime(2017, 5, 6, 0, 0, 0))
-    async_fire_time_changed.opp, time)
+    async_fire_time_changed(opp, time)
     await opp.async_block_till_done()
     assert not network.heal.called
 
 
-async def test_setup_platform.opp, mock_openzwave):
+async def test_setup_platform(opp, mock_openzwave):
     """Test invalid device config."""
     mock_device = MagicMock()
     opp.data[DATA_NETWORK] = MagicMock()
     opp.data[zwave.DATA_DEVICES] = {456: mock_device}
     async_add_entities = MagicMock()
 
-    result = await zwave.async_setup_platform.opp, None, async_add_entities, None)
+    result = await zwave.async_setup_platform(opp, None, async_add_entities, None)
     assert not result
     assert not async_add_entities.called
 
@@ -189,7 +189,7 @@ async def test_setup_platform.opp, mock_openzwave):
     assert async_add_entities.mock_calls[0][1][0] == [mock_device]
 
 
-async def test_zwave_ready_wait.opp, mock_openzwave, zwave_setup):
+async def test_zwave_ready_wait(opp, mock_openzwave, zwave_setup):
     """Test that zwave continues after waiting for network ready."""
     sleeps = []
 
@@ -219,7 +219,7 @@ async def test_zwave_ready_wait.opp, mock_openzwave, zwave_setup):
                 )
 
 
-async def test_device_entity.opp, mock_openzwave):
+async def test_device_entity(opp, mock_openzwave):
     """Test device entity base class."""
     node = MockNode(node_id="10", name="Mock Node")
     value = MockValue(
@@ -246,7 +246,7 @@ async def test_device_entity.opp, mock_openzwave):
     assert device.device_state_attributes[zwave.ATTR_POWER] == 50.123
 
 
-async def test_node_removed.opp, mock_openzwave):
+async def test_node_removed(opp, mock_openzwave):
     """Test node removed in base class."""
     # Create a mock node & node entity
     node = MockNode(node_id="10", name="Mock Node")
@@ -270,7 +270,7 @@ async def test_node_removed.opp, mock_openzwave):
     await opp.async_block_till_done()
 
     # Save it to the entity registry
-    registry = mock_registry.opp)
+    registry = mock_registry(opp)
     registry.async_get_or_create("zwave", "zwave", device.unique_id)
     device.entity_id = registry.async_get_entity_id("zwave", "zwave", device.unique_id)
 
@@ -293,7 +293,7 @@ async def test_node_removed.opp, mock_openzwave):
     assert registry.async_is_registered(zha_entity.entity_id)
 
 
-async def test_node_discovery.opp, mock_openzwave):
+async def test_node_discovery(opp, mock_openzwave):
     """Test discovery of a node."""
     mock_receivers = []
 
@@ -302,7 +302,7 @@ async def test_node_discovery.opp, mock_openzwave):
             mock_receivers.append(receiver)
 
     with patch("pydispatch.dispatcher.connect", new=mock_connect):
-        await async_setup_component.opp, "zwave", {"zwave": {}})
+        await async_setup_component(opp, "zwave", {"zwave": {}})
         await opp.async_block_till_done()
 
     assert len(mock_receivers) == 1
@@ -311,10 +311,10 @@ async def test_node_discovery.opp, mock_openzwave):
     await opp.async_add_executor_job(mock_receivers[0], node)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("zwave.mock_node").state == "unknown"
+    assert opp.states.get("zwave.mock_node").state == "unknown"
 
 
-async def test_unparsed_node_discovery.opp, mock_openzwave):
+async def test_unparsed_node_discovery(opp, mock_openzwave):
     """Test discovery of a node."""
     mock_receivers = []
 
@@ -323,7 +323,7 @@ async def test_unparsed_node_discovery.opp, mock_openzwave):
             mock_receivers.append(receiver)
 
     with patch("pydispatch.dispatcher.connect", new=mock_connect):
-        await async_setup_component.opp, "zwave", {"zwave": {}})
+        await async_setup_component(opp, "zwave", {"zwave": {}})
         await opp.async_block_till_done()
 
     assert len(mock_receivers) == 1
@@ -355,10 +355,10 @@ async def test_unparsed_node_discovery.opp, mock_openzwave):
                     14,
                     const.NODE_READY_WAIT_SECS,
                 )
-    assert.opp.states.get("zwave.unknown_node_14").state == "unknown"
+    assert opp.states.get("zwave.unknown_node_14").state == "unknown"
 
 
-async def test_node_ignored.opp, mock_openzwave):
+async def test_node_ignored(opp, mock_openzwave):
     """Test discovery of a node."""
     mock_receivers = []
 
@@ -380,10 +380,10 @@ async def test_node_ignored.opp, mock_openzwave):
     await opp.async_add_executor_job(mock_receivers[0], node)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("zwave.mock_node") is None
+    assert opp.states.get("zwave.mock_node") is None
 
 
-async def test_value_discovery.opp, mock_openzwave):
+async def test_value_discovery(opp, mock_openzwave):
     """Test discovery of a node."""
     mock_receivers = []
 
@@ -392,7 +392,7 @@ async def test_value_discovery.opp, mock_openzwave):
             mock_receivers.append(receiver)
 
     with patch("pydispatch.dispatcher.connect", new=mock_connect):
-        await async_setup_component.opp, "zwave", {"zwave": {}})
+        await async_setup_component(opp, "zwave", {"zwave": {}})
         await opp.async_block_till_done()
 
     assert len(mock_receivers) == 1
@@ -410,10 +410,10 @@ async def test_value_discovery.opp, mock_openzwave):
     await opp.async_add_executor_job(mock_receivers[0], node, value)
     await opp.async_block_till_done()
 
-    assert.opp.states.get("binary_sensor.mock_node_mock_value").state == "off"
+    assert opp.states.get("binary_sensor.mock_node_mock_value").state == "off"
 
 
-async def test_value_entities.opp, mock_openzwave):
+async def test_value_entities(opp, mock_openzwave):
     """Test discovery of a node."""
     mock_receivers = {}
 
@@ -421,7 +421,7 @@ async def test_value_entities.opp, mock_openzwave):
         mock_receivers[signal] = receiver
 
     with patch("pydispatch.dispatcher.connect", new=mock_connect):
-        await async_setup_component.opp, "zwave", {"zwave": {}})
+        await async_setup_component(opp, "zwave", {"zwave": {}})
         await opp.async_block_till_done()
 
     zwave_network = opp.data[DATA_NETWORK]
@@ -469,11 +469,11 @@ async def test_value_entities.opp, mock_openzwave):
     )
     await opp.async_block_till_done()
 
-    assert.opp.states.get("binary_sensor.mock_node_mock_value").state == "off"
-    assert.opp.states.get("binary_sensor.mock_node_mock_value_b").state == "off"
+    assert opp.states.get("binary_sensor.mock_node_mock_value").state == "off"
+    assert opp.states.get("binary_sensor.mock_node_mock_value_b").state == "off"
 
-    ent_reg = await async_get_registry.opp)
-    dev_reg = await get_dev_reg.opp)
+    ent_reg = await async_get_registry(opp)
+    dev_reg = await get_dev_reg(opp)
 
     entry = ent_reg.async_get("zwave.mock_node")
     assert entry is not None
@@ -578,7 +578,7 @@ async def test_value_entities.opp, mock_openzwave):
     assert entry.unique_id == f"{node.node_id}-{value.object_id}"
 
 
-async def test_value_discovery_existing_entity.opp, mock_openzwave):
+async def test_value_discovery_existing_entity(opp, mock_openzwave):
     """Test discovery of a node."""
     mock_receivers = []
 
@@ -587,7 +587,7 @@ async def test_value_discovery_existing_entity.opp, mock_openzwave):
             mock_receivers.append(receiver)
 
     with patch("pydispatch.dispatcher.connect", new=mock_connect):
-        await async_setup_component.opp, "zwave", {"zwave": {}})
+        await async_setup_component(opp, "zwave", {"zwave": {}})
         await opp.async_block_till_done()
 
     assert len(mock_receivers) == 1
@@ -661,7 +661,7 @@ async def test_value_discovery_existing_entity.opp, mock_openzwave):
     )
 
 
-async def test_value_discovery_legacy_thermostat.opp, mock_openzwave):
+async def test_value_discovery_legacy_thermostat(opp, mock_openzwave):
     """Test discovery of a node. Special case for legacy thermostats."""
     mock_receivers = []
 
@@ -670,7 +670,7 @@ async def test_value_discovery_legacy_thermostat.opp, mock_openzwave):
             mock_receivers.append(receiver)
 
     with patch("pydispatch.dispatcher.connect", new=mock_connect):
-        await async_setup_component.opp, "zwave", {"zwave": {}})
+        await async_setup_component(opp, "zwave", {"zwave": {}})
         await opp.async_block_till_done()
 
     assert len(mock_receivers) == 1
@@ -697,7 +697,7 @@ async def test_value_discovery_legacy_thermostat.opp, mock_openzwave):
     )
 
 
-async def test_power_schemes.opp, mock_openzwave):
+async def test_power_schemes(opp, mock_openzwave):
     """Test power attribute."""
     mock_receivers = []
 
@@ -706,7 +706,7 @@ async def test_power_schemes.opp, mock_openzwave):
             mock_receivers.append(receiver)
 
     with patch("pydispatch.dispatcher.connect", new=mock_connect):
-        await async_setup_component.opp, "zwave", {"zwave": {}})
+        await async_setup_component(opp, "zwave", {"zwave": {}})
         await opp.async_block_till_done()
 
     assert len(mock_receivers) == 1
@@ -725,7 +725,7 @@ async def test_power_schemes.opp, mock_openzwave):
 
     await opp.async_block_till_done()
 
-    assert.opp.states.get("switch.mock_node_mock_value").state == "on"
+    assert opp.states.get("switch.mock_node_mock_value").state == "on"
     assert (
         "power_consumption"
         not in.opp.states.get("switch.mock_node_mock_value").attributes
@@ -754,7 +754,7 @@ async def test_power_schemes.opp, mock_openzwave):
     )
 
 
-async def test_network_ready.opp, mock_openzwave):
+async def test_network_ready(opp, mock_openzwave):
     """Test Node network ready event."""
     mock_receivers = []
 
@@ -763,7 +763,7 @@ async def test_network_ready.opp, mock_openzwave):
             mock_receivers.append(receiver)
 
     with patch("pydispatch.dispatcher.connect", new=mock_connect):
-        await async_setup_component.opp, "zwave", {"zwave": {}})
+        await async_setup_component(opp, "zwave", {"zwave": {}})
         await opp.async_block_till_done()
 
     assert len(mock_receivers) == 1
@@ -781,7 +781,7 @@ async def test_network_ready.opp, mock_openzwave):
     assert len(events) == 1
 
 
-async def test_network_complete.opp, mock_openzwave):
+async def test_network_complete(opp, mock_openzwave):
     """Test Node network complete event."""
     mock_receivers = []
 
@@ -790,7 +790,7 @@ async def test_network_complete.opp, mock_openzwave):
             mock_receivers.append(receiver)
 
     with patch("pydispatch.dispatcher.connect", new=mock_connect):
-        await async_setup_component.opp, "zwave", {"zwave": {}})
+        await async_setup_component(opp, "zwave", {"zwave": {}})
         await opp.async_block_till_done()
 
     assert len(mock_receivers) == 1
@@ -808,7 +808,7 @@ async def test_network_complete.opp, mock_openzwave):
     assert len(events) == 1
 
 
-async def test_network_complete_some_dead.opp, mock_openzwave):
+async def test_network_complete_some_dead(opp, mock_openzwave):
     """Test Node network complete some dead event."""
     mock_receivers = []
 
@@ -817,7 +817,7 @@ async def test_network_complete_some_dead.opp, mock_openzwave):
             mock_receivers.append(receiver)
 
     with patch("pydispatch.dispatcher.connect", new=mock_connect):
-        await async_setup_component.opp, "zwave", {"zwave": {}})
+        await async_setup_component(opp, "zwave", {"zwave": {}})
         await opp.async_block_till_done()
 
     assert len(mock_receivers) == 1
@@ -841,7 +841,7 @@ async def test_entity_discovery(
     """Test the creation of a new entity."""
     (node, value_class, mock_schema) = mock_values
 
-    registry = mock_registry.opp)
+    registry = mock_registry(opp)
 
     entity_id = "mock_component.mock_node_mock_value"
     zwave_config = {"zwave": {}}
@@ -920,7 +920,7 @@ async def test_entity_existing_values(
     """Test the loading of already discovered values."""
     (node, value_class, mock_schema) = mock_values
 
-    registry = mock_registry.opp)
+    registry = mock_registry(opp)
 
     entity_id = "mock_component.mock_node_mock_value"
     zwave_config = {"zwave": {}}
@@ -974,7 +974,7 @@ async def test_node_schema_mismatch(
     """Test node schema mismatch."""
     (node, value_class, mock_schema) = mock_values
 
-    registry = mock_registry.opp)
+    registry = mock_registry(opp)
 
     entity_id = "mock_component.mock_node_mock_value"
     zwave_config = {"zwave": {}}
@@ -1010,7 +1010,7 @@ async def test_entity_workaround_component(
     """Test component workaround."""
     (node, value_class, mock_schema) = mock_values
 
-    registry = mock_registry.opp)
+    registry = mock_registry(opp)
 
     node.manufacturer_id = "010f"
     node.product_type = "0b00"
@@ -1060,7 +1060,7 @@ async def test_entity_workaround_ignore(
     """Test ignore workaround."""
     (node, value_class, mock_schema) = mock_values
 
-    registry = mock_registry.opp)
+    registry = mock_registry(opp)
 
     entity_id = "mock_component.mock_node_mock_value"
     zwave_config = {"zwave": {}}
@@ -1102,7 +1102,7 @@ async def test_entity_config_ignore(
     """Test ignore config."""
     (node, value_class, mock_schema) = mock_values
 
-    registry = mock_registry.opp)
+    registry = mock_registry(opp)
 
     entity_id = "mock_component.mock_node_mock_value"
     zwave_config = {"zwave": {}}
@@ -1140,7 +1140,7 @@ async def test_entity_config_ignore_with_registry(
     """
     (node, value_class, mock_schema) = mock_values
 
-    registry = mock_registry.opp)
+    registry = mock_registry(opp)
 
     entity_id = "mock_component.mock_node_mock_value"
     zwave_config = {"zwave": {}}
@@ -1181,7 +1181,7 @@ async def test_entity_platform_ignore(
     """Test platform ignore device."""
     (node, value_class, mock_schema) = mock_values
 
-    registry = mock_registry.opp)
+    registry = mock_registry(opp)
 
     entity_id = "mock_component.mock_node_mock_value"
     zwave_config = {"zwave": {}}
@@ -1219,7 +1219,7 @@ async def test_config_polling_intensity(
     """Test polling intensity."""
     (node, value_class, mock_schema) = mock_values
 
-    registry = mock_registry.opp)
+    registry = mock_registry(opp)
 
     entity_id = "mock_component.mock_node_mock_value"
     zwave_config = {"zwave": {}}
@@ -1258,7 +1258,7 @@ async def test_device_config_glob_is_ordered():
     assert isinstance(conf["zwave"][CONF_DEVICE_CONFIG_GLOB], OrderedDict)
 
 
-async def test_add_node.opp, mock_openzwave, zwave_setup_ready):
+async def test_add_node(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave add_node service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1270,7 +1270,7 @@ async def test_add_node.opp, mock_openzwave, zwave_setup_ready):
     assert len(zwave_network.controller.add_node.mock_calls[0][1]) == 0
 
 
-async def test_add_node_secure.opp, mock_openzwave, zwave_setup_ready):
+async def test_add_node_secure(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave add_node_secure service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1282,7 +1282,7 @@ async def test_add_node_secure.opp, mock_openzwave, zwave_setup_ready):
     assert zwave_network.controller.add_node.mock_calls[0][1][0] is True
 
 
-async def test_remove_node.opp, mock_openzwave, zwave_setup_ready):
+async def test_remove_node(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave remove_node service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1293,7 +1293,7 @@ async def test_remove_node.opp, mock_openzwave, zwave_setup_ready):
     assert len(zwave_network.controller.remove_node.mock_calls) == 1
 
 
-async def test_cancel_command.opp, mock_openzwave, zwave_setup_ready):
+async def test_cancel_command(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave cancel_command service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1304,7 +1304,7 @@ async def test_cancel_command.opp, mock_openzwave, zwave_setup_ready):
     assert len(zwave_network.controller.cancel_command.mock_calls) == 1
 
 
-async def test_heal_network.opp, mock_openzwave, zwave_setup_ready):
+async def test_heal_network(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave heal_network service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1315,7 +1315,7 @@ async def test_heal_network.opp, mock_openzwave, zwave_setup_ready):
     assert len(zwave_network.heal.mock_calls) == 1
 
 
-async def test_soft_reset.opp, mock_openzwave, zwave_setup_ready):
+async def test_soft_reset(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave soft_reset service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1326,7 +1326,7 @@ async def test_soft_reset.opp, mock_openzwave, zwave_setup_ready):
     assert len(zwave_network.controller.soft_reset.mock_calls) == 1
 
 
-async def test_test_network.opp, mock_openzwave, zwave_setup_ready):
+async def test_test_network(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave test_network service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1337,11 +1337,11 @@ async def test_test_network.opp, mock_openzwave, zwave_setup_ready):
     assert len(zwave_network.test.mock_calls) == 1
 
 
-async def test_stop_network.opp, mock_openzwave, zwave_setup_ready):
+async def test_stop_network(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave stop_network service."""
     zwave_network = opp.data[DATA_NETWORK]
 
-    with patch.object.opp.bus, "fire") as mock_fire:
+    with patch.object(opp.bus, "fire") as mock_fire:
         await opp.services.async_call("zwave", "stop_network", {})
         await opp.async_block_till_done()
 
@@ -1352,7 +1352,7 @@ async def test_stop_network.opp, mock_openzwave, zwave_setup_ready):
         assert mock_fire.mock_calls[0][1][0] == const.EVENT_NETWORK_STOP
 
 
-async def test_rename_node.opp, mock_openzwave, zwave_setup_ready):
+async def test_rename_node(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave rename_node service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1367,7 +1367,7 @@ async def test_rename_node.opp, mock_openzwave, zwave_setup_ready):
     assert zwave_network.nodes[11].name == "test_name"
 
 
-async def test_rename_value.opp, mock_openzwave, zwave_setup_ready):
+async def test_rename_value(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave rename_value service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1391,7 +1391,7 @@ async def test_rename_value.opp, mock_openzwave, zwave_setup_ready):
     assert value.label == "New Label"
 
 
-async def test_set_poll_intensity_enable.opp, mock_openzwave, zwave_setup_ready):
+async def test_set_poll_intensity_enable(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave set_poll_intensity service, successful set."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1447,7 +1447,7 @@ async def test_set_poll_intensity_enable_failed(
     assert len(enable_poll.mock_calls) == 1
 
 
-async def test_set_poll_intensity_disable.opp, mock_openzwave, zwave_setup_ready):
+async def test_set_poll_intensity_disable(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave set_poll_intensity service, successful disable."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1502,7 +1502,7 @@ async def test_set_poll_intensity_disable_failed(
     assert len(disable_poll.mock_calls) == 1
 
 
-async def test_remove_failed_node.opp, mock_openzwave, zwave_setup_ready):
+async def test_remove_failed_node(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave remove_failed_node service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1517,7 +1517,7 @@ async def test_remove_failed_node.opp, mock_openzwave, zwave_setup_ready):
     assert remove_failed_node.mock_calls[0][1][0] == 12
 
 
-async def test_replace_failed_node.opp, mock_openzwave, zwave_setup_ready):
+async def test_replace_failed_node(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave replace_failed_node service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1532,7 +1532,7 @@ async def test_replace_failed_node.opp, mock_openzwave, zwave_setup_ready):
     assert replace_failed_node.mock_calls[0][1][0] == 13
 
 
-async def test_set_config_parameter.opp, mock_openzwave, zwave_setup_ready):
+async def test_set_config_parameter(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave set_config_parameter service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1679,7 +1679,7 @@ async def test_set_config_parameter.opp, mock_openzwave, zwave_setup_ready):
     node.set_config_param.reset_mock()
 
 
-async def test_print_config_parameter.opp, mock_openzwave, zwave_setup_ready, caplog):
+async def test_print_config_parameter(opp, mock_openzwave, zwave_setup_ready, caplog):
     """Test zwave print_config_parameter service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1705,7 +1705,7 @@ async def test_print_config_parameter.opp, mock_openzwave, zwave_setup_ready, ca
     assert "Config parameter 13 on Node 14: 2345" in caplog.text
 
 
-async def test_print_node.opp, mock_openzwave, zwave_setup_ready):
+async def test_print_node(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave print_node_parameter service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1720,7 +1720,7 @@ async def test_print_node.opp, mock_openzwave, zwave_setup_ready):
         assert "FOUND NODE " in mock_logger.info.mock_calls[0][1][0]
 
 
-async def test_set_wakeup.opp, mock_openzwave, zwave_setup_ready):
+async def test_set_wakeup(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave set_wakeup service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1746,7 +1746,7 @@ async def test_set_wakeup.opp, mock_openzwave, zwave_setup_ready):
     assert value.data == 15
 
 
-async def test_reset_node_meters.opp, mock_openzwave, zwave_setup_ready):
+async def test_reset_node_meters(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave reset_node_meters service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1784,7 +1784,7 @@ async def test_reset_node_meters.opp, mock_openzwave, zwave_setup_ready):
     assert value_id == reset_value.value_id
 
 
-async def test_add_association.opp, mock_openzwave, zwave_setup_ready):
+async def test_add_association(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave change_association service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1821,7 +1821,7 @@ async def test_add_association.opp, mock_openzwave, zwave_setup_ready):
     assert group.add_association.mock_calls[0][1][1] == 5
 
 
-async def test_remove_association.opp, mock_openzwave, zwave_setup_ready):
+async def test_remove_association(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave change_association service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1858,7 +1858,7 @@ async def test_remove_association.opp, mock_openzwave, zwave_setup_ready):
     assert group.remove_association.mock_calls[0][1][1] == 5
 
 
-async def test_refresh_entity.opp, mock_openzwave, zwave_setup_ready):
+async def test_refresh_entity(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave refresh_entity service."""
     node = MockNode()
     value = MockValue(
@@ -1890,7 +1890,7 @@ async def test_refresh_entity.opp, mock_openzwave, zwave_setup_ready):
     )
 
 
-async def test_refresh_node.opp, mock_openzwave, zwave_setup_ready):
+async def test_refresh_node(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave refresh_node service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1903,7 +1903,7 @@ async def test_refresh_node.opp, mock_openzwave, zwave_setup_ready):
     assert len(node.refresh_info.mock_calls) == 1
 
 
-async def test_set_node_value.opp, mock_openzwave, zwave_setup_ready):
+async def test_set_node_value(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave set_node_value service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1957,7 +1957,7 @@ async def test_set_node_value_with_long_id_and_text_value(
     assert zwave_network.nodes[14].values[87512398541236578].data == "#00ff00"
 
 
-async def test_refresh_node_value.opp, mock_openzwave, zwave_setup_ready):
+async def test_refresh_node_value(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave refresh_node_value service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1985,7 +1985,7 @@ async def test_refresh_node_value.opp, mock_openzwave, zwave_setup_ready):
     assert value.refresh.called
 
 
-async def test_heal_node.opp, mock_openzwave, zwave_setup_ready):
+async def test_heal_node(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave heal_node service."""
     zwave_network = opp.data[DATA_NETWORK]
 
@@ -1998,7 +1998,7 @@ async def test_heal_node.opp, mock_openzwave, zwave_setup_ready):
     assert len(node.heal.mock_calls) == 1
 
 
-async def test_test_node.opp, mock_openzwave, zwave_setup_ready):
+async def test_test_node(opp, mock_openzwave, zwave_setup_ready):
     """Test the zwave test_node service."""
     zwave_network = opp.data[DATA_NETWORK]
 

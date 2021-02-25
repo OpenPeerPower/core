@@ -20,7 +20,7 @@ async def test_config_entry_not_ready(
     opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the configuration entry not ready."""
-    entry = await setup_integration.opp, aioclient_mock, connection_error=True)
+    entry = await setup_integration(opp, aioclient_mock, connection_error=True)
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
 
@@ -29,7 +29,7 @@ async def test_config_entry_reauth(
 ) -> None:
     """Test the configuration entry needing to be re-authenticated."""
     with patch.object.opp.config_entries.flow, "async_init") as mock_flow_init:
-        entry = await setup_integration.opp, aioclient_mock, invalid_auth=True)
+        entry = await setup_integration(opp, aioclient_mock, invalid_auth=True)
 
     assert entry.state == ENTRY_STATE_SETUP_ERROR
 
@@ -48,9 +48,9 @@ async def test_unload_config_entry(
         "openpeerpower.components.sonarr.sensor.async_setup_entry",
         return_value=True,
     ):
-        entry = await setup_integration.opp, aioclient_mock)
+        entry = await setup_integration(opp, aioclient_mock)
 
-    assert.opp.data[DOMAIN]
+    assert opp.data[DOMAIN]
     assert entry.entry_id in.opp.data[DOMAIN]
     assert entry.state == ENTRY_STATE_LOADED
 

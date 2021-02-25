@@ -4,7 +4,7 @@ from openpeerpower.components.met import DOMAIN
 from openpeerpower.components.weather import DOMAIN as WEATHER_DOMAIN
 
 
-async def test_tracking_home.opp, mock_weather):
+async def test_tracking_home(opp, mock_weather):
     """Test we track home."""
     await opp.config_entries.flow.async_init("met", context={"source": "onboarding"})
     await opp.async_block_till_done()
@@ -34,7 +34,7 @@ async def test_tracking_home.opp, mock_weather):
     assert len.opp.states.async_entity_ids("weather")) == 0
 
 
-async def test_not_tracking_home.opp, mock_weather):
+async def test_not_tracking_home(opp, mock_weather):
     """Test when we not track home."""
 
     # Pre-create registry entry for disabled by default hourly weather

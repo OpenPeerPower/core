@@ -32,8 +32,8 @@ async def test_services.opp):
         }
     }
 
-    assert await async_setup_component.opp, DOMAIN, config)
-    assert await async_setup_component.opp, SENSOR_DOMAIN, config)
+    assert await async_setup_component(opp, DOMAIN, config)
+    assert await async_setup_component(opp, SENSOR_DOMAIN, config)
     await opp.async_block_till_done()
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)

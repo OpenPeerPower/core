@@ -65,26 +65,26 @@ SIRENS = {
 }
 
 
-async def test_no_switches.opp, aioclient_mock):
+async def test_no_switches(opp, aioclient_mock):
     """Test that no switch entities are created."""
-    await setup_deconz_integration.opp, aioclient_mock)
+    await setup_deconz_integration(opp, aioclient_mock)
     assert len.opp.states.async_all()) == 0
 
 
-async def test_power_plugs.opp, aioclient_mock):
+async def test_power_plugs(opp, aioclient_mock):
     """Test that all supported switch entities are created."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["lights"] = deepcopy(POWER_PLUGS)
     config_entry = await setup_deconz_integration(
         opp. aioclient_mock, get_state_response=data
     )
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
 
     assert len.opp.states.async_all()) == 4
-    assert.opp.states.get("switch.on_off_switch").state == STATE_ON
-    assert.opp.states.get("switch.smart_plug").state == STATE_OFF
-    assert.opp.states.get("switch.on_off_relay").state == STATE_ON
-    assert.opp.states.get("switch.unsupported_switch") is None
+    assert opp.states.get("switch.on_off_switch").state == STATE_ON
+    assert opp.states.get("switch.smart_plug").state == STATE_OFF
+    assert opp.states.get("switch.on_off_relay").state == STATE_ON
+    assert opp.states.get("switch.unsupported_switch") is None
 
     state_changed_event = {
         "t": "event",
@@ -95,7 +95,7 @@ async def test_power_plugs.opp, aioclient_mock):
     }
     gateway.api.event_handler(state_changed_event)
 
-    assert.opp.states.get("switch.on_off_switch").state == STATE_OFF
+    assert opp.states.get("switch.on_off_switch").state == STATE_OFF
 
     # Verify service calls
 
@@ -133,18 +133,18 @@ async def test_power_plugs.opp, aioclient_mock):
     assert len.opp.states.async_all()) == 0
 
 
-async def test_sirens.opp, aioclient_mock):
+async def test_sirens(opp, aioclient_mock):
     """Test that siren entities are created."""
     data = deepcopy(DECONZ_WEB_REQUEST)
     data["lights"] = deepcopy(SIRENS)
     config_entry = await setup_deconz_integration(
         opp. aioclient_mock, get_state_response=data
     )
-    gateway = get_gateway_from_config_entry.opp, config_entry)
+    gateway = get_gateway_from_config_entry(opp, config_entry)
 
     assert len.opp.states.async_all()) == 2
-    assert.opp.states.get("switch.warning_device").state == STATE_ON
-    assert.opp.states.get("switch.unsupported_switch") is None
+    assert opp.states.get("switch.warning_device").state == STATE_ON
+    assert opp.states.get("switch.unsupported_switch") is None
 
     state_changed_event = {
         "t": "event",
@@ -155,7 +155,7 @@ async def test_sirens.opp, aioclient_mock):
     }
     gateway.api.event_handler(state_changed_event)
 
-    assert.opp.states.get("switch.warning_device").state == STATE_OFF
+    assert opp.states.get("switch.warning_device").state == STATE_OFF
 
     # Verify service calls
 

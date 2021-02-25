@@ -34,7 +34,7 @@ def _mock_config_entry_with_options_populated():
 
 async def test_setup_in_bridge_mode.opp):
     """Test we can setup a new instance in bridge mode."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -91,7 +91,7 @@ async def test_setup_in_bridge_mode.opp):
 
 async def test_setup_in_accessory_mode.opp):
     """Test we can setup a new instance in accessory."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     opp.states.async_set("camera.mine", "off")
 
     result = await opp.config_entries.flow.async_init(
@@ -151,12 +151,12 @@ async def test_setup_in_accessory_mode.opp):
 
 async def test_import.opp):
     """Test we can import instance."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
 
     entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_NAME: "mock_name", CONF_PORT: 12345}
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     await opp.async_block_till_done()
 
     result = await opp.config_entries.flow.async_init(
@@ -195,7 +195,7 @@ async def test_options_flow_exclude_mode_advanced(auto_start, opp):
     """Test config flow options in exclude mode with advanced options."""
 
     config_entry = _mock_config_entry_with_options_populated()
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     opp.states.async_set("climate.old", "off")
     await opp.async_block_till_done()
@@ -245,7 +245,7 @@ async def test_options_flow_exclude_mode_basic.opp):
     """Test config flow options in exclude mode."""
 
     config_entry = _mock_config_entry_with_options_populated()
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     opp.states.async_set("climate.old", "off")
     await opp.async_block_till_done()
@@ -286,7 +286,7 @@ async def test_options_flow_include_mode_basic.opp):
     """Test config flow options in include mode."""
 
     config_entry = _mock_config_entry_with_options_populated()
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     opp.states.async_set("climate.old", "off")
     opp.states.async_set("climate.new", "off")
@@ -329,7 +329,7 @@ async def test_options_flow_exclude_mode_with_cameras.opp):
     """Test config flow options in exclude mode with cameras."""
 
     config_entry = _mock_config_entry_with_options_populated()
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     opp.states.async_set("climate.old", "off")
     opp.states.async_set("camera.native_h264", "off")
@@ -432,7 +432,7 @@ async def test_options_flow_include_mode_with_cameras.opp):
     """Test config flow options in include mode with cameras."""
 
     config_entry = _mock_config_entry_with_options_populated()
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     opp.states.async_set("climate.old", "off")
     opp.states.async_set("camera.native_h264", "off")
@@ -577,7 +577,7 @@ async def test_options_flow_blocked_when_from_yaml.opp):
         },
         source=SOURCE_IMPORT,
     )
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     await opp.async_block_till_done()
 
@@ -598,7 +598,7 @@ async def test_options_flow_include_mode_basic_accessory.opp):
     """Test config flow options in include mode with a single accessory."""
 
     config_entry = _mock_config_entry_with_options_populated()
-    config_entry.add_to.opp.opp)
+    config_entry.add_to_opp(opp)
 
     opp.states.async_set("media_player.tv", "off")
     opp.states.async_set("media_player.sonos", "off")
@@ -649,9 +649,9 @@ async def test_options_flow_include_mode_basic_accessory.opp):
     }
 
 
-async def test_converting_bridge_to_accessory_mode.opp, hk_driver):
+async def test_converting_bridge_to_accessory_mode(opp, hk_driver):
     """Test we can convert a bridge to accessory mode."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )

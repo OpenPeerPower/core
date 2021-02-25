@@ -5,7 +5,7 @@ from unittest.mock import patch
 from .common import setup_platform
 
 
-async def test_binary_sensor.opp, requests_mock):
+async def test_binary_sensor(opp, requests_mock):
     """Test the Ring binary sensors."""
     with patch(
         "ring_doorbell.Ring.active_alerts",
@@ -19,7 +19,7 @@ async def test_binary_sensor.opp, requests_mock):
             }
         ],
     ):
-        await setup_platform.opp, "binary_sensor")
+        await setup_platform(opp, "binary_sensor")
 
     motion_state = opp.states.get("binary_sensor.front_door_motion")
     assert motion_state is not None

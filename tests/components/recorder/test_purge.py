@@ -13,7 +13,7 @@ from openpeerpower.util import dt as dt_util
 from .common import wait_recording_done
 
 
-def test_purge_old_states.opp, opp_recorder):
+def test_purge_old_states(opp, opp_recorder):
     """Test deleting old states."""
    opp =  opp_recorder()
     _add_test_states.opp)
@@ -37,7 +37,7 @@ def test_purge_old_states.opp, opp_recorder):
         assert states.count() == 2
 
 
-def test_purge_old_events.opp, opp_recorder):
+def test_purge_old_events(opp, opp_recorder):
     """Test deleting old events."""
    opp =  opp_recorder()
     _add_test_events.opp)
@@ -61,7 +61,7 @@ def test_purge_old_events.opp, opp_recorder):
         assert events.count() == 2
 
 
-def test_purge_old_recorder_runs.opp, opp_recorder):
+def test_purge_old_recorder_runs(opp, opp_recorder):
     """Test deleting old recorder runs keeps current run."""
    opp =  opp_recorder()
     _add_test_recorder_runs.opp)
@@ -77,7 +77,7 @@ def test_purge_old_recorder_runs.opp, opp_recorder):
         assert recorder_runs.count() == 1
 
 
-def test_purge_method.opp, opp_recorder):
+def test_purge_method(opp, opp_recorder):
     """Test purge method."""
    opp =  opp_recorder()
     service_data = {"keep_days": 4}

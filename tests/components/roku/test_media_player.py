@@ -83,12 +83,12 @@ async def test_setup(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test setup with basic config."""
-    await setup_integration.opp, aioclient_mock)
+    await setup_integration(opp, aioclient_mock)
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
     main = entity_registry.async_get(MAIN_ENTITY_ID)
 
-    assert.opp.states.get(MAIN_ENTITY_ID)
+    assert opp.states.get(MAIN_ENTITY_ID)
     assert main
     assert main.device_class == DEVICE_CLASS_RECEIVER
     assert main.unique_id == UPNP_SERIAL
@@ -98,7 +98,7 @@ async def test_idle_setup(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test setup with idle device."""
-    await setup_integration.opp, aioclient_mock, power=False)
+    await setup_integration(opp, aioclient_mock, power=False)
 
     state = opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_STANDBY
@@ -120,7 +120,7 @@ async def test_tv_setup(
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
     tv = entity_registry.async_get(TV_ENTITY_ID)
 
-    assert.opp.states.get(TV_ENTITY_ID)
+    assert opp.states.get(TV_ENTITY_ID)
     assert tv
     assert tv.device_class == DEVICE_CLASS_TV
     assert tv.unique_id == TV_SERIAL
@@ -134,28 +134,28 @@ async def test_availability(
     future = now + timedelta(minutes=1)
 
     with patch("openpeerpower.util.dt.utcnow", return_value=now):
-        await setup_integration.opp, aioclient_mock)
+        await setup_integration(opp, aioclient_mock)
 
     with patch(
         "openpeerpower.components.roku.Roku.update", side_effect=RokuError
     ), patch("openpeerpower.util.dt.utcnow", return_value=future):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
-        assert.opp.states.get(MAIN_ENTITY_ID).state == STATE_UNAVAILABLE
+        assert opp.states.get(MAIN_ENTITY_ID).state == STATE_UNAVAILABLE
 
     future += timedelta(minutes=1)
 
     with patch("openpeerpower.util.dt.utcnow", return_value=future):
-        async_fire_time_changed.opp, future)
+        async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
-        assert.opp.states.get(MAIN_ENTITY_ID).state == STATE_HOME
+        assert opp.states.get(MAIN_ENTITY_ID).state == STATE_HOME
 
 
 async def test_supported_features(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test supported features."""
-    await setup_integration.opp, aioclient_mock)
+    await setup_integration(opp, aioclient_mock)
 
     # Features supported for Rokus
     state = opp.states.get(MAIN_ENTITY_ID)
@@ -209,7 +209,7 @@ async def test_attributes(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test attributes."""
-    await setup_integration.opp, aioclient_mock)
+    await setup_integration(opp, aioclient_mock)
 
     state = opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_HOME
@@ -224,7 +224,7 @@ async def test_attributes_app(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test attributes for app."""
-    await setup_integration.opp, aioclient_mock, app="netflix")
+    await setup_integration(opp, aioclient_mock, app="netflix")
 
     state = opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_ON
@@ -239,7 +239,7 @@ async def test_attributes_app_media_playing(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test attributes for app with playing media."""
-    await setup_integration.opp, aioclient_mock, app="pluto", media_state="play")
+    await setup_integration(opp, aioclient_mock, app="pluto", media_state="play")
 
     state = opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_PLAYING
@@ -256,7 +256,7 @@ async def test_attributes_app_media_paused(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test attributes for app with paused media."""
-    await setup_integration.opp, aioclient_mock, app="pluto", media_state="pause")
+    await setup_integration(opp, aioclient_mock, app="pluto", media_state="pause")
 
     state = opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_PAUSED
@@ -273,7 +273,7 @@ async def test_attributes_screensaver(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test attributes for app with screensaver."""
-    await setup_integration.opp, aioclient_mock, app="screensaver")
+    await setup_integration(opp, aioclient_mock, app="screensaver")
 
     state = opp.states.get(MAIN_ENTITY_ID)
     assert state.state == STATE_IDLE
@@ -335,7 +335,7 @@ async def test_services(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the different media player services."""
-    await setup_integration.opp, aioclient_mock)
+    await setup_integration(opp, aioclient_mock)
 
     with patch("openpeerpower.components.roku.Roku.remote") as remote_mock:
         await opp.services.async_call(
@@ -501,7 +501,7 @@ async def test_tv_services(
         tune_mock.assert_called_once_with("55")
 
 
-async def test_media_browse.opp, aioclient_mock, opp_ws_client):
+async def test_media_browse(opp, aioclient_mock, opp_ws_client):
     """Test browsing media."""
     await setup_integration(
         opp,
@@ -627,14 +627,14 @@ async def test_media_browse.opp, aioclient_mock, opp_ws_client):
     assert not msg["success"]
 
 
-async def test_media_browse_internal.opp, aioclient_mock, opp_ws_client):
+async def test_media_browse_internal(opp, aioclient_mock, opp_ws_client):
     """Test browsing media with internal url."""
     await async_process_op_core_config(
         opp,
         {"internal_url": "http://example.local:8123"},
     )
 
-    assert.opp.config.internal_url == "http://example.local:8123"
+    assert opp.config.internal_url == "http://example.local:8123"
 
     await setup_integration(
         opp,
@@ -693,7 +693,7 @@ async def test_integration_services(
     opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test integration services."""
-    await setup_integration.opp, aioclient_mock)
+    await setup_integration(opp, aioclient_mock)
 
     with patch("openpeerpower.components.roku.Roku.search") as search_mock:
         await opp.services.async_call(

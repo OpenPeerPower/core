@@ -7,7 +7,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import mock_registry
 
 
-async def test_loading_file.opp, opp_client):
+async def test_loading_file(opp, opp_client):
     """Test that it loads image from disk."""
     mock_registry.opp)
 
@@ -40,7 +40,7 @@ async def test_loading_file.opp, opp_client):
     assert body == "hello"
 
 
-async def test_file_not_readable.opp, caplog):
+async def test_file_not_readable(opp, caplog):
     """Test a warning is shown setup when file is not readable."""
     mock_registry.opp)
 
@@ -65,7 +65,7 @@ async def test_file_not_readable.opp, caplog):
     assert "mock.file" in caplog.text
 
 
-async def test_camera_content_type.opp, opp_client):
+async def test_camera_content_type(opp, opp_client):
     """Test local_file camera content_type."""
     cam_config_jpg = {
         "name": "test_jpg",
@@ -145,7 +145,7 @@ async def test_update_file_path.opp):
             "name": "local_file_camera_2",
             "file_path": "mock/path_2.jpg",
         }
-        await async_setup_component.opp, "camera", {"camera": [camera_1, camera_2]})
+        await async_setup_component(opp, "camera", {"camera": [camera_1, camera_2]})
         await opp.async_block_till_done()
 
         # Fetch state and check motion detection attribute

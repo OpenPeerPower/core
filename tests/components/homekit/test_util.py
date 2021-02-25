@@ -215,7 +215,7 @@ def test_density_to_air_quality():
     assert density_to_air_quality(300) == 5
 
 
-async def test_show_setup_msg.opp, hk_driver):
+async def test_show_setup_msg(opp, hk_driver):
     """Test show setup message as persistence notification."""
     pincode = b"123-45-678"
 
@@ -230,8 +230,8 @@ async def test_show_setup_msg.opp, hk_driver):
         show_setup_message, opp, entry.entry_id, "bridge_name", pincode, "X-HM://0"
     )
     await opp.async_block_till_done()
-    assert.opp.data[DOMAIN][entry.entry_id][HOMEKIT_PAIRING_QR_SECRET]
-    assert.opp.data[DOMAIN][entry.entry_id][HOMEKIT_PAIRING_QR]
+    assert opp.data[DOMAIN][entry.entry_id][HOMEKIT_PAIRING_QR_SECRET]
+    assert opp.data[DOMAIN][entry.entry_id][HOMEKIT_PAIRING_QR]
 
     assert call_create_notification
     assert call_create_notification[0].data[ATTR_NOTIFICATION_ID] == entry.entry_id
@@ -253,7 +253,7 @@ async def test_dismiss_setup_msg.opp):
 
 async def test_port_is_available.opp):
     """Test we can get an available port and it is actually available."""
-    next_port = await async_find_next_available_port.opp, DEFAULT_CONFIG_FLOW_PORT)
+    next_port = await async_find_next_available_port(opp, DEFAULT_CONFIG_FLOW_PORT)
 
     assert next_port
 
@@ -267,9 +267,9 @@ async def test_port_is_available_skips_existing_entries.opp):
         data={CONF_NAME: BRIDGE_NAME, CONF_PORT: DEFAULT_CONFIG_FLOW_PORT},
         options={},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
-    next_port = await async_find_next_available_port.opp, DEFAULT_CONFIG_FLOW_PORT)
+    next_port = await async_find_next_available_port(opp, DEFAULT_CONFIG_FLOW_PORT)
 
     assert next_port
     assert next_port != DEFAULT_CONFIG_FLOW_PORT

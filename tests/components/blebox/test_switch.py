@@ -48,7 +48,7 @@ async def test_switchbox_init(switchbox, opp, config):
     feature_mock, entity_id = switchbox
 
     feature_mock.async_update = AsyncMock()
-    entry = await async_setup_entity.opp, config, entity_id)
+    entry = await async_setup_entity(opp, config, entity_id)
     assert entry.unique_id == "BleBox-switchBox-1afe34e750b8-0.relay"
 
     state = opp.states.get(entity_id)
@@ -77,7 +77,7 @@ async def test_switchbox_update_when_off(switchbox, opp, config):
         feature_mock.is_on = False
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
 
     state = opp.states.get(entity_id)
     assert state.state == STATE_OFF
@@ -92,7 +92,7 @@ async def test_switchbox_update_when_on(switchbox, opp, config):
         feature_mock.is_on = True
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
 
     state = opp.states.get(entity_id)
     assert state.state == STATE_ON
@@ -107,7 +107,7 @@ async def test_switchbox_on(switchbox, opp, config):
         feature_mock.is_on = False
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
     def turn_on():
@@ -135,7 +135,7 @@ async def test_switchbox_off(switchbox, opp, config):
         feature_mock.is_on = True
 
     feature_mock.async_update = AsyncMock(side_effect=initial_update)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
     feature_mock.async_update = AsyncMock()
 
     def turn_off():
@@ -194,7 +194,7 @@ async def test_switchbox_d_init(switchbox_d, opp, config):
 
     feature_mocks[0].async_update = AsyncMock()
     feature_mocks[1].async_update = AsyncMock()
-    entries = await async_setup_entities.opp, config, entity_ids)
+    entries = await async_setup_entities(opp, config, entity_ids)
 
     entry = entries[0]
     assert entry.unique_id == "BleBox-switchBoxD-1afe34e750b8-0.relay"
@@ -242,10 +242,10 @@ async def test_switchbox_d_update_when_off(switchbox_d, opp, config):
 
     feature_mocks[0].async_update = AsyncMock(side_effect=initial_update0)
     feature_mocks[1].async_update = AsyncMock()
-    await async_setup_entities.opp, config, entity_ids)
+    await async_setup_entities(opp, config, entity_ids)
 
-    assert.opp.states.get(entity_ids[0]).state == STATE_OFF
-    assert.opp.states.get(entity_ids[1]).state == STATE_OFF
+    assert opp.states.get(entity_ids[0]).state == STATE_OFF
+    assert opp.states.get(entity_ids[1]).state == STATE_OFF
 
 
 async def test_switchbox_d_update_when_second_off(switchbox_d, opp, config):
@@ -259,10 +259,10 @@ async def test_switchbox_d_update_when_second_off(switchbox_d, opp, config):
 
     feature_mocks[0].async_update = AsyncMock(side_effect=initial_update0)
     feature_mocks[1].async_update = AsyncMock()
-    await async_setup_entities.opp, config, entity_ids)
+    await async_setup_entities(opp, config, entity_ids)
 
-    assert.opp.states.get(entity_ids[0]).state == STATE_ON
-    assert.opp.states.get(entity_ids[1]).state == STATE_OFF
+    assert opp.states.get(entity_ids[0]).state == STATE_ON
+    assert opp.states.get(entity_ids[1]).state == STATE_OFF
 
 
 async def test_switchbox_d_turn_first_on(switchbox_d, opp, config):
@@ -276,7 +276,7 @@ async def test_switchbox_d_turn_first_on(switchbox_d, opp, config):
 
     feature_mocks[0].async_update = AsyncMock(side_effect=initial_update0)
     feature_mocks[1].async_update = AsyncMock()
-    await async_setup_entities.opp, config, entity_ids)
+    await async_setup_entities(opp, config, entity_ids)
     feature_mocks[0].async_update = AsyncMock()
 
     def turn_on0():
@@ -290,8 +290,8 @@ async def test_switchbox_d_turn_first_on(switchbox_d, opp, config):
         blocking=True,
     )
 
-    assert.opp.states.get(entity_ids[0]).state == STATE_ON
-    assert.opp.states.get(entity_ids[1]).state == STATE_OFF
+    assert opp.states.get(entity_ids[0]).state == STATE_ON
+    assert opp.states.get(entity_ids[1]).state == STATE_OFF
 
 
 async def test_switchbox_d_second_on(switchbox_d, opp, config):
@@ -305,7 +305,7 @@ async def test_switchbox_d_second_on(switchbox_d, opp, config):
 
     feature_mocks[0].async_update = AsyncMock(side_effect=initial_update0)
     feature_mocks[1].async_update = AsyncMock()
-    await async_setup_entities.opp, config, entity_ids)
+    await async_setup_entities(opp, config, entity_ids)
     feature_mocks[0].async_update = AsyncMock()
 
     def turn_on1():
@@ -319,8 +319,8 @@ async def test_switchbox_d_second_on(switchbox_d, opp, config):
         blocking=True,
     )
 
-    assert.opp.states.get(entity_ids[0]).state == STATE_OFF
-    assert.opp.states.get(entity_ids[1]).state == STATE_ON
+    assert opp.states.get(entity_ids[0]).state == STATE_OFF
+    assert opp.states.get(entity_ids[1]).state == STATE_ON
 
 
 async def test_switchbox_d_first_off(switchbox_d, opp, config):
@@ -334,7 +334,7 @@ async def test_switchbox_d_first_off(switchbox_d, opp, config):
 
     feature_mocks[0].async_update = AsyncMock(side_effect=initial_update_any)
     feature_mocks[1].async_update = AsyncMock()
-    await async_setup_entities.opp, config, entity_ids)
+    await async_setup_entities(opp, config, entity_ids)
     feature_mocks[0].async_update = AsyncMock()
 
     def turn_off0():
@@ -348,8 +348,8 @@ async def test_switchbox_d_first_off(switchbox_d, opp, config):
         blocking=True,
     )
 
-    assert.opp.states.get(entity_ids[0]).state == STATE_OFF
-    assert.opp.states.get(entity_ids[1]).state == STATE_ON
+    assert opp.states.get(entity_ids[0]).state == STATE_OFF
+    assert opp.states.get(entity_ids[1]).state == STATE_ON
 
 
 async def test_switchbox_d_second_off(switchbox_d, opp, config):
@@ -363,7 +363,7 @@ async def test_switchbox_d_second_off(switchbox_d, opp, config):
 
     feature_mocks[0].async_update = AsyncMock(side_effect=initial_update_any)
     feature_mocks[1].async_update = AsyncMock()
-    await async_setup_entities.opp, config, entity_ids)
+    await async_setup_entities(opp, config, entity_ids)
     feature_mocks[0].async_update = AsyncMock()
 
     def turn_off1():
@@ -376,8 +376,8 @@ async def test_switchbox_d_second_off(switchbox_d, opp, config):
         {"entity_id": entity_ids[1]},
         blocking=True,
     )
-    assert.opp.states.get(entity_ids[0]).state == STATE_ON
-    assert.opp.states.get(entity_ids[1]).state == STATE_OFF
+    assert opp.states.get(entity_ids[0]).state == STATE_ON
+    assert opp.states.get(entity_ids[1]).state == STATE_OFF
 
 
 ALL_SWITCH_FIXTURES = ["switchbox", "switchbox_d"]
@@ -398,6 +398,6 @@ async def test_update_failure(feature, opp, config, caplog):
         entity_id = entity_id[0]
 
     feature_mock.async_update = AsyncMock(side_effect=blebox_uniapi.error.ClientError)
-    await async_setup_entity.opp, config, entity_id)
+    await async_setup_entity(opp, config, entity_id)
 
     assert f"Updating '{feature_mock.full_name}' failed: " in caplog.text

@@ -150,7 +150,7 @@ async def test_setup_opp):
         "sense_energy.SenseLink",
         return_value=Mock(start=AsyncMock(), close=AsyncMock()),
     ):
-        assert await async_setup_component.opp, DOMAIN, CONFIG) is True
+        assert await async_setup_component(opp, DOMAIN, CONFIG) is True
 
 
 async def test_float.opp):
@@ -165,9 +165,9 @@ async def test_float.opp):
         "sense_energy.SenseLink",
         return_value=Mock(start=AsyncMock(), close=AsyncMock()),
     ):
-        assert await async_setup_component.opp, DOMAIN, CONFIG_SWITCH) is True
+        assert await async_setup_component(opp, DOMAIN, CONFIG_SWITCH) is True
     await opp.async_block_till_done()
-    await emulated_kasa.validate_configs.opp, config)
+    await emulated_kasa.validate_configs(opp, config)
 
     # Turn switch on
     await opp.services.async_call(
@@ -177,7 +177,7 @@ async def test_float.opp):
     switch = opp.states.get(ENTITY_SWITCH)
     assert switch.state == STATE_ON
 
-    plug_it = emulated_kasa.get_plug_devices.opp, config)
+    plug_it = emulated_kasa.get_plug_devices(opp, config)
     plug = next(plug_it).generate_response()
 
     assert nested_value(plug, "system", "get_sysinfo", "alias") == ENTITY_SWITCH_NAME
@@ -189,7 +189,7 @@ async def test_float.opp):
         SWITCH_DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_SWITCH}, blocking=True
     )
 
-    plug_it = emulated_kasa.get_plug_devices.opp, config)
+    plug_it = emulated_kasa.get_plug_devices(opp, config)
     plug = next(plug_it).generate_response()
     assert nested_value(plug, "system", "get_sysinfo", "alias") == ENTITY_SWITCH_NAME
     power = nested_value(plug, "emeter", "get_realtime", "power")
@@ -208,9 +208,9 @@ async def test_switch_power.opp):
         "sense_energy.SenseLink",
         return_value=Mock(start=AsyncMock(), close=AsyncMock()),
     ):
-        assert await async_setup_component.opp, DOMAIN, CONFIG_SWITCH_NO_POWER) is True
+        assert await async_setup_component(opp, DOMAIN, CONFIG_SWITCH_NO_POWER) is True
     await opp.async_block_till_done()
-    await emulated_kasa.validate_configs.opp, config)
+    await emulated_kasa.validate_configs(opp, config)
 
     # Turn switch on
     await opp.services.async_call(
@@ -223,7 +223,7 @@ async def test_switch_power.opp):
     assert power == 100
     assert switch.name == "AC"
 
-    plug_it = emulated_kasa.get_plug_devices.opp, config)
+    plug_it = emulated_kasa.get_plug_devices(opp, config)
     plug = next(plug_it).generate_response()
 
     assert nested_value(plug, "system", "get_sysinfo", "alias") == "AC"
@@ -236,7 +236,7 @@ async def test_switch_power.opp):
         attributes={ATTR_CURRENT_POWER_W: 120, ATTR_FRIENDLY_NAME: "AC"},
     )
 
-    plug_it = emulated_kasa.get_plug_devices.opp, config)
+    plug_it = emulated_kasa.get_plug_devices(opp, config)
     plug = next(plug_it).generate_response()
 
     assert nested_value(plug, "system", "get_sysinfo", "alias") == "AC"
@@ -248,7 +248,7 @@ async def test_switch_power.opp):
         SWITCH_DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_SWITCH}, blocking=True
     )
 
-    plug_it = emulated_kasa.get_plug_devices.opp, config)
+    plug_it = emulated_kasa.get_plug_devices(opp, config)
     plug = next(plug_it).generate_response()
     assert nested_value(plug, "system", "get_sysinfo", "alias") == "AC"
     power = nested_value(plug, "emeter", "get_realtime", "power")
@@ -265,9 +265,9 @@ async def test_template.opp):
         "sense_energy.SenseLink",
         return_value=Mock(start=AsyncMock(), close=AsyncMock()),
     ):
-        assert await async_setup_component.opp, DOMAIN, CONFIG_FAN) is True
+        assert await async_setup_component(opp, DOMAIN, CONFIG_FAN) is True
     await opp.async_block_till_done()
-    await emulated_kasa.validate_configs.opp, config)
+    await emulated_kasa.validate_configs(opp, config)
 
     # Turn all devices on to known state
     await opp.services.async_call(
@@ -284,7 +284,7 @@ async def test_template.opp):
     assert fan.state == STATE_ON
 
     # Fan low:
-    plug_it = emulated_kasa.get_plug_devices.opp, config)
+    plug_it = emulated_kasa.get_plug_devices(opp, config)
     plug = next(plug_it).generate_response()
     assert nested_value(plug, "system", "get_sysinfo", "alias") == ENTITY_FAN_NAME
     power = nested_value(plug, "emeter", "get_realtime", "power")
@@ -297,7 +297,7 @@ async def test_template.opp):
         {ATTR_ENTITY_ID: ENTITY_FAN, ATTR_SPEED: "high"},
         blocking=True,
     )
-    plug_it = emulated_kasa.get_plug_devices.opp, config)
+    plug_it = emulated_kasa.get_plug_devices(opp, config)
     plug = next(plug_it).generate_response()
     assert nested_value(plug, "system", "get_sysinfo", "alias") == ENTITY_FAN_NAME
     power = nested_value(plug, "emeter", "get_realtime", "power")
@@ -307,7 +307,7 @@ async def test_template.opp):
     await opp.services.async_call(
         FAN_DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_FAN}, blocking=True
     )
-    plug_it = emulated_kasa.get_plug_devices.opp, config)
+    plug_it = emulated_kasa.get_plug_devices(opp, config)
     plug = next(plug_it).generate_response()
     assert nested_value(plug, "system", "get_sysinfo", "alias") == ENTITY_FAN_NAME
     power = nested_value(plug, "emeter", "get_realtime", "power")
@@ -329,9 +329,9 @@ async def test_sensor.opp):
         "sense_energy.SenseLink",
         return_value=Mock(start=AsyncMock(), close=AsyncMock()),
     ):
-        assert await async_setup_component.opp, DOMAIN, CONFIG_LIGHT) is True
+        assert await async_setup_component(opp, DOMAIN, CONFIG_LIGHT) is True
     await opp.async_block_till_done()
-    await emulated_kasa.validate_configs.opp, config)
+    await emulated_kasa.validate_configs(opp, config)
 
     await opp.services.async_call(
         LIGHT_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_LIGHT}, blocking=True
@@ -344,7 +344,7 @@ async def test_sensor.opp):
     assert sensor.state == "35"
 
     # light
-    plug_it = emulated_kasa.get_plug_devices.opp, config)
+    plug_it = emulated_kasa.get_plug_devices(opp, config)
     plug = next(plug_it).generate_response()
     assert nested_value(plug, "system", "get_sysinfo", "alias") == ENTITY_LIGHT_NAME
     power = nested_value(plug, "emeter", "get_realtime", "power")
@@ -353,7 +353,7 @@ async def test_sensor.opp):
     # change power sensor
     opp.states.async_set(ENTITY_SENSOR, 40)
 
-    plug_it = emulated_kasa.get_plug_devices.opp, config)
+    plug_it = emulated_kasa.get_plug_devices(opp, config)
     plug = next(plug_it).generate_response()
     assert nested_value(plug, "system", "get_sysinfo", "alias") == ENTITY_LIGHT_NAME
     power = nested_value(plug, "emeter", "get_realtime", "power")
@@ -364,7 +364,7 @@ async def test_sensor.opp):
         LIGHT_DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_LIGHT}, blocking=True
     )
 
-    plug_it = emulated_kasa.get_plug_devices.opp, config)
+    plug_it = emulated_kasa.get_plug_devices(opp, config)
     plug = next(plug_it).generate_response()
     assert nested_value(plug, "system", "get_sysinfo", "alias") == ENTITY_LIGHT_NAME
     power = nested_value(plug, "emeter", "get_realtime", "power")
@@ -383,9 +383,9 @@ async def test_sensor_state.opp):
         "sense_energy.SenseLink",
         return_value=Mock(start=AsyncMock(), close=AsyncMock()),
     ):
-        assert await async_setup_component.opp, DOMAIN, CONFIG_SENSOR) is True
+        assert await async_setup_component(opp, DOMAIN, CONFIG_SENSOR) is True
     await opp.async_block_till_done()
-    await emulated_kasa.validate_configs.opp, config)
+    await emulated_kasa.validate_configs(opp, config)
 
     opp.states.async_set(ENTITY_SENSOR, 35)
 
@@ -393,7 +393,7 @@ async def test_sensor_state.opp):
     assert sensor.state == "35"
 
     # sensor
-    plug_it = emulated_kasa.get_plug_devices.opp, config)
+    plug_it = emulated_kasa.get_plug_devices(opp, config)
     plug = next(plug_it).generate_response()
     assert nested_value(plug, "system", "get_sysinfo", "alias") == ENTITY_SENSOR_NAME
     power = nested_value(plug, "emeter", "get_realtime", "power")
@@ -402,7 +402,7 @@ async def test_sensor_state.opp):
     # change power sensor
     opp.states.async_set(ENTITY_SENSOR, 40)
 
-    plug_it = emulated_kasa.get_plug_devices.opp, config)
+    plug_it = emulated_kasa.get_plug_devices(opp, config)
     plug = next(plug_it).generate_response()
     assert nested_value(plug, "system", "get_sysinfo", "alias") == ENTITY_SENSOR_NAME
     power = nested_value(plug, "emeter", "get_realtime", "power")
@@ -411,7 +411,7 @@ async def test_sensor_state.opp):
     # report 0 if device is off
     opp.states.async_set(ENTITY_SENSOR, 0)
 
-    plug_it = emulated_kasa.get_plug_devices.opp, config)
+    plug_it = emulated_kasa.get_plug_devices(opp, config)
     plug = next(plug_it).generate_response()
     assert nested_value(plug, "system", "get_sysinfo", "alias") == ENTITY_SENSOR_NAME
     power = nested_value(plug, "emeter", "get_realtime", "power")
@@ -441,7 +441,7 @@ async def test_multiple_devices.opp):
     ):
         assert await emulated_kasa.async_setup_opp, CONFIG) is True
     await opp.async_block_till_done()
-    await emulated_kasa.validate_configs.opp, config)
+    await emulated_kasa.validate_configs(opp, config)
 
     # Turn all devices on to known state
     await opp.services.async_call(
@@ -471,7 +471,7 @@ async def test_multiple_devices.opp):
     fan = opp.states.get(ENTITY_FAN)
     assert fan.state == STATE_ON
 
-    plug_it = emulated_kasa.get_plug_devices.opp, config)
+    plug_it = emulated_kasa.get_plug_devices(opp, config)
     # switch
     plug = next(plug_it).generate_response()
     assert nested_value(plug, "system", "get_sysinfo", "alias") == ENTITY_SWITCH_NAME

@@ -6,7 +6,7 @@ from openpeerpower.const import EVENT_OPENPEERPOWER_START
 from openpeerpower.setup import async_setup_component
 
 
-async def test.oppio_discovery_startup.opp, aioclient_mock, oppio_client):
+async def test.oppio_discovery_startup(opp, aioclient_mock, oppio_client):
     """Test startup and discovery after event."""
     aioclient_mock.get(
         "http://127.0.0.1/discovery",
@@ -58,7 +58,7 @@ async def test.oppio_discovery_startup.opp, aioclient_mock, oppio_client):
         )
 
 
-async def test.oppio_discovery_startup_done.opp, aioclient_mock, oppio_client):
+async def test.oppio_discovery_startup_done(opp, aioclient_mock, oppio_client):
     """Test startup and discovery with.opp discovery."""
     aioclient_mock.post(
         "http://127.0.0.1/supervisor/options",
@@ -102,7 +102,7 @@ async def test.oppio_discovery_startup_done.opp, aioclient_mock, oppio_client):
         return_value={"type": "abort"},
     ) as mock_mqtt:
         await opp.async_start()
-        await async_setup_component.opp,  opp.o", {})
+        await async_setup_component(opp,  opp.o", {})
         await opp.async_block_till_done()
 
         assert aioclient_mock.call_count == 2
@@ -119,7 +119,7 @@ async def test.oppio_discovery_startup_done.opp, aioclient_mock, oppio_client):
         )
 
 
-async def test.oppio_discovery_webhook.opp, aioclient_mock, oppio_client):
+async def test.oppio_discovery_webhook(opp, aioclient_mock, oppio_client):
     """Test discovery webhook."""
     aioclient_mock.get(
         "http://127.0.0.1/discovery/testuuid",

@@ -34,7 +34,7 @@ DEVICE = Device(CONFIG[DEVICE_ID], CONFIG[DEVICE_GATEWAY], CONFIG[DEVICE_NAME])
 
 async def test_show_form.opp):
     """Test we get the form."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -127,7 +127,7 @@ async def test_already_configured_error(opp):
 
         MockConfigEntry(
             domain=DOMAIN, unique_id=CONFIG[DEVICE_ID], data=CONFIG
-        ).add_to.opp.opp)
+        ).add_to_opp(opp)
 
         result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": config_entries.SOURCE_USER}, data=INPUT_CONFIG

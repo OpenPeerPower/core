@@ -21,16 +21,16 @@ async def test_nightlight(opp: OpenPeerPower):
         await opp.async_block_till_done()
 
     # active_mode
-    assert.opp.states.get(ENTITY_BINARY_SENSOR).state == "off"
+    assert opp.states.get(ENTITY_BINARY_SENSOR).state == "off"
 
     # nl_br
     properties = {**PROPERTIES}
     properties.pop("active_mode")
     mocked_bulb.last_properties = properties
     await entity_component.async_update_entity(opp, ENTITY_BINARY_SENSOR)
-    assert.opp.states.get(ENTITY_BINARY_SENSOR).state == "on"
+    assert opp.states.get(ENTITY_BINARY_SENSOR).state == "on"
 
     # default
     properties.pop("nl_br")
     await entity_component.async_update_entity(opp, ENTITY_BINARY_SENSOR)
-    assert.opp.states.get(ENTITY_BINARY_SENSOR).state == "off"
+    assert opp.states.get(ENTITY_BINARY_SENSOR).state == "off"
