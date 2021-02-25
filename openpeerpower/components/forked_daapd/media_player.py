@@ -91,7 +91,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     )
     remove_entry_listener = config_entry.add_update_listener(update_listener)
 
-    if not.opp.data.get(DOMAIN):
+    if not opp.data.get(DOMAIN):
         opp.data[DOMAIN] = {config_entry.entry_id: {}}
     opp.data[DOMAIN][config_entry.entry_id] = {
         OPP_DATA_REMOVE_LISTENERS_KEY: [

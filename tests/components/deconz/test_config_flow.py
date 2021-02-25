@@ -194,7 +194,7 @@ async def test_manual_configuration_after_discovery_timeout(opp, aioclient_mock)
 
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "manual_input"
-    assert not.opp.config_entries.flow._progress[result["flow_id"]].bridges
+    assert not opp.config_entries.flow._progress[result["flow_id"]].bridges
 
 
 async def test_manual_configuration_after_discovery_Responseerror(opp, aioclient_mock):
@@ -207,7 +207,7 @@ async def test_manual_configuration_after_discovery_Responseerror(opp, aioclient
 
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "manual_input"
-    assert not.opp.config_entries.flow._progress[result["flow_id"]].bridges
+    assert not opp.config_entries.flow._progress[result["flow_id"]].bridges
 
 
 async def test_manual_configuration_update_configuration(opp, aioclient_mock):

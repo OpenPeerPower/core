@@ -68,7 +68,7 @@ ALERT_SERVICE_SCHEMA = vol.Schema({vol.Required(ATTR_ENTITY_ID): cv.entity_ids})
 
 def is_on(opp, entity_id):
     """Return if the alert is firing and not acknowledged."""
-    return.opp.states.is_state(entity_id, STATE_ON)
+    return opp.states.is_state(entity_id, STATE_ON)
 
 
 async def async_setup(opp, config):

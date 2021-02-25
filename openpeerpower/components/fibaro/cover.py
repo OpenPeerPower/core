@@ -15,7 +15,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         return
 
     add_entities(
-        [FibaroCover(device) for device in.opp.data[FIBARO_DEVICES]["cover"]], True
+        [FibaroCover(device) for device in opp.data[FIBARO_DEVICES]["cover"]], True
     )
 
 

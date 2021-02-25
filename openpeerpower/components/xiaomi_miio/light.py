@@ -146,7 +146,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
 
 async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the light from config."""
-    if DATA_KEY not in.opp.data:
+    if DATA_KEY not in opp.data:
         opp.data[DATA_KEY] = {}
 
     host = config[CONF_HOST]
@@ -232,7 +232,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         if entity_ids:
             target_devices = [
                 dev
-                for dev in.opp.data[DATA_KEY].values()
+                for dev in opp.data[DATA_KEY].values()
                 if dev.entity_id in entity_ids
             ]
         else:

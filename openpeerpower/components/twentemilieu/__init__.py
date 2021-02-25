@@ -38,11 +38,11 @@ async def _update_twentemilieu(
             async_dispatcher_send(opp, DATA_UPDATE, unique_id)
     else:
         tasks = []
-        for twentemilieu in.opp.data[DOMAIN].values():
+        for twentemilieu in opp.data[DOMAIN].values():
             tasks.append(twentemilieu.update())
         await asyncio.wait(tasks)
 
-        for uid in.opp.data[DOMAIN]:
+        for uid in opp.data[DOMAIN]:
             async_dispatcher_send(opp, DATA_UPDATE, uid)
 
 

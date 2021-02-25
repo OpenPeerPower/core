@@ -44,7 +44,7 @@ async def test_eufycam_setup_opp):
     assert device.via_device_id is not None
 
     cameras_count = 0
-    for state in.opp.states.async_all():
+    for state in opp.states.async_all():
         if state.entity_id.startswith("camera."):
             cameras_count += 1
 

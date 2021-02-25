@@ -120,7 +120,7 @@ _LOGGER = logging.getLogger(__name__)
 @callback
 def scenes_with_entity(opp: OpenPeerPower, entity_id: str) -> List[str]:
     """Return all scenes that reference the entity."""
-    if DATA_PLATFORM not in.opp.data:
+    if DATA_PLATFORM not in opp.data:
         return []
 
     platform = opp.data[DATA_PLATFORM]
@@ -135,7 +135,7 @@ def scenes_with_entity(opp: OpenPeerPower, entity_id: str) -> List[str]:
 @callback
 def entities_in_scene(opp: OpenPeerPower, entity_id: str) -> List[str]:
     """Return all entities in a scene."""
-    if DATA_PLATFORM not in.opp.data:
+    if DATA_PLATFORM not in opp.data:
         return []
 
     platform = opp.data[DATA_PLATFORM]

@@ -2,8 +2,8 @@
 import asyncio
 import logging
 
-from.opp_nabucasa import Cloud, cloud_api
-from.opp_nabucasa.google_report_state import ErrorResponse
+from opp_nabucasa import Cloud, cloud_api
+from opp_nabucasa.google_report_state import ErrorResponse
 
 from openpeerpower.components.google_assistant.helpers import AbstractConfig
 from openpeerpower.const import (

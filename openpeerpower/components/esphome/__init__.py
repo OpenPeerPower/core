@@ -221,7 +221,7 @@ async def _setup_auto_reconnect_logic(
 
     async def try_connect(tries: int = 0, is_disconnect: bool = True) -> None:
         """Try connecting to the API client. Will retry if not successful."""
-        if entry.entry_id not in.opp.data[DOMAIN]:
+        if entry.entry_id not in opp.data[DOMAIN]:
             # When removing/disconnecting manually
             return
 

@@ -25,7 +25,7 @@ async def owner_access_token(opp, opp_owner_user):
     refresh_token = await opp.auth.async_create_refresh_token(
         opp.owner_user, CLIENT_ID
     )
-    return.opp.auth.async_create_access_token(refresh_token)
+    return opp.auth.async_create_access_token(refresh_token)
 
 
 @pytest.fixture

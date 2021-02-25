@@ -4,9 +4,9 @@ from ipaddress import ip_network
 from unittest.mock import AsyncMock, MagicMock, Mock, patch
 
 import aiohttp
-from.opp_nabucasa import thingtalk, voice
-from.opp_nabucasa.auth import Unauthenticated, UnknownError
-from.opp_nabucasa.const import STATE_CONNECTED
+from opp_nabucasa import thingtalk, voice
+from opp_nabucasa.auth import Unauthenticated, UnknownError
+from opp_nabucasa.const import STATE_CONNECTED
 from jose import jwt
 import pytest
 

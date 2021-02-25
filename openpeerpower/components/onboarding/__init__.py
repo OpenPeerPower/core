@@ -35,7 +35,7 @@ def async_is_onboarded(opp):
 @callback
 def async_is_user_onboarded(opp):
     """Return if a user has been created as part of onboarding."""
-    return async_is_onboarded(opp) or STEP_USER in.opp.data[DOMAIN]["done"]
+    return async_is_onboarded(opp) or STEP_USER in opp.data[DOMAIN]["done"]
 
 
 async def async_setup(opp, config):

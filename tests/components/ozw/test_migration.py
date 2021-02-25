@@ -217,7 +217,7 @@ async def test_migrate_zwave(opp, migration_data, opp_ws_client, zwave_integrati
     assert battery_entry.icon == ZWAVE_BATTERY_ICON
 
     # check that the zwave config entry has been removed
-    assert not.opp.config_entries.async_entries("zwave")
+    assert not opp.config_entries.async_entries("zwave")
 
     # Check that the zwave integration fails entry setup after migration
     zwave_config_entry = MockConfigEntry(domain="zwave")

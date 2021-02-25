@@ -22,7 +22,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     _LOGGER.debug("Setup Tahoma Binary sensor platform")
     controller = opp.data[TAHOMA_DOMAIN]["controller"]
     devices = []
-    for device in.opp.data[TAHOMA_DOMAIN]["devices"]["smoke"]:
+    for device in opp.data[TAHOMA_DOMAIN]["devices"]["smoke"]:
         devices.append(TahomaBinarySensor(device, controller))
     add_entities(devices, True)
 

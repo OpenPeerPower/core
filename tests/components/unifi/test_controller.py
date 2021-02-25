@@ -195,7 +195,7 @@ async def setup_unifi_integration(
         await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
 
-    if config_entry.entry_id not in.opp.data[UNIFI_DOMAIN]:
+    if config_entry.entry_id not in opp.data[UNIFI_DOMAIN]:
         return None
 
     return config_entry

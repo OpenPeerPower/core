@@ -95,13 +95,13 @@ def is_on(opp, entity_id):
 
     Async friendly.
     """
-    return.opp.states.is_state(entity_id, STATE_ON)
+    return opp.states.is_state(entity_id, STATE_ON)
 
 
 @callback
 def automations_with_entity(opp: OpenPeerPower, entity_id: str) -> List[str]:
     """Return all automations that reference the entity."""
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         return []
 
     component = opp.data[DOMAIN]
@@ -116,7 +116,7 @@ def automations_with_entity(opp: OpenPeerPower, entity_id: str) -> List[str]:
 @callback
 def entities_in_automation(opp: OpenPeerPower, entity_id: str) -> List[str]:
     """Return all entities in a scene."""
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         return []
 
     component = opp.data[DOMAIN]
@@ -132,7 +132,7 @@ def entities_in_automation(opp: OpenPeerPower, entity_id: str) -> List[str]:
 @callback
 def automations_with_device(opp: OpenPeerPower, device_id: str) -> List[str]:
     """Return all automations that reference the device."""
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         return []
 
     component = opp.data[DOMAIN]
@@ -147,7 +147,7 @@ def automations_with_device(opp: OpenPeerPower, device_id: str) -> List[str]:
 @callback
 def devices_in_automation(opp: OpenPeerPower, entity_id: str) -> List[str]:
     """Return all devices in a scene."""
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         return []
 
     component = opp.data[DOMAIN]

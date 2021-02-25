@@ -19,7 +19,7 @@ PLATFORMS = ["cover", "fan", "light", "switch"]
 _API_TIMEOUT = SLOW_UPDATE_WARNING - 1
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Bond component."""
     opp.data.setdefault(DOMAIN, {})
     return True
@@ -27,19 +27,19 @@ async def async_setup_opp: OpenPeerPower, config: dict):
 
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Bond from a config entry."""
-    host = entry.data[CONF_HOST]
-    token = entry.data[CONF_ACCESS_TOKEN]
-    config_entry_id = entry.entry_id
+    host=entry.data[CONF_HOST]
+    token=entry.data[CONF_ACCESS_TOKEN]
+    config_entry_id=entry.entry_id
 
-    bond = Bond(host=host, token=token, timeout=ClientTimeout(total=_API_TIMEOUT))
-    hub = BondHub(bond)
+    bond=Bond(host=host, token=token, timeout=ClientTimeout(total=_API_TIMEOUT))
+    hub=BondHub(bond)
     try:
         await hub.setup()
     except (ClientError, AsyncIOTimeoutError, OSError) as error:
         raise ConfigEntryNotReady from error
 
-    bpup_subs = BPUPSubscriptions()
-    stop_bpup = await start_bpup(host, bpup_subs)
+    bpup_subs=BPUPSubscriptions()
+    stop_bpup=await start_bpup(host, bpup_subs)
 
     opp.data[DOMAIN][entry.entry_id] = {
         HUB: hub,

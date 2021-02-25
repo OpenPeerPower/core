@@ -101,7 +101,7 @@ async def test_entry_created(opp, app, app_oauth_client, location, smartthings_m
     assert result["data"][CONF_CLIENT_ID] == app_oauth_client.client_id
     assert result["title"] == location.name
     entry = next(
-        (entry for entry in.opp.config_entries.async_entries(DOMAIN)),
+        (entry for entry in opp.config_entries.async_entries(DOMAIN)),
         None,
     )
     assert entry.unique_id == smartapp.format_unique_id(
@@ -172,7 +172,7 @@ async def test_entry_created_from_update_event(
     assert result["data"][CONF_CLIENT_ID] == app_oauth_client.client_id
     assert result["title"] == location.name
     entry = next(
-        (entry for entry in.opp.config_entries.async_entries(DOMAIN)),
+        (entry for entry in opp.config_entries.async_entries(DOMAIN)),
         None,
     )
     assert entry.unique_id == smartapp.format_unique_id(
@@ -243,7 +243,7 @@ async def test_entry_created_existing_app_new_oauth_client(
     assert result["data"][CONF_CLIENT_ID] == app_oauth_client.client_id
     assert result["title"] == location.name
     entry = next(
-        (entry for entry in.opp.config_entries.async_entries(DOMAIN)),
+        (entry for entry in opp.config_entries.async_entries(DOMAIN)),
         None,
     )
     assert entry.unique_id == smartapp.format_unique_id(
@@ -331,7 +331,7 @@ async def test_entry_created_existing_app_copies_oauth_client(
     entry = next(
         (
             entry
-            for entry in.opp.config_entries.async_entries(DOMAIN)
+            for entry in opp.config_entries.async_entries(DOMAIN)
             if entry.data[CONF_INSTALLED_APP_ID] == installed_app_id
         ),
         None,
@@ -418,7 +418,7 @@ async def test_entry_created_with_cloudhook(
         assert result["data"][CONF_CLIENT_ID] == app_oauth_client.client_id
         assert result["title"] == location.name
         entry = next(
-            (entry for entry in.opp.config_entries.async_entries(DOMAIN)),
+            (entry for entry in opp.config_entries.async_entries(DOMAIN)),
             None,
         )
         assert entry.unique_id == smartapp.format_unique_id(

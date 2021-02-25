@@ -180,7 +180,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         subscriber.stop_async()
         return False
     except GoogleNestException as err:
-        if DATA_NEST_UNAVAILABLE not in.opp.data[DOMAIN]:
+        if DATA_NEST_UNAVAILABLE not in opp.data[DOMAIN]:
             _LOGGER.error("Subscriber error: %s", err)
             opp.data[DOMAIN][DATA_NEST_UNAVAILABLE] = True
         subscriber.stop_async()
@@ -189,7 +189,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     try:
         await subscriber.async_get_device_manager()
     except GoogleNestException as err:
-        if DATA_NEST_UNAVAILABLE not in.opp.data[DOMAIN]:
+        if DATA_NEST_UNAVAILABLE not in opp.data[DOMAIN]:
             _LOGGER.error("Device manager error: %s", err)
             opp.data[DOMAIN][DATA_NEST_UNAVAILABLE] = True
         subscriber.stop_async()

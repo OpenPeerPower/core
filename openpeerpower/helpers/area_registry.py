@@ -194,7 +194,7 @@ def async_get(opp: OpenPeerPowerType) -> AreaRegistry:
 
 async def async_load(opp: OpenPeerPowerType) -> None:
     """Load area registry."""
-    assert DATA_REGISTRY not in.opp.data
+    assert DATA_REGISTRY not in opp.data
     opp.data[DATA_REGISTRY] = AreaRegistry.opp)
     await opp.data[DATA_REGISTRY].async_load()
 

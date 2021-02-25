@@ -38,7 +38,7 @@ def async_dispatcher_connect(
 
     This method must be run in the event loop.
     """
-    if DATA_DISPATCHER not in.opp.data:
+    if DATA_DISPATCHER not in opp.data:
         opp.data[DATA_DISPATCHER] = {}
 
     job = OppJob(

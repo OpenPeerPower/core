@@ -732,7 +732,7 @@ class _QueuedScriptRun(_ScriptRun):
 async def _async_stop_scripts_after_shutdown(opp, point_in_time):
     """Stop running Script objects started after shutdown."""
     running_scripts = [
-        script for script in.opp.data[DATA_SCRIPTS] if script["instance"].is_running
+        script for script in opp.data[DATA_SCRIPTS] if script["instance"].is_running
     ]
     if running_scripts:
         names = ", ".join([script["instance"].name for script in running_scripts])
@@ -753,7 +753,7 @@ async def _async_stop_scripts_at_shutdown(opp, event):
 
     running_scripts = [
         script
-        for script in.opp.data[DATA_SCRIPTS]
+        for script in opp.data[DATA_SCRIPTS]
         if script["instance"].is_running and script["started_before_shutdown"]
     ]
     if running_scripts:
@@ -815,7 +815,7 @@ class Script:
         self._top_level = top_level
         if top_level:
             all_scripts.append(
-                {"instance": self, "started_before_shutdown": not.opp.is_stopping}
+                {"instance": self, "started_before_shutdown": not opp.is_stopping}
             )
 
         self.opp = opp

@@ -120,7 +120,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry, async_add_entities):
     @callback
     def _receive_data(device, latitude, longitude, battery, accuracy, attrs):
         """Receive set location."""
-        if device in.opp.data[DOMAIN]["devices"]:
+        if device in opp.data[DOMAIN]["devices"]:
             return
 
         opp.data[DOMAIN]["devices"].add(device)

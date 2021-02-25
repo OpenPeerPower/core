@@ -37,7 +37,7 @@ def format_mac(mac):
 def import_device(opp, host):
     """Create a config flow for a device."""
     configured_hosts = {
-        entry.data.get(CONF_HOST) for entry in.opp.config_entries.async_entries(DOMAIN)
+        entry.data.get(CONF_HOST) for entry in opp.config_entries.async_entries(DOMAIN)
     }
 
     if host not in configured_hosts:

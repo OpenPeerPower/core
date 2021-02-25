@@ -728,7 +728,7 @@ async def test_power_schemes(opp, mock_openzwave):
     assert opp.states.get("switch.mock_node_mock_value").state == "on"
     assert (
         "power_consumption"
-        not in.opp.states.get("switch.mock_node_mock_value").attributes
+        not in opp.states.get("switch.mock_node_mock_value").attributes
     )
 
     def mock_update(self):

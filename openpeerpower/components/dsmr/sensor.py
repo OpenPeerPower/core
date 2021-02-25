@@ -247,7 +247,7 @@ async def async_setup_entry(
                     await protocol.wait_closed()
 
                     # Unexpected disconnect
-                    if not.opp.is_stopping:
+                    if not opp.is_stopping:
                         stop_listener()
 
                 transport = None

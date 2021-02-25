@@ -31,7 +31,7 @@ async def async_setup_entry(opp, config_entry):
     Load config, group, light and sensor data for server information.
     Start websocket for push notification of state changes from deCONZ.
     """
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         opp.data[DOMAIN] = {}
 
     await async_update_group_unique_id(opp, config_entry)
@@ -59,7 +59,7 @@ async def async_unload_entry(opp, config_entry):
     """Unload deCONZ config entry."""
     gateway = opp.data[DOMAIN].pop(config_entry.unique_id)
 
-    if not.opp.data[DOMAIN]:
+    if not opp.data[DOMAIN]:
         await async_unload_services(opp)
 
     elif gateway.master:

@@ -52,7 +52,7 @@ async def validate_input_owserver(opp: OpenPeerPowerType, data):
 
 def is_duplicate_owserver_entry(opp: OpenPeerPowerType, user_input):
     """Check existing entries for matching host and port."""
-    for config_entry in.opp.config_entries.async_entries(DOMAIN):
+    for config_entry in opp.config_entries.async_entries(DOMAIN):
         if (
             config_entry.data[CONF_TYPE] == CONF_TYPE_OWSERVER
             and config_entry.data[CONF_HOST] == user_input[CONF_HOST]

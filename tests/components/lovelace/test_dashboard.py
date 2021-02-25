@@ -330,7 +330,7 @@ async def test_storage_dashboards(opp, opp_ws_client, opp_storage):
 
     dashboard_id = response["result"]["id"]
 
-    assert "created-url-path" in.opp.data[frontend.DATA_PANELS]
+    assert "created-url-path" in opp.data[frontend.DATA_PANELS]
 
     await client.send_json({"id": 8, "type": "lovelace/dashboards/list"})
     response = await client.receive_json()
@@ -423,7 +423,7 @@ async def test_storage_dashboards(opp, opp_ws_client, opp_storage):
     response = await client.receive_json()
     assert response["success"]
 
-    assert "created-url-path" not in.opp.data[frontend.DATA_PANELS]
+    assert "created-url-path" not in opp.data[frontend.DATA_PANELS]
     assert dashboard.CONFIG_STORAGE_KEY.format(dashboard_id) not in.opp_storage
 
 

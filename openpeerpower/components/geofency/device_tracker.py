@@ -16,7 +16,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     @callback
     def _receive_data(device, gps, location_name, attributes):
         """Fire HA event to set location."""
-        if device in.opp.data[GF_DOMAIN]["devices"]:
+        if device in opp.data[GF_DOMAIN]["devices"]:
             return
 
         opp.data[GF_DOMAIN]["devices"].add(device)

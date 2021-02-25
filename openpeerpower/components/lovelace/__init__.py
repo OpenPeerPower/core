@@ -184,7 +184,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
             _LOGGER.warning("Failed to %s panel %s from storage", change_type, url_path)
 
     # Process YAML dashboards
-    for url_path, dashboard_conf in.opp.data[DOMAIN]["yaml_dashboards"].items():
+    for url_path, dashboard_conf in opp.data[DOMAIN]["yaml_dashboards"].items():
         # For now always mode=yaml
         config = dashboard.LovelaceYAML.opp, url_path, dashboard_conf)
         opp.data[DOMAIN]["dashboards"][url_path] = config

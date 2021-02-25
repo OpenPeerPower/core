@@ -25,7 +25,7 @@ def _perform_registry_callback(opp, pywemo_registry, pywemo_device):
     def async_callback():
         # Cause a state update callback to be triggered by the device.
         pywemo_registry.callbacks[pywemo_device.name](pywemo_device, "", "")
-        return.opp.async_block_till_done()
+        return opp.async_block_till_done()
 
     return async_callback
 
@@ -35,7 +35,7 @@ def _perform_async_update(opp, wemo_entity):
 
     @callback
     def async_callback():
-        return.opp.services.async_call(
+        return opp.services.async_call(
             OP_DOMAIN,
             SERVICE_UPDATE_ENTITY,
             {ATTR_ENTITY_ID: [wemo_entity.entity_id]},

@@ -102,7 +102,7 @@ def setup(opp, config):
         # an entity name rather than a vin.
         vin = service.data[ATTR_VIN]
 
-        if vin in.opp.data[DATA_LEAF]:
+        if vin in opp.data[DATA_LEAF]:
             data_store = opp.data[DATA_LEAF][vin]
             await data_store.async_update_data(utcnow())
         else:
@@ -114,7 +114,7 @@ def setup(opp, config):
         # an entity name rather than a vin.
         vin = service.data[ATTR_VIN]
 
-        if vin in.opp.data[DATA_LEAF]:
+        if vin in opp.data[DATA_LEAF]:
             data_store = opp.data[DATA_LEAF][vin]
 
             # Send the command to request charging is started to Nissan

@@ -15,7 +15,7 @@ async def async_pulse(opp, ihc_controller, ihc_id: int):
 @callback
 def async_set_bool(opp, ihc_controller, ihc_id: int, value: bool):
     """Set a bool value on an IHC controller resource."""
-    return.opp.async_add_executor_job(
+    return opp.async_add_executor_job(
         ihc_controller.set_runtime_value_bool, ihc_id, value
     )
 
@@ -23,6 +23,6 @@ def async_set_bool(opp, ihc_controller, ihc_id: int, value: bool):
 @callback
 def async_set_int(opp, ihc_controller, ihc_id: int, value: int):
     """Set a int value on an IHC controller resource."""
-    return.opp.async_add_executor_job(
+    return opp.async_add_executor_job(
         ihc_controller.set_runtime_value_int, ihc_id, value
     )

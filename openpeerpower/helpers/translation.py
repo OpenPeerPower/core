@@ -303,7 +303,7 @@ async def async_get_translations(
     else:
         # Only 'state' supports merging, so remove platforms from selection
         components = {
-            component for component in.opp.config.components if "." not in component
+            component for component in opp.config.components if "." not in component
         }
 
     async with lock:

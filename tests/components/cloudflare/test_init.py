@@ -24,7 +24,7 @@ async def test_unload_entry(opp, cfupdate):
     await opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_NOT_LOADED
-    assert not.opp.data.get(DOMAIN)
+    assert not opp.data.get(DOMAIN)
 
 
 async def test_async_setup_raises_entry_not_ready(opp, cfupdate):

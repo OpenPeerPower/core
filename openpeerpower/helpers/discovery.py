@@ -88,7 +88,7 @@ async def async_discover(
     opp.config: ConfigType,
 ) -> None:
     """Fire discovery event. Can ensure a component is loaded."""
-    if component is not None and component not in.opp.config.components:
+    if component is not None and component not in opp.config.components:
         await setup.async_setup_component(opp, component, opp_config)
 
     data: Dict[str, Any] = {ATTR_SERVICE: service}
@@ -191,7 +191,7 @@ async def async_load_platform(
 
     setup_success = True
 
-    if component not in.opp.config.components:
+    if component not in opp.config.components:
         setup_success = await setup.async_setup_component(opp, component, opp_config)
 
     # No need to fire event if we could not set up component

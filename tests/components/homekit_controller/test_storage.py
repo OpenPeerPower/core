@@ -23,7 +23,7 @@ async def test_load_from_storage(opp, opp_storage):
     }
 
     await setup_platform.opp)
-    assert hkid in.opp.data[ENTITY_MAP].storage_data
+    assert hkid in opp.data[ENTITY_MAP].storage_data
 
 
 async def test_storage_is_removed(opp, opp_storage):
@@ -39,7 +39,7 @@ async def test_storage_is_removed(opp, opp_storage):
     assert hkid in.opp_storage[ENTITY_MAP]["data"]["pairings"]
 
     entity_map.async_delete_map(hkid)
-    assert hkid not in.opp.data[ENTITY_MAP].storage_data
+    assert hkid not in opp.data[ENTITY_MAP].storage_data
     await flush_store(entity_map.store)
 
     assert opp_storage[ENTITY_MAP]["data"]["pairings"] == {}
@@ -99,8 +99,8 @@ async def test_storage_is_removed_on_config_entry_removal(opp, utcnow):
         system_options={},
     )
 
-    assert hkid in.opp.data[ENTITY_MAP].storage_data
+    assert hkid in opp.data[ENTITY_MAP].storage_data
 
     await async_remove_entry(opp, entry)
 
-    assert hkid not in.opp.data[ENTITY_MAP].storage_data
+    assert hkid not in opp.data[ENTITY_MAP].storage_data

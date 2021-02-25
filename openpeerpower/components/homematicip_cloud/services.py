@@ -215,7 +215,7 @@ async def _async_activate_eco_mode_with_duration(
         if home:
             await home.activate_absence_with_duration(duration)
     else:
-        for hap in.opp.data[HMIPC_DOMAIN].values():
+        for hap in opp.data[HMIPC_DOMAIN].values():
             await hap.home.activate_absence_with_duration(duration)
 
 
@@ -231,7 +231,7 @@ async def _async_activate_eco_mode_with_period(
         if home:
             await home.activate_absence_with_period(endtime)
     else:
-        for hap in.opp.data[HMIPC_DOMAIN].values():
+        for hap in opp.data[HMIPC_DOMAIN].values():
             await hap.home.activate_absence_with_period(endtime)
 
 
@@ -248,7 +248,7 @@ async def _async_activate_vacation(
         if home:
             await home.activate_vacation(endtime, temperature)
     else:
-        for hap in.opp.data[HMIPC_DOMAIN].values():
+        for hap in opp.data[HMIPC_DOMAIN].values():
             await hap.home.activate_vacation(endtime, temperature)
 
 
@@ -263,7 +263,7 @@ async def _async_deactivate_eco_mode(
         if home:
             await home.deactivate_absence()
     else:
-        for hap in.opp.data[HMIPC_DOMAIN].values():
+        for hap in opp.data[HMIPC_DOMAIN].values():
             await hap.home.deactivate_absence()
 
 
@@ -278,7 +278,7 @@ async def _async_deactivate_vacation(
         if home:
             await home.deactivate_vacation()
     else:
-        for hap in.opp.data[HMIPC_DOMAIN].values():
+        for hap in opp.data[HMIPC_DOMAIN].values():
             await hap.home.deactivate_vacation()
 
 
@@ -289,7 +289,7 @@ async def _set_active_climate_profile(
     entity_id_list = service.data[ATTR_ENTITY_ID]
     climate_profile_index = service.data[ATTR_CLIMATE_PROFILE_INDEX] - 1
 
-    for hap in.opp.data[HMIPC_DOMAIN].values():
+    for hap in opp.data[HMIPC_DOMAIN].values():
         if entity_id_list != "all":
             for entity_id in entity_id_list:
                 group = hap.hmip_device_by_entity_id.get(entity_id)
@@ -309,7 +309,7 @@ async def _async_dump_hap_config(
     config_file_prefix = service.data[ATTR_CONFIG_OUTPUT_FILE_PREFIX]
     anonymize = service.data[ATTR_ANONYMIZE]
 
-    for hap in.opp.data[HMIPC_DOMAIN].values():
+    for hap in opp.data[HMIPC_DOMAIN].values():
         hap_sgtin = hap.config_entry.unique_id
 
         if anonymize:
@@ -331,7 +331,7 @@ async def _async_reset_energy_counter(
     """Service to reset the energy counter."""
     entity_id_list = service.data[ATTR_ENTITY_ID]
 
-    for hap in.opp.data[HMIPC_DOMAIN].values():
+    for hap in opp.data[HMIPC_DOMAIN].values():
         if entity_id_list != "all":
             for entity_id in entity_id_list:
                 device = hap.hmip_device_by_entity_id.get(entity_id)

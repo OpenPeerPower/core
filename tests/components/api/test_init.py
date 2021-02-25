@@ -19,7 +19,7 @@ from tests.common import async_mock_service
 def mock_api_client(opp, opp_client):
     """Start the Open Peer Power HTTP component and return admin API client."""
     opp.loop.run_until_complete(async_setup_component(opp, "api", {}))
-    return.opp.loop.run_until_complete.opp_client())
+    return opp.loop.run_until_complete.opp_client())
 
 
 async def test_api_list_state_entities(opp, mock_api_client):

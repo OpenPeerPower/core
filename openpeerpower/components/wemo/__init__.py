@@ -167,7 +167,7 @@ class WemoDispatcher:
                 )
             )
 
-        elif component in.opp.data[DOMAIN]["pending"]:
+        elif component in opp.data[DOMAIN]["pending"]:
             opp.data[DOMAIN]["pending"][component].append(device)
 
         else:

@@ -1021,7 +1021,7 @@ async def test_reload(opp):
     assert opp.states.get("media_player.master_bed_tv").state == "on"
     assert opp.states.get("media_player.master_bed_tv").attributes["source"] == "act2"
     assert (
-        "device_class" not in.opp.states.get("media_player.master_bed_tv").attributes
+        "device_class" not in opp.states.get("media_player.master_bed_tv").attributes
     )
 
 

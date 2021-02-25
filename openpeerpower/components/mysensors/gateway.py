@@ -115,7 +115,7 @@ def get_mysensors_gateway(
     opp: OpenPeerPowerType, gateway_id: GatewayId
 ) -> Optional[BaseAsyncGateway]:
     """Return the Gateway for a given GatewayId."""
-    if MYSENSORS_GATEWAYS not in.opp.data[DOMAIN]:
+    if MYSENSORS_GATEWAYS not in opp.data[DOMAIN]:
         opp.data[DOMAIN][MYSENSORS_GATEWAYS] = {}
     gateways = opp.data[DOMAIN].get(MYSENSORS_GATEWAYS)
     return gateways.get(gateway_id)

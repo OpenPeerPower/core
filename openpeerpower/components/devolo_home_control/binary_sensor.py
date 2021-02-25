@@ -28,7 +28,7 @@ async def async_setup_entry(
     """Get all binary sensor and multi level sensor devices and setup them via config entry."""
     entities = []
 
-    for gateway in.opp.data[DOMAIN][entry.entry_id]["gateways"]:
+    for gateway in opp.data[DOMAIN][entry.entry_id]["gateways"]:
         for device in gateway.binary_sensor_devices:
             for binary_sensor in device.binary_sensor_property:
                 entities.append(

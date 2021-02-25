@@ -243,4 +243,4 @@ async def test_load_unload_entry(opp, client, webhook_id):
 
     assert await traccar.async_unload_entry(opp, entry)
     await opp.async_block_till_done()
-    assert not.opp.data[DATA_DISPATCHER][TRACKER_UPDATE]
+    assert not opp.data[DATA_DISPATCHER][TRACKER_UPDATE]

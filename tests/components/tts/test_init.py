@@ -111,8 +111,8 @@ async def test_setup_component_demo_no_access_cache_folder(opp, mock_init_cache_
     mock_init_cache_dir.side_effect = OSError(2, "No access")
     assert not await async_setup_component(opp, tts.DOMAIN, config)
 
-    assert not.opp.services.has_service(tts.DOMAIN, "demo_say")
-    assert not.opp.services.has_service(tts.DOMAIN, "clear_cache")
+    assert not opp.services.has_service(tts.DOMAIN, "demo_say")
+    assert not opp.services.has_service(tts.DOMAIN, "clear_cache")
 
 
 async def test_setup_component_and_test_service(opp, empty_cache_dir):

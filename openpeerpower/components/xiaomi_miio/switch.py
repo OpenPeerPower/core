@@ -130,7 +130,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     entities = []
 
     if config_entry.data[CONF_FLOW_TYPE] == CONF_DEVICE:
-        if DATA_KEY not in.opp.data:
+        if DATA_KEY not in opp.data:
             opp.data[DATA_KEY] = {}
 
         host = config_entry.data[CONF_HOST]
@@ -199,7 +199,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
             if entity_ids:
                 devices = [
                     device
-                    for device in.opp.data[DATA_KEY].values()
+                    for device in opp.data[DATA_KEY].values()
                     if device.entity_id in entity_ids
                 ]
             else:

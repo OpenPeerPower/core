@@ -51,7 +51,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
 
     opp.http.register_view(RegistrationsView())
 
-    for deleted_id in.opp.data[DOMAIN][DATA_DELETED_IDS]:
+    for deleted_id in opp.data[DOMAIN][DATA_DELETED_IDS]:
         try:
             webhook_register(
                 opp. DOMAIN, "Deleted Webhook", deleted_id, handle_webhook

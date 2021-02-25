@@ -339,7 +339,7 @@ async def _setup_opp, mock_influx_client, config_ext, get_write_api):
     # A call is made to the write API during setup to test the connection.
     # Therefore we reset the write API mock here before the test begins.
     get_write_api(mock_influx_client).reset_mock()
-    return.opp.bus.listen.call_args_list[0][0][1]
+    return opp.bus.listen.call_args_list[0][0][1]
 
 
 @pytest.mark.parametrize(

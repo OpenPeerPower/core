@@ -87,7 +87,7 @@ async def test_monitor_group(opp):
     )
 
     # Test if group setup in our init mode is ok
-    assert test_group.entity_id in.opp.states.async_entity_ids()
+    assert test_group.entity_id in opp.states.async_entity_ids()
 
     group_state = opp.states.get(test_group.entity_id)
     assert STATE_ON == group_state.state
@@ -653,7 +653,7 @@ async def test_group_order_with_dynamic_creation(opp):
     )
     await opp.async_block_till_done()
 
-    assert not.opp.states.get("group.new_group")
+    assert not opp.states.get("group.new_group")
 
     await opp.services.async_call(
         group.DOMAIN,

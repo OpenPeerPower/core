@@ -13,7 +13,7 @@ async def async_setup_entry(opp, entry, async_add_entities):
     @callback
     def _receive_data(device, location, location_name):
         """Receive set location."""
-        if device in.opp.data[LT_DOMAIN]["devices"]:
+        if device in opp.data[LT_DOMAIN]["devices"]:
             return
 
         opp.data[LT_DOMAIN]["devices"].add(device)

@@ -12,7 +12,7 @@ from openpeerpower.components.nest.legacy import local_auth
 def registered_flow.opp):
     """Mock a registered flow."""
     local_auth.initialize.opp, "TEST-CLIENT-ID", "TEST-CLIENT-SECRET")
-    return.opp.data[config_flow.DATA_FLOW_IMPL][const.DOMAIN]
+    return opp.data[config_flow.DATA_FLOW_IMPL][const.DOMAIN]
 
 
 async def test_generate_auth_url(registered_flow):

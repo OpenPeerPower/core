@@ -531,9 +531,9 @@ async def test_entry_is_unloaded(opp):
     mock_unload = await ps4.async_unload_entry(opp, mock_entry)
 
     assert mock_unload is True
-    assert not.opp.data[PS4_DATA].devices
+    assert not opp.data[PS4_DATA].devices
 
     # Test that callback listener for entity is removed from protocol.
-    assert not.opp.data[PS4_DATA].protocol.callbacks
+    assert not opp.data[PS4_DATA].protocol.callbacks
 
     assert opp.states.get(mock_entity_id) is None

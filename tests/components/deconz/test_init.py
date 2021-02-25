@@ -47,14 +47,14 @@ async def test_setup_entry_fails.opp):
     """Test setup entry fails if deCONZ is not available."""
     with patch("pydeconz.DeconzSession.initialize", side_effect=Exception):
         await setup_deconz_integration.opp)
-    assert not.opp.data[DECONZ_DOMAIN]
+    assert not opp.data[DECONZ_DOMAIN]
 
 
 async def test_setup_entry_no_available_bridge.opp):
     """Test setup entry fails if deCONZ is not available."""
     with patch("pydeconz.DeconzSession.initialize", side_effect=asyncio.TimeoutError):
         await setup_deconz_integration.opp)
-    assert not.opp.data[DECONZ_DOMAIN]
+    assert not opp.data[DECONZ_DOMAIN]
 
 
 async def test_setup_entry_successful(opp, aioclient_mock):
@@ -62,7 +62,7 @@ async def test_setup_entry_successful(opp, aioclient_mock):
     config_entry = await setup_deconz_integration(opp, aioclient_mock)
 
     assert opp.data[DECONZ_DOMAIN]
-    assert config_entry.unique_id in.opp.data[DECONZ_DOMAIN]
+    assert config_entry.unique_id in opp.data[DECONZ_DOMAIN]
     assert opp.data[DECONZ_DOMAIN][config_entry.unique_id].master
 
 
@@ -83,7 +83,7 @@ async def test_setup_entry_multiple_gateways(opp, aioclient_mock):
 
     assert len.opp.data[DECONZ_DOMAIN]) == 2
     assert opp.data[DECONZ_DOMAIN][config_entry.unique_id].master
-    assert not.opp.data[DECONZ_DOMAIN][config_entry2.unique_id].master
+    assert not opp.data[DECONZ_DOMAIN][config_entry2.unique_id].master
 
 
 async def test_unload_entry(opp, aioclient_mock):
@@ -92,7 +92,7 @@ async def test_unload_entry(opp, aioclient_mock):
     assert opp.data[DECONZ_DOMAIN]
 
     assert await async_unload_entry(opp, config_entry)
-    assert not.opp.data[DECONZ_DOMAIN]
+    assert not opp.data[DECONZ_DOMAIN]
 
 
 async def test_unload_entry_multiple_gateways(opp, aioclient_mock):

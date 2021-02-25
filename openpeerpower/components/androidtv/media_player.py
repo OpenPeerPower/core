@@ -193,7 +193,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 
     address = f"{config[CONF_HOST]}:{config[CONF_PORT]}"
 
-    if address in.opp.data[ANDROIDTV_DOMAIN]:
+    if address in opp.data[ANDROIDTV_DOMAIN]:
         _LOGGER.warning("Platform already setup on %s, skipping", address)
         return
 
@@ -269,7 +269,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         entity_id = service.data[ATTR_ENTITY_ID]
         target_devices = [
             dev
-            for dev in.opp.data[ANDROIDTV_DOMAIN].values()
+            for dev in opp.data[ANDROIDTV_DOMAIN].values()
             if dev.entity_id in entity_id
         ]
 
@@ -299,7 +299,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async def service_download(service):
         """Download a file from your Android TV / Fire TV device to your Open Peer Power instance."""
         local_path = service.data[ATTR_LOCAL_PATH]
-        if not.opp.config.is_allowed_path(local_path):
+        if not opp.config.is_allowed_path(local_path):
             _LOGGER.warning("'%s' is not secure to load data from!", local_path)
             return
 
@@ -307,7 +307,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         entity_id = service.data[ATTR_ENTITY_ID]
         target_device = [
             dev
-            for dev in.opp.data[ANDROIDTV_DOMAIN].values()
+            for dev in opp.data[ANDROIDTV_DOMAIN].values()
             if dev.entity_id in entity_id
         ][0]
 
@@ -323,7 +323,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async def service_upload(service):
         """Upload a file from your Open Peer Power instance to an Android TV / Fire TV device."""
         local_path = service.data[ATTR_LOCAL_PATH]
-        if not.opp.config.is_allowed_path(local_path):
+        if not opp.config.is_allowed_path(local_path):
             _LOGGER.warning("'%s' is not secure to load data from!", local_path)
             return
 
@@ -331,7 +331,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         entity_id = service.data[ATTR_ENTITY_ID]
         target_devices = [
             dev
-            for dev in.opp.data[ANDROIDTV_DOMAIN].values()
+            for dev in opp.data[ANDROIDTV_DOMAIN].values()
             if dev.entity_id in entity_id
         ]
 

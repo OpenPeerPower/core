@@ -185,7 +185,7 @@ async def webhook_async_remove_entry(
     opp: OpenPeerPowerType, entry: config_entries.ConfigEntry
 ) -> None:
     """Remove a webhook config entry."""
-    if not entry.data.get("cloudhook") or "cloud" not in.opp.config.components:
+    if not entry.data.get("cloudhook") or "cloud" not in opp.config.components:
         return
 
     await opp.components.cloud.async_delete_cloudhook(entry.data["webhook_id"])

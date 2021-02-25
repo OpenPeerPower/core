@@ -11,19 +11,19 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 
     for switch in pywink.get_switches():
         _id = switch.object_id() + switch.name()
-        if _id not in.opp.data[DOMAIN]["unique_ids"]:
+        if _id not in opp.data[DOMAIN]["unique_ids"]:
             add_entities([WinkToggleDevice(switch, opp)])
     for switch in pywink.get_powerstrips():
         _id = switch.object_id() + switch.name()
-        if _id not in.opp.data[DOMAIN]["unique_ids"]:
+        if _id not in opp.data[DOMAIN]["unique_ids"]:
             add_entities([WinkToggleDevice(switch, opp)])
     for sprinkler in pywink.get_sprinklers():
         _id = sprinkler.object_id() + sprinkler.name()
-        if _id not in.opp.data[DOMAIN]["unique_ids"]:
+        if _id not in opp.data[DOMAIN]["unique_ids"]:
             add_entities([WinkToggleDevice(sprinkler, opp)])
     for switch in pywink.get_binary_switch_groups():
         _id = switch.object_id() + switch.name()
-        if _id not in.opp.data[DOMAIN]["unique_ids"]:
+        if _id not in opp.data[DOMAIN]["unique_ids"]:
             add_entities([WinkToggleDevice(switch, opp)])
 
 

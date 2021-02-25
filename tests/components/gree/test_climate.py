@@ -120,7 +120,7 @@ async def test_discovery_setup_connection_error(opp, discovery, device):
     await opp.async_block_till_done()
     assert discovery.call_count == 1
 
-    assert not.opp.states.async_all(DOMAIN)
+    assert not opp.states.async_all(DOMAIN)
 
 
 async def test_update_connection_failure(opp, discovery, device, mock_now):

@@ -35,7 +35,7 @@ CONFIG_SCHEMA = vol.All(AUTH_PROVIDER_SCHEMA, _disallow_id)
 @callback
 def async_get_provider(opp: OpenPeerPower) -> OppAuthProvider:
     """Get the provider."""
-    for prv in.opp.auth.auth_providers:
+    for prv in opp.auth.auth_providers:
         if prv.type == "openpeerpower":
             return cast( OppAuthProvider, prv)
 

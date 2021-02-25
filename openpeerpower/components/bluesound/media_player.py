@@ -106,7 +106,7 @@ SERVICE_TO_METHOD = {
 
 def _add_player(opp, async_add_entities, host, port=None, name=None):
     """Add Bluesound players."""
-    if host in [x.host for x in.opp.data[DATA_BLUESOUND]]:
+    if host in [x.host for x in opp.data[DATA_BLUESOUND]]:
         return
 
     @callback
@@ -148,7 +148,7 @@ def _add_player(opp, async_add_entities, host, port=None, name=None):
 
 async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Bluesound platforms."""
-    if DATA_BLUESOUND not in.opp.data:
+    if DATA_BLUESOUND not in opp.data:
         opp.data[DATA_BLUESOUND] = []
 
     if discovery_info:
@@ -184,7 +184,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         if entity_ids:
             target_players = [
                 player
-                for player in.opp.data[DATA_BLUESOUND]
+                for player in opp.data[DATA_BLUESOUND]
                 if player.entity_id in entity_ids
             ]
         else:

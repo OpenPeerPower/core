@@ -273,7 +273,7 @@ class DumpView(OpenPeerPowerView):
         """Dump the state of Z-Wave."""
        opp = request.app[.opp"]
 
-        if config_entry_id not in.opp.data[DOMAIN]:
+        if config_entry_id not in opp.data[DOMAIN]:
             raise web_exceptions.HTTPBadRequest
 
         entry = opp.config_entries.async_get_entry(config_entry_id)

@@ -47,14 +47,14 @@ async def test_platform_manually_configured.opp):
         is True
     )
 
-    assert AXIS_DOMAIN not in.opp.data
+    assert AXIS_DOMAIN not in opp.data
 
 
 async def test_no_binary_sensors.opp):
     """Test that no sensors in Axis results in no sensor entities."""
     await setup_axis_integration.opp)
 
-    assert not.opp.states.async_entity_ids(BINARY_SENSOR_DOMAIN)
+    assert not opp.states.async_entity_ids(BINARY_SENSOR_DOMAIN)
 
 
 async def test_binary_sensors.opp):

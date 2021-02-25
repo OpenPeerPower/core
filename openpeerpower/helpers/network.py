@@ -210,7 +210,7 @@ def _get_external_url(
 @bind.opp
 def _get_cloud_url(opp: OpenPeerPower, require_current_request: bool = False) -> str:
     """Get external Open Peer Power Cloud URL of this instance."""
-    if "cloud" in.opp.config.components:
+    if "cloud" in opp.config.components:
         try:
             cloud_url = yarl.URL(cast(str, opp.components.cloud.async_remote_ui_url()))
         except.opp.components.cloud.CloudNotAvailable as err:

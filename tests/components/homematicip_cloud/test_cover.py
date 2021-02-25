@@ -18,7 +18,7 @@ async def test_manually_configured_platform.opp):
     assert await async_setup_component(
         opp. COVER_DOMAIN, {COVER_DOMAIN: {"platform": HMIPC_DOMAIN}}
     )
-    assert not.opp.data.get(HMIPC_DOMAIN)
+    assert not opp.data.get(HMIPC_DOMAIN)
 
 
 async def test_hmip_cover_shutter(opp, default_mock_hap_factory):

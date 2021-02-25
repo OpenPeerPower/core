@@ -74,7 +74,7 @@ async def test_async_setup_entry_sets_up_hub_and_supported_domains.opp: OpenPeer
         assert result is True
         await opp.async_block_till_done()
 
-    assert config_entry.entry_id in.opp.data[DOMAIN]
+    assert config_entry.entry_id in opp.data[DOMAIN]
     assert config_entry.state == ENTRY_STATE_LOADED
     assert config_entry.unique_id == "test-bond-id"
 
@@ -114,7 +114,7 @@ async def test_unload_config_entry.opp: OpenPeerPower):
     await opp.config_entries.async_unload(config_entry.entry_id)
     await opp.async_block_till_done()
 
-    assert config_entry.entry_id not in.opp.data[DOMAIN]
+    assert config_entry.entry_id not in opp.data[DOMAIN]
     assert config_entry.state == ENTRY_STATE_NOT_LOADED
 
 
@@ -158,7 +158,7 @@ async def test_old_identifiers_are_removed.opp: OpenPeerPower):
         assert await opp.config_entries.async_setup(config_entry.entry_id) is True
         await opp.async_block_till_done()
 
-    assert config_entry.entry_id in.opp.data[DOMAIN]
+    assert config_entry.entry_id in opp.data[DOMAIN]
     assert config_entry.state == ENTRY_STATE_LOADED
     assert config_entry.unique_id == "test-bond-id"
 
@@ -200,7 +200,7 @@ async def test_smart_by_bond_device_suggested_area.opp: OpenPeerPower):
         assert await opp.config_entries.async_setup(config_entry.entry_id) is True
         await opp.async_block_till_done()
 
-    assert config_entry.entry_id in.opp.data[DOMAIN]
+    assert config_entry.entry_id in opp.data[DOMAIN]
     assert config_entry.state == ENTRY_STATE_LOADED
     assert config_entry.unique_id == "test-bond-id"
 
@@ -246,7 +246,7 @@ async def test_bridge_device_suggested_area.opp: OpenPeerPower):
         assert await opp.config_entries.async_setup(config_entry.entry_id) is True
         await opp.async_block_till_done()
 
-    assert config_entry.entry_id in.opp.data[DOMAIN]
+    assert config_entry.entry_id in opp.data[DOMAIN]
     assert config_entry.state == ENTRY_STATE_LOADED
     assert config_entry.unique_id == "test-bond-id"
 

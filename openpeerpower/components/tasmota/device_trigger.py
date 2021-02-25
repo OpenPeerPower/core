@@ -168,7 +168,7 @@ async def async_setup_trigger(opp, tasmota_trigger, config_entry, discovery_hash
         if not trigger_config.is_active:
             # Empty trigger_config: Remove trigger
             _LOGGER.debug("Removing trigger: %s", discovery_hash)
-            if discovery_id in.opp.data[DEVICE_TRIGGERS]:
+            if discovery_id in opp.data[DEVICE_TRIGGERS]:
                 device_trigger = opp.data[DEVICE_TRIGGERS][discovery_id]
                 await device_trigger.tasmota_trigger.unsubscribe_topics()
                 device_trigger.detach_trigger()
@@ -204,9 +204,9 @@ async def async_setup_trigger(opp, tasmota_trigger, config_entry, discovery_hash
     if device is None:
         return
 
-    if DEVICE_TRIGGERS not in.opp.data:
+    if DEVICE_TRIGGERS not in opp.data:
         opp.data[DEVICE_TRIGGERS] = {}
-    if discovery_id not in.opp.data[DEVICE_TRIGGERS]:
+    if discovery_id not in opp.data[DEVICE_TRIGGERS]:
         device_trigger = Trigger(
             opp.opp,
             device_id=device.id,
@@ -242,10 +242,10 @@ async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device triggers for a Tasmota device."""
     triggers = []
 
-    if DEVICE_TRIGGERS not in.opp.data:
+    if DEVICE_TRIGGERS not in opp.data:
         return triggers
 
-    for discovery_id, trig in.opp.data[DEVICE_TRIGGERS].items():
+    for discovery_id, trig in opp.data[DEVICE_TRIGGERS].items():
         if trig.device_id != device_id or trig.tasmota_trigger is None:
             continue
 
@@ -269,13 +269,13 @@ async def async_attach_trigger(
     automation_info: dict,
 ) -> CALLBACK_TYPE:
     """Attach a device trigger."""
-    if DEVICE_TRIGGERS not in.opp.data:
+    if DEVICE_TRIGGERS not in opp.data:
         opp.data[DEVICE_TRIGGERS] = {}
     config = TRIGGER_SCHEMA(config)
     device_id = config[CONF_DEVICE_ID]
     discovery_id = config[CONF_DISCOVERY_ID]
 
-    if discovery_id not in.opp.data[DEVICE_TRIGGERS]:
+    if discovery_id not in opp.data[DEVICE_TRIGGERS]:
         # The trigger has not (yet) been discovered, prepare it for later
         opp.data[DEVICE_TRIGGERS][discovery_id] = Trigger(
             opp.opp,

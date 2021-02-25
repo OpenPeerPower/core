@@ -78,9 +78,9 @@ def setup(opp, config):
         """Set the ZoneMinder run state to the given state name."""
         zm_id = call.data[ATTR_ID]
         state_name = call.data[ATTR_NAME]
-        if zm_id not in.opp.data[DOMAIN]:
+        if zm_id not in opp.data[DOMAIN]:
             _LOGGER.error("Invalid ZoneMinder host provided: %s", zm_id)
-        if not.opp.data[DOMAIN][zm_id].set_active_state(state_name):
+        if not opp.data[DOMAIN][zm_id].set_active_state(state_name):
             _LOGGER.error(
                 "Unable to change ZoneMinder state. Host: %s, state: %s",
                 zm_id,

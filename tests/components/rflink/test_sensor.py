@@ -88,7 +88,7 @@ async def test_disable_automatic_add(opp, monkeypatch):
     await opp.async_block_till_done()
 
     # make sure new device is not added
-    assert not.opp.states.get("sensor.test2")
+    assert not opp.states.get("sensor.test2")
 
 
 async def test_entity_availability(opp, monkeypatch):
@@ -181,9 +181,9 @@ async def test_race_condition(opp, monkeypatch):
     event_callback({"id": "test3", "sensor": "battery", "value": "ko", "unit": ""})
 
     # tmp_entity added to EVENT_KEY_SENSOR
-    assert tmp_entity in.opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_SENSOR]["test3"]
+    assert tmp_entity in opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_SENSOR]["test3"]
     # tmp_entity must no be added to EVENT_KEY_COMMAND
-    assert tmp_entity not in.opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_COMMAND]["test3"]
+    assert tmp_entity not in opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_COMMAND]["test3"]
 
     await opp.async_block_till_done()
 
@@ -199,7 +199,7 @@ async def test_race_condition(opp, monkeypatch):
     event_callback({"id": "test3", "sensor": "battery", "value": "ko", "unit": ""})
     await opp.async_block_till_done()
     # tmp_entity must be deleted from EVENT_KEY_COMMAND
-    assert tmp_entity not in.opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_SENSOR]["test3"]
+    assert tmp_entity not in opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_SENSOR]["test3"]
 
     # test  state of new sensor
     new_sensor = opp.states.get(f"{DOMAIN}.test3")

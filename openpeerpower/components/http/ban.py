@@ -127,7 +127,7 @@ async def process_wrong_login(request):
 
     # Supervisor IP should never be banned
     if (
-         opp.o" in.opp.config.components
+         opp.o" in opp.config.components
         and.opp.components.oppio.get_supervisor_ip() == str(remote_addr)
     ):
         return

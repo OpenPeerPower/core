@@ -30,13 +30,13 @@ def get_astral_location(opp: OpenPeerPowerType) -> astral.Location:
     info = ("", "", latitude, longitude, timezone, elevation)
 
     # Cache astral locations so they aren't recreated with the same args
-    if DATA_LOCATION_CACHE not in.opp.data:
+    if DATA_LOCATION_CACHE not in opp.data:
         opp.data[DATA_LOCATION_CACHE] = {}
 
-    if info not in.opp.data[DATA_LOCATION_CACHE]:
+    if info not in opp.data[DATA_LOCATION_CACHE]:
         opp.data[DATA_LOCATION_CACHE][info] = Location(info)
 
-    return.opp.data[DATA_LOCATION_CACHE][info]
+    return opp.data[DATA_LOCATION_CACHE][info]
 
 
 @callback

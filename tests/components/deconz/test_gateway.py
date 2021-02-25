@@ -161,7 +161,7 @@ async def test_gateway_retry.opp):
         side_effect=CannotConnect,
     ):
         await setup_deconz_integration.opp)
-    assert not.opp.data[DECONZ_DOMAIN]
+    assert not opp.data[DECONZ_DOMAIN]
 
 
 async def test_gateway_setup_fails.opp):
@@ -170,7 +170,7 @@ async def test_gateway_setup_fails.opp):
         "openpeerpower.components.deconz.gateway.get_gateway", side_effect=Exception
     ):
         await setup_deconz_integration.opp)
-    assert not.opp.data[DECONZ_DOMAIN]
+    assert not opp.data[DECONZ_DOMAIN]
 
 
 async def test_connection_status_signalling(opp, aioclient_mock):

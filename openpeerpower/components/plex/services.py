@@ -31,7 +31,7 @@ async def async_setup_services(opp):
 
     async def async_scan_clients_service(_):
         _LOGGER.debug("Scanning for new Plex clients")
-        for server_id in.opp.data[DOMAIN][SERVERS]:
+        for server_id in opp.data[DOMAIN][SERVERS]:
             async_dispatcher_send(opp, PLEX_UPDATE_PLATFORMS_SIGNAL.format(server_id))
 
     opp.services.async_register(
@@ -70,7 +70,7 @@ def refresh_library(opp, service_call):
 
 def get_plex_server(opp, plex_server_name=None):
     """Retrieve a configured Plex server by name."""
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         raise OpenPeerPowerError("Plex integration not configured")
     plex_servers = opp.data[DOMAIN][SERVERS].values()
     if not plex_servers:

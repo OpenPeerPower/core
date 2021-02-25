@@ -28,7 +28,7 @@ TASMOTA_DISCOVERY_INSTANCE = "tasmota_discovery_instance"
 
 def clear_discovery_hash(opp, discovery_hash):
     """Clear entry in ALREADY_DISCOVERED list."""
-    if ALREADY_DISCOVERED not in.opp.data:
+    if ALREADY_DISCOVERED not in opp.data:
         # Discovery is shutting down
         return
     del.opp.data[ALREADY_DISCOVERED][discovery_hash]
@@ -56,7 +56,7 @@ async def async_start(
                 entity_registry.async_remove(entity_id)
             return
 
-        if discovery_hash in.opp.data[ALREADY_DISCOVERED]:
+        if discovery_hash in opp.data[ALREADY_DISCOVERED]:
             _LOGGER.debug(
                 "Entity already added, sending update: %s %s",
                 platform,
@@ -88,7 +88,7 @@ async def async_start(
     async def async_device_discovered(payload, mac):
         """Process the received message."""
 
-        if ALREADY_DISCOVERED not in.opp.data:
+        if ALREADY_DISCOVERED not in opp.data:
             # Discovery is shutting down
             return
 
@@ -102,7 +102,7 @@ async def async_start(
         tasmota_triggers = tasmota_get_triggers(payload)
         for trigger_config in tasmota_triggers:
             discovery_hash = (mac, "automation", "trigger", trigger_config.trigger_id)
-            if discovery_hash in.opp.data[ALREADY_DISCOVERED]:
+            if discovery_hash in opp.data[ALREADY_DISCOVERED]:
                 _LOGGER.debug(
                     "Trigger already added, sending update: %s",
                     discovery_hash,

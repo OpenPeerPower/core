@@ -48,7 +48,7 @@ def push_registrations(opp):
     """Return a dictionary of push enabled registrations."""
     targets = {}
 
-    for webhook_id, entry in.opp.data[DOMAIN][DATA_CONFIG_ENTRIES].items():
+    for webhook_id, entry in opp.data[DOMAIN][DATA_CONFIG_ENTRIES].items():
         if not supports_push(opp, webhook_id):
             continue
 

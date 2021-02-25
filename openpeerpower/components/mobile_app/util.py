@@ -20,10 +20,10 @@ if TYPE_CHECKING:
 @callback
 def webhook_id_from_device_id(opp, device_id: str) -> Optional[str]:
     """Get webhook ID from device ID."""
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         return None
 
-    for cur_webhook_id, cur_device in.opp.data[DOMAIN][DATA_DEVICES].items():
+    for cur_webhook_id, cur_device in opp.data[DOMAIN][DATA_DEVICES].items():
         if cur_device.id == device_id:
             return cur_webhook_id
 

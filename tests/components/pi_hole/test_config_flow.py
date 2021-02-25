@@ -25,7 +25,7 @@ from . import (
 def _flow_next(opp, flow_id):
     return next(
         flow
-        for flow in.opp.config_entries.flow.async_progress()
+        for flow in opp.config_entries.flow.async_progress()
         if flow["flow_id"] == flow_id
     )
 

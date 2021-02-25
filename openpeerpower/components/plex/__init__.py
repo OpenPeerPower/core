@@ -248,5 +248,5 @@ async def async_options_updated(opp, entry):
     server_id = entry.data[CONF_SERVER_IDENTIFIER]
 
     # Guard incomplete setup during reauth flows
-    if server_id in.opp.data[PLEX_DOMAIN][SERVERS]:
+    if server_id in opp.data[PLEX_DOMAIN][SERVERS]:
         opp.data[PLEX_DOMAIN][SERVERS][server_id].options = entry.options

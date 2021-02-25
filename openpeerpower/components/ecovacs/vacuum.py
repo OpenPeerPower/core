@@ -42,7 +42,7 @@ ATTR_COMPONENT_PREFIX = "component_"
 def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Ecovacs vacuums."""
     vacuums = []
-    for device in.opp.data[ECOVACS_DEVICES]:
+    for device in opp.data[ECOVACS_DEVICES]:
         vacuums.append(EcovacsVacuum(device))
     _LOGGER.debug("Adding Ecovacs Vacuums to Open Peer Power: %s", vacuums)
     add_entities(vacuums, True)

@@ -42,7 +42,7 @@ async def async_setup(opp, config):
     if DOMAIN not in config:
         return True
 
-    if not.opp.config_entries.async_entries(DOMAIN):
+    if not opp.config_entries.async_entries(DOMAIN):
         opp.async_create_task(
             opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data={}
@@ -59,10 +59,10 @@ async def async_setup(opp, config):
     config.setdefault(DOMAIN, {})
 
     # Set up sun
-    if not.opp.config.latitude:
+    if not opp.config.latitude:
         opp.config.latitude = 32.87336
 
-    if not.opp.config.longitude:
+    if not opp.config.longitude:
         opp.config.longitude = 117.22743
 
     tasks = [bootstrap.async_setup_component(opp, "sun", config)]
@@ -136,7 +136,7 @@ async def async_setup(opp, config):
 
     async def demo_start_listener(_event):
         """Finish set up."""
-        await finish_setup_opp, config)
+        await finish_setup(opp, config)
 
     opp.bus.async_listen(EVENT_OPENPEERPOWER_START, demo_start_listener)
 
@@ -153,7 +153,7 @@ async def async_setup_entry(opp, config_entry):
     return True
 
 
-async def finish_setup_opp, config):
+async def finish_setup(opp, config):
     """Finish set up once demo platforms are set up."""
     switches = None
     lights = None

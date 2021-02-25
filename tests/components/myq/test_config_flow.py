@@ -95,7 +95,7 @@ async def test_form_homekit(opp):
     assert result["errors"] == {}
     flow = next(
         flow
-        for flow in.opp.config_entries.flow.async_progress()
+        for flow in opp.config_entries.flow.async_progress()
         if flow["flow_id"] == result["flow_id"]
     )
     assert flow["context"]["unique_id"] == "AA:BB:CC:DD:EE:FF"

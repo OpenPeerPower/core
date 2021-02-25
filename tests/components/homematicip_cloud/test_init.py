@@ -38,7 +38,7 @@ async def test_config_with_accesspoint_passed_to_config_entry(
     # no config_entry exists
     assert len.opp.config_entries.async_entries(HMIPC_DOMAIN)) == 0
     # no acccesspoint exists
-    assert not.opp.data.get(HMIPC_DOMAIN)
+    assert not opp.data.get(HMIPC_DOMAIN)
 
     with patch(
         "openpeerpower.components.homematicip_cloud.hap.HomematicipHAP.async_connect",
@@ -204,7 +204,7 @@ async def test_setup_services_and_unload_services.opp):
 
     await opp.config_entries.async_unload(config_entries[0].entry_id)
     # Check services are removed
-    assert not.opp.services.async_services().get(HMIPC_DOMAIN)
+    assert not opp.services.async_services().get(HMIPC_DOMAIN)
 
 
 async def test_setup_two_haps_unload_one_by_one.opp):
@@ -245,4 +245,4 @@ async def test_setup_two_haps_unload_one_by_one.opp):
     await opp.config_entries.async_unload(config_entries[1].entry_id)
 
     # Check services are removed
-    assert not.opp.services.async_services().get(HMIPC_DOMAIN)
+    assert not opp.services.async_services().get(HMIPC_DOMAIN)

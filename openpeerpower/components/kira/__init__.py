@@ -136,7 +136,7 @@ def setup(opp, config):
 
     def _stop_kira(_event):
         """Stop the KIRA receiver."""
-        for receiver in.opp.data[DOMAIN][CONF_SENSOR].values():
+        for receiver in opp.data[DOMAIN][CONF_SENSOR].values():
             receiver.stop()
         _LOGGER.info("Terminated receivers")
 

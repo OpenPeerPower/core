@@ -34,7 +34,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up discovered switches."""
     devs = []
-    for dev in.opp.data[AQUALINK_DOMAIN][DOMAIN]:
+    for dev in opp.data[AQUALINK_DOMAIN][DOMAIN]:
         devs.append( OppAqualinkThermostat(dev))
     async_add_entities(devs, True)
 

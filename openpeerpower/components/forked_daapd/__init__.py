@@ -24,11 +24,11 @@ async def async_unload_entry(opp, entry):
         opp.data[DOMAIN][entry.entry_id][
             OPP_DATA_UPDATER_KEY
         ].websocket_handler.cancel()
-        for remove_listener in.opp.data[DOMAIN][entry.entry_id][
+        for remove_listener in opp.data[DOMAIN][entry.entry_id][
             OPP_DATA_REMOVE_LISTENERS_KEY
         ]:
             remove_listener()
         del.opp.data[DOMAIN][entry.entry_id]
-        if not.opp.data[DOMAIN]:
+        if not opp.data[DOMAIN]:
             del.opp.data[DOMAIN]
     return status

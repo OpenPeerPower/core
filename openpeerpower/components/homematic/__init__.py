@@ -423,13 +423,13 @@ def _system_callback_handler(opp, config, src, *args):
         interface = interface_id.split("-")[-1]
 
         # Device support active?
-        if not.opp.data[DATA_CONF][interface]["connect"]:
+        if not opp.data[DATA_CONF][interface]["connect"]:
             return
 
         addresses = []
         for dev in dev_descriptions:
             address = dev["ADDRESS"].split(":")[0]
-            if address not in.opp.data[DATA_STORE]:
+            if address not in opp.data[DATA_STORE]:
                 opp.data[DATA_STORE].add(address)
                 addresses.append(address)
 
@@ -613,8 +613,8 @@ def _device_from_servicecall(opp, service):
         address = "BidCoS-RF"
 
     if interface:
-        return.opp.data[DATA_HOMEMATIC].devices[interface].get(address)
+        return opp.data[DATA_HOMEMATIC].devices[interface].get(address)
 
-    for devices in.opp.data[DATA_HOMEMATIC].devices.values():
+    for devices in opp.data[DATA_HOMEMATIC].devices.values():
         if address in devices:
             return devices[address]

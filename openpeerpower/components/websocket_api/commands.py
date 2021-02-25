@@ -184,7 +184,7 @@ def handle_get_states(opp, connection, msg):
         entity_perm = connection.user.permissions.check_entity
         states = [
             state
-            for state in.opp.states.async_all()
+            for state in opp.states.async_all()
             if entity_perm(state.entity_id, "read")
         ]
 
@@ -213,7 +213,7 @@ async def handle_manifest_list(opp, connection, msg):
     integrations = await asyncio.gather(
         *[
             async_get_integration(opp, domain)
-            for domain in.opp.config.components
+            for domain in opp.config.components
             # Filter out platforms.
             if "." not in domain
         ]

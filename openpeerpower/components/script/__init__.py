@@ -85,13 +85,13 @@ RELOAD_SERVICE_SCHEMA = vol.Schema({})
 @bind.opp
 def is_on(opp, entity_id):
     """Return if the script is on based on the statemachine."""
-    return.opp.states.is_state(entity_id, STATE_ON)
+    return opp.states.is_state(entity_id, STATE_ON)
 
 
 @callback
 def scripts_with_entity(opp: OpenPeerPower, entity_id: str) -> List[str]:
     """Return all scripts that reference the entity."""
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         return []
 
     component = opp.data[DOMAIN]
@@ -106,7 +106,7 @@ def scripts_with_entity(opp: OpenPeerPower, entity_id: str) -> List[str]:
 @callback
 def entities_in_script(opp: OpenPeerPower, entity_id: str) -> List[str]:
     """Return all entities in script."""
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         return []
 
     component = opp.data[DOMAIN]
@@ -122,7 +122,7 @@ def entities_in_script(opp: OpenPeerPower, entity_id: str) -> List[str]:
 @callback
 def scripts_with_device(opp: OpenPeerPower, device_id: str) -> List[str]:
     """Return all scripts that reference the device."""
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         return []
 
     component = opp.data[DOMAIN]
@@ -137,7 +137,7 @@ def scripts_with_device(opp: OpenPeerPower, device_id: str) -> List[str]:
 @callback
 def devices_in_script(opp: OpenPeerPower, entity_id: str) -> List[str]:
     """Return all devices in script."""
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         return []
 
     component = opp.data[DOMAIN]

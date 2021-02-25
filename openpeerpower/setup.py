@@ -48,7 +48,7 @@ async def async_setup_component(
 
     This method is a coroutine.
     """
-    if domain in.opp.config.components:
+    if domain in opp.config.components:
         return True
 
     setup_tasks = opp.data.setdefault(DATA_SETUP, {})
@@ -63,7 +63,7 @@ async def async_setup_component(
     try:
         return await task  # type: ignore
     finally:
-        if domain in.opp.data.get(DATA_SETUP_DONE, {}):
+        if domain in opp.data.get(DATA_SETUP_DONE, {}):
             opp.data[DATA_SETUP_DONE].pop(domain).set()
 
 
@@ -74,7 +74,7 @@ async def _async_process_dependencies(
     dependencies_tasks = {
         dep:.opp.loop.create_task(async_setup_component(opp, dep, config))
         for dep in integration.dependencies
-        if dep not in.opp.config.components
+        if dep not in opp.config.components
     }
 
     after_dependencies_tasks = {}
@@ -83,7 +83,7 @@ async def _async_process_dependencies(
         if (
             dep not in dependencies_tasks
             and dep in to_be_loaded
-            and dep not in.opp.config.components
+            and dep not in opp.config.components
         ):
             after_dependencies_tasks[dep] = opp.loop.create_task(
                 to_be_loaded[dep].wait()
@@ -250,7 +250,7 @@ async def _async_setup_component(
     await asyncio.gather(
         *[
             entry.async_setup_opp, integration=integration)
-            for entry in.opp.config_entries.async_entries(domain)
+            for entry in opp.config_entries.async_entries(domain)
         ]
     )
 
@@ -258,7 +258,7 @@ async def _async_setup_component(
     opp.data[DATA_SETUP_STARTED].pop(domain)
 
     # Cleanup
-    if domain in.opp.data[DATA_SETUP]:
+    if domain in opp.data[DATA_SETUP]:
         opp.data[DATA_SETUP].pop(domain)
 
     opp.bus.async_fire(EVENT_COMPONENT_LOADED, {ATTR_COMPONENT: domain})
@@ -301,12 +301,12 @@ async def async_prepare_setup_platform(
         return None
 
     # Already loaded
-    if platform_path in.opp.config.components:
+    if platform_path in opp.config.components:
         return platform
 
     # Platforms cannot exist on their own, they are part of their integration.
     # If the integration is not set up yet, and can be set up, set it up.
-    if integration.domain not in.opp.config.components:
+    if integration.domain not in opp.config.components:
         try:
             component = integration.get_component()
         except ImportError as exc:
@@ -338,7 +338,7 @@ async def async_process_deps_reqs(
     if not await _async_process_dependencies(opp, config, integration):
         raise OpenPeerPowerError("Could not set up all dependencies.")
 
-    if not.opp.config.skip_pip and integration.requirements:
+    if not opp.config.skip_pip and integration.requirements:
         async with.opp.timeout.async_freeze(integration.domain):
             await requirements.async_get_integration_with_requirements(
                 opp. integration.domain
@@ -363,7 +363,7 @@ def async_when_setup(
             _LOGGER.exception("Error handling when_setup callback for %s", component)
 
     # Running it in a new task so that it always runs after
-    if component in.opp.config.components:
+    if component in opp.config.components:
         opp.async_create_task(when_setup())
         return
 

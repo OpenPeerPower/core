@@ -148,7 +148,7 @@ async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
             opp.config_entries.async_forward_entry_setup(config_entry, component)
         )
 
-    if not.opp.services.has_service(DOMAIN, SERVICE_API_CALL):
+    if not opp.services.has_service(DOMAIN, SERVICE_API_CALL):
         opp.services.async_register(
             DOMAIN, SERVICE_API_CALL, handle_api_call, schema=SERVICE_API_CALL_SCHEMA
         )

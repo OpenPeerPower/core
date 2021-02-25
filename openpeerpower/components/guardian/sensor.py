@@ -94,7 +94,7 @@ async def async_setup_entry(
         )
 
     # Add all paired sensor-specific binary sensors:
-    for coordinator in.opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
+    for coordinator in opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][
         API_SENSOR_PAIRED_SENSOR_STATUS
     ].values():
         for kind in PAIRED_SENSOR_SENSORS:

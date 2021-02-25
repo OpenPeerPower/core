@@ -184,7 +184,7 @@ KODI_CALL_METHOD_SCHEMA = cv.make_entity_service_schema(
 
 def find_matching_config_entries_for_host(opp, host):
     """Search existing config entries for one matching the host."""
-    for entry in.opp.config_entries.async_entries(DOMAIN):
+    for entry in opp.config_entries.async_entries(DOMAIN):
         if entry.data[CONF_HOST] == host:
             return entry
     return None

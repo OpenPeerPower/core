@@ -554,7 +554,7 @@ SERVICE_TO_METHOD = {
 
 async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the miio fan device from config."""
-    if DATA_KEY not in.opp.data:
+    if DATA_KEY not in opp.data:
         opp.data[DATA_KEY] = {}
 
     host = config[CONF_HOST]
@@ -617,7 +617,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         if entity_ids:
             devices = [
                 device
-                for device in.opp.data[DATA_KEY].values()
+                for device in opp.data[DATA_KEY].values()
                 if device.entity_id in entity_ids
             ]
         else:

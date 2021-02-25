@@ -19,7 +19,7 @@ async def async_setup_entry(
     """Get all cover devices and setup them via config entry."""
     entities = []
 
-    for gateway in.opp.data[DOMAIN][entry.entry_id]["gateways"]:
+    for gateway in opp.data[DOMAIN][entry.entry_id]["gateways"]:
         for device in gateway.multi_level_switch_devices:
             for multi_level_switch in device.multi_level_switch_property:
                 if multi_level_switch.startswith("devolo.Blinds"):

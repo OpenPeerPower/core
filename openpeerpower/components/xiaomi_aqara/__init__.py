@@ -383,7 +383,7 @@ def _add_gateway_to_schema(opp, schema):
         """Convert sid to a gateway."""
         sid = str(sid).replace(":", "").lower()
 
-        for gateway in.opp.data[DOMAIN][GATEWAYS_KEY].values():
+        for gateway in opp.data[DOMAIN][GATEWAYS_KEY].values():
             if gateway.sid == sid:
                 return gateway
 

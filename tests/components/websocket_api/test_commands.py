@@ -314,7 +314,7 @@ async def test_get_states(opp, websocket_client):
     assert msg["success"]
 
     states = []
-    for state in.opp.states.async_all():
+    for state in opp.states.async_all():
         states.append(state.as_dict())
 
     assert msg["result"] == states

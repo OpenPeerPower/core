@@ -137,7 +137,7 @@ async def start_server_discovery(opp):
         )
 
     opp.data.setdefault(DOMAIN, {})
-    if DISCOVERY_TASK not in.opp.data[DOMAIN]:
+    if DISCOVERY_TASK not in opp.data[DOMAIN]:
         _LOGGER.debug("Adding server discovery task for squeezebox")
         opp.data[DOMAIN][DISCOVERY_TASK] = opp.async_create_task(
             async_discover(_discovered_server)

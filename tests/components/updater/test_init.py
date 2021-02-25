@@ -78,7 +78,7 @@ async def test_same_version_shows_entity_false(
         opp.states.get("binary_sensor.updater").attributes["newest_version"]
         == MOCK_VERSION
     )
-    assert "release_notes" not in.opp.states.get("binary_sensor.updater").attributes
+    assert "release_notes" not in opp.states.get("binary_sensor.updater").attributes
 
 
 async def test_disable_reporting(opp, mock_get_uuid, mock_get_newest_version):

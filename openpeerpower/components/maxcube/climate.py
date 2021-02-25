@@ -65,7 +65,7 @@ MAX_MODE_TO_OPP_PRESET = {
 def setup_platform(opp, config, add_entities, discovery_info=None):
     """Iterate through all MAX! Devices and add thermostats."""
     devices = []
-    for handler in.opp.data[DATA_KEY].values():
+    for handler in opp.data[DATA_KEY].values():
         cube = handler.cube
         for device in cube.devices:
             name = f"{cube.room_by_id(device.room_id).name} {device.name}"

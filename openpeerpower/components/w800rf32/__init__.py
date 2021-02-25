@@ -35,7 +35,7 @@ def setup(opp, config):
             return
         _LOGGER.debug("Receive W800rf32 event in handle_receive")
 
-        # Get device_type from device_id in.opp.data
+        # Get device_type from device_id in opp.data
         device_id = event.device.lower()
         signal = W800RF32_DEVICE.format(device_id)
         dispatcher_send(opp, signal, event)

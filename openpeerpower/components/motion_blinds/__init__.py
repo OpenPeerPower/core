@@ -39,7 +39,7 @@ async def async_setup_entry(
     key = entry.data[CONF_API_KEY]
 
     # Create multicast Listener
-    if KEY_MULTICAST_LISTENER not in.opp.data[DOMAIN]:
+    if KEY_MULTICAST_LISTENER not in opp.data[DOMAIN]:
         multicast = MotionMulticast()
         opp.data[DOMAIN][KEY_MULTICAST_LISTENER] = multicast
         # start listening for local pushes (only once)

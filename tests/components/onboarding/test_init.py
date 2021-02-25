@@ -19,7 +19,7 @@ async def test_not_setup_views_if_onboarded(opp, opp_storage):
         assert await async_setup_component(opp, "onboarding", {})
 
     assert len(mock_setup.mock_calls) == 0
-    assert onboarding.DOMAIN not in.opp.data
+    assert onboarding.DOMAIN not in opp.data
     assert onboarding.async_is_onboarded(opp)
 
 
@@ -32,7 +32,7 @@ async def test_setup_views_if_not_onboarded(opp):
         assert await async_setup_component(opp, "onboarding", {})
 
     assert len(mock_setup.mock_calls) == 1
-    assert onboarding.DOMAIN in.opp.data
+    assert onboarding.DOMAIN in opp.data
 
     assert not onboarding.async_is_onboarded(opp)
 
@@ -75,7 +75,7 @@ async def test_having_owner_finishes_user_step(opp, opp_storage):
         assert await async_setup_component(opp, "onboarding", {})
 
     assert len(mock_setup.mock_calls) == 0
-    assert onboarding.DOMAIN not in.opp.data
+    assert onboarding.DOMAIN not in opp.data
     assert onboarding.async_is_onboarded(opp)
 
     done = opp_storage[onboarding.STORAGE_KEY]["data"]["done"]

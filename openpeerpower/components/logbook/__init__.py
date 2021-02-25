@@ -576,7 +576,7 @@ def _keep_event(opp, event, entities_filter):
     if entity_id:
         return entities_filter is None or entities_filter(entity_id)
 
-    if event.event_type in.opp.data[DOMAIN]:
+    if event.event_type in opp.data[DOMAIN]:
         # If the entity_id isn't described, use the domain that describes
         # the event for filtering.
         domain = opp.data[DOMAIN][event.event_type][0]

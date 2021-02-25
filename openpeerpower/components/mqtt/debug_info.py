@@ -58,11 +58,11 @@ def add_subscription(opp, message_callback, subscription):
 def remove_subscription(opp, message_callback, subscription):
     """Remove debug data for subscription if it exists."""
     entity_id = getattr(message_callback, "__entity_id", None)
-    if entity_id and entity_id in.opp.data[DATA_MQTT_DEBUG_INFO]["entities"]:
+    if entity_id and entity_id in opp.data[DATA_MQTT_DEBUG_INFO]["entities"]:
         opp.data[DATA_MQTT_DEBUG_INFO]["entities"][entity_id]["subscriptions"][
             subscription
         ]["count"] -= 1
-        if not.opp.data[DATA_MQTT_DEBUG_INFO]["entities"][entity_id]["subscriptions"][
+        if not opp.data[DATA_MQTT_DEBUG_INFO]["entities"][entity_id]["subscriptions"][
             subscription
         ]["count"]:
             opp.data[DATA_MQTT_DEBUG_INFO]["entities"][entity_id]["subscriptions"].pop(

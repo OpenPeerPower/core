@@ -134,7 +134,7 @@ _LOGGER = logging.getLogger(__name__)
 @bind.opp
 def is_on(opp, entity_id):
     """Return if the lights are on based on the statemachine."""
-    return.opp.states.is_state(entity_id, STATE_ON)
+    return opp.states.is_state(entity_id, STATE_ON)
 
 
 def preprocess_turn_on_alternatives(opp, params):

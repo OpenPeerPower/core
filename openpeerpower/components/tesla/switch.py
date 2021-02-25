@@ -12,7 +12,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Tesla binary_sensors by config_entry."""
     coordinator = opp.data[TESLA_DOMAIN][config_entry.entry_id]["coordinator"]
     entities = []
-    for device in.opp.data[TESLA_DOMAIN][config_entry.entry_id]["devices"]["switch"]:
+    for device in opp.data[TESLA_DOMAIN][config_entry.entry_id]["devices"]["switch"]:
         if device.type == "charger switch":
             entities.append(ChargerSwitch(device, coordinator))
             entities.append(UpdateSwitch(device, coordinator))

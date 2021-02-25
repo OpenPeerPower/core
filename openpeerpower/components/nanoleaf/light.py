@@ -56,7 +56,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Nanoleaf light."""
 
-    if DATA_NANOLEAF not in.opp.data:
+    if DATA_NANOLEAF not in opp.data:
         opp.data[DATA_NANOLEAF] = {}
 
     token = ""
@@ -64,7 +64,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         host = discovery_info["host"]
         name = discovery_info["hostname"]
         # if device already exists via config, skip discovery setup
-        if host in.opp.data[DATA_NANOLEAF]:
+        if host in opp.data[DATA_NANOLEAF]:
             return
         _LOGGER.info("Discovered a new Nanoleaf: %s", discovery_info)
         conf = load_json(opp.config.path(CONFIG_FILE))

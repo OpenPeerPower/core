@@ -215,7 +215,7 @@ def service_handle(opp: OpenPeerPowerType):
         """Service for sending commands."""
         entity_ids = call.data[ATTR_ENTITY_ID]
         command = call.data[ATTR_COMMAND]
-        for device in.opp.data[PS4_DATA].devices:
+        for device in opp.data[PS4_DATA].devices:
             if device.entity_id in entity_ids:
                 await device.async_send_command(command)
 

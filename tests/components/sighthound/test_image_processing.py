@@ -90,7 +90,7 @@ async def test_bad_api_key(opp, caplog):
         await async_setup_component(opp, ip.DOMAIN, VALID_CONFIG)
         await opp.async_block_till_done()
         assert "Sighthound error" in caplog.text
-        assert not.opp.states.get(VALID_ENTITY_ID)
+        assert not opp.states.get(VALID_ENTITY_ID)
 
 
 async def test_setup_platform(opp, mock_detections):

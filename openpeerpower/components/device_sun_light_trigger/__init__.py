@@ -81,7 +81,7 @@ async def async_setup(opp, config):
 
 
 async def activate_automation(
-    opp. device_group, light_group, light_profile, disable_turn_off
+    opp, device_group, light_group, light_profile, disable_turn_off
 ):
     """Activate the automation."""
     logger = logging.getLogger(__name__)

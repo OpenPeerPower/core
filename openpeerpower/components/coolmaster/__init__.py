@@ -30,7 +30,7 @@ async def async_setup_entry(opp, entry):
             raise ConfigEntryNotReady
     except (OSError, ConnectionRefusedError, TimeoutError) as error:
         raise ConfigEntryNotReady() from error
-    coordinator = CoolmasterDataUpdateCoordinator.opp, coolmaster)
+    coordinator = CoolmasterDataUpdateCoordinator(opp, coolmaster)
     await coordinator.async_refresh()
     opp.data[DOMAIN][entry.entry_id] = {
         DATA_INFO: info,

@@ -148,7 +148,7 @@ async def async_start(
 
             payload[CONF_PLATFORM] = "mqtt"
 
-        if discovery_hash in.opp.data[PENDING_DISCOVERED]:
+        if discovery_hash in opp.data[PENDING_DISCOVERED]:
             pending = opp.data[PENDING_DISCOVERED][discovery_hash]["pending"]
             pending.appendleft(payload)
             _LOGGER.info(
@@ -164,7 +164,7 @@ async def async_start(
 
         _LOGGER.debug("Process discovery payload %s", payload)
         discovery_hash = (component, discovery_id)
-        if discovery_hash in.opp.data[ALREADY_DISCOVERED] or payload:
+        if discovery_hash in opp.data[ALREADY_DISCOVERED] or payload:
 
             async def discovery_done(_):
                 pending = opp.data[PENDING_DISCOVERED][discovery_hash]["pending"]
@@ -178,7 +178,7 @@ async def async_start(
                         component, discovery_id, payload
                     )
 
-            if discovery_hash not in.opp.data[PENDING_DISCOVERED]:
+            if discovery_hash not in opp.data[PENDING_DISCOVERED]:
                 opp.data[PENDING_DISCOVERED][discovery_hash] = {
                     "unsub": async_dispatcher_connect(
                         opp,
@@ -188,7 +188,7 @@ async def async_start(
                     "pending": deque([]),
                 }
 
-        if discovery_hash in.opp.data[ALREADY_DISCOVERED]:
+        if discovery_hash in opp.data[ALREADY_DISCOVERED]:
             # Dispatch update
             _LOGGER.info(
                 "Component has already been discovered: %s %s, sending update",
@@ -205,7 +205,7 @@ async def async_start(
 
             config_entries_key = f"{component}.mqtt"
             async with.opp.data[DATA_CONFIG_ENTRY_LOCK]:
-                if config_entries_key not in.opp.data[CONFIG_ENTRY_IS_SETUP]:
+                if config_entries_key not in opp.data[CONFIG_ENTRY_IS_SETUP]:
                     if component == "device_automation":
                         # Local import to avoid circular dependencies
                         # pylint: disable=import-outside-toplevel
@@ -266,7 +266,7 @@ async def async_start(
             # Note: The lock is not intended to prevent a race, only for performance
             async with.opp.data[DATA_CONFIG_FLOW_LOCK]:
                 # Already unsubscribed
-                if key not in.opp.data[INTEGRATION_UNSUBSCRIBE]:
+                if key not in opp.data[INTEGRATION_UNSUBSCRIBE]:
                     return
 
                 result = await opp.config_entries.flow.async_init(
@@ -297,11 +297,11 @@ async def async_start(
 
 async def async_stop(opp: OpenPeerPowerType) -> bool:
     """Stop MQTT Discovery."""
-    if DISCOVERY_UNSUBSCRIBE in.opp.data:
-        for unsub in.opp.data[DISCOVERY_UNSUBSCRIBE]:
+    if DISCOVERY_UNSUBSCRIBE in opp.data:
+        for unsub in opp.data[DISCOVERY_UNSUBSCRIBE]:
             unsub()
         opp.data[DISCOVERY_UNSUBSCRIBE] = []
-    if INTEGRATION_UNSUBSCRIBE in.opp.data:
+    if INTEGRATION_UNSUBSCRIBE in opp.data:
         for key, unsub in list.opp.data[INTEGRATION_UNSUBSCRIBE].items()):
             unsub()
             opp.data[INTEGRATION_UNSUBSCRIBE].pop(key)

@@ -80,7 +80,7 @@ class InputBooleanStorageCollection(collection.StorageCollection):
 @bind.opp
 def is_on(opp, entity_id):
     """Test if input_boolean is True."""
-    return.opp.states.is_state(entity_id, STATE_ON)
+    return opp.states.is_state(entity_id, STATE_ON)
 
 
 async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:

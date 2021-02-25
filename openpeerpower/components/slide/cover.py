@@ -25,7 +25,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 
     entities = []
 
-    for slide in.opp.data[DOMAIN][SLIDES].values():
+    for slide in opp.data[DOMAIN][SLIDES].values():
         _LOGGER.debug("Setting up Slide entity: %s", slide)
         entities.append(SlideCover.opp.data[DOMAIN][API], slide))
 

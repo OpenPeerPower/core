@@ -77,7 +77,7 @@ def _async_configured_emails(opp):
     """Return a set of configured Tesla emails."""
     return {
         entry.data[CONF_USERNAME]
-        for entry in.opp.config_entries.async_entries(DOMAIN)
+        for entry in opp.config_entries.async_entries(DOMAIN)
         if CONF_USERNAME in entry.data
     }
 
@@ -91,7 +91,7 @@ async def async_setup(opp, base_config):
             CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL,
             CONF_WAKE_ON_START: DEFAULT_WAKE_ON_START,
         }
-        for entry in.opp.config_entries.async_entries(DOMAIN):
+        for entry in opp.config_entries.async_entries(DOMAIN):
             if email != entry.title:
                 continue
             opp.config_entries.async_update_entry(entry, data=data, options=options)
@@ -136,7 +136,7 @@ async def async_setup_entry(opp, config_entry):
     config = config_entry.data
     websession = aiohttp_client.async_get_clientsession(opp)
     email = config_entry.title
-    if email in.opp.data[DOMAIN] and CONF_SCAN_INTERVAL in.opp.data[DOMAIN][email]:
+    if email in opp.data[DOMAIN] and CONF_SCAN_INTERVAL in opp.data[DOMAIN][email]:
         scan_interval = opp.data[DOMAIN][email][CONF_SCAN_INTERVAL]
         opp.config_entries.async_update_entry(
             config_entry, options={CONF_SCAN_INTERVAL: scan_interval}
@@ -208,7 +208,7 @@ async def async_unload_entry(opp, config_entry) -> bool:
             ]
         )
     )
-    for listener in.opp.data[DOMAIN][config_entry.entry_id][DATA_LISTENER]:
+    for listener in opp.data[DOMAIN][config_entry.entry_id][DATA_LISTENER]:
         listener()
     username = config_entry.title
     if unload_ok:

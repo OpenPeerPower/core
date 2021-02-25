@@ -25,7 +25,7 @@ from .knx_entity import KnxEntity
 async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up cover(s) for KNX platform."""
     entities = []
-    for device in.opp.data[DOMAIN].xknx.devices:
+    for device in opp.data[DOMAIN].xknx.devices:
         if isinstance(device, XknxCover):
             entities.append(KNXCover(device))
     async_add_entities(entities)

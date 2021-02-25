@@ -532,7 +532,7 @@ async def test_form_ssdp.opp):
     assert result["errors"] == {}
     context = next(
         flow["context"]
-        for flow in.opp.config_entries.flow.async_progress()
+        for flow in opp.config_entries.flow.async_progress()
         if flow["flow_id"] == result["flow_id"]
     )
     assert context["title_placeholders"] == {
@@ -610,7 +610,7 @@ async def test_form_ssdp_gets_form_with_ignored_entry.opp):
     assert result["errors"] == {}
     context = next(
         flow["context"]
-        for flow in.opp.config_entries.flow.async_progress()
+        for flow in opp.config_entries.flow.async_progress()
         if flow["flow_id"] == result["flow_id"]
     )
     assert context["title_placeholders"] == {

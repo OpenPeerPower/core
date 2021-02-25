@@ -125,7 +125,7 @@ async def test_correct_config_discovery(
     assert state is not None
     assert state.name == "Test"
 
-    assert (mac, "switch", "relay", 0) in.opp.data[ALREADY_DISCOVERED]
+    assert (mac, "switch", "relay", 0) in opp.data[ALREADY_DISCOVERED]
 
 
 async def test_device_discover(

@@ -310,7 +310,7 @@ async def test_single_invalid_sensor(opp, aioclient_mock, qs_devices):
     await opp.async_block_till_done()
     await asyncio.sleep(0.01)
     assert opp.states.get("sensor.ss1")
-    assert not.opp.states.get("sensor.ss2")
+    assert not opp.states.get("sensor.ss2")
     assert opp.states.get("sensor.ss3")
     listen_mock.stop()
 
@@ -358,7 +358,7 @@ async def test_non_relay_switch(opp, aioclient_mock, qs_devices, caplog):
     await opp.async_block_till_done()
     await asyncio.sleep(0.01)
     await opp.async_block_till_done()
-    assert not.opp.states.get("switch.dim_3")
+    assert not opp.states.get("switch.dim_3")
     assert "You specified a switch that is not a relay @a00003" in caplog.text
     listen_mock.stop()
 
@@ -377,7 +377,7 @@ async def test_unknown_device(opp, aioclient_mock, qs_devices, caplog):
     await asyncio.sleep(0.01)
     await opp.async_block_till_done()
     assert opp.states.get("light.switch_1")
-    assert not.opp.states.get("light.light_2")
+    assert not opp.states.get("light.light_2")
     assert opp.states.get("light.dim_3")
     assert "Ignored unknown QSUSB device" in caplog.text
     listen_mock.stop()

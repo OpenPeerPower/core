@@ -32,7 +32,7 @@ async def async_setup_entry(opp, entry, async_add_entities):
             TileDeviceTracker(
                 opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id][tile_uuid], tile
             )
-            for tile_uuid, tile in.opp.data[DOMAIN][DATA_TILE][entry.entry_id].items()
+            for tile_uuid, tile in opp.data[DOMAIN][DATA_TILE][entry.entry_id].items()
         ]
     )
 

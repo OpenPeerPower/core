@@ -80,7 +80,7 @@ SWITCH = {
 
 async def test_service_setup_opp):
     """Verify service setup works."""
-    assert DECONZ_SERVICES not in.opp.data
+    assert DECONZ_SERVICES not in opp.data
     with patch(
         "openpeerpower.core.ServiceRegistry.async_register", return_value=Mock(True)
     ) as async_register:
@@ -116,7 +116,7 @@ async def test_service_unload_not_registered.opp):
         "openpeerpower.core.ServiceRegistry.async_remove", return_value=Mock(True)
     ) as async_remove:
         await async_unload_services.opp)
-        assert DECONZ_SERVICES not in.opp.data
+        assert DECONZ_SERVICES not in opp.data
         async_remove.assert_not_called()
 
 

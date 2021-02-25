@@ -140,7 +140,7 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     for component in ("binary_sensor", "sensor"):
         await opp.config_entries.async_forward_entry_unload(entry, component)
 
-    if not.opp.data[DOMAIN]:
+    if not opp.data[DOMAIN]:
         opp.data.pop(DOMAIN)
 
     return True

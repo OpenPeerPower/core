@@ -74,7 +74,7 @@ def _attach_trigger(
                 event.context,
             )
 
-    return.opp.bus.async_listen(event_type, _handle_event)
+    return opp.bus.async_listen(event_type, _handle_event)
 
 
 async def async_attach_trigger(

@@ -73,7 +73,7 @@ def async_request_config(
         name, callback, description, submit_caption, fields, entity_picture
     )
 
-    if DATA_REQUESTS not in.opp.data:
+    if DATA_REQUESTS not in opp.data:
         opp.data[DATA_REQUESTS] = {}
 
     opp.data[DATA_REQUESTS][request_id] = instance

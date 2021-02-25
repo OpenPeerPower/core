@@ -45,7 +45,7 @@ def create_stream(opp, stream_source, options=None):
     The stream_source is typically an rtsp url and options are passed into
     pyav / ffmpeg as options.
     """
-    if DOMAIN not in.opp.config.components:
+    if DOMAIN not in opp.config.components:
         raise OpenPeerPowerError("Stream integration is not set up.")
 
     if options is None:
@@ -88,7 +88,7 @@ async def async_setup(opp, config):
     @callback
     def shutdown(event):
         """Stop all stream workers."""
-        for stream in.opp.data[DOMAIN][ATTR_STREAMS]:
+        for stream in opp.data[DOMAIN][ATTR_STREAMS]:
             stream.keepalive = False
             stream.stop()
         _LOGGER.info("Stopped stream workers")

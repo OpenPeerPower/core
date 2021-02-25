@@ -31,7 +31,7 @@ def register_flow_implementation(opp, domain, client_id, client_secret):
     client_id: Client id.
     client_secret: Client secret.
     """
-    if DATA_FLOW_IMPL not in.opp.data:
+    if DATA_FLOW_IMPL not in opp.data:
         opp.data[DATA_FLOW_IMPL] = OrderedDict()
 
     opp.data[DATA_FLOW_IMPL][domain] = {

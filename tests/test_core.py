@@ -606,8 +606,8 @@ async def test_statemachine_is_state(opp):
     """Test is_state method."""
     opp.states.async_set("light.bowl", "on", {})
     assert opp.states.is_state("light.Bowl", "on")
-    assert not.opp.states.is_state("light.Bowl", "off")
-    assert not.opp.states.is_state("light.Non_existing", "on")
+    assert not opp.states.is_state("light.Bowl", "off")
+    assert not opp.states.is_state("light.Non_existing", "on")
 
 
 async def test_statemachine_entity_ids(opp):
@@ -623,7 +623,7 @@ async def test_statemachine_entity_ids(opp):
     assert len(ent_ids) == 1
     assert "light.bowl" in ent_ids
 
-    states = sorted(state.entity_id for state in.opp.states.async_all())
+    states = sorted(state.entity_id for state in opp.states.async_all())
     assert states == ["light.bowl", "switch.ac"]
 
 
@@ -632,11 +632,11 @@ async def test_statemachine_remove(opp):
     opp.states.async_set("light.bowl", "on", {})
     events = async_capture_events(opp, EVENT_STATE_CHANGED)
 
-    assert "light.bowl" in.opp.states.async_entity_ids()
+    assert "light.bowl" in opp.states.async_entity_ids()
     assert opp.states.async_remove("light.bowl")
     await opp.async_block_till_done()
 
-    assert "light.bowl" not in.opp.states.async_entity_ids()
+    assert "light.bowl" not in opp.states.async_entity_ids()
     assert len(events) == 1
     assert events[0].data.get("entity_id") == "light.bowl"
     assert events[0].data.get("old_state") is not None
@@ -644,7 +644,7 @@ async def test_statemachine_remove(opp):
     assert events[0].data.get("new_state") is None
 
     # If it does not exist, we should get False
-    assert not.opp.states.async_remove("light.Bowl")
+    assert not opp.states.async_remove("light.Bowl")
     await opp.async_block_till_done()
     assert len(events) == 1
 
@@ -707,8 +707,8 @@ async def test_serviceregistry_op._service(opp):
     opp.services.async_register("test_domain", "test_service", lambda call: None)
     assert len.opp.services.async_services()) == 1
     assert opp.services.has_service("tesT_domaiN", "tesT_servicE")
-    assert not.opp.services.has_service("test_domain", "non_existing")
-    assert not.opp.services.has_service("non_existing", "test_service")
+    assert not opp.services.has_service("test_domain", "non_existing")
+    assert not opp.services.has_service("non_existing", "test_service")
 
 
 async def test_serviceregistry_call_with_blocking_done_in_time(opp):
@@ -795,7 +795,7 @@ async def test_serviceregistry_remove_service(opp):
     opp.services.async_remove("test_Domain", "test_Service")
     await opp.async_block_till_done()
 
-    assert not.opp.services.has_service("test_Domain", "test_Service")
+    assert not opp.services.has_service("test_Domain", "test_Service")
     assert len(calls_remove) == 1
     assert calls_remove[-1].data["domain"] == "test_domain"
     assert calls_remove[-1].data["service"] == "test_service"
@@ -804,7 +804,7 @@ async def test_serviceregistry_remove_service(opp):
 async def test_serviceregistry_service_that_not_exists(opp):
     """Test remove service that not exists."""
     calls_remove = async_capture_events(opp, EVENT_SERVICE_REMOVED)
-    assert not.opp.services.has_service("test_xxx", "test_yyy")
+    assert not opp.services.has_service("test_xxx", "test_yyy")
     opp.services.async_remove("test_xxx", "test_yyy")
     await opp.async_block_till_done()
     assert len(calls_remove) == 0
@@ -1120,7 +1120,7 @@ async def test_opp_start_starts_the_timer(loop):
             await opp.async_start()
 
         assert opp.state == op.CoreState.running
-        assert not.opp._track_task
+        assert not opp._track_task
         assert len(mock_timer.mock_calls) == 1
         assert mock_timer.mock_calls[0][1][0] is.opp
 
@@ -1157,7 +1157,7 @@ async def test_track_task_functions(loop):
         assert opp._track_task
 
         opp.async_stop_track_tasks()
-        assert not.opp._track_task
+        assert not opp._track_task
 
         opp.async_track_tasks()
         assert opp._track_task
@@ -1448,18 +1448,18 @@ async def test_async_all(opp):
     opp.states.async_set("light.frog", "on")
     opp.states.async_set("vacuum.floor", "on")
 
-    assert {state.entity_id for state in.opp.states.async_all()} == {
+    assert {state.entity_id for state in opp.states.async_all()} == {
         "switch.link",
         "light.bowl",
         "light.frog",
         "vacuum.floor",
     }
-    assert {state.entity_id for state in.opp.states.async_all("light")} == {
+    assert {state.entity_id for state in opp.states.async_all("light")} == {
         "light.bowl",
         "light.frog",
     }
     assert {
-        state.entity_id for state in.opp.states.async_all(["light", "switch"])
+        state.entity_id for state in opp.states.async_all(["light", "switch"])
     } == {"light.bowl", "light.frog", "switch.link"}
 
 

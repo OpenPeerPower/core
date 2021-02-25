@@ -9,7 +9,7 @@ from . import LUTRON_CONTROLLER, LUTRON_DEVICES, LutronDevice
 def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Lutron scenes."""
     devs = []
-    for scene_data in.opp.data[LUTRON_DEVICES]["scene"]:
+    for scene_data in opp.data[LUTRON_DEVICES]["scene"]:
         (area_name, keypad_name, device, led) = scene_data
         dev = LutronScene(
             area_name, keypad_name, device, led, opp.data[LUTRON_CONTROLLER]

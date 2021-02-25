@@ -22,7 +22,7 @@ def configured_instances(opp):
     """Return a set of configured GeoNet NZ Volcano instances."""
     return {
         f"{entry.data[CONF_LATITUDE]}, {entry.data[CONF_LONGITUDE]}"
-        for entry in.opp.config_entries.async_entries(DOMAIN)
+        for entry in opp.config_entries.async_entries(DOMAIN)
     }
 
 

@@ -178,7 +178,7 @@ def _get_config_params(node, *args):
 )
 async def websocket_migrate_zwave(opp, connection, msg):
     """Migrate the zwave integration device and entity data to ozw integration."""
-    if "zwave" not in.opp.config.components:
+    if "zwave" not in opp.config.components:
         _LOGGER.error("Can not migrate, zwave integration is not loaded")
         connection.send_message(
             websocket_api.error_message(

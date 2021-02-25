@@ -346,7 +346,7 @@ async def cleanup_device_registry(opp, device_id):
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
     if (
         device_id
-        and not.opp.helpers.entity_registry.async_entries_for_device(
+        and not opp.helpers.entity_registry.async_entries_for_device(
             entity_registry, device_id, include_disabled_entities=True
         )
         and not await device_trigger.async_get_triggers(opp, device_id)

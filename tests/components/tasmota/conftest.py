@@ -75,7 +75,7 @@ async def setup_tasmota_helper.opp):
     assert await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
-    assert "tasmota" in.opp.config.components
+    assert "tasmota" in opp.config.components
 
 
 @pytest.fixture

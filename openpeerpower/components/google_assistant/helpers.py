@@ -581,7 +581,7 @@ def deep_update(target, source):
 def async_get_entities(opp, config) -> List[GoogleEntity]:
     """Return all entities that are supported by Google."""
     entities = []
-    for state in.opp.states.async_all():
+    for state in opp.states.async_all():
         if state.entity_id in CLOUD_NEVER_EXPOSED_ENTITIES:
             continue
 

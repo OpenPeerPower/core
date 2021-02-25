@@ -68,7 +68,7 @@ PLATFORM_SCHEMA = vol.All(
 
 def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Monoprice Blackbird 4k 8x8 HDBaseT Matrix platform."""
-    if DATA_BLACKBIRD not in.opp.data:
+    if DATA_BLACKBIRD not in opp.data:
         opp.data[DATA_BLACKBIRD] = {}
 
     port = config.get(CONF_PORT)
@@ -112,7 +112,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         if entity_ids:
             devices = [
                 device
-                for device in.opp.data[DATA_BLACKBIRD].values()
+                for device in opp.data[DATA_BLACKBIRD].values()
                 if device.entity_id in entity_ids
             ]
 

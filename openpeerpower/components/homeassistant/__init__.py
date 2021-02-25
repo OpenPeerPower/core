@@ -65,7 +65,7 @@ async def async_setup_opp: op.OpenPeerPower, config: dict) -> bool:
                 )
                 continue
 
-            if not.opp.services.has_service(domain, service.service):
+            if not opp.services.has_service(domain, service.service):
                 unsupported_entities.update(set(ent_ids) & referenced.referenced)
                 continue
 

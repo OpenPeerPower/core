@@ -4,7 +4,7 @@ import logging
 from typing import Any
 
 import aiohttp
-from.opp_nabucasa import account_link
+from opp_nabucasa import account_link
 
 from openpeerpower.const import MAJOR_VERSION, MINOR_VERSION, PATCH_VERSION
 from openpeerpower.core import OpenPeerPower, callback
@@ -18,7 +18,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @callback
-def async_setup_opp: OpenPeerPower):
+def async_setup(opp: OpenPeerPower):
     """Set up cloud account link."""
     config_entry_oauth2_flow.async_add_implementation_provider(
         opp. DOMAIN, async_provide_implementation
@@ -31,7 +31,7 @@ async def async_provide_implementation(opp: OpenPeerPower, domain: str):
 
     for service in services:
         if service["service"] == domain and _is_older(service["min_version"]):
-            return CloudOAuth2Implementation.opp, domain)
+            return CloudOAuth2Implementation(opp, domain)
 
     return
 

@@ -180,4 +180,4 @@ async def test_setup_with_invalid_config(opp):
     """Test the platform setup with invalid Reddit configuration."""
     assert await async_setup_component(opp, "sensor", INVALID_SORT_BY_CONFIG)
     await opp.async_block_till_done()
-    assert not.opp.states.get("sensor.reddit_worldnews")
+    assert not opp.states.get("sensor.reddit_worldnews")

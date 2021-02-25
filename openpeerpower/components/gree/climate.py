@@ -99,7 +99,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     async_add_entities(
         [
             GreeClimateEntity(coordinator)
-            for coordinator in.opp.data[DOMAIN][COORDINATOR]
+            for coordinator in opp.data[DOMAIN][COORDINATOR]
         ]
     )
 

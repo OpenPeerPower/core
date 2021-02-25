@@ -17,7 +17,7 @@ async def test_failing_setups_no_entities(opp, numato_fixture, monkeypatch):
     assert await async_setup_component(opp, "numato", NUMATO_CFG)
     await opp.async_block_till_done()
     for entity_id in MOCKUP_ENTITY_IDS:
-        assert entity_id not in.opp.states.async_entity_ids()
+        assert entity_id not in opp.states.async_entity_ids()
 
 
 async def test_setup_callbacks(opp, numato_fixture, monkeypatch):
@@ -56,7 +56,7 @@ async def test_binary_sensor_setup_without_discovery_info(opp, config, numato_fi
     numato_fixture.discover()
     await discovery.async_load_platform(opp, "binary_sensor", "numato", None, config)
     for entity_id in MOCKUP_ENTITY_IDS:
-        assert entity_id not in.opp.states.async_entity_ids()
+        assert entity_id not in opp.states.async_entity_ids()
     await opp.async_block_till_done()  # wait for numato platform to be loaded
     for entity_id in MOCKUP_ENTITY_IDS:
-        assert entity_id in.opp.states.async_entity_ids()
+        assert entity_id in opp.states.async_entity_ids()

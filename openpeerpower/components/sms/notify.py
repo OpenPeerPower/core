@@ -20,7 +20,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 def get_service(opp, config, discovery_info=None):
     """Get the SMS notification service."""
 
-    if SMS_GATEWAY not in.opp.data[DOMAIN]:
+    if SMS_GATEWAY not in opp.data[DOMAIN]:
         _LOGGER.error("SMS gateway not found, cannot initialize service")
         return
 

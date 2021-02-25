@@ -200,7 +200,7 @@ async def async_setup_trigger(opp, config, config_entry, discovery_data):
             # Empty payload: Remove trigger
             _LOGGER.info("Removing trigger: %s", discovery_hash)
             debug_info.remove_trigger_discovery_data(opp, discovery_hash)
-            if discovery_id in.opp.data[DEVICE_TRIGGERS]:
+            if discovery_id in opp.data[DEVICE_TRIGGERS]:
                 device_trigger = opp.data[DEVICE_TRIGGERS][discovery_id]
                 device_trigger.detach_trigger()
                 clear_discovery_hash(opp, discovery_hash)
@@ -232,9 +232,9 @@ async def async_setup_trigger(opp, config, config_entry, discovery_data):
         async_dispatcher_send(opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None)
         return
 
-    if DEVICE_TRIGGERS not in.opp.data:
+    if DEVICE_TRIGGERS not in opp.data:
         opp.data[DEVICE_TRIGGERS] = {}
-    if discovery_id not in.opp.data[DEVICE_TRIGGERS]:
+    if discovery_id not in opp.data[DEVICE_TRIGGERS]:
         opp.data[DEVICE_TRIGGERS][discovery_id] = Trigger(
             opp.opp,
             device_id=device.id,
@@ -282,10 +282,10 @@ async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device triggers for MQTT devices."""
     triggers = []
 
-    if DEVICE_TRIGGERS not in.opp.data:
+    if DEVICE_TRIGGERS not in opp.data:
         return triggers
 
-    for discovery_id, trig in.opp.data[DEVICE_TRIGGERS].items():
+    for discovery_id, trig in opp.data[DEVICE_TRIGGERS].items():
         if trig.device_id != device_id or trig.topic is None:
             continue
 
@@ -308,13 +308,13 @@ async def async_attach_trigger(
     automation_info: dict,
 ) -> CALLBACK_TYPE:
     """Attach a trigger."""
-    if DEVICE_TRIGGERS not in.opp.data:
+    if DEVICE_TRIGGERS not in opp.data:
         opp.data[DEVICE_TRIGGERS] = {}
     config = TRIGGER_SCHEMA(config)
     device_id = config[CONF_DEVICE_ID]
     discovery_id = config[CONF_DISCOVERY_ID]
 
-    if discovery_id not in.opp.data[DEVICE_TRIGGERS]:
+    if discovery_id not in opp.data[DEVICE_TRIGGERS]:
         opp.data[DEVICE_TRIGGERS][discovery_id] = Trigger(
             opp.opp,
             device_id=device_id,

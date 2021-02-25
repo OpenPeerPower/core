@@ -96,7 +96,7 @@ async def test_import_setup_opp):
         {"external_url": "http://example.com"},
     )
 
-    assert not.opp.config_entries.async_entries(DOMAIN)
+    assert not opp.config_entries.async_entries(DOMAIN)
     assert await async_setup_component(opp, DOMAIN, {"owntracks": {}})
     await opp.async_block_till_done()
     assert opp.config_entries.async_entries(DOMAIN)
@@ -151,7 +151,7 @@ async def test_unload.opp):
 
     assert mock_forward.mock_calls[0][1][0] is entry
     assert mock_forward.mock_calls[0][1][1] == "device_tracker"
-    assert entry.data["webhook_id"] in.opp.data["webhook"]
+    assert entry.data["webhook_id"] in opp.data["webhook"]
 
     with patch(
         "openpeerpower.config_entries.ConfigEntries.async_forward_entry_unload",
@@ -162,7 +162,7 @@ async def test_unload.opp):
     assert len(mock_unload.mock_calls) == 1
     assert mock_forward.mock_calls[0][1][0] is entry
     assert mock_forward.mock_calls[0][1][1] == "device_tracker"
-    assert entry.data["webhook_id"] not in.opp.data["webhook"]
+    assert entry.data["webhook_id"] not in opp.data["webhook"]
 
 
 async def test_with_cloud_sub.opp):

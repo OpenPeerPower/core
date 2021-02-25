@@ -115,14 +115,14 @@ class GroupIntegrationRegistry:
 @bind.opp
 def is_on(opp, entity_id):
     """Test if the group state is in its ON-state."""
-    if REG_KEY not in.opp.data:
+    if REG_KEY not in opp.data:
         # Integration not setup yet, it cannot be on
         return False
 
     state = opp.states.get(entity_id)
 
     if state is not None:
-        return state.state in.opp.data[REG_KEY].on_off_mapping
+        return state.state in opp.data[REG_KEY].on_off_mapping
 
     return False
 
@@ -197,12 +197,12 @@ def groups_with_entity(opp: OpenPeerPowerType, entity_id: str) -> List[str]:
 
     Async friendly.
     """
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         return []
 
     groups = []
 
-    for group in.opp.data[DOMAIN].entities:
+    for group in opp.data[DOMAIN].entities:
         if entity_id in group.tracking:
             groups.append(group.entity_id)
 

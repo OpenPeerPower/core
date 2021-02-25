@@ -12,7 +12,7 @@ from tests.common import mock_component
 async def test_config_setup_opp, loop):
     """Test it sets up.oppbian."""
     await async_setup_component(opp, "config", {})
-    assert "config" in.opp.config.components
+    assert "config" in opp.config.components
 
 
 async def test_load_on_demand_already_loaded(opp, aiohttp_client):
@@ -38,7 +38,7 @@ async def test_load_on_demand_on_load(opp, aiohttp_client):
     ):
         await async_setup_component(opp, "config", {})
 
-    assert "config.zwave" not in.opp.config.components
+    assert "config.zwave" not in opp.config.components
 
     with patch(
         "openpeerpower.components.config.zwave.async_setup", return_value=True

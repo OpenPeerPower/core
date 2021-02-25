@@ -75,7 +75,7 @@ def setup(opp, config):
 
     def stop(event: object) -> None:
         """Shut down open connections to Ecovacs XMPP server."""
-        for device in.opp.data[ECOVACS_DEVICES]:
+        for device in opp.data[ECOVACS_DEVICES]:
             _LOGGER.info(
                 "Shutting down connection to Ecovacs device %s", device.vacuum["did"]
             )

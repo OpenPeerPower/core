@@ -132,7 +132,7 @@ async def ev_entry.opp):
         vehicle_data=VEHICLE_DATA[TEST_VIN_2_EV],
         vehicle_status=VEHICLE_STATUS_EV,
     )
-    assert DOMAIN in.opp.config_entries.async_domains()
+    assert DOMAIN in opp.config_entries.async_domains()
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert opp.config_entries.async_get_entry(entry.entry_id)
     assert entry.state == ENTRY_STATE_LOADED

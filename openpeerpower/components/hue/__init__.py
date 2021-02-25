@@ -40,7 +40,7 @@ async def async_setup(opp, config):
             bridge.hue_activate_scene(
                 call, updated=skip_reload, hide_warnings=skip_reload
             )
-            for bridge in.opp.data[DOMAIN].values()
+            for bridge in opp.data[DOMAIN].values()
             if isinstance(bridge, HueBridge)
         ]
         results = await asyncio.gather(*tasks)
@@ -118,7 +118,7 @@ async def async_setup_entry(
         other_entry = next(
             (
                 entry
-                for entry in.opp.config_entries.async_entries(DOMAIN)
+                for entry in opp.config_entries.async_entries(DOMAIN)
                 if entry.unique_id == unique_id
             ),
             None,

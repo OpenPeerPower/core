@@ -112,7 +112,7 @@ class UserOnboardingView(_BaseOnboardingView):
             )
             await provider.data.async_save()
             await opp.auth.async_link_user(user, credentials)
-            if "person" in.opp.config.components:
+            if "person" in opp.config.components:
                 await opp.components.person.async_create_person(
                     data["name"], user_id=user.id
                 )
@@ -164,7 +164,7 @@ class CoreConfigOnboardingView(_BaseOnboardingView):
 
             if (
                 opp.components.oppio.is.oppio()
-                and "raspberrypi" in.opp.components.oppio.get_core_info()["machine"]
+                and "raspberrypi" in opp.components.oppio.get_core_info()["machine"]
             ):
                 await opp.config_entries.flow.async_init(
                     "rpi_power", context={"source": "onboarding"}
@@ -220,7 +220,7 @@ class IntegrationOnboardingView(_BaseOnboardingView):
 @callback
 def _async_get(opp_provider(opp):
     """Get the Open Peer Power auth provider."""
-    for prv in.opp.auth.auth_providers:
+    for prv in opp.auth.auth_providers:
         if prv.type == "openpeerpower":
             return prv
 

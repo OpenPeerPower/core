@@ -199,7 +199,7 @@ async def async_setup_triggers_for_entry(opp: OpenPeerPower, config_entry):
         # They have to be different accessories (they can be on the same bridge)
         # In practice, this is inline with what iOS actually supports AFAWCT.
         device_id = conn.devices[aid]
-        if device_id in.opp.data[TRIGGERS]:
+        if device_id in opp.data[TRIGGERS]:
             return False
 
         # Just because we recognise the service type doesn't mean we can actually
@@ -229,7 +229,7 @@ def async_fire_triggers(conn, events):
 async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
     """List device triggers for homekit devices."""
 
-    if device_id not in.opp.data.get(TRIGGERS, {}):
+    if device_id not in opp.data.get(TRIGGERS, {}):
         return []
 
     device = opp.data[TRIGGERS][device_id]

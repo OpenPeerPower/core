@@ -35,7 +35,7 @@ async def test_manually_configured_platform.opp):
         BINARY_SENSOR_DOMAIN,
         {BINARY_SENSOR_DOMAIN: {"platform": HMIPC_DOMAIN}},
     )
-    assert not.opp.data.get(HMIPC_DOMAIN)
+    assert not opp.data.get(HMIPC_DOMAIN)
 
 
 async def test_hmip_home_cloud_connection_sensor(opp, default_mock_hap_factory):

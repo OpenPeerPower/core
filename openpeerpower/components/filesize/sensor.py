@@ -31,7 +31,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 
     sensors = []
     for path in config.get(CONF_FILE_PATHS):
-        if not.opp.config.is_allowed_path(path):
+        if not opp.config.is_allowed_path(path):
             _LOGGER.error("Filepath %s is not valid or allowed", path)
             continue
         sensors.append(Filesize(path))

@@ -42,7 +42,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["light"]
 
 
-async def async_setup_opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Stub to allow setting up this component.
 
     Configuration through YAML is not supported at this time.

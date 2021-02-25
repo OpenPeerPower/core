@@ -147,7 +147,7 @@ async def handle_webhook(
     opp: OpenPeerPowerType, webhook_id: str, request: Request
 ) -> Response:
     """Handle webhook callback."""
-    if webhook_id in.opp.data[DOMAIN][DATA_DELETED_IDS]:
+    if webhook_id in opp.data[DOMAIN][DATA_DELETED_IDS]:
         return Response(status=410)
 
     config_entry = opp.data[DOMAIN][DATA_CONFIG_ENTRIES][webhook_id]

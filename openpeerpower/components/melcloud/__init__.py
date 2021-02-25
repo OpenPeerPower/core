@@ -77,7 +77,7 @@ async def async_unload_entry(opp, config_entry):
         ]
     )
     opp.data[DOMAIN].pop(config_entry.entry_id)
-    if not.opp.data[DOMAIN]:
+    if not opp.data[DOMAIN]:
         opp.data.pop(DOMAIN)
     return True
 

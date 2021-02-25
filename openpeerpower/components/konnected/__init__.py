@@ -227,7 +227,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
     if cfg is None:
         cfg = {}
 
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         opp.data[DOMAIN] = {
             CONF_ACCESS_TOKEN: cfg.get(CONF_ACCESS_TOKEN),
             CONF_API_HOST: cfg.get(CONF_API_HOST),
@@ -254,7 +254,7 @@ async def async_setup_opp: OpenPeerPower, config: dict):
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up panel from a config entry."""
     client = AlarmPanel.opp, entry)
-    # creates a panel data store in.opp.data[DOMAIN][CONF_DEVICES]
+    # creates a panel data store in opp.data[DOMAIN][CONF_DEVICES]
     await client.async_save_data()
 
     # if the cfg entry was created we know we could connect to the panel at some point
@@ -327,7 +327,7 @@ class KonnectedView(OpenPeerPowerView):
         tokens.extend(
             [
                 entry.data[CONF_ACCESS_TOKEN]
-                for entry in.opp.config_entries.async_entries(DOMAIN)
+                for entry in opp.config_entries.async_entries(DOMAIN)
                 if entry.data.get(CONF_ACCESS_TOKEN)
             ]
         )

@@ -14,7 +14,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         return
 
     devices = []
-    for vin, datastore in.opp.data[DATA_LEAF].items():
+    for vin, datastore in opp.data[DATA_LEAF].items():
         _LOGGER.debug("Adding binary_sensors for vin=%s", vin)
         devices.append(LeafPluggedInSensor(datastore))
         devices.append(LeafChargingSensor(datastore))

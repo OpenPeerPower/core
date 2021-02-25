@@ -34,7 +34,7 @@ async def test_requirement_installed_in_venv(opp):
         opp.config.skip_pip = False
         mock_integration(opp, MockModule("comp", requirements=["package==0.0.1"]))
         assert await setup.async_setup_component(opp, "comp", {})
-        assert "comp" in.opp.config.components
+        assert "comp" in opp.config.components
         assert mock_install.call_args == call(
             "package==0.0.1",
             constraints=os.path.join("op_package_path", CONSTRAINT_FILE),
@@ -54,7 +54,7 @@ async def test_requirement_installed_in_deps(opp):
         opp.config.skip_pip = False
         mock_integration(opp, MockModule("comp", requirements=["package==0.0.1"]))
         assert await setup.async_setup_component(opp, "comp", {})
-        assert "comp" in.opp.config.components
+        assert "comp" in opp.config.components
         assert mock_install.call_args == call(
             "package==0.0.1",
             target.opp.config.path("deps"),
@@ -154,7 +154,7 @@ async def test_install_with_wheels_index(opp):
     ) as mock_dir:
         mock_dir.return_value = "op_package_path"
         assert await setup.async_setup_component(opp, "comp", {})
-        assert "comp" in.opp.config.components
+        assert "comp" in opp.config.components
 
         assert mock_inst.call_args == call(
             "hello==1.0.0",
@@ -178,7 +178,7 @@ async def test_install_on_docker(opp):
     ):
         mock_dir.return_value = "op_package_path"
         assert await setup.async_setup_component(opp, "comp", {})
-        assert "comp" in.opp.config.components
+        assert "comp" in opp.config.components
 
         assert mock_inst.call_args == call(
             "hello==1.0.0",

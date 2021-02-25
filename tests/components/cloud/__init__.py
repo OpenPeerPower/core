@@ -24,4 +24,4 @@ def mock_cloud_prefs(opp, prefs={}):
     }
     prefs_to_set.update(prefs)
     opp.data[cloud.DOMAIN].client._prefs._prefs = prefs_to_set
-    return.opp.data[cloud.DOMAIN].client._prefs
+    return opp.data[cloud.DOMAIN].client._prefs

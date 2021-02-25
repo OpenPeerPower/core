@@ -125,7 +125,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         # Check if we had an error before
         _LOGGER.debug("Checking if update failed")
         if opp.data[DOMAIN][entry.entry_id][POWERWALL_API_CHANGED]:
-            return.opp.data[DOMAIN][entry.entry_id][POWERWALL_COORDINATOR].data
+            return opp.data[DOMAIN][entry.entry_id][POWERWALL_COORDINATOR].data
 
         _LOGGER.debug("Updating data")
         try:
@@ -178,7 +178,7 @@ async def _async_update_powerwall_data(
         await _async_handle_api_changed_error(opp, err)
         opp.data[DOMAIN][entry.entry_id][POWERWALL_API_CHANGED] = True
         # Returns the cached data. This data can also be None
-        return.opp.data[DOMAIN][entry.entry_id][POWERWALL_COORDINATOR].data
+        return opp.data[DOMAIN][entry.entry_id][POWERWALL_COORDINATOR].data
 
 
 def _async_start_reauth(opp: OpenPeerPower, entry: ConfigEntry):

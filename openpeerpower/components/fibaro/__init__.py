@@ -361,7 +361,7 @@ def setup(opp, base_config):
     def stop_fibaro(event):
         """Stop Fibaro Thread."""
         _LOGGER.info("Shutting down Fibaro connection")
-        for controller in.opp.data[FIBARO_CONTROLLERS].values():
+        for controller in opp.data[FIBARO_CONTROLLERS].values():
             controller.disable_state_handler()
 
     opp.data[FIBARO_DEVICES] = {}
@@ -380,7 +380,7 @@ def setup(opp, base_config):
     if opp.data[FIBARO_CONTROLLERS]:
         for component in FIBARO_COMPONENTS:
             discovery.load_platform(opp, component, DOMAIN, {}, base_config)
-        for controller in.opp.data[FIBARO_CONTROLLERS].values():
+        for controller in opp.data[FIBARO_CONTROLLERS].values():
             controller.enable_state_handler()
         opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop_fibaro)
         return True

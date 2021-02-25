@@ -12,7 +12,7 @@ from .const import CONF_LISTEN_PORT, DEFAULT_NAME, DEFAULT_PORT, DOMAIN
 def configured_servers(opp):
     """Return a set of the configured servers."""
     return {
-        entry.data[CONF_NAME] for entry in.opp.config_entries.async_entries(DOMAIN)
+        entry.data[CONF_NAME] for entry in opp.config_entries.async_entries(DOMAIN)
     }
 
 

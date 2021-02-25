@@ -60,7 +60,7 @@ async def test_accessory_cancels_track_state_change_on_stop(opp, hk_driver):
         await acc.run()
     assert len.opp.data[TRACK_STATE_CHANGE_CALLBACKS][entity_id]) == 1
     acc.async_stop()
-    assert entity_id not in.opp.data[TRACK_STATE_CHANGE_CALLBACKS]
+    assert entity_id not in opp.data[TRACK_STATE_CHANGE_CALLBACKS]
 
 
 async def test_home_accessory(opp, hk_driver):

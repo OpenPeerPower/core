@@ -16,7 +16,7 @@ async def test_setup_opp):
 
         mocked_melissa.assert_called_with(username="********", password="********")
 
-        assert melissa.DATA_MELISSA in.opp.data
+        assert melissa.DATA_MELISSA in opp.data
         assert isinstance(
             opp.data[melissa.DATA_MELISSA],
             type(mocked_melissa.return_value),

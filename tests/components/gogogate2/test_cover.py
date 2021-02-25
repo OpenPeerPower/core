@@ -368,7 +368,7 @@ async def test_open_close_update(gogogate2api_mock, opp: OpenPeerPower) -> None:
     assert opp.states.get("cover.door1").state == STATE_UNKNOWN
 
     assert await opp.config_entries.async_unload(config_entry.entry_id)
-    assert not.opp.states.async_entity_ids(DOMAIN)
+    assert not opp.states.async_entity_ids(DOMAIN)
 
 
 @patch("openpeerpower.components.gogogate2.common.ISmartGateApi")

@@ -138,7 +138,7 @@ FakeDevice.add_to_group = zigpy_dev.add_to_group
 def get_zha_gateway.opp):
     """Return ZHA gateway from.opp.data."""
     try:
-        return.opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZOP_GATEWAY]
+        return opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZOP_GATEWAY]
     except KeyError:
         return None
 

@@ -58,7 +58,7 @@ def setup(opp, base_config):
     _LOGGER.info("Connected to main repeater at %s", config[CONF_HOST])
 
     # Sort our devices into types
-    for area in.opp.data[LUTRON_CONTROLLER].areas:
+    for area in opp.data[LUTRON_CONTROLLER].areas:
         for output in area.outputs:
             if output.type == "SYSTEM_SHADE":
                 opp.data[LUTRON_DEVICES]["cover"].append((area.name, output))

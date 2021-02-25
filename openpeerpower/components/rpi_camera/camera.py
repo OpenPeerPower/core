@@ -63,7 +63,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, delete_temp_file)
 
     # Check whether the file path has been whitelisted
-    elif not.opp.config.is_allowed_path(file_path):
+    elif not opp.config.is_allowed_path(file_path):
         _LOGGER.error("'%s' is not a whitelisted directory", file_path)
         return
 

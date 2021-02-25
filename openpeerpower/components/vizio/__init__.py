@@ -59,7 +59,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry) -
 
     opp.data.setdefault(DOMAIN, {})
     if (
-        CONF_APPS not in.opp.data[DOMAIN]
+        CONF_APPS not in opp.data[DOMAIN]
         and config_entry.data[CONF_DEVICE_CLASS] == DEVICE_CLASS_TV
     ):
         coordinator = VizioAppsDataUpdateCoordinator.opp)
@@ -92,11 +92,11 @@ async def async_unload_entry(
         entry.state == ENTRY_STATE_LOADED
         and entry.entry_id != config_entry.entry_id
         and entry.data[CONF_DEVICE_CLASS] == DEVICE_CLASS_TV
-        for entry in.opp.config_entries.async_entries(DOMAIN)
+        for entry in opp.config_entries.async_entries(DOMAIN)
     ):
         opp.data[DOMAIN].pop(CONF_APPS, None)
 
-    if not.opp.data[DOMAIN]:
+    if not opp.data[DOMAIN]:
         opp.data.pop(DOMAIN)
 
     return unload_ok

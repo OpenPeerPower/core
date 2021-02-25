@@ -41,7 +41,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         return
 
     async_add_entities(
-        [FibaroLight(device) for device in.opp.data[FIBARO_DEVICES]["light"]], True
+        [FibaroLight(device) for device in opp.data[FIBARO_DEVICES]["light"]], True
     )
 
 

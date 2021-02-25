@@ -48,7 +48,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     else:
         connect_to_server = None
 
-    if server_id in.opp.data[DOMAIN]:
+    if server_id in opp.data[DOMAIN]:
         server = opp.data[DOMAIN][server_id]
     else:
         server = Pulse(server=connect_to_server, connect=False, threading_lock=True)

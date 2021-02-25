@@ -92,7 +92,7 @@ async def async_setup_services(opp):
 
 async def async_unload_services(opp):
     """Unload deCONZ services."""
-    if not.opp.data.get(DECONZ_SERVICES):
+    if not opp.data.get(DECONZ_SERVICES):
         return
 
     opp.data[DECONZ_SERVICES] = False

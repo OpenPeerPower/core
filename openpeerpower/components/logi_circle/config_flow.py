@@ -41,7 +41,7 @@ def register_flow_implementation(
     redirect_uri: Auth callback redirect URI.
     sensors: Sensor config.
     """
-    if DATA_FLOW_IMPL not in.opp.data:
+    if DATA_FLOW_IMPL not in opp.data:
         opp.data[DATA_FLOW_IMPL] = OrderedDict()
 
     opp.data[DATA_FLOW_IMPL][domain] = {

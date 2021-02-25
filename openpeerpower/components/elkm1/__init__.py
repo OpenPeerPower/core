@@ -190,7 +190,7 @@ async def async_setup_opp: OpenPeerPower, opp_config: ConfigType) -> bool:
 
 @callback
 def _async_find_matching_config_entry(opp, prefix):
-    for entry in.opp.config_entries.async_entries(DOMAIN):
+    for entry in opp.config_entries.async_entries(DOMAIN):
         if entry.unique_id == prefix:
             return entry
 
@@ -279,9 +279,9 @@ def _included(ranges, set_to, values):
 
 def _find_elk_by_prefix(opp, prefix):
     """Search all config entries for a given prefix."""
-    for entry_id in.opp.data[DOMAIN]:
+    for entry_id in opp.data[DOMAIN]:
         if opp.data[DOMAIN][entry_id]["prefix"] == prefix:
-            return.opp.data[DOMAIN][entry_id]["elk"]
+            return opp.data[DOMAIN][entry_id]["elk"]
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):

@@ -44,7 +44,7 @@ SOURCE_PLATFORM_CONFIG = "platform_config"
 @bind.opp
 def entity_sources(opp: OpenPeerPower) -> Dict[str, Dict[str, str]]:
     """Get the entity sources."""
-    return.opp.data.get(DATA_ENTITY_SOURCE, {})
+    return opp.data.get(DATA_ENTITY_SOURCE, {})
 
 
 def generate_entity_id(
@@ -76,7 +76,7 @@ def async_generate_entity_id(
 
     test_string = preferred_string
     tries = 1
-    while not.opp.states.async_available(test_string):
+    while not opp.states.async_available(test_string):
         tries += 1
         test_string = f"{preferred_string}_{tries}"
 

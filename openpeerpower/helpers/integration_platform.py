@@ -50,7 +50,7 @@ async def async_process_integration_platforms(
 
     opp.bus.async_listen(EVENT_COMPONENT_LOADED, async_component_loaded)
 
-    tasks = [_process(comp) for comp in.opp.config.components]
+    tasks = [_process(comp) for comp in opp.config.components]
 
     if tasks:
         await asyncio.gather(*tasks)

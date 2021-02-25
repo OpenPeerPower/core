@@ -165,7 +165,7 @@ async def test_get_translations_loads_config_flows(opp, mock_config_flows):
         "component.component1.title": "world",
     }
 
-    assert "component1" not in.opp.config.components
+    assert "component1" not in opp.config.components
 
     mock_config_flows.append("component2")
     integration = Mock(file_path=pathlib.Path(__file__))
@@ -200,8 +200,8 @@ async def test_get_translations_loads_config_flows(opp, mock_config_flows):
     )
     assert translations == translations_all_cached
 
-    assert "component1" not in.opp.config.components
-    assert "component2" not in.opp.config.components
+    assert "component1" not in opp.config.components
+    assert "component2" not in opp.config.components
 
 
 async def test_get_translations_while_loading_components(opp):

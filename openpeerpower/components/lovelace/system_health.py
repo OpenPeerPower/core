@@ -24,7 +24,7 @@ async def system_health_info(opp):
     dashboards_info = await asyncio.gather(
         *[
             opp.data[DOMAIN]["dashboards"][dashboard].async_get_info()
-            for dashboard in.opp.data[DOMAIN]["dashboards"]
+            for dashboard in opp.data[DOMAIN]["dashboards"]
         ]
     )
 

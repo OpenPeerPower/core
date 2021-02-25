@@ -49,7 +49,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     encoding = config.get(CONF_ENCODING)
     password = config.get(CONF_PASSWORD)
 
-    if "pjlink" not in.opp.data:
+    if "pjlink" not in opp.data:
         opp.data["pjlink"] = {}
     opp.data = opp.data["pjlink"]
 

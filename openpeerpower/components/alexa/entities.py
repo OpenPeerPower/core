@@ -356,7 +356,7 @@ class AlexaEntity:
 def async_get_entities(opp, config) -> List[AlexaEntity]:
     """Return all entities that are supported by Alexa."""
     entities = []
-    for state in.opp.states.async_all():
+    for state in opp.states.async_all():
         if state.entity_id in CLOUD_NEVER_EXPOSED_ENTITIES:
             continue
 

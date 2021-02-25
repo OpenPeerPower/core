@@ -17,10 +17,10 @@ async def test_unload_entry.opp):
     assert opp.data[srp_energy.SRP_ENERGY_DOMAIN]
 
     assert await srp_energy.async_unload_entry(opp, config_entry)
-    assert not.opp.data[srp_energy.SRP_ENERGY_DOMAIN]
+    assert not opp.data[srp_energy.SRP_ENERGY_DOMAIN]
 
 
 async def test_async_setup_entry_with_exception.opp):
     """Test exception when SrpClient can't load."""
     await init_integration(opp, side_effect=Exception())
-    assert srp_energy.SRP_ENERGY_DOMAIN not in.opp.data
+    assert srp_energy.SRP_ENERGY_DOMAIN not in opp.data

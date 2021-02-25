@@ -45,4 +45,4 @@ async def async_attach_trigger(opp, config, action, automation_info):
         if task:
             await task
 
-    return.opp.bus.async_listen(EVENT_TAG_SCANNED, handle_event)
+    return opp.bus.async_listen(EVENT_TAG_SCANNED, handle_event)

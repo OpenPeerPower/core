@@ -26,7 +26,7 @@ def discover_chromecast(opp: OpenPeerPower, info: ChromecastInfo):
         return
 
     info = info.fill_out_missing_chromecast_info()
-    if info.uuid in.opp.data[KNOWN_CHROMECAST_INFO_KEY]:
+    if info.uuid in opp.data[KNOWN_CHROMECAST_INFO_KEY]:
         _LOGGER.debug("Discovered update for known chromecast %s", info)
     else:
         _LOGGER.debug("Discovered chromecast %s", info)
@@ -44,10 +44,10 @@ def _remove_chromecast(opp: OpenPeerPower, info: ChromecastInfo):
 
 def setup_internal_discovery(opp: OpenPeerPower) -> None:
     """Set up the pychromecast internal discovery."""
-    if INTERNAL_DISCOVERY_RUNNING_KEY not in.opp.data:
+    if INTERNAL_DISCOVERY_RUNNING_KEY not in opp.data:
         opp.data[INTERNAL_DISCOVERY_RUNNING_KEY] = threading.Lock()
 
-    if not.opp.data[INTERNAL_DISCOVERY_RUNNING_KEY].acquire(blocking=False):
+    if not opp.data[INTERNAL_DISCOVERY_RUNNING_KEY].acquire(blocking=False):
         # Internal discovery is already running
         return
 

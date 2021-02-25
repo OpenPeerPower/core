@@ -36,7 +36,7 @@ async def test_flow_works(opp, simple_mock_home):
 
     flow = next(
         flow
-        for flow in.opp.config_entries.flow.async_progress()
+        for flow in opp.config_entries.flow.async_progress()
         if flow["flow_id"] == result["flow_id"]
     )
     assert flow["context"]["unique_id"] == "ABC123"

@@ -90,7 +90,7 @@ async def async_request_validation(opp, config_entry, august_gateway):
 
         return False
 
-    if TWO_FA_REVALIDATE not in.opp.data[DOMAIN][entry_id]:
+    if TWO_FA_REVALIDATE not in opp.data[DOMAIN][entry_id]:
         await august_gateway.authenticator.async_send_verification_code()
 
     entry_data = config_entry.data
@@ -128,7 +128,7 @@ async def async_setup_august(opp, config_entry, august_gateway):
     # We still use the configurator to get a new 2fa code
     # when needed since config_flow doesn't have a way
     # to re-request if it expires
-    if TWO_FA_REVALIDATE in.opp.data[DOMAIN][entry_id]:
+    if TWO_FA_REVALIDATE in opp.data[DOMAIN][entry_id]:
         opp.components.configurator.async_request_done(
             opp.data[DOMAIN][entry_id].pop(TWO_FA_REVALIDATE)
         )

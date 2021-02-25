@@ -25,9 +25,9 @@ def convert_speed(speed: int) -> str:
     Fallback to medium speed if unsupported by OPP fan platform.
     """
     if speed in SPEEDS.values():
-        for.opp_speed, deconz_speed in SPEEDS.items():
+        for opp_speed, deconz_speed in SPEEDS.items():
             if speed == deconz_speed:
-                return.opp_speed
+                return opp_speed
     return SPEED_MEDIUM
 
 

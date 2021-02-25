@@ -618,4 +618,4 @@ class TextToSpeechView(OpenPeerPowerView):
 
 def get_base_url(opp):
     """Get base URL."""
-    return.opp.data[BASE_URL_KEY] or get_url(opp)
+    return opp.data[BASE_URL_KEY] or get_url(opp)

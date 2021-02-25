@@ -43,7 +43,7 @@ async def test_owserver_connect_failure.opp):
 
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     assert config_entry_owserver.state == ENTRY_STATE_SETUP_RETRY
-    assert not.opp.data.get(DOMAIN)
+    assert not opp.data.get(DOMAIN)
 
 
 async def test_failed_owserver_listing.opp):
@@ -86,4 +86,4 @@ async def test_unload_entry.opp):
 
     assert config_entry_owserver.state == ENTRY_STATE_NOT_LOADED
     assert config_entry_sysbus.state == ENTRY_STATE_NOT_LOADED
-    assert not.opp.data.get(DOMAIN)
+    assert not opp.data.get(DOMAIN)

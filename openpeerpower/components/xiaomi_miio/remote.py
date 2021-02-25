@@ -86,7 +86,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         _LOGGER.error("Device unavailable or token incorrect: %s", ex)
         raise PlatformNotReady from ex
 
-    if DATA_KEY not in.opp.data:
+    if DATA_KEY not in opp.data:
         opp.data[DATA_KEY] = {}
 
     friendly_name = config.get(CONF_NAME, f"xiaomi_miio_{host.replace('.', '_')}")

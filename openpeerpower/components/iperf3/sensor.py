@@ -18,7 +18,7 @@ ATTR_REMOTE_PORT = "Remote Port"
 async def async_setup_platform(opp, config, async_add_entities, discovery_info):
     """Set up the Iperf3 sensor."""
     sensors = []
-    for iperf3_host in.opp.data[IPERF3_DOMAIN].values():
+    for iperf3_host in opp.data[IPERF3_DOMAIN].values():
         sensors.extend([Iperf3Sensor(iperf3_host, sensor) for sensor in discovery_info])
     async_add_entities(sensors, True)
 

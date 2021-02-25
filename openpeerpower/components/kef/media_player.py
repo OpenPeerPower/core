@@ -97,7 +97,7 @@ def get_ip_mode(host):
 
 async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the KEF platform."""
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         opp.data[DOMAIN] = {}
 
     host = config[CONF_HOST]
@@ -140,7 +140,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         unique_id=unique_id,
     )
 
-    if host in.opp.data[DOMAIN]:
+    if host in opp.data[DOMAIN]:
         _LOGGER.debug("%s is already configured", host)
     else:
         opp.data[DOMAIN][host] = media_player

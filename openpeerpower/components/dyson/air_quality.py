@@ -22,9 +22,9 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     opp.data.setdefault(DYSON_AIQ_DEVICES, [])
 
     # Get Dyson Devices from parent component
-    device_ids = [device.unique_id for device in.opp.data[DYSON_AIQ_DEVICES]]
+    device_ids = [device.unique_id for device in opp.data[DYSON_AIQ_DEVICES]]
     new_entities = []
-    for device in.opp.data[DYSON_DEVICES]:
+    for device in opp.data[DYSON_DEVICES]:
         if isinstance(device, DysonPureCool) and device.serial not in device_ids:
             new_entities.append(DysonAirSensor(device))
 

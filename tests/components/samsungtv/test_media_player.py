@@ -275,7 +275,7 @@ async def test_update_access_denied(opp, remote, mock_now):
 
     assert [
         flow
-        for flow in.opp.config_entries.flow.async_progress()
+        for flow in opp.config_entries.flow.async_progress()
         if flow["context"]["source"] == "reauth"
     ]
 
@@ -299,7 +299,7 @@ async def test_update_connection_failure(opp, remotews, mock_now):
 
     assert [
         flow
-        for flow in.opp.config_entries.flow.async_progress()
+        for flow in opp.config_entries.flow.async_progress()
         if flow["context"]["source"] == "reauth"
     ]
 

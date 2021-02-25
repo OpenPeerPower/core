@@ -885,7 +885,7 @@ async def test_mqtt_subscribes_topics_on_connect(opp, mqtt_client_mock, mqtt_moc
     assert mqtt_client_mock.disconnect.call_count == 0
 
     expected = {"topic/test": 0, "home/sensor": 2, "still/pending": 1}
-    calls = {call[1][1]: call[1][2] for call in.opp.add_job.mock_calls}
+    calls = {call[1][1]: call[1][2] for call in opp.add_job.mock_calls}
     assert calls == expected
 
 

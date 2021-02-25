@@ -102,13 +102,13 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         return
 
     _LOGGER.debug("Creating new Dyson fans")
-    if DYSON_FAN_DEVICES not in.opp.data:
+    if DYSON_FAN_DEVICES not in opp.data:
         opp.data[DYSON_FAN_DEVICES] = []
 
     # Get Dyson Devices from parent component
     has_purecool_devices = False
-    device_serials = [device.serial for device in.opp.data[DYSON_FAN_DEVICES]]
-    for device in.opp.data[DYSON_DEVICES]:
+    device_serials = [device.serial for device in opp.data[DYSON_FAN_DEVICES]]
+    for device in opp.data[DYSON_DEVICES]:
         if device.serial not in device_serials:
             if isinstance(device, DysonPureCool):
                 has_purecool_devices = True

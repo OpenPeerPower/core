@@ -60,7 +60,7 @@ def configured_servers(opp):
     """Return a set of the configured Plex servers."""
     return {
         entry.data[CONF_SERVER_IDENTIFIER]
-        for entry in.opp.config_entries.async_entries(DOMAIN)
+        for entry in opp.config_entries.async_entries(DOMAIN)
     }
 
 

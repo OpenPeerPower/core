@@ -205,7 +205,7 @@ async def test_import_failed_connection(opp: OpenPeerPowerType):
             config,
         )
         await opp.async_block_till_done()
-        assert not.opp.config_entries.async_entries(DOMAIN)
+        assert not opp.config_entries.async_entries(DOMAIN)
 
 
 async def test_setup_entry_failed_connection(opp: OpenPeerPowerType, caplog):

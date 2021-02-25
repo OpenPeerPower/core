@@ -38,7 +38,7 @@ async def async_setup(opp, config):
 
     conf = config[DOMAIN]
 
-    if not.opp.config_entries.async_entries(DOMAIN):
+    if not opp.config_entries.async_entries(DOMAIN):
         opp.async_create_task(
             opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": SOURCE_IMPORT}, data=conf

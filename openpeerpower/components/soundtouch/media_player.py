@@ -96,7 +96,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Bose Soundtouch platform."""
-    if DATA_SOUNDTOUCH not in.opp.data:
+    if DATA_SOUNDTOUCH not in opp.data:
         opp.data[DATA_SOUNDTOUCH] = []
 
     if discovery_info:
@@ -104,7 +104,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         port = int(discovery_info["port"])
 
         # if device already exists by config
-        if host in [device.config["host"] for device in.opp.data[DATA_SOUNDTOUCH]]:
+        if host in [device.config["host"] for device in opp.data[DATA_SOUNDTOUCH]]:
             return
 
         remote_config = {"id": "op.component.soundtouch", "host": host, "port": port}
@@ -130,14 +130,14 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         if slaves_ids:
             slaves = [
                 device
-                for device in.opp.data[DATA_SOUNDTOUCH]
+                for device in opp.data[DATA_SOUNDTOUCH]
                 if device.entity_id in slaves_ids
             ]
 
         master = next(
             [
                 device
-                for device in.opp.data[DATA_SOUNDTOUCH]
+                for device in opp.data[DATA_SOUNDTOUCH]
                 if device.entity_id == master_device_id
             ].__iter__(),
             None,
@@ -151,7 +151,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 
         if service.service == SERVICE_PLAY_EVERYWHERE:
             slaves = [
-                d for d in.opp.data[DATA_SOUNDTOUCH] if d.entity_id != master_device_id
+                d for d in opp.data[DATA_SOUNDTOUCH] if d.entity_id != master_device_id
             ]
             master.create_zone(slaves)
         elif service.service == SERVICE_CREATE_ZONE:

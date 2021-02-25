@@ -233,7 +233,7 @@ async def async_unload_entry(opp, entry):
     """Disconnect from HomeKit devices before unloading entry."""
     hkid = entry.data["AccessoryPairingID"]
 
-    if hkid in.opp.data[KNOWN_DEVICES]:
+    if hkid in opp.data[KNOWN_DEVICES]:
         connection = opp.data[KNOWN_DEVICES][hkid]
         await connection.async_unload()
 

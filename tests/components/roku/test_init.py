@@ -41,5 +41,5 @@ async def test_unload_config_entry(
     await opp.config_entries.async_unload(entry.entry_id)
     await opp.async_block_till_done()
 
-    assert entry.entry_id not in.opp.data[DOMAIN]
+    assert entry.entry_id not in opp.data[DOMAIN]
     assert entry.state == ENTRY_STATE_NOT_LOADED

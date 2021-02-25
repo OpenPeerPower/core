@@ -97,7 +97,7 @@ def async_get_cloud_api_update_interval(opp, api_key, num_consumers):
 def async_get_cloud_coordinators_by_api_key(opp, api_key):
     """Get all DataUpdateCoordinator objects related to a particular API key."""
     coordinators = []
-    for entry_id, coordinator in.opp.data[DOMAIN][DATA_COORDINATOR].items():
+    for entry_id, coordinator in opp.data[DOMAIN][DATA_COORDINATOR].items():
         config_entry = opp.config_entries.async_get_entry(entry_id)
         if config_entry.data.get(CONF_API_KEY) == api_key:
             coordinators.append(coordinator)
@@ -200,7 +200,7 @@ async def async_setup_entry(opp, config_entry):
             except (InvalidKeyError, KeyExpiredError):
                 matching_flows = [
                     flow
-                    for flow in.opp.config_entries.flow.async_progress()
+                    for flow in opp.config_entries.flow.async_progress()
                     if flow["context"]["source"] == SOURCE_REAUTH
                     and flow["context"]["unique_id"] == config_entry.unique_id
                 ]

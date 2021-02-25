@@ -45,11 +45,11 @@ async def async_setup_entry(
     async_add_entities: Callable[[List[Entity], bool], None],
 ) -> None:
     """Set up Kuler sky light devices."""
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         opp.data[DOMAIN] = {}
-    if "devices" not in.opp.data[DOMAIN]:
+    if "devices" not in opp.data[DOMAIN]:
         opp.data[DOMAIN]["devices"] = set()
-    if "discovery" not in.opp.data[DOMAIN]:
+    if "discovery" not in opp.data[DOMAIN]:
         opp.data[DOMAIN]["discovery"] = asyncio.Lock()
 
     async def discover(*args):
@@ -69,7 +69,7 @@ async def async_setup_entry(
             new_devices = [
                 device
                 for device in bluetooth_devices
-                if device["address"] not in.opp.data[DOMAIN]["devices"]
+                if device["address"] not in opp.data[DOMAIN]["devices"]
             ]
 
             for device in new_devices:

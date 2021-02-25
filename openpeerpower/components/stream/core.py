@@ -196,7 +196,7 @@ class StreamView(OpenPeerPowerView):
        opp = request.app[.opp"]
 
         stream = next(
-            (s for s in.opp.data[DOMAIN][ATTR_STREAMS] if s.access_token == token),
+            (s for s in opp.data[DOMAIN][ATTR_STREAMS] if s.access_token == token),
             None,
         )
 

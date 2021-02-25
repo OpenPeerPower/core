@@ -145,7 +145,7 @@ class EntityPlatform:
 
             # This should not be replaced with.opp.async_add_job because
             # we don't want to track this task in case it blocks startup.
-            return.opp.loop.run_in_executor(  # type: ignore[return-value]
+            return opp.loop.run_in_executor(  # type: ignore[return-value]
                 None,
                 platform.setup_platform,  # type: ignore
                 opp,
@@ -632,8 +632,8 @@ def async_get_platforms(
 ) -> List[EntityPlatform]:
     """Find existing platforms."""
     if (
-        DATA_ENTITY_PLATFORM not in.opp.data
-        or integration_name not in.opp.data[DATA_ENTITY_PLATFORM]
+        DATA_ENTITY_PLATFORM not in opp.data
+        or integration_name not in opp.data[DATA_ENTITY_PLATFORM]
     ):
         return []
 

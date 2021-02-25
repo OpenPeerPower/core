@@ -39,7 +39,7 @@ async def async_attach_trigger(opp, config, action, automation_info):
                 event.context,
             )
 
-        return.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, opp_shutdown)
+        return opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, opp_shutdown)
 
     # Automation are enabled while.opp is starting up, fire right away
     # Check state because a config reload shouldn't trigger it.

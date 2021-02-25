@@ -172,7 +172,7 @@ def async_setup_services(opp: OpenPeerPowerType):
         address = service.data.get(CONF_ADDRESS)
         isy_name = service.data.get(CONF_ISY)
 
-        for config_entry_id in.opp.data[DOMAIN]:
+        for config_entry_id in opp.data[DOMAIN]:
             isy = opp.data[DOMAIN][config_entry_id][ISY994_ISY]
             if isy_name and not isy_name == isy.configuration["name"]:
                 continue
@@ -197,7 +197,7 @@ def async_setup_services(opp: OpenPeerPowerType):
         name = service.data.get(CONF_NAME)
         isy_name = service.data.get(CONF_ISY)
 
-        for config_entry_id in.opp.data[DOMAIN]:
+        for config_entry_id in opp.data[DOMAIN]:
             isy = opp.data[DOMAIN][config_entry_id][ISY994_ISY]
             if isy_name and not isy_name == isy.configuration["name"]:
                 continue
@@ -222,7 +222,7 @@ def async_setup_services(opp: OpenPeerPowerType):
         command = service.data.get(CONF_COMMAND)
         isy_name = service.data.get(CONF_ISY)
 
-        for config_entry_id in.opp.data[DOMAIN]:
+        for config_entry_id in opp.data[DOMAIN]:
             isy = opp.data[DOMAIN][config_entry_id][ISY994_ISY]
             if isy_name and not isy_name == isy.configuration["name"]:
                 continue
@@ -245,7 +245,7 @@ def async_setup_services(opp: OpenPeerPowerType):
         init = service.data.get(CONF_INIT, False)
         isy_name = service.data.get(CONF_ISY)
 
-        for config_entry_id in.opp.data[DOMAIN]:
+        for config_entry_id in opp.data[DOMAIN]:
             isy = opp.data[DOMAIN][config_entry_id][ISY994_ISY]
             if isy_name and not isy_name == isy.configuration["name"]:
                 continue
@@ -265,7 +265,7 @@ def async_setup_services(opp: OpenPeerPowerType):
         config_ids = []
         current_unique_ids = []
 
-        for config_entry_id in.opp.data[DOMAIN]:
+        for config_entry_id in opp.data[DOMAIN]:
             entries_for_this_config = er.async_entries_for_config_entry(
                 entity_registry, config_entry_id
             )
@@ -313,7 +313,7 @@ def async_setup_services(opp: OpenPeerPowerType):
 
     async def async_reload_config_entries(service) -> None:
         """Trigger a reload of all ISY994 config entries."""
-        for config_entry_id in.opp.data[DOMAIN]:
+        for config_entry_id in opp.data[DOMAIN]:
             opp.async_create_task(opp.config_entries.async_reload(config_entry_id))
 
     opp.services.async_register(

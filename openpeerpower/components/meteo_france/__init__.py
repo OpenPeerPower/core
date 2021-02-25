@@ -136,7 +136,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         department,
     )
     if is_valid_warning_department(department):
-        if not.opp.data[DOMAIN].get(department):
+        if not opp.data[DOMAIN].get(department):
             coordinator_alert = DataUpdateCoordinator(
                 opp,
                 _LOGGER,
@@ -204,7 +204,7 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     if unload_ok:
         opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
         opp.data[DOMAIN].pop(entry.entry_id)
-        if not.opp.data[DOMAIN]:
+        if not opp.data[DOMAIN]:
             opp.data.pop(DOMAIN)
 
     return unload_ok

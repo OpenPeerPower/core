@@ -278,10 +278,10 @@ async def async_attach_trigger(
 
 def get_button_device_by_dr_id(opp: OpenPeerPower, device_id: str):
     """Get a lutron device for the given device id."""
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         return None
 
-    for config_entry in.opp.data[DOMAIN]:
+    for config_entry in opp.data[DOMAIN]:
         button_devices = opp.data[DOMAIN][config_entry][BUTTON_DEVICES]
         device = button_devices.get(device_id)
         if device:

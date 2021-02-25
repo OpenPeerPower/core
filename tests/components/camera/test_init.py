@@ -22,7 +22,7 @@ from tests.components.camera import common
 async def mock_camera_fixture.opp):
     """Initialize a demo camera platform."""
     assert await async_setup_component(
-        opp. "camera", {camera.DOMAIN: {"platform": "demo"}}
+        opp, "camera", {camera.DOMAIN: {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 
@@ -310,7 +310,7 @@ async def test_preload_stream(opp, mock_stream):
         return_value="http://example.com",
     ):
         assert await async_setup_component(
-            opp. "camera", {DOMAIN: {"platform": "demo"}}
+            opp, "camera", {DOMAIN: {"platform": "demo"}}
         )
         await opp.async_block_till_done()
         opp.bus.async_fire(EVENT_OPENPEERPOWER_START)

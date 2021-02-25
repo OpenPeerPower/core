@@ -46,13 +46,13 @@ def.oppio_stubs.oppio_env, opp, opp_client, aioclient_mock):
 @pytest.fixture
 def.oppio_client.oppio_stubs, opp, opp_client):
     """Return a Opp.io HTTP client."""
-    return.opp.loop.run_until_complete.opp_client())
+    return opp.loop.run_until_complete.opp_client())
 
 
 @pytest.fixture
 def.oppio_noauth_client.oppio_stubs, opp, aiohttp_client):
     """Return a Opp.io HTTP client without auth."""
-    return.opp.loop.run_until_complete(aiohttp_client.opp.http.app))
+    return opp.loop.run_until_complete(aiohttp_client.opp.http.app))
 
 
 @pytest.fixture
@@ -70,7 +70,7 @@ def.oppio_handler(opp, aioclient_mock):
     """Create mock.oppio handler."""
 
     async def get_client_session():
-        return.opp.helpers.aiohttp_client.async_get_clientsession()
+        return opp.helpers.aiohttp_client.async_get_clientsession()
 
     websession = opp.loop.run_until_complete(get_client_session())
 

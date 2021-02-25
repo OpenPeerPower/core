@@ -229,7 +229,7 @@ def async_track_state_change(
         # entity_id.
         return async_track_state_change_event(opp, entity_ids, state_change_listener)
 
-    return.opp.bus.async_listen(
+    return opp.bus.async_listen(
         EVENT_STATE_CHANGED, state_change_dispatcher, event_filter=state_change_filter
     )
 
@@ -260,7 +260,7 @@ def async_track_state_change_event(
 
     entity_callbacks = opp.data.setdefault(TRACK_STATE_CHANGE_CALLBACKS, {})
 
-    if TRACK_STATE_CHANGE_LISTENER not in.opp.data:
+    if TRACK_STATE_CHANGE_LISTENER not in opp.data:
 
         @callback
         def _async_state_change_filter(event: Event) -> bool:
@@ -350,7 +350,7 @@ def async_track_entity_registry_updated_event(
 
     entity_callbacks = opp.data.setdefault(TRACK_ENTITY_REGISTRY_UPDATED_CALLBACKS, {})
 
-    if TRACK_ENTITY_REGISTRY_UPDATED_LISTENER not in.opp.data:
+    if TRACK_ENTITY_REGISTRY_UPDATED_LISTENER not in opp.data:
 
         @callback
         def _async_entity_registry_updated_filter(event: Event) -> bool:
@@ -433,7 +433,7 @@ def async_track_state_added_domain(
 
     domain_callbacks = opp.data.setdefault(TRACK_STATE_ADDED_DOMAIN_CALLBACKS, {})
 
-    if TRACK_STATE_ADDED_DOMAIN_LISTENER not in.opp.data:
+    if TRACK_STATE_ADDED_DOMAIN_LISTENER not in opp.data:
 
         @callback
         def _async_state_change_filter(event: Event) -> bool:
@@ -486,7 +486,7 @@ def async_track_state_removed_domain(
 
     domain_callbacks = opp.data.setdefault(TRACK_STATE_REMOVED_DOMAIN_CALLBACKS, {})
 
-    if TRACK_STATE_REMOVED_DOMAIN_LISTENER not in.opp.data:
+    if TRACK_STATE_REMOVED_DOMAIN_LISTENER not in opp.data:
 
         @callback
         def _async_state_change_filter(event: Event) -> bool:
@@ -1381,7 +1381,7 @@ def async_track_utc_time_change(
             """Fire every time event that comes in."""
             opp.async_run(opp_job(job, event.data[ATTR_NOW])
 
-        return.opp.bus.async_listen(EVENT_TIME_CHANGED, time_change_listener)
+        return opp.bus.async_listen(EVENT_TIME_CHANGED, time_change_listener)
 
     matching_seconds = dt_util.parse_time_expression(second, 0, 59)
     matching_minutes = dt_util.parse_time_expression(minute, 0, 59)

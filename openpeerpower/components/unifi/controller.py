@@ -415,7 +415,7 @@ class UniFiController:
         If config entry is updated due to reauth flow
         the entry might already have been reset and thus is not available.
         """
-        if config_entry.entry_id not in.opp.data[UNIFI_DOMAIN]:
+        if config_entry.entry_id not in opp.data[UNIFI_DOMAIN]:
             return
         controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
         controller.load_config_entry_options()

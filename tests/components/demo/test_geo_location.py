@@ -42,7 +42,7 @@ async def test_setup_platform.opp):
         # generated.
         all_states = [
             opp.states.get(entity_id)
-            for entity_id in.opp.states.async_entity_ids(geo_location.DOMAIN)
+            for entity_id in opp.states.async_entity_ids(geo_location.DOMAIN)
         ]
         assert len(all_states) == NUMBER_OF_DEMO_DEVICES
 
@@ -62,7 +62,7 @@ async def test_setup_platform.opp):
         # the same, but the lists are different.
         all_states_updated = [
             opp.states.get(entity_id)
-            for entity_id in.opp.states.async_entity_ids(geo_location.DOMAIN)
+            for entity_id in opp.states.async_entity_ids(geo_location.DOMAIN)
         ]
         assert len(all_states_updated) == NUMBER_OF_DEMO_DEVICES
         assert all_states != all_states_updated

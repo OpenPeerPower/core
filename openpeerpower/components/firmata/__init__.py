@@ -126,7 +126,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     """Set up the Firmata domain."""
     # Delete specific entries that no longer exist in the config
     if opp.config_entries.async_entries(DOMAIN):
-        for entry in.opp.config_entries.async_entries(DOMAIN):
+        for entry in opp.config_entries.async_entries(DOMAIN):
             remove = True
             for board in config[DOMAIN]:
                 if entry.data[CONF_SERIAL_PORT] == board[CONF_SERIAL_PORT]:
@@ -139,7 +139,7 @@ async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
     for board in config[DOMAIN]:
         firmata_config = copy(board)
         existing_entry = False
-        for entry in.opp.config_entries.async_entries(DOMAIN):
+        for entry in opp.config_entries.async_entries(DOMAIN):
             if board[CONF_SERIAL_PORT] == entry.data[CONF_SERIAL_PORT]:
                 existing_entry = True
                 firmata_config[CONF_NAME] = entry.data[CONF_NAME]
@@ -161,7 +161,7 @@ async def async_setup_entry(
     opp: OpenPeerPower, config_entry: config_entries.ConfigEntry
 ) -> bool:
     """Set up a Firmata board for a config entry."""
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         opp.data[DOMAIN] = {}
 
     _LOGGER.debug(
@@ -181,7 +181,7 @@ async def async_setup_entry(
     async def handle_shutdown(event) -> None:
         """Handle shutdown of board when Open Peer Power shuts down."""
         # Ensure board was not already removed previously before shutdown
-        if config_entry.entry_id in.opp.data[DOMAIN]:
+        if config_entry.entry_id in opp.data[DOMAIN]:
             await board.async_reset()
 
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, handle_shutdown)

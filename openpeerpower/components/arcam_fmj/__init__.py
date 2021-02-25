@@ -41,7 +41,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
 
     async def _stop(_):
         asyncio.gather(
-            *[_await_cancel(task) for task in.opp.data[DOMAIN_DATA_TASKS].values()]
+            *[_await_cancel(task) for task in opp.data[DOMAIN_DATA_TASKS].values()]
         )
 
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _stop)

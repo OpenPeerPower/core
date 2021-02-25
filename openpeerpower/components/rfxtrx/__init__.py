@@ -224,7 +224,7 @@ async def async_unload_entry(opp, entry: config_entries.ConfigEntry):
 
     opp.services.async_remove(DOMAIN, SERVICE_SEND)
 
-    for cleanup_callback in.opp.data[DOMAIN][DATA_CLEANUP_CALLBACKS]:
+    for cleanup_callback in opp.data[DOMAIN][DATA_CLEANUP_CALLBACKS]:
         cleanup_callback()
 
     listener = opp.data[DOMAIN][DATA_LISTENER]

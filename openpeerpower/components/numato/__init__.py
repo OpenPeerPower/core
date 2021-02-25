@@ -149,7 +149,7 @@ def setup(opp, config):
         """Stuff to do before stopping."""
         _LOGGER.debug("Clean up Numato GPIO")
         gpio.cleanup()
-        if DATA_API in.opp.data[DOMAIN]:
+        if DATA_API in opp.data[DOMAIN]:
             opp.data[DOMAIN][DATA_API].ports_registered.clear()
 
     def prepare_gpio(event):

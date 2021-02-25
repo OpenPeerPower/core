@@ -42,7 +42,7 @@ def setup(opp, config):
     for watcher in conf:
         path = watcher[CONF_FOLDER]
         patterns = watcher[CONF_PATTERNS]
-        if not.opp.config.is_allowed_path(path):
+        if not opp.config.is_allowed_path(path):
             _LOGGER.error("folder %s is not valid or allowed", path)
             return False
         Watcher(path, patterns, opp)

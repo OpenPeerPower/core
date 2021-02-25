@@ -84,8 +84,8 @@ class TemplateLock(TemplateEntity, LockEntity):
         self._name = name
         self._state_template = value_template
         domain = __name__.split(".")[-2]
-        self._command_lock = Script.opp, command_lock, name, domain)
-        self._command_unlock = Script.opp, command_unlock, name, domain)
+        self._command_lock = Script(opp, command_lock, name, domain)
+        self._command_unlock = Script(opp, command_unlock, name, domain)
         self._optimistic = optimistic
         self._unique_id = unique_id
 

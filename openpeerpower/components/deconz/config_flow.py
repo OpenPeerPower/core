@@ -38,7 +38,7 @@ CONF_MANUAL_INPUT = "Manually define gateway"
 @callback
 def get_master_gateway(opp):
     """Return the gateway which is marked as master."""
-    for gateway in.opp.data[DOMAIN].values():
+    for gateway in opp.data[DOMAIN].values():
         if gateway.master:
             return gateway
 
@@ -49,7 +49,7 @@ class DeconzFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
     CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_PUSH
 
-     opp.o_discovery = None
+    _oppio_discovery = None
 
     @staticmethod
     @callback
@@ -215,7 +215,7 @@ class DeconzFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         return await self.async_step_link()
 
-    async def async_step(oppio(self, discovery_info):
+    async def async_step_oppio(self, discovery_info):
         """Prepare configuration for a Opp.io deCONZ bridge.
 
         This flow is triggered by the discovery component.
@@ -235,9 +235,9 @@ class DeconzFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         self.oppio_discovery = discovery_info
 
-        return await self.async_step(oppio_confirm()
+        return await self.async_step_oppio_confirm()
 
-    async def async_step(oppio_confirm(self, user_input=None):
+    async def async_step_oppio_confirm(self, user_input=None):
         """Confirm a Opp.io discovery."""
         if user_input is not None:
             self.deconz_config = {
@@ -249,7 +249,7 @@ class DeconzFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             return await self._create_entry()
 
         return self.async_show_form(
-            step_id= oppio_confirm",
+            step_id= "oppio_confirm",
             description_placeholders={"addon": self.oppio_discovery["addon"]},
         )
 

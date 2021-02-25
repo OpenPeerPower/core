@@ -126,7 +126,7 @@ async def test_reload_notify(opp):
 
     assert opp.services.has_service(notify.DOMAIN, "demo1")
     assert opp.services.has_service(notify.DOMAIN, "demo2")
-    assert not.opp.services.has_service(notify.DOMAIN, "group_notify")
+    assert not opp.services.has_service(notify.DOMAIN, "group_notify")
     assert opp.services.has_service(notify.DOMAIN, "new_group_notify")
 
 

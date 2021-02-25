@@ -117,14 +117,14 @@ async def async_setup(opp, config):
 
 async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
-    if not.opp.data[NEW_CLIENT_TASK].done():
+    if not opp.data[NEW_CLIENT_TASK].done():
         opp.data[NEW_CLIENT_TASK].cancel()
     interval_tracker = opp.data.pop(INTERVAL_TRACKER)
     interval_tracker()
     await asyncio.wait(
         [
             opp.config_entries.async_forward_entry_unload(config_entry, component)
-            for component in.opp.data.pop(CONFIG_ENTRY_IS_SETUP)
+            for component in opp.data.pop(CONFIG_ENTRY_IS_SETUP)
         ]
     )
     del.opp.data[DOMAIN]

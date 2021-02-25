@@ -221,7 +221,7 @@ def websocket_get_notifications(
                         ATTR_CREATED_AT,
                     )
                 }
-                for data in.opp.data[DOMAIN]["notifications"].values()
+                for data in opp.data[DOMAIN]["notifications"].values()
             ],
         )
     )

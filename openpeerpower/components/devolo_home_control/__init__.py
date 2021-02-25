@@ -63,7 +63,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         )
 
     def shutdown(event):
-        for gateway in.opp.data[DOMAIN][entry.entry_id]["gateways"]:
+        for gateway in opp.data[DOMAIN][entry.entry_id]["gateways"]:
             gateway.websocket_disconnect(
                 f"websocket disconnect requested by {EVENT_OPENPEERPOWER_STOP}"
             )
@@ -89,7 +89,7 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
     await asyncio.gather(
         *[
             opp.async_add_executor_job(gateway.websocket_disconnect)
-            for gateway in.opp.data[DOMAIN][entry.entry_id]["gateways"]
+            for gateway in opp.data[DOMAIN][entry.entry_id]["gateways"]
         ]
     )
     opp.data[DOMAIN][entry.entry_id]["listener"]()

@@ -310,4 +310,4 @@ async def test_load_unload_entry(opp, locative_client, webhook_id):
 
     await locative.async_unload_entry(opp, entry)
     await opp.async_block_till_done()
-    assert not.opp.data[DATA_DISPATCHER][TRACKER_UPDATE]
+    assert not opp.data[DATA_DISPATCHER][TRACKER_UPDATE]

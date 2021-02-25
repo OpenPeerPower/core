@@ -96,7 +96,7 @@ async def test_lights_on_when_sun_sets(opp, scanner):
 
     assert all(
         opp.states.get(ent_id).state == STATE_ON
-        for ent_id in.opp.states.async_entity_ids("light")
+        for ent_id in opp.states.async_entity_ids("light")
     )
 
 
@@ -123,7 +123,7 @@ async def test_lights_turn_off_when_everyone_leaves.opp):
 
     assert all(
         opp.states.get(ent_id).state == STATE_OFF
-        for ent_id in.opp.states.async_entity_ids("light")
+        for ent_id in opp.states.async_entity_ids("light")
     )
 
 
@@ -145,7 +145,7 @@ async def test_lights_turn_on_when_coming_home_after_sun_set(opp, scanner):
 
     assert all(
         opp.states.get(ent_id).state == light.STATE_ON
-        for ent_id in.opp.states.async_entity_ids("light")
+        for ent_id in opp.states.async_entity_ids("light")
     )
 
 
@@ -165,7 +165,7 @@ async def test_lights_turn_on_when_coming_home_after_sun_set_person(opp, scanner
 
         assert all(
             not light.is_on(opp, ent_id)
-            for ent_id in.opp.states.async_entity_ids("light")
+            for ent_id in opp.states.async_entity_ids("light")
         )
         assert opp.states.get(device_1).state == "not_home"
         assert opp.states.get(device_2).state == "not_home"
@@ -188,7 +188,7 @@ async def test_lights_turn_on_when_coming_home_after_sun_set_person(opp, scanner
 
         assert all(
             opp.states.get(ent_id).state == STATE_OFF
-            for ent_id in.opp.states.async_entity_ids("light")
+            for ent_id in opp.states.async_entity_ids("light")
         )
         assert opp.states.get(device_1).state == "not_home"
         assert opp.states.get(device_2).state == "not_home"
@@ -200,7 +200,7 @@ async def test_lights_turn_on_when_coming_home_after_sun_set_person(opp, scanner
 
         assert all(
             opp.states.get(ent_id).state == STATE_OFF
-            for ent_id in.opp.states.async_entity_ids("light")
+            for ent_id in opp.states.async_entity_ids("light")
         )
         assert opp.states.get(device_1).state == "not_home"
         assert opp.states.get(device_2).state == "home"
@@ -213,7 +213,7 @@ async def test_lights_turn_on_when_coming_home_after_sun_set_person(opp, scanner
 
         assert all(
             opp.states.get(ent_id).state == light.STATE_ON
-            for ent_id in.opp.states.async_entity_ids("light")
+            for ent_id in opp.states.async_entity_ids("light")
         )
         assert opp.states.get(device_1).state == "home"
         assert opp.states.get(device_2).state == "home"

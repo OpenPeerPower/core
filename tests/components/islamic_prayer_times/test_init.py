@@ -94,7 +94,7 @@ async def test_unload_entry(opp, legacy_patchable_time):
         assert await opp.config_entries.async_unload(entry.entry_id)
         await opp.async_block_till_done()
         assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
-        assert islamic_prayer_times.DOMAIN not in.opp.data
+        assert islamic_prayer_times.DOMAIN not in opp.data
 
 
 async def test_islamic_prayer_times_timestamp_format(opp, legacy_patchable_time):

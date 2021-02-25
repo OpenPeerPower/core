@@ -109,7 +109,7 @@ def websocket_lovelace_dashboards(opp, connection, msg):
         msg["id"],
         [
             dashboard.config
-            for dashboard in.opp.data[DOMAIN]["dashboards"].values()
+            for dashboard in opp.data[DOMAIN]["dashboards"].values()
             if dashboard.config
         ],
     )

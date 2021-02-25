@@ -44,7 +44,7 @@ async def test_manually_configured_platform.opp):
         {ALARM_CONTROL_PANEL_DOMAIN: {"platform": HMIPC_DOMAIN}},
     )
 
-    assert not.opp.data.get(HMIPC_DOMAIN)
+    assert not opp.data.get(HMIPC_DOMAIN)
 
 
 async def test_hmip_alarm_control_panel(opp, default_mock_hap_factory):

@@ -103,7 +103,7 @@ async def base_test(
                 assert await async_setup_component(opp, entity_domain, config_device)
                 await opp.async_block_till_done()
 
-        assert DOMAIN in.opp.data
+        assert DOMAIN in opp.data
         if config_device is not None:
             entity_id = f"{entity_domain}.{device_name}"
             device = opp.states.get(entity_id)
@@ -120,7 +120,7 @@ async def base_test(
 
         # Check state
         entity_id = f"{entity_domain}.{device_name}"
-        return.opp.states.get(entity_id).state
+        return opp.states.get(entity_id).state
 
 
 async def base_config_test(

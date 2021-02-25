@@ -14,7 +14,7 @@ from .const import DOMAIN
 @callback
 def configured_instances(opp):
     """Return already configured instances."""
-    return.opp.config_entries.async_entries(DOMAIN)
+    return opp.config_entries.async_entries(DOMAIN)
 
 
 @config_entries.HANDLERS.register(DOMAIN)

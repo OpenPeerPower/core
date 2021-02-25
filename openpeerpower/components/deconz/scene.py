@@ -42,7 +42,7 @@ class DeconzScene(Scene):
         """Subscribe to sensors events."""
         self.gateway.deconz_ids[self.entity_id] = self._scene.deconz_id
 
-    async def async_will_remove_from(opp(self) -> None:
+    async def async_will_remove_from_opp(self) -> None:
         """Disconnect scene object when removed."""
         del self.gateway.deconz_ids[self.entity_id]
         self._scene = None

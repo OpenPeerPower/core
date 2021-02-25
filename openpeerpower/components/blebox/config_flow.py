@@ -92,7 +92,7 @@ class BleBoxConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
         addr = host_port(user_input)
 
-        for entry in.opp.config_entries.async_entries(DOMAIN):
+        for entry in opp.config_entries.async_entries(DOMAIN):
             if addr == host_port(entry.data):
                 host, port = addr
                 return self.async_abort(

@@ -11,7 +11,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         return
 
     add_entities(
-        [FibaroSwitch(device) for device in.opp.data[FIBARO_DEVICES]["switch"]], True
+        [FibaroSwitch(device) for device in opp.data[FIBARO_DEVICES]["switch"]], True
     )
 
 

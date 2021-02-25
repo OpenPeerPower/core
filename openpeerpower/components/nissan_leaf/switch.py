@@ -14,7 +14,7 @@ def setup_platform(opp, config, add_devices, discovery_info=None):
         return
 
     devices = []
-    for vin, datastore in.opp.data[DATA_LEAF].items():
+    for vin, datastore in opp.data[DATA_LEAF].items():
         _LOGGER.debug("Adding switch for vin=%s", vin)
         devices.append(LeafClimateSwitch(datastore))
 

@@ -16,7 +16,7 @@ def solaredge_entries(opp: OpenPeerPower):
     """Return the site_ids for the domain."""
     return {
         (entry.data[CONF_SITE_ID])
-        for entry in.opp.config_entries.async_entries(DOMAIN)
+        for entry in opp.config_entries.async_entries(DOMAIN)
     }
 
 

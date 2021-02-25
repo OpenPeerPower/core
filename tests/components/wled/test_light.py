@@ -248,8 +248,8 @@ async def test_dynamically_handle_segments(
         async_fire_time_changed(opp, dt_util.utcnow() + SCAN_INTERVAL)
         await opp.async_block_till_done()
         assert opp.states.get("light.wled_rgb_light_segment_0")
-        assert not.opp.states.get("light.wled_rgb_light_segment_1")
-        assert not.opp.states.get("light.wled_rgb_light_master")
+        assert not opp.states.get("light.wled_rgb_light_segment_1")
+        assert not opp.states.get("light.wled_rgb_light_master")
 
     # Test adding if segment shows up again, including the master entity
     async_fire_time_changed(opp, dt_util.utcnow() + SCAN_INTERVAL)
@@ -277,7 +277,7 @@ async def test_single_segment_behavior(
         async_fire_time_changed(opp, dt_util.utcnow() + SCAN_INTERVAL)
         await opp.async_block_till_done()
 
-        assert not.opp.states.get("light.wled_rgb_light_master")
+        assert not opp.states.get("light.wled_rgb_light_master")
 
         state = opp.states.get("light.wled_rgb_light_segment_0")
         assert state

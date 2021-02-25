@@ -27,7 +27,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
             camera.capability()
         except AttributeError:
             _id = camera.object_id() + camera.name()
-            if _id not in.opp.data[DOMAIN]["unique_ids"]:
+            if _id not in opp.data[DOMAIN]["unique_ids"]:
                 add_entities([WinkCameraDevice(camera, opp)])
 
 

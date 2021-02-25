@@ -212,7 +212,7 @@ async def test_platform_error_slow_setup_opp, caplog):
         await component.async_setup({DOMAIN: {"platform": "test_platform"}})
         await opp.async_block_till_done()
         assert len(called) == 1
-        assert "test_domain.test_platform" not in.opp.config.components
+        assert "test_domain.test_platform" not in opp.config.components
         assert "test_platform is taking longer than 0 seconds" in caplog.text
 
 
@@ -411,7 +411,7 @@ async def test_using_prescribed_entity_id(opp):
     await component.async_add_entities(
         [MockEntity(name="bla", entity_id="hello.world")]
     )
-    assert "hello.world" in.opp.states.async_entity_ids()
+    assert "hello.world" in opp.states.async_entity_ids()
 
 
 async def test_using_prescribed_entity_id_with_unique_id(opp):
@@ -423,7 +423,7 @@ async def test_using_prescribed_entity_id_with_unique_id(opp):
         [MockEntity(entity_id="test_domain.world", unique_id="bla")]
     )
 
-    assert "test_domain.world_2" in.opp.states.async_entity_ids()
+    assert "test_domain.world_2" in opp.states.async_entity_ids()
 
 
 async def test_using_prescribed_entity_id_which_is_registered(opp):
@@ -436,7 +436,7 @@ async def test_using_prescribed_entity_id_which_is_registered(opp):
     # This entity_id will be rewritten
     await component.async_add_entities([MockEntity(entity_id="test_domain.world")])
 
-    assert "test_domain.world_2" in.opp.states.async_entity_ids()
+    assert "test_domain.world_2" in opp.states.async_entity_ids()
 
 
 async def test_name_which_conflict_with_registered(opp):
@@ -449,7 +449,7 @@ async def test_name_which_conflict_with_registered(opp):
 
     await component.async_add_entities([MockEntity(name="world")])
 
-    assert "test_domain.world_2" in.opp.states.async_entity_ids()
+    assert "test_domain.world_2" in opp.states.async_entity_ids()
 
 
 async def test_entity_with_name_and_entity_id_getting_registered(opp):
@@ -458,7 +458,7 @@ async def test_entity_with_name_and_entity_id_getting_registered(opp):
     await component.async_add_entities(
         [MockEntity(unique_id="1234", name="bla", entity_id="test_domain.world")]
     )
-    assert "test_domain.world" in.opp.states.async_entity_ids()
+    assert "test_domain.world" in opp.states.async_entity_ids()
 
 
 async def test_overriding_name_from_registry(opp):
@@ -563,7 +563,7 @@ async def test_setup_entry(opp):
     assert await entity_platform.async_setup_entry(config_entry)
     await opp.async_block_till_done()
     full_name = f"{entity_platform.domain}.{config_entry.domain}"
-    assert full_name in.opp.config.components
+    assert full_name in opp.config.components
     assert len.opp.states.async_entity_ids()) == 1
     assert len(registry.entities) == 1
     assert registry.entities["test_domain.test1"].config_entry_id == "super-mock-id"
@@ -582,7 +582,7 @@ async def test_setup_entry_platform_not_ready(opp, caplog):
         assert not await ent_platform.async_setup_entry(config_entry)
 
     full_name = f"{ent_platform.domain}.{config_entry.domain}"
-    assert full_name not in.opp.config.components
+    assert full_name not in opp.config.components
     assert len(async_setup_entry.mock_calls) == 1
     assert "Platform test not ready yet" in caplog.text
     assert len(mock_call_later.mock_calls) == 1
@@ -970,7 +970,7 @@ async def test_setup_entry_with_entities_that_block_forever(opp, caplog):
         assert await mock_entity_platform.async_setup_entry(config_entry)
         await opp.async_block_till_done()
     full_name = f"{mock_entity_platform.domain}.{config_entry.domain}"
-    assert full_name in.opp.config.components
+    assert full_name in opp.config.components
     assert len.opp.states.async_entity_ids()) == 0
     assert len(registry.entities) == 1
     assert "Timed out adding entities" in caplog.text

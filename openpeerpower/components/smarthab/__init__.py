@@ -38,7 +38,7 @@ async def async_setup(opp, config) -> bool:
     if DOMAIN not in config:
         return True
 
-    if not.opp.config_entries.async_entries(DOMAIN):
+    if not opp.config_entries.async_entries(DOMAIN):
         opp.async_create_task(
             opp.config_entries.flow.async_init(
                 DOMAIN,

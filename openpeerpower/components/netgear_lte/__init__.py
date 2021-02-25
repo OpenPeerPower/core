@@ -173,7 +173,7 @@ class LTEData:
 
 async def async_setup(opp, config):
     """Set up Netgear LTE component."""
-    if DATA_KEY not in.opp.data:
+    if DATA_KEY not in opp.data:
         websession = async_create_clientsession(
             opp. cookie_jar=aiohttp.CookieJar(unsafe=True)
         )

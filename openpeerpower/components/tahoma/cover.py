@@ -56,7 +56,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         return
     controller = opp.data[TAHOMA_DOMAIN]["controller"]
     devices = []
-    for device in.opp.data[TAHOMA_DOMAIN]["devices"]["cover"]:
+    for device in opp.data[TAHOMA_DOMAIN]["devices"]["cover"]:
         devices.append(TahomaCover(device, controller))
     add_entities(devices, True)
 

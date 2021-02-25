@@ -41,7 +41,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
 
 def _create_entities(opp, config_entry):
     entities = []
-    for controller in.opp.data[DOMAIN_RACHIO][config_entry.entry_id].controllers:
+    for controller in opp.data[DOMAIN_RACHIO][config_entry.entry_id].controllers:
         entities.append(RachioControllerOnlineBinarySensor(controller))
         entities.append(RachioRainSensor(controller))
     return entities

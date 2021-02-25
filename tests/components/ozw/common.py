@@ -27,7 +27,7 @@ async def setup_ozw(opp, entry=None, fixture=None):
         assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
-    assert "ozw" in.opp.config.components
+    assert "ozw" in opp.config.components
     assert len(mock_subscribe.mock_calls) == 1
     receive_message = mock_subscribe.mock_calls[0][1][2]
 

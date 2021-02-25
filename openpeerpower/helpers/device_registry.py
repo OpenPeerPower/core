@@ -659,7 +659,7 @@ def async_get(opp: OpenPeerPowerType) -> DeviceRegistry:
 
 async def async_load(opp: OpenPeerPowerType) -> None:
     """Load device registry."""
-    assert DATA_REGISTRY not in.opp.data
+    assert DATA_REGISTRY not in opp.data
     opp.data[DATA_REGISTRY] = DeviceRegistry.opp)
     await opp.data[DATA_REGISTRY].async_load()
 
@@ -699,7 +699,7 @@ def async_cleanup(
 ) -> None:
     """Clean up device registry."""
     # Find all devices that are referenced by a config_entry.
-    config_entry_ids = {entry.entry_id for entry in.opp.config_entries.async_entries()}
+    config_entry_ids = {entry.entry_id for entry in opp.config_entries.async_entries()}
     references_config_entries = {
         device.id
         for device in dev_reg.devices.values()

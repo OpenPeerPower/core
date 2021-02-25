@@ -76,7 +76,7 @@ async def test_empty_setup_opp):
     """Test an empty set up loads the core."""
     await bootstrap.async_from_config_dict({}, opp)
     for domain in bootstrap.CORE_INTEGRATIONS:
-        assert domain in.opp.config.components, domain
+        assert domain in opp.config.components, domain
 
 
 async def test_core_failure_loads_safe_mode(opp, caplog):
@@ -89,7 +89,7 @@ async def test_core_failure_loads_safe_mode(opp, caplog):
 
     assert "core failed to initialize" in caplog.text
     # We aborted early, group not set up
-    assert "group" not in.opp.config.components
+    assert "group" not in opp.config.components
 
 
 @pytest.mark.parametrize("load_registries", [False])
@@ -99,7 +99,7 @@ async def test_setting_up_config(opp):
         opp. {"group hello": {}, "openpeerpower": {}}
     )
 
-    assert "group" in.opp.config.components
+    assert "group" in opp.config.components
 
 
 @pytest.mark.parametrize("load_registries", [False])
@@ -141,9 +141,9 @@ async def test_setup_after_deps_all_present(opp):
             opp. {"root": {}, "first_dep": {}, "second_dep": {}, "logger": {}}
         )
 
-    assert "root" in.opp.config.components
-    assert "first_dep" in.opp.config.components
-    assert "second_dep" in.opp.config.components
+    assert "root" in opp.config.components
+    assert "first_dep" in opp.config.components
+    assert "second_dep" in opp.config.components
     assert order == ["logger", "root", "first_dep", "second_dep"]
 
 
@@ -189,8 +189,8 @@ async def test_setup_after_deps_in_stage_1_ignored(opp):
         opp. {"cloud": {}, "normal_integration": {}, "an_after_dep": {}}
     )
 
-    assert "normal_integration" in.opp.config.components
-    assert "cloud" in.opp.config.components
+    assert "normal_integration" in opp.config.components
+    assert "cloud" in opp.config.components
     assert order == ["cloud", "an_after_dep", "normal_integration"]
 
 
@@ -238,9 +238,9 @@ async def test_setup_after_deps_via_platform(opp):
         opp. {"light": {"platform": "platform_int"}, "after_dep_of_platform_int": {}}
     )
 
-    assert "light" in.opp.config.components
-    assert "after_dep_of_platform_int" in.opp.config.components
-    assert "platform_int" in.opp.config.components
+    assert "light" in opp.config.components
+    assert "after_dep_of_platform_int" in opp.config.components
+    assert "platform_int" in opp.config.components
     assert order == ["after_dep_of_platform_int", "platform_int"]
 
 
@@ -278,9 +278,9 @@ async def test_setup_after_deps_not_trigger_load(opp):
 
     await bootstrap._async_set_up_integrations(opp, {"root": {}, "second_dep": {}})
 
-    assert "root" in.opp.config.components
-    assert "first_dep" not in.opp.config.components
-    assert "second_dep" in.opp.config.components
+    assert "root" in opp.config.components
+    assert "first_dep" not in opp.config.components
+    assert "second_dep" in opp.config.components
 
 
 @pytest.mark.parametrize("load_registries", [False])
@@ -311,9 +311,9 @@ async def test_setup_after_deps_not_present(opp):
         opp. {"root": {}, "first_dep": {}, "second_dep": {}}
     )
 
-    assert "root" in.opp.config.components
-    assert "first_dep" not in.opp.config.components
-    assert "second_dep" in.opp.config.components
+    assert "root" in opp.config.components
+    assert "first_dep" not in opp.config.components
+    assert "second_dep" in opp.config.components
     assert order == ["root", "second_dep"]
 
 
@@ -393,8 +393,8 @@ async def test_setup_opp(
 
     assert "Waiting on integrations to complete setup" not in caplog.text
 
-    assert "browser" in.opp.config.components
-    assert "safe_mode" not in.opp.config.components
+    assert "browser" in opp.config.components
+    assert "safe_mode" not in opp.config.components
 
     assert len(mock_enable_logging.mock_calls) == 1
     assert mock_enable_logging.mock_calls[0][1] == (
@@ -474,7 +474,7 @@ async def test_setup_opp_invalid_yaml(
             ),
         )
 
-    assert "safe_mode" in.opp.config.components
+    assert "safe_mode" in opp.config.components
     assert len(mock_mount_local_lib_path.mock_calls) == 0
 
 
@@ -530,11 +530,11 @@ async def test_setup_opp_safe_mode(
             ),
         )
 
-    assert "safe_mode" in.opp.config.components
+    assert "safe_mode" in opp.config.components
     assert len(mock_mount_local_lib_path.mock_calls) == 0
 
     # Validate we didn't try to set up config entry.
-    assert "browser" not in.opp.config.components
+    assert "browser" not in opp.config.components
     assert len(browser_setup.mock_calls) == 0
 
 
@@ -563,7 +563,7 @@ async def test_setup_opp_invalid_core_config(
             ),
         )
 
-    assert "safe_mode" in.opp.config.components
+    assert "safe_mode" in opp.config.components
 
 
 async def test_setup_safe_mode_if_no_frontend(
@@ -603,7 +603,7 @@ async def test_setup_safe_mode_if_no_frontend(
             ),
         )
 
-    assert "safe_mode" in.opp.config.components
+    assert "safe_mode" in opp.config.components
     assert opp.config.config_dir == get_test_config_dir()
     assert opp.config.skip_pip
     assert opp.config.internal_url == "http://192.168.1.100:8123"

@@ -92,10 +92,10 @@ async def async_setup(opp, config):
     def update(call):
         """Service call to manually update the data."""
         called_host = call.data[ATTR_HOST]
-        if called_host in.opp.data[DOMAIN]:
+        if called_host in opp.data[DOMAIN]:
             opp.data[DOMAIN][called_host].update()
         else:
-            for iperf3_host in.opp.data[DOMAIN].values():
+            for iperf3_host in opp.data[DOMAIN].values():
                 iperf3_host.update()
 
     opp.services.async_register(DOMAIN, "speedtest", update, schema=SERVICE_SCHEMA)

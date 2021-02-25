@@ -18,7 +18,7 @@ async def test_apprise_config_load_fail01.opp):
         await opp.async_block_till_done()
 
         # Test that our service failed to load
-        assert not.opp.services.has_service(BASE_COMPONENT, "test")
+        assert not opp.services.has_service(BASE_COMPONENT, "test")
 
 
 async def test_apprise_config_load_fail02.opp):
@@ -34,7 +34,7 @@ async def test_apprise_config_load_fail02.opp):
             await opp.async_block_till_done()
 
             # Test that our service failed to load
-            assert not.opp.services.has_service(BASE_COMPONENT, "test")
+            assert not opp.services.has_service(BASE_COMPONENT, "test")
 
 
 async def test_apprise_config_load_okay(opp, tmp_path):
@@ -70,7 +70,7 @@ async def test_apprise_url_load_fail.opp):
         await opp.async_block_till_done()
 
         # Test that our service failed to load
-        assert not.opp.services.has_service(BASE_COMPONENT, "test")
+        assert not opp.services.has_service(BASE_COMPONENT, "test")
 
 
 async def test_apprise_notification.opp):

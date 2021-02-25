@@ -33,7 +33,7 @@ async def test_discover_device_tracker(opp, mqtt_mock, caplog):
 
     assert state is not None
     assert state.name == "test"
-    assert ("device_tracker", "bla") in.opp.data[ALREADY_DISCOVERED]
+    assert ("device_tracker", "bla") in opp.data[ALREADY_DISCOVERED]
 
 
 @pytest.mark.no_fail_on_log_exception

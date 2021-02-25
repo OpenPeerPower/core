@@ -151,7 +151,7 @@ def process_before_send(
     # triggers security rules, hiding all data.
     integrations = [
         integration
-        for integration in.opp.config.components
+        for integration in opp.config.components
         if integration != "auth" and "." not in integration
     ]
 

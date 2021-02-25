@@ -162,7 +162,7 @@ def valid_file_path(file_path):
 
 def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the classifier."""
-    if DATA_FACEBOX not in.opp.data:
+    if DATA_FACEBOX not in opp.data:
         opp.data[DATA_FACEBOX] = []
 
     ip_address = config[CONF_IP_ADDRESS]

@@ -36,7 +36,7 @@ class FileNotificationService(BaseNotificationService):
 
     def __init__(self, opp, filename, add_timestamp):
         """Initialize the service."""
-        self.filepath = os.path.join.opp.config.config_dir, filename)
+        self.filepath = os.path.join opp.config.config_dir, filename)
         self.add_timestamp = add_timestamp
 
     def send_message(self, message="", **kwargs):

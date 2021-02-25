@@ -40,7 +40,7 @@ def async_get_clientsession(
     else:
         key = DATA_CLIENTSESSION_NOTVERIFY
 
-    if key not in.opp.data:
+    if key not in opp.data:
         opp.data[key] = async_create_clientsession(opp, verify_ssl)
 
     return cast(aiohttp.ClientSession, opp.data[key])
@@ -171,7 +171,7 @@ def _async_get_connector(
     """
     key = DATA_CONNECTOR if verify_ssl else DATA_CONNECTOR_NOTVERIFY
 
-    if key in.opp.data:
+    if key in opp.data:
         return cast(aiohttp.BaseConnector, opp.data[key])
 
     if verify_ssl:

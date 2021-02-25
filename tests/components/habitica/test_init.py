@@ -33,4 +33,4 @@ async def test_entry_setup_unload(opp, aioclient_mock):
 
     assert await opp.config_entries.async_unload(entry.entry_id)
 
-    assert not.opp.services.has_service(DOMAIN, SERVICE_API_CALL)
+    assert not opp.services.has_service(DOMAIN, SERVICE_API_CALL)

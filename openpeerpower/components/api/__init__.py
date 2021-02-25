@@ -71,7 +71,7 @@ async def async_setup(opp, config):
     opp.http.register_view(APIComponentsView)
     opp.http.register_view(APITemplateView)
 
-    if DATA_LOGGING in.opp.data:
+    if DATA_LOGGING in opp.data:
         opp.http.register_view(APIErrorLog)
 
     return True
@@ -442,5 +442,5 @@ def async_events_json(opp):
     """Generate event data to JSONify."""
     return [
         {"event": key, "listener_count": value}
-        for key, value in.opp.bus.async_listeners().items()
+        for key, value in opp.bus.async_listeners().items()
     ]

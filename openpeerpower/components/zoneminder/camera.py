@@ -18,7 +18,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the ZoneMinder cameras."""
     filter_urllib3_logging()
     cameras = []
-    for zm_client in.opp.data[ZONEMINDER_DOMAIN].values():
+    for zm_client in opp.data[ZONEMINDER_DOMAIN].values():
         monitors = zm_client.get_monitors()
         if not monitors:
             _LOGGER.warning("Could not fetch monitors from ZoneMinder host: %s")

@@ -16,7 +16,7 @@ async def test_async_setup_no_domain_config(opp: OpenPeerPower):
     result = await async_setup_component(opp, DOMAIN, {})
 
     assert result is True
-    assert DOMAIN not in.opp.data
+    assert DOMAIN not in opp.data
 
 
 async def test_async_setup_imports_from_config(opp: OpenPeerPower):

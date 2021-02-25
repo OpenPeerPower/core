@@ -42,7 +42,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     include_archived = config.get(CONF_INCLUDE_ARCHIVED)
 
     sensors = []
-    for zm_client in.opp.data[ZONEMINDER_DOMAIN].values():
+    for zm_client in opp.data[ZONEMINDER_DOMAIN].values():
         monitors = zm_client.get_monitors()
         if not monitors:
             _LOGGER.warning("Could not fetch any monitors from ZoneMinder")

@@ -153,7 +153,7 @@ async def test_gateway_group_methods(opp, device_light_1, device_light_2, coordi
     assert zha_gateway.async_get_group_by_name(zha_group.name) is None
 
     # the group entity should be cleaned up
-    assert entity_id not in.opp.states.async_entity_ids(LIGHT_DOMAIN)
+    assert entity_id not in opp.states.async_entity_ids(LIGHT_DOMAIN)
 
     # test creating a group with 1 member
     zha_group = await zha_gateway.async_create_zigpy_group(
@@ -167,7 +167,7 @@ async def test_gateway_group_methods(opp, device_light_1, device_light_2, coordi
         assert member.device.ieee in [device_light_1.ieee]
 
     # the group entity should not have been cleaned up
-    assert entity_id not in.opp.states.async_entity_ids(LIGHT_DOMAIN)
+    assert entity_id not in opp.states.async_entity_ids(LIGHT_DOMAIN)
 
     with patch("zigpy.zcl.Cluster.request", side_effect=asyncio.TimeoutError):
         await zha_group.members[0].async_remove_from_group()

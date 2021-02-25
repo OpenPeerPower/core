@@ -90,7 +90,7 @@ async def test_form_homekit_unique_id_already_setup_opp):
     assert result["errors"] == {}
     flow = next(
         flow
-        for flow in.opp.config_entries.flow.async_progress()
+        for flow in opp.config_entries.flow.async_progress()
         if flow["flow_id"] == result["flow_id"]
     )
     assert flow["context"]["unique_id"] == MOCK_MAC_ADDR

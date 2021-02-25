@@ -329,7 +329,7 @@ async def test_camera_content_type(opp, opp_client):
     cam_config_normal["name"] = "config_test_jpg"
 
     await async_setup_component(
-        opp. "camera", {"camera": [cam_config_svg, cam_config_normal]}
+        opp, "camera", {"camera": [cam_config_svg, cam_config_normal]}
     )
     await opp.async_block_till_done()
 

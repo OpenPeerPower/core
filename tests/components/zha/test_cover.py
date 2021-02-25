@@ -240,7 +240,7 @@ async def test_shade(opp, zha_device_joined_restored, zigpy_shade_device):
         assert opp.states.get(entity_id).state == STATE_CLOSED
 
     # open from UI command fails
-    assert ATTR_CURRENT_POSITION not in.opp.states.get(entity_id).attributes
+    assert ATTR_CURRENT_POSITION not in opp.states.get(entity_id).attributes
     await send_attributes_report(opp, cluster_level, {0: 0})
     with patch("zigpy.zcl.Cluster.request", side_effect=asyncio.TimeoutError):
         await opp.services.async_call(

@@ -44,7 +44,7 @@ def log_rate_limits(opp, target, resp, level=20):
 
 def get_service(opp, config, discovery_info=None):
     """Get the iOS notification service."""
-    if "notify.ios" not in.opp.config.components:
+    if "notify.ios" not in opp.config.components:
         # Need this to enable requirements checking in the app.
         opp.config.components.add("notify.ios")
 

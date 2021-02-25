@@ -996,9 +996,9 @@ def distance.opp, *args):
         locations.append((latitude, longitude))
 
     if len(locations) == 1:
-        return.opp.config.distance(*locations[0])
+        return opp.config.distance(*locations[0])
 
-    return.opp.config.units.length(
+    return opp.config.units.length(
         loc_util.distance(*locations[0] + locations[1]), LENGTH_METERS
     )
 

@@ -49,7 +49,7 @@ class ConfigManagerEntryIndexView(OpenPeerPowerView):
        opp = request.app[.opp"]
 
         return self.json(
-            [entry_json(entry) for entry in.opp.config_entries.async_entries()]
+            [entry_json(entry) for entry in opp.config_entries.async_entries()]
         )
 
 
@@ -226,7 +226,7 @@ def config_entries_progress(opp, connection, msg):
         msg["id"],
         [
             flw
-            for flw in.opp.config_entries.flow.async_progress()
+            for flw in opp.config_entries.flow.async_progress()
             if flw["context"]["source"] != config_entries.SOURCE_USER
         ],
     )
@@ -346,7 +346,7 @@ async def ignore_config_flow(opp, connection, msg):
     flow = next(
         (
             flw
-            for flw in.opp.config_entries.flow.async_progress()
+            for flw in opp.config_entries.flow.async_progress()
             if flw["flow_id"] == msg["flow_id"]
         ),
         None,

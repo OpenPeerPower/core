@@ -213,7 +213,7 @@ CONFIGURATION_FILE = ".ios.conf"
 def devices_with_push(opp):
     """Return a dictionary of push enabled targets."""
     targets = {}
-    for device_name, device in.opp.data[DOMAIN][ATTR_DEVICES].items():
+    for device_name, device in opp.data[DOMAIN][ATTR_DEVICES].items():
         if device.get(ATTR_PUSH_ID) is not None:
             targets[device_name] = device.get(ATTR_PUSH_ID)
     return targets
@@ -222,7 +222,7 @@ def devices_with_push(opp):
 def enabled_push_ids(opp):
     """Return a list of push enabled target push IDs."""
     push_ids = []
-    for device in.opp.data[DOMAIN][ATTR_DEVICES].values():
+    for device in opp.data[DOMAIN][ATTR_DEVICES].values():
         if device.get(ATTR_PUSH_ID) is not None:
             push_ids.append(device.get(ATTR_PUSH_ID))
     return push_ids
@@ -230,12 +230,12 @@ def enabled_push_ids(opp):
 
 def devices.opp):
     """Return a dictionary of all identified devices."""
-    return.opp.data[DOMAIN][ATTR_DEVICES]
+    return opp.data[DOMAIN][ATTR_DEVICES]
 
 
 def device_name_for_push_id(opp, push_id):
     """Return the device name for the push ID."""
-    for device_name, device in.opp.data[DOMAIN][ATTR_DEVICES].items():
+    for device_name, device in opp.data[DOMAIN][ATTR_DEVICES].items():
         if device.get(ATTR_PUSH_ID) is push_id:
             return device_name
     return None

@@ -42,7 +42,7 @@ def setup(opp, config):
     """Set up the Dyson parent component."""
     _LOGGER.info("Creating new Dyson component")
 
-    if DYSON_DEVICES not in.opp.data:
+    if DYSON_DEVICES not in opp.data:
         opp.data[DYSON_DEVICES] = []
 
     dyson_account = DysonAccount(

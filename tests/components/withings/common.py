@@ -299,7 +299,7 @@ def get_config_entries_for_user_id(
     return tuple(
         [
             config_entry
-            for config_entry in.opp.config_entries.async_entries(const.DOMAIN)
+            for config_entry in opp.config_entries.async_entries(const.DOMAIN)
             if config_entry.data.get("token", {}).get("userid") == user_id
         ]
     )
@@ -309,7 +309,7 @@ def async_get_flow_for_user_id.opp: OpenPeerPower, user_id: int) -> List[dict]:
     """Get a flow for a user id."""
     return [
         flow
-        for flow in.opp.config_entries.flow.async_progress()
+        for flow in opp.config_entries.flow.async_progress()
         if flow["handler"] == const.DOMAIN and flow["context"].get("userid") == user_id
     ]
 

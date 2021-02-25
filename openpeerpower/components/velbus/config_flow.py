@@ -14,7 +14,7 @@ from .const import DOMAIN
 def velbus_entries(opp: OpenPeerPower):
     """Return connections for Velbus domain."""
     return {
-        (entry.data[CONF_PORT]) for entry in.opp.config_entries.async_entries(DOMAIN)
+        (entry.data[CONF_PORT]) for entry in opp.config_entries.async_entries(DOMAIN)
     }
 
 

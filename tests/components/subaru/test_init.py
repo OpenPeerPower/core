@@ -37,7 +37,7 @@ async def test_setup_with_no_config(opp):
     """Test DOMAIN is empty if there is no config."""
     assert await async_setup_component(opp, DOMAIN, {})
     await opp.async_block_till_done()
-    assert DOMAIN not in.opp.config_entries.async_domains()
+    assert DOMAIN not in opp.config_entries.async_domains()
 
 
 async def test_setup_ev(opp, ev_entry):

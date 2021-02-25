@@ -32,7 +32,7 @@ async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
     if not account.api.available:
         raise ConfigEntryNotReady
 
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         opp.data[DOMAIN] = {}
     opp.data[DOMAIN][config_entry.entry_id] = account
 

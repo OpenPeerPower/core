@@ -6,9 +6,9 @@ import logging
 import aiohttp
 import async_timeout
 import attr
-from.opp_nabucasa import Cloud, auth, thingtalk
-from.opp_nabucasa.const import STATE_DISCONNECTED
-from.opp_nabucasa.voice import MAP_VOICE
+from opp_nabucasa import Cloud, auth, thingtalk
+from opp_nabucasa.const import STATE_DISCONNECTED
+from opp_nabucasa.voice import MAP_VOICE
 import voluptuous as vol
 
 from openpeerpower.components import websocket_api
@@ -92,7 +92,7 @@ _CLOUD_ERRORS = {
 }
 
 
-async def async_setup_opp):
+async def async_setup(opp):
     """Initialize the HTTP API."""
     async_register_command = opp.components.websocket_api.async_register_command
     async_register_command(WS_TYPE_STATUS, websocket_cloud_status, SCHEMA_WS_STATUS)
@@ -169,7 +169,7 @@ def _ws_handle_cloud_errors(handler):
     async def error_handler(opp, connection, msg):
         """Handle exceptions that raise from the wrapped handler."""
         try:
-            return await handler.opp, connection, msg)
+            return await handler(opp, connection, msg)
 
         except Exception as err:  # pylint: disable=broad-except
             err_status, err_msg = _process_cloud_exception(err, msg["type"])
@@ -203,7 +203,7 @@ class GoogleActionsSyncView(OpenPeerPowerView):
     @_handle_cloud_errors
     async def post(self, request):
         """Trigger a Google Actions sync."""
-       opp = request.app[.opp"]
+        opp = request.app["opp"]
         cloud: Cloud = opp.data[DOMAIN]
         gconf = await cloud.client.get_google_config()
         status = await gconf.async_sync_entities(gconf.agent_user_id)
@@ -222,7 +222,7 @@ class CloudLoginView(OpenPeerPowerView):
     )
     async def post(self, request, data):
         """Handle login request."""
-       opp = request.app[.opp"]
+        opp = request.app["opp"]
         cloud = opp.data[DOMAIN]
         await cloud.login(data["email"], data["password"])
         return self.json({"success": True})
@@ -237,7 +237,7 @@ class CloudLogoutView(OpenPeerPowerView):
     @_handle_cloud_errors
     async def post(self, request):
         """Handle logout request."""
-       opp = request.app[.opp"]
+       opp = request.app["opp"]
         cloud = opp.data[DOMAIN]
 
         with async_timeout.timeout(REQUEST_TIMEOUT):

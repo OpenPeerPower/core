@@ -173,7 +173,7 @@ async def _async_setup_platform(
     async_dispatcher_connect(opp, SIGNAL_CAST_DISCOVERED, async_cast_discovered)
     # Re-play the callback for all past chromecasts, store the objects in
     # a list to avoid concurrent modification resulting in exception.
-    for chromecast in.opp.data[KNOWN_CHROMECAST_INFO_KEY].values():
+    for chromecast in opp.data[KNOWN_CHROMECAST_INFO_KEY].values():
         async_cast_discovered(chromecast)
 
     ChromeCastZeroconf.set_zeroconf(await zeroconf.async_get_instance(opp))

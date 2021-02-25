@@ -153,7 +153,7 @@ async def test_unload_entry(opp, config_entry, controller):
         await opp.async_block_till_done()
         assert controller_manager.disconnect.call_count == 1
         assert unload.call_count == 1
-    assert DOMAIN not in.opp.data
+    assert DOMAIN not in opp.data
 
 
 async def test_update_sources_retry(opp, config_entry, config, controller, caplog):

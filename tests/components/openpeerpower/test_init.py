@@ -324,7 +324,7 @@ async def test_setting_location(opp,
     assert opp.onfig.longitude == 40
 
 
-async def test_require_admin.opp.opp.ead_only_user):
+async def test_require_admin opp.opp.ead_only_user):
     """Test services requiring admin."""
     await async_setup_component.opp."openpeerpower", {})
 

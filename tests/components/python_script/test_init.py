@@ -290,7 +290,7 @@ async def test_reload.opp):
     ), patch("openpeerpower.components.python_script.glob.iglob", return_value=scripts):
         await opp.services.async_call("python_script", "reload", {}, blocking=True)
 
-    assert not.opp.services.has_service("python_script", "hello")
+    assert not opp.services.has_service("python_script", "hello")
     assert opp.services.has_service("python_script", "hello2")
     assert opp.services.has_service("python_script", "world_beer")
     assert opp.services.has_service("python_script", "reload")

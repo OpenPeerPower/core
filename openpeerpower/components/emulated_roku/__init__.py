@@ -66,7 +66,7 @@ async def async_setup_entry(opp, config_entry):
     """Set up an emulated roku server from a config entry."""
     config = config_entry.data
 
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         opp.data[DOMAIN] = {}
 
     name = config[CONF_NAME]

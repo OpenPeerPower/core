@@ -76,11 +76,11 @@ async def async_setup(opp, config):
 
     if (
         opp.data[DOMAIN][CONF_INTENTS]
-        and INTENT_HELP not in.opp.data[DOMAIN][CONF_INTENTS]
+        and INTENT_HELP not in opp.data[DOMAIN][CONF_INTENTS]
     ):
         opp.data[DOMAIN][CONF_INTENTS][INTENT_HELP] = {CONF_SENTENCES: ["HELP"]}
 
-    for data in.opp.data[DOMAIN][CONF_INTENTS].values():
+    for data in opp.data[DOMAIN][CONF_INTENTS].values():
         matchers = []
         for sentence in data[CONF_SENTENCES]:
             matchers.append(create_matcher(sentence))

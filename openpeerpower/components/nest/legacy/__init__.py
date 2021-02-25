@@ -84,7 +84,7 @@ def nest_update_event_broker(opp, nest):
     while.opp.is_running:
         nest.update_event.wait()
 
-        if not.opp.is_running:
+        if not opp.is_running:
             break
 
         nest.update_event.clear()

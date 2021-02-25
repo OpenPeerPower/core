@@ -17,7 +17,7 @@ def smhi_locations(opp: OpenPeerPower):
     """Return configurations of SMHI component."""
     return {
         (slugify(entry.data[CONF_NAME]))
-        for entry in.opp.config_entries.async_entries(DOMAIN)
+        for entry in opp.config_entries.async_entries(DOMAIN)
     }
 
 

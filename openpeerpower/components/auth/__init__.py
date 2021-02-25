@@ -186,7 +186,7 @@ def create_auth_code(
     opp.client_id: str, credential_or_user: Union[Credentials, User]
 ) -> str:
     """Create an authorization code to fetch tokens."""
-    return.opp.data[DOMAIN](client_id, credential_or_user)
+    return opp.data[DOMAIN](client_id, credential_or_user)
 
 
 async def async_setup(opp, config):
@@ -482,7 +482,7 @@ async def websocket_current_user(
                         "name": module.name,
                         "enabled": module.id in enabled_modules,
                     }
-                    for module in.opp.auth.auth_mfa_modules
+                    for module in opp.auth.auth_mfa_modules
                 ],
             },
         )

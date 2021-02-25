@@ -281,7 +281,7 @@ def setup(opp, config):
                 opp. SENSOR, DOMAIN, {CONF_NAME: name, CONF_SENSORS: sensors}, config
             )
 
-    if not.opp.data[DATA_AMCREST][DEVICES]:
+    if not opp.data[DATA_AMCREST][DEVICES]:
         return False
 
     def have_permission(user, entity_id):
@@ -299,7 +299,7 @@ def setup(opp, config):
             # Return all entity_ids user has permission to control.
             return [
                 entity_id
-                for entity_id in.opp.data[DATA_AMCREST][CAMERAS]
+                for entity_id in opp.data[DATA_AMCREST][CAMERAS]
                 if have_permission(user, entity_id)
             ]
 
@@ -308,7 +308,7 @@ def setup(opp, config):
 
         call_ids = await async_extract_entity_ids(opp, call)
         entity_ids = []
-        for entity_id in.opp.data[DATA_AMCREST][CAMERAS]:
+        for entity_id in opp.data[DATA_AMCREST][CAMERAS]:
             if entity_id not in call_ids:
                 continue
             if not have_permission(user, entity_id):

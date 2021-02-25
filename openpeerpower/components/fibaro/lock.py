@@ -10,7 +10,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         return
 
     add_entities(
-        [FibaroLock(device) for device in.opp.data[FIBARO_DEVICES]["lock"]], True
+        [FibaroLock(device) for device in opp.data[FIBARO_DEVICES]["lock"]], True
     )
 
 

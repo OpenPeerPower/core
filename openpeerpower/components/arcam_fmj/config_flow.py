@@ -15,7 +15,7 @@ from .const import DEFAULT_NAME, DEFAULT_PORT, DOMAIN, DOMAIN_DATA_ENTRIES
 
 def get_entry_client(opp, entry):
     """Retrieve client associated with a config entry."""
-    return.opp.data[DOMAIN_DATA_ENTRIES][entry.entry_id]
+    return opp.data[DOMAIN_DATA_ENTRIES][entry.entry_id]
 
 
 @config_entries.HANDLERS.register(DOMAIN)

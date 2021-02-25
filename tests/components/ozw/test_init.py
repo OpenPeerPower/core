@@ -16,10 +16,10 @@ async def test_init_entry(opp, generic_data):
     await setup_ozw(opp, fixture=generic_data)
 
     # Verify integration + platform loaded.
-    assert "ozw" in.opp.config.components
+    assert "ozw" in opp.config.components
     for platform in PLATFORMS:
-        assert platform in.opp.config.components, platform
-        assert f"{platform}.{DOMAIN}" in.opp.config.components, f"{platform}.{DOMAIN}"
+        assert platform in opp.config.components, platform
+        assert f"{platform}.{DOMAIN}" in opp.config.components, f"{platform}.{DOMAIN}"
 
     # Verify services registered
     assert opp.services.has_service(DOMAIN, const.SERVICE_ADD_NODE)
@@ -50,7 +50,7 @@ async def test_publish_without_mqtt(opp, caplog):
         await opp.config_entries.async_remove(mqtt_entry.entry_id)
         await opp.async_block_till_done()
 
-        assert not.opp.config_entries.async_entries("mqtt")
+        assert not opp.config_entries.async_entries("mqtt")
 
         # Sending a message should not error with the MQTT integration not set up.
         send_message("test_topic", "test_payload")
@@ -190,10 +190,10 @@ async def test_setup_entry_with_addon(opp, get_addon_discovery_info):
     assert mock_client.return_value.start_client.call_count == 1
 
     # Verify integration + platform loaded.
-    assert "ozw" in.opp.config.components
+    assert "ozw" in opp.config.components
     for platform in PLATFORMS:
-        assert platform in.opp.config.components, platform
-        assert f"{platform}.{DOMAIN}" in.opp.config.components, f"{platform}.{DOMAIN}"
+        assert platform in opp.config.components, platform
+        assert f"{platform}.{DOMAIN}" in opp.config.components, f"{platform}.{DOMAIN}"
 
     # Verify services registered
     assert opp.services.has_service(DOMAIN, const.SERVICE_ADD_NODE)

@@ -83,7 +83,7 @@ ATTR_TILT_POSITION = "tilt_position"
 @bind.opp
 def is_closed(opp, entity_id):
     """Return if the cover is closed based on the statemachine."""
-    return.opp.states.is_state(entity_id, STATE_CLOSED)
+    return opp.states.is_state(entity_id, STATE_CLOSED)
 
 
 async def async_setup(opp, config):

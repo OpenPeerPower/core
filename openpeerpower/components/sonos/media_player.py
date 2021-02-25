@@ -269,7 +269,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 
 async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up Sonos from a config entry."""
-    if DATA_SONOS not in.opp.data:
+    if DATA_SONOS not in opp.data:
         opp.data[DATA_SONOS] = SonosData()
 
     config = opp.data[SONOS_DOMAIN].get("media_player", {})
@@ -297,7 +297,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
             try:
                 _LOGGER.debug("Reached _discovered_player, soco=%s", soco)
 
-                if soco.uid not in.opp.data[DATA_SONOS].discovered:
+                if soco.uid not in opp.data[DATA_SONOS].discovered:
                     _LOGGER.debug("Adding new entity")
                     opp.data[DATA_SONOS].discovered.append(soco.uid)
                     opp.add_job(async_add_entities, [SonosEntity(soco)])
@@ -461,7 +461,7 @@ class _ProcessSonosEventQueue:
 
 def _get_entity_from_soco_uid(opp, uid):
     """Return SonosEntity from SoCo uid."""
-    for entity in.opp.data[DATA_SONOS].entities:
+    for entity in opp.data[DATA_SONOS].entities:
         if uid == entity.unique_id:
             return entity
     return None
@@ -1413,7 +1413,7 @@ class SonosEntity(MediaPlayerEntity):
         except asyncio.TimeoutError:
             _LOGGER.warning("Timeout waiting for target groups %s", groups)
 
-        for entity in.opp.data[DATA_SONOS].entities:
+        for entity in opp.data[DATA_SONOS].entities:
             entity.soco._zgs_cache.clear()
 
     @soco_error()

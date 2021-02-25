@@ -59,7 +59,7 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup(opp, config):
     """Initialize OwnTracks component."""
     opp.data[DOMAIN] = {"config": config[DOMAIN], "devices": {}, "unsub": None}
-    if not.opp.config_entries.async_entries(DOMAIN):
+    if not opp.config_entries.async_entries(DOMAIN):
         opp.async_create_task(
             opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data={}
@@ -188,7 +188,7 @@ async def handle_webhook(opp, webhook_id, request):
 
     response = []
 
-    for person in.opp.states.async_all("person"):
+    for person in opp.states.async_all("person"):
         if "latitude" in person.attributes and "longitude" in person.attributes:
             response.append(
                 {

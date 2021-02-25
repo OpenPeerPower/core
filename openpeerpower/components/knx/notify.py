@@ -11,7 +11,7 @@ from .const import DOMAIN
 async def async_get_service(opp, config, discovery_info=None):
     """Get the KNX notification service."""
     notification_devices = []
-    for device in.opp.data[DOMAIN].xknx.devices:
+    for device in opp.data[DOMAIN].xknx.devices:
         if isinstance(device, XknxNotification):
             notification_devices.append(device)
     return (

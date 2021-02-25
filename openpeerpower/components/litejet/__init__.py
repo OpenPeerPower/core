@@ -43,7 +43,7 @@ def setup(opp, config):
 
 def is_ignored(opp, name):
     """Determine if a load, switch, or scene should be ignored."""
-    for prefix in.opp.data["litejet_config"].get(CONF_EXCLUDE_NAMES, []):
+    for prefix in opp.data["litejet_config"].get(CONF_EXCLUDE_NAMES, []):
         if name.startswith(prefix):
             return True
     return False

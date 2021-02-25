@@ -24,7 +24,7 @@ _LOGGER = logging.getLogger(__name__)
 
 def get_service(opp, config, discovery_info=None):
     """Get the BMW notification service."""
-    accounts = [e[CONF_ACCOUNT] for e in.opp.data[BMW_DOMAIN][DATA_ENTRIES].values()]
+    accounts = [e[CONF_ACCOUNT] for e in opp.data[BMW_DOMAIN][DATA_ENTRIES].values()]
     _LOGGER.debug("Found BMW accounts: %s", ", ".join([a.name for a in accounts]))
     svc = BMWNotificationService()
     svc.setup(accounts)

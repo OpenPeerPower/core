@@ -9,7 +9,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     if discovery_info is None:
         return
     binary_sensors = []
-    for name in.opp.data[DOMAIN]:
+    for name in opp.data[DOMAIN]:
         if name in BINARY_SENSORS:
             binary_sensors.append(NextcloudBinarySensor(name))
     add_entities(binary_sensors, True)

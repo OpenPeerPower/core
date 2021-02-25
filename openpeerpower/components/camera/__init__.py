@@ -632,7 +632,7 @@ async def async_handle_snapshot_service(camera, service):
     snapshot_file = filename.async_render(variables={ATTR_ENTITY_ID: camera})
 
     # check if we allow to access to that file
-    if not.opp.config.is_allowed_path(snapshot_file):
+    if not opp.config.is_allowed_path(snapshot_file):
         _LOGGER.error("Can't write %s, no access to path!", snapshot_file)
         return
 

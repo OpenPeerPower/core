@@ -104,8 +104,8 @@ async def test_hap_setup_connection_error():
     ):
         assert not await hap.async_setup()
 
-    assert not.opp.async_add_job.mock_calls
-    assert not.opp.config_entries.flow.async_init.mock_calls
+    assert not opp.async_add_job.mock_calls
+    assert not opp.config_entries.flow.async_init.mock_calls
 
 
 async def test_hap_reset_unloads_entry_if_setup_opp, default_mock_hap_factory):

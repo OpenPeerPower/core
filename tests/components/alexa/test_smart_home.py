@@ -59,7 +59,7 @@ def events.opp):
 async def mock_camera.opp):
     """Initialize a demo camera platform."""
     assert await async_setup_component(
-        opp. "camera", {camera.DOMAIN: {"platform": "demo"}}
+        opp, "camera", {camera.DOMAIN: {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 

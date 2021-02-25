@@ -608,7 +608,7 @@ async def test_async_setup_entry_unavailable(
         )
 
         await opp.async_block_till_done()
-        assert not.opp.states.get("light.light1")
+        assert not opp.states.get("light.light1")
 
     future = utcnow() + timedelta(seconds=30)
     async_fire_time_changed(opp, future)

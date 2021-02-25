@@ -48,7 +48,7 @@ async def async_enable_proactive_mode(opp, smart_home_config):
         old_state: Optional[State],
         new_state: Optional[State],
     ):
-        if not.opp.is_running:
+        if not opp.is_running:
             return
 
         if not new_state:
@@ -106,7 +106,7 @@ async def async_enable_proactive_mode(opp, smart_home_config):
                 opp. smart_home_config, alexa_changed_entity
             )
 
-    return.opp.helpers.event.async_track_state_change(
+    return opp.helpers.event.async_track_state_change(
         MATCH_ALL, async_entity_state_listener
     )
 

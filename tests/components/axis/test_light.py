@@ -52,14 +52,14 @@ async def test_platform_manually_configured.opp):
         opp. LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": AXIS_DOMAIN}}
     )
 
-    assert AXIS_DOMAIN not in.opp.data
+    assert AXIS_DOMAIN not in opp.data
 
 
 async def test_no_lights.opp):
     """Test that no light events in Axis results in no light entities."""
     await setup_axis_integration.opp)
 
-    assert not.opp.states.async_entity_ids(LIGHT_DOMAIN)
+    assert not opp.states.async_entity_ids(LIGHT_DOMAIN)
 
 
 async def test_no_light_entity_without_light_control_representation.opp):
@@ -79,7 +79,7 @@ async def test_no_light_entity_without_light_control_representation.opp):
     device.api.event.update([EVENT_ON])
     await opp.async_block_till_done()
 
-    assert not.opp.states.async_entity_ids(LIGHT_DOMAIN)
+    assert not opp.states.async_entity_ids(LIGHT_DOMAIN)
 
 
 async def test_lights.opp):

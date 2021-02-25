@@ -41,7 +41,7 @@ async def test_manually_configured_platform.opp):
     assert await async_setup_component(
         opp. SENSOR_DOMAIN, {SENSOR_DOMAIN: {"platform": HMIPC_DOMAIN}}
     )
-    assert not.opp.data.get(HMIPC_DOMAIN)
+    assert not opp.data.get(HMIPC_DOMAIN)
 
 
 async def test_hmip_accesspoint_status(opp, default_mock_hap_factory):

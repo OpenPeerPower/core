@@ -119,7 +119,7 @@ async def test_correct_config_discovery(opp, mqtt_mock, caplog):
 
     assert state is not None
     assert state.name == "Beer"
-    assert ("binary_sensor", "bla") in.opp.data[ALREADY_DISCOVERED]
+    assert ("binary_sensor", "bla") in opp.data[ALREADY_DISCOVERED]
 
 
 async def test_discover_fan(opp, mqtt_mock, caplog):
@@ -135,7 +135,7 @@ async def test_discover_fan(opp, mqtt_mock, caplog):
 
     assert state is not None
     assert state.name == "Beer"
-    assert ("fan", "bla") in.opp.data[ALREADY_DISCOVERED]
+    assert ("fan", "bla") in opp.data[ALREADY_DISCOVERED]
 
 
 async def test_discover_climate(opp, mqtt_mock, caplog):
@@ -153,7 +153,7 @@ async def test_discover_climate(opp, mqtt_mock, caplog):
 
     assert state is not None
     assert state.name == "ClimateTest"
-    assert ("climate", "bla") in.opp.data[ALREADY_DISCOVERED]
+    assert ("climate", "bla") in opp.data[ALREADY_DISCOVERED]
 
 
 async def test_discover_alarm_control_panel(opp, mqtt_mock, caplog):
@@ -171,7 +171,7 @@ async def test_discover_alarm_control_panel(opp, mqtt_mock, caplog):
 
     assert state is not None
     assert state.name == "AlarmControlPanelTest"
-    assert ("alarm_control_panel", "bla") in.opp.data[ALREADY_DISCOVERED]
+    assert ("alarm_control_panel", "bla") in opp.data[ALREADY_DISCOVERED]
 
 
 async def test_discovery_incl_nodeid(opp, mqtt_mock, caplog):
@@ -187,7 +187,7 @@ async def test_discovery_incl_nodeid(opp, mqtt_mock, caplog):
 
     assert state is not None
     assert state.name == "Beer"
-    assert ("binary_sensor", "my_node_id bla") in.opp.data[ALREADY_DISCOVERED]
+    assert ("binary_sensor", "my_node_id bla") in opp.data[ALREADY_DISCOVERED]
 
 
 async def test_non_duplicate_discovery(opp, mqtt_mock, caplog):
@@ -453,7 +453,7 @@ async def test_discovery_expansion(opp, mqtt_mock, caplog):
     state = opp.states.get("switch.DiscoveryExpansionTest1")
     assert state is not None
     assert state.name == "DiscoveryExpansionTest1"
-    assert ("switch", "bla") in.opp.data[ALREADY_DISCOVERED]
+    assert ("switch", "bla") in opp.data[ALREADY_DISCOVERED]
     assert state.state == STATE_OFF
 
     async_fire_mqtt_message(opp, "test_topic/some/base/topic", "ON")
@@ -529,7 +529,7 @@ async def test_no_implicit_state_topic_switch(opp, mqtt_mock, caplog):
     state = opp.states.get("switch.Test1")
     assert state is not None
     assert state.name == "Test1"
-    assert ("switch", "bla") in.opp.data[ALREADY_DISCOVERED]
+    assert ("switch", "bla") in opp.data[ALREADY_DISCOVERED]
     assert state.state == "off"
     assert state.attributes["assumed_state"] is True
 
@@ -561,7 +561,7 @@ async def test_complex_discovery_topic_prefix(opp, mqtt_mock, caplog):
 
     assert state is not None
     assert state.name == "Beer"
-    assert ("binary_sensor", "node1 object1") in.opp.data[ALREADY_DISCOVERED]
+    assert ("binary_sensor", "node1 object1") in opp.data[ALREADY_DISCOVERED]
 
 
 async def test_mqtt_integration_discovery_subscribe_unsubscribe(

@@ -25,7 +25,7 @@ async def async_validate_trigger_config(opp, config):
     """Validate config."""
     config = TRIGGER_SCHEMA(config)
 
-    if "zha" in.opp.config.components:
+    if "zha" in opp.config.components:
         trigger = (config[CONF_TYPE], config[CONF_SUBTYPE])
         try:
             zha_device = await async_get_zha_device(opp, config[CONF_DEVICE_ID])

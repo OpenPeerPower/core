@@ -12,7 +12,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         return
     controller = opp.data[TAHOMA_DOMAIN]["controller"]
     scenes = [
-        TahomaScene(scene, controller) for scene in.opp.data[TAHOMA_DOMAIN]["scenes"]
+        TahomaScene(scene, controller) for scene in opp.data[TAHOMA_DOMAIN]["scenes"]
     ]
 
     add_entities(scenes, True)

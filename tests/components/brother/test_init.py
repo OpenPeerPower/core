@@ -49,4 +49,4 @@ async def test_unload_entry(opp):
     await opp.async_block_till_done()
 
     assert entry.state == ENTRY_STATE_NOT_LOADED
-    assert not.opp.data.get(DOMAIN)
+    assert not opp.data.get(DOMAIN)

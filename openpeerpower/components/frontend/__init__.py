@@ -302,13 +302,13 @@ async def async_setup(opp, config):
         sidebar_icon= opp:hammer",
     )
 
-    if DATA_EXTRA_MODULE_URL not in.opp.data:
+    if DATA_EXTRA_MODULE_URL not in opp.data:
         opp.data[DATA_EXTRA_MODULE_URL] = set()
 
     for url in conf.get(CONF_EXTRA_MODULE_URL, []):
         add_extra_js_url(opp, url)
 
-    if DATA_EXTRA_JS_URL_ES5 not in.opp.data:
+    if DATA_EXTRA_JS_URL_ES5 not in opp.data:
         opp.data[DATA_EXTRA_JS_URL_ES5] = set()
 
     for url in conf.get(CONF_EXTRA_JS_URL_ES5, []):
@@ -331,12 +331,12 @@ async def _async_setup_themes(opp, themes):
     theme_name = theme_data.get(DATA_DEFAULT_THEME, DEFAULT_THEME)
     dark_theme_name = theme_data.get(DATA_DEFAULT_DARK_THEME)
 
-    if theme_name == DEFAULT_THEME or theme_name in.opp.data[DATA_THEMES]:
+    if theme_name == DEFAULT_THEME or theme_name in opp.data[DATA_THEMES]:
         opp.data[DATA_DEFAULT_THEME] = theme_name
     else:
         opp.data[DATA_DEFAULT_THEME] = DEFAULT_THEME
 
-    if dark_theme_name == DEFAULT_THEME or dark_theme_name in.opp.data[DATA_THEMES]:
+    if dark_theme_name == DEFAULT_THEME or dark_theme_name in opp.data[DATA_THEMES]:
         opp.data[DATA_DEFAULT_DARK_THEME] = dark_theme_name
 
     @callback
@@ -360,7 +360,7 @@ async def _async_setup_themes(opp, themes):
 
         if (
             name not in (DEFAULT_THEME, VALUE_NO_THEME)
-            and name not in.opp.data[DATA_THEMES]
+            and name not in opp.data[DATA_THEMES]
         ):
             _LOGGER.warning("Theme %s not found", name)
             return
@@ -492,7 +492,7 @@ class IndexView(web_urldispatcher.AbstractResource):
         """Serve the index page for panel pages."""
        opp = request.app[.opp"]
 
-        if not.opp.components.onboarding.async_is_onboarded():
+        if not opp.components.onboarding.async_is_onboarded():
             return web.Response(status=302, headers={"location": "/onboarding.html"})
 
         template = self._template_cache

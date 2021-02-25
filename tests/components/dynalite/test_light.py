@@ -61,4 +61,4 @@ async def test_remove_config_entry(opp, mock_device):
     entry_id = await get_entry_id_from(opp.opp)
     assert await opp.config_entries.async_remove(entry_id)
     await opp.async_block_till_done()
-    assert not.opp.states.get("light.name")
+    assert not opp.states.get("light.name")

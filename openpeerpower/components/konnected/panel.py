@@ -263,7 +263,7 @@ class AlarmPanel:
             self.opp.data[DOMAIN][CONF_DEVICES] = {}
 
         _LOGGER.debug(
-            "Storing data in.opp.data[%s][%s][%s]: %s",
+            "Storing data in opp.data[%s][%s][%s]: %s",
             DOMAIN,
             CONF_DEVICES,
             self.device_id,

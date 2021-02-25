@@ -233,7 +233,7 @@ async def setup_smartapp_endpoint(opp: OpenPeerPowerType):
     if (
         cloudhook_url is None
         and.opp.components.cloud.async_active_subscription()
-        and not.opp.config_entries.async_entries(DOMAIN)
+        and not opp.config_entries.async_entries(DOMAIN)
     ):
         cloudhook_url = await opp.components.cloud.async_create_cloudhook(
             config[CONF_WEBHOOK_ID]
@@ -278,7 +278,7 @@ async def setup_smartapp_endpoint(opp: OpenPeerPowerType):
 
 async def unload_smartapp_endpoint(opp: OpenPeerPowerType):
     """Tear down the component configuration."""
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         return
     # Remove the cloudhook if it was created
     cloudhook_url = opp.data[DOMAIN][CONF_CLOUDHOOK_URL]
@@ -299,7 +299,7 @@ async def unload_smartapp_endpoint(opp: OpenPeerPowerType):
     # Remove the webhook
     webhook.async_unregister(opp, opp.data[DOMAIN][CONF_WEBHOOK_ID])
     # Disconnect all brokers
-    for broker in.opp.data[DOMAIN][DATA_BROKERS].values():
+    for broker in opp.data[DOMAIN][DATA_BROKERS].values():
         broker.disconnect()
     # Remove all handlers from manager
     opp.data[DOMAIN][DATA_MANAGER].dispatcher.disconnect_all()
@@ -408,7 +408,7 @@ async def _continue_flow(
     flow = next(
         (
             flow
-            for flow in.opp.config_entries.flow.async_progress()
+            for flow in opp.config_entries.flow.async_progress()
             if flow["handler"] == DOMAIN and flow["context"]["unique_id"] == unique_id
         ),
         None,
@@ -446,7 +446,7 @@ async def smartapp_update(opp: OpenPeerPowerType, req, resp, app):
     entry = next(
         (
             entry
-            for entry in.opp.config_entries.async_entries(DOMAIN)
+            for entry in opp.config_entries.async_entries(DOMAIN)
             if entry.data.get(CONF_INSTALLED_APP_ID) == req.installed_app_id
         ),
         None,
@@ -479,7 +479,7 @@ async def smartapp_uninstall(opp: OpenPeerPowerType, req, resp, app):
     entry = next(
         (
             entry
-            for entry in.opp.config_entries.async_entries(DOMAIN)
+            for entry in opp.config_entries.async_entries(DOMAIN)
             if entry.data.get(CONF_INSTALLED_APP_ID) == req.installed_app_id
         ),
         None,

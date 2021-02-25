@@ -260,7 +260,7 @@ def _request_oauth_completion(opp, config):
     """Request user complete Wink OAuth2 flow."""
     opp.data[DOMAIN]["configurator"] = True
     configurator = opp.components.configurator
-    if DOMAIN in.opp.data[DOMAIN]["configuring"]:
+    if DOMAIN in opp.data[DOMAIN]["configuring"]:
         configurator.notify_errors(
             opp.data[DOMAIN]["configuring"][DOMAIN],
             "Failed to register, please try again.",
@@ -331,7 +331,7 @@ def setup(opp, config):
             _request_app_setup_opp, config)
             return True
 
-        if DOMAIN in.opp.data[DOMAIN]["configuring"]:
+        if DOMAIN in opp.data[DOMAIN]["configuring"]:
             _configurator = opp.data[DOMAIN]["configuring"]
             opp.components.configurator.request_done(_configurator.pop(DOMAIN))
 
@@ -424,7 +424,7 @@ def setup(opp, config):
     def force_update(call):
         """Force all devices to poll the Wink API."""
         _LOGGER.info("Refreshing Wink states from API")
-        for entity_list in.opp.data[DOMAIN]["entities"].values():
+        for entity_list in opp.data[DOMAIN]["entities"].values():
             # Throttle the calls to Wink API
             for entity in entity_list:
                 time.sleep(1)
@@ -455,7 +455,7 @@ def setup(opp, config):
         found_device = None
         entity_id = call.data.get("entity_id")[0]
         all_devices = []
-        for list_of_devices in.opp.data[DOMAIN]["entities"].values():
+        for list_of_devices in opp.data[DOMAIN]["entities"].values():
             all_devices += list_of_devices
         for device in all_devices:
             if device.entity_id == entity_id:
@@ -474,7 +474,7 @@ def setup(opp, config):
         found_device = None
         entity_id = call.data.get("entity_id")[0]
         all_devices = []
-        for list_of_devices in.opp.data[DOMAIN]["entities"].values():
+        for list_of_devices in opp.data[DOMAIN]["entities"].values():
             all_devices += list_of_devices
         for device in all_devices:
             if device.entity_id == entity_id:
@@ -503,7 +503,7 @@ def setup(opp, config):
         """Handle nimbus services."""
         entity_id = service.data.get("entity_id")[0]
         _all_dials = []
-        for sensor in.opp.data[DOMAIN]["entities"]["sensor"]:
+        for sensor in opp.data[DOMAIN]["entities"]["sensor"]:
             if isinstance(sensor, WinkNimbusDialDevice):
                 _all_dials.append(sensor)
         for _dial in _all_dials:
@@ -519,7 +519,7 @@ def setup(opp, config):
         """Handle siren services."""
         entity_ids = service.data.get("entity_id")
         all_sirens = []
-        for switch in.opp.data[DOMAIN]["entities"]["switch"]:
+        for switch in opp.data[DOMAIN]["entities"]["switch"]:
             if isinstance(switch, WinkSirenDevice):
                 all_sirens.append(switch)
         sirens_to_set = []
@@ -571,7 +571,7 @@ def setup(opp, config):
         if _man in ("dome", "wink"):
             has_dome_or_wink_siren = True
         _id = siren.object_id() + siren.name()
-        if _id not in.opp.data[DOMAIN]["unique_ids"]:
+        if _id not in opp.data[DOMAIN]["unique_ids"]:
             sirens.append(WinkSirenDevice(siren, opp))
 
     if sirens:

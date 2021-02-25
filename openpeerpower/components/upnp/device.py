@@ -46,7 +46,7 @@ class Device:
         """Discover UPnP/IGD devices."""
         _LOGGER.debug("Discovering UPnP/IGD devices")
         local_ip = None
-        if DOMAIN in.opp.data and DOMAIN_CONFIG in.opp.data[DOMAIN]:
+        if DOMAIN in opp.data and DOMAIN_CONFIG in opp.data[DOMAIN]:
             local_ip = opp.data[DOMAIN][DOMAIN_CONFIG].get(CONF_LOCAL_IP)
         if local_ip:
             local_ip = IPv4Address(local_ip)

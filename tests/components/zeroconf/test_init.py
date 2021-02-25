@@ -126,7 +126,7 @@ async def test_setup_opp, mock_zeroconf):
     assert len(mock_config_flow.mock_calls) == expected_flow_calls
 
     # Test instance is set.
-    assert "zeroconf" in.opp.data
+    assert "zeroconf" in opp.data
     assert await opp.components.zeroconf.async_get_instance() is mock_zeroconf
 
 

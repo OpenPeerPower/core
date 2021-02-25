@@ -88,7 +88,7 @@ async def options_updated(opp, entry):
 
 async def async_setup_entry(opp, config_entry):
     """Set up the OpenTherm Gateway component."""
-    if DATA_OPENTHERM_GW not in.opp.data:
+    if DATA_OPENTHERM_GW not in opp.data:
         opp.data[DATA_OPENTHERM_GW] = {DATA_GATEWAYS: {}}
 
     gateway = OpenThermGatewayDevice.opp, config_entry)
@@ -110,7 +110,7 @@ async def async_setup_entry(opp, config_entry):
 
 async def async_setup(opp, config):
     """Set up the OpenTherm Gateway component."""
-    if not.opp.config_entries.async_entries(DOMAIN) and DOMAIN in config:
+    if not opp.config_entries.async_entries(DOMAIN) and DOMAIN in config:
         conf = config[DOMAIN]
         for device_id, device_config in conf.items():
             device_config[CONF_ID] = device_id

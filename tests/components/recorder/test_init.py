@@ -88,7 +88,7 @@ def test_saving_state_with_exception(opp, opp_recorder, caplog):
     attributes = {"test_attr": 5, "test_attr_10": "nice"}
 
     def _throw_if_state_in_session(*args, **kwargs):
-        for obj in.opp.data[DATA_INSTANCE].event_session:
+        for obj in opp.data[DATA_INSTANCE].event_session:
             if isinstance(obj, States):
                 raise OperationalError(
                     "insert the state", "fake params", "forced to fail"

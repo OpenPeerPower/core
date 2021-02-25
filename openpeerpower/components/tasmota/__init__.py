@@ -125,7 +125,7 @@ async def async_unload_entry(opp, entry):
     await discovery.async_stop(opp)
 
     # cleanup subscriptions
-    for unsub in.opp.data[DATA_UNSUB]:
+    for unsub in opp.data[DATA_UNSUB]:
         unsub()
     opp.data.pop(DATA_REMOVE_DISCOVER_COMPONENT.format("device_automation"))()
     for component in PLATFORMS:

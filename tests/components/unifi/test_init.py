@@ -14,7 +14,7 @@ from tests.common import MockConfigEntry, mock_coro
 async def test_setup_with_no_config(opp):
     """Test that we do not discover anything or try to set up a controller."""
     assert await async_setup_component(opp, UNIFI_DOMAIN, {}) is True
-    assert UNIFI_DOMAIN not in.opp.data
+    assert UNIFI_DOMAIN not in opp.data
 
 
 async def test_successful_config_entry(opp, aioclient_mock):
@@ -74,4 +74,4 @@ async def test_unload_entry(opp, aioclient_mock):
     assert opp.data[UNIFI_DOMAIN]
 
     assert await unifi.async_unload_entry(opp, config_entry)
-    assert not.opp.data[UNIFI_DOMAIN]
+    assert not opp.data[UNIFI_DOMAIN]

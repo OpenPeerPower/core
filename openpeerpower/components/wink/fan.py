@@ -21,7 +21,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Wink platform."""
 
     for fan in pywink.get_fans():
-        if fan.object_id() + fan.name() not in.opp.data[DOMAIN]["unique_ids"]:
+        if fan.object_id() + fan.name() not in opp.data[DOMAIN]["unique_ids"]:
             add_entities([WinkFanDevice(fan, opp)])
 
 

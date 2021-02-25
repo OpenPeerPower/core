@@ -57,9 +57,9 @@ async def test_unload_entry(opp):
         mock_logout.assert_called_once()
         mock_events_stop.assert_called_once()
 
-        assert not.opp.services.has_service(ABODE_DOMAIN, SERVICE_SETTINGS)
-        assert not.opp.services.has_service(ABODE_DOMAIN, SERVICE_CAPTURE_IMAGE)
-        assert not.opp.services.has_service(ABODE_DOMAIN, SERVICE_TRIGGER_AUTOMATION)
+        assert not opp.services.has_service(ABODE_DOMAIN, SERVICE_SETTINGS)
+        assert not opp.services.has_service(ABODE_DOMAIN, SERVICE_CAPTURE_IMAGE)
+        assert not opp.services.has_service(ABODE_DOMAIN, SERVICE_TRIGGER_AUTOMATION)
 
 
 async def test_invalid_credentials(opp):

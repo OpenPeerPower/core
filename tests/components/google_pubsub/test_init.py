@@ -141,7 +141,7 @@ async def _setup_opp, filter_config):
     }
     assert await async_setup_component(opp, google_pubsub.DOMAIN, config)
     await opp.async_block_till_done()
-    return.opp.bus.listen.call_args_list[0][0][1]
+    return opp.bus.listen.call_args_list[0][0][1]
 
 
 async def test_allowlist(opp, mock_client):

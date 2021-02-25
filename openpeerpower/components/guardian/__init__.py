@@ -126,7 +126,7 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         opp.data[DOMAIN][DATA_CLIENT].pop(entry.entry_id)
         opp.data[DOMAIN][DATA_COORDINATOR].pop(entry.entry_id)
         opp.data[DOMAIN][DATA_LAST_SENSOR_PAIR_DUMP].pop(entry.entry_id)
-        for unsub in.opp.data[DOMAIN][DATA_UNSUB_DISPATCHER_CONNECT][entry.entry_id]:
+        for unsub in opp.data[DOMAIN][DATA_UNSUB_DISPATCHER_CONNECT][entry.entry_id]:
             unsub()
         opp.data[DOMAIN][DATA_UNSUB_DISPATCHER_CONNECT].pop(entry.entry_id)
 

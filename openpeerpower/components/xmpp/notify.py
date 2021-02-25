@@ -302,7 +302,7 @@ async def async_send_message(
             """Upload a file from a local file path via XEP_0363."""
             _LOGGER.info("Uploading file from path, %s", path)
 
-            if not.opp.config.is_allowed_path(path):
+            if not opp.config.is_allowed_path(path):
                 raise PermissionError("Could not access file. Path not allowed")
 
             with open(path, "rb") as upfile:

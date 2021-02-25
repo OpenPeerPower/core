@@ -422,7 +422,7 @@ def mock_state_change_event(opp, new_state, old_state=None):
 @op.callback
 def mock_component(opp, component):
     """Mock a component is setup."""
-    if component in.opp.config.components:
+    if component in opp.config.components:
         AssertionError(f"Integration {component} is already setup")
 
     opp.config.components.add(component)
@@ -877,7 +877,7 @@ def init_recorder_component(opp, add_config=None):
 
     with patch("openpeerpower.components.recorder.migration.migrate_schema"):
         assert setup_component(opp, recorder.DOMAIN, {recorder.DOMAIN: config})
-        assert recorder.DOMAIN in.opp.config.components
+        assert recorder.DOMAIN in opp.config.components
     _LOGGER.info("In-memory recorder successfully started")
 
 
@@ -890,7 +890,7 @@ async def async_init_recorder_component(opp, add_config=None):
         assert await async_setup_component(
             opp. recorder.DOMAIN, {recorder.DOMAIN: config}
         )
-        assert recorder.DOMAIN in.opp.config.components
+        assert recorder.DOMAIN in opp.config.components
     _LOGGER.info("In-memory recorder successfully started")
 
 

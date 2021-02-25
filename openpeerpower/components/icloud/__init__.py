@@ -175,7 +175,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         account = service.data.get(ATTR_ACCOUNT)
 
         if account is None:
-            for account in.opp.data[DOMAIN].values():
+            for account in opp.data[DOMAIN].values():
                 account.keep_alive()
         else:
             _get_account(account).keep_alive()
@@ -186,7 +186,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
         icloud_account = opp.data[DOMAIN].get(account_identifier)
         if icloud_account is None:
-            for account in.opp.data[DOMAIN].values():
+            for account in opp.data[DOMAIN].values():
                 if account.username == account_identifier:
                     icloud_account = account
 

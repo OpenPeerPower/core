@@ -40,7 +40,7 @@ ACTION_DELETE = "delete"
 async def async_setup(opp, config):
     """Set up the config component."""
     opp.components.frontend.async_register_built_in_panel(
-        "config", "config",  opp.cog", require_admin=True
+        "config", "config",  "opp.cog", require_admin=True
     )
 
     async def setup_panel(panel_name):
@@ -50,7 +50,7 @@ async def async_setup(opp, config):
         if not panel:
             return
 
-        success = await panel.async_setup_opp)
+        success = await panel.async_setup(opp)
 
         if success:
             key = f"{DOMAIN}.{panel_name}"
@@ -68,7 +68,7 @@ async def async_setup(opp, config):
     tasks = [asyncio.create_task(setup_panel(panel_name)) for panel_name in SECTIONS]
 
     for panel_name in ON_DEMAND:
-        if panel_name in.opp.config.components:
+        if panel_name in opp.config.components:
             tasks.append(asyncio.create_task(setup_panel(panel_name)))
 
     if tasks:
@@ -119,7 +119,7 @@ class BaseEditConfigView(OpenPeerPowerView):
 
     async def get(self, request, config_key):
         """Fetch device specific config."""
-       opp = request.app[.opp"]
+        opp = request.app["opp"]
         async with self.mutation_lock:
             current = await self.read_config(opp)
             value = self._get_value(opp, current, config_key)

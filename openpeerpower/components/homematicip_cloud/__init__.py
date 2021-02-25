@@ -49,7 +49,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     for conf in accesspoints:
         if conf[CONF_ACCESSPOINT] not in {
             entry.data[HMIPC_HAPID]
-            for entry in.opp.config_entries.async_entries(DOMAIN)
+            for entry in opp.config_entries.async_entries(DOMAIN)
         }:
             opp.async_add_job(
                 opp.config_entries.flow.async_init(

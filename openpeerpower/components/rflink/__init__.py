@@ -157,7 +157,7 @@ async def async_setup(opp, config):
         _LOGGER.debug("event of type %s: %s", event_type, event)
 
         # Don't propagate non entity events (eg: version string, ack response)
-        if event_type not in.opp.data[DATA_ENTITY_LOOKUP]:
+        if event_type not in opp.data[DATA_ENTITY_LOOKUP]:
             _LOGGER.debug("unhandled event of type: %s", event_type)
             return
 
@@ -183,7 +183,7 @@ async def async_setup(opp, config):
                 async_dispatcher_send(opp, SIGNAL_HANDLE_EVENT.format(entity), event)
         elif not is_group_event:
             # If device is not yet known, register with platform (if loaded)
-            if event_type in.opp.data[DATA_DEVICE_REGISTER]:
+            if event_type in opp.data[DATA_DEVICE_REGISTER]:
                 _LOGGER.debug("device_id not known, adding new device")
                 # Add bogus event_id first to avoid race if we get another
                 # event before the device is created

@@ -347,7 +347,7 @@ def setup_service_functions(opp: OpenPeerPowerType):
     def _get_controller(call):
         controller_id = call.data[ATTR_CONTROLLER_ID]
         ihc_key = f"ihc{controller_id}"
-        return.opp.data[ihc_key][IHC_CONTROLLER]
+        return opp.data[ihc_key][IHC_CONTROLLER]
 
     def set_runtime_value_bool(call):
         """Set a IHC runtime bool value service function."""

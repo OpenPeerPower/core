@@ -15,7 +15,7 @@ from .const import CONF_TRACK_HOME, DOMAIN, HOME_LOCATION_NAME
 def configured_instances(opp):
     """Return a set of configured SimpliSafe instances."""
     entries = []
-    for entry in.opp.config_entries.async_entries(DOMAIN):
+    for entry in opp.config_entries.async_entries(DOMAIN):
         if entry.data.get("track_home"):
             entries.append("home")
             continue

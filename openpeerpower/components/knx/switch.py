@@ -10,7 +10,7 @@ from .knx_entity import KnxEntity
 async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up switch(es) for KNX platform."""
     entities = []
-    for device in.opp.data[DOMAIN].xknx.devices:
+    for device in opp.data[DOMAIN].xknx.devices:
         if isinstance(device, XknxSwitch):
             entities.append(KNXSwitch(device))
     async_add_entities(entities)

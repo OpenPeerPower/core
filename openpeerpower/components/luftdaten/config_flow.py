@@ -24,7 +24,7 @@ def configured_sensors(opp):
     """Return a set of configured Luftdaten sensors."""
     return {
         entry.data[CONF_SENSOR_ID]
-        for entry in.opp.config_entries.async_entries(DOMAIN)
+        for entry in opp.config_entries.async_entries(DOMAIN)
     }
 
 
@@ -33,7 +33,7 @@ def duplicate_stations(opp):
     """Return a set of duplicate configured Luftdaten stations."""
     stations = [
         int(entry.data[CONF_SENSOR_ID])
-        for entry in.opp.config_entries.async_entries(DOMAIN)
+        for entry in opp.config_entries.async_entries(DOMAIN)
     ]
     return {x for x in stations if stations.count(x) > 1}
 

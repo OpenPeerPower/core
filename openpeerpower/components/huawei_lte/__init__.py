@@ -485,7 +485,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
     # Arrange our YAML config to dict with normalized URLs as keys
     domain_config: Dict[str, Dict[str, Any]] = {}
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         opp.data[DOMAIN] = HuaweiLteData.opp_config=config, config=domain_config)
     for router_config in config.get(DOMAIN, []):
         domain_config[url_normalize(router_config.pop(CONF_URL))] = router_config

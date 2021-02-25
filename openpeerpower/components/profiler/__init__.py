@@ -156,7 +156,7 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     for service in SERVICES:
         opp.services.async_remove(domain=DOMAIN, service=service)
-    if LOG_INTERVAL_SUB in.opp.data[DOMAIN]:
+    if LOG_INTERVAL_SUB in opp.data[DOMAIN]:
         opp.data[DOMAIN][LOG_INTERVAL_SUB]()
     opp.data.pop(DOMAIN)
     return True

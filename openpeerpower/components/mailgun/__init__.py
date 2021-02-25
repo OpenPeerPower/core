@@ -65,7 +65,7 @@ async def handle_webhook(opp, webhook_id, request):
 
 async def verify_webhook(opp, token=None, timestamp=None, signature=None):
     """Verify webhook was signed by Mailgun."""
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         _LOGGER.warning("Cannot validate Mailgun webhook, missing API Key")
         return True
 

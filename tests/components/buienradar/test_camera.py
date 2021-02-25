@@ -205,7 +205,7 @@ async def test_last_modified_updates(aioclient_mock, opp, opp_client):
 async def test_retries_after_error(aioclient_mock, opp, opp_client):
     """Test that it does retry after an error instead of caching."""
     await async_setup_component(
-        opp. "camera", {"camera": {"name": "config_test", "platform": "buienradar"}}
+        opp, "camera", {"camera": {"name": "config_test", "platform": "buienradar"}}
     )
     await opp.async_block_till_done()
 

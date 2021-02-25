@@ -348,7 +348,7 @@ async def test_zeroconf.opp):
         assert result["errors"] == {}
         context = next(
             flow["context"]
-            for flow in.opp.config_entries.flow.async_progress()
+            for flow in opp.config_entries.flow.async_progress()
             if flow["flow_id"] == result["flow_id"]
         )
         assert context["title_placeholders"]["name"] == "shelly1pm-12345"
@@ -419,7 +419,7 @@ async def test_zeroconf_sleeping_device.opp):
         assert result["errors"] == {}
         context = next(
             flow["context"]
-            for flow in.opp.config_entries.flow.async_progress()
+            for flow in opp.config_entries.flow.async_progress()
             if flow["flow_id"] == result["flow_id"]
         )
         assert context["title_placeholders"]["name"] == "shelly1pm-12345"

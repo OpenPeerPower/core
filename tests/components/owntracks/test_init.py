@@ -50,7 +50,7 @@ def mock_client(opp, aiohttp_client):
     ).add_to_opp(opp)
     opp.loop.run_until_complete(async_setup_component(opp, "owntracks", {}))
 
-    return.opp.loop.run_until_complete(aiohttp_client.opp.http.app))
+    return opp.loop.run_until_complete(aiohttp_client.opp.http.app))
 
 
 async def test_handle_valid_message(mock_client):

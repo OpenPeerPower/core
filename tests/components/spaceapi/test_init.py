@@ -85,7 +85,7 @@ def mock_client(opp, opp_client):
         "test.hum1", 88, attributes={ATTR_UNIT_OF_MEASUREMENT: PERCENTAGE}
     )
 
-    return.opp.loop.run_until_complete.opp_client())
+    return opp.loop.run_until_complete.opp_client())
 
 
 async def test_spaceapi_get(opp, mock_client):

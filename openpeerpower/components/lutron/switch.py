@@ -9,12 +9,12 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     devs = []
 
     # Add Lutron Switches
-    for (area_name, device) in.opp.data[LUTRON_DEVICES]["switch"]:
+    for (area_name, device) in opp.data[LUTRON_DEVICES]["switch"]:
         dev = LutronSwitch(area_name, device, opp.data[LUTRON_CONTROLLER])
         devs.append(dev)
 
     # Add the indicator LEDs for scenes (keypad buttons)
-    for scene_data in.opp.data[LUTRON_DEVICES]["scene"]:
+    for scene_data in opp.data[LUTRON_DEVICES]["scene"]:
         (area_name, keypad_name, scene, led) = scene_data
         if led is not None:
             led = LutronLed(

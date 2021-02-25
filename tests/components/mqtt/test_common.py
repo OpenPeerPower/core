@@ -1084,7 +1084,7 @@ async def help_test_entity_debug_info_remove(opp, mqtt_mock, domain, config):
     debug_info_data = await debug_info.info_for_device(opp, device.id)
     assert len(debug_info_data["entities"]) == 0
     assert len(debug_info_data["triggers"]) == 0
-    assert entity_id not in.opp.data[debug_info.DATA_MQTT_DEBUG_INFO]["entities"]
+    assert entity_id not in opp.data[debug_info.DATA_MQTT_DEBUG_INFO]["entities"]
 
 
 async def help_test_entity_debug_info_update_entity_id(opp, mqtt_mock, domain, config):
@@ -1139,5 +1139,5 @@ async def help_test_entity_debug_info_update_entity_id(opp, mqtt_mock, domain, c
     ]
     assert len(debug_info_data["triggers"]) == 0
     assert (
-        f"{domain}.test" not in.opp.data[debug_info.DATA_MQTT_DEBUG_INFO]["entities"]
+        f"{domain}.test" not in opp.data[debug_info.DATA_MQTT_DEBUG_INFO]["entities"]
     )

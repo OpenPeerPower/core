@@ -1,5 +1,5 @@
 """Component to integrate the Open Peer Power cloud."""
-from.opp_nabucasa import Cloud
+from opp_nabucasa import Cloud
 import voluptuous as vol
 
 from openpeerpower.components.alexa import const as alexa_const
@@ -13,7 +13,7 @@ from openpeerpower.const import (
 from openpeerpower.core import callback
 from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers import config_validation as cv, entityfilter
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util.aiohttp import MockRequest
 
 from . import account_link, http_api
@@ -112,14 +112,14 @@ class CloudNotAvailable(OpenPeerPowerError):
 @callback
 def async_is_logged_in(opp) -> bool:
     """Test if user is logged in."""
-    return DOMAIN in.opp.data and.opp.data[DOMAIN].is_logged_in
+    return DOMAIN in opp.data and opp.data[DOMAIN].is_logged_in
 
 
 @bind.opp
 @callback
 def async_active_subscription(opp) -> bool:
     """Test if user has an active subscription."""
-    return async_is_logged_in(opp) and not.opp.data[DOMAIN].subscription_expired
+    return async_is_logged_in(opp) and not opp.data[DOMAIN].subscription_expired
 
 
 @bind.opp
@@ -135,7 +135,7 @@ async def async_create_cloudhook(opp, webhook_id: str) -> str:
 @bind.opp
 async def async_delete_cloudhook(opp, webhook_id: str) -> None:
     """Delete a cloudhook."""
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         raise CloudNotAvailable
 
     await opp.data[DOMAIN].cloudhooks.async_delete(webhook_id)
@@ -148,10 +148,10 @@ def async_remote_ui_url(opp) -> str:
     if not async_is_logged_in(opp):
         raise CloudNotAvailable
 
-    if not.opp.data[DOMAIN].client.prefs.remote_enabled:
+    if not opp.data[DOMAIN].client.prefs.remote_enabled:
         raise CloudNotAvailable
 
-    if not.opp.data[DOMAIN].remote.instance_domain:
+    if not opp.data[DOMAIN].remote.instance_domain:
         raise CloudNotAvailable
 
     return f"https://.opp.data[DOMAIN].remote.instance_domain}"
@@ -178,12 +178,12 @@ async def async_setup(opp, config):
     google_conf = kwargs.pop(CONF_GOOGLE_ACTIONS, None) or GACTIONS_SCHEMA({})
 
     # Cloud settings
-    prefs = CloudPreferences.opp)
+    prefs = CloudPreferences(opp)
     await prefs.async_initialize()
 
     # Initialize Cloud
     websession = opp.helpers.aiohttp_client.async_get_clientsession()
-    client = CloudClient.opp, prefs, websession, alexa_conf, google_conf)
+    client = CloudClient(opp, prefs, websession, alexa_conf, google_conf)
     cloud = opp.data[DOMAIN] = Cloud(client, **kwargs)
 
     async def _shutdown(event):
@@ -228,7 +228,7 @@ async def async_setup(opp, config):
     cloud.iot.register_on_connect(_on_connect)
 
     await cloud.start()
-    await http_api.async_setup_opp)
+    await http_api.async_setup(opp)
 
     account_link.async_setup_opp)
 

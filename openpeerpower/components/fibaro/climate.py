@@ -99,7 +99,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         return
 
     add_entities(
-        [FibaroThermostat(device) for device in.opp.data[FIBARO_DEVICES]["climate"]],
+        [FibaroThermostat(device) for device in opp.data[FIBARO_DEVICES]["climate"]],
         True,
     )
 

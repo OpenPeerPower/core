@@ -57,7 +57,7 @@ COLOR_BLACK = color_util.COLORS["black"]
 def _get_config_entry_from_unique_id(
     opp: OpenPeerPowerType, unique_id: str
 ) -> Optional[ConfigEntry]:
-    for entry in.opp.config_entries.async_entries(domain=DOMAIN):
+    for entry in opp.config_entries.async_entries(domain=DOMAIN):
         if TEST_SYSINFO_ID == entry.unique_id:
             return entry
     return None

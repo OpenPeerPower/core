@@ -10,7 +10,7 @@ from . import DOMAIN as ZONEMINDER_DOMAIN
 async def async_setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the ZoneMinder binary sensor platform."""
     sensors = []
-    for host_name, zm_client in.opp.data[ZONEMINDER_DOMAIN].items():
+    for host_name, zm_client in opp.data[ZONEMINDER_DOMAIN].items():
         sensors.append(ZMAvailabilitySensor(host_name, zm_client))
     add_entities(sensors)
     return True

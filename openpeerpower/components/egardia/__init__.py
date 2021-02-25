@@ -105,7 +105,7 @@ def setup(opp, config):
     if rs_enabled:
         _LOGGER.debug("Setting up EgardiaServer")
         try:
-            if EGARDIA_SERVER not in.opp.data:
+            if EGARDIA_SERVER not in opp.data:
                 server = egardiaserver.EgardiaServer("", rs_port)
                 bound = server.bind()
                 if not bound:

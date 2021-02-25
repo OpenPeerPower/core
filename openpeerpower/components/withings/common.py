@@ -1072,7 +1072,7 @@ def get_all_data_managers(opp: OpenPeerPower) -> Tuple[DataManager, ...]:
     return tuple(
         [
             config_entry_data[const.DATA_MANAGER]
-            for config_entry_data in.opp.data[const.DOMAIN].values()
+            for config_entry_data in opp.data[const.DOMAIN].values()
             if const.DATA_MANAGER in config_entry_data
         ]
     )

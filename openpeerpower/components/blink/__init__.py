@@ -83,7 +83,7 @@ async def async_setup_entry(opp, entry):
         _blink_startup_wrapper, opp, entry
     )
 
-    if not.opp.data[DOMAIN][entry.entry_id].available:
+    if not opp.data[DOMAIN][entry.entry_id].available:
         raise ConfigEntryNotReady
 
     for component in PLATFORMS:
@@ -158,7 +158,7 @@ async def async_handle_save_video_service(opp, entry, call):
     """Handle save video service calls."""
     camera_name = call.data[CONF_NAME]
     video_path = call.data[CONF_FILENAME]
-    if not.opp.config.is_allowed_path(video_path):
+    if not opp.config.is_allowed_path(video_path):
         _LOGGER.error("Can't write %s, no access to path!", video_path)
         return
 

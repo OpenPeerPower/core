@@ -104,7 +104,7 @@ async def _async_setup_platform(
     platform_configs: List[Dict],
 ) -> None:
     """Platform for the first time when new configuration is added."""
-    if integration_platform not in.opp.data:
+    if integration_platform not in opp.data:
         await async_setup_component(
             opp. integration_platform, {integration_platform: platform_configs}
         )

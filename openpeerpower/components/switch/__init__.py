@@ -51,7 +51,7 @@ def is_on(opp, entity_id):
 
     Async friendly.
     """
-    return.opp.states.is_state(entity_id, STATE_ON)
+    return opp.states.is_state(entity_id, STATE_ON)
 
 
 async def async_setup(opp, config):

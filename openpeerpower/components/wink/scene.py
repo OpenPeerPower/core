@@ -13,7 +13,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 
     for scene in pywink.get_scenes():
         _id = scene.object_id() + scene.name()
-        if _id not in.opp.data[DOMAIN]["unique_ids"]:
+        if _id not in opp.data[DOMAIN]["unique_ids"]:
             add_entities([WinkScene(scene, opp)])
 
 

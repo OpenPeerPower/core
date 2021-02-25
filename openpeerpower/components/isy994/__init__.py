@@ -92,7 +92,7 @@ async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
 
 @callback
 def _async_find_matching_config_entry(opp):
-    for entry in.opp.config_entries.async_entries(DOMAIN):
+    for entry in opp.config_entries.async_entries(DOMAIN):
         if entry.source == config_entries.SOURCE_IMPORT:
             return entry
 

@@ -229,7 +229,7 @@ async def test_setup_with_no_config(opp):
     # Nothing saved from configuration.yaml
     assert opp.data[konnected.DOMAIN][konnected.CONF_ACCESS_TOKEN] is None
     assert opp.data[konnected.DOMAIN][konnected.CONF_API_HOST] is None
-    assert konnected.YAML_CONFIGS not in.opp.data[konnected.DOMAIN]
+    assert konnected.YAML_CONFIGS not in opp.data[konnected.DOMAIN]
 
 
 async def test_setup_defined_hosts_known_auth(opp, mock_panel):
@@ -266,7 +266,7 @@ async def test_setup_defined_hosts_known_auth(opp, mock_panel):
     )
 
     assert opp.data[konnected.DOMAIN][konnected.CONF_ACCESS_TOKEN] == "abcdefgh"
-    assert konnected.YAML_CONFIGS not in.opp.data[konnected.DOMAIN]
+    assert konnected.YAML_CONFIGS not in opp.data[konnected.DOMAIN]
 
     # Flow aborted
     assert len.opp.config_entries.flow.async_progress()) == 0

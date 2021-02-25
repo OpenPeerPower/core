@@ -225,7 +225,7 @@ def get_info(opp,
 
     Async friendly.
     """
-    return.opp.ata.get(DATA_INFO)
+    return opp.ata.get(DATA_INFO)
 
 
 @callback
@@ -235,7 +235,7 @@ def get_host_info(opp,
 
     Async friendly.
     """
-    return.opp.ata.get(DATA_HOST_INFO)
+    return opp.ata.get(DATA_HOST_INFO)
 
 
 @callback
@@ -245,7 +245,7 @@ def get_supervisor_info(opp,
 
     Async friendly.
     """
-    return.opp.ata.get(DATA_SUPERVISOR_INFO)
+    return opp.ata.get(DATA_SUPERVISOR_INFO)
 
 
 @callback
@@ -255,7 +255,7 @@ def get_os_info(opp,
 
     Async friendly.
     """
-    return.opp.ata.get(DATA_OS_INFO)
+    return opp.ata.get(DATA_OS_INFO)
 
 
 @callback
@@ -265,7 +265,7 @@ def get_core_info(opp,
 
     Async friendly.
     """
-    return.opp.ata.get(DATA_CORE_INFO)
+    return opp.ata.get(DATA_CORE_INFO)
 
 
 @callback
@@ -275,7 +275,7 @@ def is_opp(opp,
 
     Async friendly.
     """
-    return DOMAIN in.opp.onfig.components
+    return DOMAIN in opp.onfig.components
 
 
 @callback

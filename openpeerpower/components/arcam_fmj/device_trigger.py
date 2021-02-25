@@ -71,6 +71,6 @@ async def async_attach_trigger(
                     event.context,
                 )
 
-        return.opp.bus.async_listen(EVENT_TURN_ON, _handle_event)
+        return opp.bus.async_listen(EVENT_TURN_ON, _handle_event)
 
     return lambda: None

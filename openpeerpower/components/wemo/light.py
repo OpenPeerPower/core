@@ -52,7 +52,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     await asyncio.gather(
         *[
             _discovered_wemo(device)
-            for device in.opp.data[WEMO_DOMAIN]["pending"].pop("light")
+            for device in opp.data[WEMO_DOMAIN]["pending"].pop("light")
         ]
     )
 

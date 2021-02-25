@@ -65,7 +65,7 @@ REMOTE_SERVICE_ACTIVITY_SCHEMA = make_entity_service_schema(
 @bind.opp
 def is_on(opp: OpenPeerPowerType, entity_id: str) -> bool:
     """Return if the remote is on based on the statemachine."""
-    return.opp.states.is_state(entity_id, STATE_ON)
+    return opp.states.is_state(entity_id, STATE_ON)
 
 
 async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:

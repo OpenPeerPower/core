@@ -136,7 +136,7 @@ def add_available_devices(opp, device_type, device_class):
 
     devices = opp.data[TPLINK_DOMAIN][device_type]
 
-    if f"{device_type}_remaining" in.opp.data[TPLINK_DOMAIN]:
+    if f"{device_type}_remaining" in opp.data[TPLINK_DOMAIN]:
         devices = opp.data[TPLINK_DOMAIN][f"{device_type}_remaining"]
 
     entities_ready = []

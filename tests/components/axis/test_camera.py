@@ -23,7 +23,7 @@ async def test_platform_manually_configured.opp):
         is True
     )
 
-    assert AXIS_DOMAIN not in.opp.data
+    assert AXIS_DOMAIN not in opp.data
 
 
 async def test_camera.opp):

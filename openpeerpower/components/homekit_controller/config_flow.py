@@ -63,7 +63,7 @@ def normalize_hkid(hkid):
 @callback
 def find_existing_host(opp, serial):
     """Return a set of the configured hosts."""
-    for entry in.opp.config_entries.async_entries(DOMAIN):
+    for entry in opp.config_entries.async_entries(DOMAIN):
         if entry.data.get("AccessoryPairingID") == serial:
             return entry
 

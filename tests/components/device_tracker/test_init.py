@@ -213,7 +213,7 @@ async def test_discover_platform(mock_demo_setup_scanner, mock_see, opp):
         opp. device_tracker.DOMAIN, "demo", {"test_key": "test_val"}, {"bla": {}}
     )
     await opp.async_block_till_done()
-    assert device_tracker.DOMAIN in.opp.config.components
+    assert device_tracker.DOMAIN in opp.config.components
     assert mock_demo_setup_scanner.called
     assert mock_demo_setup_scanner.call_args[0] == (
         opp,

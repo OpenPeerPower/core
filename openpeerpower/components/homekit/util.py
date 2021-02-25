@@ -391,12 +391,12 @@ def get_aid_storage_filename_for_entry_id(entry_id: str):
 
 def get_persist_fullpath_for_entry_id(opp: OpenPeerPower, entry_id: str):
     """Determine the path to the homekit state file."""
-    return.opp.config.path(STORAGE_DIR, get_persist_filename_for_entry_id(entry_id))
+    return opp.config.path(STORAGE_DIR, get_persist_filename_for_entry_id(entry_id))
 
 
 def get_aid_storage_fullpath_for_entry_id(opp: OpenPeerPower, entry_id: str):
     """Determine the path to the homekit aid storage file."""
-    return.opp.config.path(
+    return opp.config.path(
         STORAGE_DIR, get_aid_storage_filename_for_entry_id(entry_id)
     )
 
@@ -441,7 +441,7 @@ def port_is_available(port: int) -> bool:
 async def async_find_next_available_port(opp: OpenPeerPower, start_port: int) -> int:
     """Find the next available port not assigned to a config entry."""
     exclude_ports = set()
-    for entry in.opp.config_entries.async_entries(DOMAIN):
+    for entry in opp.config_entries.async_entries(DOMAIN):
         if CONF_PORT in entry.data:
             exclude_ports.add(entry.data[CONF_PORT])
 

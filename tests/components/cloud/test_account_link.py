@@ -105,7 +105,7 @@ async def test_get_services_error(opp):
         side_effect=asyncio.TimeoutError,
     ):
         assert await account_link._get_services.opp) == []
-        assert account_link.DATA_SERVICES not in.opp.data
+        assert account_link.DATA_SERVICES not in opp.data
 
 
 async def test_implementation(opp, flow_handler):

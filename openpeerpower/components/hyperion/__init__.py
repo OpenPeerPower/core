@@ -314,7 +314,7 @@ async def async_unload_entry(
             ]
         )
     )
-    if unload_ok and config_entry.entry_id in.opp.data[DOMAIN]:
+    if unload_ok and config_entry.entry_id in opp.data[DOMAIN]:
         config_data = opp.data[DOMAIN].pop(config_entry.entry_id)
         for func in config_data[CONF_ON_UNLOAD]:
             func()

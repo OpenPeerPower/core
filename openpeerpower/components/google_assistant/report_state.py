@@ -24,7 +24,7 @@ def async_enable_report_state(opp: OpenPeerPower, google_config: AbstractConfig)
     checker = None
 
     async def async_entity_state_listener(changed_entity, old_state, new_state):
-        if not.opp.is_running:
+        if not opp.is_running:
             return
 
         if not new_state:

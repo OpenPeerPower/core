@@ -47,14 +47,14 @@ async def test_platform_manually_configured.opp):
         opp. SWITCH_DOMAIN, {SWITCH_DOMAIN: {"platform": AXIS_DOMAIN}}
     )
 
-    assert AXIS_DOMAIN not in.opp.data
+    assert AXIS_DOMAIN not in opp.data
 
 
 async def test_no_switches.opp):
     """Test that no output events in Axis results in no switch entities."""
     await setup_axis_integration.opp)
 
-    assert not.opp.states.async_entity_ids(SWITCH_DOMAIN)
+    assert not opp.states.async_entity_ids(SWITCH_DOMAIN)
 
 
 async def test_switches_with_port_cgi.opp):

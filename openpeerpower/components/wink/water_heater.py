@@ -47,7 +47,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 
     for water_heater in pywink.get_water_heaters():
         _id = water_heater.object_id() + water_heater.name()
-        if _id not in.opp.data[DOMAIN]["unique_ids"]:
+        if _id not in opp.data[DOMAIN]["unique_ids"]:
             add_entities([WinkWaterHeater(water_heater, opp)])
 
 

@@ -346,8 +346,8 @@ def _async_register_events_and_services(opp: OpenPeerPower):
 
     def handle_homekit_reset_accessory(service):
         """Handle start HomeKit service call."""
-        for entry_id in.opp.data[DOMAIN]:
-            if HOMEKIT not in.opp.data[DOMAIN][entry_id]:
+        for entry_id in opp.data[DOMAIN]:
+            if HOMEKIT not in opp.data[DOMAIN][entry_id]:
                 continue
             homekit = opp.data[DOMAIN][entry_id][HOMEKIT]
             if homekit.status != STATUS_RUNNING:
@@ -370,8 +370,8 @@ def _async_register_events_and_services(opp: OpenPeerPower):
     async def async_handle_homekit_service_start(service):
         """Handle start HomeKit service call."""
         tasks = []
-        for entry_id in.opp.data[DOMAIN]:
-            if HOMEKIT not in.opp.data[DOMAIN][entry_id]:
+        for entry_id in opp.data[DOMAIN]:
+            if HOMEKIT not in opp.data[DOMAIN][entry_id]:
                 continue
             homekit = opp.data[DOMAIN][entry_id][HOMEKIT]
             if homekit.status == STATUS_RUNNING:

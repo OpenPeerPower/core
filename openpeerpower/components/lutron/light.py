@@ -11,7 +11,7 @@ from . import LUTRON_CONTROLLER, LUTRON_DEVICES, LutronDevice
 def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Lutron lights."""
     devs = []
-    for (area_name, device) in.opp.data[LUTRON_DEVICES]["light"]:
+    for (area_name, device) in opp.data[LUTRON_DEVICES]["light"]:
         dev = LutronLight(area_name, device, opp.data[LUTRON_CONTROLLER])
         devs.append(dev)
 

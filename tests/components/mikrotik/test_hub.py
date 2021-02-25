@@ -44,7 +44,7 @@ async def setup_mikrotik_entry(opp, **kwargs):
     ):
         await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
-        return.opp.data[mikrotik.DOMAIN][config_entry.entry_id]
+        return opp.data[mikrotik.DOMAIN][config_entry.entry_id]
 
 
 async def test_hub_setup_successful(opp):

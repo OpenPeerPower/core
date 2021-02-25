@@ -109,7 +109,7 @@ async def async_setup_entry(opp, entry):
 
     async def async_refresh_all(_):
         """Refresh all ring data."""
-        for info in.opp.data[DOMAIN].values():
+        for info in opp.data[DOMAIN].values():
             await info["device_data"].async_refresh_all()
             await info["dings_data"].async_refresh_all()
             await opp.async_add_executor_job(info["history_data"].refresh_all)

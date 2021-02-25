@@ -46,8 +46,8 @@ async def test_setup_duplicate_config(opp: OpenPeerPowerType, fritz: Mock, caplo
     }
     assert not await async_setup_component(opp, FB_DOMAIN, DUPLICATE)
     await opp.async_block_till_done()
-    assert not.opp.states.async_entity_ids()
-    assert not.opp.states.async_all()
+    assert not opp.states.async_entity_ids()
+    assert not opp.states.async_all()
     assert "duplicate host entries found" in caplog.text
 
 

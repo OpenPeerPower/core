@@ -106,7 +106,7 @@ class AuthProvidersView(OpenPeerPowerView):
     async def get(self, request):
         """Get available auth providers."""
        opp = request.app["opp"]
-        if not.opp.components.onboarding.async_is_user_onboarded():
+        if not opp.components.onboarding.async_is_user_onboarded():
             return self.json_message(
                 message="Onboarding not finished",
                 status_code=HTTP_BAD_REQUEST,
@@ -116,7 +116,7 @@ class AuthProvidersView(OpenPeerPowerView):
         return self.json(
             [
                 {"name": provider.name, "id": provider.id, "type": provider.type}
-                for provider in.opp.auth.auth_providers
+                for provider in opp.auth.auth_providers
             ]
         )
 

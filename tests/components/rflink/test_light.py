@@ -466,7 +466,7 @@ async def test_disable_automatic_add(opp, monkeypatch):
     await opp.async_block_till_done()
 
     # make sure new device is not added
-    assert not.opp.states.get(f"{DOMAIN}.protocol_0_0")
+    assert not opp.states.get(f"{DOMAIN}.protocol_0_0")
 
 
 async def test_restore_state(opp, monkeypatch):

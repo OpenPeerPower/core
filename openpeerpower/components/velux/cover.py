@@ -29,7 +29,7 @@ from . import DATA_VELUX
 async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up cover(s) for Velux platform."""
     entities = []
-    for node in.opp.data[DATA_VELUX].pyvlx.nodes:
+    for node in opp.data[DATA_VELUX].pyvlx.nodes:
         if isinstance(node, OpeningDevice):
             entities.append(VeluxCover(node))
     async_add_entities(entities)

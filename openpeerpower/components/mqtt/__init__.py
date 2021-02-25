@@ -401,7 +401,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     opp.data[DATA_MQTT_CONFIG] = conf
 
     # Only import if we haven't before.
-    if not.opp.config_entries.async_entries(DOMAIN):
+    if not opp.config_entries.async_entries(DOMAIN):
         opp.async_create_task(
             opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data={}
@@ -1081,4 +1081,4 @@ def async_subscribe_connection_status(opp, connection_status_callback):
 
 def is_connected(opp):
     """Return if MQTT client is connected."""
-    return.opp.data[DATA_MQTT].connected
+    return opp.data[DATA_MQTT].connected

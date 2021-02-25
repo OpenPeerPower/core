@@ -189,7 +189,7 @@ async def test_add_new_binary_sensor_ignored(opp, aioclient_mock):
     await opp.async_block_till_done()
 
     assert len.opp.states.async_all()) == 0
-    assert not.opp.states.get("binary_sensor.presence_sensor")
+    assert not opp.states.get("binary_sensor.presence_sensor")
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
     assert (

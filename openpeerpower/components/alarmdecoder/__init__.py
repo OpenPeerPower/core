@@ -53,7 +53,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
     def stop_alarmdecoder(event):
         """Handle the shutdown of AlarmDecoder."""
-        if not.opp.data.get(DOMAIN):
+        if not opp.data.get(DOMAIN):
             return
         _LOGGER.debug("Shutting down alarmdecoder")
         opp.data[DOMAIN][entry.entry_id][DATA_RESTART] = False
@@ -74,7 +74,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
     def handle_closed_connection(event):
         """Restart after unexpected loss of connection."""
-        if not.opp.data[DOMAIN][entry.entry_id][DATA_RESTART]:
+        if not opp.data[DOMAIN][entry.entry_id][DATA_RESTART]:
             return
         opp.data[DOMAIN][entry.entry_id][DATA_RESTART] = False
         _LOGGER.warning("AlarmDecoder unexpectedly lost connection")
@@ -159,7 +159,7 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
 
     if opp.data[DOMAIN][entry.entry_id]:
         opp.data[DOMAIN].pop(entry.entry_id)
-        if not.opp.data[DOMAIN]:
+        if not opp.data[DOMAIN]:
             opp.data.pop(DOMAIN)
 
     return True

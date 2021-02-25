@@ -344,7 +344,7 @@ def async_register_implementation(
     opp: OpenPeerPower, domain: str, implementation: AbstractOAuth2Implementation
 ) -> None:
     """Register an OAuth2 flow implementation for an integration."""
-    if isinstance(implementation, LocalOAuth2Implementation) and not.opp.data.get(
+    if isinstance(implementation, LocalOAuth2Implementation) and not opp.data.get(
         DATA_VIEW_REGISTERED, False
     ):
         opp.http.register_view(OAuth2AuthorizeCallbackView())  # type: ignore
@@ -363,12 +363,12 @@ async def async_get_implementations(
         opp.data.setdefault(DATA_IMPLEMENTATIONS, {}).get(domain, {}),
     )
 
-    if DATA_PROVIDERS not in.opp.data:
+    if DATA_PROVIDERS not in opp.data:
         return registered
 
     registered = dict(registered)
 
-    for provider_domain, get_impl in.opp.data[DATA_PROVIDERS].items():
+    for provider_domain, get_impl in opp.data[DATA_PROVIDERS].items():
         implementation = await get_impl(opp, domain)
         if implementation is not None:
             registered[provider_domain] = implementation

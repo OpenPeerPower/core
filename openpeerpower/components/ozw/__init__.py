@@ -319,7 +319,7 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
         return False
 
     # unsubscribe all listeners
-    for unsubscribe_listener in.opp.data[DOMAIN][entry.entry_id][DATA_UNSUBSCRIBE]:
+    for unsubscribe_listener in opp.data[DOMAIN][entry.entry_id][DATA_UNSUBSCRIBE]:
         unsubscribe_listener()
 
     if entry.data.get(CONF_USE_ADDON):

@@ -25,14 +25,14 @@ from tests.common import MockConfigEntry
 async def test_setup_no_config(opp):
     """Test setup without configuration."""
     assert await async_setup_component(opp, AXIS_DOMAIN, {})
-    assert AXIS_DOMAIN not in.opp.data
+    assert AXIS_DOMAIN not in opp.data
 
 
 async def test_setup_entry.opp):
     """Test successful setup of entry."""
     await setup_axis_integration.opp)
     assert len.opp.data[AXIS_DOMAIN]) == 1
-    assert format_mac(MAC) in.opp.data[AXIS_DOMAIN]
+    assert format_mac(MAC) in opp.data[AXIS_DOMAIN]
 
 
 async def test_setup_entry_fails.opp):
@@ -50,7 +50,7 @@ async def test_setup_entry_fails.opp):
 
         assert not await opp.config_entries.async_setup(config_entry.entry_id)
 
-    assert not.opp.data[AXIS_DOMAIN]
+    assert not opp.data[AXIS_DOMAIN]
 
 
 async def test_unload_entry.opp):
@@ -60,7 +60,7 @@ async def test_unload_entry.opp):
     assert opp.data[AXIS_DOMAIN]
 
     assert await opp.config_entries.async_unload(device.config_entry.entry_id)
-    assert not.opp.data[AXIS_DOMAIN]
+    assert not opp.data[AXIS_DOMAIN]
 
 
 async def test_migrate_entry.opp):

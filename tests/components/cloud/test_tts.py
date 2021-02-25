@@ -1,7 +1,7 @@
 """Tests for cloud tts."""
 from unittest.mock import Mock
 
-from.opp_nabucasa import voice
+from opp_nabucasa import voice
 import pytest
 import voluptuous as vol
 

@@ -163,7 +163,7 @@ def setup(opp, config):
     # exists in configuration.yaml, or if the password has changed, then delete
     # that out-of-date config entry.
     already_configured = []
-    for entry in.opp.config_entries.async_entries(DOMAIN):
+    for entry in opp.config_entries.async_entries(DOMAIN):
         # Find corresponding configuration.yaml entry and its password.
         password = None
         for account in conf[CONF_ACCOUNTS]:

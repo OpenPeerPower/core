@@ -272,7 +272,7 @@ async def _setup_opp, filter_config):
     config = {prometheus.DOMAIN: {"filter": filter_config}}
     assert await async_setup_component(opp, prometheus.DOMAIN, config)
     await opp.async_block_till_done()
-    return.opp.bus.listen.call_args_list[0][0][1]
+    return opp.bus.listen.call_args_list[0][0][1]
 
 
 @pytest.mark.usefixtures("mock_bus")

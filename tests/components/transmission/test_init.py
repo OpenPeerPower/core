@@ -49,7 +49,7 @@ def mock_api_unknown_error():
 async def test_setup_with_no_config(opp):
     """Test that we do not discover anything or try to set up a Transmission client."""
     assert await async_setup_component(opp, transmission.DOMAIN, {}) is True
-    assert transmission.DOMAIN not in.opp.data
+    assert transmission.DOMAIN not in opp.data
 
 
 async def test_setup_with_config(opp, api):
@@ -122,4 +122,4 @@ async def test_unload_entry(opp, api):
 
         assert await transmission.async_unload_entry(opp, entry)
         assert unload_entry.call_count == 2
-        assert entry.entry_id not in.opp.data[transmission.DOMAIN]
+        assert entry.entry_id not in opp.data[transmission.DOMAIN]

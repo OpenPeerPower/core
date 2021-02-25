@@ -157,10 +157,10 @@ async def async_setup_platform(
         url = discovery_info["ssdp_description"]
         name = discovery_info.get("name")
 
-    if DLNA_DMR_DATA not in.opp.data:
+    if DLNA_DMR_DATA not in opp.data:
         opp.data[DLNA_DMR_DATA] = {}
 
-    if "lock" not in.opp.data[DLNA_DMR_DATA]:
+    if "lock" not in opp.data[DLNA_DMR_DATA]:
         opp.data[DLNA_DMR_DATA]["lock"] = asyncio.Lock()
 
     # build upnp/aiohttp requester

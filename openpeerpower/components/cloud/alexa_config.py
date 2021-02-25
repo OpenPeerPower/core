@@ -5,7 +5,7 @@ import logging
 
 import aiohttp
 import async_timeout
-from.opp_nabucasa import Cloud, cloud_api
+from opp_nabucasa import Cloud, cloud_api
 
 from openpeerpower.components.alexa import (
     config as alexa_config,
@@ -41,7 +41,7 @@ class AlexaConfig(alexa_config.AbstractConfig):
         cloud: Cloud,
     ):
         """Initialize the Alexa config."""
-        super().__init__.opp)
+        super().__init__(opp)
         self._config = config
         self._cloud_user = cloud_user
         self._prefs = prefs

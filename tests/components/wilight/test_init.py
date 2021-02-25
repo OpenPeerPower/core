@@ -56,12 +56,12 @@ async def test_unload_config_entry(
     """Test the WiLight configuration entry unloading."""
     entry = await setup_integration.opp)
 
-    assert entry.entry_id in.opp.data[DOMAIN]
+    assert entry.entry_id in opp.data[DOMAIN]
     assert entry.state == ENTRY_STATE_LOADED
 
     await opp.config_entries.async_unload(entry.entry_id)
     await opp.async_block_till_done()
 
-    if DOMAIN in.opp.data:
-        assert entry.entry_id not in.opp.data[DOMAIN]
+    if DOMAIN in opp.data:
+        assert entry.entry_id not in opp.data[DOMAIN]
         assert entry.state == ENTRY_STATE_NOT_LOADED

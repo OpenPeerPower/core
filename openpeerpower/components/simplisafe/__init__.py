@@ -334,7 +334,7 @@ async def async_unload_entry(opp, entry):
     )
     if unload_ok:
         opp.data[DOMAIN][DATA_CLIENT].pop(entry.entry_id)
-        for remove_listener in.opp.data[DOMAIN][DATA_LISTENER].pop(entry.entry_id):
+        for remove_listener in opp.data[DOMAIN][DATA_LISTENER].pop(entry.entry_id):
             remove_listener()
 
     return unload_ok

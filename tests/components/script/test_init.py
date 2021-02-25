@@ -241,7 +241,7 @@ async def test_reload_service(opp, running):
 
     if running != "same":
         assert opp.states.get(ENTITY_ID) is None
-        assert not.opp.services.has_service(script.DOMAIN, "test")
+        assert not opp.services.has_service(script.DOMAIN, "test")
 
         assert opp.states.get("script.test2") is not None
         assert opp.services.has_service(script.DOMAIN, "test2")

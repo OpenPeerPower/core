@@ -97,7 +97,7 @@ async def discover_devices(opp, opp_config):
     """
     component_configs = {}
 
-    for server_name, server in.opp.data[DOMAIN][SUPLA_SERVERS].items():
+    for server_name, server in opp.data[DOMAIN][SUPLA_SERVERS].items():
 
         async def _fetch_channels():
             async with async_timeout.timeout(SCAN_INTERVAL.total_seconds()):

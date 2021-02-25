@@ -25,7 +25,7 @@ DEFAULT_WHITE_VALUE = 255
 async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up lights for KNX platform."""
     entities = []
-    for device in.opp.data[DOMAIN].xknx.devices:
+    for device in opp.data[DOMAIN].xknx.devices:
         if isinstance(device, XknxLight):
             entities.append(KNXLight(device))
     async_add_entities(entities)

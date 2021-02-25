@@ -184,7 +184,7 @@ async def test_platform_not_ready(opp, legacy_patchable_time):
     await component.async_setup({DOMAIN: {"platform": "mod1"}})
     await opp.async_block_till_done()
     assert len(platform1_setup.mock_calls) == 1
-    assert "test_domain.mod1" not in.opp.config.components
+    assert "test_domain.mod1" not in opp.config.components
 
     utcnow = dt_util.utcnow()
 
@@ -198,7 +198,7 @@ async def test_platform_not_ready(opp, legacy_patchable_time):
         async_fire_time_changed(opp, utcnow + timedelta(seconds=30))
         await opp.async_block_till_done()
         assert len(platform1_setup.mock_calls) == 2
-        assert "test_domain.mod1" not in.opp.config.components
+        assert "test_domain.mod1" not in opp.config.components
 
         # This should not trigger attempt 3
         async_fire_time_changed(opp, utcnow + timedelta(seconds=59))
@@ -209,7 +209,7 @@ async def test_platform_not_ready(opp, legacy_patchable_time):
         async_fire_time_changed(opp, utcnow + timedelta(seconds=60))
         await opp.async_block_till_done()
         assert len(platform1_setup.mock_calls) == 3
-        assert "test_domain.mod1" in.opp.config.components
+        assert "test_domain.mod1" in opp.config.components
 
 
 async def test_extract_from_service_fails_if_no_entity_id(opp):
@@ -283,9 +283,9 @@ async def test_setup_dependencies_platform(opp):
 
     await component.async_setup({DOMAIN: {"platform": "test_component"}})
     await opp.async_block_till_done()
-    assert "test_component" in.opp.config.components
-    assert "test_component2" in.opp.config.components
-    assert "test_domain.test_component" in.opp.config.components
+    assert "test_component" in opp.config.components
+    assert "test_component2" in opp.config.components
+    assert "test_domain.test_component" in opp.config.components
 
 
 async def test_setup_entry(opp):

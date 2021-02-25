@@ -201,7 +201,7 @@ def do_authentication(opp, opp_config, config):
 
 def setup(opp, config):
     """Set up the Google platform."""
-    if DATA_INDEX not in.opp.data:
+    if DATA_INDEX not in opp.data:
         opp.data[DATA_INDEX] = {}
 
     conf = config.get(DOMAIN, {})
@@ -329,7 +329,7 @@ def do_setup_opp, opp_config, config):
     )
     setup_services(opp, opp_config, track_new_found_calendars, calendar_service)
 
-    for calendar in.opp.data[DATA_INDEX].values():
+    for calendar in opp.data[DATA_INDEX].values():
         discovery.load_platform(opp, "calendar", DOMAIN, calendar, opp_config)
 
     # Look for any new calendars

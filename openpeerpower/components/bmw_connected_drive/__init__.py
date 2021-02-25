@@ -122,7 +122,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
     def _update_all() -> None:
         """Update all BMW accounts."""
-        for entry in.opp.data[DOMAIN][DATA_ENTRIES].values():
+        for entry in opp.data[DOMAIN][DATA_ENTRIES].values():
             entry[CONF_ACCOUNT].update()
 
     # Add update listener for config entry changes (options)
@@ -174,13 +174,13 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     # Only remove services if it is the last account and not read only
     if (
         len.opp.data[DOMAIN][DATA_ENTRIES]) == 1
-        and not.opp.data[DOMAIN][DATA_ENTRIES][entry.entry_id][CONF_ACCOUNT].read_only
+        and not opp.data[DOMAIN][DATA_ENTRIES][entry.entry_id][CONF_ACCOUNT].read_only
     ):
         services = list(_SERVICE_MAP) + [SERVICE_UPDATE_STATE]
         for service in services:
             opp.services.async_remove(DOMAIN, service)
 
-    for vehicle in.opp.data[DOMAIN][DATA_ENTRIES][entry.entry_id][
+    for vehicle in opp.data[DOMAIN][DATA_ENTRIES][entry.entry_id][
         CONF_ACCOUNT
     ].account.vehicles:
         opp.services.async_remove(NOTIFY_DOMAIN, slugify(f"{DOMAIN}_{vehicle.name}"))
@@ -221,7 +221,7 @@ def setup_account(entry: ConfigEntry, opp, name: str) -> BMWConnectedDriveAccoun
         # Double check for read_only accounts as another account could create the services
         for entry_data in [
             e
-            for e in.opp.data[DOMAIN][DATA_ENTRIES].values()
+            for e in opp.data[DOMAIN][DATA_ENTRIES].values()
             if not e[CONF_ACCOUNT].read_only
         ]:
             vehicle = entry_data[CONF_ACCOUNT].account.get_vehicle(vin)

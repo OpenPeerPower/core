@@ -181,10 +181,10 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         _LOGGER.error("Gateway setup failed for %s", entry.data)
         return False
 
-    if DOMAIN not in.opp.data:
+    if DOMAIN not in opp.data:
         opp.data[DOMAIN] = {}
 
-    if MYSENSORS_GATEWAYS not in.opp.data[DOMAIN]:
+    if MYSENSORS_GATEWAYS not in opp.data[DOMAIN]:
         opp.data[DOMAIN][MYSENSORS_GATEWAYS] = {}
     opp.data[DOMAIN][MYSENSORS_GATEWAYS][entry.entry_id] = gateway
 
@@ -219,8 +219,8 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
         return False
 
     key = MYSENSORS_ON_UNLOAD.format(entry.entry_id)
-    if key in.opp.data[DOMAIN]:
-        for fnct in.opp.data[DOMAIN][key]:
+    if key in opp.data[DOMAIN]:
+        for fnct in opp.data[DOMAIN][key]:
             fnct()
 
     del.opp.data[DOMAIN][MYSENSORS_GATEWAYS][entry.entry_id]
@@ -241,7 +241,7 @@ async def on_unload(
     else:
         uniqueid = entry.entry_id
     key = MYSENSORS_ON_UNLOAD.format(uniqueid)
-    if key not in.opp.data[DOMAIN]:
+    if key not in opp.data[DOMAIN]:
         opp.data[DOMAIN][key] = []
     opp.data[DOMAIN][key].append(fnct)
 

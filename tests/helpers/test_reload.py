@@ -50,7 +50,7 @@ async def test_reload_platform(opp):
     await opp.async_block_till_done()
     assert component_setup.called
 
-    assert f"{DOMAIN}.{PLATFORM}" in.opp.config.components
+    assert f"{DOMAIN}.{PLATFORM}" in opp.config.components
     assert len(setup_called) == 1
 
     platform = async_get_platform_without_config_entry(opp, PLATFORM, DOMAIN)
@@ -94,7 +94,7 @@ async def test_setup_reload_service(opp):
     await opp.async_block_till_done()
     assert component_setup.called
 
-    assert f"{DOMAIN}.{PLATFORM}" in.opp.config.components
+    assert f"{DOMAIN}.{PLATFORM}" in opp.config.components
     assert len(setup_called) == 1
 
     await async_setup_reload_service(opp, PLATFORM, [DOMAIN])
@@ -137,7 +137,7 @@ async def test_setup_reload_service_when_async_process_component_config_fails(op
     await opp.async_block_till_done()
     assert component_setup.called
 
-    assert f"{DOMAIN}.{PLATFORM}" in.opp.config.components
+    assert f"{DOMAIN}.{PLATFORM}" in opp.config.components
     assert len(setup_called) == 1
 
     await async_setup_reload_service(opp, PLATFORM, [DOMAIN])
@@ -191,7 +191,7 @@ async def test_setup_reload_service_with_platform_that_provides_async_reset_plat
     await opp.async_block_till_done()
     assert component_setup.called
 
-    assert f"{DOMAIN}.{PLATFORM}" in.opp.config.components
+    assert f"{DOMAIN}.{PLATFORM}" in opp.config.components
     assert len(setup_called) == 1
 
     await async_setup_reload_service(opp, PLATFORM, [DOMAIN])

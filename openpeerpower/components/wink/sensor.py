@@ -17,23 +17,23 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 
     for sensor in pywink.get_sensors():
         _id = sensor.object_id() + sensor.name()
-        if _id not in.opp.data[DOMAIN]["unique_ids"]:
+        if _id not in opp.data[DOMAIN]["unique_ids"]:
             if sensor.capability() in SENSOR_TYPES:
                 add_entities([WinkSensorDevice(sensor, opp)])
 
     for eggtray in pywink.get_eggtrays():
         _id = eggtray.object_id() + eggtray.name()
-        if _id not in.opp.data[DOMAIN]["unique_ids"]:
+        if _id not in opp.data[DOMAIN]["unique_ids"]:
             add_entities([WinkSensorDevice(eggtray, opp)])
 
     for tank in pywink.get_propane_tanks():
         _id = tank.object_id() + tank.name()
-        if _id not in.opp.data[DOMAIN]["unique_ids"]:
+        if _id not in opp.data[DOMAIN]["unique_ids"]:
             add_entities([WinkSensorDevice(tank, opp)])
 
     for piggy_bank in pywink.get_piggy_banks():
         _id = piggy_bank.object_id() + piggy_bank.name()
-        if _id not in.opp.data[DOMAIN]["unique_ids"]:
+        if _id not in opp.data[DOMAIN]["unique_ids"]:
             try:
                 if piggy_bank.capability() in SENSOR_TYPES:
                     add_entities([WinkSensorDevice(piggy_bank, opp)])

@@ -151,7 +151,7 @@ async def test_create_and_setup_opp, mock_panel):
         "endpoint": "http://192.168.1.1:8123/api/konnected",
     }
 
-    # confirm the device settings are saved in.opp.data
+    # confirm the device settings are saved in opp.data
     assert device.stored_configuration == {
         "binary_sensors": {
             "1": {
@@ -309,7 +309,7 @@ async def test_create_and_setup_pro(opp, mock_panel):
         "endpoint": "http://192.168.1.1:8123/api/konnected",
     }
 
-    # confirm the device settings are saved in.opp.data
+    # confirm the device settings are saved in opp.data
     assert device.stored_configuration == {
         "binary_sensors": {
             "11": {
@@ -499,7 +499,7 @@ async def test_default_options(opp, mock_panel):
         "endpoint": "http://192.168.1.1:8123/api/konnected",
     }
 
-    # confirm the device settings are saved in.opp.data
+    # confirm the device settings are saved in opp.data
     assert device.stored_configuration == {
         "binary_sensors": {
             "1": {

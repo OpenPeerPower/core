@@ -44,7 +44,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the folder sensor."""
     path = config.get(CONF_FOLDER_PATHS)
 
-    if not.opp.config.is_allowed_path(path):
+    if not opp.config.is_allowed_path(path):
         _LOGGER.error("folder %s is not valid or allowed", path)
     else:
         folder = Folder(path, config.get(CONF_FILTER))

@@ -225,7 +225,7 @@ class DeviceTrackerPlatform:
             setup = None
             if hasattr(self.platform, "async_get_scanner"):
                 scanner = await self.platform.async_get_scanner(
-                    opp. {DOMAIN: self.config}
+                    opp, {DOMAIN: self.config}
                 )
             elif hasattr(self.platform, "get_scanner"):
                 scanner = await opp.async_add_executor_job(
@@ -284,7 +284,7 @@ async def async_extract_config(opp, config):
 
 
 async def async_create_platform_type(
-    opp. config, p_type, p_config
+    opp, config, p_type, p_config
 ) -> Optional[DeviceTrackerPlatform]:
     """Determine type of platform."""
     platform = await async_prepare_setup_platform(opp, config, DOMAIN, p_type)
@@ -350,7 +350,7 @@ def async_setup_scanner_platform(
                 },
             }
 
-            zone_home = opp.states.get.opp.components.zone.ENTITY_ID_HOME)
+            zone_home = opp.states.get(opp.components.zone.ENTITY_ID_HOME)
             if zone_home:
                 kwargs["gps"] = [
                     zone_home.attributes[ATTR_LATITUDE],
@@ -378,7 +378,7 @@ async def get_tracker(opp, config):
         track_new = defaults.get(CONF_TRACK_NEW, DEFAULT_TRACK_NEW)
 
     devices = await async_load_config(yaml_path, opp, consider_home)
-    tracker = DeviceTracker.opp, consider_home, track_new, defaults, devices)
+    tracker = DeviceTracker(opp, consider_home, track_new, defaults, devices)
     return tracker
 
 

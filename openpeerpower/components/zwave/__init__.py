@@ -275,7 +275,7 @@ async def async_get_ozw_migration_data(opp):
     unique_entries = {entry.unique_id: entry for entry in entity_entries}
     dev_reg = await async_get_device_registry(opp)
 
-    for entity_values in.opp.data[DATA_ENTITY_VALUES]:
+    for entity_values in opp.data[DATA_ENTITY_VALUES]:
         node = entity_values.primary.node
         unique_id = compute_value_unique_id(node, entity_values.primary)
         if unique_id not in unique_entries:
@@ -354,7 +354,7 @@ def get_config_value(node, value_index, tries=5):
 
 async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Z-Wave platform (generic part)."""
-    if discovery_info is None or DATA_NETWORK not in.opp.data:
+    if discovery_info is None or DATA_NETWORK not in opp.data:
         return False
 
     device = opp.data[DATA_DEVICES].get(discovery_info[const.DISCOVERY_DEVICE])
@@ -374,7 +374,7 @@ async def async_setup(opp, config):
     opp.data[DATA_ZWAVE_CONFIG] = conf
     opp.data[DATA_ZWAVE_CONFIG_YAML_PRESENT] = True
 
-    if not.opp.config_entries.async_entries(DOMAIN):
+    if not opp.config_entries.async_entries(DOMAIN):
         opp.async_create_task(
             opp.config_entries.flow.async_init(
                 DOMAIN,
@@ -412,7 +412,7 @@ async def async_setup_entry(opp, config_entry):
 
     # Merge config entry and yaml config
     config = config_entry.data
-    if DATA_ZWAVE_CONFIG in.opp.data:
+    if DATA_ZWAVE_CONFIG in opp.data:
         config = {**config, *.opp.data[DATA_ZWAVE_CONFIG]}
 
     # Update.opp.data with merged config so we can access it elsewhere
@@ -476,7 +476,7 @@ async def async_setup_entry(opp, config_entry):
     def value_added(node, value):
         """Handle new added value to a node on the network."""
         # Check if this value should be tracked by an existing entity
-        for values in.opp.data[DATA_ENTITY_VALUES]:
+        for values in opp.data[DATA_ENTITY_VALUES]:
             values.check_value(value)
 
         for schema in DISCOVERY_SCHEMAS:

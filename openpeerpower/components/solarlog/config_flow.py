@@ -20,7 +20,7 @@ _LOGGER = logging.getLogger(__name__)
 def solarlog_entries(opp: OpenPeerPower):
     """Return the hosts already configured."""
     return {
-        entry.data[CONF_HOST] for entry in.opp.config_entries.async_entries(DOMAIN)
+        entry.data[CONF_HOST] for entry in opp.config_entries.async_entries(DOMAIN)
     }
 
 

@@ -104,7 +104,7 @@ async def async_setup(opp, opp_config):
 
     async def async_extract_color_from_url(url):
         """Handle call for URL based image."""
-        if not.opp.config.is_allowed_external_url(url):
+        if not opp.config.is_allowed_external_url(url):
             _LOGGER.error(
                 "External URL '%s' is not allowed, please add to 'allowlist_external_urls'",
                 url,
@@ -134,7 +134,7 @@ async def async_setup(opp, opp_config):
 
     def extract_color_from_path(file_path):
         """Handle call for local file based image."""
-        if not.opp.config.is_allowed_path(file_path):
+        if not opp.config.is_allowed_path(file_path):
             _LOGGER.error(
                 "File path '%s' is not allowed, please add to 'allowlist_external_dirs'",
                 file_path,

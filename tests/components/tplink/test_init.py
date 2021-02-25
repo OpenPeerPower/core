@@ -169,7 +169,7 @@ async def test_is_dimmable.opp):
     assert len(discover.mock_calls) == 1
     assert len(setup.mock_calls) == 1
     assert len.opp.data[tplink.DOMAIN][CONF_LIGHT]) == 1
-    assert not.opp.data[tplink.DOMAIN][CONF_SWITCH]
+    assert not opp.data[tplink.DOMAIN][CONF_SWITCH]
 
 
 async def test_configuring_discovery_disabled.opp):
@@ -256,7 +256,7 @@ async def test_unload(opp, platform):
         await opp.async_block_till_done()
 
         assert len(light_setup.mock_calls) == 1
-        assert tplink.DOMAIN in.opp.data
+        assert tplink.DOMAIN in opp.data
 
     assert await tplink.async_unload_entry(opp, entry)
-    assert not.opp.data[tplink.DOMAIN]
+    assert not opp.data[tplink.DOMAIN]

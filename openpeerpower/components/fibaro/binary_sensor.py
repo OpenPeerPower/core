@@ -30,7 +30,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(
         [
             FibaroBinarySensor(device)
-            for device in.opp.data[FIBARO_DEVICES]["binary_sensor"]
+            for device in opp.data[FIBARO_DEVICES]["binary_sensor"]
         ],
         True,
     )

@@ -74,7 +74,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     # Get Dyson Devices from parent component
     new_entities = []
 
-    for device in.opp.data[DYSON_DEVICES]:
+    for device in opp.data[DYSON_DEVICES]:
         if device.serial not in known_devices:
             if isinstance(device, DysonPureHotCool):
                 dyson_entity = DysonPureHotCoolEntity(device)

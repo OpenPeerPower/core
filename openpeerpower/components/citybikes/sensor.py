@@ -147,7 +147,7 @@ async def async_citybikes_request(opp, uri, schema):
 
 async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the CityBikes platform."""
-    if PLATFORM not in.opp.data:
+    if PLATFORM not in opp.data:
         opp.data[PLATFORM] = {MONITORED_NETWORKS: {}}
 
     latitude = config.get(CONF_LATITUDE, opp.config.latitude)
@@ -156,7 +156,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     stations_list = set(config.get(CONF_STATIONS_LIST, []))
     radius = config.get(CONF_RADIUS, 0)
     name = config[CONF_NAME]
-    if not.opp.config.units.is_metric:
+    if not opp.config.units.is_metric:
         radius = distance.convert(radius, LENGTH_FEET, LENGTH_METERS)
 
     # Create a single instance of CityBikesNetworks.
@@ -165,7 +165,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     if not network_id:
         network_id = await networks.get_closest_network_id(latitude, longitude)
 
-    if network_id not in.opp.data[PLATFORM][MONITORED_NETWORKS]:
+    if network_id not in opp.data[PLATFORM][MONITORED_NETWORKS]:
         network = CityBikesNetwork.opp, network_id)
         opp.data[PLATFORM][MONITORED_NETWORKS][network_id] = network
         opp.async_create_task(network.async_refresh())

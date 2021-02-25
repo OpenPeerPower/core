@@ -207,7 +207,7 @@ async def async_setup(opp, config):
             discovery.async_load_platform(opp, platform.value, DOMAIN, {}, config)
         )
 
-    if not.opp.data[DOMAIN].xknx.devices:
+    if not opp.data[DOMAIN].xknx.devices:
         _LOGGER.warning(
             "No KNX devices are configured. Please read "
             "https://www.open-peer-power.io/blog/2020/09/17/release-115/#breaking-changes"

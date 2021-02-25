@@ -9,7 +9,7 @@ from openpeerpower.setup import async_setup_component
 def mock_client(opp, opp_client):
     """Create http client for webhooks."""
     opp.loop.run_until_complete(async_setup_component(opp, "webhook", {}))
-    return.opp.loop.run_until_complete.opp_client())
+    return opp.loop.run_until_complete.opp_client())
 
 
 async def test_unregistering_webhook(opp, mock_client):

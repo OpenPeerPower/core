@@ -40,7 +40,7 @@ async def connect_client(opp, user_input):
 
 async def validate_input(opp: OpenPeerPower, user_input):
     """Validate the user input allows us to connect."""
-    for entry in.opp.config_entries.async_entries(DOMAIN):
+    for entry in opp.config_entries.async_entries(DOMAIN):
         if (
             entry.data[CONF_HOST] == user_input[CONF_HOST]
             and entry.data[CONF_PORT] == user_input[CONF_PORT]

@@ -20,7 +20,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 
     entities = []
 
-    for channel in.opp.data[DOMAIN]["channels"]:
+    for channel in opp.data[DOMAIN]["channels"]:
 
         stream_source = get_stream_source(channel["guid"], client)
         entities.append(

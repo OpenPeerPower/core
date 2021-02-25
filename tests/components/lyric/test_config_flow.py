@@ -106,7 +106,7 @@ async def test_full_flow(
         "expires_in": 60,
     }
 
-    assert DOMAIN in.opp.config.components
+    assert DOMAIN in opp.config.components
     entry = opp.config_entries.async_entries(DOMAIN)[0]
     assert entry.state == config_entries.ENTRY_STATE_LOADED
 

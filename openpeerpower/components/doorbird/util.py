@@ -21,7 +21,7 @@ def get_doorstation_by_slug(opp, slug):
 
 
 def _get_doorstation_by_attr(opp, attr, val):
-    for entry in.opp.data[DOMAIN].values():
+    for entry in opp.data[DOMAIN].values():
         if DOOR_STATION not in entry:
             continue
 
@@ -37,6 +37,6 @@ def get_all_doorstations(opp):
     """Get all doorstations."""
     return [
         entry[DOOR_STATION]
-        for entry in.opp.data[DOMAIN].values()
+        for entry in opp.data[DOMAIN].values()
         if DOOR_STATION in entry
     ]

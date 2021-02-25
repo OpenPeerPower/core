@@ -76,7 +76,7 @@ async def create_checker(
 # Marked as singleton so multiple calls all wait for same output.
 async def _initialize(opp: OpenPeerPower) -> None:
     """Initialize the functions."""
-    if DATA_FUNCTIONS in.opp.data:
+    if DATA_FUNCTIONS in opp.data:
         return
 
     functions = opp.data[DATA_FUNCTIONS] = {}

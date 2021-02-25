@@ -31,7 +31,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     mac_address = config[CONF_MAC]
     device_name = config.get(CONF_NAME)
 
-    if not.opp.data.get(DATA_RSN):
+    if not opp.data.get(DATA_RSN):
         opp.data[DATA_RSN] = RSNetwork()
         job = opp.data[DATA_RSN].create_datagram_endpoint()
         opp.async_create_task(job)

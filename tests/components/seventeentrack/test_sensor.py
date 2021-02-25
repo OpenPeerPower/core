@@ -162,7 +162,7 @@ async def test_invalid_config(opp):
     """Ensure nothing is created when config is wrong."""
     assert await async_setup_component(opp, "sensor", INVALID_CONFIG)
 
-    assert not.opp.states.async_entity_ids()
+    assert not opp.states.async_entity_ids()
 
 
 async def test_add_package.opp):
@@ -251,7 +251,7 @@ async def test_delivered_not_shown.opp):
     await _setup_seventeentrack(opp, VALID_CONFIG_FULL_NO_DELIVERED)
     await _goto_future.opp)
 
-    assert not.opp.states.async_entity_ids()
+    assert not opp.states.async_entity_ids()
     opp.components.persistent_notification.create.assert_called()
 
 
@@ -291,7 +291,7 @@ async def test_becomes_delivered_not_shown_notification.opp):
     await _goto_future.opp)
 
     opp.components.persistent_notification.create.assert_called()
-    assert not.opp.states.async_entity_ids()
+    assert not opp.states.async_entity_ids()
 
 
 async def test_summary_correctly_updated.opp):
@@ -299,7 +299,7 @@ async def test_summary_correctly_updated.opp):
     await _setup_seventeentrack(opp, summary_data=DEFAULT_SUMMARY)
 
     assert len.opp.states.async_entity_ids()) == 7
-    for state in.opp.states.async_all():
+    for state in opp.states.async_all():
         assert state.state == "0"
 
     ProfileMock.summary_data = NEW_SUMMARY_DATA
@@ -307,5 +307,5 @@ async def test_summary_correctly_updated.opp):
     await _goto_future.opp)
 
     assert len.opp.states.async_entity_ids()) == 7
-    for state in.opp.states.async_all():
+    for state in opp.states.async_all():
         assert state.state == "1"

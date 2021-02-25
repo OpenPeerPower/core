@@ -246,7 +246,7 @@ async def.opp_access_token(opp, opp_admin_user, opp_admin_credential):
     refresh_token = await opp.auth.async_create_refresh_token(
         opp.admin_user, CLIENT_ID, credential.opp_admin_credential
     )
-    return.opp.auth.async_create_access_token(refresh_token)
+    return opp.auth.async_create_access_token(refresh_token)
 
 
 @pytest.fixture
@@ -290,7 +290,7 @@ def.opp_read_only_access_token(opp, opp_read_only_user, local_auth):
             opp.read_only_user, CLIENT_ID, credential=credential
         )
     )
-    return.opp.auth.async_create_access_token(refresh_token)
+    return opp.auth.async_create_access_token(refresh_token)
 
 
 @pytest.fixture
@@ -536,7 +536,7 @@ def legacy_patchable_time():
                 """Fire every time event that comes in."""
                 opp.async_run_opp_job(job, ev.data[ATTR_NOW])
 
-            return.opp.bus.async_listen(EVENT_TIME_CHANGED, time_change_listener)
+            return opp.bus.async_listen(EVENT_TIME_CHANGED, time_change_listener)
 
         matching_seconds = event.dt_util.parse_time_expression(second, 0, 59)
         matching_minutes = event.dt_util.parse_time_expression(minute, 0, 59)
@@ -579,7 +579,7 @@ def legacy_patchable_time():
         # We can't use async_track_point_in_utc_time here because it would
         # break in the case that the system time abruptly jumps backwards.
         # Our custom last_now logic takes care of resolving that scenario.
-        return.opp.bus.async_listen(EVENT_TIME_CHANGED, pattern_time_change_listener)
+        return opp.bus.async_listen(EVENT_TIME_CHANGED, pattern_time_change_listener)
 
     with patch(
         "openpeerpower.helpers.event.async_track_point_in_utc_time",

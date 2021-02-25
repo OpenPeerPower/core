@@ -71,7 +71,7 @@ async def async_reload(opp: OpenPeerPowerType, integration_name: str) -> None:
 
     tasks = [
         notify_service.async_register_services()
-        for notify_service in.opp.data[NOTIFY_SERVICES][integration_name]
+        for notify_service in opp.data[NOTIFY_SERVICES][integration_name]
     ]
 
     await asyncio.gather(*tasks)
@@ -85,7 +85,7 @@ async def async_reset_platform(opp: OpenPeerPowerType, integration_name: str) ->
 
     tasks = [
         notify_service.async_unregister_services()
-        for notify_service in.opp.data[NOTIFY_SERVICES][integration_name]
+        for notify_service in opp.data[NOTIFY_SERVICES][integration_name]
     ]
 
     await asyncio.gather(*tasks)
@@ -98,8 +98,8 @@ def _async_integration_has_notify_services(
 ) -> bool:
     """Determine if an integration has notify services registered."""
     if (
-        NOTIFY_SERVICES not in.opp.data
-        or integration_name not in.opp.data[NOTIFY_SERVICES]
+        NOTIFY_SERVICES not in opp.data
+        or integration_name not in opp.data[NOTIFY_SERVICES]
     ):
         return False
 

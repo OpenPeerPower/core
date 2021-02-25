@@ -39,7 +39,7 @@ async def director_update_data(
 
 
 async def refresh_tokens(opp: OpenPeerPower, entry: ConfigEntry):
-    """Store updated authentication and director tokens in.opp.data."""
+    """Store updated authentication and director tokens in opp.data."""
     config = entry.data
     account_session = aiohttp_client.async_get_clientsession(opp)
 

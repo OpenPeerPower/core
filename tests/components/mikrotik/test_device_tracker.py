@@ -36,7 +36,7 @@ async def test_platform_manually_configured(opp):
         )
         is False
     )
-    assert mikrotik.DOMAIN not in.opp.data
+    assert mikrotik.DOMAIN not in opp.data
 
 
 async def test_device_trackers(opp, legacy_patchable_time):

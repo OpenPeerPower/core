@@ -210,7 +210,7 @@ async def async_setup_opp: OpenPeerPower, config: Dict[str, Any]) -> bool:
         data = service_call.data
         host = data.get(ATTR_HOST, "")
         bridges = []
-        for cur_bridge in.opp.data[DOMAIN].values():
+        for cur_bridge in opp.data[DOMAIN].values():
             if not host or cur_bridge.host == host:
                 bridges.append(cur_bridge)
         LOGGER.debug("Selected bridged for service call: %s", bridges)

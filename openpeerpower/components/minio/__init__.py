@@ -132,7 +132,7 @@ def setup(opp, config):
         key = _render_service_value(service, ATTR_KEY)
         file_path = _render_service_value(service, ATTR_FILE_PATH)
 
-        if not.opp.config.is_allowed_path(file_path):
+        if not opp.config.is_allowed_path(file_path):
             _LOGGER.error("Invalid file_path %s", file_path)
             return
 
@@ -144,7 +144,7 @@ def setup(opp, config):
         key = _render_service_value(service, ATTR_KEY)
         file_path = _render_service_value(service, ATTR_FILE_PATH)
 
-        if not.opp.config.is_allowed_path(file_path):
+        if not opp.config.is_allowed_path(file_path):
             _LOGGER.error("Invalid file_path %s", file_path)
             return
 

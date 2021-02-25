@@ -173,10 +173,10 @@ def get_input_triggers(
 
 def get_device_wrapper(opp: OpenPeerPower, device_id: str):
     """Get a Shelly device wrapper for the given device id."""
-    if not.opp.data.get(DOMAIN):
+    if not opp.data.get(DOMAIN):
         return None
 
-    for config_entry in.opp.data[DOMAIN][DATA_CONFIG_ENTRY]:
+    for config_entry in opp.data[DOMAIN][DATA_CONFIG_ENTRY]:
         wrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][config_entry][COAP]
 
         if wrapper.device_id == device_id:

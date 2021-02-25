@@ -174,7 +174,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
             dev_type = device.device_type()
             if (
                 dev_type in TUYA_TYPE_TO_HA
-                and device.object_id() not in.opp.data[DOMAIN]["entities"]
+                and device.object_id() not in opp.data[DOMAIN]["entities"]
             ):
                 op_type = TUYA_TYPE_TO_HA[dev_type]
                 if op_type not in device_type_list:
@@ -184,7 +184,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
         for op_type, dev_ids in device_type_list.items():
             config_entries_key = f"{op_type}.tuya"
-            if config_entries_key not in.opp.data[DOMAIN][ENTRY_IS_SETUP]:
+            if config_entries_key not in opp.data[DOMAIN][ENTRY_IS_SETUP]:
                 opp.data[DOMAIN]["pending"][op_type] = dev_ids
                 opp.async_create_task(
                     opp.config_entries.async_forward_entry_setup(entry, op_type)
@@ -242,7 +242,7 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
                 opp.config_entries.async_forward_entry_unload(
                     entry, component.split(".", 1)[0]
                 )
-                for component in.opp.data[DOMAIN][ENTRY_IS_SETUP]
+                for component in opp.data[DOMAIN][ENTRY_IS_SETUP]
             ]
         )
     )
@@ -273,7 +273,7 @@ async def cleanup_device_registry(opp: OpenPeerPower, device_id):
 
     device_registry = await opp.helpers.device_registry.async_get_registry()
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
-    if device_id and not.opp.helpers.entity_registry.async_entries_for_device(
+    if device_id and not opp.helpers.entity_registry.async_entries_for_device(
         entity_registry, device_id, include_disabled_entities=True
     ):
         device_registry.async_remove_device(device_id)

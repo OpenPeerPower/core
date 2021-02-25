@@ -210,7 +210,7 @@ async def test_ignored_discoveries(opp, discovery_flow_conf):
     flow = next(
         (
             flw
-            for flw in.opp.config_entries.flow.async_progress()
+            for flw in opp.config_entries.flow.async_progress()
             if flw["flow_id"] == result["flow_id"]
         ),
         None,

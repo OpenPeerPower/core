@@ -15,7 +15,7 @@ from .const import DOMAIN
 PLATFORMS = ["sensor"]
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Coronavirus component."""
     # Make sure coordinator is initialized.
     await get_coordinator(opp)
@@ -68,8 +68,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
 async def get_coordinator(opp):
     """Get the data update coordinator."""
-    if DOMAIN in.opp.data:
-        return.opp.data[DOMAIN]
+    if DOMAIN in opp.data:
+        return opp.data[DOMAIN]
 
     async def async_get_cases():
         with async_timeout.timeout(10):
@@ -88,4 +88,4 @@ async def get_coordinator(opp):
         update_interval=timedelta(hours=1),
     )
     await opp.data[DOMAIN].async_refresh()
-    return.opp.data[DOMAIN]
+    return opp.data[DOMAIN]

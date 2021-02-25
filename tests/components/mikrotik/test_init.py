@@ -12,7 +12,7 @@ from tests.common import MockConfigEntry
 async def test_setup_with_no_config(opp):
     """Test that we do not discover anything or try to set up a hub."""
     assert await async_setup_component(opp, mikrotik.DOMAIN, {}) is True
-    assert mikrotik.DOMAIN not in.opp.data
+    assert mikrotik.DOMAIN not in opp.data
 
 
 async def test_successful_config_entry(opp):
@@ -64,7 +64,7 @@ async def test_hub_fail_setup_opp):
         mock_hub.return_value.async_setup = AsyncMock(return_value=False)
         assert await mikrotik.async_setup_entry(opp, entry) is False
 
-    assert mikrotik.DOMAIN not in.opp.data
+    assert mikrotik.DOMAIN not in opp.data
 
 
 async def test_unload_entry(opp):
@@ -89,4 +89,4 @@ async def test_unload_entry(opp):
     assert len(mock_hub.return_value.mock_calls) == 1
 
     assert await mikrotik.async_unload_entry(opp, entry)
-    assert entry.entry_id not in.opp.data[mikrotik.DOMAIN]
+    assert entry.entry_id not in opp.data[mikrotik.DOMAIN]

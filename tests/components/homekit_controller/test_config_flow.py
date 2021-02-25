@@ -107,7 +107,7 @@ def get_flow_context(opp, result):
     """Get the flow context from the result of async_init or async_configure."""
     flow = next(
         flow
-        for flow in.opp.config_entries.flow.async_progress()
+        for flow in opp.config_entries.flow.async_progress()
         if flow["flow_id"] == result["flow_id"]
     )
 

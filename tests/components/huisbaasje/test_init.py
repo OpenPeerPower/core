@@ -22,7 +22,7 @@ async def test_setup_opp: OpenPeerPower):
     """Test for successfully setting up the platform."""
     assert await async_setup_component(opp, huisbaasje.DOMAIN, {})
     await opp.async_block_till_done()
-    assert huisbaasje.DOMAIN in.opp.config.components
+    assert huisbaasje.DOMAIN in opp.config.components
 
 
 async def test_setup_entry.opp: OpenPeerPower):
@@ -57,9 +57,9 @@ async def test_setup_entry.opp: OpenPeerPower):
 
         # Assert integration is loaded
         assert config_entry.state == ENTRY_STATE_LOADED
-        assert huisbaasje.DOMAIN in.opp.config.components
-        assert huisbaasje.DOMAIN in.opp.data
-        assert config_entry.entry_id in.opp.data[huisbaasje.DOMAIN]
+        assert huisbaasje.DOMAIN in opp.config.components
+        assert huisbaasje.DOMAIN in opp.data
+        assert config_entry.entry_id in opp.data[huisbaasje.DOMAIN]
 
         # Assert entities are loaded
         entities = opp.states.async_entity_ids("sensor")
@@ -98,7 +98,7 @@ async def test_setup_entry_error(opp: OpenPeerPower):
 
         # Assert integration is loaded with error
         assert config_entry.state == ENTRY_STATE_SETUP_ERROR
-        assert huisbaasje.DOMAIN not in.opp.data
+        assert huisbaasje.DOMAIN not in opp.data
 
         # Assert entities are not loaded
         entities = opp.states.async_entity_ids("sensor")
