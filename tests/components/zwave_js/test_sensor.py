@@ -20,7 +20,7 @@ from .common import (
 )
 
 
-async def test_numeric_sensor.opp, multisensor_6, integration):
+async def test_numeric_sensor(opp, multisensor_6, integration):
     """Test the numeric sensor."""
     state = opp.states.get(AIR_TEMPERATURE_SENSOR)
 
@@ -30,7 +30,7 @@ async def test_numeric_sensor.opp, multisensor_6, integration):
     assert state.attributes["device_class"] == DEVICE_CLASS_TEMPERATURE
 
 
-async def test_energy_sensors.opp, hank_binary_switch, integration):
+async def test_energy_sensors(opp, hank_binary_switch, integration):
     """Test power and energy sensors."""
     state = opp.states.get(POWER_SENSOR)
 
@@ -47,9 +47,9 @@ async def test_energy_sensors.opp, hank_binary_switch, integration):
     assert state.attributes["device_class"] == DEVICE_CLASS_ENERGY
 
 
-async def test_disabled_notification_sensor.opp, multisensor_6, integration):
+async def test_disabled_notification_sensor(opp, multisensor_6, integration):
     """Test sensor is created from Notification CC and is disabled."""
-    ent_reg = await async_get_registry.opp)
+    ent_reg = await async_get_registry(opp)
     entity_entry = ent_reg.async_get(NOTIFICATION_MOTION_SENSOR)
 
     assert entity_entry

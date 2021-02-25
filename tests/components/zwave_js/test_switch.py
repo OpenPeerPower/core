@@ -8,7 +8,7 @@ from openpeerpower.const import STATE_OFF, STATE_ON
 from .common import SWITCH_ENTITY
 
 
-async def test_switch.opp, hank_binary_switch, integration, client):
+async def test_switch(opp, hank_binary_switch, integration, client):
     """Test the switch."""
     state = opp.states.get(SWITCH_ENTITY)
     node = hank_binary_switch
@@ -88,7 +88,7 @@ async def test_switch.opp, hank_binary_switch, integration, client):
     assert args["value"] is False
 
 
-async def test_barrier_signaling_switch.opp, gdc_zw062, integration, client):
+async def test_barrier_signaling_switch(opp, gdc_zw062, integration, client):
     """Test barrier signaling state switch."""
     node = gdc_zw062
     entity = "switch.aeon_labs_garage_door_controller_gen5_signaling_state_visual"

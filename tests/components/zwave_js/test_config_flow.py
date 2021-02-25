@@ -135,9 +135,9 @@ def mock_addon_setup_time():
         yield addon_setup_time
 
 
-async def test_manual.opp):
+async def test_manual(opp):
     """Test we create an entry with manual step."""
-    await setup.async_setup_component.opp, "persistent_notification", {})
+    await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
@@ -216,7 +216,7 @@ async def test_manual_errors(
     assert result["errors"] == {"base": error}
 
 
-async def test_manual_already_configured.opp):
+async def test_manual_already_configured(opp):
     """Test that only one unique instance is allowed."""
     entry = MockConfigEntry(domain=DOMAIN, data={}, title=TITLE, unique_id=1234)
     entry.add_to.opp.opp)

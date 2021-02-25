@@ -45,7 +45,7 @@ def uninstall_addon_fixture():
         yield uninstall_addon
 
 
-async def test_entry_setup_unload.opp, client, integration):
+async def test_entry_setup_unload(opp, client, integration):
     """Test the integration set up and unload."""
     entry = integration
 
@@ -58,17 +58,17 @@ async def test_entry_setup_unload.opp, client, integration):
     assert entry.state == ENTRY_STATE_NOT_LOADED
 
 
-async def test_open_peer_power_stop.opp, client, integration):
+async def test_open_peer_power_stop(opp, client, integration):
     """Test we clean up on open peer power stop."""
     await opp.async_stop()
 
     assert client.disconnect.call_count == 1
 
 
-async def test_initialized_timeout.opp, client, connect_timeout):
+async def test_initialized_timeout(opp, client, connect_timeout):
     """Test we handle a timeout during client initialization."""
     entry = MockConfigEntry(domain="zwave_js", data={"url": "ws://test.org"})
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
@@ -164,7 +164,7 @@ async def test_existing_node_not_ready.opp, client, multisensor_6, device_regist
     event = {"node": node}
     air_temperature_device_id = f"{client.driver.controller.home_id}-{node.node_id}"
     entry = MockConfigEntry(domain="zwave_js", data={"url": "ws://test.org"})
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
 
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
@@ -189,7 +189,7 @@ async def test_existing_node_not_ready.opp, client, multisensor_6, device_regist
     )
 
 
-async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
+async def test_remove_entry(opp, stop_addon, uninstall_addon, caplog):
     """Test remove the config entry."""
     # test successful remove without created add-on
     entry = MockConfigEntry(
@@ -198,7 +198,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
         connection_class=CONN_CLASS_LOCAL_PUSH,
         data={"integration_created_addon": False},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     assert entry.state == ENTRY_STATE_NOT_LOADED
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
@@ -214,7 +214,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
         connection_class=CONN_CLASS_LOCAL_PUSH,
         data={"integration_created_addon": True},
     )
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
 
     await opp.config_entries.async_remove(entry.entry_id)
@@ -227,7 +227,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
     uninstall_addon.reset_mock()
 
     # test add-on stop failure
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     stop_addon.side_effect = OppioAPIError()
 
@@ -243,7 +243,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
     uninstall_addon.reset_mock()
 
     # test add-on uninstall failure
-    entry.add_to.opp.opp)
+    entry.add_to_opp(opp)
     assert len.opp.config_entries.async_entries(DOMAIN)) == 1
     uninstall_addon.side_effect = OppioAPIError()
 
@@ -256,7 +256,7 @@ async def test_remove_entry.opp, stop_addon, uninstall_addon, caplog):
     assert "Failed to uninstall the Z-Wave JS add-on" in caplog.text
 
 
-async def test_removed_device.opp, client, multiple_devices, integration):
+async def test_removed_device(opp, client, multiple_devices, integration):
     """Test that the device registry gets updated when a device gets removed."""
     nodes = multiple_devices
 
@@ -271,7 +271,7 @@ async def test_removed_device.opp, client, multiple_devices, integration):
     assert len(device_entries) == 2
 
     # Check how many entities there are
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
     entity_entries = entity_registry.async_entries_for_config_entry(
         ent_reg, integration.entry_id
     )

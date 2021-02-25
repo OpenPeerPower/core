@@ -7,7 +7,7 @@ from openpeerpower.components.fan import ATTR_SPEED, SPEED_MEDIUM
 FAN_ENTITY = "fan.in_wall_smart_fan_control"
 
 
-async def test_fan.opp, client, in_wall_smart_fan_control, integration):
+async def test_fan(opp, client, in_wall_smart_fan_control, integration):
     """Test the fan entity."""
     node = in_wall_smart_fan_control
     state = opp.states.get(FAN_ENTITY)

@@ -281,31 +281,30 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
 
 
 async def _async_setup_entity(
-    opp. async_add_entities, config, config_entry=None, discovery_data=None
-):
+    opp, async_add_entities, config, config_entry=None, discovery_data=None):
     """Set up the MQTT climate devices."""
     async_add_entities([MqttClimate.opp, config, config_entry, discovery_data)])
 
 
 class MqttClimate(MqttEntity, ClimateEntity):
     """Representation of an MQTT climate device."""
-
+    
     def __init__(self, opp, config, config_entry, discovery_data):
-        """Initialize the climate device."""
-        self._action = None
-        self._aux = False
-        self._away = False
-        self._current_fan_mode = None
-        self._current_operation = None
-        self._current_swing_mode = None
-        self._current_temp = None
-        self._hold = None
-        self._target_temp = None
-        self._target_temp_high = None
-        self._target_temp_low = None
-        self._topic = None
-        self._value_templates = None
-        self._command_templates = None
+         """Initialize the climate device."""
+        self._action=None
+        self._aux=False
+        self._away=False
+        self._current_fan_mode=None
+        self._current_operation=None
+        self._current_swing_mode=None
+        self._current_temp=None
+        self._hold=None
+        self._target_temp=None
+        self._target_temp_high=None
+        self._target_temp_low=None
+        self._topic=None
+        self._value_templates=None
+        self._command_templates=None
 
         MqttEntity.__init__(self, opp, config, config_entry, discovery_data)
 
@@ -321,15 +320,13 @@ class MqttClimate(MqttEntity, ClimateEntity):
 
     def _setup_from_config(self, config):
         """(Re)Setup the entity."""
-        self._config = config
-        self._topic = {key: config.get(key) for key in TOPIC_KEYS}
+        self._config=config
+        self._topic={key: config.get(key) for key in TOPIC_KEYS}
 
         # set to None in non-optimistic mode
-        self._target_temp = (
-            self._current_fan_mode
-        ) = self._current_operation = self._current_swing_mode = None
-        self._target_temp_low = None
-        self._target_temp_high = None
+        self._target_temp=(self._current_fan_mode)=self._current_operation=self._current_swing_mode=None
+        self._target_temp_low=None
+        self._target_temp_high=None
 
         if self._topic[CONF_TEMP_STATE_TOPIC] is None:
             self._target_temp = config[CONF_TEMP_INITIAL]

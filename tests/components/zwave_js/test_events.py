@@ -4,7 +4,7 @@ from zwave_js_server.event import Event
 from tests.common import async_capture_events
 
 
-async def test_scenes.opp, hank_binary_switch, integration, client):
+async def test_scenes(opp, hank_binary_switch, integration, client):
     """Test scene events."""
     # just pick a random node to fake the value notification events
     node = hank_binary_switch

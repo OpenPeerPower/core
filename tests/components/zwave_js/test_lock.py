@@ -17,7 +17,7 @@ from openpeerpower.const import ATTR_ENTITY_ID, STATE_LOCKED, STATE_UNLOCKED
 SCHLAGE_BE469_LOCK_ENTITY = "lock.touchscreen_deadbolt"
 
 
-async def test_door_lock.opp, client, lock_schlage_be469, integration):
+async def test_door_lock(opp, client, lock_schlage_be469, integration):
     """Test a lock entity with door lock command class."""
     node = lock_schlage_be469
     state = opp.states.get(SCHLAGE_BE469_LOCK_ENTITY)
@@ -86,7 +86,7 @@ async def test_door_lock.opp, client, lock_schlage_be469, integration):
     )
     node.receive_event(event)
 
-    assert.opp.states.get(SCHLAGE_BE469_LOCK_ENTITY).state == STATE_LOCKED
+    assert opp.states.get(SCHLAGE_BE469_LOCK_ENTITY).state == STATE_LOCKED
 
     client.async_send_command.reset_mock()
 

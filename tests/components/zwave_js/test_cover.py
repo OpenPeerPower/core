@@ -21,7 +21,7 @@ WINDOW_COVER_ENTITY = "cover.zws_12"
 GDC_COVER_ENTITY = "cover.aeon_labs_garage_door_controller_gen5"
 
 
-async def test_window_cover.opp, client, chain_actuator_zws12, integration):
+async def test_window_cover(opp, client, chain_actuator_zws12, integration):
     """Test the cover entity."""
     node = chain_actuator_zws12
     state = opp.states.get(WINDOW_COVER_ENTITY)
@@ -299,7 +299,7 @@ async def test_window_cover.opp, client, chain_actuator_zws12, integration):
     assert state.state == "closed"
 
 
-async def test_motor_barrier_cover.opp, client, gdc_zw062, integration):
+async def test_motor_barrier_cover(opp, client, gdc_zw062, integration):
     """Test the cover entity."""
     node = gdc_zw062
 
