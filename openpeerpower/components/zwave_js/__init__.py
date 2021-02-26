@@ -51,7 +51,7 @@ DATA_CLIENT_LISTEN_TASK = "client_listen_task"
 DATA_START_PLATFORM_TASK = "start_platform_task"
 
 
-async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
+async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
     """Set up the Z-Wave JS component."""
     opp.data[DOMAIN] = {}
     return True

@@ -5,7 +5,7 @@ components. Instead call the service directly.
 """
 from openpeerpower.components.scene import DOMAIN
 from openpeerpower.const import ATTR_ENTITY_ID, ENTITY_MATCH_ALL, SERVICE_TURN_ON
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 
 @bind.opp

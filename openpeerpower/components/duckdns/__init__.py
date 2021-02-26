@@ -10,7 +10,7 @@ from openpeerpower.core import CALLBACK_TYPE, callback
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.event import async_call_later
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util import dt as dt_util
 
 _LOGGER = logging.getLogger(__name__)

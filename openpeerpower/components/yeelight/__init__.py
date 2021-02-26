@@ -151,7 +151,7 @@ UPDATE_REQUEST_PROPERTIES = [
 PLATFORMS = ["binary_sensor", "light"]
 
 
-async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
+async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
     """Set up the Yeelight bulbs."""
     conf = config.get(DOMAIN, {})
     opp.data[DOMAIN] = {

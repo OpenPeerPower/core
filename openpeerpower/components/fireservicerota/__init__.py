@@ -29,7 +29,7 @@ _LOGGER = logging.getLogger(__name__)
 SUPPORTED_PLATFORMS = {SENSOR_DOMAIN, BINARYSENSOR_DOMAIN, SWITCH_DOMAIN}
 
 
-async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
+async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
     """Set up the FireServiceRota component."""
 
     return True

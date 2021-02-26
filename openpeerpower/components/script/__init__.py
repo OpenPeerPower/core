@@ -35,7 +35,7 @@ from openpeerpower.helpers.script import (
     make_script_schema,
 )
 from openpeerpower.helpers.service import async_set_service_schema
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 _LOGGER = logging.getLogger(__name__)
 

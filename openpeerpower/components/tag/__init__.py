@@ -11,7 +11,7 @@ from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers import collection
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.storage import Store
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 import openpeerpower.util.dt as dt_util
 
 from .const import DEVICE_ID, DOMAIN, EVENT_TAG_SCANNED, TAG_ID
@@ -87,7 +87,7 @@ class TagStorageCollection(collection.StorageCollection):
         return data
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Tag component."""
     opp.data[DOMAIN] = {}
     id_manager = TagIDManager()

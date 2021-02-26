@@ -55,7 +55,7 @@ DATA_DEVICES = "zwave-mqtt-devices"
 DATA_STOP_MQTT_CLIENT = "ozw_stop_mqtt_client"
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Initialize basic config of ozw component."""
     opp.data[DOMAIN] = {}
     return True

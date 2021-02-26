@@ -6,7 +6,7 @@ import pytest
 
 from openpeerpower.components import duckdns
 from openpeerpower.components.duckdns import async_track_time_interval_backoff
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.setup import async_setup_component
 from openpeerpower.util.dt import utcnow
 

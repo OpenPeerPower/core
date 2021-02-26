@@ -10,7 +10,7 @@ from openpeerpower.const import (
     SERVICE_TURN_OFF,
     SERVICE_TURN_ON,
 )
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 
 @bind.opp

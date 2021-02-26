@@ -1,7 +1,7 @@
 """Support to help onboard new users."""
 from openpeerpower.core import callback
 from openpeerpower.helpers.storage import Store
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 from . import views
 from .const import DOMAIN, STEP_CORE_CONFIG, STEP_INTEGRATION, STEP_USER, STEPS

@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, Optional, Union
 
 from openpeerpower.const import SUN_EVENT_SUNRISE, SUN_EVENT_SUNSET
 from openpeerpower.core import callback
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util import dt as dt_util
 
 from .typing import OpenPeerPowerType

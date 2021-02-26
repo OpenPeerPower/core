@@ -17,7 +17,7 @@ def async_register(
 
 async def system_health_info(opp):
     """Get info for the info page."""
-    remaining_requests = list.opp.data[DOMAIN].values())[0][
+    remaining_requests = list(opp.data[DOMAIN].values())[0][
         COORDINATOR
     ].accuweather.requests_remaining
 

@@ -43,7 +43,7 @@ from openpeerpower.helpers.config_validation import (  # noqa: F401
 from openpeerpower.helpers.entity import Entity, entity_sources
 from openpeerpower.helpers.entity_component import EntityComponent
 from openpeerpower.helpers.network import get_url
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 from .const import (
     CAMERA_IMAGE_TIMEOUT,

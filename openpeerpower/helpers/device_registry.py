@@ -11,7 +11,7 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_STARTED,
 )
 from openpeerpower.core import Event, callback
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 import openpeerpower.util.uuid as uuid_util
 
 from .debounce import Debouncer

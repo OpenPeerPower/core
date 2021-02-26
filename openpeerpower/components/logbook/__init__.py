@@ -44,7 +44,7 @@ from openpeerpower.helpers.entityfilter import (
 from openpeerpower.helpers.integration_platform import (
     async_process_integration_platforms,
 )
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 import openpeerpower.util.dt as dt_util
 
 ENTITY_ID_JSON_TEMPLATE = '"entity_id": "{}"'

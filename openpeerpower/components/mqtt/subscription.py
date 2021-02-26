@@ -4,7 +4,7 @@ from typing import Any, Callable, Dict, Optional
 import attr
 
 from openpeerpower.helpers.typing import OpenPeerPowerType
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 from . import debug_info
 from .. import mqtt

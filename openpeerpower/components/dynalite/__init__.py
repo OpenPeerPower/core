@@ -178,7 +178,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp: OpenPeerPower, config: Dict[str, Any]) -> bool:
+async def async_setup(opp: OpenPeerPower, config: Dict[str, Any]) -> bool:
     """Set up the Dynalite platform."""
     conf = config.get(DOMAIN)
     LOGGER.debug("Setting up dynalite component config = %s", conf)

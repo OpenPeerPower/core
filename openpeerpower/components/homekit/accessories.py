@@ -191,7 +191,7 @@ def get_accessory(opp, driver, state, aid, config):
         return None
 
     _LOGGER.debug('Add "%s" as "%s"', state.entity_id, a_type)
-    return TYPES[a_type].opp, driver, name, state.entity_id, aid, config)
+    return TYPES[a_type](opp, driver, name, state.entity_id, aid, config)
 
 
 class HomeAccessory(Accessory):
@@ -206,7 +206,7 @@ class HomeAccessory(Accessory):
         aid,
         config,
         *args,
-        category=CATEGORY_OTHER,
+        category = CATEGORY_OTHER,
         **kwargs,
     ):
         """Initialize a Accessory object."""

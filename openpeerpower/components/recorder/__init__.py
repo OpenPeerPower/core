@@ -160,7 +160,7 @@ def run_information_with_session(session, point_in_time: Optional[datetime] = No
     return res
 
 
-async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up the recorder."""
     conf = config[DOMAIN]
     entity_filter = convert_include_exclude_filter(conf)

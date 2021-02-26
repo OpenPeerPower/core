@@ -9,7 +9,7 @@ from .const import DOMAIN
 PLATFORMS = ["light"]
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Kuler Sky component."""
     return True
 

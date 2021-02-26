@@ -30,7 +30,7 @@ from openpeerpower.helpers.entity_platform import EntityPlatform
 from openpeerpower.helpers.entity_registry import RegistryEntry
 from openpeerpower.helpers.event import Event, async_track_entity_registry_updated_event
 from openpeerpower.helpers.typing import StateType
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util import dt as dt_util, ensure_unique_string, slugify
 
 _LOGGER = logging.getLogger(__name__)

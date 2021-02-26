@@ -8,7 +8,7 @@ from typing import Any, Callable, Dict, List, Optional, Type, Union
 from openpeerpower.const import EVENT_OPENPEERPOWER_FINAL_WRITE
 from openpeerpower.core import CALLBACK_TYPE, CoreState, OpenPeerPower, callback
 from openpeerpower.helpers.event import async_call_later
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util import json as json_util
 
 # mypy: allow-untyped-calls, allow-untyped-defs, no-warn-return-any

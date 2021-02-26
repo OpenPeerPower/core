@@ -28,7 +28,7 @@ from openpeerpower.helpers.config_validation import (  # noqa: F401
 )
 from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.entity_component import EntityComponent
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 # mypy: allow-untyped-calls, allow-untyped-defs, no-check-untyped-defs
 

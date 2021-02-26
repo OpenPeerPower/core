@@ -15,7 +15,7 @@ from tests.common import MockConfigEntry
 
 async def test_unload_entry(opp, cfupdate):
     """Test successful unload of entry."""
-    entry = await init_integration.opp)
+    entry = await init_integration(opp)
 
     assert len(opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
@@ -44,7 +44,7 @@ async def test_integration_services(opp, cfupdate):
     """Test integration services."""
     instance = cfupdate.return_value
 
-    entry = await init_integration.opp)
+    entry = await init_integration(opp)
     assert entry.state == ENTRY_STATE_LOADED
 
     await opp.services.async_call(

@@ -62,7 +62,7 @@ CONFIG_SCHEMA = vol.Schema(
 PLATFORMS = ["camera", "climate", "light", "sensor"]
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Netatmo component."""
     opp.data[DOMAIN] = {
         DATA_PERSONS: {},

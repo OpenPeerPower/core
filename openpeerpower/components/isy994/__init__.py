@@ -65,7 +65,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp: OpenPeerPower, config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up the isy994 integration from YAML."""
     isy_config: Optional[ConfigType] = config.get(DOMAIN)
     opp.data.setdefault(DOMAIN, {})

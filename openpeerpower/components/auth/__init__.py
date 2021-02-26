@@ -134,7 +134,7 @@ from openpeerpower.components.http.data_validator import RequestDataValidator
 from openpeerpower.components.http.view import OpenPeerPowerView
 from openpeerpower.const import HTTP_BAD_REQUEST, HTTP_FORBIDDEN, HTTP_OK
 from openpeerpower.core import OpenPeerPower, callback
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util import dt as dt_util
 
 from . import indieauth, login_flow, mfa_setup_flow

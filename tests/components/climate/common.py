@@ -29,7 +29,7 @@ from openpeerpower.const import (
     SERVICE_TURN_OFF,
     SERVICE_TURN_ON,
 )
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 
 async def async_set_preset_mode(opp, preset_mode, entity_id=ENTITY_MATCH_ALL):

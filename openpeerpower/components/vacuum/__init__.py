@@ -24,7 +24,7 @@ from openpeerpower.helpers.config_validation import (  # noqa: F401
 from openpeerpower.helpers.entity import Entity, ToggleEntity
 from openpeerpower.helpers.entity_component import EntityComponent
 from openpeerpower.helpers.icon import icon_for_battery_level
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 # mypy: allow-untyped-defs, no-check-untyped-defs
 

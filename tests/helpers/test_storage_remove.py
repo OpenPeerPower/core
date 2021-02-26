@@ -19,7 +19,7 @@ async def test_removing_while_delay_in_progress(tmpdir):
     test_dir = await opp.async_add_executor_job(tmpdir.mkdir, "storage")
 
     with patch.object(storage, "STORAGE_DIR", test_dir):
-        real_store = storage.Store.opp, 1, "remove_me")
+        real_store = storage.Store(opp, 1, "remove_me")
 
         await real_store.async_save({"delay": "no"})
 

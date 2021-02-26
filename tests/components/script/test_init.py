@@ -21,7 +21,7 @@ from openpeerpower.exceptions import ServiceNotFound
 from openpeerpower.helpers import template
 from openpeerpower.helpers.event import async_track_state_change
 from openpeerpower.helpers.service import async_get_all_descriptions
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.setup import async_setup_component, setup_component
 
 from tests.common import async_mock_service, get_test_open_peer_power

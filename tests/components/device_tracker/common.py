@@ -17,7 +17,7 @@ from openpeerpower.components.device_tracker import (
 )
 from openpeerpower.core import callback
 from openpeerpower.helpers.typing import GPSType, OpenPeerPowerType
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 
 @callback

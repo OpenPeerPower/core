@@ -39,7 +39,7 @@ CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 LOGGER_INFO_REGEX = re.compile(r"^(\w+)\.?(\w+)?\.?(\w+)?\.?(\w+)?(?:\..*)?$")
 
 
-async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
+async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
     """Set up the Sentry component."""
     return True
 

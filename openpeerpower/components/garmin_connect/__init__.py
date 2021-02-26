@@ -24,7 +24,7 @@ PLATFORMS = ["sensor"]
 MIN_SCAN_INTERVAL = timedelta(minutes=10)
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Garmin Connect component."""
     opp.data[DOMAIN] = {}
     return True

@@ -221,7 +221,7 @@ YAML_CONFIGS = "yaml_configs"
 PLATFORMS = ["binary_sensor", "sensor", "switch"]
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Konnected platform."""
     cfg = config.get(DOMAIN)
     if cfg is None:

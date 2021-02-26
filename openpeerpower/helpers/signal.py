@@ -6,7 +6,7 @@ from types import FrameType
 
 from openpeerpower.const import RESTART_EXIT_CODE
 from openpeerpower.core import OpenPeerPower, callback
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 _LOGGER = logging.getLogger(__name__)
 

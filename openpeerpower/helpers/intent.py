@@ -12,7 +12,7 @@ from openpeerpower.core import Context, State, T, callback
 from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.helpers.typing import OpenPeerPowerType
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 _LOGGER = logging.getLogger(__name__)
 _SlotsType = Dict[str, Any]

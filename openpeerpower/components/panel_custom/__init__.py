@@ -4,7 +4,7 @@ import logging
 import voluptuous as vol
 
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 _LOGGER = logging.getLogger(__name__)
 

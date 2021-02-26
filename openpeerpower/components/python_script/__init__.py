@@ -22,7 +22,7 @@ import voluptuous as vol
 from openpeerpower.const import SERVICE_RELOAD
 from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers.service import async_set_service_schema
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util import raise_if_invalid_filename
 import openpeerpower.util.dt as dt_util
 from openpeerpower.util.yaml.loader import load_yaml

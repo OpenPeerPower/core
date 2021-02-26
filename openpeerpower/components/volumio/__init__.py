@@ -14,7 +14,7 @@ from .const import DATA_INFO, DATA_VOLUMIO, DOMAIN
 PLATFORMS = ["media_player"]
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Volumio component."""
     return True
 

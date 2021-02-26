@@ -10,7 +10,7 @@ from openpeerpower.helpers import config_validation as cv, integration_platform,
 from .const import DOMAIN
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Intent component."""
     opp.http.register_view(IntentHandleView())
 

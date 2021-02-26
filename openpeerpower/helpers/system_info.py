@@ -4,7 +4,7 @@ import platform
 from typing import Any, Dict
 
 from openpeerpower.const import __version__ as current_version
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util.package import is_virtual_env
 
 from .typing import OpenPeerPowerType

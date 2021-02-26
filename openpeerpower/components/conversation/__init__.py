@@ -9,7 +9,7 @@ from openpeerpower.components import http, websocket_api
 from openpeerpower.components.http.data_validator import RequestDataValidator
 from openpeerpower.const import HTTP_INTERNAL_SERVER_ERROR
 from openpeerpower.helpers import config_validation as cv, intent
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 from .agent import AbstractConversationAgent
 from .default_agent import DefaultAgent, async_register

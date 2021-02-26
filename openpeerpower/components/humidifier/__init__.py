@@ -20,7 +20,7 @@ from openpeerpower.helpers.config_validation import (  # noqa: F401
 from openpeerpower.helpers.entity import ToggleEntity
 from openpeerpower.helpers.entity_component import EntityComponent
 from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 from .const import (
     ATTR_AVAILABLE_MODES,

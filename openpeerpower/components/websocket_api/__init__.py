@@ -4,7 +4,7 @@ from typing import Optional, Union, cast
 import voluptuous as vol
 
 from openpeerpower.core import OpenPeerPower, callback
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 from . import commands, connection, const, decorators, http, messages  # noqa
 from .connection import ActiveConnection  # noqa

@@ -61,7 +61,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp: OpenPeerPower, base_config: dict) -> bool:
+async def async_setup(opp: OpenPeerPower, base_config: dict) -> bool:
     """Set up for Vera controllers."""
     opp.data[DOMAIN] = {}
 

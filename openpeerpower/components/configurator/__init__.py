@@ -15,7 +15,7 @@ from openpeerpower.const import (
 )
 from openpeerpower.core import Event, callback as async_callback
 from openpeerpower.helpers.entity import async_generate_entity_id
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util.async_ import run_callback_threadsafe
 
 _KEY_INSTANCE = "configurator"

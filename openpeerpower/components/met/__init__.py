@@ -28,7 +28,7 @@ URL = "https://aa015h6buqvih86i1.api.met.no/weatherapi/locationforecast/2.0/comp
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
+async def async_setup(opp: OpenPeerPower, config: Config) -> bool:
     """Set up configured Met."""
     opp.data.setdefault(DOMAIN, {})
     return True

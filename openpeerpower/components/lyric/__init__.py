@@ -47,7 +47,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["climate", "sensor"]
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Honeywell Lyric component."""
     opp.data[DOMAIN] = {}
 

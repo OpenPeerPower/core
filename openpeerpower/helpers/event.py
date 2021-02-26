@@ -46,7 +46,7 @@ from openpeerpower.helpers.ratelimit import KeyedRateLimit
 from openpeerpower.helpers.sun import get_astral_event_next
 from openpeerpower.helpers.template import RenderInfo, Template, result_as_boolean
 from openpeerpower.helpers.typing import TemplateVarsType
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util import dt as dt_util
 from openpeerpower.util.async_ import run_callback_threadsafe
 

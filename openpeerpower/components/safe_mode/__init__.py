@@ -5,7 +5,7 @@ from openpeerpower.core import OpenPeerPower
 DOMAIN = "safe_mode"
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Safe Mode component."""
     persistent_notification.async_create(
         opp,

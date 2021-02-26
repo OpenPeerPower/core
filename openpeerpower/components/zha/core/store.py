@@ -9,7 +9,7 @@ import attr
 
 from openpeerpower.core import callback
 from openpeerpower.helpers.typing import OpenPeerPowerType
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 from .typing import ZhaDeviceType
 

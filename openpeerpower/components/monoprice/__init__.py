@@ -23,7 +23,7 @@ PLATFORMS = ["media_player"]
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Monoprice 6-Zone Amplifier component."""
     return True
 

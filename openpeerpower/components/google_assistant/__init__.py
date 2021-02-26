@@ -87,7 +87,7 @@ GOOGLE_ASSISTANT_SCHEMA = vol.All(
 CONFIG_SCHEMA = vol.Schema({DOMAIN: GOOGLE_ASSISTANT_SCHEMA}, extra=vol.ALLOW_EXTRA)
 
 
-async def async_setup_opp: OpenPeerPower, yaml_config: Dict[str, Any]):
+async def async_setup(opp: OpenPeerPower, yaml_config: Dict[str, Any]):
     """Activate Google Actions component."""
     config = yaml_config.get(DOMAIN, {})
 

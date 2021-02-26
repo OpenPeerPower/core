@@ -4,7 +4,7 @@ from openpeerpower.const import (  # noqa: F401 pylint: disable=unused-import
     STATE_HOME,
 )
 from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 from .config_entry import (  # noqa: F401 pylint: disable=unused-import
     async_setup_entry,

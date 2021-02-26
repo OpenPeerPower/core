@@ -12,7 +12,7 @@ from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers.integration_platform import (
     async_process_integration_platforms,
 )
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 from . import local_source, models
 from .const import DOMAIN, URI_SCHEME, URI_SCHEME_REGEX
@@ -32,7 +32,7 @@ def generate_media_source_id(domain: str, identifier: str) -> str:
     return uri
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the media_source component."""
     opp.data[DOMAIN] = {}
     opp.components.websocket_api.async_register_command(websocket_browse_media)

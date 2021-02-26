@@ -13,7 +13,7 @@ from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers import config_per_platform, discovery
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.typing import OpenPeerPowerType
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.setup import async_prepare_setup_platform
 from openpeerpower.util import slugify
 

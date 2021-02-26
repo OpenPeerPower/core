@@ -43,7 +43,7 @@ SLEEPING_PLATFORMS = ["binary_sensor", "sensor"]
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Shelly component."""
     opp.data[DOMAIN] = {DATA_CONFIG_ENTRY: {}}
     return True

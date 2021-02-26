@@ -7,7 +7,7 @@ import yarl
 from openpeerpower.components import http
 from openpeerpower.core import OpenPeerPower
 from openpeerpower.exceptions import OpenPeerPowerError
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util.network import is_ip_address, is_loopback, normalize_url
 
 TYPE_URL_INTERNAL = "internal_url"

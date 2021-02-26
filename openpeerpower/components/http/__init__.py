@@ -18,7 +18,7 @@ from openpeerpower.const import (
 from openpeerpower.core import Event, OpenPeerPower
 from openpeerpower.helpers import storage
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.setup import ATTR_COMPONENT, EVENT_COMPONENT_LOADED
 import openpeerpower.util as.opp_util
 from openpeerpower.util import ssl as ssl_util

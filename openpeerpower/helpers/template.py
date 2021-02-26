@@ -35,7 +35,7 @@ from openpeerpower.core import State, callback, split_entity_id, valid_entity_id
 from openpeerpower.exceptions import TemplateError
 from openpeerpower.helpers import entity_registry, location as loc_helper
 from openpeerpower.helpers.typing import OpenPeerPowerType, TemplateVarsType
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util import convert, dt as dt_util, location as loc_util
 from openpeerpower.util.async_ import run_callback_threadsafe
 from openpeerpower.util.thread import ThreadWithException

@@ -7,7 +7,7 @@ from openpeerpower.core import OpenPeerPower
 from .gateway import async_setup_entry_gw, async_unload_entry_gw
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Plugwise platform."""
     return True
 

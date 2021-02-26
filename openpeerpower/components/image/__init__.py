@@ -36,7 +36,7 @@ UPDATE_FIELDS = {
 }
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Image integration."""
     image_dir = pathlib.Path.opp.config.path(DOMAIN))
     opp.data[DOMAIN] = storage_collection = ImageStorageCollection.opp, image_dir)

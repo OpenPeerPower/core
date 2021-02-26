@@ -14,7 +14,7 @@ from openpeerpower.const import EVENT_OPENPEERPOWER_CLOSE, __version__
 from openpeerpower.core import Event, callback
 from openpeerpower.helpers.frame import warn_use
 from openpeerpower.helpers.typing import OpenPeerPowerType
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util import ssl as ssl_util
 
 DATA_CONNECTOR = "aiohttp_connector"

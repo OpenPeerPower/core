@@ -58,7 +58,7 @@ async def async_setup(opp, config):
     host = config[DOMAIN][CONF_HOST]
     rfid = config[DOMAIN][CONF_RFID]
     refresh_interval = config[DOMAIN][CONF_FS_INTERVAL]
-    keba = KebaHandler.opp, host, rfid, refresh_interval)
+    keba = KebaHandler(opp, host, rfid, refresh_interval)
     opp.data[DOMAIN] = keba
 
     # Wait for KebaHandler setup complete (initial values loaded)
@@ -76,7 +76,7 @@ async def async_setup(opp, config):
     except ValueError as ex:
         _LOGGER.warning("Could not set failsafe mode %s", ex)
 
-    # Register services to.opp
+    # Register services to opp
     async def execute_service(call):
         """Execute a service to KEBA charging station.
 
@@ -158,7 +158,7 @@ class KebaHandler(KebaKeContact):
 
         return False
 
-    def.opp_callback(self, data):
+    def opp_callback(self, data):
         """Handle component notification via callback."""
 
         # Inform entities about updated values

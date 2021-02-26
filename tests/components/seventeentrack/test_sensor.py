@@ -165,14 +165,14 @@ async def test_invalid_config(opp):
     assert not opp.states.async_entity_ids()
 
 
-async def test_add_package.opp):
+async def test_add_package(opp):
     """Ensure package is added correctly when user add a new package."""
-    package = Package(
+    package = Package( 
         "456", 206, "friendly name 1", "info text 1", "location 1", 206, 2
     )
     ProfileMock.package_list = [package]
 
-    await _setup_seventeentrack.opp)
+    await _setup_seventeentrack(opp)
     assert opp.states.get("sensor.seventeentrack_package_456") is not None
     assert len(opp.states.async_entity_ids()) == 1
 
@@ -181,13 +181,13 @@ async def test_add_package.opp):
     )
     ProfileMock.package_list = [package, package2]
 
-    await _goto_future.opp)
+    await _goto_future(opp)
 
     assert opp.states.get("sensor.seventeentrack_package_789") is not None
     assert len(opp.states.async_entity_ids()) == 2
 
 
-async def test_remove_package.opp):
+async def test_remove_package(opp):
     """Ensure entity is not there anymore if package is not there."""
     package1 = Package(
         "456", 206, "friendly name 1", "info text 1", "location 1", 206, 2
@@ -198,7 +198,7 @@ async def test_remove_package.opp):
 
     ProfileMock.package_list = [package1, package2]
 
-    await _setup_seventeentrack.opp)
+    await _setup_seventeentrack(opp)
 
     assert opp.states.get("sensor.seventeentrack_package_456") is not None
     assert opp.states.get("sensor.seventeentrack_package_789") is not None
@@ -206,21 +206,21 @@ async def test_remove_package.opp):
 
     ProfileMock.package_list = [package2]
 
-    await _goto_future.opp)
+    await _goto_future(opp)
 
     assert opp.states.get("sensor.seventeentrack_package_456") is None
     assert opp.states.get("sensor.seventeentrack_package_789") is not None
     assert len(opp.states.async_entity_ids()) == 1
 
 
-async def test_friendly_name_changed.opp):
+async def test_friendly_name_changed(opp):
     """Test friendly name change."""
     package = Package(
         "456", 206, "friendly name 1", "info text 1", "location 1", 206, 2
     )
     ProfileMock.package_list = [package]
 
-    await _setup_seventeentrack.opp)
+    await _setup_seventeentrack(opp)
 
     assert opp.states.get("sensor.seventeentrack_package_456") is not None
     assert len(opp.states.async_entity_ids()) == 1
@@ -230,7 +230,7 @@ async def test_friendly_name_changed.opp):
     )
     ProfileMock.package_list = [package]
 
-    await _goto_future.opp)
+    await _goto_future(opp)
 
     assert opp.states.get("sensor.seventeentrack_package_456") is not None
     entity = opp.data["entity_components"]["sensor"].get_entity(
@@ -240,7 +240,7 @@ async def test_friendly_name_changed.opp):
     assert len(opp.states.async_entity_ids()) == 1
 
 
-async def test_delivered_not_shown.opp):
+async def test_delivered_not_shown(opp):
     """Ensure delivered packages are not shown."""
     package = Package(
         "456", 206, "friendly name 1", "info text 1", "location 1", 206, 2, 40
@@ -249,13 +249,13 @@ async def test_delivered_not_shown.opp):
 
     opp.components.persistent_notification = MagicMock()
     await _setup_seventeentrack(opp, VALID_CONFIG_FULL_NO_DELIVERED)
-    await _goto_future.opp)
+    await _goto_future(opp)
 
     assert not opp.states.async_entity_ids()
     opp.components.persistent_notification.create.assert_called()
 
 
-async def test_delivered_shown.opp):
+async def test_delivered_shown(opp):
     """Ensure delivered packages are show when user choose to show them."""
     package = Package(
         "456", 206, "friendly name 1", "info text 1", "location 1", 206, 2, 40
@@ -270,7 +270,7 @@ async def test_delivered_shown.opp):
     opp.components.persistent_notification.create.assert_not_called()
 
 
-async def test_becomes_delivered_not_shown_notification.opp):
+async def test_becomes_delivered_not_shown_notification(opp):
     """Ensure notification is triggered when package becomes delivered."""
     package = Package(
         "456", 206, "friendly name 1", "info text 1", "location 1", 206, 2
@@ -288,13 +288,13 @@ async def test_becomes_delivered_not_shown_notification.opp):
     ProfileMock.package_list = [package_delivered]
 
     opp.components.persistent_notification = MagicMock()
-    await _goto_future.opp)
+    await _goto_future(opp)
 
     opp.components.persistent_notification.create.assert_called()
     assert not opp.states.async_entity_ids()
 
 
-async def test_summary_correctly_updated.opp):
+async def test_summary_correctly_updated(opp):
     """Ensure summary entities are not duplicated."""
     await _setup_seventeentrack(opp, summary_data=DEFAULT_SUMMARY)
 
@@ -304,7 +304,7 @@ async def test_summary_correctly_updated.opp):
 
     ProfileMock.summary_data = NEW_SUMMARY_DATA
 
-    await _goto_future.opp)
+    await _goto_future(opp)
 
     assert len(opp.states.async_entity_ids()) == 7
     for state in opp.states.async_all():

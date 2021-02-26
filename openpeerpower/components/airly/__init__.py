@@ -44,7 +44,7 @@ def set_update_interval(opp, instances):
     return interval
 
 
-async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
+async def async_setup(opp: OpenPeerPower, config: Config) -> bool:
     """Set up configured Airly."""
     return True
 

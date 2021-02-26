@@ -34,7 +34,7 @@ from openpeerpower.exceptions import OpenPeerPowerError, Unauthorized
 from openpeerpower.helpers import config_validation as cv, event, template
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect, dispatcher_send
 from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType, ServiceDataType
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util import dt as dt_util
 from openpeerpower.util.async_ import run_callback_threadsafe
 from openpeerpower.util.logging import catch_log_exception

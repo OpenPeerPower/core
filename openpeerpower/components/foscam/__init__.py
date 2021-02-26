@@ -14,7 +14,7 @@ from .const import CONF_RTSP_PORT, DOMAIN, LOGGER, SERVICE_PTZ, SERVICE_PTZ_PRES
 PLATFORMS = ["camera"]
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the foscam component."""
     opp.data.setdefault(DOMAIN, {})
     return True

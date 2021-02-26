@@ -78,7 +78,7 @@ SERVICE_API_CALL_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
+async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
     """Set up the Habitica service."""
     configs = config.get(DOMAIN, [])
 

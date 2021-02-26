@@ -6,7 +6,7 @@ import attr
 
 from openpeerpower.core import callback
 from openpeerpower.helpers import device_registry as dr, entity_registry as er
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util import slugify
 
 from .typing import OpenPeerPowerType

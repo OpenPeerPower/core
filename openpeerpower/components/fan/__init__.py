@@ -20,7 +20,7 @@ from openpeerpower.helpers.config_validation import (  # noqa: F401
 )
 from openpeerpower.helpers.entity import ToggleEntity
 from openpeerpower.helpers.entity_component import EntityComponent
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util.percentage import (
     ordered_list_item_to_percentage,
     percentage_to_ordered_list_item,

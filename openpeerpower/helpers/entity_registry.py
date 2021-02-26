@@ -38,7 +38,7 @@ from openpeerpower.const import (
 from openpeerpower.core import Event, callback, split_entity_id, valid_entity_id
 from openpeerpower.helpers import device_registry as dr
 from openpeerpower.helpers.device_registry import EVENT_DEVICE_REGISTRY_UPDATED
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util import slugify
 from openpeerpower.util.yaml import load_yaml
 

@@ -49,7 +49,7 @@ async def async_setup(opp, config):
 
 async def async_setup_entry(opp, config_entry):
     """Set up the Islamic Prayer Component."""
-    client = IslamicPrayerClient.opp, config_entry)
+    client = IslamicPrayerClient(opp, config_entry)
 
     if not await client.async_setup():
         return False

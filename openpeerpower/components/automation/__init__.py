@@ -50,7 +50,7 @@ from openpeerpower.helpers.script_variables import ScriptVariables
 from openpeerpower.helpers.service import async_register_admin_service
 from openpeerpower.helpers.trigger import async_initialize_triggers
 from openpeerpower.helpers.typing import TemplateVarsType
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util.dt import parse_datetime
 
 # Not used except by packages to check config structure
@@ -416,9 +416,9 @@ class AutomationEntity(ToggleEntity, RestoreEntity):
         except Exception:  # pylint: disable=broad-except
             self._logger.exception("While executing automation %s", self.entity_id)
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Remove listeners when removing automation from Open Peer Power."""
-        await super().async_will_remove_from(opp()
+        await super().async_will_remove_from(opp)
         await self.async_disable()
 
     async def async_enable(self):
@@ -530,7 +530,7 @@ async def _async_process_config(
                     config_block = cast(
                         Dict[str, Any],
                         await async_validate_config_item(
-                            opp. blueprint_inputs.async_substitute()
+                            opp, blueprint_inputs.async_substitute()
                         ),
                     )
                 except vol.Invalid as err:
@@ -563,7 +563,7 @@ async def _async_process_config(
             )
 
             if CONF_CONDITION in config_block:
-                cond_func = await _async_process_if opp, config, config_block)
+                cond_func = await _async_process_if(opp, config, config_block)
 
                 if cond_func is None:
                     continue
@@ -601,7 +601,7 @@ async def _async_process_config(
     return blueprints_used
 
 
-async def _async_process_if opp, config, p_config):
+async def _async_process_if(opp, config, p_config):
     """Process if checks."""
     if_configs = p_config[CONF_CONDITION]
 
@@ -618,7 +618,7 @@ async def _async_process_if opp, config, p_config):
         errors = []
         for check in checks:
             try:
-                if not check.opp, variables):
+                if not check(opp, variables):
                     return False
             except ConditionError as ex:
                 errors.append(f"Error in 'condition' evaluation: {ex}")

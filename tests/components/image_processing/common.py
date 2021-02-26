@@ -6,7 +6,7 @@ components. Instead call the service directly.
 from openpeerpower.components.image_processing import DOMAIN, SERVICE_SCAN
 from openpeerpower.const import ATTR_ENTITY_ID, ENTITY_MATCH_ALL
 from openpeerpower.core import callback
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 
 @bind.opp

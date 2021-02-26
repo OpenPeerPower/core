@@ -13,7 +13,7 @@ from openpeerpower.components.group import (
 )
 from openpeerpower.const import ATTR_ICON, ATTR_NAME, SERVICE_RELOAD
 from openpeerpower.core import callback
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 
 @bind.opp

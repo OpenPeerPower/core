@@ -145,7 +145,7 @@ async def async_setup_august(opp, config_entry, august_gateway):
     return True
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the August component from YAML."""
 
     conf = config.get(DOMAIN)

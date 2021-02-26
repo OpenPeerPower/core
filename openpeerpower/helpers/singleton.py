@@ -4,7 +4,7 @@ import functools
 from typing import Callable, Optional, TypeVar, cast
 
 from openpeerpower.core import OpenPeerPower
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 T = TypeVar("T")
 

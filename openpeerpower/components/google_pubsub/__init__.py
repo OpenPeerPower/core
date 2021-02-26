@@ -37,7 +37,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-def setup_opp: OpenPeerPower, yaml_config: Dict[str, Any]):
+def setup(opp: OpenPeerPower, yaml_config: Dict[str, Any]):
     """Activate Google Pub/Sub component."""
 
     config = yaml_config[DOMAIN]

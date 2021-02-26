@@ -33,7 +33,7 @@ from openpeerpower.helpers.integration_platform import (
 )
 from openpeerpower.helpers.reload import async_reload_integration_platforms
 from openpeerpower.helpers.typing import OpenPeerPowerType
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 # mypy: allow-untyped-calls, allow-untyped-defs, no-check-untyped-defs
 

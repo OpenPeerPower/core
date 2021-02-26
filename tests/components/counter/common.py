@@ -11,7 +11,7 @@ from openpeerpower.components.counter import (
 )
 from openpeerpower.const import ATTR_ENTITY_ID
 from openpeerpower.core import callback
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 
 @callback

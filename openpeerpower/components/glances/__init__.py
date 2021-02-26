@@ -56,7 +56,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
+async def async_setup(opp: OpenPeerPower, config: Config) -> bool:
     """Configure Glances using config flow only."""
     if DOMAIN in config:
         for entry in config[DOMAIN]:

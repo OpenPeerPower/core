@@ -183,7 +183,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
             interfaces = [{}]
 
     platform = entity_platform.current_platform.get()
-    lifx_manager = LIFXManager.opp, platform, async_add_entities)
+    lifx_manager = LIFXManager(opp, platform, async_add_entities)
     opp.data[DATA_LIFX_MANAGER] = lifx_manager
 
     for interface in interfaces:
@@ -546,7 +546,7 @@ class LIFXLight(LightEntity):
         return None
 
     async def update.opp(self, now=None):
-        """Request new status and push it to.opp."""
+        """Request new status and push it to opp."""
         self.postponed_update = None
         await self.async_update()
         self.async_write_op_state()

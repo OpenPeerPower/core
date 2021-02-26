@@ -48,7 +48,7 @@ from openpeerpower.helpers.event import async_track_state_change_event
 from openpeerpower.helpers.restore_state import RestoreEntity
 from openpeerpower.helpers.storage import Store
 from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 _LOGGER = logging.getLogger(__name__)
 

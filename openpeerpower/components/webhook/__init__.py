@@ -10,7 +10,7 @@ from openpeerpower.components.http.view import OpenPeerPowerView
 from openpeerpower.const import HTTP_OK
 from openpeerpower.core import callback
 from openpeerpower.helpers.network import get_url
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util.aiohttp import MockRequest
 
 _LOGGER = logging.getLogger(__name__)

@@ -26,7 +26,7 @@ from openpeerpower.helpers.restore_state import RestoreEntity
 import openpeerpower.helpers.service
 from openpeerpower.helpers.storage import Store
 from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType, ServiceCallType
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 DOMAIN = "input_boolean"
 

@@ -19,7 +19,7 @@ EMPTY_CREDENTIALS = ""
 PLATFORMS = ["switch"]
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Rituals Perfume Genie component."""
     return True
 

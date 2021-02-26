@@ -152,7 +152,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp: OpenPeerPower, opp_config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPower, opp_config: ConfigType) -> bool:
     """Set up the Elk M1 platform."""
     opp.data.setdefault(DOMAIN, {})
     _create_elk_services(opp)

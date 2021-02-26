@@ -10,7 +10,7 @@ from openpeerpower.components.notify import (
     DOMAIN,
     SERVICE_NOTIFY,
 )
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 
 @bind.opp

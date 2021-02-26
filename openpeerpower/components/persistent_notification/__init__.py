@@ -11,7 +11,7 @@ from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.exceptions import TemplateError
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.helpers.entity import async_generate_entity_id
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util import slugify
 import openpeerpower.util.dt as dt_util
 
@@ -96,7 +96,7 @@ def async_dismiss(opp: OpenPeerPower, notification_id: str) -> None:
     opp.async_create_task(opp.services.async_call(DOMAIN, SERVICE_DISMISS, data))
 
 
-async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
+async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
     """Set up the persistent notification component."""
     persistent_notifications: MutableMapping[str, MutableMapping] = OrderedDict()
     opp.data[DOMAIN] = {"notifications": persistent_notifications}

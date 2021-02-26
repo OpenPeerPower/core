@@ -11,7 +11,7 @@ from openpeerpower import core, setup
 from openpeerpower.const import ATTR_DISCOVERED, ATTR_SERVICE, EVENT_PLATFORM_DISCOVERED
 from openpeerpower.core import CALLBACK_TYPE
 from openpeerpower.helpers.typing import ConfigType, DiscoveryInfoType
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util.async_ import run_callback_threadsafe
 
 EVENT_LOAD_PLATFORM = "load_platform.{}"

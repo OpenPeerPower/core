@@ -68,7 +68,7 @@ class SenseDevicesData:
         return self._data_by_device.get(sense_device_id)
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Sense component."""
     opp.data.setdefault(DOMAIN, {})
     conf = config.get(DOMAIN)

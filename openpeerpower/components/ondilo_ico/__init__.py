@@ -12,7 +12,7 @@ from .oauth_impl import OndiloOauth2Implementation
 PLATFORMS = ["sensor"]
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Ondilo ICO component."""
     opp.data.setdefault(DOMAIN, {})
 

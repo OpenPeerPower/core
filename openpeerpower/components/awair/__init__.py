@@ -18,7 +18,7 @@ from .const import API_TIMEOUT, DOMAIN, LOGGER, UPDATE_INTERVAL, AwairResult
 PLATFORMS = ["sensor"]
 
 
-async def async_setup_opp: OpenPeerPower, config: Config) -> bool:
+async def async_setup(opp: OpenPeerPower, config: Config) -> bool:
     """Set up Awair integration."""
     return True
 

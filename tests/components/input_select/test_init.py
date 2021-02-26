@@ -27,7 +27,7 @@ from openpeerpower.const import (
 from openpeerpower.core import Context, State
 from openpeerpower.exceptions import Unauthorized
 from openpeerpower.helpers import entity_registry
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.setup import async_setup_component
 
 from tests.common import mock_restore_cache

@@ -22,7 +22,7 @@ from .const import CONF_TOKEN_EXPIRES_IN, CONF_TOKEN_EXPIRY, DOMAIN
 CONF_ID_TOKEN = "id_token"
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Flick Electric component."""
     opp.data[DOMAIN] = {}
     return True

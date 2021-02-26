@@ -46,7 +46,7 @@ DHCP_REQUEST = 3
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_opp: OpenPeerPower, config: dict) -> bool:
+async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
     """Set up the dhcp component."""
 
     async def _initialize(_):

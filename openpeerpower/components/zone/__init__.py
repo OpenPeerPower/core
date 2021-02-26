@@ -30,7 +30,7 @@ from openpeerpower.helpers import (
     service,
     storage,
 )
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 from openpeerpower.util.location import distance
 
 from .const import ATTR_PASSIVE, ATTR_RADIUS, CONF_PASSIVE, DOMAIN, HOME_ZONE
@@ -176,7 +176,7 @@ class ZoneStorageCollection(collection.StorageCollection):
         return {**data, **update_data}
 
 
-async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
+async def async_setup(opp: OpenPeerPower, config: Dict) -> bool:
     """Set up configured zones as well as Open Peer Power zone if necessary."""
     component = entity_component.EntityComponent(_LOGGER, DOMAIN, opp)
     id_manager = collection.IDManager()

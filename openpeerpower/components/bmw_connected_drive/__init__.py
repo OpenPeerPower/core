@@ -74,7 +74,7 @@ _SERVICE_MAP = {
 UNDO_UPDATE_LISTENER = "undo_update_listener"
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the BMW Connected Drive component from configuration.yaml."""
     opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][DATA_OPP_CONFIG] = config

@@ -50,7 +50,7 @@ CONFIG_SCHEMA = vol.Schema(
 PLATFORMS = ["media_player", "remote", "binary_sensor", "sensor"]
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the xbox component."""
     opp.data[DOMAIN] = {}
 

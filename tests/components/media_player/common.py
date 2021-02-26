@@ -34,7 +34,7 @@ from openpeerpower.const import (
     SERVICE_VOLUME_SET,
     SERVICE_VOLUME_UP,
 )
-from openpeerpower.loader import bind.opp
+from openpeerpower.loader import bind_opp
 
 
 async def async_turn_on(opp, entity_id=ENTITY_MATCH_ALL):

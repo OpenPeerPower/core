@@ -28,7 +28,7 @@ PLATFORMS = ["media_player", "remote"]
 SCAN_INTERVAL = timedelta(seconds=30)
 
 
-async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
+async def async_setup(opp: OpenPeerPower, config: Dict) -> bool:
     """Set up the DirecTV component."""
     opp.data.setdefault(DOMAIN, {})
     return True

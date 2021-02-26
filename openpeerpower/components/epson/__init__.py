@@ -32,7 +32,7 @@ async def validate_projector(opp: OpenPeerPower, host, port):
     return epson_proj
 
 
-async def async_setup_opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the epson component."""
     opp.data.setdefault(DOMAIN, {})
     return True
