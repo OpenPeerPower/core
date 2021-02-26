@@ -6,7 +6,7 @@ from openpeerpower.components.geonetnz_quakes import DOMAIN, FEED
 
 async def test_component_unload_config_entry(opp, config_entry):
     """Test that loading and unloading of a config entry works."""
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     with patch(
         "aio_geojson_geonetnz_quakes.GeonetnzQuakesFeedManager.update"
     ) as mock_feed_manager_update:

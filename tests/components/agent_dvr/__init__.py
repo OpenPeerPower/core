@@ -35,7 +35,7 @@ async def init_integration(
         },
     )
 
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     if not skip_setup:
         await opp.config_entries.async_setup(entry.entry_id)

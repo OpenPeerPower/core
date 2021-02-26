@@ -735,7 +735,7 @@ async def test_disable_device_disables_entities(opp, registry):
     """Test that we disable entities tied to a device."""
     device_registry = mock_device_registry(opp)
     config_entry = MockConfigEntry(domain="light")
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     device_entry = device_registry.async_get_or_create(
         config_entry_id=config_entry.entry_id,
@@ -800,7 +800,7 @@ async def test_disable_config_entry_disables_entities(opp, registry):
     """Test that we disable entities tied to a config entry."""
     device_registry = mock_device_registry(opp)
     config_entry = MockConfigEntry(domain="light")
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     device_entry = device_registry.async_get_or_create(
         config_entry_id=config_entry.entry_id,

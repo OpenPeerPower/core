@@ -207,7 +207,7 @@ async def _create_entries(
             },
             entry_id=client.id,
         )
-        config_entry.add_to(opp.opp)
+        config_entry.add_to_opp(opp)
         assert await opp.config_entries.async_setup(client.id)
         await opp.async_block_till_done()
 

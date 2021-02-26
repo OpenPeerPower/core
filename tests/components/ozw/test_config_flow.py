@@ -431,7 +431,7 @@ async def test_clean_discovery_on_user_create(
         )
         await opp.async_block_till_done()
 
-    assert len.opp.config_entries.flow.async_progress()) == 0
+    assert len(opp.config_entries.flow.async_progress()) == 0
     assert result["type"] == "create_entry"
     assert result["title"] == TITLE
     assert result["data"] == {
@@ -462,7 +462,7 @@ async def test_abort_discovery_with_user_flow(
 
     assert result["type"] == "abort"
     assert result["reason"] == "already_in_progress"
-    assert len.opp.config_entries.flow.async_progress()) == 1
+    assert len(opp.config_entries.flow.async_progress()) == 1
 
 
 async def test_abort_discovery_with_existing_entry(

@@ -102,7 +102,7 @@ async def async_setup_entry(opp, entry):
             port=port,
             disconnect_callback=disconnected,
             reconnect_callback=reconnected,
-            loop.opp.loop,
+            loop=opp.loop,
             timeout=CONNECTION_TIMEOUT,
             reconnect_interval=DEFAULT_RECONNECT_INTERVAL,
             keep_alive_interval=DEFAULT_KEEP_ALIVE_INTERVAL,

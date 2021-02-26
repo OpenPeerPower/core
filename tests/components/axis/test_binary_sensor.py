@@ -65,7 +65,7 @@ async def test_binary_sensors.opp):
     device.api.event.update(EVENTS)
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids(BINARY_SENSOR_DOMAIN)) == 2
+    assert len(opp.states.async_entity_ids(BINARY_SENSOR_DOMAIN)) == 2
 
     pir = opp.states.get(f"{BINARY_SENSOR_DOMAIN}.{NAME}_pir_0")
     assert pir.state == STATE_OFF

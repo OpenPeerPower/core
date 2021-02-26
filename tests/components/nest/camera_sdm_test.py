@@ -143,7 +143,7 @@ async def async_get_image.opp):
 async def test_no_devices.opp):
     """Test configuration that returns no devices."""
     await async_setup_camera.opp)
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_ineligible_device.opp):
@@ -156,14 +156,14 @@ async def test_ineligible_device.opp):
             },
         },
     )
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_camera_device.opp):
     """Test a basic camera with a live stream."""
     await async_setup_camera(opp, DEVICE_TRAITS)
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     camera = opp.states.get("camera.my_camera")
     assert camera is not None
     assert camera.state == STATE_IDLE
@@ -186,7 +186,7 @@ async def test_camera_stream(opp, auth):
     auth.responses = [make_stream_url_response()]
     await async_setup_camera(opp, DEVICE_TRAITS, auth=auth)
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     cam = opp.states.get("camera.my_camera")
     assert cam is not None
     assert cam.state == STATE_IDLE
@@ -214,7 +214,7 @@ async def test_camera_stream_missing_trait(opp, auth):
 
     await async_setup_camera(opp, traits, auth=auth)
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     cam = opp.states.get("camera.my_camera")
     assert cam is not None
     assert cam.state == STATE_IDLE
@@ -248,7 +248,7 @@ async def test_refresh_expired_stream_token(opp, auth):
     )
     assert await async_setup_component(opp, "stream", {})
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     cam = opp.states.get("camera.my_camera")
     assert cam is not None
     assert cam.state == STATE_IDLE
@@ -296,7 +296,7 @@ async def test_stream_response_already_expired(opp, auth):
     ]
     await async_setup_camera(opp, DEVICE_TRAITS, auth=auth)
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     cam = opp.states.get("camera.my_camera")
     assert cam is not None
     assert cam.state == STATE_IDLE
@@ -320,7 +320,7 @@ async def test_camera_removed(opp, auth):
         auth=auth,
     )
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     cam = opp.states.get("camera.my_camera")
     assert cam is not None
     assert cam.state == STATE_IDLE
@@ -346,7 +346,7 @@ async def test_camera_removed(opp, auth):
     for config_entry in opp.config_entries.async_entries(DOMAIN):
         await opp.config_entries.async_remove(config_entry.entry_id)
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_refresh_expired_stream_failure(opp, auth):
@@ -363,7 +363,7 @@ async def test_refresh_expired_stream_failure(opp, auth):
     ]
     await async_setup_camera(opp, DEVICE_TRAITS, auth=auth)
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     cam = opp.states.get("camera.my_camera")
     assert cam is not None
     assert cam.state == STATE_IDLE
@@ -387,7 +387,7 @@ async def test_camera_image_from_last_event(opp, auth):
     # holds on to the event message. When the test asks for a capera snapshot
     # it exchanges the event id for an image url and fetches the image.
     subscriber = await async_setup_camera(opp, DEVICE_TRAITS, auth=auth)
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     assert opp.states.get("camera.my_camera")
 
     # Simulate a pubsub message received by the subscriber with a motion event.
@@ -421,7 +421,7 @@ async def test_camera_image_from_event_not_supported(opp, auth):
     traits = DEVICE_TRAITS.copy()
     del traits["sdm.devices.traits.CameraEventImage"]
     subscriber = await async_setup_camera(opp, traits, auth=auth)
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     assert opp.states.get("camera.my_camera")
 
     await subscriber.async_receive_event(make_motion_event())
@@ -437,7 +437,7 @@ async def test_camera_image_from_event_not_supported(opp, auth):
 async def test_generate_event_image_url_failure(opp, auth):
     """Test fallback to stream on failure to create an image url."""
     subscriber = await async_setup_camera(opp, DEVICE_TRAITS, auth=auth)
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     assert opp.states.get("camera.my_camera")
 
     await subscriber.async_receive_event(make_motion_event())
@@ -457,7 +457,7 @@ async def test_generate_event_image_url_failure(opp, auth):
 async def test_fetch_event_image_failure(opp, auth):
     """Test fallback to a stream on image download failure."""
     subscriber = await async_setup_camera(opp, DEVICE_TRAITS, auth=auth)
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     assert opp.states.get("camera.my_camera")
 
     await subscriber.async_receive_event(make_motion_event())
@@ -479,7 +479,7 @@ async def test_fetch_event_image_failure(opp, auth):
 async def test_event_image_expired(opp, auth):
     """Test fallback for an event event image that has expired."""
     subscriber = await async_setup_camera(opp, DEVICE_TRAITS, auth=auth)
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     assert opp.states.get("camera.my_camera")
 
     # Simulate a pubsub message has already expired
@@ -497,7 +497,7 @@ async def test_event_image_expired(opp, auth):
 async def test_event_image_becomes_expired(opp, auth):
     """Test fallback for an event event image that has been cleaned up on expiration."""
     subscriber = await async_setup_camera(opp, DEVICE_TRAITS, auth=auth)
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     assert opp.states.get("camera.my_camera")
 
     event_timestamp = utcnow()
@@ -539,7 +539,7 @@ async def test_event_image_becomes_expired(opp, auth):
 async def test_multiple_event_images(opp, auth):
     """Test fallback for an event event image that has been cleaned up on expiration."""
     subscriber = await async_setup_camera(opp, DEVICE_TRAITS, auth=auth)
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     assert opp.states.get("camera.my_camera")
 
     event_timestamp = utcnow()

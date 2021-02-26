@@ -480,7 +480,7 @@ class TestSetup:
 async def test_component_warn_slow_setup_opp):
     """Warn we log when a component setup takes a long time."""
     mock_integration(opp, MockModule("test_component1"))
-    with patch.object.opp.loop, "call_later") as mock_call:
+    with patch.object(opp.loop, "call_later") as mock_call:
         result = await setup.async_setup_component(opp, "test_component1", {})
         assert result
         assert mock_call.called
@@ -499,7 +499,7 @@ async def test_platform_no_warn_slow(opp):
     mock_integration(
         opp. MockModule("test_component1", platform_schema=PLATFORM_SCHEMA)
     )
-    with patch.object.opp.loop, "call_later") as mock_call:
+    with patch.object(opp.loop, "call_later") as mock_call:
         result = await setup.async_setup_component(opp, "test_component1", {})
         assert result
         assert len(mock_call.mock_calls) == 0

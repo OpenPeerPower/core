@@ -14,7 +14,7 @@ async def setup_platform(opp, platform):
         domain=ABODE_DOMAIN,
         data={CONF_USERNAME: "user@email.com", CONF_PASSWORD: "password"},
     )
-    mock_entry.add_to(opp.opp)
+    mock_entry.add_to_opp(opp)
 
     with patch("openpeerpower.components.abode.ABODE_PLATFORMS", [platform]), patch(
         "abodepy.event_controller.sio"

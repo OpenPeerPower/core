@@ -63,7 +63,7 @@ async def test_deconz_events(opp, aioclient_mock):
     )
     gateway = get_gateway_from_config_entry(opp, config_entry)
 
-    assert len.opp.states.async_all()) == 3
+    assert len(opp.states.async_all()) == 3
     assert len(gateway.events) == 5
     assert opp.states.get("sensor.switch_1") is None
     assert opp.states.get("sensor.switch_1_battery_level") is None
@@ -125,12 +125,12 @@ async def test_deconz_events(opp, aioclient_mock):
     await opp.config_entries.async_unload(config_entry.entry_id)
 
     states = opp.states.async_all()
-    assert len.opp.states.async_all()) == 3
+    assert len(opp.states.async_all()) == 3
     for state in states:
         assert state.state == STATE_UNAVAILABLE
     assert len(gateway.events) == 0
 
     await opp.config_entries.async_remove(config_entry.entry_id)
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
     assert len(gateway.events) == 0

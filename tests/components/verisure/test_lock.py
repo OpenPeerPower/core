@@ -75,7 +75,7 @@ async def setup_verisure_locks(opp, config):
         await async_setup_component(opp, VERISURE_DOMAIN, config)
         await opp.async_block_till_done()
         # lock.door_lock, ethernet_status
-        assert len.opp.states.async_all()) == 2
+        assert len(opp.states.async_all()) == 2
 
 
 async def test_verisure_no_default_code.opp):

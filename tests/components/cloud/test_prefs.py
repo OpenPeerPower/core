@@ -5,9 +5,9 @@ from openpeerpower.auth.const import GROUP_ID_ADMIN
 from openpeerpower.components.cloud.prefs import STORAGE_KEY, CloudPreferences
 
 
-async def test_set_username.opp):
+async def test_set_username(opp):
     """Test we clear config if we set different username."""
-    prefs = CloudPreferences.opp)
+    prefs = CloudPreferences(opp)
     await prefs.async_initialize()
 
     assert prefs.google_enabled
@@ -21,9 +21,9 @@ async def test_set_username.opp):
     assert prefs.google_enabled
 
 
-async def test_set_username_migration.opp):
+async def test_set_username_migration(opp):
     """Test we not clear config if we had no username."""
-    prefs = CloudPreferences.opp)
+    prefs = CloudPreferences(opp)
 
     with patch.object(prefs, "_empty_config", return_value=prefs._empty_config(None)):
         await prefs.async_initialize()
@@ -43,7 +43,7 @@ async def test_load_invalid_cloud_user(opp, opp_storage):
     """Test loading cloud user with invalid storage."""
     opp.storage[STORAGE_KEY] = {"version": 1, "data": {"cloud_user": "non-existing"}}
 
-    prefs = CloudPreferences.opp)
+    prefs = CloudPreferences(opp)
     await prefs.async_initialize()
 
     cloud_user_id = await prefs.get_cloud_user()
@@ -62,7 +62,7 @@ async def test_setup_remove_cloud_user(opp, opp_storage):
     """Test creating and removing cloud user."""
     opp.storage[STORAGE_KEY] = {"version": 1, "data": {"cloud_user": None}}
 
-    prefs = CloudPreferences.opp)
+    prefs = CloudPreferences(opp)
     await prefs.async_initialize()
     await prefs.async_set_username("user1")
 

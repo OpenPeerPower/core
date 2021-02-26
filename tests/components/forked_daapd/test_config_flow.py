@@ -103,7 +103,7 @@ async def test_zeroconf_updates_title(opp, config_entry):
     """Test that zeroconf updates title and aborts with same host."""
     MockConfigEntry(domain=DOMAIN, data={CONF_HOST: "different host"}).add_to_opp(opp)
     config_entry.add_to_opp(opp)
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 2
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 2
     discovery_info = {
         "host": "192.168.1.1",
         "port": 23,
@@ -115,7 +115,7 @@ async def test_zeroconf_updates_title(opp, config_entry):
     await opp.async_block_till_done()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert config_entry.title == "zeroconf_test"
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 2
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 2
 
 
 async def test_config_flow_no_websocket(opp, config_entry):

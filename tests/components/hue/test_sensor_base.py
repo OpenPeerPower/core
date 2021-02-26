@@ -280,7 +280,7 @@ async def test_no_sensors(opp, mock_bridge):
     mock_bridge.mock_sensor_responses.append({})
     await setup_bridge(opp, mock_bridge)
     assert len(mock_bridge.mock_requests) == 1
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_sensors_with_multiple_bridges(opp, mock_bridge):
@@ -300,7 +300,7 @@ async def test_sensors_with_multiple_bridges(opp, mock_bridge):
     assert len(mock_bridge.mock_requests) == 1
     assert len(mock_bridge_2.mock_requests) == 1
     # 3 "physical" sensors with 3 virtual sensors each + 1 battery sensor
-    assert len.opp.states.async_all()) == 10
+    assert len(opp.states.async_all()) == 10
 
 
 async def test_sensors(opp, mock_bridge):
@@ -309,7 +309,7 @@ async def test_sensors(opp, mock_bridge):
     await setup_bridge(opp, mock_bridge)
     assert len(mock_bridge.mock_requests) == 1
     # 2 "physical" sensors with 3 virtual sensors each
-    assert len.opp.states.async_all()) == 7
+    assert len(opp.states.async_all()) == 7
 
     presence_sensor_1 = opp.states.get("binary_sensor.living_room_sensor_motion")
     light_level_sensor_1 = opp.states.get("sensor.living_room_sensor_light_level")
@@ -349,7 +349,7 @@ async def test_unsupported_sensors(opp, mock_bridge):
     await setup_bridge(opp, mock_bridge)
     assert len(mock_bridge.mock_requests) == 1
     # 2 "physical" sensors with 3 virtual sensors each + 1 battery sensor
-    assert len.opp.states.async_all()) == 7
+    assert len(opp.states.async_all()) == 7
 
 
 async def test_new_sensor_discovered(opp, mock_bridge):
@@ -358,7 +358,7 @@ async def test_new_sensor_discovered(opp, mock_bridge):
 
     await setup_bridge(opp, mock_bridge)
     assert len(mock_bridge.mock_requests) == 1
-    assert len.opp.states.async_all()) == 7
+    assert len(opp.states.async_all()) == 7
 
     new_sensor_response = dict(SENSOR_RESPONSE)
     new_sensor_response.update(
@@ -376,7 +376,7 @@ async def test_new_sensor_discovered(opp, mock_bridge):
     await opp.async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 2
-    assert len.opp.states.async_all()) == 10
+    assert len(opp.states.async_all()) == 10
 
     presence = opp.states.get("binary_sensor.bedroom_sensor_motion")
     assert presence is not None
@@ -392,7 +392,7 @@ async def test_sensor_removed(opp, mock_bridge):
 
     await setup_bridge(opp, mock_bridge)
     assert len(mock_bridge.mock_requests) == 1
-    assert len.opp.states.async_all()) == 7
+    assert len(opp.states.async_all()) == 7
 
     mock_bridge.mock_sensor_responses.clear()
     keys = ("1", "2", "3")
@@ -405,7 +405,7 @@ async def test_sensor_removed(opp, mock_bridge):
     await opp.async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 2
-    assert len.opp.states.async_all()) == 3
+    assert len(opp.states.async_all()) == 3
 
     sensor = opp.states.get("binary_sensor.living_room_sensor_motion")
     assert sensor is not None
@@ -419,7 +419,7 @@ async def test_update_timeout(opp, mock_bridge):
     mock_bridge.api.sensors.update = Mock(side_effect=asyncio.TimeoutError)
     await setup_bridge(opp, mock_bridge)
     assert len(mock_bridge.mock_requests) == 0
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_update_unauthorized(opp, mock_bridge):
@@ -427,7 +427,7 @@ async def test_update_unauthorized(opp, mock_bridge):
     mock_bridge.api.sensors.update = Mock(side_effect=aiohue.Unauthorized)
     await setup_bridge(opp, mock_bridge)
     assert len(mock_bridge.mock_requests) == 0
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
     assert len(mock_bridge.handle_unauthorized_error.mock_calls) == 1
 
 
@@ -440,7 +440,7 @@ async def test_hue_events(opp, mock_bridge):
 
     await setup_bridge(opp, mock_bridge)
     assert len(mock_bridge.mock_requests) == 1
-    assert len.opp.states.async_all()) == 7
+    assert len(opp.states.async_all()) == 7
     assert len(mock_listener.mock_calls) == 0
 
     new_sensor_response = dict(SENSOR_RESPONSE)
@@ -455,7 +455,7 @@ async def test_hue_events(opp, mock_bridge):
     await opp.async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 2
-    assert len.opp.states.async_all()) == 7
+    assert len(opp.states.async_all()) == 7
     assert len(mock_listener.mock_calls) == 1
     assert mock_listener.mock_calls[0][1][0].data == {
         "id": "hue_tap",
@@ -476,7 +476,7 @@ async def test_hue_events(opp, mock_bridge):
     await opp.async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 3
-    assert len.opp.states.async_all()) == 7
+    assert len(opp.states.async_all()) == 7
     assert len(mock_listener.mock_calls) == 2
     assert mock_listener.mock_calls[1][1][0].data == {
         "id": "hue_dimmer_switch_1",
@@ -525,7 +525,7 @@ async def test_hue_events(opp, mock_bridge):
     await opp.async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 4
-    assert len.opp.states.async_all()) == 8
+    assert len(opp.states.async_all()) == 8
     assert len(mock_listener.mock_calls) == 2
 
     # A new press fires the event
@@ -537,7 +537,7 @@ async def test_hue_events(opp, mock_bridge):
     await opp.async_block_till_done()
 
     assert len(mock_bridge.mock_requests) == 5
-    assert len.opp.states.async_all()) == 8
+    assert len(opp.states.async_all()) == 8
     assert len(mock_listener.mock_calls) == 3
     assert mock_listener.mock_calls[2][1][0].data == {
         "id": "lutron_aurora_1",

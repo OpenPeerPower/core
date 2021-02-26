@@ -287,7 +287,7 @@ async def test_adding_last_unconfigured_server(
             CONF_SERVER_IDENTIFIER: MOCK_SERVERS[1][CONF_SERVER_IDENTIFIER],
             CONF_SERVER: MOCK_SERVERS[1][CONF_SERVER],
         },
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
@@ -339,7 +339,7 @@ async def test_all_available_servers_configured(
         {"internal_url": "http://example.local:8123"},
     )
 
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     MockConfigEntry(
         domain=DOMAIN,
@@ -347,7 +347,7 @@ async def test_all_available_servers_configured(
             CONF_SERVER_IDENTIFIER: MOCK_SERVERS[1][CONF_SERVER_IDENTIFIER],
             CONF_SERVER: MOCK_SERVERS[1][CONF_SERVER],
         },
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
@@ -379,7 +379,7 @@ async def test_all_available_servers_configured(
 
 async def test_option_flow(opp, entry, mock_plex_server):
     """Test config options flow selection."""
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
 
     result = await opp.config_entries.options.async_init(
@@ -411,7 +411,7 @@ async def test_option_flow(opp, entry, mock_plex_server):
 
 async def test_missing_option_flow(opp, entry, mock_plex_server):
     """Test config options flow selection when no options stored."""
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
 
     result = await opp.config_entries.options.async_init(
@@ -713,7 +713,7 @@ async def test_setup_with_limited_credentials(opp, entry, setup_plex_server):
     assert len(plex_server.accounts) == 0
     assert plex_server.owner is None
 
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
 
 
@@ -755,7 +755,7 @@ async def test_trigger_reauth(opp, entry, mock_plex_server, mock_websocket):
         trigger_plex_update(mock_websocket)
         await wait_for_debouncer(opp)
 
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state != ENTRY_STATE_LOADED
 
     flows = opp.config_entries.flow.async_progress()
@@ -778,8 +778,8 @@ async def test_trigger_reauth(opp, entry, mock_plex_server, mock_websocket):
         assert result["reason"] == "reauth_successful"
         assert result["flow_id"] == flow_id
 
-    assert len.opp.config_entries.flow.async_progress()) == 0
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.flow.async_progress()) == 0
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
     assert entry.state == ENTRY_STATE_LOADED
     assert entry.data[CONF_SERVER] == mock_plex_server.friendly_name

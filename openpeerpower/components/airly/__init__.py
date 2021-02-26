@@ -65,7 +65,7 @@ async def async_setup_entry(opp, config_entry):
     websession = async_get_clientsession(opp)
     # Change update_interval for other Airly instances
     update_interval = set_update_interval(
-        opp. len.opp.config_entries.async_entries(DOMAIN))
+        opp. len(opp.config_entries.async_entries(DOMAIN))
     )
 
     coordinator = AirlyDataUpdateCoordinator(
@@ -101,7 +101,7 @@ async def async_unload_entry(opp, config_entry):
         opp.data[DOMAIN].pop(config_entry.entry_id)
 
     # Change update_interval for other Airly instances
-    set_update_interval(opp, len.opp.data[DOMAIN]))
+    set_update_interval(opp, len(opp.data[DOMAIN]))
 
     return unload_ok
 

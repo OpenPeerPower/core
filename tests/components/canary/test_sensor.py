@@ -31,8 +31,8 @@ async def test_sensors_pro(opp, canary) -> None:
     """Test the creation and values of the sensors for Canary Pro."""
     await async_setup_component(opp, "persistent_notification", {})
 
-    registry = mock_registry.opp)
-    device_registry = mock_device_registry.opp)
+    registry = mock_registry(opp)
+    device_registry = mock_device_registry(opp)
 
     online_device_at_home = mock_device(20, "Dining Room", True, "Canary Pro")
 
@@ -157,8 +157,8 @@ async def test_sensors_flex(opp, canary) -> None:
     """Test the creation and values of the sensors for Canary Flex."""
     await async_setup_component(opp, "persistent_notification", {})
 
-    registry = mock_registry.opp)
-    device_registry = mock_device_registry.opp)
+    registry = mock_registry(opp)
+    device_registry = mock_device_registry(opp)
 
     online_device_at_home = mock_device(20, "Dining Room", True, "Canary Flex")
 

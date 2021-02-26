@@ -250,7 +250,7 @@ async def async_setup(opp, config):
             keepalive=keepalive_idle_timer,
             event_callback=event_callback,
             disconnect_callback=reconnect,
-            loop.opp.loop,
+            loop=opp.loop,
             ignore=config[DOMAIN][CONF_IGNORE_DEVICES],
         )
 

@@ -13,7 +13,7 @@ from .helpers import future_timestamp
 from tests.common import MockConfigEntry
 
 
-async def test_user.opp):
+async def test_user(opp):
     """Test user config."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
@@ -37,7 +37,7 @@ async def test_user.opp):
         await opp.async_block_till_done()
 
 
-async def test_user_with_bad_cert.opp):
+async def test_user_with_bad_cert(opp):
     """Test user config with bad certificate."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
@@ -63,7 +63,7 @@ async def test_user_with_bad_cert.opp):
         await opp.async_block_till_done()
 
 
-async def test_import_host_only.opp):
+async def test_import_host_only(opp):
     """Test import with host only."""
     with patch(
         "openpeerpower.components.cert_expiry.config_flow.get_cert_expiry_timestamp"
@@ -83,7 +83,7 @@ async def test_import_host_only.opp):
     assert result["result"].unique_id == f"{HOST}:{DEFAULT_PORT}"
 
 
-async def test_import_host_and_port.opp):
+async def test_import_host_and_port(opp):
     """Test import with host and port."""
     with patch(
         "openpeerpower.components.cert_expiry.config_flow.get_cert_expiry_timestamp"
@@ -105,7 +105,7 @@ async def test_import_host_and_port.opp):
     assert result["result"].unique_id == f"{HOST}:{PORT}"
 
 
-async def test_import_non_default_port.opp):
+async def test_import_non_default_port(opp):
     """Test import with host and non-default port."""
     with patch(
         "openpeerpower.components.cert_expiry.config_flow.get_cert_expiry_timestamp"
@@ -125,7 +125,7 @@ async def test_import_non_default_port.opp):
     assert result["result"].unique_id == f"{HOST}:888"
 
 
-async def test_import_with_name.opp):
+async def test_import_with_name(opp):
     """Test import with name (deprecated)."""
     with patch(
         "openpeerpower.components.cert_expiry.config_flow.get_cert_expiry_timestamp"
@@ -147,7 +147,7 @@ async def test_import_with_name.opp):
     assert result["result"].unique_id == f"{HOST}:{PORT}"
 
 
-async def test_bad_import.opp):
+async def test_bad_import(opp):
     """Test import step."""
     with patch(
         "openpeerpower.components.cert_expiry.helper.get_cert",
@@ -182,7 +182,7 @@ async def test_abort_if_already_setup_opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_abort_on_socket_failed.opp):
+async def test_abort_on_socket_failed(opp):
     """Test we abort of we have errors during socket creation."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}

@@ -28,7 +28,7 @@ async def test_invalid_path.opp):
     """Test that an invalid path is caught."""
     config = {"sensor": {"platform": "folder", CONF_FOLDER_PATHS: "invalid_path"}}
     assert await async_setup_component(opp, "sensor", config)
-    assert len.opp.states.async_entity_ids()) == 0
+    assert len(opp.states.async_entity_ids()) == 0
 
 
 async def test_valid_path.opp):
@@ -41,7 +41,7 @@ async def test_valid_path.opp):
     config = {"sensor": {"platform": "folder", CONF_FOLDER_PATHS: TEST_DIR}}
     assert await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
-    assert len.opp.states.async_entity_ids()) == 1
+    assert len(opp.states.async_entity_ids()) == 1
     state = opp.states.get("sensor.test_folder")
     assert state.state == "0.0"
     assert state.attributes.get("number_of_files") == 1

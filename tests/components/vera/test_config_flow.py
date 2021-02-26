@@ -133,7 +133,7 @@ async def test_options(opp):
         data={CONF_CONTROLLER: "http://127.0.0.1/"},
         options={CONF_LIGHTS: [1, 2, 3]},
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(
         entry.entry_id, context={"source": "test"}, data=None

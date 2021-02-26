@@ -136,7 +136,7 @@ async def test_import_ssh(opp, connect):
         assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_error_no_password_ssh.opp):
+async def test_error_no_password_ssh(opp):
     """Test we abort if component is already setup."""
     config_data = CONFIG_DATA.copy()
     config_data.pop(CONF_PASSWORD)
@@ -150,7 +150,7 @@ async def test_error_no_password_ssh.opp):
     assert result["errors"] == {"base": "pwd_or_ssh"}
 
 
-async def test_error_both_password_ssh.opp):
+async def test_error_both_password_ssh(opp):
     """Test we abort if component is already setup."""
     config_data = CONFIG_DATA.copy()
     config_data[CONF_SSH_KEY] = SSH_KEY
@@ -164,7 +164,7 @@ async def test_error_both_password_ssh.opp):
     assert result["errors"] == {"base": "pwd_and_ssh"}
 
 
-async def test_error_invalid_ssh.opp):
+async def test_error_invalid_ssh(opp):
     """Test we abort if component is already setup."""
     config_data = CONFIG_DATA.copy()
     config_data.pop(CONF_PASSWORD)
@@ -179,7 +179,7 @@ async def test_error_invalid_ssh.opp):
     assert result["errors"] == {"base": "ssh_not_file"}
 
 
-async def test_error_invalid_host.opp):
+async def test_error_invalid_host(opp):
     """Test we abort if host name is invalid."""
     with patch(
         "openpeerpower.components.asuswrt.config_flow.socket.gethostbyname",
@@ -225,7 +225,7 @@ async def test_abort_if_already_setup_opp):
         assert result["reason"] == "single_instance_allowed"
 
 
-async def test_on_connect_failed.opp):
+async def test_on_connect_failed(opp):
     """Test when we have errors connecting the router."""
     flow_result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -260,7 +260,7 @@ async def test_on_connect_failed.opp):
         assert result["errors"] == {"base": "unknown"}
 
 
-async def test_options_flow.opp):
+async def test_options_flow(opp):
     """Test config flow options."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,

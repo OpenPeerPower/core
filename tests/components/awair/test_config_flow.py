@@ -14,7 +14,7 @@ from .const import CONFIG, DEVICES_FIXTURE, NO_DEVICES_FIXTURE, UNIQUE_ID, USER_
 from tests.common import MockConfigEntry
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -24,7 +24,7 @@ async def test_show_form.opp):
     assert result["step_id"] == SOURCE_USER
 
 
-async def test_invalid_access_token.opp):
+async def test_invalid_access_token(opp):
     """Test that errors are shown when the access token is invalid."""
 
     with patch("python_awair.AwairClient.query", side_effect=AuthError()):
@@ -56,7 +56,7 @@ async def test_duplicate_error(opp):
         "openpeerpower.components.awair.sensor.async_setup_entry",
         return_value=True,
     ):
-        MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG).add_to.opp(
+        MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG).add_to(opp(
             opp
         )
 
@@ -82,7 +82,7 @@ async def test_no_devices_error(opp):
         assert result["reason"] == "no_devices_found"
 
 
-async def test_import.opp):
+async def test_import(opp):
     """Test config.yaml import."""
 
     with patch(
@@ -117,7 +117,7 @@ async def test_import_aborts_on_api_error(opp):
         assert result["reason"] == "unknown"
 
 
-async def test_import_aborts_if_configured.opp):
+async def test_import_aborts_if_configured(opp):
     """Test config import doesn't re-import unnecessarily."""
 
     with patch(
@@ -126,7 +126,7 @@ async def test_import_aborts_if_configured.opp):
         "openpeerpower.components.awair.sensor.async_setup_entry",
         return_value=True,
     ):
-        MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG).add_to.opp(
+        MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG).add_to(opp(
             opp
         )
 
@@ -140,7 +140,7 @@ async def test_import_aborts_if_configured.opp):
         assert result["reason"] == "already_setup"
 
 
-async def test_reauth.opp):
+async def test_reauth(opp):
     """Test reauth flow."""
     with patch(
         "python_awair.AwairClient.query", side_effect=[USER_FIXTURE, DEVICES_FIXTURE]
@@ -183,7 +183,7 @@ async def test_reauth.opp):
         assert result["reason"] == "unknown"
 
 
-async def test_create_entry.opp):
+async def test_create_entry(opp):
     """Test overall flow."""
 
     with patch(

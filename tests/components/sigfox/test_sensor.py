@@ -37,7 +37,7 @@ async def test_invalid_credentials.opp):
         mock_req.get(url, text="{}", status_code=401)
         assert await async_setup_component(opp, "sensor", VALID_CONFIG)
         await opp.async_block_till_done()
-    assert len.opp.states.async_entity_ids()) == 0
+    assert len(opp.states.async_entity_ids()) == 0
 
 
 async def test_valid_credentials.opp):
@@ -55,7 +55,7 @@ async def test_valid_credentials.opp):
         assert await async_setup_component(opp, "sensor", VALID_CONFIG)
         await opp.async_block_till_done()
 
-        assert len.opp.states.async_entity_ids()) == 1
+        assert len(opp.states.async_entity_ids()) == 1
         state = opp.states.get("sensor.sigfox_fake_id")
         assert state.state == "payload"
         assert state.attributes.get("snr") == "50.0"

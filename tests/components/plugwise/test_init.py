@@ -63,7 +63,7 @@ async def test_async_setup_entry_fail(opp):
     """Test async_setup_entry."""
     entry = MockConfigEntry(domain=DOMAIN, data={})
 
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
     assert entry.state == ENTRY_STATE_SETUP_ERROR

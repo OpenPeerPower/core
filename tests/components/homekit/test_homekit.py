@@ -7,7 +7,7 @@ from pyhap.accessory import Accessory
 from pyhap.const import CATEGORY_CAMERA, CATEGORY_TELEVISION
 import pytest
 
-from openpeerpower import config as.opp_config
+from openpeerpower import config as opp_config
 from openpeerpower.components import zeroconf
 from openpeerpower.components.binary_sensor import (
     DEVICE_CLASS_BATTERY_CHARGING,
@@ -205,7 +205,7 @@ async def test_homekit_setup_opp, hk_driver, mock_zeroconf):
         opp,
         entry.entry_id,
         BRIDGE_NAME,
-        loop.opp.loop,
+        loop=opp.loop,
         address=IP_ADDRESS,
         port=DEFAULT_PORT,
         persist_file=path,
@@ -245,7 +245,7 @@ async def test_homekit_setup_ip_address(opp, hk_driver, mock_zeroconf):
         opp,
         entry.entry_id,
         BRIDGE_NAME,
-        loop.opp.loop,
+        loop=opp.loop,
         address="172.0.0.0",
         port=DEFAULT_PORT,
         persist_file=path,
@@ -281,7 +281,7 @@ async def test_homekit_setup_advertise_ip(opp, hk_driver, mock_zeroconf):
         opp,
         entry.entry_id,
         BRIDGE_NAME,
-        loop.opp.loop,
+        loop=opp.loop,
         address="0.0.0.0",
         port=DEFAULT_PORT,
         persist_file=path,

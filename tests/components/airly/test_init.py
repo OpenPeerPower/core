@@ -90,7 +90,7 @@ async def test_update_interval(opp, aioclient_mock):
     """Test correct update interval when the number of configured instances changes."""
     entry = await init_integration(opp, aioclient_mock)
 
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
     for instance in opp.data[DOMAIN].values():
         assert instance.update_interval == timedelta(minutes=15)
@@ -115,7 +115,7 @@ async def test_update_interval(opp, aioclient_mock):
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 2
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 2
     assert entry.state == ENTRY_STATE_LOADED
     for instance in opp.data[DOMAIN].values():
         assert instance.update_interval == timedelta(minutes=30)
@@ -125,7 +125,7 @@ async def test_unload_entry(opp, aioclient_mock):
     """Test successful unload of entry."""
     entry = await init_integration(opp, aioclient_mock)
 
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
 
     assert await opp.config_entries.async_unload(entry.entry_id)

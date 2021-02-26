@@ -336,7 +336,7 @@ async def test_invalid_attribute_template(opp, caplog):
         },
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     await opp.async_start()
     await opp.async_block_till_done()
@@ -641,4 +641,4 @@ async def test_unique_id.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1

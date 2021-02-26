@@ -146,7 +146,7 @@ async def test_hddtemp_wrong_disk(opp, telnetmock):
     assert await async_setup_component(opp, "sensor", VALID_CONFIG_WRONG_DISK)
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     state = opp.states.get("sensor.hd_temperature_dev_sdx1")
     assert state.attributes.get("friendly_name") == "HD Temperature /dev/sdx1"
 
@@ -183,11 +183,11 @@ async def test_hddtemp_host_refused(opp, telnetmock):
     """Test hddtemp if host is refused."""
     assert await async_setup_component(opp, "sensor", VALID_CONFIG_HOST_REFUSED)
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_hddtemp_host_unreachable(opp, telnetmock):
     """Test hddtemp if host unreachable."""
     assert await async_setup_component(opp, "sensor", VALID_CONFIG_HOST_UNREACHABLE)
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0

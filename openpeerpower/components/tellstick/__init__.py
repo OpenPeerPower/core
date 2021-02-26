@@ -102,7 +102,7 @@ def setup(opp, config):
 
     try:
         tellcore_lib = TelldusCore(
-            callback_dispatcher=AsyncioCallbackDispatcher.opp.loop)
+            callback_dispatcher=AsyncioCallbackDispatcher(opp.loop)
         )
     except OSError:
         _LOGGER.exception("Could not initialize Tellstick")

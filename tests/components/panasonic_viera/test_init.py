@@ -232,7 +232,7 @@ async def test_setup_config_flow_initiated.opp):
         is True
     )
 
-    assert len.opp.config_entries.flow.async_progress()) == 1
+    assert len(opp.config_entries.flow.async_progress()) == 1
 
 
 async def test_setup_unload_entry.opp):

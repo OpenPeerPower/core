@@ -51,7 +51,7 @@ async def test_form(opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_2fa.opp):
+async def test_form_2fa(opp):
     """Test we get the 2fa form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -275,7 +275,7 @@ async def test_options_flow(opp):
         entry_id=1,
         version=2,
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     mock_auth = Mock(
         startup=Mock(return_value=True), check_key_required=Mock(return_value=False)

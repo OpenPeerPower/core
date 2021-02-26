@@ -293,7 +293,7 @@ async def test_rapid_rediscover(opp, mqtt_mock, caplog):
     )
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids("binary_sensor")) == 1
+    assert len(opp.states.async_entity_ids("binary_sensor")) == 1
     state = opp.states.get("binary_sensor.milk")
     assert state is not None
 
@@ -353,7 +353,7 @@ async def test_rapid_rediscover_unique(opp, mqtt_mock, caplog):
     )
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids("binary_sensor")) == 2
+    assert len(opp.states.async_entity_ids("binary_sensor")) == 2
     state = opp.states.get("binary_sensor.ale")
     assert state is not None
     state = opp.states.get("binary_sensor.milk")

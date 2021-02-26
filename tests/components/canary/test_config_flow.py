@@ -106,7 +106,7 @@ async def test_user_form_single_instance_allowed(opp, canary_config_flow):
 async def test_options_flow(opp, canary):
     """Test updating options."""
     with patch("openpeerpower.components.canary.PLATFORMS", []):
-        entry = await init_integration.opp)
+        entry = await init_integration(opp)
 
     assert entry.options[CONF_FFMPEG_ARGUMENTS] == DEFAULT_FFMPEG_ARGUMENTS
     assert entry.options[CONF_TIMEOUT] == DEFAULT_TIMEOUT

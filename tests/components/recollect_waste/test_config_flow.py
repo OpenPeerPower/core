@@ -52,7 +52,7 @@ async def test_options_flow(opp):
     conf = {CONF_PLACE_ID: "12345", CONF_SERVICE_ID: "12345"}
 
     config_entry = MockConfigEntry(domain=DOMAIN, unique_id="12345, 12345", data=conf)
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.recollect_waste.async_setup_entry", return_value=True

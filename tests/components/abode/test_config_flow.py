@@ -39,7 +39,7 @@ async def test_one_config_allowed(opp):
     MockConfigEntry(
         domain=DOMAIN,
         data={CONF_USERNAME: "user@email.com", CONF_PASSWORD: "password"},
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
 
     step_user_result = await flow.async_step_user()
 
@@ -183,7 +183,7 @@ async def test_step_reauth(opp):
         domain=DOMAIN,
         unique_id="user@email.com",
         data=conf,
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
 
     with patch("openpeerpower.components.abode.config_flow.Abode"), patch(
         "abodepy.UTILS"
@@ -206,4 +206,4 @@ async def test_step_reauth(opp):
             assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
             assert result["reason"] == "reauth_successful"
 
-        assert len.opp.config_entries.async_entries()) == 1
+        assert len(opp.config_entries.async_entries()) == 1

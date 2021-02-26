@@ -31,7 +31,7 @@ async def setup_mikrotik_entry(opp, **kwargs):
     config_entry = MockConfigEntry(
         domain=mikrotik.DOMAIN, data=MOCK_DATA, options=MOCK_OPTIONS
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     if "force_dhcp" in kwargs:
         config_entry.options = {**config_entry.options, "force_dhcp": True}
@@ -78,7 +78,7 @@ async def test_hub_setup_failed(opp):
     """Failed setup of Mikrotik hub."""
 
     config_entry = MockConfigEntry(domain=mikrotik.DOMAIN, data=MOCK_DATA)
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     # error when connection fails
     with patch(
         "librouteros.connect", side_effect=librouteros.exceptions.ConnectionClosed
@@ -90,7 +90,7 @@ async def test_hub_setup_failed(opp):
 
     # error when username or password is invalid
     config_entry = MockConfigEntry(domain=mikrotik.DOMAIN, data=MOCK_DATA)
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     with patch(
         "openpeerpower.config_entries.ConfigEntries.async_forward_entry_setup"
     ) as forward_entry_setup, patch(

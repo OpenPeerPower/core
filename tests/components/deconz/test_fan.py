@@ -48,7 +48,7 @@ FANS = {
 async def test_no_fans(opp, aioclient_mock):
     """Test that no fan entities are created."""
     await setup_deconz_integration(opp, aioclient_mock)
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_fans(opp, aioclient_mock):
@@ -60,7 +60,7 @@ async def test_fans(opp, aioclient_mock):
     )
     gateway = get_gateway_from_config_entry(opp, config_entry)
 
-    assert len.opp.states.async_all()) == 2  # Light and fan
+    assert len(opp.states.async_all()) == 2  # Light and fan
     assert opp.states.get("fan.ceiling_fan")
 
     # Test states
@@ -173,10 +173,10 @@ async def test_fans(opp, aioclient_mock):
     await opp.config_entries.async_unload(config_entry.entry_id)
 
     states = opp.states.async_all()
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
     for state in states:
         assert state.state == STATE_UNAVAILABLE
 
     await opp.config_entries.async_remove(config_entry.entry_id)
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0

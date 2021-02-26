@@ -247,7 +247,7 @@ async def _test_setup_failure.opp: OpenPeerPowerType, config: str) -> None:
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=config, unique_id=UNIQUE_ID)
         await _add_config_entry_to.opp.opp, config_entry)
-        assert len.opp.states.async_entity_ids(MP_DOMAIN)) == 0
+        assert len(opp.states.async_entity_ids(MP_DOMAIN)) == 0
 
 
 async def _test_service(

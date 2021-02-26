@@ -133,7 +133,7 @@ def add_test_config_entry(
         unique_id=TEST_SYSINFO_ID,
         options=TEST_CONFIG_ENTRY_OPTIONS,
     )
-    config_entry.add_to(opp.opp)  # type: ignore[no-untyped-call]
+    config_entry.add_to_opp(opp)  # type: ignore[no-untyped-call]
     return config_entry
 
 

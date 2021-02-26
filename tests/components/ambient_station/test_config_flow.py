@@ -71,7 +71,7 @@ async def test_no_devices(opp, mock_aioambient):
     assert result["errors"] == {"base": "no_devices"}
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     flow = config_flow.AmbientStationFlowHandler()
     flow.opp = opp

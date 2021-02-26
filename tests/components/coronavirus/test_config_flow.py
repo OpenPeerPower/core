@@ -23,4 +23,4 @@ async def test_form(opp):
         "country": OPTION_WORLDWIDE,
     }
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 4
+    assert len(opp.states.async_all()) == 4

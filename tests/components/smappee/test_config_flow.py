@@ -74,7 +74,7 @@ async def test_show_zeroconf_connection_error_form.opp):
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "cannot_connect"
-        assert len.opp.config_entries.async_entries(DOMAIN)) == 0
+        assert len(opp.config_entries.async_entries(DOMAIN)) == 0
 
 
 async def test_connection_error(opp):
@@ -168,7 +168,7 @@ async def test_user_device_exists_abort.opp):
             source=SOURCE_USER,
         )
         config_entry.add_to_opp(opp)
-        assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+        assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
         result = await opp.config_entries.flow.async_init(
             DOMAIN,
@@ -188,7 +188,7 @@ async def test_user_device_exists_abort.opp):
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "already_configured"
-        assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+        assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
 
 async def test_zeroconf_device_exists_abort.opp):
@@ -210,7 +210,7 @@ async def test_zeroconf_device_exists_abort.opp):
         )
         config_entry.add_to_opp(opp)
 
-        assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+        assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
         result = await opp.config_entries.flow.async_init(
             DOMAIN,
@@ -226,7 +226,7 @@ async def test_zeroconf_device_exists_abort.opp):
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "already_configured"
-        assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+        assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
 
 async def test_cloud_device_exists_abort.opp):
@@ -238,7 +238,7 @@ async def test_cloud_device_exists_abort.opp):
     )
     config_entry.add_to_opp(opp)
 
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -247,7 +247,7 @@ async def test_cloud_device_exists_abort.opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured_device"
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
 
 async def test_zeroconf_abort_if_cloud_device_exists(opp):
@@ -259,7 +259,7 @@ async def test_zeroconf_abort_if_cloud_device_exists(opp):
     )
     config_entry.add_to_opp(opp)
 
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -275,7 +275,7 @@ async def test_zeroconf_abort_if_cloud_device_exists(opp):
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured_device"
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
 
 async def test_zeroconf_confirm_abort_if_cloud_device_exists(opp):
@@ -300,13 +300,13 @@ async def test_zeroconf_confirm_abort_if_cloud_device_exists(opp):
     )
     config_entry.add_to_opp(opp)
 
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
     result = await opp.config_entries.flow.async_configure(result["flow_id"])
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured_device"
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
 
 async def test_abort_cloud_flow_if_local_device_exists(opp):
@@ -319,7 +319,7 @@ async def test_abort_cloud_flow_if_local_device_exists(opp):
     )
     config_entry.add_to_opp(opp)
 
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -331,7 +331,7 @@ async def test_abort_cloud_flow_if_local_device_exists(opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured_local_device"
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
 
 async def test_full_user_flow(
@@ -382,7 +382,7 @@ async def test_full_user_flow(
     ) as mock_setup:
         await opp.config_entries.flow.async_configure(result["flow_id"])
 
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
     assert len(mock_setup.mock_calls) == 1
 
 
@@ -421,7 +421,7 @@ async def test_full_zeroconf_flow.opp):
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == "smappee1006000212"
-        assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+        assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
         entry = opp.config_entries.async_entries(DOMAIN)[0]
         assert entry.unique_id == "1006000212"
@@ -460,7 +460,7 @@ async def test_full_user_local_flow.opp):
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == "smappee1006000212"
-        assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+        assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
         entry = opp.config_entries.async_entries(DOMAIN)[0]
         assert entry.unique_id == "1006000212"

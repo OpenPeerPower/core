@@ -57,7 +57,7 @@ async def mock_failed_connection(*args, **kwargs):
 async def test_setup_entry(opp: OpenPeerPowerType):
     """Test setting up the entry."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_USER_INPUT_PLM)
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch.object(
         insteon, "async_connect", new=mock_successful_connection
@@ -211,7 +211,7 @@ async def test_import_failed_connection(opp: OpenPeerPowerType):
 async def test_setup_entry_failed_connection(opp: OpenPeerPowerType, caplog):
     """Test setting up the entry with a failed connection."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_USER_INPUT_PLM)
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch.object(
         insteon, "async_connect", new=mock_failed_connection

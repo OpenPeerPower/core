@@ -47,7 +47,7 @@ async def async_setup(opp, config):
     session = aiohttp_client.async_get_clientsession(opp)
 
     spc = SpcWebGateway(
-        loop.opp.loop,
+        loop=opp.loop,
         session=session,
         api_url=config[DOMAIN].get(CONF_API_URL),
         ws_url=config[DOMAIN].get(CONF_WS_URL),

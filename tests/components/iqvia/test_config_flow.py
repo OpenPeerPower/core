@@ -12,7 +12,7 @@ async def test_duplicate_error(opp):
     """Test that errors are shown when duplicates are added."""
     conf = {CONF_ZIP_CODE: "12345"}
 
-    MockConfigEntry(domain=DOMAIN, unique_id="12345", data=conf).add_to(opp.opp)
+    MockConfigEntry(domain=DOMAIN, unique_id="12345", data=conf).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=conf

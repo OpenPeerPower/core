@@ -71,7 +71,7 @@ async def test_switches_with_port_cgi.opp):
     device.api.event.update(EVENTS)
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
+    assert len(opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
 
     relay_1 = opp.states.get(f"{SWITCH_DOMAIN}.{NAME}_relay_1")
     assert relay_1.state == STATE_ON
@@ -118,7 +118,7 @@ async def test_switches_with_port_management.opp):
     device.api.event.update(EVENTS)
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
+    assert len(opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
 
     relay_1 = opp.states.get(f"{SWITCH_DOMAIN}.{NAME}_relay_1")
     assert relay_1.state == STATE_ON

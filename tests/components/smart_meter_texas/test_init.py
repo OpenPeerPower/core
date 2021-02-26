@@ -24,7 +24,7 @@ async def test_setup_with_no_config(opp):
     await opp.async_block_till_done()
 
     # Assert no flows were started.
-    assert len.opp.config_entries.flow.async_progress()) == 0
+    assert len(opp.config_entries.flow.async_progress()) == 0
 
 
 async def test_auth_failure(opp, config_entry, aioclient_mock):

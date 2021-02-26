@@ -161,7 +161,7 @@ async def test_onboarding_user(opp, opp_storage, aiohttp_client):
     assert user.name == "Test Name"
     assert len(user.credentials) == 1
     assert user.credentials[0].data["username"] == "test-user"
-    assert len.opp.data["person"][1].async_items()) == 1
+    assert len(opp.data["person"][1].async_items()) == 1
 
     # Validate refresh token 1
     resp = await client.post(
@@ -366,7 +366,7 @@ async def test_onboarding_core_sets_up_met(opp, opp_storage, opp_client):
     assert resp.status == 200
 
     await opp.async_block_till_done()
-    assert len.opp.states.async_entity_ids("weather")) == 1
+    assert len(opp.states.async_entity_ids("weather")) == 1
 
 
 async def test_onboarding_core_sets_up_rpi_power(

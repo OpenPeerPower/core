@@ -101,7 +101,7 @@ class HomeFactory:
             .get_async_home_mock()
         )
 
-        self.hmip_config_entry.add_to.opp(self.opp)
+        self.hmip_config_entry.add_to_opp(self.opp)
         with patch(
             "openpeerpower.components.homematicip_cloud.hap.HomematicipHAP.get_hap",
             return_value=mock_home,

@@ -18,7 +18,7 @@ def async_register(
 
 async def system_health_info(opp):
     """Get info for the info page."""
-    health_info = {"dashboards": len.opp.data[DOMAIN]["dashboards"])}
+    health_info = {"dashboards": len(opp.data[DOMAIN]["dashboards"])}
     health_info.update(await opp.data[DOMAIN]["resources"].async_get_info())
 
     dashboards_info = await asyncio.gather(

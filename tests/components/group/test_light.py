@@ -3,7 +3,7 @@ from os import path
 import unittest.mock
 from unittest.mock import MagicMock, patch
 
-from openpeerpower import config as.opp_config
+from openpeerpower import config as opp_config
 from openpeerpower.components.group import DOMAIN, SERVICE_RELOAD
 import openpeerpower.components.group.light as group
 from openpeerpower.components.light import (

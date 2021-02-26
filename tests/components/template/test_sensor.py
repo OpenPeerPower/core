@@ -507,7 +507,7 @@ async def test_invalid_attribute_template(opp, caplog):
         },
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
     await opp.async_block_till_done()
@@ -586,7 +586,7 @@ async def test_no_template_match_all(opp, caplog):
     assert opp.states.get("sensor.invalid_friendly_name").state == "unknown"
 
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 6
+    assert len(opp.states.async_all()) == 6
 
     assert opp.states.get("sensor.invalid_state").state == "unknown"
     assert opp.states.get("sensor.invalid_icon").state == "unknown"
@@ -656,7 +656,7 @@ async def test_unique_id.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
 
 async def test_sun_renders_once_per_sensor.opp):
@@ -691,7 +691,7 @@ async def test_sun_renders_once_per_sensor.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 3
+    assert len(opp.states.async_all()) == 3
 
     assert opp.states.get("sensor.solar_angle").state == "45.3"
     assert opp.states.get("sensor.sunrise").state == str(now)
@@ -742,7 +742,7 @@ async def test_self_referencing_sensor_loop(opp, caplog):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     await opp.async_block_till_done()
     await opp.async_block_till_done()
@@ -778,7 +778,7 @@ async def test_self_referencing_sensor_with_icon_loop(opp, caplog):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     await opp.async_block_till_done()
     await opp.async_block_till_done()
@@ -817,7 +817,7 @@ async def test_self_referencing_sensor_with_icon_and_picture_entity_loop(opp, ca
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     await opp.async_block_till_done()
     await opp.async_block_till_done()
@@ -856,7 +856,7 @@ async def test_self_referencing_entity_picture_loop(opp, caplog):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     next_time = dt_util.utcnow() + timedelta(seconds=1.2)
     with patch(
@@ -932,7 +932,7 @@ async def test_self_referencing_icon_with_no_loop(opp, caplog):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 5
+    assert len(opp.states.async_all()) == 5
 
     opp.states.async_set("sensor.heartworm_high_80", 10)
 

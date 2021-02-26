@@ -226,7 +226,7 @@ async def test_discovery_duplicate_aborted(opp):
     entry = MockConfigEntry(
         domain="tradfri", data={"host": "some-host"}, unique_id="homekit-id"
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     flow = await opp.config_entries.flow.async_init(
         "tradfri",
@@ -242,7 +242,7 @@ async def test_discovery_duplicate_aborted(opp):
 
 async def test_import_duplicate_aborted(opp):
     """Test a duplicate import host is ignored."""
-    MockConfigEntry(domain="tradfri", data={"host": "some-host"}).add_to(opp.opp)
+    MockConfigEntry(domain="tradfri", data={"host": "some-host"}).add_to_opp(opp)
 
     flow = await opp.config_entries.flow.async_init(
         "tradfri", context={"source": "import"}, data={"host": "some-host"}
@@ -277,7 +277,7 @@ async def test_discovery_updates_unique_id(opp):
         domain="tradfri",
         data={"host": "some-host"},
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     flow = await opp.config_entries.flow.async_init(
         "tradfri",

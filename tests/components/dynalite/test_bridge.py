@@ -27,7 +27,7 @@ async def test_update_device(opp):
     """Test that update works."""
     host = "1.2.3.4"
     entry = MockConfigEntry(domain=dynalite.DOMAIN, data={dynalite.CONF_HOST: host})
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices"
     ) as mock_dyn_dev:
@@ -57,7 +57,7 @@ async def test_add_devices_then_register(opp):
     """Test that add_devices work."""
     host = "1.2.3.4"
     entry = MockConfigEntry(domain=dynalite.DOMAIN, data={dynalite.CONF_HOST: host})
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices"
     ) as mock_dyn_dev:
@@ -90,7 +90,7 @@ async def test_register_then_add_devices(opp):
     """Test that add_devices work after register_add_entities."""
     host = "1.2.3.4"
     entry = MockConfigEntry(domain=dynalite.DOMAIN, data={dynalite.CONF_HOST: host})
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices"
     ) as mock_dyn_dev:
@@ -117,7 +117,7 @@ async def test_notifications(opp):
     """Test that update works."""
     host = "1.2.3.4"
     entry = MockConfigEntry(domain=dynalite.DOMAIN, data={dynalite.CONF_HOST: host})
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices"
     ) as mock_dyn_dev:

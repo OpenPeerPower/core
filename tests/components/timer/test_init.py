@@ -90,7 +90,7 @@ async def test_config(opp):
 
 async def test_config_options.opp):
     """Test configuration options."""
-    count_start = len.opp.states.async_entity_ids())
+    count_start = len(opp.states.async_entity_ids())
 
     _LOGGER.debug("ENTITIES @ start: %s", opp.states.async_entity_ids())
 
@@ -109,7 +109,7 @@ async def test_config_options.opp):
     assert await async_setup_component(opp, "timer", config)
     await opp.async_block_till_done()
 
-    assert count_start + 3 == len.opp.states.async_entity_ids())
+    assert count_start + 3 == len(opp.states.async_entity_ids())
     await opp.async_block_till_done()
 
     state_1 = opp.states.get("timer.test_1")
@@ -247,7 +247,7 @@ async def test_no_initial_state_and_no_restore_state.opp):
 
 async def test_config_reload(opp, opp_admin_user, opp_read_only_user):
     """Test reload service."""
-    count_start = len.opp.states.async_entity_ids())
+    count_start = len(opp.states.async_entity_ids())
     ent_reg = await entity_registry.async_get_registry.opp)
 
     _LOGGER.debug("ENTITIES @ start: %s", opp.states.async_entity_ids())
@@ -266,7 +266,7 @@ async def test_config_reload(opp, opp_admin_user, opp_read_only_user):
     assert await async_setup_component(opp, "timer", config)
     await opp.async_block_till_done()
 
-    assert count_start + 2 == len.opp.states.async_entity_ids())
+    assert count_start + 2 == len(opp.states.async_entity_ids())
     await opp.async_block_till_done()
 
     state_1 = opp.states.get("timer.test_1")
@@ -318,7 +318,7 @@ async def test_config_reload(opp, opp_admin_user, opp_read_only_user):
         )
         await opp.async_block_till_done()
 
-    assert count_start + 2 == len.opp.states.async_entity_ids())
+    assert count_start + 2 == len(opp.states.async_entity_ids())
 
     state_1 = opp.states.get("timer.test_1")
     state_2 = opp.states.get("timer.test_2")
@@ -581,7 +581,7 @@ async def test_ws_create(opp, opp_ws_client, storage_setup):
 
 async def test_setup_no_config(opp, opp_admin_user):
     """Test component setup with no config."""
-    count_start = len.opp.states.async_entity_ids())
+    count_start = len(opp.states.async_entity_ids())
     assert await async_setup_component(opp, DOMAIN, {})
 
     with patch(
@@ -595,4 +595,4 @@ async def test_setup_no_config(opp, opp_admin_user):
         )
         await opp.async_block_till_done()
 
-    assert count_start == len.opp.states.async_entity_ids())
+    assert count_start == len(opp.states.async_entity_ids())

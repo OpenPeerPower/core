@@ -152,7 +152,7 @@ async def test_user_form_unexpected_exception(opp, cfupdate_flow):
     assert result["errors"] == {"base": "unknown"}
 
 
-async def test_user_form_single_instance_allowed.opp):
+async def test_user_form_single_instance_allowed(opp):
     """Test that configuring more than one instance is rejected."""
     entry = MockConfigEntry(domain=DOMAIN, data=ENTRY_CONFIG)
     entry.add_to_opp(opp)

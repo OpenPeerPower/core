@@ -102,7 +102,7 @@ async def test_lights.opp):
         device.api.event.update([EVENT_ON])
         await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids(LIGHT_DOMAIN)) == 1
+    assert len(opp.states.async_entity_ids(LIGHT_DOMAIN)) == 1
 
     entity_id = f"{LIGHT_DOMAIN}.{NAME}_ir_light_0"
 

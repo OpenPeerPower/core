@@ -46,7 +46,7 @@ MOCK_DISCOVER = {
 
 
 @pytest.fixture(name="dummy_client", autouse=True)
-def dummy_client_fixture.opp):
+def dummy_client_fixture(opp):
     """Mock out the real client."""
     with patch("openpeerpower.components.arcam_fmj.config_flow.Client") as client:
         client.return_value.start.side_effect = AsyncMock(return_value=None)
@@ -70,7 +70,7 @@ async def test_ssdp(opp, dummy_client):
     assert result["data"] == MOCK_CONFIG_ENTRY
 
 
-async def test_ssdp_abort.opp):
+async def test_ssdp_abort(opp):
     """Test a ssdp import flow."""
     entry = MockConfigEntry(
         domain=DOMAIN, data=MOCK_CONFIG_ENTRY, title=MOCK_NAME, unique_id=MOCK_UUID
@@ -103,7 +103,7 @@ async def test_ssdp_unable_to_connect(opp, dummy_client):
     assert result["reason"] == "cannot_connect"
 
 
-async def test_ssdp_update.opp):
+async def test_ssdp_update(opp):
     """Test a ssdp import flow."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -188,7 +188,7 @@ async def test_user_wrong(opp, aioclient_mock):
     assert result["result"].unique_id is None
 
 
-async def test_get_entry_client.opp):
+async def test_get_entry_client(opp):
     """Test helper for configuration."""
     entry = MockConfigEntry(
         domain=DOMAIN, data=MOCK_CONFIG_ENTRY, title=MOCK_NAME, unique_id=MOCK_UUID

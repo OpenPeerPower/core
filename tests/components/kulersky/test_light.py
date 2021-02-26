@@ -82,7 +82,7 @@ async def test_init(opp, mock_light):
         | SUPPORT_WHITE_VALUE,
     }
 
-    with patch.object.opp.loop, "stop"), patch.object(
+    with patch.object(opp.loop, "stop"), patch.object(
         mock_light, "disconnect"
     ) as mock_disconnect:
         await opp.async_stop()

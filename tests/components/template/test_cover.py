@@ -1075,7 +1075,7 @@ async def test_unique_id.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
 
 async def test_state_gets_lowercased.opp):
@@ -1111,7 +1111,7 @@ async def test_state_gets_lowercased.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
 
     assert opp.states.get("cover.garage_door").state == STATE_OPEN
     opp.states.async_set("binary_sensor.garage_door_sensor", "on")
@@ -1159,6 +1159,6 @@ async def test_self_referencing_icon_with_no_template_is_not_a_loop(opp, caplog)
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     assert "Template loop detected" not in caplog.text

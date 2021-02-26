@@ -17,7 +17,7 @@ async def test_user_flow_cannot_create_multiple_instances(opp):
     entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_DEVICE: "/already/configured/path"}
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     with patch(DONGLE_VALIDATE_PATH_METHOD, Mock(return_value=True)):
         result = await opp.config_entries.flow.async_init(

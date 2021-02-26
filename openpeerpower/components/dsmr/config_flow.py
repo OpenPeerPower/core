@@ -66,7 +66,7 @@ class DSMRConnection:
                 self._port,
                 self._dsmr_version,
                 update_telegram,
-                loop.opp.loop,
+                loop=opp.loop,
             )
         else:
             reader_factory = partial(
@@ -75,7 +75,7 @@ class DSMRConnection:
                 self._port,
                 self._dsmr_version,
                 update_telegram,
-                loop.opp.loop,
+                loop=opp.loop,
             )
 
         try:

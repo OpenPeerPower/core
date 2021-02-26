@@ -90,7 +90,7 @@ async def test_reset_unloads_entry_if_setup_opp):
     ), patch.object.opp.config_entries, "async_forward_entry_setup") as mock_forward:
         assert await hue_bridge.async_setup() is True
 
-    assert len.opp.services.async_services()) == 0
+    assert len(opp.services.async_services()) == 0
     assert len(mock_forward.mock_calls) == 3
 
     with patch.object(
@@ -99,7 +99,7 @@ async def test_reset_unloads_entry_if_setup_opp):
         assert await hue_bridge.async_reset()
 
     assert len(mock_forward.mock_calls) == 3
-    assert len.opp.services.async_services()) == 0
+    assert len(opp.services.async_services()) == 0
 
 
 async def test_handle_unauthorized(opp):

@@ -158,7 +158,7 @@ async def setup_onvif_integration(
         entry_id=entry_id,
         unique_id=unique_id,
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.onvif.config_flow.get_device"

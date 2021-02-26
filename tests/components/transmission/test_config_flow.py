@@ -203,7 +203,7 @@ async def test_host_already_configured(opp, api):
         data=MOCK_ENTRY,
         options={CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL},
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     mock_entry_unique_name = MOCK_ENTRY.copy()
     mock_entry_unique_name[CONF_NAME] = "Transmission 1"
@@ -237,7 +237,7 @@ async def test_name_already_configured(opp, api):
         data=MOCK_ENTRY,
         options={CONF_SCAN_INTERVAL: DEFAULT_SCAN_INTERVAL},
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     mock_entry = MOCK_ENTRY.copy()
     mock_entry[CONF_HOST] = "0.0.0.0"

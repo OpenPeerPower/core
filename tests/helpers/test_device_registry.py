@@ -782,7 +782,7 @@ async def test_update_suggested_area(registry, area_registry):
 async def test_cleanup_device_registry(opp, registry):
     """Test cleanup works."""
     config_entry = MockConfigEntry(domain="hue")
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     d1 = registry.async_get_or_create(
         identifiers={("hue", "d1")}, config_entry_id=config_entry.entry_id
@@ -813,7 +813,7 @@ async def test_cleanup_device_registry(opp, registry):
 async def test_cleanup_device_registry_removes_expired_orphaned_devices(opp, registry):
     """Test cleanup removes expired orphaned devices."""
     config_entry = MockConfigEntry(domain="hue")
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     registry.async_get_or_create(
         identifiers={("hue", "d1")}, config_entry_id=config_entry.entry_id
@@ -1214,7 +1214,7 @@ async def test_verify_suggested_area_does_not_overwrite_area_id(
 async def test_disable_config_entry_disables_devices(opp, registry):
     """Test that we disable entities tied to a config entry."""
     config_entry = MockConfigEntry(domain="light")
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     entry1 = registry.async_get_or_create(
         config_entry_id=config_entry.entry_id,

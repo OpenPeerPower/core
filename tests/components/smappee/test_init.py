@@ -25,7 +25,7 @@ async def test_unload_config_entry.opp):
             source=SOURCE_ZEROCONF,
         )
         config_entry.add_to_opp(opp)
-        assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+        assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
         entry = opp.config_entries.async_entries(DOMAIN)[0]
         await opp.config_entries.async_unload(entry.entry_id)

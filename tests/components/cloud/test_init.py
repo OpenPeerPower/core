@@ -135,13 +135,13 @@ async def test_on_connect(opp, mock_cloud_fixture):
 
     assert len(cl.iot._on_connect) == 3
 
-    assert len.opp.states.async_entity_ids("binary_sensor")) == 0
+    assert len(opp.states.async_entity_ids("binary_sensor")) == 0
 
     assert "async_setup" in str(cl.iot._on_connect[-1])
     await cl.iot._on_connect[-1]()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids("binary_sensor")) == 1
+    assert len(opp.states.async_entity_ids("binary_sensor")) == 1
 
     with patch("openpeerpower.helpers.discovery.async_load_platform") as mock_load:
         await cl.iot._on_connect[-1]()

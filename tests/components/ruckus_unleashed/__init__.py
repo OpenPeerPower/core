@@ -86,7 +86,7 @@ async def init_integration(opp) -> MockConfigEntry:
             TEST_CLIENT[API_MAC]: TEST_CLIENT,
         },
     ):
-        entry.add_to(opp.opp)
+        entry.add_to_opp(opp)
         await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 

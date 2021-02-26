@@ -159,7 +159,7 @@ from unittest.mock import call, patch
 
 import pytest
 
-from openpeerpower import config as.opp_config
+from openpeerpower import config as opp_config
 from openpeerpower.components import light
 from openpeerpower.const import ATTR_ASSUMED_STATE, SERVICE_RELOAD, STATE_OFF, STATE_ON
 import openpeerpower.core as ha
@@ -1963,7 +1963,7 @@ async def test_reloadable(opp, mqtt_mock):
     await opp.async_block_till_done()
 
     assert opp.states.get("light.test")
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -1979,7 +1979,7 @@ async def test_reloadable(opp, mqtt_mock):
         )
         await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     assert opp.states.get("light.test") is None
     assert opp.states.get("light.reload")

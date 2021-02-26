@@ -62,7 +62,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 
     session = async_get_clientsession(opp)
     vz_api = VolkszaehlerData(
-        Volkszaehler.opp.loop, session, uuid, host=host, port=port)
+        Volkszaehler(opp.loop, session, uuid, host=host, port=port)
     )
 
     await vz_api.async_update()

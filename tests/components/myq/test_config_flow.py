@@ -103,7 +103,7 @@ async def test_form_homekit(opp):
     entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_USERNAME: "mock", CONF_PASSWORD: "mock"}
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

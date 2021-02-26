@@ -105,7 +105,7 @@ async def test_manual_flow_config_exist(opp):
         domain=DOMAIN,
         unique_id="test-api-user",
         data={"api_user": "test-api-user", "api_key": "test-api-key"},
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_IMPORT}

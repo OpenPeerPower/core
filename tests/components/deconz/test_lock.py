@@ -41,7 +41,7 @@ LOCKS = {
 async def test_no_locks(opp, aioclient_mock):
     """Test that no lock entities are created."""
     await setup_deconz_integration(opp, aioclient_mock)
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_locks(opp, aioclient_mock):
@@ -53,7 +53,7 @@ async def test_locks(opp, aioclient_mock):
     )
     gateway = get_gateway_from_config_entry(opp, config_entry)
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     assert opp.states.get("lock.door_lock").state == STATE_UNLOCKED
 
     door_lock = opp.states.get("lock.door_lock")
@@ -98,10 +98,10 @@ async def test_locks(opp, aioclient_mock):
     await opp.config_entries.async_unload(config_entry.entry_id)
 
     states = opp.states.async_all()
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     for state in states:
         assert state.state == STATE_UNAVAILABLE
 
     await opp.config_entries.async_remove(config_entry.entry_id)
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0

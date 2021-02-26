@@ -170,7 +170,7 @@ async def test_async_setup_entry_error(
         options={},
         unique_id="12345",
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     assert not await opp.config_entries.async_setup(entry.entry_id)
 

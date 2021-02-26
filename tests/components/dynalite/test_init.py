@@ -16,8 +16,8 @@ from tests.common import MockConfigEntry
 async def test_empty_config(opp):
     """Test with an empty config."""
     assert await async_setup_component(opp, dynalite.DOMAIN, {}) is True
-    assert len.opp.config_entries.flow.async_progress()) == 0
-    assert len.opp.config_entries.async_entries(dynalite.DOMAIN)) == 0
+    assert len(opp.config_entries.flow.async_progress()) == 0
+    assert len(opp.config_entries.async_entries(dynalite.DOMAIN)) == 0
 
 
 async def test_async_setup_opp):
@@ -80,7 +80,7 @@ async def test_async_setup_opp):
             },
         )
         await opp.async_block_till_done()
-    assert len.opp.config_entries.async_entries(dynalite.DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(dynalite.DOMAIN)) == 1
 
 
 async def test_service_request_area_preset(opp):
@@ -105,7 +105,7 @@ async def test_service_request_area_preset(opp):
             },
         )
         await opp.async_block_till_done()
-        assert len.opp.config_entries.async_entries(dynalite.DOMAIN)) == 2
+        assert len(opp.config_entries.async_entries(dynalite.DOMAIN)) == 2
         await opp.services.async_call(
             dynalite.DOMAIN,
             "request_area_preset",
@@ -180,7 +180,7 @@ async def test_service_request_channel_level(opp):
             },
         )
         await opp.async_block_till_done()
-        assert len.opp.config_entries.async_entries(dynalite.DOMAIN)) == 2
+        assert len(opp.config_entries.async_entries(dynalite.DOMAIN)) == 2
         await opp.services.async_call(
             dynalite.DOMAIN,
             "request_channel_level",
@@ -257,21 +257,21 @@ async def test_async_setup_bad_config2.opp):
             },
         )
         await opp.async_block_till_done()
-    assert len.opp.config_entries.async_entries(dynalite.DOMAIN)) == 0
+    assert len(opp.config_entries.async_entries(dynalite.DOMAIN)) == 0
 
 
 async def test_unload_entry(opp):
     """Test being able to unload an entry."""
     host = "1.2.3.4"
     entry = MockConfigEntry(domain=dynalite.DOMAIN, data={CONF_HOST: host})
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices.async_setup",
         return_value=True,
     ):
         assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
-    assert len.opp.config_entries.async_entries(dynalite.DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(dynalite.DOMAIN)) == 1
     with patch.object(
         opp.config_entries, "async_forward_entry_unload", return_value=True
     ) as mock_unload:

@@ -61,7 +61,7 @@ def _get_media_item(
         return models.MediaSourceItem.from_uri(opp, media_content_id)
 
     # We default to our own domain if its only one registered
-    domain = None if len.opp.data[DOMAIN]) > 1 else DOMAIN
+    domain = None if len(opp.data[DOMAIN]) > 1 else DOMAIN
     return models.MediaSourceItem.opp, domain, "")
 
 

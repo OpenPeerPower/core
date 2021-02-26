@@ -3,7 +3,7 @@ import json
 from os import path
 from unittest.mock import patch
 
-from openpeerpower import config as.opp_config
+from openpeerpower import config as opp_config
 from openpeerpower.components.bayesian import DOMAIN, binary_sensor as bayesian
 from openpeerpower.components.openpeerpower import (
     DOMAIN as OP_DOMAIN,
@@ -20,7 +20,7 @@ from openpeerpower.core import Context, callback
 from openpeerpower.setup import async_setup_component
 
 
-async def test_load_values_when_added_to(opp.opp):
+async def test_load_values_when_added_to_opp(opp):
     """Test that sensor initializes with observations of relevant entities."""
 
     config = {
@@ -662,7 +662,7 @@ async def test_reload(opp):
     await async_setup_component(opp, "binary_sensor", config)
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     assert opp.states.get("binary_sensor.test")
 
@@ -680,7 +680,7 @@ async def test_reload(opp):
         )
         await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     assert opp.states.get("binary_sensor.test") is None
     assert opp.states.get("binary_sensor.test2")

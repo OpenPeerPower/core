@@ -304,7 +304,7 @@ async def test_load_unload_entry(opp, locative_client, webhook_id):
 
     state = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["device"]))
     assert state.state == "not_home"
-    assert len.opp.data[DATA_DISPATCHER][TRACKER_UPDATE]) == 1
+    assert len(opp.data[DATA_DISPATCHER][TRACKER_UPDATE]) == 1
 
     entry = opp.config_entries.async_entries(DOMAIN)[0]
 

@@ -6,7 +6,7 @@ from openpeerpower.setup import async_setup_component
 BASE_COMPONENT = "notify"
 
 
-async def test_apprise_config_load_fail01.opp):
+async def test_apprise_config_load_fail01(opp):
     """Test apprise configuration failures 1."""
 
     config = {
@@ -21,7 +21,7 @@ async def test_apprise_config_load_fail01.opp):
         assert not opp.services.has_service(BASE_COMPONENT, "test")
 
 
-async def test_apprise_config_load_fail02.opp):
+async def test_apprise_config_load_fail02(opp):
     """Test apprise configuration failures 2."""
 
     config = {
@@ -55,7 +55,7 @@ async def test_apprise_config_load_okay(opp, tmp_path):
     assert opp.services.has_service(BASE_COMPONENT, "test")
 
 
-async def test_apprise_url_load_fail.opp):
+async def test_apprise_url_load_fail(opp):
     """Test apprise url failure."""
 
     config = {
@@ -73,7 +73,7 @@ async def test_apprise_url_load_fail.opp):
         assert not opp.services.has_service(BASE_COMPONENT, "test")
 
 
-async def test_apprise_notification.opp):
+async def test_apprise_notification(opp):
     """Test apprise notification."""
 
     config = {

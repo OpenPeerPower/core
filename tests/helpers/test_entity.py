@@ -522,9 +522,9 @@ async def test_async_remove_no_platform(opp):
     ent.opp = opp
     ent.entity_id = "test.test"
     await ent.async_update_op_state()
-    assert len.opp.states.async_entity_ids()) == 1
+    assert len(opp.states.async_entity_ids()) == 1
     await ent.async_remove()
-    assert len.opp.states.async_entity_ids()) == 0
+    assert len(opp.states.async_entity_ids()) == 0
 
 
 async def test_async_remove_runs_callbacks(opp):

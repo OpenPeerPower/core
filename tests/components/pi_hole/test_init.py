@@ -203,7 +203,7 @@ async def test_unload(opp):
             CONF_STATISTICS_ONLY: True,
         },
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
         await opp.config_entries.async_setup(entry.entry_id)
@@ -218,7 +218,7 @@ async def test_unload(opp):
 async def test_migrate(opp):
     """Test migrate from old config entry."""
     entry = MockConfigEntry(domain=pi_hole.DOMAIN, data=CONF_DATA)
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
@@ -233,7 +233,7 @@ async def test_migrate_statistics_only(opp):
     conf_data = {**CONF_DATA}
     conf_data[CONF_API_KEY] = ""
     entry = MockConfigEntry(domain=pi_hole.DOMAIN, data=conf_data)
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):

@@ -42,7 +42,7 @@ async def test_websocket_get_actions(opp, opp_ws_client, device_reg, entity_reg)
     """Test we get the expected conditions from a light through websocket."""
     await async_setup_component(opp, "device_automation", {})
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -86,7 +86,7 @@ async def test_websocket_get_conditions(opp, opp_ws_client, device_reg, entity_r
     """Test we get the expected conditions from a light through websocket."""
     await async_setup_component(opp, "device_automation", {})
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -130,7 +130,7 @@ async def test_websocket_get_triggers(opp, opp_ws_client, device_reg, entity_reg
     """Test we get the expected triggers from a light through websocket."""
     await async_setup_component(opp, "device_automation", {})
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -176,7 +176,7 @@ async def test_websocket_get_action_capabilities(
     """Test we get the expected action capabilities for an alarm through websocket."""
     await async_setup_component(opp, "device_automation", {})
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -279,7 +279,7 @@ async def test_websocket_get_condition_capabilities(
     """Test we get the expected condition capabilities for a light through websocket."""
     await async_setup_component(opp, "device_automation", {})
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -377,7 +377,7 @@ async def test_websocket_get_trigger_capabilities(
     """Test we get the expected trigger capabilities for a light through websocket."""
     await async_setup_component(opp, "device_automation", {})
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},

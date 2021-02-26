@@ -7,7 +7,7 @@ import pytest
 import pytz
 import voluptuous as vol
 
-from openpeerpower import config as.opp_config
+from openpeerpower import config as opp_config
 from openpeerpower.components import input_boolean, switch
 from openpeerpower.components.climate.const import (
     ATTR_PRESET_MODE,
@@ -1322,7 +1322,7 @@ async def test_reload.opp):
     )
 
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     assert opp.states.get("climate.test") is not None
 
     yaml_path = path.join(
@@ -1339,7 +1339,7 @@ async def test_reload.opp):
         )
         await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     assert opp.states.get("climate.test") is None
     assert opp.states.get("climate.reload")
 

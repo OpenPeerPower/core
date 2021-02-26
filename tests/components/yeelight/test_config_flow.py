@@ -226,7 +226,7 @@ async def test_options(opp: OpenPeerPower):
     config_entry = MockConfigEntry(
         domain=DOMAIN, data={CONF_HOST: IP_ADDRESS, CONF_NAME: NAME}
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     mocked_bulb = _mocked_bulb()
     with patch(f"{MODULE}.Bulb", return_value=mocked_bulb):

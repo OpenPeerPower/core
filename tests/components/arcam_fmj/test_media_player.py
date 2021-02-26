@@ -312,8 +312,8 @@ async def test_media_title(player, state, source, channel, title):
             assert data.attributes["media_title"] == title
 
 
-async def test_added_to.opp(player, state):
-    """Test addition to.opp."""
+async def test_added_to_opp(player, state):
+    """Test addition to opp."""
     from openpeerpower.components.arcam_fmj.const import (
         SIGNAL_CLIENT_DATA,
         SIGNAL_CLIENT_STARTED,
@@ -325,7 +325,7 @@ async def test_added_to.opp(player, state):
     def _connect(signal, fun):
         connectors[signal] = fun
 
-    player opp =MagicMock()
+    player.opp =MagicMock()
     player.opp.helpers.dispatcher.async_dispatcher_connect.side_effects = _connect
 
     await player.async_added_to_opp()

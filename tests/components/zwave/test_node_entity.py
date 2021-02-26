@@ -13,7 +13,7 @@ async def test_maybe_schedule_update(opp, mock_openzwave):
     base_entity.entity_id = "zwave.bla"
     base_entity.opp = opp
 
-    with patch.object.opp.loop, "call_later") as mock_call_later:
+    with patch.object(opp.loop, "call_later") as mock_call_later:
         base_entity._schedule_update()
         assert mock_call_later.called
 

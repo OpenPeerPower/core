@@ -15,7 +15,7 @@ async def test_setup_simple(opp, discovery, device):
     await opp.async_block_till_done()
 
     # No flows started
-    assert len.opp.config_entries.flow.async_progress()) == 0
+    assert len(opp.config_entries.flow.async_progress()) == 0
 
 
 async def test_unload_config_entry(opp, discovery, device):

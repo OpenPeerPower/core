@@ -154,7 +154,7 @@ async def test_no_clients(opp, aioclient_mock):
     """Test the update_clients function when no clients are found."""
     await setup_unifi_integration(opp, aioclient_mock)
 
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 0
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 0
 
 
 async def test_tracked_wireless_clients(opp, aioclient_mock):
@@ -163,7 +163,7 @@ async def test_tracked_wireless_clients(opp, aioclient_mock):
         opp. aioclient_mock, clients_response=[CLIENT_1]
     )
     controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 1
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 1
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1 is not None
@@ -228,7 +228,7 @@ async def test_tracked_clients(opp, aioclient_mock):
         known_wireless_clients=(CLIENT_4["mac"],),
     )
     controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 4
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 4
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1 is not None
@@ -270,7 +270,7 @@ async def test_tracked_devices(opp, aioclient_mock):
         devices_response=[DEVICE_1, DEVICE_2],
     )
     controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
 
     device_1 = opp.states.get("device_tracker.device_1")
     assert device_1
@@ -339,7 +339,7 @@ async def test_remove_clients(opp, aioclient_mock):
         opp. aioclient_mock, clients_response=[CLIENT_1, CLIENT_2]
     )
     controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1 is not None
@@ -355,7 +355,7 @@ async def test_remove_clients(opp, aioclient_mock):
     await opp.async_block_till_done()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 1
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 1
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1 is None
@@ -373,7 +373,7 @@ async def test_controller_state_change(opp, aioclient_mock):
         devices_response=[DEVICE_1],
     )
     controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1.state == "not_home"
@@ -412,7 +412,7 @@ async def test_option_track_clients(opp, aioclient_mock):
         clients_response=[CLIENT_1, CLIENT_2],
         devices_response=[DEVICE_1],
     )
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 3
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 3
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1 is not None
@@ -462,7 +462,7 @@ async def test_option_track_wired_clients(opp, aioclient_mock):
         clients_response=[CLIENT_1, CLIENT_2],
         devices_response=[DEVICE_1],
     )
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 3
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 3
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1 is not None
@@ -512,7 +512,7 @@ async def test_option_track_devices(opp, aioclient_mock):
         clients_response=[CLIENT_1, CLIENT_2],
         devices_response=[DEVICE_1],
     )
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 3
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 3
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1 is not None
@@ -567,7 +567,7 @@ async def test_option_ssid_filter(opp, aioclient_mock):
         opp. aioclient_mock, clients_response=[client_1_copy, CLIENT_3]
     )
     controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1.state == "home"
@@ -671,7 +671,7 @@ async def test_wireless_client_go_wired_issue(opp, aioclient_mock):
         opp. aioclient_mock, clients_response=[client_1_client]
     )
     controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 1
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 1
 
     # Client is wireless
     client_1 = opp.states.get("device_tracker.client_1")
@@ -735,7 +735,7 @@ async def test_option_ignore_wired_bug(opp, aioclient_mock):
         clients_response=[client_1_client],
     )
     controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 1
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 1
 
     # Client is wireless
     client_1 = opp.states.get("device_tracker.client_1")
@@ -824,7 +824,7 @@ async def test_restoring_client(opp, aioclient_mock):
         clients_response=[CLIENT_2],
         clients_all_response=[CLIENT_1],
     )
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
 
     device_1 = opp.states.get("device_tracker.client_1")
     assert device_1 is not None
@@ -839,7 +839,7 @@ async def test_dont_track_clients(opp, aioclient_mock):
         clients_response=[CLIENT_1],
         devices_response=[DEVICE_1],
     )
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 1
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 1
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1 is None
@@ -853,7 +853,7 @@ async def test_dont_track_clients(opp, aioclient_mock):
     )
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1 is not None
@@ -871,7 +871,7 @@ async def test_dont_track_devices(opp, aioclient_mock):
         clients_response=[CLIENT_1],
         devices_response=[DEVICE_1],
     )
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 1
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 1
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1 is not None
@@ -885,7 +885,7 @@ async def test_dont_track_devices(opp, aioclient_mock):
     )
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1 is not None
@@ -902,7 +902,7 @@ async def test_dont_track_wired_clients(opp, aioclient_mock):
         options={CONF_TRACK_WIRED_CLIENTS: False},
         clients_response=[CLIENT_1, CLIENT_2],
     )
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 1
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 1
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1 is not None
@@ -916,7 +916,7 @@ async def test_dont_track_wired_clients(opp, aioclient_mock):
     )
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
 
     client_1 = opp.states.get("device_tracker.client_1")
     assert client_1 is not None

@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 import pytest
 
-from openpeerpower import config as.opp_config
+from openpeerpower import config as opp_config
 from openpeerpower.components import recorder
 from openpeerpower.components.statistics.sensor import DOMAIN, StatisticsSensor
 from openpeerpower.const import (
@@ -474,7 +474,7 @@ async def test_reload.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
 
     assert opp.states.get("sensor.test")
 
@@ -492,7 +492,7 @@ async def test_reload.opp):
         )
         await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
 
     assert opp.states.get("sensor.test") is None
     assert opp.states.get("sensor.cputest")

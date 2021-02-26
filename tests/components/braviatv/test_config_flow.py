@@ -35,7 +35,7 @@ IMPORT_CONFIG_HOSTNAME = {CONF_HOST: "bravia-host", CONF_PIN: "1234"}
 IMPORT_CONFIG_IP = {CONF_HOST: "10.10.10.12", CONF_PIN: "1234"}
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -45,7 +45,7 @@ async def test_show_form.opp):
     assert result["step_id"] == SOURCE_USER
 
 
-async def test_import.opp):
+async def test_import(opp):
     """Test that the import works."""
     with patch("bravia_tv.BraviaRC.connect", return_value=True), patch(
         "bravia_tv.BraviaRC.is_connected", return_value=True
@@ -68,7 +68,7 @@ async def test_import.opp):
         }
 
 
-async def test_import_cannot_connect.opp):
+async def test_import_cannot_connect(opp):
     """Test that errors are shown when cannot connect to the host during import."""
     with patch("bravia_tv.BraviaRC.connect", return_value=True), patch(
         "bravia_tv.BraviaRC.is_connected", return_value=False
@@ -81,7 +81,7 @@ async def test_import_cannot_connect.opp):
         assert result["reason"] == "cannot_connect"
 
 
-async def test_import_model_unsupported.opp):
+async def test_import_model_unsupported(opp):
     """Test that errors are shown when the TV is not supported during import."""
     with patch("bravia_tv.BraviaRC.connect", return_value=True), patch(
         "bravia_tv.BraviaRC.is_connected", return_value=True
@@ -94,7 +94,7 @@ async def test_import_model_unsupported.opp):
         assert result["reason"] == "unsupported_model"
 
 
-async def test_import_no_ip_control.opp):
+async def test_import_no_ip_control(opp):
     """Test that errors are shown when IP Control is disabled on the TV during import."""
     with patch("bravia_tv.BraviaRC.connect", side_effect=NoIPControl("No IP Control")):
         result = await opp.config_entries.flow.async_init(
@@ -131,7 +131,7 @@ async def test_import_duplicate_error(opp):
         assert result["reason"] == "already_configured"
 
 
-async def test_user_invalid_host.opp):
+async def test_user_invalid_host(opp):
     """Test that errors are shown when the host is invalid."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data={CONF_HOST: "invalid/host"}
@@ -140,7 +140,7 @@ async def test_user_invalid_host.opp):
     assert result["errors"] == {CONF_HOST: "invalid_host"}
 
 
-async def test_authorize_cannot_connect.opp):
+async def test_authorize_cannot_connect(opp):
     """Test that errors are shown when cannot connect to host at the authorize step."""
     with patch("bravia_tv.BraviaRC.connect", return_value=True):
         result = await opp.config_entries.flow.async_init(
@@ -153,7 +153,7 @@ async def test_authorize_cannot_connect.opp):
         assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_authorize_model_unsupported.opp):
+async def test_authorize_model_unsupported(opp):
     """Test that errors are shown when the TV is not supported at the authorize step."""
     with patch("bravia_tv.BraviaRC.connect", return_value=True), patch(
         "bravia_tv.BraviaRC.is_connected", return_value=True
@@ -168,7 +168,7 @@ async def test_authorize_model_unsupported.opp):
         assert result["errors"] == {"base": "unsupported_model"}
 
 
-async def test_authorize_no_ip_control.opp):
+async def test_authorize_no_ip_control(opp):
     """Test that errors are shown when IP Control is disabled on the TV."""
     with patch("bravia_tv.BraviaRC.connect", side_effect=NoIPControl("No IP Control")):
         result = await opp.config_entries.flow.async_init(
@@ -208,7 +208,7 @@ async def test_duplicate_error(opp):
         assert result["reason"] == "already_configured"
 
 
-async def test_create_entry.opp):
+async def test_create_entry(opp):
     """Test that the user step works."""
     with patch("bravia_tv.BraviaRC.connect", return_value=True), patch(
         "bravia_tv.BraviaRC.is_connected", return_value=True
@@ -239,7 +239,7 @@ async def test_create_entry.opp):
         }
 
 
-async def test_options_flow.opp):
+async def test_options_flow(opp):
     """Test config flow options."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,

@@ -9,11 +9,11 @@ from tests.common import MockConfigEntry, mock_registry
 async def test_migration(opp):
     """Test that we can migrate coronavirus to stable unique ID."""
     nl_entry = MockConfigEntry(domain=DOMAIN, title="Netherlands", data={"country": 34})
-    nl_entry.add_to(opp.opp)
+    nl_entry.add_to_opp(opp)
     worldwide_entry = MockConfigEntry(
         domain=DOMAIN, title="Worldwide", data={"country": OPTION_WORLDWIDE}
     )
-    worldwide_entry.add_to(opp.opp)
+    worldwide_entry.add_to_opp(opp)
     mock_registry(
         opp,
         {

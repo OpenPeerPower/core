@@ -22,7 +22,7 @@ async def test_speedtestdotnet_sensors.opp):
         await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids(SENSOR_DOMAIN)) == 3
+    assert len(opp.states.async_entity_ids(SENSOR_DOMAIN)) == 3
 
     for sensor_type in SENSOR_TYPES:
         sensor = opp.states.get(

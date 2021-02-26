@@ -55,7 +55,7 @@ def get_service(opp, config, discovery_info=None):
     # Library can do synchronous IO when creating the clients.
     # Passes in loop here, but can't run setup on the event loop.
     servicebus = ServiceBusClient.from_connection_string(
-        connection_string, loop.opp.loop
+        connection_string, loop=opp.loop
     )
 
     try:

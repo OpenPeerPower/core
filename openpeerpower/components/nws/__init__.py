@@ -176,6 +176,6 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     )
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
-        if len.opp.data[DOMAIN]) == 0:
+        if len(opp.data[DOMAIN]) == 0:
             opp.data.pop(DOMAIN)
     return unload_ok

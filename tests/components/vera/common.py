@@ -165,7 +165,7 @@ class ComponentFactory:
                 options=controller_config.options,
                 unique_id="12345",
             )
-            entry.add_to(opp.opp)
+            entry.add_to_opp(opp)
 
             await opp.config_entries.async_setup(entry.entry_id)
             await opp.async_block_till_done()

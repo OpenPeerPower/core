@@ -55,7 +55,7 @@ async def test_full_user_flow_implementation(opp):
 
 async def test_integration_already_exists(opp):
     """Test we only allow a single config flow."""
-    MockConfigEntry(domain=DOMAIN).add_to(opp.opp)
+    MockConfigEntry(domain=DOMAIN).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -108,7 +108,7 @@ async def test_options_flow(opp):
         domain=DOMAIN,
         data={"dsn": "http://public@sentry.local/1"},
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     with patch("openpeerpower.components.sentry.async_setup_entry", return_value=True):
         assert await opp.config_entries.async_setup(entry.entry_id)

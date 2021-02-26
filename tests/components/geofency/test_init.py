@@ -303,12 +303,12 @@ async def test_load_unload_entry(opp, geofency_client, webhook_id):
     state_1 = opp.states.get(f"device_tracker.{device_name}")
     assert STATE_HOME == state_1.state
 
-    assert len.opp.data[DOMAIN]["devices"]) == 1
+    assert len(opp.data[DOMAIN]["devices"]) == 1
     entry = opp.config_entries.async_entries(DOMAIN)[0]
 
     assert await opp.config_entries.async_unload(entry.entry_id)
     await opp.async_block_till_done()
-    assert len.opp.data[DOMAIN]["devices"]) == 0
+    assert len(opp.data[DOMAIN]["devices"]) == 0
 
     assert await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()

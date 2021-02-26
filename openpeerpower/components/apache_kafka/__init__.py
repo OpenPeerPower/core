@@ -100,7 +100,7 @@ class KafkaManager:
         self.opp = opp
         ssl_context = ssl_util.client_context()
         self._producer = AIOKafkaProducer(
-            loop.opp.loop,
+            loop=opp.loop,
             bootstrap_servers=f"{ip_address}:{port}",
             compression_type="gzip",
             security_protocol=security_protocol,

@@ -213,7 +213,7 @@ async def test_start_stop(mock_pilight_error, opp):
         assert "PilightDaemonSim start" in str(error_log_call)
 
         # Test stop
-        with patch.object.opp.loop, "stop"):
+        with patch.object(opp.loop, "stop"):
             await opp.async_stop()
         error_log_call = mock_pilight_error.call_args_list[-1]
         assert "PilightDaemonSim stop" in str(error_log_call)

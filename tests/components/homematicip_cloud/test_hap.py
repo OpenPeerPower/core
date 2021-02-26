@@ -82,7 +82,7 @@ async def test_hap_setup_works():
         assert await hap.async_setup()
 
     assert hap.home is home
-    assert len.opp.config_entries.async_forward_entry_setup.mock_calls) == 8
+    assert len(opp.config_entries.async_forward_entry_setup.mock_calls) == 8
     assert opp.config_entries.async_forward_entry_setup.mock_calls[0][1] == (
         entry,
         "alarm_control_panel",

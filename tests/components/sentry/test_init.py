@@ -27,7 +27,7 @@ async def test_setup_entry(opp: OpenPeerPower) -> None:
         domain=DOMAIN,
         data={CONF_DSN: "http://public@example.com/1", CONF_ENVIRONMENT: "production"},
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.sentry.AioHttpIntegration"
@@ -81,7 +81,7 @@ async def test_setup_entry_with_tracing(opp: OpenPeerPower) -> None:
         data={CONF_DSN: "http://public@example.com/1"},
         options={CONF_TRACING: True, CONF_TRACING_SAMPLE_RATE: 0.5},
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     with patch("openpeerpower.components.sentry.AioHttpIntegration"), patch(
         "openpeerpower.components.sentry.SqlalchemyIntegration"

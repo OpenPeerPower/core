@@ -179,7 +179,7 @@ async def test_options_form(opp):
         },
         options={},
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(
         entry.entry_id, context={"source": "test"}, data=None

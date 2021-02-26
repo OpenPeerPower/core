@@ -43,10 +43,10 @@ async def test_setup_with_config(opp):
     ):
         await opp.async_block_till_done()
 
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 2
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 2
 
 
-async def test_update_unique_id.opp):
+async def test_update_unique_id(opp):
     """Test updating a config entry without a unique_id."""
     entry = MockConfigEntry(domain=DOMAIN, data={CONF_HOST: HOST, CONF_PORT: PORT})
     entry.add_to_opp(opp)

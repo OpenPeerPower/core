@@ -41,7 +41,7 @@ async def test_owserver_connect_failure.opp):
         await opp.config_entries.async_setup(config_entry_owserver.entry_id)
         await opp.async_block_till_done()
 
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
     assert config_entry_owserver.state == ENTRY_STATE_SETUP_RETRY
     assert not opp.data.get(DOMAIN)
 
@@ -76,7 +76,7 @@ async def test_unload_entry.opp):
     config_entry_owserver = await setup_onewire_owserver_integration.opp)
     config_entry_sysbus = await setup_onewire_sysbus_integration.opp)
 
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 2
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 2
     assert config_entry_owserver.state == ENTRY_STATE_LOADED
     assert config_entry_sysbus.state == ENTRY_STATE_LOADED
 

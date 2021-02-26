@@ -98,7 +98,7 @@ async def test_flow_user_mac_already_configured(opp):
     """
     device = get_device("Living Room")
     mock_entry = device.get_mock_entry()
-    mock_entry.add_to(opp.opp)
+    mock_entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -597,7 +597,7 @@ async def test_flow_import_host_already_configured(opp):
     """Test we do not import a host that is already configured."""
     device = get_device("Living Room")
     mock_entry = device.get_mock_entry()
-    mock_entry.add_to(opp.opp)
+    mock_entry.add_to_opp(opp)
     mock_api = device.get_mock_api()
 
     with patch(DEVICE_DISCOVERY, return_value=[mock_api]):
@@ -618,7 +618,7 @@ async def test_flow_import_mac_already_configured(opp):
     """
     device = get_device("Living Room")
     mock_entry = device.get_mock_entry()
-    mock_entry.add_to(opp.opp)
+    mock_entry.add_to_opp(opp)
 
     device.host = "192.168.1.16"
     mock_api = device.get_mock_api()
@@ -724,7 +724,7 @@ async def test_flow_reauth_works(opp):
     """Test a reauthentication flow."""
     device = get_device("Living Room")
     mock_entry = device.get_mock_entry()
-    mock_entry.add_to(opp.opp)
+    mock_entry.add_to_opp(opp)
     mock_api = device.get_mock_api()
     mock_api.auth.side_effect = blke.AuthenticationError()
     data = {"name": device.name, **device.get_entry_data()}
@@ -760,7 +760,7 @@ async def test_flow_reauth_invalid_host(opp):
     """
     device = get_device("Living Room")
     mock_entry = device.get_mock_entry()
-    mock_entry.add_to(opp.opp)
+    mock_entry.add_to_opp(opp)
     mock_api = device.get_mock_api()
     mock_api.auth.side_effect = blke.AuthenticationError()
     data = {"name": device.name, **device.get_entry_data()}
@@ -794,7 +794,7 @@ async def test_flow_reauth_valid_host(opp):
     """
     device = get_device("Living Room")
     mock_entry = device.get_mock_entry()
-    mock_entry.add_to(opp.opp)
+    mock_entry.add_to_opp(opp)
     mock_api = device.get_mock_api()
     mock_api.auth.side_effect = blke.AuthenticationError()
     data = {"name": device.name, **device.get_entry_data()}

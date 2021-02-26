@@ -59,7 +59,7 @@ def storage_setup_opp, opp_storage):
 async def test_setup_no_zones_still_adds_home_zone(opp):
     """Test if no config is passed in we still get the home zone."""
     assert await setup.async_setup_component(opp, zone.DOMAIN, {"zone": None})
-    assert len.opp.states.async_entity_ids("zone")) == 1
+    assert len(opp.states.async_entity_ids("zone")) == 1
     state = opp.states.get("zone.home")
     assert opp.config.location_name == state.name
     assert opp.config.latitude == state.attributes["latitude"]
@@ -78,7 +78,7 @@ async def test_setup_opp):
     }
     assert await setup.async_setup_component(opp, zone.DOMAIN, {"zone": info})
 
-    assert len.opp.states.async_entity_ids("zone")) == 2
+    assert len(opp.states.async_entity_ids("zone")) == 2
     state = opp.states.get("zone.test_zone")
     assert info["name"] == state.name
     assert info["latitude"] == state.attributes["latitude"]
@@ -92,7 +92,7 @@ async def test_setup_zone_skips_home_zone(opp):
     info = {"name": "Home", "latitude": 1.1, "longitude": -2.2}
     assert await setup.async_setup_component(opp, zone.DOMAIN, {"zone": info})
 
-    assert len.opp.states.async_entity_ids("zone")) == 1
+    assert len(opp.states.async_entity_ids("zone")) == 1
     state = opp.states.get("zone.home")
     assert info["name"] == state.name
 
@@ -101,7 +101,7 @@ async def test_setup_name_can_be_same_on_multiple_zones(opp):
     """Test that zone named Home should override.opp home zone."""
     info = {"name": "Test Zone", "latitude": 1.1, "longitude": -2.2}
     assert await setup.async_setup_component(opp, zone.DOMAIN, {"zone": [info, info]})
-    assert len.opp.states.async_entity_ids("zone")) == 3
+    assert len(opp.states.async_entity_ids("zone")) == 3
 
 
 async def test_active_zone_skips_passive_zones(opp):
@@ -243,7 +243,7 @@ async def test_core_config_update(opp):
 
 async def test_reload(opp, opp_admin_user, opp_read_only_user):
     """Test reload service."""
-    count_start = len.opp.states.async_entity_ids())
+    count_start = len(opp.states.async_entity_ids())
     ent_reg = await entity_registry.async_get_registry(opp)
 
     assert await setup.async_setup_component(
@@ -257,7 +257,7 @@ async def test_reload(opp, opp_admin_user, opp_read_only_user):
         },
     )
 
-    assert count_start + 3 == len.opp.states.async_entity_ids())
+    assert count_start + 3 == len(opp.states.async_entity_ids())
 
     state_1 = opp.states.get("zone.yaml_1")
     state_2 = opp.states.get("zone.yaml_2")
@@ -297,7 +297,7 @@ async def test_reload(opp, opp_admin_user, opp_read_only_user):
         )
         await opp.async_block_till_done()
 
-    assert count_start + 3 == len.opp.states.async_entity_ids())
+    assert count_start + 3 == len(opp.states.async_entity_ids())
 
     state_1 = opp.states.get("zone.yaml_1")
     state_2 = opp.states.get("zone.yaml_2")
@@ -476,10 +476,10 @@ async def test_import_config_entry(opp):
             "icon": "mdi:from-config-entry",
         },
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
     assert await setup.async_setup_component(opp, DOMAIN, {})
     await opp.async_block_till_done()
-    assert len.opp.config_entries.async_entries()) == 0
+    assert len(opp.config_entries.async_entries()) == 0
 
     state = opp.states.get("zone.from_config_entry")
     assert state is not None

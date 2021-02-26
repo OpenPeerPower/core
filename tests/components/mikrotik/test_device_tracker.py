@@ -99,7 +99,7 @@ async def test_restoring_devices(opp):
     config_entry = MockConfigEntry(
         domain=mikrotik.DOMAIN, data=MOCK_DATA, options=MOCK_OPTIONS
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     registry = await entity_registry.async_get_registry(opp)
     registry.async_get_or_create(

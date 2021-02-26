@@ -72,7 +72,7 @@ def _setup_controller(opp, controller_config, config):
     server = controller_config[CONF_HOST]
     password = controller_config[CONF_PASSWORD]
     controller = RainbirdController(server, password)
-    position = len.opp.data[DATA_RAINBIRD])
+    position = len(opp.data[DATA_RAINBIRD])
     try:
         controller.get_serial_number()
     except Exception as exc:  # pylint: disable=broad-except

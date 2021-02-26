@@ -36,7 +36,7 @@ async def test_config_with_accesspoint_passed_to_config_entry(
         CONF_NAME: "name",
     }
     # no config_entry exists
-    assert len.opp.config_entries.async_entries(HMIPC_DOMAIN)) == 0
+    assert len(opp.config_entries.async_entries(HMIPC_DOMAIN)) == 0
     # no acccesspoint exists
     assert not opp.data.get(HMIPC_DOMAIN)
 

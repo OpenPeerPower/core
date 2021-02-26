@@ -46,7 +46,7 @@ async def setup_verisure(opp, config, response):
 async def test_verisure_no_ethernet_status.opp):
     """Test no data from API."""
     await setup_verisure(opp, CONFIG, {})
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     entity_id = opp.states.async_entity_ids()[0]
     assert opp.states.get(entity_id).state == STATE_UNAVAILABLE
 
@@ -54,7 +54,7 @@ async def test_verisure_no_ethernet_status.opp):
 async def test_verisure_ethernet_status_disconnected.opp):
     """Test disconnected."""
     await setup_verisure(opp, CONFIG, {"ethernetConnectedNow": False})
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     entity_id = opp.states.async_entity_ids()[0]
     assert opp.states.get(entity_id).state == "off"
 
@@ -62,6 +62,6 @@ async def test_verisure_ethernet_status_disconnected.opp):
 async def test_verisure_ethernet_status_connected.opp):
     """Test connected."""
     await setup_verisure(opp, CONFIG, {"ethernetConnectedNow": True})
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     entity_id = opp.states.async_entity_ids()[0]
     assert opp.states.get(entity_id).state == "on"

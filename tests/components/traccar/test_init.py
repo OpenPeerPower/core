@@ -237,7 +237,7 @@ async def test_load_unload_entry(opp, client, webhook_id):
         "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"])
     ).state
     assert STATE_HOME == state_name
-    assert len.opp.data[DATA_DISPATCHER][TRACKER_UPDATE]) == 1
+    assert len(opp.data[DATA_DISPATCHER][TRACKER_UPDATE]) == 1
 
     entry = opp.config_entries.async_entries(DOMAIN)[0]
 

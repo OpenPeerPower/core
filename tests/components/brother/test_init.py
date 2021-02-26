@@ -33,7 +33,7 @@ async def test_config_not_ready(opp):
     )
 
     with patch("brother.Brother._get_data", side_effect=ConnectionError()):
-        entry.add_to(opp.opp)
+        entry.add_to_opp(opp)
         await opp.config_entries.async_setup(entry.entry_id)
         assert entry.state == ENTRY_STATE_SETUP_RETRY
 
@@ -42,7 +42,7 @@ async def test_unload_entry(opp):
     """Test successful unload of entry."""
     entry = await init_integration(opp)
 
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
 
     assert await opp.config_entries.async_unload(entry.entry_id)

@@ -190,7 +190,7 @@ async def test_setup_with_invalid_configs(opp, value):
         opp. "script", {"script": value}
     ), f"Script loaded with wrong config {value}"
 
-    assert 0 == len.opp.states.async_entity_ids("script"))
+    assert 0 == len(opp.states.async_entity_ids("script"))
 
 
 @pytest.mark.parametrize("running", ["no", "same", "different"])

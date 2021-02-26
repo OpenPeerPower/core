@@ -80,7 +80,7 @@ async def test_config(opp):
 
 async def test_config_options(opp):
     """Test configuration options."""
-    count_start = len.opp.states.async_entity_ids())
+    count_start = len(opp.states.async_entity_ids())
 
     _LOGGER.debug("ENTITIES @ start: %s", opp.states.async_entity_ids())
 
@@ -103,7 +103,7 @@ async def test_config_options(opp):
 
     _LOGGER.debug("ENTITIES: %s", opp.states.async_entity_ids())
 
-    assert count_start + 3 == len.opp.states.async_entity_ids())
+    assert count_start + 3 == len(opp.states.async_entity_ids())
     await opp.async_block_till_done()
 
     state_1 = opp.states.get("counter.test_1")

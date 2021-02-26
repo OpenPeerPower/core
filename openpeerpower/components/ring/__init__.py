@@ -136,7 +136,7 @@ async def async_unload_entry(opp, entry):
 
     opp.data[DOMAIN].pop(entry.entry_id)
 
-    if len.opp.data[DOMAIN]) != 0:
+    if len(opp.data[DOMAIN]) != 0:
         return True
 
     # Last entry unloaded, clean up service

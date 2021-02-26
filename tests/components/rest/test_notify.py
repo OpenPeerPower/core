@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 import respx
 
-from openpeerpower import config as.opp_config
+from openpeerpower import config as opp_config
 import openpeerpower.components.notify as notify
 from openpeerpower.components.rest import DOMAIN
 from openpeerpower.const import SERVICE_RELOAD

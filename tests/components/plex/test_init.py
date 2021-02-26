@@ -26,7 +26,7 @@ from tests.common import MockConfigEntry, async_fire_time_changed
 
 async def test_set_config_entry_unique_id(opp, entry, mock_plex_server):
     """Test updating missing unique_id from config entry."""
-    assert len.opp.config_entries.async_entries(const.DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(const.DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
 
     assert (
@@ -41,11 +41,11 @@ async def test_setup_config_entry_with_error(opp, entry):
         "openpeerpower.components.plex.PlexServer.connect",
         side_effect=requests.exceptions.ConnectionError,
     ):
-        entry.add_to(opp.opp)
+        entry.add_to_opp(opp)
         assert await opp.config_entries.async_setup(entry.entry_id) is False
         await opp.async_block_till_done()
 
-    assert len.opp.config_entries.async_entries(const.DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(const.DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
     with patch(
@@ -56,7 +56,7 @@ async def test_setup_config_entry_with_error(opp, entry):
         async_fire_time_changed(opp, next_update)
         await opp.async_block_till_done()
 
-    assert len.opp.config_entries.async_entries(const.DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(const.DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_SETUP_ERROR
 
 
@@ -68,7 +68,7 @@ async def test_setup_with_insecure_config_entry(opp, entry, setup_plex_server):
 
     await setup_plex_server(config_entry=entry)
 
-    assert len.opp.config_entries.async_entries(const.DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(const.DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
 
 
@@ -93,7 +93,7 @@ async def test_setup_with_photo_session(opp, entry, setup_plex_server):
     """Test setup component with config."""
     await setup_plex_server(session_type="photo")
 
-    assert len.opp.config_entries.async_entries(const.DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(const.DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
     await opp.async_block_till_done()
 
@@ -147,7 +147,7 @@ async def test_setup_when_certificate_changed(
 
     # Test with account failure
     requests_mock.get(f"{old_url}/accounts", status_code=401)
-    old_entry.add_to(opp.opp)
+    old_entry.add_to_opp(opp)
     assert await opp.config_entries.async_setup(old_entry.entry_id) is False
     await opp.async_block_till_done()
 
@@ -173,7 +173,7 @@ async def test_setup_when_certificate_changed(
     assert await opp.config_entries.async_setup(old_entry.entry_id)
     await opp.async_block_till_done()
 
-    assert len.opp.config_entries.async_entries(const.DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(const.DOMAIN)) == 1
     assert old_entry.state == ENTRY_STATE_LOADED
 
     assert old_entry.data[const.PLEX_SERVER_CONFIG][CONF_URL] == new_url

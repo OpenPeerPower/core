@@ -112,7 +112,7 @@ async def test_init(opp, mock_entry):
         ATTR_XY_COLOR: (0.138, 0.08),
     }
 
-    with patch.object.opp.loop, "stop"):
+    with patch.object(opp.loop, "stop"):
         await opp.async_stop()
 
     assert mock_light_1.disconnect.called
@@ -133,7 +133,7 @@ async def test_discovery_exception(opp, mock_entry):
         await opp.async_block_till_done()
 
     # The exception should be captured and no entities should be added
-    assert len.opp.data[DOMAIN]["addresses"]) == 0
+    assert len(opp.data[DOMAIN]["addresses"]) == 0
 
 
 async def test_connect_exception(opp, mock_entry):
@@ -163,7 +163,7 @@ async def test_connect_exception(opp, mock_entry):
 
     # The exception connecting to light 1 should be captured, but light 2
     # should still be added
-    assert len.opp.data[DOMAIN]["addresses"]) == 1
+    assert len(opp.data[DOMAIN]["addresses"]) == 1
 
 
 async def test_remove_entry(opp, mock_light, mock_entry):

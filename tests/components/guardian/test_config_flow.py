@@ -19,7 +19,7 @@ async def test_duplicate_error(opp, ping_client):
     """Test that errors are shown when duplicate entries are added."""
     conf = {CONF_IP_ADDRESS: "192.168.1.100", CONF_PORT: 7777}
 
-    MockConfigEntry(domain=DOMAIN, unique_id="guardian_3456", data=conf).add_to.opp(
+    MockConfigEntry(domain=DOMAIN, unique_id="guardian_3456", data=conf).add_to_opp(
         opp
     )
 

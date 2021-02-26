@@ -99,7 +99,7 @@ async def test_form_homekit_unique_id_already_setup_opp):
         domain=DOMAIN,
         data={CONF_IP_ADDRESS: "1.2.3.4", CONF_USERNAME: "mock", CONF_PASSWORD: "mock"},
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -117,7 +117,7 @@ async def test_form_homekit_ip_address_already_setup_opp):
         domain=DOMAIN,
         data={CONF_IP_ADDRESS: "1.2.3.4", CONF_USERNAME: "mock", CONF_PASSWORD: "mock"},
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

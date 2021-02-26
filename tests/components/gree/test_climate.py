@@ -103,7 +103,7 @@ async def test_discovery_setup_opp, discovery, device):
     await async_setup_gree.opp)
     await opp.async_block_till_done()
     assert discovery.call_count == 1
-    assert len.opp.states.async_all(DOMAIN)) == 2
+    assert len(opp.states.async_all(DOMAIN)) == 2
 
 
 async def test_discovery_setup_connection_error(opp, discovery, device):

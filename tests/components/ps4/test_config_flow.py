@@ -263,7 +263,7 @@ async def test_port_bind_abort(opp):
 
 async def test_duplicate_abort(opp):
     """Test that Flow aborts when found devices already configured."""
-    MockConfigEntry(domain=ps4.DOMAIN, data=MOCK_DATA).add_to(opp.opp)
+    MockConfigEntry(domain=ps4.DOMAIN, data=MOCK_DATA).add_to_opp(opp)
 
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
         result = await opp.config_entries.flow.async_init(
@@ -293,7 +293,7 @@ async def test_additional_device(opp):
     """Test that Flow can configure another device."""
     # Mock existing entry.
     entry = MockConfigEntry(domain=ps4.DOMAIN, data=MOCK_DATA)
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     with patch("pyps4_2ndscreen.Helper.port_bind", return_value=None):
         result = await opp.config_entries.flow.async_init(

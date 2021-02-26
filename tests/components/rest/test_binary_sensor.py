@@ -7,7 +7,7 @@ from unittest.mock import patch
 import httpx
 import respx
 
-from openpeerpower import config as.opp_config
+from openpeerpower import config as opp_config
 import openpeerpower.components.binary_sensor as binary_sensor
 from openpeerpower.const import (
     ATTR_ENTITY_ID,
@@ -26,7 +26,7 @@ async def test_setup_missing_basic_config(opp):
         opp. binary_sensor.DOMAIN, {"binary_sensor": {"platform": "rest"}}
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_setup_missing_config(opp):
@@ -43,7 +43,7 @@ async def test_setup_missing_config(opp):
         },
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 @respx.mock
@@ -62,7 +62,7 @@ async def test_setup_failed_connect.opp):
         },
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 @respx.mock
@@ -81,7 +81,7 @@ async def test_setup_timeout.opp):
         },
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 @respx.mock
@@ -100,7 +100,7 @@ async def test_setup_minimum.opp):
         },
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
 
 @respx.mock
@@ -118,7 +118,7 @@ async def test_setup_minimum_resource_template.opp):
         },
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
 
 @respx.mock
@@ -137,7 +137,7 @@ async def test_setup_duplicate_resource_template.opp):
         },
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 @respx.mock
@@ -165,7 +165,7 @@ async def test_setup_get.opp):
     )
 
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
 
 @respx.mock
@@ -193,7 +193,7 @@ async def test_setup_get_digest_auth.opp):
     )
 
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
 
 @respx.mock
@@ -221,7 +221,7 @@ async def test_setup_post.opp):
         },
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
 
 @respx.mock
@@ -248,7 +248,7 @@ async def test_setup_get_off.opp):
         },
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     state = opp.states.get("binary_sensor.foo")
     assert state.state == STATE_OFF
@@ -278,7 +278,7 @@ async def test_setup_get_on.opp):
         },
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     state = opp.states.get("binary_sensor.foo")
     assert state.state == STATE_ON
@@ -304,7 +304,7 @@ async def test_setup_with_exception.opp):
         },
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     state = opp.states.get("binary_sensor.foo")
     assert state.state == STATE_OFF
@@ -348,7 +348,7 @@ async def test_reload.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     assert opp.states.get("binary_sensor.mockrest")
 
@@ -387,7 +387,7 @@ async def test_setup_query_params.opp):
         },
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
 
 def _get_fixtures_base_path():

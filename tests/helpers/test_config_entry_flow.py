@@ -48,7 +48,7 @@ async def test_single_entry_allowed(opp, discovery_flow_conf):
     flow.opp = opp
     flow.context = {}
 
-    MockConfigEntry(domain="test").add_to(opp.opp)
+    MockConfigEntry(domain="test").add_to_opp(opp)
     result = await flow.async_step_user()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -89,7 +89,7 @@ async def test_discovery_single_instance(opp, discovery_flow_conf, source):
     flow.opp = opp
     flow.context = {}
 
-    MockConfigEntry(domain="test").add_to(opp.opp)
+    MockConfigEntry(domain="test").add_to_opp(opp)
     result = await getattr(flow, f"async_step_{source}")({})
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -146,12 +146,12 @@ async def test_only_one_in_progress(opp, discovery_flow_conf):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
     # Discovery flow has not been aborted
-    assert len.opp.config_entries.flow.async_progress()) == 2
+    assert len(opp.config_entries.flow.async_progress()) == 2
 
     # Discovery should be aborted once user confirms
     result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
-    assert len.opp.config_entries.flow.async_progress()) == 0
+    assert len(opp.config_entries.flow.async_progress()) == 0
 
 
 async def test_import_abort_discovery(opp, discovery_flow_conf):
@@ -172,7 +172,7 @@ async def test_import_abort_discovery(opp, discovery_flow_conf):
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
     # Discovery flow has been aborted
-    assert len.opp.config_entries.flow.async_progress()) == 0
+    assert len(opp.config_entries.flow.async_progress()) == 0
 
 
 async def test_import_no_confirmation(opp, discovery_flow_conf):
@@ -192,7 +192,7 @@ async def test_import_single_instance(opp, discovery_flow_conf):
     flow.opp = opp
     flow.context = {}
     discovery_flow_conf["discovered"] = True
-    MockConfigEntry(domain="test").add_to(opp.opp)
+    MockConfigEntry(domain="test").add_to_opp(opp)
 
     result = await flow.async_step_import(None)
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -235,7 +235,7 @@ async def test_webhook_single_entry_allowed(opp, webhook_flow_conf):
     flow = config_entries.HANDLERS["test_single"]()
     flow.opp = opp
 
-    MockConfigEntry(domain="test_single").add_to(opp.opp)
+    MockConfigEntry(domain="test_single").add_to_opp(opp)
     result = await flow.async_step_user()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -247,7 +247,7 @@ async def test_webhook_multiple_entries_allowed(opp, webhook_flow_conf):
     flow = config_entries.HANDLERS["test_multiple"]()
     flow.opp = opp
 
-    MockConfigEntry(domain="test_multiple").add_to(opp.opp)
+    MockConfigEntry(domain="test_multiple").add_to_opp(opp)
     opp.config.api = Mock(base_url="http://example.com")
 
     result = await flow.async_step_user()

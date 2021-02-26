@@ -275,7 +275,7 @@ async def test_two_accounts_setup(
         domain=DOMAIN,
         data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
         unique_id=USERNAME,
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
 
     # import with required
     result = await opp.config_entries.flow.async_init(
@@ -299,7 +299,7 @@ async def test_already_setup_opp: OpenPeerPowerType):
         domain=DOMAIN,
         data={CONF_USERNAME: USERNAME, CONF_PASSWORD: PASSWORD},
         unique_id=USERNAME,
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
 
     # Should fail, same USERNAME (import)
     result = await opp.config_entries.flow.async_init(
@@ -506,7 +506,7 @@ async def test_password_update(
     config_entry = MockConfigEntry(
         domain=DOMAIN, data=MOCK_CONFIG, entry_id="test", unique_id=USERNAME
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -530,7 +530,7 @@ async def test_password_update_wrong_password(opp: OpenPeerPowerType):
     config_entry = MockConfigEntry(
         domain=DOMAIN, data=MOCK_CONFIG, entry_id="test", unique_id=USERNAME
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

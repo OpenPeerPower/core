@@ -91,7 +91,7 @@ async def test_setup_duplicate_config(opp, remote, caplog):
     await async_setup_component(opp, SAMSUNGTV_DOMAIN, DUPLICATE)
     await opp.async_block_till_done()
     assert opp.states.get(ENTITY_ID) is None
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
     assert "duplicate host entries found" in caplog.text
 
 
@@ -100,6 +100,6 @@ async def test_setup_duplicate_entries(opp, remote, caplog):
     await async_setup_component(opp, SAMSUNGTV_DOMAIN, MOCK_CONFIG)
     await opp.async_block_till_done()
     assert opp.states.get(ENTITY_ID)
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     await async_setup_component(opp, SAMSUNGTV_DOMAIN, MOCK_CONFIG)
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1

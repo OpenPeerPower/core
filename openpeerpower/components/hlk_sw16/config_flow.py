@@ -30,7 +30,7 @@ async def connect_client(opp, user_input):
     client_aw = create_hlk_sw16_connection(
         host=user_input[CONF_HOST],
         port=user_input[CONF_PORT],
-        loop.opp.loop,
+        loop=opp.loop,
         timeout=CONNECTION_TIMEOUT,
         reconnect_interval=DEFAULT_RECONNECT_INTERVAL,
         keep_alive_interval=DEFAULT_KEEP_ALIVE_INTERVAL,

@@ -72,7 +72,7 @@ async def test_unload_entry(opp, generic_data, switch_msg, caplog):
     receive_message = await setup_ozw(opp, entry=entry, fixture=generic_data)
 
     assert entry.state == config_entries.ENTRY_STATE_LOADED
-    assert len.opp.states.async_entity_ids("switch")) == 1
+    assert len(opp.states.async_entity_ids("switch")) == 1
 
     await opp.config_entries.async_unload(entry.entry_id)
 
@@ -88,7 +88,7 @@ async def test_unload_entry(opp, generic_data, switch_msg, caplog):
     receive_message(switch_msg)
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids("switch")) == 1
+    assert len(opp.states.async_entity_ids("switch")) == 1
     for entity in entities:
         assert opp.states.get(entity).state == STATE_UNAVAILABLE
         assert opp.states.get(entity).attributes.get(ATTR_RESTORED)
@@ -101,7 +101,7 @@ async def test_unload_entry(opp, generic_data, switch_msg, caplog):
     await opp.async_block_till_done()
 
     assert entry.state == config_entries.ENTRY_STATE_LOADED
-    assert len.opp.states.async_entity_ids("switch")) == 1
+    assert len(opp.states.async_entity_ids("switch")) == 1
     for record in caplog.records:
         assert record.levelname != "ERROR"
 
@@ -117,12 +117,12 @@ async def test_remove_entry(opp, stop_addon, uninstall_addon, caplog):
     )
     entry.add_to_opp(opp)
     assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
     await opp.config_entries.async_remove(entry.entry_id)
 
     assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 0
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 0
 
     # test successful remove with created add-on
     entry = MockConfigEntry(
@@ -132,20 +132,20 @@ async def test_remove_entry(opp, stop_addon, uninstall_addon, caplog):
         data={"integration_created_addon": True},
     )
     entry.add_to_opp(opp)
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
     await opp.config_entries.async_remove(entry.entry_id)
 
     assert stop_addon.call_count == 1
     assert uninstall_addon.call_count == 1
     assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 0
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 0
     stop_addon.reset_mock()
     uninstall_addon.reset_mock()
 
     # test add-on stop failure
     entry.add_to_opp(opp)
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
     stop_addon.side_effect = OppioAPIError()
 
     await opp.config_entries.async_remove(entry.entry_id)
@@ -153,7 +153,7 @@ async def test_remove_entry(opp, stop_addon, uninstall_addon, caplog):
     assert stop_addon.call_count == 1
     assert uninstall_addon.call_count == 0
     assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 0
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 0
     assert "Failed to stop the OpenZWave add-on" in caplog.text
     stop_addon.side_effect = None
     stop_addon.reset_mock()
@@ -161,7 +161,7 @@ async def test_remove_entry(opp, stop_addon, uninstall_addon, caplog):
 
     # test add-on uninstall failure
     entry.add_to_opp(opp)
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
     uninstall_addon.side_effect = OppioAPIError()
 
     await opp.config_entries.async_remove(entry.entry_id)
@@ -169,7 +169,7 @@ async def test_remove_entry(opp, stop_addon, uninstall_addon, caplog):
     assert stop_addon.call_count == 1
     assert uninstall_addon.call_count == 1
     assert entry.state == config_entries.ENTRY_STATE_NOT_LOADED
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 0
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 0
     assert "Failed to uninstall the OpenZWave add-on" in caplog.text
 
 

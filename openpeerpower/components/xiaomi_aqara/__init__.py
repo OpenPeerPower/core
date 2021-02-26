@@ -156,7 +156,7 @@ async def async_setup_entry(
         XiaomiGatewayDiscovery.opp.add_job, [], entry.data[CONF_INTERFACE]),
     )
 
-    if len.opp.data[DOMAIN][GATEWAYS_KEY]) == 1:
+    if len(opp.data[DOMAIN][GATEWAYS_KEY]) == 1:
         # start listining for local pushes (only once)
         await opp.async_add_executor_job(gateway_discovery.listen)
 
@@ -216,7 +216,7 @@ async def async_unload_entry(
     if unload_ok:
         opp.data[DOMAIN][GATEWAYS_KEY].pop(entry.entry_id)
 
-    if len.opp.data[DOMAIN][GATEWAYS_KEY]) == 0:
+    if len(opp.data[DOMAIN][GATEWAYS_KEY]) == 0:
         # No gateways left, stop Xiaomi socket
         opp.data[DOMAIN].pop(GATEWAYS_KEY)
         _LOGGER.debug("Shutting down Xiaomi Gateway Listener")

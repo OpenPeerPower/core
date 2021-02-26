@@ -138,7 +138,7 @@ async def test_gateway_setup_opp, aioclient_mock):
         assert gateway.option_allow_new_devices is True
 
         assert len(gateway.deconz_ids) == 0
-        assert len.opp.states.async_all()) == 0
+        assert len(opp.states.async_all()) == 0
 
         assert forward_entry_setup.mock_calls[0][1] == (
             config_entry,

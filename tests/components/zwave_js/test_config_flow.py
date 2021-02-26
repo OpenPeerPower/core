@@ -344,7 +344,7 @@ async def test_clean_discovery_on_user_create(
         )
         await opp.async_block_till_done()
 
-    assert len.opp.config_entries.flow.async_progress()) == 0
+    assert len(opp.config_entries.flow.async_progress()) == 0
     assert result["type"] == "create_entry"
     assert result["title"] == TITLE
     assert result["data"] == {

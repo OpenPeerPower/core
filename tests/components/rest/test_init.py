@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 import respx
 
-from openpeerpower import config as.opp_config
+from openpeerpower import config as opp_config
 from openpeerpower.components.rest.const import DOMAIN
 from openpeerpower.const import (
     ATTR_ENTITY_ID,
@@ -64,7 +64,7 @@ async def test_setup_with_endpoint_timeout_with_recovery.opp):
         },
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
     respx.get("http://localhost").respond(
         status_code=200,
@@ -84,7 +84,7 @@ async def test_setup_with_endpoint_timeout_with_recovery.opp):
     async_fire_time_changed(opp, utcnow() + timedelta(seconds=61))
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 4
+    assert len(opp.states.async_all()) == 4
 
     assert opp.states.get("sensor.sensor1").state == "1"
     assert opp.states.get("sensor.sensor2").state == "2"
@@ -178,7 +178,7 @@ async def test_setup_minimum_resource_template.opp):
         },
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 4
+    assert len(opp.states.async_all()) == 4
 
     assert opp.states.get("sensor.sensor1").state == "1"
     assert opp.states.get("sensor.sensor2").state == "2"
@@ -215,7 +215,7 @@ async def test_reload.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     assert opp.states.get("sensor.mockrest")
 
@@ -267,7 +267,7 @@ async def test_reload_and_remove_all.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     assert opp.states.get("sensor.mockrest")
 
@@ -317,7 +317,7 @@ async def test_reload_fails_to_read_configuration.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -333,7 +333,7 @@ async def test_reload_fails_to_read_configuration.opp):
         )
         await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
 
 def _get_fixtures_base_path():

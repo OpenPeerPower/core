@@ -25,7 +25,7 @@ FIXTURE_USER_INPUT = {
 async def test_config_entry_not_ready(opp: OpenPeerPower) -> None:
     """Test the Mazda configuration entry not ready."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=FIXTURE_USER_INPUT)
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.mazda.MazdaAPI.validate_credentials",
@@ -44,7 +44,7 @@ async def test_init_auth_failure(opp: OpenPeerPower):
         side_effect=MazdaAuthenticationException("Login failed"),
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=FIXTURE_USER_INPUT)
-        config_entry.add_to(opp.opp)
+        config_entry.add_to_opp(opp)
 
         await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
@@ -65,7 +65,7 @@ async def test_update_auth_failure(opp: OpenPeerPower):
         return_value=True,
     ), patch("openpeerpower.components.mazda.MazdaAPI.get_vehicles", return_value={}):
         config_entry = MockConfigEntry(domain=DOMAIN, data=FIXTURE_USER_INPUT)
-        config_entry.add_to(opp.opp)
+        config_entry.add_to_opp(opp)
 
         await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()

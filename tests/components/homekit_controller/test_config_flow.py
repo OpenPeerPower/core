@@ -309,7 +309,7 @@ async def test_discovery_invalid_config_entry(opp, controller):
     ).add_to_opp(opp)
 
     # We just added a mock config entry so it must be visible in.opp
-    assert len.opp.config_entries.async_entries()) == 1
+    assert len(opp.config_entries.async_entries()) == 1
 
     device = setup_mock_accessory(controller)
     discovery_info = get_device_discovery_info(device)
@@ -322,7 +322,7 @@ async def test_discovery_invalid_config_entry(opp, controller):
     # Discovery of a HKID that is in a pairable state but for which there is
     # already a config entry - in that case the stale config entry is
     # automatically removed.
-    config_entry_count = len.opp.config_entries.async_entries())
+    config_entry_count = len(opp.config_entries.async_entries())
     assert config_entry_count == 0
 
     # And new config flow should continue allowing user to set up a new pairing

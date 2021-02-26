@@ -107,4 +107,4 @@ async def test_unload_entry.opp):
 
     assert await emulated_roku.async_unload_entry(opp, entry)
 
-    assert len.opp.data[emulated_roku.DOMAIN]) == 0
+    assert len(opp.data[emulated_roku.DOMAIN]) == 0

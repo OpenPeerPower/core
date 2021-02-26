@@ -84,7 +84,7 @@ SENSORS = {
 async def test_no_sensors(opp, aioclient_mock):
     """Test that no sensors in deconz results in no sensor entities."""
     await setup_deconz_integration(opp, aioclient_mock)
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_sensors(opp, aioclient_mock):
@@ -96,7 +96,7 @@ async def test_sensors(opp, aioclient_mock):
     )
     gateway = get_gateway_from_config_entry(opp, config_entry)
 
-    assert len.opp.states.async_all()) == 5
+    assert len(opp.states.async_all()) == 5
 
     light_level_sensor = opp.states.get("sensor.light_level_sensor")
     assert light_level_sensor.state == "999.8"
@@ -153,13 +153,13 @@ async def test_sensors(opp, aioclient_mock):
     await opp.config_entries.async_unload(config_entry.entry_id)
 
     states = opp.states.async_all()
-    assert len.opp.states.async_all()) == 5
+    assert len(opp.states.async_all()) == 5
     for state in states:
         assert state.state == STATE_UNAVAILABLE
 
     await opp.config_entries.async_remove(config_entry.entry_id)
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_allow_clip_sensors(opp, aioclient_mock):
@@ -173,7 +173,7 @@ async def test_allow_clip_sensors(opp, aioclient_mock):
         get_state_response=data,
     )
 
-    assert len.opp.states.async_all()) == 6
+    assert len(opp.states.async_all()) == 6
     assert opp.states.get("sensor.clip_light_level_sensor").state == "999.8"
 
     # Disallow clip sensors
@@ -183,7 +183,7 @@ async def test_allow_clip_sensors(opp, aioclient_mock):
     )
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 5
+    assert len(opp.states.async_all()) == 5
     assert opp.states.get("sensor.clip_light_level_sensor") is None
 
     # Allow clip sensors
@@ -193,7 +193,7 @@ async def test_allow_clip_sensors(opp, aioclient_mock):
     )
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 6
+    assert len(opp.states.async_all()) == 6
     assert opp.states.get("sensor.clip_light_level_sensor")
 
 
@@ -201,7 +201,7 @@ async def test_add_new_sensor(opp, aioclient_mock):
     """Test that adding a new sensor works."""
     config_entry = await setup_deconz_integration(opp, aioclient_mock)
     gateway = get_gateway_from_config_entry(opp, config_entry)
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
     state_added_event = {
         "t": "event",
@@ -213,7 +213,7 @@ async def test_add_new_sensor(opp, aioclient_mock):
     gateway.api.event_handler(state_added_event)
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     assert opp.states.get("sensor.light_level_sensor").state == "999.8"
 
 
@@ -227,14 +227,14 @@ async def test_add_battery_later(opp, aioclient_mock):
     gateway = get_gateway_from_config_entry(opp, config_entry)
     remote = gateway.api.sensors["1"]
 
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
     assert len(gateway.events) == 1
     assert len(remote._callbacks) == 2  # Event and battery tracker
 
     remote.update({"config": {"battery": 50}})
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     assert len(gateway.events) == 1
     assert len(remote._callbacks) == 2  # Event and battery entity
 
@@ -265,7 +265,7 @@ async def test_air_quality_sensor(opp, aioclient_mock):
     }
     await setup_deconz_integration(opp, aioclient_mock, get_state_response=data)
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     air_quality = opp.states.get("sensor.air_quality")
     assert air_quality.state == "poor"
@@ -296,7 +296,7 @@ async def test_time_sensor(opp, aioclient_mock):
     }
     await setup_deconz_integration(opp, aioclient_mock, get_state_response=data)
 
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
 
     time = opp.states.get("sensor.time")
     assert time.state == "2020-11-19T08:07:08Z"
@@ -313,7 +313,7 @@ async def test_unsupported_sensor(opp, aioclient_mock):
     }
     await setup_deconz_integration(opp, aioclient_mock, get_state_response=data)
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     unsupported_sensor = opp.states.get("sensor.name")
     assert unsupported_sensor.state == "unknown"

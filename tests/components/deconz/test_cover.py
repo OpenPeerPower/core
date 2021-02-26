@@ -76,7 +76,7 @@ COVERS = {
 async def test_no_covers(opp, aioclient_mock):
     """Test that no cover entities are created."""
     await setup_deconz_integration(opp, aioclient_mock)
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_cover(opp, aioclient_mock):
@@ -88,7 +88,7 @@ async def test_cover(opp, aioclient_mock):
     )
     gateway = get_gateway_from_config_entry(opp, config_entry)
 
-    assert len.opp.states.async_all()) == 5
+    assert len(opp.states.async_all()) == 5
     assert opp.states.get("cover.level_controllable_cover").state == STATE_OPEN
     assert opp.states.get("cover.window_covering_device").state == STATE_CLOSED
     assert opp.states.get("cover.unsupported_cover") is None
@@ -217,13 +217,13 @@ async def test_cover(opp, aioclient_mock):
     await opp.config_entries.async_unload(config_entry.entry_id)
 
     states = opp.states.async_all()
-    assert len.opp.states.async_all()) == 5
+    assert len(opp.states.async_all()) == 5
     for state in states:
         assert state.state == STATE_UNAVAILABLE
 
     await opp.config_entries.async_remove(config_entry.entry_id)
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_tilt_cover(opp, aioclient_mock):
@@ -254,7 +254,7 @@ async def test_tilt_cover(opp, aioclient_mock):
         opp. aioclient_mock, get_state_response=data
     )
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     entity = opp.states.get("cover.covering_device")
     assert entity.state == STATE_OPEN
     assert entity.attributes[ATTR_CURRENT_TILT_POSITION] == 100

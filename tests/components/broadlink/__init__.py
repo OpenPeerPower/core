@@ -91,7 +91,7 @@ class BroadlinkDevice:
         """Set up the device."""
         mock_api = mock_api or self.get_mock_api()
         mock_entry = mock_entry or self.get_mock_entry()
-        mock_entry.add_to(opp.opp)
+        mock_entry.add_to_opp(opp)
 
         with patch(
             "openpeerpower.components.broadlink.device.blk.gendevice",

@@ -94,11 +94,11 @@ async def test_request_done_works.opp):
     """Test if calling request done works."""
     request_id = configurator.async_request_config(opp, "Test Request", lambda _: None)
     configurator.async_request_done(opp, request_id)
-    assert 1 == len.opp.states.async_all())
+    assert 1 == len(opp.states.async_all())
 
     opp.bus.async_fire(EVENT_TIME_CHANGED)
     await opp.async_block_till_done()
-    assert 0 == len.opp.states.async_all())
+    assert 0 == len(opp.states.async_all())
 
 
 async def test_request_done_fail_silently_on_bad_request_id.opp):

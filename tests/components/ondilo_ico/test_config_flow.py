@@ -80,5 +80,5 @@ async def test_full_flow(
     ) as mock_setup:
         await opp.config_entries.flow.async_configure(result["flow_id"])
 
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
     assert len(mock_setup.mock_calls) == 1

@@ -14,12 +14,12 @@ from tests.common import async_fire_time_changed
 
 async def test_device(opp, config_entry, aioclient_mock_fixture, aioclient_mock):
     """Test Flo by Moen device."""
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     assert await async_setup_component(
         opp. FLO_DOMAIN, {CONF_USERNAME: TEST_USER_ID, CONF_PASSWORD: TEST_PASSWORD}
     )
     await opp.async_block_till_done()
-    assert len.opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 1
+    assert len(opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 1
 
     device: FloDeviceDataUpdateCoordinator = opp.data[FLO_DOMAIN][
         config_entry.entry_id

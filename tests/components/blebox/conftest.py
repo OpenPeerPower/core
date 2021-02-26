@@ -66,7 +66,7 @@ def mock_config(ip_address="172.100.123.4"):
 
 @pytest.fixture(name="config")
 def config_fixture():
-    """Create.opp config fixture."""
+    """Create opp config fixture."""
     return {DOMAIN: {CONF_HOST: "172.100.123.4", CONF_PORT: 80}}
 
 

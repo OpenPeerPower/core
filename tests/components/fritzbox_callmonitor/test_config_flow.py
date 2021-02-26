@@ -280,7 +280,7 @@ async def test_options_flow_correct_prefixes(opp: OpenPeerPower) -> None:
         data=MOCK_CONFIG_ENTRY,
         options={CONF_PREFIXES: None},
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.fritzbox_callmonitor.async_setup_entry",
@@ -309,7 +309,7 @@ async def test_options_flow_incorrect_prefixes(opp: OpenPeerPower) -> None:
         data=MOCK_CONFIG_ENTRY,
         options={CONF_PREFIXES: None},
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.fritzbox_callmonitor.async_setup_entry",
@@ -338,7 +338,7 @@ async def test_options_flow_no_prefixes(opp: OpenPeerPower) -> None:
         data=MOCK_CONFIG_ENTRY,
         options={CONF_PREFIXES: None},
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.fritzbox_callmonitor.async_setup_entry",

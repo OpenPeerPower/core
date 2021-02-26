@@ -214,7 +214,7 @@ async def async_setup_entry(
             config[CONF_PORT],
             config[CONF_DSMR_VERSION],
             update_entities_telegram,
-            loop.opp.loop,
+            loop=opp.loop,
             keep_alive_interval=60,
         )
     else:
@@ -223,7 +223,7 @@ async def async_setup_entry(
             config[CONF_PORT],
             config[CONF_DSMR_VERSION],
             update_entities_telegram,
-            loop.opp.loop,
+            loop=opp.loop,
         )
 
     async def connect_and_reconnect():

@@ -240,7 +240,7 @@ async def test_options(opp):
         data={},
         options={CONF_SCAN_INTERVAL: 5},
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.plaato.async_setup", return_value=True
@@ -278,7 +278,7 @@ async def test_options_webhook(opp, webhook_id):
         data={CONF_USE_WEBHOOK: True, CONF_WEBHOOK_ID: None},
         options={CONF_SCAN_INTERVAL: 5},
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.plaato.async_setup", return_value=True

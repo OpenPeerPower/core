@@ -86,7 +86,7 @@ async def test_user_owserver_duplicate.opp):
         return_value=True,
     ) as mock_setup_entry:
         await setup_onewire_owserver_integration.opp)
-        assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+        assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -181,7 +181,7 @@ async def test_user_sysbus_duplicate.opp):
         return_value=True,
     ) as mock_setup_entry:
         await setup_onewire_sysbus_integration.opp)
-        assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+        assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -343,7 +343,7 @@ async def test_import_owserver_duplicate.opp):
         return_value=True,
     ) as mock_setup_entry:
         await setup_onewire_owserver_integration.opp)
-        assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+        assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
     # Import duplicate entry
     result = await opp.config_entries.flow.async_init(

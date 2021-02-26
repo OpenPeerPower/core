@@ -29,11 +29,11 @@ async def test_forward_async_setup_entry() -> None:
    opp = Mock()
 
     assert await smhi.async_setup_entry(opp, {}) is True
-    assert len.opp.config_entries.async_forward_entry_setup.mock_calls) == 1
+    assert len(opp.config_entries.async_forward_entry_setup.mock_calls) == 1
 
 
 async def test_forward_async_unload_entry() -> None:
     """Test that it will forward unload entry."""
    opp = AsyncMock()
     assert await smhi.async_unload_entry(opp, {}) is True
-    assert len.opp.config_entries.async_forward_entry_unload.mock_calls) == 1
+    assert len(opp.config_entries.async_forward_entry_unload.mock_calls) == 1

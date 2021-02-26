@@ -206,7 +206,7 @@ async def test_callback_is_always_scheduled(opp):
     callback = MagicMock()
     hasync.shutdown_run_callback_threadsafe(opp.loop)
 
-    with patch.object.opp.loop, "call_soon_threadsafe") as mock_call_soon_threadsafe:
+    with patch.object(opp.loop, "call_soon_threadsafe") as mock_call_soon_threadsafe:
         with pytest.raises(RuntimeError):
             hasync.run_callback_threadsafe(opp.loop, callback)
 

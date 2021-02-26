@@ -27,7 +27,7 @@ async def test_alarm_control_panel(opp, canary) -> None:
     """Test the creation and values of the alarm_control_panel for Canary."""
     await async_setup_component(opp, "persistent_notification", {})
 
-    registry = mock_registry.opp)
+    registry = mock_registry(opp)
     online_device_at_home = mock_device(20, "Dining Room", True, "Canary Pro")
 
     mocked_location = mock_location(

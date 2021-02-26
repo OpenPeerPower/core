@@ -30,7 +30,7 @@ async def test_duplicate_error(opp):
     """Test that errors are shown when duplicates are added."""
     conf = {CONF_USERNAME: "user@host.com", CONF_PASSWORD: "password123"}
 
-    MockConfigEntry(domain=DOMAIN, unique_id="user@host.com", data=conf).add_to.opp(
+    MockConfigEntry(domain=DOMAIN, unique_id="user@host.com", data=conf).add_to_opp(
         opp
     )
 

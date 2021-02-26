@@ -5,7 +5,7 @@ from openpeerpower.components.cloud.const import DISPATCHER_REMOTE_UPDATE
 from openpeerpower.setup import async_setup_component
 
 
-async def test_remote_connection_sensor.opp):
+async def test_remote_connection_sensor(opp):
     """Test the remote connection sensor."""
     assert await async_setup_component(opp, "cloud", {"cloud": {}})
     await opp.async_block_till_done()

@@ -19,13 +19,13 @@ SWITCH_ENTITY_ID = "switch.shutoff_valve"
 
 async def test_services(opp, config_entry, aioclient_mock_fixture, aioclient_mock):
     """Test Flo services."""
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     assert await async_setup_component(
         opp. FLO_DOMAIN, {CONF_USERNAME: TEST_USER_ID, CONF_PASSWORD: TEST_PASSWORD}
     )
     await opp.async_block_till_done()
 
-    assert len.opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 1
+    assert len(opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 1
     assert aioclient_mock.call_count == 4
 
     await opp.services.async_call(

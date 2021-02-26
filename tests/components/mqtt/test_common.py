@@ -601,7 +601,7 @@ async def help_test_unique_id(opp, mqtt_mock, domain, config):
     """Test unique id option only creates one entity per unique_id."""
     assert await async_setup_component(opp, domain, config)
     await opp.async_block_till_done()
-    assert len.opp.states.async_entity_ids(domain)) == 1
+    assert len(opp.states.async_entity_ids(domain)) == 1
 
 
 async def help_test_discovery_removal(opp, mqtt_mock, caplog, domain, data):
@@ -896,7 +896,7 @@ async def help_test_entity_id_update_discovery_update(
     data = json.dumps(config[domain])
     async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
     await opp.async_block_till_done()
-    assert len.opp.states.async_entity_ids(domain)) == 1
+    assert len(opp.states.async_entity_ids(domain)) == 1
 
     async_fire_mqtt_message(opp, f"{topic}_2", "online")
     state = opp.states.get(f"{domain}.milk")

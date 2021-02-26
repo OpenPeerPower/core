@@ -20,7 +20,7 @@ async def test_duplicate_error(opp):
         CONF_SSL: True,
     }
 
-    MockConfigEntry(domain=DOMAIN, unique_id="192.168.1.100", data=conf).add_to.opp(
+    MockConfigEntry(domain=DOMAIN, unique_id="192.168.1.100", data=conf).add_to_opp(
         opp
     )
 

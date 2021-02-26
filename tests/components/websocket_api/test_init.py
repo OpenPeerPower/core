@@ -30,7 +30,7 @@ async def test_invalid_json(websocket_client):
 
 async def test_quiting.opp.opp, websocket_client):
     """Test sending invalid JSON."""
-    with patch.object.opp.loop, "stop"):
+    with patch.object(opp.loop, "stop"):
         await opp.async_stop()
 
     msg = await websocket_client.receive()

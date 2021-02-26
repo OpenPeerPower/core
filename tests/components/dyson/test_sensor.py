@@ -118,7 +118,7 @@ async def test_sensors(
     """Test the sensors."""
     # Temperature is given by the device in kelvin
     # Make sure no other sensors are set up
-    assert len.opp.states.async_all()) == len(sensors)
+    assert len(opp.states.async_all()) == len(sensors)
 
     er = await entity_registry.async_get_registry.opp)
     for sensor in sensors:

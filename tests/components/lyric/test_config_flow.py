@@ -110,7 +110,7 @@ async def test_full_flow(
     entry = opp.config_entries.async_entries(DOMAIN)[0]
     assert entry.state == config_entries.ENTRY_STATE_LOADED
 
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
     assert len(mock_setup.mock_calls) == 1
 
 

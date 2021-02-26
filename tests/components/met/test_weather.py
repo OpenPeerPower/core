@@ -8,7 +8,7 @@ async def test_tracking_home(opp, mock_weather):
     """Test we track home."""
     await opp.config_entries.flow.async_init("met", context={"source": "onboarding"})
     await opp.async_block_till_done()
-    assert len.opp.states.async_entity_ids("weather")) == 1
+    assert len(opp.states.async_entity_ids("weather")) == 1
     assert len(mock_weather.mock_calls) == 4
 
     # Test the hourly sensor is disabled by default
@@ -31,7 +31,7 @@ async def test_tracking_home(opp, mock_weather):
     entry = opp.config_entries.async_entries()[0]
     await opp.config_entries.async_remove(entry.entry_id)
     await opp.async_block_till_done()
-    assert len.opp.states.async_entity_ids("weather")) == 0
+    assert len(opp.states.async_entity_ids("weather")) == 0
 
 
 async def test_not_tracking_home(opp, mock_weather):
@@ -53,7 +53,7 @@ async def test_not_tracking_home(opp, mock_weather):
         data={"name": "Somewhere", "latitude": 10, "longitude": 20, "elevation": 0},
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_entity_ids("weather")) == 2
+    assert len(opp.states.async_entity_ids("weather")) == 2
     assert len(mock_weather.mock_calls) == 4
 
     # Test we do not track config
@@ -65,4 +65,4 @@ async def test_not_tracking_home(opp, mock_weather):
     entry = opp.config_entries.async_entries()[0]
     await opp.config_entries.async_remove(entry.entry_id)
     await opp.async_block_till_done()
-    assert len.opp.states.async_entity_ids("weather")) == 0
+    assert len(opp.states.async_entity_ids("weather")) == 0

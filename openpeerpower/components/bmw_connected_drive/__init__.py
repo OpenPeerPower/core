@@ -173,7 +173,7 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
     # Only remove services if it is the last account and not read only
     if (
-        len.opp.data[DOMAIN][DATA_ENTRIES]) == 1
+        len(opp.data[DOMAIN][DATA_ENTRIES]) == 1
         and not opp.data[DOMAIN][DATA_ENTRIES][entry.entry_id][CONF_ACCOUNT].read_only
     ):
         services = list(_SERVICE_MAP) + [SERVICE_UPDATE_STATE]

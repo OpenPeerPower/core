@@ -213,7 +213,7 @@ async def test_load_unload_entry(opp, gpslogger_client, webhook_id):
     assert req.status == HTTP_OK
     state_name = opp.states.get(f"{DEVICE_TRACKER_DOMAIN}.{data['device']}").state
     assert STATE_HOME == state_name
-    assert len.opp.data[DATA_DISPATCHER][TRACKER_UPDATE]) == 1
+    assert len(opp.data[DATA_DISPATCHER][TRACKER_UPDATE]) == 1
 
     entry = opp.config_entries.async_entries(DOMAIN)[0]
 

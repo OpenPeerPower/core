@@ -224,7 +224,7 @@ async def test_setup_with_no_config(opp):
     assert await async_setup_component(opp, konnected.DOMAIN, {})
 
     # No flows started
-    assert len.opp.config_entries.flow.async_progress()) == 0
+    assert len(opp.config_entries.flow.async_progress()) == 0
 
     # Nothing saved from configuration.yaml
     assert opp.data[konnected.DOMAIN][konnected.CONF_ACCESS_TOKEN] is None
@@ -269,7 +269,7 @@ async def test_setup_defined_hosts_known_auth(opp, mock_panel):
     assert konnected.YAML_CONFIGS not in opp.data[konnected.DOMAIN]
 
     # Flow aborted
-    assert len.opp.config_entries.flow.async_progress()) == 0
+    assert len(opp.config_entries.flow.async_progress()) == 0
 
 
 async def test_setup_defined_hosts_no_known_auth.opp):
@@ -289,7 +289,7 @@ async def test_setup_defined_hosts_no_known_auth.opp):
     )
 
     # Flow started for discovered bridge
-    assert len.opp.config_entries.flow.async_progress()) == 1
+    assert len(opp.config_entries.flow.async_progress()) == 1
 
 
 async def test_setup_multiple.opp):
@@ -344,7 +344,7 @@ async def test_setup_multiple.opp):
     )
 
     # Flow started for discovered bridge
-    assert len.opp.config_entries.flow.async_progress()) == 2
+    assert len(opp.config_entries.flow.async_progress()) == 2
 
     # Globals saved
     assert (

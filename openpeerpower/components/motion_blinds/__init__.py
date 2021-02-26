@@ -131,7 +131,7 @@ async def async_unload_entry(
     if unload_ok:
         opp.data[DOMAIN].pop(config_entry.entry_id)
 
-    if len.opp.data[DOMAIN]) == 1:
+    if len(opp.data[DOMAIN]) == 1:
         # No motion gateways left, stop Motion multicast
         _LOGGER.debug("Shutting down Motion Listener")
         multicast = opp.data[DOMAIN].pop(KEY_MULTICAST_LISTENER)

@@ -21,7 +21,7 @@ FIXTURE_USER_INPUT = {CONF_ORG: "random", CONF_PROJECT: "project", CONF_PAT: "ab
 UNIQUE_ID = "random_project"
 
 
-async def test_show_user_form.opp: OpenPeerPower) -> None:
+async def test_show_user_form(opp: OpenPeerPower) -> None:
     """Test that the setup form is served."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -185,7 +185,7 @@ async def test_reauth_project_error(opp: OpenPeerPower) -> None:
         assert result2["errors"] == {"base": "project_error"}
 
 
-async def test_reauth_flow.opp: OpenPeerPower) -> None:
+async def test_reauth_flow(opp: OpenPeerPower) -> None:
     """Test reauth works."""
     with patch(
         "openpeerpower.components.azure_devops.config_flow.DevOpsClient.authorize",
@@ -225,7 +225,7 @@ async def test_reauth_flow.opp: OpenPeerPower) -> None:
         assert result2["reason"] == "reauth_successful"
 
 
-async def test_full_flow_implementation.opp: OpenPeerPower) -> None:
+async def test_full_flow_implementation(opp: OpenPeerPower) -> None:
     """Test registering an integration and finishing flow works."""
     with patch(
         "openpeerpower.components.azure_devops.async_setup", return_value=True

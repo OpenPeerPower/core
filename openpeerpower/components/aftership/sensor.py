@@ -62,7 +62,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     name = config[CONF_NAME]
 
     session = async_get_clientsession(opp)
-    aftership = Tracking.opp.loop, session, apikey)
+    aftership = Tracking(opp.loop, session, apikey)
 
     await aftership.get_trackings()
 

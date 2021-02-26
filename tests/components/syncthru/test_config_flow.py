@@ -54,7 +54,7 @@ async def test_already_configured_by_url(opp, aioclient_mock):
         data={**FIXTURE_USER_INPUT, CONF_NAME: "Already configured"},
         title="Already configured",
         unique_id=udn,
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
     mock_connection(aioclient_mock)
 
     result = await opp.config_entries.flow.async_init(

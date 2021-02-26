@@ -30,7 +30,7 @@ async def init_integration(opp: OpenPeerPower, use_nickname=True) -> MockConfigE
     )
 
     config_entry = MockConfigEntry(domain=DOMAIN, data=FIXTURE_USER_INPUT)
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     client_mock = MagicMock(
         MazdaAPI(

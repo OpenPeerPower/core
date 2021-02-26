@@ -293,7 +293,7 @@ async def test_ensure_setup_config(mocked_status, mocked_volume, opp, one_device
 
     assert one_device.call_count == 1
     assert one_device.call_args == call("192.168.1.44", 8888)
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     state = opp.states.get("media_player.custom_sound")
     assert state.name == "custom_sound"
 
@@ -313,7 +313,7 @@ async def test_ensure_setup_discovery(mocked_status, mocked_volume, opp, one_dev
 
     assert one_device.call_count == 1
     assert one_device.call_args == call("192.168.1.1", 8090)
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
 
 async def test_ensure_setup_discovery_no_duplicate(
@@ -323,7 +323,7 @@ async def test_ensure_setup_discovery_no_duplicate(
     await setup_soundtouch(opp, DEVICE_1_CONFIG)
 
     assert one_device.call_count == 1
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     new_device = {
         "port": "8090",
@@ -336,7 +336,7 @@ async def test_ensure_setup_discovery_no_duplicate(
     )
     await opp.async_block_till_done()
     assert one_device.call_count == 2
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
 
     existing_device = {
         "port": "8090",
@@ -349,7 +349,7 @@ async def test_ensure_setup_discovery_no_duplicate(
     )
     await opp.async_block_till_done()
     assert one_device.call_count == 2
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
 
 
 async def test_playing_media(mocked_status, mocked_volume, opp, one_device):

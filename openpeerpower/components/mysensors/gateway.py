@@ -188,7 +188,7 @@ async def _get_gateway(
             in_prefix=topic_in_prefix,
             out_prefix=topic_out_prefix,
             retain=retain,
-            loop.opp.loop,
+            loop=opp.loop,
             event_callback=None,
             persistence=persistence,
             persistence_file=persistence_file,
@@ -200,7 +200,7 @@ async def _get_gateway(
             gateway = mysensors.AsyncSerialGateway(
                 device,
                 baud=baud_rate,
-                loop.opp.loop,
+                loop=opp.loop,
                 event_callback=None,
                 persistence=persistence,
                 persistence_file=persistence_file,
@@ -213,7 +213,7 @@ async def _get_gateway(
                 gateway = mysensors.AsyncTCPGateway(
                     device,
                     port=tcp_port,
-                    loop.opp.loop,
+                    loop=opp.loop,
                     event_callback=None,
                     persistence=persistence,
                     persistence_file=persistence_file,

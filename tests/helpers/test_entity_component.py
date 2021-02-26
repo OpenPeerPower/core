@@ -355,10 +355,10 @@ async def test_unload_entry_resets_platform(opp):
     add_entities([MockEntity()])
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids()) == 1
+    assert len(opp.states.async_entity_ids()) == 1
 
     assert await component.async_unload_entry(entry)
-    assert len.opp.states.async_entity_ids()) == 0
+    assert len(opp.states.async_entity_ids()) == 0
 
 
 async def test_unload_entry_fails_if_never_loaded(opp):

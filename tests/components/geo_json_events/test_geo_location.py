@@ -212,8 +212,8 @@ async def test_setup_race_condition(opp, legacy_patchable_time):
 
             all_states = opp.states.async_all()
             assert len(all_states) == 1
-            assert len.opp.data[DATA_DISPATCHER][delete_signal]) == 1
-            assert len.opp.data[DATA_DISPATCHER][update_signal]) == 1
+            assert len(opp.data[DATA_DISPATCHER][delete_signal]) == 1
+            assert len(opp.data[DATA_DISPATCHER][update_signal]) == 1
 
             # Simulate an update - empty data, removes all entities
             mock_feed.return_value.update.return_value = "ERROR", None
@@ -222,8 +222,8 @@ async def test_setup_race_condition(opp, legacy_patchable_time):
 
             all_states = opp.states.async_all()
             assert len(all_states) == 0
-            assert len.opp.data[DATA_DISPATCHER][delete_signal]) == 0
-            assert len.opp.data[DATA_DISPATCHER][update_signal]) == 0
+            assert len(opp.data[DATA_DISPATCHER][delete_signal]) == 0
+            assert len(opp.data[DATA_DISPATCHER][update_signal]) == 0
 
             # Simulate an update - 1 entry
             mock_feed.return_value.update.return_value = "OK", [mock_entry_1]
@@ -232,8 +232,8 @@ async def test_setup_race_condition(opp, legacy_patchable_time):
 
             all_states = opp.states.async_all()
             assert len(all_states) == 1
-            assert len.opp.data[DATA_DISPATCHER][delete_signal]) == 1
-            assert len.opp.data[DATA_DISPATCHER][update_signal]) == 1
+            assert len(opp.data[DATA_DISPATCHER][delete_signal]) == 1
+            assert len(opp.data[DATA_DISPATCHER][update_signal]) == 1
 
             # Simulate an update - 1 entry
             mock_feed.return_value.update.return_value = "OK", [mock_entry_1]
@@ -242,8 +242,8 @@ async def test_setup_race_condition(opp, legacy_patchable_time):
 
             all_states = opp.states.async_all()
             assert len(all_states) == 1
-            assert len.opp.data[DATA_DISPATCHER][delete_signal]) == 1
-            assert len.opp.data[DATA_DISPATCHER][update_signal]) == 1
+            assert len(opp.data[DATA_DISPATCHER][delete_signal]) == 1
+            assert len(opp.data[DATA_DISPATCHER][update_signal]) == 1
 
             # Simulate an update - empty data, removes all entities
             mock_feed.return_value.update.return_value = "ERROR", None
@@ -253,5 +253,5 @@ async def test_setup_race_condition(opp, legacy_patchable_time):
             all_states = opp.states.async_all()
             assert len(all_states) == 0
             # Ensure that delete and update signal targets are now empty.
-            assert len.opp.data[DATA_DISPATCHER][delete_signal]) == 0
-            assert len.opp.data[DATA_DISPATCHER][update_signal]) == 0
+            assert len(opp.data[DATA_DISPATCHER][delete_signal]) == 0
+            assert len(opp.data[DATA_DISPATCHER][update_signal]) == 0

@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 import pytest
 
-from openpeerpower import config as.opp_config
+from openpeerpower import config as opp_config
 from openpeerpower.components.filesize import DOMAIN
 from openpeerpower.components.filesize.sensor import CONF_FILE_PATHS
 from openpeerpower.const import SERVICE_RELOAD
@@ -33,7 +33,7 @@ async def test_invalid_path.opp):
     config = {"sensor": {"platform": "filesize", CONF_FILE_PATHS: ["invalid_path"]}}
     assert await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
-    assert len.opp.states.async_entity_ids()) == 0
+    assert len(opp.states.async_entity_ids()) == 0
 
 
 async def test_valid_path.opp):
@@ -43,7 +43,7 @@ async def test_valid_path.opp):
     opp.config.allowlist_external_dirs = {TEST_DIR}
     assert await async_setup_component(opp, "sensor", config)
     await opp.async_block_till_done()
-    assert len.opp.states.async_entity_ids()) == 1
+    assert len(opp.states.async_entity_ids()) == 1
     state = opp.states.get("sensor.mock_file_test_filesize_txt")
     assert state.state == "0.0"
     assert state.attributes.get("bytes") == 4
@@ -66,7 +66,7 @@ async def test_reload(opp, tmpdir):
         )
         await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     assert opp.states.get("sensor.file")
 

@@ -24,7 +24,7 @@ async def test_setup_with_no_config(opp):
     assert await async_setup_component(opp, hue.DOMAIN, {}) is True
 
     # No flows started
-    assert len.opp.config_entries.flow.async_progress()) == 0
+    assert len(opp.config_entries.flow.async_progress()) == 0
 
     # No configs stored
     assert opp.data[hue.DOMAIN] == {}
@@ -33,7 +33,7 @@ async def test_setup_with_no_config(opp):
 async def test_unload_entry(opp, mock_bridge_setup):
     """Test being able to unload an entry."""
     entry = MockConfigEntry(domain=hue.DOMAIN, data={"host": "0.0.0.0"})
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     assert await async_setup_component(opp, hue.DOMAIN, {}) is True
     assert len(mock_bridge_setup.mock_calls) == 1
@@ -47,7 +47,7 @@ async def test_unload_entry(opp, mock_bridge_setup):
 async def test_setting_unique_id(opp, mock_bridge_setup):
     """Test we set unique ID if not set yet."""
     entry = MockConfigEntry(domain=hue.DOMAIN, data={"host": "0.0.0.0"})
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
     assert await async_setup_component(opp, hue.DOMAIN, {}) is True
     assert entry.unique_id == "mock-id"
 
@@ -57,7 +57,7 @@ async def test_fixing_unique_id_no_other(opp, mock_bridge_setup):
     entry = MockConfigEntry(
         domain=hue.DOMAIN, data={"host": "0.0.0.0"}, unique_id="invalid-id"
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
     assert await async_setup_component(opp, hue.DOMAIN, {}) is True
     assert entry.unique_id == "mock-id"
 
@@ -69,13 +69,13 @@ async def test_fixing_unique_id_other_ignored(opp, mock_bridge_setup):
         data={"host": "0.0.0.0"},
         unique_id="mock-id",
         source=config_entries.SOURCE_IGNORE,
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
     entry = MockConfigEntry(
         domain=hue.DOMAIN,
         data={"host": "0.0.0.0"},
         unique_id="invalid-id",
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
     assert await async_setup_component(opp, hue.DOMAIN, {}) is True
     await opp.async_block_till_done()
     assert entry.unique_id == "mock-id"
@@ -89,13 +89,13 @@ async def test_fixing_unique_id_other_correct(opp, mock_bridge_setup):
         data={"host": "0.0.0.0"},
         unique_id="mock-id",
     )
-    correct_entry.add_to(opp.opp)
+    correct_entry.add_to_opp(opp)
     entry = MockConfigEntry(
         domain=hue.DOMAIN,
         data={"host": "0.0.0.0"},
         unique_id="invalid-id",
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
     assert await async_setup_component(opp, hue.DOMAIN, {}) is True
     await opp.async_block_till_done()
     assert opp.config_entries.async_entries() == [correct_entry]
@@ -105,7 +105,7 @@ async def test_security_vuln_check(opp):
     """Test that we report security vulnerabilities."""
     assert await async_setup_component(opp, "persistent_notification", {})
     entry = MockConfigEntry(domain=hue.DOMAIN, data={"host": "0.0.0.0"})
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     config = Mock(bridgeid="", mac="", modelid="BSB002", swversion="1935144020")
     config.name = "Hue"

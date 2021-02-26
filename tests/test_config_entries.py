@@ -296,7 +296,7 @@ async def test_remove_entry(opp, manager):
 
     # Check entity state got added
     assert opp.states.get("light.test_entity") is not None
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     # Check entity got added to entity registry
     ent_reg = await opp.helpers.entity_registry.async_get_registry()
@@ -319,7 +319,7 @@ async def test_remove_entry(opp, manager):
 
     # Check that entity state has been removed
     assert opp.states.get("light.test_entity") is None
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
     # Check that entity registry entry has been removed
     entity_entry_list = list(ent_reg.entities.values())
@@ -523,7 +523,7 @@ async def test_saving_and_loading(opp):
             "test", context={"source": config_entries.SOURCE_USER}
         )
 
-    assert len.opp.config_entries.async_entries()) == 2
+    assert len(opp.config_entries.async_entries()) == 2
 
     # To trigger the call_later
     async_fire_time_changed(opp, dt.utcnow() + timedelta(seconds=1))
@@ -1111,7 +1111,7 @@ async def test_entry_reload_error(opp, manager, state):
 async def test_entry_disable_succeed(opp, manager):
     """Test that we can disable an entry."""
     entry = MockConfigEntry(domain="comp", state=config_entries.ENTRY_STATE_LOADED)
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     async_setup = AsyncMock(return_value=True)
     async_setup_entry = AsyncMock(return_value=True)
@@ -1148,7 +1148,7 @@ async def test_entry_disable_succeed(opp, manager):
 async def test_entry_disable_without_reload_support(opp, manager):
     """Test that we can disable an entry without reload support."""
     entry = MockConfigEntry(domain="comp", state=config_entries.ENTRY_STATE_LOADED)
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     async_setup = AsyncMock(return_value=True)
     async_setup_entry = AsyncMock(return_value=True)
@@ -1182,7 +1182,7 @@ async def test_entry_disable_without_reload_support(opp, manager):
 async def test_entry_enable_without_reload_support(opp, manager):
     """Test that we can disable an entry without reload support."""
     entry = MockConfigEntry(domain="comp", disabled_by=config_entries.DISABLED_USER)
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     async_setup = AsyncMock(return_value=True)
     async_setup_entry = AsyncMock(return_value=True)
@@ -1598,7 +1598,7 @@ async def test_finish_flow_aborts_progress(opp, manager):
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    assert len.opp.config_entries.flow.async_progress()) == 0
+    assert len(opp.config_entries.flow.async_progress()) == 0
 
 
 async def test_unique_id_ignore(opp, manager):
@@ -1632,7 +1632,7 @@ async def test_unique_id_ignore(opp, manager):
 
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    # assert len.opp.config_entries.flow.async_progress()) == 0
+    # assert len(opp.config_entries.flow.async_progress()) == 0
 
     # We should never set up an ignored entry.
     assert len(async_setup_entry.mock_calls) == 0
@@ -1762,15 +1762,15 @@ async def test_unignore_step_form(opp, manager):
         await manager.async_remove(entry.entry_id)
 
         # Right after removal there shouldn't be an entry or active flows
-        assert len.opp.config_entries.async_entries("comp")) == 0
-        assert len.opp.config_entries.flow.async_progress()) == 0
+        assert len(opp.config_entries.async_entries("comp")) == 0
+        assert len(opp.config_entries.flow.async_progress()) == 0
 
         # But after a 'tick' the unignore step has run and we can see an active flow again.
         await opp.async_block_till_done()
-        assert len.opp.config_entries.flow.async_progress()) == 1
+        assert len(opp.config_entries.flow.async_progress()) == 1
 
         # and still not config entries
-        assert len.opp.config_entries.async_entries("comp")) == 0
+        assert len(opp.config_entries.async_entries("comp")) == 0
 
 
 async def test_unignore_create_entry(opp, manager):
@@ -1807,8 +1807,8 @@ async def test_unignore_create_entry(opp, manager):
         await manager.async_remove(entry.entry_id)
 
         # Right after removal there shouldn't be an entry or flow
-        assert len.opp.config_entries.flow.async_progress()) == 0
-        assert len.opp.config_entries.async_entries("comp")) == 0
+        assert len(opp.config_entries.flow.async_progress()) == 0
+        assert len(opp.config_entries.async_entries("comp")) == 0
 
         # But after a 'tick' the unignore step has run and we can see a config entry.
         await opp.async_block_till_done()
@@ -1818,7 +1818,7 @@ async def test_unignore_create_entry(opp, manager):
         assert entry.title == "yo"
 
         # And still no active flow
-        assert len.opp.config_entries.flow.async_progress()) == 0
+        assert len(opp.config_entries.flow.async_progress()) == 0
 
 
 async def test_unignore_default_impl(opp, manager):
@@ -1849,8 +1849,8 @@ async def test_unignore_default_impl(opp, manager):
         await manager.async_remove(entry.entry_id)
         await opp.async_block_till_done()
 
-        assert len.opp.config_entries.async_entries("comp")) == 0
-        assert len.opp.config_entries.flow.async_progress()) == 0
+        assert len(opp.config_entries.async_entries("comp")) == 0
+        assert len(opp.config_entries.flow.async_progress()) == 0
 
 
 async def test_partial_flows_hidden(opp, manager):
@@ -1892,7 +1892,7 @@ async def test_partial_flows_hidden(opp, manager):
         await discovery_started.wait()
 
         # While it's blocked it shouldn't be visible or trigger discovery notifications
-        assert len.opp.config_entries.flow.async_progress()) == 0
+        assert len(opp.config_entries.flow.async_progress()) == 0
 
         await opp.async_block_till_done()
         state = opp.states.get("persistent_notification.config_entry_discovery")
@@ -1905,7 +1905,7 @@ async def test_partial_flows_hidden(opp, manager):
         # discovery notifications
         result = await init_task
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
-        assert len.opp.config_entries.flow.async_progress()) == 1
+        assert len(opp.config_entries.flow.async_progress()) == 1
 
         await opp.async_block_till_done()
         state = opp.states.get("persistent_notification.config_entry_discovery")
@@ -2063,7 +2063,7 @@ async def test_flow_with_default_discovery(opp, manager, discovery_source):
         )
         assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
-    assert len.opp.config_entries.flow.async_progress()) == 0
+    assert len(opp.config_entries.flow.async_progress()) == 0
 
     entry = opp.config_entries.async_entries("comp")[0]
     assert entry.title == "yo"

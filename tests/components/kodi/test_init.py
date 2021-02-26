@@ -15,7 +15,7 @@ async def test_unload_entry.opp):
     ):
         entry = await init_integration.opp)
 
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
 
     assert await opp.config_entries.async_unload(entry.entry_id)

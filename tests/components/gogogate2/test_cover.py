@@ -333,7 +333,7 @@ async def test_open_close_update(gogogate2api_mock, opp: OpenPeerPower) -> None:
             CONF_PASSWORD: "password",
         },
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     assert opp.states.get("cover.door1") is None
     assert await opp.config_entries.async_setup(config_entry.entry_id)
@@ -390,7 +390,7 @@ async def test_availability(ismartgateapi_mock, opp: OpenPeerPower) -> None:
             CONF_PASSWORD: "password",
         },
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     assert opp.states.get("cover.door1") is None
     assert await opp.config_entries.async_setup(config_entry.entry_id)
@@ -441,7 +441,7 @@ async def test_device_info_ismartgate(ismartgateapi_mock, opp: OpenPeerPower) ->
             CONF_PASSWORD: "password",
         },
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     assert await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
 
@@ -476,7 +476,7 @@ async def test_device_info_gogogate2(gogogate2api_mock, opp: OpenPeerPower) -> N
             CONF_PASSWORD: "password",
         },
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     assert await opp.config_entries.async_setup(config_entry.entry_id)
     await opp.async_block_till_done()
 

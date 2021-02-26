@@ -78,7 +78,7 @@ async def test_clients_update_failed(opp):
 async def test_restoring_clients(opp):
     """Test restoring existing device_tracker entities if not detected on startup."""
     entry = mock_config_entry()
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     registry = await entity_registry.async_get_registry(opp)
     registry.async_get_or_create(
@@ -105,7 +105,7 @@ async def test_restoring_clients(opp):
         "openpeerpower.components.ruckus_unleashed.RuckusUnleashedDataUpdateCoordinator._fetch_clients",
         return_value={},
     ):
-        entry.add_to(opp.opp)
+        entry.add_to_opp(opp)
         await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 

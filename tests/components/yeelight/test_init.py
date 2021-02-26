@@ -38,7 +38,7 @@ from tests.common import MockConfigEntry
 async def test_setup_discovery(opp: OpenPeerPower):
     """Test setting up Yeelight by discovery."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=CONFIG_ENTRY_DATA)
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     mocked_bulb = _mocked_bulb()
     with _patch_discovery(MODULE), patch(f"{MODULE}.Bulb", return_value=mocked_bulb):
@@ -98,7 +98,7 @@ async def test_unique_ids_device(opp: OpenPeerPower):
         },
         unique_id=ID,
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     mocked_bulb = _mocked_bulb()
     mocked_bulb.bulb_type = BulbType.WhiteTempMood
@@ -122,7 +122,7 @@ async def test_unique_ids_entry(opp: OpenPeerPower):
             CONF_NIGHTLIGHT_SWITCH: True,
         },
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     mocked_bulb = _mocked_bulb()
     mocked_bulb.bulb_type = BulbType.WhiteTempMood
@@ -156,7 +156,7 @@ async def test_bulb_off_while_adding_in_ha(opp: OpenPeerPower):
         },
         unique_id=ID,
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     mocked_bulb = _mocked_bulb(True)
     mocked_bulb.bulb_type = BulbType.WhiteTempMood

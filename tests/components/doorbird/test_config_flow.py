@@ -348,7 +348,7 @@ async def test_options_flow(opp):
         data=VALID_CONFIG,
         options={CONF_EVENTS: ["event1", "event2", "event3"]},
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.doorbird.async_setup_entry", return_value=True

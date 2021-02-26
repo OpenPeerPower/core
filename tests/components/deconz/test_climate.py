@@ -77,7 +77,7 @@ SENSORS = {
 async def test_no_sensors(opp, aioclient_mock):
     """Test that no sensors in deconz results in no climate entities."""
     await setup_deconz_integration(opp, aioclient_mock)
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_simple_climate_device(opp, aioclient_mock):
@@ -123,7 +123,7 @@ async def test_simple_climate_device(opp, aioclient_mock):
     )
     gateway = get_gateway_from_config_entry(opp, config_entry)
 
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
     climate_thermostat = opp.states.get("climate.thermostat")
     assert climate_thermostat.state == HVAC_MODE_HEAT
     assert climate_thermostat.attributes["hvac_modes"] == [
@@ -206,7 +206,7 @@ async def test_climate_device_without_cooling_support(opp, aioclient_mock):
     )
     gateway = get_gateway_from_config_entry(opp, config_entry)
 
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
     climate_thermostat = opp.states.get("climate.thermostat")
     assert climate_thermostat.state == HVAC_MODE_AUTO
     assert climate_thermostat.attributes["hvac_modes"] == [
@@ -335,13 +335,13 @@ async def test_climate_device_without_cooling_support(opp, aioclient_mock):
     await opp.config_entries.async_unload(config_entry.entry_id)
 
     states = opp.states.async_all()
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
     for state in states:
         assert state.state == STATE_UNAVAILABLE
 
     await opp.config_entries.async_remove(config_entry.entry_id)
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_climate_device_with_cooling_support(opp, aioclient_mock):
@@ -379,7 +379,7 @@ async def test_climate_device_with_cooling_support(opp, aioclient_mock):
     )
     gateway = get_gateway_from_config_entry(opp, config_entry)
 
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
     climate_thermostat = opp.states.get("climate.zen_01")
     assert climate_thermostat.state == HVAC_MODE_HEAT
     assert climate_thermostat.attributes["hvac_modes"] == [
@@ -456,7 +456,7 @@ async def test_climate_device_with_fan_support(opp, aioclient_mock):
     )
     gateway = get_gateway_from_config_entry(opp, config_entry)
 
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
     climate_thermostat = opp.states.get("climate.zen_01")
     assert climate_thermostat.state == HVAC_MODE_HEAT
     assert climate_thermostat.attributes["fan_mode"] == FAN_AUTO
@@ -584,7 +584,7 @@ async def test_climate_device_with_preset(opp, aioclient_mock):
     )
     gateway = get_gateway_from_config_entry(opp, config_entry)
 
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
 
     climate_zen_01 = opp.states.get("climate.zen_01")
     assert climate_zen_01.state == HVAC_MODE_HEAT
@@ -678,7 +678,7 @@ async def test_clip_climate_device(opp, aioclient_mock):
         get_state_response=data,
     )
 
-    assert len.opp.states.async_all()) == 3
+    assert len(opp.states.async_all()) == 3
     assert opp.states.get("climate.thermostat").state == HVAC_MODE_AUTO
     assert opp.states.get("sensor.thermostat") is None
     assert opp.states.get("sensor.thermostat_battery_level").state == "100"
@@ -691,7 +691,7 @@ async def test_clip_climate_device(opp, aioclient_mock):
     )
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
     assert opp.states.get("climate.clip_thermostat") is None
 
     # Allow clip sensors
@@ -701,7 +701,7 @@ async def test_clip_climate_device(opp, aioclient_mock):
     )
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 3
+    assert len(opp.states.async_all()) == 3
     assert opp.states.get("climate.clip_thermostat").state == HVAC_MODE_HEAT
 
 
@@ -734,7 +734,7 @@ async def test_add_new_climate_device(opp, aioclient_mock):
     """Test that adding a new climate device works."""
     config_entry = await setup_deconz_integration(opp, aioclient_mock)
     gateway = get_gateway_from_config_entry(opp, config_entry)
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
     state_added_event = {
         "t": "event",
@@ -746,6 +746,6 @@ async def test_add_new_climate_device(opp, aioclient_mock):
     gateway.api.event_handler(state_added_event)
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
     assert opp.states.get("climate.thermostat").state == HVAC_MODE_AUTO
     assert opp.states.get("sensor.thermostat_battery_level").state == "100"

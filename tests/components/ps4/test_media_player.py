@@ -137,7 +137,7 @@ async def setup_mock_component(opp, entry=None):
     else:
         mock_entry = entry
 
-    mock_entry.add_to(opp.opp)
+    mock_entry.add_to_opp(opp)
 
     await async_setup_component(opp, DOMAIN, {DOMAIN: {}})
 
@@ -169,7 +169,7 @@ async def test_media_player_is_setup_correctly_with_entry(opp):
     mock_state = opp.states.get(mock_entity_id).state
 
     # Assert status updated callback is added to protocol.
-    assert len.opp.data[PS4_DATA].protocol.callbacks) == 1
+    assert len(opp.data[PS4_DATA].protocol.callbacks) == 1
 
     # Test that entity is added to.opp,
     assert opp.data[PS4_DATA].protocol is not None

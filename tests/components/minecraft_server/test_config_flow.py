@@ -120,7 +120,7 @@ async def test_same_host(opp: OpenPeerPowerType) -> None:
             mock_config_entry = MockConfigEntry(
                 domain=DOMAIN, unique_id=unique_id, data=config_data
             )
-            mock_config_entry.add_to(opp.opp)
+            mock_config_entry.add_to_opp(opp)
 
             result = await opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT

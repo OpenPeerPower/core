@@ -122,7 +122,7 @@ async def test_remove_entry(opp, client):
     assert resp.status == 200
     data = await resp.json()
     assert data == {"require_restart": True}
-    assert len.opp.config_entries.async_entries()) == 0
+    assert len(opp.config_entries.async_entries()) == 0
 
 
 async def test_reload_entry(opp, client):
@@ -135,7 +135,7 @@ async def test_reload_entry(opp, client):
     assert resp.status == 200
     data = await resp.json()
     assert data == {"require_restart": True}
-    assert len.opp.config_entries.async_entries()) == 1
+    assert len(opp.config_entries.async_entries()) == 1
 
 
 async def test_reload_invalid_entry(opp, client):
@@ -151,7 +151,7 @@ async def test_remove_entry_unauth(opp, client, opp_admin_user):
     entry.add_to_opp(opp)
     resp = await client.delete(f"/api/config/config_entries/entry/{entry.entry_id}")
     assert resp.status == 401
-    assert len.opp.config_entries.async_entries()) == 1
+    assert len(opp.config_entries.async_entries()) == 1
 
 
 async def test_reload_entry_unauth(opp, client, opp_admin_user):
@@ -163,7 +163,7 @@ async def test_reload_entry_unauth(opp, client, opp_admin_user):
         f"/api/config/config_entries/entry/{entry.entry_id}/reload"
     )
     assert resp.status == 401
-    assert len.opp.config_entries.async_entries()) == 1
+    assert len(opp.config_entries.async_entries()) == 1
 
 
 async def test_reload_entry_in_failed_state(opp, client, opp_admin_user):
@@ -174,7 +174,7 @@ async def test_reload_entry_in_failed_state(opp, client, opp_admin_user):
         f"/api/config/config_entries/entry/{entry.entry_id}/reload"
     )
     assert resp.status == 403
-    assert len.opp.config_entries.async_entries()) == 1
+    assert len(opp.config_entries.async_entries()) == 1
 
 
 async def test_available_flows(opp, client):
@@ -871,7 +871,7 @@ async def test_ignore_flow(opp, opp_ws_client):
 
         assert response["success"]
 
-    assert len.opp.config_entries.flow.async_progress()) == 0
+    assert len(opp.config_entries.flow.async_progress()) == 0
 
     entry = opp.config_entries.async_entries("test")[0]
     assert entry.source == "ignore"

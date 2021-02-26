@@ -16,7 +16,7 @@ async def test_setup_with_no_config(setup_component, opp, smarttub_api):
     """Test that we do not discover anything."""
 
     # No flows started
-    assert len.opp.config_entries.flow.async_progress()) == 0
+    assert len(opp.config_entries.flow.async_progress()) == 0
 
     smarttub_api.login.assert_not_called()
 

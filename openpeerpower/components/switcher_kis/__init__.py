@@ -51,7 +51,7 @@ async def async_setup_opp: OpenPeerPowerType, config: Dict) -> bool:
     device_id = config[DOMAIN][CONF_DEVICE_ID]
     device_password = config[DOMAIN][CONF_DEVICE_PASSWORD]
 
-    v2bridge = SwitcherV2Bridge.opp.loop, phone_id, device_id, device_password)
+    v2bridge = SwitcherV2Bridge(opp.loop, phone_id, device_id, device_password)
 
     await v2bridge.start()
 

@@ -49,7 +49,7 @@ async def init_integration(
         domain=DOMAIN, data={CONF_HOST: "192.168.1.123", CONF_MAC: "aabbccddeeff"}
     )
 
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     if not skip_setup:
         await opp.config_entries.async_setup(entry.entry_id)

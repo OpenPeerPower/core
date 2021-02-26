@@ -1185,8 +1185,8 @@ async def _test_split_light(opp, mqtt_mock, config, num_lights, num_switches):
     await opp.async_block_till_done()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids("switch")) == num_switches
-    assert len.opp.states.async_entity_ids("light")) == num_lights
+    assert len(opp.states.async_entity_ids("switch")) == num_switches
+    assert len(opp.states.async_entity_ids("light")) == num_lights
 
     lights = opp.states.async_entity_ids("light")
     for idx, entity in enumerate(lights):
@@ -1257,8 +1257,8 @@ async def _test_unlinked_light(opp, mqtt_mock, config, num_switches):
     await opp.async_block_till_done()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids("switch")) == num_switches
-    assert len.opp.states.async_entity_ids("light")) == num_lights
+    assert len(opp.states.async_entity_ids("switch")) == num_switches
+    assert len(opp.states.async_entity_ids("light")) == num_lights
 
     lights = opp.states.async_entity_ids("light")
     for idx, entity in enumerate(lights):

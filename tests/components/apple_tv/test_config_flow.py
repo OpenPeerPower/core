@@ -222,7 +222,7 @@ async def test_user_adds_device_by_ip_uses_unicast_scan(opp, mock_scan):
 
 async def test_user_adds_existing_device(opp, mrp_device):
     """Test that it is not possible to add existing device."""
-    MockConfigEntry(domain="apple_tv", unique_id="mrpid").add_to(opp.opp)
+    MockConfigEntry(domain="apple_tv", unique_id="mrpid").add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -489,7 +489,7 @@ async def test_zeroconf_add_but_device_not_found(opp, mock_scan):
 
 async def test_zeroconf_add_existing_device(opp, dmap_device):
     """Test add already existing device from zeroconf."""
-    MockConfigEntry(domain="apple_tv", unique_id="dmapid").add_to(opp.opp)
+    MockConfigEntry(domain="apple_tv", unique_id="dmapid").add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}, data=DMAP_SERVICE
@@ -515,7 +515,7 @@ async def test_zeroconf_unexpected_error(opp, mock_scan):
 async def test_reconfigure_update_credentials(opp, mrp_device, pairing):
     """Test that reconfigure flow updates config entry."""
     config_entry = MockConfigEntry(domain="apple_tv", unique_id="mrpid")
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -570,7 +570,7 @@ async def test_option_start_off(opp):
     config_entry = MockConfigEntry(
         domain=DOMAIN, unique_id="dmapid", options={"start_off": False}
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(config_entry.entry_id)
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM

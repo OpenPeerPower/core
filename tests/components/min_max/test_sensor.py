@@ -3,7 +3,7 @@ from os import path
 import statistics
 from unittest.mock import patch
 
-from openpeerpower import config as.opp_config
+from openpeerpower import config as opp_config
 from openpeerpower.components.min_max import DOMAIN
 from openpeerpower.const import (
     ATTR_UNIT_OF_MEASUREMENT,
@@ -361,7 +361,7 @@ async def test_reload(opp):
     )
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 3
+    assert len(opp.states.async_all()) == 3
 
     assert opp.states.get("sensor.test")
 
@@ -379,7 +379,7 @@ async def test_reload(opp):
         )
         await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 3
+    assert len(opp.states.async_all()) == 3
 
     assert opp.states.get("sensor.test") is None
     assert opp.states.get("sensor.second_test")

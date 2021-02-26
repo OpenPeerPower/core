@@ -92,7 +92,7 @@ async def async_setup(opp, config):
     client = Client(
         host=host,
         port=port,
-        loop.opp.loop,
+        loop=opp.loop,
         update_interval=scan_interval.total_seconds(),
         infer_arming_state=infer_arming_state,
     )

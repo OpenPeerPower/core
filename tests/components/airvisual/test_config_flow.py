@@ -182,7 +182,7 @@ async def test_migration(opp):
     )
     config_entry.add_to_opp(opp)
 
-    assert len.opp.config_entries.async_entries(DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
     with patch("pyairvisual.air_quality.AirQuality.city"), patch(
         "pyairvisual.air_quality.AirQuality.nearest_city"
@@ -366,7 +366,7 @@ async def test_step_reauth(opp):
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "reauth_successful"
 
-    assert len.opp.config_entries.async_entries()) == 1
+    assert len(opp.config_entries.async_entries()) == 1
 
 
 async def test_step_user(opp):

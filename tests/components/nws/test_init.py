@@ -18,10 +18,10 @@ async def test_unload_entry(opp, mock_simple_nws):
     await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids(WEATHER_DOMAIN)) == 1
+    assert len(opp.states.async_entity_ids(WEATHER_DOMAIN)) == 1
     assert DOMAIN in opp.data
 
-    assert len.opp.data[DOMAIN]) == 1
+    assert len(opp.data[DOMAIN]) == 1
     entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
 
@@ -34,4 +34,4 @@ async def test_unload_entry(opp, mock_simple_nws):
 
     assert await opp.config_entries.async_remove(entries[0].entry_id)
     await opp.async_block_till_done()
-    assert len.opp.states.async_entity_ids(WEATHER_DOMAIN)) == 0
+    assert len(opp.states.async_entity_ids(WEATHER_DOMAIN)) == 0

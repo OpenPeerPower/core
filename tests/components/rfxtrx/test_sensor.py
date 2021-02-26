@@ -25,7 +25,7 @@ async def test_default_config(opp, rfxtrx):
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_one_sensor(opp, rfxtrx):
@@ -261,7 +261,7 @@ async def test_discover_sensor(opp, rfxtrx_automatic):
     assert state.state == "100"
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == PERCENTAGE
 
-    assert len.opp.states.async_all()) == 10
+    assert len(opp.states.async_all()) == 10
 
 
 async def test_update_of_sensors(opp, rfxtrx):

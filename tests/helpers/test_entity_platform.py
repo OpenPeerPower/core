@@ -98,13 +98,13 @@ async def test_update_state_adds_entities(opp):
     ent2 = MockEntity(should_poll=True)
 
     await component.async_add_entities([ent2])
-    assert len.opp.states.async_entity_ids()) == 1
+    assert len(opp.states.async_entity_ids()) == 1
     ent2.update = lambda *_: component.add_entities([ent1])
 
     async_fire_time_changed(opp, dt_util.utcnow() + DEFAULT_SCAN_INTERVAL)
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids()) == 2
+    assert len(opp.states.async_entity_ids()) == 2
 
 
 async def test_update_state_adds_entities_with_update_before_add_true(opp):
@@ -117,7 +117,7 @@ async def test_update_state_adds_entities_with_update_before_add_true(opp):
     await component.async_add_entities([ent], True)
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids()) == 1
+    assert len(opp.states.async_entity_ids()) == 1
     assert ent.update.called
 
 
@@ -131,7 +131,7 @@ async def test_update_state_adds_entities_with_update_before_add_false(opp):
     await component.async_add_entities([ent], False)
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids()) == 1
+    assert len(opp.states.async_entity_ids()) == 1
     assert not ent.update.called
 
 
@@ -182,7 +182,7 @@ async def test_platform_warn_slow_setup_opp):
 
     component = EntityComponent(_LOGGER, DOMAIN, opp)
 
-    with patch.object.opp.loop, "call_later") as mock_call:
+    with patch.object(opp.loop, "call_later") as mock_call:
         await component.async_setup({DOMAIN: {"platform": "platform"}})
         await opp.async_block_till_done()
         assert mock_call.called
@@ -370,9 +370,9 @@ async def test_async_remove_with_platform(opp):
     component = EntityComponent(_LOGGER, DOMAIN, opp)
     entity1 = MockEntity(name="test_1")
     await component.async_add_entities([entity1])
-    assert len.opp.states.async_entity_ids()) == 1
+    assert len(opp.states.async_entity_ids()) == 1
     await entity1.async_remove()
-    assert len.opp.states.async_entity_ids()) == 0
+    assert len(opp.states.async_entity_ids()) == 0
 
 
 async def test_not_adding_duplicate_entities_with_unique_id(opp, caplog):
@@ -384,7 +384,7 @@ async def test_not_adding_duplicate_entities_with_unique_id(opp, caplog):
         [MockEntity(name="test1", unique_id="not_very_unique")]
     )
 
-    assert len.opp.states.async_entity_ids()) == 1
+    assert len(opp.states.async_entity_ids()) == 1
     assert not caplog.text
 
     ent2 = MockEntity(name="test2", unique_id="not_very_unique")
@@ -402,7 +402,7 @@ async def test_not_adding_duplicate_entities_with_unique_id(opp, caplog):
 
     assert ent2.opp is None
     assert ent2.platform is None
-    assert len.opp.states.async_entity_ids()) == 1
+    assert len(opp.states.async_entity_ids()) == 1
 
 
 async def test_using_prescribed_entity_id(opp):
@@ -564,7 +564,7 @@ async def test_setup_entry(opp):
     await opp.async_block_till_done()
     full_name = f"{entity_platform.domain}.{config_entry.domain}"
     assert full_name in opp.config.components
-    assert len.opp.states.async_entity_ids()) == 1
+    assert len(opp.states.async_entity_ids()) == 1
     assert len(registry.entities) == 1
     assert registry.entities["test_domain.test1"].config_entry_id == "super-mock-id"
 
@@ -616,7 +616,7 @@ async def test_not_fails_with_adding_empty_entities_.opp):
 
     await component.async_add_entities([])
 
-    assert len.opp.states.async_entity_ids()) == 0
+    assert len(opp.states.async_entity_ids()) == 0
 
 
 async def test_entity_registry_updates_entity_id(opp):
@@ -746,7 +746,7 @@ async def test_device_info_called(opp):
     assert await entity_platform.async_setup_entry(config_entry)
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids()) == 2
+    assert len(opp.states.async_entity_ids()) == 2
 
     device = registry.async_get_device({("hue", "1234")})
     assert device is not None
@@ -971,7 +971,7 @@ async def test_setup_entry_with_entities_that_block_forever(opp, caplog):
         await opp.async_block_till_done()
     full_name = f"{mock_entity_platform.domain}.{config_entry.domain}"
     assert full_name in opp.config.components
-    assert len.opp.states.async_entity_ids()) == 0
+    assert len(opp.states.async_entity_ids()) == 0
     assert len(registry.entities) == 1
     assert "Timed out adding entities" in caplog.text
     assert "test_domain.test1" in caplog.text

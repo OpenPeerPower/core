@@ -61,7 +61,7 @@ async def test_already_configured(opp):
     """Test we reject already configured devices."""
     MockConfigEntry(
         domain=DOMAIN, data=FIXTURE_USER_INPUT, title="Already configured"
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -191,7 +191,7 @@ async def test_options(opp):
     config_entry = MockConfigEntry(
         domain=DOMAIN, data=FIXTURE_USER_INPUT, options=FIXTURE_USER_INPUT_OPTIONS
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(config_entry.entry_id)
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM

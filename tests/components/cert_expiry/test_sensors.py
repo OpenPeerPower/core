@@ -42,7 +42,7 @@ async def test_async_setup_entry(mock_now, opp):
     assert state.attributes.get("is_valid")
 
 
-async def test_async_setup_entry_bad_cert.opp):
+async def test_async_setup_entry_bad_cert(opp):
     """Test async_setup_entry with a bad/expired cert."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -65,7 +65,7 @@ async def test_async_setup_entry_bad_cert.opp):
     assert not state.attributes.get("is_valid")
 
 
-async def test_async_setup_entry_host_unavailable.opp):
+async def test_async_setup_entry_host_unavailable(opp):
     """Test async_setup_entry when host is unavailable."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -95,7 +95,7 @@ async def test_async_setup_entry_host_unavailable.opp):
     assert state is None
 
 
-async def test_update_sensor.opp):
+async def test_update_sensor(opp):
     """Test async_update for sensor."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -137,7 +137,7 @@ async def test_update_sensor.opp):
     assert state.attributes.get("is_valid")
 
 
-async def test_update_sensor_network_errors.opp):
+async def test_update_sensor_network_errors(opp):
     """Test async_update for sensor."""
     entry = MockConfigEntry(
         domain=DOMAIN,

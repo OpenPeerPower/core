@@ -28,7 +28,7 @@ MOCK_CONFIG_ENTRY = MockConfigEntry(
 
 async def test_device_registry_insert(opp):
     """Test that the device registry is initialized correctly."""
-    MOCK_CONFIG_ENTRY.add_to(opp.opp)
+    MOCK_CONFIG_ENTRY.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.opentherm_gw.OpenThermGatewayDevice.cleanup",
@@ -46,7 +46,7 @@ async def test_device_registry_insert(opp):
 
 async def test_device_registry_update(opp):
     """Test that the device registry is updated correctly."""
-    MOCK_CONFIG_ENTRY.add_to(opp.opp)
+    MOCK_CONFIG_ENTRY.add_to_opp(opp)
 
     dev_reg = mock_device_registry(opp)
     dev_reg.async_get_or_create(

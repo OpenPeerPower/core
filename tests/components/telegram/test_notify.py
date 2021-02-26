@@ -2,7 +2,7 @@
 from os import path
 from unittest.mock import patch
 
-from openpeerpower import config as.opp_config
+from openpeerpower import config as opp_config
 import openpeerpower.components.notify as notify
 from openpeerpower.components.telegram import DOMAIN
 from openpeerpower.const import SERVICE_RELOAD

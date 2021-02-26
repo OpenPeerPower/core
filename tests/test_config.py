@@ -364,7 +364,7 @@ async def test_loading_configuration_from_storage(opp, opp_storage):
     assert opp.config.time_zone.zone == "Europe/Copenhagen"
     assert opp.config.external_url == "https://www.example.com"
     assert opp.config.internal_url == "http://example.local"
-    assert len.opp.config.allowlist_external_dirs) == 3
+    assert len(opp.config.allowlist_external_dirs) == 3
     assert "/etc" in opp.config.allowlist_external_dirs
     assert opp.config.config_source == SOURCE_STORAGE
 
@@ -393,7 +393,7 @@ async def test_loading_configuration_from_storage_with_yaml_only(opp, opp_storag
     assert opp.config.location_name == "Home"
     assert opp.config.units.name == CONF_UNIT_SYSTEM_METRIC
     assert opp.config.time_zone.zone == "Europe/Copenhagen"
-    assert len.opp.config.allowlist_external_dirs) == 3
+    assert len(opp.config.allowlist_external_dirs) == 3
     assert "/etc" in opp.config.allowlist_external_dirs
     assert opp.config.media_dirs == {"mymedia": "/usr"}
     assert opp.config.config_source == SOURCE_STORAGE
@@ -451,7 +451,7 @@ async def test_override_stored_configuration(opp, opp_storage):
     assert opp.config.location_name == "Home"
     assert opp.config.units.name == CONF_UNIT_SYSTEM_METRIC
     assert opp.config.time_zone.zone == "Europe/Copenhagen"
-    assert len.opp.config.allowlist_external_dirs) == 3
+    assert len(opp.config.allowlist_external_dirs) == 3
     assert "/etc" in opp.config.allowlist_external_dirs
     assert opp.config.config_source == config_util.SOURCE_YAML
 
@@ -483,7 +483,7 @@ async def test_loading_configuration(opp):
     assert opp.config.time_zone.zone == "America/New_York"
     assert opp.config.external_url == "https://www.example.com"
     assert opp.config.internal_url == "http://example.local"
-    assert len.opp.config.allowlist_external_dirs) == 3
+    assert len(opp.config.allowlist_external_dirs) == 3
     assert "/etc" in opp.config.allowlist_external_dirs
     assert "/usr" in opp.config.allowlist_external_dirs
     assert opp.config.media_dirs == {"mymedia": "/usr"}
@@ -529,7 +529,7 @@ async def test_loading_configuration_default_media_dirs_docker(opp):
         )
 
     assert opp.config.location_name == "Huis"
-    assert len.opp.config.allowlist_external_dirs) == 2
+    assert len(opp.config.allowlist_external_dirs) == 2
     assert "/media" in opp.config.allowlist_external_dirs
     assert opp.config.media_dirs == {"local": "/media"}
 
@@ -844,10 +844,10 @@ async def test_auth_provider_config(opp):
         del.opp.auth
     await config_util.async_process_op_core_config(opp, core_config)
 
-    assert len.opp.auth.auth_providers) == 2
+    assert len(opp.auth.auth_providers) == 2
     assert opp.auth.auth_providers[0].type == "openpeerpower"
     assert opp.auth.auth_providers[1].type == "legacy_api_password"
-    assert len.opp.auth.auth_mfa_modules) == 2
+    assert len(opp.auth.auth_mfa_modules) == 2
     assert opp.auth.auth_mfa_modules[0].id == "totp"
     assert opp.auth.auth_mfa_modules[1].id == "second"
 
@@ -866,9 +866,9 @@ async def test_auth_provider_config_default(opp):
         del.opp.auth
     await config_util.async_process_op_core_config(opp, core_config)
 
-    assert len.opp.auth.auth_providers) == 1
+    assert len(opp.auth.auth_providers) == 1
     assert opp.auth.auth_providers[0].type == "openpeerpower"
-    assert len.opp.auth.auth_mfa_modules) == 1
+    assert len(opp.auth.auth_mfa_modules) == 1
     assert opp.auth.auth_mfa_modules[0].id == "totp"
 
 

@@ -136,7 +136,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         supports_on,
         sources,
         speaker_type,
-        loop.opp.loop,
+        loop=opp.loop,
         unique_id=unique_id,
     )
 

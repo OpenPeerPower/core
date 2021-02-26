@@ -65,7 +65,7 @@ def setup_zone(opp):
 async def test_get_triggers(opp, device_reg, entity_reg):
     """Test we get the expected triggers from a device_tracker."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
@@ -176,7 +176,7 @@ async def test_if_fires_on_zone_change(opp, calls):
 async def test_get_trigger_capabilities(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a device_tracker trigger."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},

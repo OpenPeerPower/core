@@ -729,7 +729,7 @@ async def test_invalid_attribute_template(opp, caplog):
         },
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
     await opp.async_start()
     await opp.async_block_till_done()
 
@@ -794,7 +794,7 @@ async def test_no_update_template_match_all(opp, caplog):
         },
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 5
+    assert len(opp.states.async_all()) == 5
 
     assert opp.states.get("binary_sensor.all_state").state == "off"
     assert opp.states.get("binary_sensor.all_icon").state == "off"
@@ -859,7 +859,7 @@ async def test_unique_id.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
 
 async def test_template_validation_error(opp, caplog):

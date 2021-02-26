@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 from pytest import fixture
 
-from openpeerpower import config as.opp_config
+from openpeerpower import config as opp_config
 from openpeerpower.components.filter.sensor import (
     DOMAIN,
     LowPassFilter,
@@ -466,7 +466,7 @@ async def test_reload.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
 
     assert opp.states.get("sensor.test")
 
@@ -484,7 +484,7 @@ async def test_reload.opp):
         )
         await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
 
     assert opp.states.get("sensor.test") is None
     assert opp.states.get("sensor.filtered_realistic_humidity")

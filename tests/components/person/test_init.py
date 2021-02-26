@@ -359,7 +359,7 @@ async def test_duplicate_ids(opp, opp_admin_user):
     }
     assert await async_setup_component(opp, DOMAIN, config)
 
-    assert len.opp.states.async_entity_ids("person")) == 1
+    assert len(opp.states.async_entity_ids("person")) == 1
     assert opp.states.get("person.test_user_1") is not None
     assert opp.states.get("person.test_user_2") is None
 
@@ -428,7 +428,7 @@ async def test_load_person_storage_two_nonlinked(opp, opp_storage):
     }
     await async_setup_component(opp, DOMAIN, {})
 
-    assert len.opp.states.async_entity_ids("person")) == 2
+    assert len(opp.states.async_entity_ids("person")) == 2
     assert opp.states.get("person.tracked_person_1") is not None
     assert opp.states.get("person.tracked_person_2") is not None
 
@@ -588,7 +588,7 @@ async def test_ws_delete(opp, opp_ws_client, storage_setup):
     assert len(persons) == 0
 
     assert resp["success"]
-    assert len.opp.states.async_entity_ids("person")) == 0
+    assert len(opp.states.async_entity_ids("person")) == 0
     ent_reg = await opp.helpers.entity_registry.async_get_registry()
     assert not ent_reg.async_is_registered("person.tracked_person")
 
@@ -730,7 +730,7 @@ async def test_reload(opp, opp_admin_user):
         },
     )
 
-    assert len.opp.states.async_entity_ids()) == 2
+    assert len(opp.states.async_entity_ids()) == 2
 
     state_1 = opp.states.get("person.person_1")
     state_2 = opp.states.get("person.person_2")
@@ -760,7 +760,7 @@ async def test_reload(opp, opp_admin_user):
         )
         await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids()) == 2
+    assert len(opp.states.async_entity_ids()) == 2
 
     state_1 = opp.states.get("person.person_1")
     state_2 = opp.states.get("person.person_2")

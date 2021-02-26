@@ -42,7 +42,7 @@ async def test_setup_failure_on_connection(opp, caplog):
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
 
-async def test_unload_config_entry.opp):
+async def test_unload_config_entry(opp):
     """Test that unloading works properly."""
     patch_product_identify(None)
 

@@ -183,7 +183,7 @@ async def test_config_flow_entry_migrate(opp):
 async def test_media_player_is_setup_opp):
     """Test media_player is setup correctly."""
     await setup_mock_component(opp)
-    assert len.opp.data[PS4_DATA].devices) == 1
+    assert len(opp.data[PS4_DATA].devices) == 1
 
 
 async def setup_mock_component(opp):

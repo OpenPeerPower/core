@@ -55,7 +55,7 @@ async def async_setup_opp: OpenPeerPower, config: Dict) -> bool:
     """Set up the component."""
     opp.data.setdefault(DOMAIN, {})
 
-    if len.opp.config_entries.async_entries(DOMAIN)) > 0:
+    if len(opp.config_entries.async_entries(DOMAIN)) > 0:
         return True
 
     if DOMAIN in config and CONF_API_KEY in config[DOMAIN]:

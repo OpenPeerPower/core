@@ -276,7 +276,7 @@ async def test_template_syntax_error(opp, caplog):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
     assert ("invalid template") in caplog.text
 
 
@@ -321,7 +321,7 @@ async def test_invalid_name_does_not_create(opp, caplog):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
     assert ("invalid slug bad name") in caplog.text
 
 
@@ -342,7 +342,7 @@ async def test_invalid_panel_does_not_create(opp, caplog):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
     assert ("[wibble] is an invalid option") in caplog.text
 
 
@@ -358,7 +358,7 @@ async def test_no_panels_does_not_create(opp, caplog):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
     assert ("required key not provided @ data['panels']") in caplog.text
 
 
@@ -624,4 +624,4 @@ async def test_unique_id.opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1

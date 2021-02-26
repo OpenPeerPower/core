@@ -13,7 +13,7 @@ from tests.common import MockConfigEntry
 
 async def test_config_yaml_host_not_imported(opp):
     """Test that we don't import a configured host."""
-    MockConfigEntry(domain="tradfri", data={"host": "mock-host"}).add_to(opp.opp)
+    MockConfigEntry(domain="tradfri", data={"host": "mock-host"}).add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.tradfri.load_json", return_value={}
@@ -42,7 +42,7 @@ async def test_config_yaml_host_imported(opp):
 
 async def test_config_json_host_not_imported(opp):
     """Test that we don't import a configured host."""
-    MockConfigEntry(domain="tradfri", data={"host": "mock-host"}).add_to(opp.opp)
+    MockConfigEntry(domain="tradfri", data={"host": "mock-host"}).add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.tradfri.load_json",
@@ -91,7 +91,7 @@ async def test_entry_setup_unload(opp, api_factory, gateway_id):
         },
     )
 
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
     with patch.object(
         opp.config_entries, "async_forward_entry_setup", return_value=True
     ) as setup:

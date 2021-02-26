@@ -39,7 +39,7 @@ async def test_get_triggers(opp, mock_bridge, device_reg):
 
     assert len(mock_bridge.mock_requests) == 1
     # 2 remotes, just 1 battery sensor
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     # Get triggers for specific tap switch
     hue_tap_device = device_reg.async_get_device(
@@ -93,7 +93,7 @@ async def test_if_fires_on_state_change(opp, mock_bridge, device_reg, calls):
     mock_bridge.mock_sensor_responses.append(REMOTES_RESPONSE)
     await setup_bridge(opp, mock_bridge)
     assert len(mock_bridge.mock_requests) == 1
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     # Set an automation with a specific tap switch trigger
     hue_tap_device = device_reg.async_get_device(

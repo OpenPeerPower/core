@@ -21,7 +21,7 @@ async def test_successful_config_entry(opp):
         domain=mikrotik.DOMAIN,
         data=MOCK_DATA,
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
     mock_registry = Mock()
 
     with patch.object(mikrotik, "MikrotikHub") as mock_hub, patch(
@@ -58,7 +58,7 @@ async def test_hub_fail_setup_opp):
         domain=mikrotik.DOMAIN,
         data=MOCK_DATA,
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     with patch.object(mikrotik, "MikrotikHub") as mock_hub:
         mock_hub.return_value.async_setup = AsyncMock(return_value=False)
@@ -73,7 +73,7 @@ async def test_unload_entry(opp):
         domain=mikrotik.DOMAIN,
         data=MOCK_DATA,
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     with patch.object(mikrotik, "MikrotikHub") as mock_hub, patch(
         "openpeerpower.helpers.device_registry.async_get_registry",

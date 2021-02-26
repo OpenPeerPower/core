@@ -49,7 +49,7 @@ from .test_device import (
 from tests.common import MockConfigEntry
 
 
-async def test_flow_manual_configuration.opp):
+async def test_flow_manual_configuration(opp):
     """Test that config flow works."""
     MockConfigEntry(domain=AXIS_DOMAIN, source=SOURCE_IGNORE).add_to_opp(opp)
 
@@ -84,9 +84,9 @@ async def test_flow_manual_configuration.opp):
     }
 
 
-async def test_manual_configuration_update_configuration.opp):
+async def test_manual_configuration_update_configuration(opp):
     """Test that config flow fails on already configured device."""
-    config_entry = await setup_axis_integration.opp)
+    config_entry = await setup_axis_integration(opp)
     device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     result = await opp.config_entries.flow.async_init(
@@ -118,7 +118,7 @@ async def test_manual_configuration_update_configuration.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_flow_fails_faulty_credentials.opp):
+async def test_flow_fails_faulty_credentials(opp):
     """Test that config flow fails on faulty credentials."""
     result = await opp.config_entries.flow.async_init(
         AXIS_DOMAIN, context={"source": SOURCE_USER}
@@ -144,7 +144,7 @@ async def test_flow_fails_faulty_credentials.opp):
     assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_flow_fails_cannot_connect.opp):
+async def test_flow_fails_cannot_connect(opp):
     """Test that config flow fails on cannot connect."""
     result = await opp.config_entries.flow.async_init(
         AXIS_DOMAIN, context={"source": SOURCE_USER}
@@ -170,7 +170,7 @@ async def test_flow_fails_cannot_connect.opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_flow_create_entry_multiple_existing_entries_of_same_model.opp):
+async def test_flow_create_entry_multiple_existing_entries_of_same_model(opp):
     """Test that create entry can generate a name with other entries."""
     entry = MockConfigEntry(
         domain=AXIS_DOMAIN,
@@ -216,9 +216,9 @@ async def test_flow_create_entry_multiple_existing_entries_of_same_model.opp):
     assert result["data"][CONF_NAME] == "M1065-LW 2"
 
 
-async def test_reauth_flow_update_configuration.opp):
+async def test_reauth_flow_update_configuration(opp):
     """Test that config flow fails on already configured device."""
-    config_entry = await setup_axis_integration.opp)
+    config_entry = await setup_axis_integration(opp)
     device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     result = await opp.config_entries.flow.async_init(
@@ -372,10 +372,10 @@ async def test_discovery_flow(opp, source: str, discovery_info: dict):
     ],
 )
 async def test_discovered_device_already_configured(
-    opp. source: str, discovery_info: dict
+    opp, source: str, discovery_info: dict
 ):
     """Test that discovery doesn't setup already configured devices."""
-    config_entry = await setup_axis_integration.opp)
+    config_entry = await setup_axis_integration(opp)
     assert config_entry.data[CONF_HOST] == DEFAULT_HOST
 
     result = await opp.config_entries.flow.async_init(
@@ -421,10 +421,10 @@ async def test_discovered_device_already_configured(
     ],
 )
 async def test_discovery_flow_updated_configuration(
-    opp. source: str, discovery_info: dict, expected_port: int
+    opp, source: str, discovery_info: dict, expected_port: int
 ):
     """Test that discovery flow update configuration with new parameters."""
-    config_entry = await setup_axis_integration.opp)
+    config_entry = await setup_axis_integration(opp)
     assert config_entry.data == {
         CONF_HOST: DEFAULT_HOST,
         CONF_PORT: 80,
@@ -488,7 +488,7 @@ async def test_discovery_flow_updated_configuration(
     ],
 )
 async def test_discovery_flow_ignore_non_axis_device(
-    opp. source: str, discovery_info: dict
+    opp, source: str, discovery_info: dict
 ):
     """Test that discovery flow ignores devices with non Axis OUI."""
     result = await opp.config_entries.flow.async_init(
@@ -526,7 +526,7 @@ async def test_discovery_flow_ignore_non_axis_device(
     ],
 )
 async def test_discovery_flow_ignore_link_local_address(
-    opp. source: str, discovery_info: dict
+    opp, source: str, discovery_info: dict
 ):
     """Test that discovery flow ignores devices with link local addresses."""
     result = await opp.config_entries.flow.async_init(
@@ -537,9 +537,9 @@ async def test_discovery_flow_ignore_link_local_address(
     assert result["reason"] == "link_local_address"
 
 
-async def test_option_flow.opp):
+async def test_option_flow(opp):
     """Test config flow options."""
-    config_entry = await setup_axis_integration.opp)
+    config_entry = await setup_axis_integration(opp)
     device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
     assert device.option_stream_profile == DEFAULT_STREAM_PROFILE
     assert device.option_video_source == DEFAULT_VIDEO_SOURCE

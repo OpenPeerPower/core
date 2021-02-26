@@ -130,7 +130,7 @@ async def test_services(opp: OpenPeerPower, caplog):
             CONF_NIGHTLIGHT_SWITCH: True,
         },
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     mocked_bulb = _mocked_bulb()
     with _patch_discovery(MODULE), patch(f"{MODULE}.Bulb", return_value=mocked_bulb):
@@ -359,7 +359,7 @@ async def test_device_types(opp: OpenPeerPower):
                 CONF_NIGHTLIGHT_SWITCH: False,
             },
         )
-        config_entry.add_to(opp.opp)
+        config_entry.add_to_opp(opp)
 
         mocked_bulb.bulb_type = bulb_type
         model_specs = _MODEL_SPECS.get(model)
@@ -389,7 +389,7 @@ async def test_device_types(opp: OpenPeerPower):
                 CONF_NIGHTLIGHT_SWITCH: True,
             },
         )
-        config_entry.add_to(opp.opp)
+        config_entry.add_to_opp(opp)
         await _async_setup(config_entry)
 
         assert opp.states.get(entity_id).state == "off"
@@ -567,7 +567,7 @@ async def test_effects(opp: OpenPeerPower):
         domain=DOMAIN,
         data=CONFIG_ENTRY_DATA,
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     mocked_bulb = _mocked_bulb()
     with _patch_discovery(MODULE), patch(f"{MODULE}.Bulb", return_value=mocked_bulb):

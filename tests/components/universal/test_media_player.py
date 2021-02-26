@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 from voluptuous.error import MultipleInvalid
 
-from openpeerpower import config as.opp_config
+from openpeerpower import config as opp_config
 import openpeerpower.components.input_number as input_number
 import openpeerpower.components.input_select as input_select
 import openpeerpower.components.media_player as media_player
@@ -862,7 +862,7 @@ async def test_state_template(opp):
         },
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
     await opp.async_start()
 
     await opp.async_block_till_done()
@@ -907,7 +907,7 @@ async def test_invalid_state_template(opp):
         },
     )
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
     await opp.async_start()
 
     await opp.async_block_till_done()
@@ -940,7 +940,7 @@ async def test_master_state_with_template(opp):
     )
 
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 3
+    assert len(opp.states.async_all()) == 3
     await opp.async_start()
 
     await opp.async_block_till_done()
@@ -983,7 +983,7 @@ async def test_reload(opp):
     )
 
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 3
+    assert len(opp.states.async_all()) == 3
     await opp.async_start()
 
     await opp.async_block_till_done()
@@ -1015,7 +1015,7 @@ async def test_reload(opp):
         )
         await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 5
+    assert len(opp.states.async_all()) == 5
 
     assert opp.states.get("media_player.tv") is None
     assert opp.states.get("media_player.master_bed_tv").state == "on"

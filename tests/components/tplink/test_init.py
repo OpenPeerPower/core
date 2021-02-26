@@ -79,7 +79,7 @@ async def test_configuring_device_types(opp, name, cls, platform, count):
         await opp.async_block_till_done()
 
     assert len(discover.mock_calls) == 1
-    assert len.opp.data[tplink.DOMAIN][platform]) == count
+    assert len(opp.data[tplink.DOMAIN][platform]) == count
 
 
 class UnknownSmartDevice(SmartDevice):
@@ -144,8 +144,8 @@ async def test_configuring_devices_from_multiple_sources.opp):
         await opp.async_block_till_done()
 
         assert len(discover.mock_calls) == 1
-        assert len.opp.data[tplink.DOMAIN][CONF_LIGHT]) == 3
-        assert len.opp.data[tplink.DOMAIN][CONF_SWITCH]) == 2
+        assert len(opp.data[tplink.DOMAIN][CONF_LIGHT]) == 3
+        assert len(opp.data[tplink.DOMAIN][CONF_SWITCH]) == 2
 
 
 async def test_is_dimmable.opp):
@@ -168,7 +168,7 @@ async def test_is_dimmable.opp):
 
     assert len(discover.mock_calls) == 1
     assert len(setup.mock_calls) == 1
-    assert len.opp.data[tplink.DOMAIN][CONF_LIGHT]) == 1
+    assert len(opp.data[tplink.DOMAIN][CONF_LIGHT]) == 1
     assert not opp.data[tplink.DOMAIN][CONF_SWITCH]
 
 

@@ -103,7 +103,7 @@ async def test_form_repeat_identifier(opp):
         data={"username": "test-username", "password": "test-password"},
         options=None,
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -129,7 +129,7 @@ async def test_form_reauth(opp):
         data={"username": "test-username", "password": "same"},
         options=None,
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -171,7 +171,7 @@ async def test_import(opp):
 async def test_option_flow(opp):
     """Test config flow options."""
     entry = MockConfigEntry(domain=DOMAIN, data={}, options=None)
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 
@@ -189,7 +189,7 @@ async def test_option_flow(opp):
 async def test_option_flow_defaults(opp):
     """Test config flow options."""
     entry = MockConfigEntry(domain=DOMAIN, data={}, options=None)
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 
@@ -209,7 +209,7 @@ async def test_option_flow_defaults(opp):
 async def test_option_flow_input_floor(opp):
     """Test config flow options."""
     entry = MockConfigEntry(domain=DOMAIN, data={}, options=None)
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 

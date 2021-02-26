@@ -28,7 +28,7 @@ async def validate_input(opp: core.OpenPeerPower, data):
     hub_address = data[CONF_HOST]
     websession = async_get_clientsession(opp)
 
-    pv_request = AioRequest(hub_address, loop.opp.loop, websession=websession)
+    pv_request = AioRequest(hub_address, loop=opp.loop, websession=websession)
 
     try:
         async with async_timeout.timeout(10):

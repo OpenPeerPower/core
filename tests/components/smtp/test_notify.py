@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 import pytest
 
-from openpeerpower import config as.opp_config
+from openpeerpower import config as opp_config
 import openpeerpower.components.notify as notify
 from openpeerpower.components.smtp import DOMAIN
 from openpeerpower.components.smtp.notify import MailNotificationService

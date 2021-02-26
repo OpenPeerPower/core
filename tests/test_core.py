@@ -57,9 +57,9 @@ def test_async_add_opp_job_schedule_callback():
     job = MagicMock()
 
     op.OpenPeerPower.async_add_opp_job(opp, op.OppJob(op.callback(job)))
-    assert len.opp.loop.call_soon.mock_calls) == 1
-    assert len.opp.loop.create_task.mock_calls) == 0
-    assert len.opp.add_job.mock_calls) == 0
+    assert len(opp.loop.call_soon.mock_calls) == 1
+    assert len(opp.loop.create_task.mock_calls) == 0
+    assert len(opp.add_job.mock_calls) == 0
 
 
 def test_async_add_opp_job_schedule_partial_callback():
@@ -69,9 +69,9 @@ def test_async_add_opp_job_schedule_partial_callback():
     partial = functools.partial(op.callback(job))
 
     op.OpenPeerPower.async_add_opp_job(opp, op.OppJob(partial))
-    assert len.opp.loop.call_soon.mock_calls) == 1
-    assert len.opp.loop.create_task.mock_calls) == 0
-    assert len.opp.add_job.mock_calls) == 0
+    assert len(opp.loop.call_soon.mock_calls) == 1
+    assert len(opp.loop.create_task.mock_calls) == 0
+    assert len(opp.add_job.mock_calls) == 0
 
 
 def test_async_add_opp_job_schedule_coroutinefunction(loop):
@@ -82,9 +82,9 @@ def test_async_add_opp_job_schedule_coroutinefunction(loop):
         pass
 
     op.OpenPeerPower.async_add_opp_job(opp, op.OppJob(job))
-    assert len.opp.loop.call_soon.mock_calls) == 0
-    assert len.opp.loop.create_task.mock_calls) == 1
-    assert len.opp.add_job.mock_calls) == 0
+    assert len(opp.loop.call_soon.mock_calls) == 0
+    assert len(opp.loop.create_task.mock_calls) == 1
+    assert len(opp.add_job.mock_calls) == 0
 
 
 def test_async_add_opp_job_schedule_partial_coroutinefunction(loop):
@@ -97,9 +97,9 @@ def test_async_add_opp_job_schedule_partial_coroutinefunction(loop):
     partial = functools.partial(job)
 
     op.OpenPeerPower.async_add_opp_job(opp, op.OppJob(partial))
-    assert len.opp.loop.call_soon.mock_calls) == 0
-    assert len.opp.loop.create_task.mock_calls) == 1
-    assert len.opp.add_job.mock_calls) == 0
+    assert len(opp.loop.call_soon.mock_calls) == 0
+    assert len(opp.loop.create_task.mock_calls) == 1
+    assert len(opp.add_job.mock_calls) == 0
 
 
 def test_async_add_job_add_opp_threaded_job_to_pool():
@@ -110,9 +110,9 @@ def test_async_add_job_add_opp_threaded_job_to_pool():
         pass
 
     op.OpenPeerPower.async_add_opp_job(opp, op.OppJob(job))
-    assert len.opp.loop.call_soon.mock_calls) == 0
-    assert len.opp.loop.create_task.mock_calls) == 0
-    assert len.opp.loop.run_in_executor.mock_calls) == 1
+    assert len(opp.loop.call_soon.mock_calls) == 0
+    assert len(opp.loop.create_task.mock_calls) == 0
+    assert len(opp.loop.run_in_executor.mock_calls) == 1
 
 
 def test_async_create_task_schedule_coroutine(loop):
@@ -123,9 +123,9 @@ def test_async_create_task_schedule_coroutine(loop):
         pass
 
     op.OpenPeerPower.async_create_task(opp, job())
-    assert len.opp.loop.call_soon.mock_calls) == 0
-    assert len.opp.loop.create_task.mock_calls) == 1
-    assert len.opp.add_job.mock_calls) == 0
+    assert len(opp.loop.call_soon.mock_calls) == 0
+    assert len(opp.loop.create_task.mock_calls) == 1
+    assert len(opp.add_job.mock_calls) == 0
 
 
 def test_async_run_opp_job_calls_callback():
@@ -138,7 +138,7 @@ def test_async_run_opp_job_calls_callback():
 
     op.OpenPeerPower.async_run_opp_job(opp, op.OppJob(op.callback(job)))
     assert len(calls) == 1
-    assert len.opp.async_add_job.mock_calls) == 0
+    assert len(opp.async_add_job.mock_calls) == 0
 
 
 def test_async_run_opp_job_delegates_non_async():
@@ -151,7 +151,7 @@ def test_async_run_opp_job_delegates_non_async():
 
     op.OpenPeerPower.async_run_opp_job(opp, op.OppJob(job))
     assert len(calls) == 0
-    assert len.opp.async_add_opp_job.mock_calls) == 1
+    assert len(opp.async_add_opp_job.mock_calls) == 1
 
 
 async def test_stage_shutdown(opp):
@@ -206,7 +206,7 @@ async def test_pending_sheduler(opp):
 
     await asyncio.wait.opp._pending_tasks)
 
-    assert len.opp._pending_tasks) == 3
+    assert len(opp._pending_tasks) == 3
     assert len(call_count) == 3
 
 
@@ -228,7 +228,7 @@ async def test_async_add_job_pending_tasks_coro(opp):
 
     await wait_finish_callback()
 
-    assert len.opp._pending_tasks) == 2
+    assert len(opp._pending_tasks) == 2
     await opp.async_block_till_done()
     assert len(call_count) == 2
 
@@ -251,7 +251,7 @@ async def test_async_add_job_pending_tasks_executor(opp):
 
     await wait_finish_callback()
 
-    assert len.opp._pending_tasks) == 2
+    assert len(opp._pending_tasks) == 2
     await opp.async_block_till_done()
     assert len(call_count) == 2
 
@@ -277,7 +277,7 @@ async def test_async_add_job_pending_tasks_callback(opp):
 
     await opp.async_block_till_done()
 
-    assert len.opp._pending_tasks) == 0
+    assert len(opp._pending_tasks) == 0
     assert len(call_count) == 2
 
 
@@ -362,18 +362,18 @@ def test_state_as_dict():
 
 async def test_eventbus_add_remove_listener(opp):
     """Test remove_listener method."""
-    old_count = len.opp.bus.async_listeners())
+    old_count = len(opp.bus.async_listeners())
 
     def listener(_):
         pass
 
     unsub = opp.bus.async_listen("test", listener)
 
-    assert old_count + 1 == len.opp.bus.async_listeners())
+    assert old_count + 1 == len(opp.bus.async_listeners())
 
     # Remove listener
     unsub()
-    assert old_count == len.opp.bus.async_listeners())
+    assert old_count == len(opp.bus.async_listeners())
 
     # Should do nothing now
     unsub()
@@ -705,7 +705,7 @@ def test_service_call_repr():
 async def test_serviceregistry_op._service(opp):
     """Test has_service method."""
     opp.services.async_register("test_domain", "test_service", lambda call: None)
-    assert len.opp.services.async_services()) == 1
+    assert len(opp.services.async_services()) == 1
     assert opp.services.has_service("tesT_domaiN", "tesT_servicE")
     assert not opp.services.has_service("test_domain", "non_existing")
     assert not opp.services.has_service("non_existing", "test_service")
@@ -1028,7 +1028,7 @@ def test_create_timer(mock_monotonic, loop):
     assert len(funcs) == 2
     fire_time_event, stop_timer = funcs
 
-    assert len.opp.loop.call_later.mock_calls) == 1
+    assert len(opp.loop.call_later.mock_calls) == 1
     delay, callback, target = opp.loop.call_later.mock_calls[0][1]
     assert abs(delay - 0.666667) < 0.001
     assert callback is fire_time_event
@@ -1040,9 +1040,9 @@ def test_create_timer(mock_monotonic, loop):
     ):
         callback(target)
 
-    assert len.opp.bus.async_listen_once.mock_calls) == 1
-    assert len.opp.bus.async_fire.mock_calls) == 1
-    assert len.opp.loop.call_later.mock_calls) == 2
+    assert len(opp.bus.async_listen_once.mock_calls) == 1
+    assert len(opp.bus.async_fire.mock_calls) == 1
+    assert len(opp.loop.call_later.mock_calls) == 2
 
     event_type, callback = opp.bus.async_listen_once.mock_calls[0][1]
     assert event_type == EVENT_OPENPEERPOWER_STOP
@@ -1103,7 +1103,7 @@ def test_timer_out_of_sync(mock_monotonic, loop):
         assert len(funcs) == 2
         fire_time_event, _ = funcs
 
-    assert len.opp.loop.call_later.mock_calls) == 2
+    assert len(opp.loop.call_later.mock_calls) == 2
 
     delay, callback, target = opp.loop.call_later.mock_calls[1][1]
     assert abs(delay - 0.8) < 0.001

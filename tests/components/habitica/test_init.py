@@ -19,7 +19,7 @@ async def test_entry_setup_unload(opp, aioclient_mock):
             "url": DEFAULT_URL,
         },
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     aioclient_mock.get(
         "https://habitica.com/api/v3/user",

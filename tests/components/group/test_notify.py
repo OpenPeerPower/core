@@ -2,7 +2,7 @@
 from os import path
 from unittest.mock import MagicMock, patch
 
-from openpeerpower import config as.opp_config
+from openpeerpower import config as opp_config
 import openpeerpower.components.demo.notify as demo
 from openpeerpower.components.group import SERVICE_RELOAD
 import openpeerpower.components.group.notify as group

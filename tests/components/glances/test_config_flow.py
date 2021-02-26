@@ -87,7 +87,7 @@ async def test_form_already_configured(opp):
     entry = MockConfigEntry(
         domain=glances.DOMAIN, data=DEMO_USER_INPUT, options={CONF_SCAN_INTERVAL: 60}
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         glances.DOMAIN, context={"source": "user"}
@@ -104,7 +104,7 @@ async def test_options(opp):
     entry = MockConfigEntry(
         domain=glances.DOMAIN, data=DEMO_USER_INPUT, options={CONF_SCAN_INTERVAL: 60}
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 

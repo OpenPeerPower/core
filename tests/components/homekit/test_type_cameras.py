@@ -88,7 +88,7 @@ def run_driver.opp):
         "pyhap.accessory_driver.AccessoryDriver.persist"
     ):
         yield AccessoryDriver(
-            pincode=b"123-45-678", address="127.0.0.1", loop.opp.loop
+            pincode=b"123-45-678", address="127.0.0.1", loop=opp.loop
         )
 
 

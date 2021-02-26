@@ -28,7 +28,7 @@ def camera_client_fixture(opp, opp_client):
     )
     opp.loop.run_until_complete(opp.async_block_till_done())
 
-    yield.opp.loop.run_until_complete(opp_client())
+    yield opp.loop.run_until_complete(opp_client())
 
 
 async def test_get_clientsession_with_ssl(opp):

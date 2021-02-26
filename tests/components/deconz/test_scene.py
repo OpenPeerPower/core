@@ -27,7 +27,7 @@ GROUPS = {
 async def test_no_scenes(opp, aioclient_mock):
     """Test that scenes can be loaded without scenes being available."""
     await setup_deconz_integration(opp, aioclient_mock)
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_scenes(opp, aioclient_mock):
@@ -38,7 +38,7 @@ async def test_scenes(opp, aioclient_mock):
         opp. aioclient_mock, get_state_response=data
     )
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     assert opp.states.get("scene.light_group_scene")
 
     # Verify service calls
@@ -59,4 +59,4 @@ async def test_scenes(opp, aioclient_mock):
 
     await opp.config_entries.async_unload(config_entry.entry_id)
 
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0

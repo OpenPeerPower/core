@@ -553,7 +553,7 @@ async def test_import_existing_config_entry(opp, mock_panel):
     assert result["type"] == "abort"
 
     # We should have updated the host info but not the access token
-    assert len.opp.config_entries.async_entries("konnected")) == 1
+    assert len(opp.config_entries.async_entries("konnected")) == 1
     assert opp.config_entries.async_entries("konnected")[0].data == {
         "host": "1.2.3.4",
         "port": 1234,

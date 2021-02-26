@@ -8,7 +8,7 @@ from unittest.mock import patch
 import pytest
 import pytz
 
-from openpeerpower import config as.opp_config
+from openpeerpower import config as opp_config
 from openpeerpower.components.history_stats import DOMAIN
 from openpeerpower.components.history_stats.sensor import HistoryStatsSensor
 from openpeerpower.const import SERVICE_RELOAD, STATE_UNKNOWN
@@ -393,7 +393,7 @@ async def test_reload(opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
 
     assert opp.states.get("sensor.test")
 
@@ -411,7 +411,7 @@ async def test_reload(opp):
         )
         await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
 
     assert opp.states.get("sensor.test") is None
     assert opp.states.get("sensor.second_test")

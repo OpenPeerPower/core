@@ -44,7 +44,7 @@ async def test_import_duplicate_error(opp):
         data={CONF_HOST: "dunehd-host"},
         title="dunehd-host",
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch("pdunehd.DuneHDPlayer.update_state", return_value=DUNEHD_STATE):
         result = await opp.config_entries.flow.async_init(
@@ -81,7 +81,7 @@ async def test_duplicate_error(opp):
         data=CONFIG_HOSTNAME,
         title="dunehd-host",
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     with patch("pdunehd.DuneHDPlayer.update_state", return_value=DUNEHD_STATE):
         result = await opp.config_entries.flow.async_init(

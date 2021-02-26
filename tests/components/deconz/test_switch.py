@@ -68,7 +68,7 @@ SIRENS = {
 async def test_no_switches(opp, aioclient_mock):
     """Test that no switch entities are created."""
     await setup_deconz_integration(opp, aioclient_mock)
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_power_plugs(opp, aioclient_mock):
@@ -80,7 +80,7 @@ async def test_power_plugs(opp, aioclient_mock):
     )
     gateway = get_gateway_from_config_entry(opp, config_entry)
 
-    assert len.opp.states.async_all()) == 4
+    assert len(opp.states.async_all()) == 4
     assert opp.states.get("switch.on_off_switch").state == STATE_ON
     assert opp.states.get("switch.smart_plug").state == STATE_OFF
     assert opp.states.get("switch.on_off_relay").state == STATE_ON
@@ -124,13 +124,13 @@ async def test_power_plugs(opp, aioclient_mock):
     await opp.config_entries.async_unload(config_entry.entry_id)
 
     states = opp.states.async_all()
-    assert len.opp.states.async_all()) == 4
+    assert len(opp.states.async_all()) == 4
     for state in states:
         assert state.state == STATE_UNAVAILABLE
 
     await opp.config_entries.async_remove(config_entry.entry_id)
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_sirens(opp, aioclient_mock):
@@ -142,7 +142,7 @@ async def test_sirens(opp, aioclient_mock):
     )
     gateway = get_gateway_from_config_entry(opp, config_entry)
 
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
     assert opp.states.get("switch.warning_device").state == STATE_ON
     assert opp.states.get("switch.unsupported_switch") is None
 
@@ -184,10 +184,10 @@ async def test_sirens(opp, aioclient_mock):
     await opp.config_entries.async_unload(config_entry.entry_id)
 
     states = opp.states.async_all()
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
     for state in states:
         assert state.state == STATE_UNAVAILABLE
 
     await opp.config_entries.async_remove(config_entry.entry_id)
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0

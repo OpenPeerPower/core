@@ -116,7 +116,7 @@ async def test_import(opp, tuya):
 
 async def test_abort_if_already_setup_opp, tuya):
     """Test we abort if Tuya is already setup."""
-    MockConfigEntry(domain=DOMAIN, data=TUYA_USER_DATA).add_to(opp.opp)
+    MockConfigEntry(domain=DOMAIN, data=TUYA_USER_DATA).add_to_opp(opp)
 
     # Should fail, config exist (import)
     result = await opp.config_entries.flow.async_init(
@@ -179,7 +179,7 @@ async def test_options_flow(opp):
         domain=DOMAIN,
         data=TUYA_USER_DATA,
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
 
     # Set up the integration to make sure the config flow module is loaded.
     assert await opp.config_entries.async_setup(config_entry.entry_id)

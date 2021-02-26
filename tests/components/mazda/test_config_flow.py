@@ -158,7 +158,7 @@ async def test_reauth_flow(opp: OpenPeerPower) -> None:
             unique_id=FIXTURE_USER_INPUT[CONF_EMAIL],
             data=FIXTURE_USER_INPUT,
         )
-        mock_config.add_to(opp.opp)
+        mock_config.add_to_opp(opp)
 
         await opp.config_entries.async_setup(mock_config.entry_id)
         await opp.async_block_till_done()

@@ -81,7 +81,7 @@ async def test_setup_entry_multiple_gateways(opp, aioclient_mock):
         unique_id="01234E56789B",
     )
 
-    assert len.opp.data[DECONZ_DOMAIN]) == 2
+    assert len(opp.data[DECONZ_DOMAIN]) == 2
     assert opp.data[DECONZ_DOMAIN][config_entry.unique_id].master
     assert not opp.data[DECONZ_DOMAIN][config_entry2.unique_id].master
 
@@ -110,11 +110,11 @@ async def test_unload_entry_multiple_gateways(opp, aioclient_mock):
         unique_id="01234E56789B",
     )
 
-    assert len.opp.data[DECONZ_DOMAIN]) == 2
+    assert len(opp.data[DECONZ_DOMAIN]) == 2
 
     assert await async_unload_entry(opp, config_entry)
 
-    assert len.opp.data[DECONZ_DOMAIN]) == 1
+    assert len(opp.data[DECONZ_DOMAIN]) == 1
     assert opp.data[DECONZ_DOMAIN][config_entry2.unique_id].master
 
 

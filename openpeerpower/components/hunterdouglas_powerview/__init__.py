@@ -77,7 +77,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     hub_address = config.get(CONF_HOST)
     websession = async_get_clientsession(opp)
 
-    pv_request = AioRequest(hub_address, loop.opp.loop, websession=websession)
+    pv_request = AioRequest(hub_address, loop=opp.loop, websession=websession)
 
     try:
         async with async_timeout.timeout(10):

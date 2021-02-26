@@ -28,14 +28,14 @@ async def test_setup_no_config(opp):
     assert AXIS_DOMAIN not in opp.data
 
 
-async def test_setup_entry.opp):
+async def test_setup_entry(opp):
     """Test successful setup of entry."""
-    await setup_axis_integration.opp)
-    assert len.opp.data[AXIS_DOMAIN]) == 1
+    await setup_axis_integration(opp)
+    assert len(opp.data[AXIS_DOMAIN]) == 1
     assert format_mac(MAC) in opp.data[AXIS_DOMAIN]
 
 
-async def test_setup_entry_fails.opp):
+async def test_setup_entry_fails(opp):
     """Test successful setup of entry."""
     config_entry = MockConfigEntry(
         domain=AXIS_DOMAIN, data={CONF_MAC: "0123"}, version=3
@@ -53,9 +53,9 @@ async def test_setup_entry_fails.opp):
     assert not opp.data[AXIS_DOMAIN]
 
 
-async def test_unload_entry.opp):
+async def test_unload_entry(opp):
     """Test successful unload of entry."""
-    config_entry = await setup_axis_integration.opp)
+    config_entry = await setup_axis_integration(opp)
     device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
     assert opp.data[AXIS_DOMAIN]
 
@@ -63,7 +63,7 @@ async def test_unload_entry.opp):
     assert not opp.data[AXIS_DOMAIN]
 
 
-async def test_migrate_entry.opp):
+async def test_migrate_entry(opp):
     """Test successful migration of entry data."""
     legacy_config = {
         CONF_DEVICE: {
@@ -83,7 +83,7 @@ async def test_migrate_entry.opp):
     assert not entry.unique_id
 
     # Create entity entry to migrate to new unique ID
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
     registry.async_get_or_create(
         BINARY_SENSOR_DOMAIN,
         AXIS_DOMAIN,
@@ -92,7 +92,7 @@ async def test_migrate_entry.opp):
         config_entry=entry,
     )
 
-    await entry.async_migrate.opp)
+    await entry.async_migrate(opp)
 
     assert entry.data == {
         CONF_DEVICE: {

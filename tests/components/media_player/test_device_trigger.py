@@ -45,7 +45,7 @@ def calls.opp):
 async def test_get_triggers(opp, device_reg, entity_reg):
     """Test we get the expected triggers from a media player."""
     config_entry = MockConfigEntry(domain="test", data={})
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},

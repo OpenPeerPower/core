@@ -89,7 +89,7 @@ async def test_abort_if_already_setup_opp):
     flow = init_config_flow(opp)
     MockConfigEntry(
         domain="velbus", data={CONF_PORT: PORT_TCP, CONF_NAME: "velbus home"}
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
 
     result = await flow.async_step_import(
         {CONF_PORT: PORT_TCP, CONF_NAME: "velbus import test"}

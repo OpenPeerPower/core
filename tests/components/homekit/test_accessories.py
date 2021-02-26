@@ -58,7 +58,7 @@ async def test_accessory_cancels_track_state_change_on_stop(opp, hk_driver):
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
     ):
         await acc.run()
-    assert len.opp.data[TRACK_STATE_CHANGE_CALLBACKS][entity_id]) == 1
+    assert len(opp.data[TRACK_STATE_CHANGE_CALLBACKS][entity_id]) == 1
     acc.async_stop()
     assert entity_id not in opp.data[TRACK_STATE_CHANGE_CALLBACKS]
 

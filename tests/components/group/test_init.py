@@ -440,10 +440,10 @@ async def test_reloading_groups(opp):
         "group.test_group",
     ]
     assert opp.bus.async_listeners()["state_changed"] == 1
-    assert len.opp.data[TRACK_STATE_CHANGE_CALLBACKS]["hello.world"]) == 1
-    assert len.opp.data[TRACK_STATE_CHANGE_CALLBACKS]["light.bowl"]) == 1
-    assert len.opp.data[TRACK_STATE_CHANGE_CALLBACKS]["test.one"]) == 1
-    assert len.opp.data[TRACK_STATE_CHANGE_CALLBACKS]["test.two"]) == 1
+    assert len(opp.data[TRACK_STATE_CHANGE_CALLBACKS]["hello.world"]) == 1
+    assert len(opp.data[TRACK_STATE_CHANGE_CALLBACKS]["light.bowl"]) == 1
+    assert len(opp.data[TRACK_STATE_CHANGE_CALLBACKS]["test.one"]) == 1
+    assert len(opp.data[TRACK_STATE_CHANGE_CALLBACKS]["test.two"]) == 1
 
     with patch(
         "openpeerpower.config.load_yaml_config_file",
@@ -459,9 +459,9 @@ async def test_reloading_groups(opp):
         "group.hello",
     ]
     assert opp.bus.async_listeners()["state_changed"] == 1
-    assert len.opp.data[TRACK_STATE_CHANGE_CALLBACKS]["light.bowl"]) == 1
-    assert len.opp.data[TRACK_STATE_CHANGE_CALLBACKS]["test.one"]) == 1
-    assert len.opp.data[TRACK_STATE_CHANGE_CALLBACKS]["test.two"]) == 1
+    assert len(opp.data[TRACK_STATE_CHANGE_CALLBACKS]["light.bowl"]) == 1
+    assert len(opp.data[TRACK_STATE_CHANGE_CALLBACKS]["test.one"]) == 1
+    assert len(opp.data[TRACK_STATE_CHANGE_CALLBACKS]["test.two"]) == 1
 
 
 async def test_modify_group(opp):

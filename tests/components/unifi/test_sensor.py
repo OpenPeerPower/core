@@ -60,7 +60,7 @@ async def test_no_clients(opp, aioclient_mock):
         },
     )
 
-    assert len.opp.states.async_entity_ids(SENSOR_DOMAIN)) == 0
+    assert len(opp.states.async_entity_ids(SENSOR_DOMAIN)) == 0
 
 
 async def test_sensors(opp, aioclient_mock):
@@ -78,7 +78,7 @@ async def test_sensors(opp, aioclient_mock):
     )
     controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
 
-    assert len.opp.states.async_entity_ids(SENSOR_DOMAIN)) == 6
+    assert len(opp.states.async_entity_ids(SENSOR_DOMAIN)) == 6
 
     wired_client_rx = opp.states.get("sensor.wired_client_name_rx")
     assert wired_client_rx.state == "1234.0"
@@ -175,7 +175,7 @@ async def test_sensors(opp, aioclient_mock):
 
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids(SENSOR_DOMAIN)) == 6
+    assert len(opp.states.async_entity_ids(SENSOR_DOMAIN)) == 6
 
 
 async def test_remove_sensors(opp, aioclient_mock):
@@ -190,8 +190,8 @@ async def test_remove_sensors(opp, aioclient_mock):
         clients_response=CLIENTS,
     )
     controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
-    assert len.opp.states.async_entity_ids(SENSOR_DOMAIN)) == 6
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
+    assert len(opp.states.async_entity_ids(SENSOR_DOMAIN)) == 6
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 2
 
     wired_client_rx = opp.states.get("sensor.wired_client_name_rx")
     assert wired_client_rx is not None
@@ -216,8 +216,8 @@ async def test_remove_sensors(opp, aioclient_mock):
     controller.api.session_handler(SIGNAL_DATA)
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_entity_ids(SENSOR_DOMAIN)) == 3
-    assert len.opp.states.async_entity_ids(TRACKER_DOMAIN)) == 1
+    assert len(opp.states.async_entity_ids(SENSOR_DOMAIN)) == 3
+    assert len(opp.states.async_entity_ids(TRACKER_DOMAIN)) == 1
 
     wired_client_rx = opp.states.get("sensor.wired_client_name_rx")
     assert wired_client_rx is None

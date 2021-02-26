@@ -109,7 +109,7 @@ LIGHTS = {
 async def test_no_lights_or_groups(opp, aioclient_mock):
     """Test that no lights or groups entities are created."""
     await setup_deconz_integration(opp, aioclient_mock)
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_lights_and_groups(opp, aioclient_mock):
@@ -122,7 +122,7 @@ async def test_lights_and_groups(opp, aioclient_mock):
     )
     gateway = get_gateway_from_config_entry(opp, config_entry)
 
-    assert len.opp.states.async_all()) == 6
+    assert len(opp.states.async_all()) == 6
 
     rgb_light = opp.states.get("light.rgb_light")
     assert rgb_light.state == STATE_ON
@@ -272,13 +272,13 @@ async def test_lights_and_groups(opp, aioclient_mock):
     await opp.config_entries.async_unload(config_entry.entry_id)
 
     states = opp.states.async_all()
-    assert len.opp.states.async_all()) == 6
+    assert len(opp.states.async_all()) == 6
     for state in states:
         assert state.state == STATE_UNAVAILABLE
 
     await opp.config_entries.async_remove(config_entry.entry_id)
     await opp.async_block_till_done()
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_disable_light_groups(opp, aioclient_mock):
@@ -293,7 +293,7 @@ async def test_disable_light_groups(opp, aioclient_mock):
         get_state_response=data,
     )
 
-    assert len.opp.states.async_all()) == 5
+    assert len(opp.states.async_all()) == 5
     assert opp.states.get("light.rgb_light")
     assert opp.states.get("light.tunable_white_light")
     assert opp.states.get("light.light_group") is None
@@ -304,7 +304,7 @@ async def test_disable_light_groups(opp, aioclient_mock):
     )
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 6
+    assert len(opp.states.async_all()) == 6
     assert opp.states.get("light.light_group")
 
     opp.config_entries.async_update_entry(
@@ -312,7 +312,7 @@ async def test_disable_light_groups(opp, aioclient_mock):
     )
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 5
+    assert len(opp.states.async_all()) == 5
     assert opp.states.get("light.light_group") is None
 
 
@@ -336,7 +336,7 @@ async def test_configuration_tool(opp, aioclient_mock):
     }
     await setup_deconz_integration(opp, aioclient_mock, get_state_response=data)
 
-    assert len.opp.states.async_all()) == 0
+    assert len(opp.states.async_all()) == 0
 
 
 async def test_lidl_christmas_light(opp, aioclient_mock):
@@ -474,7 +474,7 @@ async def test_non_color_light_reports_color(opp, aioclient_mock):
     )
     gateway = get_gateway_from_config_entry(opp, config_entry)
 
-    assert len.opp.states.async_all()) == 3
+    assert len(opp.states.async_all()) == 3
     assert opp.states.get("light.all").attributes[ATTR_COLOR_TEMP] == 307
 
     # Updating a scene will return a faulty color value for a non-color light causing an exception in hs_color
@@ -554,7 +554,7 @@ async def test_verify_group_supported_features(opp, aioclient_mock):
     )
     await setup_deconz_integration(opp, aioclient_mock, get_state_response=data)
 
-    assert len.opp.states.async_all()) == 4
+    assert len(opp.states.async_all()) == 4
 
     group = opp.states.get("light.group")
     assert group.state == STATE_ON

@@ -139,7 +139,7 @@ async def test_flow_with_unsupported_version(opp, product_class_mock):
         assert result["errors"] == {"base": "unsupported_version"}
 
 
-async def test_async_setup_opp):
+async def test_async_setup(opp):
     """Test async_setup (for coverage)."""
     assert await async_setup_component(opp, "blebox", {"host": "172.2.3.4"})
     await opp.async_block_till_done()

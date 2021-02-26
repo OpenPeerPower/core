@@ -109,7 +109,7 @@ async def test_fail_on_existing(opp: OpenPeerPowerType):
         data={**MOCK_USER_INPUT_HUB_V2, CONF_HUB_VERSION: 2},
         options={},
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     assert config_entry.state == config_entries.ENTRY_STATE_NOT_LOADED
 
     result = await opp.config_entries.flow.async_init(
@@ -275,7 +275,7 @@ async def test_import_existing(opp: OpenPeerPowerType):
         data={**MOCK_USER_INPUT_HUB_V2, CONF_HUB_VERSION: 2},
         options={},
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     assert config_entry.state == config_entries.ENTRY_STATE_NOT_LOADED
 
     result = await _import_config(
@@ -319,7 +319,7 @@ async def test_options_change_hub_config(opp: OpenPeerPowerType):
         options={},
     )
 
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     result = await _options_init_form(
         opp. config_entry.entry_id, STEP_CHANGE_HUB_CONFIG
     )
@@ -346,7 +346,7 @@ async def test_options_add_device_override(opp: OpenPeerPowerType):
         options={},
     )
 
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     result = await _options_init_form(opp, config_entry.entry_id, STEP_ADD_OVERRIDE)
 
     user_input = {
@@ -394,7 +394,7 @@ async def test_options_remove_device_override(opp: OpenPeerPowerType):
         },
     )
 
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     result = await _options_init_form(opp, config_entry.entry_id, STEP_REMOVE_OVERRIDE)
 
     user_input = {CONF_ADDRESS: "1A.2B.3C"}
@@ -426,7 +426,7 @@ async def test_options_remove_device_override_with_x10.opp: OpenPeerPowerType):
         },
     )
 
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     result = await _options_init_form(opp, config_entry.entry_id, STEP_REMOVE_OVERRIDE)
 
     user_input = {CONF_ADDRESS: "1A.2B.3C"}
@@ -446,7 +446,7 @@ async def test_options_add_x10_device(opp: OpenPeerPowerType):
         options={},
     )
 
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     result = await _options_init_form(opp, config_entry.entry_id, STEP_ADD_X10)
 
     user_input = {
@@ -508,7 +508,7 @@ async def test_options_remove_x10_device(opp: OpenPeerPowerType):
         },
     )
 
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     result = await _options_init_form(opp, config_entry.entry_id, STEP_REMOVE_X10)
 
     for device in config_entry.options[CONF_X10]:
@@ -548,7 +548,7 @@ async def test_options_remove_x10_device_with_override(opp: OpenPeerPowerType):
         },
     )
 
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     result = await _options_init_form(opp, config_entry.entry_id, STEP_REMOVE_X10)
 
     for device in config_entry.options[CONF_X10]:
@@ -572,7 +572,7 @@ async def test_options_dup_selection(opp: OpenPeerPowerType):
         data={**MOCK_USER_INPUT_HUB_V2, CONF_HUB_VERSION: 2},
         options={},
     )
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     result = await opp.config_entries.options.async_init(config_entry.entry_id)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -596,7 +596,7 @@ async def test_options_override_bad_data(opp: OpenPeerPowerType):
         options={},
     )
 
-    config_entry.add_to(opp.opp)
+    config_entry.add_to_opp(opp)
     result = await _options_init_form(opp, config_entry.entry_id, STEP_ADD_OVERRIDE)
 
     user_input = {

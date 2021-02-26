@@ -288,7 +288,7 @@ async def test_options_flow_power(opp, mock_smile) -> None:
     )
 
     opp.data[DOMAIN] = {entry.entry_id: {"api": MagicMock(smile_type="power")}}
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.plugwise.async_setup_entry", return_value=True
@@ -320,7 +320,7 @@ async def test_options_flow_thermo(opp, mock_smile) -> None:
     )
 
     opp.data[DOMAIN] = {entry.entry_id: {"api": MagicMock(smile_type="thermostat")}}
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.plugwise.async_setup_entry", return_value=True

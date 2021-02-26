@@ -7,7 +7,7 @@ from unittest.mock import patch
 
 import pytest
 
-from openpeerpower import config as.opp_config
+from openpeerpower import config as opp_config
 import openpeerpower.components.command_line.cover as cmd_rs
 from openpeerpower.components.cover import DOMAIN
 from openpeerpower.const import (
@@ -107,7 +107,7 @@ async def test_reload.opp):
     )
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
     assert opp.states.get("cover.test").state
 
     yaml_path = path.join(
@@ -124,7 +124,7 @@ async def test_reload.opp):
         )
         await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     assert opp.states.get("cover.test") is None
     assert opp.states.get("cover.from_yaml")

@@ -255,7 +255,7 @@ async def test_abort_discovered_existing_entries(opp, flow_handler, local_impl):
         domain=TEST_DOMAIN,
         data={},
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         TEST_DOMAIN, context={"source": config_entries.SOURCE_SSDP}

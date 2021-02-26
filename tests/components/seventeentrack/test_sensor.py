@@ -148,14 +148,14 @@ async def test_full_valid_config(opp):
     """Ensure everything starts correctly."""
     assert await async_setup_component(opp, "sensor", VALID_CONFIG_FULL)
     await opp.async_block_till_done()
-    assert len.opp.states.async_entity_ids()) == len(ProfileMock.summary_data.keys())
+    assert len(opp.states.async_entity_ids()) == len(ProfileMock.summary_data.keys())
 
 
 async def test_valid_config(opp):
     """Ensure everything starts correctly."""
     assert await async_setup_component(opp, "sensor", VALID_CONFIG_MINIMAL)
     await opp.async_block_till_done()
-    assert len.opp.states.async_entity_ids()) == len(ProfileMock.summary_data.keys())
+    assert len(opp.states.async_entity_ids()) == len(ProfileMock.summary_data.keys())
 
 
 async def test_invalid_config(opp):
@@ -174,7 +174,7 @@ async def test_add_package.opp):
 
     await _setup_seventeentrack.opp)
     assert opp.states.get("sensor.seventeentrack_package_456") is not None
-    assert len.opp.states.async_entity_ids()) == 1
+    assert len(opp.states.async_entity_ids()) == 1
 
     package2 = Package(
         "789", 206, "friendly name 2", "info text 2", "location 2", 206, 2
@@ -184,7 +184,7 @@ async def test_add_package.opp):
     await _goto_future.opp)
 
     assert opp.states.get("sensor.seventeentrack_package_789") is not None
-    assert len.opp.states.async_entity_ids()) == 2
+    assert len(opp.states.async_entity_ids()) == 2
 
 
 async def test_remove_package.opp):
@@ -202,7 +202,7 @@ async def test_remove_package.opp):
 
     assert opp.states.get("sensor.seventeentrack_package_456") is not None
     assert opp.states.get("sensor.seventeentrack_package_789") is not None
-    assert len.opp.states.async_entity_ids()) == 2
+    assert len(opp.states.async_entity_ids()) == 2
 
     ProfileMock.package_list = [package2]
 
@@ -210,7 +210,7 @@ async def test_remove_package.opp):
 
     assert opp.states.get("sensor.seventeentrack_package_456") is None
     assert opp.states.get("sensor.seventeentrack_package_789") is not None
-    assert len.opp.states.async_entity_ids()) == 1
+    assert len(opp.states.async_entity_ids()) == 1
 
 
 async def test_friendly_name_changed.opp):
@@ -223,7 +223,7 @@ async def test_friendly_name_changed.opp):
     await _setup_seventeentrack.opp)
 
     assert opp.states.get("sensor.seventeentrack_package_456") is not None
-    assert len.opp.states.async_entity_ids()) == 1
+    assert len(opp.states.async_entity_ids()) == 1
 
     package = Package(
         "456", 206, "friendly name 2", "info text 1", "location 1", 206, 2
@@ -237,7 +237,7 @@ async def test_friendly_name_changed.opp):
         "sensor.seventeentrack_package_456"
     )
     assert entity.name == "Seventeentrack Package: friendly name 2"
-    assert len.opp.states.async_entity_ids()) == 1
+    assert len(opp.states.async_entity_ids()) == 1
 
 
 async def test_delivered_not_shown.opp):
@@ -266,7 +266,7 @@ async def test_delivered_shown.opp):
     await _setup_seventeentrack(opp, VALID_CONFIG_FULL)
 
     assert opp.states.get("sensor.seventeentrack_package_456") is not None
-    assert len.opp.states.async_entity_ids()) == 1
+    assert len(opp.states.async_entity_ids()) == 1
     opp.components.persistent_notification.create.assert_not_called()
 
 
@@ -280,7 +280,7 @@ async def test_becomes_delivered_not_shown_notification.opp):
     await _setup_seventeentrack(opp, VALID_CONFIG_FULL_NO_DELIVERED)
 
     assert opp.states.get("sensor.seventeentrack_package_456") is not None
-    assert len.opp.states.async_entity_ids()) == 1
+    assert len(opp.states.async_entity_ids()) == 1
 
     package_delivered = Package(
         "456", 206, "friendly name 1", "info text 1", "location 1", 206, 2, 40
@@ -298,7 +298,7 @@ async def test_summary_correctly_updated.opp):
     """Ensure summary entities are not duplicated."""
     await _setup_seventeentrack(opp, summary_data=DEFAULT_SUMMARY)
 
-    assert len.opp.states.async_entity_ids()) == 7
+    assert len(opp.states.async_entity_ids()) == 7
     for state in opp.states.async_all():
         assert state.state == "0"
 
@@ -306,6 +306,6 @@ async def test_summary_correctly_updated.opp):
 
     await _goto_future.opp)
 
-    assert len.opp.states.async_entity_ids()) == 7
+    assert len(opp.states.async_entity_ids()) == 7
     for state in opp.states.async_all():
         assert state.state == "1"

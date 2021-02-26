@@ -3,7 +3,7 @@ from datetime import timedelta
 from os import path
 from unittest.mock import patch
 
-from openpeerpower import config as.opp_config, setup
+from openpeerpower import config as opp_config, setup
 from openpeerpower.components.trend import DOMAIN
 from openpeerpower.const import SERVICE_RELOAD
 import openpeerpower.util.dt as dt_util
@@ -391,7 +391,7 @@ async def test_reload.opp):
     )
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
 
     assert opp.states.get("binary_sensor.test_trend_sensor")
 
@@ -409,7 +409,7 @@ async def test_reload.opp):
         )
         await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 2
+    assert len(opp.states.async_all()) == 2
 
     assert opp.states.get("binary_sensor.test_trend_sensor") is None
     assert opp.states.get("binary_sensor.second_test_trend_sensor")

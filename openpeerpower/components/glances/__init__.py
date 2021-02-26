@@ -171,4 +171,4 @@ def get_api(opp, entry):
     params.pop(CONF_NAME)
     verify_ssl = params.pop(CONF_VERIFY_SSL)
     session = async_get_clientsession(opp, verify_ssl)
-    return Glances.opp.loop, session, **params)
+    return Glances(opp.loop, session, **params)

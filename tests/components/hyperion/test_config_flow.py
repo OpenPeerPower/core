@@ -106,7 +106,7 @@ async def _create_mock_entry(opp: OpenPeerPowerType) -> MockConfigEntry:
             "instance": TEST_INSTANCE,
         },
     )
-    entry.add_to(opp.opp)  # type: ignore[no-untyped-call]
+    entry.add_to_opp(opp)  # type: ignore[no-untyped-call]
 
     # Setup
     client = create_mock_client()

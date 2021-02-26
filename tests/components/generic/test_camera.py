@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 import respx
 
-from openpeerpower import config as.opp_config
+from openpeerpower import config as opp_config
 from openpeerpower.components.generic import DOMAIN
 from openpeerpower.components.websocket_api.const import TYPE_RESULT
 from openpeerpower.const import (
@@ -393,7 +393,7 @@ async def test_reloading(opp, opp_client):
         )
         await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     resp = await client.get("/api/camera_proxy/camera.config_test")
 

@@ -43,7 +43,7 @@ async def test_existing(opp):
     host = "1.2.3.4"
     MockConfigEntry(
         domain=dynalite.DOMAIN, data={dynalite.CONF_HOST: host}
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices.async_setup",
         return_value=True,
@@ -66,7 +66,7 @@ async def test_existing_update(opp):
         domain=dynalite.DOMAIN,
         data={dynalite.CONF_HOST: host, dynalite.CONF_PORT: port1},
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices"
     ) as mock_dyn_dev:
@@ -93,7 +93,7 @@ async def test_two_entries(opp):
     host2 = "5.6.7.8"
     MockConfigEntry(
         domain=dynalite.DOMAIN, data={dynalite.CONF_HOST: host1}
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices.async_setup",
         return_value=True,

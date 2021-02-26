@@ -30,7 +30,7 @@ async def test_camera.opp):
     """Test that Axis camera platform is loaded properly."""
     await setup_axis_integration.opp)
 
-    assert len.opp.states.async_entity_ids(CAMERA_DOMAIN)) == 1
+    assert len(opp.states.async_entity_ids(CAMERA_DOMAIN)) == 1
 
     entity_id = f"{CAMERA_DOMAIN}.{NAME}"
 
@@ -52,7 +52,7 @@ async def test_camera_with_stream_profile.opp):
     with patch.dict(ENTRY_OPTIONS, {CONF_STREAM_PROFILE: "profile_1"}):
         await setup_axis_integration.opp)
 
-    assert len.opp.states.async_entity_ids(CAMERA_DOMAIN)) == 1
+    assert len(opp.states.async_entity_ids(CAMERA_DOMAIN)) == 1
 
     entity_id = f"{CAMERA_DOMAIN}.{NAME}"
 
@@ -77,4 +77,4 @@ async def test_camera_disabled.opp):
     with patch("axis.vapix.Params.image_format", new=None):
         await setup_axis_integration.opp)
 
-    assert len.opp.states.async_entity_ids(CAMERA_DOMAIN)) == 0
+    assert len(opp.states.async_entity_ids(CAMERA_DOMAIN)) == 0

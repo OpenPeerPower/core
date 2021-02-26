@@ -94,7 +94,7 @@ async def test_manual_flow_works(opp, aioclient_mock):
 
     MockConfigEntry(
         domain="hue", source=config_entries.SOURCE_IGNORE, unique_id="bla"
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.hue.config_flow.discover_nupnp",
@@ -150,7 +150,7 @@ async def test_manual_flow_bridge_exist(opp, aioclient_mock):
     """Test config flow discovers only already configured bridges."""
     MockConfigEntry(
         domain="hue", unique_id="id-1234", data={"host": "2.2.2.2"}
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.hue.config_flow.discover_nupnp",
@@ -195,7 +195,7 @@ async def test_flow_all_discovered_bridges_exist(opp, aioclient_mock):
     aioclient_mock.get(URL_NUPNP, json=[{"internalipaddress": "1.2.3.4", "id": "bla"}])
     MockConfigEntry(
         domain="hue", unique_id="bla", data={"host": "1.2.3.4"}
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": "user"}
@@ -210,7 +210,7 @@ async def test_flow_bridges_discovered(opp, aioclient_mock):
     # Add ignored config entry. Should still show up as option.
     MockConfigEntry(
         domain="hue", source=config_entries.SOURCE_IGNORE, unique_id="bla"
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
 
     aioclient_mock.get(
         URL_NUPNP,
@@ -245,7 +245,7 @@ async def test_flow_two_bridges_discovered_one_new(opp, aioclient_mock):
     )
     MockConfigEntry(
         domain="hue", unique_id="bla", data={"host": "1.2.3.4"}
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": "user"}
@@ -471,7 +471,7 @@ async def test_bridge_ssdp_already_configured(opp):
     """Test if a discovered bridge has already been configured."""
     MockConfigEntry(
         domain="hue", unique_id="1234", data={"host": "0.0.0.0"}
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -511,15 +511,15 @@ async def test_creating_entry_removes_entries_for_same_host_or_bridge(opp):
         data={"host": "0.0.0.0", "username": "aaaa"},
         unique_id="id-1234",
     )
-    orig_entry.add_to(opp.opp)
+    orig_entry.add_to_opp(opp)
 
     MockConfigEntry(
         domain="hue",
         data={"host": "1.2.3.4", "username": "bbbb"},
         unique_id="id-5678",
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
 
-    assert len.opp.config_entries.async_entries("hue")) == 2
+    assert len(opp.config_entries.async_entries("hue")) == 2
 
     bridge = get_mock_bridge(
         bridge_id="id-1234", host="2.2.2.2", username="username-abc"
@@ -577,7 +577,7 @@ async def test_bridge_import_already_configured(opp):
     """Test if a import flow aborts if host is already configured."""
     MockConfigEntry(
         domain="hue", unique_id="aabbccddeeff", data={"host": "0.0.0.0"}
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -593,7 +593,7 @@ async def test_bridge_homekit_already_configured(opp):
     """Test if a HomeKit discovered bridge has already been configured."""
     MockConfigEntry(
         domain="hue", unique_id="aabbccddeeff", data={"host": "0.0.0.0"}
-    ).add_to(opp.opp)
+    ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -610,7 +610,7 @@ async def test_ssdp_discovery_update_configuration(opp):
     entry = MockConfigEntry(
         domain="hue", unique_id="aabbccddeeff", data={"host": "0.0.0.0"}
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -634,7 +634,7 @@ async def test_options_flow(opp):
         unique_id="aabbccddeeff",
         data={"host": "0.0.0.0"},
     )
-    entry.add_to(opp.opp)
+    entry.add_to_opp(opp)
 
     result = await opp.config_entries.options.async_init(entry.entry_id)
 

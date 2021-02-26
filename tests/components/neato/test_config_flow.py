@@ -70,7 +70,7 @@ async def test_full_flow(
     ) as mock_setup:
         await opp.config_entries.flow.async_configure(result["flow_id"])
 
-    assert len.opp.config_entries.async_entries(NEATO_DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(NEATO_DOMAIN)) == 1
     assert len(mock_setup.mock_calls) == 1
 
 
@@ -153,5 +153,5 @@ async def test_reauth(
     assert result3["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result3["reason"] == "reauth_successful"
     assert new_entry.state == "loaded"
-    assert len.opp.config_entries.async_entries(NEATO_DOMAIN)) == 1
+    assert len(opp.config_entries.async_entries(NEATO_DOMAIN)) == 1
     assert len(mock_setup.mock_calls) == 1

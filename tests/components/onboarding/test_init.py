@@ -67,7 +67,7 @@ async def test_is_user_onboarded():
 
 async def test_having_owner_finishes_user_step(opp, opp_storage):
     """If owner user already exists, mark user step as complete."""
-    MockUser(is_owner=True).add_to(opp.opp)
+    MockUser(is_owner=True).add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.onboarding.views.async_setup"

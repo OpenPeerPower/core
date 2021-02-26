@@ -584,7 +584,7 @@ async def help_test_entity_id_update_discovery_update(
     data = json.dumps(config)
     async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{config[CONF_MAC]}/config", data)
     await opp.async_block_till_done()
-    assert len.opp.states.async_entity_ids(domain)) == 1
+    assert len(opp.states.async_entity_ids(domain)) == 1
 
     topic = get_topic_tele_will(config)
     async_fire_mqtt_message(opp, topic, config_get_state_online(config))

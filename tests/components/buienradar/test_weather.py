@@ -16,7 +16,7 @@ BASE_CONFIG = {
 }
 
 
-async def test_smoke_test_setup_component.opp):
+async def test_smoke_test_setup_component(opp):
     """Smoke test for successfully set-up with default config."""
     assert await async_setup_component(opp, weather.DOMAIN, BASE_CONFIG)
     await opp.async_block_till_done()

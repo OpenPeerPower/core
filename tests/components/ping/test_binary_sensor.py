@@ -2,7 +2,7 @@
 from os import path
 from unittest.mock import patch
 
-from openpeerpower import config as.opp_config, setup
+from openpeerpower import config as opp_config, setup
 from openpeerpower.components.ping import DOMAIN
 from openpeerpower.const import SERVICE_RELOAD
 
@@ -24,7 +24,7 @@ async def test_reload.opp):
     )
     await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     assert opp.states.get("binary_sensor.test")
 
@@ -42,7 +42,7 @@ async def test_reload.opp):
         )
         await opp.async_block_till_done()
 
-    assert len.opp.states.async_all()) == 1
+    assert len(opp.states.async_all()) == 1
 
     assert opp.states.get("binary_sensor.test") is None
     assert opp.states.get("binary_sensor.test2")
