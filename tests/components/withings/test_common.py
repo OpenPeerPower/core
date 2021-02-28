@@ -27,7 +27,7 @@ from tests.components.withings.common import (
 from tests.test_util.aiohttp import AiohttpClientMocker
 
 
-async def test_config_entry_withings_api.opp: OpenPeerPower) -> None:
+async def test_config_entry_withings_api(opp: OpenPeerPower) -> None:
     """Test ConfigEntryWithingsApi."""
     config_entry = MockConfigEntry(
         data={"token": {"access_token": "mock_access_token", "expires_at": 1111111}}

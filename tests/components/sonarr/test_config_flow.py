@@ -31,7 +31,7 @@ from tests.components.sonarr import (
 from tests.test_util.aiohttp import AiohttpClientMocker
 
 
-async def test_show_user_form.opp: OpenPeerPowerType) -> None:
+async def test_show_user_form(opp: OpenPeerPowerType) -> None:
     """Test that the user set up form is served."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

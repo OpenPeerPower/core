@@ -97,7 +97,7 @@ def async_get_device(spec: Type[DysonDevice]) -> DysonDevice:
 @pytest.mark.parametrize(
     "device", [DysonPureHotCoolLink, DysonPureHotCool], indirect=True
 )
-async def test_state_common.opp: OpenPeerPower, device: DysonDevice) -> None:
+async def test_state_common(opp: OpenPeerPower, device: DysonDevice) -> None:
     """Test common state and attributes of two types of climate entities."""
     er = await entity_registry.async_get_registry(opp)
     assert er.async_get(ENTITY_ID).unique_id == SERIAL
@@ -159,7 +159,7 @@ async def test_state_purehotcoollink(
 
 
 @pytest.mark.parametrize("device", [DysonPureHotCool], indirect=True)
-async def test_state_purehotcool.opp: OpenPeerPower, device: DysonPureHotCool) -> None:
+async def test_state_purehotcool(opp: OpenPeerPower, device: DysonPureHotCool) -> None:
     """Test common state and attributes of a PureHotCool entity."""
     state = opp.states.get(ENTITY_ID)
     assert state.state == HVAC_MODE_HEAT

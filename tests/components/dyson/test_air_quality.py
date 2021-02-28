@@ -48,7 +48,7 @@ def async_get_device() -> DysonPureCool:
     return device
 
 
-async def test_air_quality.opp: OpenPeerPower, device: DysonPureCool) -> None:
+async def test_air_quality(opp: OpenPeerPower, device: DysonPureCool) -> None:
     """Test the state and attributes of the air quality entity."""
     state = opp.states.get(ENTITY_ID)
     assert state.state == str(MOCKED_VALUES[ATTR_PM_2_5])

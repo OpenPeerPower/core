@@ -69,7 +69,7 @@ async def test_form_error(opp: OpenPeerPower, exc: Exception, base_error: str):
     assert result2["errors"].get("base") == base_error
 
 
-async def test_reauth_success.opp: OpenPeerPower):
+async def test_reauth_success(opp: OpenPeerPower):
     """Test reauth flow."""
     with patch("sharkiqpy.AylaApi.async_sign_in", return_value=True):
         mock_config = MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG)

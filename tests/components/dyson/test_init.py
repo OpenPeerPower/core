@@ -19,7 +19,7 @@ from .common import (
 from tests.common import async_setup_component
 
 
-async def test_setup_manual.opp: OpenPeerPower):
+async def test_setup_manual(opp: OpenPeerPower):
     """Test set up the component with manually configured device IPs."""
     SERIAL_TEMPLATE = "XX-XXXXX-X{}"
 
@@ -69,7 +69,7 @@ async def test_setup_manual.opp: OpenPeerPower):
     device4.connect.assert_not_called()
 
 
-async def test_setup_autoconnect.opp: OpenPeerPower):
+async def test_setup_autoconnect(opp: OpenPeerPower):
     """Test set up the component with auto connect."""
     # device1 works
     device1 = async_get_purecoollink_device()
@@ -93,7 +93,7 @@ async def test_setup_autoconnect.opp: OpenPeerPower):
     assert opp.states.async_entity_ids_count() == 1
 
 
-async def test_login_failed.opp: OpenPeerPower):
+async def test_login_failed(opp: OpenPeerPower):
     """Test login failure during setup."""
     with patch(f"{BASE_PATH}.DysonAccount.login", return_value=False):
         assert not await async_setup_component(opp, DOMAIN, CONFIG)

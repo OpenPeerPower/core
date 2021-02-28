@@ -15,7 +15,7 @@ from openpeerpower.core import OpenPeerPower
 from tests.components.devolo_home_control import configure_integration
 
 
-async def test_setup_entry.opp: OpenPeerPower):
+async def test_setup_entry(opp: OpenPeerPower):
     """Test setup entry."""
     entry = configure_integration(opp)
     with patch("openpeerpower.components.devolo_home_control.HomeControl"):
@@ -24,7 +24,7 @@ async def test_setup_entry.opp: OpenPeerPower):
 
 
 @pytest.mark.credentials_invalid
-async def test_setup_entry_credentials_invalid.opp: OpenPeerPower):
+async def test_setup_entry_credentials_invalid(opp: OpenPeerPower):
     """Test setup entry fails if credentials are invalid."""
     entry = configure_integration(opp)
     await opp.config_entries.async_setup(entry.entry_id)
@@ -32,7 +32,7 @@ async def test_setup_entry_credentials_invalid.opp: OpenPeerPower):
 
 
 @pytest.mark.maintenance
-async def test_setup_entry_maintenance.opp: OpenPeerPower):
+async def test_setup_entry_maintenance(opp: OpenPeerPower):
     """Test setup entry fails if mydevolo is in maintenance mode."""
     entry = configure_integration(opp)
     await opp.config_entries.async_setup(entry.entry_id)
@@ -50,7 +50,7 @@ async def test_setup_connection_error(opp: OpenPeerPower):
         assert entry.state == ENTRY_STATE_SETUP_RETRY
 
 
-async def test_setup_gateway_offline.opp: OpenPeerPower):
+async def test_setup_gateway_offline(opp: OpenPeerPower):
     """Test setup entry fails on gateway offline."""
     entry = configure_integration(opp)
     with patch(
@@ -61,7 +61,7 @@ async def test_setup_gateway_offline.opp: OpenPeerPower):
         assert entry.state == ENTRY_STATE_SETUP_RETRY
 
 
-async def test_unload_entry.opp: OpenPeerPower):
+async def test_unload_entry(opp: OpenPeerPower):
     """Test unload entry."""
     entry = configure_integration(opp)
     with patch("openpeerpower.components.devolo_home_control.HomeControl"):

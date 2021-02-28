@@ -126,7 +126,7 @@ async def test_state_purecoollink(
 
 
 @pytest.mark.parametrize("device", [DysonPureCool], indirect=True)
-async def test_state_purecool.opp: OpenPeerPower, device: DysonPureCool) -> None:
+async def test_state_purecool(opp: OpenPeerPower, device: DysonPureCool) -> None:
     """Test the state of a PureCool fan."""
     er = await entity_registry.async_get_registry(opp)
     assert er.async_get(ENTITY_ID).unique_id == SERIAL

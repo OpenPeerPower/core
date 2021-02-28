@@ -239,7 +239,7 @@ def dimmer_switch_mock_data_fixture() -> None:
         )
 
 
-async def update_entity.opp: OpenPeerPower, entity_id: str) -> None:
+async def update_entity(opp: OpenPeerPower, entity_id: str) -> None:
     """Run an update action for an entity."""
     await opp.services.async_call(
         OP_DOMAIN,
@@ -343,7 +343,7 @@ async def test_smartswitch(
     assert sys_info["brightness"] == 66
 
 
-async def test_light.opp: OpenPeerPower, light_mock_data: LightMockData) -> None:
+async def test_light(opp: OpenPeerPower, light_mock_data: LightMockData) -> None:
     """Test function."""
     light_state = light_mock_data.light_state
     set_light_state = light_mock_data.set_light_state

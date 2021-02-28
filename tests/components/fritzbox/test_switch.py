@@ -34,7 +34,7 @@ from tests.common import async_fire_time_changed
 ENTITY_ID = f"{DOMAIN}.fake_name"
 
 
-async def setup_fritzbox.opp: OpenPeerPowerType, config: dict):
+async def setup_fritzbox(opp: OpenPeerPowerType, config: dict):
     """Set up mock AVM Fritz!Box."""
     assert await async_setup_component(opp, FB_DOMAIN, config)
     await opp.async_block_till_done()
@@ -60,7 +60,7 @@ async def test_setup_opp: OpenPeerPowerType, fritz: Mock):
     assert state.attributes[ATTR_TOTAL_CONSUMPTION_UNIT] == ENERGY_KILO_WATT_HOUR
 
 
-async def test_turn_on.opp: OpenPeerPowerType, fritz: Mock):
+async def test_turn_on(opp: OpenPeerPowerType, fritz: Mock):
     """Test turn device on."""
     device = FritzDeviceSwitchMock()
     fritz().get_devices.return_value = [device]
@@ -73,7 +73,7 @@ async def test_turn_on.opp: OpenPeerPowerType, fritz: Mock):
     assert device.set_switch_state_on.call_count == 1
 
 
-async def test_turn_off.opp: OpenPeerPowerType, fritz: Mock):
+async def test_turn_off(opp: OpenPeerPowerType, fritz: Mock):
     """Test turn device off."""
     device = FritzDeviceSwitchMock()
     fritz().get_devices.return_value = [device]
@@ -86,7 +86,7 @@ async def test_turn_off.opp: OpenPeerPowerType, fritz: Mock):
     assert device.set_switch_state_off.call_count == 1
 
 
-async def test_update.opp: OpenPeerPowerType, fritz: Mock):
+async def test_update(opp: OpenPeerPowerType, fritz: Mock):
     """Test update with error."""
     device = FritzDeviceSwitchMock()
     fritz().get_devices.return_value = [device]

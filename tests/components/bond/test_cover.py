@@ -29,7 +29,7 @@ def shades(name: str):
     return {"name": name, "type": DeviceType.MOTORIZED_SHADES}
 
 
-async def test_entity_registry.opp: core.OpenPeerPower):
+async def test_entity_registry(opp: core.OpenPeerPower):
     """Tests that the devices are registered in the entity registry."""
     await setup_platform(
         opp,
@@ -44,7 +44,7 @@ async def test_entity_registry.opp: core.OpenPeerPower):
     assert entity.unique_id == "test-hub-id_test-device-id"
 
 
-async def test_open_cover.opp: core.OpenPeerPower):
+async def test_open_cover(opp: core.OpenPeerPower):
     """Tests that open cover command delegates to API."""
     await setup_platform(
         opp. COVER_DOMAIN, shades("name-1"), bond_device_id="test-device-id"
@@ -62,7 +62,7 @@ async def test_open_cover.opp: core.OpenPeerPower):
     mock_open.assert_called_once_with("test-device-id", Action.open())
 
 
-async def test_close_cover.opp: core.OpenPeerPower):
+async def test_close_cover(opp: core.OpenPeerPower):
     """Tests that close cover command delegates to API."""
     await setup_platform(
         opp. COVER_DOMAIN, shades("name-1"), bond_device_id="test-device-id"
@@ -80,7 +80,7 @@ async def test_close_cover.opp: core.OpenPeerPower):
     mock_close.assert_called_once_with("test-device-id", Action.close())
 
 
-async def test_stop_cover.opp: core.OpenPeerPower):
+async def test_stop_cover(opp: core.OpenPeerPower):
     """Tests that stop cover command delegates to API."""
     await setup_platform(
         opp. COVER_DOMAIN, shades("name-1"), bond_device_id="test-device-id"
@@ -98,7 +98,7 @@ async def test_stop_cover.opp: core.OpenPeerPower):
     mock_hold.assert_called_once_with("test-device-id", Action.hold())
 
 
-async def test_update_reports_open_cover.opp: core.OpenPeerPower):
+async def test_update_reports_open_cover(opp: core.OpenPeerPower):
     """Tests that update command sets correct state when Bond API reports cover is open."""
     await setup_platform(opp, COVER_DOMAIN, shades("name-1"))
 
@@ -109,7 +109,7 @@ async def test_update_reports_open_cover.opp: core.OpenPeerPower):
     assert opp.states.get("cover.name_1").state == "open"
 
 
-async def test_update_reports_closed_cover.opp: core.OpenPeerPower):
+async def test_update_reports_closed_cover(opp: core.OpenPeerPower):
     """Tests that update command sets correct state when Bond API reports cover is closed."""
     await setup_platform(opp, COVER_DOMAIN, shades("name-1"))
 
@@ -120,7 +120,7 @@ async def test_update_reports_closed_cover.opp: core.OpenPeerPower):
     assert opp.states.get("cover.name_1").state == "closed"
 
 
-async def test_cover_available.opp: core.OpenPeerPower):
+async def test_cover_available(opp: core.OpenPeerPower):
     """Tests that available state is updated based on API errors."""
     await help_test_entity_available(
         opp. COVER_DOMAIN, shades("name-1"), "cover.name_1"

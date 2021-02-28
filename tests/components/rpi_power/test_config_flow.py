@@ -30,7 +30,7 @@ async def test_setup_opp: OpenPeerPower) -> None:
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
 
 
-async def test_not_supported.opp: OpenPeerPower) -> None:
+async def test_not_supported(opp: OpenPeerPower) -> None:
     """Test setting up on not supported system."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -43,7 +43,7 @@ async def test_not_supported.opp: OpenPeerPower) -> None:
     assert result["reason"] == "no_devices_found"
 
 
-async def test_onboarding.opp: OpenPeerPower) -> None:
+async def test_onboarding(opp: OpenPeerPower) -> None:
     """Test setting up via onboarding."""
     with patch(MODULE, return_value=MagicMock()):
         result = await opp.config_entries.flow.async_init(
@@ -53,7 +53,7 @@ async def test_onboarding.opp: OpenPeerPower) -> None:
     assert result["type"] == RESULT_TYPE_CREATE_ENTRY
 
 
-async def test_onboarding_not_supported.opp: OpenPeerPower) -> None:
+async def test_onboarding_not_supported(opp: OpenPeerPower) -> None:
     """Test setting up via onboarding with unsupported system."""
     with patch(MODULE, return_value=None):
         result = await opp.config_entries.flow.async_init(

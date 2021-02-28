@@ -125,7 +125,7 @@ async def setup_integration(opp):
     await opp.async_block_till_done()
 
 
-async def test_simple_properties.opp: OpenPeerPower):
+async def test_simple_properties(opp: OpenPeerPower):
     """Test that simple properties work as intended."""
     state = opp.states.get(VAC_ENTITY_ID)
     registry = await opp.helpers.entity_registry.async_get_registry()
@@ -167,7 +167,7 @@ async def test_initial_attributes(
         (SERVICE_START, STATE_CLEANING),
     ],
 )
-async def test_cleaning_states.opp: OpenPeerPower, service: str, target_state: str):
+async def test_cleaning_states(opp: OpenPeerPower, service: str, target_state: str):
     """Test cleaning states."""
     service_data = {ATTR_ENTITY_ID: VAC_ENTITY_ID}
     await opp.services.async_call("vacuum", service, service_data, blocking=True)
@@ -176,7 +176,7 @@ async def test_cleaning_states.opp: OpenPeerPower, service: str, target_state: s
 
 
 @pytest.mark.parametrize("fan_speed", list(FAN_SPEEDS_MAP))
-async def test_fan_speed.opp: OpenPeerPower, fan_speed: str) -> None:
+async def test_fan_speed(opp: OpenPeerPower, fan_speed: str) -> None:
     """Test setting fan speeds."""
     service_data = {ATTR_ENTITY_ID: VAC_ENTITY_ID, ATTR_FAN_SPEED: fan_speed}
     await opp.services.async_call(

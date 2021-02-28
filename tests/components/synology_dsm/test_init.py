@@ -20,7 +20,7 @@ from tests.common import MockConfigEntry
 
 
 @pytest.mark.no_bypass_setup
-async def test_services_registered.opp: OpenPeerPowerType):
+async def test_services_registered(opp: OpenPeerPowerType):
     """Test if all services are registered."""
     with patch(
         "openpeerpower.components.synology_dsm.SynoApi.async_setup", return_value=True

@@ -30,7 +30,7 @@ from .mock_device import MockDevice
 from tests.common import MockConfigEntry
 
 
-async def test_flow_ssdp_discovery.opp: OpenPeerPowerType):
+async def test_flow_ssdp_discovery(opp: OpenPeerPowerType):
     """Test config flow: discovered + configured through ssdp."""
     udn = "uuid:device_1"
     location = "dummy"
@@ -82,7 +82,7 @@ async def test_flow_ssdp_discovery.opp: OpenPeerPowerType):
         }
 
 
-async def test_flow_ssdp_incomplete_discovery.opp: OpenPeerPowerType):
+async def test_flow_ssdp_incomplete_discovery(opp: OpenPeerPowerType):
     """Test config flow: incomplete discovery through ssdp."""
     udn = "uuid:device_1"
     location = "dummy"
@@ -103,7 +103,7 @@ async def test_flow_ssdp_incomplete_discovery.opp: OpenPeerPowerType):
     assert result["reason"] == "incomplete_discovery"
 
 
-async def test_flow_ssdp_discovery_ignored.opp: OpenPeerPowerType):
+async def test_flow_ssdp_discovery_ignored(opp: OpenPeerPowerType):
     """Test config flow: discovery through ssdp, but ignored."""
     udn = "uuid:device_random_1"
     location = "dummy"
@@ -151,7 +151,7 @@ async def test_flow_ssdp_discovery_ignored.opp: OpenPeerPowerType):
         assert result["reason"] == "discovery_ignored"
 
 
-async def test_flow_user.opp: OpenPeerPowerType):
+async def test_flow_user(opp: OpenPeerPowerType):
     """Test config flow: discovered + configured through user."""
     udn = "uuid:device_1"
     location = "dummy"
@@ -197,7 +197,7 @@ async def test_flow_user.opp: OpenPeerPowerType):
         }
 
 
-async def test_flow_import.opp: OpenPeerPowerType):
+async def test_flow_import(opp: OpenPeerPowerType):
     """Test config flow: discovered + configured through configuration.yaml."""
     udn = "uuid:device_1"
     mock_device = MockDevice(udn)
@@ -235,7 +235,7 @@ async def test_flow_import.opp: OpenPeerPowerType):
         }
 
 
-async def test_flow_import_already_configured.opp: OpenPeerPowerType):
+async def test_flow_import_already_configured(opp: OpenPeerPowerType):
     """Test config flow: discovered, but already configured."""
     udn = "uuid:device_1"
     mock_device = MockDevice(udn)
@@ -261,7 +261,7 @@ async def test_flow_import_already_configured.opp: OpenPeerPowerType):
     assert result["reason"] == "already_configured"
 
 
-async def test_flow_import_incomplete.opp: OpenPeerPowerType):
+async def test_flow_import_incomplete(opp: OpenPeerPowerType):
     """Test config flow: incomplete discovery, configured through configuration.yaml."""
     udn = "uuid:device_1"
     mock_device = MockDevice(udn)
@@ -288,7 +288,7 @@ async def test_flow_import_incomplete.opp: OpenPeerPowerType):
         assert result["reason"] == "incomplete_discovery"
 
 
-async def test_options_flow.opp: OpenPeerPowerType):
+async def test_options_flow(opp: OpenPeerPowerType):
     """Test options flow."""
     # Set up config entry.
     udn = "uuid:device_1"

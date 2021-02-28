@@ -19,7 +19,7 @@ from .common import (
 from tests.common import MockConfigEntry
 
 
-async def test_user_form.opp: core.OpenPeerPower):
+async def test_user_form(opp: core.OpenPeerPower):
     """Test we get the user initiated form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -49,7 +49,7 @@ async def test_user_form.opp: core.OpenPeerPower):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_user_form_with_non_bridge.opp: core.OpenPeerPower):
+async def test_user_form_with_non_bridge(opp: core.OpenPeerPower):
     """Test setup a smart by bond fan."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -85,7 +85,7 @@ async def test_user_form_with_non_bridge.opp: core.OpenPeerPower):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_user_form_invalid_auth.opp: core.OpenPeerPower):
+async def test_user_form_invalid_auth(opp: core.OpenPeerPower):
     """Test we handle invalid auth."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -105,7 +105,7 @@ async def test_user_form_invalid_auth.opp: core.OpenPeerPower):
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_user_form_cannot_connect.opp: core.OpenPeerPower):
+async def test_user_form_cannot_connect(opp: core.OpenPeerPower):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -123,7 +123,7 @@ async def test_user_form_cannot_connect.opp: core.OpenPeerPower):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_user_form_old_firmware.opp: core.OpenPeerPower):
+async def test_user_form_old_firmware(opp: core.OpenPeerPower):
     """Test we handle unsupported old firmware."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -161,7 +161,7 @@ async def test_user_form_unexpected_error(opp: core.OpenPeerPower):
     )
 
 
-async def test_user_form_one_entry_per_device_allowed.opp: core.OpenPeerPower):
+async def test_user_form_one_entry_per_device_allowed(opp: core.OpenPeerPower):
     """Test that only one entry allowed per unique ID reported by Bond hub device."""
     MockConfigEntry(
         domain=DOMAIN,
@@ -191,7 +191,7 @@ async def test_user_form_one_entry_per_device_allowed.opp: core.OpenPeerPower):
     assert len(mock_setup_entry.mock_calls) == 0
 
 
-async def test_zeroconf_form.opp: core.OpenPeerPower):
+async def test_zeroconf_form(opp: core.OpenPeerPower):
     """Test we get the discovery form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -221,7 +221,7 @@ async def test_zeroconf_form.opp: core.OpenPeerPower):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_zeroconf_already_configured.opp: core.OpenPeerPower):
+async def test_zeroconf_already_configured(opp: core.OpenPeerPower):
     """Test starting a flow from discovery when already configured."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 

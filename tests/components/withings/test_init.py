@@ -189,7 +189,7 @@ async def test_set_config_unique_id(
         assert config_entry.unique_id == "my_user_id"
 
 
-async def test_set_convert_unique_id_to_string.opp: OpenPeerPower) -> None:
+async def test_set_convert_unique_id_to_string(opp: OpenPeerPower) -> None:
     """Test upgrading configs to use a unique id."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,

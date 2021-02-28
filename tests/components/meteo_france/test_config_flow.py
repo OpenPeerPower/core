@@ -214,7 +214,7 @@ async def test_abort_if_already_setup_opp, client_single):
     assert result["reason"] == "already_configured"
 
 
-async def test_options_flow.opp: OpenPeerPowerType):
+async def test_options_flow(opp: OpenPeerPowerType):
     """Test config flow options."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,

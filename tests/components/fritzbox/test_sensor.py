@@ -26,7 +26,7 @@ from tests.common import async_fire_time_changed
 ENTITY_ID = f"{DOMAIN}.fake_name"
 
 
-async def setup_fritzbox.opp: OpenPeerPowerType, config: dict):
+async def setup_fritzbox(opp: OpenPeerPowerType, config: dict):
     """Set up mock AVM Fritz!Box."""
     assert await async_setup_component(opp, FB_DOMAIN, config)
     await opp.async_block_till_done()
@@ -48,7 +48,7 @@ async def test_setup_opp: OpenPeerPowerType, fritz: Mock):
     assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == TEMP_CELSIUS
 
 
-async def test_update.opp: OpenPeerPowerType, fritz: Mock):
+async def test_update(opp: OpenPeerPowerType, fritz: Mock):
     """Test update with error."""
     device = FritzDeviceSensorMock()
     fritz().get_devices.return_value = [device]

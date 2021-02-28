@@ -33,7 +33,7 @@ _LOGGER = logging.getLogger(__name__)
 TEST_CONFIG = {"name": "test", "longitude": "17.84197", "latitude": "59.32624"}
 
 
-async def test_setup_opp.opp: OpenPeerPower, aioclient_mock) -> None:
+async def test_setup_opp(opp: OpenPeerPower, aioclient_mock) -> None:
     """Test for successfully setting up the smhi platform.
 
     This test are deeper integrated with the core. Since only
@@ -75,7 +75,7 @@ async def test_setup_opp.opp: OpenPeerPower, aioclient_mock) -> None:
     assert forecast[ATTR_FORECAST_CONDITION] == "partlycloudy"
 
 
-def test_properties_no_data.opp: OpenPeerPower) -> None:
+def test_properties_no_data(opp: OpenPeerPower) -> None:
     """Test properties when no API data available."""
     weather = weather_smhi.SmhiWeather("name", "10", "10")
     weather.opp = opp

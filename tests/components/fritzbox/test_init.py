@@ -51,7 +51,7 @@ async def test_setup_duplicate_config(opp: OpenPeerPowerType, fritz: Mock, caplo
     assert "duplicate host entries found" in caplog.text
 
 
-async def test_unload_remove.opp: OpenPeerPowerType, fritz: Mock):
+async def test_unload_remove(opp: OpenPeerPowerType, fritz: Mock):
     """Test unload and remove of integration."""
     fritz().get_devices.return_value = [FritzDeviceSwitchMock()]
     entity_id = f"{SWITCH_DOMAIN}.fake_name"

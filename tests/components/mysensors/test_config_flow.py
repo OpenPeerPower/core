@@ -49,7 +49,7 @@ async def get_form(
     return result
 
 
-async def test_config_mqtt.opp: OpenPeerPowerType):
+async def test_config_mqtt(opp: OpenPeerPowerType):
     """Test configuring a mqtt gateway."""
     step = await get_form(opp, CONF_GATEWAY_TYPE_MQTT, "gw_mqtt")
     flow_id = step["flow_id"]
@@ -86,7 +86,7 @@ async def test_config_mqtt.opp: OpenPeerPowerType):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_config_serial.opp: OpenPeerPowerType):
+async def test_config_serial(opp: OpenPeerPowerType):
     """Test configuring a gateway via serial."""
     step = await get_form(opp, CONF_GATEWAY_TYPE_SERIAL, "gw_serial")
     flow_id = step["flow_id"]
@@ -125,7 +125,7 @@ async def test_config_serial.opp: OpenPeerPowerType):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_config_tcp.opp: OpenPeerPowerType):
+async def test_config_tcp(opp: OpenPeerPowerType):
     """Test configuring a gateway via tcp."""
     step = await get_form(opp, CONF_GATEWAY_TYPE_TCP, "gw_tcp")
     flow_id = step["flow_id"]
@@ -161,7 +161,7 @@ async def test_config_tcp.opp: OpenPeerPowerType):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_fail_to_connect.opp: OpenPeerPowerType):
+async def test_fail_to_connect(opp: OpenPeerPowerType):
     """Test configuring a gateway via tcp."""
     step = await get_form(opp, CONF_GATEWAY_TYPE_TCP, "gw_tcp")
     flow_id = step["flow_id"]
@@ -417,7 +417,7 @@ async def test_config_invalid(
         },
     ],
 )
-async def test_import.opp: OpenPeerPowerType, user_input: Dict):
+async def test_import(opp: OpenPeerPowerType, user_input: Dict):
     """Test importing a gateway."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 

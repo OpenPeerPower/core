@@ -55,7 +55,7 @@ from tests.common import MockConfigEntry
         ),
     ],
 )
-async def test_setups.opp: OpenPeerPower, protocol, connection, title):
+async def test_setups(opp: OpenPeerPower, protocol, connection, title):
     """Test flow for setting up the available AlarmDecoder protocols."""
 
     result = await opp.config_entries.flow.async_init(
@@ -130,7 +130,7 @@ async def test_setup_connection_error(opp: OpenPeerPower):
         assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_options_arm_flow.opp: OpenPeerPower):
+async def test_options_arm_flow(opp: OpenPeerPower):
     """Test arm options flow."""
     user_input = {
         CONF_ALT_NIGHT_MODE: True,
@@ -171,7 +171,7 @@ async def test_options_arm_flow.opp: OpenPeerPower):
     }
 
 
-async def test_options_zone_flow.opp: OpenPeerPower):
+async def test_options_zone_flow(opp: OpenPeerPower):
     """Test options flow for adding/deleting zones."""
     zone_number = "2"
     zone_settings = {CONF_ZONE_NAME: "Front Entry", CONF_ZONE_TYPE: DEVICE_CLASS_WINDOW}
@@ -247,7 +247,7 @@ async def test_options_zone_flow.opp: OpenPeerPower):
     }
 
 
-async def test_options_zone_flow_validation.opp: OpenPeerPower):
+async def test_options_zone_flow_validation(opp: OpenPeerPower):
     """Test input validation for zone options flow."""
     zone_number = "2"
     zone_settings = {CONF_ZONE_NAME: "Front Entry", CONF_ZONE_TYPE: DEVICE_CLASS_WINDOW}

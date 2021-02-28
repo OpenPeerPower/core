@@ -11,7 +11,7 @@ from tests.common import MockConfigEntry
 PATH_HOMEKIT = "openpeerpower.components.homekit"
 
 
-async def async_init_integration.opp: OpenPeerPower) -> MockConfigEntry:
+async def async_init_integration(opp: OpenPeerPower) -> MockConfigEntry:
     """Set up the homekit integration in Open Peer Power."""
 
     with patch(f"{PATH_HOMEKIT}.HomeKit.async_start"):
@@ -24,7 +24,7 @@ async def async_init_integration.opp: OpenPeerPower) -> MockConfigEntry:
         return entry
 
 
-async def async_init_entry.opp: OpenPeerPower, entry: MockConfigEntry):
+async def async_init_entry(opp: OpenPeerPower, entry: MockConfigEntry):
     """Set up the homekit integration in Open Peer Power."""
 
     with patch(f"{PATH_HOMEKIT}.HomeKit.async_start"):

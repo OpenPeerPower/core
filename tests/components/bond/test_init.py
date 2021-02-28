@@ -37,7 +37,7 @@ async def test_async_setup_no_domain_config(opp: OpenPeerPower):
     assert result is True
 
 
-async def test_async_setup_raises_entry_not_ready.opp: OpenPeerPower):
+async def test_async_setup_raises_entry_not_ready(opp: OpenPeerPower):
     """Test that it throws ConfigEntryNotReady when exception occurs during setup."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -50,7 +50,7 @@ async def test_async_setup_raises_entry_not_ready.opp: OpenPeerPower):
     assert config_entry.state == ENTRY_STATE_SETUP_RETRY
 
 
-async def test_async_setup_entry_sets_up_hub_and_supported_domains.opp: OpenPeerPower):
+async def test_async_setup_entry_sets_up_hub_and_supported_domains(opp: OpenPeerPower):
     """Test that configuring entry sets up cover domain."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -93,7 +93,7 @@ async def test_async_setup_entry_sets_up_hub_and_supported_domains.opp: OpenPeer
     assert len(mock_switch_async_setup_entry.mock_calls) == 1
 
 
-async def test_unload_config_entry.opp: OpenPeerPower):
+async def test_unload_config_entry(opp: OpenPeerPower):
     """Test that configuration entry supports unloading."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -118,7 +118,7 @@ async def test_unload_config_entry.opp: OpenPeerPower):
     assert config_entry.state == ENTRY_STATE_NOT_LOADED
 
 
-async def test_old_identifiers_are_removed.opp: OpenPeerPower):
+async def test_old_identifiers_are_removed(opp: OpenPeerPower):
     """Test we remove the old non-unique identifiers."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -167,7 +167,7 @@ async def test_old_identifiers_are_removed.opp: OpenPeerPower):
     assert device_registry.async_get_device(identifiers={new_identifiers}) is not None
 
 
-async def test_smart_by_bond_device_suggested_area.opp: OpenPeerPower):
+async def test_smart_by_bond_device_suggested_area(opp: OpenPeerPower):
     """Test we can setup a smart by bond device and get the suggested area."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -210,7 +210,7 @@ async def test_smart_by_bond_device_suggested_area.opp: OpenPeerPower):
     assert device.suggested_area == "Den"
 
 
-async def test_bridge_device_suggested_area.opp: OpenPeerPower):
+async def test_bridge_device_suggested_area(opp: OpenPeerPower):
     """Test we can setup a bridge bond device and get the suggested area."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,

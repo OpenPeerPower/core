@@ -43,7 +43,7 @@ def async_get_device(state=Dyson360EyeMode.FULL_CLEAN_RUNNING) -> Dyson360Eye:
     return async_get_360eye_device(state)
 
 
-async def test_state.opp: OpenPeerPower, device: Dyson360Eye) -> None:
+async def test_state(opp: OpenPeerPower, device: Dyson360Eye) -> None:
     """Test the state of the vacuum."""
     er = await entity_registry.async_get_registry(opp)
     assert er.async_get(ENTITY_ID).unique_id == SERIAL
@@ -99,7 +99,7 @@ async def test_commands(
     getattr(device, command).assert_called_once_with()
 
 
-async def test_set_fan_speed.opp: OpenPeerPower, device: Dyson360Eye):
+async def test_set_fan_speed(opp: OpenPeerPower, device: Dyson360Eye):
     """Test setting fan speed of the vacuum."""
     fan_speed_map = {
         "Max": PowerMode.MAX,

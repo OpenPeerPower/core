@@ -12,7 +12,7 @@ from tests.components.huisbaasje.test_data import (
 )
 
 
-async def test_setup_entry.opp: OpenPeerPower):
+async def test_setup_entry(opp: OpenPeerPower):
     """Test for successfully loading sensor states."""
     with patch(
         "huisbaasje.Huisbaasje.authenticate", return_value=None
@@ -69,7 +69,7 @@ async def test_setup_entry.opp: OpenPeerPower):
         assert len(mock_current_measurements.mock_calls) == 1
 
 
-async def test_setup_entry_absent_measurement.opp: OpenPeerPower):
+async def test_setup_entry_absent_measurement(opp: OpenPeerPower):
     """Test for successfully loading sensor states when response does not contain all measurements."""
     with patch(
         "huisbaasje.Huisbaasje.authenticate", return_value=None

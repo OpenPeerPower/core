@@ -18,7 +18,7 @@ from openpeerpower.helpers.typing import OpenPeerPowerType
         ("/dev/ttyACM0", False),
     ],
 )
-def test_is_serial_port_windows.opp: OpenPeerPowerType, port: str, expect_valid: bool):
+def test_is_serial_port_windows(opp: OpenPeerPowerType, port: str, expect_valid: bool):
     """Test windows serial port."""
 
     with patch("sys.platform", "win32"):

@@ -43,7 +43,7 @@ def mock_dummy_device_from_host():
         yield device
 
 
-async def test_config_entry_not_ready.opp: OpenPeerPowerType) -> None:
+async def test_config_entry_not_ready(opp: OpenPeerPowerType) -> None:
     """Test the WiLight configuration entry not ready."""
     entry = await setup_integration(opp)
 

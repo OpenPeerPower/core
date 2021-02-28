@@ -43,7 +43,7 @@ def mock_keenetic_connect_failed():
         yield
 
 
-async def test_flow_works.opp: OpenPeerPowerType, connect):
+async def test_flow_works(opp: OpenPeerPowerType, connect):
     """Test config flow."""
 
     result = await opp.config_entries.flow.async_init(
@@ -70,7 +70,7 @@ async def test_flow_works.opp: OpenPeerPowerType, connect):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_import_works.opp: OpenPeerPowerType, connect):
+async def test_import_works(opp: OpenPeerPowerType, connect):
     """Test config flow."""
 
     with patch(

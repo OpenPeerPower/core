@@ -25,7 +25,7 @@ async def test_setup_opp: OpenPeerPower):
     assert huisbaasje.DOMAIN in opp.config.components
 
 
-async def test_setup_entry.opp: OpenPeerPower):
+async def test_setup_entry(opp: OpenPeerPower):
     """Test for successfully setting a config entry."""
     with patch(
         "huisbaasje.Huisbaasje.authenticate", return_value=None
@@ -108,7 +108,7 @@ async def test_setup_entry_error(opp: OpenPeerPower):
         assert len(mock_authenticate.mock_calls) == 1
 
 
-async def test_unload_entry.opp: OpenPeerPower):
+async def test_unload_entry(opp: OpenPeerPower):
     """Test for successfully unloading the config entry."""
     with patch(
         "huisbaasje.Huisbaasje.authenticate", return_value=None

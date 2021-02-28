@@ -146,7 +146,7 @@ async def test_sensors(
 
 
 @pytest.mark.parametrize("device", [DysonPureCoolLink], indirect=True)
-async def test_sensors_off.opp: OpenPeerPower, device: DysonPureCoolLink) -> None:
+async def test_sensors_off(opp: OpenPeerPower, device: DysonPureCoolLink) -> None:
     """Test the case where temperature and humidity are not available."""
     device.environmental_state.temperature = 0
     device.environmental_state.humidity = 0

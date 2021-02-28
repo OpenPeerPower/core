@@ -24,7 +24,7 @@ def generic_device(name: str):
     return {"name": name, "type": DeviceType.GENERIC_DEVICE}
 
 
-async def test_entity_registry.opp: core.OpenPeerPower):
+async def test_entity_registry(opp: core.OpenPeerPower):
     """Tests that the devices are registered in the entity registry."""
     await setup_platform(
         opp,
@@ -39,7 +39,7 @@ async def test_entity_registry.opp: core.OpenPeerPower):
     assert entity.unique_id == "test-hub-id_test-device-id"
 
 
-async def test_turn_on_switch.opp: core.OpenPeerPower):
+async def test_turn_on_switch(opp: core.OpenPeerPower):
     """Tests that turn on command delegates to API."""
     await setup_platform(
         opp. SWITCH_DOMAIN, generic_device("name-1"), bond_device_id="test-device-id"
@@ -57,7 +57,7 @@ async def test_turn_on_switch.opp: core.OpenPeerPower):
     mock_turn_on.assert_called_once_with("test-device-id", Action.turn_on())
 
 
-async def test_turn_off_switch.opp: core.OpenPeerPower):
+async def test_turn_off_switch(opp: core.OpenPeerPower):
     """Tests that turn off command delegates to API."""
     await setup_platform(
         opp. SWITCH_DOMAIN, generic_device("name-1"), bond_device_id="test-device-id"
@@ -75,7 +75,7 @@ async def test_turn_off_switch.opp: core.OpenPeerPower):
     mock_turn_off.assert_called_once_with("test-device-id", Action.turn_off())
 
 
-async def test_update_reports_switch_is_on.opp: core.OpenPeerPower):
+async def test_update_reports_switch_is_on(opp: core.OpenPeerPower):
     """Tests that update command sets correct state when Bond API reports the device is on."""
     await setup_platform(opp, SWITCH_DOMAIN, generic_device("name-1"))
 
@@ -86,7 +86,7 @@ async def test_update_reports_switch_is_on.opp: core.OpenPeerPower):
     assert opp.states.get("switch.name_1").state == "on"
 
 
-async def test_update_reports_switch_is_off.opp: core.OpenPeerPower):
+async def test_update_reports_switch_is_off(opp: core.OpenPeerPower):
     """Tests that update command sets correct state when Bond API reports the device is off."""
     await setup_platform(opp, SWITCH_DOMAIN, generic_device("name-1"))
 
@@ -97,7 +97,7 @@ async def test_update_reports_switch_is_off.opp: core.OpenPeerPower):
     assert opp.states.get("switch.name_1").state == "off"
 
 
-async def test_switch_available.opp: core.OpenPeerPower):
+async def test_switch_available(opp: core.OpenPeerPower):
     """Tests that available state is updated based on API errors."""
     await help_test_entity_available(
         opp. SWITCH_DOMAIN, generic_device("name-1"), "switch.name_1"

@@ -728,7 +728,7 @@ async def test_sending_mqtt_commands_and_optimistic(opp, mqtt_mock):
             "payload_off": "off",
         }
     }
-    fake_state = op.State(
+    fake_state = opp.State(
         "light.test",
         "on",
         {
@@ -1304,7 +1304,7 @@ async def test_update_with_json_attrs_not_dict(opp, mqtt_mock, caplog):
     )
 
 
-async def test_update_with_json_attrs_bad_JSON.opp, mqtt_mock, caplog):
+async def test_update_with_json_attrs_bad_JSON(opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_bad_JSON(
         opp, mqtt_mock, caplog, light.DOMAIN, DEFAULT_CONFIG
@@ -1970,7 +1970,7 @@ async def test_reloadable(opp, mqtt_mock):
         "fixtures",
         "mqtt/configuration.yaml",
     )
-    with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
+    with patch.object(opp_config, "YAML_CONFIG_FILE", yaml_path):
         await opp.services.async_call(
             "mqtt",
             SERVICE_RELOAD,

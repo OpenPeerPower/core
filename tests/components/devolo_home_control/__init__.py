@@ -6,7 +6,7 @@ from openpeerpower.core import OpenPeerPower
 from tests.common import MockConfigEntry
 
 
-def configure_integration.opp: OpenPeerPower) -> MockConfigEntry:
+def configure_integration(opp: OpenPeerPower) -> MockConfigEntry:
     """Configure the integration."""
     config = {
         "username": "test-username",

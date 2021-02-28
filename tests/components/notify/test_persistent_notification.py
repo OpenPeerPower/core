@@ -5,7 +5,7 @@ from openpeerpower.core import OpenPeerPower
 from openpeerpower.setup import async_setup_component
 
 
-async def test_async_send_message.opp: OpenPeerPower):
+async def test_async_send_message(opp: OpenPeerPower):
     """Test sending a message to notify.persistent_notification service."""
     await async_setup_component(opp, pn.DOMAIN, {"core": {}})
     await async_setup_component(opp, notify.DOMAIN, {})

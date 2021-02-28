@@ -52,7 +52,7 @@ def mock_dummy_get_components_from_model_wrong():
         yield components
 
 
-async def test_show_ssdp_form.opp: OpenPeerPowerType) -> None:
+async def test_show_ssdp_form(opp: OpenPeerPowerType) -> None:
     """Test that the ssdp confirmation form is served."""
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO_P_B.copy()
@@ -120,7 +120,7 @@ async def test_ssdp_not_supported_abort(
     assert result["reason"] == "not_supported_device"
 
 
-async def test_ssdp_device_exists_abort.opp: OpenPeerPowerType) -> None:
+async def test_ssdp_device_exists_abort(opp: OpenPeerPowerType) -> None:
     """Test abort SSDP flow if WiLight already configured."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -145,7 +145,7 @@ async def test_ssdp_device_exists_abort.opp: OpenPeerPowerType) -> None:
     assert result["reason"] == "already_configured"
 
 
-async def test_full_ssdp_flow_implementation.opp: OpenPeerPowerType) -> None:
+async def test_full_ssdp_flow_implementation(opp: OpenPeerPowerType) -> None:
     """Test the full SSDP flow from start to finish."""
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO_P_B.copy()

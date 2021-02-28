@@ -305,7 +305,7 @@ def get_config_entries_for_user_id(
     )
 
 
-def async_get_flow_for_user_id.opp: OpenPeerPower, user_id: int) -> List[dict]:
+def async_get_flow_for_user_id(opp: OpenPeerPower, user_id: int) -> List[dict]:
     """Get a flow for a user id."""
     return [
         flow

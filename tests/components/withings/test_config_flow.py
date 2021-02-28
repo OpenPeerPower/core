@@ -18,7 +18,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import MockConfigEntry
 
 
-async def test_config_non_unique_profile.opp: OpenPeerPower) -> None:
+async def test_config_non_unique_profile(opp: OpenPeerPower) -> None:
     """Test setup a non-unique profile."""
     config_entry = MockConfigEntry(
         domain=const.DOMAIN, data={const.PROFILE: "person0"}, unique_id="0"

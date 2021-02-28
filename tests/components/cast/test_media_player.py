@@ -181,7 +181,7 @@ async def async_setup_cast_internal_discovery(opp, config=None):
     return discover_chromecast, remove_chromecast, add_entities
 
 
-async def async_setup_media_player_cast.opp: OpenPeerPowerType, info: ChromecastInfo):
+async def async_setup_media_player_cast(opp: OpenPeerPowerType, info: ChromecastInfo):
     """Set up the cast platform with async_setup_component."""
     listener = MagicMock(services={})
     browser = MagicMock(zc={})
@@ -625,7 +625,7 @@ async def test_update_cast_chromecasts(opp):
     assert add_dev1.call_count == 1
 
 
-async def test_entity_availability.opp: OpenPeerPowerType):
+async def test_entity_availability(opp: OpenPeerPowerType):
     """Test handling of connection status."""
     entity_id = "media_player.speaker"
     info = get_fake_chromecast_info()
@@ -651,7 +651,7 @@ async def test_entity_availability.opp: OpenPeerPowerType):
     assert state.state == "unavailable"
 
 
-async def test_entity_cast_status.opp: OpenPeerPowerType):
+async def test_entity_cast_status(opp: OpenPeerPowerType):
     """Test handling of cast status."""
     entity_id = "media_player.speaker"
     reg = await opp.helpers.entity_registry.async_get_registry()
@@ -720,7 +720,7 @@ async def test_entity_cast_status.opp: OpenPeerPowerType):
     )
 
 
-async def test_entity_play_media.opp: OpenPeerPowerType):
+async def test_entity_play_media(opp: OpenPeerPowerType):
     """Test playing media."""
     entity_id = "media_player.speaker"
     reg = await opp.helpers.entity_registry.async_get_registry()
@@ -749,7 +749,7 @@ async def test_entity_play_media.opp: OpenPeerPowerType):
     chromecast.media_controller.play_media.assert_called_once_with("best.mp3", "audio")
 
 
-async def test_entity_play_media_cast.opp: OpenPeerPowerType, quick_play_mock):
+async def test_entity_play_media_cast(opp: OpenPeerPowerType, quick_play_mock):
     """Test playing media with cast special features."""
     entity_id = "media_player.speaker"
     reg = await opp.helpers.entity_registry.async_get_registry()
@@ -855,7 +855,7 @@ async def test_entity_play_media_sign_URL.opp: OpenPeerPowerType):
     )
 
 
-async def test_entity_media_content_type.opp: OpenPeerPowerType):
+async def test_entity_media_content_type(opp: OpenPeerPowerType):
     """Test various content types."""
     entity_id = "media_player.speaker"
     reg = await opp.helpers.entity_registry.async_get_registry()
@@ -909,7 +909,7 @@ async def test_entity_media_content_type.opp: OpenPeerPowerType):
     assert state.attributes.get("media_content_type") == "movie"
 
 
-async def test_entity_control.opp: OpenPeerPowerType):
+async def test_entity_control(opp: OpenPeerPowerType):
     """Test various device and media controls."""
     entity_id = "media_player.speaker"
     reg = await opp.helpers.entity_registry.async_get_registry()
@@ -1018,7 +1018,7 @@ async def test_entity_control.opp: OpenPeerPowerType):
     chromecast.media_controller.seek.assert_called_once_with(123)
 
 
-async def test_entity_media_states.opp: OpenPeerPowerType):
+async def test_entity_media_states(opp: OpenPeerPowerType):
     """Test various entity media states."""
     entity_id = "media_player.speaker"
     reg = await opp.helpers.entity_registry.async_get_registry()
@@ -1318,7 +1318,7 @@ async def test_failed_cast_tts_base_url(opp, caplog):
     )
 
 
-async def test_disconnect_on_stop.opp: OpenPeerPowerType):
+async def test_disconnect_on_stop(opp: OpenPeerPowerType):
     """Test cast device disconnects socket on stop."""
     info = get_fake_chromecast_info()
 
@@ -1376,7 +1376,7 @@ async def test_entry_setup_list_config(opp: OpenPeerPowerType):
     assert mock_setup.mock_calls[1][1][1] == {"uuid": "blu"}
 
 
-async def test_entry_setup_platform_not_ready.opp: OpenPeerPowerType):
+async def test_entry_setup_platform_not_ready(opp: OpenPeerPowerType):
     """Test failed setting up entry will raise PlatformNotReady."""
     await async_setup_component(
         opp. "cast", {"cast": {"media_player": {"uuid": "bla"}}}

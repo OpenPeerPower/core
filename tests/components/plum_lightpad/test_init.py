@@ -44,7 +44,7 @@ async def test_async_setup_imports_from_config(opp: OpenPeerPower):
     assert len(mock_async_setup_entry.mock_calls) == 1
 
 
-async def test_async_setup_entry_sets_up_light.opp: OpenPeerPower):
+async def test_async_setup_entry_sets_up_light(opp: OpenPeerPower):
     """Test that configuring entry sets up light domain."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,

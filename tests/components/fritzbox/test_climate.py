@@ -47,7 +47,7 @@ from tests.common import async_fire_time_changed
 ENTITY_ID = f"{DOMAIN}.fake_name"
 
 
-async def setup_fritzbox.opp: OpenPeerPowerType, config: dict):
+async def setup_fritzbox(opp: OpenPeerPowerType, config: dict):
     """Set up mock AVM Fritz!Box."""
     assert await async_setup_component(opp, FB_DOMAIN, config) is True
     await opp.async_block_till_done()
@@ -80,7 +80,7 @@ async def test_setup_opp: OpenPeerPowerType, fritz: Mock):
     assert state.state == HVAC_MODE_HEAT
 
 
-async def test_target_temperature_on.opp: OpenPeerPowerType, fritz: Mock):
+async def test_target_temperature_on(opp: OpenPeerPowerType, fritz: Mock):
     """Test turn device on."""
     device = FritzDeviceClimateMock()
     fritz().get_devices.return_value = [device]
@@ -92,7 +92,7 @@ async def test_target_temperature_on.opp: OpenPeerPowerType, fritz: Mock):
     assert state.attributes[ATTR_TEMPERATURE] == 30
 
 
-async def test_target_temperature_off.opp: OpenPeerPowerType, fritz: Mock):
+async def test_target_temperature_off(opp: OpenPeerPowerType, fritz: Mock):
     """Test turn device on."""
     device = FritzDeviceClimateMock()
     fritz().get_devices.return_value = [device]
@@ -104,7 +104,7 @@ async def test_target_temperature_off.opp: OpenPeerPowerType, fritz: Mock):
     assert state.attributes[ATTR_TEMPERATURE] == 0
 
 
-async def test_update.opp: OpenPeerPowerType, fritz: Mock):
+async def test_update(opp: OpenPeerPowerType, fritz: Mock):
     """Test update with error."""
     device = FritzDeviceClimateMock()
     fritz().get_devices.return_value = [device]
@@ -150,7 +150,7 @@ async def test_update_error(opp: OpenPeerPowerType, fritz: Mock):
     assert fritz().login.call_count == 2
 
 
-async def test_set_temperature_temperature.opp: OpenPeerPowerType, fritz: Mock):
+async def test_set_temperature_temperature(opp: OpenPeerPowerType, fritz: Mock):
     """Test setting temperature by temperature."""
     device = FritzDeviceClimateMock()
     fritz().get_devices.return_value = [device]
@@ -166,7 +166,7 @@ async def test_set_temperature_temperature.opp: OpenPeerPowerType, fritz: Mock):
     assert device.set_target_temperature.call_args_list == [call(123)]
 
 
-async def test_set_temperature_mode_off.opp: OpenPeerPowerType, fritz: Mock):
+async def test_set_temperature_mode_off(opp: OpenPeerPowerType, fritz: Mock):
     """Test setting temperature by mode."""
     device = FritzDeviceClimateMock()
     fritz().get_devices.return_value = [device]
@@ -186,7 +186,7 @@ async def test_set_temperature_mode_off.opp: OpenPeerPowerType, fritz: Mock):
     assert device.set_target_temperature.call_args_list == [call(0)]
 
 
-async def test_set_temperature_mode_heat.opp: OpenPeerPowerType, fritz: Mock):
+async def test_set_temperature_mode_heat(opp: OpenPeerPowerType, fritz: Mock):
     """Test setting temperature by mode."""
     device = FritzDeviceClimateMock()
     fritz().get_devices.return_value = [device]
@@ -206,7 +206,7 @@ async def test_set_temperature_mode_heat.opp: OpenPeerPowerType, fritz: Mock):
     assert device.set_target_temperature.call_args_list == [call(22)]
 
 
-async def test_set_hvac_mode_off.opp: OpenPeerPowerType, fritz: Mock):
+async def test_set_hvac_mode_off(opp: OpenPeerPowerType, fritz: Mock):
     """Test setting hvac mode."""
     device = FritzDeviceClimateMock()
     fritz().get_devices.return_value = [device]
@@ -222,7 +222,7 @@ async def test_set_hvac_mode_off.opp: OpenPeerPowerType, fritz: Mock):
     assert device.set_target_temperature.call_args_list == [call(0)]
 
 
-async def test_set_hvac_mode_heat.opp: OpenPeerPowerType, fritz: Mock):
+async def test_set_hvac_mode_heat(opp: OpenPeerPowerType, fritz: Mock):
     """Test setting hvac mode."""
     device = FritzDeviceClimateMock()
     fritz().get_devices.return_value = [device]
@@ -238,7 +238,7 @@ async def test_set_hvac_mode_heat.opp: OpenPeerPowerType, fritz: Mock):
     assert device.set_target_temperature.call_args_list == [call(22)]
 
 
-async def test_set_preset_mode_comfort.opp: OpenPeerPowerType, fritz: Mock):
+async def test_set_preset_mode_comfort(opp: OpenPeerPowerType, fritz: Mock):
     """Test setting preset mode."""
     device = FritzDeviceClimateMock()
     fritz().get_devices.return_value = [device]
@@ -254,7 +254,7 @@ async def test_set_preset_mode_comfort.opp: OpenPeerPowerType, fritz: Mock):
     assert device.set_target_temperature.call_args_list == [call(22)]
 
 
-async def test_set_preset_mode_eco.opp: OpenPeerPowerType, fritz: Mock):
+async def test_set_preset_mode_eco(opp: OpenPeerPowerType, fritz: Mock):
     """Test setting preset mode."""
     device = FritzDeviceClimateMock()
     fritz().get_devices.return_value = [device]
@@ -270,7 +270,7 @@ async def test_set_preset_mode_eco.opp: OpenPeerPowerType, fritz: Mock):
     assert device.set_target_temperature.call_args_list == [call(16)]
 
 
-async def test_preset_mode_update.opp: OpenPeerPowerType, fritz: Mock):
+async def test_preset_mode_update(opp: OpenPeerPowerType, fritz: Mock):
     """Test preset mode."""
     device = FritzDeviceClimateMock()
     device.comfort_temperature = 98

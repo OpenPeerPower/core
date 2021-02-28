@@ -239,7 +239,7 @@ def _assert_source_list_with_apps(
     assert attr["source_list"] == list_to_test
 
 
-async def _test_setup_failure.opp: OpenPeerPowerType, config: str) -> None:
+async def _test_setup_failure(opp: OpenPeerPowerType, config: str) -> None:
     """Test generic Vizio entity setup failure."""
     with patch(
         "openpeerpower.components.vizio.media_player.VizioAsync.can_connect_with_auth_check",

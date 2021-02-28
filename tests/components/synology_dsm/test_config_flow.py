@@ -114,7 +114,7 @@ def mock_controller_service_failed():
         yield service_mock
 
 
-async def test_user.opp: OpenPeerPowerType, service: MagicMock):
+async def test_user(opp: OpenPeerPowerType, service: MagicMock):
     """Test user config."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=None
@@ -220,7 +220,7 @@ async def test_user_2sa.opp: OpenPeerPowerType, service_2sa: MagicMock):
     assert result["data"].get(CONF_VOLUMES) is None
 
 
-async def test_user_vdsm.opp: OpenPeerPowerType, service_vdsm: MagicMock):
+async def test_user_vdsm(opp: OpenPeerPowerType, service_vdsm: MagicMock):
     """Test user config."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=None
@@ -256,7 +256,7 @@ async def test_user_vdsm.opp: OpenPeerPowerType, service_vdsm: MagicMock):
     assert result["data"].get(CONF_VOLUMES) is None
 
 
-async def test_import.opp: OpenPeerPowerType, service: MagicMock):
+async def test_import(opp: OpenPeerPowerType, service: MagicMock):
     """Test import step."""
     # import with minimum setup
     result = await opp.config_entries.flow.async_init(
@@ -336,7 +336,7 @@ async def test_abort_if_already_setup_opp: OpenPeerPowerType, service: MagicMock
     assert result["reason"] == "already_configured"
 
 
-async def test_login_failed.opp: OpenPeerPowerType, service: MagicMock):
+async def test_login_failed(opp: OpenPeerPowerType, service: MagicMock):
     """Test when we have errors during login."""
     service.return_value.login = Mock(
         side_effect=(SynologyDSMLoginInvalidException(USERNAME))
@@ -351,7 +351,7 @@ async def test_login_failed.opp: OpenPeerPowerType, service: MagicMock):
     assert result["errors"] == {CONF_USERNAME: "invalid_auth"}
 
 
-async def test_connection_failed.opp: OpenPeerPowerType, service: MagicMock):
+async def test_connection_failed(opp: OpenPeerPowerType, service: MagicMock):
     """Test when we have errors during connection."""
     service.return_value.login = Mock(
         side_effect=SynologyDSMRequestException(IOError("arg"))
@@ -367,7 +367,7 @@ async def test_connection_failed.opp: OpenPeerPowerType, service: MagicMock):
     assert result["errors"] == {CONF_HOST: "cannot_connect"}
 
 
-async def test_unknown_failed.opp: OpenPeerPowerType, service: MagicMock):
+async def test_unknown_failed(opp: OpenPeerPowerType, service: MagicMock):
     """Test when we have an unknown error."""
     service.return_value.login = Mock(side_effect=SynologyDSMException(None, None))
 
@@ -423,7 +423,7 @@ async def test_form_ssdp_already_configured(
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
 
-async def test_form_ssdp.opp: OpenPeerPowerType, service: MagicMock):
+async def test_form_ssdp(opp: OpenPeerPowerType, service: MagicMock):
     """Test we can setup from ssdp."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -459,7 +459,7 @@ async def test_form_ssdp.opp: OpenPeerPowerType, service: MagicMock):
     assert result["data"].get(CONF_VOLUMES) is None
 
 
-async def test_options_flow.opp: OpenPeerPowerType, service: MagicMock):
+async def test_options_flow(opp: OpenPeerPowerType, service: MagicMock):
     """Test config flow options."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
