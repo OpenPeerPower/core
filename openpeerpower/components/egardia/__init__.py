@@ -127,13 +127,13 @@ def setup(opp, config):
             return False
 
     discovery.load_platform(
-        opp. "alarm_control_panel", DOMAIN, discovered=conf, opp_config=config
+        opp, "alarm_control_panel", DOMAIN, discovered=conf, opp_config=config
     )
 
     # Get the sensors from the device and add those
     sensors = device.getsensors()
     discovery.load_platform(
-        opp. "binary_sensor", DOMAIN, {ATTR_DISCOVER_DEVICES: sensors}, config
+        opp, "binary_sensor", DOMAIN, {ATTR_DISCOVER_DEVICES: sensors}, config
     )
 
     return True

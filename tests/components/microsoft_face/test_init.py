@@ -80,7 +80,7 @@ class TestMicrosoftFaceSetup:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self opp =get_test_open_peer_power()
+        self.opp =get_test_open_peer_power()
 
         self.config = {mf.DOMAIN: {"api_key": "12345678abcdef"}}
 

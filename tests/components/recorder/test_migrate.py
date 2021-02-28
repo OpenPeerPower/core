@@ -32,7 +32,7 @@ async def test_schema_update_calls(opp):
         wraps=migration._apply_update,
     ) as update:
         await async_setup_component(
-            opp. "recorder", {"recorder": {"db_url": "sqlite://"}}
+            opp, "recorder", {"recorder": {"db_url": "sqlite://"}}
         )
         await opp.async_block_till_done()
 
@@ -55,7 +55,7 @@ async def test_schema_migrate(opp):
         "openpeerpower.components.recorder.Recorder._setup_run"
     ) as setup_run:
         await async_setup_component(
-            opp. "recorder", {"recorder": {"db_url": "sqlite://"}}
+            opp, "recorder", {"recorder": {"db_url": "sqlite://"}}
         )
         await opp.async_block_till_done()
         assert setup_run.called

@@ -149,14 +149,14 @@ async def test_track_state_change_from_to_state_match(opp):
         no_to_from_specified_runs.append(1)
 
     async_track_state_change(
-        opp. "light.Bowl", from_and_to_state_callback, "on", "off"
+        opp, "light.Bowl", from_and_to_state_callback, "on", "off"
     )
     async_track_state_change(opp, "light.Bowl", only_from_state_callback, "on", None)
     async_track_state_change(
-        opp. "light.Bowl", only_to_state_callback, None, ["off", "standby"]
+        opp, "light.Bowl", only_to_state_callback, None, ["off", "standby"]
     )
     async_track_state_change(
-        opp. "light.Bowl", match_all_callback, MATCH_ALL, MATCH_ALL
+        opp, "light.Bowl", match_all_callback, MATCH_ALL, MATCH_ALL
     )
     async_track_state_change(opp, "light.Bowl", no_to_from_specified_callback)
 
@@ -3125,7 +3125,7 @@ async def test_track_state_change_event_chain_single_entity(opp):
 
         chained_tracker_unsub.append(
             async_track_state_change_event(
-                opp. "light.bowl", chained_single_run_callback
+                opp, "light.bowl", chained_single_run_callback
             )
         )
 

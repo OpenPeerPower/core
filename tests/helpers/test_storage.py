@@ -244,7 +244,7 @@ async def test_migrator_existing_config(opp, store, opp_storage):
     """Test migrating existing config."""
     with patch("os.path.isfile", return_value=True), patch("os.remove") as mock_remove:
         data = await storage.async_migrator(
-            opp. "old-path", store, old_conf_load_func=lambda _: {"old": "config"}
+            opp, "old-path", store, old_conf_load_func=lambda _: {"old": "config"}
         )
 
     assert len(mock_remove.mock_calls) == 1

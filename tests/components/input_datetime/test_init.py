@@ -392,7 +392,7 @@ async def test_default_value(opp):
 async def test_input_datetime_context(opp, opp_admin_user):
     """Test that input_datetime context works."""
     assert await async_setup_component(
-        opp. "input_datetime", {"input_datetime": {"only_date": {"has_date": True}}}
+        opp, "input_datetime", {"input_datetime": {"only_date": {"has_date": True}}}
     )
 
     state = opp.states.get("input_datetime.only_date")

@@ -12,7 +12,7 @@ from tests.common import mock_coro
 
 async def test_scan_match_st(opp, caplog):
     """Test matching based on ST."""
-    scanner = ssdp.Scanner.opp, {"mock-domain": [{"st": "mock-st"}]})
+    scanner = ssdp.Scanner(opp, {"mock-domain": [{"st": "mock-st"}]})
 
     async def _inject_entry(*args, **kwargs):
         scanner.async_store_entry(
@@ -59,7 +59,7 @@ async def test_scan_match_upnp_devicedesc(opp, aioclient_mock, key):
 </root>
     """,
     )
-    scanner = ssdp.Scanner.opp, {"mock-domain": [{key: "Paulus"}]})
+    scanner = ssdp.Scanner(opp, {"mock-domain": [{key: "Paulus"}]})
 
     async def _inject_entry(*args, **kwargs):
         scanner.async_store_entry(
@@ -164,7 +164,7 @@ async def test_scan_not_all_match(opp, aioclient_mock):
 async def test_scan_description_fetch_fail(opp, aioclient_mock, exc):
     """Test failing to fetch description."""
     aioclient_mock.get("http://1.1.1.1", exc=exc)
-    scanner = ssdp.Scanner.opp, {})
+    scanner = ssdp.Scanner(opp, {})
 
     async def _inject_entry(*args, **kwargs):
         scanner.async_store_entry(
@@ -186,7 +186,7 @@ async def test_scan_description_parse_fail(opp, aioclient_mock):
 <root>INVALIDXML
     """,
     )
-    scanner = ssdp.Scanner.opp, {})
+    scanner = ssdp.Scanner(opp, {})
 
     async def _inject_entry(*args, **kwargs):
         scanner.async_store_entry(

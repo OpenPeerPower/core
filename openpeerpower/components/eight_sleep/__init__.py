@@ -159,13 +159,13 @@ async def async_setup(opp, config):
 
     opp.async_create_task(
         discovery.async_load_platform(
-            opp. "sensor", DOMAIN, {CONF_SENSORS: sensors}, config
+            opp, "sensor", DOMAIN, {CONF_SENSORS: sensors}, config
         )
     )
 
     opp.async_create_task(
         discovery.async_load_platform(
-            opp. "binary_sensor", DOMAIN, {CONF_BINARY_SENSORS: binary_sensors}, config
+            opp, "binary_sensor", DOMAIN, {CONF_BINARY_SENSORS: binary_sensors}, config
         )
     )
 

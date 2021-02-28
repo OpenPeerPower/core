@@ -158,7 +158,7 @@ async def test_all_commands(opp, mqtt_mock):
     mqtt_mock.async_publish.reset_mock()
 
     await common.async_send_command(
-        opp. "44 FE 93", {"key": "value"}, entity_id="vacuum.mqtttest"
+        opp, "44 FE 93", {"key": "value"}, entity_id="vacuum.mqtttest"
     )
     assert json.loads(mqtt_mock.async_publish.mock_calls[-1][1][1]) == {
         "command": "44 FE 93",
@@ -166,7 +166,7 @@ async def test_all_commands(opp, mqtt_mock):
     }
 
     await common.async_send_command(
-        opp. "44 FE 93", {"key": "value"}, entity_id="vacuum.mqtttest"
+        opp, "44 FE 93", {"key": "value"}, entity_id="vacuum.mqtttest"
     )
     assert json.loads(mqtt_mock.async_publish.mock_calls[-1][1][1]) == {
         "command": "44 FE 93",

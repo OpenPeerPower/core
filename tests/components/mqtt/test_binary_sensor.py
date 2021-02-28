@@ -176,7 +176,7 @@ async def test_expiration_on_discovery_and_discovery_update_of_binary_sensor(
     with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=now):
         async_fire_time_changed(opp, now)
         async_fire_mqtt_message(
-            opp. "openpeerpower/binary_sensor/bla/config", config_msg
+            opp, "openpeerpower/binary_sensor/bla/config", config_msg
         )
         await opp.async_block_till_done()
 
@@ -207,7 +207,7 @@ async def test_expiration_on_discovery_and_discovery_update_of_binary_sensor(
     with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=now):
         async_fire_time_changed(opp, now)
         async_fire_mqtt_message(
-            opp. "openpeerpower/binary_sensor/bla/config", config_msg
+            opp, "openpeerpower/binary_sensor/bla/config", config_msg
         )
         await opp.async_block_till_done()
 
@@ -228,7 +228,7 @@ async def test_expiration_on_discovery_and_discovery_update_of_binary_sensor(
     # Resend config message to update discovery
     with patch(("openpeerpower.helpers.event.dt_util.utcnow"), return_value=now):
         async_fire_mqtt_message(
-            opp. "openpeerpower/binary_sensor/bla/config", config_msg
+            opp, "openpeerpower/binary_sensor/bla/config", config_msg
         )
         await opp.async_block_till_done()
 

@@ -161,7 +161,7 @@ async def test_bad_import(opp):
     assert result["reason"] == "import_failed"
 
 
-async def test_abort_if_already_setup_opp):
+async def test_abort_if_already_setup(opp):
     """Test we abort if the cert is already setup."""
     MockConfigEntry(
         domain=DOMAIN,

@@ -11,7 +11,7 @@ from tests.common import async_fire_time_changed
 
 async def test_subscription_registry(opp: OpenPeerPower) -> None:
     """Test subscription registry polling."""
-    subscription_registry = SubscriptionRegistry.opp)
+    subscription_registry = SubscriptionRegistry(opp)
     # pylint: disable=protected-access
     subscription_registry.poll_server_once = poll_server_once_mock = MagicMock()
 

@@ -275,21 +275,21 @@ async def test_controlling_state_via_topic(opp, mqtt_mock):
     assert light_state.attributes["brightness"] == 100
 
     async_fire_mqtt_message(
-        opp. "test_light_rgb", '{"state":"ON", ' '"color":{"r":125,"g":125,"b":125}}'
+        opp, "test_light_rgb", '{"state":"ON", ' '"color":{"r":125,"g":125,"b":125}}'
     )
 
     light_state = opp.states.get("light.test")
     assert light_state.attributes.get("rgb_color") == (255, 255, 255)
 
     async_fire_mqtt_message(
-        opp. "test_light_rgb", '{"state":"ON", "color":{"x":0.135,"y":0.135}}'
+        opp, "test_light_rgb", '{"state":"ON", "color":{"x":0.135,"y":0.135}}'
     )
 
     light_state = opp.states.get("light.test")
     assert light_state.attributes.get("xy_color") == (0.141, 0.14)
 
     async_fire_mqtt_message(
-        opp. "test_light_rgb", '{"state":"ON", "color":{"h":180,"s":50}}'
+        opp, "test_light_rgb", '{"state":"ON", "color":{"h":180,"s":50}}'
     )
 
     light_state = opp.states.get("light.test")
@@ -311,7 +311,7 @@ async def test_controlling_state_via_topic(opp, mqtt_mock):
     assert "color_temp" not in light_state.attributes
 
     async_fire_mqtt_message(
-        opp. "test_light_rgb", '{"state":"ON", "effect":"colorloop"}'
+        opp, "test_light_rgb", '{"state":"ON", "effect":"colorloop"}'
     )
 
     light_state = opp.states.get("light.test")
@@ -405,11 +405,11 @@ async def test_sending_mqtt_commands_and_optimistic(opp, mqtt_mock):
 
     mqtt_mock.reset_mock()
     await common.async_turn_on(
-        opp. "light.test", brightness=50, xy_color=[0.123, 0.123]
+        opp, "light.test", brightness=50, xy_color=[0.123, 0.123]
     )
     await common.async_turn_on(opp, "light.test", brightness=50, hs_color=[359, 78])
     await common.async_turn_on(
-        opp. "light.test", rgb_color=[255, 128, 0], white_value=80
+        opp, "light.test", rgb_color=[255, 128, 0], white_value=80
     )
 
     mqtt_mock.async_publish.assert_has_calls(
@@ -480,11 +480,11 @@ async def test_sending_hs_color(opp, mqtt_mock):
 
     mqtt_mock.reset_mock()
     await common.async_turn_on(
-        opp. "light.test", brightness=50, xy_color=[0.123, 0.123]
+        opp, "light.test", brightness=50, xy_color=[0.123, 0.123]
     )
     await common.async_turn_on(opp, "light.test", brightness=50, hs_color=[359, 78])
     await common.async_turn_on(
-        opp. "light.test", rgb_color=[255, 128, 0], white_value=80
+        opp, "light.test", rgb_color=[255, 128, 0], white_value=80
     )
 
     mqtt_mock.async_publish.assert_has_calls(
@@ -542,11 +542,11 @@ async def test_sending_rgb_color_no_brightness(opp, mqtt_mock):
     assert state.state == STATE_OFF
 
     await common.async_turn_on(
-        opp. "light.test", brightness=50, xy_color=[0.123, 0.123]
+        opp, "light.test", brightness=50, xy_color=[0.123, 0.123]
     )
     await common.async_turn_on(opp, "light.test", brightness=50, hs_color=[359, 78])
     await common.async_turn_on(
-        opp. "light.test", rgb_color=[255, 128, 0], brightness=255
+        opp, "light.test", rgb_color=[255, 128, 0], brightness=255
     )
 
     mqtt_mock.async_publish.assert_has_calls(
@@ -596,12 +596,12 @@ async def test_sending_rgb_color_with_brightness(opp, mqtt_mock):
     assert state.state == STATE_OFF
 
     await common.async_turn_on(
-        opp. "light.test", brightness=50, xy_color=[0.123, 0.123]
+        opp, "light.test", brightness=50, xy_color=[0.123, 0.123]
     )
     await common.async_turn_on(opp, "light.test", brightness=255, hs_color=[359, 78])
     await common.async_turn_on(opp, "light.test", brightness=1)
     await common.async_turn_on(
-        opp. "light.test", rgb_color=[255, 128, 0], white_value=80
+        opp, "light.test", rgb_color=[255, 128, 0], white_value=80
     )
 
     mqtt_mock.async_publish.assert_has_calls(
@@ -666,12 +666,12 @@ async def test_sending_rgb_color_with_scaled_brightness(opp, mqtt_mock):
     assert state.state == STATE_OFF
 
     await common.async_turn_on(
-        opp. "light.test", brightness=50, xy_color=[0.123, 0.123]
+        opp, "light.test", brightness=50, xy_color=[0.123, 0.123]
     )
     await common.async_turn_on(opp, "light.test", brightness=255, hs_color=[359, 78])
     await common.async_turn_on(opp, "light.test", brightness=1)
     await common.async_turn_on(
-        opp. "light.test", rgb_color=[255, 128, 0], white_value=80
+        opp, "light.test", rgb_color=[255, 128, 0], white_value=80
     )
 
     mqtt_mock.async_publish.assert_has_calls(
@@ -735,11 +735,11 @@ async def test_sending_xy_color(opp, mqtt_mock):
     assert state.state == STATE_OFF
 
     await common.async_turn_on(
-        opp. "light.test", brightness=50, xy_color=[0.123, 0.123]
+        opp, "light.test", brightness=50, xy_color=[0.123, 0.123]
     )
     await common.async_turn_on(opp, "light.test", brightness=50, hs_color=[359, 78])
     await common.async_turn_on(
-        opp. "light.test", rgb_color=[255, 128, 0], white_value=80
+        opp, "light.test", rgb_color=[255, 128, 0], white_value=80
     )
 
     mqtt_mock.async_publish.assert_has_calls(
@@ -956,7 +956,7 @@ async def test_brightness_scale(opp, mqtt_mock):
 
     # Turn on the light with brightness
     async_fire_mqtt_message(
-        opp. "test_light_bright_scale", '{"state":"ON", "brightness": 99}'
+        opp, "test_light_bright_scale", '{"state":"ON", "brightness": 99}'
     )
 
     state = opp.states.get("light.test")
@@ -1064,7 +1064,7 @@ async def test_invalid_values(opp, mqtt_mock):
 
     # Bad brightness values
     async_fire_mqtt_message(
-        opp. "test_light_rgb", '{"state":"ON",' '"brightness": "badValue"}'
+        opp, "test_light_rgb", '{"state":"ON",' '"brightness": "badValue"}'
     )
 
     # Brightness should not have changed
@@ -1074,7 +1074,7 @@ async def test_invalid_values(opp, mqtt_mock):
 
     # Bad white value
     async_fire_mqtt_message(
-        opp. "test_light_rgb", '{"state":"ON",' '"white_value": "badValue"}'
+        opp, "test_light_rgb", '{"state":"ON",' '"white_value": "badValue"}'
     )
 
     # White value should not have changed
@@ -1084,7 +1084,7 @@ async def test_invalid_values(opp, mqtt_mock):
 
     # Bad color temperature
     async_fire_mqtt_message(
-        opp. "test_light_rgb", '{"state":"ON",' '"color_temp": "badValue"}'
+        opp, "test_light_rgb", '{"state":"ON",' '"color_temp": "badValue"}'
     )
 
     # Color temperature should not have changed

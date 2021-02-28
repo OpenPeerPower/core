@@ -202,7 +202,7 @@ async def async_setup_media_player_cast(opp: OpenPeerPowerType, info: Chromecast
         return_value=zconf,
     ):
         await async_setup_component(
-            opp. "cast", {"cast": {"media_player": {"uuid": info.uuid}}}
+            opp, "cast", {"cast": {"media_player": {"uuid": info.uuid}}}
         )
         await opp.async_block_till_done()
 
@@ -815,7 +815,7 @@ async def test_entity_play_media_cast_invalid(opp, caplog, quick_play_mock):
 
     # Play_media - media_type cast with extra keys
     await common.async_play_media(
-        opp. "cast", '{"app_id": "abc123", "extra": "data"}', entity_id
+        opp, "cast", '{"app_id": "abc123", "extra": "data"}', entity_id
     )
     assert "Extra keys dict_keys(['extra']) were ignored" in caplog.text
     chromecast.start_app.assert_called_once_with("abc123")
@@ -1346,7 +1346,7 @@ async def test_entry_setup_no_config(opp: OpenPeerPowerType):
 async def test_entry_setup_single_config(opp: OpenPeerPowerType):
     """Test setting up entry and having a single config option."""
     await async_setup_component(
-        opp. "cast", {"cast": {"media_player": {"uuid": "bla"}}}
+        opp, "cast", {"cast": {"media_player": {"uuid": "bla"}}}
     )
     await opp.async_block_till_done()
 
@@ -1362,7 +1362,7 @@ async def test_entry_setup_single_config(opp: OpenPeerPowerType):
 async def test_entry_setup_list_config(opp: OpenPeerPowerType):
     """Test setting up entry and having multiple config options."""
     await async_setup_component(
-        opp. "cast", {"cast": {"media_player": [{"uuid": "bla"}, {"uuid": "blu"}]}}
+        opp, "cast", {"cast": {"media_player": [{"uuid": "bla"}, {"uuid": "blu"}]}}
     )
     await opp.async_block_till_done()
 
@@ -1379,7 +1379,7 @@ async def test_entry_setup_list_config(opp: OpenPeerPowerType):
 async def test_entry_setup_platform_not_ready(opp: OpenPeerPowerType):
     """Test failed setting up entry will raise PlatformNotReady."""
     await async_setup_component(
-        opp. "cast", {"cast": {"media_player": {"uuid": "bla"}}}
+        opp, "cast", {"cast": {"media_player": {"uuid": "bla"}}}
     )
     await opp.async_block_till_done()
 

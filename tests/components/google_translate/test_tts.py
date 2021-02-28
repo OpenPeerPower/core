@@ -29,7 +29,7 @@ def cleanup_cache(opp):
 
 
 @pytest.fixture
-async def calls.opp):
+async def calls(opp):
     """Mock media player calls."""
     return async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 

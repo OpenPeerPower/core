@@ -202,7 +202,7 @@ async def websocket_permit_devices(opp, connection, msg):
         connection.send_message(websocket_api.event_message(msg["id"], data))
 
     remove_dispatcher_function = async_dispatcher_connect(
-        opp. "zha_gateway_message", forward_messages
+        opp, "zha_gateway_message", forward_messages
     )
 
     @callback

@@ -361,7 +361,7 @@ async def test_restore_state(opp, monkeypatch):
     }
 
     mock_restore_cache(
-        opp. (State(f"{DOMAIN}.c1", STATE_OPEN), State(f"{DOMAIN}.c2", STATE_CLOSED))
+        opp, (State(f"{DOMAIN}.c1", STATE_OPEN), State(f"{DOMAIN}.c2", STATE_CLOSED))
     )
 
     opp.state = CoreState.starting
@@ -422,7 +422,7 @@ async def test_inverted_cover(opp, monkeypatch):
 
     # setup mocking rflink module
     event_callback, _, protocol, _ = await mock_rflink(
-        opp. config, DOMAIN, monkeypatch
+        opp, config, DOMAIN, monkeypatch
     )
 
     # test default state of cover loaded from config

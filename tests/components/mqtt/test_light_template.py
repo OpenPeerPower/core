@@ -377,7 +377,7 @@ async def test_sending_mqtt_commands_and_optimistic(opp, mqtt_mock):
 
     # Full brightness - no scaling of RGB values sent over MQTT
     await common.async_turn_on(
-        opp. "light.test", rgb_color=[255, 128, 0], white_value=80
+        opp, "light.test", rgb_color=[255, 128, 0], white_value=80
     )
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,,,80,255-128-0", 2, False
@@ -409,7 +409,7 @@ async def test_sending_mqtt_commands_and_optimistic(opp, mqtt_mock):
 
     # Half brightness - scaling of RGB values sent over MQTT
     await common.async_turn_on(
-        opp. "light.test", rgb_color=[0, 255, 128], white_value=40
+        opp, "light.test", rgb_color=[0, 255, 128], white_value=40
     )
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,,,40,0-128-64", 2, False
@@ -422,7 +422,7 @@ async def test_sending_mqtt_commands_and_optimistic(opp, mqtt_mock):
 
     # Half brightness - normalization+scaling of RGB values sent over MQTT
     await common.async_turn_on(
-        opp. "light.test", rgb_color=[0, 32, 16], white_value=40
+        opp, "light.test", rgb_color=[0, 32, 16], white_value=40
     )
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,,,40,0-128-64", 2, False
@@ -518,7 +518,7 @@ async def test_sending_mqtt_commands_non_optimistic_brightness_template(
 
     # Full brightness - no scaling of RGB values sent over MQTT
     await common.async_turn_on(
-        opp. "light.test", rgb_color=[255, 128, 0], white_value=80
+        opp, "light.test", rgb_color=[255, 128, 0], white_value=80
     )
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,,,80,255-128-0", 0, False
@@ -545,7 +545,7 @@ async def test_sending_mqtt_commands_non_optimistic_brightness_template(
 
     # Half brightness - no scaling of RGB values sent over MQTT
     await common.async_turn_on(
-        opp. "light.test", rgb_color=[0, 255, 128], white_value=40
+        opp, "light.test", rgb_color=[0, 255, 128], white_value=40
     )
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,,,40,0-255-128", 0, False
@@ -555,7 +555,7 @@ async def test_sending_mqtt_commands_non_optimistic_brightness_template(
 
     # Half brightness - normalization but no scaling of RGB values sent over MQTT
     await common.async_turn_on(
-        opp. "light.test", rgb_color=[0, 32, 16], white_value=40
+        opp, "light.test", rgb_color=[0, 32, 16], white_value=40
     )
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,,,40,0-255-127", 0, False
@@ -751,7 +751,7 @@ async def test_invalid_values(opp, mqtt_mock):
 
     # turn on the light, full white
     async_fire_mqtt_message(
-        opp. "test_light_rgb", "on,255,215,222,255-255-255,rainbow"
+        opp, "test_light_rgb", "on,255,215,222,255-255-255,rainbow"
     )
 
     state = opp.states.get("light.test")

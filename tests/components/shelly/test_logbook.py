@@ -18,7 +18,7 @@ async def test_humanify_shelly_click_event(opp, coap_wrapper):
     assert coap_wrapper
     opp.config.components.add("recorder")
     assert await async_setup_component(opp, "logbook", {})
-    entity_attr_cache = logbook.EntityAttributeCache.opp)
+    entity_attr_cache = logbook.EntityAttributeCache(opp)
 
     event1, event2 = list(
         logbook.humanify(

@@ -35,7 +35,7 @@ def entity_reg(opp):
 
 
 @pytest.fixture
-def calls.opp):
+def calls(opp):
     """Track calls to a mock service."""
     return async_mock_service(opp, "test", "automation")
 

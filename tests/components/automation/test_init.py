@@ -35,7 +35,7 @@ from tests.components.logbook.test_init import MockLazyEventPartialState
 
 
 @pytest.fixture
-def calls.opp):
+def calls(opp):
     """Track calls to a mock service."""
     return async_mock_service(opp, "test", "automation")
 

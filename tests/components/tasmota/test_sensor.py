@@ -118,7 +118,7 @@ async def test_controlling_state_via_mqtt(opp, mqtt_mock, setup_tasmota):
 
     # Test periodic state update
     async_fire_mqtt_message(
-        opp. "tasmota_49A3BC/tele/SENSOR", '{"DHT11":{"Temperature":20.5}}'
+        opp, "tasmota_49A3BC/tele/SENSOR", '{"DHT11":{"Temperature":20.5}}'
     )
     state = opp.states.get("sensor.tasmota_dht11_temperature")
     assert state.state == "20.5"
@@ -163,7 +163,7 @@ async def test_nested_sensor_state_via_mqtt(opp, mqtt_mock, setup_tasmota):
 
     # Test periodic state update
     async_fire_mqtt_message(
-        opp. "tasmota_49A3BC/tele/SENSOR", '{"TX23":{"Speed":{"Act":"12.3"}}}'
+        opp, "tasmota_49A3BC/tele/SENSOR", '{"TX23":{"Speed":{"Act":"12.3"}}}'
     )
     state = opp.states.get("sensor.tasmota_tx23_speed_act")
     assert state.state == "12.3"
@@ -208,7 +208,7 @@ async def test_indexed_sensor_state_via_mqtt(opp, mqtt_mock, setup_tasmota):
 
     # Test periodic state update
     async_fire_mqtt_message(
-        opp. "tasmota_49A3BC/tele/SENSOR", '{"ENERGY":{"TotalTariff":[1.2,3.4]}}'
+        opp, "tasmota_49A3BC/tele/SENSOR", '{"ENERGY":{"TotalTariff":[1.2,3.4]}}'
     )
     state = opp.states.get("sensor.tasmota_energy_totaltariff_1")
     assert state.state == "3.4"
@@ -259,7 +259,7 @@ async def test_status_sensor_state_via_mqtt(opp, mqtt_mock, setup_tasmota):
 
     # Test pushed state update
     async_fire_mqtt_message(
-        opp. "tasmota_49A3BC/tele/STATE", '{"Wifi":{"Signal":20.5}}'
+        opp, "tasmota_49A3BC/tele/STATE", '{"Wifi":{"Signal":20.5}}'
     )
     await opp.async_block_till_done()
     state = opp.states.get("sensor.tasmota_status")

@@ -274,7 +274,7 @@ async def test_remove_entry(opp, manager):
         ),
     )
     mock_entity_platform(
-        opp. "light.test", MockPlatform(async_setup_entry=mock_setup_entry_platform)
+        opp, "light.test", MockPlatform(async_setup_entry=mock_setup_entry_platform)
     )
     mock_entity_platform(opp, "config_flow.test", None)
 

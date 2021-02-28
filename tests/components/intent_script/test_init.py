@@ -30,7 +30,7 @@ async def test_intent_script(opp):
     )
 
     response = await intent.async_handle(
-        opp. "test", "HelloWorld", {"name": {"value": "Paulus"}}
+        opp, "test", "HelloWorld", {"name": {"value": "Paulus"}}
     )
 
     assert len(calls) == 1

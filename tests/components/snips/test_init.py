@@ -49,7 +49,7 @@ async def test_snips_config_feedback_on(opp, mqtt_mock):
     """Test Snips Config."""
     calls = async_mock_service(opp, "mqtt", "publish", MQTT_PUBLISH_SCHEMA)
     result = await async_setup_component(
-        opp. "snips", {"snips": {"feedback_sounds": True}}
+        opp, "snips", {"snips": {"feedback_sounds": True}}
     )
     assert result
     await opp.async_block_till_done()
@@ -67,7 +67,7 @@ async def test_snips_config_feedback_off(opp, mqtt_mock):
     """Test Snips Config."""
     calls = async_mock_service(opp, "mqtt", "publish", MQTT_PUBLISH_SCHEMA)
     result = await async_setup_component(
-        opp. "snips", {"snips": {"feedback_sounds": False}}
+        opp, "snips", {"snips": {"feedback_sounds": False}}
     )
     assert result
     await opp.async_block_till_done()
@@ -163,7 +163,7 @@ async def test_snips_service_intent(opp, mqtt_mock):
     """
 
     async_register(
-        opp. ServiceIntentHandler("Lights", "light", "turn_on", "Turned {} on")
+        opp, ServiceIntentHandler("Lights", "light", "turn_on", "Turned {} on")
     )
 
     async_fire_mqtt_message(opp, "hermes/intent/Lights", payload)
@@ -342,7 +342,7 @@ async def test_snips_low_probability(opp, caplog, mqtt_mock):
     """Test intent via Snips."""
     caplog.set_level(logging.WARNING)
     result = await async_setup_component(
-        opp. "snips", {"snips": {"probability_threshold": 0.5}}
+        opp, "snips", {"snips": {"probability_threshold": 0.5}}
     )
     assert result
     payload = """
@@ -422,7 +422,7 @@ async def test_snips_say(opp):
 async def test_snips_say_action(opp):
     """Test snips say_action with invalid config."""
     calls = async_mock_service(
-        opp. "snips", "say_action", snips.SERVICE_SCHEMA_SAY_ACTION
+        opp, "snips", "say_action", snips.SERVICE_SCHEMA_SAY_ACTION
     )
 
     data = {"text": "Hello", "intent_filter": ["myIntent"]}
@@ -451,7 +451,7 @@ async def test_snips_say_invalid_config(opp):
 async def test_snips_say_action_invalid(opp):
     """Test snips say_action with invalid config."""
     calls = async_mock_service(
-        opp. "snips", "say_action", snips.SERVICE_SCHEMA_SAY_ACTION
+        opp, "snips", "say_action", snips.SERVICE_SCHEMA_SAY_ACTION
     )
 
     data = {"text": "Hello", "can_be_enqueued": "notabool"}
@@ -466,7 +466,7 @@ async def test_snips_say_action_invalid(opp):
 async def test_snips_feedback_on(opp):
     """Test snips say with invalid config."""
     calls = async_mock_service(
-        opp. "snips", "feedback_on", snips.SERVICE_SCHEMA_FEEDBACK
+        opp, "snips", "feedback_on", snips.SERVICE_SCHEMA_FEEDBACK
     )
 
     data = {"site_id": "remote"}
@@ -482,7 +482,7 @@ async def test_snips_feedback_on(opp):
 async def test_snips_feedback_off(opp):
     """Test snips say with invalid config."""
     calls = async_mock_service(
-        opp. "snips", "feedback_off", snips.SERVICE_SCHEMA_FEEDBACK
+        opp, "snips", "feedback_off", snips.SERVICE_SCHEMA_FEEDBACK
     )
 
     data = {"site_id": "remote"}
@@ -498,7 +498,7 @@ async def test_snips_feedback_off(opp):
 async def test_snips_feedback_config(opp):
     """Test snips say with invalid config."""
     calls = async_mock_service(
-        opp. "snips", "feedback_on", snips.SERVICE_SCHEMA_FEEDBACK
+        opp, "snips", "feedback_on", snips.SERVICE_SCHEMA_FEEDBACK
     )
 
     data = {"site_id": "remote", "test": "test"}

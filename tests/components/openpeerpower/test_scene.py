@@ -11,9 +11,9 @@ from openpeerpower.setup import async_setup_component
 from tests.common import async_mock_service
 
 
-async def test_reload_config_service(opp,
+async def test_reload_config_service(opp):
     """Test the reload config service."""
-    assert await async_setup_component.opp."scene", {})
+    assert await async_setup_component(opp,"scene", {})
 
     test_reloaded_event = []
     opp.us.async_listen(
@@ -44,10 +44,10 @@ async def test_reload_config_service(opp,
     assert opp.tates.get("scene.bye") is not None
 
 
-async def test_apply_service(opp,
+async def test_apply_service(opp):
     """Test the apply service."""
-    assert await async_setup_component.opp."scene", {})
-    assert await async_setup_component.opp."light", {"light": {"platform": "demo"}})
+    assert await async_setup_component(opp,"scene", {})
+    assert await async_setup_component(opp,"light", {"light": {"platform": "demo"}})
     await opp.async_block_till_done()
 
     assert await opp.services.async_call(
@@ -67,7 +67,7 @@ async def test_apply_service(opp,
     assert state.state == "on"
     assert state.attributes["brightness"] == 50
 
-    turn_on_calls = async_mock_service.opp."light", "turn_on")
+    turn_on_calls = async_mock_service(opp,"light", "turn_on")
     assert await opp.services.async_call(
         "scene",
         "apply",
@@ -86,7 +86,7 @@ async def test_apply_service(opp,
     assert turn_on_calls[0].data.get("brightness") == 50
 
 
-async def test_create_service.opp.caplog):
+async def test_create_service(opp, caplog):
     """Test the create service."""
     assert await async_setup_component(
         opp,
@@ -163,9 +163,9 @@ async def test_create_service.opp.caplog):
     assert scene.attributes.get("entity_id") == ["light.kitchen"]
 
 
-async def test_snapshot_service.opp.caplog):
+async def test_snapshot_service(opp, caplog):
     """Test the snapshot option."""
-    assert await async_setup_component.opp."scene", {"scene": {}})
+    assert await async_setup_component(opp, "scene", {"scene": {}})
     await opp.async_block_till_done()
     opp.tates.async_set("light.my_light", "on", {"hs_color": (345, 75)})
     assert opp.tates.get("scene.hallo") is None
@@ -182,7 +182,7 @@ async def test_snapshot_service.opp.caplog):
     assert scene.attributes.get("entity_id") == ["light.my_light"]
 
     opp.tates.async_set("light.my_light", "off", {"hs_color": (123, 45)})
-    turn_on_calls = async_mock_service.opp."light", "turn_on")
+    turn_on_calls = async_mock_service(opp, "light", "turn_on")
     assert await opp.services.async_call(
         "scene", "turn_on", {"entity_id": "scene.hallo"}, blocking=True
     )
@@ -221,9 +221,9 @@ async def test_snapshot_service.opp.caplog):
     assert "light.bed_light" in scene.attributes.get("entity_id")
 
 
-async def test_ensure_no_intersection(opp,
+async def test_ensure_no_intersection(opp):
     """Test that entities and snapshot_entities do not overlap."""
-    assert await async_setup_component.opp."scene", {"scene": {}})
+    assert await async_setup_component(opp, "scene", {"scene": {}})
     await opp.async_block_till_done()
 
     with pytest.raises(vol.MultipleInvalid) as ex:
@@ -242,7 +242,7 @@ async def test_ensure_no_intersection(opp,
     assert opp.tates.get("scene.hallo") is None
 
 
-async def test_scenes_with_entity(opp,
+async def test_scenes_with_entity(opp):
     """Test finding scenes with a specific entity."""
     assert await async_setup_component(
         opp,
@@ -260,13 +260,13 @@ async def test_scenes_with_entity(opp,
     )
     await opp.async_block_till_done()
 
-    assert sorted(op_scene.scenes_with_entity.opp."light.kitchen")) == [
+    assert sorted(op_scene.scenes_with_entity(opp, "light.kitchen")) == [
         "scene.scene_1",
         "scene.scene_3",
     ]
 
 
-async def test_entities_in_scene(opp,
+async def test_entities_in_scene(opp):
     """Test finding entities in a scene."""
     assert await async_setup_component(
         opp,
@@ -289,10 +289,10 @@ async def test_entities_in_scene(opp,
         ("scene.scene_2", ["light.living_room"]),
         ("scene.scene_3", ["light.kitchen", "light.living_room"]),
     ):
-        assert op_scene.entities_in_scene.opp.scene_id) == entities
+        assert op_scene.entities_in_scene(opp, scene_id) == entities
 
 
-async def test_config(opp,
+async def test_config(opp):
     """Test passing config in YAML."""
     assert await async_setup_component(
         opp,
@@ -325,7 +325,7 @@ async def test_config(opp,
 
 def test_validator():
     """Test validators."""
-    parsed = op.scene.STATES_SCHEMA({"light.Test": {"state": "on"}})
+    parsed = op_scene.STATES_SCHEMA({"light.Test": {"state": "on"}})
     assert len(parsed) == 1
     assert "light.test" in parsed
     assert parsed["light.test"].entity_id == "light.test"

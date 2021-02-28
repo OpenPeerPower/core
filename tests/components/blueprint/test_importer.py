@@ -160,7 +160,7 @@ async def test_fetch_blueprint_from_community_url(opp, aioclient_mock, community
         "https://community.open-peer-power.io/t/test-topic/123.json", text=community_post
     )
     imported_blueprint = await importer.fetch_blueprint_from_url(
-        opp. "https://community.open-peer-power.io/t/test-topic/123/2"
+        opp, "https://community.open-peer-power.io/t/test-topic/123/2"
     )
     assert isinstance(imported_blueprint, importer.ImportedBlueprint)
     assert imported_blueprint.blueprint.domain == "automation"

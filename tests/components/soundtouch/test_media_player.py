@@ -307,7 +307,7 @@ async def test_ensure_setup_discovery(mocked_status, mocked_volume, opp, one_dev
         "hostname": "hostname.local",
     }
     await async_load_platform(
-        opp. "media_player", DOMAIN, new_device, {"media_player": {}}
+        opp, "media_player", DOMAIN, new_device, {"media_player": {}}
     )
     await opp.async_block_till_done()
 
@@ -332,7 +332,7 @@ async def test_ensure_setup_discovery_no_duplicate(
         "hostname": "hostname.local",
     }
     await async_load_platform(
-        opp. "media_player", DOMAIN, new_device, {"media_player": DEVICE_1_CONFIG}
+        opp, "media_player", DOMAIN, new_device, {"media_player": DEVICE_1_CONFIG}
     )
     await opp.async_block_till_done()
     assert one_device.call_count == 2
@@ -345,7 +345,7 @@ async def test_ensure_setup_discovery_no_duplicate(
         "hostname": "hostname.local",
     }
     await async_load_platform(
-        opp. "media_player", DOMAIN, existing_device, {"media_player": DEVICE_1_CONFIG}
+        opp, "media_player", DOMAIN, existing_device, {"media_player": DEVICE_1_CONFIG}
     )
     await opp.async_block_till_done()
     assert one_device.call_count == 2

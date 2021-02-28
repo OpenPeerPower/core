@@ -141,7 +141,7 @@ async def test_calling_notify_from_script_loaded_from_yaml_without_title(opp, ev
         "data_template": {"message": "Test 123 {{ 2 + 2 }}\n"},
     }
     await async_setup_component(
-        opp. "script", {"script": {"test": {"sequence": step}}}
+        opp, "script", {"script": {"test": {"sequence": step}}}
     )
     await opp.services.async_call("script", "test")
     await opp.async_block_till_done()
@@ -163,7 +163,7 @@ async def test_calling_notify_from_script_loaded_from_yaml_with_title(opp, event
         "data_template": {"message": "Test 123 {{ 2 + 2 }}\n", "title": "Test"},
     }
     await async_setup_component(
-        opp. "script", {"script": {"test": {"sequence": step}}}
+        opp, "script", {"script": {"test": {"sequence": step}}}
     )
     await opp.services.async_call("script", "test")
     await opp.async_block_till_done()

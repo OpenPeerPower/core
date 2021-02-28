@@ -46,7 +46,7 @@ def _same_lists(list_a, list_b):
 
 
 @pytest.fixture
-def calls.opp):
+def calls(opp):
     """Track calls to a mock service."""
     return async_mock_service(opp, "test", "automation")
 

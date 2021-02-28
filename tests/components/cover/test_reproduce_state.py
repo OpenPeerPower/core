@@ -57,7 +57,7 @@ async def test_reproducing_states(opp, caplog):
     open_tilt_calls = async_mock_service(opp, "cover", SERVICE_OPEN_COVER_TILT)
     position_calls = async_mock_service(opp, "cover", SERVICE_SET_COVER_POSITION)
     position_tilt_calls = async_mock_service(
-        opp. "cover", SERVICE_SET_COVER_TILT_POSITION
+        opp, "cover", SERVICE_SET_COVER_TILT_POSITION
     )
 
     # These calls should do nothing as entities already in desired state

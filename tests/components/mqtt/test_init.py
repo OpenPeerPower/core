@@ -589,7 +589,7 @@ async def test_subscribe_same_topic(opp, mqtt_client_mock, mqtt_mock):
     calls_a = MagicMock()
     await mqtt.async_subscribe(opp, "test/state", calls_a)
     async_fire_mqtt_message(
-        opp. "test/state", "online"
+        opp, "test/state", "online"
     )  # Simulate a (retained) message
     await opp.async_block_till_done()
     assert calls_a.called
@@ -600,7 +600,7 @@ async def test_subscribe_same_topic(opp, mqtt_client_mock, mqtt_mock):
     calls_b = MagicMock()
     await mqtt.async_subscribe(opp, "test/state", calls_b)
     async_fire_mqtt_message(
-        opp. "test/state", "online"
+        opp, "test/state", "online"
     )  # Simulate a (retained) message
     await opp.async_block_till_done()
     assert calls_a.called

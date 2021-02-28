@@ -227,7 +227,7 @@ async def async_setup(opp, config):
     if zones:
         opp.async_create_task(
             async_load_platform(
-                opp. "binary_sensor", "envisalink", {CONF_ZONES: zones}, config
+                opp, "binary_sensor", "envisalink", {CONF_ZONES: zones}, config
             )
         )
 

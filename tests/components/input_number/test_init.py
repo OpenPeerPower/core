@@ -277,7 +277,7 @@ async def test_no_initial_state_and_no_restore_state(opp):
 async def test_input_number_context(opp, opp_admin_user):
     """Test that input_number context works."""
     assert await async_setup_component(
-        opp. "input_number", {"input_number": {"b1": {"min": 0, "max": 100}}}
+        opp, "input_number", {"input_number": {"b1": {"min": 0, "max": 100}}}
     )
 
     state = opp.states.get("input_number.b1")

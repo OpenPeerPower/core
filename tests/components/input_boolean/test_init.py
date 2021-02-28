@@ -169,7 +169,7 @@ async def test_initial_state_overrules_restore_state(opp):
 async def test_input_boolean_context(opp, opp_admin_user):
     """Test that input_boolean context works."""
     assert await async_setup_component(
-        opp. "input_boolean", {"input_boolean": {"ac": {CONF_INITIAL: True}}}
+        opp, "input_boolean", {"input_boolean": {"ac": {CONF_INITIAL: True}}}
     )
 
     state = opp.states.get("input_boolean.ac")

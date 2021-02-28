@@ -24,7 +24,7 @@ from tests.common import (
 
 
 @pytest.fixture
-def calls.opp):
+def calls(opp):
     """Track calls to a mock service."""
     return async_mock_service(opp, "test", "automation")
 
@@ -317,7 +317,7 @@ async def test_no_switches_does_not_create(opp):
     """Test if there are no switches no creation."""
     with assert_setup_component(0, "switch"):
         assert await async_setup_component(
-            opp. "switch", {"switch": {"platform": "template"}}
+            opp, "switch", {"switch": {"platform": "template"}}
         )
 
     await opp.async_block_till_done()

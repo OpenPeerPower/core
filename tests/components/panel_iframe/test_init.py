@@ -15,7 +15,7 @@ from openpeerpower.setup import async_setup_component
 async def test_wrong_config(opp, config_to_try):
     """Test setup with wrong configuration."""
     assert not await async_setup_component(
-        opp. "panel_iframe", {"panel_iframe": config_to_try}
+        opp, "panel_iframe", {"panel_iframe": config_to_try}
     )
 
 

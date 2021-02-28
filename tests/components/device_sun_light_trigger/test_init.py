@@ -103,7 +103,7 @@ async def test_lights_on_when_sun_sets(opp, scanner):
 async def test_lights_turn_off_when_everyone_leaves(opp):
     """Test lights turn off when everyone leaves the house."""
     assert await async_setup_component(
-        opp. "light", {light.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, "light", {light.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.services.async_call(
         light.DOMAIN,

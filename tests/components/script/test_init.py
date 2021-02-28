@@ -187,7 +187,7 @@ invalid_configs = [
 async def test_setup_with_invalid_configs(opp, value):
     """Test setup with invalid configs."""
     assert await async_setup_component(
-        opp. "script", {"script": value}
+        opp, "script", {"script": value}
     ), f"Script loaded with wrong config {value}"
 
     assert 0 == len(opp.states.async_entity_ids("script"))
@@ -316,7 +316,7 @@ async def test_shared_context(opp):
     opp.bus.async_listen(EVENT_SCRIPT_STARTED, run_mock)
 
     assert await async_setup_component(
-        opp. "script", {"script": {"test": {"sequence": [{"event": event}]}}}
+        opp, "script", {"script": {"test": {"sequence": [{"event": event}]}}}
     )
 
     await opp.services.async_call(

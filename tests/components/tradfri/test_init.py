@@ -19,7 +19,7 @@ async def test_config_yaml_host_not_imported(opp):
         "openpeerpower.components.tradfri.load_json", return_value={}
     ), patch.object.opp.config_entries.flow, "async_init") as mock_init:
         assert await async_setup_component(
-            opp. "tradfri", {"tradfri": {"host": "mock-host"}}
+            opp, "tradfri", {"tradfri": {"host": "mock-host"}}
         )
         await opp.async_block_till_done()
 
@@ -30,7 +30,7 @@ async def test_config_yaml_host_imported(opp):
     """Test that we import a configured host."""
     with patch("openpeerpower.components.tradfri.load_json", return_value={}):
         assert await async_setup_component(
-            opp. "tradfri", {"tradfri": {"host": "mock-host"}}
+            opp, "tradfri", {"tradfri": {"host": "mock-host"}}
         )
         await opp.async_block_till_done()
 

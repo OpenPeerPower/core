@@ -37,7 +37,7 @@ def entity_reg(opp):
 
 
 @pytest.fixture
-def calls.opp):
+def calls(opp):
     """Track calls to a mock service."""
     return async_mock_service(opp, "test", "automation")
 
@@ -118,7 +118,7 @@ async def test_get_action_capabilities(opp, device_reg, entity_reg):
     assert len(actions) == 3
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
-            opp. "action", action
+            opp, "action", action
         )
         assert capabilities == {"extra_fields": []}
 
@@ -154,7 +154,7 @@ async def test_get_action_capabilities_brightness(opp, device_reg, entity_reg):
     assert len(actions) == 5
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
-            opp. "action", action
+            opp, "action", action
         )
         if action["type"] == "turn_on":
             assert capabilities == expected_capabilities
@@ -193,7 +193,7 @@ async def test_get_action_capabilities_flash(opp, device_reg, entity_reg):
     assert len(actions) == 4
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
-            opp. "action", action
+            opp, "action", action
         )
         if action["type"] == "turn_on":
             assert capabilities == expected_capabilities

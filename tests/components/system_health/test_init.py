@@ -123,7 +123,7 @@ async def test_platform_loading(opp, opp_ws_client, aioclient_mock):
                     return_value={
                         "hello": "info",
                         "server_reachable": system_health.async_check_can_reach_url(
-                            opp. "http://example.com/status"
+                            opp, "http://example.com/status"
                         ),
                         "server_fail_reachable": system_health.async_check_can_reach_url(
                             opp,

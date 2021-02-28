@@ -917,7 +917,7 @@ async def test_yaml_updates_update_config_entry_for_name(opp, mock_zeroconf):
         mock_homekit.return_value = homekit = Mock()
         type(homekit).async_start = AsyncMock()
         assert await async_setup_component(
-            opp. "homekit", {"homekit": {CONF_NAME: BRIDGE_NAME, CONF_PORT: 12345}}
+            opp, "homekit", {"homekit": {CONF_NAME: BRIDGE_NAME, CONF_PORT: 12345}}
         )
         await opp.async_block_till_done()
 
@@ -1231,7 +1231,7 @@ async def test_reload(opp, mock_zeroconf):
         mock_homekit.return_value = homekit = Mock()
         type(homekit).async_start = AsyncMock()
         assert await async_setup_component(
-            opp. "homekit", {"homekit": {CONF_NAME: "reloadable", CONF_PORT: 12345}}
+            opp, "homekit", {"homekit": {CONF_NAME: "reloadable", CONF_PORT: 12345}}
         )
         await opp.async_block_till_done()
 

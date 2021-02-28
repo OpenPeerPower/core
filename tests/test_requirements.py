@@ -120,7 +120,7 @@ async def test_get_integration_with_requirements(opp):
     ) as mock_inst:
 
         integration = await async_get_integration_with_requirements(
-            opp. "test_component"
+            opp, "test_component"
         )
         assert integration
         assert integration.domain == "test_component"

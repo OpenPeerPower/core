@@ -16,7 +16,7 @@ from openpeerpower.const import CONF_API_KEY
 from tests.common import MockConfigEntry, mock_coro
 
 
-async def test_abort_if_already_setup_opp):
+async def test_abort_if_already_setup(opp):
     """Test we abort if ecobee is already setup."""
     flow = config_flow.EcobeeFlowHandler()
     flow.opp = opp

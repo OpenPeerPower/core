@@ -15,7 +15,7 @@ RESOURCE_EXAMPLES = [
 async def test_yaml_resources(opp, opp_ws_client):
     """Test defining resources in configuration.yaml."""
     assert await async_setup_component(
-        opp. "lovelace", {"lovelace": {"mode": "yaml", "resources": RESOURCE_EXAMPLES}}
+        opp, "lovelace", {"lovelace": {"mode": "yaml", "resources": RESOURCE_EXAMPLES}}
     )
 
     client = await opp_ws_client(opp)
@@ -34,7 +34,7 @@ async def test_yaml_resources_backwards(opp, opp_ws_client):
         return_value={"resources": RESOURCE_EXAMPLES},
     ):
         assert await async_setup_component(
-            opp. "lovelace", {"lovelace": {"mode": "yaml"}}
+            opp, "lovelace", {"lovelace": {"mode": "yaml"}}
         )
 
     client = await opp_ws_client(opp)

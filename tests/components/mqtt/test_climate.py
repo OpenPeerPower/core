@@ -662,7 +662,7 @@ async def test_get_target_temperature_low_high_with_templates(opp, mqtt_mock, ca
     assert state.attributes.get("target_temp_high") is None
 
     async_fire_mqtt_message(
-        opp. "temperature-state", '{"temp_low": "1031", "temp_high": "1032"}'
+        opp, "temperature-state", '{"temp_low": "1031", "temp_high": "1032"}'
     )
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get("target_temp_low") == 1031

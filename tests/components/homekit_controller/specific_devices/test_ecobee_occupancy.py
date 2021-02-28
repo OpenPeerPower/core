@@ -22,7 +22,7 @@ async def test_ecobee_occupancy_setup_opp):
     assert sensor.unique_id == "homekit-111111111111-56"
 
     sensor_helper = Helper(
-        opp. "binary_sensor.master_fan", pairing, accessories[0], config_entry
+        opp, "binary_sensor.master_fan", pairing, accessories[0], config_entry
     )
     sensor_state = await sensor_helper.poll_and_get_state()
     assert sensor_state.attributes["friendly_name"] == "Master Fan"

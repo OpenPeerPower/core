@@ -33,7 +33,7 @@ async def test_setup_group_with_mixed_groupable_states(opp):
     assert await async_setup_component(opp, "group", {})
 
     await group.Group.async_create_group(
-        opp. "person_and_light", ["light.Bowl", "device_tracker.Paulus"]
+        opp, "person_and_light", ["light.Bowl", "device_tracker.Paulus"]
     )
 
     await opp.async_block_till_done()
@@ -48,7 +48,7 @@ async def test_setup_group_with_a_non_existing_state(opp):
     assert await async_setup_component(opp, "group", {})
 
     grp = await group.Group.async_create_group(
-        opp. "light_and_nothing", ["light.Bowl", "non.existing"]
+        opp, "light_and_nothing", ["light.Bowl", "non.existing"]
     )
 
     assert STATE_ON == grp.state
@@ -62,7 +62,7 @@ async def test_setup_group_with_non_groupable_states(opp):
     assert await async_setup_component(opp, "group", {})
 
     grp = await group.Group.async_create_group(
-        opp. "chromecasts", ["cast.living_room", "cast.bedroom"]
+        opp, "chromecasts", ["cast.living_room", "cast.bedroom"]
     )
 
     assert grp.state is None
@@ -83,7 +83,7 @@ async def test_monitor_group(opp):
     assert await async_setup_component(opp, "group", {})
 
     test_group = await group.Group.async_create_group(
-        opp. "init_group", ["light.Bowl", "light.Ceiling"], False
+        opp, "init_group", ["light.Bowl", "light.Ceiling"], False
     )
 
     # Test if group setup in our init mode is ok
@@ -102,7 +102,7 @@ async def test_group_turns_off_if_all_off(opp):
     assert await async_setup_component(opp, "group", {})
 
     test_group = await group.Group.async_create_group(
-        opp. "init_group", ["light.Bowl", "light.Ceiling"], False
+        opp, "init_group", ["light.Bowl", "light.Ceiling"], False
     )
 
     await opp.async_block_till_done()
@@ -119,7 +119,7 @@ async def test_group_turns_on_if_all_are_off_and_one_turns_on(opp):
     assert await async_setup_component(opp, "group", {})
 
     test_group = await group.Group.async_create_group(
-        opp. "init_group", ["light.Bowl", "light.Ceiling"], False
+        opp, "init_group", ["light.Bowl", "light.Ceiling"], False
     )
 
     # Turn one on
@@ -138,7 +138,7 @@ async def test_allgroup_stays_off_if_all_are_off_and_one_turns_on(opp):
     assert await async_setup_component(opp, "group", {})
 
     test_group = await group.Group.async_create_group(
-        opp. "init_group", ["light.Bowl", "light.Ceiling"], False, mode=True
+        opp, "init_group", ["light.Bowl", "light.Ceiling"], False, mode=True
     )
 
     # Turn one on
@@ -157,7 +157,7 @@ async def test_allgroup_turn_on_if_last_turns_on(opp):
     assert await async_setup_component(opp, "group", {})
 
     test_group = await group.Group.async_create_group(
-        opp. "init_group", ["light.Bowl", "light.Ceiling"], False, mode=True
+        opp, "init_group", ["light.Bowl", "light.Ceiling"], False, mode=True
     )
 
     # Turn one on
@@ -176,7 +176,7 @@ async def test_expand_entity_ids(opp):
     assert await async_setup_component(opp, "group", {})
 
     test_group = await group.Group.async_create_group(
-        opp. "init_group", ["light.Bowl", "light.Ceiling"], False
+        opp, "init_group", ["light.Bowl", "light.Ceiling"], False
     )
 
     assert sorted(["light.ceiling", "light.bowl"]) == sorted(
@@ -192,7 +192,7 @@ async def test_expand_entity_ids_does_not_return_duplicates(opp):
     assert await async_setup_component(opp, "group", {})
 
     test_group = await group.Group.async_create_group(
-        opp. "init_group", ["light.Bowl", "light.Ceiling"], False
+        opp, "init_group", ["light.Bowl", "light.Ceiling"], False
     )
 
     assert ["light.bowl", "light.ceiling"] == sorted(
@@ -236,7 +236,7 @@ async def test_get_entity_ids(opp):
     assert await async_setup_component(opp, "group", {})
 
     test_group = await group.Group.async_create_group(
-        opp. "init_group", ["light.Bowl", "light.Ceiling"], False
+        opp, "init_group", ["light.Bowl", "light.Ceiling"], False
     )
 
     assert ["light.bowl", "light.ceiling"] == sorted(
@@ -251,7 +251,7 @@ async def test_get_entity_ids_with_domain_filter(opp):
     assert await async_setup_component(opp, "group", {})
 
     mixed_group = await group.Group.async_create_group(
-        opp. "mixed_group", ["light.Bowl", "switch.AC"], False
+        opp, "mixed_group", ["light.Bowl", "switch.AC"], False
     )
 
     assert ["switch.ac"] == group.get_entity_ids(
@@ -279,7 +279,7 @@ async def test_group_being_init_before_first_tracked_state_is_set_to_on(opp):
     assert await async_setup_component(opp, "group", {})
 
     test_group = await group.Group.async_create_group(
-        opp. "test group", ["light.not_there_1"]
+        opp, "test group", ["light.not_there_1"]
     )
 
     opp.states.async_set("light.not_there_1", STATE_ON)
@@ -298,7 +298,7 @@ async def test_group_being_init_before_first_tracked_state_is_set_to_off(opp):
     """
     assert await async_setup_component(opp, "group", {})
     test_group = await group.Group.async_create_group(
-        opp. "test group", ["light.not_there_1"]
+        opp, "test group", ["light.not_there_1"]
     )
 
     opp.states.async_set("light.not_there_1", STATE_OFF)
@@ -326,13 +326,13 @@ async def test_expand_entity_ids_expands_nested_groups(opp):
     assert await async_setup_component(opp, "group", {})
 
     await group.Group.async_create_group(
-        opp. "light", ["light.test_1", "light.test_2"]
+        opp, "light", ["light.test_1", "light.test_2"]
     )
     await group.Group.async_create_group(
-        opp. "switch", ["switch.test_1", "switch.test_2"]
+        opp, "switch", ["switch.test_1", "switch.test_2"]
     )
     await group.Group.async_create_group(
-        opp. "group_of_groups", ["group.light", "group.switch"]
+        opp, "group_of_groups", ["group.light", "group.switch"]
     )
 
     assert [
@@ -351,7 +351,7 @@ async def test_set_assumed_state_based_on_tracked(opp):
     assert await async_setup_component(opp, "group", {})
 
     test_group = await group.Group.async_create_group(
-        opp. "init_group", ["light.Bowl", "light.Ceiling", "sensor.no_exist"]
+        opp, "init_group", ["light.Bowl", "light.Ceiling", "sensor.no_exist"]
     )
 
     state = opp.states.get(test_group.entity_id)
@@ -380,7 +380,7 @@ async def test_group_updated_after_device_tracker_zone_change(opp):
     assert await async_setup_component(opp, "device_tracker", {})
 
     await group.Group.async_create_group(
-        opp. "peeps", ["device_tracker.Adam", "device_tracker.Eve"]
+        opp, "peeps", ["device_tracker.Adam", "device_tracker.Eve"]
     )
 
     opp.states.async_set("device_tracker.Adam", "cool_state_not_home")
@@ -399,7 +399,7 @@ async def test_is_on(opp):
     await opp.async_block_till_done()
 
     test_group = await group.Group.async_create_group(
-        opp. "init_group", ["light.Bowl", "light.Ceiling"], False
+        opp, "init_group", ["light.Bowl", "light.Ceiling"], False
     )
     await opp.async_block_till_done()
 
@@ -428,7 +428,7 @@ async def test_reloading_groups(opp):
     await opp.async_block_till_done()
 
     await group.Group.async_create_group(
-        opp. "all tests", ["test.one", "test.two"], user_defined=False
+        opp, "all tests", ["test.one", "test.two"], user_defined=False
     )
 
     await opp.async_block_till_done()
@@ -505,7 +505,7 @@ async def test_setup_opp):
     await opp.async_block_till_done()
 
     test_group = await group.Group.async_create_group(
-        opp. "init_group", ["light.Bowl", "light.Ceiling"], False
+        opp, "init_group", ["light.Bowl", "light.Ceiling"], False
     )
     await group.Group.async_create_group(
         opp,

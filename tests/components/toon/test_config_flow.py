@@ -41,7 +41,7 @@ async def test_abort_if_no_configuration(opp):
 
 
 async def test_full_flow_implementation(
-    opp. aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test registering an integration and finishing flow works."""
     await setup_component(opp)
@@ -75,7 +75,7 @@ async def test_full_flow_implementation(
         "&tenant_id=eneco&issuer=identity.toon.eu"
     )
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
     resp = await client.get(f"/auth/external/callback?code=abcd&state={state}")
     assert resp.status == 200
     assert resp.headers["content-type"] == "text/html; charset=utf-8"
@@ -105,7 +105,7 @@ async def test_full_flow_implementation(
 
 
 async def test_no_agreements(
-    opp. aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test abort when there are no displays."""
     await setup_component(opp)
@@ -145,7 +145,7 @@ async def test_no_agreements(
 
 
 async def test_multiple_agreements(
-    opp. aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test abort when there are no displays."""
     await setup_component(opp)
@@ -195,7 +195,7 @@ async def test_multiple_agreements(
 
 
 async def test_agreement_already_set_up(
-    opp. aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test showing display form again if display already exists."""
     await setup_component(opp)
@@ -236,7 +236,7 @@ async def test_agreement_already_set_up(
 
 
 async def test_toon_abort(
-    opp. aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test we abort on Toon error."""
     await setup_component(opp)
@@ -289,7 +289,7 @@ async def test_import(opp, current_request_with_host):
 
 
 async def test_import_migration(
-    opp. aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test if importing step with migration works."""
     old_entry = MockConfigEntry(domain=DOMAIN, unique_id=123, version=1)

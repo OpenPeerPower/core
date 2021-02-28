@@ -46,7 +46,7 @@ async def test_get_triggers(opp, coap_wrapper):
     ]
 
     triggers = await async_get_device_automations(
-        opp. "trigger", coap_wrapper.device_id
+        opp, "trigger", coap_wrapper.device_id
     )
 
     assert_lists_same(triggers, expected_triggers)

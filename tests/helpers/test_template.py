@@ -1400,7 +1400,7 @@ async def test_expand(opp):
     opp.states.async_set("test.object", "happy")
 
     info = render_to_info(
-        opp. "{{ expand('test.object') | map(attribute='entity_id') | join(', ') }}"
+        opp, "{{ expand('test.object') | map(attribute='entity_id') | join(', ') }}"
     )
     assert_result_info(info, "test.object", ["test.object"])
     assert info.rate_limit is None
@@ -1413,7 +1413,7 @@ async def test_expand(opp):
     assert info.rate_limit is None
 
     info = render_to_info(
-        opp. "{{ expand(states.group) | map(attribute='entity_id') | join(', ') }}"
+        opp, "{{ expand(states.group) | map(attribute='entity_id') | join(', ') }}"
     )
     assert_result_info(info, "", [], ["group"])
     assert info.rate_limit == template.DOMAIN_STATES_RATE_LIMIT
@@ -1430,7 +1430,7 @@ async def test_expand(opp):
     assert info.rate_limit is None
 
     info = render_to_info(
-        opp. "{{ expand(states.group) | map(attribute='entity_id') | join(', ') }}"
+        opp, "{{ expand(states.group) | map(attribute='entity_id') | join(', ') }}"
     )
     assert_result_info(info, "test.object", {"test.object"}, ["group"])
     assert info.rate_limit == template.DOMAIN_STATES_RATE_LIMIT
@@ -1457,7 +1457,7 @@ async def test_expand(opp):
     assert await async_setup_component(opp, "group", {})
     await opp.async_block_till_done()
     await group.Group.async_create_group(
-        opp. "power sensors", ["sensor.power_1", "sensor.power_2", "sensor.power_3"]
+        opp, "power sensors", ["sensor.power_1", "sensor.power_2", "sensor.power_3"]
     )
 
     info = render_to_info(
@@ -1740,7 +1740,7 @@ def test_nested_async_render_to_info_case(opp):
     opp.states.async_set("vacuum.a", "off")
 
     info = render_to_info(
-        opp. "{{ states[states['input_select.picker'].state].state }}", {}
+        opp, "{{ states[states['input_select.picker'].state].state }}", {}
     )
     assert_result_info(info, "off", {"input_select.picker", "vacuum.a"})
     assert info.rate_limit is None

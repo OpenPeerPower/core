@@ -294,7 +294,7 @@ async def test_counter_context(opp, opp_admin_user):
 async def test_counter_min(opp, opp_admin_user):
     """Test that min works."""
     assert await async_setup_component(
-        opp. "counter", {"counter": {"test": {"minimum": "0", "initial": "0"}}}
+        opp, "counter", {"counter": {"test": {"minimum": "0", "initial": "0"}}}
     )
 
     state = opp.states.get("counter.test")
@@ -329,7 +329,7 @@ async def test_counter_min(opp, opp_admin_user):
 async def test_counter_max(opp, opp_admin_user):
     """Test that max works."""
     assert await async_setup_component(
-        opp. "counter", {"counter": {"test": {"maximum": "0", "initial": "0"}}}
+        opp, "counter", {"counter": {"test": {"maximum": "0", "initial": "0"}}}
     )
 
     state = opp.states.get("counter.test")
@@ -364,7 +364,7 @@ async def test_counter_max(opp, opp_admin_user):
 async def test_configure(opp, opp_admin_user):
     """Test that setting values through configure works."""
     assert await async_setup_component(
-        opp. "counter", {"counter": {"test": {"maximum": "10", "initial": "10"}}}
+        opp, "counter", {"counter": {"test": {"maximum": "10", "initial": "10"}}}
     )
 
     state = opp.states.get("counter.test")

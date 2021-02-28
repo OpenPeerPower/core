@@ -63,7 +63,7 @@ async def test_invalid_topic(opp, mqtt_mock):
         mock_dispatcher_send = AsyncMock(return_value=None)
 
         async_fire_mqtt_message(
-            opp. "openpeerpower/binary_sensor/bla/not_config", "{}"
+            opp, "openpeerpower/binary_sensor/bla/not_config", "{}"
         )
         await opp.async_block_till_done()
         assert not mock_dispatcher_send.called
@@ -78,7 +78,7 @@ async def test_invalid_json(opp, mqtt_mock, caplog):
         mock_dispatcher_send = AsyncMock(return_value=None)
 
         async_fire_mqtt_message(
-            opp. "openpeerpower/binary_sensor/bla/config", "not json"
+            opp, "openpeerpower/binary_sensor/bla/config", "not json"
         )
         await opp.async_block_till_done()
         assert "Unable to parse JSON" in caplog.text

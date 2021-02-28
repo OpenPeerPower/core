@@ -108,7 +108,7 @@ async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
         )
 
     # Initialize the Vera controller.
-    subscription_registry = SubscriptionRegistry.opp)
+    subscription_registry = SubscriptionRegistry(opp)
     controller = veraApi.VeraController(base_url, subscription_registry)
 
     try:

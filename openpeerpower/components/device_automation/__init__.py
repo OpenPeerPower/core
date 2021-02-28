@@ -250,7 +250,7 @@ async def websocket_device_automation_get_action_capabilities(opp, connection, m
     """Handle request for device action capabilities."""
     action = msg["action"]
     capabilities = await _async_get_device_automation_capabilities(
-        opp. "action", action
+        opp, "action", action
     )
     connection.send_result(msg["id"], capabilities)
 
@@ -267,7 +267,7 @@ async def websocket_device_automation_get_condition_capabilities(opp, connection
     """Handle request for device condition capabilities."""
     condition = msg["condition"]
     capabilities = await _async_get_device_automation_capabilities(
-        opp. "condition", condition
+        opp, "condition", condition
     )
     connection.send_result(msg["id"], capabilities)
 
@@ -284,6 +284,6 @@ async def websocket_device_automation_get_trigger_capabilities(opp, connection, 
     """Handle request for device trigger capabilities."""
     trigger = msg["trigger"]
     capabilities = await _async_get_device_automation_capabilities(
-        opp. "trigger", trigger
+        opp, "trigger", trigger
     )
     connection.send_result(msg["id"], capabilities)

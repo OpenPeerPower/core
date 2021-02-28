@@ -42,20 +42,20 @@ async def test_reproducing_states(opp, caplog):
     )
 
     arm_away_calls = async_mock_service(
-        opp. "alarm_control_panel", SERVICE_ALARM_ARM_AWAY
+        opp, "alarm_control_panel", SERVICE_ALARM_ARM_AWAY
     )
     arm_custom_bypass_calls = async_mock_service(
-        opp. "alarm_control_panel", SERVICE_ALARM_ARM_CUSTOM_BYPASS
+        opp, "alarm_control_panel", SERVICE_ALARM_ARM_CUSTOM_BYPASS
     )
     arm_home_calls = async_mock_service(
-        opp. "alarm_control_panel", SERVICE_ALARM_ARM_HOME
+        opp, "alarm_control_panel", SERVICE_ALARM_ARM_HOME
     )
     arm_night_calls = async_mock_service(
-        opp. "alarm_control_panel", SERVICE_ALARM_ARM_NIGHT
+        opp, "alarm_control_panel", SERVICE_ALARM_ARM_NIGHT
     )
     disarm_calls = async_mock_service(opp, "alarm_control_panel", SERVICE_ALARM_DISARM)
     trigger_calls = async_mock_service(
-        opp. "alarm_control_panel", SERVICE_ALARM_TRIGGER
+        opp, "alarm_control_panel", SERVICE_ALARM_TRIGGER
     )
 
     # These calls should do nothing as entities already in desired state

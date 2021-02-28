@@ -18,7 +18,7 @@ from tests.components.homekit_controller.common import setup_test_component
 
 # pylint: disable=redefined-outer-name
 @pytest.fixture
-def calls.opp):
+def calls(opp):
     """Track calls to a mock service."""
     return async_mock_service(opp, "test", "automation")
 

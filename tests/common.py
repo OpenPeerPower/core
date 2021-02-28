@@ -298,7 +298,7 @@ async def async_test_open_peer_power(loop, load_registries=True):
         """Start the mocking."""
         # We only mock time during tests and we want to track tasks
         with patch("openpeerpower.core._async_create_timer"), patch.object(
-            opp. "async_stop_track_tasks"
+            opp, "async_stop_track_tasks"
         ):
             await orig_start()
 

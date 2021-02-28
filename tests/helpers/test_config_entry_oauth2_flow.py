@@ -531,7 +531,7 @@ async def test_implementation_provider(opp, local_impl):
         return provider_source.get(domain)
 
     config_entry_oauth2_flow.async_add_implementation_provider(
-        opp. "cloud", async_provide_implementation
+        opp, "cloud", async_provide_implementation
     )
 
     assert await config_entry_oauth2_flow.async_get_implementations(
@@ -541,7 +541,7 @@ async def test_implementation_provider(opp, local_impl):
     provider_source[
         mock_domain_with_impl
     ] = config_entry_oauth2_flow.LocalOAuth2Implementation(
-        opp. "cloud", CLIENT_ID, CLIENT_SECRET, AUTHORIZE_URL, TOKEN_URL
+        opp, "cloud", CLIENT_ID, CLIENT_SECRET, AUTHORIZE_URL, TOKEN_URL
     )
 
     assert await config_entry_oauth2_flow.async_get_implementations(

@@ -38,7 +38,7 @@ def entity_reg(opp):
 
 
 @pytest.fixture
-def calls.opp):
+def calls(opp):
     """Track calls to a mock service."""
     return async_mock_service(opp, "test", "automation")
 
@@ -232,7 +232,7 @@ async def test_get_trigger_capabilities(opp, device_reg, entity_reg):
     assert len(triggers) == 4
     for trigger in triggers:
         capabilities = await async_get_device_automation_capabilities(
-            opp. "trigger", trigger
+            opp, "trigger", trigger
         )
         assert capabilities == {"extra_fields": []}
 
@@ -279,7 +279,7 @@ async def test_get_trigger_capabilities_set_pos(opp, device_reg, entity_reg):
     assert len(triggers) == 5
     for trigger in triggers:
         capabilities = await async_get_device_automation_capabilities(
-            opp. "trigger", trigger
+            opp, "trigger", trigger
         )
         if trigger["type"] == "position":
             assert capabilities == expected_capabilities
@@ -329,7 +329,7 @@ async def test_get_trigger_capabilities_set_tilt_pos(opp, device_reg, entity_reg
     assert len(triggers) == 5
     for trigger in triggers:
         capabilities = await async_get_device_automation_capabilities(
-            opp. "trigger", trigger
+            opp, "trigger", trigger
         )
         if trigger["type"] == "tilt_position":
             assert capabilities == expected_capabilities

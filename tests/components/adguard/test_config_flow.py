@@ -95,7 +95,7 @@ async def test_integration_already_exists(opp):
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test.oppio_single_instance(opp):
+async def test_oppio_single_instance(opp):
     """Test we only allow a single config flow."""
     MockConfigEntry(
         domain="adguard", data={"host": "mock-adguard", "port": "3000"}

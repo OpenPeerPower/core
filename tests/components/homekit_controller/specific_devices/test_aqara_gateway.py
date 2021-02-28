@@ -40,7 +40,7 @@ async def test_aqara_gateway_setup_opp):
     assert light.unique_id == "homekit-0000000123456789-65792"
 
     light_helper = Helper(
-        opp. "light.aqara_hub_1563", pairing, accessories[0], config_entry
+        opp, "light.aqara_hub_1563", pairing, accessories[0], config_entry
     )
     light_state = await light_helper.poll_and_get_state()
     assert light_state.attributes["friendly_name"] == "Aqara Hub-1563"

@@ -507,7 +507,7 @@ async def help_test_setting_attribute_with_template(opp, mqtt_mock, domain, conf
     await opp.async_block_till_done()
 
     async_fire_mqtt_message(
-        opp. "attr-topic", json.dumps({"Timer1": {"Arm": 0, "Time": "22:18"}})
+        opp, "attr-topic", json.dumps({"Timer1": {"Arm": 0, "Time": "22:18"}})
     )
     state = opp.states.get(f"{domain}.test")
 

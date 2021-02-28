@@ -483,7 +483,7 @@ async def async_process_op_core_config(opp: OpenPeerPower, config: Dict) -> None
         )
 
         setattr(
-            opp. "auth", await auth.auth_manager_from_config(opp, auth_conf, mfa_conf)
+            opp, "auth", await auth.auth_manager_from_config(opp, auth_conf, mfa_conf)
         )
 
     await opp.config.async_load()

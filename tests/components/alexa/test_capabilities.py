@@ -659,7 +659,7 @@ async def test_report_alarm_control_panel_state(opp):
     properties.assert_equal("Alexa.SecurityPanelController", "armState", "ARMED_AWAY")
 
     properties = await reported_properties(
-        opp. "alarm_control_panel.armed_custom_bypass"
+        opp, "alarm_control_panel.armed_custom_bypass"
     )
     properties.assert_equal("Alexa.SecurityPanelController", "armState", "ARMED_STAY")
 

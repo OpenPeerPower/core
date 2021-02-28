@@ -49,7 +49,7 @@ async def test_setup_provide_implementation(opp):
     ):
         assert (
             await config_entry_oauth2_flow.async_get_implementations(
-                opp. "non_existing"
+                opp, "non_existing"
             )
             == {}
         )
@@ -58,7 +58,7 @@ async def test_setup_provide_implementation(opp):
             == {}
         )
         implementations = await config_entry_oauth2_flow.async_get_implementations(
-            opp. "test"
+            opp, "test"
         )
 
     assert "cloud" in implementations

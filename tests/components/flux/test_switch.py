@@ -122,7 +122,7 @@ async def test_invalid_config_no_lights(opp):
     """Test configuration."""
     with assert_setup_component(0, "switch"):
         assert await async_setup_component(
-            opp. "switch", {"switch": {"platform": "flux", "name": "flux"}}
+            opp, "switch", {"switch": {"platform": "flux", "name": "flux"}}
         )
         await opp.async_block_till_done()
 

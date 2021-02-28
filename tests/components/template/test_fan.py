@@ -39,7 +39,7 @@ _DIRECTION_INPUT_SELECT = "input_select.direction"
 
 
 @pytest.fixture
-def calls.opp):
+def calls(opp):
     """Track calls to a mock service."""
     return async_mock_service(opp, "test", "automation")
 
@@ -926,7 +926,7 @@ async def _register_components(opp, speed_list=None, preset_modes=None):
     """Register basic components for testing."""
     with assert_setup_component(1, "input_boolean"):
         assert await setup.async_setup_component(
-            opp. "input_boolean", {"input_boolean": {"state": None}}
+            opp, "input_boolean", {"input_boolean": {"state": None}}
         )
 
     with assert_setup_component(1, "input_number"):

@@ -49,7 +49,7 @@ async def test_notify_leaving_zone(opp):
     set_person_state("School")
 
     assert await async_setup_component(
-        opp. "zone", {"zone": {"name": "School", "latitude": 1, "longitude": 2}}
+        opp, "zone", {"zone": {"name": "School", "latitude": 1, "longitude": 2}}
     )
 
     with patch_blueprint(

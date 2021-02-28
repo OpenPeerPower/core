@@ -149,7 +149,7 @@ async def test_get_action_capabilities(opp, device_reg, entity_reg):
     assert len(actions) == 5
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
-            opp. "action", action
+            opp, "action", action
         )
         assert capabilities == expected_capabilities[action["type"]]
 
@@ -193,7 +193,7 @@ async def test_get_action_capabilities_arm_code(opp, device_reg, entity_reg):
     assert len(actions) == 5
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
-            opp. "action", action
+            opp, "action", action
         )
         assert capabilities == expected_capabilities[action["type"]]
 

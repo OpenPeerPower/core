@@ -228,7 +228,7 @@ async def test_get_action_capabilities(opp, device_reg, entity_reg):
     assert len(actions) == 3  # open, close, stop
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
-            opp. "action", action
+            opp, "action", action
         )
         assert capabilities == {"extra_fields": []}
 
@@ -268,7 +268,7 @@ async def test_get_action_capabilities_set_pos(opp, device_reg, entity_reg):
     assert len(actions) == 1  # set_position
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
-            opp. "action", action
+            opp, "action", action
         )
         if action["type"] == "set_position":
             assert capabilities == expected_capabilities
@@ -311,7 +311,7 @@ async def test_get_action_capabilities_set_tilt_pos(opp, device_reg, entity_reg)
     assert len(actions) == 4  # open, close, stop, set_tilt_position
     for action in actions:
         capabilities = await async_get_device_automation_capabilities(
-            opp. "action", action
+            opp, "action", action
         )
         if action["type"] == "set_tilt_position":
             assert capabilities == expected_capabilities

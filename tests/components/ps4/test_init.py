@@ -107,9 +107,9 @@ MOCK_GAMES = {MOCK_ID: MOCK_GAMES_DATA}
 MOCK_GAMES_LOCKED = {MOCK_ID: MOCK_GAMES_DATA_LOCKED}
 
 
-async def test_ps4_integration_setup_opp):
+async def test_ps4_integration_setup(opp):
     """Test PS4 integration is setup."""
-    await ps4.async_setup_opp, {})
+    await ps4.async_setup(opp, {})
     await opp.async_block_till_done()
     assert opp.data[PS4_DATA].protocol is not None
 
@@ -180,7 +180,7 @@ async def test_config_flow_entry_migrate(opp):
     assert mock_entry.data["devices"][0][CONF_REGION] == DEFAULT_REGION
 
 
-async def test_media_player_is_setup_opp):
+async def test_media_player_is_setup(opp):
     """Test media_player is setup correctly."""
     await setup_mock_component(opp)
     assert len(opp.data[PS4_DATA].devices) == 1

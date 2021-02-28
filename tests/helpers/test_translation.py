@@ -130,7 +130,7 @@ async def test_get_translations(opp, mock_config_flows):
 
     # Test that an untranslated language falls back to English.
     translations = await translation.async_get_translations(
-        opp. "invalid-language", "state"
+        opp, "invalid-language", "state"
     )
     assert translations["component.switch.state.string1"] == "Value 1"
     assert translations["component.switch.state.string2"] == "Value 2"
@@ -153,10 +153,10 @@ async def test_get_translations_loads_config_flows(opp, mock_config_flows):
         return_value=integration,
     ):
         translations = await translation.async_get_translations(
-            opp. "en", "title", config_flow=True
+            opp, "en", "title", config_flow=True
         )
         translations_again = await translation.async_get_translations(
-            opp. "en", "title", config_flow=True
+            opp, "en", "title", config_flow=True
         )
 
         assert translations == translations_again
@@ -182,10 +182,10 @@ async def test_get_translations_loads_config_flows(opp, mock_config_flows):
         return_value=integration,
     ):
         translations = await translation.async_get_translations(
-            opp. "en", "title", config_flow=True
+            opp, "en", "title", config_flow=True
         )
         translations_again = await translation.async_get_translations(
-            opp. "en", "title", config_flow=True
+            opp, "en", "title", config_flow=True
         )
 
         assert translations == translations_again
@@ -196,7 +196,7 @@ async def test_get_translations_loads_config_flows(opp, mock_config_flows):
     }
 
     translations_all_cached = await translation.async_get_translations(
-        opp. "en", "title", config_flow=True
+        opp, "en", "title", config_flow=True
     )
     assert translations == translations_all_cached
 
@@ -244,12 +244,12 @@ async def test_get_translation_categories(opp):
     """Test the get translations helper loads config flow translations."""
     with patch.object(translation, "async_get_config_flows", return_value={"light"}):
         translations = await translation.async_get_translations(
-            opp. "en", "title", None, True
+            opp, "en", "title", None, True
         )
         assert "component.light.title" in translations
 
         translations = await translation.async_get_translations(
-            opp. "en", "device_automation", None, True
+            opp, "en", "device_automation", None, True
         )
         assert "component.light.device_automation.action_type.turn_on" in translations
 
@@ -304,7 +304,7 @@ async def test_translation_merging_loaded_apart(opp, caplog):
     assert "component.sensor.state.moon__phase.first_quarter" in translations
 
     translations = await translation.async_get_translations(
-        opp. "en", "state", integration="sensor"
+        opp, "en", "state", integration="sensor"
     )
 
     assert "component.sensor.state.moon__phase.first_quarter" in translations
@@ -334,14 +334,14 @@ async def test_caching(opp):
             )
 
     load_sensor_only = await translation.async_get_translations(
-        opp. "en", "state", integration="sensor"
+        opp, "en", "state", integration="sensor"
     )
     assert load_sensor_only
     for key in load_sensor_only:
         assert key.startswith("component.sensor.state.")
 
     load_light_only = await translation.async_get_translations(
-        opp. "en", "state", integration="light"
+        opp, "en", "state", integration="light"
     )
     assert load_light_only
     for key in load_light_only:
@@ -355,7 +355,7 @@ async def test_caching(opp):
         side_effect=translation._build_resources,
     ) as mock_build:
         load_sensor_only = await translation.async_get_translations(
-            opp. "en", "title", integration="sensor"
+            opp, "en", "title", integration="sensor"
         )
         assert load_sensor_only
         for key in load_sensor_only:
@@ -363,12 +363,12 @@ async def test_caching(opp):
         assert len(mock_build.mock_calls) == 0
 
         assert await translation.async_get_translations(
-            opp. "en", "title", integration="sensor"
+            opp, "en", "title", integration="sensor"
         )
         assert len(mock_build.mock_calls) == 0
 
         load_light_only = await translation.async_get_translations(
-            opp. "en", "title", integration="media_player"
+            opp, "en", "title", integration="media_player"
         )
         assert load_light_only
         for key in load_light_only:

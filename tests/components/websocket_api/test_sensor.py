@@ -10,7 +10,7 @@ from .test_auth import test_auth_active_with_token
 async def test_websocket_api(opp, aiohttp_client, opp_access_token, legacy_auth):
     """Test API streams."""
     await async_setup_component(
-        opp. "sensor", {"sensor": {"platform": "websocket_api"}}
+        opp, "sensor", {"sensor": {"platform": "websocket_api"}}
     )
     await opp.async_block_till_done()
 

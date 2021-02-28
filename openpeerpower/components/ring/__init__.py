@@ -71,7 +71,7 @@ async def async_setup_entry(opp, entry):
         "api": ring,
         "devices": ring.devices(),
         "device_data": GlobalDataUpdater(
-            opp. "device", entry.entry_id, ring, "update_devices", timedelta(minutes=1)
+            opp, "device", entry.entry_id, ring, "update_devices", timedelta(minutes=1)
         ),
         "dings_data": GlobalDataUpdater(
             opp,

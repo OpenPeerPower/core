@@ -21,7 +21,7 @@ def light_mock(opp, brightness):
     """Mock light."""
     controller_mock = mock.MagicMock()
     dev_dict = {"address": "a1", "name": "fake_light", "brightness_levels": brightness}
-    return mochad.MochadLight.opp, controller_mock, dev_dict)
+    return mochad.MochadLight(opp, controller_mock, dev_dict)
 
 
 async def test_setup_adds_proper_devices(opp):
@@ -39,6 +39,8 @@ async def test_setup_adds_proper_devices(opp):
 @pytest.mark.parametrize(
     "brightness,expected", [(32, "on"), (256, "xdim 255"), (64, "xdim 63")]
 )
+
+
 async def test_turn_on_with_no_brightness(light_mock, expected):
     """Test turn_on."""
     light_mock.turn_on()

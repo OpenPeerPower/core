@@ -773,7 +773,7 @@ async def test_fetch_period_api_with_use_include_order(opp, opp_client):
     """Test the fetch period view for history with include order."""
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component(
-        opp. "history", {history.DOMAIN: {history.CONF_ORDER: True}}
+        opp, "history", {history.DOMAIN: {history.CONF_ORDER: True}}
     )
     await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
     client = await opp_client()

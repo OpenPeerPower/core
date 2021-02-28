@@ -265,7 +265,7 @@ async def test_services(opp):
 
     params = {"rotate": 150, "speed": 20}
     await common.async_send_command(
-        opp. "test_command", entity_id=ENTITY_VACUUM_BASIC, params=params
+        opp, "test_command", entity_id=ENTITY_VACUUM_BASIC, params=params
     )
     assert len(send_command_calls) == 1
     call = send_command_calls[-1]
@@ -325,7 +325,7 @@ async def test_send_command(opp):
     old_state_complete = opp.states.get(ENTITY_VACUUM_COMPLETE)
 
     await common.async_send_command(
-        opp. "test_command", params={"p1": 3}, entity_id=group_vacuums
+        opp, "test_command", params={"p1": 3}, entity_id=group_vacuums
     )
 
     new_state_basic = opp.states.get(ENTITY_VACUUM_BASIC)

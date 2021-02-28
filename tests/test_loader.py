@@ -17,7 +17,7 @@ async def test_component_dependencies(opp):
     mod_3 = mock_integration(opp, MockModule("mod3", ["mod2"]))
 
     assert {"mod1", "mod2", "mod3"} == await loader._async_component_dependencies(
-        opp. "mod_3", mod_3, set(), set()
+        opp, "mod_3", mod_3, set(), set()
     )
 
     # Create circular dependency
@@ -26,7 +26,7 @@ async def test_component_dependencies(opp):
     with pytest.raises(loader.CircularDependency):
         print(
             await loader._async_component_dependencies(
-                opp. "mod_3", mod_3, set(), set()
+                opp, "mod_3", mod_3, set(), set()
             )
         )
 
@@ -36,7 +36,7 @@ async def test_component_dependencies(opp):
     with pytest.raises(loader.IntegrationNotFound):
         print(
             await loader._async_component_dependencies(
-                opp. "mod_1", mod_1, set(), set()
+                opp, "mod_1", mod_1, set(), set()
             )
         )
 
@@ -48,7 +48,7 @@ async def test_component_dependencies(opp):
     with pytest.raises(loader.CircularDependency):
         print(
             await loader._async_component_dependencies(
-                opp. "mod_3", mod_3, set(), set()
+                opp, "mod_3", mod_3, set(), set()
             )
         )
 
@@ -140,7 +140,7 @@ async def test_log_warning_custom_component(opp, caplog):
 async def test_custom_integration_missing_version(opp, caplog):
     """Test that we log a warning when custom integrations are missing a version."""
     test_integration_1 = loader.Integration(
-        opp. "custom_components.test1", None, {"domain": "test1"}
+        opp, "custom_components.test1", None, {"domain": "test1"}
     )
     test_integration_2 = loader.Integration(
         opp,
@@ -180,7 +180,7 @@ async def test_no_version_warning_for_none_custom_integrations(opp, caplog):
 async def test_custom_integration_version_not_valid(opp, caplog):
     """Test that we log a warning when custom integrations have a invalid version."""
     test_integration = loader.Integration(
-        opp. "custom_components.test", None, {"domain": "test", "version": "test"}
+        opp, "custom_components.test", None, {"domain": "test", "version": "test"}
     )
 
     with patch("openpeerpower.loader.async_get_custom_components") as mock_get:

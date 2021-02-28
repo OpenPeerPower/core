@@ -14,7 +14,7 @@ from tests.common import async_fire_mqtt_message
 
 
 async def test_availability_poll_state_once(
-    opp. mqtt_client_mock, mqtt_mock, setup_tasmota
+    opp, mqtt_client_mock, mqtt_mock, setup_tasmota
 ):
     """Test several entities send a single message to update state."""
     config = copy.deepcopy(DEFAULT_CONFIG)
