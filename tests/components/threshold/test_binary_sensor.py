@@ -4,7 +4,7 @@ from openpeerpower.const import ATTR_UNIT_OF_MEASUREMENT, STATE_UNKNOWN, TEMP_CE
 from openpeerpower.setup import async_setup_component
 
 
-async def test_sensor_upper.opp):
+async def test_sensor_upper(opp):
     """Test if source is above threshold."""
     config = {
         "binary_sensor": {
@@ -48,7 +48,7 @@ async def test_sensor_upper.opp):
     assert state.state == "off"
 
 
-async def test_sensor_lower.opp):
+async def test_sensor_lower(opp):
     """Test if source is below threshold."""
     config = {
         "binary_sensor": {
@@ -81,7 +81,7 @@ async def test_sensor_lower.opp):
     assert state.state == "on"
 
 
-async def test_sensor_hysteresis.opp):
+async def test_sensor_hysteresis(opp):
     """Test if source is above threshold using hysteresis."""
     config = {
         "binary_sensor": {
@@ -136,7 +136,7 @@ async def test_sensor_hysteresis.opp):
     assert state.state == "on"
 
 
-async def test_sensor_in_range_no_hysteresis.opp):
+async def test_sensor_in_range_no_hysteresis(opp):
     """Test if source is within the range."""
     config = {
         "binary_sensor": {
@@ -184,7 +184,7 @@ async def test_sensor_in_range_no_hysteresis.opp):
     assert state.state == "off"
 
 
-async def test_sensor_in_range_with_hysteresis.opp):
+async def test_sensor_in_range_with_hysteresis(opp):
     """Test if source is within the range."""
     config = {
         "binary_sensor": {
@@ -283,7 +283,7 @@ async def test_sensor_in_range_with_hysteresis.opp):
     assert state.state == "on"
 
 
-async def test_sensor_in_range_unknown_state.opp):
+async def test_sensor_in_range_unknown_state(opp):
     """Test if source is within the range."""
     config = {
         "binary_sensor": {
@@ -323,7 +323,7 @@ async def test_sensor_in_range_unknown_state.opp):
     assert state.state == "off"
 
 
-async def test_sensor_lower_zero_threshold.opp):
+async def test_sensor_lower_zero_threshold(opp):
     """Test if a lower threshold of zero is set."""
     config = {
         "binary_sensor": {
@@ -354,7 +354,7 @@ async def test_sensor_lower_zero_threshold.opp):
     assert state.state == "on"
 
 
-async def test_sensor_upper_zero_threshold.opp):
+async def test_sensor_upper_zero_threshold(opp):
     """Test if an upper threshold of zero is set."""
     config = {
         "binary_sensor": {

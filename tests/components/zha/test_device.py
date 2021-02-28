@@ -227,7 +227,7 @@ async def test_ota_sw_version(opp, ota_zha_device):
     """Test device entry gets sw_version updated via OTA channel."""
 
     ota_ch = ota_zha_device.channels.pools[0].client_channels["1:0x0019"]
-    dev_registry = await ha_dev_reg.async_get_registry.opp)
+    dev_registry = await ha_dev_reg.async_get_registry(opp)
     entry = dev_registry.async_get(ota_zha_device.device_id)
     assert entry.sw_version is None
 

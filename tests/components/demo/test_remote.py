@@ -17,7 +17,7 @@ SERVICE_SEND_COMMAND = "send_command"
 
 
 @pytest.fixture(autouse=True)
-async def setup_component.opp):
+async def setup_component(opp):
     """Initialize components."""
     assert await async_setup_component(
         opp. remote.DOMAIN, {"remote": {"platform": "demo"}}
@@ -25,7 +25,7 @@ async def setup_component.opp):
     await opp.async_block_till_done()
 
 
-async def test_methods.opp):
+async def test_methods(opp):
     """Test if services call the entity methods as expected."""
     await opp.services.async_call(
         remote.DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_ID}

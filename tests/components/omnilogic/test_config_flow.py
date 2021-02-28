@@ -11,7 +11,7 @@ from tests.common import MockConfigEntry
 DATA = {"username": "test-username", "password": "test-password"}
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -42,7 +42,7 @@ async def test_form.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_already_configured.opp):
+async def test_already_configured(opp):
     """Test config flow when Omnilogic component is already setup."""
     MockConfigEntry(domain="omnilogic", data=DATA).add_to_opp(opp)
 
@@ -55,7 +55,7 @@ async def test_already_configured.opp):
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test_with_invalid_credentials.opp):
+async def test_with_invalid_credentials(opp):
     """Test with invalid credentials."""
 
     await setup.async_setup_component(opp, "persistent_notification", {})
@@ -77,7 +77,7 @@ async def test_with_invalid_credentials.opp):
     assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test if invalid response or no connection returned from Hayward."""
 
     await setup.async_setup_component(opp, "persistent_notification", {})
@@ -120,7 +120,7 @@ async def test_with_unknown_error(opp):
     assert result["errors"] == {"base": "unknown"}
 
 
-async def test_option_flow.opp):
+async def test_option_flow(opp):
     """Test option flow."""
     entry = MockConfigEntry(domain=DOMAIN, data=DATA)
     entry.add_to_opp(opp)

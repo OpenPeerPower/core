@@ -3,10 +3,10 @@
 from .util import async_init_integration
 
 
-async def test_automation_scenes.opp):
+async def test_automation_scenes(opp):
     """Test creation automation scenes."""
 
-    await async_init_integration.opp)
+    await async_init_integration(opp)
 
     state = opp.states.get("scene.away_short")
     expected_attributes = {

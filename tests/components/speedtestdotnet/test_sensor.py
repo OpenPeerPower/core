@@ -10,7 +10,7 @@ from . import MOCK_RESULTS, MOCK_SERVERS, MOCK_STATES
 from tests.common import MockConfigEntry
 
 
-async def test_speedtestdotnet_sensors.opp):
+async def test_speedtestdotnet_sensors(opp):
     """Test sensors created for speedtestdotnet integration."""
     entry = MockConfigEntry(domain=speedtestdotnet.DOMAIN, data={})
     entry.add_to_opp(opp)

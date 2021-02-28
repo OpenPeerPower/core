@@ -60,7 +60,7 @@ async def test_import_from_yaml_ffmpeg(opp, canary) -> None:
 
 async def test_unload_entry(opp, canary):
     """Test successful unload of entry."""
-    entry = await init_integration.opp)
+    entry = await init_integration(opp)
 
     assert entry
     assert len(opp.config_entries.async_entries(DOMAIN)) == 1
@@ -77,6 +77,6 @@ async def test_async_setup_raises_entry_not_ready(opp, canary):
     """Test that it throws ConfigEntryNotReady when exception occurs during setup."""
     canary.side_effect = ConnectTimeout()
 
-    entry = await init_integration.opp)
+    entry = await init_integration(opp)
     assert entry
     assert entry.state == ENTRY_STATE_SETUP_RETRY

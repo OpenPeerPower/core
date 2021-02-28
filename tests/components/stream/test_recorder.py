@@ -52,7 +52,7 @@ class SaveRecordWorkerSync:
 
 
 @pytest.fixture()
-def record_worker_sync.opp):
+def record_worker_sync(opp):
     """Patch recorder_save_worker for clean thread shutdown for test."""
     sync = SaveRecordWorkerSync()
     with patch(

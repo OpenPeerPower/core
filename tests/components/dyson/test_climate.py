@@ -99,7 +99,7 @@ def async_get_device(spec: Type[DysonDevice]) -> DysonDevice:
 )
 async def test_state_common.opp: OpenPeerPower, device: DysonDevice) -> None:
     """Test common state and attributes of two types of climate entities."""
-    er = await entity_registry.async_get_registry.opp)
+    er = await entity_registry.async_get_registry(opp)
     assert er.async_get(ENTITY_ID).unique_id == SERIAL
 
     state = opp.states.get(ENTITY_ID)

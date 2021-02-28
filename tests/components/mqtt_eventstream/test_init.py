@@ -32,7 +32,7 @@ async def add_eventstream(opp, sub_topic=None, pub_topic=None, ignore_event=None
 
 async def test_setup_succeeds(opp, mqtt_mock):
     """Test the success of the setup."""
-    assert await add_eventstream.opp)
+    assert await add_eventstream(opp)
 
 
 async def test_setup_with_pub(opp, mqtt_mock):

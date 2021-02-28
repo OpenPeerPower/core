@@ -7,7 +7,7 @@ from openpeerpower.const import __version__
 from . import DEFAULT_CONFIG, get_new_request
 
 
-async def test_unsupported_domain.opp):
+async def test_unsupported_domain(opp):
     """Discovery ignores entities of unknown domains."""
     request = get_new_request("Alexa.Discovery", "Discover")
 
@@ -21,7 +21,7 @@ async def test_unsupported_domain.opp):
     assert not msg["payload"]["endpoints"]
 
 
-async def test_serialize_discovery.opp):
+async def test_serialize_discovery(opp):
     """Test we handle an interface raising unexpectedly during serialize discovery."""
     request = get_new_request("Alexa.Discovery", "Discover")
 

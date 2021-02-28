@@ -10,10 +10,10 @@ from .mocks import _mock_powerwall_with_fixtures
 from tests.common import MockConfigEntry
 
 
-async def test_sensors.opp):
+async def test_sensors(opp):
     """Test creation of the sensors."""
 
-    mock_powerwall = await _mock_powerwall_with_fixtures.opp)
+    mock_powerwall = await _mock_powerwall_with_fixtures(opp)
 
     config_entry = MockConfigEntry(domain=DOMAIN, data={CONF_IP_ADDRESS: "1.2.3.4"})
     config_entry.add_to_opp(opp)

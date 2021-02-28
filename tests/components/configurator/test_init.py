@@ -4,7 +4,7 @@ import openpeerpower.components.configurator as configurator
 from openpeerpower.const import ATTR_FRIENDLY_NAME, EVENT_TIME_CHANGED
 
 
-async def test_request_least_info.opp):
+async def test_request_least_info(opp):
     """Test request config with least amount of data."""
     request_id = configurator.async_request_config(opp, "Test Request", lambda _: None)
 
@@ -22,7 +22,7 @@ async def test_request_least_info.opp):
     assert request_id == state.attributes.get(configurator.ATTR_CONFIGURE_ID)
 
 
-async def test_request_all_info.opp):
+async def test_request_all_info(opp):
     """Test request config with all possible info."""
     exp_attr = {
         ATTR_FRIENDLY_NAME: "Test Request",
@@ -56,7 +56,7 @@ async def test_request_all_info.opp):
     assert exp_attr == state.attributes
 
 
-async def test_callback_called_on_configure.opp):
+async def test_callback_called_on_configure(opp):
     """Test if our callback gets called when configure service called."""
     calls = []
     request_id = configurator.async_request_config(
@@ -73,7 +73,7 @@ async def test_callback_called_on_configure.opp):
     assert 1 == len(calls), "Callback not called"
 
 
-async def test_state_change_on_notify_errors.opp):
+async def test_state_change_on_notify_errors(opp):
     """Test state change on notify errors."""
     request_id = configurator.async_request_config(opp, "Test Request", lambda _: None)
     error = "Oh no bad bad bad"
@@ -85,12 +85,12 @@ async def test_state_change_on_notify_errors.opp):
     assert error == state.attributes.get(configurator.ATTR_ERRORS)
 
 
-async def test_notify_errors_fail_silently_on_bad_request_id.opp):
+async def test_notify_errors_fail_silently_on_bad_request_id(opp):
     """Test if notify errors fails silently with a bad request id."""
     configurator.async_notify_errors(opp, 2015, "Try this error")
 
 
-async def test_request_done_works.opp):
+async def test_request_done_works(opp):
     """Test if calling request done works."""
     request_id = configurator.async_request_config(opp, "Test Request", lambda _: None)
     configurator.async_request_done(opp, request_id)
@@ -101,6 +101,6 @@ async def test_request_done_works.opp):
     assert 0 == len(opp.states.async_all())
 
 
-async def test_request_done_fail_silently_on_bad_request_id.opp):
+async def test_request_done_fail_silently_on_bad_request_id(opp):
     """Test that request_done fails silently with a bad request id."""
     configurator.async_request_done(opp, 2016)

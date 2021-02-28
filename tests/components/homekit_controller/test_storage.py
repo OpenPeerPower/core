@@ -22,13 +22,13 @@ async def test_load_from_storage(opp, opp_storage):
         "data": {"pairings": {hkid: {"c#": 1, "accessories": []}}},
     }
 
-    await setup_platform.opp)
+    await setup_platform(opp)
     assert hkid in opp.data[ENTITY_MAP].storage_data
 
 
 async def test_storage_is_removed(opp, opp_storage):
     """Test entity map storage removal is idempotent."""
-    await setup_platform.opp)
+    await setup_platform(opp)
 
     entity_map = opp.data[ENTITY_MAP]
     hkid = "00:00:00:00:00:01"
@@ -45,9 +45,9 @@ async def test_storage_is_removed(opp, opp_storage):
     assert opp_storage[ENTITY_MAP]["data"]["pairings"] == {}
 
 
-async def test_storage_is_removed_idempotent.opp):
+async def test_storage_is_removed_idempotent(opp):
     """Test entity map storage removal is idempotent."""
-    await setup_platform.opp)
+    await setup_platform(opp)
 
     entity_map = opp.data[ENTITY_MAP]
     hkid = "00:00:00:00:00:01"

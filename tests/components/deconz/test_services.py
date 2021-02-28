@@ -84,38 +84,38 @@ async def test_service_setup_opp):
     with patch(
         "openpeerpower.core.ServiceRegistry.async_register", return_value=Mock(True)
     ) as async_register:
-        await async_setup_services.opp)
+        await async_setup_services(opp)
         assert opp.data[DECONZ_SERVICES] is True
         assert async_register.call_count == 3
 
 
-async def test_service_setup_already_registered.opp):
+async def test_service_setup_already_registered(opp):
     """Make sure that services are only registered once."""
     opp.data[DECONZ_SERVICES] = True
     with patch(
         "openpeerpower.core.ServiceRegistry.async_register", return_value=Mock(True)
     ) as async_register:
-        await async_setup_services.opp)
+        await async_setup_services(opp)
         async_register.assert_not_called()
 
 
-async def test_service_unload.opp):
+async def test_service_unload(opp):
     """Verify service unload works."""
     opp.data[DECONZ_SERVICES] = True
     with patch(
         "openpeerpower.core.ServiceRegistry.async_remove", return_value=Mock(True)
     ) as async_remove:
-        await async_unload_services.opp)
+        await async_unload_services(opp)
         assert opp.data[DECONZ_SERVICES] is False
         assert async_remove.call_count == 3
 
 
-async def test_service_unload_not_registered.opp):
+async def test_service_unload_not_registered(opp):
     """Make sure that services can only be unloaded once."""
     with patch(
         "openpeerpower.core.ServiceRegistry.async_remove", return_value=Mock(True)
     ) as async_remove:
-        await async_unload_services.opp)
+        await async_unload_services(opp)
         assert DECONZ_SERVICES not in opp.data
         async_remove.assert_not_called()
 

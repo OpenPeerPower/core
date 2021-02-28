@@ -49,7 +49,7 @@ RAW_DHCP_REQUEST = (
 )
 
 
-async def test_dhcp_match_hostname_and_macaddress.opp):
+async def test_dhcp_match_hostname_and_macaddress(opp):
     """Test matching based on hostname and macaddress."""
     dhcp_watcher = dhcp.DHCPWatcher(
         opp,
@@ -76,7 +76,7 @@ async def test_dhcp_match_hostname_and_macaddress.opp):
     }
 
 
-async def test_dhcp_match_hostname.opp):
+async def test_dhcp_match_hostname(opp):
     """Test matching based on hostname only."""
     dhcp_watcher = dhcp.DHCPWatcher(
         opp. {}, [{"domain": "mock-domain", "hostname": "connect"}]
@@ -99,7 +99,7 @@ async def test_dhcp_match_hostname.opp):
     }
 
 
-async def test_dhcp_match_macaddress.opp):
+async def test_dhcp_match_macaddress(opp):
     """Test matching based on macaddress only."""
     dhcp_watcher = dhcp.DHCPWatcher(
         opp. {}, [{"domain": "mock-domain", "macaddress": "B8B7F1*"}]
@@ -122,7 +122,7 @@ async def test_dhcp_match_macaddress.opp):
     }
 
 
-async def test_dhcp_nomatch.opp):
+async def test_dhcp_nomatch(opp):
     """Test not matching based on macaddress only."""
     dhcp_watcher = dhcp.DHCPWatcher(
         opp. {}, [{"domain": "mock-domain", "macaddress": "ABC123*"}]
@@ -138,7 +138,7 @@ async def test_dhcp_nomatch.opp):
     assert len(mock_init.mock_calls) == 0
 
 
-async def test_dhcp_nomatch_hostname.opp):
+async def test_dhcp_nomatch_hostname(opp):
     """Test not matching based on hostname only."""
     dhcp_watcher = dhcp.DHCPWatcher(
         opp. {}, [{"domain": "mock-domain", "hostname": "nomatch*"}]
@@ -154,7 +154,7 @@ async def test_dhcp_nomatch_hostname.opp):
     assert len(mock_init.mock_calls) == 0
 
 
-async def test_dhcp_nomatch_non_dhcp_packet.opp):
+async def test_dhcp_nomatch_non_dhcp_packet(opp):
     """Test matching does not throw on a non-dhcp packet."""
     dhcp_watcher = dhcp.DHCPWatcher(
         opp. {}, [{"domain": "mock-domain", "hostname": "nomatch*"}]
@@ -170,7 +170,7 @@ async def test_dhcp_nomatch_non_dhcp_packet.opp):
     assert len(mock_init.mock_calls) == 0
 
 
-async def test_dhcp_nomatch_non_dhcp_request_packet.opp):
+async def test_dhcp_nomatch_non_dhcp_request_packet(opp):
     """Test nothing happens with the wrong message-type."""
     dhcp_watcher = dhcp.DHCPWatcher(
         opp. {}, [{"domain": "mock-domain", "hostname": "nomatch*"}]
@@ -195,7 +195,7 @@ async def test_dhcp_nomatch_non_dhcp_request_packet.opp):
     assert len(mock_init.mock_calls) == 0
 
 
-async def test_dhcp_invalid_hostname.opp):
+async def test_dhcp_invalid_hostname(opp):
     """Test we ignore invalid hostnames."""
     dhcp_watcher = dhcp.DHCPWatcher(
         opp. {}, [{"domain": "mock-domain", "hostname": "nomatch*"}]
@@ -220,7 +220,7 @@ async def test_dhcp_invalid_hostname.opp):
     assert len(mock_init.mock_calls) == 0
 
 
-async def test_dhcp_missing_hostname.opp):
+async def test_dhcp_missing_hostname(opp):
     """Test we ignore missing hostnames."""
     dhcp_watcher = dhcp.DHCPWatcher(
         opp. {}, [{"domain": "mock-domain", "hostname": "nomatch*"}]
@@ -245,7 +245,7 @@ async def test_dhcp_missing_hostname.opp):
     assert len(mock_init.mock_calls) == 0
 
 
-async def test_dhcp_invalid_option.opp):
+async def test_dhcp_invalid_option(opp):
     """Test we ignore invalid hostname option."""
     dhcp_watcher = dhcp.DHCPWatcher(
         opp. {}, [{"domain": "mock-domain", "hostname": "nomatch*"}]
@@ -270,7 +270,7 @@ async def test_dhcp_invalid_option.opp):
     assert len(mock_init.mock_calls) == 0
 
 
-async def test_setup_and_stop.opp):
+async def test_setup_and_stop(opp):
     """Test we can setup and stop."""
 
     assert await async_setup_component(
@@ -372,7 +372,7 @@ async def test_setup_fails_with_broken_libpcap(opp, caplog):
     )
 
 
-async def test_device_tracker_hostname_and_macaddress_exists_before_start.opp):
+async def test_device_tracker_hostname_and_macaddress_exists_before_start(opp):
     """Test matching based on hostname and macaddress before start."""
     opp.states.async_set(
         "device_tracker.august_connect",
@@ -408,7 +408,7 @@ async def test_device_tracker_hostname_and_macaddress_exists_before_start.opp):
     }
 
 
-async def test_device_tracker_hostname_and_macaddress_after_start.opp):
+async def test_device_tracker_hostname_and_macaddress_after_start(opp):
     """Test matching based on hostname and macaddress after start."""
 
     with patch.object(
@@ -445,7 +445,7 @@ async def test_device_tracker_hostname_and_macaddress_after_start.opp):
     }
 
 
-async def test_device_tracker_hostname_and_macaddress_after_start_not_home.opp):
+async def test_device_tracker_hostname_and_macaddress_after_start_not_home(opp):
     """Test matching based on hostname and macaddress after start but not home."""
 
     with patch.object(
@@ -475,7 +475,7 @@ async def test_device_tracker_hostname_and_macaddress_after_start_not_home.opp):
     assert len(mock_init.mock_calls) == 0
 
 
-async def test_device_tracker_hostname_and_macaddress_after_start_not_router.opp):
+async def test_device_tracker_hostname_and_macaddress_after_start_not_router(opp):
     """Test matching based on hostname and macaddress after start but not router."""
 
     with patch.object(
@@ -536,7 +536,7 @@ async def test_device_tracker_hostname_and_macaddress_after_start_hostname_missi
     assert len(mock_init.mock_calls) == 0
 
 
-async def test_device_tracker_ignore_self_assigned_ips_before_start.opp):
+async def test_device_tracker_ignore_self_assigned_ips_before_start(opp):
     """Test matching ignores self assigned ip address."""
     opp.states.async_set(
         "device_tracker.august_connect",

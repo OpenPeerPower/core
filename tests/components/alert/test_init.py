@@ -93,7 +93,7 @@ def async_toggle(opp, entity_id):
 
 
 @pytest.fixture
-def mock_notifier.opp):
+def mock_notifier(opp):
     """Mock for notifier."""
     events = []
 
@@ -107,7 +107,7 @@ def mock_notifier.opp):
     return events
 
 
-async def test_is_on.opp):
+async def test_is_on(opp):
     """Test is_on method."""
     opp.states.async_set(ENTITY_ID, STATE_ON)
     await opp.async_block_till_done()
@@ -176,7 +176,7 @@ async def test_toggle(opp, mock_notifier):
     assert STATE_ON == opp.states.get(ENTITY_ID).state
 
 
-async def test_notification_no_done_message.opp):
+async def test_notification_no_done_message(opp):
     """Test notifications."""
     events = []
     config = deepcopy(TEST_CONFIG)
@@ -201,7 +201,7 @@ async def test_notification_no_done_message.opp):
     assert len(events) == 1
 
 
-async def test_notification.opp):
+async def test_notification(opp):
     """Test notifications."""
     events = []
 
@@ -289,7 +289,7 @@ async def test_sending_data_notification(opp, mock_notifier):
     assert last_event.data[notify.ATTR_DATA] == TEST_DATA
 
 
-async def test_skipfirst.opp):
+async def test_skipfirst(opp):
     """Test skipping first notification."""
     config = deepcopy(TEST_CONFIG)
     config[alert.DOMAIN][NAME][alert.CONF_SKIP_FIRST] = True
@@ -310,14 +310,14 @@ async def test_skipfirst.opp):
     assert len(events) == 0
 
 
-async def test_noack.opp):
+async def test_noack(opp):
     """Test no ack feature."""
     entity = alert.Alert.opp, *TEST_NOACK)
     opp.async_add_job(entity.begin_alerting)
     await opp.async_block_till_done()
 
 
-async def test_done_message_state_tracker_reset_on_cancel.opp):
+async def test_done_message_state_tracker_reset_on_cancel(opp):
     """Test that the done message is reset when canceled."""
     entity = alert.Alert.opp, *TEST_NOACK)
     entity._cancel = lambda *args: None

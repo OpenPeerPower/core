@@ -14,7 +14,7 @@ TEST_APP_USERNAME = "sluser"
 TEST_APP_PASSWORD = "slpassword"
 
 
-async def test_flow_works.opp):
+async def test_flow_works(opp):
     """Test that config flow works."""
     with requests_mock.Mocker() as mock:
         mock.get(
@@ -68,7 +68,7 @@ async def test_flow_works.opp):
         assert result["title"] == f"Application {TEST_APP_ID}"
 
 
-async def test_step_auth_app_code_falls.opp):
+async def test_step_auth_app_code_falls(opp):
     """Test config flow works when app auth code fails."""
     with requests_mock.Mocker() as mock:
         mock.get(
@@ -87,7 +87,7 @@ async def test_step_auth_app_code_falls.opp):
         assert result["errors"] == {"base": "error_auth_app"}
 
 
-async def test_step_auth_app_token_falls.opp):
+async def test_step_auth_app_token_falls(opp):
     """Test config flow works when app auth token fails."""
     with requests_mock.Mocker() as mock:
         mock.get(
@@ -110,7 +110,7 @@ async def test_step_auth_app_token_falls.opp):
         assert result["errors"] == {"base": "error_auth_app"}
 
 
-async def test_step_auth_user_falls.opp):
+async def test_step_auth_user_falls(opp):
     """Test config flow works when user fails."""
     with requests_mock.Mocker() as mock:
         mock.post("https://id.starline.ru/apiV3/user/login/", text='{"state": 0}')

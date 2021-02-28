@@ -375,7 +375,7 @@ class TestTrendBinarySensor:
         assert self.opp.states.all() == []
 
 
-async def test_reload.opp):
+async def test_reload(opp):
     """Verify we can reload trend sensors."""
     opp.states.async_set("sensor.test_state", 1234)
 

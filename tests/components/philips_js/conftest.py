@@ -12,7 +12,7 @@ from tests.common import MockConfigEntry, mock_device_registry
 
 
 @fixture(autouse=True)
-async def setup_notification.opp):
+async def setup_notification(opp):
     """Configure notification system."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -32,7 +32,7 @@ def mock_tv():
 
 
 @fixture
-async def mock_config_entry.opp):
+async def mock_config_entry(opp):
     """Get standard player."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG, title=MOCK_NAME)
     config_entry.add_to_opp(opp)
@@ -40,9 +40,9 @@ async def mock_config_entry.opp):
 
 
 @fixture
-def mock_device_reg.opp):
+def mock_device_reg(opp):
     """Get standard device."""
-    return mock_device_registry.opp)
+    return mock_device_registry(opp)
 
 
 @fixture

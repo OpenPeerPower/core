@@ -59,7 +59,7 @@ def get_mock_remote(device_info=MOCK_DEVICE_INFO):
     return mock_remote
 
 
-async def test_setup_entry_encrypted.opp):
+async def test_setup_entry_encrypted(opp):
     """Test setup with encrypted config entry."""
     mock_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -84,7 +84,7 @@ async def test_setup_entry_encrypted.opp):
         assert state.name == DEFAULT_NAME
 
 
-async def test_setup_entry_encrypted_missing_device_info.opp):
+async def test_setup_entry_encrypted_missing_device_info(opp):
     """Test setup with encrypted config entry and missing device info."""
     mock_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -112,7 +112,7 @@ async def test_setup_entry_encrypted_missing_device_info.opp):
         assert state.name == DEFAULT_NAME
 
 
-async def test_setup_entry_encrypted_missing_device_info_none.opp):
+async def test_setup_entry_encrypted_missing_device_info_none(opp):
     """Test setup with encrypted config entry and device info set to None."""
     mock_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -140,7 +140,7 @@ async def test_setup_entry_encrypted_missing_device_info_none.opp):
         assert state.name == DEFAULT_NAME
 
 
-async def test_setup_entry_unencrypted.opp):
+async def test_setup_entry_unencrypted(opp):
     """Test setup with unencrypted config entry."""
     mock_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -165,7 +165,7 @@ async def test_setup_entry_unencrypted.opp):
         assert state.name == DEFAULT_NAME
 
 
-async def test_setup_entry_unencrypted_missing_device_info.opp):
+async def test_setup_entry_unencrypted_missing_device_info(opp):
     """Test setup with unencrypted config entry and missing device info."""
     mock_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -193,7 +193,7 @@ async def test_setup_entry_unencrypted_missing_device_info.opp):
         assert state.name == DEFAULT_NAME
 
 
-async def test_setup_entry_unencrypted_missing_device_info_none.opp):
+async def test_setup_entry_unencrypted_missing_device_info_none(opp):
     """Test setup with unencrypted config entry and device info set to None."""
     mock_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -221,7 +221,7 @@ async def test_setup_entry_unencrypted_missing_device_info_none.opp):
         assert state.name == DEFAULT_NAME
 
 
-async def test_setup_config_flow_initiated.opp):
+async def test_setup_config_flow_initiated(opp):
     """Test if config flow is initiated in setup."""
     assert (
         await async_setup_component(
@@ -235,7 +235,7 @@ async def test_setup_config_flow_initiated.opp):
     assert len(opp.config_entries.flow.async_progress()) == 1
 
 
-async def test_setup_unload_entry.opp):
+async def test_setup_unload_entry(opp):
     """Test if config entry is unloaded."""
     mock_entry = MockConfigEntry(
         domain=DOMAIN, unique_id=MOCK_DEVICE_INFO[ATTR_UDN], data=MOCK_CONFIG_DATA

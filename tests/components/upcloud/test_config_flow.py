@@ -20,7 +20,7 @@ FIXTURE_USER_INPUT_OPTIONS = {
 }
 
 
-async def test_show_set_form.opp):
+async def test_show_set_form(opp):
     """Test that the setup form is served."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}, data=None
@@ -73,7 +73,7 @@ async def test_success(opp, requests_mock):
     assert result["data"][CONF_PASSWORD] == FIXTURE_USER_INPUT[CONF_PASSWORD]
 
 
-async def test_options.opp):
+async def test_options(opp):
     """Test options produce expected data."""
 
     config_entry = MockConfigEntry(

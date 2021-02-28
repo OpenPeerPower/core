@@ -8,7 +8,7 @@ from openpeerpower.components.nexia.const import DOMAIN
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -45,7 +45,7 @@ async def test_form.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_invalid_auth.opp):
+async def test_form_invalid_auth(opp):
     """Test we handle invalid auth."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -61,7 +61,7 @@ async def test_form_invalid_auth.opp):
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -101,7 +101,7 @@ async def test_form_invalid_auth_http_401.opp):
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_form_cannot_connect_not_found.opp):
+async def test_form_cannot_connect_not_found(opp):
     """Test we handle cannot connect from an http not found error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -122,7 +122,7 @@ async def test_form_cannot_connect_not_found.opp):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_broad_exception.opp):
+async def test_form_broad_exception(opp):
     """Test we handle invalid auth error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

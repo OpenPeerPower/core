@@ -29,7 +29,7 @@ async def test_setup_missing_config(opp):
     assert len(opp.states.async_all()) == 0
 
 
-async def test_setup_missing_schema.opp):
+async def test_setup_missing_schema(opp):
     """Test setup with resource missing schema."""
     assert await async_setup_component(
         opp,
@@ -41,7 +41,7 @@ async def test_setup_missing_schema.opp):
 
 
 @respx.mock
-async def test_setup_failed_connect.opp):
+async def test_setup_failed_connect(opp):
     """Test setup when connection error occurs."""
     respx.get("http://localhost").mock(side_effect=httpx.RequestError)
     assert await async_setup_component(
@@ -60,7 +60,7 @@ async def test_setup_failed_connect.opp):
 
 
 @respx.mock
-async def test_setup_timeout.opp):
+async def test_setup_timeout(opp):
     """Test setup when connection timeout occurs."""
     respx.get("http://localhost").mock(side_effect=asyncio.TimeoutError())
     assert await async_setup_component(
@@ -73,7 +73,7 @@ async def test_setup_timeout.opp):
 
 
 @respx.mock
-async def test_setup_minimum.opp):
+async def test_setup_minimum(opp):
     """Test setup with minimum configuration."""
     respx.get("http://localhost") % 200
     assert await async_setup_component(
@@ -92,7 +92,7 @@ async def test_setup_minimum.opp):
 
 
 @respx.mock
-async def test_manual_update.opp):
+async def test_manual_update(opp):
     """Test setup with minimum configuration."""
     await async_setup_component(opp, "openpeerpower", {})
     respx.get("http://localhost").respond(status_code=200, json={"data": "first"})
@@ -124,7 +124,7 @@ async def test_manual_update.opp):
 
 
 @respx.mock
-async def test_setup_minimum_resource_template.opp):
+async def test_setup_minimum_resource_template(opp):
     """Test setup with minimum configuration (resource_template)."""
     respx.get("http://localhost") % 200
     assert await async_setup_component(
@@ -142,7 +142,7 @@ async def test_setup_minimum_resource_template.opp):
 
 
 @respx.mock
-async def test_setup_duplicate_resource_template.opp):
+async def test_setup_duplicate_resource_template(opp):
     """Test setup with duplicate resources."""
     respx.get("http://localhost") % 200
     assert await async_setup_component(
@@ -161,7 +161,7 @@ async def test_setup_duplicate_resource_template.opp):
 
 
 @respx.mock
-async def test_setup_get.opp):
+async def test_setup_get(opp):
     """Test setup with valid configuration."""
     respx.get("http://localhost").respond(status_code=200, json={})
     assert await async_setup_component(
@@ -201,7 +201,7 @@ async def test_setup_get.opp):
 
 
 @respx.mock
-async def test_setup_get_digest_auth.opp):
+async def test_setup_get_digest_auth(opp):
     """Test setup with valid configuration."""
     respx.get("http://localhost").respond(status_code=200, json={})
     assert await async_setup_component(
@@ -230,7 +230,7 @@ async def test_setup_get_digest_auth.opp):
 
 
 @respx.mock
-async def test_setup_post.opp):
+async def test_setup_post(opp):
     """Test setup with valid configuration."""
     respx.post("http://localhost").respond(status_code=200, json={})
     assert await async_setup_component(
@@ -259,7 +259,7 @@ async def test_setup_post.opp):
 
 
 @respx.mock
-async def test_setup_get_xml.opp):
+async def test_setup_get_xml(opp):
     """Test setup with valid xml configuration."""
     respx.get("http://localhost").respond(
         status_code=200,
@@ -291,7 +291,7 @@ async def test_setup_get_xml.opp):
 
 
 @respx.mock
-async def test_setup_query_params.opp):
+async def test_setup_query_params(opp):
     """Test setup with query params."""
     respx.get("http://localhost", params={"search": "something"}) % 200
     assert await async_setup_component(
@@ -311,7 +311,7 @@ async def test_setup_query_params.opp):
 
 
 @respx.mock
-async def test_update_with_json_attrs.opp):
+async def test_update_with_json_attrs(opp):
     """Test attributes get extracted from a JSON result."""
 
     respx.get("http://localhost").respond(
@@ -344,7 +344,7 @@ async def test_update_with_json_attrs.opp):
 
 
 @respx.mock
-async def test_update_with_no_template.opp):
+async def test_update_with_no_template(opp):
     """Test update when there is no value template."""
 
     respx.get("http://localhost").respond(
@@ -483,7 +483,7 @@ async def test_update_with_json_attrs_bad_JSON.opp, caplog):
 
 
 @respx.mock
-async def test_update_with_json_attrs_with_json_attrs_path.opp):
+async def test_update_with_json_attrs_with_json_attrs_path(opp):
     """Test attributes get extracted from a JSON result with a template for the attributes."""
 
     respx.get("http://localhost").respond(
@@ -527,7 +527,7 @@ async def test_update_with_json_attrs_with_json_attrs_path.opp):
 
 
 @respx.mock
-async def test_update_with_xml_convert_json_attrs_with_json_attrs_path.opp):
+async def test_update_with_xml_convert_json_attrs_with_json_attrs_path(opp):
     """Test attributes get extracted from a JSON result that was converted from XML with a template for the attributes."""
 
     respx.get("http://localhost").respond(
@@ -563,7 +563,7 @@ async def test_update_with_xml_convert_json_attrs_with_json_attrs_path.opp):
 
 
 @respx.mock
-async def test_update_with_xml_convert_json_attrs_with_jsonattr_template.opp):
+async def test_update_with_xml_convert_json_attrs_with_jsonattr_template(opp):
     """Test attributes get extracted from a JSON result that was converted from XML."""
 
     respx.get("http://localhost").respond(
@@ -710,7 +710,7 @@ async def test_update_with_failed_get(opp, caplog):
 
 
 @respx.mock
-async def test_reload.opp):
+async def test_reload(opp):
     """Verify we can reload reset sensors."""
 
     respx.get("http://localhost") % 200

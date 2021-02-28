@@ -108,7 +108,7 @@ CATEGORIES_TO_EVENTS = {
 }
 
 
-async def test_cannot_connect.opp):
+async def test_cannot_connect(opp):
     """Test connection error."""
 
     with patch(
@@ -125,7 +125,7 @@ async def test_cannot_connect.opp):
         assert not registry.async_is_registered(id)
 
 
-async def test_unauthorized.opp):
+async def test_unauthorized(opp):
     """Test unauthorized error."""
 
     with patch(

@@ -41,13 +41,13 @@ def registries.opp):
     from types import SimpleNamespace
 
     ret = SimpleNamespace()
-    ret.entity = mock_registry.opp)
-    ret.device = mock_device_registry.opp)
-    ret.area = mock_area_registry.opp)
+    ret.entity = mock_registry(opp)
+    ret.device = mock_device_registry(opp)
+    ret.area = mock_area_registry(opp)
     return ret
 
 
-async def test_sync_message.opp):
+async def test_sync_message(opp):
     """Test a sync message."""
     light = DemoLight(
         None,
@@ -269,7 +269,7 @@ async def test_sync_in_area(area_on_device, opp, registries):
     assert events[0].data == {"request_id": REQ_ID, "source": "cloud"}
 
 
-async def test_query_message.opp):
+async def test_query_message(opp):
     """Test a sync message."""
     light = DemoLight(
         None,
@@ -378,7 +378,7 @@ async def test_query_message.opp):
     }
 
 
-async def test_execute.opp):
+async def test_execute(opp):
     """Test an execute command."""
     await async_setup_component(opp, "light", {"light": {"platform": "demo"}})
     await opp.async_block_till_done()
@@ -562,7 +562,7 @@ async def test_execute.opp):
     assert service_events[3].context == events[5].context
 
 
-async def test_raising_error_trait.opp):
+async def test_raising_error_trait(opp):
     """Test raising an error while executing a trait command."""
     opp.states.async_set(
         "climate.bla",
@@ -629,7 +629,7 @@ async def test_raising_error_trait.opp):
     }
 
 
-async def test_serialize_input_boolean.opp):
+async def test_serialize_input_boolean(opp):
     """Test serializing an input boolean entity."""
     state = State("input_boolean.bla", "on")
     # pylint: disable=protected-access
@@ -645,7 +645,7 @@ async def test_serialize_input_boolean.opp):
     }
 
 
-async def test_unavailable_state_does_sync.opp):
+async def test_unavailable_state_does_sync(opp):
     """Test that an unavailable entity does sync over."""
     light = DemoLight(
         None,
@@ -919,7 +919,7 @@ async def test_device_media_player(opp, device_class, google_type):
     }
 
 
-async def test_query_disconnect.opp):
+async def test_query_disconnect(opp):
     """Test a disconnect message."""
     config = Mockconfig(opp.opp)
     config.async_enable_report_state()
@@ -936,7 +936,7 @@ async def test_query_disconnect.opp):
     assert len(mock_disconnect.mock_calls) == 1
 
 
-async def test_trait_execute_adding_query_data.opp):
+async def test_trait_execute_adding_query_data(opp):
     """Test a trait execute influencing query data."""
     await async_process_op_core_config(
         opp,
@@ -1004,7 +1004,7 @@ async def test_trait_execute_adding_query_data.opp):
     }
 
 
-async def test_identify.opp):
+async def test_identify(opp):
     """Test identify message."""
     user_agent_id = "mock-user-id"
     proxy_device_id = user_agent_id
@@ -1072,7 +1072,7 @@ async def test_identify.opp):
     }
 
 
-async def test_reachable_devices.opp):
+async def test_reachable_devices(opp):
     """Test REACHABLE_DEVICES intent."""
     # Matching passed in device.
     opp.states.async_set("light.ceiling_lights", "on")

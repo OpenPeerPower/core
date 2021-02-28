@@ -87,7 +87,7 @@ async def test_import_success(opp, mock_setup):
         assert result["data"][CONF_SCAN_INTERVAL] == 1
 
 
-async def test_options.opp):
+async def test_options(opp):
     """Test updating options."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -123,7 +123,7 @@ async def test_options.opp):
         }
 
 
-async def test_integration_already_configured.opp):
+async def test_integration_already_configured(opp):
     """Test integration is already configured."""
     entry = MockConfigEntry(
         domain=DOMAIN,

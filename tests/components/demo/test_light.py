@@ -24,7 +24,7 @@ ENTITY_LIGHT = "light.bed_light"
 
 
 @pytest.fixture(autouse=True)
-async def setup_comp.opp):
+async def setup_comp(opp):
     """Set up demo component."""
     assert await async_setup_component(
         opp. LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": DOMAIN}}
@@ -32,7 +32,7 @@ async def setup_comp.opp):
     await opp.async_block_till_done()
 
 
-async def test_state_attributes.opp):
+async def test_state_attributes(opp):
     """Test light state attributes."""
     await opp.services.async_call(
         LIGHT_DOMAIN,
@@ -89,7 +89,7 @@ async def test_state_attributes.opp):
     assert state.attributes.get(ATTR_BRIGHTNESS) == 128
 
 
-async def test_turn_off.opp):
+async def test_turn_off(opp):
     """Test light turn off method."""
     await opp.services.async_call(
         LIGHT_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_LIGHT}, blocking=True
@@ -106,7 +106,7 @@ async def test_turn_off.opp):
     assert state.state == STATE_OFF
 
 
-async def test_turn_off_without_entity_id.opp):
+async def test_turn_off_without_entity_id(opp):
     """Test light turn off all lights."""
     await opp.services.async_call(
         LIGHT_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: "all"}, blocking=True

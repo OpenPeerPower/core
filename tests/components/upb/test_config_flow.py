@@ -38,7 +38,7 @@ async def valid_tcp_flow(opp, sync_complete=True, config_ok=True):
     return result
 
 
-async def test_full_upb_flow_with_serial_port.opp):
+async def test_full_upb_flow_with_serial_port(opp):
     """Test a full UPB config flow with serial port."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -73,15 +73,15 @@ async def test_full_upb_flow_with_serial_port.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_user_with_tcp_upb.opp):
+async def test_form_user_with_tcp_upb(opp):
     """Test we can setup a serial upb."""
-    result = await valid_tcp_flow.opp)
+    result = await valid_tcp_flow(opp)
     assert result["type"] == "create_entry"
     assert result["data"] == {"host": "tcp://1.2.3.4", "file_path": "upb.upe"}
     await opp.async_block_till_done()
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     from asyncio import TimeoutError
 
@@ -95,23 +95,23 @@ async def test_form_cannot_connect.opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_missing_upb_file.opp):
+async def test_form_missing_upb_file(opp):
     """Test we handle cannot connect error."""
     result = await valid_tcp_flow(opp, config_ok=False)
     assert result["type"] == "form"
     assert result["errors"] == {"base": "invalid_upb_file"}
 
 
-async def test_form_user_with_already_configured.opp):
+async def test_form_user_with_already_configured(opp):
     """Test we can setup a TCP upb."""
-    _ = await valid_tcp_flow.opp)
-    result2 = await valid_tcp_flow.opp)
+    _ = await valid_tcp_flow(opp)
+    result2 = await valid_tcp_flow(opp)
     assert result2["type"] == "abort"
     assert result2["reason"] == "already_configured"
     await opp.async_block_till_done()
 
 
-async def test_form_import.opp):
+async def test_form_import(opp):
     """Test we get the form with import source."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -135,7 +135,7 @@ async def test_form_import.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_junk_input.opp):
+async def test_form_junk_input(opp):
     """Test we get the form with import source."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 

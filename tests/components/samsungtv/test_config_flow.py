@@ -149,7 +149,7 @@ async def test_user_websocket(opp, remotews):
         assert result["data"][CONF_ID] is None
 
 
-async def test_user_legacy_missing_auth.opp):
+async def test_user_legacy_missing_auth(opp):
     """Test starting a flow by user with authentication."""
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",
@@ -163,7 +163,7 @@ async def test_user_legacy_missing_auth.opp):
         assert result["reason"] == "auth_missing"
 
 
-async def test_user_legacy_not_supported.opp):
+async def test_user_legacy_not_supported(opp):
     """Test starting a flow by user for not supported device."""
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",
@@ -177,7 +177,7 @@ async def test_user_legacy_not_supported.opp):
         assert result["reason"] == "not_supported"
 
 
-async def test_user_websocket_not_supported.opp):
+async def test_user_websocket_not_supported(opp):
     """Test starting a flow by user for not supported device."""
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",
@@ -196,7 +196,7 @@ async def test_user_websocket_not_supported.opp):
         assert result["reason"] == "not_supported"
 
 
-async def test_user_not_successful.opp):
+async def test_user_not_successful(opp):
     """Test starting a flow by user but no connection found."""
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",
@@ -295,7 +295,7 @@ async def test_ssdp_noprefix(opp, remote):
     assert result["data"][CONF_ID] == "fake2_uuid"
 
 
-async def test_ssdp_legacy_missing_auth.opp):
+async def test_ssdp_legacy_missing_auth(opp):
     """Test starting a flow from discovery with authentication."""
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",
@@ -317,7 +317,7 @@ async def test_ssdp_legacy_missing_auth.opp):
         assert result["reason"] == "auth_missing"
 
 
-async def test_ssdp_legacy_not_supported.opp):
+async def test_ssdp_legacy_not_supported(opp):
     """Test starting a flow from discovery for not supported device."""
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",
@@ -339,7 +339,7 @@ async def test_ssdp_legacy_not_supported.opp):
         assert result["reason"] == "not_supported"
 
 
-async def test_ssdp_websocket_not_supported.opp):
+async def test_ssdp_websocket_not_supported(opp):
     """Test starting a flow from discovery for not supported device."""
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",
@@ -365,7 +365,7 @@ async def test_ssdp_websocket_not_supported.opp):
         assert result["reason"] == "not_supported"
 
 
-async def test_ssdp_not_successful.opp):
+async def test_ssdp_not_successful(opp):
     """Test starting a flow from discovery but no device found."""
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",

@@ -135,7 +135,7 @@ async def test_state_change(opp, legacy_patchable_time):
     assert sun.STATE_ABOVE_HORIZON == opp.states.get(sun.ENTITY_ID).state
 
 
-async def test_norway_in_june.opp):
+async def test_norway_in_june(opp):
     """Test location in Norway where the sun doesn't set in summer."""
     opp.config.latitude = 69.6
     opp.config.longitude = 18.8
@@ -161,7 +161,7 @@ async def test_norway_in_june.opp):
 
 
 @mark.skip
-async def test_state_change_count.opp):
+async def test_state_change_count(opp):
     """Count the number of state change events in a location."""
     # Skipped because it's a bit slow. Has been validated with
     # multiple lattitudes and dates

@@ -5,10 +5,10 @@ from openpeerpower.components.climate.const import HVAC_MODE_HEAT_COOL
 from .util import async_init_integration
 
 
-async def test_climate_zones.opp):
+async def test_climate_zones(opp):
     """Test creation climate zones."""
 
-    await async_init_integration.opp)
+    await async_init_integration(opp)
 
     state = opp.states.get("climate.nick_office")
     assert state.state == HVAC_MODE_HEAT_COOL

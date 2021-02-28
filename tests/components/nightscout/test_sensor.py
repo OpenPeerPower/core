@@ -16,9 +16,9 @@ from tests.components.nightscout import (
 )
 
 
-async def test_sensor_state.opp):
+async def test_sensor_state(opp):
     """Test sensor state data."""
-    await init_integration.opp)
+    await init_integration(opp)
 
     test_glucose_sensor = opp.states.get("sensor.blood_sugar")
     assert test_glucose_sensor.state == str(
@@ -28,23 +28,23 @@ async def test_sensor_state.opp):
 
 async def test_sensor_error(opp):
     """Test sensor state data."""
-    await init_integration_unavailable.opp)
+    await init_integration_unavailable(opp)
 
     test_glucose_sensor = opp.states.get("sensor.blood_sugar")
     assert test_glucose_sensor.state == STATE_UNAVAILABLE
 
 
-async def test_sensor_empty_response.opp):
+async def test_sensor_empty_response(opp):
     """Test sensor state data."""
-    await init_integration_empty_response.opp)
+    await init_integration_empty_response(opp)
 
     test_glucose_sensor = opp.states.get("sensor.blood_sugar")
     assert test_glucose_sensor.state == STATE_UNAVAILABLE
 
 
-async def test_sensor_attributes.opp):
+async def test_sensor_attributes(opp):
     """Test sensor attributes."""
-    await init_integration.opp)
+    await init_integration(opp)
 
     test_glucose_sensor = opp.states.get("sensor.blood_sugar")
     reading = GLUCOSE_READINGS[0]

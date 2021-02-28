@@ -57,7 +57,7 @@ async def mock_discovery(opp, discoveries, config=BASE_CONFIG):
     return mock_discover, mock_platform
 
 
-async def test_unknown_service.opp):
+async def test_unknown_service(opp):
     """Test that unknown service is ignored."""
 
     def discover(netdisco, zeroconf_instance):
@@ -70,7 +70,7 @@ async def test_unknown_service.opp):
     assert not mock_platform.called
 
 
-async def test_load_platform.opp):
+async def test_load_platform(opp):
     """Test load a platform."""
 
     def discover(netdisco, zeroconf_instance):
@@ -86,7 +86,7 @@ async def test_load_platform.opp):
     )
 
 
-async def test_load_component.opp):
+async def test_load_component(opp):
     """Test load a component."""
 
     def discover(netdisco, zeroconf_instance):
@@ -106,7 +106,7 @@ async def test_load_component.opp):
     )
 
 
-async def test_ignore_service.opp):
+async def test_ignore_service(opp):
     """Test ignore service."""
 
     def discover(netdisco, zeroconf_instance):
@@ -119,7 +119,7 @@ async def test_ignore_service.opp):
     assert not mock_platform.called
 
 
-async def test_discover_duplicates.opp):
+async def test_discover_duplicates(opp):
     """Test load a component."""
 
     def discover(netdisco, zeroconf_instance):
@@ -143,7 +143,7 @@ async def test_discover_duplicates.opp):
     )
 
 
-async def test_discover_config_flow.opp):
+async def test_discover_config_flow(opp):
     """Test discovery triggering a config flow."""
     discovery_info = {"hello": "world"}
 

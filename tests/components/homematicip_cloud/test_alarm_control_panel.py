@@ -36,7 +36,7 @@ async def _async_manipulate_security_zones(
     await opp.async_block_till_done()
 
 
-async def test_manually_configured_platform.opp):
+async def test_manually_configured_platform(opp):
     """Test that we do not set up an access point."""
     assert await async_setup_component(
         opp,

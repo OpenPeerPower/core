@@ -16,7 +16,7 @@ CLIENT_SECRET_VALUE = "5678"
 
 
 @pytest.fixture()
-async def mock_impl.opp):
+async def mock_impl(opp):
     """Mock implementation."""
     await setup.async_setup_component(opp, "http", {})
 
@@ -32,7 +32,7 @@ async def mock_impl.opp):
     return impl
 
 
-async def test_abort_if_no_configuration.opp):
+async def test_abort_if_no_configuration(opp):
     """Check flow abort when no configuration."""
     flow = config_flow.SomfyFlowHandler()
     flow.opp = opp
@@ -41,7 +41,7 @@ async def test_abort_if_no_configuration.opp):
     assert result["reason"] == "missing_configuration"
 
 
-async def test_abort_if_existing_entry.opp):
+async def test_abort_if_existing_entry(opp):
     """Check flow abort when an entry already exist."""
     flow = config_flow.SomfyFlowHandler()
     flow.opp = opp

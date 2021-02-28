@@ -136,7 +136,7 @@ async def test_loading_light(
 
     # Using light_fan and removind fan from get_components_from_model
     # to test light.py line 28
-    entry = await setup_integration.opp)
+    entry = await setup_integration(opp)
     assert entry
     assert entry.unique_id == WILIGHT_ID
 
@@ -156,7 +156,7 @@ async def test_on_off_light_state(
     opp: OpenPeerPowerType, dummy_device_from_host_pb
 ) -> None:
     """Test the change of state of the light switches."""
-    await setup_integration.opp)
+    await setup_integration(opp)
 
     # Turn on
     await opp.services.async_call(
@@ -189,7 +189,7 @@ async def test_dimmer_light_state(
     opp: OpenPeerPowerType, dummy_device_from_host_dimmer
 ) -> None:
     """Test the change of state of the light switches."""
-    await setup_integration.opp)
+    await setup_integration(opp)
 
     await opp.services.async_call(
         LIGHT_DOMAIN,
@@ -259,7 +259,7 @@ async def test_color_light_state(
     opp: OpenPeerPowerType, dummy_device_from_host_color
 ) -> None:
     """Test the change of state of the light switches."""
-    await setup_integration.opp)
+    await setup_integration(opp)
 
     await opp.services.async_call(
         LIGHT_DOMAIN,

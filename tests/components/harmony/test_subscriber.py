@@ -26,14 +26,14 @@ _ALL_CALLBACK_NAMES = list(_NO_PARAM_CALLBACKS.keys()) + list(
 _ACTIVITY_TUPLE = ("not", "used")
 
 
-async def test_no_callbacks.opp):
+async def test_no_callbacks(opp):
     """Ensure we handle no subscriptions."""
     subscriber = HarmonySubscriberMixin.opp)
     _call_all_callbacks(subscriber)
     await opp.async_block_till_done()
 
 
-async def test_empty_callbacks.opp):
+async def test_empty_callbacks(opp):
     """Ensure we handle a missing callback in a subscription."""
     subscriber = HarmonySubscriberMixin.opp)
 
@@ -43,7 +43,7 @@ async def test_empty_callbacks.opp):
     await opp.async_block_till_done()
 
 
-async def test_async_callbacks.opp):
+async def test_async_callbacks(opp):
     """Ensure we handle async callbacks."""
     subscriber = HarmonySubscriberMixin.opp)
 
@@ -61,7 +61,7 @@ async def test_async_callbacks.opp):
         callback_mock.assert_awaited_once_with(_ACTIVITY_TUPLE)
 
 
-async def test_long_async_callbacks.opp):
+async def test_long_async_callbacks(opp):
     """Ensure we handle async callbacks that may have sleeps."""
     subscriber = HarmonySubscriberMixin.opp)
 
@@ -87,7 +87,7 @@ async def test_long_async_callbacks.opp):
     await notifier_event_one.wait()
 
 
-async def test_callbacks.opp):
+async def test_callbacks(opp):
     """Ensure we handle non-async callbacks."""
     subscriber = HarmonySubscriberMixin.opp)
 
@@ -105,7 +105,7 @@ async def test_callbacks.opp):
         callback_mock.assert_called_once_with(_ACTIVITY_TUPLE)
 
 
-async def test_subscribe_unsubscribe.opp):
+async def test_subscribe_unsubscribe(opp):
     """Ensure we handle subscriptions and unsubscriptions correctly."""
     subscriber = HarmonySubscriberMixin.opp)
 

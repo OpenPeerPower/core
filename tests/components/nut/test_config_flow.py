@@ -18,7 +18,7 @@ VALID_CONFIG = {
 }
 
 
-async def test_form_zeroconf.opp):
+async def test_form_zeroconf(opp):
     """Test we can setup from zeroconf."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -74,7 +74,7 @@ async def test_form_zeroconf.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_user_one_ups.opp):
+async def test_form_user_one_ups(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -132,7 +132,7 @@ async def test_form_user_one_ups.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_user_multiple_ups.opp):
+async def test_form_user_multiple_ups(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -212,7 +212,7 @@ async def test_form_user_multiple_ups.opp):
     assert len(mock_setup_entry.mock_calls) == 2
 
 
-async def test_form_user_one_ups_with_ignored_entry.opp):
+async def test_form_user_one_ups_with_ignored_entry(opp):
     """Test we can setup a new one when there is an ignored one."""
     ignored_entry = MockConfigEntry(
         domain=DOMAIN, data={}, source=config_entries.SOURCE_IGNORE
@@ -275,7 +275,7 @@ async def test_form_user_one_ups_with_ignored_entry.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -301,7 +301,7 @@ async def test_form_cannot_connect.opp):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_options_flow.opp):
+async def test_options_flow(opp):
     """Test config flow options."""
 
     config_entry = MockConfigEntry(

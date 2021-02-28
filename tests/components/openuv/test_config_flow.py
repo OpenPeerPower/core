@@ -51,7 +51,7 @@ async def test_duplicate_error(opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_invalid_api_key.opp):
+async def test_invalid_api_key(opp):
     """Test that an invalid API key throws an error."""
     conf = {
         CONF_API_KEY: "12345abcde",
@@ -71,7 +71,7 @@ async def test_invalid_api_key.opp):
         assert result["errors"] == {CONF_API_KEY: "invalid_api_key"}
 
 
-async def test_step_user.opp):
+async def test_step_user(opp):
     """Test that the user step works."""
     conf = {
         CONF_API_KEY: "12345abcde",

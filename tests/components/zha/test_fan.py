@@ -248,7 +248,7 @@ async def async_set_preset_mode(opp, entity_id, preset_mode=None):
 )
 async def test_zha_group_fan_entity(opp, device_fan_1, device_fan_2, coordinator):
     """Test the fan entity for a ZHA group."""
-    zha_gateway = get_zha_gateway.opp)
+    zha_gateway = get_zha_gateway(opp)
     assert zha_gateway is not None
     zha_gateway.coordinator_zha_device = coordinator
     coordinator._zha_gateway = zha_gateway
@@ -358,7 +358,7 @@ async def test_zha_group_fan_entity_failure_state(
     opp. device_fan_1, device_fan_2, coordinator, caplog
 ):
     """Test the fan entity for a ZHA group when writing attributes generates an exception."""
-    zha_gateway = get_zha_gateway.opp)
+    zha_gateway = get_zha_gateway(opp)
     assert zha_gateway is not None
     zha_gateway.coordinator_zha_device = coordinator
     coordinator._zha_gateway = zha_gateway

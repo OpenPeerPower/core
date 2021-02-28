@@ -214,7 +214,7 @@ async def test_setup_opp):
             assert len(all_states) == 0
 
 
-async def test_setup_with_custom_location.opp):
+async def test_setup_with_custom_location(opp):
     """Test the setup with a custom location."""
     # Set up some mock feed entries for this test.
     mock_entry_1 = _generate_mock_feed_entry("1234", "Title 1", 20.5, (-31.1, 150.1))

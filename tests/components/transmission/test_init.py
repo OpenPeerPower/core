@@ -87,7 +87,7 @@ async def test_successful_config_entry(opp, api):
     }
 
 
-async def test_setup_failed.opp):
+async def test_setup_failed(opp):
     """Test transmission failed due to an error."""
 
     entry = MOCK_ENTRY

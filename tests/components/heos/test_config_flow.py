@@ -22,7 +22,7 @@ async def test_flow_aborts_already_setup_opp, config_entry):
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test_no_host_shows_form.opp):
+async def test_no_host_shows_form(opp):
     """Test form is shown when host not provided."""
     flow = HeosFlowHandler()
     flow.opp = opp

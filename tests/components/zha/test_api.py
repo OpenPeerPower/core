@@ -93,8 +93,8 @@ async def zha_client(opp, opp_ws_client, device_switch, device_groupable):
     """Test zha switch platform."""
 
     # load the ZHA API
-    async_load_api.opp)
-    return await opp_ws_client.opp)
+    async_load_api(opp)
+    return await opp_ws_client(opp)
 
 
 async def test_device_clusters(opp, zha_client):

@@ -6,7 +6,7 @@ from tests.common import MockConfigEntry
 from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 
 
-async def test_search.opp):
+async def test_search(opp):
     """Test that search works."""
     area_reg = await opp.helpers.area_registry.async_get_registry()
     device_reg = await opp.helpers.device_registry.async_get_registry()
@@ -291,7 +291,7 @@ async def test_ws_api(opp, opp_ws_client):
 
     device_reg.async_update_device(hue_device.id, area_id=kitchen_area.id)
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {

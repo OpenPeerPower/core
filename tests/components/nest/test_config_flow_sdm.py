@@ -27,7 +27,7 @@ CONFIG = {
 }
 
 
-def get_config_entry.opp):
+def get_config_entry(opp):
     """Return a single config entry."""
     entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
@@ -100,7 +100,7 @@ async def test_full_flow(opp, oauth):
     )
     await oauth.async_oauth_flow(result)
 
-    entry = get_config_entry.opp)
+    entry = get_config_entry(opp)
     assert entry.title == "Configuration.yaml"
     assert "token" in entry.data
     entry.data["token"].pop("expires_at")
@@ -132,7 +132,7 @@ async def test_reauth(opp, oauth):
     )
     old_entry.add_to_opp(opp)
 
-    entry = get_config_entry.opp)
+    entry = get_config_entry(opp)
     assert entry.data["token"] == {
         "access_token": "some-revoked-token",
     }
@@ -151,7 +151,7 @@ async def test_reauth(opp, oauth):
     await oauth.async_oauth_flow(result)
 
     # Verify existing tokens are replaced
-    entry = get_config_entry.opp)
+    entry = get_config_entry(opp)
     entry.data["token"].pop("expires_at")
     assert entry.unique_id == DOMAIN
     assert entry.data["token"] == {
@@ -162,7 +162,7 @@ async def test_reauth(opp, oauth):
     }
 
 
-async def test_single_config_entry.opp):
+async def test_single_config_entry(opp):
     """Test that only a single config entry is allowed."""
     old_entry = MockConfigEntry(
         domain=DOMAIN, data={"auth_implementation": DOMAIN, "sdm": {}}

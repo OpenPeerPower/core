@@ -99,7 +99,7 @@ class TestFFmpegSetup:
         assert self.opp.services.has_service(ffmpeg.DOMAIN, "restart")
 
 
-async def test_setup_component_test_register.opp):
+async def test_setup_component_test_register(opp):
     """Set up ffmpeg component test register."""
     with assert_setup_component(1):
         await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
@@ -112,7 +112,7 @@ async def test_setup_component_test_register.opp):
     assert opp.bus.async_listen_once.call_count == 2
 
 
-async def test_setup_component_test_register_no_startup.opp):
+async def test_setup_component_test_register_no_startup(opp):
     """Set up ffmpeg component test register without startup."""
     with assert_setup_component(1):
         await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
@@ -125,7 +125,7 @@ async def test_setup_component_test_register_no_startup.opp):
     assert opp.bus.async_listen_once.call_count == 1
 
 
-async def test_setup_component_test_service_start.opp):
+async def test_setup_component_test_service_start(opp):
     """Set up ffmpeg component test service start."""
     with assert_setup_component(1):
         await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
@@ -133,13 +133,13 @@ async def test_setup_component_test_service_start.opp):
     ffmpeg_dev = MockFFmpegDev.opp, False)
     await ffmpeg_dev.async_added_to_opp()
 
-    async_start.opp)
+    async_start(opp)
     await opp.async_block_till_done()
 
     assert ffmpeg_dev.called_start
 
 
-async def test_setup_component_test_service_stop.opp):
+async def test_setup_component_test_service_stop(opp):
     """Set up ffmpeg component test service stop."""
     with assert_setup_component(1):
         await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
@@ -147,13 +147,13 @@ async def test_setup_component_test_service_stop.opp):
     ffmpeg_dev = MockFFmpegDev.opp, False)
     await ffmpeg_dev.async_added_to_opp()
 
-    async_stop.opp)
+    async_stop(opp)
     await opp.async_block_till_done()
 
     assert ffmpeg_dev.called_stop
 
 
-async def test_setup_component_test_service_restart.opp):
+async def test_setup_component_test_service_restart(opp):
     """Set up ffmpeg component test service restart."""
     with assert_setup_component(1):
         await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
@@ -161,14 +161,14 @@ async def test_setup_component_test_service_restart.opp):
     ffmpeg_dev = MockFFmpegDev.opp, False)
     await ffmpeg_dev.async_added_to_opp()
 
-    async_restart.opp)
+    async_restart(opp)
     await opp.async_block_till_done()
 
     assert ffmpeg_dev.called_stop
     assert ffmpeg_dev.called_start
 
 
-async def test_setup_component_test_service_start_with_entity.opp):
+async def test_setup_component_test_service_start_with_entity(opp):
     """Set up ffmpeg component test service start."""
     with assert_setup_component(1):
         await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})

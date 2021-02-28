@@ -13,7 +13,7 @@ MOCK_HOST = "123.45.67.89"
 MOCK_PORT = 3000
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test user form showing."""
     flow = config_flow.SomaFlowHandler()
     flow.opp = opp
@@ -21,7 +21,7 @@ async def test_form.opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
 
-async def test_import_abort.opp):
+async def test_import_abort(opp):
     """Test configuration from YAML aborting with existing entity."""
     flow = config_flow.SomaFlowHandler()
     flow.opp = opp
@@ -31,7 +31,7 @@ async def test_import_abort.opp):
     assert result["reason"] == "already_setup"
 
 
-async def test_import_create.opp):
+async def test_import_create(opp):
     """Test configuration from YAML."""
     flow = config_flow.SomaFlowHandler()
     flow.opp = opp
@@ -40,7 +40,7 @@ async def test_import_create.opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
 
-async def test_error_status.opp):
+async def test_error_status(opp):
     """Test Connect successfully returning error status."""
     flow = config_flow.SomaFlowHandler()
     flow.opp = opp
@@ -60,7 +60,7 @@ async def test_key_error(opp):
     assert result["reason"] == "connection_error"
 
 
-async def test_exception.opp):
+async def test_exception(opp):
     """Test if RequestException fires when no connection can be made."""
     flow = config_flow.SomaFlowHandler()
     flow.opp = opp
@@ -70,7 +70,7 @@ async def test_exception.opp):
     assert result["reason"] == "connection_error"
 
 
-async def test_full_flow.opp):
+async def test_full_flow(opp):
     """Check classic use case."""
     opp.data[DOMAIN] = {}
     flow = config_flow.SomaFlowHandler()

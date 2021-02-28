@@ -24,7 +24,7 @@ from tests.components.subaru.conftest import setup_subaru_integration
 VEHICLE_NAME = VEHICLE_DATA[TEST_VIN_2_EV][VEHICLE_NAME]
 
 
-async def test_sensors_ev_imperial.opp):
+async def test_sensors_ev_imperial(opp):
     """Test sensors supporting imperial units."""
     opp.config.units = IMPERIAL_SYSTEM
     await setup_subaru_integration(
@@ -41,7 +41,7 @@ async def test_sensors_ev_metric(opp, ev_entry):
     _assert_data(opp, EXPECTED_STATE_EV_METRIC)
 
 
-async def test_sensors_missing_vin_data.opp):
+async def test_sensors_missing_vin_data(opp):
     """Test for missing VIN dataset."""
     await setup_subaru_integration(
         opp,

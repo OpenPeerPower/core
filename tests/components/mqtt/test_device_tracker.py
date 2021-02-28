@@ -16,7 +16,7 @@ def setup_comp(opp, mqtt_mock):
     pass
 
 
-async def test_ensure_device_tracker_platform_validation.opp):
+async def test_ensure_device_tracker_platform_validation(opp):
     """Test if platform validation was done."""
 
     async def mock_setup_scanner(opp, config, see, discovery_info=None):

@@ -446,7 +446,7 @@ async def test_windowcovering_basic_restore(opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
     opp.state = CoreState.not_running
 
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
 
     registry.async_get_or_create(
         "cover",
@@ -484,7 +484,7 @@ async def test_windowcovering_restore(opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
     opp.state = CoreState.not_running
 
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
 
     registry.async_get_or_create(
         "cover",

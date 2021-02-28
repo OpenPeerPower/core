@@ -21,15 +21,15 @@ from tests.components.light.conftest import mock_light_profiles  # noqa
 
 
 @pytest.fixture
-def device_reg.opp):
+def device_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_device_registry.opp)
+    return mock_device_registry(opp)
 
 
 @pytest.fixture
-def entity_reg.opp):
+def entity_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_registry.opp)
+    return mock_registry(opp)
 
 
 @pytest.fixture
@@ -59,7 +59,7 @@ def disable_status_sensor(status_sensor_disabled):
         yield
 
 
-async def setup_tasmota_helper.opp):
+async def setup_tasmota_helper(opp):
     """Set up Tasmota."""
     opp.config.components.add("tasmota")
 
@@ -79,6 +79,6 @@ async def setup_tasmota_helper.opp):
 
 
 @pytest.fixture
-async def setup_tasmota.opp):
+async def setup_tasmota(opp):
     """Set up Tasmota."""
-    await setup_tasmota_helper.opp)
+    await setup_tasmota_helper(opp)

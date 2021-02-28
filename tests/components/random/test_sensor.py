@@ -2,7 +2,7 @@
 from openpeerpower.setup import async_setup_component
 
 
-async def test_random_sensor.opp):
+async def test_random_sensor(opp):
     """Test the Random number sensor."""
     config = {
         "sensor": {

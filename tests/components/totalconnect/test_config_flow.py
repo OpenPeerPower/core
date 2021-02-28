@@ -12,7 +12,7 @@ USERNAME = "username@me.com"
 PASSWORD = "password"
 
 
-async def test_user.opp):
+async def test_user(opp):
     """Test user config."""
     # no data provided so show the form
     result = await opp.config_entries.flow.async_init(
@@ -36,7 +36,7 @@ async def test_user.opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
 
-async def test_import.opp):
+async def test_import(opp):
     """Test import step with good username and password."""
     with patch(
         "openpeerpower.components.totalconnect.config_flow.TotalConnectClient.TotalConnectClient"
@@ -88,7 +88,7 @@ async def test_abort_if_already_setup_opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_login_failed.opp):
+async def test_login_failed(opp):
     """Test when we have errors during login."""
     with patch(
         "openpeerpower.components.totalconnect.config_flow.TotalConnectClient.TotalConnectClient"

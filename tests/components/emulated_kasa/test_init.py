@@ -153,7 +153,7 @@ async def test_setup_opp):
         assert await async_setup_component(opp, DOMAIN, CONFIG) is True
 
 
-async def test_float.opp):
+async def test_float(opp):
     """Test a configuration using a simple float."""
     config = CONFIG_SWITCH[DOMAIN][CONF_ENTITIES]
     assert await async_setup_component(
@@ -196,7 +196,7 @@ async def test_float.opp):
     assert math.isclose(power, 0)
 
 
-async def test_switch_power.opp):
+async def test_switch_power(opp):
     """Test a configuration using a simple float."""
     config = CONFIG_SWITCH_NO_POWER[DOMAIN][CONF_ENTITIES]
     assert await async_setup_component(
@@ -255,7 +255,7 @@ async def test_switch_power.opp):
     assert math.isclose(power, 0)
 
 
-async def test_template.opp):
+async def test_template(opp):
     """Test a configuration using a complex template."""
     config = CONFIG_FAN[DOMAIN][CONF_ENTITIES]
     assert await async_setup_component(
@@ -314,7 +314,7 @@ async def test_template.opp):
     assert math.isclose(power, 0)
 
 
-async def test_sensor.opp):
+async def test_sensor(opp):
     """Test a configuration using a sensor in a template."""
     config = CONFIG_LIGHT[DOMAIN][CONF_ENTITIES]
     assert await async_setup_component(
@@ -371,7 +371,7 @@ async def test_sensor.opp):
     assert math.isclose(power, 0)
 
 
-async def test_sensor_state.opp):
+async def test_sensor_state(opp):
     """Test a configuration using a sensor in a template."""
     config = CONFIG_SENSOR[DOMAIN][CONF_ENTITIES]
     assert await async_setup_component(
@@ -418,7 +418,7 @@ async def test_sensor_state.opp):
     assert math.isclose(power, 0)
 
 
-async def test_multiple_devices.opp):
+async def test_multiple_devices(opp):
     """Test that devices are reported correctly."""
     config = CONFIG[DOMAIN][CONF_ENTITIES]
     assert await async_setup_component(

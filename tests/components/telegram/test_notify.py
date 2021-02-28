@@ -9,7 +9,7 @@ from openpeerpower.const import SERVICE_RELOAD
 from openpeerpower.setup import async_setup_component
 
 
-async def test_reload_notify.opp):
+async def test_reload_notify(opp):
     """Verify we can reload the notify service."""
 
     with patch("openpeerpower.components.telegram_bot.async_setup", return_value=True):

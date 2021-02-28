@@ -102,7 +102,7 @@ async def test_season_southern_hemisphere(opp, type, day, expected):
     assert state.state == expected
 
 
-async def test_season_equator.opp):
+async def test_season_equator(opp):
     """Test that season should be unknown for equator."""
     opp.config.latitude = HEMISPHERE_EQUATOR["openpeerpower"]["latitude"]
     day = datetime(2017, 9, 3, 0, 0)
@@ -116,7 +116,7 @@ async def test_season_equator.opp):
     assert state.state == STATE_UNKNOWN
 
 
-async def test_setup_hemisphere_empty.opp):
+async def test_setup_hemisphere_empty(opp):
     """Test platform setup of missing latlong."""
     opp.config.latitude = None
     assert await async_setup_component(opp, "sensor", HEMISPHERE_EMPTY)

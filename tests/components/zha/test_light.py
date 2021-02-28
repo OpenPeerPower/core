@@ -472,7 +472,7 @@ async def test_zha_group_light_entity(
     opp. device_light_1, device_light_2, device_light_3, coordinator
 ):
     """Test the light entity for a ZHA group."""
-    zha_gateway = get_zha_gateway.opp)
+    zha_gateway = get_zha_gateway(opp)
     assert zha_gateway is not None
     zha_gateway.coordinator_zha_device = coordinator
     coordinator._zha_gateway = zha_gateway

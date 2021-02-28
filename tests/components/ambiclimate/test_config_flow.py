@@ -11,7 +11,7 @@ from openpeerpower.setup import async_setup_component
 from openpeerpower.util import aiohttp
 
 
-async def init_config_flow.opp):
+async def init_config_flow(opp):
     """Init a configuration flow."""
     await async_process_op_core_config(
         opp,
@@ -26,7 +26,7 @@ async def init_config_flow.opp):
     return flow
 
 
-async def test_abort_if_no_implementation_registered.opp):
+async def test_abort_if_no_implementation_registered(opp):
     """Test we abort if no implementation is registered."""
     flow = config_flow.AmbiclimateFlowHandler()
     flow.opp = opp
@@ -38,7 +38,7 @@ async def test_abort_if_no_implementation_registered.opp):
 
 async def test_abort_if_already_setup_opp):
     """Test we abort if Ambiclimate is already setup."""
-    flow = await init_config_flow.opp)
+    flow = await init_config_flow(opp)
 
     with patch.object.opp.config_entries, "async_entries", return_value=[{}]):
         result = await flow.async_step_user()
@@ -51,10 +51,10 @@ async def test_abort_if_already_setup_opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_full_flow_implementation.opp):
+async def test_full_flow_implementation(opp):
     """Test registering an implementation and finishing flow works."""
     config_flow.register_flow_implementation(opp, None, None)
-    flow = await init_config_flow.opp)
+    flow = await init_config_flow(opp)
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -90,10 +90,10 @@ async def test_full_flow_implementation.opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
 
-async def test_abort_invalid_code.opp):
+async def test_abort_invalid_code(opp):
     """Test if no code is given to step_code."""
     config_flow.register_flow_implementation(opp, None, None)
-    flow = await init_config_flow.opp)
+    flow = await init_config_flow(opp)
 
     with patch("ambiclimate.AmbiclimateOAuth.get_access_token", return_value=None):
         result = await flow.async_step_code("invalid")
@@ -104,7 +104,7 @@ async def test_abort_invalid_code.opp):
 async def test_already_setup_opp):
     """Test when already setup."""
     config_flow.register_flow_implementation(opp, None, None)
-    flow = await init_config_flow.opp)
+    flow = await init_config_flow(opp)
 
     with patch.object.opp.config_entries, "async_entries", return_value=True):
         result = await flow.async_step_user()
@@ -113,7 +113,7 @@ async def test_already_setup_opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_view.opp):
+async def test_view(opp):
     """Test view."""
     opp.config_entries.flow.async_init = AsyncMock()
 

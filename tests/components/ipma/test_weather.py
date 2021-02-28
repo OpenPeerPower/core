@@ -129,7 +129,7 @@ class MockLocation:
         return 0
 
 
-async def test_setup_configuration.opp):
+async def test_setup_configuration(opp):
     """Test for successfully setting up the IPMA platform."""
     with patch(
         "openpeerpower.components.ipma.weather.async_get_location",
@@ -154,7 +154,7 @@ async def test_setup_configuration.opp):
     assert state.attributes.get("friendly_name") == "HomeTown"
 
 
-async def test_setup_config_flow.opp):
+async def test_setup_config_flow(opp):
     """Test for successfully setting up the IPMA platform."""
     with patch(
         "openpeerpower.components.ipma.weather.async_get_location",
@@ -176,7 +176,7 @@ async def test_setup_config_flow.opp):
     assert state.attributes.get("friendly_name") == "HomeTown"
 
 
-async def test_daily_forecast.opp):
+async def test_daily_forecast(opp):
     """Test for successfully getting daily forecast."""
     with patch(
         "openpeerpower.components.ipma.weather.async_get_location",
@@ -202,7 +202,7 @@ async def test_daily_forecast.opp):
     assert forecast.get(ATTR_FORECAST_WIND_BEARING) == "S"
 
 
-async def test_hourly_forecast.opp):
+async def test_hourly_forecast(opp):
     """Test for successfully getting daily forecast."""
     with patch(
         "openpeerpower.components.ipma.weather.async_get_location",

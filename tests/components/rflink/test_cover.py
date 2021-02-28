@@ -105,7 +105,7 @@ async def test_default_setup(opp, monkeypatch):
         )
     )
     await opp.async_block_till_done()
-    assert(opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
+    assert opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
     assert protocol.send_command_ack.call_args_list[1][0][1] == "UP"
 
 

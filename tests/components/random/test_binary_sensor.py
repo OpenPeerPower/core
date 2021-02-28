@@ -4,7 +4,7 @@ from unittest.mock import patch
 from openpeerpower.setup import async_setup_component
 
 
-async def test_random_binary_sensor_on.opp):
+async def test_random_binary_sensor_on(opp):
     """Test the Random binary sensor."""
     config = {"binary_sensor": {"platform": "random", "name": "test"}}
 
@@ -24,7 +24,7 @@ async def test_random_binary_sensor_on.opp):
     assert state.state == "on"
 
 
-async def test_random_binary_sensor_off.opp):
+async def test_random_binary_sensor_off(opp):
     """Test the Random binary sensor."""
     config = {"binary_sensor": {"platform": "random", "name": "test"}}
 

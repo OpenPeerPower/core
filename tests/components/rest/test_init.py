@@ -22,7 +22,7 @@ from tests.common import async_fire_time_changed
 
 
 @respx.mock
-async def test_setup_with_endpoint_timeout_with_recovery.opp):
+async def test_setup_with_endpoint_timeout_with_recovery(opp):
     """Test setup with an endpoint that times out that recovers."""
     await async_setup_component(opp, "openpeerpower", {})
 
@@ -129,7 +129,7 @@ async def test_setup_with_endpoint_timeout_with_recovery.opp):
 
 
 @respx.mock
-async def test_setup_minimum_resource_template.opp):
+async def test_setup_minimum_resource_template(opp):
     """Test setup with minimum configuration (resource_template)."""
 
     respx.get("http://localhost").respond(
@@ -187,7 +187,7 @@ async def test_setup_minimum_resource_template.opp):
 
 
 @respx.mock
-async def test_reload.opp):
+async def test_reload(opp):
     """Verify we can reload."""
 
     respx.get("http://localhost") % 200
@@ -239,7 +239,7 @@ async def test_reload.opp):
 
 
 @respx.mock
-async def test_reload_and_remove_all.opp):
+async def test_reload_and_remove_all(opp):
     """Verify we can reload and remove all."""
 
     respx.get("http://localhost") % 200
@@ -289,7 +289,7 @@ async def test_reload_and_remove_all.opp):
 
 
 @respx.mock
-async def test_reload_fails_to_read_configuration.opp):
+async def test_reload_fails_to_read_configuration(opp):
     """Verify reload when configuration is missing or broken."""
 
     respx.get("http://localhost") % 200

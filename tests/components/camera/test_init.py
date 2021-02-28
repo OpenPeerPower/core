@@ -19,7 +19,7 @@ from tests.components.camera import common
 
 
 @pytest.fixture(name="mock_camera")
-async def mock_camera_fixture.opp):
+async def mock_camera_fixture(opp):
     """Initialize a demo camera platform."""
     assert await async_setup_component(
         opp, "camera", {camera.DOMAIN: {"platform": "demo"}}
@@ -34,7 +34,7 @@ async def mock_camera_fixture.opp):
 
 
 @pytest.fixture(name="mock_stream")
-def mock_stream_fixture.opp):
+def mock_stream_fixture(opp):
     """Initialize a demo camera platform with streaming."""
     assert opp.loop.run_until_complete(
         async_setup_component(opp, "stream", {"stream": {}})
@@ -42,13 +42,13 @@ def mock_stream_fixture.opp):
 
 
 @pytest.fixture(name="setup_camera_prefs")
-def setup_camera_prefs_fixture.opp):
+def setup_camera_prefs_fixture(opp):
     """Initialize HTTP API."""
     return common.mock_camera_prefs(opp, "camera.demo_camera")
 
 
 @pytest.fixture(name="image_mock_url")
-async def image_mock_url_fixture.opp):
+async def image_mock_url_fixture(opp):
     """Fixture for get_image tests."""
     await async_setup_component(
         opp. camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
@@ -138,7 +138,7 @@ async def test_websocket_camera_thumbnail(opp, opp_ws_client, mock_camera):
     """Test camera_thumbnail websocket command."""
     await async_setup_component(opp, "camera", {})
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     await client.send_json(
         {"id": 5, "type": "camera_thumbnail", "entity_id": "camera.demo_camera"}
     )
@@ -159,7 +159,7 @@ async def test_websocket_stream_no_source(
     await async_setup_component(opp, "camera", {})
 
     # Request playlist through WebSocket
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     await client.send_json(
         {"id": 6, "type": "camera/stream", "entity_id": "camera.demo_camera"}
     )
@@ -183,7 +183,7 @@ async def test_websocket_camera_stream(opp, opp_ws_client, mock_camera, mock_str
         return_value="http://example.com",
     ):
         # Request playlist through WebSocket
-        client = await opp_ws_client.opp)
+        client = await opp_ws_client(opp)
         await client.send_json(
             {"id": 6, "type": "camera/stream", "entity_id": "camera.demo_camera"}
         )
@@ -202,7 +202,7 @@ async def test_websocket_get_prefs(opp, opp_ws_client, mock_camera):
     await async_setup_component(opp, "camera", {})
 
     # Request preferences through websocket
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     await client.send_json(
         {"id": 7, "type": "camera/get_prefs", "entity_id": "camera.demo_camera"}
     )
@@ -218,7 +218,7 @@ async def test_websocket_update_prefs(
     """Test updating preference."""
     await async_setup_component(opp, "camera", {})
     assert setup_camera_prefs[PREF_PRELOAD_STREAM]
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     await client.send_json(
         {
             "id": 8,

@@ -6,14 +6,14 @@ from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture(autouse=True)
-def setup_frontend.opp):
+def setup_frontend(opp):
     """Fixture to setup the frontend."""
     opp.loop.run_until_complete(async_setup_component(opp, "frontend", {}))
 
 
 async def test_get_user_data_empty(opp, opp_ws_client, opp_storage):
     """Test get_user_data command."""
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {"id": 5, "type": "frontend/get_user_data", "key": "non-existing-key"}
@@ -33,7 +33,7 @@ async def test_get_user_data(opp, opp_ws_client, opp_admin_user, opp_storage):
         "data": {"test-key": "test-value", "test-complex": [{"foo": "bar"}]},
     }
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     # Get a simple string key
 
@@ -67,7 +67,7 @@ async def test_get_user_data(opp, opp_ws_client, opp_admin_user, opp_storage):
 
 async def test_set_user_data_empty(opp, opp_ws_client, opp_storage):
     """Test set_user_data command."""
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     # test creating
 
@@ -108,7 +108,7 @@ async def test_set_user_data(opp, opp_ws_client, opp_storage, opp_admin_user):
         "data": {"test-key": "test-value", "test-complex": "string"},
     }
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     # test creating
 

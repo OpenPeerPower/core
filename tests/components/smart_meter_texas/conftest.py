@@ -91,7 +91,7 @@ def mock_connection(
 
 
 @pytest.fixture(name="config_entry")
-def mock_config_entry.opp):
+def mock_config_entry(opp):
     """Return a mock config entry."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,

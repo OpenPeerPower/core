@@ -6,7 +6,7 @@ from pytest import fixture
 
 
 @fixture(autouse=True)
-def mock_ffmpeg.opp):
+def mock_ffmpeg(opp):
     """Mock ffmpeg is loaded."""
     opp.config.components.add("ffmpeg")
 
@@ -36,7 +36,7 @@ def canary.opp):
 
 
 @fixture
-def canary_config_flow.opp):
+def canary_config_flow(opp):
     """Mock the CanaryApi for easier config flow testing."""
     with patch.object(Api, "login", return_value=True), patch(
         "openpeerpower.components.canary.config_flow.Api"

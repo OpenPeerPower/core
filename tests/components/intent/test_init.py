@@ -50,7 +50,7 @@ async def test_http_handle_intent(opp, opp_client, opp_admin_user):
     }
 
 
-async def test_cover_intents_loading.opp):
+async def test_cover_intents_loading(opp):
     """Test Cover Intents Loading."""
     assert await async_setup_component(opp, "intent", {})
 
@@ -77,7 +77,7 @@ async def test_cover_intents_loading.opp):
     assert call.data == {"entity_id": "cover.garage_door"}
 
 
-async def test_turn_on_intent.opp):
+async def test_turn_on_intent(opp):
     """Test OppTurnOn intent."""
     result = await async_setup_component(opp, "openpeerpower", {})
     result = await async_setup_component(opp, "intent", {})
@@ -99,7 +99,7 @@ async def test_turn_on_intent.opp):
     assert call.data == {"entity_id": ["light.test_light"]}
 
 
-async def test_turn_off_intent.opp):
+async def test_turn_off_intent(opp):
     """Test OppTurnOff intent."""
     result = await async_setup_component(opp, "openpeerpower", {})
     result = await async_setup_component(opp, "intent", {})
@@ -121,7 +121,7 @@ async def test_turn_off_intent.opp):
     assert call.data == {"entity_id": ["light.test_light"]}
 
 
-async def test_toggle_intent.opp):
+async def test_toggle_intent(opp):
     """Test OppToggle intent."""
     result = await async_setup_component(opp, "openpeerpower", {})
     result = await async_setup_component(opp, "intent", {})
@@ -143,7 +143,7 @@ async def test_toggle_intent.opp):
     assert call.data == {"entity_id": ["light.test_light"]}
 
 
-async def test_turn_on_multiple_intent.opp):
+async def test_turn_on_multiple_intent(opp):
     """Test OppTurnOn intent with multiple similar entities.
 
     This tests that matching finds the proper entity among similar names.

@@ -253,23 +253,23 @@ def get_status_callbacks(chromecast_mock, mz_mock=None):
     return cast_status_cb, conn_status_cb, media_status_cb, group_media_status_cb
 
 
-async def test_start_discovery_called_once.opp):
+async def test_start_discovery_called_once(opp):
     """Test pychromecast.start_discovery called exactly once."""
     with patch(
         "openpeerpower.components.cast.discovery.pychromecast.start_discovery",
         return_value=Mock(),
     ) as start_discovery:
-        await async_setup_cast.opp)
+        await async_setup_cast(opp)
 
         assert start_discovery.call_count == 1
 
-        await async_setup_cast.opp)
+        await async_setup_cast(opp)
         assert start_discovery.call_count == 1
 
 
-async def test_internal_discovery_callback_fill_out.opp):
+async def test_internal_discovery_callback_fill_out(opp):
     """Test internal discovery automatically filling out information."""
-    discover_cast, _, _ = await async_setup_cast_internal_discovery.opp)
+    discover_cast, _, _ = await async_setup_cast_internal_discovery(opp)
     info = get_fake_chromecast_info(host="host1")
     zconf = get_fake_zconf(host="host1", port=8009)
     full_info = attr.evolve(
@@ -298,9 +298,9 @@ async def test_internal_discovery_callback_fill_out.opp):
         assert discover == full_info
 
 
-async def test_internal_discovery_callback_fill_out_default_manufacturer.opp):
+async def test_internal_discovery_callback_fill_out_default_manufacturer(opp):
     """Test internal discovery automatically filling out information."""
-    discover_cast, _, _ = await async_setup_cast_internal_discovery.opp)
+    discover_cast, _, _ = await async_setup_cast_internal_discovery(opp)
     info = get_fake_chromecast_info(host="host1")
     zconf = get_fake_zconf(host="host1", port=8009)
     full_info = attr.evolve(
@@ -325,9 +325,9 @@ async def test_internal_discovery_callback_fill_out_default_manufacturer.opp):
         assert discover == attr.evolve(full_info, manufacturer="Google Inc.")
 
 
-async def test_internal_discovery_callback_fill_out_fail.opp):
+async def test_internal_discovery_callback_fill_out_fail(opp):
     """Test internal discovery automatically filling out information."""
-    discover_cast, _, _ = await async_setup_cast_internal_discovery.opp)
+    discover_cast, _, _ = await async_setup_cast_internal_discovery(opp)
     info = get_fake_chromecast_info(host="host1")
     zconf = get_fake_zconf(host="host1", port=8009)
     full_info = (
@@ -353,9 +353,9 @@ async def test_internal_discovery_callback_fill_out_fail.opp):
         # assert 1 == 2
 
 
-async def test_internal_discovery_callback_fill_out_group.opp):
+async def test_internal_discovery_callback_fill_out_group(opp):
     """Test internal discovery automatically filling out information."""
-    discover_cast, _, _ = await async_setup_cast_internal_discovery.opp)
+    discover_cast, _, _ = await async_setup_cast_internal_discovery(opp)
     info = get_fake_chromecast_info(host="host1", port=12345)
     zconf = get_fake_zconf(host="host1", port=12345)
     full_info = attr.evolve(
@@ -384,7 +384,7 @@ async def test_internal_discovery_callback_fill_out_group.opp):
         assert discover == full_info
 
 
-async def test_stop_discovery_called_on_stop.opp):
+async def test_stop_discovery_called_on_stop(opp):
     """Test pychromecast.stop_discovery called on shutdown."""
     browser = MagicMock(zc={})
 
@@ -407,14 +407,14 @@ async def test_stop_discovery_called_on_stop.opp):
         stop_discovery.assert_called_once_with(browser)
 
 
-async def test_create_cast_device_without_uuid.opp):
+async def test_create_cast_device_without_uuid(opp):
     """Test create a cast device with no UUId does not create an entity."""
     info = get_fake_chromecast_info(uuid=None)
     cast_device = cast._async_create_cast_device(opp, info)
     assert cast_device is None
 
 
-async def test_create_cast_device_with_uuid.opp):
+async def test_create_cast_device_with_uuid(opp):
     """Test create cast devices with UUID creates entities."""
     added_casts = opp.data[cast.ADDED_CAST_DEVICES_KEY] = set()
     info = get_fake_chromecast_info()
@@ -428,7 +428,7 @@ async def test_create_cast_device_with_uuid.opp):
     assert cast_device is None
 
 
-async def test_replay_past_chromecasts.opp):
+async def test_replay_past_chromecasts(opp):
     """Test cast platform re-playing past chromecasts when adding new one."""
     cast_group1 = get_fake_chromecast_info(host="host1", port=8009, uuid=FakeUUID)
     cast_group2 = get_fake_chromecast_info(
@@ -465,7 +465,7 @@ async def test_replay_past_chromecasts.opp):
     assert add_dev2.call_count == 1
 
 
-async def test_manual_cast_chromecasts_uuid.opp):
+async def test_manual_cast_chromecasts_uuid(opp):
     """Test only wanted casts are added for manual configuration."""
     cast_1 = get_fake_chromecast_info(host="host_1", uuid=FakeUUID)
     cast_2 = get_fake_chromecast_info(host="host_2", uuid=FakeUUID2)
@@ -495,7 +495,7 @@ async def test_manual_cast_chromecasts_uuid.opp):
     assert add_dev1.call_count == 1
 
 
-async def test_auto_cast_chromecasts.opp):
+async def test_auto_cast_chromecasts(opp):
     """Test all discovered casts are added for default configuration."""
     cast_1 = get_fake_chromecast_info(host="some_host")
     cast_2 = get_fake_chromecast_info(host="other_host", uuid=FakeUUID2)
@@ -503,7 +503,7 @@ async def test_auto_cast_chromecasts.opp):
     zconf_2 = get_fake_zconf(host="other_host")
 
     # Manual configuration of media player with host "configured_host"
-    discover_cast, _, add_dev1 = await async_setup_cast_internal_discovery.opp)
+    discover_cast, _, add_dev1 = await async_setup_cast_internal_discovery(opp)
     with patch(
         "openpeerpower.components.cast.discovery.ChromeCastZeroconf.get_zeroconf",
         return_value=zconf_1,
@@ -596,7 +596,7 @@ async def test_discover_dynamic_group(opp, dial_mock, pycast_mock, caplog):
     assert "Disconnecting from chromecast" in caplog.text
 
 
-async def test_update_cast_chromecasts.opp):
+async def test_update_cast_chromecasts(opp):
     """Test discovery of same UUID twice only adds one cast."""
     cast_1 = get_fake_chromecast_info(host="old_host")
     cast_2 = get_fake_chromecast_info(host="new_host")
@@ -604,7 +604,7 @@ async def test_update_cast_chromecasts.opp):
     zconf_2 = get_fake_zconf(host="new_host")
 
     # Manual configuration of media player with host "configured_host"
-    discover_cast, _, add_dev1 = await async_setup_cast_internal_discovery.opp)
+    discover_cast, _, add_dev1 = await async_setup_cast_internal_discovery(opp)
 
     with patch(
         "openpeerpower.components.cast.discovery.ChromeCastZeroconf.get_zeroconf",

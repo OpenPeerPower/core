@@ -154,22 +154,22 @@ async def test_gateway_setup_opp, aioclient_mock):
         assert forward_entry_setup.mock_calls[8][1] == (config_entry, SWITCH_DOMAIN)
 
 
-async def test_gateway_retry.opp):
+async def test_gateway_retry(opp):
     """Retry setup."""
     with patch(
         "openpeerpower.components.deconz.gateway.get_gateway",
         side_effect=CannotConnect,
     ):
-        await setup_deconz_integration.opp)
+        await setup_deconz_integration(opp)
     assert not opp.data[DECONZ_DOMAIN]
 
 
-async def test_gateway_setup_fails.opp):
+async def test_gateway_setup_fails(opp):
     """Retry setup."""
     with patch(
         "openpeerpower.components.deconz.gateway.get_gateway", side_effect=Exception
     ):
-        await setup_deconz_integration.opp)
+        await setup_deconz_integration(opp)
     assert not opp.data[DECONZ_DOMAIN]
 
 
@@ -216,13 +216,13 @@ async def test_update_address(opp, aioclient_mock):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_gateway_trigger_reauth_flow.opp):
+async def test_gateway_trigger_reauth_flow(opp):
     """Failed authentication trigger a reauthentication flow."""
     with patch(
         "openpeerpower.components.deconz.gateway.get_gateway",
         side_effect=AuthenticationRequired,
     ), patch.object.opp.config_entries.flow, "async_init") as mock_flow_init:
-        await setup_deconz_integration.opp)
+        await setup_deconz_integration(opp)
         mock_flow_init.assert_called_once()
 
     assert opp.data[DECONZ_DOMAIN] == {}
@@ -239,13 +239,13 @@ async def test_reset_after_successful_setup_opp, aioclient_mock):
     assert result is True
 
 
-async def test_get_gateway.opp):
+async def test_get_gateway(opp):
     """Successful call."""
     with patch("pydeconz.DeconzSession.initialize", return_value=True):
         assert await get_gateway(opp, ENTRY_CONFIG, Mock(), Mock())
 
 
-async def test_get_gateway_fails_unauthorized.opp):
+async def test_get_gateway_fails_unauthorized(opp):
     """Failed call."""
     with patch(
         "pydeconz.DeconzSession.initialize",
@@ -254,7 +254,7 @@ async def test_get_gateway_fails_unauthorized.opp):
         assert await get_gateway(opp, ENTRY_CONFIG, Mock(), Mock()) is False
 
 
-async def test_get_gateway_fails_cannot_connect.opp):
+async def test_get_gateway_fails_cannot_connect(opp):
     """Failed call."""
     with patch(
         "pydeconz.DeconzSession.initialize",

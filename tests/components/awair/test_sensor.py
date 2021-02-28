@@ -69,7 +69,7 @@ def assert_expected_properties(
         assert state.attributes.get(attr) == value
 
 
-async def test_awair_gen1_sensors.opp):
+async def test_awair_gen1_sensors(opp):
     """Test expected sensors on a 1st gen Awair."""
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, GEN1_DATA_FIXTURE]
@@ -165,7 +165,7 @@ async def test_awair_gen1_sensors.opp):
     assert opp.states.get("sensor.living_room_illuminance") is None
 
 
-async def test_awair_gen2_sensors.opp):
+async def test_awair_gen2_sensors(opp):
     """Test expected sensors on a 2nd gen Awair."""
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, GEN2_DATA_FIXTURE]
@@ -199,7 +199,7 @@ async def test_awair_gen2_sensors.opp):
     assert opp.states.get("sensor.living_room_pm10") is None
 
 
-async def test_awair_mint_sensors.opp):
+async def test_awair_mint_sensors(opp):
     """Test expected sensors on an Awair mint."""
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, MINT_DATA_FIXTURE]
@@ -241,7 +241,7 @@ async def test_awair_mint_sensors.opp):
     assert opp.states.get("sensor.living_room_carbon_dioxide") is None
 
 
-async def test_awair_glow_sensors.opp):
+async def test_awair_glow_sensors(opp):
     """Test expected sensors on an Awair glow."""
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, GLOW_DATA_FIXTURE]
@@ -261,7 +261,7 @@ async def test_awair_glow_sensors.opp):
     assert opp.states.get("sensor.living_room_pm2_5") is None
 
 
-async def test_awair_omni_sensors.opp):
+async def test_awair_omni_sensors(opp):
     """Test expected sensors on an Awair omni."""
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, OMNI_DATA_FIXTURE]
@@ -296,7 +296,7 @@ async def test_awair_omni_sensors.opp):
     )
 
 
-async def test_awair_offline.opp):
+async def test_awair_offline(opp):
     """Test expected behavior when an Awair is offline."""
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, OFFLINE_FIXTURE]
@@ -314,7 +314,7 @@ async def test_awair_offline.opp):
     assert opp.states.get("sensor.living_room_awair_score") is None
 
 
-async def test_awair_unavailable.opp):
+async def test_awair_unavailable(opp):
     """Test expected behavior when an Awair becomes offline later."""
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, GEN1_DATA_FIXTURE]

@@ -63,19 +63,19 @@ async def setup_climate(opp, raw_traits=None, auth=None):
     return await async_setup_sdm_platform(opp, PLATFORM, devices)
 
 
-async def test_no_devices.opp):
+async def test_no_devices(opp):
     """Test no devices returned by the api."""
-    await setup_climate.opp)
+    await setup_climate(opp)
     assert len(opp.states.async_all()) == 0
 
 
-async def test_climate_devices.opp):
+async def test_climate_devices(opp):
     """Test no eligible climate devices returned by the api."""
     await setup_climate(opp, {"sdm.devices.traits.CameraImage": {}})
     assert len(opp.states.async_all()) == 0
 
 
-async def test_thermostat_off.opp):
+async def test_thermostat_off(opp):
     """Test a thermostat that is not running."""
     await setup_climate(
         opp,
@@ -112,7 +112,7 @@ async def test_thermostat_off.opp):
     assert ATTR_FAN_MODES not in thermostat.attributes
 
 
-async def test_thermostat_heat.opp):
+async def test_thermostat_heat(opp):
     """Test a thermostat that is heating."""
     await setup_climate(
         opp,
@@ -152,7 +152,7 @@ async def test_thermostat_heat.opp):
     assert ATTR_PRESET_MODES not in thermostat.attributes
 
 
-async def test_thermostat_cool.opp):
+async def test_thermostat_cool(opp):
     """Test a thermostat that is cooling."""
     await setup_climate(
         opp,
@@ -192,7 +192,7 @@ async def test_thermostat_cool.opp):
     assert ATTR_PRESET_MODES not in thermostat.attributes
 
 
-async def test_thermostat_heatcool.opp):
+async def test_thermostat_heatcool(opp):
     """Test a thermostat that is cooling in heatcool mode."""
     await setup_climate(
         opp,
@@ -233,7 +233,7 @@ async def test_thermostat_heatcool.opp):
     assert ATTR_PRESET_MODES not in thermostat.attributes
 
 
-async def test_thermostat_eco_off.opp):
+async def test_thermostat_eco_off(opp):
     """Test a thermostat cooling with eco off."""
     await setup_climate(
         opp,
@@ -280,7 +280,7 @@ async def test_thermostat_eco_off.opp):
     assert thermostat.attributes[ATTR_PRESET_MODES] == [PRESET_ECO, PRESET_NONE]
 
 
-async def test_thermostat_eco_on.opp):
+async def test_thermostat_eco_on(opp):
     """Test a thermostat in eco mode."""
     await setup_climate(
         opp,
@@ -327,7 +327,7 @@ async def test_thermostat_eco_on.opp):
     assert thermostat.attributes[ATTR_PRESET_MODES] == [PRESET_ECO, PRESET_NONE]
 
 
-async def test_thermostat_eco_heat_only.opp):
+async def test_thermostat_eco_heat_only(opp):
     """Test a thermostat in eco mode that only supports heat."""
     await setup_climate(
         opp,
@@ -670,7 +670,7 @@ async def test_thermostat_set_heat_cool(opp, auth):
     }
 
 
-async def test_thermostat_fan_off.opp):
+async def test_thermostat_fan_off(opp):
     """Test a thermostat with the fan not running."""
     await setup_climate(
         opp,
@@ -707,7 +707,7 @@ async def test_thermostat_fan_off.opp):
     assert thermostat.attributes[ATTR_FAN_MODES] == [FAN_ON, FAN_OFF]
 
 
-async def test_thermostat_fan_on.opp):
+async def test_thermostat_fan_on(opp):
     """Test a thermostat with the fan running."""
     await setup_climate(
         opp,
@@ -746,7 +746,7 @@ async def test_thermostat_fan_on.opp):
     assert thermostat.attributes[ATTR_FAN_MODES] == [FAN_ON, FAN_OFF]
 
 
-async def test_thermostat_cool_with_fan.opp):
+async def test_thermostat_cool_with_fan(opp):
     """Test a thermostat cooling while the fan is on."""
     await setup_climate(
         opp,
@@ -820,7 +820,7 @@ async def test_thermostat_set_fan(opp, auth):
     }
 
 
-async def test_thermostat_fan_empty.opp):
+async def test_thermostat_fan_empty(opp):
     """Test a fan trait with an empty response."""
     await setup_climate(
         opp,
@@ -860,7 +860,7 @@ async def test_thermostat_fan_empty.opp):
     assert ATTR_FAN_MODES not in thermostat.attributes
 
 
-async def test_thermostat_invalid_fan_mode.opp):
+async def test_thermostat_invalid_fan_mode(opp):
     """Test setting a fan mode that is not supported."""
     await setup_climate(
         opp,
@@ -1011,7 +1011,7 @@ async def test_thermostat_target_temp(opp, auth):
     assert thermostat.attributes[ATTR_TEMPERATURE] is None
 
 
-async def test_thermostat_missing_mode_traits.opp):
+async def test_thermostat_missing_mode_traits(opp):
     """Test a thermostat missing many thermostat traits in api response."""
     await setup_climate(
         opp,
@@ -1044,7 +1044,7 @@ async def test_thermostat_missing_mode_traits.opp):
     assert ATTR_PRESET_MODE not in thermostat.attributes
 
 
-async def test_thermostat_missing_temperature_trait.opp):
+async def test_thermostat_missing_temperature_trait(opp):
     """Test a thermostat missing many thermostat traits in api response."""
     await setup_climate(
         opp,
@@ -1082,7 +1082,7 @@ async def test_thermostat_missing_temperature_trait.opp):
     assert thermostat.attributes[ATTR_TEMPERATURE] is None
 
 
-async def test_thermostat_unexpected_hvac_status.opp):
+async def test_thermostat_unexpected_hvac_status(opp):
     """Test a thermostat missing many thermostat traits in api response."""
     await setup_climate(
         opp,
@@ -1112,7 +1112,7 @@ async def test_thermostat_unexpected_hvac_status.opp):
     assert thermostat.state == HVAC_MODE_OFF
 
 
-async def test_thermostat_missing_set_point.opp):
+async def test_thermostat_missing_set_point(opp):
     """Test a thermostat missing many thermostat traits in api response."""
     await setup_climate(
         opp,
@@ -1146,7 +1146,7 @@ async def test_thermostat_missing_set_point.opp):
     assert ATTR_FAN_MODES not in thermostat.attributes
 
 
-async def test_thermostat_unexepected_hvac_mode.opp):
+async def test_thermostat_unexepected_hvac_mode(opp):
     """Test a thermostat missing many thermostat traits in api response."""
     await setup_climate(
         opp,

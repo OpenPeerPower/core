@@ -17,9 +17,9 @@ from tests.common import MockConfigEntry, load_fixture
 
 
 @pytest.fixture(name="device_registry")
-async def device_registry_fixture.opp):
+async def device_registry_fixture(opp):
     """Return the device registry."""
-    return await async_get_device_registry.opp)
+    return await async_get_device_registry(opp)
 
 
 @pytest.fixture(name="discovery_info")

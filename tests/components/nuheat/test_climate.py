@@ -18,7 +18,7 @@ from .mocks import (
 from tests.common import MockConfigEntry, async_fire_time_changed
 
 
-async def test_climate_thermostat_run.opp):
+async def test_climate_thermostat_run(opp):
     """Test a thermostat with the schedule running."""
     mock_thermostat = _get_mock_thermostat_run()
     mock_nuheat = _get_mock_nuheat(get_thermostat=mock_thermostat)
@@ -51,7 +51,7 @@ async def test_climate_thermostat_run.opp):
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
 
-async def test_climate_thermostat_schedule_hold_unavailable.opp):
+async def test_climate_thermostat_schedule_hold_unavailable(opp):
     """Test a thermostat with the schedule hold that is offline."""
     mock_thermostat = _get_mock_thermostat_schedule_hold_unavailable()
     mock_nuheat = _get_mock_nuheat(get_thermostat=mock_thermostat)
@@ -81,7 +81,7 @@ async def test_climate_thermostat_schedule_hold_unavailable.opp):
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
 
-async def test_climate_thermostat_schedule_hold_available.opp):
+async def test_climate_thermostat_schedule_hold_available(opp):
     """Test a thermostat with the schedule hold that is online."""
     mock_thermostat = _get_mock_thermostat_schedule_hold_available()
     mock_nuheat = _get_mock_nuheat(get_thermostat=mock_thermostat)
@@ -115,7 +115,7 @@ async def test_climate_thermostat_schedule_hold_available.opp):
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
 
-async def test_climate_thermostat_schedule_temporary_hold.opp):
+async def test_climate_thermostat_schedule_temporary_hold(opp):
     """Test a thermostat with the temporary schedule hold that is online."""
     mock_thermostat = _get_mock_thermostat_schedule_temporary_hold()
     mock_nuheat = _get_mock_nuheat(get_thermostat=mock_thermostat)

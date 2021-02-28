@@ -33,7 +33,7 @@ CONFIG_THEMES = {
 
 
 @pytest.fixture
-async def ignore_frontend_deps.opp):
+async def ignore_frontend_deps(opp):
     """Frontend dependencies."""
     frontend = await async_get_integration(opp, "frontend")
     for dep in frontend.dependencies:
@@ -52,7 +52,7 @@ async def frontend.opp, ignore_frontend_deps):
 
 
 @pytest.fixture
-async def frontend_themes.opp):
+async def frontend_themes(opp):
     """Frontend setup with themes."""
     assert await async_setup_component(
         opp,
@@ -70,13 +70,13 @@ async def mock_http_client(opp, aiohttp_client, frontend):
 @pytest.fixture
 async def themes_ws_client(opp, opp_ws_client, frontend_themes):
     """Start the Open Peer Power HTTP component."""
-    return await opp_ws_client.opp)
+    return await opp_ws_client(opp)
 
 
 @pytest.fixture
 async def ws_client(opp, opp_ws_client, frontend):
     """Start the Open Peer Power HTTP component."""
-    return await opp_ws_client.opp)
+    return await opp_ws_client(opp)
 
 
 @pytest.fixture
@@ -176,7 +176,7 @@ async def test_themes_persist(opp, opp_storage, opp_ws_client, ignore_frontend_d
     }
 
     assert await async_setup_component(opp, "frontend", CONFIG_THEMES)
-    themes_ws_client = await opp_ws_client.opp)
+    themes_ws_client = await opp_ws_client(opp)
 
     await themes_ws_client.send_json({"id": 5, "type": "frontend/get_themes"})
     msg = await themes_ws_client.receive_json()
@@ -346,7 +346,7 @@ async def test_get_panels(opp, opp_ws_client, mock_http_client):
 
     assert len(events) == 1
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     await client.send_json({"id": 5, "type": "get_panels"})
 
     msg = await client.receive_json()
@@ -414,13 +414,13 @@ async def test_get_translations(opp, ws_client):
     assert msg["result"] == {"resources": {"lang": "nl"}}
 
 
-async def test_auth_load.opp):
+async def test_auth_load(opp):
     """Test auth component loaded by default."""
     frontend = await async_get_integration(opp, "frontend")
     assert "auth" in frontend.dependencies
 
 
-async def test_onboarding_load.opp):
+async def test_onboarding_load(opp):
     """Test onboarding component loaded by default."""
     frontend = await async_get_integration(opp, "frontend")
     assert "onboarding" in frontend.dependencies

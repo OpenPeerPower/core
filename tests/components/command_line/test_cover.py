@@ -54,7 +54,7 @@ def test_query_state_value(rs):
         )
 
 
-async def test_state_value.opp):
+async def test_state_value(opp):
     """Test with state value."""
     with tempfile.TemporaryDirectory() as tempdirname:
         path = os.path.join(tempdirname, "cover_status")
@@ -93,7 +93,7 @@ async def test_state_value.opp):
         assert "closed" == opp.states.get("cover.test").state
 
 
-async def test_reload.opp):
+async def test_reload(opp):
     """Verify we can reload command_line covers."""
 
     test_cover = {

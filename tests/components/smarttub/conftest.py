@@ -29,7 +29,7 @@ def config_entry(config_data):
 
 
 @pytest.fixture
-async def setup_component.opp):
+async def setup_component(opp):
     """Set up the component."""
     assert await async_setup_component(opp, DOMAIN, {}) is True
 

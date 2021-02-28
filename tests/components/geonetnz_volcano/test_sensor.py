@@ -130,7 +130,7 @@ async def test_setup_opp, legacy_patchable_time):
         assert len(all_states) == 4
 
 
-async def test_setup_imperial.opp):
+async def test_setup_imperial(opp):
     """Test the setup of the integration using imperial unit system."""
     opp.config.units = IMPERIAL_SYSTEM
     # Set up some mock feed entries for this test.

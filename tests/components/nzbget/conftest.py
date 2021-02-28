@@ -7,7 +7,7 @@ from . import MOCK_HISTORY, MOCK_STATUS, MOCK_VERSION
 
 
 @fixture
-def nzbget_api.opp):
+def nzbget_api(opp):
     """Mock NZBGetApi for easier testing."""
     with patch("openpeerpower.components.nzbget.coordinator.NZBGetAPI") as mock_api:
         instance = mock_api.return_value

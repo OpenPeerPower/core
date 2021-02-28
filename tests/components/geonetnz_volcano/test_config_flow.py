@@ -25,7 +25,7 @@ async def test_duplicate_error(opp, config_entry):
     assert result["errors"] == {"base": "already_configured"}
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     flow = config_flow.GeonetnzVolcanoFlowHandler()
     flow.opp = opp
@@ -36,7 +36,7 @@ async def test_show_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_step_import.opp):
+async def test_step_import(opp):
     """Test that the import step works."""
     conf = {
         CONF_LATITUDE: -41.2,
@@ -66,7 +66,7 @@ async def test_step_import.opp):
     }
 
 
-async def test_step_user.opp):
+async def test_step_user(opp):
     """Test that the user step works."""
     opp.config.latitude = -41.2
     opp.config.longitude = 174.7

@@ -32,7 +32,7 @@ async def test_future_discovery_message(opp, mqtt_mock, caplog):
         "openpeerpower.components.tasmota.discovery.tasmota_get_device_config",
         return_value={},
     ) as mock_tasmota_get_device_config:
-        await setup_tasmota_helper.opp)
+        await setup_tasmota_helper(opp)
 
         async_fire_mqtt_message(
             opp. f"{DEFAULT_PREFIX}/00000049A3BC/config", json.dumps(config)
@@ -49,7 +49,7 @@ async def test_valid_discovery_message(opp, mqtt_mock, caplog):
         "openpeerpower.components.tasmota.discovery.tasmota_get_device_config",
         return_value={},
     ) as mock_tasmota_get_device_config:
-        await setup_tasmota_helper.opp)
+        await setup_tasmota_helper(opp)
 
         async_fire_mqtt_message(
             opp. f"{DEFAULT_PREFIX}/00000049A3BC/config", json.dumps(config)
@@ -63,7 +63,7 @@ async def test_invalid_topic(opp, mqtt_mock):
     with patch(
         "openpeerpower.components.tasmota.discovery.tasmota_get_device_config"
     ) as mock_tasmota_get_device_config:
-        await setup_tasmota_helper.opp)
+        await setup_tasmota_helper(opp)
 
         async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/123456/configuration", "{}")
         await opp.async_block_till_done()
@@ -75,7 +75,7 @@ async def test_invalid_message(opp, mqtt_mock, caplog):
     with patch(
         "openpeerpower.components.tasmota.discovery.tasmota_get_device_config"
     ) as mock_tasmota_get_device_config:
-        await setup_tasmota_helper.opp)
+        await setup_tasmota_helper(opp)
 
         async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/123456/config", "asd")
         await opp.async_block_till_done()
@@ -90,7 +90,7 @@ async def test_invalid_mac(opp, mqtt_mock, caplog):
     with patch(
         "openpeerpower.components.tasmota.discovery.tasmota_get_device_config"
     ) as mock_tasmota_get_device_config:
-        await setup_tasmota_helper.opp)
+        await setup_tasmota_helper(opp)
 
         async_fire_mqtt_message(
             opp. f"{DEFAULT_PREFIX}/00000049A3BA/config", json.dumps(config)

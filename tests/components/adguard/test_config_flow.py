@@ -29,7 +29,7 @@ FIXTURE_USER_INPUT = {
 }
 
 
-async def test_show_authenticate_form.opp):
+async def test_show_authenticate_form(opp):
     """Test that the setup form is served."""
     flow = config_flow.AdGuardHomeFlowHandler()
     flow.opp = opp
@@ -95,7 +95,7 @@ async def test_integration_already_exists(opp):
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test.oppio_single_instance.opp):
+async def test.oppio_single_instance(opp):
     """Test we only allow a single config flow."""
     MockConfigEntry(
         domain="adguard", data={"host": "mock-adguard", "port": "3000"}
@@ -110,7 +110,7 @@ async def test.oppio_single_instance.opp):
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test.oppio_update_instance_not_running.opp):
+async def test.oppio_update_instance_not_running(opp):
     """Test we only allow a single config flow."""
     entry = MockConfigEntry(
         domain="adguard", data={"host": "mock-adguard", "port": "3000"}

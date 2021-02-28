@@ -14,7 +14,7 @@ async def test_multiple_zeroconf_instances(opp, mock_zeroconf, caplog):
     """Test creating multiple zeroconf throws without an integration."""
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {}})
 
-    zeroconf_instance = await async_get_instance.opp)
+    zeroconf_instance = await async_get_instance(opp)
 
     install_multiple_zeroconf_catcher(zeroconf_instance)
 
@@ -28,7 +28,7 @@ async def test_multiple_zeroconf_instances_gives_shared(opp, mock_zeroconf, capl
     """Test creating multiple zeroconf gives the shared instance to an integration."""
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {}})
 
-    zeroconf_instance = await async_get_instance.opp)
+    zeroconf_instance = await async_get_instance(opp)
 
     install_multiple_zeroconf_catcher(zeroconf_instance)
 

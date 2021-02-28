@@ -12,14 +12,14 @@ import openpeerpower.util.dt as dt_util
 from .util import async_init_integration
 
 
-async def test_aemet_forecast_create_sensors.opp):
+async def test_aemet_forecast_create_sensors(opp):
     """Test creation of forecast sensors."""
 
     now = dt_util.parse_datetime("2021-01-09 12:00:00+00:00")
     with patch("openpeerpower.util.dt.now", return_value=now), patch(
         "openpeerpower.util.dt.utcnow", return_value=now
     ):
-        await async_init_integration.opp)
+        await async_init_integration(opp)
 
     state = opp.states.get("sensor.aemet_daily_forecast_condition")
     assert state.state == ATTR_CONDITION_PARTLYCLOUDY
@@ -70,14 +70,14 @@ async def test_aemet_forecast_create_sensors.opp):
     assert state is None
 
 
-async def test_aemet_weather_create_sensors.opp):
+async def test_aemet_weather_create_sensors(opp):
     """Test creation of weather sensors."""
 
     now = dt_util.parse_datetime("2021-01-09 12:00:00+00:00")
     with patch("openpeerpower.util.dt.now", return_value=now), patch(
         "openpeerpower.util.dt.utcnow", return_value=now
     ):
-        await async_init_integration.opp)
+        await async_init_integration(opp)
 
     state = opp.states.get("sensor.aemet_condition")
     assert state.state == ATTR_CONDITION_SNOWY

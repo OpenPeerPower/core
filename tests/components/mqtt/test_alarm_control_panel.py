@@ -156,7 +156,7 @@ async def test_arm_home_publishes_mqtt(opp, mqtt_mock):
     )
     await opp.async_block_till_done()
 
-    await common.async_alarm_arm_home.opp)
+    await common.async_alarm_arm_home(opp)
     mqtt_mock.async_publish.assert_called_once_with(
         "alarm/command", "ARM_HOME", 0, False
     )
@@ -192,7 +192,7 @@ async def test_arm_home_publishes_mqtt_when_code_not_req(opp, mqtt_mock):
     )
     await opp.async_block_till_done()
 
-    await common.async_alarm_arm_home.opp)
+    await common.async_alarm_arm_home(opp)
     mqtt_mock.async_publish.assert_called_once_with(
         "alarm/command", "ARM_HOME", 0, False
     )
@@ -207,7 +207,7 @@ async def test_arm_away_publishes_mqtt(opp, mqtt_mock):
     )
     await opp.async_block_till_done()
 
-    await common.async_alarm_arm_away.opp)
+    await common.async_alarm_arm_away(opp)
     mqtt_mock.async_publish.assert_called_once_with(
         "alarm/command", "ARM_AWAY", 0, False
     )
@@ -243,7 +243,7 @@ async def test_arm_away_publishes_mqtt_when_code_not_req(opp, mqtt_mock):
     )
     await opp.async_block_till_done()
 
-    await common.async_alarm_arm_away.opp)
+    await common.async_alarm_arm_away(opp)
     mqtt_mock.async_publish.assert_called_once_with(
         "alarm/command", "ARM_AWAY", 0, False
     )
@@ -258,7 +258,7 @@ async def test_arm_night_publishes_mqtt(opp, mqtt_mock):
     )
     await opp.async_block_till_done()
 
-    await common.async_alarm_arm_night.opp)
+    await common.async_alarm_arm_night(opp)
     mqtt_mock.async_publish.assert_called_once_with(
         "alarm/command", "ARM_NIGHT", 0, False
     )
@@ -294,7 +294,7 @@ async def test_arm_night_publishes_mqtt_when_code_not_req(opp, mqtt_mock):
     )
     await opp.async_block_till_done()
 
-    await common.async_alarm_arm_night.opp)
+    await common.async_alarm_arm_night(opp)
     mqtt_mock.async_publish.assert_called_once_with(
         "alarm/command", "ARM_NIGHT", 0, False
     )
@@ -316,7 +316,7 @@ async def test_arm_custom_bypass_publishes_mqtt(opp, mqtt_mock):
     )
     await opp.async_block_till_done()
 
-    await common.async_alarm_arm_custom_bypass.opp)
+    await common.async_alarm_arm_custom_bypass(opp)
     mqtt_mock.async_publish.assert_called_once_with(
         "alarm/command", "ARM_CUSTOM_BYPASS", 0, False
     )
@@ -371,7 +371,7 @@ async def test_arm_custom_bypass_publishes_mqtt_when_code_not_req(opp, mqtt_mock
     )
     await opp.async_block_till_done()
 
-    await common.async_alarm_arm_custom_bypass.opp)
+    await common.async_alarm_arm_custom_bypass(opp)
     mqtt_mock.async_publish.assert_called_once_with(
         "alarm/command", "ARM_CUSTOM_BYPASS", 0, False
     )
@@ -386,7 +386,7 @@ async def test_disarm_publishes_mqtt(opp, mqtt_mock):
     )
     await opp.async_block_till_done()
 
-    await common.async_alarm_disarm.opp)
+    await common.async_alarm_disarm(opp)
     mqtt_mock.async_publish.assert_called_once_with("alarm/command", "DISARM", 0, False)
 
 
@@ -428,7 +428,7 @@ async def test_disarm_publishes_mqtt_when_code_not_req(opp, mqtt_mock):
     )
     await opp.async_block_till_done()
 
-    await common.async_alarm_disarm.opp)
+    await common.async_alarm_disarm(opp)
     mqtt_mock.async_publish.assert_called_once_with("alarm/command", "DISARM", 0, False)
 
 

@@ -9,7 +9,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import mock_coro
 
 
-async def test_abort_if_no_implementation_registered.opp):
+async def test_abort_if_no_implementation_registered(opp):
     """Test we abort if no implementation is registered."""
     flow = config_flow.NestFlowHandler()
     flow.opp = opp
@@ -19,7 +19,7 @@ async def test_abort_if_no_implementation_registered.opp):
     assert result["reason"] == "missing_configuration"
 
 
-async def test_abort_if_single_instance_allowed.opp):
+async def test_abort_if_single_instance_allowed(opp):
     """Test we abort if Nest is already setup."""
     flow = config_flow.NestFlowHandler()
     flow.opp = opp
@@ -31,7 +31,7 @@ async def test_abort_if_single_instance_allowed.opp):
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test_full_flow_implementation.opp):
+async def test_full_flow_implementation(opp):
     """Test registering an implementation and finishing flow works."""
     gen_authorize_url = AsyncMock(return_value="https://example.com")
     convert_code = AsyncMock(return_value={"access_token": "yoo"})
@@ -60,7 +60,7 @@ async def test_full_flow_implementation.opp):
     assert result["title"] == "Nest (via Test)"
 
 
-async def test_not_pick_implementation_if_only_one.opp):
+async def test_not_pick_implementation_if_only_one(opp):
     """Test we allow picking implementation if we have two."""
     gen_authorize_url = AsyncMock(return_value="https://example.com")
     config_flow.register_flow_implementation(
@@ -74,7 +74,7 @@ async def test_not_pick_implementation_if_only_one.opp):
     assert result["step_id"] == "link"
 
 
-async def test_abort_if_timeout_generating_auth_url.opp):
+async def test_abort_if_timeout_generating_auth_url(opp):
     """Test we abort if generating authorize url fails."""
     gen_authorize_url = Mock(side_effect=asyncio.TimeoutError)
     config_flow.register_flow_implementation(
@@ -88,7 +88,7 @@ async def test_abort_if_timeout_generating_auth_url.opp):
     assert result["reason"] == "authorize_url_timeout"
 
 
-async def test_abort_if_exception_generating_auth_url.opp):
+async def test_abort_if_exception_generating_auth_url(opp):
     """Test we abort if generating authorize url blows up."""
     gen_authorize_url = Mock(side_effect=ValueError)
     config_flow.register_flow_implementation(
@@ -102,7 +102,7 @@ async def test_abort_if_exception_generating_auth_url.opp):
     assert result["reason"] == "unknown_authorize_url_generation"
 
 
-async def test_verify_code_timeout.opp):
+async def test_verify_code_timeout(opp):
     """Test verify code timing out."""
     gen_authorize_url = AsyncMock(return_value="https://example.com")
     convert_code = Mock(side_effect=asyncio.TimeoutError)
@@ -122,7 +122,7 @@ async def test_verify_code_timeout.opp):
     assert result["errors"] == {"code": "timeout"}
 
 
-async def test_verify_code_invalid.opp):
+async def test_verify_code_invalid(opp):
     """Test verify code invalid."""
     gen_authorize_url = AsyncMock(return_value="https://example.com")
     convert_code = Mock(side_effect=config_flow.CodeInvalid)
@@ -162,7 +162,7 @@ async def test_verify_code_unknown_error(opp):
     assert result["errors"] == {"code": "unknown"}
 
 
-async def test_verify_code_exception.opp):
+async def test_verify_code_exception(opp):
     """Test verify code blows up."""
     gen_authorize_url = AsyncMock(return_value="https://example.com")
     convert_code = Mock(side_effect=ValueError)
@@ -182,7 +182,7 @@ async def test_verify_code_exception.opp):
     assert result["errors"] == {"code": "internal_error"}
 
 
-async def test_step_import.opp):
+async def test_step_import(opp):
     """Test that we trigger import when configuring with client."""
     with patch("os.path.isfile", return_value=False):
         assert await async_setup_component(
@@ -197,7 +197,7 @@ async def test_step_import.opp):
     assert result["step_id"] == "link"
 
 
-async def test_step_import_with_token_cache.opp):
+async def test_step_import_with_token_cache(opp):
     """Test that we import existing token cache."""
     with patch("os.path.isfile", return_value=True), patch(
         "openpeerpower.components.nest.config_flow.load_json",

@@ -18,7 +18,7 @@ from tests.components.august.mocks import (
 )
 
 
-async def test_doorsense.opp):
+async def test_doorsense(opp):
     """Test creation of a lock with doorsense and bridge."""
     lock_one = await _mock_lock_from_fixture(
         opp. "get_lock.online_with_doorsense.json"
@@ -52,7 +52,7 @@ async def test_doorsense.opp):
     assert binary_sensor_online_with_doorsense_name.state == STATE_OFF
 
 
-async def test_create_doorbell.opp):
+async def test_create_doorbell(opp):
     """Test creation of a doorbell."""
     doorbell_one = await _mock_doorbell_from_fixture(opp, "get_doorbell.json")
     await _create_august_with_devices(opp, [doorbell_one])
@@ -75,7 +75,7 @@ async def test_create_doorbell.opp):
     assert binary_sensor_k98gidt45gul_name_motion.state == STATE_OFF
 
 
-async def test_create_doorbell_offline.opp):
+async def test_create_doorbell_offline(opp):
     """Test creation of a doorbell that is offline."""
     doorbell_one = await _mock_doorbell_from_fixture(opp, "get_doorbell.offline.json")
     await _create_august_with_devices(opp, [doorbell_one])
@@ -92,7 +92,7 @@ async def test_create_doorbell_offline.opp):
     assert binary_sensor_tmt100_name_ding.state == STATE_UNAVAILABLE
 
 
-async def test_create_doorbell_with_motion.opp):
+async def test_create_doorbell_with_motion(opp):
     """Test creation of a doorbell."""
     doorbell_one = await _mock_doorbell_from_fixture(opp, "get_doorbell.json")
     activities = await _mock_activities_from_fixture(
@@ -114,7 +114,7 @@ async def test_create_doorbell_with_motion.opp):
     assert binary_sensor_k98gidt45gul_name_ding.state == STATE_OFF
 
 
-async def test_doorbell_device_registry.opp):
+async def test_doorbell_device_registry(opp):
     """Test creation of a lock with doorsense and bridge ands up in the registry."""
     doorbell_one = await _mock_doorbell_from_fixture(opp, "get_doorbell.offline.json")
     await _create_august_with_devices(opp, [doorbell_one])

@@ -20,15 +20,15 @@ from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 
 
 @pytest.fixture
-def device_reg.opp):
+def device_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_device_registry.opp)
+    return mock_device_registry(opp)
 
 
 @pytest.fixture
-def entity_reg.opp):
+def entity_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_registry.opp)
+    return mock_registry(opp)
 
 
 async def test_get_actions(opp, device_reg, entity_reg):
@@ -319,7 +319,7 @@ async def test_get_action_capabilities_set_tilt_pos(opp, device_reg, entity_reg)
             assert capabilities == {"extra_fields": []}
 
 
-async def test_action.opp):
+async def test_action(opp):
     """Test for cover actions."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
@@ -385,7 +385,7 @@ async def test_action.opp):
     assert len(stop_calls) == 1
 
 
-async def test_action_tilt.opp):
+async def test_action_tilt(opp):
     """Test for cover tilt actions."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()
@@ -438,7 +438,7 @@ async def test_action_tilt.opp):
     assert len(close_calls) == 1
 
 
-async def test_action_set_position.opp):
+async def test_action_set_position(opp):
     """Test for cover set position actions."""
     platform = getattr.opp.components, f"test.{DOMAIN}")
     platform.init()

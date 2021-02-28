@@ -24,7 +24,7 @@ def light_mock(opp, brightness):
     return mochad.MochadLight.opp, controller_mock, dev_dict)
 
 
-async def test_setup_adds_proper_devices.opp):
+async def test_setup_adds_proper_devices(opp):
     """Test if setup adds devices."""
     good_config = {
         "mochad": {},

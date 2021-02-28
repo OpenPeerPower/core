@@ -29,7 +29,7 @@ from .common import (
 FAKE_UPDATED_TOKEN = "fake-updated-token"
 
 
-async def async_setup_sdm.opp):
+async def async_setup_sdm(opp):
     """Set up the integration."""
     assert await async_setup_component(opp, DOMAIN, CONFIG)
     await opp.async_block_till_done()
@@ -59,7 +59,7 @@ async def test_auth(opp, aioclient_mock):
         "google_nest_sdm.google_nest_subscriber.DefaultSubscriberFactory.async_new_subscriber",
         side_effect=async_new_subscriber,
     ) as new_subscriber_mock:
-        await async_setup_sdm.opp)
+        await async_setup_sdm(opp)
 
     # Verify API requests are made with the correct credentials
     calls = aioclient_mock.mock_calls
@@ -117,7 +117,7 @@ async def test_auth_expired_token(opp, aioclient_mock):
         "google_nest_sdm.google_nest_subscriber.DefaultSubscriberFactory.async_new_subscriber",
         side_effect=async_new_subscriber,
     ) as new_subscriber_mock:
-        await async_setup_sdm.opp)
+        await async_setup_sdm(opp)
 
     calls = aioclient_mock.mock_calls
     assert len(calls) == 3

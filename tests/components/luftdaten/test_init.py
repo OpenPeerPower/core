@@ -7,7 +7,7 @@ from openpeerpower.const import CONF_SCAN_INTERVAL, CONF_SHOW_ON_MAP
 from openpeerpower.setup import async_setup_component
 
 
-async def test_config_with_sensor_passed_to_config_entry.opp):
+async def test_config_with_sensor_passed_to_config_entry(opp):
     """Test that configured options for a sensor are loaded."""
     conf = {
         CONF_SENSOR_ID: "12345abcde",
@@ -25,7 +25,7 @@ async def test_config_with_sensor_passed_to_config_entry.opp):
     assert len(mock_config_entries.flow.mock_calls) == 0
 
 
-async def test_config_already_registered_not_passed_to_config_entry.opp):
+async def test_config_already_registered_not_passed_to_config_entry(opp):
     """Test that an already registered sensor does not initiate an import."""
     conf = {CONF_SENSOR_ID: "12345abcde"}
 

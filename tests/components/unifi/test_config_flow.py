@@ -513,7 +513,7 @@ async def test_simple_option_flow(opp, aioclient_mock):
     }
 
 
-async def test_form_ssdp.opp):
+async def test_form_ssdp(opp):
     """Test we get the form with ssdp source."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -586,7 +586,7 @@ async def test_form_ssdp_aborts_if_serial_already_exists(opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_form_ssdp_gets_form_with_ignored_entry.opp):
+async def test_form_ssdp_gets_form_with_ignored_entry(opp):
     """Test we can still setup if there is an ignored entry."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     entry = MockConfigEntry(

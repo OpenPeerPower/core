@@ -6,7 +6,7 @@ import openpeerpower.components.remember_the_milk as rtm
 from .const import JSON_STRING, PROFILE, TOKEN
 
 
-def test_create_new.opp):
+def test_create_new(opp):
     """Test creating a new config file."""
     with patch("builtins.open", mock_open()), patch(
         "os.path.isfile", Mock(return_value=False)
@@ -25,7 +25,7 @@ def test_load_config(opp):
     assert config.get_token(PROFILE) == TOKEN
 
 
-def test_invalid_data.opp):
+def test_invalid_data(opp):
     """Test starts with invalid data and should not raise an exception."""
     with patch("builtins.open", mock_open(read_data="random characters")), patch(
         "os.path.isfile", Mock(return_value=True)
@@ -34,7 +34,7 @@ def test_invalid_data.opp):
     assert config is not None
 
 
-def test_id_map.opp):
+def test_id_map(opp):
     """Test the.opp to rtm task is mapping."""
     opp.id = opp-id-1234"
     list_id = "mylist"
@@ -52,7 +52,7 @@ def test_id_map.opp):
         assert config.get_rtm_id(PROFILE, opp_id) is None
 
 
-def test_load_key_map.opp):
+def test_load_key_map(opp):
     """Test loading an existing key map from the file."""
     with patch("builtins.open", mock_open(read_data=JSON_STRING)), patch(
         "os.path.isfile", Mock(return_value=True)

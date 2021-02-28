@@ -85,7 +85,7 @@ def mutagen_mock():
 
 
 @pytest.fixture(autouse=True)
-async def internal_url_mock.opp):
+async def internal_url_mock(opp):
     """Mock internal URL of the instance."""
     await async_process_op_core_config(
         opp,
@@ -93,7 +93,7 @@ async def internal_url_mock.opp):
     )
 
 
-async def test_setup_component_demo.opp):
+async def test_setup_component_demo(opp):
     """Set up the demo platform with defaults."""
     config = {tts.DOMAIN: {"platform": "demo"}}
 
@@ -213,7 +213,7 @@ async def test_setup_component_and_test_service_with_config_language_special(
     ).is_file()
 
 
-async def test_setup_component_and_test_service_with_wrong_conf_language.opp):
+async def test_setup_component_and_test_service_with_wrong_conf_language(opp):
     """Set up the demo platform and call service with wrong config."""
     config = {tts.DOMAIN: {"platform": "demo", "language": "ru"}}
 
@@ -388,7 +388,7 @@ async def test_setup_component_and_test_service_with_service_options_wrong(
     ).is_file()
 
 
-async def test_setup_component_and_test_service_with_base_url_set.opp):
+async def test_setup_component_and_test_service_with_base_url_set(opp):
     """Set up the demo platform with ``base_url`` set and call service."""
     calls = async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 
@@ -648,7 +648,7 @@ async def test_setup_component_test_with_cache_dir(
     )
 
 
-async def test_setup_component_test_with_error_on_get_tts.opp):
+async def test_setup_component_test_with_error_on_get_tts(opp):
     """Set up demo platform with wrong get_tts_audio."""
     config = {tts.DOMAIN: {"platform": "demo"}}
 

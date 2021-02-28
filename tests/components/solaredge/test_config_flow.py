@@ -25,7 +25,7 @@ def mock_controller():
         yield api
 
 
-def init_config_flow.opp):
+def init_config_flow(opp):
     """Init a configuration flow."""
     flow = config_flow.SolarEdgeConfigFlow()
     flow.opp = opp
@@ -34,7 +34,7 @@ def init_config_flow.opp):
 
 async def test_user(opp, test_api):
     """Test user config."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -52,7 +52,7 @@ async def test_user(opp, test_api):
 
 async def test_import(opp, test_api):
     """Test import step."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     # import with site_id and api_key
     result = await flow.async_step_import(
@@ -75,7 +75,7 @@ async def test_import(opp, test_api):
 
 async def test_abort_if_already_setup_opp, test_api):
     """Test we abort if the site_id is already setup."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
     MockConfigEntry(
         domain="solaredge",
         data={CONF_NAME: DEFAULT_NAME, CONF_SITE_ID: SITE_ID, CONF_API_KEY: API_KEY},
@@ -98,7 +98,7 @@ async def test_abort_if_already_setup_opp, test_api):
 
 async def test_asserts(opp, test_api):
     """Test the _site_in_configuration_exists method."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     # test with inactive site
     test_api.get_details.return_value = {"details": {"status": "NOK"}}

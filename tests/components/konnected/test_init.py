@@ -42,7 +42,7 @@ async def mock_panel_fixture():
         yield konn_client
 
 
-async def test_config_schema.opp):
+async def test_config_schema(opp):
     """Test that config schema is imported properly."""
     config = {
         konnected.DOMAIN: {
@@ -272,7 +272,7 @@ async def test_setup_defined_hosts_known_auth(opp, mock_panel):
     assert len(opp.config_entries.flow.async_progress()) == 0
 
 
-async def test_setup_defined_hosts_no_known_auth.opp):
+async def test_setup_defined_hosts_no_known_auth(opp):
     """Test we initiate config entry if config panel is not known."""
     assert (
         await async_setup_component(
@@ -292,7 +292,7 @@ async def test_setup_defined_hosts_no_known_auth.opp):
     assert len(opp.config_entries.flow.async_progress()) == 1
 
 
-async def test_setup_multiple.opp):
+async def test_setup_multiple(opp):
     """Test we initiate config entry for multiple panels."""
     assert (
         await async_setup_component(
@@ -356,7 +356,7 @@ async def test_setup_multiple.opp):
     )
 
 
-async def test_config_passed_to_config_entry.opp):
+async def test_config_passed_to_config_entry(opp):
     """Test that configured options for a host are loaded via config entry."""
     entry = MockConfigEntry(
         domain=konnected.DOMAIN,

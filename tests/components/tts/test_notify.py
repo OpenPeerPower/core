@@ -33,7 +33,7 @@ def mutagen_mock():
 
 
 @pytest.fixture(autouse=True)
-async def internal_url_mock.opp):
+async def internal_url_mock(opp):
     """Mock internal URL of the instance."""
     await async_process_op_core_config(
         opp,
@@ -41,7 +41,7 @@ async def internal_url_mock.opp):
     )
 
 
-async def test_setup_platform.opp):
+async def test_setup_platform(opp):
     """Set up the tts platform ."""
     config = {
         notify.DOMAIN: {
@@ -57,7 +57,7 @@ async def test_setup_platform.opp):
     assert opp.services.has_service(notify.DOMAIN, "tts_test")
 
 
-async def test_setup_component_and_test_service.opp):
+async def test_setup_component_and_test_service(opp):
     """Set up the demo platform and call service."""
     calls = async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 

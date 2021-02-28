@@ -123,7 +123,7 @@ def test_invalid_configs(config):
         CONFIG_SCHEMA({DOMAIN: config})
 
 
-async def test_set_datetime.opp):
+async def test_set_datetime(opp):
     """Test set_datetime method using date & time."""
     await async_setup_component(
         opp. DOMAIN, {DOMAIN: {"test_datetime": {"has_time": True, "has_date": True}}}
@@ -201,7 +201,7 @@ async def test_set_datetime_3.opp):
     assert state.attributes["timestamp"] == dt_obj.timestamp()
 
 
-async def test_set_datetime_time.opp):
+async def test_set_datetime_time(opp):
     """Test set_datetime method with only time."""
     await async_setup_component(
         opp. DOMAIN, {DOMAIN: {"test_time": {"has_time": True, "has_date": False}}}
@@ -221,7 +221,7 @@ async def test_set_datetime_time.opp):
     assert state.attributes["timestamp"] == (19 * 3600) + (46 * 60) + 30
 
 
-async def test_set_invalid.opp):
+async def test_set_invalid(opp):
     """Test set_datetime method with only time."""
     initial = "2017-01-01"
     await async_setup_component(
@@ -281,7 +281,7 @@ async def test_set_invalid_2.opp):
     assert state.state == initial
 
 
-async def test_set_datetime_date.opp):
+async def test_set_datetime_date(opp):
     """Test set_datetime method with only date."""
     await async_setup_component(
         opp. DOMAIN, {DOMAIN: {"test_date": {"has_time": False, "has_date": True}}}
@@ -303,7 +303,7 @@ async def test_set_datetime_date.opp):
     assert state.attributes["timestamp"] == date_dt_obj.timestamp()
 
 
-async def test_restore_state.opp):
+async def test_restore_state(opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
         opp,
@@ -361,7 +361,7 @@ async def test_restore_state.opp):
     assert state_was_date.state == default.strftime(FMT_TIME)
 
 
-async def test_default_value.opp):
+async def test_default_value(opp):
     """Test default value if none has been set via initial or restore state."""
     await async_setup_component(
         opp,
@@ -415,7 +415,7 @@ async def test_input_datetime_context(opp, opp_admin_user):
 async def test_reload(opp, opp_admin_user, opp_read_only_user):
     """Test reload service."""
     count_start = len(opp.states.async_entity_ids())
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     assert await async_setup_component(
         opp,
@@ -522,7 +522,7 @@ async def test_ws_list(opp, opp_ws_client, storage_setup):
     """Test listing via WS."""
     assert await storage_setup(config={DOMAIN: {"from_yaml": {CONF_HAS_DATE: True}}})
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json({"id": 6, "type": f"{DOMAIN}/list"})
     resp = await client.receive_json()
@@ -544,13 +544,13 @@ async def test_ws_delete(opp, opp_ws_client, storage_setup):
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.datetime_from_storage"
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) == input_entity_id
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {"id": 6, "type": f"{DOMAIN}/delete", f"{DOMAIN}_id": f"{input_id}"}
@@ -570,14 +570,14 @@ async def test_update(opp, opp_ws_client, storage_setup):
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.datetime_from_storage"
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     state = opp.states.get(input_entity_id)
     assert state.attributes[ATTR_FRIENDLY_NAME] == "datetime from storage"
     assert state.state == INITIAL_DATETIME
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) == input_entity_id
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {
@@ -602,13 +602,13 @@ async def test_ws_create(opp, opp_ws_client, storage_setup):
 
     input_id = "new_datetime"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {
@@ -647,7 +647,7 @@ async def test_setup_no_config(opp, opp_admin_user):
     assert count_start == len(opp.states.async_entity_ids())
 
 
-async def test_timestamp.opp):
+async def test_timestamp(opp):
     """Test timestamp."""
     try:
         dt_util.set_default_time_zone(dt_util.get_time_zone("America/Los_Angeles"))

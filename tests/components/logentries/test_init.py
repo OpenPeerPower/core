@@ -9,7 +9,7 @@ from openpeerpower.const import EVENT_STATE_CHANGED, STATE_OFF, STATE_ON
 from openpeerpower.setup import async_setup_component
 
 
-async def test_setup_config_full.opp):
+async def test_setup_config_full(opp):
     """Test setup with all data."""
     config = {"logentries": {"token": "secret"}}
     opp.bus.listen = MagicMock()
@@ -18,7 +18,7 @@ async def test_setup_config_full.opp):
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
 
 
-async def test_setup_config_defaults.opp):
+async def test_setup_config_defaults(opp):
     """Test setup with defaults."""
     config = {"logentries": {"token": "token"}}
     opp.bus.listen = MagicMock()

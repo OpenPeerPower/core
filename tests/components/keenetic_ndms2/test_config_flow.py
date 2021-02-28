@@ -92,7 +92,7 @@ async def test_import_works.opp: OpenPeerPowerType, connect):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_options.opp):
+async def test_options(opp):
     """Test updating options."""
     entry = MockConfigEntry(domain=keenetic.DOMAIN, data=MOCK_DATA)
     entry.add_to_opp(opp)

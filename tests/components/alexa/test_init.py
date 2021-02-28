@@ -6,7 +6,7 @@ from openpeerpower.setup import async_setup_component
 from tests.components.logbook.test_init import MockLazyEventPartialState
 
 
-async def test_humanify_alexa_event.opp):
+async def test_humanify_alexa_event(opp):
     """Test humanifying Alexa event."""
     opp.config.components.add("recorder")
     await async_setup_component(opp, "alexa", {})

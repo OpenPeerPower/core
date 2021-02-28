@@ -78,7 +78,7 @@ async def _async_stop_stream(opp, acc, session_info):
 
 
 @pytest.fixture()
-def run_driver.opp):
+def run_driver(opp):
     """Return a custom AccessoryDriver instance for HomeKit accessory init."""
     with patch("pyhap.accessory_driver.Zeroconf"), patch(
         "pyhap.accessory_driver.AccessoryEncoder"

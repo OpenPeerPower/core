@@ -21,7 +21,7 @@ CONFIG = {
 }
 
 
-async def test_unload_entry.opp):
+async def test_unload_entry(opp):
     """Test that the options form."""
 
     now = dt_util.parse_datetime("2021-01-09 12:00:00+00:00")

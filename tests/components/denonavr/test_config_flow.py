@@ -79,7 +79,7 @@ def denonavr_connect_fixture():
         yield
 
 
-async def test_config_flow_manual_host_success.opp):
+async def test_config_flow_manual_host_success(opp):
     """
     Successful flow manually initialized by the user.
 
@@ -110,7 +110,7 @@ async def test_config_flow_manual_host_success.opp):
     }
 
 
-async def test_config_flow_manual_discover_1_success.opp):
+async def test_config_flow_manual_discover_1_success(opp):
     """
     Successful flow manually initialized by the user.
 
@@ -145,7 +145,7 @@ async def test_config_flow_manual_discover_1_success.opp):
     }
 
 
-async def test_config_flow_manual_discover_2_success.opp):
+async def test_config_flow_manual_discover_2_success(opp):
     """
     Successful flow manually initialized by the user.
 
@@ -217,7 +217,7 @@ async def test_config_flow_manual_discover_error(opp):
     assert result["errors"] == {"base": "discovery_error"}
 
 
-async def test_config_flow_manual_host_no_serial.opp):
+async def test_config_flow_manual_host_no_serial(opp):
     """
     Successful flow manually initialized by the user.
 
@@ -252,7 +252,7 @@ async def test_config_flow_manual_host_no_serial.opp):
     }
 
 
-async def test_config_flow_manual_host_no_mac.opp):
+async def test_config_flow_manual_host_no_mac(opp):
     """
     Successful flow manually initialized by the user.
 
@@ -287,7 +287,7 @@ async def test_config_flow_manual_host_no_mac.opp):
     }
 
 
-async def test_config_flow_manual_host_no_serial_no_mac.opp):
+async def test_config_flow_manual_host_no_serial_no_mac(opp):
     """
     Successful flow manually initialized by the user.
 
@@ -325,7 +325,7 @@ async def test_config_flow_manual_host_no_serial_no_mac.opp):
     }
 
 
-async def test_config_flow_manual_host_no_serial_no_mac_exception.opp):
+async def test_config_flow_manual_host_no_serial_no_mac_exception(opp):
     """
     Successful flow manually initialized by the user.
 
@@ -393,7 +393,7 @@ async def test_config_flow_manual_host_connection_error(opp):
     assert result["reason"] == "cannot_connect"
 
 
-async def test_config_flow_manual_host_no_device_info.opp):
+async def test_config_flow_manual_host_no_device_info(opp):
     """
     Failed flow manually initialized by the user.
 
@@ -420,7 +420,7 @@ async def test_config_flow_manual_host_no_device_info.opp):
     assert result["reason"] == "cannot_connect"
 
 
-async def test_config_flow_ssdp.opp):
+async def test_config_flow_ssdp(opp):
     """Successful flow initialized by ssdp discovery."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -453,7 +453,7 @@ async def test_config_flow_ssdp.opp):
     }
 
 
-async def test_config_flow_ssdp_not_denon.opp):
+async def test_config_flow_ssdp_not_denon(opp):
     """
     Failed flow initialized by ssdp discovery.
 
@@ -474,7 +474,7 @@ async def test_config_flow_ssdp_not_denon.opp):
     assert result["reason"] == "not_denonavr_manufacturer"
 
 
-async def test_config_flow_ssdp_missing_info.opp):
+async def test_config_flow_ssdp_missing_info(opp):
     """
     Failed flow initialized by ssdp discovery.
 
@@ -493,7 +493,7 @@ async def test_config_flow_ssdp_missing_info.opp):
     assert result["reason"] == "not_denonavr_missing"
 
 
-async def test_config_flow_ssdp_ignored_model.opp):
+async def test_config_flow_ssdp_ignored_model(opp):
     """
     Failed flow initialized by ssdp discovery.
 
@@ -514,7 +514,7 @@ async def test_config_flow_ssdp_ignored_model.opp):
     assert result["reason"] == "not_denonavr_manufacturer"
 
 
-async def test_options_flow.opp):
+async def test_options_flow(opp):
     """Test specifying non default settings using options flow."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,

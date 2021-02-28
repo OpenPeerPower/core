@@ -16,7 +16,7 @@ from .common import wait_recording_done
 def test_purge_old_states(opp, opp_recorder):
     """Test deleting old states."""
    opp =  opp_recorder()
-    _add_test_states.opp)
+    _add_test_states(opp)
 
     # make sure we start with 6 states
     with session_scope.opp.opp) as session:
@@ -40,7 +40,7 @@ def test_purge_old_states(opp, opp_recorder):
 def test_purge_old_events(opp, opp_recorder):
     """Test deleting old events."""
    opp =  opp_recorder()
-    _add_test_events.opp)
+    _add_test_events(opp)
 
     with session_scope.opp.opp) as session:
         events = session.query(Events).filter(Events.event_type.like("EVENT_TEST%"))
@@ -64,7 +64,7 @@ def test_purge_old_events(opp, opp_recorder):
 def test_purge_old_recorder_runs(opp, opp_recorder):
     """Test deleting old recorder runs keeps current run."""
    opp =  opp_recorder()
-    _add_test_recorder_runs.opp)
+    _add_test_recorder_runs(opp)
 
     # make sure we start with 7 recorder runs
     with session_scope.opp.opp) as session:
@@ -81,9 +81,9 @@ def test_purge_method(opp, opp_recorder):
     """Test purge method."""
    opp =  opp_recorder()
     service_data = {"keep_days": 4}
-    _add_test_events.opp)
-    _add_test_states.opp)
-    _add_test_recorder_runs.opp)
+    _add_test_events(opp)
+    _add_test_states(opp)
+    _add_test_recorder_runs(opp)
 
     # make sure we start with 6 states
     with session_scope.opp.opp) as session:
@@ -97,7 +97,7 @@ def test_purge_method(opp, opp_recorder):
         assert recorder_runs.count() == 7
 
         opp.data[DATA_INSTANCE].block_till_done()
-        wait_recording_done.opp)
+        wait_recording_done(opp)
 
         # run purge method - no service data, use defaults
         opp.services.call("recorder", "purge")
@@ -105,7 +105,7 @@ def test_purge_method(opp, opp_recorder):
 
         # Small wait for recorder thread
         opp.data[DATA_INSTANCE].block_till_done()
-        wait_recording_done.opp)
+        wait_recording_done(opp)
 
         # only purged old events
         assert states.count() == 4
@@ -117,7 +117,7 @@ def test_purge_method(opp, opp_recorder):
 
         # Small wait for recorder thread
         opp.data[DATA_INSTANCE].block_till_done()
-        wait_recording_done.opp)
+        wait_recording_done(opp)
 
         # we should only have 2 states left after purging
         assert states.count() == 2
@@ -136,14 +136,14 @@ def test_purge_method(opp, opp_recorder):
             opp.services.call("recorder", "purge", service_data=service_data)
             opp.block_till_done()
             opp.data[DATA_INSTANCE].block_till_done()
-            wait_recording_done.opp)
+            wait_recording_done(opp)
             assert (
                 mock_logger.debug.mock_calls[5][1][0]
                 == "Vacuuming SQL DB to free space"
             )
 
 
-def _add_test_states.opp):
+def _add_test_states(opp):
     """Add multiple states to the db for testing."""
     now = datetime.now()
     five_days_ago = now - timedelta(days=5)
@@ -152,7 +152,7 @@ def _add_test_states.opp):
 
     opp.block_till_done()
     opp.data[DATA_INSTANCE].block_till_done()
-    wait_recording_done.opp)
+    wait_recording_done(opp)
 
     with recorder.session_scope.opp.opp) as session:
         for event_id in range(6):
@@ -180,7 +180,7 @@ def _add_test_states.opp):
             )
 
 
-def _add_test_events.opp):
+def _add_test_events(opp):
     """Add a few events for testing."""
     now = datetime.now()
     five_days_ago = now - timedelta(days=5)
@@ -189,7 +189,7 @@ def _add_test_events.opp):
 
     opp.block_till_done()
     opp.data[DATA_INSTANCE].block_till_done()
-    wait_recording_done.opp)
+    wait_recording_done(opp)
 
     with recorder.session_scope.opp.opp) as session:
         for event_id in range(6):
@@ -214,7 +214,7 @@ def _add_test_events.opp):
             )
 
 
-def _add_test_recorder_runs.opp):
+def _add_test_recorder_runs(opp):
     """Add a few recorder_runs for testing."""
     now = datetime.now()
     five_days_ago = now - timedelta(days=5)
@@ -222,7 +222,7 @@ def _add_test_recorder_runs.opp):
 
     opp.block_till_done()
     opp.data[DATA_INSTANCE].block_till_done()
-    wait_recording_done.opp)
+    wait_recording_done(opp)
 
     with recorder.session_scope.opp.opp) as session:
         for rec_id in range(6):

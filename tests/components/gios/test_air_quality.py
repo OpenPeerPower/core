@@ -29,9 +29,9 @@ from tests.common import async_fire_time_changed, load_fixture
 from tests.components.gios import init_integration
 
 
-async def test_air_quality.opp):
+async def test_air_quality(opp):
     """Test states of the air_quality."""
-    await init_integration.opp)
+    await init_integration(opp)
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     state = opp.states.get("air_quality.home")
@@ -57,7 +57,7 @@ async def test_air_quality.opp):
     assert entry.unique_id == 123
 
 
-async def test_air_quality_with_incomplete_data.opp):
+async def test_air_quality_with_incomplete_data(opp):
     """Test states of the air_quality with incomplete data from measuring station."""
     await init_integration(opp, incomplete_data=True)
     registry = await opp.helpers.entity_registry.async_get_registry()
@@ -85,9 +85,9 @@ async def test_air_quality_with_incomplete_data.opp):
     assert entry.unique_id == 123
 
 
-async def test_availability.opp):
+async def test_availability(opp):
     """Ensure that we mark the entities unavailable correctly when service causes an error."""
-    await init_integration.opp)
+    await init_integration(opp)
 
     state = opp.states.get("air_quality.home")
     assert state

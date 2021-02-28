@@ -26,7 +26,7 @@ from . import (
 from tests.common import MockConfigEntry
 
 
-async def test_user_form.opp):
+async def test_user_form(opp):
     """Test we get the user initiated form."""
     await async_setup_component(opp, "persistent_notification", {})
 
@@ -51,7 +51,7 @@ async def test_user_form.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_user_form_show_advanced_options.opp):
+async def test_user_form_show_advanced_options(opp):
     """Test we get the user initiated form with advanced options shown."""
     await async_setup_component(opp, "persistent_notification", {})
 
@@ -81,7 +81,7 @@ async def test_user_form_show_advanced_options.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_user_form_cannot_connect.opp):
+async def test_user_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -100,7 +100,7 @@ async def test_user_form_cannot_connect.opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_user_form_unexpected_exception.opp):
+async def test_user_form_unexpected_exception(opp):
     """Test we handle unexpected exception."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -119,7 +119,7 @@ async def test_user_form_unexpected_exception.opp):
     assert result["reason"] == "unknown"
 
 
-async def test_user_form_single_instance_allowed.opp):
+async def test_user_form_single_instance_allowed(opp):
     """Test that configuring more than one instance is rejected."""
     entry = MockConfigEntry(domain=DOMAIN, data=ENTRY_CONFIG)
     entry.add_to_opp(opp)

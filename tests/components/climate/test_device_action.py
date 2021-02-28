@@ -19,15 +19,15 @@ from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 
 
 @pytest.fixture
-def device_reg.opp):
+def device_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_device_registry.opp)
+    return mock_device_registry(opp)
 
 
 @pytest.fixture
-def entity_reg.opp):
+def entity_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_registry.opp)
+    return mock_registry(opp)
 
 
 async def test_get_actions(opp, device_reg, entity_reg):
@@ -82,7 +82,7 @@ async def test_get_action_hvac_only(opp, device_reg, entity_reg):
     assert_lists_same(actions, expected_actions)
 
 
-async def test_action.opp):
+async def test_action(opp):
     """Test for actions."""
     opp.states.async_set(
         "climate.entity",
@@ -142,7 +142,7 @@ async def test_action.opp):
     assert len(set_preset_mode_calls) == 1
 
 
-async def test_capabilities.opp):
+async def test_capabilities(opp):
     """Test getting capabilities."""
     opp.states.async_set(
         "climate.entity",

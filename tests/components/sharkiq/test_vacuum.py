@@ -115,7 +115,7 @@ class MockShark(SharkIqVacuum):
 
 @pytest.fixture(autouse=True)
 @patch("sharkiqpy.ayla_api.AylaApi", MockAyla)
-async def setup_integration.opp):
+async def setup_integration(opp):
     """Build the mock integration."""
     entry = MockConfigEntry(
         domain=DOMAIN, unique_id=TEST_USERNAME, data=CONFIG, entry_id=ENTRY_ID
@@ -204,7 +204,7 @@ async def test_device_properties(
     assert getattr(device, device_property) == target_value
 
 
-async def test_locate.opp):
+async def test_locate(opp):
     """Test that the locate command works."""
     with patch.object(SharkIqVacuum, "async_find_device") as mock_locate:
         data = {ATTR_ENTITY_ID: VAC_ENTITY_ID}

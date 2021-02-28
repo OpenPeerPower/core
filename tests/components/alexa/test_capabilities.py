@@ -67,7 +67,7 @@ async def test_api_adjust_brightness(opp, result, adjust):
     assert msg["header"]["name"] == "Response"
 
 
-async def test_api_set_color_rgb.opp):
+async def test_api_set_color_rgb(opp):
     """Test api set color process."""
     request = get_new_request("Alexa.ColorController", "SetColor", "light#test")
 
@@ -97,7 +97,7 @@ async def test_api_set_color_rgb.opp):
     assert msg["header"]["name"] == "Response"
 
 
-async def test_api_set_color_temperature.opp):
+async def test_api_set_color_temperature(opp):
     """Test api set color temperature process."""
     request = get_new_request(
         "Alexa.ColorTemperatureController", "SetColorTemperature", "light#test"
@@ -223,7 +223,7 @@ async def test_api_select_input(opp, domain, payload, source_list, idx):
     assert call.data["source"] == source_list[idx]
 
 
-async def test_report_lock_state.opp):
+async def test_report_lock_state(opp):
     """Test LockController implements lockState property."""
     opp.states.async_set("lock.locked", STATE_LOCKED, {})
     opp.states.async_set("lock.unlocked", STATE_UNLOCKED, {})
@@ -239,7 +239,7 @@ async def test_report_lock_state.opp):
     properties.assert_equal("Alexa.LockController", "lockState", "JAMMED")
 
 
-async def test_report_dimmable_light_state.opp):
+async def test_report_dimmable_light_state(opp):
     """Test BrightnessController reports brightness correctly."""
     opp.states.async_set(
         "light.test_on",
@@ -259,7 +259,7 @@ async def test_report_dimmable_light_state.opp):
     properties.assert_equal("Alexa.BrightnessController", "brightness", 0)
 
 
-async def test_report_colored_light_state.opp):
+async def test_report_colored_light_state(opp):
     """Test ColorController reports color correctly."""
     opp.states.async_set(
         "light.test_on",
@@ -290,7 +290,7 @@ async def test_report_colored_light_state.opp):
     )
 
 
-async def test_report_colored_temp_light_state.opp):
+async def test_report_colored_temp_light_state(opp):
     """Test ColorTemperatureController reports color temp correctly."""
     opp.states.async_set(
         "light.test_on",
@@ -314,7 +314,7 @@ async def test_report_colored_temp_light_state.opp):
     )
 
 
-async def test_report_fan_speed_state.opp):
+async def test_report_fan_speed_state(opp):
     """Test PercentageController, PowerLevelController, RangeController reports fan speed correctly."""
     opp.states.async_set(
         "fan.off",
@@ -382,7 +382,7 @@ async def test_report_fan_speed_state.opp):
     properties.assert_equal("Alexa.RangeController", "rangeValue", 3)
 
 
-async def test_report_fan_oscillating.opp):
+async def test_report_fan_oscillating(opp):
     """Test ToggleController reports fan oscillating correctly."""
     opp.states.async_set(
         "fan.oscillating_off",
@@ -406,7 +406,7 @@ async def test_report_fan_oscillating.opp):
     properties.assert_equal("Alexa.ToggleController", "toggleState", "ON")
 
 
-async def test_report_fan_direction.opp):
+async def test_report_fan_direction(opp):
     """Test ModeController reports fan direction correctly."""
     opp.states.async_set(
         "fan.off", "off", {"friendly_name": "Off fan", "supported_features": 4}
@@ -440,7 +440,7 @@ async def test_report_fan_direction.opp):
     properties.assert_equal("Alexa.ModeController", "mode", "direction.forward")
 
 
-async def test_report_cover_range_value.opp):
+async def test_report_cover_range_value(opp):
     """Test RangeController reports cover position correctly."""
     opp.states.async_set(
         "cover.fully_open",
@@ -480,7 +480,7 @@ async def test_report_cover_range_value.opp):
     properties.assert_equal("Alexa.RangeController", "rangeValue", 0)
 
 
-async def test_report_climate_state.opp):
+async def test_report_climate_state(opp):
     """Test ThermostatController reports state correctly."""
     for auto_modes in (climate.HVAC_MODE_AUTO, climate.HVAC_MODE_HEAT_COOL):
         opp.states.async_set(
@@ -599,7 +599,7 @@ async def test_report_climate_state.opp):
         )
 
 
-async def test_temperature_sensor_sensor.opp):
+async def test_temperature_sensor_sensor(opp):
     """Test TemperatureSensor reports sensor temperature correctly."""
     for bad_value in (STATE_UNKNOWN, STATE_UNAVAILABLE, "not-number"):
         opp.states.async_set(
@@ -620,7 +620,7 @@ async def test_temperature_sensor_sensor.opp):
     )
 
 
-async def test_temperature_sensor_climate.opp):
+async def test_temperature_sensor_climate(opp):
     """Test TemperatureSensor reports climate temperature correctly."""
     for bad_value in (STATE_UNKNOWN, STATE_UNAVAILABLE, "not-number"):
         opp.states.async_set(
@@ -643,7 +643,7 @@ async def test_temperature_sensor_climate.opp):
     )
 
 
-async def test_report_alarm_control_panel_state.opp):
+async def test_report_alarm_control_panel_state(opp):
     """Test SecurityPanelController implements armState property."""
     opp.states.async_set("alarm_control_panel.armed_away", STATE_ALARM_ARMED_AWAY, {})
     opp.states.async_set(
@@ -673,7 +673,7 @@ async def test_report_alarm_control_panel_state.opp):
     properties.assert_equal("Alexa.SecurityPanelController", "armState", "DISARMED")
 
 
-async def test_report_playback_state.opp):
+async def test_report_playback_state(opp):
     """Test PlaybackStateReporter implements playbackState property."""
     opp.states.async_set(
         "media_player.test",
@@ -692,7 +692,7 @@ async def test_report_playback_state.opp):
     )
 
 
-async def test_report_speaker_volume.opp):
+async def test_report_speaker_volume(opp):
     """Test Speaker reports volume correctly."""
     opp.states.async_set(
         "media_player.test_speaker",
@@ -722,7 +722,7 @@ async def test_report_speaker_volume.opp):
         properties.assert_equal("Alexa.Speaker", "volume", good_value)
 
 
-async def test_report_image_processing.opp):
+async def test_report_image_processing(opp):
     """Test EventDetectionSensor implements humanPresenceDetectionState property."""
     opp.states.async_set(
         "image_processing.test_face",

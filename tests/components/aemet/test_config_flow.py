@@ -22,7 +22,7 @@ CONFIG = {
 }
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test that the form is served with valid input."""
 
     with patch(
@@ -61,7 +61,7 @@ async def test_form.opp):
         assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_duplicated_id.opp):
+async def test_form_duplicated_id(opp):
     """Test that the options form."""
 
     now = dt_util.parse_datetime("2021-01-09 12:00:00+00:00")
@@ -83,7 +83,7 @@ async def test_form_duplicated_id.opp):
         assert result["reason"] == "already_configured"
 
 
-async def test_form_api_offline.opp):
+async def test_form_api_offline(opp):
     """Test setting up with api call error."""
     mocked_aemet = MagicMock()
 

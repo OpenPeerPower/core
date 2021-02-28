@@ -20,7 +20,7 @@ async def mbddns_update_mock(domain, password, host, ttl=60, session=None):
 
 
 @patch("mbddns.update", new=mbddns_update_mock)
-async def test_update.opp):
+async def test_update(opp):
     """Run with correct values and check true is returned."""
     result = await async_setup_component(
         opp,
@@ -37,7 +37,7 @@ async def test_update.opp):
 
 
 @patch("mbddns.update", new=mbddns_update_mock)
-async def test_update_fails_if_wrong_token.opp):
+async def test_update_fails_if_wrong_token(opp):
     """Run with incorrect token and check false is returned."""
     result = await async_setup_component(
         opp,
@@ -54,7 +54,7 @@ async def test_update_fails_if_wrong_token.opp):
 
 
 @patch("mbddns.update", new=mbddns_update_mock)
-async def test_update_fails_if_invalid_host.opp):
+async def test_update_fails_if_invalid_host(opp):
     """Run with invalid characters in host and check false is returned."""
     result = await async_setup_component(
         opp,

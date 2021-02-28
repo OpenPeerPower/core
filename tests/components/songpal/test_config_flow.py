@@ -54,7 +54,7 @@ def _patch_setup():
     )
 
 
-async def test_flow_ssdp.opp):
+async def test_flow_ssdp(opp):
     """Test working ssdp flow."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -79,7 +79,7 @@ async def test_flow_ssdp.opp):
         assert result["data"] == CONF_DATA
 
 
-async def test_flow_user.opp):
+async def test_flow_user(opp):
     """Test working user initialized flow."""
     mocked_device = _create_mocked_device()
 
@@ -108,7 +108,7 @@ async def test_flow_user.opp):
     mocked_device.get_interface_information.assert_called_once()
 
 
-async def test_flow_import.opp):
+async def test_flow_import(opp):
     """Test working import flow."""
     mocked_device = _create_mocked_device()
 
@@ -124,7 +124,7 @@ async def test_flow_import.opp):
     mocked_device.get_interface_information.assert_not_called()
 
 
-async def test_flow_import_without_name.opp):
+async def test_flow_import_without_name(opp):
     """Test import flow without optional name."""
     mocked_device = _create_mocked_device()
 
@@ -140,7 +140,7 @@ async def test_flow_import_without_name.opp):
     mocked_device.get_interface_information.assert_called_once()
 
 
-def _create_mock_config_entry.opp):
+def _create_mock_config_entry(opp):
     MockConfigEntry(
         domain=DOMAIN,
         unique_id="uuid:0000",
@@ -148,7 +148,7 @@ def _create_mock_config_entry.opp):
     ).add_to_opp(opp)
 
 
-async def test_ssdp_bravia.opp):
+async def test_ssdp_bravia(opp):
     """Test discovering a bravia TV."""
     ssdp_data = copy.deepcopy(SSDP_DATA)
     ssdp_data["X_ScalarWebAPI_DeviceInfo"]["X_ScalarWebAPI_ServiceList"][
@@ -163,9 +163,9 @@ async def test_ssdp_bravia.opp):
     assert result["reason"] == "not_songpal_device"
 
 
-async def test_sddp_exist.opp):
+async def test_sddp_exist(opp):
     """Test discovering existed device."""
-    _create_mock_config_entry.opp)
+    _create_mock_config_entry(opp)
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": SOURCE_SSDP},
@@ -175,10 +175,10 @@ async def test_sddp_exist.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_user_exist.opp):
+async def test_user_exist(opp):
     """Test user adding existed device."""
     mocked_device = _create_mocked_device()
-    _create_mock_config_entry.opp)
+    _create_mock_config_entry(opp)
 
     with _patch_config_flow_device(mocked_device):
         result = await opp.config_entries.flow.async_init(
@@ -191,10 +191,10 @@ async def test_user_exist.opp):
     mocked_device.get_interface_information.assert_called_once()
 
 
-async def test_import_exist.opp):
+async def test_import_exist(opp):
     """Test importing existed device."""
     mocked_device = _create_mocked_device()
-    _create_mock_config_entry.opp)
+    _create_mock_config_entry(opp)
 
     with _patch_config_flow_device(mocked_device):
         result = await opp.config_entries.flow.async_init(
@@ -207,10 +207,10 @@ async def test_import_exist.opp):
     mocked_device.get_interface_information.assert_not_called()
 
 
-async def test_user_invalid.opp):
+async def test_user_invalid(opp):
     """Test using adding invalid config."""
     mocked_device = _create_mocked_device(True)
-    _create_mock_config_entry.opp)
+    _create_mock_config_entry(opp)
 
     with _patch_config_flow_device(mocked_device):
         result = await opp.config_entries.flow.async_init(
@@ -224,10 +224,10 @@ async def test_user_invalid.opp):
     mocked_device.get_interface_information.assert_not_called()
 
 
-async def test_import_invalid.opp):
+async def test_import_invalid(opp):
     """Test importing invalid config."""
     mocked_device = _create_mocked_device(True)
-    _create_mock_config_entry.opp)
+    _create_mock_config_entry(opp)
 
     with _patch_config_flow_device(mocked_device):
         result = await opp.config_entries.flow.async_init(

@@ -114,14 +114,14 @@ async def test_device_left(opp, zigpy_dev_basic, zha_dev_basic):
 
     assert zha_dev_basic.available is True
 
-    get_zha_gateway.opp).device_left(zigpy_dev_basic)
+    get_zha_gateway(opp).device_left(zigpy_dev_basic)
     await opp.async_block_till_done()
     assert zha_dev_basic.available is False
 
 
 async def test_gateway_group_methods(opp, device_light_1, device_light_2, coordinator):
     """Test creating a group with 2 members."""
-    zha_gateway = get_zha_gateway.opp)
+    zha_gateway = get_zha_gateway(opp)
     assert zha_gateway is not None
     zha_gateway.coordinator_zha_device = coordinator
     coordinator._zha_gateway = zha_gateway
@@ -178,7 +178,7 @@ async def test_gateway_group_methods(opp, device_light_1, device_light_2, coordi
 
 async def test_updating_device_store(opp, zigpy_dev_basic, zha_dev_basic):
     """Test saving data after a delay."""
-    zha_gateway = get_zha_gateway.opp)
+    zha_gateway = get_zha_gateway(opp)
     assert zha_gateway is not None
     await async_enable_traffic(opp, [zha_dev_basic])
 
@@ -215,7 +215,7 @@ async def test_updating_device_store(opp, zigpy_dev_basic, zha_dev_basic):
 
 async def test_cleaning_up_storage(opp, zigpy_dev_basic, zha_dev_basic, opp_storage):
     """Test cleaning up zha storage and remove stale devices."""
-    zha_gateway = get_zha_gateway.opp)
+    zha_gateway = get_zha_gateway(opp)
     assert zha_gateway is not None
     await async_enable_traffic(opp, [zha_dev_basic])
 

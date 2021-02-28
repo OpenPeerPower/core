@@ -193,7 +193,7 @@ async def test_stream_source(aioclient_mock, opp, opp_client, opp_ws_client):
         return_value="http://home.assistant/playlist.m3u8",
     ) as mock_stream_url:
         # Request playlist through WebSocket
-        client = await opp_ws_client.opp)
+        client = await opp_ws_client(opp)
 
         await client.send_json(
             {"id": 1, "type": "camera/stream", "entity_id": "camera.config_test"}
@@ -232,7 +232,7 @@ async def test_stream_source_error(aioclient_mock, opp, opp_client, opp_ws_clien
         return_value="http://home.assistant/playlist.m3u8",
     ) as mock_stream_url:
         # Request playlist through WebSocket
-        client = await opp_ws_client.opp)
+        client = await opp_ws_client(opp)
 
         await client.send_json(
             {"id": 1, "type": "camera/stream", "entity_id": "camera.config_test"}
@@ -293,7 +293,7 @@ async def test_no_stream_source(aioclient_mock, opp, opp_client, opp_ws_client):
         return_value="http://home.assistant/playlist.m3u8",
     ) as mock_request_stream:
         # Request playlist through WebSocket
-        client = await opp_ws_client.opp)
+        client = await opp_ws_client(opp)
 
         await client.send_json(
             {"id": 3, "type": "camera/stream", "entity_id": "camera.config_test"}

@@ -57,7 +57,7 @@ async def test_invalid_credentials(opp, mock_aionotion):
     assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     flow = config_flow.NotionFlowHandler()
     flow.opp = opp

@@ -73,7 +73,7 @@ async def test_smartapp_uninstall(opp, config_entry):
         assert remove.call_count == 1
 
 
-async def test_smartapp_webhook.opp):
+async def test_smartapp_webhook(opp):
     """Test the smartapp webhook calls the manager."""
     manager = Mock()
     manager.handle_request = AsyncMock(return_value={})

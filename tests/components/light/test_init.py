@@ -24,7 +24,7 @@ from tests.common import async_mock_service
 orig_Profiles = light.Profiles
 
 
-async def test_methods.opp):
+async def test_methods(opp):
     """Test if methods call the services as expected."""
     # Test is_on
     opp.states.async_set("light.test", STATE_ON)
@@ -703,7 +703,7 @@ async def test_light_turn_on_auth(opp, opp_admin_user):
         )
 
 
-async def test_light_brightness_step.opp):
+async def test_light_brightness_step(opp):
     """Test that light context works."""
     platform = getattr.opp.components, "test.light")
     platform.init()
@@ -738,7 +738,7 @@ async def test_light_brightness_step.opp):
     assert data["brightness"] == 126, data
 
 
-async def test_light_brightness_pct_conversion.opp):
+async def test_light_brightness_pct_conversion(opp):
     """Test that light brightness percent conversion."""
     platform = getattr.opp.components, "test.light")
     platform.init()
@@ -813,7 +813,7 @@ def test_deprecated_base_class(caplog):
     assert "Light is deprecated, modify CustomLight" in caplog.text
 
 
-async def test_profiles.opp):
+async def test_profiles(opp):
     """Test profiles loading."""
     profiles = orig_Profiles.opp)
     await profiles.async_initialize()
@@ -830,7 +830,7 @@ async def test_profiles.opp):
 
 
 @patch("os.path.isfile", MagicMock(side_effect=(True, False)))
-async def test_profile_load_optional_hs_color.opp):
+async def test_profile_load_optional_hs_color(opp):
     """Test profile loading with profiles containing no xy color."""
 
     csv_file = """the first line is skipped

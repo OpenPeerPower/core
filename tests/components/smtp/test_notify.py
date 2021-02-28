@@ -21,7 +21,7 @@ class MockSMTP(MailNotificationService):
         return msg.as_string()
 
 
-async def test_reload_notify.opp):
+async def test_reload_notify(opp):
     """Verify we can reload the notify service."""
 
     with patch(

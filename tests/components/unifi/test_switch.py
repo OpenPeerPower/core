@@ -724,7 +724,7 @@ async def test_restoring_client(opp, aioclient_mock):
         entry_id=1,
     )
 
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
     registry.async_get_or_create(
         SWITCH_DOMAIN,
         UNIFI_DOMAIN,

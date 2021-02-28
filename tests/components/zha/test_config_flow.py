@@ -75,7 +75,7 @@ async def test_user_flow_not_detected(detect_mock, opp):
 
 
 @patch("serial.tools.list_ports.comports", MagicMock(return_value=[com_port()]))
-async def test_user_flow_show_form.opp):
+async def test_user_flow_show_form(opp):
     """Test user step form."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -86,7 +86,7 @@ async def test_user_flow_show_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_user_flow_show_manual.opp):
+async def test_user_flow_show_manual(opp):
     """Test user flow manual entry when no comport detected."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -97,7 +97,7 @@ async def test_user_flow_show_manual.opp):
     assert result["step_id"] == "pick_radio"
 
 
-async def test_user_flow_manual.opp):
+async def test_user_flow_manual(opp):
     """Test user flow manual entry."""
 
     result = await opp.config_entries.flow.async_init(
@@ -120,7 +120,7 @@ async def test_pick_radio_flow(opp, radio_type):
     assert result["step_id"] == "port_config"
 
 
-async def test_user_flow_existing_config_entry.opp):
+async def test_user_flow_existing_config_entry(opp):
     """Test if config entry already exists."""
     MockConfigEntry(domain=DOMAIN, data={"usb_path": "/dev/ttyUSB1"}).add_to_opp(opp)
     await setup.async_setup_component(opp, "persistent_notification", {})

@@ -79,7 +79,7 @@ async def test_fire_event(opp, rfxtrx):
     await opp.async_block_till_done()
     await opp.async_start()
 
-    device_registry: DeviceRegistry = await async_get_device_registry.opp)
+    device_registry: DeviceRegistry = await async_get_device_registry(opp)
 
     calls = []
 

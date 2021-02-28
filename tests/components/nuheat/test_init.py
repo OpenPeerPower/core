@@ -13,7 +13,7 @@ VALID_CONFIG = {
 INVALID_CONFIG = {"nuheat": {"username": "warm", "password": "feet"}}
 
 
-async def test_init_success.opp):
+async def test_init_success(opp):
     """Test that we can setup with valid config."""
     mock_nuheat = _get_mock_nuheat()
 

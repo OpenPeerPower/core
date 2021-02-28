@@ -60,7 +60,7 @@ async def test_loading_cover(
 ) -> None:
     """Test the WiLight configuration entry loading."""
 
-    entry = await setup_integration.opp)
+    entry = await setup_integration(opp)
     assert entry
     assert entry.unique_id == WILIGHT_ID
 
@@ -80,7 +80,7 @@ async def test_open_close_cover_state(
     opp: OpenPeerPowerType, dummy_device_from_host_cover
 ) -> None:
     """Test the change of state of the cover."""
-    await setup_integration.opp)
+    await setup_integration(opp)
 
     # Open
     await opp.services.async_call(

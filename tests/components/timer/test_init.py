@@ -88,7 +88,7 @@ async def test_config(opp):
         assert not await async_setup_component(opp, DOMAIN, {DOMAIN: cfg})
 
 
-async def test_config_options.opp):
+async def test_config_options(opp):
     """Test configuration options."""
     count_start = len(opp.states.async_entity_ids())
 
@@ -135,7 +135,7 @@ async def test_config_options.opp):
     )
 
 
-async def test_methods_and_events.opp):
+async def test_methods_and_events(opp):
     """Test methods and events."""
     opp.state = CoreState.starting
 
@@ -190,7 +190,7 @@ async def test_methods_and_events.opp):
             assert len(results) == expectedEvents
 
 
-async def test_wait_till_timer_expires.opp):
+async def test_wait_till_timer_expires(opp):
     """Test for a timer to end."""
     opp.state = CoreState.starting
 
@@ -234,7 +234,7 @@ async def test_wait_till_timer_expires.opp):
     assert len(results) == 2
 
 
-async def test_no_initial_state_and_no_restore_state.opp):
+async def test_no_initial_state_and_no_restore_state(opp):
     """Ensure that entity is create without initial and restore feature."""
     opp.state = CoreState.starting
 
@@ -248,7 +248,7 @@ async def test_no_initial_state_and_no_restore_state.opp):
 async def test_config_reload(opp, opp_admin_user, opp_read_only_user):
     """Test reload service."""
     count_start = len(opp.states.async_entity_ids())
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     _LOGGER.debug("ENTITIES @ start: %s", opp.states.async_entity_ids())
 
@@ -341,7 +341,7 @@ async def test_config_reload(opp, opp_admin_user, opp_read_only_user):
     assert ATTR_FRIENDLY_NAME not in state_3.attributes
 
 
-async def test_timer_restarted_event.opp):
+async def test_timer_restarted_event(opp):
     """Ensure restarted event is called after starting a paused or running timer."""
     opp.state = CoreState.starting
 
@@ -408,7 +408,7 @@ async def test_timer_restarted_event.opp):
     assert len(results) == 4
 
 
-async def test_state_changed_when_timer_restarted.opp):
+async def test_state_changed_when_timer_restarted(opp):
     """Ensure timer's state changes when it restarted."""
     opp.state = CoreState.starting
 
@@ -476,7 +476,7 @@ async def test_ws_list(opp, opp_ws_client, storage_setup):
     """Test listing via WS."""
     assert await storage_setup(config={DOMAIN: {"from_yaml": None}})
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json({"id": 6, "type": f"{DOMAIN}/list"})
     resp = await client.receive_json()
@@ -498,14 +498,14 @@ async def test_ws_delete(opp, opp_ws_client, storage_setup):
 
     timer_id = "from_storage"
     timer_entity_id = f"{DOMAIN}.{DOMAIN}_{timer_id}"
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     state = opp.states.get(timer_entity_id)
     assert state is not None
     from_reg = ent_reg.async_get_entity_id(DOMAIN, DOMAIN, timer_id)
     assert from_reg == timer_entity_id
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {"id": 6, "type": f"{DOMAIN}/delete", f"{DOMAIN}_id": f"{timer_id}"}
@@ -525,13 +525,13 @@ async def test_update(opp, opp_ws_client, storage_setup):
 
     timer_id = "from_storage"
     timer_entity_id = f"{DOMAIN}.{DOMAIN}_{timer_id}"
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     state = opp.states.get(timer_entity_id)
     assert state.attributes[ATTR_FRIENDLY_NAME] == "timer from storage"
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, timer_id) == timer_entity_id
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {
@@ -554,13 +554,13 @@ async def test_ws_create(opp, opp_ws_client, storage_setup):
 
     timer_id = "new_timer"
     timer_entity_id = f"{DOMAIN}.{timer_id}"
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     state = opp.states.get(timer_entity_id)
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, timer_id) is None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {

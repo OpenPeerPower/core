@@ -8,7 +8,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import mock_coro
 
 
-async def test_creating_entry_sets_up_media_player.opp):
+async def test_creating_entry_sets_up_media_player(opp):
     """Test setting up Sonos loads the media player."""
     with patch(
         "openpeerpower.components.sonos.media_player.async_setup_entry",
@@ -29,7 +29,7 @@ async def test_creating_entry_sets_up_media_player.opp):
     assert len(mock_setup.mock_calls) == 1
 
 
-async def test_configuring_sonos_creates_entry.opp):
+async def test_configuring_sonos_creates_entry(opp):
     """Test that specifying config will create an entry."""
     with patch(
         "openpeerpower.components.sonos.async_setup_entry", return_value=mock_coro(True)
@@ -44,7 +44,7 @@ async def test_configuring_sonos_creates_entry.opp):
     assert len(mock_setup.mock_calls) == 1
 
 
-async def test_not_configuring_sonos_not_creates_entry.opp):
+async def test_not_configuring_sonos_not_creates_entry(opp):
     """Test that no config will not create an entry."""
     with patch(
         "openpeerpower.components.sonos.async_setup_entry", return_value=mock_coro(True)

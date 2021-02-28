@@ -17,7 +17,7 @@ def _get_mock_harmonyapi(connect=None, close=None):
     return harmonyapi_mock
 
 
-async def test_user_form.opp):
+async def test_user_form(opp):
     """Test we get the user form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -49,7 +49,7 @@ async def test_user_form.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_ssdp.opp):
+async def test_form_ssdp(opp):
     """Test we get the form with ssdp source."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -97,7 +97,7 @@ async def test_form_ssdp.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_ssdp_aborts_before_checking_remoteid_if_host_known.opp):
+async def test_form_ssdp_aborts_before_checking_remoteid_if_host_known(opp):
     """Test we abort without connecting if the host is already known."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     config_entry = MockConfigEntry(
@@ -129,7 +129,7 @@ async def test_form_ssdp_aborts_before_checking_remoteid_if_host_known.opp):
     assert result["type"] == "abort"
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

@@ -129,8 +129,8 @@ MOCK_DEVICE_SENSORS = {
 @pytest.mark.parametrize("device_id", MOCK_DEVICE_SENSORS.keys())
 async def test_onewiredirect_setup_valid_device(opp, device_id):
     """Test that sysbus config entry works correctly."""
-    entity_registry = mock_registry.opp)
-    device_registry = mock_device_registry.opp)
+    entity_registry = mock_registry(opp)
+    device_registry = mock_device_registry(opp)
 
     mock_device_sensor = MOCK_DEVICE_SENSORS[device_id]
 

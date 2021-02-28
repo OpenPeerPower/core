@@ -7,7 +7,7 @@ from openpeerpower.config import async_process_op_core_config
 from openpeerpower.setup import async_setup_component
 
 
-async def test_async_browse_media.opp):
+async def test_async_browse_media(opp):
     """Test browse media."""
     local_media = opp.config.path("media")
     await async_process_op_core_config(

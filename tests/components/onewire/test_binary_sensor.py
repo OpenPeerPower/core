@@ -43,7 +43,7 @@ async def test_owserver_binary_sensor(owproxy, opp, device_id):
     This test forces all entities to be enabled.
     """
     await async_setup_component(opp, "persistent_notification", {})
-    entity_registry = mock_registry.opp)
+    entity_registry = mock_registry(opp)
 
     mock_device_sensor = MOCK_DEVICE_SENSORS[device_id]
 
@@ -73,7 +73,7 @@ async def test_owserver_binary_sensor(owproxy, opp, device_id):
         "openpeerpower.components.onewire.binary_sensor.DEVICE_BINARY_SENSORS",
         patch_device_binary_sensors,
     ):
-        await setup_onewire_patched_owserver_integration.opp)
+        await setup_onewire_patched_owserver_integration(opp)
         await opp.async_block_till_done()
 
     assert len(entity_registry.entities) == len(expected_sensors)

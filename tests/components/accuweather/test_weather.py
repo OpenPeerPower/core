@@ -30,9 +30,9 @@ from tests.common import async_fire_time_changed, load_fixture
 from tests.components.accuweather import init_integration
 
 
-async def test_weather_without_forecast.opp):
+async def test_weather_without_forecast(opp):
     """Test states of the weather without forecast."""
-    await init_integration.opp)
+    await init_integration(opp)
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     state = opp.states.get("weather.home")
@@ -53,7 +53,7 @@ async def test_weather_without_forecast.opp):
     assert entry.unique_id == "0123456"
 
 
-async def test_weather_with_forecast.opp):
+async def test_weather_with_forecast(opp):
     """Test states of the weather with forecast."""
     await init_integration(opp, forecast=True)
     registry = await opp.helpers.entity_registry.async_get_registry()
@@ -84,9 +84,9 @@ async def test_weather_with_forecast.opp):
     assert entry.unique_id == "0123456"
 
 
-async def test_availability.opp):
+async def test_availability(opp):
     """Ensure that we mark the entities unavailable correctly when service is offline."""
-    await init_integration.opp)
+    await init_integration(opp)
 
     state = opp.states.get("weather.home")
     assert state
@@ -121,7 +121,7 @@ async def test_availability.opp):
         assert state.state == "sunny"
 
 
-async def test_manual_update_entity.opp):
+async def test_manual_update_entity(opp):
     """Test manual update entity via service homeasasistant/update_entity."""
     await init_integration(opp, forecast=True)
 
@@ -147,7 +147,7 @@ async def test_manual_update_entity.opp):
     assert mock_forecast.call_count == 1
 
 
-async def test_unsupported_condition_icon_data.opp):
+async def test_unsupported_condition_icon_data(opp):
     """Test with unsupported condition icon data."""
     await init_integration(opp, forecast=True, unsupported_icon=True)
 

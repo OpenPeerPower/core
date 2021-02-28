@@ -590,7 +590,7 @@ async def test_trigger_zero_trigger_time(opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp)
+    await common.async_alarm_trigger(opp)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
@@ -619,7 +619,7 @@ async def test_trigger_zero_trigger_time_with_pending(opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp)
+    await common.async_alarm_trigger(opp)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
@@ -648,7 +648,7 @@ async def test_trigger_with_pending(opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp)
+    await common.async_alarm_trigger(opp)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
@@ -906,7 +906,7 @@ async def test_disarm_while_pending_trigger(opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp)
+    await common.async_alarm_trigger(opp)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
@@ -950,7 +950,7 @@ async def test_disarm_during_trigger_with_invalid_code(opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp)
+    await common.async_alarm_trigger(opp)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
@@ -1212,7 +1212,7 @@ async def test_armed_home_with_specific_pending(opp, mqtt_mock):
 
     entity_id = "alarm_control_panel.test"
 
-    await common.async_alarm_arm_home.opp)
+    await common.async_alarm_arm_home(opp)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
@@ -1248,7 +1248,7 @@ async def test_armed_away_with_specific_pending(opp, mqtt_mock):
 
     entity_id = "alarm_control_panel.test"
 
-    await common.async_alarm_arm_away.opp)
+    await common.async_alarm_arm_away(opp)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
@@ -1284,7 +1284,7 @@ async def test_armed_night_with_specific_pending(opp, mqtt_mock):
 
     entity_id = "alarm_control_panel.test"
 
-    await common.async_alarm_arm_night.opp)
+    await common.async_alarm_arm_night(opp)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
@@ -1322,7 +1322,7 @@ async def test_trigger_with_specific_pending(opp, mqtt_mock):
 
     entity_id = "alarm_control_panel.test"
 
-    await common.async_alarm_trigger.opp)
+    await common.async_alarm_trigger(opp)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
@@ -1602,7 +1602,7 @@ async def test_disarm_pending_via_command_topic(opp, mqtt_mock):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp)
+    await common.async_alarm_trigger(opp)
     await opp.async_block_till_done()
 
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
@@ -1640,7 +1640,7 @@ async def test_state_changes_are_published_to_mqtt(opp, mqtt_mock):
     mqtt_mock.async_publish.reset_mock()
 
     # Arm in home mode
-    await common.async_alarm_arm_home.opp)
+    await common.async_alarm_arm_home(opp)
     await opp.async_block_till_done()
     mqtt_mock.async_publish.assert_called_once_with(
         "alarm/state", STATE_ALARM_PENDING, 0, True
@@ -1660,7 +1660,7 @@ async def test_state_changes_are_published_to_mqtt(opp, mqtt_mock):
     mqtt_mock.async_publish.reset_mock()
 
     # Arm in away mode
-    await common.async_alarm_arm_away.opp)
+    await common.async_alarm_arm_away(opp)
     await opp.async_block_till_done()
     mqtt_mock.async_publish.assert_called_once_with(
         "alarm/state", STATE_ALARM_PENDING, 0, True
@@ -1680,7 +1680,7 @@ async def test_state_changes_are_published_to_mqtt(opp, mqtt_mock):
     mqtt_mock.async_publish.reset_mock()
 
     # Arm in night mode
-    await common.async_alarm_arm_night.opp)
+    await common.async_alarm_arm_night(opp)
     await opp.async_block_till_done()
     mqtt_mock.async_publish.assert_called_once_with(
         "alarm/state", STATE_ALARM_PENDING, 0, True
@@ -1700,7 +1700,7 @@ async def test_state_changes_are_published_to_mqtt(opp, mqtt_mock):
     mqtt_mock.async_publish.reset_mock()
 
     # Disarm
-    await common.async_alarm_disarm.opp)
+    await common.async_alarm_disarm(opp)
     await opp.async_block_till_done()
     mqtt_mock.async_publish.assert_called_once_with(
         "alarm/state", STATE_ALARM_DISARMED, 0, True

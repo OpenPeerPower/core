@@ -14,7 +14,7 @@ from tests.common import async_mock_service
 from tests.components.alarm_control_panel import common
 
 
-async def test_template_state_text.opp):
+async def test_template_state_text(opp):
     """Test the state text of a template."""
     await setup.async_setup_component(
         opp,
@@ -104,7 +104,7 @@ async def test_template_state_text.opp):
     assert state.state == "unknown"
 
 
-async def test_optimistic_states.opp):
+async def test_optimistic_states(opp):
     """Test the optimistic state."""
     await setup.async_setup_component(
         opp,
@@ -178,7 +178,7 @@ async def test_optimistic_states.opp):
     assert state.state == STATE_ALARM_DISARMED
 
 
-async def test_no_action_scripts.opp):
+async def test_no_action_scripts(opp):
     """Test no action scripts per state."""
     await setup.async_setup_component(
         opp,
@@ -362,7 +362,7 @@ async def test_no_panels_does_not_create(opp, caplog):
     assert ("required key not provided @ data['panels']") in caplog.text
 
 
-async def test_name.opp):
+async def test_name(opp):
     """Test the accessibility of the name attribute."""
     await setup.async_setup_component(
         opp,
@@ -410,7 +410,7 @@ async def test_name.opp):
     assert state.attributes.get("friendly_name") == "Template Alarm Panel"
 
 
-async def test_arm_home_action.opp):
+async def test_arm_home_action(opp):
     """Test arm home action."""
     await setup.async_setup_component(
         opp,
@@ -457,7 +457,7 @@ async def test_arm_home_action.opp):
     assert len(service_calls) == 1
 
 
-async def test_arm_away_action.opp):
+async def test_arm_away_action(opp):
     """Test arm away action."""
     await setup.async_setup_component(
         opp,
@@ -504,7 +504,7 @@ async def test_arm_away_action.opp):
     assert len(service_calls) == 1
 
 
-async def test_arm_night_action.opp):
+async def test_arm_night_action(opp):
     """Test arm night action."""
     await setup.async_setup_component(
         opp,
@@ -551,7 +551,7 @@ async def test_arm_night_action.opp):
     assert len(service_calls) == 1
 
 
-async def test_disarm_action.opp):
+async def test_disarm_action(opp):
     """Test disarm action."""
     await setup.async_setup_component(
         opp,
@@ -598,7 +598,7 @@ async def test_disarm_action.opp):
     assert len(service_calls) == 1
 
 
-async def test_unique_id.opp):
+async def test_unique_id(opp):
     """Test unique_id option only creates one alarm control panel per id."""
     await setup.async_setup_component(
         opp,

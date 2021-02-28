@@ -11,7 +11,7 @@ CLIENT_ID = "1234"
 CLIENT_SECRET = "5678"
 
 
-async def test_abort_if_existing_entry.opp):
+async def test_abort_if_existing_entry(opp):
     """Check flow abort when an entry already exist."""
     MockConfigEntry(domain=DOMAIN).add_to_opp(opp)
 

@@ -120,7 +120,7 @@ async def test_sensors(
     # Make sure no other sensors are set up
     assert len(opp.states.async_all()) == len(sensors)
 
-    er = await entity_registry.async_get_registry.opp)
+    er = await entity_registry.async_get_registry(opp)
     for sensor in sensors:
         entity_id = _async_get_entity_id(sensor)
 

@@ -31,7 +31,7 @@ CODE = "-1"
 DATA = {ATTR_ENTITY_ID: ENTITY_ID}
 
 
-async def test_attributes.opp):
+async def test_attributes(opp):
     """Test the alarm control panel attributes are correct."""
     with patch(
         "openpeerpower.components.totalconnect.TotalConnectClient.TotalConnectClient.request",
@@ -44,7 +44,7 @@ async def test_attributes.opp):
         assert state.attributes.get(ATTR_FRIENDLY_NAME) == "test"
 
 
-async def test_arm_home_success.opp):
+async def test_arm_home_success(opp):
     """Test arm home method success."""
     responses = [RESPONSE_DISARMED, RESPONSE_ARM_SUCCESS, RESPONSE_ARMED_STAY]
     with patch(
@@ -62,7 +62,7 @@ async def test_arm_home_success.opp):
         assert STATE_ALARM_ARMED_HOME == opp.states.get(ENTITY_ID).state
 
 
-async def test_arm_home_failure.opp):
+async def test_arm_home_failure(opp):
     """Test arm home method failure."""
     responses = [RESPONSE_DISARMED, RESPONSE_ARM_FAILURE, RESPONSE_DISARMED]
     with patch(
@@ -81,7 +81,7 @@ async def test_arm_home_failure.opp):
         assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
 
 
-async def test_arm_away_success.opp):
+async def test_arm_away_success(opp):
     """Test arm away method success."""
     responses = [RESPONSE_DISARMED, RESPONSE_ARM_SUCCESS, RESPONSE_ARMED_AWAY]
     with patch(
@@ -98,7 +98,7 @@ async def test_arm_away_success.opp):
         assert STATE_ALARM_ARMED_AWAY == opp.states.get(ENTITY_ID).state
 
 
-async def test_arm_away_failure.opp):
+async def test_arm_away_failure(opp):
     """Test arm away method failure."""
     responses = [RESPONSE_DISARMED, RESPONSE_ARM_FAILURE, RESPONSE_DISARMED]
     with patch(
@@ -117,7 +117,7 @@ async def test_arm_away_failure.opp):
         assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
 
 
-async def test_disarm_success.opp):
+async def test_disarm_success(opp):
     """Test disarm method success."""
     responses = [RESPONSE_ARMED_AWAY, RESPONSE_DISARM_SUCCESS, RESPONSE_DISARMED]
     with patch(
@@ -134,7 +134,7 @@ async def test_disarm_success.opp):
         assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
 
 
-async def test_disarm_failure.opp):
+async def test_disarm_failure(opp):
     """Test disarm method failure."""
     responses = [RESPONSE_ARMED_AWAY, RESPONSE_DISARM_FAILURE, RESPONSE_ARMED_AWAY]
     with patch(

@@ -21,7 +21,7 @@ from tests.common import mock_coro
 
 
 @pytest.fixture
-def track_connected.opp):
+def track_connected(opp):
     """Track connected and disconnected events."""
     connected_evt = []
 

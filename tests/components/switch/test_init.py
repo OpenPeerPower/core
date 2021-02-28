@@ -35,14 +35,14 @@ async def test_methods(opp, entities):
     assert switch.is_on(opp, switch_2.entity_id)
 
     # Turn all off
-    await common.async_turn_off.opp)
+    await common.async_turn_off(opp)
 
     assert not switch.is_on(opp, switch_1.entity_id)
     assert not switch.is_on(opp, switch_2.entity_id)
     assert not switch.is_on(opp, switch_3.entity_id)
 
     # Turn all on
-    await common.async_turn_on.opp)
+    await common.async_turn_on(opp)
 
     assert switch.is_on(opp, switch_1.entity_id)
     assert switch.is_on(opp, switch_2.entity_id)

@@ -16,7 +16,7 @@ from openpeerpower.data_entry_flow import (
 from tests.common import MockConfigEntry
 
 
-async def test_bad_credentials.opp):
+async def test_bad_credentials(opp):
     """Test when provided credentials are rejected."""
 
     result = await opp.config_entries.flow.async_init(
@@ -46,7 +46,7 @@ async def test_bad_credentials.opp):
         }
 
 
-async def test_generic_error_from_library.opp):
+async def test_generic_error_from_library(opp):
     """Test when connection fails."""
 
     result = await opp.config_entries.flow.async_init(
@@ -76,7 +76,7 @@ async def test_generic_error_from_library.opp):
         }
 
 
-async def test_auth_worked.opp):
+async def test_auth_worked(opp):
     """Test when provided credentials are accepted."""
 
     result = await opp.config_entries.flow.async_init(
@@ -106,7 +106,7 @@ async def test_auth_worked.opp):
         }
 
 
-async def test_already_configured.opp):
+async def test_already_configured(opp):
     """Test when provided credentials are already configured."""
     config = {
         CONF_EMAIL: "admin@localhost.com",

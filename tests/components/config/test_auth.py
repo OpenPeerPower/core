@@ -222,7 +222,7 @@ async def test_create_requires_admin(opp, opp_ws_client, opp_read_only_access_to
 
 async def test_update(opp, opp_ws_client):
     """Test update command works."""
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     user = await opp.auth.async_create_user("Test user")
 
@@ -270,7 +270,7 @@ async def test_update_requires_admin(opp, opp_ws_client, opp_read_only_access_to
 
 async def test_update_system_generated(opp, opp_ws_client):
     """Test update command cannot update a system generated."""
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     user = await opp.auth.async_create_system_user("Test user")
 
@@ -291,7 +291,7 @@ async def test_update_system_generated(opp, opp_ws_client):
 
 async def test_deactivate(opp, opp_ws_client):
     """Test deactivation and reactivation of regular user."""
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     user = await opp.auth.async_create_user("Test user")
     assert user.is_active is True
@@ -334,7 +334,7 @@ async def test_deactivate_owner(opp, opp_ws_client):
     assert user.is_active is True
     assert user.is_owner is True
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     await client.send_json(
         {"id": 5, "type": "config/auth/update", "user_id": user.id, "is_active": False}
     )
@@ -346,7 +346,7 @@ async def test_deactivate_owner(opp, opp_ws_client):
 
 async def test_deactivate_system_generated(opp, opp_ws_client):
     """Test that owner cannot be deactivated."""
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     user = await opp.auth.async_create_system_user("Test user")
     assert user.is_active is True

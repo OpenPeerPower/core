@@ -29,9 +29,9 @@ from tests.common import async_fire_time_changed, load_fixture
 from tests.components.accuweather import init_integration
 
 
-async def test_sensor_without_forecast.opp):
+async def test_sensor_without_forecast(opp):
     """Test states of the sensor without forecast."""
-    await init_integration.opp)
+    await init_integration(opp)
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     state = opp.states.get("sensor.home_cloud_ceiling")
@@ -91,7 +91,7 @@ async def test_sensor_without_forecast.opp):
     assert entry.unique_id == "0123456-uvindex"
 
 
-async def test_sensor_with_forecast.opp):
+async def test_sensor_with_forecast(opp):
     """Test states of the sensor with forecast."""
     await init_integration(opp, forecast=True)
     registry = await opp.helpers.entity_registry.async_get_registry()
@@ -163,9 +163,9 @@ async def test_sensor_with_forecast.opp):
     assert entry.unique_id == "0123456-uvindex-0"
 
 
-async def test_sensor_disabled.opp):
+async def test_sensor_disabled(opp):
     """Test sensor disabled by default."""
-    await init_integration.opp)
+    await init_integration(opp)
     registry = await opp.helpers.entity_registry.async_get_registry()
 
     entry = registry.async_get("sensor.home_apparent_temperature")
@@ -183,7 +183,7 @@ async def test_sensor_disabled.opp):
     assert updated_entry.disabled is False
 
 
-async def test_sensor_enabled_without_forecast.opp):
+async def test_sensor_enabled_without_forecast(opp):
     """Test enabling an advanced sensor."""
     registry = await opp.helpers.entity_registry.async_get_registry()
 
@@ -588,9 +588,9 @@ async def test_sensor_enabled_without_forecast.opp):
     assert entry.unique_id == "0123456-windgustnight-0"
 
 
-async def test_availability.opp):
+async def test_availability(opp):
     """Ensure that we mark the entities unavailable correctly when service is offline."""
-    await init_integration.opp)
+    await init_integration(opp)
 
     state = opp.states.get("sensor.home_cloud_ceiling")
     assert state
@@ -625,7 +625,7 @@ async def test_availability.opp):
         assert state.state == "3200"
 
 
-async def test_manual_update_entity.opp):
+async def test_manual_update_entity(opp):
     """Test manual update entity via service homeasasistant/update_entity."""
     await init_integration(opp, forecast=True)
 

@@ -889,7 +889,7 @@ async def test_thermostat_restore(opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
     opp.state = CoreState.not_running
 
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
 
     registry.async_get_or_create(
         "climate", "generic", "1234", suggested_object_id="simple"
@@ -1705,7 +1705,7 @@ async def test_water_heater_restore(opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
     opp.state = CoreState.not_running
 
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
 
     registry.async_get_or_create(
         "water_heater", "generic", "1234", suggested_object_id="simple"

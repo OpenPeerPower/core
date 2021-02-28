@@ -12,7 +12,7 @@ HW_ID = 123456789
 MOCK_INFO = {"ids": {"hardwareId": HW_ID}}
 
 
-async def setup_nuki_integration.opp):
+async def setup_nuki_integration(opp):
     """Create the Nuki device."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     entry = MockConfigEntry(

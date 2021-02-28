@@ -77,7 +77,7 @@ async def test_reproducing_on_off_states(opp, caplog):
     assert len(humidity_calls) == 0
 
 
-async def test_multiple_attrs.opp):
+async def test_multiple_attrs(opp):
     """Test turn on with multiple attributes."""
     opp.states.async_set(ENTITY_1, STATE_OFF, {})
 
@@ -101,7 +101,7 @@ async def test_multiple_attrs.opp):
     assert humidity_calls[0].data == {"entity_id": ENTITY_1, "humidity": 45}
 
 
-async def test_turn_off_multiple_attrs.opp):
+async def test_turn_off_multiple_attrs(opp):
     """Test set mode and humidity for off state."""
     opp.states.async_set(ENTITY_1, STATE_ON, {})
 
@@ -123,7 +123,7 @@ async def test_turn_off_multiple_attrs.opp):
     assert len(humidity_calls) == 0
 
 
-async def test_multiple_modes.opp):
+async def test_multiple_modes(opp):
     """Test that multiple states gets calls."""
     opp.states.async_set(ENTITY_1, STATE_OFF, {})
     opp.states.async_set(ENTITY_2, STATE_OFF, {})
@@ -163,7 +163,7 @@ async def test_multiple_modes.opp):
     )
 
 
-async def test_state_with_none.opp):
+async def test_state_with_none(opp):
     """Test that none is not a humidifier state."""
     opp.states.async_set(ENTITY_1, STATE_OFF, {})
 
@@ -182,7 +182,7 @@ async def test_state_with_none.opp):
     assert len(humidity_calls) == 0
 
 
-async def test_state_with_context.opp):
+async def test_state_with_context(opp):
     """Test that context is forwarded."""
     opp.states.async_set(ENTITY_1, STATE_OFF, {})
 

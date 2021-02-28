@@ -248,23 +248,23 @@ async def test_controller_mac(opp, aioclient_mock):
     assert controller.mac == CONTROLLER_HOST["mac"]
 
 
-async def test_controller_not_accessible.opp):
+async def test_controller_not_accessible(opp):
     """Retry to login gets scheduled when connection fails."""
     with patch(
         "openpeerpower.components.unifi.controller.get_controller",
         side_effect=CannotConnect,
     ):
-        await setup_unifi_integration.opp)
+        await setup_unifi_integration(opp)
     assert opp.data[UNIFI_DOMAIN] == {}
 
 
-async def test_controller_trigger_reauth_flow.opp):
+async def test_controller_trigger_reauth_flow(opp):
     """Failed authentication trigger a reauthentication flow."""
     with patch(
         "openpeerpower.components.unifi.controller.get_controller",
         side_effect=AuthenticationRequired,
     ), patch.object.opp.config_entries.flow, "async_init") as mock_flow_init:
-        await setup_unifi_integration.opp)
+        await setup_unifi_integration(opp)
         mock_flow_init.assert_called_once()
     assert opp.data[UNIFI_DOMAIN] == {}
 
@@ -275,7 +275,7 @@ async def test_controller_unknown_error(opp):
         "openpeerpower.components.unifi.controller.get_controller",
         side_effect=Exception,
     ):
-        await setup_unifi_integration.opp)
+        await setup_unifi_integration(opp)
     assert opp.data[UNIFI_DOMAIN] == {}
 
 
@@ -320,7 +320,7 @@ async def test_wireless_client_event_calls_update_wireless_devices(
         assert wireless_clients_mock.assert_called_once
 
 
-async def test_get_controller.opp):
+async def test_get_controller(opp):
     """Successful call."""
     with patch("aiounifi.Controller.check_unifi_os", return_value=True), patch(
         "aiounifi.Controller.login", return_value=True
@@ -328,7 +328,7 @@ async def test_get_controller.opp):
         assert await get_controller(opp, **CONTROLLER_DATA)
 
 
-async def test_get_controller_verify_ssl_false.opp):
+async def test_get_controller_verify_ssl_false(opp):
     """Successful call with verify ssl set to false."""
     controller_data = dict(CONTROLLER_DATA)
     controller_data[CONF_VERIFY_SSL] = False
@@ -338,7 +338,7 @@ async def test_get_controller_verify_ssl_false.opp):
         assert await get_controller(opp, **controller_data)
 
 
-async def test_get_controller_login_failed.opp):
+async def test_get_controller_login_failed(opp):
     """Check that get_controller can handle a failed login."""
     with patch("aiounifi.Controller.check_unifi_os", return_value=True), patch(
         "aiounifi.Controller.login", side_effect=aiounifi.Unauthorized
@@ -346,7 +346,7 @@ async def test_get_controller_login_failed.opp):
         await get_controller(opp, **CONTROLLER_DATA)
 
 
-async def test_get_controller_controller_bad_gateway.opp):
+async def test_get_controller_controller_bad_gateway(opp):
     """Check that get_controller can handle controller being unavailable."""
     with patch("aiounifi.Controller.check_unifi_os", return_value=True), patch(
         "aiounifi.Controller.login", side_effect=aiounifi.BadGateway
@@ -354,7 +354,7 @@ async def test_get_controller_controller_bad_gateway.opp):
         await get_controller(opp, **CONTROLLER_DATA)
 
 
-async def test_get_controller_controller_service_unavailable.opp):
+async def test_get_controller_controller_service_unavailable(opp):
     """Check that get_controller can handle controller being unavailable."""
     with patch("aiounifi.Controller.check_unifi_os", return_value=True), patch(
         "aiounifi.Controller.login", side_effect=aiounifi.ServiceUnavailable
@@ -362,7 +362,7 @@ async def test_get_controller_controller_service_unavailable.opp):
         await get_controller(opp, **CONTROLLER_DATA)
 
 
-async def test_get_controller_controller_unavailable.opp):
+async def test_get_controller_controller_unavailable(opp):
     """Check that get_controller can handle controller being unavailable."""
     with patch("aiounifi.Controller.check_unifi_os", return_value=True), patch(
         "aiounifi.Controller.login", side_effect=aiounifi.RequestError
@@ -370,7 +370,7 @@ async def test_get_controller_controller_unavailable.opp):
         await get_controller(opp, **CONTROLLER_DATA)
 
 
-async def test_get_controller_login_required.opp):
+async def test_get_controller_login_required(opp):
     """Check that get_controller can handle unknown errors."""
     with patch("aiounifi.Controller.check_unifi_os", return_value=True), patch(
         "aiounifi.Controller.login", side_effect=aiounifi.LoginRequired

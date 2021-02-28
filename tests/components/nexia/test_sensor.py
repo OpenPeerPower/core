@@ -5,10 +5,10 @@ from openpeerpower.const import PERCENTAGE, TEMP_CELSIUS
 from .util import async_init_integration
 
 
-async def test_create_sensors.opp):
+async def test_create_sensors(opp):
     """Test creation of sensors."""
 
-    await async_init_integration.opp)
+    await async_init_integration(opp)
 
     state = opp.states.get("sensor.nick_office_temperature")
     assert state.state == "23"

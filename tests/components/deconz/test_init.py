@@ -43,17 +43,17 @@ async def setup_entry(opp, entry):
         assert await async_setup_entry(opp, entry) is True
 
 
-async def test_setup_entry_fails.opp):
+async def test_setup_entry_fails(opp):
     """Test setup entry fails if deCONZ is not available."""
     with patch("pydeconz.DeconzSession.initialize", side_effect=Exception):
-        await setup_deconz_integration.opp)
+        await setup_deconz_integration(opp)
     assert not opp.data[DECONZ_DOMAIN]
 
 
-async def test_setup_entry_no_available_bridge.opp):
+async def test_setup_entry_no_available_bridge(opp):
     """Test setup entry fails if deCONZ is not available."""
     with patch("pydeconz.DeconzSession.initialize", side_effect=asyncio.TimeoutError):
-        await setup_deconz_integration.opp)
+        await setup_deconz_integration(opp)
     assert not opp.data[DECONZ_DOMAIN]
 
 
@@ -118,7 +118,7 @@ async def test_unload_entry_multiple_gateways(opp, aioclient_mock):
     assert opp.data[DECONZ_DOMAIN][config_entry2.unique_id].master
 
 
-async def test_update_group_unique_id.opp):
+async def test_update_group_unique_id(opp):
     """Test successful migration of entry data."""
     old_unique_id = "123"
     new_unique_id = "1234"
@@ -133,7 +133,7 @@ async def test_update_group_unique_id.opp):
         },
     )
 
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
     # Create entity entry to migrate to new unique ID
     registry.async_get_or_create(
         LIGHT_DOMAIN,
@@ -162,7 +162,7 @@ async def test_update_group_unique_id.opp):
     assert new_entity.unique_id == f"{new_unique_id}-NEW"
 
 
-async def test_update_group_unique_id_no_legacy_group_id.opp):
+async def test_update_group_unique_id_no_legacy_group_id(opp):
     """Test migration doesn't trigger without old legacy group id in entry data."""
     old_unique_id = "123"
     new_unique_id = "1234"
@@ -172,7 +172,7 @@ async def test_update_group_unique_id_no_legacy_group_id.opp):
         data={},
     )
 
-    registry = await entity_registry.async_get_registry.opp)
+    registry = await entity_registry.async_get_registry(opp)
     # Create entity entry to migrate to new unique ID
     registry.async_get_or_create(
         LIGHT_DOMAIN,

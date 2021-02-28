@@ -41,7 +41,7 @@ EVENTS = [
 ]
 
 
-async def test_platform_manually_configured.opp):
+async def test_platform_manually_configured(opp):
     """Test that nothing happens when platform is manually configured."""
     assert await async_setup_component(
         opp. SWITCH_DOMAIN, {SWITCH_DOMAIN: {"platform": AXIS_DOMAIN}}
@@ -50,16 +50,16 @@ async def test_platform_manually_configured.opp):
     assert AXIS_DOMAIN not in opp.data
 
 
-async def test_no_switches.opp):
+async def test_no_switches(opp):
     """Test that no output events in Axis results in no switch entities."""
-    await setup_axis_integration.opp)
+    await setup_axis_integration(opp)
 
     assert not opp.states.async_entity_ids(SWITCH_DOMAIN)
 
 
-async def test_switches_with_port_cgi.opp):
+async def test_switches_with_port_cgi(opp):
     """Test that switches are loaded properly using port.cgi."""
-    config_entry = await setup_axis_integration.opp)
+    config_entry = await setup_axis_integration(opp)
     device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     device.api.vapix.ports = {"0": AsyncMock(), "1": AsyncMock()}
@@ -100,13 +100,13 @@ async def test_switches_with_port_cgi.opp):
     device.api.vapix.ports["0"].open.assert_called_once()
 
 
-async def test_switches_with_port_management.opp):
+async def test_switches_with_port_management(opp):
     """Test that switches are loaded properly using port management."""
     api_discovery = deepcopy(API_DISCOVERY_RESPONSE)
     api_discovery["data"]["apiList"].append(API_DISCOVERY_PORT_MANAGEMENT)
 
     with patch.dict(API_DISCOVERY_RESPONSE, api_discovery):
-        config_entry = await setup_axis_integration.opp)
+        config_entry = await setup_axis_integration(opp)
         device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     device.api.vapix.ports = {"0": AsyncMock(), "1": AsyncMock()}

@@ -36,12 +36,12 @@ from . import (
 from tests.common import MockConfigEntry, async_fire_time_changed
 
 
-def _get_attributes.opp):
+def _get_attributes(opp):
     state = opp.states.get(ENTITY_ID)
     return state.as_dict()["attributes"]
 
 
-async def test_setup_platform.opp):
+async def test_setup_platform(opp):
     """Test the legacy setup platform."""
     mocked_device = _create_mocked_device(throw_exception=True)
     with _patch_media_player_device(mocked_device):
@@ -93,7 +93,7 @@ async def test_setup_failed(opp, caplog):
     assert not any(x.levelno == logging.ERROR for x in caplog.records)
 
 
-async def test_state.opp):
+async def test_state(opp):
     """Test state of the entity."""
     mocked_device = _create_mocked_device()
     entry = MockConfigEntry(domain=songpal.DOMAIN, data=CONF_DATA)
@@ -113,7 +113,7 @@ async def test_state.opp):
     assert attributes["source"] == "title2"
     assert attributes["supported_features"] == SUPPORT_SONGPAL
 
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     device = device_registry.async_get_device(identifiers={(songpal.DOMAIN, MAC)})
     assert device.connections == {(dr.CONNECTION_NETWORK_MAC, MAC)}
     assert device.manufacturer == "Sony Corporation"
@@ -121,12 +121,12 @@ async def test_state.opp):
     assert device.sw_version == SW_VERSION
     assert device.model == MODEL
 
-    entity_registry = await er.async_get_registry.opp)
+    entity_registry = await er.async_get_registry(opp)
     entity = entity_registry.async_get(ENTITY_ID)
     assert entity.unique_id == MAC
 
 
-async def test_services.opp):
+async def test_services(opp):
     """Test services."""
     mocked_device = _create_mocked_device()
     entry = MockConfigEntry(domain=songpal.DOMAIN, data=CONF_DATA)
@@ -196,7 +196,7 @@ async def test_services.opp):
     mocked_device2.set_sound_settings.assert_called_once_with("name", "value")
 
 
-async def test_websocket_events.opp):
+async def test_websocket_events(opp):
     """Test websocket events."""
     mocked_device = _create_mocked_device()
     entry = MockConfigEntry(domain=songpal.DOMAIN, data=CONF_DATA)
@@ -215,7 +215,7 @@ async def test_websocket_events.opp):
     volume_change.mute = True
     volume_change.volume = 20
     await notification_callbacks[VolumeChange](volume_change)
-    attributes = _get_attributes.opp)
+    attributes = _get_attributes(opp)
     assert attributes["is_volume_muted"] is True
     assert attributes["volume_level"] == 0.2
 
@@ -223,10 +223,10 @@ async def test_websocket_events.opp):
     content_change.is_input = False
     content_change.uri = "uri1"
     await notification_callbacks[ContentChange](content_change)
-    assert _get_attributes.opp)["source"] == "title2"
+    assert _get_attributes(opp)["source"] == "title2"
     content_change.is_input = True
     await notification_callbacks[ContentChange](content_change)
-    assert _get_attributes.opp)["source"] == "title1"
+    assert _get_attributes(opp)["source"] == "title1"
 
     power_change = MagicMock()
     power_change.status = False

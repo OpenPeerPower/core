@@ -23,7 +23,7 @@ def _mock_get_config():
     return {DOMAIN: {CONF_LOADZONE: "LZ_HOUSTON"}}
 
 
-async def test_houston_loadzone.opp):
+async def test_houston_loadzone(opp):
     """Test creation of the houston load zone."""
 
     getnow_json = await _load_json_fixture(opp, "getnow.json")

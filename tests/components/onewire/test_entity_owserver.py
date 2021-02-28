@@ -762,8 +762,8 @@ async def test_owserver_setup_valid_device(owproxy, opp, device_id, platform):
     As they would be on a clean setup: all binary-sensors and switches disabled.
     """
     await async_setup_component(opp, "persistent_notification", {})
-    entity_registry = mock_registry.opp)
-    device_registry = mock_device_registry.opp)
+    entity_registry = mock_registry(opp)
+    device_registry = mock_device_registry(opp)
 
     mock_device_sensor = MOCK_DEVICE_SENSORS[device_id]
 
@@ -783,7 +783,7 @@ async def test_owserver_setup_valid_device(owproxy, opp, device_id, platform):
     owproxy.return_value.read.side_effect = read_side_effect
 
     with patch("openpeerpower.components.onewire.SUPPORTED_PLATFORMS", [platform]):
-        await setup_onewire_patched_owserver_integration.opp)
+        await setup_onewire_patched_owserver_integration(opp)
         await opp.async_block_till_done()
 
     assert len(entity_registry.entities) == len(expected_sensors)

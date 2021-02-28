@@ -11,13 +11,13 @@ from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture(autouse=True)
-def mock_history.opp):
+def mock_history(opp):
     """Mock history component loaded."""
     opp.config.components.add("history")
 
 
 @pytest.fixture(autouse=True)
-def demo_cleanup.opp):
+def demo_cleanup(opp):
     """Clean up device tracker demo file."""
     yield
     try:
@@ -26,7 +26,7 @@ def demo_cleanup.opp):
         pass
 
 
-async def test_setting_up_demo.opp):
+async def test_setting_up_demo(opp):
     """Test if we can set up the demo and dump it to JSON."""
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {}})
     await opp.async_block_till_done()

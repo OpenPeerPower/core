@@ -56,7 +56,7 @@ async def test_config(opp):
         assert not await async_setup_component(opp, DOMAIN, {DOMAIN: cfg})
 
 
-async def test_methods.opp):
+async def test_methods(opp):
     """Test is_on, turn_on, turn_off methods."""
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {"test_1": None}})
     entity_id = "input_boolean.test_1"
@@ -82,7 +82,7 @@ async def test_methods.opp):
     assert is_on(opp, entity_id)
 
 
-async def test_config_options.opp):
+async def test_config_options(opp):
     """Test configuration options."""
     count_start = len(opp.states.async_entity_ids())
 
@@ -118,7 +118,7 @@ async def test_config_options.opp):
     assert "mdi:work" == state_2.attributes.get(ATTR_ICON)
 
 
-async def test_restore_state.opp):
+async def test_restore_state(opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
         opp,
@@ -143,7 +143,7 @@ async def test_restore_state.opp):
     assert state.state == "off"
 
 
-async def test_initial_state_overrules_restore_state.opp):
+async def test_initial_state_overrules_restore_state(opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
         opp. (State("input_boolean.b1", "on"), State("input_boolean.b2", "off"))
@@ -192,7 +192,7 @@ async def test_input_boolean_context(opp, opp_admin_user):
 async def test_reload(opp, opp_admin_user):
     """Test reload service."""
     count_start = len(opp.states.async_entity_ids())
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     _LOGGER.debug("ENTITIES @ start: %s", opp.states.async_entity_ids())
 
@@ -291,7 +291,7 @@ async def test_ws_list(opp, opp_ws_client, storage_setup):
     """Test listing via WS."""
     assert await storage_setup(config={DOMAIN: {"from_yaml": None}})
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json({"id": 6, "type": f"{DOMAIN}/list"})
     resp = await client.receive_json()
@@ -313,13 +313,13 @@ async def test_ws_delete(opp, opp_ws_client, storage_setup):
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {"id": 6, "type": f"{DOMAIN}/delete", f"{DOMAIN}_id": f"{input_id}"}

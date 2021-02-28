@@ -79,7 +79,7 @@ async def test_async_setup_entry_sets_up_hub_and_supported_domains.opp: OpenPeer
     assert config_entry.unique_id == "test-bond-id"
 
     # verify hub device is registered correctly
-    device_registry = await dr.async_get_registry.opp)
+    device_registry = await dr.async_get_registry(opp)
     hub = device_registry.async_get_device(identifiers={(DOMAIN, "test-bond-id")})
     assert hub.name == "bond-name"
     assert hub.manufacturer == "Olibra"

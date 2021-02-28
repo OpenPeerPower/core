@@ -22,7 +22,7 @@ from tests.common import (
 
 
 @pytest.fixture(autouse=True)
-def mock_test_component.opp):
+def mock_test_component(opp):
     """Ensure a component called 'test' exists."""
     mock_integration(opp, MockModule("test"))
 
@@ -434,7 +434,7 @@ async def test_get_progress_index(opp, opp_ws_client):
     """Test querying for the flows that are in progress."""
     assert await async_setup_component(opp, "config", {})
     mock_entity_platform(opp, "config_flow.test", None)
-    ws_client = await opp_ws_client.opp)
+    ws_client = await opp_ws_client(opp)
 
     class TestFlow(core_ce.ConfigFlow):
         VERSION = 5
@@ -468,7 +468,7 @@ async def test_get_progress_index_unauth(opp, opp_ws_client, opp_admin_user):
     """Test we can't get flows that are in progress."""
     assert await async_setup_component(opp, "config", {})
     opp.admin_user.groups = []
-    ws_client = await opp_ws_client.opp)
+    ws_client = await opp_ws_client(opp)
 
     await ws_client.send_json({"id": 5, "type": "config_entries/flow/progress"})
     response = await ws_client.receive_json()
@@ -657,7 +657,7 @@ async def test_two_step_options_flow(opp, client):
 async def test_list_system_options(opp, opp_ws_client):
     """Test that we can list an entries system options."""
     assert await async_setup_component(opp, "config", {})
-    ws_client = await opp_ws_client.opp)
+    ws_client = await opp_ws_client(opp)
 
     entry = MockConfigEntry(domain="demo")
     entry.add_to_opp(opp)
@@ -678,7 +678,7 @@ async def test_list_system_options(opp, opp_ws_client):
 async def test_update_system_options(opp, opp_ws_client):
     """Test that we can update system options."""
     assert await async_setup_component(opp, "config", {})
-    ws_client = await opp_ws_client.opp)
+    ws_client = await opp_ws_client(opp)
 
     entry = MockConfigEntry(domain="demo")
     entry.add_to_opp(opp)
@@ -701,7 +701,7 @@ async def test_update_system_options(opp, opp_ws_client):
 async def test_update_system_options_nonexisting(opp, opp_ws_client):
     """Test that we can update entry."""
     assert await async_setup_component(opp, "config", {})
-    ws_client = await opp_ws_client.opp)
+    ws_client = await opp_ws_client(opp)
 
     await ws_client.send_json(
         {
@@ -720,7 +720,7 @@ async def test_update_system_options_nonexisting(opp, opp_ws_client):
 async def test_update_entry(opp, opp_ws_client):
     """Test that we can update entry."""
     assert await async_setup_component(opp, "config", {})
-    ws_client = await opp_ws_client.opp)
+    ws_client = await opp_ws_client(opp)
 
     entry = MockConfigEntry(domain="demo", title="Initial Title")
     entry.add_to_opp(opp)
@@ -743,7 +743,7 @@ async def test_update_entry(opp, opp_ws_client):
 async def test_update_entry_nonexisting(opp, opp_ws_client):
     """Test that we can update entry."""
     assert await async_setup_component(opp, "config", {})
-    ws_client = await opp_ws_client.opp)
+    ws_client = await opp_ws_client(opp)
 
     await ws_client.send_json(
         {
@@ -762,7 +762,7 @@ async def test_update_entry_nonexisting(opp, opp_ws_client):
 async def test_disable_entry(opp, opp_ws_client):
     """Test that we can disable entry."""
     assert await async_setup_component(opp, "config", {})
-    ws_client = await opp_ws_client.opp)
+    ws_client = await opp_ws_client(opp)
 
     entry = MockConfigEntry(domain="demo", state="loaded")
     entry.add_to_opp(opp)
@@ -820,7 +820,7 @@ async def test_disable_entry(opp, opp_ws_client):
 async def test_disable_entry_nonexisting(opp, opp_ws_client):
     """Test that we can disable entry."""
     assert await async_setup_component(opp, "config", {})
-    ws_client = await opp_ws_client.opp)
+    ws_client = await opp_ws_client(opp)
 
     await ws_client.send_json(
         {
@@ -851,7 +851,7 @@ async def test_ignore_flow(opp, opp_ws_client):
             await self.async_set_unique_id("mock-unique-id")
             return self.async_show_form(step_id="account", data_schema=vol.Schema({}))
 
-    ws_client = await opp_ws_client.opp)
+    ws_client = await opp_ws_client(opp)
 
     with patch.dict(HANDLERS, {"test": TestFlow}):
         result = await opp.config_entries.flow.async_init(
@@ -882,7 +882,7 @@ async def test_ignore_flow(opp, opp_ws_client):
 async def test_ignore_flow_nonexisting(opp, opp_ws_client):
     """Test we can ignore a flow."""
     assert await async_setup_component(opp, "config", {})
-    ws_client = await opp_ws_client.opp)
+    ws_client = await opp_ws_client(opp)
 
     await ws_client.send_json(
         {

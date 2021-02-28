@@ -14,7 +14,7 @@ CLIENT_ID_VALUE = "1234"
 CLIENT_SECRET_VALUE = "5678"
 
 
-async def test_import.opp):
+async def test_import(opp):
     """Test that we can import a config entry."""
     with patch("pyalmond.WebAlmondAPI.async_list_apps"):
         assert await setup.async_setup_component(
@@ -30,7 +30,7 @@ async def test_import.opp):
     assert entry.data["host"] == "http://localhost:3000"
 
 
-async def test_import_cannot_connect.opp):
+async def test_import_cannot_connect(opp):
     """Test that we won't import a config entry if we cannot connect."""
     with patch(
         "pyalmond.WebAlmondAPI.async_list_apps", side_effect=asyncio.TimeoutError
@@ -71,7 +71,7 @@ async def test.oppio.opp):
     assert entry.data["host"] == "http://almond-addon:1234"
 
 
-async def test_abort_if_existing_entry.opp):
+async def test_abort_if_existing_entry(opp):
     """Check flow abort when an entry already exist."""
     MockConfigEntry(domain=DOMAIN).add_to_opp(opp)
 

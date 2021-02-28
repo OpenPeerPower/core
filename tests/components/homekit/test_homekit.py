@@ -71,15 +71,15 @@ def always_patch_driver(hk_driver):
 
 
 @pytest.fixture(name="device_reg")
-def device_reg_fixture.opp):
+def device_reg_fixture(opp):
     """Return an empty, loaded, registry."""
-    return mock_device_registry.opp)
+    return mock_device_registry(opp)
 
 
 @pytest.fixture(name="entity_reg")
-def entity_reg_fixture.opp):
+def entity_reg_fixture(opp):
     """Return an empty, loaded, registry."""
-    return mock_registry.opp)
+    return mock_registry(opp)
 
 
 async def test_setup_min(opp, mock_zeroconf):
@@ -292,7 +292,7 @@ async def test_homekit_setup_advertise_ip(opp, hk_driver, mock_zeroconf):
 
 async def test_homekit_add_accessory(opp, mock_zeroconf):
     """Add accessory if config exists and get_acc returns an accessory."""
-    entry = await async_init_integration.opp)
+    entry = await async_init_integration(opp)
 
     homekit = HomeKit(
         opp,
@@ -311,7 +311,7 @@ async def test_homekit_add_accessory(opp, mock_zeroconf):
 
     mock_acc = Mock(category="any")
 
-    await async_init_integration.opp)
+    await async_init_integration(opp)
 
     with patch(f"{PATH_HOMEKIT}.get_accessory") as mock_get_acc:
         mock_get_acc.side_effect = [None, mock_acc, None]
@@ -333,7 +333,7 @@ async def test_homekit_warn_add_accessory_bridge(
     opp. acc_category, mock_zeroconf, caplog
 ):
     """Test we warn when adding cameras or tvs to a bridge."""
-    entry = await async_init_integration.opp)
+    entry = await async_init_integration(opp)
 
     homekit = HomeKit(
         opp,
@@ -352,7 +352,7 @@ async def test_homekit_warn_add_accessory_bridge(
 
     mock_camera_acc = Mock(category=acc_category)
 
-    await async_init_integration.opp)
+    await async_init_integration(opp)
 
     with patch(f"{PATH_HOMEKIT}.get_accessory") as mock_get_acc:
         mock_get_acc.side_effect = [None, mock_camera_acc, None]
@@ -369,7 +369,7 @@ async def test_homekit_warn_add_accessory_bridge(
 
 async def test_homekit_remove_accessory(opp, mock_zeroconf):
     """Remove accessory from bridge."""
-    entry = await async_init_integration.opp)
+    entry = await async_init_integration(opp)
 
     homekit = HomeKit(
         opp,
@@ -393,7 +393,7 @@ async def test_homekit_remove_accessory(opp, mock_zeroconf):
 
 async def test_homekit_entity_filter(opp, mock_zeroconf):
     """Test the entity filter."""
-    entry = await async_init_integration.opp)
+    entry = await async_init_integration(opp)
 
     entity_filter = generate_filter(["cover"], ["demo.test"], [], [])
     homekit = HomeKit(
@@ -427,7 +427,7 @@ async def test_homekit_entity_filter(opp, mock_zeroconf):
 
 async def test_homekit_entity_glob_filter(opp, mock_zeroconf):
     """Test the entity filter."""
-    entry = await async_init_integration.opp)
+    entry = await async_init_integration(opp)
 
     entity_filter = generate_filter(
         ["cover"], ["demo.test"], [], [], ["*.included_*"], ["*.excluded_*"]
@@ -468,7 +468,7 @@ async def test_homekit_entity_glob_filter(opp, mock_zeroconf):
 
 async def test_homekit_start(opp, hk_driver, device_reg):
     """Test HomeKit start method."""
-    entry = await async_init_integration.opp)
+    entry = await async_init_integration(opp)
 
     pin = b"123-45-678"
     homekit = HomeKit(
@@ -605,9 +605,9 @@ async def test_homekit_start_with_a_broken_accessory(opp, hk_driver, mock_zeroco
     assert not hk_driver_start.called
 
 
-async def test_homekit_stop.opp):
+async def test_homekit_stop(opp):
     """Test HomeKit stop method."""
-    entry = await async_init_integration.opp)
+    entry = await async_init_integration(opp)
 
     homekit = HomeKit(
         opp,
@@ -693,7 +693,7 @@ async def test_homekit_reset_accessories(opp, mock_zeroconf):
 
 async def test_homekit_too_many_accessories(opp, hk_driver, caplog, mock_zeroconf):
     """Test adding too many accessories to HomeKit."""
-    entry = await async_init_integration.opp)
+    entry = await async_init_integration(opp)
 
     entity_filter = generate_filter(["cover", "light"], ["demo.test"], [], [])
 
@@ -736,7 +736,7 @@ async def test_homekit_finds_linked_batteries(
     opp. hk_driver, device_reg, entity_reg, mock_zeroconf
 ):
     """Test HomeKit start method."""
-    entry = await async_init_integration.opp)
+    entry = await async_init_integration(opp)
 
     homekit = HomeKit(
         opp,
@@ -822,7 +822,7 @@ async def test_homekit_async_get_integration_fails(
     opp. hk_driver, device_reg, entity_reg, mock_zeroconf
 ):
     """Test that we continue if async_get_integration fails."""
-    entry = await async_init_integration.opp)
+    entry = await async_init_integration(opp)
 
     homekit = HomeKit(
         opp,
@@ -964,7 +964,7 @@ async def test_homekit_uses_system_zeroconf(opp, hk_driver, mock_zeroconf):
         options={},
     )
     assert await async_setup_component(opp, "zeroconf", {"zeroconf": {}})
-    system_zc = await zeroconf.async_get_instance.opp)
+    system_zc = await zeroconf.async_get_instance(opp)
 
     with patch("pyhap.accessory_driver.AccessoryDriver.start_service"), patch(
         f"{PATH_HOMEKIT}.HomeKit.async_stop"
@@ -988,7 +988,7 @@ async def test_homekit_ignored_missing_devices(
     opp. hk_driver, device_reg, entity_reg, mock_zeroconf
 ):
     """Test HomeKit handles a device in the entity registry but missing from the device registry."""
-    entry = await async_init_integration.opp)
+    entry = await async_init_integration(opp)
 
     homekit = HomeKit(
         opp,
@@ -1069,7 +1069,7 @@ async def test_homekit_finds_linked_motion_sensors(
     opp. hk_driver, device_reg, entity_reg, mock_zeroconf
 ):
     """Test HomeKit start method."""
-    entry = await async_init_integration.opp)
+    entry = await async_init_integration(opp)
 
     homekit = HomeKit(
         opp,
@@ -1144,7 +1144,7 @@ async def test_homekit_finds_linked_humidity_sensors(
     opp. hk_driver, device_reg, entity_reg, mock_zeroconf
 ):
     """Test HomeKit start method."""
-    entry = await async_init_integration.opp)
+    entry = await async_init_integration(opp)
 
     homekit = HomeKit(
         opp,
@@ -1291,7 +1291,7 @@ def _get_fixtures_base_path():
 
 async def test_homekit_start_in_accessory_mode(opp, hk_driver, device_reg):
     """Test HomeKit start method in accessory mode."""
-    entry = await async_init_integration.opp)
+    entry = await async_init_integration(opp)
 
     pin = b"123-45-678"
     homekit = HomeKit(

@@ -7,7 +7,7 @@ from openpeerpower import config_entries, setup
 from openpeerpower.components.zerproc.config_flow import DOMAIN
 
 
-async def test_flow_success.opp):
+async def test_flow_success(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -39,7 +39,7 @@ async def test_flow_success.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_flow_no_devices_found.opp):
+async def test_flow_no_devices_found(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -69,7 +69,7 @@ async def test_flow_no_devices_found.opp):
     assert len(mock_setup_entry.mock_calls) == 0
 
 
-async def test_flow_exceptions_caught.opp):
+async def test_flow_exceptions_caught(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(

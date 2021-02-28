@@ -264,7 +264,7 @@ async def test_removed_device(opp, client, multiple_devices, integration):
     assert len(client.driver.controller.nodes) == 2
 
     # Make sure there are the same number of devices
-    dev_reg = await device_registry.async_get_registry.opp)
+    dev_reg = await device_registry.async_get_registry(opp)
     device_entries = device_registry.async_entries_for_config_entry(
         dev_reg, integration.entry_id
     )

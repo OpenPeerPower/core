@@ -29,7 +29,7 @@ SERVER_STATUS_STATUS_ONLY = ServerStatus.new_from_json_dict(
 )
 
 
-async def init_integration.opp) -> MockConfigEntry:
+async def init_integration(opp) -> MockConfigEntry:
     """Set up the Nightscout integration in Open Peer Power."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -49,7 +49,7 @@ async def init_integration.opp) -> MockConfigEntry:
     return entry
 
 
-async def init_integration_unavailable.opp) -> MockConfigEntry:
+async def init_integration_unavailable(opp) -> MockConfigEntry:
     """Set up the Nightscout integration in Open Peer Power."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -69,7 +69,7 @@ async def init_integration_unavailable.opp) -> MockConfigEntry:
     return entry
 
 
-async def init_integration_empty_response.opp) -> MockConfigEntry:
+async def init_integration_empty_response(opp) -> MockConfigEntry:
     """Set up the Nightscout integration in Open Peer Power."""
     entry = MockConfigEntry(
         domain=DOMAIN,

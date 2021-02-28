@@ -18,9 +18,9 @@ from tests.common import MockConfigEntry, async_fire_time_changed, load_fixture
 from tests.components.accuweather import init_integration
 
 
-async def test_async_setup_entry.opp):
+async def test_async_setup_entry(opp):
     """Test a successful setup entry."""
-    await init_integration.opp)
+    await init_integration(opp)
 
     state = opp.states.get("weather.home")
     assert state is not None
@@ -28,7 +28,7 @@ async def test_async_setup_entry.opp):
     assert state.state == "sunny"
 
 
-async def test_config_not_ready.opp):
+async def test_config_not_ready(opp):
     """Test for setup failure if connection to AccuWeather is missing."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -51,9 +51,9 @@ async def test_config_not_ready.opp):
         assert entry.state == ENTRY_STATE_SETUP_RETRY
 
 
-async def test_unload_entry.opp):
+async def test_unload_entry(opp):
     """Test successful unload of entry."""
-    entry = await init_integration.opp)
+    entry = await init_integration(opp)
 
     assert len(opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
@@ -65,9 +65,9 @@ async def test_unload_entry.opp):
     assert not opp.data.get(DOMAIN)
 
 
-async def test_update_interval.opp):
+async def test_update_interval(opp):
     """Test correct update interval."""
-    entry = await init_integration.opp)
+    entry = await init_integration(opp)
 
     assert entry.state == ENTRY_STATE_LOADED
 
@@ -87,7 +87,7 @@ async def test_update_interval.opp):
         assert mock_current.call_count == 1
 
 
-async def test_update_interval_forecast.opp):
+async def test_update_interval_forecast(opp):
     """Test correct update interval when forecast is True."""
     entry = await init_integration(opp, forecast=True)
 

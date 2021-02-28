@@ -40,7 +40,7 @@ async def test_tv_load_and_unload(
     assert len(opp.states.async_entity_ids(MP_DOMAIN)) == 1
     assert DOMAIN in opp.data
 
-    assert await config_entry.async_unload.opp)
+    assert await config_entry.async_unload(opp)
     await opp.async_block_till_done()
     entities = opp.states.async_entity_ids(MP_DOMAIN)
     assert len(entities) == 1
@@ -64,7 +64,7 @@ async def test_speaker_load_and_unload(
     assert len(opp.states.async_entity_ids(MP_DOMAIN)) == 1
     assert DOMAIN in opp.data
 
-    assert await config_entry.async_unload.opp)
+    assert await config_entry.async_unload(opp)
     await opp.async_block_till_done()
     entities = opp.states.async_entity_ids(MP_DOMAIN)
     assert len(entities) == 1

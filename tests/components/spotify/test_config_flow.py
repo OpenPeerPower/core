@@ -12,7 +12,7 @@ from openpeerpower.helpers import config_entry_oauth2_flow
 from tests.common import MockConfigEntry
 
 
-async def test_abort_if_no_configuration.opp):
+async def test_abort_if_no_configuration(opp):
     """Check flow aborts when no configuration is present."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -29,7 +29,7 @@ async def test_abort_if_no_configuration.opp):
     assert result["reason"] == "missing_configuration"
 
 
-async def test_zeroconf_abort_if_existing_entry.opp):
+async def test_zeroconf_abort_if_existing_entry(opp):
     """Check zeroconf flow aborts when an entry already exist."""
     MockConfigEntry(domain=DOMAIN).add_to_opp(opp)
 

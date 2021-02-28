@@ -71,7 +71,7 @@ async def setup_accessories_from_file(opp, path):
     return accessories
 
 
-async def setup_platform.opp):
+async def setup_platform(opp):
     """Load the platform but with a fake Controller API."""
     config = {"discovery": {}}
 
@@ -84,7 +84,7 @@ async def setup_platform.opp):
 
 async def setup_test_accessories(opp, accessories):
     """Load a fake homekit device based on captured JSON profile."""
-    fake_controller = await setup_platform.opp)
+    fake_controller = await setup_platform(opp)
 
     pairing_id = "00:00:00:00:00:00"
 

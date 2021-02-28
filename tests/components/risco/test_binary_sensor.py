@@ -15,7 +15,7 @@ FIRST_ENTITY_ID = "binary_sensor.zone_0"
 SECOND_ENTITY_ID = "binary_sensor.zone_1"
 
 
-async def test_cannot_connect.opp):
+async def test_cannot_connect(opp):
     """Test connection error."""
 
     with patch(
@@ -31,7 +31,7 @@ async def test_cannot_connect.opp):
         assert not registry.async_is_registered(SECOND_ENTITY_ID)
 
 
-async def test_unauthorized.opp):
+async def test_unauthorized(opp):
     """Test unauthorized error."""
 
     with patch(
@@ -54,7 +54,7 @@ async def test_setup_opp, two_zone_alarm):  # noqa: F811
     assert not registry.async_is_registered(FIRST_ENTITY_ID)
     assert not registry.async_is_registered(SECOND_ENTITY_ID)
 
-    await setup_risco.opp)
+    await setup_risco(opp)
 
     assert registry.async_is_registered(FIRST_ENTITY_ID)
     assert registry.async_is_registered(SECOND_ENTITY_ID)
@@ -90,7 +90,7 @@ async def _check_state(opp, alarm, triggered, bypassed, entity_id, zone_id):
 
 async def test_states(opp, two_zone_alarm):  # noqa: F811
     """Test the various alarm states."""
-    await setup_risco.opp)
+    await setup_risco(opp)
 
     await _check_state(opp, two_zone_alarm, True, True, FIRST_ENTITY_ID, 0)
     await _check_state(opp, two_zone_alarm, True, False, FIRST_ENTITY_ID, 0)
@@ -104,7 +104,7 @@ async def test_states(opp, two_zone_alarm):  # noqa: F811
 
 async def test_bypass(opp, two_zone_alarm):  # noqa: F811
     """Test bypassing a zone."""
-    await setup_risco.opp)
+    await setup_risco(opp)
     with patch("openpeerpower.components.risco.RiscoAPI.bypass_zone") as mock:
         data = {"entity_id": FIRST_ENTITY_ID}
 
@@ -117,7 +117,7 @@ async def test_bypass(opp, two_zone_alarm):  # noqa: F811
 
 async def test_unbypass(opp, two_zone_alarm):  # noqa: F811
     """Test unbypassing a zone."""
-    await setup_risco.opp)
+    await setup_risco(opp)
     with patch("openpeerpower.components.risco.RiscoAPI.bypass_zone") as mock:
         data = {"entity_id": FIRST_ENTITY_ID}
 

@@ -220,7 +220,7 @@ async def test_stream_ended(opp, stream_worker_sync):
     stream.stop()
 
 
-async def test_stream_keepalive.opp):
+async def test_stream_keepalive(opp):
     """Test hls stream retries the stream when keepalive=True."""
     await async_setup_component(opp, "stream", {"stream": {}})
 

@@ -58,7 +58,7 @@ COLD_TOLERANCE = 0.5
 HOT_TOLERANCE = 0.5
 
 
-async def test_setup_missing_conf.opp):
+async def test_setup_missing_conf(opp):
     """Test set up heat_control with missing config values."""
     config = {
         "platform": "generic_thermostat",
@@ -69,7 +69,7 @@ async def test_setup_missing_conf.opp):
         await async_setup_component(opp, "climate", {"climate": config})
 
 
-async def test_valid_conf.opp):
+async def test_valid_conf(opp):
     """Test set up generic_thermostat with valid config values."""
     assert await async_setup_component(
         opp,
@@ -214,7 +214,7 @@ async def setup_comp_2.opp):
     await opp.async_block_till_done()
 
 
-async def test_setup_defaults_to_unknown.opp):
+async def test_setup_defaults_to_unknown(opp):
     """Test the setting of defaults to unknown."""
     opp.config.units = METRIC_SYSTEM
     await async_setup_component(
@@ -236,7 +236,7 @@ async def test_setup_defaults_to_unknown.opp):
     assert HVAC_MODE_OFF == opp.states.get(ENTITY).state
 
 
-async def test_setup_gets_current_temp_from_sensor.opp):
+async def test_setup_gets_current_temp_from_sensor(opp):
     """Test that current temperature is updated on entity addition."""
     opp.config.units = METRIC_SYSTEM
     _setup_sensor(opp, 18)
@@ -335,7 +335,7 @@ async def test_sensor_bad_value(opp, setup_comp_2):
     assert temp == state.attributes.get("current_temperature")
 
 
-async def test_sensor_unknown.opp):
+async def test_sensor_unknown(opp):
     """Test when target sensor is Unknown."""
     opp.states.async_set("sensor.unknown", STATE_UNKNOWN)
     assert await async_setup_component(
@@ -355,7 +355,7 @@ async def test_sensor_unknown.opp):
     assert state.attributes.get("current_temperature") is None
 
 
-async def test_sensor_unavailable.opp):
+async def test_sensor_unavailable(opp):
     """Test when target sensor is Unavailable."""
     opp.states.async_set("sensor.unavailable", STATE_UNAVAILABLE)
     assert await async_setup_component(
@@ -1151,7 +1151,7 @@ async def test_precision(opp, setup_comp_9):
     assert 23.3 == state.attributes.get("temperature")
 
 
-async def test_custom_setup_params.opp):
+async def test_custom_setup_params(opp):
     """Test the setup with custom parameters."""
     result = await async_setup_component(
         opp,
@@ -1176,7 +1176,7 @@ async def test_custom_setup_params.opp):
     assert state.attributes.get("temperature") == TARGET_TEMP
 
 
-async def test_restore_state.opp):
+async def test_restore_state(opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
         opp,
@@ -1211,7 +1211,7 @@ async def test_restore_state.opp):
     assert state.state == HVAC_MODE_OFF
 
 
-async def test_no_restore_state.opp):
+async def test_no_restore_state(opp):
     """Ensure states are restored on startup if they exist.
 
     Allows for graceful reboot.
@@ -1248,7 +1248,7 @@ async def test_no_restore_state.opp):
     assert state.state == HVAC_MODE_OFF
 
 
-async def test_restore_state_uncoherence_case.opp):
+async def test_restore_state_uncoherence_case(opp):
     """
     Test restore from a strange state.
 
@@ -1259,7 +1259,7 @@ async def test_restore_state_uncoherence_case.opp):
 
     calls = _setup_switch(opp, False)
     _setup_sensor(opp, 15)
-    await _setup_climate.opp)
+    await _setup_climate(opp)
     await opp.async_block_till_done()
 
     state = opp.states.get(ENTITY)
@@ -1273,7 +1273,7 @@ async def test_restore_state_uncoherence_case.opp):
     assert HVAC_MODE_OFF == state.state
 
 
-async def _setup_climate.opp):
+async def _setup_climate(opp):
     assert await async_setup_component(
         opp,
         DOMAIN,
@@ -1305,7 +1305,7 @@ def _mock_restore_cache(opp, temperature=20, hvac_mode=HVAC_MODE_OFF):
     )
 
 
-async def test_reload.opp):
+async def test_reload(opp):
     """Test we can reload."""
 
     assert await async_setup_component(

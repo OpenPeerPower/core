@@ -223,7 +223,7 @@ async def test_option_flow(opp, options_form):
 
 
 @pytest.fixture
-async def user_form.opp):
+async def user_form(opp):
     """Return initial form for Subaru config flow."""
     return await opp.config_entries.flow.async_init(
         config_flow.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -243,7 +243,7 @@ async def pin_form(opp, user_form):
 
 
 @pytest.fixture
-async def options_form.opp):
+async def options_form(opp):
     """Return options form for Subaru config flow."""
     entry = MockConfigEntry(domain=DOMAIN, data={}, options=None)
     entry.add_to_opp(opp)

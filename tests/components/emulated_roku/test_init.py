@@ -5,7 +5,7 @@ from openpeerpower.components import emulated_roku
 from openpeerpower.setup import async_setup_component
 
 
-async def test_config_required_fields.opp):
+async def test_config_required_fields(opp):
     """Test that configuration is successful with required fields."""
     with patch.object(emulated_roku, "configured_servers", return_value=[]), patch(
         "openpeerpower.components.emulated_roku.binding.EmulatedRokuServer",
@@ -30,7 +30,7 @@ async def test_config_required_fields.opp):
         )
 
 
-async def test_config_already_registered_not_configured.opp):
+async def test_config_already_registered_not_configured(opp):
     """Test that an already registered name causes the entry to be ignored."""
     with patch(
         "openpeerpower.components.emulated_roku.binding.EmulatedRokuServer",
@@ -59,7 +59,7 @@ async def test_config_already_registered_not_configured.opp):
     assert len(instantiate.mock_calls) == 0
 
 
-async def test_setup_entry_successful.opp):
+async def test_setup_entry_successful(opp):
     """Test setup entry is successful."""
     entry = Mock()
     entry.data = {
@@ -90,7 +90,7 @@ async def test_setup_entry_successful.opp):
     assert roku_instance.bind_multicast is False
 
 
-async def test_unload_entry.opp):
+async def test_unload_entry(opp):
     """Test being able to unload an entry."""
     entry = Mock()
     entry.data = {"name": "Emulated Roku Test", "listen_port": 8060}

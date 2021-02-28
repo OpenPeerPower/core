@@ -36,7 +36,7 @@ EVENTS = [
 ]
 
 
-async def test_platform_manually_configured.opp):
+async def test_platform_manually_configured(opp):
     """Test that nothing happens when platform is manually configured."""
     assert (
         await async_setup_component(
@@ -50,16 +50,16 @@ async def test_platform_manually_configured.opp):
     assert AXIS_DOMAIN not in opp.data
 
 
-async def test_no_binary_sensors.opp):
+async def test_no_binary_sensors(opp):
     """Test that no sensors in Axis results in no sensor entities."""
-    await setup_axis_integration.opp)
+    await setup_axis_integration(opp)
 
     assert not opp.states.async_entity_ids(BINARY_SENSOR_DOMAIN)
 
 
-async def test_binary_sensors.opp):
+async def test_binary_sensors(opp):
     """Test that sensors are loaded properly."""
-    config_entry = await setup_axis_integration.opp)
+    config_entry = await setup_axis_integration(opp)
     device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     device.api.event.update(EVENTS)

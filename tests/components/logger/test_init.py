@@ -25,7 +25,7 @@ def restore_logging_class():
     logging.setLoggerClass(klass)
 
 
-async def test_setting_level.opp):
+async def test_setting_level(opp):
     """Test we set log levels."""
     mocks = defaultdict(Mock)
 
@@ -90,7 +90,7 @@ async def test_setting_level.opp):
     )
 
 
-async def test_can_set_level.opp):
+async def test_can_set_level(opp):
     """Test logger propagation."""
 
     assert await async_setup_component(

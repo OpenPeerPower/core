@@ -32,7 +32,7 @@ async def test_ws_list(opp, opp_ws_client, storage_setup):
     """Test listing tags via WS."""
     assert await storage_setup()
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json({"id": 6, "type": f"{DOMAIN}/list"})
     resp = await client.receive_json()
@@ -49,7 +49,7 @@ async def test_ws_update(opp, opp_ws_client, storage_setup):
     assert await storage_setup()
     await async_scan_tag(opp, "test tag", "some_scanner")
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {
@@ -72,7 +72,7 @@ async def test_tag_scanned(opp, opp_ws_client, storage_setup):
     """Test scanning tags."""
     assert await storage_setup()
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json({"id": 6, "type": f"{DOMAIN}/list"})
     resp = await client.receive_json()
@@ -115,7 +115,7 @@ async def test_tag_id_exists(opp, opp_ws_client, storage_setup):
     """Test scanning tags."""
     assert await storage_setup()
     changes = track_changes.opp.data[DOMAIN][TAGS])
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json({"id": 2, "type": f"{DOMAIN}/create", "tag_id": "test tag"})
     response = await client.receive_json()

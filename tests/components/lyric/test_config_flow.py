@@ -16,7 +16,7 @@ CLIENT_SECRET = "5678"
 
 
 @pytest.fixture()
-async def mock_impl.opp):
+async def mock_impl(opp):
     """Mock implementation."""
     await setup.async_setup_component(opp, "http", {})
 
@@ -32,7 +32,7 @@ async def mock_impl.opp):
     return impl
 
 
-async def test_abort_if_no_configuration.opp):
+async def test_abort_if_no_configuration(opp):
     """Check flow abort when no configuration."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

@@ -96,7 +96,7 @@ def mock_google_setup_opp, test_calendar):
 
 
 @pytest.fixture(autouse=True)
-def mock_http.opp):
+def mock_http(opp):
     """Mock the http component."""
     opp.http = Mock()
 

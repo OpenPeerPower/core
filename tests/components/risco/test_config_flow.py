@@ -42,7 +42,7 @@ TEST_OPTIONS = {
 }
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -77,7 +77,7 @@ async def test_form.opp):
     mock_close.assert_awaited_once()
 
 
-async def test_form_invalid_auth.opp):
+async def test_form_invalid_auth(opp):
     """Test we handle invalid auth."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -96,7 +96,7 @@ async def test_form_invalid_auth.opp):
     mock_close.assert_awaited_once()
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -115,7 +115,7 @@ async def test_form_cannot_connect.opp):
     mock_close.assert_awaited_once()
 
 
-async def test_form_exception.opp):
+async def test_form_exception(opp):
     """Test we handle unknown exception."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -156,7 +156,7 @@ async def test_form_already_exists(opp):
     assert result2["reason"] == "already_configured"
 
 
-async def test_options_flow.opp):
+async def test_options_flow(opp):
     """Test options flow."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -200,7 +200,7 @@ async def test_options_flow.opp):
     }
 
 
-async def test_op_to_risco_schema.opp):
+async def test_op_to_risco_schema(opp):
     """Test that the schema for the ha-to-risco mapping step is generated properly."""
     entry = MockConfigEntry(
         domain=DOMAIN,

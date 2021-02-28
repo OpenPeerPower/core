@@ -34,21 +34,21 @@ async def test_setup_missing_config(opp):
         assert not mock_client.called
 
 
-async def test_setup_failed_login.opp):
+async def test_setup_failed_login(opp):
     """Test setup with login failure."""
     with mock.patch("openpeerpower.components.mfi.sensor.MFiClient") as mock_client:
         mock_client.side_effect = FailedToLogin
         assert not PLATFORM.setup_platform(opp, dict(GOOD_CONFIG), None)
 
 
-async def test_setup_failed_connect.opp):
+async def test_setup_failed_connect(opp):
     """Test setup with connection failure."""
     with mock.patch("openpeerpower.components.mfi.sensor.MFiClient") as mock_client:
         mock_client.side_effect = requests.exceptions.ConnectionError
         assert not PLATFORM.setup_platform(opp, dict(GOOD_CONFIG), None)
 
 
-async def test_setup_minimum.opp):
+async def test_setup_minimum(opp):
     """Test setup with minimum configuration."""
     with mock.patch("openpeerpower.components.mfi.sensor.MFiClient") as mock_client:
         config = dict(GOOD_CONFIG)
@@ -61,7 +61,7 @@ async def test_setup_minimum.opp):
         )
 
 
-async def test_setup_with_port.opp):
+async def test_setup_with_port(opp):
     """Test setup with port."""
     with mock.patch("openpeerpower.components.mfi.sensor.MFiClient") as mock_client:
         config = dict(GOOD_CONFIG)
@@ -74,7 +74,7 @@ async def test_setup_with_port.opp):
         )
 
 
-async def test_setup_with_tls_disabled.opp):
+async def test_setup_with_tls_disabled(opp):
     """Test setup without TLS."""
     with mock.patch("openpeerpower.components.mfi.sensor.MFiClient") as mock_client:
         config = dict(GOOD_CONFIG)
@@ -89,7 +89,7 @@ async def test_setup_with_tls_disabled.opp):
         )
 
 
-async def test_setup_adds_proper_devices.opp):
+async def test_setup_adds_proper_devices(opp):
     """Test if setup adds devices."""
     with mock.patch(
         "openpeerpower.components.mfi.sensor.MFiClient"

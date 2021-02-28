@@ -24,7 +24,7 @@ from tests.components.alarm_control_panel import common
 CODE = "HELLO_CODE"
 
 
-async def test_setup_demo_platform.opp):
+async def test_setup_demo_platform(opp):
     """Test setup."""
     mock = MagicMock()
     add_entities = mock.MagicMock()
@@ -32,7 +32,7 @@ async def test_setup_demo_platform.opp):
     assert add_entities.call_count == 1
 
 
-async def test_arm_home_no_pending.opp):
+async def test_arm_home_no_pending(opp):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -58,7 +58,7 @@ async def test_arm_home_no_pending.opp):
     assert STATE_ALARM_ARMED_HOME == opp.states.get(entity_id).state
 
 
-async def test_arm_home_no_pending_when_code_not_req.opp):
+async def test_arm_home_no_pending_when_code_not_req(opp):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -85,7 +85,7 @@ async def test_arm_home_no_pending_when_code_not_req.opp):
     assert STATE_ALARM_ARMED_HOME == opp.states.get(entity_id).state
 
 
-async def test_arm_home_with_pending.opp):
+async def test_arm_home_with_pending(opp):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -125,7 +125,7 @@ async def test_arm_home_with_pending.opp):
     assert state.state == STATE_ALARM_ARMED_HOME
 
 
-async def test_arm_home_with_invalid_code.opp):
+async def test_arm_home_with_invalid_code(opp):
     """Attempt to arm home without a valid code."""
     assert await async_setup_component(
         opp,
@@ -151,7 +151,7 @@ async def test_arm_home_with_invalid_code.opp):
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_arm_away_no_pending.opp):
+async def test_arm_away_no_pending(opp):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -177,7 +177,7 @@ async def test_arm_away_no_pending.opp):
     assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
 
 
-async def test_arm_away_no_pending_when_code_not_req.opp):
+async def test_arm_away_no_pending_when_code_not_req(opp):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -204,7 +204,7 @@ async def test_arm_away_no_pending_when_code_not_req.opp):
     assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
 
 
-async def test_arm_home_with_template_code.opp):
+async def test_arm_home_with_template_code(opp):
     """Attempt to arm with a template-based code."""
     assert await async_setup_component(
         opp,
@@ -231,7 +231,7 @@ async def test_arm_home_with_template_code.opp):
     assert STATE_ALARM_ARMED_HOME == state.state
 
 
-async def test_arm_away_with_pending.opp):
+async def test_arm_away_with_pending(opp):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -271,7 +271,7 @@ async def test_arm_away_with_pending.opp):
     assert state.state == STATE_ALARM_ARMED_AWAY
 
 
-async def test_arm_away_with_invalid_code.opp):
+async def test_arm_away_with_invalid_code(opp):
     """Attempt to arm away without a valid code."""
     assert await async_setup_component(
         opp,
@@ -297,7 +297,7 @@ async def test_arm_away_with_invalid_code.opp):
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_arm_night_no_pending.opp):
+async def test_arm_night_no_pending(opp):
     """Test arm night method."""
     assert await async_setup_component(
         opp,
@@ -323,7 +323,7 @@ async def test_arm_night_no_pending.opp):
     assert STATE_ALARM_ARMED_NIGHT == opp.states.get(entity_id).state
 
 
-async def test_arm_night_no_pending_when_code_not_req.opp):
+async def test_arm_night_no_pending_when_code_not_req(opp):
     """Test arm night method."""
     assert await async_setup_component(
         opp,
@@ -350,7 +350,7 @@ async def test_arm_night_no_pending_when_code_not_req.opp):
     assert STATE_ALARM_ARMED_NIGHT == opp.states.get(entity_id).state
 
 
-async def test_arm_night_with_pending.opp):
+async def test_arm_night_with_pending(opp):
     """Test arm night method."""
     assert await async_setup_component(
         opp,
@@ -395,7 +395,7 @@ async def test_arm_night_with_pending.opp):
     assert STATE_ALARM_ARMED_NIGHT == opp.states.get(entity_id).state
 
 
-async def test_arm_night_with_invalid_code.opp):
+async def test_arm_night_with_invalid_code(opp):
     """Attempt to night home without a valid code."""
     assert await async_setup_component(
         opp,
@@ -421,7 +421,7 @@ async def test_arm_night_with_invalid_code.opp):
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_trigger_no_pending.opp):
+async def test_trigger_no_pending(opp):
     """Test triggering when no pending submitted method."""
     assert await async_setup_component(
         opp,
@@ -456,7 +456,7 @@ async def test_trigger_no_pending.opp):
     assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
 
 
-async def test_trigger_with_delay.opp):
+async def test_trigger_with_delay(opp):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
         opp,
@@ -500,7 +500,7 @@ async def test_trigger_with_delay.opp):
     assert STATE_ALARM_TRIGGERED == state.state
 
 
-async def test_trigger_zero_trigger_time.opp):
+async def test_trigger_zero_trigger_time(opp):
     """Test disabled trigger."""
     assert await async_setup_component(
         opp,
@@ -521,12 +521,12 @@ async def test_trigger_zero_trigger_time.opp):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp)
+    await common.async_alarm_trigger(opp)
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_trigger_zero_trigger_time_with_pending.opp):
+async def test_trigger_zero_trigger_time_with_pending(opp):
     """Test disabled trigger."""
     assert await async_setup_component(
         opp,
@@ -547,12 +547,12 @@ async def test_trigger_zero_trigger_time_with_pending.opp):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp)
+    await common.async_alarm_trigger(opp)
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_trigger_with_pending.opp):
+async def test_trigger_with_pending(opp):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -573,7 +573,7 @@ async def test_trigger_with_pending.opp):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp)
+    await common.async_alarm_trigger(opp)
 
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
 
@@ -603,7 +603,7 @@ async def test_trigger_with_pending.opp):
     assert state.state == STATE_ALARM_DISARMED
 
 
-async def test_trigger_with_unused_specific_delay.opp):
+async def test_trigger_with_unused_specific_delay(opp):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
         opp,
@@ -648,7 +648,7 @@ async def test_trigger_with_unused_specific_delay.opp):
     assert state.state == STATE_ALARM_TRIGGERED
 
 
-async def test_trigger_with_specific_delay.opp):
+async def test_trigger_with_specific_delay(opp):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
         opp,
@@ -693,7 +693,7 @@ async def test_trigger_with_specific_delay.opp):
     assert state.state == STATE_ALARM_TRIGGERED
 
 
-async def test_trigger_with_pending_and_delay.opp):
+async def test_trigger_with_pending_and_delay(opp):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
         opp,
@@ -749,7 +749,7 @@ async def test_trigger_with_pending_and_delay.opp):
     assert state.state == STATE_ALARM_TRIGGERED
 
 
-async def test_trigger_with_pending_and_specific_delay.opp):
+async def test_trigger_with_pending_and_specific_delay(opp):
     """Test trigger method and switch from pending to triggered."""
     assert await async_setup_component(
         opp,
@@ -806,7 +806,7 @@ async def test_trigger_with_pending_and_specific_delay.opp):
     assert state.state == STATE_ALARM_TRIGGERED
 
 
-async def test_armed_home_with_specific_pending.opp):
+async def test_armed_home_with_specific_pending(opp):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -824,7 +824,7 @@ async def test_armed_home_with_specific_pending.opp):
 
     entity_id = "alarm_control_panel.test"
 
-    await common.async_alarm_arm_home.opp)
+    await common.async_alarm_arm_home(opp)
 
     assert STATE_ALARM_ARMING == opp.states.get(entity_id).state
 
@@ -839,7 +839,7 @@ async def test_armed_home_with_specific_pending.opp):
     assert STATE_ALARM_ARMED_HOME == opp.states.get(entity_id).state
 
 
-async def test_armed_away_with_specific_pending.opp):
+async def test_armed_away_with_specific_pending(opp):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -857,7 +857,7 @@ async def test_armed_away_with_specific_pending.opp):
 
     entity_id = "alarm_control_panel.test"
 
-    await common.async_alarm_arm_away.opp)
+    await common.async_alarm_arm_away(opp)
 
     assert STATE_ALARM_ARMING == opp.states.get(entity_id).state
 
@@ -872,7 +872,7 @@ async def test_armed_away_with_specific_pending.opp):
     assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
 
 
-async def test_armed_night_with_specific_pending.opp):
+async def test_armed_night_with_specific_pending(opp):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -890,7 +890,7 @@ async def test_armed_night_with_specific_pending.opp):
 
     entity_id = "alarm_control_panel.test"
 
-    await common.async_alarm_arm_night.opp)
+    await common.async_alarm_arm_night(opp)
 
     assert STATE_ALARM_ARMING == opp.states.get(entity_id).state
 
@@ -905,7 +905,7 @@ async def test_armed_night_with_specific_pending.opp):
     assert STATE_ALARM_ARMED_NIGHT == opp.states.get(entity_id).state
 
 
-async def test_trigger_with_specific_pending.opp):
+async def test_trigger_with_specific_pending(opp):
     """Test arm home method."""
     assert await async_setup_component(
         opp,
@@ -925,7 +925,7 @@ async def test_trigger_with_specific_pending.opp):
 
     entity_id = "alarm_control_panel.test"
 
-    await common.async_alarm_trigger.opp)
+    await common.async_alarm_trigger(opp)
 
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
 
@@ -950,7 +950,7 @@ async def test_trigger_with_specific_pending.opp):
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_trigger_with_disarm_after_trigger.opp):
+async def test_trigger_with_disarm_after_trigger(opp):
     """Test disarm after trigger."""
     assert await async_setup_component(
         opp,
@@ -986,7 +986,7 @@ async def test_trigger_with_disarm_after_trigger.opp):
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_trigger_with_zero_specific_trigger_time.opp):
+async def test_trigger_with_zero_specific_trigger_time(opp):
     """Test trigger method."""
     assert await async_setup_component(
         opp,
@@ -1013,7 +1013,7 @@ async def test_trigger_with_zero_specific_trigger_time.opp):
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_trigger_with_unused_zero_specific_trigger_time.opp):
+async def test_trigger_with_unused_zero_specific_trigger_time(opp):
     """Test disarm after trigger."""
     assert await async_setup_component(
         opp,
@@ -1050,7 +1050,7 @@ async def test_trigger_with_unused_zero_specific_trigger_time.opp):
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_trigger_with_specific_trigger_time.opp):
+async def test_trigger_with_specific_trigger_time(opp):
     """Test disarm after trigger."""
     assert await async_setup_component(
         opp,
@@ -1086,7 +1086,7 @@ async def test_trigger_with_specific_trigger_time.opp):
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_trigger_with_no_disarm_after_trigger.opp):
+async def test_trigger_with_no_disarm_after_trigger(opp):
     """Test disarm after trigger."""
     assert await async_setup_component(
         opp,
@@ -1127,7 +1127,7 @@ async def test_trigger_with_no_disarm_after_trigger.opp):
     assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
 
 
-async def test_back_to_back_trigger_with_no_disarm_after_trigger.opp):
+async def test_back_to_back_trigger_with_no_disarm_after_trigger(opp):
     """Test disarm after trigger."""
     assert await async_setup_component(
         opp,
@@ -1182,7 +1182,7 @@ async def test_back_to_back_trigger_with_no_disarm_after_trigger.opp):
     assert STATE_ALARM_ARMED_AWAY == opp.states.get(entity_id).state
 
 
-async def test_disarm_while_pending_trigger.opp):
+async def test_disarm_while_pending_trigger(opp):
     """Test disarming while pending state."""
     assert await async_setup_component(
         opp,
@@ -1202,7 +1202,7 @@ async def test_disarm_while_pending_trigger.opp):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp)
+    await common.async_alarm_trigger(opp)
 
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
 
@@ -1221,7 +1221,7 @@ async def test_disarm_while_pending_trigger.opp):
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_disarm_during_trigger_with_invalid_code.opp):
+async def test_disarm_during_trigger_with_invalid_code(opp):
     """Test disarming while code is invalid."""
     assert await async_setup_component(
         opp,
@@ -1242,7 +1242,7 @@ async def test_disarm_during_trigger_with_invalid_code.opp):
 
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
-    await common.async_alarm_trigger.opp)
+    await common.async_alarm_trigger(opp)
 
     assert STATE_ALARM_PENDING == opp.states.get(entity_id).state
 
@@ -1261,7 +1261,7 @@ async def test_disarm_during_trigger_with_invalid_code.opp):
     assert STATE_ALARM_TRIGGERED == opp.states.get(entity_id).state
 
 
-async def test_disarm_with_template_code.opp):
+async def test_disarm_with_template_code(opp):
     """Attempt to disarm with a valid or invalid template-based code."""
     assert await async_setup_component(
         opp,
@@ -1298,7 +1298,7 @@ async def test_disarm_with_template_code.opp):
     assert STATE_ALARM_DISARMED == state.state
 
 
-async def test_arm_custom_bypass_no_pending.opp):
+async def test_arm_custom_bypass_no_pending(opp):
     """Test arm custom bypass method."""
     assert await async_setup_component(
         opp,
@@ -1324,7 +1324,7 @@ async def test_arm_custom_bypass_no_pending.opp):
     assert STATE_ALARM_ARMED_CUSTOM_BYPASS == opp.states.get(entity_id).state
 
 
-async def test_arm_custom_bypass_no_pending_when_code_not_req.opp):
+async def test_arm_custom_bypass_no_pending_when_code_not_req(opp):
     """Test arm custom bypass method."""
     assert await async_setup_component(
         opp,
@@ -1351,7 +1351,7 @@ async def test_arm_custom_bypass_no_pending_when_code_not_req.opp):
     assert STATE_ALARM_ARMED_CUSTOM_BYPASS == opp.states.get(entity_id).state
 
 
-async def test_arm_custom_bypass_with_pending.opp):
+async def test_arm_custom_bypass_with_pending(opp):
     """Test arm custom bypass method."""
     assert await async_setup_component(
         opp,
@@ -1391,7 +1391,7 @@ async def test_arm_custom_bypass_with_pending.opp):
     assert state.state == STATE_ALARM_ARMED_CUSTOM_BYPASS
 
 
-async def test_arm_custom_bypass_with_invalid_code.opp):
+async def test_arm_custom_bypass_with_invalid_code(opp):
     """Attempt to custom bypass without a valid code."""
     assert await async_setup_component(
         opp,
@@ -1417,7 +1417,7 @@ async def test_arm_custom_bypass_with_invalid_code.opp):
     assert STATE_ALARM_DISARMED == opp.states.get(entity_id).state
 
 
-async def test_armed_custom_bypass_with_specific_pending.opp):
+async def test_armed_custom_bypass_with_specific_pending(opp):
     """Test arm custom bypass method."""
     assert await async_setup_component(
         opp,
@@ -1435,7 +1435,7 @@ async def test_armed_custom_bypass_with_specific_pending.opp):
 
     entity_id = "alarm_control_panel.test"
 
-    await common.async_alarm_arm_custom_bypass.opp)
+    await common.async_alarm_arm_custom_bypass(opp)
 
     assert STATE_ALARM_ARMING == opp.states.get(entity_id).state
 
@@ -1518,7 +1518,7 @@ async def test_arm_away_after_disabled_disarmed(opp, legacy_patchable_time):
     assert STATE_ALARM_TRIGGERED == state.state
 
 
-async def test_restore_armed_state.opp):
+async def test_restore_armed_state(opp):
     """Ensure armed state is restored on startup."""
     mock_restore_cache(
         opp. (State("alarm_control_panel.test", STATE_ALARM_ARMED_AWAY),)
@@ -1547,7 +1547,7 @@ async def test_restore_armed_state.opp):
     assert state.state == STATE_ALARM_ARMED_AWAY
 
 
-async def test_restore_disarmed_state.opp):
+async def test_restore_disarmed_state(opp):
     """Ensure disarmed state is restored on startup."""
     mock_restore_cache(opp, (State("alarm_control_panel.test", STATE_ALARM_DISARMED),))
 

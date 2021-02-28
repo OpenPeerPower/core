@@ -20,15 +20,15 @@ from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 
 
 @pytest.fixture
-def device_reg.opp):
+def device_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_device_registry.opp)
+    return mock_device_registry(opp)
 
 
 @pytest.fixture
-def entity_reg.opp):
+def entity_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_registry.opp)
+    return mock_registry(opp)
 
 
 @pytest.fixture
@@ -189,7 +189,7 @@ async def test_if_fires_on_state_change(opp, calls):
     assert calls[2].data["some"] == "current_humidity_changed"
 
 
-async def test_get_trigger_capabilities_hvac_mode.opp):
+async def test_get_trigger_capabilities_hvac_mode(opp):
     """Test we get the expected capabilities from a climate trigger."""
     capabilities = await device_trigger.async_get_trigger_capabilities(
         opp,

@@ -47,7 +47,7 @@ async def create_mock_hlk_sw16_connection(fail):
     return client
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -109,7 +109,7 @@ async def test_form.opp):
     await opp.async_block_till_done()
 
 
-async def test_import.opp):
+async def test_import(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -150,7 +150,7 @@ async def test_import.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_invalid_data.opp):
+async def test_form_invalid_data(opp):
     """Test we handle invalid auth."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -176,7 +176,7 @@ async def test_form_invalid_data.opp):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

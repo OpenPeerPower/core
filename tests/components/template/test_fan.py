@@ -556,7 +556,7 @@ async def test_invalid_availability_template_keeps_component_available(opp, capl
 # Function tests #
 async def test_on_off(opp, calls):
     """Test turn on and turn off."""
-    await _register_components.opp)
+    await _register_components(opp)
 
     # Turn on fan
     await common.async_turn_on(opp, _TEST_FAN)
@@ -575,7 +575,7 @@ async def test_on_off(opp, calls):
 
 async def test_on_with_speed(opp, calls):
     """Test turn on with speed."""
-    await _register_components.opp)
+    await _register_components(opp)
 
     # Turn on fan with high speed
     await common.async_turn_on(opp, _TEST_FAN, SPEED_HIGH)
@@ -617,7 +617,7 @@ async def test_set_speed(opp, calls):
 
 async def test_set_percentage(opp, calls):
     """Test set valid speed percentage."""
-    await _register_components.opp)
+    await _register_components(opp)
 
     # Turn on fan
     await common.async_turn_on(opp, _TEST_FAN)
@@ -651,7 +651,7 @@ async def test_set_percentage(opp, calls):
 
 async def test_increase_decrease_speed(opp, calls):
     """Test set valid increase and derease speed."""
-    await _register_components.opp)
+    await _register_components(opp)
 
     # Turn on fan
     await common.async_turn_on(opp, _TEST_FAN)
@@ -691,7 +691,7 @@ async def test_increase_decrease_speed(opp, calls):
 
 async def test_set_invalid_speed_from_initial_stage(opp, calls):
     """Test set invalid speed when fan is in initial state."""
-    await _register_components.opp)
+    await _register_components(opp)
 
     # Turn on fan
     await common.async_turn_on(opp, _TEST_FAN)
@@ -706,7 +706,7 @@ async def test_set_invalid_speed_from_initial_stage(opp, calls):
 
 async def test_set_invalid_speed(opp, calls):
     """Test set invalid speed when fan has valid speed."""
-    await _register_components.opp)
+    await _register_components(opp)
 
     # Turn on fan
     await common.async_turn_on(opp, _TEST_FAN)
@@ -784,7 +784,7 @@ async def test_preset_modes(opp, calls):
 
 async def test_set_osc(opp, calls):
     """Test set oscillating."""
-    await _register_components.opp)
+    await _register_components(opp)
 
     # Turn on fan
     await common.async_turn_on(opp, _TEST_FAN)
@@ -806,7 +806,7 @@ async def test_set_osc(opp, calls):
 
 async def test_set_invalid_osc_from_initial_state(opp, calls):
     """Test set invalid oscillating when fan is in initial state."""
-    await _register_components.opp)
+    await _register_components(opp)
 
     # Turn on fan
     await common.async_turn_on(opp, _TEST_FAN)
@@ -822,7 +822,7 @@ async def test_set_invalid_osc_from_initial_state(opp, calls):
 
 async def test_set_invalid_osc(opp, calls):
     """Test set invalid oscillating when fan has valid osc."""
-    await _register_components.opp)
+    await _register_components(opp)
 
     # Turn on fan
     await common.async_turn_on(opp, _TEST_FAN)
@@ -845,7 +845,7 @@ async def test_set_invalid_osc(opp, calls):
 
 async def test_set_direction(opp, calls):
     """Test set valid direction."""
-    await _register_components.opp)
+    await _register_components(opp)
 
     # Turn on fan
     await common.async_turn_on(opp, _TEST_FAN)
@@ -867,7 +867,7 @@ async def test_set_direction(opp, calls):
 
 async def test_set_invalid_direction_from_initial_stage(opp, calls):
     """Test set invalid direction when fan is in initial state."""
-    await _register_components.opp)
+    await _register_components(opp)
 
     # Turn on fan
     await common.async_turn_on(opp, _TEST_FAN)
@@ -882,7 +882,7 @@ async def test_set_invalid_direction_from_initial_stage(opp, calls):
 
 async def test_set_invalid_direction(opp, calls):
     """Test set invalid direction when fan has valid direction."""
-    await _register_components.opp)
+    await _register_components(opp)
 
     # Turn on fan
     await common.async_turn_on(opp, _TEST_FAN)
@@ -1058,7 +1058,7 @@ async def _register_components(opp, speed_list=None, preset_modes=None):
     await opp.async_block_till_done()
 
 
-async def test_unique_id.opp):
+async def test_unique_id(opp):
     """Test unique_id option only creates one fan per id."""
     await setup.async_setup_component(
         opp,

@@ -17,7 +17,7 @@ async def client.opp, opp_ws_client):
     """Fixture that can interact with the config manager API."""
     with patch.object(config, "SECTIONS", ["core"]):
         assert await async_setup_component(opp, "config", {})
-    return await opp_ws_client.opp)
+    return await opp_ws_client(opp)
 
 
 async def test_validate_config_ok(opp, opp_client):
@@ -100,7 +100,7 @@ async def test_websocket_core_update_not_admin(opp, opp_ws_client, opp_admin_use
     with patch.object(config, "SECTIONS", ["core"]):
         await async_setup_component(opp, "config", {})
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     await client.send_json({"id": 6, "type": "config/core/update", "latitude": 23})
 
     msg = await client.receive_json()

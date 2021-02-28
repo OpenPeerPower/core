@@ -13,7 +13,7 @@ import pytest
 
 
 @pytest.fixture
-async def dsmr_connection_fixture.opp):
+async def dsmr_connection_fixture(opp):
     """Fixture that mocks serial connection."""
 
     transport = MagicMock(spec=asyncio.Transport)
@@ -35,7 +35,7 @@ async def dsmr_connection_fixture.opp):
 
 
 @pytest.fixture
-async def dsmr_connection_send_validate_fixture.opp):
+async def dsmr_connection_send_validate_fixture(opp):
     """Fixture that mocks serial connection."""
 
     transport = MagicMock(spec=asyncio.Transport)

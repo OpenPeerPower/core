@@ -148,7 +148,7 @@ def test_properties_unknown_symbol() -> None:
 
 
 # pylint: disable=protected-access
-async def test_refresh_weather_forecast_exceeds_retries.opp) -> None:
+async def test_refresh_weather_forecast_exceeds_retries(opp) -> None:
     """Test the refresh weather forecast function."""
 
     with patch.object(
@@ -168,7 +168,7 @@ async def test_refresh_weather_forecast_exceeds_retries.opp) -> None:
         assert not call_later.mock_calls
 
 
-async def test_refresh_weather_forecast_timeout.opp) -> None:
+async def test_refresh_weather_forecast_timeout(opp) -> None:
     """Test timeout exception."""
     weather = weather_smhi.SmhiWeather("name", "17.0022", "62.0022")
     weather.opp = opp

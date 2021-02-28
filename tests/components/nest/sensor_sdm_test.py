@@ -20,7 +20,7 @@ async def async_setup_sensor(opp, devices={}, structures={}):
     return await async_setup_sdm_platform(opp, PLATFORM, devices, structures)
 
 
-async def test_thermostat_device.opp):
+async def test_thermostat_device(opp):
     """Test a thermostat with temperature and humidity sensors."""
     devices = {
         "some-device-id": Device.MakeDevice(
@@ -65,9 +65,9 @@ async def test_thermostat_device.opp):
     assert device.identifiers == {("nest", "some-device-id")}
 
 
-async def test_no_devices.opp):
+async def test_no_devices(opp):
     """Test no devices returned by the api."""
-    await async_setup_sensor.opp)
+    await async_setup_sensor(opp)
 
     temperature = opp.states.get("sensor.my_sensor_temperature")
     assert temperature is None
@@ -76,7 +76,7 @@ async def test_no_devices.opp):
     assert humidity is None
 
 
-async def test_device_no_sensor_traits.opp):
+async def test_device_no_sensor_traits(opp):
     """Test a device with applicable sensor traits."""
     devices = {
         "some-device-id": Device.MakeDevice(
@@ -97,7 +97,7 @@ async def test_device_no_sensor_traits.opp):
     assert humidity is None
 
 
-async def test_device_name_from_structure.opp):
+async def test_device_name_from_structure(opp):
     """Test a device without a custom name, inferring name from structure."""
     devices = {
         "some-device-id": Device.MakeDevice(
@@ -123,7 +123,7 @@ async def test_device_name_from_structure.opp):
     assert temperature.state == "25.2"
 
 
-async def test_event_updates_sensor.opp):
+async def test_event_updates_sensor(opp):
     """Test a pubsub message received by subscriber to update temperature."""
     devices = {
         "some-device-id": Device.MakeDevice(
@@ -172,7 +172,7 @@ async def test_event_updates_sensor.opp):
     assert temperature.state == "26.2"
 
 
-async def test_device_with_unknown_type.opp):
+async def test_device_with_unknown_type(opp):
     """Test a device without a custom name, inferring name from structure."""
     devices = {
         "some-device-id": Device.MakeDevice(

@@ -23,7 +23,7 @@ GOOD_CONFIG = {
 }
 
 
-async def test_setup_adds_proper_devices.opp):
+async def test_setup_adds_proper_devices(opp):
     """Test if setup adds devices."""
     with mock.patch(
         "openpeerpower.components.mfi.switch.MFiClient"

@@ -8,7 +8,7 @@ from openpeerpower.components import hisense_aehw4a1
 from openpeerpower.setup import async_setup_component
 
 
-async def test_creating_entry_sets_up_climate_discovery.opp):
+async def test_creating_entry_sets_up_climate_discovery(opp):
     """Test setting up Hisense AEH-W4A1 loads the climate component."""
     with patch(
         "openpeerpower.components.hisense_aehw4a1.config_flow.AehW4a1.discovery",
@@ -35,7 +35,7 @@ async def test_creating_entry_sets_up_climate_discovery.opp):
     assert len(mock_setup.mock_calls) == 1
 
 
-async def test_configuring_hisense_w4a1_create_entry.opp):
+async def test_configuring_hisense_w4a1_create_entry(opp):
     """Test that specifying config will create an entry."""
     with patch(
         "openpeerpower.components.hisense_aehw4a1.config_flow.AehW4a1.check",
@@ -55,7 +55,7 @@ async def test_configuring_hisense_w4a1_create_entry.opp):
     assert len(mock_setup.mock_calls) == 1
 
 
-async def test_configuring_hisense_w4a1_not_creates_entry_for_device_not_found.opp):
+async def test_configuring_hisense_w4a1_not_creates_entry_for_device_not_found(opp):
     """Test that specifying config will not create an entry."""
     with patch(
         "openpeerpower.components.hisense_aehw4a1.config_flow.AehW4a1.check",
@@ -75,7 +75,7 @@ async def test_configuring_hisense_w4a1_not_creates_entry_for_device_not_found.o
     assert len(mock_setup.mock_calls) == 0
 
 
-async def test_configuring_hisense_w4a1_not_creates_entry_for_empty_import.opp):
+async def test_configuring_hisense_w4a1_not_creates_entry_for_empty_import(opp):
     """Test that specifying config will not create an entry."""
     with patch(
         "openpeerpower.components.hisense_aehw4a1.async_setup_entry",

@@ -31,7 +31,7 @@ async def test_duplicate_error(opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_invalid_password.opp):
+async def test_invalid_password(opp):
     """Test that an invalid password throws an error."""
     conf = {
         CONF_IP_ADDRESS: "192.168.1.100",
@@ -52,7 +52,7 @@ async def test_invalid_password.opp):
         assert result["errors"] == {CONF_PASSWORD: "invalid_auth"}
 
 
-async def test_options_flow.opp):
+async def test_options_flow(opp):
     """Test config flow options."""
     conf = {
         CONF_IP_ADDRESS: "192.168.1.100",
@@ -86,7 +86,7 @@ async def test_options_flow.opp):
         assert config_entry.options == {CONF_ZONE_RUN_TIME: 600}
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     flow = config_flow.RainMachineFlowHandler()
     flow.opp = opp
@@ -98,7 +98,7 @@ async def test_show_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_step_user.opp):
+async def test_step_user(opp):
     """Test that the user step works."""
     conf = {
         CONF_IP_ADDRESS: "192.168.1.100",

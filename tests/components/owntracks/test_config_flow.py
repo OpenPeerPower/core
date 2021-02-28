@@ -48,7 +48,7 @@ def mock_not_supports_encryption():
         yield
 
 
-async def init_config_flow.opp):
+async def init_config_flow(opp):
     """Init a configuration flow."""
     await async_process_op_core_config(
         opp,
@@ -61,7 +61,7 @@ async def init_config_flow.opp):
 
 async def test_user(opp, webhook_id, secret):
     """Test user step."""
-    flow = await init_config_flow.opp)
+    flow = await init_config_flow(opp)
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -78,7 +78,7 @@ async def test_user(opp, webhook_id, secret):
 
 async def test_import(opp, webhook_id, secret):
     """Test import step."""
-    flow = await init_config_flow.opp)
+    flow = await init_config_flow(opp)
 
     result = await flow.async_step_import({})
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -104,7 +104,7 @@ async def test_import_setup_opp):
 
 async def test_abort_if_already_setup_opp):
     """Test that we can't add more than one instance."""
-    flow = await init_config_flow.opp)
+    flow = await init_config_flow(opp)
 
     MockConfigEntry(domain=DOMAIN, data={}).add_to_opp(opp)
     assert opp.config_entries.async_entries(DOMAIN)
@@ -122,7 +122,7 @@ async def test_abort_if_already_setup_opp):
 
 async def test_user_not_supports_encryption(opp, not_supports_encryption):
     """Test user step."""
-    flow = await init_config_flow.opp)
+    flow = await init_config_flow(opp)
 
     result = await flow.async_step_user({})
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -132,7 +132,7 @@ async def test_user_not_supports_encryption(opp, not_supports_encryption):
     )
 
 
-async def test_unload.opp):
+async def test_unload(opp):
     """Test unloading a config flow."""
     await async_process_op_core_config(
         opp,
@@ -165,7 +165,7 @@ async def test_unload.opp):
     assert entry.data["webhook_id"] not in opp.data["webhook"]
 
 
-async def test_with_cloud_sub.opp):
+async def test_with_cloud_sub(opp):
     """Test creating a config flow while subscribed."""
     opp.config.components.add("cloud")
     with patch(

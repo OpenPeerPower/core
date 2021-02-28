@@ -35,7 +35,7 @@ async def add_statestream(
 
 async def test_fails_with_no_base(opp, mqtt_mock):
     """Setup should fail if no base_topic is set."""
-    assert await add_statestream.opp) is False
+    assert await add_statestream(opp) is False
 
 
 async def test_setup_succeeds_without_attributes(opp, mqtt_mock):

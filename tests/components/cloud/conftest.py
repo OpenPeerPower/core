@@ -17,14 +17,14 @@ def mock_user_data():
 
 
 @pytest.fixture
-def mock_cloud_fixture.opp):
+def mock_cloud_fixture(opp):
     """Fixture for cloud component."""
-    opp.loop.run_until_complete(mock_cloud.opp))
-    return mock_cloud_prefs.opp)
+    opp.loop.run_until_complete(mock_cloud(opp))
+    return mock_cloud_prefs(opp)
 
 
 @pytest.fixture
-async def cloud_prefs.opp):
+async def cloud_prefs(opp):
     """Fixture for cloud preferences."""
     cloud_prefs = prefs.CloudPreferences.opp)
     await cloud_prefs.async_initialize()
@@ -34,7 +34,7 @@ async def cloud_prefs.opp):
 @pytest.fixture
 async def mock_cloud_setup_opp):
     """Set up the cloud."""
-    await mock_cloud.opp)
+    await mock_cloud(opp)
 
 
 @pytest.fixture

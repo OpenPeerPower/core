@@ -164,7 +164,7 @@ async def test_zha_group_switch_entity(
     opp. device_switch_1, device_switch_2, coordinator
 ):
     """Test the switch entity for a ZHA group."""
-    zha_gateway = get_zha_gateway.opp)
+    zha_gateway = get_zha_gateway(opp)
     assert zha_gateway is not None
     zha_gateway.coordinator_zha_device = coordinator
     coordinator._zha_gateway = zha_gateway

@@ -93,7 +93,7 @@ class MockMonoprice:
         self.zones[zone.zone] = AttrDict(zone)
 
 
-async def test_cannot_connect.opp):
+async def test_cannot_connect(opp):
     """Test connection error."""
 
     with patch(
@@ -159,7 +159,7 @@ async def _call_monoprice_service(opp, name, data):
     await opp.services.async_call(DOMAIN, name, service_data=data, blocking=True)
 
 
-async def test_service_calls_with_entity_id.opp):
+async def test_service_calls_with_entity_id(opp):
     """Test snapshot save/restore service calls."""
     await _setup_monoprice(opp, MockMonoprice())
 
@@ -203,7 +203,7 @@ async def test_service_calls_with_entity_id.opp):
     assert state.attributes[ATTR_INPUT_SOURCE] == "one"
 
 
-async def test_service_calls_with_all_entities.opp):
+async def test_service_calls_with_all_entities(opp):
     """Test snapshot save/restore service calls."""
     await _setup_monoprice(opp, MockMonoprice())
 
@@ -236,7 +236,7 @@ async def test_service_calls_with_all_entities.opp):
     assert state.attributes[ATTR_INPUT_SOURCE] == "one"
 
 
-async def test_service_calls_without_relevant_entities.opp):
+async def test_service_calls_without_relevant_entities(opp):
     """Test snapshot save/restore service calls."""
     await _setup_monoprice(opp, MockMonoprice())
 
@@ -269,7 +269,7 @@ async def test_service_calls_without_relevant_entities.opp):
     assert state.attributes[ATTR_INPUT_SOURCE] == "three"
 
 
-async def test_restore_without_snapshort.opp):
+async def test_restore_without_snapshort(opp):
     """Test restore when snapshot wasn't called."""
     await _setup_monoprice(opp, MockMonoprice())
 
@@ -280,7 +280,7 @@ async def test_restore_without_snapshort.opp):
         assert not method_call.called
 
 
-async def test_update.opp):
+async def test_update(opp):
     """Test updating values from monoprice."""
     monoprice = MockMonoprice()
     await _setup_monoprice(opp, monoprice)
@@ -305,7 +305,7 @@ async def test_update.opp):
     assert state.attributes[ATTR_INPUT_SOURCE] == "three"
 
 
-async def test_failed_update.opp):
+async def test_failed_update(opp):
     """Test updating failure from monoprice."""
     monoprice = MockMonoprice()
     await _setup_monoprice(opp, monoprice)
@@ -331,7 +331,7 @@ async def test_failed_update.opp):
     assert state.attributes[ATTR_INPUT_SOURCE] == "one"
 
 
-async def test_empty_update.opp):
+async def test_empty_update(opp):
     """Test updating with no state from monoprice."""
     monoprice = MockMonoprice()
     await _setup_monoprice(opp, monoprice)
@@ -357,7 +357,7 @@ async def test_empty_update.opp):
     assert state.attributes[ATTR_INPUT_SOURCE] == "one"
 
 
-async def test_supported_features.opp):
+async def test_supported_features(opp):
     """Test supported features property."""
     await _setup_monoprice(opp, MockMonoprice())
 
@@ -373,7 +373,7 @@ async def test_supported_features.opp):
     )
 
 
-async def test_source_list.opp):
+async def test_source_list(opp):
     """Test source list property."""
     await _setup_monoprice(opp, MockMonoprice())
 
@@ -382,7 +382,7 @@ async def test_source_list.opp):
     assert state.attributes[ATTR_INPUT_SOURCE_LIST] == ["one", "three"]
 
 
-async def test_source_list_with_options.opp):
+async def test_source_list_with_options(opp):
     """Test source list property."""
     await _setup_monoprice_with_options(opp, MockMonoprice())
 
@@ -391,7 +391,7 @@ async def test_source_list_with_options.opp):
     assert state.attributes[ATTR_INPUT_SOURCE_LIST] == ["two", "four"]
 
 
-async def test_select_source.opp):
+async def test_select_source(opp):
     """Test source selection methods."""
     monoprice = MockMonoprice()
     await _setup_monoprice(opp, monoprice)
@@ -412,7 +412,7 @@ async def test_select_source.opp):
     assert monoprice.zones[11].source == 3
 
 
-async def test_unknown_source.opp):
+async def test_unknown_source(opp):
     """Test behavior when device has unknown source."""
     monoprice = MockMonoprice()
     await _setup_monoprice(opp, monoprice)
@@ -427,7 +427,7 @@ async def test_unknown_source.opp):
     assert state.attributes.get(ATTR_INPUT_SOURCE) is None
 
 
-async def test_turn_on_off.opp):
+async def test_turn_on_off(opp):
     """Test turning on the zone."""
     monoprice = MockMonoprice()
     await _setup_monoprice(opp, monoprice)
@@ -439,7 +439,7 @@ async def test_turn_on_off.opp):
     assert monoprice.zones[11].power
 
 
-async def test_mute_volume.opp):
+async def test_mute_volume(opp):
     """Test mute functionality."""
     monoprice = MockMonoprice()
     await _setup_monoprice(opp, monoprice)
@@ -458,7 +458,7 @@ async def test_mute_volume.opp):
     assert monoprice.zones[11].mute
 
 
-async def test_volume_up_down.opp):
+async def test_volume_up_down(opp):
     """Test increasing volume by one."""
     monoprice = MockMonoprice()
     await _setup_monoprice(opp, monoprice)
@@ -492,7 +492,7 @@ async def test_volume_up_down.opp):
     assert monoprice.zones[11].volume == 37
 
 
-async def test_first_run_with_available_zones.opp):
+async def test_first_run_with_available_zones(opp):
     """Test first run with all zones available."""
     monoprice = MockMonoprice()
     await _setup_monoprice(opp, monoprice)
@@ -503,7 +503,7 @@ async def test_first_run_with_available_zones.opp):
     assert not entry.disabled
 
 
-async def test_first_run_with_failing_zones.opp):
+async def test_first_run_with_failing_zones(opp):
     """Test first run with failed zones."""
     monoprice = MockMonoprice()
 
@@ -520,7 +520,7 @@ async def test_first_run_with_failing_zones.opp):
     assert entry.disabled_by == "integration"
 
 
-async def test_not_first_run_with_failing_zone.opp):
+async def test_not_first_run_with_failing_zone(opp):
     """Test first run with failed zones."""
     monoprice = MockMonoprice()
 

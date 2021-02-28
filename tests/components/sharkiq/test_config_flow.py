@@ -14,7 +14,7 @@ from .const import CONFIG, TEST_PASSWORD, TEST_USERNAME, UNIQUE_ID
 from tests.common import MockConfigEntry
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(

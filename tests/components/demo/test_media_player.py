@@ -29,7 +29,7 @@ def media_player_media_seek_fixture():
         yield seek
 
 
-async def test_source_select.opp):
+async def test_source_select(opp):
     """Test the input source service."""
     entity_id = "media_player.lounge_room"
 
@@ -60,7 +60,7 @@ async def test_source_select.opp):
     assert state.attributes.get(mp.ATTR_INPUT_SOURCE) == "xbox"
 
 
-async def test_repeat_set.opp):
+async def test_repeat_set(opp):
     """Test the repeat set service."""
     entity_id = "media_player.walkman"
 
@@ -81,7 +81,7 @@ async def test_repeat_set.opp):
     assert state.attributes.get(mp.ATTR_MEDIA_REPEAT) == mp.const.REPEAT_MODE_ALL
 
 
-async def test_clear_playlist.opp):
+async def test_clear_playlist(opp):
     """Test clear playlist."""
     assert await async_setup_component(
         opp. mp.DOMAIN, {"media_player": {"platform": "demo"}}
@@ -101,7 +101,7 @@ async def test_clear_playlist.opp):
     assert state.state == STATE_OFF
 
 
-async def test_volume_services.opp):
+async def test_volume_services(opp):
     """Test the volume service."""
     assert await async_setup_component(
         opp. mp.DOMAIN, {"media_player": {"platform": "demo"}}
@@ -173,7 +173,7 @@ async def test_volume_services.opp):
     assert state.attributes.get(mp.ATTR_MEDIA_VOLUME_MUTED) is True
 
 
-async def test_turning_off_and_on.opp):
+async def test_turning_off_and_on(opp):
     """Test turn_on and turn_off."""
     assert await async_setup_component(
         opp. mp.DOMAIN, {"media_player": {"platform": "demo"}}
@@ -214,7 +214,7 @@ async def test_turning_off_and_on.opp):
     assert not mp.is_on(opp, TEST_ENTITY_ID)
 
 
-async def test_playing_pausing.opp):
+async def test_playing_pausing(opp):
     """Test media_pause."""
     assert await async_setup_component(
         opp. mp.DOMAIN, {"media_player": {"platform": "demo"}}
@@ -261,7 +261,7 @@ async def test_playing_pausing.opp):
     assert state.state == STATE_PLAYING
 
 
-async def test_prev_next_track.opp):
+async def test_prev_next_track(opp):
     """Test media_next_track and media_previous_track ."""
     assert await async_setup_component(
         opp. mp.DOMAIN, {"media_player": {"platform": "demo"}}
@@ -326,7 +326,7 @@ async def test_prev_next_track.opp):
     assert state.attributes.get(mp.ATTR_MEDIA_EPISODE) == 1
 
 
-async def test_play_media.opp):
+async def test_play_media(opp):
     """Test play_media ."""
     assert await async_setup_component(
         opp. mp.DOMAIN, {"media_player": {"platform": "demo"}}

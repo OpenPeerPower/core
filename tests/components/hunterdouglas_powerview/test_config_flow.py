@@ -22,7 +22,7 @@ def _get_mock_powerview_userdata(userdata=None, get_resources=None):
     return mock_powerview_userdata
 
 
-async def test_user_form.opp):
+async def test_user_form(opp):
     """Test we get the user form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -69,7 +69,7 @@ async def test_user_form.opp):
     assert result4["type"] == "abort"
 
 
-async def test_form_homekit.opp):
+async def test_form_homekit(opp):
     """Test we get the form with homekit source."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -132,7 +132,7 @@ async def test_form_homekit.opp):
     assert result3["type"] == "abort"
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -154,7 +154,7 @@ async def test_form_cannot_connect.opp):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_no_data.opp):
+async def test_form_no_data(opp):
     """Test we handle no data being returned from the hub."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -174,7 +174,7 @@ async def test_form_no_data.opp):
     assert result2["errors"] == {"base": "unknown"}
 
 
-async def test_form_unknown_exception.opp):
+async def test_form_unknown_exception(opp):
     """Test we handle unknown exception."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

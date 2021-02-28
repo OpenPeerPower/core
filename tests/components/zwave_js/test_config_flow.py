@@ -242,7 +242,7 @@ async def test_manual_already_configured(opp):
 
 @pytest.mark.parametrize("discovery_info", [{"config": ADDON_DISCOVERY_INFO}])
 async def test_supervisor_discovery(
-    opp. supervisor, addon_running, addon_options, get_addon_discovery_info
+    opp, supervisor, addon_running, addon_options, get_addon_discovery_info
 ):
     """Test flow started from Supervisor discovery."""
     await setup.async_setup_component(opp, "persistent_notification", {})

@@ -14,7 +14,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import MockConfigEntry
 
 
-async def setup_component.opp):
+async def setup_component(opp):
     """Set up Toon component."""
     await async_process_op_core_config(
         opp,
@@ -30,7 +30,7 @@ async def setup_component.opp):
         await opp.async_block_till_done()
 
 
-async def test_abort_if_no_configuration.opp):
+async def test_abort_if_no_configuration(opp):
     """Test abort if no app is configured."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -44,7 +44,7 @@ async def test_full_flow_implementation(
     opp. aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test registering an integration and finishing flow works."""
-    await setup_component.opp)
+    await setup_component(opp)
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -108,7 +108,7 @@ async def test_no_agreements(
     opp. aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test abort when there are no displays."""
-    await setup_component.opp)
+    await setup_component(opp)
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
@@ -148,7 +148,7 @@ async def test_multiple_agreements(
     opp. aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test abort when there are no displays."""
-    await setup_component.opp)
+    await setup_component(opp)
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
@@ -198,7 +198,7 @@ async def test_agreement_already_set_up(
     opp. aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test showing display form again if display already exists."""
-    await setup_component.opp)
+    await setup_component(opp)
     MockConfigEntry(domain=DOMAIN, unique_id=123).add_to_opp(opp)
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -239,7 +239,7 @@ async def test_toon_abort(
     opp. aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test we abort on Toon error."""
-    await setup_component.opp)
+    await setup_component(opp)
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
     )
@@ -276,7 +276,7 @@ async def test_toon_abort(
 
 async def test_import(opp, current_request_with_host):
     """Test if importing step works."""
-    await setup_component.opp)
+    await setup_component(opp)
 
     # Setting up the component without entries, should already have triggered
     # it. Hence, expect this to throw an already_in_progress.
@@ -295,7 +295,7 @@ async def test_import_migration(
     old_entry = MockConfigEntry(domain=DOMAIN, unique_id=123, version=1)
     old_entry.add_to_opp(opp)
 
-    await setup_component.opp)
+    await setup_component(opp)
 
     entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1

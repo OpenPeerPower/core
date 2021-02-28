@@ -30,7 +30,7 @@ VALID_MESSAGE = """
 """
 
 
-async def test_invalid_credentials.opp):
+async def test_invalid_credentials(opp):
     """Test for invalid credentials."""
     with requests_mock.Mocker() as mock_req:
         url = re.compile(API_URL + "devicetypes")
@@ -40,7 +40,7 @@ async def test_invalid_credentials.opp):
     assert len(opp.states.async_entity_ids()) == 0
 
 
-async def test_valid_credentials.opp):
+async def test_valid_credentials(opp):
     """Test for valid credentials."""
     with requests_mock.Mocker() as mock_req:
         url1 = re.compile(API_URL + "devicetypes")

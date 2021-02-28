@@ -45,7 +45,7 @@ def make_thermostat():
     return device
 
 
-async def test_thermostat.opp):
+async def test_thermostat(opp):
     """Test simple initialization for thermostat entities."""
 
     thermostat = make_thermostat()

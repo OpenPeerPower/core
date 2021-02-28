@@ -20,7 +20,7 @@ from tests.common import MockConfigEntry
 VALID_CONFIG = {CONF_IP_ADDRESS: "1.2.3.4", CONF_PASSWORD: "00GGX"}
 
 
-async def test_form_source_user.opp):
+async def test_form_source_user(opp):
     """Test we get config flow setup form as a user."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -53,7 +53,7 @@ async def test_form_source_user.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -74,7 +74,7 @@ async def test_form_cannot_connect.opp):
     assert result2["errors"] == {CONF_IP_ADDRESS: "cannot_connect"}
 
 
-async def test_invalid_auth.opp):
+async def test_invalid_auth(opp):
     """Test we handle invalid auth error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -95,7 +95,7 @@ async def test_invalid_auth.opp):
     assert result2["errors"] == {CONF_PASSWORD: "invalid_auth"}
 
 
-async def test_form_unknown_exeption.opp):
+async def test_form_unknown_exeption(opp):
     """Test we handle an unknown exception."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -115,7 +115,7 @@ async def test_form_unknown_exeption.opp):
     assert result2["errors"] == {"base": "unknown"}
 
 
-async def test_form_wrong_version.opp):
+async def test_form_wrong_version(opp):
     """Test we can handle wrong version error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -138,7 +138,7 @@ async def test_form_wrong_version.opp):
     assert result3["errors"] == {"base": "wrong_version"}
 
 
-async def test_already_configured.opp):
+async def test_already_configured(opp):
     """Test we abort when already configured."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -158,7 +158,7 @@ async def test_already_configured.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_already_configured_with_ignored.opp):
+async def test_already_configured_with_ignored(opp):
     """Test ignored entries do not break checking for existing entries."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -177,7 +177,7 @@ async def test_already_configured_with_ignored.opp):
     assert result["type"] == "form"
 
 
-async def test_dhcp_discovery.opp):
+async def test_dhcp_discovery(opp):
     """Test we can process the discovery from dhcp."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -215,7 +215,7 @@ async def test_dhcp_discovery.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_reauth.opp):
+async def test_form_reauth(opp):
     """Test reauthenticate."""
 
     entry = MockConfigEntry(

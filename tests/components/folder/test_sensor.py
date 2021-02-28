@@ -24,14 +24,14 @@ def remove_test_file():
         os.rmdir(TEST_DIR)
 
 
-async def test_invalid_path.opp):
+async def test_invalid_path(opp):
     """Test that an invalid path is caught."""
     config = {"sensor": {"platform": "folder", CONF_FOLDER_PATHS: "invalid_path"}}
     assert await async_setup_component(opp, "sensor", config)
     assert len(opp.states.async_entity_ids()) == 0
 
 
-async def test_valid_path.opp):
+async def test_valid_path(opp):
     """Test for a valid path."""
     if not os.path.isdir(TEST_DIR):
         os.mkdir(TEST_DIR)

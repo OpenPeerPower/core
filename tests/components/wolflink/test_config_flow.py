@@ -32,7 +32,7 @@ INPUT_CONFIG = {
 DEVICE = Device(CONFIG[DEVICE_ID], CONFIG[DEVICE_GATEWAY], CONFIG[DEVICE_NAME])
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -42,7 +42,7 @@ async def test_show_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_device_step_form.opp):
+async def test_device_step_form(opp):
     """Test we get the second step of config."""
     with patch(
         "openpeerpower.components.wolflink.config_flow.WolfClient.fetch_system_list",
@@ -56,7 +56,7 @@ async def test_device_step_form.opp):
     assert result["step_id"] == "device"
 
 
-async def test_create_entry.opp):
+async def test_create_entry(opp):
     """Test entity creation from device step."""
     with patch(
         "openpeerpower.components.wolflink.config_flow.WolfClient.fetch_system_list",
@@ -76,7 +76,7 @@ async def test_create_entry.opp):
     assert result_create_entry["data"] == CONFIG
 
 
-async def test_form_invalid_auth.opp):
+async def test_form_invalid_auth(opp):
     """Test we handle invalid auth."""
     with patch(
         "openpeerpower.components.wolflink.config_flow.WolfClient.fetch_system_list",
@@ -90,7 +90,7 @@ async def test_form_invalid_auth.opp):
     assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     with patch(
         "openpeerpower.components.wolflink.config_flow.WolfClient.fetch_system_list",
@@ -104,7 +104,7 @@ async def test_form_cannot_connect.opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_unknown_exception.opp):
+async def test_form_unknown_exception(opp):
     """Test we handle cannot connect error."""
     with patch(
         "openpeerpower.components.wolflink.config_flow.WolfClient.fetch_system_list",

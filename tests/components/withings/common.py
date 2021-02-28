@@ -322,7 +322,7 @@ def get_data_manager_by_user_id(
         iter(
             [
                 data_manager
-                for data_manager in get_all_data_managers.opp)
+                for data_manager in get_all_data_managers(opp)
                 if data_manager.user_id == user_id
             ]
         ),

@@ -36,7 +36,7 @@ async def test_setup_opp):
         assert await setup.async_setup_component(opp, binary_sensor.DOMAIN, config)
 
 
-async def test_setup_no_sensors.opp):
+async def test_setup_no_sensors(opp):
     """Test setup with no sensors."""
     with assert_setup_component(0):
         assert await setup.async_setup_component(
@@ -44,7 +44,7 @@ async def test_setup_no_sensors.opp):
         )
 
 
-async def test_setup_invalid_device.opp):
+async def test_setup_invalid_device(opp):
     """Test the setup with invalid devices."""
     with assert_setup_component(0):
         assert await setup.async_setup_component(
@@ -54,7 +54,7 @@ async def test_setup_invalid_device.opp):
         )
 
 
-async def test_setup_invalid_device_class.opp):
+async def test_setup_invalid_device_class(opp):
     """Test setup with invalid sensor class."""
     with assert_setup_component(0):
         assert await setup.async_setup_component(
@@ -74,7 +74,7 @@ async def test_setup_invalid_device_class.opp):
         )
 
 
-async def test_setup_invalid_missing_template.opp):
+async def test_setup_invalid_missing_template(opp):
     """Test setup with invalid and missing template."""
     with assert_setup_component(0):
         assert await setup.async_setup_component(
@@ -89,7 +89,7 @@ async def test_setup_invalid_missing_template.opp):
         )
 
 
-async def test_icon_template.opp):
+async def test_icon_template(opp):
     """Test icon template."""
     with assert_setup_component(1):
         assert await setup.async_setup_component(
@@ -125,7 +125,7 @@ async def test_icon_template.opp):
     assert state.attributes["icon"] == "mdi:check"
 
 
-async def test_entity_picture_template.opp):
+async def test_entity_picture_template(opp):
     """Test entity_picture template."""
     with assert_setup_component(1):
         assert await setup.async_setup_component(
@@ -161,7 +161,7 @@ async def test_entity_picture_template.opp):
     assert state.attributes["entity_picture"] == "/local/sensor.png"
 
 
-async def test_attribute_templates.opp):
+async def test_attribute_templates(opp):
     """Test attribute_templates template."""
     with assert_setup_component(1):
         assert await setup.async_setup_component(
@@ -196,7 +196,7 @@ async def test_attribute_templates.opp):
     assert state.attributes["test_attribute"] == "It Works."
 
 
-async def test_match_all.opp):
+async def test_match_all(opp):
     """Test template that is rerendered on any state lifecycle."""
     with patch(
         "openpeerpower.components.template.binary_sensor."
@@ -233,7 +233,7 @@ async def test_match_all.opp):
             assert len(_update_state.mock_calls) == init_calls
 
 
-async def test_event.opp):
+async def test_event(opp):
     """Test the event."""
     config = {
         "binary_sensor": {
@@ -264,7 +264,7 @@ async def test_event.opp):
     assert state.state == "on"
 
 
-async def test_template_delay_on.opp):
+async def test_template_delay_on(opp):
     """Test binary sensor template delay on."""
     config = {
         "binary_sensor": {
@@ -323,7 +323,7 @@ async def test_template_delay_on.opp):
     assert state.state == "off"
 
 
-async def test_template_delay_off.opp):
+async def test_template_delay_off(opp):
     """Test binary sensor template delay off."""
     config = {
         "binary_sensor": {
@@ -383,7 +383,7 @@ async def test_template_delay_off.opp):
     assert state.state == "on"
 
 
-async def test_template_with_templated_delay_on.opp):
+async def test_template_with_templated_delay_on(opp):
     """Test binary sensor template with template delay on."""
     config = {
         "binary_sensor": {
@@ -442,7 +442,7 @@ async def test_template_with_templated_delay_on.opp):
     assert state.state == "off"
 
 
-async def test_template_with_templated_delay_off.opp):
+async def test_template_with_templated_delay_off(opp):
     """Test binary sensor template with template delay off."""
     config = {
         "binary_sensor": {
@@ -502,7 +502,7 @@ async def test_template_with_templated_delay_off.opp):
     assert state.state == "on"
 
 
-async def test_template_with_delay_on_based_on_input.opp):
+async def test_template_with_delay_on_based_on_input(opp):
     """Test binary sensor template with template delay on based on input number."""
     config = {
         "binary_sensor": {
@@ -574,7 +574,7 @@ async def test_template_with_delay_on_based_on_input.opp):
     assert state.state == "on"
 
 
-async def test_template_with_delay_off_based_on_input.opp):
+async def test_template_with_delay_off_based_on_input(opp):
     """Test binary sensor template with template delay off based on input number."""
     config = {
         "binary_sensor": {
@@ -646,7 +646,7 @@ async def test_template_with_delay_off_based_on_input.opp):
     assert state.state == "off"
 
 
-async def test_available_without_availability_template.opp):
+async def test_available_without_availability_template(opp):
     """Ensure availability is true without an availability_template."""
     config = {
         "binary_sensor": {
@@ -672,7 +672,7 @@ async def test_available_without_availability_template.opp):
     assert state.attributes[ATTR_DEVICE_CLASS] == "motion"
 
 
-async def test_availability_template.opp):
+async def test_availability_template(opp):
     """Test availability template."""
     config = {
         "binary_sensor": {
@@ -833,7 +833,7 @@ async def test_no_update_template_match_all(opp, caplog):
     assert opp.states.get("binary_sensor.all_attribute").state == "off"
 
 
-async def test_unique_id.opp):
+async def test_unique_id(opp):
     """Test unique_id option only creates one binary sensor per id."""
     await setup.async_setup_component(
         opp,

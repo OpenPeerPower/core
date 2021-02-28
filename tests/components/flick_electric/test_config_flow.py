@@ -13,7 +13,7 @@ from tests.common import MockConfigEntry
 CONF = {CONF_USERNAME: "test-username", CONF_PASSWORD: "test-password"}
 
 
-async def _flow_submit.opp):
+async def _flow_submit(opp):
     return await opp.config_entries.flow.async_init(
         DOMAIN,
         context={"source": config_entries.SOURCE_USER},
@@ -21,7 +21,7 @@ async def _flow_submit.opp):
     )
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -52,7 +52,7 @@ async def test_form.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_duplicate_login.opp):
+async def test_form_duplicate_login(opp):
     """Test uniqueness of username."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -66,43 +66,43 @@ async def test_form_duplicate_login.opp):
         "openpeerpower.components.flick_electric.config_flow.SimpleFlickAuth.async_get_access_token",
         return_value="123456789abcdef",
     ):
-        result = await _flow_submit.opp)
+        result = await _flow_submit(opp)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
 
 
-async def test_form_invalid_auth.opp):
+async def test_form_invalid_auth(opp):
     """Test we handle invalid auth."""
     with patch(
         "openpeerpower.components.flick_electric.config_flow.SimpleFlickAuth.async_get_access_token",
         side_effect=AuthException,
     ):
-        result = await _flow_submit.opp)
+        result = await _flow_submit(opp)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     with patch(
         "openpeerpower.components.flick_electric.config_flow.SimpleFlickAuth.async_get_access_token",
         side_effect=asyncio.TimeoutError,
     ):
-        result = await _flow_submit.opp)
+        result = await _flow_submit(opp)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_generic_exception.opp):
+async def test_form_generic_exception(opp):
     """Test we handle cannot connect error."""
     with patch(
         "openpeerpower.components.flick_electric.config_flow.SimpleFlickAuth.async_get_access_token",
         side_effect=Exception,
     ):
-        result = await _flow_submit.opp)
+        result = await _flow_submit(opp)
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] == {"base": "unknown"}

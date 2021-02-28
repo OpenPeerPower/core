@@ -124,14 +124,14 @@ async def test_nx584_sensor_setup_with_exceptions(opp, exception_type):
 
 
 @pytest.mark.usefixtures("client")
-async def test_nx584_sensor_setup_version_too_old.opp):
+async def test_nx584_sensor_setup_version_too_old(opp):
     """Test if version is too old."""
     nx584_client.Client.return_value.get_version.return_value = "1.0"
     await _test_assert_graceful_fail(opp, {})
 
 
 @pytest.mark.usefixtures("client")
-def test_nx584_sensor_setup_no_zones.opp):
+def test_nx584_sensor_setup_no_zones(opp):
     """Test the setup with no zones."""
     nx584_client.Client.return_value.list_zones.return_value = []
     add_entities = mock.MagicMock()

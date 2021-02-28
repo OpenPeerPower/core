@@ -135,7 +135,7 @@ class FakeDevice:
 FakeDevice.add_to_group = zigpy_dev.add_to_group
 
 
-def get_zha_gateway.opp):
+def get_zha_gateway(opp):
     """Return ZHA gateway from.opp.data."""
     try:
         return opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZOP_GATEWAY]
@@ -229,7 +229,7 @@ async def async_test_rejoin(opp, zigpy_device, clusters, report_counts, ep_id=1)
     """Test device rejoins."""
     reset_clusters(clusters)
 
-    zha_gateway = get_zha_gateway.opp)
+    zha_gateway = get_zha_gateway(opp)
     await zha_gateway.async_device_initialized(zigpy_device)
     await opp.async_block_till_done()
     for cluster, reports in zip(clusters, report_counts):

@@ -7,7 +7,7 @@ from openpeerpower.config_entries import SOURCE_USER
 from openpeerpower.const import CONF_EMAIL, CONF_PASSWORD
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -17,7 +17,7 @@ async def test_show_form.opp):
     assert result["step_id"] == SOURCE_USER
 
 
-async def test_invalid_credentials.opp):
+async def test_invalid_credentials(opp):
     """Test we handle invalid credentials."""
     with patch(
         "poolsense.PoolSense.test_poolsense_credentials",
@@ -33,7 +33,7 @@ async def test_invalid_credentials.opp):
     assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_valid_credentials.opp):
+async def test_valid_credentials(opp):
     """Test we handle invalid credentials."""
     with patch(
         "poolsense.PoolSense.test_poolsense_credentials", return_value=True

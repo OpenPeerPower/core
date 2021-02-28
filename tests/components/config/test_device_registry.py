@@ -11,13 +11,13 @@ from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 def client.opp, opp_ws_client):
     """Fixture that can interact with the config manager API."""
     opp.loop.run_until_complete(device_registry.async_setup_opp))
-    yield.opp.loop.run_until_complete.opp_ws_client.opp))
+    yield.opp.loop.run_until_complete.opp_ws_client(opp))
 
 
 @pytest.fixture
 def registry.opp):
     """Return an empty, loaded, registry."""
-    return mock_device_registry.opp)
+    return mock_device_registry(opp)
 
 
 async def test_list_devices(opp, client, registry):

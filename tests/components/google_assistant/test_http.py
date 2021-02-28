@@ -31,7 +31,7 @@ MOCK_HEADER = {
 }
 
 
-async def test_get_jwt.opp):
+async def test_get_jwt(opp):
     """Test signing of key."""
 
     jwt = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJkdW1teUBkdW1teS5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInNjb3BlIjoiaHR0cHM6Ly93d3cuZ29vZ2xlYXBpcy5jb20vYXV0aC9ob21lZ3JhcGgiLCJhdWQiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20vby9vYXV0aDIvdG9rZW4iLCJpYXQiOjE1NzEwMTEyMDAsImV4cCI6MTU3MTAxNDgwMH0.gG06SmY-zSvFwSrdFfqIdC6AnC22rwz-d2F2UDeWbywjdmFL_1zceL-OOLBwjD8MJr6nR0kmN_Osu7ml9-EzzZjJqsRUxMjGn2G8nSYHbv16R4FYIp62Ibvt6Jj_wdFobEPoy_5OJ28P5Hdu0giGMlFBJMy0Tc6MgEDZA-cwOBw"
@@ -61,7 +61,7 @@ async def test_get_access_token(opp, aioclient_mock):
     }
 
 
-async def test_update_access_token.opp):
+async def test_update_access_token(opp):
     """Test the function to update access token when expired."""
     jwt = "dummyjwt"
 

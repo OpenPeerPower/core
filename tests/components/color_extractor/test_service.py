@@ -55,7 +55,7 @@ def _close_enough(actual_rgb, testing_rgb):
 
 
 @pytest.fixture(autouse=True)
-async def setup_light.opp):
+async def setup_light(opp):
     """Configure our light component to work against for testing."""
     assert await async_setup_component(
         opp. LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": "demo"}}
@@ -84,7 +84,7 @@ async def setup_light.opp):
     assert state.state == STATE_OFF
 
 
-async def test_missing_url_and_path.opp):
+async def test_missing_url_and_path(opp):
     """Test that nothing happens when url and path are missing."""
     # Load our color_extractor component
     await async_setup_component(
@@ -248,7 +248,7 @@ def _get_file_mock(file_path):
 
 @patch("os.path.isfile", Mock(return_value=True))
 @patch("os.access", Mock(return_value=True))
-async def test_file.opp):
+async def test_file(opp):
     """Test that the file only service reads a file and translates to light RGB."""
     service_data = {
         ATTR_PATH: "/opt/image.png",
@@ -289,7 +289,7 @@ async def test_file.opp):
 
 @patch("os.path.isfile", Mock(return_value=True))
 @patch("os.access", Mock(return_value=True))
-async def test_file_denied_dir.opp):
+async def test_file_denied_dir(opp):
     """Test that the file only service fails to read an image in a dir not explicitly allowed."""
     service_data = {
         ATTR_PATH: "/path/to/a/dir/not/allowed/image.png",

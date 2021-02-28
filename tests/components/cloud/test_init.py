@@ -156,19 +156,19 @@ async def test_remote_ui_url(opp, mock_cloud_fixture):
 
     # Not logged in
     with pytest.raises(cloud.CloudNotAvailable):
-        cloud.async_remote_ui_url.opp)
+        cloud.async_remote_ui_url(opp)
 
     with patch.object(cloud, "async_is_logged_in", return_value=True):
         # Remote not enabled
         with pytest.raises(cloud.CloudNotAvailable):
-            cloud.async_remote_ui_url.opp)
+            cloud.async_remote_ui_url(opp)
 
         await cl.client.prefs.async_update(remote_enabled=True)
 
         # No instance domain
         with pytest.raises(cloud.CloudNotAvailable):
-            cloud.async_remote_ui_url.opp)
+            cloud.async_remote_ui_url(opp)
 
         cl.remote._instance_domain = "example.com"
 
-        assert cloud.async_remote_ui_url.opp) == "https://example.com"
+        assert cloud.async_remote_ui_url(opp) == "https://example.com"

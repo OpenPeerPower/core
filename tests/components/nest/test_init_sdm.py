@@ -37,7 +37,7 @@ async def test_setup_success(opp, caplog):
 
 async def async_setup_sdm(opp, config=CONFIG):
     """Prepare test setup."""
-    create_config_entry.opp)
+    create_config_entry(opp)
     with patch(
         "openpeerpower.helpers.config_entry_oauth2_flow.async_get_config_entry_implementation"
     ):
@@ -67,7 +67,7 @@ async def test_setup_susbcriber_failure(opp, caplog):
         "openpeerpower.components.nest.GoogleNestSubscriber.start_async",
         side_effect=GoogleNestException(),
     ), caplog.at_level(logging.ERROR, logger="openpeerpower.components.nest"):
-        result = await async_setup_sdm.opp)
+        result = await async_setup_sdm(opp)
         assert result
         assert "Subscriber error:" in caplog.text
 
@@ -82,7 +82,7 @@ async def test_setup_device_manager_failure(opp, caplog):
         "openpeerpower.components.nest.GoogleNestSubscriber.async_get_device_manager",
         side_effect=GoogleNestException(),
     ), caplog.at_level(logging.ERROR, logger="openpeerpower.components.nest"):
-        result = await async_setup_sdm.opp)
+        result = await async_setup_sdm(opp)
         assert result
         assert len(caplog.messages) == 1
         assert "Device manager error:" in caplog.text

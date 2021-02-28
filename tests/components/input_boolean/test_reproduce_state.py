@@ -3,7 +3,7 @@ from openpeerpower.core import State
 from openpeerpower.setup import async_setup_component
 
 
-async def test_reproducing_states.opp):
+async def test_reproducing_states(opp):
     """Test reproducing input_boolean states."""
     assert await async_setup_component(
         opp,

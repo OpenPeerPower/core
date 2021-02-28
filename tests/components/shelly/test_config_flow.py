@@ -22,7 +22,7 @@ DISCOVERY_INFO = {
 }
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -64,7 +64,7 @@ async def test_form.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_title_without_name.opp):
+async def test_title_without_name(opp):
     """Test we set the title to the hostname when the device doesn't have a name."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -110,7 +110,7 @@ async def test_title_without_name.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_auth.opp):
+async def test_form_auth(opp):
     """Test manual configuration if auth is required."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -204,7 +204,7 @@ async def test_form_errors_test_connection(opp, error):
     assert result2["errors"] == {"base": base_error}
 
 
-async def test_form_already_configured.opp):
+async def test_form_already_configured(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     entry = MockConfigEntry(
@@ -232,7 +232,7 @@ async def test_form_already_configured.opp):
     assert entry.data["host"] == "1.1.1.1"
 
 
-async def test_user_setup_ignored_device.opp):
+async def test_user_setup_ignored_device(opp):
     """Test user can successfully setup an ignored device."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     entry = MockConfigEntry(
@@ -281,7 +281,7 @@ async def test_user_setup_ignored_device.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_firmware_unsupported.opp):
+async def test_form_firmware_unsupported(opp):
     """Test we abort if device firmware is unsupported."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -331,7 +331,7 @@ async def test_form_auth_errors_test_connection(opp, error):
     assert result3["errors"] == {"base": base_error}
 
 
-async def test_zeroconf.opp):
+async def test_zeroconf(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -382,7 +382,7 @@ async def test_zeroconf.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_zeroconf_sleeping_device.opp):
+async def test_zeroconf_sleeping_device(opp):
     """Test sleeping device configuration via zeroconf."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -512,7 +512,7 @@ async def test_zeroconf_confirm_error(opp, error):
     assert result2["errors"] == {"base": base_error}
 
 
-async def test_zeroconf_already_configured.opp):
+async def test_zeroconf_already_configured(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     entry = MockConfigEntry(
@@ -536,7 +536,7 @@ async def test_zeroconf_already_configured.opp):
     assert entry.data["host"] == "1.1.1.1"
 
 
-async def test_zeroconf_firmware_unsupported.opp):
+async def test_zeroconf_firmware_unsupported(opp):
     """Test we abort if device firmware is unsupported."""
     with patch("aioshelly.get_info", side_effect=aioshelly.FirmwareUnsupported):
         result = await opp.config_entries.flow.async_init(
@@ -549,7 +549,7 @@ async def test_zeroconf_firmware_unsupported.opp):
         assert result["reason"] == "unsupported_firmware"
 
 
-async def test_zeroconf_cannot_connect.opp):
+async def test_zeroconf_cannot_connect(opp):
     """Test we get the form."""
     with patch("aioshelly.get_info", side_effect=asyncio.TimeoutError):
         result = await opp.config_entries.flow.async_init(
@@ -561,7 +561,7 @@ async def test_zeroconf_cannot_connect.opp):
         assert result["reason"] == "cannot_connect"
 
 
-async def test_zeroconf_require_auth.opp):
+async def test_zeroconf_require_auth(opp):
     """Test zeroconf if auth is required."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 

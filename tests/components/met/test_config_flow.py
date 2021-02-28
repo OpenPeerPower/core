@@ -16,7 +16,7 @@ def met_setup_fixture():
         yield
 
 
-async def test_show_config_form.opp):
+async def test_show_config_form(opp):
     """Test show configuration form."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
@@ -26,7 +26,7 @@ async def test_show_config_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_flow_with_home_location.opp):
+async def test_flow_with_home_location(opp):
     """Test config flow.
 
     Test the flow when a default location is configured.
@@ -50,7 +50,7 @@ async def test_flow_with_home_location.opp):
     assert default_data["elevation"] == 3
 
 
-async def test_create_entry.opp):
+async def test_create_entry(opp):
     """Test create entry from user input."""
     test_data = {
         "name": "home",
@@ -95,7 +95,7 @@ async def test_flow_entry_already_exists(opp):
     assert result["errors"]["name"] == "already_configured"
 
 
-async def test_onboarding_step.opp):
+async def test_onboarding_step(opp):
     """Test initializing via onboarding step."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "onboarding"}, data={}
@@ -106,7 +106,7 @@ async def test_onboarding_step.opp):
     assert result["data"] == {"track_home": True}
 
 
-async def test_import_step.opp):
+async def test_import_step(opp):
     """Test initializing via import step."""
     test_data = {
         "name": "home",

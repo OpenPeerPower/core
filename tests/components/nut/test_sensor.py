@@ -186,7 +186,7 @@ async def test_dl650elcd.opp):
     )
 
 
-async def test_blazer_usb.opp):
+async def test_blazer_usb(opp):
     """Test creation of blazer_usb sensors."""
 
     config_entry = await async_init_integration(opp, "blazer_usb", ["battery.charge"])

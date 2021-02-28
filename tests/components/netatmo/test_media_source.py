@@ -12,7 +12,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import load_fixture
 
 
-async def test_async_browse_media.opp):
+async def test_async_browse_media(opp):
     """Test browse media."""
     assert await async_setup_component(opp, DOMAIN, {})
 

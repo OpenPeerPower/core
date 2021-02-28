@@ -56,7 +56,7 @@ def events.opp):
 
 
 @pytest.fixture
-async def mock_camera.opp):
+async def mock_camera(opp):
     """Initialize a demo camera platform."""
     assert await async_setup_component(
         opp, "camera", {camera.DOMAIN: {"platform": "demo"}}
@@ -65,13 +65,13 @@ async def mock_camera.opp):
 
 
 @pytest.fixture
-async def mock_stream.opp):
+async def mock_stream(opp):
     """Initialize a demo camera platform with streaming."""
     assert await async_setup_component(opp, "stream", {"stream": {}})
     await opp.async_block_till_done()
 
 
-def test_create_api_message_defaults.opp):
+def test_create_api_message_defaults(opp):
     """Create a API message response of a request with defaults."""
     request = get_new_request("Alexa.PowerController", "TurnOn", "switch#xy")
     directive_header = request["directive"]["header"]
@@ -119,7 +119,7 @@ def test_create_api_message_special():
     assert "endpoint" not in msg
 
 
-async def test_wrong_version.opp):
+async def test_wrong_version(opp):
     """Test with wrong version."""
     msg = get_new_request("Alexa.PowerController", "TurnOn")
     msg["directive"]["header"]["payloadVersion"] = "2"
@@ -213,7 +213,7 @@ async def test_outlet(opp, events):
     )
 
 
-async def test_light.opp):
+async def test_light(opp):
     """Test light discovery."""
     device = ("light.test_1", "on", {"friendly_name": "Test light 1"})
     appliance = await discovery_test(device, opp)
@@ -230,7 +230,7 @@ async def test_light.opp):
     )
 
 
-async def test_dimmable_light.opp):
+async def test_dimmable_light(opp):
     """Test dimmable light discovery."""
     device = (
         "light.test_2",
@@ -266,7 +266,7 @@ async def test_dimmable_light.opp):
     assert call.data["brightness_pct"] == 50
 
 
-async def test_color_light.opp):
+async def test_color_light(opp):
     """Test color light discovery."""
     device = (
         "light.test_3",
@@ -298,7 +298,7 @@ async def test_color_light.opp):
     # tests
 
 
-async def test_script.opp):
+async def test_script(opp):
     """Test script discovery."""
     device = ("script.test", "off", {"friendly_name": "Test script"})
     appliance = await discovery_test(device, opp)
@@ -318,7 +318,7 @@ async def test_script.opp):
     )
 
 
-async def test_input_boolean.opp):
+async def test_input_boolean(opp):
     """Test input boolean discovery."""
     device = ("input_boolean.test", "off", {"friendly_name": "Test input boolean"})
     appliance = await discovery_test(device, opp)
@@ -335,7 +335,7 @@ async def test_input_boolean.opp):
     )
 
 
-async def test_scene.opp):
+async def test_scene(opp):
     """Test scene discovery."""
     device = ("scene.test", "off", {"friendly_name": "Test scene"})
     appliance = await discovery_test(device, opp)
@@ -353,7 +353,7 @@ async def test_scene.opp):
     await assert_scene_controller_works("scene#test", "scene.turn_on", None, opp)
 
 
-async def test_fan.opp):
+async def test_fan(opp):
     """Test fan discovery."""
     device = ("fan.test_1", "off", {"friendly_name": "Test fan 1"})
     appliance = await discovery_test(device, opp)
@@ -370,7 +370,7 @@ async def test_fan.opp):
     assert "configuration" not in power_capability
 
 
-async def test_variable_fan.opp):
+async def test_variable_fan(opp):
     """Test fan discovery.
 
     This one has variable speed.
@@ -503,7 +503,7 @@ async def test_variable_fan.opp):
     )
 
 
-async def test_oscillating_fan.opp):
+async def test_oscillating_fan(opp):
     """Test oscillating fan with ToggleController."""
     device = (
         "fan.test_3",
@@ -561,7 +561,7 @@ async def test_oscillating_fan.opp):
     assert not call.data["oscillating"]
 
 
-async def test_direction_fan.opp):
+async def test_direction_fan(opp):
     """Test fan direction with modeController."""
     device = (
         "fan.test_4",
@@ -667,7 +667,7 @@ async def test_direction_fan.opp):
         assert call.data
 
 
-async def test_fan_range.opp):
+async def test_fan_range(opp):
     """Test fan speed with rangeController."""
     device = (
         "fan.test_5",
@@ -805,7 +805,7 @@ async def test_fan_range.opp):
     )
 
 
-async def test_fan_range_off.opp):
+async def test_fan_range_off(opp):
     """Test fan range controller 0 turns_off fan."""
     device = (
         "fan.test_6",
@@ -842,7 +842,7 @@ async def test_fan_range_off.opp):
     )
 
 
-async def test_lock.opp):
+async def test_lock(opp):
     """Test lock discovery."""
     device = ("lock.test", "off", {"friendly_name": "Test lock"})
     appliance = await discovery_test(device, opp)
@@ -873,7 +873,7 @@ async def test_lock.opp):
     assert properties["value"] == "UNLOCKED"
 
 
-async def test_media_player.opp):
+async def test_media_player(opp):
     """Test media player discovery."""
     device = (
         "media_player.test",
@@ -1031,7 +1031,7 @@ async def test_media_player.opp):
     )
 
 
-async def test_media_player_power.opp):
+async def test_media_player_power(opp):
     """Test media player discovery with mapped on/off."""
     device = (
         "media_player.test",
@@ -1077,7 +1077,7 @@ async def test_media_player_power.opp):
     )
 
 
-async def test_media_player_inputs.opp):
+async def test_media_player_inputs(opp):
     """Test media player discovery with source list inputs."""
     device = (
         "media_player.test",
@@ -1181,7 +1181,7 @@ async def test_media_player_inputs.opp):
     assert call.data["source"] == "tv"
 
 
-async def test_media_player_no_supported_inputs.opp):
+async def test_media_player_no_supported_inputs(opp):
     """Test media player discovery with no supported inputs."""
     device = (
         "media_player.test_no_inputs",
@@ -1216,7 +1216,7 @@ async def test_media_player_no_supported_inputs.opp):
     )
 
 
-async def test_media_player_speaker.opp):
+async def test_media_player_speaker(opp):
     """Test media player with speaker interface."""
     device = (
         "media_player.test_speaker",
@@ -1289,7 +1289,7 @@ async def test_media_player_speaker.opp):
     )
 
 
-async def test_media_player_step_speaker.opp):
+async def test_media_player_step_speaker(opp):
     """Test media player with step speaker interface."""
     device = (
         "media_player.test_step_speaker",
@@ -1354,7 +1354,7 @@ async def test_media_player_step_speaker.opp):
     )
 
 
-async def test_media_player_seek.opp):
+async def test_media_player_seek(opp):
     """Test media player seek capability."""
     device = (
         "media_player.test_seek",
@@ -1469,7 +1469,7 @@ async def test_media_player_seek_error(opp):
         assert msg["payload"]["type"] == "ACTION_NOT_PERMITTED_FOR_CONTENT"
 
 
-async def test_alert.opp):
+async def test_alert(opp):
     """Test alert discovery."""
     device = ("alert.test", "off", {"friendly_name": "Test alert"})
     appliance = await discovery_test(device, opp)
@@ -1486,7 +1486,7 @@ async def test_alert.opp):
     )
 
 
-async def test_automation.opp):
+async def test_automation(opp):
     """Test automation discovery."""
     device = ("automation.test", "off", {"friendly_name": "Test automation"})
     appliance = await discovery_test(device, opp)
@@ -1503,7 +1503,7 @@ async def test_automation.opp):
     )
 
 
-async def test_group.opp):
+async def test_group(opp):
     """Test group discovery."""
     device = ("group.test", "off", {"friendly_name": "Test group"})
     appliance = await discovery_test(device, opp)
@@ -1520,7 +1520,7 @@ async def test_group.opp):
     )
 
 
-async def test_cover_position_range.opp):
+async def test_cover_position_range(opp):
     """Test cover discovery and position using rangeController."""
     device = (
         "cover.test_range",
@@ -1718,7 +1718,7 @@ async def assert_range_changes(
         assert call.data[changed_parameter] == result_range
 
 
-async def test_temp_sensor.opp):
+async def test_temp_sensor(opp):
     """Test temperature sensor discovery."""
     device = (
         "sensor.test_temp",
@@ -1747,7 +1747,7 @@ async def test_temp_sensor.opp):
     )
 
 
-async def test_contact_sensor.opp):
+async def test_contact_sensor(opp):
     """Test contact sensor discovery."""
     device = (
         "binary_sensor.test_contact",
@@ -1776,7 +1776,7 @@ async def test_contact_sensor.opp):
     properties.assert_equal("Alexa.EndpointHealth", "connectivity", {"value": "OK"})
 
 
-async def test_forced_contact_sensor.opp):
+async def test_forced_contact_sensor(opp):
     """Test contact sensor discovery with specified display_category."""
     device = (
         "binary_sensor.test_contact_forced",
@@ -1805,7 +1805,7 @@ async def test_forced_contact_sensor.opp):
     properties.assert_equal("Alexa.EndpointHealth", "connectivity", {"value": "OK"})
 
 
-async def test_motion_sensor.opp):
+async def test_motion_sensor(opp):
     """Test motion sensor discovery."""
     device = (
         "binary_sensor.test_motion",
@@ -1832,7 +1832,7 @@ async def test_motion_sensor.opp):
     properties.assert_equal("Alexa.MotionSensor", "detectionState", "DETECTED")
 
 
-async def test_forced_motion_sensor.opp):
+async def test_forced_motion_sensor(opp):
     """Test motion sensor discovery with specified display_category."""
     device = (
         "binary_sensor.test_motion_forced",
@@ -1861,7 +1861,7 @@ async def test_forced_motion_sensor.opp):
     properties.assert_equal("Alexa.EndpointHealth", "connectivity", {"value": "OK"})
 
 
-async def test_doorbell_sensor.opp):
+async def test_doorbell_sensor(opp):
     """Test doorbell sensor discovery."""
     device = (
         "binary_sensor.test_doorbell",
@@ -1883,7 +1883,7 @@ async def test_doorbell_sensor.opp):
     assert doorbell_capability["proactivelyReported"] is True
 
 
-async def test_unknown_sensor.opp):
+async def test_unknown_sensor(opp):
     """Test sensors of unknown quantities are not discovered."""
     device = (
         "sensor.test_sickness",
@@ -1893,7 +1893,7 @@ async def test_unknown_sensor.opp):
     await discovery_test(device, opp, expected_endpoints=0)
 
 
-async def test_thermostat.opp):
+async def test_thermostat(opp):
     """Test thermostat discovery."""
     opp.config.units.temperature_unit = TEMP_FAHRENHEIT
     device = (
@@ -2155,7 +2155,7 @@ async def test_thermostat.opp):
     opp.config.units.temperature_unit = TEMP_CELSIUS
 
 
-async def test_exclude_filters.opp):
+async def test_exclude_filters(opp):
     """Test exclusion filters."""
     request = get_new_request("Alexa.Discovery", "Discover")
 
@@ -2182,7 +2182,7 @@ async def test_exclude_filters.opp):
     assert len(msg["payload"]["endpoints"]) == 1
 
 
-async def test_include_filters.opp):
+async def test_include_filters(opp):
     """Test inclusion filters."""
     request = get_new_request("Alexa.Discovery", "Discover")
 
@@ -2213,7 +2213,7 @@ async def test_include_filters.opp):
     assert len(msg["payload"]["endpoints"]) == 3
 
 
-async def test_never_exposed_entities.opp):
+async def test_never_exposed_entities(opp):
     """Test never exposed locks do not get discovered."""
     request = get_new_request("Alexa.Discovery", "Discover")
 
@@ -2256,7 +2256,7 @@ async def test_api_entity_not_exists(opp):
     assert msg["payload"]["type"] == "NO_SUCH_ENDPOINT"
 
 
-async def test_api_function_not_implemented.opp):
+async def test_api_function_not_implemented(opp):
     """Test api call that is not implemented to us."""
     request = get_new_request("Alexa.HAHAAH", "Sweet")
     msg = await smart_home.async_handle_message(opp, DEFAULT_CONFIG, request)
@@ -2269,7 +2269,7 @@ async def test_api_function_not_implemented.opp):
     assert msg["payload"]["type"] == "INTERNAL_ERROR"
 
 
-async def test_api_accept_grant.opp):
+async def test_api_accept_grant(opp):
     """Test api AcceptGrant process."""
     request = get_new_request("Alexa.Authorization", "AcceptGrant")
 
@@ -2374,7 +2374,7 @@ async def test_logging_request_with_entity(opp, events):
     assert event.context == context
 
 
-async def test_disabled.opp):
+async def test_disabled(opp):
     """When enabled=False, everything fails."""
     opp.states.async_set("switch.test", "on", {"friendly_name": "Test switch"})
     request = get_new_request("Alexa.PowerController", "TurnOn", "switch#test")
@@ -2395,7 +2395,7 @@ async def test_disabled.opp):
     assert msg["payload"]["type"] == "BRIDGE_UNREACHABLE"
 
 
-async def test_endpoint_good_health.opp):
+async def test_endpoint_good_health(opp):
     """Test endpoint health reporting."""
     device = (
         "binary_sensor.test_contact",
@@ -2407,7 +2407,7 @@ async def test_endpoint_good_health.opp):
     properties.assert_equal("Alexa.EndpointHealth", "connectivity", {"value": "OK"})
 
 
-async def test_endpoint_bad_health.opp):
+async def test_endpoint_bad_health(opp):
     """Test endpoint health reporting."""
     device = (
         "binary_sensor.test_contact",
@@ -2421,7 +2421,7 @@ async def test_endpoint_bad_health.opp):
     )
 
 
-async def test_alarm_control_panel_disarmed.opp):
+async def test_alarm_control_panel_disarmed(opp):
     """Test alarm_control_panel discovery."""
     device = (
         "alarm_control_panel.test_1",
@@ -2493,7 +2493,7 @@ async def test_alarm_control_panel_disarmed.opp):
     properties.assert_equal("Alexa.SecurityPanelController", "armState", "ARMED_NIGHT")
 
 
-async def test_alarm_control_panel_armed.opp):
+async def test_alarm_control_panel_armed(opp):
     """Test alarm_control_panel discovery."""
     device = (
         "alarm_control_panel.test_2",
@@ -2541,7 +2541,7 @@ async def test_alarm_control_panel_armed.opp):
     assert msg["event"]["payload"]["type"] == "AUTHORIZATION_REQUIRED"
 
 
-async def test_alarm_control_panel_code_arm_required.opp):
+async def test_alarm_control_panel_code_arm_required(opp):
     """Test alarm_control_panel with code_arm_required not in discovery."""
     device = (
         "alarm_control_panel.test_3",
@@ -2555,7 +2555,7 @@ async def test_alarm_control_panel_code_arm_required.opp):
     await discovery_test(device, opp, expected_endpoints=0)
 
 
-async def test_range_unsupported_domain.opp):
+async def test_range_unsupported_domain(opp):
     """Test rangeController with unsupported domain."""
     device = ("switch.test", "on", {"friendly_name": "Test switch"})
     await discovery_test(device, opp)
@@ -2574,7 +2574,7 @@ async def test_range_unsupported_domain.opp):
     assert msg["payload"]["type"] == "INVALID_DIRECTIVE"
 
 
-async def test_mode_unsupported_domain.opp):
+async def test_mode_unsupported_domain(opp):
     """Test modeController with unsupported domain."""
     device = ("switch.test", "on", {"friendly_name": "Test switch"})
     await discovery_test(device, opp)
@@ -2593,7 +2593,7 @@ async def test_mode_unsupported_domain.opp):
     assert msg["payload"]["type"] == "INVALID_DIRECTIVE"
 
 
-async def test_cover_garage_door.opp):
+async def test_cover_garage_door(opp):
     """Test garage door cover discovery."""
     device = (
         "cover.test_garage_door",
@@ -2615,7 +2615,7 @@ async def test_cover_garage_door.opp):
     )
 
 
-async def test_cover_gate.opp):
+async def test_cover_gate(opp):
     """Test gate cover discovery."""
     device = (
         "cover.test_gate",
@@ -2637,7 +2637,7 @@ async def test_cover_gate.opp):
     )
 
 
-async def test_cover_position_mode.opp):
+async def test_cover_position_mode(opp):
     """Test cover discovery and position using modeController."""
     device = (
         "cover.test_mode",
@@ -2778,7 +2778,7 @@ async def test_cover_position_mode.opp):
     assert properties["value"] == "position.custom"
 
 
-async def test_image_processing.opp):
+async def test_image_processing(opp):
     """Test image_processing discovery as event detection."""
     device = (
         "image_processing.test_face",
@@ -2801,7 +2801,7 @@ async def test_image_processing.opp):
     )
 
 
-async def test_motion_sensor_event_detection.opp):
+async def test_motion_sensor_event_detection(opp):
     """Test motion sensor with EventDetectionSensor discovery."""
     device = (
         "binary_sensor.test_motion_camera_event",
@@ -2832,7 +2832,7 @@ async def test_motion_sensor_event_detection.opp):
     assert {"name": "humanPresenceDetectionState"} in properties["supported"]
 
 
-async def test_presence_sensor.opp):
+async def test_presence_sensor(opp):
     """Test presence sensor."""
     device = (
         "binary_sensor.test_presence_sensor",
@@ -2859,7 +2859,7 @@ async def test_presence_sensor.opp):
     assert {"name": "humanPresenceDetectionState"} in properties["supported"]
 
 
-async def test_cover_tilt_position_range.opp):
+async def test_cover_tilt_position_range(opp):
     """Test cover discovery and tilt position using rangeController."""
     device = (
         "cover.test_tilt_range",
@@ -2977,7 +2977,7 @@ async def test_cover_tilt_position_range.opp):
     )
 
 
-async def test_cover_semantics_position_and_tilt.opp):
+async def test_cover_semantics_position_and_tilt(opp):
     """Test cover discovery and semantics with position and tilt support."""
     device = (
         "cover.test_semantics",
@@ -3057,7 +3057,7 @@ async def test_cover_semantics_position_and_tilt.opp):
     } in tilt_state_mappings
 
 
-async def test_input_number.opp):
+async def test_input_number(opp):
     """Test input_number discovery."""
     device = (
         "input_number.test_slider",
@@ -3142,7 +3142,7 @@ async def test_input_number.opp):
     )
 
 
-async def test_input_number_float.opp):
+async def test_input_number_float(opp):
     """Test input_number discovery."""
     device = (
         "input_number.test_slider_float",
@@ -3233,7 +3233,7 @@ async def test_input_number_float.opp):
     )
 
 
-async def test_media_player_eq_modes.opp):
+async def test_media_player_eq_modes(opp):
     """Test media player discovery with sound mode list."""
     device = (
         "media_player.test",
@@ -3280,7 +3280,7 @@ async def test_media_player_eq_modes.opp):
         assert call.data["sound_mode"] == mode.lower()
 
 
-async def test_media_player_sound_mode_list_unsupported.opp):
+async def test_media_player_sound_mode_list_unsupported(opp):
     """Test EqualizerController with unsupported sound modes."""
     device = (
         "media_player.test",
@@ -3302,7 +3302,7 @@ async def test_media_player_sound_mode_list_unsupported.opp):
     )
 
 
-async def test_media_player_eq_bands_not_supported.opp):
+async def test_media_player_eq_bands_not_supported(opp):
     """Test EqualizerController bands directive not supported."""
     device = (
         "media_player.test_bands",
@@ -3362,7 +3362,7 @@ async def test_media_player_eq_bands_not_supported.opp):
     assert msg["payload"]["type"] == "INVALID_DIRECTIVE"
 
 
-async def test_timer_hold.opp):
+async def test_timer_hold(opp):
     """Test timer hold."""
     device = (
         "timer.laundry",
@@ -3389,7 +3389,7 @@ async def test_timer_hold.opp):
     )
 
 
-async def test_timer_resume.opp):
+async def test_timer_resume(opp):
     """Test timer resume."""
     device = (
         "timer.laundry",
@@ -3406,7 +3406,7 @@ async def test_timer_resume.opp):
     )
 
 
-async def test_timer_start.opp):
+async def test_timer_start(opp):
     """Test timer start."""
     device = (
         "timer.laundry",
@@ -3423,7 +3423,7 @@ async def test_timer_start.opp):
     )
 
 
-async def test_timer_cancel.opp):
+async def test_timer_cancel(opp):
     """Test timer cancel."""
     device = (
         "timer.laundry",
@@ -3440,7 +3440,7 @@ async def test_timer_cancel.opp):
     )
 
 
-async def test_vacuum_discovery.opp):
+async def test_vacuum_discovery(opp):
     """Test vacuum discovery."""
     device = (
         "vacuum.test_1",
@@ -3481,7 +3481,7 @@ async def test_vacuum_discovery.opp):
     )
 
 
-async def test_vacuum_fan_speed.opp):
+async def test_vacuum_fan_speed(opp):
     """Test vacuum fan speed with rangeController."""
     device = (
         "vacuum.test_2",
@@ -3610,7 +3610,7 @@ async def test_vacuum_fan_speed.opp):
     )
 
 
-async def test_vacuum_pause.opp):
+async def test_vacuum_pause(opp):
     """Test vacuum pause with TimeHoldController."""
     device = (
         "vacuum.test_3",
@@ -3648,7 +3648,7 @@ async def test_vacuum_pause.opp):
     )
 
 
-async def test_vacuum_resume.opp):
+async def test_vacuum_resume(opp):
     """Test vacuum resume with TimeHoldController."""
     device = (
         "vacuum.test_4",
@@ -3676,7 +3676,7 @@ async def test_vacuum_resume.opp):
     )
 
 
-async def test_vacuum_discovery_no_turn_on.opp):
+async def test_vacuum_discovery_no_turn_on(opp):
     """Test vacuum discovery for vacuums without turn_on."""
     device = (
         "vacuum.test_5",
@@ -3706,7 +3706,7 @@ async def test_vacuum_discovery_no_turn_on.opp):
     )
 
 
-async def test_vacuum_discovery_no_turn_off.opp):
+async def test_vacuum_discovery_no_turn_off(opp):
     """Test vacuum discovery for vacuums without turn_off."""
     device = (
         "vacuum.test_6",
@@ -3737,7 +3737,7 @@ async def test_vacuum_discovery_no_turn_off.opp):
     )
 
 
-async def test_vacuum_discovery_no_turn_on_or_off.opp):
+async def test_vacuum_discovery_no_turn_on_or_off(opp):
     """Test vacuum discovery vacuums without on or off."""
     device = (
         "vacuum.test_7",
@@ -3797,7 +3797,7 @@ async def test_camera_discovery(opp, mock_stream):
     assert "AAC" in configuration["audioCodecs"]
 
 
-async def test_camera_discovery_without_stream.opp):
+async def test_camera_discovery_without_stream(opp):
     """Test camera discovery without stream integration."""
     device = (
         "camera.test",

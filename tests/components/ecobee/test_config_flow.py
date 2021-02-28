@@ -29,7 +29,7 @@ async def test_abort_if_already_setup_opp):
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test_user_step_without_user_input.opp):
+async def test_user_step_without_user_input(opp):
     """Test expected result if user step is called."""
     flow = config_flow.EcobeeFlowHandler()
     flow.opp = opp
@@ -40,7 +40,7 @@ async def test_user_step_without_user_input.opp):
     assert result["step_id"] == "user"
 
 
-async def test_pin_request_succeeds.opp):
+async def test_pin_request_succeeds(opp):
     """Test expected result if pin request succeeds."""
     flow = config_flow.EcobeeFlowHandler()
     flow.opp = opp
@@ -58,7 +58,7 @@ async def test_pin_request_succeeds.opp):
         assert result["description_placeholders"] == {"pin": "test-pin"}
 
 
-async def test_pin_request_fails.opp):
+async def test_pin_request_fails(opp):
     """Test expected result if pin request fails."""
     flow = config_flow.EcobeeFlowHandler()
     flow.opp = opp
@@ -75,7 +75,7 @@ async def test_pin_request_fails.opp):
         assert result["errors"]["base"] == "pin_request_failed"
 
 
-async def test_token_request_succeeds.opp):
+async def test_token_request_succeeds(opp):
     """Test expected result if token request succeeds."""
     flow = config_flow.EcobeeFlowHandler()
     flow.opp = opp
@@ -100,7 +100,7 @@ async def test_token_request_succeeds.opp):
         }
 
 
-async def test_token_request_fails.opp):
+async def test_token_request_fails(opp):
     """Test expected result if token request fails."""
     flow = config_flow.EcobeeFlowHandler()
     flow.opp = opp
@@ -123,7 +123,7 @@ async def test_token_request_fails.opp):
 
 
 @pytest.mark.skip(reason="Flaky/slow")
-async def test_import_flow_triggered_but_no_ecobee_conf.opp):
+async def test_import_flow_triggered_but_no_ecobee_conf(opp):
     """Test expected result if import flow triggers but ecobee.conf doesn't exist."""
     flow = config_flow.EcobeeFlowHandler()
     flow.opp = opp
@@ -163,7 +163,7 @@ async def test_import_flow_triggered_with_ecobee_conf_and_valid_data_and_valid_t
         }
 
 
-async def test_import_flow_triggered_with_ecobee_conf_and_invalid_data.opp):
+async def test_import_flow_triggered_with_ecobee_conf_and_invalid_data(opp):
     """Test expected result if import flow triggers and ecobee.conf exists with invalid data."""
     flow = config_flow.EcobeeFlowHandler()
     flow.opp = opp

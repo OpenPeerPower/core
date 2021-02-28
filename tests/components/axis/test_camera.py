@@ -14,7 +14,7 @@ from openpeerpower.setup import async_setup_component
 from .test_device import ENTRY_OPTIONS, NAME, setup_axis_integration
 
 
-async def test_platform_manually_configured.opp):
+async def test_platform_manually_configured(opp):
     """Test that nothing happens when platform is manually configured."""
     assert (
         await async_setup_component(
@@ -26,9 +26,9 @@ async def test_platform_manually_configured.opp):
     assert AXIS_DOMAIN not in opp.data
 
 
-async def test_camera.opp):
+async def test_camera(opp):
     """Test that Axis camera platform is loaded properly."""
-    await setup_axis_integration.opp)
+    await setup_axis_integration(opp)
 
     assert len(opp.states.async_entity_ids(CAMERA_DOMAIN)) == 1
 
@@ -47,10 +47,10 @@ async def test_camera.opp):
     )
 
 
-async def test_camera_with_stream_profile.opp):
+async def test_camera_with_stream_profile(opp):
     """Test that Axis camera entity is using the correct path with stream profike."""
     with patch.dict(ENTRY_OPTIONS, {CONF_STREAM_PROFILE: "profile_1"}):
-        await setup_axis_integration.opp)
+        await setup_axis_integration(opp)
 
     assert len(opp.states.async_entity_ids(CAMERA_DOMAIN)) == 1
 
@@ -72,9 +72,9 @@ async def test_camera_with_stream_profile.opp):
     )
 
 
-async def test_camera_disabled.opp):
+async def test_camera_disabled(opp):
     """Test that Axis camera platform is loaded properly but does not create camera entity."""
     with patch("axis.vapix.Params.image_format", new=None):
-        await setup_axis_integration.opp)
+        await setup_axis_integration(opp)
 
     assert len(opp.states.async_entity_ids(CAMERA_DOMAIN)) == 0

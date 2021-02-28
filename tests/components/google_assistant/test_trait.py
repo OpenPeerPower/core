@@ -69,7 +69,7 @@ PIN_DATA = helpers.RequestData(
 )
 
 
-async def test_brightness_light.opp):
+async def test_brightness_light(opp):
     """Test brightness trait support for light domain."""
     assert helpers.get_google_type(light.DOMAIN, None) is not None
     assert trait.BrightnessTrait.supported(light.DOMAIN, light.SUPPORT_BRIGHTNESS, None)
@@ -104,7 +104,7 @@ async def test_brightness_light.opp):
     }
 
 
-async def test_camera_stream.opp):
+async def test_camera_stream(opp):
     """Test camera stream trait support for camera domain."""
     await async_process_op_core_config(
         opp,
@@ -137,7 +137,7 @@ async def test_camera_stream.opp):
     }
 
 
-async def test_onoff_group.opp):
+async def test_onoff_group(opp):
     """Test OnOff trait support for group domain."""
     assert helpers.get_google_type(group.DOMAIN, None) is not None
     assert trait.OnOffTrait.supported(group.DOMAIN, 0, None)
@@ -163,7 +163,7 @@ async def test_onoff_group.opp):
     assert off_calls[0].data == {ATTR_ENTITY_ID: "group.bla"}
 
 
-async def test_onoff_input_boolean.opp):
+async def test_onoff_input_boolean(opp):
     """Test OnOff trait support for input_boolean domain."""
     assert helpers.get_google_type(input_boolean.DOMAIN, None) is not None
     assert trait.OnOffTrait.supported(input_boolean.DOMAIN, 0, None)
@@ -191,7 +191,7 @@ async def test_onoff_input_boolean.opp):
     assert off_calls[0].data == {ATTR_ENTITY_ID: "input_boolean.bla"}
 
 
-async def test_onoff_switch.opp):
+async def test_onoff_switch(opp):
     """Test OnOff trait support for switch domain."""
     assert helpers.get_google_type(switch.DOMAIN, None) is not None
     assert trait.OnOffTrait.supported(switch.DOMAIN, 0, None)
@@ -222,7 +222,7 @@ async def test_onoff_switch.opp):
     assert off_calls[0].data == {ATTR_ENTITY_ID: "switch.bla"}
 
 
-async def test_onoff_fan.opp):
+async def test_onoff_fan(opp):
     """Test OnOff trait support for fan domain."""
     assert helpers.get_google_type(fan.DOMAIN, None) is not None
     assert trait.OnOffTrait.supported(fan.DOMAIN, 0, None)
@@ -247,7 +247,7 @@ async def test_onoff_fan.opp):
     assert off_calls[0].data == {ATTR_ENTITY_ID: "fan.bla"}
 
 
-async def test_onoff_light.opp):
+async def test_onoff_light(opp):
     """Test OnOff trait support for light domain."""
     assert helpers.get_google_type(light.DOMAIN, None) is not None
     assert trait.OnOffTrait.supported(light.DOMAIN, 0, None)
@@ -273,7 +273,7 @@ async def test_onoff_light.opp):
     assert off_calls[0].data == {ATTR_ENTITY_ID: "light.bla"}
 
 
-async def test_onoff_media_player.opp):
+async def test_onoff_media_player(opp):
     """Test OnOff trait support for media_player domain."""
     assert helpers.get_google_type(media_player.DOMAIN, None) is not None
     assert trait.OnOffTrait.supported(media_player.DOMAIN, 0, None)
@@ -300,7 +300,7 @@ async def test_onoff_media_player.opp):
     assert off_calls[0].data == {ATTR_ENTITY_ID: "media_player.bla"}
 
 
-async def test_onoff_humidifier.opp):
+async def test_onoff_humidifier(opp):
     """Test OnOff trait support for humidifier domain."""
     assert helpers.get_google_type(humidifier.DOMAIN, None) is not None
     assert trait.OnOffTrait.supported(humidifier.DOMAIN, 0, None)
@@ -327,7 +327,7 @@ async def test_onoff_humidifier.opp):
     assert off_calls[0].data == {ATTR_ENTITY_ID: "humidifier.bla"}
 
 
-async def test_dock_vacuum.opp):
+async def test_dock_vacuum(opp):
     """Test dock trait support for vacuum domain."""
     assert helpers.get_google_type(vacuum.DOMAIN, None) is not None
     assert trait.DockTrait.supported(vacuum.DOMAIN, 0, None)
@@ -344,7 +344,7 @@ async def test_dock_vacuum.opp):
     assert calls[0].data == {ATTR_ENTITY_ID: "vacuum.bla"}
 
 
-async def test_startstop_vacuum.opp):
+async def test_startstop_vacuum(opp):
     """Test startStop trait support for vacuum domain."""
     assert helpers.get_google_type(vacuum.DOMAIN, None) is not None
     assert trait.StartStopTrait.supported(vacuum.DOMAIN, 0, None)
@@ -384,7 +384,7 @@ async def test_startstop_vacuum.opp):
     assert unpause_calls[0].data == {ATTR_ENTITY_ID: "vacuum.bla"}
 
 
-async def test_startstop_cover.opp):
+async def test_startstop_cover(opp):
     """Test startStop trait support for cover domain."""
     assert helpers.get_google_type(cover.DOMAIN, None) is not None
     assert trait.StartStopTrait.supported(cover.DOMAIN, cover.SUPPORT_STOP, None)
@@ -429,7 +429,7 @@ async def test_startstop_cover.opp):
         await trt.execute(trait.COMMAND_PAUSEUNPAUSE, BASIC_DATA, {"start": True}, {})
 
 
-async def test_startstop_cover_assumed.opp):
+async def test_startstop_cover_assumed(opp):
     """Test startStop trait support for cover domain of assumed state."""
     trt = trait.StartStopTrait(
         opp,
@@ -447,7 +447,7 @@ async def test_startstop_cover_assumed.opp):
     assert stop_calls[0].data == {ATTR_ENTITY_ID: "cover.bla"}
 
 
-async def test_color_setting_color_light.opp):
+async def test_color_setting_color_light(opp):
     """Test ColorSpectrum trait support for light domain."""
     assert helpers.get_google_type(light.DOMAIN, None) is not None
     assert not trait.ColorSettingTrait.supported(light.DOMAIN, 0, None)
@@ -504,7 +504,7 @@ async def test_color_setting_color_light.opp):
     }
 
 
-async def test_color_setting_temperature_light.opp):
+async def test_color_setting_temperature_light(opp):
     """Test ColorTemperature trait support for light domain."""
     assert helpers.get_google_type(light.DOMAIN, None) is not None
     assert not trait.ColorSettingTrait.supported(light.DOMAIN, 0, None)
@@ -557,7 +557,7 @@ async def test_color_setting_temperature_light.opp):
     }
 
 
-async def test_color_light_temperature_light_bad_temp.opp):
+async def test_color_light_temperature_light_bad_temp(opp):
     """Test ColorTemperature trait support for light domain."""
     assert helpers.get_google_type(light.DOMAIN, None) is not None
     assert not trait.ColorSettingTrait.supported(light.DOMAIN, 0, None)
@@ -582,7 +582,7 @@ async def test_color_light_temperature_light_bad_temp.opp):
     assert trt.query_attributes() == {}
 
 
-async def test_light_modes.opp):
+async def test_light_modes(opp):
     """Test Light Mode trait."""
     assert helpers.get_google_type(light.DOMAIN, None) is not None
     assert trait.ModesTrait.supported(light.DOMAIN, light.SUPPORT_EFFECT, None)
@@ -650,7 +650,7 @@ async def test_light_modes.opp):
     }
 
 
-async def test_scene_scene.opp):
+async def test_scene_scene(opp):
     """Test Scene trait support for scene domain."""
     assert helpers.get_google_type(scene.DOMAIN, None) is not None
     assert trait.SceneTrait.supported(scene.DOMAIN, 0, None)
@@ -666,7 +666,7 @@ async def test_scene_scene.opp):
     assert calls[0].data == {ATTR_ENTITY_ID: "scene.bla"}
 
 
-async def test_scene_script.opp):
+async def test_scene_script(opp):
     """Test Scene trait support for script domain."""
     assert helpers.get_google_type(script.DOMAIN, None) is not None
     assert trait.SceneTrait.supported(script.DOMAIN, 0, None)
@@ -686,7 +686,7 @@ async def test_scene_script.opp):
     assert calls[0].data == {ATTR_ENTITY_ID: "script.bla"}
 
 
-async def test_temperature_setting_climate_onoff.opp):
+async def test_temperature_setting_climate_onoff(opp):
     """Test TemperatureSetting trait support for climate domain - range."""
     assert helpers.get_google_type(climate.DOMAIN, None) is not None
     assert trait.TemperatureSettingTrait.supported(climate.DOMAIN, 0, None)
@@ -731,7 +731,7 @@ async def test_temperature_setting_climate_onoff.opp):
     assert len(calls) == 1
 
 
-async def test_temperature_setting_climate_no_modes.opp):
+async def test_temperature_setting_climate_no_modes(opp):
     """Test TemperatureSetting trait support for climate domain not supporting any modes."""
     assert helpers.get_google_type(climate.DOMAIN, None) is not None
     assert trait.TemperatureSettingTrait.supported(climate.DOMAIN, 0, None)
@@ -757,7 +757,7 @@ async def test_temperature_setting_climate_no_modes.opp):
     }
 
 
-async def test_temperature_setting_climate_range.opp):
+async def test_temperature_setting_climate_range(opp):
     """Test TemperatureSetting trait support for climate domain - range."""
     assert helpers.get_google_type(climate.DOMAIN, None) is not None
     assert trait.TemperatureSettingTrait.supported(climate.DOMAIN, 0, None)
@@ -839,7 +839,7 @@ async def test_temperature_setting_climate_range.opp):
     opp.config.units.temperature_unit = TEMP_CELSIUS
 
 
-async def test_temperature_setting_climate_setpoint.opp):
+async def test_temperature_setting_climate_setpoint(opp):
     """Test TemperatureSetting trait support for climate domain - setpoint."""
     assert helpers.get_google_type(climate.DOMAIN, None) is not None
     assert trait.TemperatureSettingTrait.supported(climate.DOMAIN, 0, None)
@@ -893,7 +893,7 @@ async def test_temperature_setting_climate_setpoint.opp):
     assert calls[0].data == {ATTR_ENTITY_ID: "climate.bla", ATTR_TEMPERATURE: 19}
 
 
-async def test_temperature_setting_climate_setpoint_auto.opp):
+async def test_temperature_setting_climate_setpoint_auto(opp):
     """
     Test TemperatureSetting trait support for climate domain.
 
@@ -944,7 +944,7 @@ async def test_temperature_setting_climate_setpoint_auto.opp):
     assert calls[0].data == {ATTR_ENTITY_ID: "climate.bla", ATTR_TEMPERATURE: 19}
 
 
-async def test_humidity_setting_humidifier_setpoint.opp):
+async def test_humidity_setting_humidifier_setpoint(opp):
     """Test HumiditySetting trait support for humidifier domain - setpoint."""
     assert helpers.get_google_type(humidifier.DOMAIN, None) is not None
     assert trait.HumiditySettingTrait.supported(humidifier.DOMAIN, 0, None)
@@ -980,7 +980,7 @@ async def test_humidity_setting_humidifier_setpoint.opp):
     }
 
 
-async def test_lock_unlock_lock.opp):
+async def test_lock_unlock_lock(opp):
     """Test LockUnlock trait locking support for lock domain."""
     assert helpers.get_google_type(lock.DOMAIN, None) is not None
     assert trait.LockUnlockTrait.supported(lock.DOMAIN, lock.SUPPORT_OPEN, None)
@@ -1004,7 +1004,7 @@ async def test_lock_unlock_lock.opp):
     assert calls[0].data == {ATTR_ENTITY_ID: "lock.front_door"}
 
 
-async def test_lock_unlock_unlock.opp):
+async def test_lock_unlock_unlock(opp):
     """Test LockUnlock trait unlocking support for lock domain."""
     assert helpers.get_google_type(lock.DOMAIN, None) is not None
     assert trait.LockUnlockTrait.supported(lock.DOMAIN, lock.SUPPORT_OPEN, None)
@@ -1064,7 +1064,7 @@ async def test_lock_unlock_unlock.opp):
     assert len(calls) == 2
 
 
-async def test_arm_disarm_arm_away.opp):
+async def test_arm_disarm_arm_away(opp):
     """Test ArmDisarm trait Arming support for alarm_control_panel domain."""
     assert helpers.get_google_type(alarm_control_panel.DOMAIN, None) is not None
     assert trait.ArmDisArmTrait.supported(alarm_control_panel.DOMAIN, 0, None)
@@ -1227,7 +1227,7 @@ async def test_arm_disarm_arm_away.opp):
         )
 
 
-async def test_arm_disarm_disarm.opp):
+async def test_arm_disarm_disarm(opp):
     """Test ArmDisarm trait Disarming support for alarm_control_panel domain."""
     assert helpers.get_google_type(alarm_control_panel.DOMAIN, None) is not None
     assert trait.ArmDisArmTrait.supported(alarm_control_panel.DOMAIN, 0, None)
@@ -1373,7 +1373,7 @@ async def test_arm_disarm_disarm.opp):
     assert len(calls) == 2
 
 
-async def test_fan_speed.opp):
+async def test_fan_speed(opp):
     """Test FanSpeed trait speed control support for fan domain."""
     assert helpers.get_google_type(fan.DOMAIN, None) is not None
     assert trait.FanSpeedTrait.supported(fan.DOMAIN, fan.SUPPORT_SET_SPEED, None)
@@ -1465,7 +1465,7 @@ async def test_fan_speed.opp):
     assert calls[0].data == {"entity_id": "fan.living_room_fan", "percentage": 10}
 
 
-async def test_climate_fan_speed.opp):
+async def test_climate_fan_speed(opp):
     """Test FanSpeed trait speed control support for climate domain."""
     assert helpers.get_google_type(climate.DOMAIN, None) is not None
     assert trait.FanSpeedTrait.supported(climate.DOMAIN, climate.SUPPORT_FAN_MODE, None)
@@ -1525,7 +1525,7 @@ async def test_climate_fan_speed.opp):
     }
 
 
-async def test_inputselector.opp):
+async def test_inputselector(opp):
     """Test input selector trait."""
     assert helpers.get_google_type(media_player.DOMAIN, None) is not None
     assert trait.InputSelectorTrait.supported(
@@ -1683,7 +1683,7 @@ async def test_inputselector_nextprev_invalid(opp, sources, source):
         )
 
 
-async def test_modes_input_select.opp):
+async def test_modes_input_select(opp):
     """Test Input Select Mode trait."""
     assert helpers.get_google_type(input_select.DOMAIN, None) is not None
     assert trait.ModesTrait.supported(input_select.DOMAIN, None, None)
@@ -1759,7 +1759,7 @@ async def test_modes_input_select.opp):
     assert calls[0].data == {"entity_id": "input_select.bla", "option": "xyz"}
 
 
-async def test_modes_humidifier.opp):
+async def test_modes_humidifier(opp):
     """Test Humidifier Mode trait."""
     assert helpers.get_google_type(humidifier.DOMAIN, None) is not None
     assert trait.ModesTrait.supported(humidifier.DOMAIN, humidifier.SUPPORT_MODES, None)
@@ -1836,7 +1836,7 @@ async def test_modes_humidifier.opp):
     }
 
 
-async def test_sound_modes.opp):
+async def test_sound_modes(opp):
     """Test Mode trait."""
     assert helpers.get_google_type(media_player.DOMAIN, None) is not None
     assert trait.ModesTrait.supported(
@@ -1910,7 +1910,7 @@ async def test_sound_modes.opp):
     }
 
 
-async def test_openclose_cover.opp):
+async def test_openclose_cover(opp):
     """Test OpenClose trait support for cover domain."""
     assert helpers.get_google_type(cover.DOMAIN, None) is not None
     assert trait.OpenCloseTrait.supported(
@@ -1947,7 +1947,7 @@ async def test_openclose_cover.opp):
     assert calls_open[0].data == {ATTR_ENTITY_ID: "cover.bla"}
 
 
-async def test_openclose_cover_unknown_state.opp):
+async def test_openclose_cover_unknown_state(opp):
     """Test OpenClose trait support for cover domain with unknown state."""
     assert helpers.get_google_type(cover.DOMAIN, None) is not None
     assert trait.OpenCloseTrait.supported(
@@ -1977,7 +1977,7 @@ async def test_openclose_cover_unknown_state.opp):
         trt.query_attributes()
 
 
-async def test_openclose_cover_assumed_state.opp):
+async def test_openclose_cover_assumed_state(opp):
     """Test OpenClose trait support for cover domain."""
     assert helpers.get_google_type(cover.DOMAIN, None) is not None
     assert trait.OpenCloseTrait.supported(
@@ -2007,7 +2007,7 @@ async def test_openclose_cover_assumed_state.opp):
     assert calls[0].data == {ATTR_ENTITY_ID: "cover.bla", cover.ATTR_POSITION: 40}
 
 
-async def test_openclose_cover_query_only.opp):
+async def test_openclose_cover_query_only(opp):
     """Test OpenClose trait support for cover domain."""
     assert helpers.get_google_type(cover.DOMAIN, None) is not None
     assert trait.OpenCloseTrait.supported(cover.DOMAIN, 0, None)
@@ -2030,7 +2030,7 @@ async def test_openclose_cover_query_only.opp):
     assert trt.query_attributes() == {"openPercent": 100}
 
 
-async def test_openclose_cover_no_position.opp):
+async def test_openclose_cover_no_position(opp):
     """Test OpenClose trait support for cover domain."""
     assert helpers.get_google_type(cover.DOMAIN, None) is not None
     assert trait.OpenCloseTrait.supported(
@@ -2187,7 +2187,7 @@ async def test_openclose_binary_sensor(opp, device_class):
     assert trt.query_attributes() == {"openPercent": 0}
 
 
-async def test_volume_media_player.opp):
+async def test_volume_media_player(opp):
     """Test volume trait support for media player domain."""
     assert helpers.get_google_type(media_player.DOMAIN, None) is not None
     assert trait.VolumeTrait.supported(
@@ -2241,7 +2241,7 @@ async def test_volume_media_player.opp):
     }
 
 
-async def test_volume_media_player_relative.opp):
+async def test_volume_media_player_relative(opp):
     """Test volume trait support for relative-volume-only media players."""
     assert trait.VolumeTrait.supported(
         media_player.DOMAIN,
@@ -2308,7 +2308,7 @@ async def test_volume_media_player_relative.opp):
         await trt.execute(trait.COMMAND_MUTE, BASIC_DATA, {"mute": True}, {})
 
 
-async def test_media_player_mute.opp):
+async def test_media_player_mute(opp):
     """Test volume trait support for muting."""
     assert trait.VolumeTrait.supported(
         media_player.DOMAIN,
@@ -2369,7 +2369,7 @@ async def test_media_player_mute.opp):
     }
 
 
-async def test_temperature_setting_sensor.opp):
+async def test_temperature_setting_sensor(opp):
     """Test TemperatureSetting trait support for temperature sensor."""
     assert (
         helpers.get_google_type(sensor.DOMAIN, sensor.DEVICE_CLASS_TEMPERATURE)
@@ -2416,7 +2416,7 @@ async def test_temperature_setting_sensor_data(opp, unit_in, unit_out, state, am
     opp.config.units.temperature_unit = TEMP_CELSIUS
 
 
-async def test_humidity_setting_sensor.opp):
+async def test_humidity_setting_sensor(opp):
     """Test HumiditySetting trait support for humidity sensor."""
     assert (
         helpers.get_google_type(sensor.DOMAIN, sensor.DEVICE_CLASS_HUMIDITY) is not None
@@ -2451,7 +2451,7 @@ async def test_humidity_setting_sensor_data(opp, state, ambient):
     assert err.value.code == const.ERR_NOT_SUPPORTED
 
 
-async def test_transport_control.opp):
+async def test_transport_control(opp):
     """Test the TransportControlTrait."""
     assert helpers.get_google_type(media_player.DOMAIN, None) is not None
 

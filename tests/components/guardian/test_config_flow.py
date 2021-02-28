@@ -109,7 +109,7 @@ async def test_step_zeroconf(opp, ping_client):
     }
 
 
-async def test_step_zeroconf_already_in_progress.opp):
+async def test_step_zeroconf_already_in_progress(opp):
     """Test the zeroconf step aborting because it's already in progress."""
     zeroconf_data = {
         "host": "192.168.1.100",
@@ -133,7 +133,7 @@ async def test_step_zeroconf_already_in_progress.opp):
     assert result["reason"] == "already_in_progress"
 
 
-async def test_step_zeroconf_no_discovery_info.opp):
+async def test_step_zeroconf_no_discovery_info(opp):
     """Test the zeroconf step aborting because no discovery info came along."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_ZEROCONF}

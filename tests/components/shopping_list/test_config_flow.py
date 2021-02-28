@@ -5,7 +5,7 @@ from openpeerpower.components.shopping_list.const import DOMAIN
 from openpeerpower.config_entries import SOURCE_IMPORT, SOURCE_USER
 
 
-async def test_import.opp):
+async def test_import(opp):
     """Test entry will be imported."""
 
     result = await opp.config_entries.flow.async_init(
@@ -14,7 +14,7 @@ async def test_import.opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
 
-async def test_user.opp):
+async def test_user(opp):
     """Test we can start a config flow."""
 
     result = await opp.config_entries.flow.async_init(
@@ -25,7 +25,7 @@ async def test_user.opp):
     assert result["step_id"] == "user"
 
 
-async def test_user_confirm.opp):
+async def test_user_confirm(opp):
     """Test we can finish a config flow."""
 
     result = await opp.config_entries.flow.async_init(

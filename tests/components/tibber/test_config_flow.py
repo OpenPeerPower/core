@@ -16,7 +16,7 @@ def tibber_setup_fixture():
         yield
 
 
-async def test_show_config_form.opp):
+async def test_show_config_form(opp):
     """Test show configuration form."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
@@ -26,7 +26,7 @@ async def test_show_config_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_create_entry.opp):
+async def test_create_entry(opp):
     """Test create entry from user input."""
     test_data = {
         CONF_ACCESS_TOKEN: "valid",

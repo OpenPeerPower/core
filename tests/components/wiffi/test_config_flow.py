@@ -116,7 +116,7 @@ async def test_form_start_server_failed(opp, start_server_failed):
     assert result2["reason"] == "start_server_failed"
 
 
-async def test_option_flow.opp):
+async def test_option_flow(opp):
     """Test option flow."""
     entry = MockConfigEntry(domain=DOMAIN, data=MOCK_CONFIG)
     entry.add_to_opp(opp)

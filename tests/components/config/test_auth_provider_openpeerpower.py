@@ -268,7 +268,7 @@ async def test_change_password_wrong_pw(
 ):
     """Test that change password fails with invalid password."""
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     await client.send_json(
         {
             "id": 6,
@@ -288,7 +288,7 @@ async def test_change_password_wrong_pw(
 async def test_change_password_no_creds(opp, opp_ws_client, opp_admin_user):
     """Test that change password fails with no credentials."""
     opp.admin_user.credentials.clear()
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {
@@ -306,7 +306,7 @@ async def test_change_password_no_creds(opp, opp_ws_client, opp_admin_user):
 
 async def test_admin_change_password_not_owner(opp, opp_ws_client, auth_provider):
     """Test that change password fails when not owner."""
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {

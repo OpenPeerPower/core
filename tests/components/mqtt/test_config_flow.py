@@ -89,7 +89,7 @@ async def test_manual_config_set(opp, mock_try_connection, mock_finish_setup):
     assert result["type"] == "abort"
 
 
-async def test_user_single_instance.opp):
+async def test_user_single_instance(opp):
     """Test we only allow a single config flow."""
     MockConfigEntry(domain="mqtt").add_to_opp(opp)
 
@@ -100,7 +100,7 @@ async def test_user_single_instance.opp):
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test.oppio_single_instance.opp):
+async def test.oppio_single_instance(opp):
     """Test we only allow a single config flow."""
     MockConfigEntry(domain="mqtt").add_to_opp(opp)
 

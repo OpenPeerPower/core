@@ -5,7 +5,7 @@ from openpeerpower.helpers import intent
 from tests.common import async_mock_service
 
 
-async def test_intent_script.opp):
+async def test_intent_script(opp):
     """Test intent scripts work."""
     calls = async_mock_service(opp, "test", "service")
 

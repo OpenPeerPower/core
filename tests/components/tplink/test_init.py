@@ -19,7 +19,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import MockConfigEntry, mock_coro
 
 
-async def test_creating_entry_tries_discover.opp):
+async def test_creating_entry_tries_discover(opp):
     """Test setting up does discovery."""
     with patch(
         "openpeerpower.components.tplink.async_setup_entry",
@@ -43,7 +43,7 @@ async def test_creating_entry_tries_discover.opp):
     assert len(mock_setup.mock_calls) == 1
 
 
-async def test_configuring_tplink_causes_discovery.opp):
+async def test_configuring_tplink_causes_discovery(opp):
     """Test that specifying empty config does discovery."""
     with patch("openpeerpower.components.tplink.common.Discover.discover") as discover:
         discover.return_value = {"host": 1234}
@@ -109,7 +109,7 @@ class UnknownSmartDevice(SmartDevice):
         pass
 
 
-async def test_configuring_devices_from_multiple_sources.opp):
+async def test_configuring_devices_from_multiple_sources(opp):
     """Test static and discover devices are not duplicated."""
     with patch(
         "openpeerpower.components.tplink.common.Discover.discover"
@@ -148,7 +148,7 @@ async def test_configuring_devices_from_multiple_sources.opp):
         assert len(opp.data[tplink.DOMAIN][CONF_SWITCH]) == 2
 
 
-async def test_is_dimmable.opp):
+async def test_is_dimmable(opp):
     """Test that is_dimmable switches are correctly added as lights."""
     with patch(
         "openpeerpower.components.tplink.common.Discover.discover"
@@ -172,7 +172,7 @@ async def test_is_dimmable.opp):
     assert not opp.data[tplink.DOMAIN][CONF_SWITCH]
 
 
-async def test_configuring_discovery_disabled.opp):
+async def test_configuring_discovery_disabled(opp):
     """Test that discover does not get called when disabled."""
     with patch(
         "openpeerpower.components.tplink.async_setup_entry",
@@ -189,7 +189,7 @@ async def test_configuring_discovery_disabled.opp):
     assert mock_setup.call_count == 1
 
 
-async def test_platforms_are_initialized.opp):
+async def test_platforms_are_initialized(opp):
     """Test that platforms are initialized per configuration array."""
     config = {
         tplink.DOMAIN: {
@@ -221,7 +221,7 @@ async def test_platforms_are_initialized.opp):
     assert switch_setup.call_count == 1
 
 
-async def test_no_config_creates_no_entry.opp):
+async def test_no_config_creates_no_entry(opp):
     """Test for when there is no tplink in config."""
     with patch(
         "openpeerpower.components.tplink.async_setup_entry",

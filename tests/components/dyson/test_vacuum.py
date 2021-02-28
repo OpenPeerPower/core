@@ -45,7 +45,7 @@ def async_get_device(state=Dyson360EyeMode.FULL_CLEAN_RUNNING) -> Dyson360Eye:
 
 async def test_state.opp: OpenPeerPower, device: Dyson360Eye) -> None:
     """Test the state of the vacuum."""
-    er = await entity_registry.async_get_registry.opp)
+    er = await entity_registry.async_get_registry(opp)
     assert er.async_get(ENTITY_ID).unique_id == SERIAL
 
     state = opp.states.get(ENTITY_ID)

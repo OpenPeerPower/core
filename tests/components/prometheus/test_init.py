@@ -212,7 +212,7 @@ def mock_client_fixture():
 
 
 @pytest.fixture
-def mock_bus.opp):
+def mock_bus(opp):
     """Mock the event bus listener."""
     opp.bus.listen = mock.MagicMock()
 

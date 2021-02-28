@@ -29,7 +29,7 @@ def mock_legacy_time(legacy_patchable_time):
     yield
 
 
-async def test_setup_platform.opp):
+async def test_setup_platform(opp):
     """Test setup of demo platform via configuration."""
     utcnow = dt_util.utcnow()
     # Patching 'utcnow' to gain more control over the timed update.

@@ -3,10 +3,10 @@
 from .util import async_init_integration
 
 
-async def test_air_con.opp):
+async def test_air_con(opp):
     """Test creation of aircon climate."""
 
-    await async_init_integration.opp)
+    await async_init_integration(opp)
 
     state = opp.states.get("climate.air_conditioning")
     assert state.state == "cool"
@@ -32,10 +32,10 @@ async def test_air_con.opp):
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
 
-async def test_heater.opp):
+async def test_heater(opp):
     """Test creation of heater climate."""
 
-    await async_init_integration.opp)
+    await async_init_integration(opp)
 
     state = opp.states.get("climate.baseboard_heater")
     assert state.state == "heat"
@@ -59,10 +59,10 @@ async def test_heater.opp):
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
 
-async def test_smartac_with_swing.opp):
+async def test_smartac_with_swing(opp):
     """Test creation of smart ac with swing climate."""
 
-    await async_init_integration.opp)
+    await async_init_integration(opp)
 
     state = opp.states.get("climate.air_conditioning_with_swing")
     assert state.state == "auto"

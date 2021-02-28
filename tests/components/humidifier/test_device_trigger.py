@@ -24,15 +24,15 @@ from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 
 
 @pytest.fixture
-def device_reg.opp):
+def device_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_device_registry.opp)
+    return mock_device_registry(opp)
 
 
 @pytest.fixture
-def entity_reg.opp):
+def entity_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_registry.opp)
+    return mock_registry(opp)
 
 
 @pytest.fixture
@@ -280,7 +280,7 @@ async def test_invalid_config(opp, calls):
     assert len(calls) == 0
 
 
-async def test_get_trigger_capabilities_on.opp):
+async def test_get_trigger_capabilities_on(opp):
     """Test we get the expected capabilities from a humidifier trigger."""
     capabilities = await device_trigger.async_get_trigger_capabilities(
         opp,
@@ -300,7 +300,7 @@ async def test_get_trigger_capabilities_on.opp):
     ) == [{"name": "for", "optional": True, "type": "positive_time_period_dict"}]
 
 
-async def test_get_trigger_capabilities_off.opp):
+async def test_get_trigger_capabilities_off(opp):
     """Test we get the expected capabilities from a humidifier trigger."""
     capabilities = await device_trigger.async_get_trigger_capabilities(
         opp,
@@ -320,7 +320,7 @@ async def test_get_trigger_capabilities_off.opp):
     ) == [{"name": "for", "optional": True, "type": "positive_time_period_dict"}]
 
 
-async def test_get_trigger_capabilities_humidity.opp):
+async def test_get_trigger_capabilities_humidity(opp):
     """Test we get the expected capabilities from a humidifier trigger."""
     capabilities = await device_trigger.async_get_trigger_capabilities(
         opp,

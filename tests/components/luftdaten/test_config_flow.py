@@ -34,7 +34,7 @@ async def test_communication_error(opp):
         assert result["errors"] == {CONF_SENSOR_ID: "invalid_sensor"}
 
 
-async def test_invalid_sensor.opp):
+async def test_invalid_sensor(opp):
     """Test that an invalid sensor throws an error."""
     conf = {CONF_SENSOR_ID: "12345abcde"}
 
@@ -48,7 +48,7 @@ async def test_invalid_sensor.opp):
         assert result["errors"] == {CONF_SENSOR_ID: "invalid_sensor"}
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     flow = config_flow.LuftDatenFlowHandler()
     flow.opp = opp
@@ -59,7 +59,7 @@ async def test_show_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_step_import.opp):
+async def test_step_import(opp):
     """Test that the import step works."""
     conf = {CONF_SENSOR_ID: "12345abcde", CONF_SHOW_ON_MAP: False}
 
@@ -80,7 +80,7 @@ async def test_step_import.opp):
         }
 
 
-async def test_step_user.opp):
+async def test_step_user(opp):
     """Test that the user step works."""
     conf = {
         CONF_SENSOR_ID: "12345abcde",

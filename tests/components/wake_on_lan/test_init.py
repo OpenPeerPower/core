@@ -8,7 +8,7 @@ from openpeerpower.components.wake_on_lan import DOMAIN, SERVICE_SEND_MAGIC_PACK
 from openpeerpower.setup import async_setup_component
 
 
-async def test_send_magic_packet.opp):
+async def test_send_magic_packet(opp):
     """Test of send magic packet service call."""
     with patch("openpeerpower.components.wake_on_lan.wakeonlan") as mocked_wakeonlan:
         mac = "aa:bb:cc:dd:ee:ff"

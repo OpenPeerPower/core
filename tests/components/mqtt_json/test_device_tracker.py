@@ -34,7 +34,7 @@ def setup_comp(opp, mqtt_mock):
         os.remove(yaml_devices)
 
 
-async def test_ensure_device_tracker_platform_validation.opp):
+async def test_ensure_device_tracker_platform_validation(opp):
     """Test if platform validation was done."""
 
     async def mock_setup_scanner(opp, config, see, discovery_info=None):
@@ -57,7 +57,7 @@ async def test_ensure_device_tracker_platform_validation.opp):
         assert mock_sp.call_count == 1
 
 
-async def test_json_message.opp):
+async def test_json_message(opp):
     """Test json location message."""
     dev_id = "zanzito"
     topic = "location/zanzito"
@@ -116,7 +116,7 @@ async def test_incomplete_message(opp, caplog):
     )
 
 
-async def test_single_level_wildcard_topic.opp):
+async def test_single_level_wildcard_topic(opp):
     """Test single level wildcard topic."""
     dev_id = "zanzito"
     subscription = "location/+/zanzito"
@@ -135,7 +135,7 @@ async def test_single_level_wildcard_topic.opp):
     assert state.attributes.get("longitude") == 1.0
 
 
-async def test_multi_level_wildcard_topic.opp):
+async def test_multi_level_wildcard_topic(opp):
     """Test multi level wildcard topic."""
     dev_id = "zanzito"
     subscription = "location/#"
@@ -154,7 +154,7 @@ async def test_multi_level_wildcard_topic.opp):
     assert state.attributes.get("longitude") == 1.0
 
 
-async def test_single_level_wildcard_topic_not_matching.opp):
+async def test_single_level_wildcard_topic_not_matching(opp):
     """Test not matching single level wildcard topic."""
     dev_id = "zanzito"
     entity_id = f"{DT_DOMAIN}.{dev_id}"
@@ -172,7 +172,7 @@ async def test_single_level_wildcard_topic_not_matching.opp):
     assert opp.states.get(entity_id) is None
 
 
-async def test_multi_level_wildcard_topic_not_matching.opp):
+async def test_multi_level_wildcard_topic_not_matching(opp):
     """Test not matching multi level wildcard topic."""
     dev_id = "zanzito"
     entity_id = f"{DT_DOMAIN}.{dev_id}"

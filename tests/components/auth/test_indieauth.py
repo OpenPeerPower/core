@@ -147,7 +147,7 @@ async def test_find_link_tag(opp, mock_session):
     )
     redirect_uris = await indieauth.fetch_redirect_uris(opp, "http://127.0.0.1:8000")
 
-    assert redirect_uris == [.opp://oauth2_redirect", "http://127.0.0.1:8000/beer"]
+    assert redirect_uris == ["opp://oauth2_redirect", "http://127.0.0.1:8000/beer"]
 
 
 async def test_find_link_tag_max_size(opp, mock_session):

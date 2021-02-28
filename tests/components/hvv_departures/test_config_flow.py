@@ -26,7 +26,7 @@ FIXTURE_OPTIONS = json.loads(load_fixture("hvv_departures/options.json"))
 FIXTURE_DEPARTURE_LIST = json.loads(load_fixture("hvv_departures/departure_list.json"))
 
 
-async def test_user_flow.opp):
+async def test_user_flow(opp):
     """Test that config flow works."""
 
     with patch(
@@ -92,7 +92,7 @@ async def test_user_flow.opp):
         }
 
 
-async def test_user_flow_no_results.opp):
+async def test_user_flow_no_results(opp):
     """Test that config flow works when there are no results."""
 
     with patch(
@@ -132,7 +132,7 @@ async def test_user_flow_no_results.opp):
         assert result_station["errors"]["base"] == "no_results"
 
 
-async def test_user_flow_invalid_auth.opp):
+async def test_user_flow_invalid_auth(opp):
     """Test that config flow handles invalid auth."""
 
     with patch(
@@ -159,7 +159,7 @@ async def test_user_flow_invalid_auth.opp):
         assert result_user["errors"] == {"base": "invalid_auth"}
 
 
-async def test_user_flow_cannot_connect.opp):
+async def test_user_flow_cannot_connect(opp):
     """Test that config flow handles connection errors."""
 
     with patch(
@@ -182,7 +182,7 @@ async def test_user_flow_cannot_connect.opp):
         assert result_user["errors"] == {"base": "cannot_connect"}
 
 
-async def test_user_flow_station.opp):
+async def test_user_flow_station(opp):
     """Test that config flow handles empty data on step station."""
 
     with patch(
@@ -216,7 +216,7 @@ async def test_user_flow_station.opp):
         assert result_station["step_id"] == "station"
 
 
-async def test_user_flow_station_select.opp):
+async def test_user_flow_station_select(opp):
     """Test that config flow handles empty data on step station_select."""
 
     with patch(
@@ -251,7 +251,7 @@ async def test_user_flow_station_select.opp):
         assert result_station_select["step_id"] == "station_select"
 
 
-async def test_options_flow.opp):
+async def test_options_flow(opp):
     """Test that options flow works."""
 
     config_entry = MockConfigEntry(
@@ -302,7 +302,7 @@ async def test_options_flow.opp):
         }
 
 
-async def test_options_flow_invalid_auth.opp):
+async def test_options_flow_invalid_auth(opp):
     """Test that options flow works."""
 
     config_entry = MockConfigEntry(
@@ -343,7 +343,7 @@ async def test_options_flow_invalid_auth.opp):
         assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_options_flow_cannot_connect.opp):
+async def test_options_flow_cannot_connect(opp):
     """Test that options flow works."""
 
     config_entry = MockConfigEntry(

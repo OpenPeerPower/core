@@ -74,7 +74,7 @@ def setup_mock_foscam_camera(mock_foscam_camera):
     mock_foscam_camera.side_effect = configure_mock_on_init
 
 
-async def test_user_valid.opp):
+async def test_user_valid(opp):
     """Test valid config from user input."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -109,7 +109,7 @@ async def test_user_valid.opp):
         assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_user_invalid_auth.opp):
+async def test_user_invalid_auth(opp):
     """Test we handle invalid auth from user input."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -138,7 +138,7 @@ async def test_user_invalid_auth.opp):
         assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_user_cannot_connect.opp):
+async def test_user_cannot_connect(opp):
     """Test we handle cannot connect error from user input."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -167,7 +167,7 @@ async def test_user_cannot_connect.opp):
         assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_user_invalid_response.opp):
+async def test_user_invalid_response(opp):
     """Test we handle invalid response error from user input."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -198,7 +198,7 @@ async def test_user_invalid_response.opp):
         assert result["errors"] == {"base": "invalid_response"}
 
 
-async def test_user_already_configured.opp):
+async def test_user_already_configured(opp):
     """Test we handle already configured from user input."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -230,7 +230,7 @@ async def test_user_already_configured.opp):
         assert result["reason"] == "already_configured"
 
 
-async def test_user_unknown_exception.opp):
+async def test_user_unknown_exception(opp):
     """Test we handle unknown exceptions from user input."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -256,7 +256,7 @@ async def test_user_unknown_exception.opp):
         assert result["errors"] == {"base": "unknown"}
 
 
-async def test_import_user_valid.opp):
+async def test_import_user_valid(opp):
     """Test valid config from import."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -286,7 +286,7 @@ async def test_import_user_valid.opp):
         assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_import_user_valid_with_name.opp):
+async def test_import_user_valid_with_name(opp):
     """Test valid config with extra name from import."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -320,7 +320,7 @@ async def test_import_user_valid_with_name.opp):
         assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_import_invalid_auth.opp):
+async def test_import_invalid_auth(opp):
     """Test we handle invalid auth from import."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -344,7 +344,7 @@ async def test_import_invalid_auth.opp):
         assert result["reason"] == "invalid_auth"
 
 
-async def test_import_cannot_connect.opp):
+async def test_import_cannot_connect(opp):
     """Test we handle cannot connect error from import."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -368,7 +368,7 @@ async def test_import_cannot_connect.opp):
         assert result["reason"] == "cannot_connect"
 
 
-async def test_import_invalid_response.opp):
+async def test_import_invalid_response(opp):
     """Test we handle invalid response error from import."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -394,7 +394,7 @@ async def test_import_invalid_response.opp):
         assert result["reason"] == "invalid_response"
 
 
-async def test_import_already_configured.opp):
+async def test_import_already_configured(opp):
     """Test we handle already configured from import."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -421,7 +421,7 @@ async def test_import_already_configured.opp):
         assert result["reason"] == "already_configured"
 
 
-async def test_import_unknown_exception.opp):
+async def test_import_unknown_exception(opp):
     """Test we handle unknown exceptions from import."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 

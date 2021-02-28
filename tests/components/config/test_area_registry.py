@@ -10,13 +10,13 @@ from tests.common import mock_area_registry
 def client.opp, opp_ws_client):
     """Fixture that can interact with the config manager API."""
     opp.loop.run_until_complete(area_registry.async_setup_opp))
-    yield.opp.loop.run_until_complete.opp_ws_client.opp))
+    yield.opp.loop.run_until_complete.opp_ws_client(opp))
 
 
 @pytest.fixture
 def registry.opp):
     """Return an empty, loaded, registry."""
-    return mock_area_registry.opp)
+    return mock_area_registry(opp)
 
 
 async def test_list_areas(opp, client, registry):

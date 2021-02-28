@@ -245,7 +245,7 @@ async def test_template_syntax_error(opp):
     assert opp.states.async_all() == []
 
 
-async def test_template_attribute_missing.opp):
+async def test_template_attribute_missing(opp):
     """Test missing attribute template."""
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
@@ -272,7 +272,7 @@ async def test_template_attribute_missing.opp):
     assert state.state == STATE_UNAVAILABLE
 
 
-async def test_invalid_name_does_not_create.opp):
+async def test_invalid_name_does_not_create(opp):
     """Test invalid name."""
     with assert_setup_component(0, sensor.DOMAIN):
         assert await async_setup_component(
@@ -297,7 +297,7 @@ async def test_invalid_name_does_not_create.opp):
     assert opp.states.async_all() == []
 
 
-async def test_invalid_sensor_does_not_create.opp):
+async def test_invalid_sensor_does_not_create(opp):
     """Test invalid sensor."""
     with assert_setup_component(0, sensor.DOMAIN):
         assert await async_setup_component(
@@ -317,7 +317,7 @@ async def test_invalid_sensor_does_not_create.opp):
     assert opp.states.async_all() == []
 
 
-async def test_no_sensors_does_not_create.opp):
+async def test_no_sensors_does_not_create(opp):
     """Test no sensors."""
     with assert_setup_component(0, sensor.DOMAIN):
         assert await async_setup_component(
@@ -331,7 +331,7 @@ async def test_no_sensors_does_not_create.opp):
     assert opp.states.async_all() == []
 
 
-async def test_missing_template_does_not_create.opp):
+async def test_missing_template_does_not_create(opp):
     """Test missing template."""
     with assert_setup_component(0, sensor.DOMAIN):
         assert await async_setup_component(
@@ -356,7 +356,7 @@ async def test_missing_template_does_not_create.opp):
     assert opp.states.async_all() == []
 
 
-async def test_setup_invalid_device_class.opp):
+async def test_setup_invalid_device_class(opp):
     """Test setup with invalid device_class."""
     with assert_setup_component(0, sensor.DOMAIN):
         assert await async_setup_component(
@@ -376,7 +376,7 @@ async def test_setup_invalid_device_class.opp):
         )
 
 
-async def test_setup_valid_device_class.opp):
+async def test_setup_valid_device_class(opp):
     """Test setup with valid device_class."""
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
@@ -406,7 +406,7 @@ async def test_setup_valid_device_class.opp):
 
 
 @pytest.mark.parametrize("load_registries", [False])
-async def test_creating_sensor_loads_group.opp):
+async def test_creating_sensor_loads_group(opp):
     """Test setting up template sensor loads group component first."""
     order = []
     after_dep_event = Event()
@@ -446,7 +446,7 @@ async def test_creating_sensor_loads_group.opp):
     assert order == ["group", "sensor.template"]
 
 
-async def test_available_template_with_entities.opp):
+async def test_available_template_with_entities(opp):
     """Test availability tempalates with values from other entities."""
     opp.states.async_set("sensor.availability_sensor", STATE_OFF)
     with assert_setup_component(1, sensor.DOMAIN):
@@ -630,7 +630,7 @@ async def test_no_template_match_all(opp, caplog):
     assert opp.states.get("sensor.invalid_attribute").state == "hello"
 
 
-async def test_unique_id.opp):
+async def test_unique_id(opp):
     """Test unique_id option only creates one sensor per id."""
     await async_setup_component(
         opp,
@@ -659,7 +659,7 @@ async def test_unique_id.opp):
     assert len(opp.states.async_all()) == 1
 
 
-async def test_sun_renders_once_per_sensor.opp):
+async def test_sun_renders_once_per_sensor(opp):
     """Test sun change renders the template only once per sensor."""
 
     now = dt_util.utcnow()
@@ -951,7 +951,7 @@ async def test_self_referencing_icon_with_no_loop(opp, caplog):
     assert "Template loop detected" not in caplog.text
 
 
-async def test_duplicate_templates.opp):
+async def test_duplicate_templates(opp):
     """Test template entity where the value and friendly name as the same template."""
     opp.states.async_set("sensor.test_state", "Abc")
 

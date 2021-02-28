@@ -25,7 +25,7 @@ def mock_send_magic_packet():
         yield mock_send
 
 
-async def test_valid_hostname.opp):
+async def test_valid_hostname(opp):
     """Test with valid hostname."""
     assert await async_setup_component(
         opp,
@@ -66,7 +66,7 @@ async def test_valid_hostname.opp):
         assert STATE_ON == state.state
 
 
-async def test_valid_hostname_windows.opp):
+async def test_valid_hostname_windows(opp):
     """Test with valid hostname on windows."""
     assert await async_setup_component(
         opp,
@@ -197,7 +197,7 @@ async def test_broadcast_config_port(opp, mock_send_magic_packet):
         mock_send_magic_packet.assert_called_with(mac, port=port)
 
 
-async def test_off_script.opp):
+async def test_off_script(opp):
     """Test with turn off script."""
 
     assert await async_setup_component(
@@ -245,7 +245,7 @@ async def test_off_script.opp):
         assert len(calls) == 1
 
 
-async def test_invalid_hostname_windows.opp):
+async def test_invalid_hostname_windows(opp):
     """Test with invalid hostname on windows."""
 
     assert await async_setup_component(

@@ -140,7 +140,7 @@ async def activate.opp, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(scene.DOMAIN, SERVICE_TURN_ON, data, blocking=True)
 
 
-async def test_services_registered.opp):
+async def test_services_registered(opp):
     """Test we register services with empty config."""
     assert await async_setup_component(opp, "scene", {})
     assert opp.services.has_service("scene", "reload")

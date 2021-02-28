@@ -15,7 +15,7 @@ from tests.common import MockConfigEntry, async_fire_time_changed
 
 
 @pytest.fixture(autouse=True)
-def patch.opp_state.opp):
+def patch.opp_state(opp):
     """Mock the.opp.state to be not_running."""
     opp.state = core.CoreState.not_running
 

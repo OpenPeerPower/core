@@ -15,7 +15,7 @@ async def test_download_switch(opp, nzbget_api) -> None:
     """Test the creation and values of the download switch."""
     instance = nzbget_api.return_value
 
-    entry = await init_integration.opp)
+    entry = await init_integration(opp)
     assert entry
 
     registry = await opp.helpers.entity_registry.async_get_registry()
@@ -43,7 +43,7 @@ async def test_download_switch_services(opp, nzbget_api) -> None:
     """Test download switch services."""
     instance = nzbget_api.return_value
 
-    entry = await init_integration.opp)
+    entry = await init_integration(opp)
     entity_id = "switch.nzbgettest_download"
     assert entry
 

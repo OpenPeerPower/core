@@ -76,7 +76,7 @@ def get_mock_discovery(
     return gateway_discovery
 
 
-async def test_config_flow_user_success.opp):
+async def test_config_flow_user_success(opp):
     """Test a successful config flow initialized by the user."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -113,7 +113,7 @@ async def test_config_flow_user_success.opp):
     }
 
 
-async def test_config_flow_user_multiple_success.opp):
+async def test_config_flow_user_multiple_success(opp):
     """Test a successful config flow initialized by the user with multiple gateways discoverd."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -165,7 +165,7 @@ async def test_config_flow_user_multiple_success.opp):
     }
 
 
-async def test_config_flow_user_no_key_success.opp):
+async def test_config_flow_user_no_key_success(opp):
     """Test a successful config flow initialized by the user without a key."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -202,7 +202,7 @@ async def test_config_flow_user_no_key_success.opp):
     }
 
 
-async def test_config_flow_user_host_mac_success.opp):
+async def test_config_flow_user_host_mac_success(opp):
     """Test a successful config flow initialized by the user with a host and mac specified."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -275,7 +275,7 @@ async def test_config_flow_user_discovery_error(opp):
     assert result["errors"] == {"base": "discovery_error"}
 
 
-async def test_config_flow_user_invalid_interface.opp):
+async def test_config_flow_user_invalid_interface(opp):
     """Test a failed config flow initialized by the user with an invalid interface."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -301,7 +301,7 @@ async def test_config_flow_user_invalid_interface.opp):
     assert result["errors"] == {const.CONF_INTERFACE: "invalid_interface"}
 
 
-async def test_config_flow_user_invalid_host.opp):
+async def test_config_flow_user_invalid_host(opp):
     """Test a failed config flow initialized by the user with an invalid host."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -331,7 +331,7 @@ async def test_config_flow_user_invalid_host.opp):
     assert result["errors"] == {"host": "invalid_host"}
 
 
-async def test_config_flow_user_invalid_mac.opp):
+async def test_config_flow_user_invalid_mac(opp):
     """Test a failed config flow initialized by the user with an invalid mac."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -361,7 +361,7 @@ async def test_config_flow_user_invalid_mac.opp):
     assert result["errors"] == {"mac": "invalid_mac"}
 
 
-async def test_config_flow_user_invalid_key.opp):
+async def test_config_flow_user_invalid_key(opp):
     """Test a failed config flow initialized by the user with an invalid key."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -396,7 +396,7 @@ async def test_config_flow_user_invalid_key.opp):
     assert result["errors"] == {const.CONF_KEY: "invalid_key"}
 
 
-async def test_zeroconf_success.opp):
+async def test_zeroconf_success(opp):
     """Test a successful zeroconf discovery of a xiaomi aqara gateway."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -439,7 +439,7 @@ async def test_zeroconf_success.opp):
     }
 
 
-async def test_zeroconf_missing_data.opp):
+async def test_zeroconf_missing_data(opp):
     """Test a failed zeroconf discovery because of missing data."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -451,7 +451,7 @@ async def test_zeroconf_missing_data.opp):
     assert result["reason"] == "not_xiaomi_aqara"
 
 
-async def test_zeroconf_unknown_device.opp):
+async def test_zeroconf_unknown_device(opp):
     """Test a failed zeroconf discovery because of a unknown device."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,

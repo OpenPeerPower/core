@@ -23,7 +23,7 @@ async def test_setup_with_config(opp):
         assert await async_setup_component(opp, speedtestdotnet.DOMAIN, config)
 
 
-async def test_successful_config_entry.opp):
+async def test_successful_config_entry(opp):
     """Test that SpeedTestDotNet is configured successfully."""
 
     entry = MockConfigEntry(
@@ -45,7 +45,7 @@ async def test_successful_config_entry.opp):
     )
 
 
-async def test_setup_failed.opp):
+async def test_setup_failed(opp):
     """Test SpeedTestDotNet failed due to an error."""
 
     entry = MockConfigEntry(
@@ -61,7 +61,7 @@ async def test_setup_failed.opp):
     assert entry.state == config_entries.ENTRY_STATE_SETUP_RETRY
 
 
-async def test_unload_entry.opp):
+async def test_unload_entry(opp):
     """Test removing SpeedTestDotNet."""
     entry = MockConfigEntry(
         domain=speedtestdotnet.DOMAIN,

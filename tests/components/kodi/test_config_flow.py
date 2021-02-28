@@ -27,7 +27,7 @@ from tests.common import MockConfigEntry
 
 
 @pytest.fixture
-async def user_flow.opp):
+async def user_flow(opp):
     """Return a user-initiated flow after filling in host info."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -413,7 +413,7 @@ async def test_form_exception_ws(opp, user_flow):
     assert result["errors"] == {"base": "unknown"}
 
 
-async def test_discovery.opp):
+async def test_discovery(opp):
     """Test discovery flow works."""
     with patch(
         "openpeerpower.components.kodi.config_flow.Kodi.ping",
@@ -455,7 +455,7 @@ async def test_discovery.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_discovery_cannot_connect_http.opp):
+async def test_discovery_cannot_connect_http(opp):
     """Test discovery aborts if cannot connect."""
     with patch(
         "openpeerpower.components.kodi.config_flow.Kodi.ping",
@@ -472,7 +472,7 @@ async def test_discovery_cannot_connect_http.opp):
     assert result["reason"] == "cannot_connect"
 
 
-async def test_discovery_cannot_connect_ws.opp):
+async def test_discovery_cannot_connect_ws(opp):
     """Test discovery aborts if cannot connect to websocket."""
     with patch(
         "openpeerpower.components.kodi.config_flow.Kodi.ping",
@@ -511,7 +511,7 @@ async def test_discovery_exception_http(opp, user_flow):
     assert result["reason"] == "unknown"
 
 
-async def test_discovery_invalid_auth.opp):
+async def test_discovery_invalid_auth(opp):
     """Test we handle invalid auth during discovery."""
     with patch(
         "openpeerpower.components.kodi.config_flow.Kodi.ping",
@@ -529,7 +529,7 @@ async def test_discovery_invalid_auth.opp):
     assert result["errors"] == {}
 
 
-async def test_discovery_duplicate_data.opp):
+async def test_discovery_duplicate_data(opp):
     """Test discovery aborts if same mDNS packet arrives."""
     with patch(
         "openpeerpower.components.kodi.config_flow.Kodi.ping",
@@ -553,7 +553,7 @@ async def test_discovery_duplicate_data.opp):
     assert result["reason"] == "already_in_progress"
 
 
-async def test_discovery_updates_unique_id.opp):
+async def test_discovery_updates_unique_id(opp):
     """Test a duplicate discovery id aborts and updates existing entry."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -575,7 +575,7 @@ async def test_discovery_updates_unique_id.opp):
     assert entry.data["name"] == "hostname"
 
 
-async def test_discovery_without_unique_id.opp):
+async def test_discovery_without_unique_id(opp):
     """Test a discovery flow with no unique id aborts."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY_WO_UUID
@@ -585,7 +585,7 @@ async def test_discovery_without_unique_id.opp):
     assert result["reason"] == "no_uuid"
 
 
-async def test_form_import.opp):
+async def test_form_import(opp):
     """Test we get the form with import source."""
     with patch(
         "openpeerpower.components.kodi.config_flow.Kodi.ping",
@@ -614,7 +614,7 @@ async def test_form_import.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_import_invalid_auth.opp):
+async def test_form_import_invalid_auth(opp):
     """Test we handle invalid auth on import."""
     with patch(
         "openpeerpower.components.kodi.config_flow.Kodi.ping",
@@ -633,7 +633,7 @@ async def test_form_import_invalid_auth.opp):
     assert result["reason"] == "invalid_auth"
 
 
-async def test_form_import_cannot_connect.opp):
+async def test_form_import_cannot_connect(opp):
     """Test we handle cannot connect on import."""
     with patch(
         "openpeerpower.components.kodi.config_flow.Kodi.ping",
@@ -652,7 +652,7 @@ async def test_form_import_cannot_connect.opp):
     assert result["reason"] == "cannot_connect"
 
 
-async def test_form_import_exception.opp):
+async def test_form_import_exception(opp):
     """Test we handle unknown exception on import."""
     with patch(
         "openpeerpower.components.kodi.config_flow.Kodi.ping",

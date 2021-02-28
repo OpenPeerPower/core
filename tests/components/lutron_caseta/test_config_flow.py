@@ -59,7 +59,7 @@ class MockBridge:
         self.is_currently_connected = False
 
 
-async def test_bridge_import_flow.opp):
+async def test_bridge_import_flow(opp):
     """Test a bridge entry gets created and set up during the import flow."""
 
     entry_mock_data = {
@@ -92,7 +92,7 @@ async def test_bridge_import_flow.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_bridge_cannot_connect.opp):
+async def test_bridge_cannot_connect(opp):
     """Test checking for connection and cannot_connect error."""
 
     entry_mock_data = {
@@ -164,7 +164,7 @@ async def test_bridge_invalid_ssl_error(opp):
     assert result["reason"] == CasetaConfigFlow.ABORT_REASON_CANNOT_CONNECT
 
 
-async def test_duplicate_bridge_import.opp):
+async def test_duplicate_bridge_import(opp):
     """Test that creating a bridge entry with a duplicate host errors."""
 
     entry_mock_data = {
@@ -192,7 +192,7 @@ async def test_duplicate_bridge_import.opp):
     assert len(mock_setup_entry.mock_calls) == 0
 
 
-async def test_already_configured_with_ignored.opp):
+async def test_already_configured_with_ignored(opp):
     """Test ignored entries do not break checking for existing entries."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -433,7 +433,7 @@ async def test_zeroconf_host_already_configured(opp, tmpdir):
     assert result["reason"] == "already_configured"
 
 
-async def test_zeroconf_lutron_id_already_configured.opp):
+async def test_zeroconf_lutron_id_already_configured(opp):
     """Test starting a flow from discovery when lutron id already configured."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -458,7 +458,7 @@ async def test_zeroconf_lutron_id_already_configured.opp):
     assert config_entry.data[CONF_HOST] == "1.1.1.1"
 
 
-async def test_zeroconf_not_lutron_device.opp):
+async def test_zeroconf_not_lutron_device(opp):
     """Test starting a flow from discovery when it is not a lutron device."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 

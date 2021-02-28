@@ -7,7 +7,7 @@ from openpeerpower.setup import async_setup_component
 import openpeerpower.util.dt as dt_util
 
 
-async def test_state.opp):
+async def test_state(opp):
     """Test integration sensor state."""
     config = {
         "sensor": {
@@ -39,7 +39,7 @@ async def test_state.opp):
     assert state.attributes.get("unit_of_measurement") == ENERGY_KILO_WATT_HOUR
 
 
-async def test_trapezoidal.opp):
+async def test_trapezoidal(opp):
     """Test integration sensor state."""
     config = {
         "sensor": {
@@ -72,7 +72,7 @@ async def test_trapezoidal.opp):
     assert state.attributes.get("unit_of_measurement") == ENERGY_KILO_WATT_HOUR
 
 
-async def test_left.opp):
+async def test_left(opp):
     """Test integration sensor state with left reimann method."""
     config = {
         "sensor": {
@@ -106,7 +106,7 @@ async def test_left.opp):
     assert state.attributes.get("unit_of_measurement") == ENERGY_KILO_WATT_HOUR
 
 
-async def test_right.opp):
+async def test_right(opp):
     """Test integration sensor state with left reimann method."""
     config = {
         "sensor": {
@@ -140,7 +140,7 @@ async def test_right.opp):
     assert state.attributes.get("unit_of_measurement") == ENERGY_KILO_WATT_HOUR
 
 
-async def test_prefix.opp):
+async def test_prefix(opp):
     """Test integration sensor state using a power source."""
     config = {
         "sensor": {
@@ -173,7 +173,7 @@ async def test_prefix.opp):
     assert state.attributes.get("unit_of_measurement") == ENERGY_KILO_WATT_HOUR
 
 
-async def test_suffix.opp):
+async def test_suffix(opp):
     """Test integration sensor state using a network counter source."""
     config = {
         "sensor": {

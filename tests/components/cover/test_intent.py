@@ -10,9 +10,9 @@ from openpeerpower.helpers import intent
 from tests.common import async_mock_service
 
 
-async def test_open_cover_intent.opp):
+async def test_open_cover_intent(opp):
     """Test OppOpenCover intent."""
-    await cover_intent.async_setup_intents.opp)
+    await cover_intent.async_setup_intents(opp)
 
     opp.states.async_set("cover.garage_door", "closed")
     calls = async_mock_service(opp, "cover", SERVICE_OPEN_COVER)
@@ -30,9 +30,9 @@ async def test_open_cover_intent.opp):
     assert call.data == {"entity_id": "cover.garage_door"}
 
 
-async def test_close_cover_intent.opp):
+async def test_close_cover_intent(opp):
     """Test OppCloseCover intent."""
-    await cover_intent.async_setup_intents.opp)
+    await cover_intent.async_setup_intents(opp)
 
     opp.states.async_set("cover.garage_door", "open")
     calls = async_mock_service(opp, "cover", SERVICE_CLOSE_COVER)

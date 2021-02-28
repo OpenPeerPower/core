@@ -39,7 +39,7 @@ def _patch_setup():
     )
 
 
-async def test_flow_user.opp):
+async def test_flow_user(opp):
     """Test user initialized flow."""
     mocked_yeti = await _create_mocked_yeti()
     with _patch_config_flow_yeti(mocked_yeti), _patch_setup():
@@ -56,7 +56,7 @@ async def test_flow_user.opp):
         assert result["data"] == CONF_DATA
 
 
-async def test_flow_user_already_configured.opp):
+async def test_flow_user_already_configured(opp):
     """Test user initialized flow with duplicate server."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -77,7 +77,7 @@ async def test_flow_user_already_configured.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_flow_user_cannot_connect.opp):
+async def test_flow_user_cannot_connect(opp):
     """Test user initialized flow with unreachable server."""
     mocked_yeti = await _create_mocked_yeti(True)
     with _patch_config_flow_yeti(mocked_yeti) as yetimock:
@@ -90,7 +90,7 @@ async def test_flow_user_cannot_connect.opp):
         assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_flow_user_invalid_host.opp):
+async def test_flow_user_invalid_host(opp):
     """Test user initialized flow with invalid server."""
     mocked_yeti = await _create_mocked_yeti(True)
     with _patch_config_flow_yeti(mocked_yeti) as yetimock:

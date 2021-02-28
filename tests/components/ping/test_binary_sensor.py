@@ -7,7 +7,7 @@ from openpeerpower.components.ping import DOMAIN
 from openpeerpower.const import SERVICE_RELOAD
 
 
-async def test_reload.opp):
+async def test_reload(opp):
     """Verify we can reload trend sensors."""
 
     await setup.async_setup_component(

@@ -36,7 +36,7 @@ async def test_show_config_form_default_values():
     assert result["step_id"] == "user"
 
 
-async def test_flow_with_home_location.opp):
+async def test_flow_with_home_location(opp):
     """Test config flow .
 
     Tests the flow when a default location is configured
@@ -124,7 +124,7 @@ async def test_flow_entry_config_entry_already_exists():
         assert len(flow._errors) == 1
 
 
-async def test_config_entry_migration.opp):
+async def test_config_entry_migration(opp):
     """Tests config entry without mode in unique_id can be migrated."""
     ipma_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -165,7 +165,7 @@ async def test_config_entry_migration.opp):
         assert await async_setup_component(opp, DOMAIN, {})
         await opp.async_block_till_done()
 
-        ent_reg = await entity_registry.async_get_registry.opp)
+        ent_reg = await entity_registry.async_get_registry(opp)
 
         weather_home = ent_reg.async_get("weather.hometown")
         assert weather_home.unique_id == "0, 0, daily"

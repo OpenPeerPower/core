@@ -14,7 +14,7 @@ from tests.components.homekit_controller.common import (
 )
 
 
-async def test_lg_tv.opp):
+async def test_lg_tv(opp):
     """Test that a Koogeek LS1 can be correctly setup in HA."""
     accessories = await setup_accessories_from_file(opp, "lg_tv.json")
     config_entry, pairing = await setup_test_accessories(opp, accessories)

@@ -128,7 +128,7 @@ async def test_service_clear_txt(opp, aioclient_mock, setup_duckdns):
     assert aioclient_mock.call_count == 1
 
 
-async def test_async_track_time_interval_backoff.opp):
+async def test_async_track_time_interval_backoff(opp):
     """Test setup fails if first update fails."""
     ret_val = False
     call_count = 0

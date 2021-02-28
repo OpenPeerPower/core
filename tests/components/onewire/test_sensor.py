@@ -57,7 +57,7 @@ MOCK_COUPLERS = {
 }
 
 
-async def test_setup_minimum.opp):
+async def test_setup_minimum(opp):
     """Test old platform setup with minimum configuration."""
     config = {"sensor": {"platform": "onewire"}}
     with assert_setup_component(1, "sensor"):
@@ -65,7 +65,7 @@ async def test_setup_minimum.opp):
     await opp.async_block_till_done()
 
 
-async def test_setup_sysbus.opp):
+async def test_setup_sysbus(opp):
     """Test old platform setup with SysBus configuration."""
     config = {
         "sensor": {
@@ -78,7 +78,7 @@ async def test_setup_sysbus.opp):
     await opp.async_block_till_done()
 
 
-async def test_setup_owserver.opp):
+async def test_setup_owserver(opp):
     """Test old platform setup with OWServer configuration."""
     config = {"sensor": {"platform": "onewire", "host": "localhost"}}
     with assert_setup_component(1, "sensor"):
@@ -86,7 +86,7 @@ async def test_setup_owserver.opp):
     await opp.async_block_till_done()
 
 
-async def test_setup_owserver_with_port.opp):
+async def test_setup_owserver_with_port(opp):
     """Test old platform setup with OWServer configuration."""
     config = {"sensor": {"platform": "onewire", "host": "localhost", "port": "1234"}}
     with assert_setup_component(1, "sensor"):
@@ -99,7 +99,7 @@ async def test_setup_owserver_with_port.opp):
 async def test_sensors_on_owserver_coupler(owproxy, opp, device_id):
     """Test for 1-Wire sensors connected to DS2409 coupler."""
     await async_setup_component(opp, "persistent_notification", {})
-    entity_registry = mock_registry.opp)
+    entity_registry = mock_registry(opp)
 
     mock_coupler = MOCK_COUPLERS[device_id]
 
@@ -135,7 +135,7 @@ async def test_sensors_on_owserver_coupler(owproxy, opp, device_id):
     owproxy.return_value.read.side_effect = read_side_effect
 
     with patch("openpeerpower.components.onewire.SUPPORTED_PLATFORMS", [SENSOR_DOMAIN]):
-        await setup_onewire_patched_owserver_integration.opp)
+        await setup_onewire_patched_owserver_integration(opp)
         await opp.async_block_till_done()
 
     assert len(entity_registry.entities) == len(expected_sensors)

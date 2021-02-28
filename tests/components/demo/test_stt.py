@@ -6,7 +6,7 @@ from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture(autouse=True)
-async def setup_comp.opp):
+async def setup_comp(opp):
     """Set up demo component."""
     assert await async_setup_component(opp, stt.DOMAIN, {"stt": {"platform": "demo"}})
     await opp.async_block_till_done()

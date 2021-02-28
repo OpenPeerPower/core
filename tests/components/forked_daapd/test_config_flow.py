@@ -57,7 +57,7 @@ def config_entry_fixture():
     )
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -132,7 +132,7 @@ async def test_config_flow_no_websocket(opp, config_entry):
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
 
-async def test_config_flow_zeroconf_invalid.opp):
+async def test_config_flow_zeroconf_invalid(opp):
     """Test that an invalid zeroconf entry doesn't work."""
     # test with no discovery properties
     discovery_info = {"host": "127.0.0.1", "port": 23}
@@ -176,7 +176,7 @@ async def test_config_flow_zeroconf_invalid.opp):
     assert result["reason"] == "not_forked_daapd"
 
 
-async def test_config_flow_zeroconf_valid.opp):
+async def test_config_flow_zeroconf_valid(opp):
     """Test that a valid zeroconf entry works."""
     discovery_info = {
         "host": "192.168.1.1",

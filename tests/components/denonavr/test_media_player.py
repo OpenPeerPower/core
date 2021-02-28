@@ -53,7 +53,7 @@ def client_fixture():
         yield mock_client_class.return_value
 
 
-async def setup_denonavr.opp):
+async def setup_denonavr(opp):
     """Initialize media_player for tests."""
     entry_data = {
         CONF_HOST: TEST_HOST,
@@ -83,7 +83,7 @@ async def setup_denonavr.opp):
 
 async def test_get_command(opp, client):
     """Test generic command functionality."""
-    await setup_denonavr.opp)
+    await setup_denonavr(opp)
 
     data = {
         ATTR_ENTITY_ID: ENTITY_ID,

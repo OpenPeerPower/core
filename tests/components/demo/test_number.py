@@ -19,19 +19,19 @@ ENTITY_PWM = "number.pwm_1"
 
 
 @pytest.fixture(autouse=True)
-async def setup_demo_number.opp):
+async def setup_demo_number(opp):
     """Initialize setup demo Number entity."""
     assert await async_setup_component(opp, DOMAIN, {"number": {"platform": "demo"}})
     await opp.async_block_till_done()
 
 
-def test_setup_params.opp):
+def test_setup_params(opp):
     """Test the initial parameters."""
     state = opp.states.get(ENTITY_VOLUME)
     assert state.state == "42.0"
 
 
-def test_default_setup_params.opp):
+def test_default_setup_params(opp):
     """Test the setup with default parameters."""
     state = opp.states.get(ENTITY_VOLUME)
     assert state.attributes.get(ATTR_MIN) == 0.0
@@ -44,7 +44,7 @@ def test_default_setup_params.opp):
     assert state.attributes.get(ATTR_STEP) == 0.01
 
 
-async def test_set_value_bad_attr.opp):
+async def test_set_value_bad_attr(opp):
     """Test setting the value without required attribute."""
     state = opp.states.get(ENTITY_VOLUME)
     assert state.state == "42.0"
@@ -62,7 +62,7 @@ async def test_set_value_bad_attr.opp):
     assert state.state == "42.0"
 
 
-async def test_set_value_bad_range.opp):
+async def test_set_value_bad_range(opp):
     """Test setting the value out of range."""
     state = opp.states.get(ENTITY_VOLUME)
     assert state.state == "42.0"
@@ -80,7 +80,7 @@ async def test_set_value_bad_range.opp):
     assert state.state == "42.0"
 
 
-async def test_set_set_value.opp):
+async def test_set_set_value(opp):
     """Test the setting of the value."""
     state = opp.states.get(ENTITY_VOLUME)
     assert state.state == "42.0"

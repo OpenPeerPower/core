@@ -167,7 +167,7 @@ async def test_invalid_config(opp):
 
 async def test_add_package(opp):
     """Ensure package is added correctly when user add a new package."""
-    package = Package( 
+    package = Package(
         "456", 206, "friendly name 1", "info text 1", "location 1", 206, 2
     )
     ProfileMock.package_list = [package]

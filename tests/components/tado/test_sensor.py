@@ -3,10 +3,10 @@
 from .util import async_init_integration
 
 
-async def test_air_con_create_sensors.opp):
+async def test_air_con_create_sensors(opp):
     """Test creation of aircon sensors."""
 
-    await async_init_integration.opp)
+    await async_init_integration(opp)
 
     state = opp.states.get("sensor.air_conditioning_tado_mode")
     assert state.state == "HOME"
@@ -21,10 +21,10 @@ async def test_air_con_create_sensors.opp):
     assert state.state == "60.9"
 
 
-async def test_heater_create_sensors.opp):
+async def test_heater_create_sensors(opp):
     """Test creation of heater sensors."""
 
-    await async_init_integration.opp)
+    await async_init_integration(opp)
 
     state = opp.states.get("sensor.baseboard_heater_tado_mode")
     assert state.state == "HOME"
@@ -36,10 +36,10 @@ async def test_heater_create_sensors.opp):
     assert state.state == "45.2"
 
 
-async def test_water_heater_create_sensors.opp):
+async def test_water_heater_create_sensors(opp):
     """Test creation of water heater sensors."""
 
-    await async_init_integration.opp)
+    await async_init_integration(opp)
 
     state = opp.states.get("sensor.water_heater_tado_mode")
     assert state.state == "HOME"

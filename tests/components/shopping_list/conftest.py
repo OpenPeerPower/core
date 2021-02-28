@@ -26,4 +26,4 @@ async def sl_setup_opp):
 
     assert await opp.config_entries.async_setup(entry.entry_id)
 
-    await sl_intent.async_setup_intents.opp)
+    await sl_intent.async_setup_intents(opp)

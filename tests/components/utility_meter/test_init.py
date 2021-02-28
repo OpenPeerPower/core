@@ -20,7 +20,7 @@ from openpeerpower.setup import async_setup_component
 import openpeerpower.util.dt as dt_util
 
 
-async def test_services.opp):
+async def test_services(opp):
     """Test energy sensor reset service."""
     config = {
         "utility_meter": {

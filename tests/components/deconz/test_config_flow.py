@@ -509,7 +509,7 @@ async def test_ssdp_discovery_dont_update_existing.oppio_configuration(
     assert config_entry.data[CONF_HOST] == "1.2.3.4"
 
 
-async def test_flow.oppio_discovery.opp):
+async def test_flow.oppio_discovery(opp):
     """Test.oppio discovery flow works."""
     result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN,

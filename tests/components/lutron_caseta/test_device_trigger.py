@@ -60,9 +60,9 @@ def calls.opp):
 
 
 @pytest.fixture
-def device_reg.opp):
+def device_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_device_registry.opp)
+    return mock_device_registry(opp)
 
 
 async def _async_setup_lutron_with_picos(opp, device_reg):

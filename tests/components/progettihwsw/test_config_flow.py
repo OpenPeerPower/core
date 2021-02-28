@@ -20,7 +20,7 @@ mock_value_step_user = {
 }
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -66,7 +66,7 @@ async def test_form.opp):
     assert result3["data"]["relay_count"] == result3["data"]["input_count"] == 1
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle unexisting board."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -88,7 +88,7 @@ async def test_form_cannot_connect.opp):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_existing_entry_exception.opp):
+async def test_form_existing_entry_exception(opp):
     """Test we handle existing board."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -114,7 +114,7 @@ async def test_form_existing_entry_exception.opp):
     assert result2["reason"] == "already_configured"
 
 
-async def test_form_user_exception.opp):
+async def test_form_user_exception(opp):
     """Test we handle unknown exception."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

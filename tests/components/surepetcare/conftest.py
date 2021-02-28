@@ -15,7 +15,7 @@ async def surepetcare.opp):
             "test-username",
             "test-password",
             opp.loop,
-            async_get_clientsession.opp),
+            async_get_clientsession(opp),
             api_timeout=1,
         )
         instance._get_resource = AsyncMock(return_value=None)

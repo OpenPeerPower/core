@@ -37,7 +37,7 @@ async def test_thermostat_update(spa, setup_entry, opp):
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_HEAT
 
     spa.get_status.return_value["heater"] = "OFF"
-    await trigger_update.opp)
+    await trigger_update(opp)
     state = opp.states.get(entity_id)
 
     assert state.attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_IDLE
@@ -67,5 +67,5 @@ async def test_thermostat_update(spa, setup_entry, opp):
     # does nothing
 
     spa.get_status.side_effect = smarttub.APIError
-    await trigger_update.opp)
+    await trigger_update(opp)
     # should not fail

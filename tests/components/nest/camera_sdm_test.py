@@ -127,7 +127,7 @@ async def fire_alarm(opp, point_in_time):
         await opp.async_block_till_done()
 
 
-async def async_get_image.opp):
+async def async_get_image(opp):
     """Get image from the camera, a wrapper around camera.async_get_image."""
     # Note: this patches ImageFrame to simulate decoding an image from a live
     # stream, however the test may not use it. Tests assert on the image
@@ -140,13 +140,13 @@ async def async_get_image.opp):
         return await camera.async_get_image(opp, "camera.my_camera")
 
 
-async def test_no_devices.opp):
+async def test_no_devices(opp):
     """Test configuration that returns no devices."""
-    await async_setup_camera.opp)
+    await async_setup_camera(opp)
     assert len(opp.states.async_all()) == 0
 
 
-async def test_ineligible_device.opp):
+async def test_ineligible_device(opp):
     """Test configuration with devices that do not support cameras."""
     await async_setup_camera(
         opp,
@@ -159,7 +159,7 @@ async def test_ineligible_device.opp):
     assert len(opp.states.async_all()) == 0
 
 
-async def test_camera_device.opp):
+async def test_camera_device(opp):
     """Test a basic camera with a live stream."""
     await async_setup_camera(opp, DEVICE_TRAITS)
 
@@ -194,7 +194,7 @@ async def test_camera_stream(opp, auth):
     stream_source = await camera.async_get_stream_source(opp, "camera.my_camera")
     assert stream_source == "rtsp://some/url?auth=g.0.streamingToken"
 
-    image = await async_get_image.opp)
+    image = await async_get_image(opp)
     assert image.content == IMAGE_BYTES_FROM_STREAM
 
 
@@ -224,7 +224,7 @@ async def test_camera_stream_missing_trait(opp, auth):
 
     # Unable to get an image from the live stream
     with pytest.raises(OpenPeerPowerError):
-        await async_get_image.opp)
+        await async_get_image(opp)
 
 
 async def test_refresh_expired_stream_token(opp, auth):
@@ -340,7 +340,7 @@ async def test_camera_removed(opp, auth):
         aiohttp.web.json_response(GENERATE_IMAGE_URL_RESPONSE),
         aiohttp.web.Response(body=IMAGE_BYTES_FROM_EVENT),
     ]
-    image = await async_get_image.opp)
+    image = await async_get_image(opp)
     assert image.content == IMAGE_BYTES_FROM_EVENT
 
     for config_entry in opp.config_entries.async_entries(DOMAIN):
@@ -401,14 +401,14 @@ async def test_camera_image_from_last_event(opp, auth):
         aiohttp.web.Response(body=IMAGE_BYTES_FROM_EVENT),
     ]
 
-    image = await async_get_image.opp)
+    image = await async_get_image(opp)
     assert image.content == IMAGE_BYTES_FROM_EVENT
     # Verify expected image fetch request was captured
     assert auth.url == TEST_IMAGE_URL
     assert auth.headers == IMAGE_AUTHORIZATION_HEADERS
 
     # An additional fetch uses the cache and does not send another RPC
-    image = await async_get_image.opp)
+    image = await async_get_image(opp)
     assert image.content == IMAGE_BYTES_FROM_EVENT
     # Verify expected image fetch request was captured
     assert auth.url == TEST_IMAGE_URL
@@ -430,7 +430,7 @@ async def test_camera_image_from_event_not_supported(opp, auth):
     # Camera fetches a stream url since CameraEventImage is not supported
     auth.responses = [make_stream_url_response()]
 
-    image = await async_get_image.opp)
+    image = await async_get_image(opp)
     assert image.content == IMAGE_BYTES_FROM_STREAM
 
 
@@ -450,7 +450,7 @@ async def test_generate_event_image_url_failure(opp, auth):
         make_stream_url_response(),
     ]
 
-    image = await async_get_image.opp)
+    image = await async_get_image(opp)
     assert image.content == IMAGE_BYTES_FROM_STREAM
 
 
@@ -472,7 +472,7 @@ async def test_fetch_event_image_failure(opp, auth):
         make_stream_url_response(),
     ]
 
-    image = await async_get_image.opp)
+    image = await async_get_image(opp)
     assert image.content == IMAGE_BYTES_FROM_STREAM
 
 
@@ -490,7 +490,7 @@ async def test_event_image_expired(opp, auth):
     # Fallback to a stream url since the event message is expired.
     auth.responses = [make_stream_url_response()]
 
-    image = await async_get_image.opp)
+    image = await async_get_image(opp)
     assert image.content == IMAGE_BYTES_FROM_STREAM
 
 
@@ -514,14 +514,14 @@ async def test_event_image_becomes_expired(opp, auth):
         aiohttp.web.Response(body=b"updated image bytes"),
     ]
 
-    image = await async_get_image.opp)
+    image = await async_get_image(opp)
     assert image.content == IMAGE_BYTES_FROM_EVENT
 
     # Event image is still valid before expiration
     next_update = event_timestamp + datetime.timedelta(seconds=25)
     await fire_alarm(opp, next_update)
 
-    image = await async_get_image.opp)
+    image = await async_get_image(opp)
     assert image.content == IMAGE_BYTES_FROM_EVENT
 
     # Fire an alarm well after expiration, removing image from cache
@@ -532,7 +532,7 @@ async def test_event_image_becomes_expired(opp, auth):
     next_update = event_timestamp + datetime.timedelta(seconds=180)
     await fire_alarm(opp, next_update)
 
-    image = await async_get_image.opp)
+    image = await async_get_image(opp)
     assert image.content == b"updated image bytes"
 
 
@@ -556,7 +556,7 @@ async def test_multiple_event_images(opp, auth):
         aiohttp.web.Response(body=b"updated image bytes"),
     ]
 
-    image = await async_get_image.opp)
+    image = await async_get_image(opp)
     assert image.content == IMAGE_BYTES_FROM_EVENT
 
     next_event_timestamp = event_timestamp + datetime.timedelta(seconds=25)
@@ -565,5 +565,5 @@ async def test_multiple_event_images(opp, auth):
     )
     await opp.async_block_till_done()
 
-    image = await async_get_image.opp)
+    image = await async_get_image(opp)
     assert image.content == b"updated image bytes"

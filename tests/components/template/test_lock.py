@@ -14,7 +14,7 @@ def calls.opp):
     return async_mock_service(opp, "test", "automation")
 
 
-async def test_template_state.opp):
+async def test_template_state(opp):
     """Test template."""
     with assert_setup_component(1, lock.DOMAIN):
         assert await setup.async_setup_component(
@@ -54,7 +54,7 @@ async def test_template_state.opp):
     assert state.state == lock.STATE_UNLOCKED
 
 
-async def test_template_state_boolean_on.opp):
+async def test_template_state_boolean_on(opp):
     """Test the setting of the state with boolean on."""
     with assert_setup_component(1, lock.DOMAIN):
         assert await setup.async_setup_component(
@@ -84,7 +84,7 @@ async def test_template_state_boolean_on.opp):
     assert state.state == lock.STATE_LOCKED
 
 
-async def test_template_state_boolean_off.opp):
+async def test_template_state_boolean_off(opp):
     """Test the setting of the state with off."""
     with assert_setup_component(1, lock.DOMAIN):
         assert await setup.async_setup_component(
@@ -143,7 +143,7 @@ async def test_template_syntax_error(opp):
     assert opp.states.async_all() == []
 
 
-async def test_invalid_name_does_not_create.opp):
+async def test_invalid_name_does_not_create(opp):
     """Test invalid name."""
     with assert_setup_component(0, lock.DOMAIN):
         assert await setup.async_setup_component(
@@ -173,7 +173,7 @@ async def test_invalid_name_does_not_create.opp):
     assert opp.states.async_all() == []
 
 
-async def test_invalid_lock_does_not_create.opp):
+async def test_invalid_lock_does_not_create(opp):
     """Test invalid lock."""
     with assert_setup_component(0, lock.DOMAIN):
         assert await setup.async_setup_component(
@@ -189,7 +189,7 @@ async def test_invalid_lock_does_not_create.opp):
     assert opp.states.async_all() == []
 
 
-async def test_missing_template_does_not_create.opp):
+async def test_missing_template_does_not_create(opp):
     """Test missing template."""
     with assert_setup_component(0, lock.DOMAIN):
         assert await setup.async_setup_component(
@@ -325,7 +325,7 @@ async def test_unlock_action(opp, calls):
     assert len(calls) == 1
 
 
-async def test_available_template_with_entities.opp):
+async def test_available_template_with_entities(opp):
     """Test availability templates with values from other entities."""
 
     await setup.async_setup_component(
@@ -391,7 +391,7 @@ async def test_invalid_availability_template_keeps_component_available(opp, capl
     assert ("UndefinedError: 'x' is undefined") in caplog.text
 
 
-async def test_unique_id.opp):
+async def test_unique_id(opp):
     """Test unique_id option only creates one lock per id."""
     await setup.async_setup_component(
         opp,

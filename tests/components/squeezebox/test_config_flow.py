@@ -42,7 +42,7 @@ async def patch_async_query_unauthorized(self, *args):
     return False
 
 
-async def test_user_form.opp):
+async def test_user_form(opp):
     """Test user-initiated flow, including discovery and the edit step."""
     with patch("pysqueezebox.Server.async_query", return_value={"uuid": UUID},), patch(
         "openpeerpower.components.squeezebox.async_setup", return_value=True
@@ -81,7 +81,7 @@ async def test_user_form.opp):
         assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_user_form_timeout.opp):
+async def test_user_form_timeout(opp):
     """Test we handle server search timeout."""
     with patch(
         "openpeerpower.components.squeezebox.config_flow.async_discover",
@@ -105,7 +105,7 @@ async def test_user_form_timeout.opp):
                 assert key.description == {"suggested_value": HOST2}
 
 
-async def test_user_form_duplicate.opp):
+async def test_user_form_duplicate(opp):
     """Test duplicate discovered servers are skipped."""
     with patch(
         "openpeerpower.components.squeezebox.config_flow.async_discover",
@@ -125,7 +125,7 @@ async def test_user_form_duplicate.opp):
         assert result["errors"] == {"base": "no_server_found"}
 
 
-async def test_form_invalid_auth.opp):
+async def test_form_invalid_auth(opp):
     """Test we handle invalid auth."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "edit"}
@@ -150,7 +150,7 @@ async def test_form_invalid_auth.opp):
     assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "edit"}
@@ -174,7 +174,7 @@ async def test_form_cannot_connect.opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_discovery.opp):
+async def test_discovery(opp):
     """Test handling of discovered server."""
     with patch(
         "pysqueezebox.Server.async_query",
@@ -189,7 +189,7 @@ async def test_discovery.opp):
         assert result["step_id"] == "edit"
 
 
-async def test_discovery_no_uuid.opp):
+async def test_discovery_no_uuid(opp):
     """Test handling of discovered server with unavailable uuid."""
     with patch("pysqueezebox.Server.async_query", new=patch_async_query_unauthorized):
         result = await opp.config_entries.flow.async_init(
@@ -201,7 +201,7 @@ async def test_discovery_no_uuid.opp):
         assert result["step_id"] == "edit"
 
 
-async def test_import.opp):
+async def test_import(opp):
     """Test handling of configuration imported."""
     with patch("pysqueezebox.Server.async_query", return_value={"uuid": UUID},), patch(
         "openpeerpower.components.squeezebox.async_setup", return_value=True
@@ -221,7 +221,7 @@ async def test_import.opp):
         assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_import_bad_host.opp):
+async def test_import_bad_host(opp):
     """Test handling of configuration imported with bad host."""
     with patch("pysqueezebox.Server.async_query", return_value=False):
         result = await opp.config_entries.flow.async_init(
@@ -233,7 +233,7 @@ async def test_import_bad_host.opp):
         assert result["reason"] == "cannot_connect"
 
 
-async def test_import_bad_auth.opp):
+async def test_import_bad_auth(opp):
     """Test handling of configuration import with bad authentication."""
     with patch("pysqueezebox.Server.async_query", new=patch_async_query_unauthorized):
         result = await opp.config_entries.flow.async_init(
@@ -250,7 +250,7 @@ async def test_import_bad_auth.opp):
         assert result["reason"] == "invalid_auth"
 
 
-async def test_import_existing.opp):
+async def test_import_existing(opp):
     """Test handling of configuration import of existing server."""
     with patch(
         "openpeerpower.components.squeezebox.async_setup", return_value=True

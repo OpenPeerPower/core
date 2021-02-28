@@ -28,7 +28,7 @@ def test_invalid_config():
         statsd.CONFIG_SCHEMA(config)
 
 
-async def test_statsd_setup_full.opp):
+async def test_statsd_setup_full(opp):
     """Test setup with all data."""
     config = {"statsd": {"host": "host", "port": 123, "rate": 1, "prefix": "foo"}}
     opp.bus.listen = MagicMock()
@@ -42,7 +42,7 @@ async def test_statsd_setup_full.opp):
     assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
 
 
-async def test_statsd_setup_defaults.opp):
+async def test_statsd_setup_defaults(opp):
     """Test setup with defaults."""
     config = {"statsd": {"host": "host"}}
 

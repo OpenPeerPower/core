@@ -18,7 +18,7 @@ CONFIG = {
 }
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     flow = config_flow.GiosFlowHandler()
     flow.opp = opp
@@ -29,7 +29,7 @@ async def test_show_form.opp):
     assert result["step_id"] == "user"
 
 
-async def test_invalid_station_id.opp):
+async def test_invalid_station_id(opp):
     """Test that errors are shown when measuring station ID is invalid."""
     with patch(
         "openpeerpower.components.gios.Gios._get_stations", return_value=STATIONS
@@ -45,7 +45,7 @@ async def test_invalid_station_id.opp):
         assert result["errors"] == {CONF_STATION_ID: "wrong_station_id"}
 
 
-async def test_invalid_sensor_data.opp):
+async def test_invalid_sensor_data(opp):
     """Test that errors are shown when sensor data is invalid."""
     with patch(
         "openpeerpower.components.gios.Gios._get_stations", return_value=STATIONS
@@ -64,7 +64,7 @@ async def test_invalid_sensor_data.opp):
         assert result["errors"] == {CONF_STATION_ID: "invalid_sensors_data"}
 
 
-async def test_cannot_connect.opp):
+async def test_cannot_connect(opp):
     """Test that errors are shown when cannot connect to GIOS server."""
     with patch(
         "openpeerpower.components.gios.Gios._async_get", side_effect=ApiError("error")
@@ -78,7 +78,7 @@ async def test_cannot_connect.opp):
         assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_create_entry.opp):
+async def test_create_entry(opp):
     """Test that the user step works."""
     with patch(
         "openpeerpower.components.gios.Gios._get_stations", return_value=STATIONS

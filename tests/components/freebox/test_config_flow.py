@@ -37,7 +37,7 @@ def mock_controller_connect():
         yield service_mock
 
 
-async def test_user.opp):
+async def test_user(opp):
     """Test user config."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -55,7 +55,7 @@ async def test_user.opp):
     assert result["step_id"] == "link"
 
 
-async def test_import.opp):
+async def test_import(opp):
     """Test import step."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -66,7 +66,7 @@ async def test_import.opp):
     assert result["step_id"] == "link"
 
 
-async def test_discovery.opp):
+async def test_discovery(opp):
     """Test discovery step."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -118,7 +118,7 @@ async def test_abort_if_already_setup_opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_on_link_failed.opp):
+async def test_on_link_failed(opp):
     """Test when we have errors during linking the router."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

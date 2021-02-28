@@ -70,7 +70,7 @@ async def test_setup_g1.opp):
     assert check_entry.state == ENTRY_STATE_LOADED
 
 
-async def test_unsuccessful_connect.opp):
+async def test_unsuccessful_connect(opp):
     """Test unsuccessful connect due to connectivity."""
     entry = await setup_subaru_integration(
         opp,
@@ -84,7 +84,7 @@ async def test_unsuccessful_connect.opp):
     assert check_entry.state == ENTRY_STATE_SETUP_RETRY
 
 
-async def test_invalid_credentials.opp):
+async def test_invalid_credentials(opp):
     """Test invalid credentials."""
     entry = await setup_subaru_integration(
         opp,
@@ -98,7 +98,7 @@ async def test_invalid_credentials.opp):
     assert check_entry.state == ENTRY_STATE_SETUP_ERROR
 
 
-async def test_update_skip_unsubscribed.opp):
+async def test_update_skip_unsubscribed(opp):
     """Test update function skips vehicles without subscription."""
     await setup_subaru_integration(
         opp. vehicle_list=[TEST_VIN_1_G1], vehicle_data=VEHICLE_DATA[TEST_VIN_1_G1]
@@ -131,7 +131,7 @@ async def test_update_disabled(opp, ev_entry):
         mock_update.assert_not_called()
 
 
-async def test_fetch_failed.opp):
+async def test_fetch_failed(opp):
     """Tests when fetch fails."""
     await setup_subaru_integration(
         opp,

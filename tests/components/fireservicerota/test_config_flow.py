@@ -37,7 +37,7 @@ MOCK_TOKEN_INFO = {
 }
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user"}
@@ -59,7 +59,7 @@ async def test_abort_if_already_setup_opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_invalid_credentials.opp):
+async def test_invalid_credentials(opp):
     """Test that invalid credentials throws an error."""
 
     with patch(
@@ -72,7 +72,7 @@ async def test_invalid_credentials.opp):
         assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_step_user.opp):
+async def test_step_user(opp):
     """Test the start of the config flow."""
 
     with patch(

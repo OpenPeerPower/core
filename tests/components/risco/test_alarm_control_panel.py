@@ -103,7 +103,7 @@ def two_part_alarm():
         yield alarm_mock
 
 
-async def test_cannot_connect.opp):
+async def test_cannot_connect(opp):
     """Test connection error."""
 
     with patch(
@@ -119,7 +119,7 @@ async def test_cannot_connect.opp):
         assert not registry.async_is_registered(SECOND_ENTITY_ID)
 
 
-async def test_unauthorized.opp):
+async def test_unauthorized(opp):
     """Test unauthorized error."""
 
     with patch(
@@ -142,7 +142,7 @@ async def test_setup_opp, two_part_alarm):
     assert not registry.async_is_registered(FIRST_ENTITY_ID)
     assert not registry.async_is_registered(SECOND_ENTITY_ID)
 
-    await setup_risco.opp)
+    await setup_risco(opp)
 
     assert registry.async_is_registered(FIRST_ENTITY_ID)
     assert registry.async_is_registered(SECOND_ENTITY_ID)

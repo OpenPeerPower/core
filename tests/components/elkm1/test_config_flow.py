@@ -24,7 +24,7 @@ def mock_elk(invalid_auth=None, sync_complete=None):
     return mocked_elk
 
 
-async def test_form_user_with_secure_elk.opp):
+async def test_form_user_with_secure_elk(opp):
     """Test we can setup a secure elk."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -71,7 +71,7 @@ async def test_form_user_with_secure_elk.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_user_with_non_secure_elk.opp):
+async def test_form_user_with_non_secure_elk(opp):
     """Test we can setup a non-secure elk."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -116,7 +116,7 @@ async def test_form_user_with_non_secure_elk.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_user_with_serial_elk.opp):
+async def test_form_user_with_serial_elk(opp):
     """Test we can setup a serial elk."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -161,7 +161,7 @@ async def test_form_user_with_serial_elk.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -192,7 +192,7 @@ async def test_form_cannot_connect.opp):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_invalid_auth.opp):
+async def test_form_invalid_auth(opp):
     """Test we handle invalid auth error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -220,7 +220,7 @@ async def test_form_invalid_auth.opp):
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_form_import.opp):
+async def test_form_import(opp):
     """Test we get the form with import source."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 

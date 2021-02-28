@@ -22,7 +22,7 @@ from openpeerpower.data_entry_flow import (
 from . import setup_onewire_owserver_integration, setup_onewire_sysbus_integration
 
 
-async def test_user_owserver.opp):
+async def test_user_owserver(opp):
     """Test OWServer user flow."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -77,7 +77,7 @@ async def test_user_owserver.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_user_owserver_duplicate.opp):
+async def test_user_owserver_duplicate(opp):
     """Test OWServer flow."""
     with patch(
         "openpeerpower.components.onewire.async_setup", return_value=True
@@ -85,7 +85,7 @@ async def test_user_owserver_duplicate.opp):
         "openpeerpower.components.onewire.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        await setup_onewire_owserver_integration.opp)
+        await setup_onewire_owserver_integration(opp)
         assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
     result = await opp.config_entries.flow.async_init(
@@ -115,7 +115,7 @@ async def test_user_owserver_duplicate.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_user_sysbus.opp):
+async def test_user_sysbus(opp):
     """Test SysBus flow."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -172,7 +172,7 @@ async def test_user_sysbus.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_user_sysbus_duplicate.opp):
+async def test_user_sysbus_duplicate(opp):
     """Test SysBus duplicate flow."""
     with patch(
         "openpeerpower.components.onewire.async_setup", return_value=True
@@ -180,7 +180,7 @@ async def test_user_sysbus_duplicate.opp):
         "openpeerpower.components.onewire.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        await setup_onewire_sysbus_integration.opp)
+        await setup_onewire_sysbus_integration(opp)
         assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
     result = await opp.config_entries.flow.async_init(
@@ -215,7 +215,7 @@ async def test_user_sysbus_duplicate.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_import_sysbus.opp):
+async def test_import_sysbus(opp):
     """Test import step."""
 
     with patch(
@@ -243,7 +243,7 @@ async def test_import_sysbus.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_import_sysbus_with_mount_dir.opp):
+async def test_import_sysbus_with_mount_dir(opp):
     """Test import step."""
 
     with patch(
@@ -274,7 +274,7 @@ async def test_import_sysbus_with_mount_dir.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_import_owserver.opp):
+async def test_import_owserver(opp):
     """Test import step."""
 
     with patch("openpeerpower.components.onewire.onewirehub.protocol.proxy",), patch(
@@ -303,7 +303,7 @@ async def test_import_owserver.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_import_owserver_with_port.opp):
+async def test_import_owserver_with_port(opp):
     """Test import step."""
 
     with patch("openpeerpower.components.onewire.onewirehub.protocol.proxy",), patch(
@@ -333,7 +333,7 @@ async def test_import_owserver_with_port.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_import_owserver_duplicate.opp):
+async def test_import_owserver_duplicate(opp):
     """Test OWServer flow."""
     # Initialise with single entry
     with patch(
@@ -342,7 +342,7 @@ async def test_import_owserver_duplicate.opp):
         "openpeerpower.components.onewire.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
-        await setup_onewire_owserver_integration.opp)
+        await setup_onewire_owserver_integration(opp)
         assert len(opp.config_entries.async_entries(DOMAIN)) == 1
 
     # Import duplicate entry

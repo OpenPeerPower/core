@@ -27,12 +27,12 @@ async def test_controller_fail_setup_opp):
     """Test that a failed setup still stores controller."""
     with patch("openpeerpower.components.unifi.UniFiController") as mock_controller:
         mock_controller.return_value.async_setup = AsyncMock(return_value=False)
-        await setup_unifi_integration.opp)
+        await setup_unifi_integration(opp)
 
     assert opp.data[UNIFI_DOMAIN] == {}
 
 
-async def test_controller_no_mac.opp):
+async def test_controller_no_mac(opp):
     """Test that configured options for a host are loaded via config entry."""
     entry = MockConfigEntry(
         domain=UNIFI_DOMAIN,
@@ -57,7 +57,7 @@ async def test_controller_no_mac.opp):
     assert len(mock_registry.mock_calls) == 0
 
 
-async def test_flatten_entry_data.opp):
+async def test_flatten_entry_data(opp):
     """Verify entry data can be flattened."""
     entry = MockConfigEntry(
         domain=UNIFI_DOMAIN,

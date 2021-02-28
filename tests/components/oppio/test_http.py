@@ -171,7 +171,7 @@ async def test_snapshot_download_headers.oppio_client, aioclient_mock):
     resp.headers["Content-Disposition"] == content_disposition
 
 
-def test_need_auth.opp):
+def test_need_auth(opp):
     """Test if the requested path needs authentication."""
     assert not _need_auth(opp, "addons/test/logo")
     assert _need_auth(opp, "snapshots/new/upload")

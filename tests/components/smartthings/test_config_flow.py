@@ -27,7 +27,7 @@ from openpeerpower.const import (
 from tests.common import MockConfigEntry
 
 
-async def test_import_shows_user_step.opp):
+async def test_import_shows_user_step(opp):
     """Test import source shows the user form."""
     # Webhook confirmation shown
     result = await opp.config_entries.flow.async_init(
@@ -37,7 +37,7 @@ async def test_import_shows_user_step.opp):
     assert result["step_id"] == "user"
     assert result["description_placeholders"][
         "webhook_url"
-    ] == smartapp.get_webhook_url.opp)
+    ] == smartapp.get_webhook_url(opp)
 
 
 async def test_entry_created(opp, app, app_oauth_client, location, smartthings_mock):
@@ -62,7 +62,7 @@ async def test_entry_created(opp, app, app_oauth_client, location, smartthings_m
     assert result["step_id"] == "user"
     assert result["description_placeholders"][
         "webhook_url"
-    ] == smartapp.get_webhook_url.opp)
+    ] == smartapp.get_webhook_url(opp)
 
     # Advance to PAT screen
     result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
@@ -133,7 +133,7 @@ async def test_entry_created_from_update_event(
     assert result["step_id"] == "user"
     assert result["description_placeholders"][
         "webhook_url"
-    ] == smartapp.get_webhook_url.opp)
+    ] == smartapp.get_webhook_url(opp)
 
     # Advance to PAT screen
     result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
@@ -204,7 +204,7 @@ async def test_entry_created_existing_app_new_oauth_client(
     assert result["step_id"] == "user"
     assert result["description_placeholders"][
         "webhook_url"
-    ] == smartapp.get_webhook_url.opp)
+    ] == smartapp.get_webhook_url(opp)
 
     # Advance to PAT screen
     result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
@@ -288,7 +288,7 @@ async def test_entry_created_existing_app_copies_oauth_client(
     assert result["step_id"] == "user"
     assert result["description_placeholders"][
         "webhook_url"
-    ] == smartapp.get_webhook_url.opp)
+    ] == smartapp.get_webhook_url(opp)
 
     # Advance to PAT screen
     result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
@@ -347,7 +347,7 @@ async def test_entry_created_with_cloudhook(
     """Test cloud, new app, install event creates entry."""
     opp.config.components.add("cloud")
     # Unload the endpoint so we can reload it under the cloud.
-    await smartapp.unload_smartapp_endpoint.opp)
+    await smartapp.unload_smartapp_endpoint(opp)
     token = str(uuid4())
     installed_app_id = str(uuid4())
     refresh_token = str(uuid4())
@@ -368,7 +368,7 @@ async def test_entry_created_with_cloudhook(
         AsyncMock(return_value="http://cloud.test"),
     ) as mock_create_cloudhook:
 
-        await smartapp.setup_smartapp_endpoint.opp)
+        await smartapp.setup_smartapp_endpoint(opp)
 
         # Webhook confirmation shown
         result = await opp.config_entries.flow.async_init(
@@ -378,7 +378,7 @@ async def test_entry_created_with_cloudhook(
         assert result["step_id"] == "user"
         assert result["description_placeholders"][
             "webhook_url"
-        ] == smartapp.get_webhook_url.opp)
+        ] == smartapp.get_webhook_url(opp)
         assert mock_create_cloudhook.call_count == 1
 
         # Advance to PAT screen
@@ -426,7 +426,7 @@ async def test_entry_created_with_cloudhook(
         )
 
 
-async def test_invalid_webhook_aborts.opp):
+async def test_invalid_webhook_aborts(opp):
     """Test flow aborts if webhook is invalid."""
     # Webhook confirmation shown
     await async_process_op_core_config(
@@ -440,7 +440,7 @@ async def test_invalid_webhook_aborts.opp):
     assert result["reason"] == "invalid_webhook_url"
     assert result["description_placeholders"][
         "webhook_url"
-    ] == smartapp.get_webhook_url.opp)
+    ] == smartapp.get_webhook_url(opp)
     assert "component_url" in result["description_placeholders"]
 
 
@@ -456,7 +456,7 @@ async def test_invalid_token_shows_error(opp):
     assert result["step_id"] == "user"
     assert result["description_placeholders"][
         "webhook_url"
-    ] == smartapp.get_webhook_url.opp)
+    ] == smartapp.get_webhook_url(opp)
 
     # Advance to PAT screen
     result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
@@ -493,7 +493,7 @@ async def test_unauthorized_token_shows_error(opp, smartthings_mock):
     assert result["step_id"] == "user"
     assert result["description_placeholders"][
         "webhook_url"
-    ] == smartapp.get_webhook_url.opp)
+    ] == smartapp.get_webhook_url(opp)
 
     # Advance to PAT screen
     result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
@@ -530,7 +530,7 @@ async def test_forbidden_token_shows_error(opp, smartthings_mock):
     assert result["step_id"] == "user"
     assert result["description_placeholders"][
         "webhook_url"
-    ] == smartapp.get_webhook_url.opp)
+    ] == smartapp.get_webhook_url(opp)
 
     # Advance to PAT screen
     result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
@@ -570,7 +570,7 @@ async def test_webhook_problem_shows_error(opp, smartthings_mock):
     assert result["step_id"] == "user"
     assert result["description_placeholders"][
         "webhook_url"
-    ] == smartapp.get_webhook_url.opp)
+    ] == smartapp.get_webhook_url(opp)
 
     # Advance to PAT screen
     result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
@@ -609,7 +609,7 @@ async def test_api_error_shows_error(opp, smartthings_mock):
     assert result["step_id"] == "user"
     assert result["description_placeholders"][
         "webhook_url"
-    ] == smartapp.get_webhook_url.opp)
+    ] == smartapp.get_webhook_url(opp)
 
     # Advance to PAT screen
     result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
@@ -647,7 +647,7 @@ async def test_unknown_response_error_shows_error(opp, smartthings_mock):
     assert result["step_id"] == "user"
     assert result["description_placeholders"][
         "webhook_url"
-    ] == smartapp.get_webhook_url.opp)
+    ] == smartapp.get_webhook_url(opp)
 
     # Advance to PAT screen
     result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
@@ -681,7 +681,7 @@ async def test_unknown_error_shows_error(opp, smartthings_mock):
     assert result["step_id"] == "user"
     assert result["description_placeholders"][
         "webhook_url"
-    ] == smartapp.get_webhook_url.opp)
+    ] == smartapp.get_webhook_url(opp)
 
     # Advance to PAT screen
     result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
@@ -723,7 +723,7 @@ async def test_no_available_locations_aborts(
     assert result["step_id"] == "user"
     assert result["description_placeholders"][
         "webhook_url"
-    ] == smartapp.get_webhook_url.opp)
+    ] == smartapp.get_webhook_url(opp)
 
     # Advance to PAT screen
     result = await opp.config_entries.flow.async_configure(result["flow_id"], {})

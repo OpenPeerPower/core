@@ -21,15 +21,15 @@ from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 
 
 @pytest.fixture
-def device_reg.opp):
+def device_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_device_registry.opp)
+    return mock_device_registry(opp)
 
 
 @pytest.fixture
-def entity_reg.opp):
+def entity_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_registry.opp)
+    return mock_registry(opp)
 
 
 @pytest.fixture
@@ -233,7 +233,7 @@ async def test_if_state(opp, calls):
     assert len(calls) == 3
 
 
-async def test_capabilities.opp):
+async def test_capabilities(opp):
     """Test capabilities."""
     opp.states.async_set(
         "humidifier.entity",
@@ -270,7 +270,7 @@ async def test_capabilities.opp):
     ]
 
 
-async def test_capabilities_no_state.opp):
+async def test_capabilities_no_state(opp):
     """Test capabilities while state not available."""
     # Test mode
     capabilities = await device_condition.async_get_condition_capabilities(

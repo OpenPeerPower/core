@@ -39,15 +39,15 @@ def mock_storage(opp_storage):
 
 
 @pytest.fixture
-def device_reg.opp):
+def device_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_device_registry.opp)
+    return mock_device_registry(opp)
 
 
 @pytest.fixture
-def entity_reg.opp):
+def entity_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_registry.opp)
+    return mock_registry(opp)
 
 
 @pytest.fixture
@@ -701,7 +701,7 @@ async def test_setup_raises_ConfigEntryNotReady_if_no_connect_broker(opp, caplog
         assert "Failed to connect to MQTT server due to exception:" in caplog.text
 
 
-async def test_setup_uses_certificate_on_certificate_set_to_auto.opp):
+async def test_setup_uses_certificate_on_certificate_set_to_auto(opp):
     """Test setup uses bundled certs when certificate is set to auto."""
     calls = []
 
@@ -915,7 +915,7 @@ async def test_message_callback_exception_gets_logged(opp, caplog, mqtt_mock):
 
 async def test_mqtt_ws_subscription(opp, opp_ws_client, mqtt_mock):
     """Test MQTT websocket subscription."""
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     await client.send_json({"id": 5, "type": "mqtt/subscribe", "topic": "test-topic"})
     response = await client.receive_json()
     assert response["success"]
@@ -974,7 +974,7 @@ async def test_mqtt_ws_remove_discovered_device(
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
     assert device_entry is not None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     await client.send_json(
         {"id": 5, "type": "mqtt/device/remove", "device_id": device_entry.id}
     )
@@ -1002,7 +1002,7 @@ async def test_mqtt_ws_remove_discovered_device_twice(
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
     assert device_entry is not None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     await client.send_json(
         {"id": 5, "type": "mqtt/device/remove", "device_id": device_entry.id}
     )
@@ -1034,7 +1034,7 @@ async def test_mqtt_ws_remove_discovered_device_same_topic(
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
     assert device_entry is not None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     await client.send_json(
         {"id": 5, "type": "mqtt/device/remove", "device_id": device_entry.id}
     )
@@ -1062,7 +1062,7 @@ async def test_mqtt_ws_remove_non_mqtt_device(
     )
     assert device_entry is not None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     await client.send_json(
         {"id": 5, "type": "mqtt/device/remove", "device_id": device_entry.id}
     )
@@ -1090,7 +1090,7 @@ async def test_mqtt_ws_get_device_debug_info(
     device_entry = device_reg.async_get_device({("mqtt", "0AFFD2")})
     assert device_entry is not None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     await client.send_json(
         {"id": 5, "type": "mqtt/device/debug_info", "device_id": device_entry.id}
     )

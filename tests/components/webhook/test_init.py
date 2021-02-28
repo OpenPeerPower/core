@@ -34,7 +34,7 @@ async def test_unregistering_webhook(opp, mock_client):
     assert len(hooks) == 1
 
 
-async def test_generate_webhook_url.opp):
+async def test_generate_webhook_url(opp):
     """Test we generate a webhook url correctly."""
     await async_process_op_core_config(
         opp,
@@ -45,7 +45,7 @@ async def test_generate_webhook_url.opp):
     assert url == "https://example.com/api/webhook/some_id"
 
 
-async def test_async_generate_path.opp):
+async def test_async_generate_path(opp):
     """Test generating just the path component of the url correctly."""
     path = opp.components.webhook.async_generate_path("some_id")
     assert path == "/api/webhook/some_id"

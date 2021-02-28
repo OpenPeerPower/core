@@ -16,7 +16,7 @@ from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture(autouse=True)
-def init_sensors_fixture.opp):
+def init_sensors_fixture(opp):
     """Set up things to be run when tests are started."""
     opp.states.async_set(
         "test.indoortemp", "20", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
@@ -50,7 +50,7 @@ async def test_setup_opp):
     assert PERCENTAGE == moldind.attributes.get("unit_of_measurement")
 
 
-async def test_invalidcalib.opp):
+async def test_invalidcalib(opp):
     """Test invalid sensor values."""
     opp.states.async_set(
         "test.indoortemp", "10", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
@@ -85,7 +85,7 @@ async def test_invalidcalib.opp):
     assert moldind.attributes.get(ATTR_CRITICAL_TEMP) is None
 
 
-async def test_invalidhum.opp):
+async def test_invalidhum(opp):
     """Test invalid sensor values."""
     opp.states.async_set(
         "test.indoortemp", "10", {ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS}
@@ -141,7 +141,7 @@ async def test_invalidhum.opp):
     assert moldind.attributes.get(ATTR_CRITICAL_TEMP) is None
 
 
-async def test_calculation.opp):
+async def test_calculation(opp):
     """Test the mold indicator internal calculations."""
     assert await async_setup_component(
         opp,
@@ -180,7 +180,7 @@ async def test_calculation.opp):
     assert state == "68"
 
 
-async def test_unknown_sensor.opp):
+async def test_unknown_sensor(opp):
     """Test the sensor_changed function."""
     assert await async_setup_component(
         opp,
@@ -254,7 +254,7 @@ async def test_unknown_sensor.opp):
     assert esttemp == 27.5
 
 
-async def test_sensor_changed.opp):
+async def test_sensor_changed(opp):
     """Test the sensor_changed function."""
     assert await async_setup_component(
         opp,

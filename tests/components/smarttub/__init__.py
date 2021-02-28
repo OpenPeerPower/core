@@ -8,7 +8,7 @@ from openpeerpower.util import dt
 from tests.common import async_fire_time_changed
 
 
-async def trigger_update.opp):
+async def trigger_update(opp):
     """Trigger a polling update by moving time forward."""
     new_time = dt.utcnow() + timedelta(seconds=SCAN_INTERVAL + 1)
     async_fire_time_changed(opp, new_time)

@@ -8,7 +8,7 @@ from openpeerpower.components.vilfo.const import DOMAIN
 from openpeerpower.const import CONF_ACCESS_TOKEN, CONF_HOST, CONF_ID, CONF_MAC
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     mock_mac = "FF-00-00-00-00-00"
@@ -42,7 +42,7 @@ async def test_form.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_invalid_auth.opp):
+async def test_form_invalid_auth(opp):
     """Test we handle invalid auth."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -63,7 +63,7 @@ async def test_form_invalid_auth.opp):
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -92,7 +92,7 @@ async def test_form_cannot_connect.opp):
     assert result3["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_wrong_host.opp):
+async def test_form_wrong_host(opp):
     """Test we handle wrong host errors."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -103,7 +103,7 @@ async def test_form_wrong_host.opp):
     assert result["errors"] == {"host": "wrong_host"}
 
 
-async def test_form_already_configured.opp):
+async def test_form_already_configured(opp):
     """Test that we handle already configured exceptions appropriately."""
     first_flow_result1 = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -136,7 +136,7 @@ async def test_form_already_configured.opp):
     assert second_flow_result2["reason"] == "already_configured"
 
 
-async def test_form_unexpected_exception.opp):
+async def test_form_unexpected_exception(opp):
     """Test that we handle unexpected exceptions."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -154,7 +154,7 @@ async def test_form_unexpected_exception.opp):
     assert result2["errors"] == {"base": "unknown"}
 
 
-async def test_validate_input_returns_data.opp):
+async def test_validate_input_returns_data(opp):
     """Test we handle the MAC address being resolved or not."""
     mock_data = {"host": "testadmin.vilfo.com", "access_token": "test-token"}
     mock_data_with_ip = {"host": "192.168.0.1", "access_token": "test-token"}

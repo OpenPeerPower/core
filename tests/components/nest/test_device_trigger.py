@@ -90,7 +90,7 @@ def calls.opp):
     return async_mock_service(opp, "test", "automation")
 
 
-async def test_get_triggers.opp):
+async def test_get_triggers(opp):
     """Test we get the expected triggers from a nest."""
     camera = make_camera(
         device_id=DEVICE_ID,
@@ -122,7 +122,7 @@ async def test_get_triggers.opp):
     assert_lists_same(triggers, expected_triggers)
 
 
-async def test_multiple_devices.opp):
+async def test_multiple_devices(opp):
     """Test we get the expected triggers from a nest."""
     camera1 = make_camera(
         device_id="device-id-1",
@@ -165,7 +165,7 @@ async def test_multiple_devices.opp):
     }
 
 
-async def test_triggers_for_invalid_device_id.opp):
+async def test_triggers_for_invalid_device_id(opp):
     """Get triggers for a device not found in the API."""
     camera = make_camera(
         device_id=DEVICE_ID,
@@ -193,7 +193,7 @@ async def test_triggers_for_invalid_device_id.opp):
         await async_get_device_automations(opp, "trigger", device_entry_2.id)
 
 
-async def test_no_triggers.opp):
+async def test_no_triggers(opp):
     """Test we get the expected triggers from a nest."""
     camera = make_camera(device_id=DEVICE_ID, traits={})
     await async_setup_camera(opp, {DEVICE_ID: camera})

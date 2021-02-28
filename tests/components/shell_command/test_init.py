@@ -25,7 +25,7 @@ def mock_process_creator(error: bool = False):
     return mock_process
 
 
-async def test_executing_service.opp):
+async def test_executing_service(opp):
     """Test if able to call a configured service."""
     with tempfile.TemporaryDirectory() as tempdirname:
         path = os.path.join(tempdirname, "called.txt")
@@ -41,7 +41,7 @@ async def test_executing_service.opp):
         assert os.path.isfile(path)
 
 
-async def test_config_not_dict.opp):
+async def test_config_not_dict(opp):
     """Test that setup fails if config is not a dict."""
     assert not await async_setup_component(
         opp,
@@ -50,7 +50,7 @@ async def test_config_not_dict.opp):
     )
 
 
-async def test_config_not_valid_service_names.opp):
+async def test_config_not_valid_service_names(opp):
     """Test that setup fails if config contains invalid service names."""
     assert not await async_setup_component(
         opp,

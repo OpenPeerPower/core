@@ -6,7 +6,7 @@ from openpeerpower.config_entries import SOURCE_USER
 from tests.common import MockConfigEntry
 
 
-async def test_config_flow.opp):
+async def test_config_flow(opp):
     """Test we can finish a config flow."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}

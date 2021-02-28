@@ -254,11 +254,11 @@ def _mock_august_lock_data(lockid="mocklockid1", houseid="mockhouseid1"):
     }
 
 
-async def _mock_operative_august_lock_detail.opp):
+async def _mock_operative_august_lock_detail(opp):
     return await _mock_lock_from_fixture(opp, "get_lock.online.json")
 
 
-async def _mock_inoperative_august_lock_detail.opp):
+async def _mock_inoperative_august_lock_detail(opp):
     return await _mock_lock_from_fixture(opp, "get_lock.offline.json")
 
 
@@ -290,11 +290,11 @@ async def _load_json_fixture(opp, path):
     return json.loads(fixture)
 
 
-async def _mock_doorsense_enabled_august_lock_detail.opp):
+async def _mock_doorsense_enabled_august_lock_detail(opp):
     return await _mock_lock_from_fixture(opp, "get_lock.online_with_doorsense.json")
 
 
-async def _mock_doorsense_missing_august_lock_detail.opp):
+async def _mock_doorsense_missing_august_lock_detail(opp):
     return await _mock_lock_from_fixture(opp, "get_lock.online_missing_doorsense.json")
 
 

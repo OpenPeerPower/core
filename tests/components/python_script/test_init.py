@@ -165,7 +165,7 @@ async def test_accessing_forbidden_methods(opp, caplog):
         assert f"Not allowed to access {name}" in caplog.text
 
 
-async def test_iterating.opp):
+async def test_iterating(opp):
     """Test compile error logs error."""
     source = """
 for i in [1, 2]:
@@ -265,7 +265,7 @@ b()
     assert caplog.text == ""
 
 
-async def test_reload.opp):
+async def test_reload(opp):
     """Test we can re-discover scripts."""
     scripts = [
         "/some/config/dir/python_scripts/hello.py",
@@ -296,7 +296,7 @@ async def test_reload.opp):
     assert opp.services.has_service("python_script", "reload")
 
 
-async def test_service_descriptions.opp):
+async def test_service_descriptions(opp):
     """Test that service descriptions are loaded and reloaded correctly."""
     # Test 1: no user-provided services.yaml file
     scripts1 = [
@@ -329,7 +329,7 @@ async def test_service_descriptions.opp):
     ):
         await async_setup_component(opp, DOMAIN, {})
 
-        descriptions = await async_get_all_descriptions.opp)
+        descriptions = await async_get_all_descriptions(opp)
 
     assert len(descriptions) == 1
 
@@ -376,7 +376,7 @@ async def test_service_descriptions.opp):
         services_yaml2
     ):
         await opp.services.async_call(DOMAIN, "reload", {}, blocking=True)
-        descriptions = await async_get_all_descriptions.opp)
+        descriptions = await async_get_all_descriptions(opp)
 
     assert len(descriptions) == 1
 

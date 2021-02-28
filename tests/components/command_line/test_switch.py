@@ -15,7 +15,7 @@ from openpeerpower.const import (
 from openpeerpower.setup import async_setup_component
 
 
-async def test_state_none.opp):
+async def test_state_none(opp):
     """Test with none state."""
     with tempfile.TemporaryDirectory() as tempdirname:
         path = os.path.join(tempdirname, "switch_status")
@@ -59,7 +59,7 @@ async def test_state_none.opp):
         assert STATE_OFF == state.state
 
 
-async def test_state_value.opp):
+async def test_state_value(opp):
     """Test with state value."""
     with tempfile.TemporaryDirectory() as tempdirname:
         path = os.path.join(tempdirname, "switch_status")
@@ -105,7 +105,7 @@ async def test_state_value.opp):
         assert STATE_OFF == state.state
 
 
-async def test_state_json_value.opp):
+async def test_state_json_value(opp):
     """Test with state JSON value."""
     with tempfile.TemporaryDirectory() as tempdirname:
         path = os.path.join(tempdirname, "switch_status")
@@ -153,7 +153,7 @@ async def test_state_json_value.opp):
         assert STATE_OFF == state.state
 
 
-async def test_state_code.opp):
+async def test_state_code(opp):
     """Test with state code."""
     with tempfile.TemporaryDirectory() as tempdirname:
         path = os.path.join(tempdirname, "switch_status")
@@ -198,7 +198,7 @@ async def test_state_code.opp):
         assert STATE_ON == state.state
 
 
-def test_assumed_state_should_be_true_if_command_state_is_none.opp):
+def test_assumed_state_should_be_true_if_command_state_is_none(opp):
     """Test with state value."""
     # args:.opp, device_name, friendly_name, command_on, command_off,
     #       command_state, value_template
@@ -223,7 +223,7 @@ def test_assumed_state_should_be_true_if_command_state_is_none.opp):
     assert not state_device.assumed_state
 
 
-def test_entity_id_set_correctly.opp):
+def test_entity_id_set_correctly(opp):
     """Test that entity_id is set correctly from object_id."""
     init_args = [
         opp,

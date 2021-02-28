@@ -47,7 +47,7 @@ async def test_setup_missing_config(opp):
 
 
 @respx.mock
-async def test_setup_failed_connect.opp):
+async def test_setup_failed_connect(opp):
     """Test setup when connection error occurs."""
     respx.get("http://localhost").mock(side_effect=httpx.RequestError)
     assert await async_setup_component(
@@ -66,7 +66,7 @@ async def test_setup_failed_connect.opp):
 
 
 @respx.mock
-async def test_setup_timeout.opp):
+async def test_setup_timeout(opp):
     """Test setup when connection timeout occurs."""
     respx.get("http://localhost").mock(side_effect=asyncio.TimeoutError())
     assert await async_setup_component(
@@ -85,7 +85,7 @@ async def test_setup_timeout.opp):
 
 
 @respx.mock
-async def test_setup_minimum.opp):
+async def test_setup_minimum(opp):
     """Test setup with minimum configuration."""
     respx.get("http://localhost") % 200
     assert await async_setup_component(
@@ -104,7 +104,7 @@ async def test_setup_minimum.opp):
 
 
 @respx.mock
-async def test_setup_minimum_resource_template.opp):
+async def test_setup_minimum_resource_template(opp):
     """Test setup with minimum configuration (resource_template)."""
     respx.get("http://localhost") % 200
     assert await async_setup_component(
@@ -122,7 +122,7 @@ async def test_setup_minimum_resource_template.opp):
 
 
 @respx.mock
-async def test_setup_duplicate_resource_template.opp):
+async def test_setup_duplicate_resource_template(opp):
     """Test setup with duplicate resources."""
     respx.get("http://localhost") % 200
     assert await async_setup_component(
@@ -141,7 +141,7 @@ async def test_setup_duplicate_resource_template.opp):
 
 
 @respx.mock
-async def test_setup_get.opp):
+async def test_setup_get(opp):
     """Test setup with valid configuration."""
     respx.get("http://localhost").respond(status_code=200, json={})
     assert await async_setup_component(
@@ -169,7 +169,7 @@ async def test_setup_get.opp):
 
 
 @respx.mock
-async def test_setup_get_digest_auth.opp):
+async def test_setup_get_digest_auth(opp):
     """Test setup with valid configuration."""
     respx.get("http://localhost").respond(status_code=200, json={})
     assert await async_setup_component(
@@ -197,7 +197,7 @@ async def test_setup_get_digest_auth.opp):
 
 
 @respx.mock
-async def test_setup_post.opp):
+async def test_setup_post(opp):
     """Test setup with valid configuration."""
     respx.post("http://localhost").respond(status_code=200, json={})
     assert await async_setup_component(
@@ -225,7 +225,7 @@ async def test_setup_post.opp):
 
 
 @respx.mock
-async def test_setup_get_off.opp):
+async def test_setup_get_off(opp):
     """Test setup with valid off configuration."""
     respx.get("http://localhost").respond(
         status_code=200,
@@ -255,7 +255,7 @@ async def test_setup_get_off.opp):
 
 
 @respx.mock
-async def test_setup_get_on.opp):
+async def test_setup_get_on(opp):
     """Test setup with valid on configuration."""
     respx.get("http://localhost").respond(
         status_code=200,
@@ -285,7 +285,7 @@ async def test_setup_get_on.opp):
 
 
 @respx.mock
-async def test_setup_with_exception.opp):
+async def test_setup_with_exception(opp):
     """Test setup with exception."""
     respx.get("http://localhost").respond(status_code=200, json={})
     assert await async_setup_component(
@@ -327,7 +327,7 @@ async def test_setup_with_exception.opp):
 
 
 @respx.mock
-async def test_reload.opp):
+async def test_reload(opp):
     """Verify we can reload reset sensors."""
 
     respx.get("http://localhost") % 200
@@ -371,7 +371,7 @@ async def test_reload.opp):
 
 
 @respx.mock
-async def test_setup_query_params.opp):
+async def test_setup_query_params(opp):
     """Test setup with query params."""
     respx.get("http://localhost", params={"search": "something"}) % 200
     assert await async_setup_component(

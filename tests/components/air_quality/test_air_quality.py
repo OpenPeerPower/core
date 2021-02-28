@@ -12,7 +12,7 @@ from openpeerpower.const import (
 from openpeerpower.setup import async_setup_component
 
 
-async def test_state.opp):
+async def test_state(opp):
     """Test Air Quality state."""
     config = {"air_quality": {"platform": "demo"}}
 
@@ -25,7 +25,7 @@ async def test_state.opp):
     assert state.state == "14"
 
 
-async def test_attributes.opp):
+async def test_attributes(opp):
     """Test Air Quality attributes."""
     config = {"air_quality": {"platform": "demo"}}
 

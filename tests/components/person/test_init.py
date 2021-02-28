@@ -32,7 +32,7 @@ DEVICE_TRACKER_2 = "device_tracker.test_tracker_2"
 
 
 @pytest.fixture
-def storage_collection.opp):
+def storage_collection(opp):
     """Return an empty storage collection."""
     id_manager = collection.IDManager()
     return person.PersonStorageCollection(
@@ -79,13 +79,13 @@ async def test_minimal_setup_opp):
     assert state.attributes.get(ATTR_ENTITY_PICTURE) is None
 
 
-async def test_setup_no_id.opp):
+async def test_setup_no_id(opp):
     """Test config with no id."""
     config = {DOMAIN: {"name": "test user"}}
     assert not await async_setup_component(opp, DOMAIN, config)
 
 
-async def test_setup_no_name.opp):
+async def test_setup_no_name(opp):
     """Test config with no name."""
     config = {DOMAIN: {"id": "1234"}}
     assert not await async_setup_component(opp, DOMAIN, config)
@@ -364,7 +364,7 @@ async def test_duplicate_ids(opp, opp_admin_user):
     assert opp.states.get("person.test_user_2") is None
 
 
-async def test_create_person_during_run.opp):
+async def test_create_person_during_run(opp):
     """Test that person is updated if created while.opp is running."""
     config = {DOMAIN: {}}
     assert await async_setup_component(opp, DOMAIN, config)
@@ -437,7 +437,7 @@ async def test_ws_list(opp, opp_ws_client, storage_setup):
     """Test listing via WS."""
     manager = opp.data[DOMAIN][1]
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     resp = await client.send_json({"id": 6, "type": "person/list"})
     resp = await client.receive_json()
@@ -451,7 +451,7 @@ async def test_ws_create(opp, opp_ws_client, storage_setup, opp_read_only_user):
     """Test creating via WS."""
     manager = opp.data[DOMAIN][1]
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     resp = await client.send_json(
         {
@@ -479,7 +479,7 @@ async def test_ws_create_requires_admin(
     opp.admin_user.groups = []
     manager = opp.data[DOMAIN][1]
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     resp = await client.send_json(
         {
@@ -502,7 +502,7 @@ async def test_ws_update(opp, opp_ws_client, storage_setup):
     """Test updating via WS."""
     manager = opp.data[DOMAIN][1]
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     persons = manager.async_items()
 
     resp = await client.send_json(
@@ -552,7 +552,7 @@ async def test_ws_update_require_admin(
     opp.admin_user.groups = []
     manager = opp.data[DOMAIN][1]
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     original = dict(manager.async_items()[0])
 
     resp = await client.send_json(
@@ -576,7 +576,7 @@ async def test_ws_delete(opp, opp_ws_client, storage_setup):
     """Test deleting via WS."""
     manager = opp.data[DOMAIN][1]
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     persons = manager.async_items()
 
     resp = await client.send_json(
@@ -600,7 +600,7 @@ async def test_ws_delete_require_admin(
     opp.admin_user.groups = []
     manager = opp.data[DOMAIN][1]
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     resp = await client.send_json(
         {
@@ -681,7 +681,7 @@ async def test_update_person_when_user_removed(
 async def test_removing_device_tracker(opp, storage_setup):
     """Test we automatically remove removed device trackers."""
     storage_collection = opp.data[DOMAIN][1]
-    reg = await entity_registry.async_get_registry.opp)
+    reg = await entity_registry.async_get_registry(opp)
     entry = reg.async_get_or_create(
         "device_tracker", "mobile_app", "bla", suggested_object_id="pixel"
     )

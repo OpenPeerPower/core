@@ -59,9 +59,9 @@ async def test_name_in_configuration_exists() -> None:
         assert flow._name_in_configuration_exists("name_exist") is True
 
 
-def test_smhi_locations.opp) -> None:
+def test_smhi_locations(opp) -> None:
     """Test return empty set."""
-    locations = config_flow.smhi_locations.opp)
+    locations = config_flow.smhi_locations(opp)
     assert not locations
 
 
@@ -89,7 +89,7 @@ async def test_show_config_form_default_values() -> None:
     assert result["step_id"] == "user"
 
 
-async def test_flow_with_home_location.opp) -> None:
+async def test_flow_with_home_location(opp) -> None:
     """Test config flow .
 
     Tests the flow when a default location is configured

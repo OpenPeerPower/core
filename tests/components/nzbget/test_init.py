@@ -25,7 +25,7 @@ from . import (
 from tests.common import MockConfigEntry
 
 
-async def test_import_from_yaml.opp) -> None:
+async def test_import_from_yaml(opp) -> None:
     """Test import from YAML."""
     with _patch_version(), _patch_status(), _patch_history(), _patch_async_setup_entry():
         assert await async_setup_component(opp, DOMAIN, {DOMAIN: YAML_CONFIG})
@@ -41,7 +41,7 @@ async def test_import_from_yaml.opp) -> None:
 
 async def test_unload_entry(opp, nzbget_api):
     """Test successful unload of entry."""
-    entry = await init_integration.opp)
+    entry = await init_integration(opp)
 
     assert len(opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED
@@ -53,7 +53,7 @@ async def test_unload_entry(opp, nzbget_api):
     assert not opp.data.get(DOMAIN)
 
 
-async def test_async_setup_raises_entry_not_ready.opp):
+async def test_async_setup_raises_entry_not_ready(opp):
     """Test that it throws ConfigEntryNotReady when exception occurs during setup."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=ENTRY_CONFIG)
     config_entry.add_to_opp(opp)

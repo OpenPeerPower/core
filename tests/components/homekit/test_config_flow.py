@@ -32,7 +32,7 @@ def _mock_config_entry_with_options_populated():
     )
 
 
-async def test_setup_in_bridge_mode.opp):
+async def test_setup_in_bridge_mode(opp):
     """Test we can setup a new instance in bridge mode."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -89,7 +89,7 @@ async def test_setup_in_bridge_mode.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_setup_in_accessory_mode.opp):
+async def test_setup_in_accessory_mode(opp):
     """Test we can setup a new instance in accessory."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     opp.states.async_set("camera.mine", "off")
@@ -149,7 +149,7 @@ async def test_setup_in_accessory_mode.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_import.opp):
+async def test_import(opp):
     """Test we can import instance."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -241,7 +241,7 @@ async def test_options_flow_exclude_mode_advanced(auto_start, opp):
     }
 
 
-async def test_options_flow_exclude_mode_basic.opp):
+async def test_options_flow_exclude_mode_basic(opp):
     """Test config flow options in exclude mode."""
 
     config_entry = _mock_config_entry_with_options_populated()
@@ -282,7 +282,7 @@ async def test_options_flow_exclude_mode_basic.opp):
     }
 
 
-async def test_options_flow_include_mode_basic.opp):
+async def test_options_flow_include_mode_basic(opp):
     """Test config flow options in include mode."""
 
     config_entry = _mock_config_entry_with_options_populated()
@@ -325,7 +325,7 @@ async def test_options_flow_include_mode_basic.opp):
     }
 
 
-async def test_options_flow_exclude_mode_with_cameras.opp):
+async def test_options_flow_exclude_mode_with_cameras(opp):
     """Test config flow options in exclude mode with cameras."""
 
     config_entry = _mock_config_entry_with_options_populated()
@@ -428,7 +428,7 @@ async def test_options_flow_exclude_mode_with_cameras.opp):
     }
 
 
-async def test_options_flow_include_mode_with_cameras.opp):
+async def test_options_flow_include_mode_with_cameras(opp):
     """Test config flow options in include mode with cameras."""
 
     config_entry = _mock_config_entry_with_options_populated()
@@ -555,7 +555,7 @@ async def test_options_flow_include_mode_with_cameras.opp):
     }
 
 
-async def test_options_flow_blocked_when_from_yaml.opp):
+async def test_options_flow_blocked_when_from_yaml(opp):
     """Test config flow options."""
 
     config_entry = MockConfigEntry(
@@ -594,7 +594,7 @@ async def test_options_flow_blocked_when_from_yaml.opp):
         assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
 
-async def test_options_flow_include_mode_basic_accessory.opp):
+async def test_options_flow_include_mode_basic_accessory(opp):
     """Test config flow options in include mode with a single accessory."""
 
     config_entry = _mock_config_entry_with_options_populated()

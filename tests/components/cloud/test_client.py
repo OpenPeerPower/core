@@ -26,7 +26,7 @@ def mock_cloud_inst():
     return MagicMock(subscription_expired=False)
 
 
-async def test_handler_alexa.opp):
+async def test_handler_alexa(opp):
     """Test handler Alexa."""
     opp.states.async_set("switch.test", "on", {"friendly_name": "Test switch"})
     opp.states.async_set("switch.test2", "on", {"friendly_name": "Test switch 2"})
@@ -47,7 +47,7 @@ async def test_handler_alexa.opp):
         },
     )
 
-    mock_cloud_prefs.opp)
+    mock_cloud_prefs(opp)
     cloud = opp.data["cloud"]
 
     resp = await cloud.client.async_alexa_message(
@@ -79,7 +79,7 @@ async def test_handler_alexa_disabled(opp, mock_cloud_fixture):
     assert resp["event"]["payload"]["type"] == "BRIDGE_UNREACHABLE"
 
 
-async def test_handler_google_actions.opp):
+async def test_handler_google_actions(opp):
     """Test handler Google Actions."""
     opp.states.async_set("switch.test", "on", {"friendly_name": "Test switch"})
     opp.states.async_set("switch.test2", "on", {"friendly_name": "Test switch 2"})
@@ -101,7 +101,7 @@ async def test_handler_google_actions.opp):
         },
     )
 
-    mock_cloud_prefs.opp)
+    mock_cloud_prefs(opp)
     cloud = opp.data["cloud"]
 
     reqid = "5711642932632160983"
@@ -252,7 +252,7 @@ async def test_google_config_should_2fa.opp, mock_cloud_setup, mock_cloud_login)
     assert not gconf.should_2fa(state)
 
 
-async def test_set_username.opp):
+async def test_set_username(opp):
     """Test we set username during login."""
     prefs = MagicMock(
         alexa_enabled=False,

@@ -43,7 +43,7 @@ async def test_with_hvac_mode(opp, state):
     assert calls[0].data == {"entity_id": ENTITY_1, "hvac_mode": state}
 
 
-async def test_multiple_state.opp):
+async def test_multiple_state(opp):
     """Test that multiple states gets calls."""
     calls_1 = async_mock_service(opp, DOMAIN, SERVICE_SET_HVAC_MODE)
 
@@ -65,7 +65,7 @@ async def test_multiple_state.opp):
     )
 
 
-async def test_state_with_none.opp):
+async def test_state_with_none(opp):
     """Test that none is not a hvac state."""
     calls = async_mock_service(opp, DOMAIN, SERVICE_SET_HVAC_MODE)
 
@@ -76,7 +76,7 @@ async def test_state_with_none.opp):
     assert len(calls) == 0
 
 
-async def test_state_with_context.opp):
+async def test_state_with_context(opp):
     """Test that context is forwarded."""
     calls = async_mock_service(opp, DOMAIN, SERVICE_SET_HVAC_MODE)
 

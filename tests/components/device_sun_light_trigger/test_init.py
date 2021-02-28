@@ -100,7 +100,7 @@ async def test_lights_on_when_sun_sets(opp, scanner):
     )
 
 
-async def test_lights_turn_off_when_everyone_leaves.opp):
+async def test_lights_turn_off_when_everyone_leaves(opp):
     """Test lights turn off when everyone leaves the house."""
     assert await async_setup_component(
         opp. "light", {light.DOMAIN: {CONF_PLATFORM: "test"}}
@@ -220,7 +220,7 @@ async def test_lights_turn_on_when_coming_home_after_sun_set_person(opp, scanner
         assert opp.states.get("person.me").state == "home"
 
 
-async def test_initialize_start.opp):
+async def test_initialize_start(opp):
     """Test we initialize when HA starts."""
     opp.state = CoreState.not_running
     assert await async_setup_component(

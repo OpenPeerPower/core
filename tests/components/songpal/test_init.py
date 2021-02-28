@@ -26,7 +26,7 @@ def _patch_media_setup():
     )
 
 
-async def test_setup_empty.opp):
+async def test_setup_empty(opp):
     """Test setup without any configuration."""
     with _patch_media_setup() as setup:
         assert await async_setup_component(opp, songpal.DOMAIN, {}) is True
@@ -50,7 +50,7 @@ async def test_setup_opp):
     setup.assert_called_once()
 
 
-async def test_unload.opp):
+async def test_unload(opp):
     """Test unload entity."""
     entry = MockConfigEntry(domain=songpal.DOMAIN, data=CONF_DATA)
     entry.add_to_opp(opp)

@@ -60,7 +60,7 @@ async def test_config_flow(
         assert pvpc_aioclient_mock.call_count == 1
 
         # Check removal
-        registry = await entity_registry.async_get_registry.opp)
+        registry = await entity_registry.async_get_registry(opp)
         registry_entity = registry.async_get("sensor.test")
         assert await opp.config_entries.async_remove(registry_entity.config_entry_id)
 

@@ -7,7 +7,7 @@ from openpeerpower.setup import async_setup_component
 import openpeerpower.util.dt as dt_util
 
 
-async def test_state.opp):
+async def test_state(opp):
     """Test derivative sensor state."""
     config = {
         "sensor": {
@@ -141,7 +141,7 @@ async def test_dataSet6.opp):
     await setup_tests(opp, {}, times=[0, 60], values=[0, 1 / 60], expected_state=1)
 
 
-async def test_data_moving_average_for_discrete_sensor.opp):
+async def test_data_moving_average_for_discrete_sensor(opp):
     """Test derivative sensor state."""
     # We simulate the following situation:
     # The temperature rises 1 °C per minute for 30 minutes long.
@@ -180,7 +180,7 @@ async def test_data_moving_average_for_discrete_sensor.opp):
             assert abs(1 - derivative) <= 0.1 + 1e-6
 
 
-async def test_prefix.opp):
+async def test_prefix(opp):
     """Test derivative sensor state using a power source."""
     config = {
         "sensor": {
@@ -217,7 +217,7 @@ async def test_prefix.opp):
     assert state.attributes.get("unit_of_measurement") == f"kW/{TIME_HOURS}"
 
 
-async def test_suffix.opp):
+async def test_suffix(opp):
     """Test derivative sensor state using a network counter source."""
     config = {
         "sensor": {

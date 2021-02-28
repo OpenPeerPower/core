@@ -19,7 +19,7 @@ async def test_config_no_config(opp):
     assert await async_setup_component(opp, DOMAIN, {})
 
 
-async def test_config_no_static.opp):
+async def test_config_no_static(opp):
     """Component setup succeeds when there are no static config entries."""
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_DISCOVERY: False}})
 
@@ -82,7 +82,7 @@ async def test_static_config_without_port(opp, pywemo_device):
     assert len(entity_entries) == 1
 
 
-async def test_static_config_with_invalid_host.opp):
+async def test_static_config_with_invalid_host(opp):
     """Component setup fails if a static host is invalid."""
     setup_success = await async_setup_component(
         opp,

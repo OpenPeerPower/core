@@ -68,7 +68,7 @@ async def test_config_flow_step_gateway_connect_error(opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_config_flow_gateway_success.opp):
+async def test_config_flow_gateway_success(opp):
     """Test a successful config flow."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -102,7 +102,7 @@ async def test_config_flow_gateway_success.opp):
     }
 
 
-async def test_zeroconf_gateway_success.opp):
+async def test_zeroconf_gateway_success(opp):
     """Test a successful zeroconf discovery of a gateway."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -142,7 +142,7 @@ async def test_zeroconf_gateway_success.opp):
     }
 
 
-async def test_zeroconf_unknown_device.opp):
+async def test_zeroconf_unknown_device(opp):
     """Test a failed zeroconf discovery because of a unknown device."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -158,7 +158,7 @@ async def test_zeroconf_unknown_device.opp):
     assert result["reason"] == "not_xiaomi_miio"
 
 
-async def test_zeroconf_no_data.opp):
+async def test_zeroconf_no_data(opp):
     """Test a failed zeroconf discovery because of no data."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}, data={}
@@ -168,7 +168,7 @@ async def test_zeroconf_no_data.opp):
     assert result["reason"] == "not_xiaomi_miio"
 
 
-async def test_zeroconf_missing_data.opp):
+async def test_zeroconf_missing_data(opp):
     """Test a failed zeroconf discovery because of missing data."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
@@ -204,7 +204,7 @@ async def test_config_flow_step_device_connect_error(opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_config_flow_step_unknown_device.opp):
+async def test_config_flow_step_unknown_device(opp):
     """Test config flow, unknown device error."""
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -230,7 +230,7 @@ async def test_config_flow_step_unknown_device.opp):
     assert result["errors"] == {"base": "unknown_device"}
 
 
-async def test_import_flow_success.opp):
+async def test_import_flow_success(opp):
     """Test a successful import form yaml for a device."""
     mock_info = get_mock_info(model=const.MODELS_SWITCH[0])
 
@@ -331,13 +331,13 @@ async def zeroconf_device_success(opp, zeroconf_name_to_test, model_to_test):
     }
 
 
-async def test_config_flow_plug_success.opp):
+async def test_config_flow_plug_success(opp):
     """Test a successful config flow for a plug."""
     test_plug_model = const.MODELS_SWITCH[0]
     await config_flow_device_success(opp, test_plug_model)
 
 
-async def test_zeroconf_plug_success.opp):
+async def test_zeroconf_plug_success(opp):
     """Test a successful zeroconf discovery of a plug."""
     test_plug_model = const.MODELS_SWITCH[0]
     test_zeroconf_name = const.MODELS_SWITCH[0].replace(".", "-")

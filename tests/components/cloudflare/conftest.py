@@ -18,7 +18,7 @@ def cfupdate.opp):
 
 
 @fixture
-def cfupdate_flow.opp):
+def cfupdate_flow(opp):
     """Mock the CloudflareUpdater for easier config flow testing."""
     mock_cfupdate = _get_mock_cfupdate()
     with patch(

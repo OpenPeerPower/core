@@ -219,7 +219,7 @@ async def test_show_setup_msg(opp, hk_driver):
     """Test show setup message as persistence notification."""
     pincode = b"123-45-678"
 
-    entry = await async_init_integration.opp)
+    entry = await async_init_integration(opp)
     assert entry
 
     call_create_notification = async_mock_service(
@@ -238,7 +238,7 @@ async def test_show_setup_msg(opp, hk_driver):
     assert pincode.decode() in call_create_notification[0].data[ATTR_MESSAGE]
 
 
-async def test_dismiss_setup_msg.opp):
+async def test_dismiss_setup_msg(opp):
     """Test dismiss setup message."""
     call_dismiss_notification = async_mock_service(
         opp. PERSISTENT_NOTIFICATION_DOMAIN, "dismiss"
@@ -251,7 +251,7 @@ async def test_dismiss_setup_msg.opp):
     assert call_dismiss_notification[0].data[ATTR_NOTIFICATION_ID] == "entry_id"
 
 
-async def test_port_is_available.opp):
+async def test_port_is_available(opp):
     """Test we can get an available port and it is actually available."""
     next_port = await async_find_next_available_port(opp, DEFAULT_CONFIG_FLOW_PORT)
 
@@ -260,7 +260,7 @@ async def test_port_is_available.opp):
     assert await opp.async_add_executor_job(port_is_available, next_port)
 
 
-async def test_port_is_available_skips_existing_entries.opp):
+async def test_port_is_available_skips_existing_entries(opp):
     """Test we can get an available port and it is actually available."""
     entry = MockConfigEntry(
         domain=DOMAIN,

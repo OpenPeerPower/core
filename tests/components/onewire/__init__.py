@@ -16,7 +16,7 @@ from openpeerpower.const import CONF_HOST, CONF_PORT, CONF_TYPE
 from tests.common import MockConfigEntry
 
 
-async def setup_onewire_sysbus_integration.opp):
+async def setup_onewire_sysbus_integration(opp):
     """Create the 1-Wire integration."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -41,7 +41,7 @@ async def setup_onewire_sysbus_integration.opp):
     return config_entry
 
 
-async def setup_onewire_owserver_integration.opp):
+async def setup_onewire_owserver_integration(opp):
     """Create the 1-Wire integration."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -66,7 +66,7 @@ async def setup_onewire_owserver_integration.opp):
         return config_entry
 
 
-async def setup_onewire_patched_owserver_integration.opp):
+async def setup_onewire_patched_owserver_integration(opp):
     """Create the 1-Wire integration."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,

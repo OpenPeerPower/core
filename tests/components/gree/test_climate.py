@@ -72,7 +72,7 @@ def mock_now():
     return dt_util.utcnow()
 
 
-async def async_setup_gree.opp):
+async def async_setup_gree(opp):
     """Set up the gree platform."""
     MockConfigEntry(domain=GREE_DOMAIN).add_to_opp(opp)
     await async_setup_component(opp, GREE_DOMAIN, {GREE_DOMAIN: {"climate": {}}})
@@ -81,10 +81,10 @@ async def async_setup_gree.opp):
 
 async def test_discovery_called_once(opp, discovery, device):
     """Test discovery is only ever called once."""
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
     assert discovery.call_count == 1
 
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
     assert discovery.call_count == 1
 
 
@@ -100,7 +100,7 @@ async def test_discovery_setup_opp, discovery, device):
     discovery.return_value = [MockDevice1.device_info, MockDevice2.device_info]
     device.side_effect = [MockDevice1, MockDevice2]
 
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
     await opp.async_block_till_done()
     assert discovery.call_count == 1
     assert len(opp.states.async_all(DOMAIN)) == 2
@@ -116,7 +116,7 @@ async def test_discovery_setup_connection_error(opp, discovery, device):
 
     device.side_effect = [MockDevice1, MockDevice2]
 
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
     await opp.async_block_till_done()
     assert discovery.call_count == 1
 
@@ -131,7 +131,7 @@ async def test_update_connection_failure(opp, discovery, device, mock_now):
         DeviceTimeoutError,
     ]
 
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     next_update = mock_now + timedelta(minutes=5)
     with patch("openpeerpower.util.dt.utcnow", return_value=next_update):
@@ -167,7 +167,7 @@ async def test_update_connection_failure_recovery(opp, discovery, device, mock_n
         DEFAULT_MOCK,
     ]
 
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     # First update becomes unavailable
     next_update = mock_now + timedelta(minutes=5)
@@ -194,7 +194,7 @@ async def test_update_unhandled_exception(opp, discovery, device, mock_now):
     """Testing update hvac connection unhandled response exception."""
     device().update_state.side_effect = [DEFAULT_MOCK, Exception]
 
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     state = opp.states.get(ENTITY_ID)
     assert state.name == "fake-device-1"
@@ -212,7 +212,7 @@ async def test_update_unhandled_exception(opp, discovery, device, mock_now):
 
 async def test_send_command_device_timeout(opp, discovery, device, mock_now):
     """Test for sending power on command to the device with a device timeout."""
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     # First update to make the device available
     next_update = mock_now + timedelta(minutes=5)
@@ -242,7 +242,7 @@ async def test_send_command_device_timeout(opp, discovery, device, mock_now):
 
 async def test_send_power_on(opp, discovery, device, mock_now):
     """Test for sending power on command to the device."""
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     assert await opp.services.async_call(
         DOMAIN,
@@ -260,7 +260,7 @@ async def test_send_power_on_device_timeout(opp, discovery, device, mock_now):
     """Test for sending power on command to the device with a device timeout."""
     device().push_state_update.side_effect = DeviceTimeoutError
 
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     assert await opp.services.async_call(
         DOMAIN,
@@ -276,7 +276,7 @@ async def test_send_power_on_device_timeout(opp, discovery, device, mock_now):
 
 async def test_send_power_off(opp, discovery, device, mock_now):
     """Test for sending power off command to the device."""
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     next_update = mock_now + timedelta(minutes=5)
     with patch("openpeerpower.util.dt.utcnow", return_value=next_update):
@@ -299,7 +299,7 @@ async def test_send_power_off_device_timeout(opp, discovery, device, mock_now):
     """Test for sending power off command to the device with a device timeout."""
     device().push_state_update.side_effect = DeviceTimeoutError
 
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     next_update = mock_now + timedelta(minutes=5)
     with patch("openpeerpower.util.dt.utcnow", return_value=next_update):
@@ -320,7 +320,7 @@ async def test_send_power_off_device_timeout(opp, discovery, device, mock_now):
 
 async def test_send_target_temperature(opp, discovery, device, mock_now):
     """Test for sending target temperature command to the device."""
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     assert await opp.services.async_call(
         DOMAIN,
@@ -340,7 +340,7 @@ async def test_send_target_temperature_device_timeout(
     """Test for sending target temperature command to the device with a device timeout."""
     device().push_state_update.side_effect = DeviceTimeoutError
 
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     assert await opp.services.async_call(
         DOMAIN,
@@ -358,7 +358,7 @@ async def test_update_target_temperature(opp, discovery, device, mock_now):
     """Test for updating target temperature from the device."""
     device().target_temperature = 32
 
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     state = opp.states.get(ENTITY_ID)
     assert state is not None
@@ -370,7 +370,7 @@ async def test_update_target_temperature(opp, discovery, device, mock_now):
 )
 async def test_send_preset_mode(opp, discovery, device, mock_now, preset):
     """Test for sending preset mode command to the device."""
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     assert await opp.services.async_call(
         DOMAIN,
@@ -386,7 +386,7 @@ async def test_send_preset_mode(opp, discovery, device, mock_now, preset):
 
 async def test_send_invalid_preset_mode(opp, discovery, device, mock_now):
     """Test for sending preset mode command to the device."""
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     with pytest.raises(ValueError):
         await opp.services.async_call(
@@ -410,7 +410,7 @@ async def test_send_preset_mode_device_timeout(
     """Test for sending preset mode command to the device with a device timeout."""
     device().push_state_update.side_effect = DeviceTimeoutError
 
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     assert await opp.services.async_call(
         DOMAIN,
@@ -434,7 +434,7 @@ async def test_update_preset_mode(opp, discovery, device, mock_now, preset):
     device().sleep = preset == PRESET_SLEEP
     device().turbo = preset == PRESET_BOOST
 
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     state = opp.states.get(ENTITY_ID)
     assert state is not None
@@ -454,7 +454,7 @@ async def test_update_preset_mode(opp, discovery, device, mock_now, preset):
 )
 async def test_send_hvac_mode(opp, discovery, device, mock_now, hvac_mode):
     """Test for sending hvac mode command to the device."""
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     assert await opp.services.async_call(
         DOMAIN,
@@ -478,7 +478,7 @@ async def test_send_hvac_mode_device_timeout(
     """Test for sending hvac mode command to the device with a device timeout."""
     device().push_state_update.side_effect = DeviceTimeoutError
 
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     assert await opp.services.async_call(
         DOMAIN,
@@ -508,7 +508,7 @@ async def test_update_hvac_mode(opp, discovery, device, mock_now, hvac_mode):
     device().power = hvac_mode != HVAC_MODE_OFF
     device().mode = HVAC_MODES_REVERSE.get(hvac_mode)
 
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     state = opp.states.get(ENTITY_ID)
     assert state is not None
@@ -521,7 +521,7 @@ async def test_update_hvac_mode(opp, discovery, device, mock_now, hvac_mode):
 )
 async def test_send_fan_mode(opp, discovery, device, mock_now, fan_mode):
     """Test for sending fan mode command to the device."""
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     assert await opp.services.async_call(
         DOMAIN,
@@ -537,7 +537,7 @@ async def test_send_fan_mode(opp, discovery, device, mock_now, fan_mode):
 
 async def test_send_invalid_fan_mode(opp, discovery, device, mock_now):
     """Test for sending fan mode command to the device."""
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     with pytest.raises(ValueError):
         await opp.services.async_call(
@@ -562,7 +562,7 @@ async def test_send_fan_mode_device_timeout(
     """Test for sending fan mode command to the device with a device timeout."""
     device().push_state_update.side_effect = DeviceTimeoutError
 
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     assert await opp.services.async_call(
         DOMAIN,
@@ -584,7 +584,7 @@ async def test_update_fan_mode(opp, discovery, device, mock_now, fan_mode):
     """Test for updating fan mode from the device."""
     device().fan_speed = FAN_MODES_REVERSE.get(fan_mode)
 
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     state = opp.states.get(ENTITY_ID)
     assert state is not None
@@ -596,7 +596,7 @@ async def test_update_fan_mode(opp, discovery, device, mock_now, fan_mode):
 )
 async def test_send_swing_mode(opp, discovery, device, mock_now, swing_mode):
     """Test for sending swing mode command to the device."""
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     assert await opp.services.async_call(
         DOMAIN,
@@ -612,7 +612,7 @@ async def test_send_swing_mode(opp, discovery, device, mock_now, swing_mode):
 
 async def test_send_invalid_swing_mode(opp, discovery, device, mock_now):
     """Test for sending swing mode command to the device."""
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     with pytest.raises(ValueError):
         await opp.services.async_call(
@@ -636,7 +636,7 @@ async def test_send_swing_mode_device_timeout(
     """Test for sending swing mode command to the device with a device timeout."""
     device().push_state_update.side_effect = DeviceTimeoutError
 
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     assert await opp.services.async_call(
         DOMAIN,
@@ -666,7 +666,7 @@ async def test_update_swing_mode(opp, discovery, device, mock_now, swing_mode):
         else VerticalSwing.Default
     )
 
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
 
     state = opp.states.get(ENTITY_ID)
     assert state is not None
@@ -675,13 +675,13 @@ async def test_update_swing_mode(opp, discovery, device, mock_now, swing_mode):
 
 async def test_name(opp, discovery, device):
     """Test for name property."""
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
     state = opp.states.get(ENTITY_ID)
     assert state.attributes[ATTR_FRIENDLY_NAME] == "fake-device-1"
 
 
 async def test_supported_features_with_turnon(opp, discovery, device):
     """Test for supported_features property."""
-    await async_setup_gree.opp)
+    await async_setup_gree(opp)
     state = opp.states.get(ENTITY_ID)
     assert state.attributes[ATTR_SUPPORTED_FEATURES] == SUPPORTED_FEATURES

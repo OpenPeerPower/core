@@ -71,7 +71,7 @@ async def authed_api_client(opp, opp_client):
 
 
 @pytest.fixture(autouse=True)
-async def setup_ws.opp):
+async def setup_ws(opp):
     """Configure the websocket_api component."""
     assert await async_setup_component(opp, "websocket_api", {})
     await opp.async_block_till_done()

@@ -11,7 +11,7 @@ from tests.components.august.mocks import (
 )
 
 
-async def test_create_doorbell.opp):
+async def test_create_doorbell(opp):
     """Test creation of a doorbell."""
     doorbell_one = await _mock_doorbell_from_fixture(opp, "get_doorbell.json")
     await _create_august_with_devices(opp, [doorbell_one])
@@ -25,7 +25,7 @@ async def test_create_doorbell.opp):
     )
 
 
-async def test_create_doorbell_offline.opp):
+async def test_create_doorbell_offline(opp):
     """Test creation of a doorbell that is offline."""
     doorbell_one = await _mock_doorbell_from_fixture(opp, "get_doorbell.offline.json")
     await _create_august_with_devices(opp, [doorbell_one])
@@ -40,7 +40,7 @@ async def test_create_doorbell_offline.opp):
     assert entry.unique_id == "tmt100_device_battery"
 
 
-async def test_create_doorbell_hardwired.opp):
+async def test_create_doorbell_hardwired(opp):
     """Test creation of a doorbell that is hardwired without a battery."""
     doorbell_one = await _mock_doorbell_from_fixture(
         opp. "get_doorbell.nobattery.json"
@@ -51,7 +51,7 @@ async def test_create_doorbell_hardwired.opp):
     assert sensor_tmt100_name_battery is None
 
 
-async def test_create_lock_with_linked_keypad.opp):
+async def test_create_lock_with_linked_keypad(opp):
     """Test creation of a lock with a linked keypad that both have a battery."""
     lock_one = await _mock_lock_from_fixture(opp, "get_lock.doorsense_init.json")
     await _create_august_with_devices(opp, [lock_one])
@@ -81,7 +81,7 @@ async def test_create_lock_with_linked_keypad.opp):
     assert entry.unique_id == "5bc65c24e6ef2a263e1450a8_linked_keypad_battery"
 
 
-async def test_create_lock_with_low_battery_linked_keypad.opp):
+async def test_create_lock_with_low_battery_linked_keypad(opp):
     """Test creation of a lock with a linked keypad that both have a battery."""
     lock_one = await _mock_lock_from_fixture(opp, "get_lock.low_keypad_battery.json")
     await _create_august_with_devices(opp, [lock_one])
@@ -124,9 +124,9 @@ async def test_create_lock_with_low_battery_linked_keypad.opp):
     )
 
 
-async def test_lock_operator_bluetooth.opp):
+async def test_lock_operator_bluetooth(opp):
     """Test operation of a lock with doorsense and bridge."""
-    lock_one = await _mock_doorsense_enabled_august_lock_detail.opp)
+    lock_one = await _mock_doorsense_enabled_august_lock_detail(opp)
 
     activities = await _mock_activities_from_fixture(
         opp. "get_activity.lock_from_bluetooth.json"
@@ -168,9 +168,9 @@ async def test_lock_operator_bluetooth.opp):
     )
 
 
-async def test_lock_operator_keypad.opp):
+async def test_lock_operator_keypad(opp):
     """Test operation of a lock with doorsense and bridge."""
-    lock_one = await _mock_doorsense_enabled_august_lock_detail.opp)
+    lock_one = await _mock_doorsense_enabled_august_lock_detail(opp)
 
     activities = await _mock_activities_from_fixture(
         opp. "get_activity.lock_from_keypad.json"
@@ -212,9 +212,9 @@ async def test_lock_operator_keypad.opp):
     )
 
 
-async def test_lock_operator_remote.opp):
+async def test_lock_operator_remote(opp):
     """Test operation of a lock with doorsense and bridge."""
-    lock_one = await _mock_doorsense_enabled_august_lock_detail.opp)
+    lock_one = await _mock_doorsense_enabled_august_lock_detail(opp)
 
     activities = await _mock_activities_from_fixture(opp, "get_activity.lock.json")
     await _create_august_with_devices(opp, [lock_one], activities=activities)
@@ -254,9 +254,9 @@ async def test_lock_operator_remote.opp):
     )
 
 
-async def test_lock_operator_autorelock.opp):
+async def test_lock_operator_autorelock(opp):
     """Test operation of a lock with doorsense and bridge."""
-    lock_one = await _mock_doorsense_enabled_august_lock_detail.opp)
+    lock_one = await _mock_doorsense_enabled_august_lock_detail(opp)
 
     activities = await _mock_activities_from_fixture(
         opp. "get_activity.lock_from_autorelock.json"

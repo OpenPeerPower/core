@@ -19,15 +19,15 @@ from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 
 
 @pytest.fixture
-def device_reg.opp):
+def device_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_device_registry.opp)
+    return mock_device_registry(opp)
 
 
 @pytest.fixture
-def entity_reg.opp):
+def entity_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_registry.opp)
+    return mock_registry(opp)
 
 
 @pytest.fixture
@@ -37,9 +37,9 @@ def calls.opp):
 
 
 @pytest.fixture
-async def kodi_media_player.opp):
+async def kodi_media_player(opp):
     """Get a kodi media player."""
-    await init_integration.opp)
+    await init_integration(opp)
     return f"{MP_DOMAIN}.name"
 
 

@@ -13,7 +13,7 @@ from openpeerpower.components.srp_energy.sensor import SrpEntity, async_setup_en
 from openpeerpower.const import ATTR_ATTRIBUTION, ENERGY_KILO_WATT_HOUR
 
 
-async def test_async_setup_entry.opp):
+async def test_async_setup_entry(opp):
     """Test the sensor."""
     fake_async_add_entities = MagicMock()
     fake_srp_energy_client = MagicMock()
@@ -78,7 +78,7 @@ async def test_async_setup_entry_connect_error(opp):
     ].coordinator.last_update_success
 
 
-async def test_srp_entity.opp):
+async def test_srp_entity(opp):
     """Test the SrpEntity."""
     fake_coordinator = MagicMock(data=1.99999999999)
     srp_entity = SrpEntity(fake_coordinator)
@@ -100,14 +100,14 @@ async def test_srp_entity.opp):
     assert not fake_coordinator.async_add_listener.data.called
 
 
-async def test_srp_entity_no_data.opp):
+async def test_srp_entity_no_data(opp):
     """Test the SrpEntity."""
     fake_coordinator = MagicMock(data=False)
     srp_entity = SrpEntity(fake_coordinator)
     assert srp_entity.device_state_attributes is None
 
 
-async def test_srp_entity_no_coord_data.opp):
+async def test_srp_entity_no_coord_data(opp):
     """Test the SrpEntity."""
     fake_coordinator = MagicMock(data=False)
     srp_entity = SrpEntity(fake_coordinator)
@@ -115,7 +115,7 @@ async def test_srp_entity_no_coord_data.opp):
     assert srp_entity.usage is None
 
 
-async def test_srp_entity_async_update.opp):
+async def test_srp_entity_async_update(opp):
     """Test the SrpEntity."""
 
     async def async_magic():

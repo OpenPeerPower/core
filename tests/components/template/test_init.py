@@ -11,7 +11,7 @@ from openpeerpower.util import dt as dt_util
 from tests.common import async_fire_time_changed
 
 
-async def test_reloadable.opp):
+async def test_reloadable(opp):
     """Test that we can reload."""
     opp.states.async_set("sensor.test_sensor", "mytest")
 
@@ -58,7 +58,7 @@ async def test_reloadable.opp):
     assert float.opp.states.get("sensor.combined_sensor_energy_usage").state) == 0
 
 
-async def test_reloadable_can_remove.opp):
+async def test_reloadable_can_remove(opp):
     """Test that we can reload and remove all template sensors."""
     opp.states.async_set("sensor.test_sensor", "mytest")
 
@@ -194,7 +194,7 @@ async def test_reloadable_handles_partial_valid_config(opp):
     assert float.opp.states.get("sensor.combined_sensor_energy_usage").state) == 0
 
 
-async def test_reloadable_multiple_platforms.opp):
+async def test_reloadable_multiple_platforms(opp):
     """Test that we can reload."""
     opp.states.async_set("sensor.test_sensor", "mytest")
 
@@ -257,7 +257,7 @@ async def test_reloadable_multiple_platforms.opp):
     assert float.opp.states.get("sensor.combined_sensor_energy_usage").state) == 0
 
 
-async def test_reload_sensors_that_reference_other_template_sensors.opp):
+async def test_reload_sensors_that_reference_other_template_sensors(opp):
     """Test that we can reload sensor that reference other template sensors."""
 
     await async_setup_component(

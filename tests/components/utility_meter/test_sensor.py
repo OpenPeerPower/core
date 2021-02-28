@@ -40,7 +40,7 @@ def alter_time(retval):
         yield
 
 
-async def test_state.opp):
+async def test_state(opp):
     """Test utility sensor state."""
     config = {
         "utility_meter": {
@@ -159,7 +159,7 @@ async def test_state.opp):
     assert state.state == "0.123"
 
 
-async def test_restore_state.opp):
+async def test_restore_state(opp):
     """Test utility sensor restore state."""
     config = {
         "utility_meter": {
@@ -218,7 +218,7 @@ async def test_restore_state.opp):
     assert state.attributes.get("status") == PAUSED
 
 
-async def test_net_consumption.opp):
+async def test_net_consumption(opp):
     """Test utility sensor state."""
     config = {
         "utility_meter": {
@@ -253,7 +253,7 @@ async def test_net_consumption.opp):
     assert state.state == "-1"
 
 
-async def test_non_net_consumption.opp):
+async def test_non_net_consumption(opp):
     """Test utility sensor state."""
     config = {
         "utility_meter": {

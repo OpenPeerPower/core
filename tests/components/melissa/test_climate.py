@@ -58,7 +58,7 @@ def melissa_mock():
     return api
 
 
-async def test_setup_platform.opp):
+async def test_setup_platform(opp):
     """Test setup_platform."""
     with patch(
         "openpeerpower.components.melissa.climate.MelissaClimate"
@@ -78,7 +78,7 @@ async def test_setup_platform.opp):
         add_entities.assert_called_once_with(thermostats)
 
 
-async def test_get_name.opp):
+async def test_get_name(opp):
     """Test name property."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
@@ -87,7 +87,7 @@ async def test_get_name.opp):
         assert thermostat.name == "Melissa 12345678"
 
 
-async def test_current_fan_mode.opp):
+async def test_current_fan_mode(opp):
     """Test current_fan_mode property."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
@@ -100,7 +100,7 @@ async def test_current_fan_mode.opp):
         assert thermostat.fan_mode is None
 
 
-async def test_current_temperature.opp):
+async def test_current_temperature(opp):
     """Test current temperature."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
@@ -109,7 +109,7 @@ async def test_current_temperature.opp):
         assert thermostat.current_temperature == 27.4
 
 
-async def test_current_temperature_no_data.opp):
+async def test_current_temperature_no_data(opp):
     """Test current temperature without data."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
@@ -119,7 +119,7 @@ async def test_current_temperature_no_data.opp):
         assert thermostat.current_temperature is None
 
 
-async def test_target_temperature_step.opp):
+async def test_target_temperature_step(opp):
     """Test current target_temperature_step."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
@@ -128,7 +128,7 @@ async def test_target_temperature_step.opp):
         assert thermostat.target_temperature_step == 1
 
 
-async def test_current_operation.opp):
+async def test_current_operation(opp):
     """Test current operation."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
@@ -141,7 +141,7 @@ async def test_current_operation.opp):
         assert thermostat.hvac_action is None
 
 
-async def test_operation_list.opp):
+async def test_operation_list(opp):
     """Test the operation list."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
@@ -156,7 +156,7 @@ async def test_operation_list.opp):
         ] == thermostat.hvac_modes
 
 
-async def test_fan_modes.opp):
+async def test_fan_modes(opp):
     """Test the fan list."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
@@ -165,7 +165,7 @@ async def test_fan_modes.opp):
         assert ["auto", SPEED_HIGH, SPEED_MEDIUM, SPEED_LOW] == thermostat.fan_modes
 
 
-async def test_target_temperature.opp):
+async def test_target_temperature(opp):
     """Test target temperature."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
@@ -178,7 +178,7 @@ async def test_target_temperature.opp):
         assert thermostat.target_temperature is None
 
 
-async def test_state.opp):
+async def test_state(opp):
     """Test state."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
@@ -191,7 +191,7 @@ async def test_state.opp):
         assert thermostat.state is None
 
 
-async def test_temperature_unit.opp):
+async def test_temperature_unit(opp):
     """Test temperature unit."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
@@ -200,7 +200,7 @@ async def test_temperature_unit.opp):
         assert TEMP_CELSIUS == thermostat.temperature_unit
 
 
-async def test_min_temp.opp):
+async def test_min_temp(opp):
     """Test min temp."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
@@ -209,7 +209,7 @@ async def test_min_temp.opp):
         assert thermostat.min_temp == 16
 
 
-async def test_max_temp.opp):
+async def test_max_temp(opp):
     """Test max temp."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
@@ -218,7 +218,7 @@ async def test_max_temp.opp):
         assert thermostat.max_temp == 30
 
 
-async def test_supported_features.opp):
+async def test_supported_features(opp):
     """Test supported_features property."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
@@ -228,7 +228,7 @@ async def test_supported_features.opp):
         assert features == thermostat.supported_features
 
 
-async def test_set_temperature.opp):
+async def test_set_temperature(opp):
     """Test set_temperature."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
@@ -239,7 +239,7 @@ async def test_set_temperature.opp):
         assert thermostat.target_temperature == 25
 
 
-async def test_fan_mode.opp):
+async def test_fan_mode(opp):
     """Test set_fan_mode."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
@@ -252,7 +252,7 @@ async def test_fan_mode.opp):
         assert SPEED_HIGH == thermostat.fan_mode
 
 
-async def test_set_operation_mode.opp):
+async def test_set_operation_mode(opp):
     """Test set_operation_mode."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
@@ -265,7 +265,7 @@ async def test_set_operation_mode.opp):
         assert HVAC_MODE_COOL == thermostat.hvac_mode
 
 
-async def test_send.opp):
+async def test_send(opp):
     """Test send."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
@@ -284,7 +284,7 @@ async def test_send.opp):
         assert thermostat._cur_settings is None
 
 
-async def test_update.opp):
+async def test_update(opp):
     """Test update."""
     with patch(
         "openpeerpower.components.melissa.climate._LOGGER.warning"
@@ -329,7 +329,7 @@ async def test_melissa_fan_to.opp.opp):
         assert thermostat.melissa_fan_to.opp(4) is None
 
 
-async def test.opp_mode_to_melissa.opp):
+async def test.opp_mode_to_melissa(opp):
     """Test for.opp operations to melssa."""
     with patch(
         "openpeerpower.components.melissa.climate._LOGGER.warning"
@@ -348,7 +348,7 @@ async def test.opp_mode_to_melissa.opp):
             )
 
 
-async def test.opp_fan_to_melissa.opp):
+async def test.opp_fan_to_melissa(opp):
     """Test for translate melissa states to.opp."""
     with patch(
         "openpeerpower.components.melissa.climate._LOGGER.warning"

@@ -50,9 +50,9 @@ async def test_setup_entry_session_error(opp):
     assert result is False
 
 
-async def test_unload_entry.opp):
+async def test_unload_entry(opp):
     """Test successful unload of entry."""
-    entry = await init_integration.opp)
+    entry = await init_integration(opp)
 
     assert len(opp.config_entries.async_entries(DOMAIN)) == 1
     assert entry.state == ENTRY_STATE_LOADED

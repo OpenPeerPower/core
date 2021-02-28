@@ -25,7 +25,7 @@ def create_rfx_test_cfg(device="abcd", automatic_add=False, devices=None):
 
 
 @pytest.fixture(autouse=True, name="rfxtrx")
-async def rfxtrx_fixture.opp):
+async def rfxtrx_fixture(opp):
     """Fixture that cleans up threads from integration."""
 
     with patch("RFXtrx.Connect") as connect, patch("RFXtrx.DummyTransport2"):

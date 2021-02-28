@@ -18,7 +18,7 @@ from tests.components.nightscout import (
 CONFIG = {CONF_URL: "https://some.url:1234"}
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the user initiated form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -41,7 +41,7 @@ async def test_form.opp):
         assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_user_form_cannot_connect.opp):
+async def test_user_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -60,7 +60,7 @@ async def test_user_form_cannot_connect.opp):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_user_form_api_key_required.opp):
+async def test_user_form_api_key_required(opp):
     """Test we handle an unauthorized error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -82,7 +82,7 @@ async def test_user_form_api_key_required.opp):
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_user_form_unexpected_exception.opp):
+async def test_user_form_unexpected_exception(opp):
     """Test we handle unexpected exception."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -101,7 +101,7 @@ async def test_user_form_unexpected_exception.opp):
     assert result2["errors"] == {"base": "unknown"}
 
 
-async def test_user_form_duplicate.opp):
+async def test_user_form_duplicate(opp):
     """Test duplicate entries."""
     with _patch_glucose_readings(), _patch_server_status():
         unique_id = hash_from_url(CONFIG[CONF_URL])

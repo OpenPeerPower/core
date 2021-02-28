@@ -276,7 +276,7 @@ async def test_discovery_ignored_hk_bridge(opp, controller):
     config_entry = MockConfigEntry(domain=config_flow.HOMEKIT_BRIDGE_DOMAIN, data={})
     formatted_mac = device_registry.format_mac("AA:BB:CC:DD:EE:FF")
 
-    dev_reg = mock_device_registry.opp)
+    dev_reg = mock_device_registry(opp)
     dev_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
         identifiers={

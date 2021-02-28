@@ -9,15 +9,15 @@ from tests.common import async_fire_mqtt_message, mock_device_registry, mock_reg
 
 
 @pytest.fixture
-def device_reg.opp):
+def device_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_device_registry.opp)
+    return mock_device_registry(opp)
 
 
 @pytest.fixture
-def entity_reg.opp):
+def entity_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_registry.opp)
+    return mock_registry(opp)
 
 
 async def test_discover_device_tracker(opp, mqtt_mock, caplog):

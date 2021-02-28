@@ -26,7 +26,7 @@ async def test_init_entry(opp, generic_data):
     assert opp.services.has_service(DOMAIN, const.SERVICE_REMOVE_NODE)
 
 
-async def test_setup_entry_without_mqtt.opp):
+async def test_setup_entry_without_mqtt(opp):
     """Test setting up config entry without mqtt integration setup."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -41,7 +41,7 @@ async def test_setup_entry_without_mqtt.opp):
 async def test_publish_without_mqtt(opp, caplog):
     """Test publish without mqtt integration setup."""
     with patch("openpeerpower.components.ozw.OZWOptions") as ozw_options:
-        await setup_ozw.opp)
+        await setup_ozw(opp)
 
         send_message = ozw_options.call_args[1]["send_message"]
 

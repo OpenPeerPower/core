@@ -124,7 +124,7 @@ async def setup_subaru_integration(
 
 
 @pytest.fixture
-async def ev_entry.opp):
+async def ev_entry(opp):
     """Create a Subaru entry representing an EV vehicle with full STARLINK subscription."""
     entry = await setup_subaru_integration(
         opp,

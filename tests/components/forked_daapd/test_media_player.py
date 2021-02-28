@@ -348,7 +348,7 @@ async def test_unload_config_entry(opp, config_entry, mock_api_object):
     """Test the player is set unavailable when the config entry is unloaded."""
     assert opp.states.get(TEST_MASTER_ENTITY_NAME)
     assert opp.states.get(TEST_ZONE_ENTITY_NAMES[0])
-    await config_entry.async_unload.opp)
+    await config_entry.async_unload(opp)
     assert opp.states.get(TEST_MASTER_ENTITY_NAME).state == STATE_UNAVAILABLE
     assert opp.states.get(TEST_ZONE_ENTITY_NAMES[0]).state == STATE_UNAVAILABLE
 

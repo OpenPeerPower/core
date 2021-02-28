@@ -86,7 +86,7 @@ async def test_triggers(opp, mock_devices):
 
     ieee_address = str(zha_device.ieee)
 
-    ha_device_registry = await async_get_registry.opp)
+    ha_device_registry = await async_get_registry(opp)
     reg_device = ha_device_registry.async_get_device({("zha", ieee_address)})
 
     triggers = await async_get_device_automations(opp, "trigger", reg_device.id)
@@ -144,7 +144,7 @@ async def test_no_triggers(opp, mock_devices):
     _, zha_device = mock_devices
     ieee_address = str(zha_device.ieee)
 
-    ha_device_registry = await async_get_registry.opp)
+    ha_device_registry = await async_get_registry(opp)
     reg_device = ha_device_registry.async_get_device({("zha", ieee_address)})
 
     triggers = await async_get_device_automations(opp, "trigger", reg_device.id)
@@ -173,7 +173,7 @@ async def test_if_fires_on_event(opp, mock_devices, calls):
     }
 
     ieee_address = str(zha_device.ieee)
-    ha_device_registry = await async_get_registry.opp)
+    ha_device_registry = await async_get_registry(opp)
     reg_device = ha_device_registry.async_get_device({("zha", ieee_address)})
 
     assert await async_setup_component(
@@ -282,7 +282,7 @@ async def test_exception_no_triggers(opp, mock_devices, calls, caplog):
     _, zha_device = mock_devices
 
     ieee_address = str(zha_device.ieee)
-    ha_device_registry = await async_get_registry.opp)
+    ha_device_registry = await async_get_registry(opp)
     reg_device = ha_device_registry.async_get_device({("zha", ieee_address)})
 
     await async_setup_component(
@@ -324,7 +324,7 @@ async def test_exception_bad_trigger(opp, mock_devices, calls, caplog):
     }
 
     ieee_address = str(zha_device.ieee)
-    ha_device_registry = await async_get_registry.opp)
+    ha_device_registry = await async_get_registry(opp)
     reg_device = ha_device_registry.async_get_device({("zha", ieee_address)})
 
     await async_setup_component(

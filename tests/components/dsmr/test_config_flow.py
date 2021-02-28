@@ -204,7 +204,7 @@ async def test_import_update(opp, dsmr_connection_send_validate_fixture):
     assert entry.data["precision"] == 3
 
 
-async def test_options_flow.opp):
+async def test_options_flow(opp):
     """Test options flow."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 

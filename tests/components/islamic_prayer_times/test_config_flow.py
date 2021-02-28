@@ -20,7 +20,7 @@ def mock_setup():
         yield
 
 
-async def test_flow_works.opp):
+async def test_flow_works(opp):
     """Test user config."""
     result = await opp.config_entries.flow.async_init(
         islamic_prayer_times.DOMAIN, context={"source": "user"}
@@ -35,7 +35,7 @@ async def test_flow_works.opp):
     assert result["title"] == "Islamic Prayer Times"
 
 
-async def test_options.opp):
+async def test_options(opp):
     """Test updating options."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -58,7 +58,7 @@ async def test_options.opp):
     assert result["data"][CONF_CALC_METHOD] == "makkah"
 
 
-async def test_import.opp):
+async def test_import(opp):
     """Test import step."""
     result = await opp.config_entries.flow.async_init(
         islamic_prayer_times.DOMAIN,
@@ -71,7 +71,7 @@ async def test_import.opp):
     assert result["data"][CONF_CALC_METHOD] == "makkah"
 
 
-async def test_integration_already_configured.opp):
+async def test_integration_already_configured(opp):
     """Test integration is already configured."""
     entry = MockConfigEntry(
         domain=DOMAIN,

@@ -7,7 +7,7 @@ from openpeerpower import config_entries
 from openpeerpower.components.smarttub.const import DOMAIN
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

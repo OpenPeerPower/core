@@ -34,7 +34,7 @@ def nwk():
 async def zha_gateway(opp, setup_zha):
     """Return ZhaGateway fixture."""
     await setup_zha()
-    return get_zha_gateway.opp)
+    return get_zha_gateway(opp)
 
 
 @pytest.fixture

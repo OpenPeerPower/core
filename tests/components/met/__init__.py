@@ -7,7 +7,7 @@ from openpeerpower.const import CONF_ELEVATION, CONF_LATITUDE, CONF_LONGITUDE, C
 from tests.common import MockConfigEntry
 
 
-async def init_integration.opp) -> MockConfigEntry:
+async def init_integration(opp) -> MockConfigEntry:
     """Set up the Met integration in Open Peer Power."""
     entry_data = {
         CONF_NAME: "test",

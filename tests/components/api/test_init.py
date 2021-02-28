@@ -318,11 +318,11 @@ async def test_api_template_error(opp, mock_api_client):
 
 async def test_stream(opp, mock_api_client):
     """Test the stream."""
-    listen_count = _listen_count.opp)
+    listen_count = _listen_count(opp)
 
     resp = await mock_api_client.get(const.URL_API_STREAM)
     assert resp.status == 200
-    assert listen_count + 1 == _listen_count.opp)
+    assert listen_count + 1 == _listen_count(opp)
 
     opp.bus.async_fire("test_event")
 
@@ -333,13 +333,13 @@ async def test_stream(opp, mock_api_client):
 
 async def test_stream_with_restricted(opp, mock_api_client):
     """Test the stream with restrictions."""
-    listen_count = _listen_count.opp)
+    listen_count = _listen_count(opp)
 
     resp = await mock_api_client.get(
         f"{const.URL_API_STREAM}?restrict=test_event1,test_event3"
     )
     assert resp.status == 200
-    assert listen_count + 1 == _listen_count.opp)
+    assert listen_count + 1 == _listen_count(opp)
 
     opp.bus.async_fire("test_event1")
     data = await _stream_next_event(resp.content)
@@ -371,7 +371,7 @@ async def _stream_next_event(stream):
     return json.loads(conv)
 
 
-def _listen_count.opp):
+def _listen_count(opp):
     """Return number of event listeners."""
     return sum.opp.bus.async_listeners().values())
 

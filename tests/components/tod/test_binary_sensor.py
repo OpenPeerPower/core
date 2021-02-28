@@ -21,7 +21,7 @@ def mock_legacy_time(legacy_patchable_time):
 
 
 @pytest.fixture(autouse=True)
-def setup_fixture.opp):
+def setup_fixture(opp):
     """Set up things to be run when tests are started."""
     opp.config.latitude = 50.27583
     opp.config.longitude = 18.98583
@@ -51,7 +51,7 @@ async def test_setup_opp):
         assert await async_setup_component(opp, "binary_sensor", config)
 
 
-async def test_setup_no_sensors.opp):
+async def test_setup_no_sensors(opp):
     """Test setup with no sensors."""
     with assert_setup_component(0):
         assert await async_setup_component(
@@ -59,7 +59,7 @@ async def test_setup_no_sensors.opp):
         )
 
 
-async def test_in_period_on_start.opp):
+async def test_in_period_on_start(opp):
     """Test simple setting."""
     test_time = datetime(2019, 1, 10, 18, 43, 0, tzinfo.opp.config.time_zone)
     config = {
@@ -83,7 +83,7 @@ async def test_in_period_on_start.opp):
     assert state.state == STATE_ON
 
 
-async def test_midnight_turnover_before_midnight_inside_period.opp):
+async def test_midnight_turnover_before_midnight_inside_period(opp):
     """Test midnight turnover setting before midnight inside period ."""
     test_time = datetime(2019, 1, 10, 22, 30, 0, tzinfo.opp.config.time_zone)
     config = {
@@ -102,7 +102,7 @@ async def test_midnight_turnover_before_midnight_inside_period.opp):
     assert state.state == STATE_ON
 
 
-async def test_midnight_turnover_after_midnight_inside_period.opp):
+async def test_midnight_turnover_after_midnight_inside_period(opp):
     """Test midnight turnover setting before midnight inside period ."""
     test_time = opp.config.time_zone.localize(
         datetime(2019, 1, 10, 21, 0, 0)
@@ -138,7 +138,7 @@ async def test_midnight_turnover_after_midnight_inside_period.opp):
         assert state.state == STATE_ON
 
 
-async def test_midnight_turnover_before_midnight_outside_period.opp):
+async def test_midnight_turnover_before_midnight_outside_period(opp):
     """Test midnight turnover setting before midnight outside period."""
     test_time = opp.config.time_zone.localize(
         datetime(2019, 1, 10, 20, 30, 0)
@@ -159,7 +159,7 @@ async def test_midnight_turnover_before_midnight_outside_period.opp):
     assert state.state == STATE_OFF
 
 
-async def test_midnight_turnover_after_midnight_outside_period.opp):
+async def test_midnight_turnover_after_midnight_outside_period(opp):
     """Test midnight turnover setting before midnight inside period ."""
     test_time = opp.config.time_zone.localize(
         datetime(2019, 1, 10, 20, 0, 0)
@@ -208,7 +208,7 @@ async def test_midnight_turnover_after_midnight_outside_period.opp):
         assert state.state == STATE_OFF
 
 
-async def test_from_sunrise_to_sunset.opp):
+async def test_from_sunrise_to_sunset(opp):
     """Test period from sunrise to sunset."""
     test_time = opp.config.time_zone.localize(datetime(2019, 1, 12)).astimezone(
         pytz.UTC
@@ -309,7 +309,7 @@ async def test_from_sunrise_to_sunset.opp):
         assert state.state == STATE_OFF
 
 
-async def test_from_sunset_to_sunrise.opp):
+async def test_from_sunset_to_sunrise(opp):
     """Test period from sunset to sunrise."""
     test_time = opp.config.time_zone.localize(datetime(2019, 1, 12)).astimezone(
         pytz.UTC
@@ -403,7 +403,7 @@ async def test_from_sunset_to_sunrise.opp):
         assert state.state == STATE_OFF
 
 
-async def test_offset.opp):
+async def test_offset(opp):
     """Test offset."""
     after = opp.config.time_zone.localize(datetime(2019, 1, 10, 18, 0, 0)).astimezone(
         pytz.UTC
@@ -482,7 +482,7 @@ async def test_offset.opp):
         assert state.state == STATE_OFF
 
 
-async def test_offset_overnight.opp):
+async def test_offset_overnight(opp):
     """Test offset overnight."""
     after = opp.config.time_zone.localize(datetime(2019, 1, 10, 18, 0, 0)).astimezone(
         pytz.UTC
@@ -523,7 +523,7 @@ async def test_offset_overnight.opp):
         assert state.state == STATE_ON
 
 
-async def test_norwegian_case_winter.opp):
+async def test_norwegian_case_winter(opp):
     """Test location in Norway where the sun doesn't set in summer."""
     opp.config.latitude = 69.6
     opp.config.longitude = 18.8
@@ -639,7 +639,7 @@ async def test_norwegian_case_winter.opp):
         assert state.state == STATE_OFF
 
 
-async def test_norwegian_case_summer.opp):
+async def test_norwegian_case_summer(opp):
     """Test location in Norway where the sun doesn't set in summer."""
     opp.config.latitude = 69.6
     opp.config.longitude = 18.8
@@ -756,7 +756,7 @@ async def test_norwegian_case_summer.opp):
         assert state.state == STATE_OFF
 
 
-async def test_sun_offset.opp):
+async def test_sun_offset(opp):
     """Test sun event with offset."""
     test_time = opp.config.time_zone.localize(datetime(2019, 1, 12)).astimezone(
         pytz.UTC
@@ -878,7 +878,7 @@ async def test_sun_offset.opp):
         assert state.state == STATE_ON
 
 
-async def test_dst.opp):
+async def test_dst(opp):
     """Test sun event with offset."""
     opp.config.time_zone = pytz.timezone("CET")
     test_time = opp.config.time_zone.localize(

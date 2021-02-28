@@ -356,7 +356,7 @@ async def test_import_network_connection_fail(connect_mock, opp):
     assert result["reason"] == "cannot_connect"
 
 
-async def test_import_update.opp):
+async def test_import_update(opp):
     """Test we can import."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -389,7 +389,7 @@ async def test_import_update.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_import_migrate.opp):
+async def test_import_migrate(opp):
     """Test we can import."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -420,7 +420,7 @@ async def test_import_migrate.opp):
     assert entry.data["devices"] == {}
 
 
-async def test_options_global.opp):
+async def test_options_global(opp):
     """Test if we can set global options."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -453,7 +453,7 @@ async def test_options_global.opp):
     assert entry.data["automatic_add"]
 
 
-async def test_options_add_device.opp):
+async def test_options_add_device(opp):
     """Test we can add a device."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -519,7 +519,7 @@ async def test_options_add_device.opp):
     assert state.attributes.get("friendly_name") == "AC 213c7f2:48"
 
 
-async def test_options_add_duplicate_device.opp):
+async def test_options_add_duplicate_device(opp):
     """Test we can add a device."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -556,7 +556,7 @@ async def test_options_add_duplicate_device.opp):
     assert result["errors"]["event_code"] == "already_configured_device"
 
 
-async def test_options_add_remove_device.opp):
+async def test_options_add_remove_device(opp):
     """Test we can add a device."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -610,7 +610,7 @@ async def test_options_add_remove_device.opp):
     assert state.state == "off"
     assert state.attributes.get("friendly_name") == "AC 213c7f2:48"
 
-    device_registry = await async_get_device_registry.opp)
+    device_registry = await async_get_device_registry(opp)
     device_entries = async_entries_for_config_entry(device_registry, entry.entry_id)
 
     assert device_entries[0].id
@@ -640,7 +640,7 @@ async def test_options_add_remove_device.opp):
     assert not state
 
 
-async def test_options_replace_sensor_device.opp):
+async def test_options_replace_sensor_device(opp):
     """Test we can replace a sensor device."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -704,7 +704,7 @@ async def test_options_replace_sensor_device.opp):
     )
     assert state
 
-    device_registry = await async_get_device_registry.opp)
+    device_registry = await async_get_device_registry(opp)
     device_entries = async_entries_for_config_entry(device_registry, entry.entry_id)
 
     old_device = next(
@@ -751,7 +751,7 @@ async def test_options_replace_sensor_device.opp):
 
     await opp.async_block_till_done()
 
-    entity_registry = await async_get_entity_registry.opp)
+    entity_registry = await async_get_entity_registry(opp)
 
     entry = entity_registry.async_get(
         "sensor.thgn122_123_thgn132_thgr122_228_238_268_f0_04_rssi_numeric"
@@ -801,7 +801,7 @@ async def test_options_replace_sensor_device.opp):
     assert not state
 
 
-async def test_options_replace_control_device.opp):
+async def test_options_replace_control_device(opp):
     """Test we can replace a control device."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -843,7 +843,7 @@ async def test_options_replace_control_device.opp):
     state = opp.states.get("switch.ac_1118cdea_2")
     assert state
 
-    device_registry = await async_get_device_registry.opp)
+    device_registry = await async_get_device_registry(opp)
     device_entries = async_entries_for_config_entry(device_registry, entry.entry_id)
 
     old_device = next(
@@ -890,7 +890,7 @@ async def test_options_replace_control_device.opp):
 
     await opp.async_block_till_done()
 
-    entity_registry = await async_get_entity_registry.opp)
+    entity_registry = await async_get_entity_registry(opp)
 
     entry = entity_registry.async_get("binary_sensor.ac_118cdea_2")
     assert entry
@@ -910,7 +910,7 @@ async def test_options_replace_control_device.opp):
     assert not state
 
 
-async def test_options_remove_multiple_devices.opp):
+async def test_options_remove_multiple_devices(opp):
     """Test we can add a device."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -941,7 +941,7 @@ async def test_options_remove_multiple_devices.opp):
     state = opp.states.get("binary_sensor.ac_1118cdea_2")
     assert state
 
-    device_registry = await async_get_device_registry.opp)
+    device_registry = await async_get_device_registry(opp)
     device_entries = async_entries_for_config_entry(device_registry, entry.entry_id)
 
     assert len(device_entries) == 3
@@ -981,7 +981,7 @@ async def test_options_remove_multiple_devices.opp):
     assert state
 
 
-async def test_options_add_and_configure_device.opp):
+async def test_options_add_and_configure_device(opp):
     """Test we can add a device."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -1061,7 +1061,7 @@ async def test_options_add_and_configure_device.opp):
     assert state.state == "off"
     assert state.attributes.get("friendly_name") == "PT2262 22670e"
 
-    device_registry = await async_get_device_registry.opp)
+    device_registry = await async_get_device_registry(opp)
     device_entries = async_entries_for_config_entry(device_registry, entry.entry_id)
 
     assert device_entries[0].id
@@ -1103,7 +1103,7 @@ async def test_options_add_and_configure_device.opp):
     assert "delay_off" not in entry.data["devices"]["0913000022670e013970"]
 
 
-async def test_options_configure_rfy_cover_device.opp):
+async def test_options_configure_rfy_cover_device(opp):
     """Test we can configure the venetion blind mode of an Rfy cover."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -1151,7 +1151,7 @@ async def test_options_configure_rfy_cover_device.opp):
 
     assert entry.data["devices"]["071a000001020301"]["venetian_blind_mode"] == "EU"
 
-    device_registry = await async_get_device_registry.opp)
+    device_registry = await async_get_device_registry(opp)
     device_entries = async_entries_for_config_entry(device_registry, entry.entry_id)
 
     assert device_entries[0].id

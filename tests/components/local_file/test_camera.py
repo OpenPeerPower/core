@@ -9,7 +9,7 @@ from tests.common import mock_registry
 
 async def test_loading_file(opp, opp_client):
     """Test that it loads image from disk."""
-    mock_registry.opp)
+    mock_registry(opp)
 
     with mock.patch("os.path.isfile", mock.Mock(return_value=True)), mock.patch(
         "os.access", mock.Mock(return_value=True)
@@ -42,7 +42,7 @@ async def test_loading_file(opp, opp_client):
 
 async def test_file_not_readable(opp, caplog):
     """Test a warning is shown setup when file is not readable."""
-    mock_registry.opp)
+    mock_registry(opp)
 
     with mock.patch("os.path.isfile", mock.Mock(return_value=True)), mock.patch(
         "os.access", mock.Mock(return_value=False)
@@ -129,11 +129,11 @@ async def test_camera_content_type(opp, opp_client):
     assert body == image
 
 
-async def test_update_file_path.opp):
+async def test_update_file_path(opp):
     """Test update_file_path service."""
     # Setup platform
 
-    mock_registry.opp)
+    mock_registry(opp)
 
     with mock.patch("os.path.isfile", mock.Mock(return_value=True)), mock.patch(
         "os.access", mock.Mock(return_value=True)

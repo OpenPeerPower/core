@@ -80,7 +80,7 @@ async def default_mock_hap_factory_fixture(
 def hmip_config_fixture() -> ConfigType:
     """Create a config for homematic ip cloud."""
 
-    entry_data={
+    entry_data = {
         HMIPC_HAPID: HAPID,
         HMIPC_AUTHTOKEN: AUTH_TOKEN,
         HMIPC_NAME: "",

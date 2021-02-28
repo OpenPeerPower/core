@@ -43,7 +43,7 @@ VALID_CONFIG = {
 }
 
 
-async def test_bus.opp):
+async def test_bus(opp):
     """Test for operational uk_transport sensor with proper attributes."""
     with requests_mock.Mocker() as mock_req:
         uri = re.compile(UkTransportSensor.TRANSPORT_API_URL_BASE + "*")
@@ -65,7 +65,7 @@ async def test_bus.opp):
         assert None is not direction_re.search(bus["direction"])
 
 
-async def test_train.opp):
+async def test_train(opp):
     """Test for operational uk_transport sensor with proper attributes."""
     with requests_mock.Mocker() as mock_req, patch(
         "openpeerpower.util.dt.now", return_value=now().replace(hour=13)

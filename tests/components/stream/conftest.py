@@ -48,7 +48,7 @@ class WorkerSync:
 
 
 @pytest.fixture()
-def stream_worker_sync.opp):
+def stream_worker_sync(opp):
     """Patch StreamOutput to allow test to synchronize worker stream end."""
     sync = WorkerSync()
     with patch(

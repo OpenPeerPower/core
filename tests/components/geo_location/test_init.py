@@ -6,13 +6,13 @@ from openpeerpower.components.geo_location import GeolocationEvent
 from openpeerpower.setup import async_setup_component
 
 
-async def test_setup_component.opp):
+async def test_setup_component(opp):
     """Simple test setup of component."""
     result = await async_setup_component(opp, geo_location.DOMAIN, {})
     assert result
 
 
-async def test_event.opp):
+async def test_event(opp):
     """Simple test of the geolocation event class."""
     entity = GeolocationEvent()
 

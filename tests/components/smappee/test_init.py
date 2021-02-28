@@ -7,7 +7,7 @@ from openpeerpower.config_entries import SOURCE_ZEROCONF
 from tests.common import MockConfigEntry
 
 
-async def test_unload_config_entry.opp):
+async def test_unload_config_entry(opp):
     """Test unload config entry flow."""
     with patch("pysmappee.api.SmappeeLocalApi.logon", return_value={}), patch(
         "pysmappee.api.SmappeeLocalApi.load_advanced_config",

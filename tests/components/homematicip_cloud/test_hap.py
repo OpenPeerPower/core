@@ -40,7 +40,7 @@ async def test_auth_setup_connection_error(opp):
         assert not await hmip_auth.async_setup()
 
 
-async def test_auth_auth_check_and_register.opp):
+async def test_auth_auth_check_and_register(opp):
     """Test auth client registration."""
     config = {HMIPC_HAPID: "ABC123", HMIPC_PIN: "123", HMIPC_NAME: "hmip"}
 
@@ -57,7 +57,7 @@ async def test_auth_auth_check_and_register.opp):
         assert await hmip_auth.async_register() == "ABC"
 
 
-async def test_auth_auth_check_and_register_with_exception.opp):
+async def test_auth_auth_check_and_register_with_exception(opp):
     """Test auth client registration."""
     config = {HMIPC_HAPID: "ABC123", HMIPC_PIN: "123", HMIPC_NAME: "hmip"}
     hmip_auth = HomematicipAuth.opp, config)

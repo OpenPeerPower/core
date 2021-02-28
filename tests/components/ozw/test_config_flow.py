@@ -115,7 +115,7 @@ async def test_mqtt_not_setup_opp):
     assert result["reason"] == "mqtt_required"
 
 
-async def test_one_instance_allowed.opp):
+async def test_one_instance_allowed(opp):
     """Test that only one instance is allowed."""
     entry = MockConfigEntry(domain=DOMAIN, data={}, title=TITLE)
     entry.add_to_opp(opp)

@@ -19,7 +19,7 @@ from openpeerpower.const import CONF_HOST, CONF_PORT
 from tests.common import MockConfigEntry
 
 
-async def test_form_user.opp):
+async def test_form_user(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -58,7 +58,7 @@ async def test_form_user.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_user_already_configured.opp):
+async def test_form_user_already_configured(opp):
     """Test we abort if already configured."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -97,7 +97,7 @@ async def test_form_user_already_configured.opp):
     assert len(mock_setup_entry.mock_calls) == 0
 
 
-async def test_form_import.opp):
+async def test_form_import(opp):
     """Test we get the form with import source."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -206,7 +206,7 @@ async def test_form_import_already_exists(opp):
     assert len(mock_setup_entry.mock_calls) == 0
 
 
-async def test_form_invalid_auth.opp):
+async def test_form_invalid_auth(opp):
     """Test we handle invalid auth."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -233,7 +233,7 @@ async def test_form_invalid_auth.opp):
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -279,7 +279,7 @@ async def test_form_unknown_error(opp):
     assert result2["errors"] == {"base": "unknown"}
 
 
-async def test_options_not_loaded.opp):
+async def test_options_not_loaded(opp):
     """Test options will not display until loaded."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -425,7 +425,7 @@ async def test_form_import_with_entity_config_modify_options(opp, reversed):
         await opp.async_block_till_done()
 
 
-async def test_form_user_already_configured_from_dhcp.opp):
+async def test_form_user_already_configured_from_dhcp(opp):
     """Test we abort if already configured from dhcp."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -461,7 +461,7 @@ async def test_form_user_already_configured_from_dhcp.opp):
     assert len(mock_setup_entry.mock_calls) == 0
 
 
-async def test_already_configured_with_ignored.opp):
+async def test_already_configured_with_ignored(opp):
     """Test ignored entries do not break checking for existing entries."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -480,7 +480,7 @@ async def test_already_configured_with_ignored.opp):
     assert result["type"] == "form"
 
 
-async def test_dhcp_discovery.opp):
+async def test_dhcp_discovery(opp):
     """Test we can process the discovery from dhcp."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(

@@ -33,7 +33,7 @@ CONFIG = {
 VALID_YAML_CONFIG = {CONF_API_KEY: "foo"}
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test that the form is served with valid input."""
     mocked_owm = _create_mocked_owm(True)
 
@@ -70,7 +70,7 @@ async def test_form.opp):
         assert result["data"][CONF_API_KEY] == CONFIG[CONF_API_KEY]
 
 
-async def test_form_options.opp):
+async def test_form_options(opp):
     """Test that the options form."""
     mocked_owm = _create_mocked_owm(True)
 
@@ -127,7 +127,7 @@ async def test_form_options.opp):
         assert config_entry.state == "loaded"
 
 
-async def test_form_invalid_api_key.opp):
+async def test_form_invalid_api_key(opp):
     """Test that the form is served with no input."""
     mocked_owm = _create_mocked_owm(True)
 
@@ -159,7 +159,7 @@ async def test_form_api_call_error(opp):
         assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_api_offline.opp):
+async def test_form_api_offline(opp):
     """Test setting up with api call error."""
     mocked_owm = _create_mocked_owm(False)
 

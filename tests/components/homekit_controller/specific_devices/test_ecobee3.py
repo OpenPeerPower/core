@@ -127,7 +127,7 @@ async def test_ecobee3_setup_from_cache(opp, opp_storage):
     assert occ3.unique_id == "homekit-AB3C-56"
 
 
-async def test_ecobee3_setup_connection_failure.opp):
+async def test_ecobee3_setup_connection_failure(opp):
     """Test that Ecbobee can be correctly setup from its cached entity map."""
     accessories = await setup_accessories_from_file(opp, "ecobee3.json")
 
@@ -168,7 +168,7 @@ async def test_ecobee3_setup_connection_failure.opp):
     assert occ3.unique_id == "homekit-AB3C-56"
 
 
-async def test_ecobee3_add_sensors_at_runtime.opp):
+async def test_ecobee3_add_sensors_at_runtime(opp):
     """Test that new sensors are automatically added."""
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 

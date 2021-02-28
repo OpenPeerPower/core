@@ -4,7 +4,7 @@ from openpeerpower.components.proximity import DOMAIN
 from openpeerpower.setup import async_setup_component
 
 
-async def test_proximities.opp):
+async def test_proximities(opp):
     """Test a list of proximities."""
     config = {
         "proximity": {
@@ -49,7 +49,7 @@ async def test_proximities_setup_opp):
     assert await async_setup_component(opp, DOMAIN, config)
 
 
-async def test_proximity.opp):
+async def test_proximity(opp):
     """Test the proximity."""
     config = {
         "proximity": {
@@ -74,7 +74,7 @@ async def test_proximity.opp):
     assert state.state == "0"
 
 
-async def test_device_tracker_test1_in_zone.opp):
+async def test_device_tracker_test1_in_zone(opp):
     """Test for tracker in zone."""
     config = {
         "proximity": {
@@ -100,7 +100,7 @@ async def test_device_tracker_test1_in_zone.opp):
     assert state.attributes.get("dir_of_travel") == "arrived"
 
 
-async def test_device_trackers_in_zone.opp):
+async def test_device_trackers_in_zone(opp):
     """Test for trackers in zone."""
     config = {
         "proximity": {
@@ -134,7 +134,7 @@ async def test_device_trackers_in_zone.opp):
     assert state.attributes.get("dir_of_travel") == "arrived"
 
 
-async def test_device_tracker_test1_away.opp):
+async def test_device_tracker_test1_away(opp):
     """Test for tracker state away."""
     config = {
         "proximity": {
@@ -160,10 +160,10 @@ async def test_device_tracker_test1_away.opp):
     assert state.attributes.get("dir_of_travel") == "unknown"
 
 
-async def test_device_tracker_test1_awayfurther.opp):
+async def test_device_tracker_test1_awayfurther(opp):
     """Test for tracker state away further."""
 
-    config_zones.opp)
+    config_zones(opp)
     await opp.async_block_till_done()
 
     config = {
@@ -199,9 +199,9 @@ async def test_device_tracker_test1_awayfurther.opp):
     assert state.attributes.get("dir_of_travel") == "away_from"
 
 
-async def test_device_tracker_test1_awaycloser.opp):
+async def test_device_tracker_test1_awaycloser(opp):
     """Test for tracker state away closer."""
-    config_zones.opp)
+    config_zones(opp)
     await opp.async_block_till_done()
 
     config = {
@@ -237,7 +237,7 @@ async def test_device_tracker_test1_awaycloser.opp):
     assert state.attributes.get("dir_of_travel") == "towards"
 
 
-async def test_all_device_trackers_in_ignored_zone.opp):
+async def test_all_device_trackers_in_ignored_zone(opp):
     """Test for tracker in ignored zone."""
     config = {
         "proximity": {
@@ -259,7 +259,7 @@ async def test_all_device_trackers_in_ignored_zone.opp):
     assert state.attributes.get("dir_of_travel") == "not set"
 
 
-async def test_device_tracker_test1_no_coordinates.opp):
+async def test_device_tracker_test1_no_coordinates(opp):
     """Test for tracker with no coordinates."""
     config = {
         "proximity": {
@@ -284,7 +284,7 @@ async def test_device_tracker_test1_no_coordinates.opp):
 
 async def test_device_tracker_test1_awayfurther_than_test2_first_test1.opp):
     """Test for tracker ordering."""
-    config_zones.opp)
+    config_zones(opp)
     await opp.async_block_till_done()
 
     opp.states.async_set(
@@ -334,7 +334,7 @@ async def test_device_tracker_test1_awayfurther_than_test2_first_test1.opp):
 
 async def test_device_tracker_test1_awayfurther_than_test2_first_test2.opp):
     """Test for tracker ordering."""
-    config_zones.opp)
+    config_zones(opp)
     await opp.async_block_till_done()
 
     opp.states.async_set(
@@ -380,7 +380,7 @@ async def test_device_tracker_test1_awayfurther_than_test2_first_test2.opp):
     assert state.attributes.get("dir_of_travel") == "unknown"
 
 
-async def test_device_tracker_test1_awayfurther_test2_in_ignored_zone.opp):
+async def test_device_tracker_test1_awayfurther_test2_in_ignored_zone(opp):
     """Test for tracker states."""
     opp.states.async_set(
         "device_tracker.test1", "not_home", {"friendly_name": "test1"}
@@ -413,9 +413,9 @@ async def test_device_tracker_test1_awayfurther_test2_in_ignored_zone.opp):
     assert state.attributes.get("dir_of_travel") == "unknown"
 
 
-async def test_device_tracker_test1_awayfurther_test2_first.opp):
+async def test_device_tracker_test1_awayfurther_test2_first(opp):
     """Test for tracker state."""
-    config_zones.opp)
+    config_zones(opp)
     await opp.async_block_till_done()
 
     opp.states.async_set(
@@ -477,7 +477,7 @@ async def test_device_tracker_test1_awayfurther_test2_first.opp):
     assert state.attributes.get("dir_of_travel") == "unknown"
 
 
-async def test_device_tracker_test1_awayfurther_a_bit.opp):
+async def test_device_tracker_test1_awayfurther_a_bit(opp):
     """Test for tracker states."""
     assert await async_setup_component(
         opp,
@@ -515,9 +515,9 @@ async def test_device_tracker_test1_awayfurther_a_bit.opp):
     assert state.attributes.get("dir_of_travel") == "stationary"
 
 
-async def test_device_tracker_test1_nearest_after_test2_in_ignored_zone.opp):
+async def test_device_tracker_test1_nearest_after_test2_in_ignored_zone(opp):
     """Test for tracker states."""
-    config_zones.opp)
+    config_zones(opp)
     await opp.async_block_till_done()
 
     opp.states.async_set(
@@ -574,7 +574,7 @@ async def test_device_tracker_test1_nearest_after_test2_in_ignored_zone.opp):
     assert state.attributes.get("dir_of_travel") == "unknown"
 
 
-def config_zones.opp):
+def config_zones(opp):
     """Set up zones for test."""
     opp.config.components.add("zone")
     opp.states.async_set(

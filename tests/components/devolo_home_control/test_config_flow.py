@@ -10,7 +10,7 @@ from openpeerpower.config_entries import SOURCE_USER
 from tests.common import MockConfigEntry
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -48,7 +48,7 @@ async def test_form.opp):
 
 
 @pytest.mark.credentials_invalid
-async def test_form_invalid_credentials.opp):
+async def test_form_invalid_credentials(opp):
     """Test if we get the error message on invalid credentials."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -65,7 +65,7 @@ async def test_form_invalid_credentials.opp):
     assert result["errors"] == {"base": "invalid_auth"}
 
 
-async def test_form_already_configured.opp):
+async def test_form_already_configured(opp):
     """Test if we get the error message on already configured."""
     with patch(
         "openpeerpower.components.devolo_home_control.config_flow.Mydevolo.uuid",
@@ -81,7 +81,7 @@ async def test_form_already_configured.opp):
         assert result["reason"] == "already_configured"
 
 
-async def test_form_advanced_options.opp):
+async def test_form_advanced_options(opp):
     """Test if we get the advanced options if user has enabled it."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "user", "show_advanced_options": True}

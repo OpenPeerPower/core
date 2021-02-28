@@ -30,7 +30,7 @@ ENTITY_HUMIDIFIER = "humidifier.humidifier"
 
 
 @pytest.fixture(autouse=True)
-async def setup_demo_humidifier.opp):
+async def setup_demo_humidifier(opp):
     """Initialize setup demo humidifier."""
     assert await async_setup_component(
         opp. DOMAIN, {"humidifier": {"platform": "demo"}}
@@ -38,21 +38,21 @@ async def setup_demo_humidifier.opp):
     await opp.async_block_till_done()
 
 
-def test_setup_params.opp):
+def test_setup_params(opp):
     """Test the initial parameters."""
     state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.state == STATE_ON
     assert state.attributes.get(ATTR_HUMIDITY) == 54
 
 
-def test_default_setup_params.opp):
+def test_default_setup_params(opp):
     """Test the setup with default parameters."""
     state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.attributes.get(ATTR_MIN_HUMIDITY) == 0
     assert state.attributes.get(ATTR_MAX_HUMIDITY) == 100
 
 
-async def test_set_target_humidity_bad_attr.opp):
+async def test_set_target_humidity_bad_attr(opp):
     """Test setting the target humidity without required attribute."""
     state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.attributes.get(ATTR_HUMIDITY) == 54
@@ -70,7 +70,7 @@ async def test_set_target_humidity_bad_attr.opp):
     assert state.attributes.get(ATTR_HUMIDITY) == 54
 
 
-async def test_set_target_humidity.opp):
+async def test_set_target_humidity(opp):
     """Test the setting of the target humidity."""
     state = opp.states.get(ENTITY_DEHUMIDIFIER)
     assert state.attributes.get(ATTR_HUMIDITY) == 54
@@ -87,7 +87,7 @@ async def test_set_target_humidity.opp):
     assert state.attributes.get(ATTR_HUMIDITY) == 64
 
 
-async def test_set_hold_mode_away.opp):
+async def test_set_hold_mode_away(opp):
     """Test setting the hold mode away."""
     await opp.services.async_call(
         DOMAIN,
@@ -101,7 +101,7 @@ async def test_set_hold_mode_away.opp):
     assert state.attributes.get(ATTR_MODE) == MODE_AWAY
 
 
-async def test_set_hold_mode_eco.opp):
+async def test_set_hold_mode_eco(opp):
     """Test setting the hold mode eco."""
     await opp.services.async_call(
         DOMAIN,
@@ -115,7 +115,7 @@ async def test_set_hold_mode_eco.opp):
     assert state.attributes.get(ATTR_MODE) == MODE_ECO
 
 
-async def test_turn_on.opp):
+async def test_turn_on(opp):
     """Test turn on device."""
     await opp.services.async_call(
         DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER}, blocking=True
@@ -130,7 +130,7 @@ async def test_turn_on.opp):
     assert state.state == STATE_ON
 
 
-async def test_turn_off.opp):
+async def test_turn_off(opp):
     """Test turn off device."""
     await opp.services.async_call(
         DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER}, blocking=True
@@ -145,7 +145,7 @@ async def test_turn_off.opp):
     assert state.state == STATE_OFF
 
 
-async def test_toggle.opp):
+async def test_toggle(opp):
     """Test toggle device."""
     await opp.services.async_call(
         DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_DEHUMIDIFIER}, blocking=True

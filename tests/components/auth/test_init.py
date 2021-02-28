@@ -14,7 +14,7 @@ from . import async_setup_auth
 from tests.common import CLIENT_ID, CLIENT_REDIRECT_URI, MockUser
 
 
-async def async_setup_user_refresh_token.opp):
+async def async_setup_user_refresh_token(opp):
     """Create a testing user with a connected credential."""
     user = await opp.auth.async_create_user("Test User")
 
@@ -198,7 +198,7 @@ async def test_refresh_token_system_generated(opp, aiohttp_client):
 async def test_refresh_token_different_client_id(opp, aiohttp_client):
     """Test that we verify client ID."""
     client = await async_setup_auth(opp, aiohttp_client)
-    refresh_token = await async_setup_user_refresh_token.opp)
+    refresh_token = await async_setup_user_refresh_token(opp)
 
     # No client ID
     resp = await client.post(
@@ -246,7 +246,7 @@ async def test_refresh_token_provider_rejected(
 ):
     """Test that we verify client ID."""
     client = await async_setup_auth(opp, aiohttp_client)
-    refresh_token = await async_setup_user_refresh_token.opp)
+    refresh_token = await async_setup_user_refresh_token(opp)
 
     # Rejected by provider
     with patch(
@@ -271,7 +271,7 @@ async def test_refresh_token_provider_rejected(
 async def test_revoking_refresh_token(opp, aiohttp_client):
     """Test that we can revoke refresh tokens."""
     client = await async_setup_auth(opp, aiohttp_client)
-    refresh_token = await async_setup_user_refresh_token.opp)
+    refresh_token = await async_setup_user_refresh_token(opp)
 
     # Test that we can create an access token
     resp = await client.post(

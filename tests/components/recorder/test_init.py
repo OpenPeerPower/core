@@ -36,12 +36,12 @@ from tests.common import (
 )
 
 
-async def test_shutdown_before_startup_finishes.opp):
+async def test_shutdown_before_startup_finishes(opp):
     """Test shutdown before recorder starts is clean."""
 
     opp.state = CoreState.not_running
 
-    await async_init_recorder_component.opp)
+    await async_init_recorder_component(opp)
     await opp.async_block_till_done()
 
     session = await opp.async_add_executor_job.opp.data[DATA_INSTANCE].get_session)
@@ -68,7 +68,7 @@ def test_saving_state(opp, opp_recorder):
 
     opp.states.set(entity_id, state, attributes)
 
-    wait_recording_done.opp)
+    wait_recording_done(opp)
 
     with session_scope.opp.opp) as session:
         db_states = list(session.query(States))
@@ -100,14 +100,14 @@ def test_saving_state_with_exception(opp, opp_recorder, caplog):
         side_effect=_throw_if_state_in_session,
     ):
         opp.states.set(entity_id, "fail", attributes)
-        wait_recording_done.opp)
+        wait_recording_done(opp)
 
     assert "Error executing query" in caplog.text
     assert "Error saving events" not in caplog.text
 
     caplog.clear()
     opp.states.set(entity_id, state, attributes)
-    wait_recording_done.opp)
+    wait_recording_done(opp)
 
     with session_scope.opp.opp) as session:
         db_states = list(session.query(States))
@@ -136,7 +136,7 @@ def test_saving_event(opp, opp_recorder):
 
     opp.bus.fire(event_type, event_data)
 
-    wait_recording_done.opp)
+    wait_recording_done(opp)
 
     assert len(events) == 1
     event = events[0]
@@ -163,7 +163,7 @@ def _add_entities(opp, entity_ids):
     attributes = {"test_attr": 5, "test_attr_10": "nice"}
     for idx, entity_id in enumerate(entity_ids):
         opp.states.set(entity_id, f"state{idx}", attributes)
-    wait_recording_done.opp)
+    wait_recording_done(opp)
 
     with session_scope.opp.opp) as session:
         return [st.to_native() for st in session.query(States)]
@@ -174,7 +174,7 @@ def _add_events(opp, events):
         session.query(Events).delete(synchronize_session=False)
     for event_type in events:
         opp.bus.fire(event_type)
-    wait_recording_done.opp)
+    wait_recording_done(opp)
 
     with session_scope.opp.opp) as session:
         return [ev.to_native() for ev in session.query(Events)]
@@ -325,7 +325,7 @@ def test_saving_state_and_removing_entity(opp, opp_recorder):
     opp.states.set(entity_id, STATE_UNLOCKED)
     opp.states.async_remove(entity_id)
 
-    wait_recording_done.opp)
+    wait_recording_done(opp)
 
     with session_scope.opp.opp) as session:
         states = list(session.query(States))
@@ -364,7 +364,7 @@ def test_recorder_setup_failure():
     opp.stop()
 
 
-async def test_defaults_set.opp):
+async def test_defaults_set(opp):
     """Test the config defaults are set."""
     recorder_config = None
 
@@ -444,10 +444,10 @@ def test_saving_sets_old_state.opp_recorder):
 
     opp.states.set("test.one", "on", {})
     opp.states.set("test.two", "on", {})
-    wait_recording_done.opp)
+    wait_recording_done(opp)
     opp.states.set("test.one", "off", {})
     opp.states.set("test.two", "off", {})
-    wait_recording_done.opp)
+    wait_recording_done(opp)
 
     with session_scope.opp.opp) as session:
         states = list(session.query(States))
@@ -469,11 +469,11 @@ def test_saving_state_with_serializable_data.opp_recorder, caplog):
    opp =  opp_recorder()
 
     opp.states.set("test.one", "on", {"fail": CannotSerializeMe()})
-    wait_recording_done.opp)
+    wait_recording_done(opp)
     opp.states.set("test.two", "on", {})
-    wait_recording_done.opp)
+    wait_recording_done(opp)
     opp.states.set("test.two", "off", {})
-    wait_recording_done.opp)
+    wait_recording_done(opp)
 
     with session_scope.opp.opp) as session:
         states = list(session.query(States))
@@ -491,7 +491,7 @@ def test_run_information.opp_recorder):
     """Ensure run_information returns expected data."""
     before_start_recording = dt_util.utcnow()
    opp =  opp_recorder()
-    run_info = run_information_from_instance.opp)
+    run_info = run_information_from_instance(opp)
     assert isinstance(run_info, RecorderRuns)
     assert run_info.closed_incorrect is False
 
@@ -500,13 +500,13 @@ def test_run_information.opp_recorder):
         assert isinstance(run_info, RecorderRuns)
         assert run_info.closed_incorrect is False
 
-    run_info = run_information.opp)
+    run_info = run_information(opp)
     assert isinstance(run_info, RecorderRuns)
     assert run_info.closed_incorrect is False
 
     opp.states.set("test.two", "on", {})
-    wait_recording_done.opp)
-    run_info = run_information.opp)
+    wait_recording_done(opp)
+    run_info = run_information(opp)
     assert isinstance(run_info, RecorderRuns)
     assert run_info.closed_incorrect is False
 
@@ -537,15 +537,15 @@ async def test_database_corruption_while_running(opp, tmpdir, caplog):
 
     opp.states.async_set("test.lost", "on", {})
 
-    await async_wait_recording_done.opp)
+    await async_wait_recording_done(opp)
     await opp.async_add_executor_job(corrupt_db_file, test_db_file)
-    await async_wait_recording_done.opp)
+    await async_wait_recording_done(opp)
 
     # This state will not be recorded because
     # the database corruption will be discovered
     # and we will have to rollback to recover
     opp.states.async_set("test.one", "off", {})
-    await async_wait_recording_done.opp)
+    await async_wait_recording_done(opp)
 
     assert "Unrecoverable sqlite3 database corruption detected" in caplog.text
     assert "The system will rename the corrupt database file" in caplog.text
@@ -553,7 +553,7 @@ async def test_database_corruption_while_running(opp, tmpdir, caplog):
 
     # This state should go into the new database
     opp.states.async_set("test.two", "on", {})
-    await async_wait_recording_done.opp)
+    await async_wait_recording_done(opp)
 
     def _get_last_state():
         with session_scope.opp.opp) as session:

@@ -14,9 +14,9 @@ from openpeerpower.const import (
 from tests.components.dexcom import GLUCOSE_READING, init_integration
 
 
-async def test_sensors.opp):
+async def test_sensors(opp):
     """Test we get sensor data."""
-    await init_integration.opp)
+    await init_integration(opp)
 
     test_username_glucose_value = opp.states.get(
         "sensor.dexcom_test_username_glucose_value"
@@ -28,9 +28,9 @@ async def test_sensors.opp):
     assert test_username_glucose_trend.state == GLUCOSE_READING.trend_description
 
 
-async def test_sensors_unknown.opp):
+async def test_sensors_unknown(opp):
     """Test we handle sensor state unknown."""
-    await init_integration.opp)
+    await init_integration(opp)
 
     with patch(
         "openpeerpower.components.dexcom.Dexcom.get_current_glucose_reading",
@@ -53,9 +53,9 @@ async def test_sensors_unknown.opp):
     assert test_username_glucose_trend.state == STATE_UNKNOWN
 
 
-async def test_sensors_update_failed.opp):
+async def test_sensors_update_failed(opp):
     """Test we handle sensor update failed."""
-    await init_integration.opp)
+    await init_integration(opp)
 
     with patch(
         "openpeerpower.components.dexcom.Dexcom.get_current_glucose_reading",
@@ -78,9 +78,9 @@ async def test_sensors_update_failed.opp):
     assert test_username_glucose_trend.state == STATE_UNAVAILABLE
 
 
-async def test_sensors_options_changed.opp):
+async def test_sensors_options_changed(opp):
     """Test we handle sensor unavailable."""
-    entry = await init_integration.opp)
+    entry = await init_integration(opp)
 
     test_username_glucose_value = opp.states.get(
         "sensor.dexcom_test_username_glucose_value"

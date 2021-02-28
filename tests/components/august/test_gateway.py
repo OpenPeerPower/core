@@ -9,7 +9,7 @@ from openpeerpower.components.august.gateway import AugustGateway
 from tests.components.august.mocks import _mock_august_authentication, _mock_get_config
 
 
-async def test_refresh_access_token.opp):
+async def test_refresh_access_token(opp):
     """Test token refreshes."""
     await _patched_refresh_access_token(opp, "new_token", 5678)
 

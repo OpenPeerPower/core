@@ -12,7 +12,7 @@ from tests.common import get_system_health_info, mock_platform
 
 async def gather_system_health_info(opp, opp_ws_client):
     """Gather all info."""
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     resp = await client.send_json({"id": 6, "type": "system_health/info"})
 
@@ -64,7 +64,7 @@ async def test_info_endpoint_return_info(opp, opp_ws_client):
 async def test_info_endpoint_register_callback(opp, opp_ws_client):
     """Test that the info endpoint allows registering callbacks."""
 
-    async def mock_info.opp):
+    async def mock_info(opp):
         return {"storage": "YAML"}
 
     opp.components.system_health.async_register_info("lovelace", mock_info)
@@ -82,7 +82,7 @@ async def test_info_endpoint_register_callback(opp, opp_ws_client):
 async def test_info_endpoint_register_callback_timeout(opp, opp_ws_client):
     """Test that the info endpoint timing out."""
 
-    async def mock_info.opp):
+    async def mock_info(opp):
         raise asyncio.TimeoutError
 
     opp.components.system_health.async_register_info("lovelace", mock_info)
@@ -97,7 +97,7 @@ async def test_info_endpoint_register_callback_timeout(opp, opp_ws_client):
 async def test_info_endpoint_register_callback_exc(opp, opp_ws_client):
     """Test that the info endpoint requires auth."""
 
-    async def mock_info.opp):
+    async def mock_info(opp):
         raise Exception("TEST ERROR")
 
     opp.components.system_health.async_register_info("lovelace", mock_info)

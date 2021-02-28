@@ -42,7 +42,7 @@ def mock_pypoint(is_authorized):  # pylint: disable=redefined-outer-name
         yield PointSession
 
 
-async def test_abort_if_no_implementation_registered.opp):
+async def test_abort_if_no_implementation_registered(opp):
     """Test we abort if no implementation is registered."""
     flow = config_flow.PointFlowHandler()
     flow.opp = opp
@@ -54,7 +54,7 @@ async def test_abort_if_no_implementation_registered.opp):
 
 async def test_abort_if_already_setup_opp):
     """Test we abort if Point is already setup."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     with patch.object.opp.config_entries, "async_entries", return_value=[{}]):
         result = await flow.async_step_user()
@@ -72,7 +72,7 @@ async def test_full_flow_implementation(
 ):
     """Test registering an implementation and finishing flow works."""
     config_flow.register_flow_implementation(opp, "test-other", None, None)
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -97,7 +97,7 @@ async def test_full_flow_implementation(
 
 async def test_step_import(opp, mock_pypoint):  # pylint: disable=redefined-outer-name
     """Test that we trigger import when configuring with client."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_import()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -109,23 +109,23 @@ async def test_wrong_code_flow_implementation(
     opp. mock_pypoint
 ):  # pylint: disable=redefined-outer-name
     """Test wrong code."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_code("123ABC")
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "auth_error"
 
 
-async def test_not_pick_implementation_if_only_one.opp):
+async def test_not_pick_implementation_if_only_one(opp):
     """Test we allow picking implementation if we have one flow_imp."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "auth"
 
 
-async def test_abort_if_timeout_generating_auth_url.opp):
+async def test_abort_if_timeout_generating_auth_url(opp):
     """Test we abort if generating authorize url fails."""
     flow = init_config_flow(opp, side_effect=asyncio.TimeoutError)
 
@@ -134,7 +134,7 @@ async def test_abort_if_timeout_generating_auth_url.opp):
     assert result["reason"] == "authorize_url_timeout"
 
 
-async def test_abort_if_exception_generating_auth_url.opp):
+async def test_abort_if_exception_generating_auth_url(opp):
     """Test we abort if generating authorize url blows up."""
     flow = init_config_flow(opp, side_effect=ValueError)
 
@@ -143,9 +143,9 @@ async def test_abort_if_exception_generating_auth_url.opp):
     assert result["reason"] == "unknown_authorize_url_generation"
 
 
-async def test_abort_no_code.opp):
+async def test_abort_no_code(opp):
     """Test if no code is given to step_code."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_code()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT

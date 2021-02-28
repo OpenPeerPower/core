@@ -218,7 +218,7 @@ async def test_light_unloaded_removed(opp, utcnow):
     state = await helper.poll_and_get_state()
     assert state.state == "off"
 
-    unload_result = await helper.config_entry.async_unload.opp)
+    unload_result = await helper.config_entry.async_unload(opp)
     assert unload_result is True
 
     # Make sure entity is set to unavailable state
@@ -228,7 +228,7 @@ async def test_light_unloaded_removed(opp, utcnow):
     conn = opp.data[KNOWN_DEVICES]["00:00:00:00:00:00"]
     assert not conn.pollable_characteristics
 
-    await helper.config_entry.async_remove.opp)
+    await helper.config_entry.async_remove(opp)
     await opp.async_block_till_done()
 
     # Make sure entity is removed

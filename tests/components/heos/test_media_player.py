@@ -589,7 +589,7 @@ async def test_select_input_command_error(
 async def test_unload_config_entry(opp, config_entry, config, controller):
     """Test the player is set unavailable when the config entry is unloaded."""
     await setup_platform(opp, config_entry, config)
-    await config_entry.async_unload.opp)
+    await config_entry.async_unload(opp)
     assert opp.states.get("media_player.test_player").state == STATE_UNAVAILABLE
 
 

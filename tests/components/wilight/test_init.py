@@ -45,7 +45,7 @@ def mock_dummy_device_from_host():
 
 async def test_config_entry_not_ready.opp: OpenPeerPowerType) -> None:
     """Test the WiLight configuration entry not ready."""
-    entry = await setup_integration.opp)
+    entry = await setup_integration(opp)
 
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
@@ -54,7 +54,7 @@ async def test_unload_config_entry(
     opp: OpenPeerPowerType, dummy_device_from_host
 ) -> None:
     """Test the WiLight configuration entry unloading."""
-    entry = await setup_integration.opp)
+    entry = await setup_integration(opp)
 
     assert entry.entry_id in opp.data[DOMAIN]
     assert entry.state == ENTRY_STATE_LOADED

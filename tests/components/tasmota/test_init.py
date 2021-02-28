@@ -112,7 +112,7 @@ async def test_tasmota_ws_remove_discovered_device(
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
     assert device_entry is not None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     await client.send_json(
         {"id": 5, "type": "tasmota/device/remove", "device_id": device_entry.id}
     )
@@ -138,7 +138,7 @@ async def test_tasmota_ws_remove_discovered_device_twice(
     device_entry = device_reg.async_get_device(set(), {("mac", mac)})
     assert device_entry is not None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     await client.send_json(
         {"id": 5, "type": "tasmota/device/remove", "device_id": device_entry.id}
     )
@@ -167,7 +167,7 @@ async def test_tasmota_ws_remove_non_tasmota_device(
     )
     assert device_entry is not None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
     await client.send_json(
         {"id": 5, "type": "tasmota/device/remove", "device_id": device_entry.id}
     )

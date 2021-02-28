@@ -39,7 +39,7 @@ def zigpy_app_controller():
 
 
 @pytest.fixture(name="config_entry")
-async def config_entry_fixture.opp):
+async def config_entry_fixture(opp):
     """Fixture representing a config entry."""
     entry = MockConfigEntry(
         version=2,
@@ -134,7 +134,7 @@ def zha_device_joined(opp, setup_zha):
 
     async def _zha_device(zigpy_dev):
         await setup_zha()
-        zha_gateway = get_zha_gateway.opp)
+        zha_gateway = get_zha_gateway(opp)
         await zha_gateway.async_device_initialized(zigpy_dev)
         await opp.async_block_till_done()
         return zha_gateway.get_device(zigpy_dev.ieee)
@@ -214,7 +214,7 @@ def zha_device_mock(opp, zigpy_device_mock):
 
 
 @pytest.fixture
-def.opp_disable_services.opp):
+def.opp_disable_services(opp):
     """Mock service register."""
     with patch.object.opp.services, "async_register"), patch.object(
         opp.services, "has_service", return_value=True

@@ -17,7 +17,7 @@ TEST_DOMAIN = "oauth2_test"
 
 
 @pytest.fixture
-def flow_handler.opp):
+def flow_handler(opp):
     """Return a registered config flow."""
 
     mock_platform(opp, f"{TEST_DOMAIN}.config_flow")
@@ -36,7 +36,7 @@ def flow_handler.opp):
         yield TestFlowHandler
 
 
-async def test_setup_provide_implementation.opp):
+async def test_setup_provide_implementation(opp):
     """Test that we provide implementations."""
     account_link.async_setup_opp)
 
@@ -67,7 +67,7 @@ async def test_setup_provide_implementation.opp):
     assert implementations["cloud"].opp is.opp
 
 
-async def test_get_services_cached.opp):
+async def test_get_services_cached(opp):
     """Test that we cache services."""
     opp.data["cloud"] = None
 
@@ -77,23 +77,23 @@ async def test_get_services_cached.opp):
          opp.nabucasa.account_link.async_fetch_available_services",
         side_effect=lambda _: services,
     ) as mock_fetch:
-        assert await account_link._get_services.opp) == 1
+        assert await account_link._get_services(opp) == 1
 
         services = 2
 
         assert len(mock_fetch.mock_calls) == 1
-        assert await account_link._get_services.opp) == 1
+        assert await account_link._get_services(opp) == 1
 
         services = 3
         opp.data.pop(account_link.DATA_SERVICES)
-        assert await account_link._get_services.opp) == 3
+        assert await account_link._get_services(opp) == 3
 
         services = 4
         async_fire_time_changed(opp, utcnow())
         await opp.async_block_till_done()
 
         # Check cache purged
-        assert await account_link._get_services.opp) == 4
+        assert await account_link._get_services(opp) == 4
 
 
 async def test_get_services_error(opp):
@@ -104,7 +104,7 @@ async def test_get_services_error(opp):
          opp.nabucasa.account_link.async_fetch_available_services",
         side_effect=asyncio.TimeoutError,
     ):
-        assert await account_link._get_services.opp) == []
+        assert await account_link._get_services(opp) == []
         assert account_link.DATA_SERVICES not in opp.data
 
 

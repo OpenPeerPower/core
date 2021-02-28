@@ -46,7 +46,7 @@ EVENT_OFF = {
 }
 
 
-async def test_platform_manually_configured.opp):
+async def test_platform_manually_configured(opp):
     """Test that nothing happens when platform is manually configured."""
     assert await async_setup_component(
         opp. LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": AXIS_DOMAIN}}
@@ -55,14 +55,14 @@ async def test_platform_manually_configured.opp):
     assert AXIS_DOMAIN not in opp.data
 
 
-async def test_no_lights.opp):
+async def test_no_lights(opp):
     """Test that no light events in Axis results in no light entities."""
-    await setup_axis_integration.opp)
+    await setup_axis_integration(opp)
 
     assert not opp.states.async_entity_ids(LIGHT_DOMAIN)
 
 
-async def test_no_light_entity_without_light_control_representation.opp):
+async def test_no_light_entity_without_light_control_representation(opp):
     """Verify no lights entities get created without light control representation."""
     api_discovery = deepcopy(API_DISCOVERY_RESPONSE)
     api_discovery["data"]["apiList"].append(API_DISCOVERY_LIGHT_CONTROL)
@@ -73,7 +73,7 @@ async def test_no_light_entity_without_light_control_representation.opp):
     with patch.dict(API_DISCOVERY_RESPONSE, api_discovery), patch.dict(
         LIGHT_CONTROL_RESPONSE, light_control
     ):
-        config_entry = await setup_axis_integration.opp)
+        config_entry = await setup_axis_integration(opp)
         device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     device.api.event.update([EVENT_ON])
@@ -82,13 +82,13 @@ async def test_no_light_entity_without_light_control_representation.opp):
     assert not opp.states.async_entity_ids(LIGHT_DOMAIN)
 
 
-async def test_lights.opp):
+async def test_lights(opp):
     """Test that lights are loaded properly."""
     api_discovery = deepcopy(API_DISCOVERY_RESPONSE)
     api_discovery["data"]["apiList"].append(API_DISCOVERY_LIGHT_CONTROL)
 
     with patch.dict(API_DISCOVERY_RESPONSE, api_discovery):
-        config_entry = await setup_axis_integration.opp)
+        config_entry = await setup_axis_integration(opp)
         device = opp.data[AXIS_DOMAIN][config_entry.unique_id]
 
     # Add light

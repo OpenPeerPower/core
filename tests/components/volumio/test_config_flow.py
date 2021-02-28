@@ -30,7 +30,7 @@ TEST_DISCOVERY_RESULT = {
 }
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -61,7 +61,7 @@ async def test_form.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_updates_unique_id.opp):
+async def test_form_updates_unique_id(opp):
     """Test a duplicate id aborts and updates existing entry."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -98,7 +98,7 @@ async def test_form_updates_unique_id.opp):
     assert entry.data == {**TEST_SYSTEM_INFO, **TEST_CONNECTION}
 
 
-async def test_empty_system_info.opp):
+async def test_empty_system_info(opp):
     """Test old volumio versions with empty system info."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -134,7 +134,7 @@ async def test_empty_system_info.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_cannot_connect.opp):
+async def test_form_cannot_connect(opp):
     """Test we handle cannot connect error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -153,7 +153,7 @@ async def test_form_cannot_connect.opp):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_exception.opp):
+async def test_form_exception(opp):
     """Test we handle generic error."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -172,7 +172,7 @@ async def test_form_exception.opp):
     assert result2["errors"] == {"base": "unknown"}
 
 
-async def test_discovery.opp):
+async def test_discovery(opp):
     """Test discovery flow works."""
 
     result = await opp.config_entries.flow.async_init(
@@ -205,7 +205,7 @@ async def test_discovery.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_discovery_cannot_connect.opp):
+async def test_discovery_cannot_connect(opp):
     """Test discovery aborts if cannot connect."""
 
     result = await opp.config_entries.flow.async_init(
@@ -225,7 +225,7 @@ async def test_discovery_cannot_connect.opp):
     assert result2["reason"] == "cannot_connect"
 
 
-async def test_discovery_duplicate_data.opp):
+async def test_discovery_duplicate_data(opp):
     """Test discovery aborts if same mDNS packet arrives."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
@@ -240,7 +240,7 @@ async def test_discovery_duplicate_data.opp):
     assert result["reason"] == "already_in_progress"
 
 
-async def test_discovery_updates_unique_id.opp):
+async def test_discovery_updates_unique_id(opp):
     """Test a duplicate discovery id aborts and updates existing entry."""
     entry = MockConfigEntry(
         domain=DOMAIN,

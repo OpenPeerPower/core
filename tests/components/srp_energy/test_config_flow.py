@@ -7,7 +7,7 @@ from openpeerpower.components.srp_energy.const import CONF_IS_TOU, SRP_ENERGY_DO
 from . import ENTRY_CONFIG, init_integration
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test user config."""
     # First get the form
     result = await opp.config_entries.flow.async_init(
@@ -40,7 +40,7 @@ async def test_form.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_invalid_auth.opp):
+async def test_form_invalid_auth(opp):
     """Test user config with invalid auth."""
     result = await opp.config_entries.flow.async_init(
         SRP_ENERGY_DOMAIN, context={"source": "user"}
@@ -76,7 +76,7 @@ async def test_form_value_error(opp):
         assert result["errors"]["base"] == "invalid_account"
 
 
-async def test_form_unknown_exception.opp):
+async def test_form_unknown_exception(opp):
     """Test user config that throws an unknown exception."""
     result = await opp.config_entries.flow.async_init(
         SRP_ENERGY_DOMAIN, context={"source": "user"}
@@ -105,9 +105,9 @@ async def test_config(opp):
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
 
-async def test_integration_already_configured.opp):
+async def test_integration_already_configured(opp):
     """Test integration is already configured."""
-    await init_integration.opp)
+    await init_integration(opp)
     result = await opp.config_entries.flow.async_init(
         SRP_ENERGY_DOMAIN, context={"source": "user"}
     )

@@ -27,14 +27,14 @@ import openpeerpower.util.dt as dt_util
 from .util import async_init_integration
 
 
-async def test_aemet_weather.opp):
+async def test_aemet_weather(opp):
     """Test states of the weather."""
 
     now = dt_util.parse_datetime("2021-01-09 12:00:00+00:00")
     with patch("openpeerpower.util.dt.now", return_value=now), patch(
         "openpeerpower.util.dt.utcnow", return_value=now
     ):
-        await async_init_integration.opp)
+        await async_init_integration(opp)
 
     state = opp.states.get("weather.aemet_daily")
     assert state

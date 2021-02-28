@@ -21,7 +21,7 @@ CLIENT_SECRET = "5678"
 VALID_CONFIG = {}
 
 
-async def test_abort_if_existing_entry.opp):
+async def test_abort_if_existing_entry(opp):
     """Check flow abort when an entry already exist."""
     MockConfigEntry(domain=DOMAIN).add_to_opp(opp)
 
@@ -113,7 +113,7 @@ async def test_full_flow(
     assert len(mock_setup.mock_calls) == 1
 
 
-async def test_option_flow.opp):
+async def test_option_flow(opp):
     """Test config flow options."""
     valid_option = {
         "lat_ne": 32.91336,
@@ -171,7 +171,7 @@ async def test_option_flow.opp):
         assert config_entry.options[CONF_WEATHER_AREAS]["Home"][k] == v
 
 
-async def test_option_flow_wrong_coordinates.opp):
+async def test_option_flow_wrong_coordinates(opp):
     """Test config flow options with mixed up coordinates."""
     valid_option = {
         "lat_ne": 32.1234567,

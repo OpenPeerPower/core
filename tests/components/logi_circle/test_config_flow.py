@@ -25,7 +25,7 @@ class MockRequest:
         self.query = query
 
 
-def init_config_flow.opp):
+def init_config_flow(opp):
     """Init a configuration flow."""
     config_flow.register_flow_implementation(
         opp,
@@ -62,7 +62,7 @@ async def test_step_import(
     opp. mock_logi_circle  # pylint: disable=redefined-outer-name
 ):
     """Test that we trigger import when configuring with client."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_import()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -82,7 +82,7 @@ async def test_full_flow_implementation(
         redirect_uri=None,
         sensors=None,
     )
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -100,15 +100,15 @@ async def test_full_flow_implementation(
     assert result["title"] == "Logi Circle ({})".format("testId")
 
 
-async def test_we_reprompt_user_to_follow_link.opp):
+async def test_we_reprompt_user_to_follow_link(opp):
     """Test we prompt user to follow link if previously prompted."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_auth("dummy")
     assert result["errors"]["base"] == "follow_link"
 
 
-async def test_abort_if_no_implementation_registered.opp):
+async def test_abort_if_no_implementation_registered(opp):
     """Test we abort if no implementation is registered."""
     flow = config_flow.LogiCircleFlowHandler()
     flow.opp = opp
@@ -120,7 +120,7 @@ async def test_abort_if_no_implementation_registered.opp):
 
 async def test_abort_if_already_setup_opp):
     """Test we abort if Logi Circle is already setup."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     with patch.object.opp.config_entries, "async_entries", return_value=[{}]):
         result = await flow.async_step_user()
@@ -154,7 +154,7 @@ async def test_abort_if_authorize_fails(
     opp. mock_logi_circle, side_effect, error
 ):  # pylint: disable=redefined-outer-name
     """Test we abort if authorizing fails."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
     mock_logi_circle.authorize.side_effect = side_effect
 
     result = await flow.async_step_code("123ABC")
@@ -165,9 +165,9 @@ async def test_abort_if_authorize_fails(
     assert result["errors"]["base"] == error
 
 
-async def test_not_pick_implementation_if_only_one.opp):
+async def test_not_pick_implementation_if_only_one(opp):
     """Test we bypass picking implementation if we have one flow_imp."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -196,7 +196,7 @@ async def test_gen_auth_url(
     assert result == "http://authorize.url"
 
 
-async def test_callback_view_rejects_missing_code.opp):
+async def test_callback_view_rejects_missing_code(opp):
     """Test the auth callback view rejects requests with no code."""
     view = LogiCircleAuthCallbackView()
     resp = await view.get(MockRequest.opp, {}))
@@ -208,7 +208,7 @@ async def test_callback_view_accepts_code(
     opp. mock_logi_circle
 ):  # pylint: disable=redefined-outer-name
     """Test the auth callback view handles requests with auth code."""
-    init_config_flow.opp)
+    init_config_flow(opp)
     view = LogiCircleAuthCallbackView()
 
     resp = await view.get(MockRequest.opp, {"code": "456"}))

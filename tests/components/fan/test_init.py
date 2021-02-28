@@ -37,7 +37,7 @@ def test_fanentity():
         fan.turn_off()
 
 
-async def test_async_fanentity.opp):
+async def test_async_fanentity(opp):
     """Test async fan entity methods."""
     fan = BaseFan()
     fan.opp = opp

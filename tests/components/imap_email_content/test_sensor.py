@@ -28,7 +28,7 @@ class FakeEMailReader:
         return self._messages.popleft()
 
 
-async def test_allowed_sender.opp):
+async def test_allowed_sender(opp):
     """Test emails from allowed sender."""
     test_message = email.message.Message()
     test_message["From"] = "sender@test.com"
@@ -57,7 +57,7 @@ async def test_allowed_sender.opp):
     )
 
 
-async def test_multi_part_with_text.opp):
+async def test_multi_part_with_text(opp):
     """Test multi part emails."""
     msg = MIMEMultipart("alternative")
     msg["Subject"] = "Link"
@@ -87,7 +87,7 @@ async def test_multi_part_with_text.opp):
     assert "Test Message" == sensor.device_state_attributes["body"]
 
 
-async def test_multi_part_only_html.opp):
+async def test_multi_part_only_html(opp):
     """Test multi part emails with only HTML."""
     msg = MIMEMultipart("alternative")
     msg["Subject"] = "Link"
@@ -117,7 +117,7 @@ async def test_multi_part_only_html.opp):
     )
 
 
-async def test_multi_part_only_other_text.opp):
+async def test_multi_part_only_other_text(opp):
     """Test multi part emails with only other text."""
     msg = MIMEMultipart("alternative")
     msg["Subject"] = "Link"
@@ -144,7 +144,7 @@ async def test_multi_part_only_other_text.opp):
     assert "Test Message" == sensor.device_state_attributes["body"]
 
 
-async def test_multiple_emails.opp):
+async def test_multiple_emails(opp):
     """Test multiple emails."""
     states = []
 
@@ -186,7 +186,7 @@ async def test_multiple_emails.opp):
     assert "Test Message 2" == sensor.device_state_attributes["body"]
 
 
-async def test_sender_not_allowed.opp):
+async def test_sender_not_allowed(opp):
     """Test not whitelisted emails."""
     test_message = email.message.Message()
     test_message["From"] = "sender@test.com"
@@ -208,7 +208,7 @@ async def test_sender_not_allowed.opp):
     assert sensor.state is None
 
 
-async def test_template.opp):
+async def test_template(opp):
     """Test value template."""
     test_message = email.message.Message()
     test_message["From"] = "sender@test.com"

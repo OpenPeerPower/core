@@ -85,7 +85,7 @@ def get_mock_remote(
     return mock_remote
 
 
-async def test_flow_non_encrypted.opp):
+async def test_flow_non_encrypted(opp):
     """Test flow without encryption."""
 
     result = await opp.config_entries.flow.async_init(
@@ -146,7 +146,7 @@ async def test_flow_not_connected_error(opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_flow_unknown_abort.opp):
+async def test_flow_unknown_abort(opp):
     """Test flow with unknown error abortion."""
 
     result = await opp.config_entries.flow.async_init(
@@ -169,7 +169,7 @@ async def test_flow_unknown_abort.opp):
     assert result["reason"] == "unknown"
 
 
-async def test_flow_encrypted_not_connected_pin_code_request.opp):
+async def test_flow_encrypted_not_connected_pin_code_request(opp):
     """Test flow with encryption and PIN code request connection error abortion during pairing request step."""
 
     result = await opp.config_entries.flow.async_init(
@@ -194,7 +194,7 @@ async def test_flow_encrypted_not_connected_pin_code_request.opp):
     assert result["reason"] == "cannot_connect"
 
 
-async def test_flow_encrypted_unknown_pin_code_request.opp):
+async def test_flow_encrypted_unknown_pin_code_request(opp):
     """Test flow with encryption and PIN code request unknown error abortion during pairing request step."""
 
     result = await opp.config_entries.flow.async_init(
@@ -219,7 +219,7 @@ async def test_flow_encrypted_unknown_pin_code_request.opp):
     assert result["reason"] == "unknown"
 
 
-async def test_flow_encrypted_valid_pin_code.opp):
+async def test_flow_encrypted_valid_pin_code(opp):
     """Test flow with encryption and valid PIN code."""
 
     result = await opp.config_entries.flow.async_init(
@@ -308,7 +308,7 @@ async def test_flow_encrypted_invalid_pin_code_error(opp):
     assert result["errors"] == {"base": ERROR_INVALID_PIN_CODE}
 
 
-async def test_flow_encrypted_not_connected_abort.opp):
+async def test_flow_encrypted_not_connected_abort(opp):
     """Test flow with encryption and PIN code connection error abortion during pairing step."""
 
     result = await opp.config_entries.flow.async_init(
@@ -341,7 +341,7 @@ async def test_flow_encrypted_not_connected_abort.opp):
     assert result["reason"] == "cannot_connect"
 
 
-async def test_flow_encrypted_unknown_abort.opp):
+async def test_flow_encrypted_unknown_abort(opp):
     """Test flow with encryption and PIN code unknown error abortion during pairing step."""
 
     result = await opp.config_entries.flow.async_init(
@@ -374,7 +374,7 @@ async def test_flow_encrypted_unknown_abort.opp):
     assert result["reason"] == "unknown"
 
 
-async def test_flow_non_encrypted_already_configured_abort.opp):
+async def test_flow_non_encrypted_already_configured_abort(opp):
     """Test flow without encryption and existing config entry abortion."""
 
     MockConfigEntry(
@@ -393,7 +393,7 @@ async def test_flow_non_encrypted_already_configured_abort.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_flow_encrypted_already_configured_abort.opp):
+async def test_flow_encrypted_already_configured_abort(opp):
     """Test flow with encryption and existing config entry abortion."""
 
     MockConfigEntry(
@@ -418,7 +418,7 @@ async def test_flow_encrypted_already_configured_abort.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_imported_flow_non_encrypted.opp):
+async def test_imported_flow_non_encrypted(opp):
     """Test imported flow without encryption."""
 
     mock_remote = get_mock_remote(encrypted=False)
@@ -454,7 +454,7 @@ async def test_imported_flow_non_encrypted.opp):
     }
 
 
-async def test_imported_flow_encrypted_valid_pin_code.opp):
+async def test_imported_flow_encrypted_valid_pin_code(opp):
     """Test imported flow with encryption and valid PIN code."""
 
     mock_remote = get_mock_remote(
@@ -541,7 +541,7 @@ async def test_imported_flow_encrypted_invalid_pin_code_error(opp):
     assert result["errors"] == {"base": ERROR_INVALID_PIN_CODE}
 
 
-async def test_imported_flow_encrypted_not_connected_abort.opp):
+async def test_imported_flow_encrypted_not_connected_abort(opp):
     """Test imported flow with encryption and PIN code connection error abortion during pairing step."""
 
     mock_remote = get_mock_remote(encrypted=True, authorize_error=TimeoutError)
@@ -573,7 +573,7 @@ async def test_imported_flow_encrypted_not_connected_abort.opp):
     assert result["reason"] == "cannot_connect"
 
 
-async def test_imported_flow_encrypted_unknown_abort.opp):
+async def test_imported_flow_encrypted_unknown_abort(opp):
     """Test imported flow with encryption and PIN code unknown error abortion during pairing step."""
 
     mock_remote = get_mock_remote(encrypted=True, authorize_error=Exception)
@@ -628,7 +628,7 @@ async def test_imported_flow_not_connected_error(opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_imported_flow_unknown_abort.opp):
+async def test_imported_flow_unknown_abort(opp):
     """Test imported flow with unknown error abortion."""
 
     with patch(
@@ -650,7 +650,7 @@ async def test_imported_flow_unknown_abort.opp):
     assert result["reason"] == "unknown"
 
 
-async def test_imported_flow_non_encrypted_already_configured_abort.opp):
+async def test_imported_flow_non_encrypted_already_configured_abort(opp):
     """Test imported flow without encryption and existing config entry abortion."""
 
     MockConfigEntry(
@@ -674,7 +674,7 @@ async def test_imported_flow_non_encrypted_already_configured_abort.opp):
     assert result["reason"] == "already_configured"
 
 
-async def test_imported_flow_encrypted_already_configured_abort.opp):
+async def test_imported_flow_encrypted_already_configured_abort(opp):
     """Test imported flow with encryption and existing config entry abortion."""
 
     MockConfigEntry(

@@ -17,7 +17,7 @@ from tests.components.atag import (
 from tests.test_util.aiohttp import AiohttpClientMocker
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -62,7 +62,7 @@ async def test_connection_error(opp):
     assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_unauthorized.opp):
+async def test_unauthorized(opp):
     """Test we show correct form when Unauthorized error is raised."""
     with patch("pyatag.AtagOne.authorize", side_effect=errors.Unauthorized()):
         result = await opp.config_entries.flow.async_init(

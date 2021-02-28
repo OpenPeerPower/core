@@ -60,7 +60,7 @@ async def test_unique_id_migration(mock_hc, opp, mock_write_config):
     assert await async_setup_component(opp, DOMAIN, {})
     await opp.async_block_till_done()
 
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     switch_tv = ent_reg.async_get(ENTITY_WATCH_TV)
     assert switch_tv.unique_id == f"activity_{WATCH_TV_ACTIVITY_ID}"

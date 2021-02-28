@@ -31,7 +31,7 @@ PERCENTAGE_MODEL_FANS = ["fan.percentage_full_fan", "fan.percentage_limited_fan"
 
 
 @pytest.fixture(autouse=True)
-async def setup_comp.opp):
+async def setup_comp(opp):
     """Initialize components."""
     assert await async_setup_component(opp, fan.DOMAIN, {"fan": {"platform": "demo"}})
     await opp.async_block_till_done()

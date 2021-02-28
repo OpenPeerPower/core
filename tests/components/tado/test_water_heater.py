@@ -3,10 +3,10 @@
 from .util import async_init_integration
 
 
-async def test_water_heater_create_sensors.opp):
+async def test_water_heater_create_sensors(opp):
     """Test creation of water heater."""
 
-    await async_init_integration.opp)
+    await async_init_integration(opp)
 
     state = opp.states.get("water_heater.water_heater")
     assert state.state == "auto"

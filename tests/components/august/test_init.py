@@ -44,7 +44,7 @@ from tests.components.august.mocks import (
 )
 
 
-async def test_august_is_offline.opp):
+async def test_august_is_offline(opp):
     """Config entry state is ENTRY_STATE_SETUP_RETRY when august is offline."""
 
     config_entry = MockConfigEntry(
@@ -67,7 +67,7 @@ async def test_august_is_offline.opp):
 
 async def test_unlock_throws_august_api_http_error(opp):
     """Test unlock throws correct error on http error."""
-    mocked_lock_detail = await _mock_operative_august_lock_detail.opp)
+    mocked_lock_detail = await _mock_operative_august_lock_detail(opp)
 
     def _unlock_return_activities_side_effect(access_token, device_id):
         raise AugustApiAIOHTTPError("This should bubble up as its user consumable")
@@ -93,7 +93,7 @@ async def test_unlock_throws_august_api_http_error(opp):
 
 async def test_lock_throws_august_api_http_error(opp):
     """Test lock throws correct error on http error."""
-    mocked_lock_detail = await _mock_operative_august_lock_detail.opp)
+    mocked_lock_detail = await _mock_operative_august_lock_detail(opp)
 
     def _lock_return_activities_side_effect(access_token, device_id):
         raise AugustApiAIOHTTPError("This should bubble up as its user consumable")
@@ -117,10 +117,10 @@ async def test_lock_throws_august_api_http_error(opp):
     )
 
 
-async def test_inoperative_locks_are_filtered_out.opp):
+async def test_inoperative_locks_are_filtered_out(opp):
     """Ensure inoperative locks do not get setup."""
-    august_operative_lock = await _mock_operative_august_lock_detail.opp)
-    august_inoperative_lock = await _mock_inoperative_august_lock_detail.opp)
+    august_operative_lock = await _mock_operative_august_lock_detail(opp)
+    august_inoperative_lock = await _mock_inoperative_august_lock_detail(opp)
     await _create_august_with_devices(
         opp. [august_operative_lock, august_inoperative_lock]
     )
@@ -133,10 +133,10 @@ async def test_inoperative_locks_are_filtered_out.opp):
     assert lock_a6697750d607098bae8d6baa11ef8063_name.state == STATE_LOCKED
 
 
-async def test_lock_has_doorsense.opp):
+async def test_lock_has_doorsense(opp):
     """Check to see if a lock has doorsense."""
-    doorsenselock = await _mock_doorsense_enabled_august_lock_detail.opp)
-    nodoorsenselock = await _mock_doorsense_missing_august_lock_detail.opp)
+    doorsenselock = await _mock_doorsense_enabled_august_lock_detail(opp)
+    nodoorsenselock = await _mock_doorsense_missing_august_lock_detail(opp)
     await _create_august_with_devices(opp, [doorsenselock, nodoorsenselock])
 
     binary_sensor_online_with_doorsense_name_open = opp.states.get(
@@ -149,7 +149,7 @@ async def test_lock_has_doorsense.opp):
     assert binary_sensor_missing_doorsense_id_name_open is None
 
 
-async def test_set_up_from_yaml.opp):
+async def test_set_up_from_yaml(opp):
     """Test to make sure config is imported from yaml."""
 
     await setup.async_setup_component(opp, "persistent_notification", {})
@@ -178,7 +178,7 @@ async def test_set_up_from_yaml.opp):
     }
 
 
-async def test_auth_fails.opp):
+async def test_auth_fails(opp):
     """Config entry state is ENTRY_STATE_SETUP_ERROR when auth fails."""
 
     config_entry = MockConfigEntry(
@@ -204,7 +204,7 @@ async def test_auth_fails.opp):
     assert flows[0]["step_id"] == "user"
 
 
-async def test_bad_password.opp):
+async def test_bad_password(opp):
     """Config entry state is ENTRY_STATE_SETUP_ERROR when the password has been changed."""
 
     config_entry = MockConfigEntry(
@@ -232,7 +232,7 @@ async def test_bad_password.opp):
     assert flows[0]["step_id"] == "user"
 
 
-async def test_http_failure.opp):
+async def test_http_failure(opp):
     """Config entry state is ENTRY_STATE_SETUP_RETRY when august is offline."""
 
     config_entry = MockConfigEntry(
@@ -256,7 +256,7 @@ async def test_http_failure.opp):
     assert opp.config_entries.flow.async_progress() == []
 
 
-async def test_unknown_auth_state.opp):
+async def test_unknown_auth_state(opp):
     """Config entry state is ENTRY_STATE_SETUP_ERROR when august is in an unknown auth state."""
 
     config_entry = MockConfigEntry(
@@ -282,7 +282,7 @@ async def test_unknown_auth_state.opp):
     assert flows[0]["step_id"] == "user"
 
 
-async def test_requires_validation_state.opp):
+async def test_requires_validation_state(opp):
     """Config entry state is ENTRY_STATE_SETUP_ERROR when august requires validation."""
 
     config_entry = MockConfigEntry(

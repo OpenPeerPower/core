@@ -23,7 +23,7 @@ def create_engine_test(*args, **kwargs):
     return engine
 
 
-async def test_schema_update_calls.opp):
+async def test_schema_update_calls(opp):
     """Test that schema migrations occur in correct order."""
     with patch(
         "openpeerpower.components.recorder.create_engine", new=create_engine_test
@@ -44,7 +44,7 @@ async def test_schema_update_calls.opp):
     )
 
 
-async def test_schema_migrate.opp):
+async def test_schema_migrate(opp):
     """Test the full schema migration logic.
 
     We're just testing that the logic can execute successfully here without

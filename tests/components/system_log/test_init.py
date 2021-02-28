@@ -236,7 +236,7 @@ async def test_clear_logs(opp, simple_queue, opp_client):
     await get_error_log(opp, opp_client, 0)
 
 
-async def test_write_log.opp):
+async def test_write_log(opp):
     """Test that error propagates to logger."""
     await async_setup_component(opp, system_log.DOMAIN, BASIC_CONFIG)
     logger = MagicMock()
@@ -249,7 +249,7 @@ async def test_write_log.opp):
     assert logger.method_calls[0] == ("error", ("test_message",))
 
 
-async def test_write_choose_logger.opp):
+async def test_write_choose_logger(opp):
     """Test that correct logger is chosen."""
     await async_setup_component(opp, system_log.DOMAIN, BASIC_CONFIG)
     with patch("logging.getLogger") as mock_logging:
@@ -262,7 +262,7 @@ async def test_write_choose_logger.opp):
     mock_logging.assert_called_once_with("myLogger")
 
 
-async def test_write_choose_level.opp):
+async def test_write_choose_level(opp):
     """Test that correct logger is chosen."""
     await async_setup_component(opp, system_log.DOMAIN, BASIC_CONFIG)
     logger = MagicMock()

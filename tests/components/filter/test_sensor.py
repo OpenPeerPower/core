@@ -36,7 +36,7 @@ def values():
     return values
 
 
-async def test_setup_fail.opp):
+async def test_setup_fail(opp):
     """Test if filter doesn't exist."""
     config = {
         "sensor": {
@@ -64,7 +64,7 @@ async def test_chain(opp, values):
             ],
         }
     }
-    await async_init_recorder_component.opp)
+    await async_init_recorder_component(opp)
 
     with assert_setup_component(1, "sensor"):
         assert await async_setup_component(opp, "sensor", config)
@@ -93,7 +93,7 @@ async def test_chain_history(opp, values, missing=False):
             ],
         },
     }
-    await async_init_recorder_component.opp)
+    await async_init_recorder_component(opp)
     assert_setup_component(1, "history")
 
     t_0 = dt_util.utcnow() - timedelta(minutes=1)
@@ -138,7 +138,7 @@ async def test_chain_history(opp, values, missing=False):
 
 async def test_source_state_none(opp, values):
     """Test is source sensor state is null and sets state to STATE_UNKNOWN."""
-    await async_init_recorder_component.opp)
+    await async_init_recorder_component(opp)
 
     config = {
         "sensor": [
@@ -206,7 +206,7 @@ async def test_chain_history_missing(opp, values):
     await test_chain_history(opp, values, missing=True)
 
 
-async def test_history_time.opp):
+async def test_history_time(opp):
     """Test loading from history based on a time window."""
     config = {
         "history": {},
@@ -217,7 +217,7 @@ async def test_history_time.opp):
             "filters": [{"filter": "time_throttle", "window_size": "00:01"}],
         },
     }
-    await async_init_recorder_component.opp)
+    await async_init_recorder_component(opp)
     assert_setup_component(1, "history")
 
     t_0 = dt_util.utcnow() - timedelta(minutes=1)
@@ -261,7 +261,7 @@ async def test_setup_opp):
         }
     }
 
-    await async_init_recorder_component.opp)
+    await async_init_recorder_component(opp)
 
     with assert_setup_component(1, "sensor"):
         assert await async_setup_component(opp, "sensor", config)
@@ -279,7 +279,7 @@ async def test_setup_opp):
         assert state.state == "1.0"
 
 
-async def test_invalid_state.opp):
+async def test_invalid_state(opp):
     """Test if filter attributes are inherited."""
     config = {
         "sensor": {
@@ -292,7 +292,7 @@ async def test_invalid_state.opp):
         }
     }
 
-    await async_init_recorder_component.opp)
+    await async_init_recorder_component(opp)
 
     with assert_setup_component(1, "sensor"):
         assert await async_setup_component(opp, "sensor", config)
@@ -441,9 +441,9 @@ def test_time_sma(values):
     assert 21.5 == filtered.state
 
 
-async def test_reload.opp):
+async def test_reload(opp):
     """Verify we can reload filter sensors."""
-    await async_init_recorder_component.opp)
+    await async_init_recorder_component(opp)
 
     opp.states.async_set("sensor.test_monitored", 12345)
     await async_setup_component(

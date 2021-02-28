@@ -225,7 +225,7 @@ async def test_reconnect_androidtv_python_adb(opp, caplog):
     assert await _test_reconnect(opp, caplog, CONFIG_ANDROIDTV_PYTHON_ADB)
 
 
-async def test_adb_shell_returns_none_androidtv_python_adb.opp):
+async def test_adb_shell_returns_none_androidtv_python_adb(opp):
     """Test the case that the ADB shell command returns `None`.
 
     * Device type: Android TV
@@ -245,7 +245,7 @@ async def test_reconnect_firetv_python_adb(opp, caplog):
     assert await _test_reconnect(opp, caplog, CONFIG_FIRETV_PYTHON_ADB)
 
 
-async def test_adb_shell_returns_none_firetv_python_adb.opp):
+async def test_adb_shell_returns_none_firetv_python_adb(opp):
     """Test the case that the ADB shell command returns `None`.
 
     * Device type: Fire TV
@@ -265,7 +265,7 @@ async def test_reconnect_androidtv_adb_server(opp, caplog):
     assert await _test_reconnect(opp, caplog, CONFIG_ANDROIDTV_ADB_SERVER)
 
 
-async def test_adb_shell_returns_none_androidtv_adb_server.opp):
+async def test_adb_shell_returns_none_androidtv_adb_server(opp):
     """Test the case that the ADB shell command returns `None`.
 
     * Device type: Android TV
@@ -285,7 +285,7 @@ async def test_reconnect_firetv_adb_server(opp, caplog):
     assert await _test_reconnect(opp, caplog, CONFIG_FIRETV_ADB_SERVER)
 
 
-async def test_adb_shell_returns_none_firetv_adb_server.opp):
+async def test_adb_shell_returns_none_firetv_adb_server(opp):
     """Test the case that the ADB shell command returns `None`.
 
     * Device type: Fire TV
@@ -295,7 +295,7 @@ async def test_adb_shell_returns_none_firetv_adb_server.opp):
     assert await _test_adb_shell_returns_none(opp, CONFIG_FIRETV_ADB_SERVER)
 
 
-async def test_setup_with_adbkey.opp):
+async def test_setup_with_adbkey(opp):
     """Test that setup succeeds when using an ADB key."""
     config = copy.deepcopy(CONFIG_ANDROIDTV_PYTHON_ADB)
     config[DOMAIN][CONF_ADBKEY] = opp.config.path("user_provided_adbkey")
@@ -389,12 +389,12 @@ async def _test_sources(opp, config0):
     return True
 
 
-async def test_androidtv_sources.opp):
+async def test_androidtv_sources(opp):
     """Test that sources (i.e., apps) are handled correctly for Android TV devices."""
     assert await _test_sources(opp, CONFIG_ANDROIDTV_ADB_SERVER)
 
 
-async def test_firetv_sources.opp):
+async def test_firetv_sources(opp):
     """Test that sources (i.e., apps) are handled correctly for Fire TV devices."""
     assert await _test_sources(opp, CONFIG_FIRETV_ADB_SERVER)
 
@@ -460,14 +460,14 @@ async def _test_exclude_sources(opp, config0, expected_sources):
     return True
 
 
-async def test_androidtv_exclude_sources.opp):
+async def test_androidtv_exclude_sources(opp):
     """Test that sources (i.e., apps) are handled correctly for Android TV devices when the `exclude_unnamed_apps` config parameter is provided as true."""
     config = copy.deepcopy(CONFIG_ANDROIDTV_ADB_SERVER)
     config[DOMAIN][CONF_EXCLUDE_UNNAMED_APPS] = True
     assert await _test_exclude_sources(opp, config, ["TEST 1"])
 
 
-async def test_firetv_exclude_sources.opp):
+async def test_firetv_exclude_sources(opp):
     """Test that sources (i.e., apps) are handled correctly for Fire TV devices when the `exclude_unnamed_apps` config parameter is provided as true."""
     config = copy.deepcopy(CONFIG_FIRETV_ADB_SERVER)
     config[DOMAIN][CONF_EXCLUDE_UNNAMED_APPS] = True
@@ -506,7 +506,7 @@ async def _test_select_source(opp, config0, source, expected_arg, method_patch):
     return True
 
 
-async def test_androidtv_select_source_launch_app_id.opp):
+async def test_androidtv_select_source_launch_app_id(opp):
     """Test that an app can be launched using its app ID."""
     assert await _test_select_source(
         opp,
@@ -517,7 +517,7 @@ async def test_androidtv_select_source_launch_app_id.opp):
     )
 
 
-async def test_androidtv_select_source_launch_app_name.opp):
+async def test_androidtv_select_source_launch_app_name(opp):
     """Test that an app can be launched using its friendly name."""
     assert await _test_select_source(
         opp,
@@ -528,7 +528,7 @@ async def test_androidtv_select_source_launch_app_name.opp):
     )
 
 
-async def test_androidtv_select_source_launch_app_id_no_name.opp):
+async def test_androidtv_select_source_launch_app_id_no_name(opp):
     """Test that an app can be launched using its app ID when it has no friendly name."""
     assert await _test_select_source(
         opp,
@@ -539,7 +539,7 @@ async def test_androidtv_select_source_launch_app_id_no_name.opp):
     )
 
 
-async def test_androidtv_select_source_launch_app_hidden.opp):
+async def test_androidtv_select_source_launch_app_hidden(opp):
     """Test that an app can be launched using its app ID when it is hidden from the sources list."""
     assert await _test_select_source(
         opp,
@@ -550,7 +550,7 @@ async def test_androidtv_select_source_launch_app_hidden.opp):
     )
 
 
-async def test_androidtv_select_source_overridden_app_name.opp):
+async def test_androidtv_select_source_overridden_app_name(opp):
     """Test that when an app name is overridden via the `apps` configuration parameter, the app is launched correctly."""
     # Evidence that the default YouTube app ID will be overridden
     assert "YouTube" in ANDROIDTV_APPS.values()
@@ -564,7 +564,7 @@ async def test_androidtv_select_source_overridden_app_name.opp):
     )
 
 
-async def test_androidtv_select_source_stop_app_id.opp):
+async def test_androidtv_select_source_stop_app_id(opp):
     """Test that an app can be stopped using its app ID."""
     assert await _test_select_source(
         opp,
@@ -575,7 +575,7 @@ async def test_androidtv_select_source_stop_app_id.opp):
     )
 
 
-async def test_androidtv_select_source_stop_app_name.opp):
+async def test_androidtv_select_source_stop_app_name(opp):
     """Test that an app can be stopped using its friendly name."""
     assert await _test_select_source(
         opp,
@@ -586,7 +586,7 @@ async def test_androidtv_select_source_stop_app_name.opp):
     )
 
 
-async def test_androidtv_select_source_stop_app_id_no_name.opp):
+async def test_androidtv_select_source_stop_app_id_no_name(opp):
     """Test that an app can be stopped using its app ID when it has no friendly name."""
     assert await _test_select_source(
         opp,
@@ -597,7 +597,7 @@ async def test_androidtv_select_source_stop_app_id_no_name.opp):
     )
 
 
-async def test_androidtv_select_source_stop_app_hidden.opp):
+async def test_androidtv_select_source_stop_app_hidden(opp):
     """Test that an app can be stopped using its app ID when it is hidden from the sources list."""
     assert await _test_select_source(
         opp,
@@ -608,7 +608,7 @@ async def test_androidtv_select_source_stop_app_hidden.opp):
     )
 
 
-async def test_firetv_select_source_launch_app_id.opp):
+async def test_firetv_select_source_launch_app_id(opp):
     """Test that an app can be launched using its app ID."""
     assert await _test_select_source(
         opp,
@@ -619,7 +619,7 @@ async def test_firetv_select_source_launch_app_id.opp):
     )
 
 
-async def test_firetv_select_source_launch_app_name.opp):
+async def test_firetv_select_source_launch_app_name(opp):
     """Test that an app can be launched using its friendly name."""
     assert await _test_select_source(
         opp,
@@ -630,7 +630,7 @@ async def test_firetv_select_source_launch_app_name.opp):
     )
 
 
-async def test_firetv_select_source_launch_app_id_no_name.opp):
+async def test_firetv_select_source_launch_app_id_no_name(opp):
     """Test that an app can be launched using its app ID when it has no friendly name."""
     assert await _test_select_source(
         opp,
@@ -641,7 +641,7 @@ async def test_firetv_select_source_launch_app_id_no_name.opp):
     )
 
 
-async def test_firetv_select_source_launch_app_hidden.opp):
+async def test_firetv_select_source_launch_app_hidden(opp):
     """Test that an app can be launched using its app ID when it is hidden from the sources list."""
     assert await _test_select_source(
         opp,
@@ -652,7 +652,7 @@ async def test_firetv_select_source_launch_app_hidden.opp):
     )
 
 
-async def test_firetv_select_source_stop_app_id.opp):
+async def test_firetv_select_source_stop_app_id(opp):
     """Test that an app can be stopped using its app ID."""
     assert await _test_select_source(
         opp,
@@ -663,7 +663,7 @@ async def test_firetv_select_source_stop_app_id.opp):
     )
 
 
-async def test_firetv_select_source_stop_app_name.opp):
+async def test_firetv_select_source_stop_app_name(opp):
     """Test that an app can be stopped using its friendly name."""
     assert await _test_select_source(
         opp,
@@ -674,7 +674,7 @@ async def test_firetv_select_source_stop_app_name.opp):
     )
 
 
-async def test_firetv_select_source_stop_app_id_no_name.opp):
+async def test_firetv_select_source_stop_app_id_no_name(opp):
     """Test that an app can be stopped using its app ID when it has no friendly name."""
     assert await _test_select_source(
         opp,
@@ -685,7 +685,7 @@ async def test_firetv_select_source_stop_app_id_no_name.opp):
     )
 
 
-async def test_firetv_select_source_stop_hidden.opp):
+async def test_firetv_select_source_stop_hidden(opp):
     """Test that an app can be stopped using its app ID when it is hidden from the sources list."""
     assert await _test_select_source(
         opp,
@@ -714,17 +714,17 @@ async def _test_setup_fail(opp, config):
     return True
 
 
-async def test_setup_fail_androidtv.opp):
+async def test_setup_fail_androidtv(opp):
     """Test that the Android TV entity is not created when the ADB connection is not established."""
     assert await _test_setup_fail(opp, CONFIG_ANDROIDTV_PYTHON_ADB)
 
 
-async def test_setup_fail_firetv.opp):
+async def test_setup_fail_firetv(opp):
     """Test that the Fire TV entity is not created when the ADB connection is not established."""
     assert await _test_setup_fail(opp, CONFIG_FIRETV_PYTHON_ADB)
 
 
-async def test_setup_two_devices.opp):
+async def test_setup_two_devices(opp):
     """Test that two devices can be set up."""
     config = {
         DOMAIN: [
@@ -748,7 +748,7 @@ async def test_setup_two_devices.opp):
             assert state.state == STATE_OFF
 
 
-async def test_setup_same_device_twice.opp):
+async def test_setup_same_device_twice(opp):
     """Test that setup succeeds with a duplicated config entry."""
     patch_key, entity_id = _setup(CONFIG_ANDROIDTV_ADB_SERVER)
 
@@ -769,7 +769,7 @@ async def test_setup_same_device_twice.opp):
         await opp.async_block_till_done()
 
 
-async def test_adb_command.opp):
+async def test_adb_command(opp):
     """Test sending a command via the `androidtv.adb_command` service."""
     patch_key, entity_id = _setup(CONFIG_ANDROIDTV_ADB_SERVER)
     command = "test command"
@@ -826,7 +826,7 @@ async def test_adb_command_unicode_decode_error(opp):
         assert state.attributes["adb_response"] is None
 
 
-async def test_adb_command_key.opp):
+async def test_adb_command_key(opp):
     """Test sending a key command via the `androidtv.adb_command` service."""
     patch_key = "server"
     entity_id = "media_player.android_tv"
@@ -855,7 +855,7 @@ async def test_adb_command_key.opp):
         assert state.attributes["adb_response"] is None
 
 
-async def test_adb_command_get_properties.opp):
+async def test_adb_command_get_properties(opp):
     """Test sending the "GET_PROPERTIES" command via the `androidtv.adb_command` service."""
     patch_key = "server"
     entity_id = "media_player.android_tv"
@@ -885,7 +885,7 @@ async def test_adb_command_get_properties.opp):
         assert state.attributes["adb_response"] == str(response)
 
 
-async def test_learn_sendevent.opp):
+async def test_learn_sendevent(opp):
     """Test the `androidtv.learn_sendevent` service."""
     patch_key = "server"
     entity_id = "media_player.android_tv"
@@ -914,7 +914,7 @@ async def test_learn_sendevent.opp):
             assert state.attributes["adb_response"] == response
 
 
-async def test_update_lock_not_acquired.opp):
+async def test_update_lock_not_acquired(opp):
     """Test that the state does not get updated when a `LockNotAcquiredException` is raised."""
     patch_key, entity_id = _setup(CONFIG_ANDROIDTV_ADB_SERVER)
 
@@ -947,7 +947,7 @@ async def test_update_lock_not_acquired.opp):
         assert state.state == STATE_STANDBY
 
 
-async def test_download.opp):
+async def test_download(opp):
     """Test the `androidtv.download` service."""
     patch_key, entity_id = _setup(CONFIG_ANDROIDTV_ADB_SERVER)
     device_path = "device/path"
@@ -990,7 +990,7 @@ async def test_download.opp):
         patch_pull.assert_called_with(local_path, device_path)
 
 
-async def test_upload.opp):
+async def test_upload(opp):
     """Test the `androidtv.upload` service."""
     patch_key, entity_id = _setup(CONFIG_ANDROIDTV_ADB_SERVER)
     device_path = "device/path"
@@ -1033,7 +1033,7 @@ async def test_upload.opp):
         patch_push.assert_called_with(local_path, device_path)
 
 
-async def test_androidtv_volume_set.opp):
+async def test_androidtv_volume_set(opp):
     """Test setting the volume for an Android TV device."""
     patch_key, entity_id = _setup(CONFIG_ANDROIDTV_ADB_SERVER)
 
@@ -1072,7 +1072,7 @@ async def test_get_image(opp, opp_ws_client):
     with patchers.patch_shell("11")[patch_key]:
         await opp.helpers.entity_component.async_update_entity(entity_id)
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     with patch(
         "androidtv.basetv.basetv_async.BaseTVAsync.adb_screencap", return_value=b"image"
@@ -1135,7 +1135,7 @@ async def _test_service(
         assert service_call.called
 
 
-async def test_services_androidtv.opp):
+async def test_services_androidtv(opp):
     """Test media player services for an Android TV device."""
     patch_key, entity_id = _setup(CONFIG_ANDROIDTV_ADB_SERVER)
 
@@ -1184,7 +1184,7 @@ async def test_services_androidtv.opp):
             )
 
 
-async def test_services_firetv.opp):
+async def test_services_firetv(opp):
     """Test media player services for a Fire TV device."""
     patch_key, entity_id = _setup(CONFIG_FIRETV_ADB_SERVER)
     config = copy.deepcopy(CONFIG_FIRETV_ADB_SERVER)
@@ -1202,7 +1202,7 @@ async def test_services_firetv.opp):
             await _test_service(opp, entity_id, SERVICE_TURN_ON, "adb_shell")
 
 
-async def test_connection_closed_on_op_stop.opp):
+async def test_connection_closed_on_op_stop(opp):
     """Test that the ADB socket connection is closed when HA stops."""
     patch_key, entity_id = _setup(CONFIG_ANDROIDTV_ADB_SERVER)
 
@@ -1221,7 +1221,7 @@ async def test_connection_closed_on_op_stop.opp):
                 assert adb_close.called
 
 
-async def test_exception.opp):
+async def test_exception(opp):
     """Test that the ADB connection gets closed when there is an unforeseen exception.
 
     HA will attempt to reconnect on the next update.

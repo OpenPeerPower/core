@@ -6,7 +6,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import assert_setup_component
 
 
-async def test_setup_full.opp):
+async def test_setup_full(opp):
     """Test valid configuration."""
     await async_setup_component(
         opp,
@@ -32,7 +32,7 @@ async def test_setup_full.opp):
     assert handle_config[notify_comp.DOMAIN]
 
 
-async def test_setup_without_optional.opp):
+async def test_setup_without_optional(opp):
     """Test valid configuration without optional."""
     await async_setup_component(
         opp,

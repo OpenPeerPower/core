@@ -512,7 +512,7 @@ async def test_media_browse(opp, aioclient_mock, opp_ws_client):
         unique_id=TV_SERIAL,
     )
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {
@@ -645,7 +645,7 @@ async def test_media_browse_internal(opp, aioclient_mock, opp_ws_client):
         unique_id=TV_SERIAL,
     )
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     with patch(
         "openpeerpower.helpers.network._get_request_host", return_value="example.local"

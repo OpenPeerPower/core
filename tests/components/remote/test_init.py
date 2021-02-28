@@ -29,7 +29,7 @@ SERVICE_DELETE_COMMAND = "delete_command"
 ENTITY_ID = "entity_id_val"
 
 
-async def test_is_on.opp):
+async def test_is_on(opp):
     """Test is_on."""
     opp.states.async_set("remote.test", STATE_ON)
     assert remote.is_on(opp, "remote.test")
@@ -38,7 +38,7 @@ async def test_is_on.opp):
     assert not remote.is_on(opp, "remote.test")
 
 
-async def test_turn_on.opp):
+async def test_turn_on(opp):
     """Test turn_on."""
     turn_on_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_ON)
     await opp.services.async_call(DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_ID})
@@ -51,7 +51,7 @@ async def test_turn_on.opp):
     assert DOMAIN == call.domain
 
 
-async def test_turn_off.opp):
+async def test_turn_off(opp):
     """Test turn_off."""
     turn_off_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_OFF)
 
@@ -69,7 +69,7 @@ async def test_turn_off.opp):
     assert call.data[ATTR_ENTITY_ID] == ENTITY_ID
 
 
-async def test_send_command.opp):
+async def test_send_command(opp):
     """Test send_command."""
     send_command_calls = async_mock_service(opp, DOMAIN, SERVICE_SEND_COMMAND)
 
@@ -93,7 +93,7 @@ async def test_send_command.opp):
     assert call.data[ATTR_ENTITY_ID] == ENTITY_ID
 
 
-async def test_learn_command.opp):
+async def test_learn_command(opp):
     """Test learn_command."""
     learn_command_calls = async_mock_service(opp, DOMAIN, SERVICE_LEARN_COMMAND)
 
@@ -117,7 +117,7 @@ async def test_learn_command.opp):
     assert call.data[ATTR_ENTITY_ID] == ENTITY_ID
 
 
-async def test_delete_command.opp):
+async def test_delete_command(opp):
     """Test delete_command."""
     delete_command_calls = async_mock_service(
         opp. remote.DOMAIN, SERVICE_DELETE_COMMAND

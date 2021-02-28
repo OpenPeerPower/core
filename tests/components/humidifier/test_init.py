@@ -13,7 +13,7 @@ class MockHumidifierEntity(HumidifierEntity):
         return 0
 
 
-async def test_sync_turn_on.opp):
+async def test_sync_turn_on(opp):
     """Test if async turn_on calls sync turn_on."""
     humidifier = MockHumidifierEntity()
     humidifier.opp = opp
@@ -24,7 +24,7 @@ async def test_sync_turn_on.opp):
     assert humidifier.turn_on.called
 
 
-async def test_sync_turn_off.opp):
+async def test_sync_turn_off(opp):
     """Test if async turn_off calls sync turn_off."""
     humidifier = MockHumidifierEntity()
     humidifier.opp = opp

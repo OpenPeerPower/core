@@ -224,7 +224,7 @@ async def test_setup_oppio_no_additional_data(opp, aioclient_mock):
     assert aioclient_mock.mock_calls[-1][3]["X- Oppio-Key"] == "123456"
 
 
-async def test_fail_setup_without_environ_var.opp):
+async def test_fail_setup_without_environ_var(opp):
     """Fail setup if no environ variable set."""
     with patch.dict(os.environ, {}, clear=True):
         result = await async_setup_component(opp,  opp.o", {})
@@ -366,7 +366,7 @@ async def test_websocket_supervisor_event(
 ):
     """Test Supervisor websocket event."""
     assert await async_setup_component(opp,  opp.o", {})
-    websocket_client = await opp_ws_client.opp)
+    websocket_client = await opp_ws_client(opp)
 
     test_event = async_capture_events(opp, EVENT_SUPERVISOR_EVENT)
 
@@ -385,7 +385,7 @@ async def test_websocket_supervisor_api(
 ):
     """Test Supervisor websocket api."""
     assert await async_setup_component(opp,  opp.o", {})
-    websocket_client = await opp_ws_client.opp)
+    websocket_client = await opp_ws_client(opp)
     aioclient_mock.post(
         "http://127.0.0.1/snapshots/new/partial",
         json={"result": "ok", "data": {"slug": "sn_slug"}},

@@ -27,7 +27,7 @@ class MockNumberEntity(NumberEntity):
         return 0.5
 
 
-async def test_step.opp):
+async def test_step(opp):
     """Test the step calculation."""
     number = MockDefaultNumberEntity()
     assert number.step == 1.0
@@ -36,7 +36,7 @@ async def test_step.opp):
     assert number_2.step == 0.1
 
 
-async def test_sync_set_value.opp):
+async def test_sync_set_value(opp):
     """Test if async set_value calls sync set_value."""
     number = MockDefaultNumberEntity()
     number.opp = opp

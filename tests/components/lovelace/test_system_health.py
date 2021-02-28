@@ -7,7 +7,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import get_system_health_info
 
 
-async def test_system_health_info_autogen.opp):
+async def test_system_health_info_autogen(opp):
     """Test system health info endpoint."""
     assert await async_setup_component(opp, "lovelace", {})
     assert await async_setup_component(opp, "system_health", {})
@@ -28,7 +28,7 @@ async def test_system_health_info_storage(opp, opp_storage):
     assert info == {"dashboards": 1, "mode": "storage", "resources": 0, "views": 0}
 
 
-async def test_system_health_info_yaml.opp):
+async def test_system_health_info_yaml(opp):
     """Test system health info endpoint."""
     assert await async_setup_component(opp, "system_health", {})
     assert await async_setup_component(opp, "lovelace", {"lovelace": {"mode": "YAML"}})
@@ -40,7 +40,7 @@ async def test_system_health_info_yaml.opp):
     assert info == {"dashboards": 1, "mode": "yaml", "resources": 0, "views": 1}
 
 
-async def test_system_health_info_yaml_not_found.opp):
+async def test_system_health_info_yaml_not_found(opp):
     """Test system health info endpoint."""
     assert await async_setup_component(opp, "system_health", {})
     assert await async_setup_component(opp, "lovelace", {"lovelace": {"mode": "YAML"}})

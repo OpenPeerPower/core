@@ -101,7 +101,7 @@ class FakeSubscriber(GoogleNestSubscriber):
 
 async def async_setup_sdm_platform(opp, platform, devices={}, structures={}):
     """Set up the platform and prerequisites."""
-    create_config_entry.opp)
+    create_config_entry(opp)
     device_manager = FakeDeviceManager(devices=devices, structures=structures)
     subscriber = FakeSubscriber(device_manager)
     with patch(

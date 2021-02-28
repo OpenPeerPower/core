@@ -12,7 +12,7 @@ async def test_state_update(spa, setup_entry, opp, smarttub_api):
     assert state.state == "normal"
 
     spa.get_status.return_value["state"] = "BAD"
-    await trigger_update.opp)
+    await trigger_update(opp)
     state = opp.states.get(entity_id)
     assert state is not None
     assert state.state == "bad"

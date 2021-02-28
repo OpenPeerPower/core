@@ -9,7 +9,7 @@ from openpeerpower.components.nest.legacy import local_auth
 
 
 @pytest.fixture
-def registered_flow.opp):
+def registered_flow(opp):
     """Mock a registered flow."""
     local_auth.initialize.opp, "TEST-CLIENT-ID", "TEST-CLIENT-SECRET")
     return opp.data[config_flow.DATA_FLOW_IMPL][const.DOMAIN]

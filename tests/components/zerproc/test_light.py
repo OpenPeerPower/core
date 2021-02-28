@@ -30,7 +30,7 @@ from tests.common import MockConfigEntry, async_fire_time_changed
 
 
 @pytest.fixture
-async def mock_entry.opp):
+async def mock_entry(opp):
     """Create a mock light entity."""
     return MockConfigEntry(domain=DOMAIN)
 

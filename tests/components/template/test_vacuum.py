@@ -351,7 +351,7 @@ async def test_invalid_attribute_template(opp, caplog):
 # Function tests #
 async def test_state_services(opp, calls):
     """Test state services."""
-    await _register_components.opp)
+    await _register_components(opp)
 
     # Start vacuum
     await common.async_start(opp, _TEST_VACUUM)
@@ -388,7 +388,7 @@ async def test_state_services(opp, calls):
 
 async def test_unused_services(opp, calls):
     """Test calling unused services should not crash."""
-    await _register_basic_vacuum.opp)
+    await _register_basic_vacuum(opp)
 
     # Pause vacuum
     await common.async_pause(opp, _TEST_VACUUM)
@@ -419,7 +419,7 @@ async def test_unused_services(opp, calls):
 
 async def test_clean_spot_service(opp, calls):
     """Test clean spot service."""
-    await _register_components.opp)
+    await _register_components(opp)
 
     # Clean spot
     await common.async_clean_spot(opp, _TEST_VACUUM)
@@ -431,7 +431,7 @@ async def test_clean_spot_service(opp, calls):
 
 async def test_locate_service(opp, calls):
     """Test locate service."""
-    await _register_components.opp)
+    await _register_components(opp)
 
     # Locate vacuum
     await common.async_locate(opp, _TEST_VACUUM)
@@ -443,7 +443,7 @@ async def test_locate_service(opp, calls):
 
 async def test_set_fan_speed(opp, calls):
     """Test set valid fan speed."""
-    await _register_components.opp)
+    await _register_components(opp)
 
     # Set vacuum's fan speed to high
     await common.async_set_fan_speed(opp, "high", _TEST_VACUUM)
@@ -462,7 +462,7 @@ async def test_set_fan_speed(opp, calls):
 
 async def test_set_invalid_fan_speed(opp, calls):
     """Test set invalid fan speed when fan has valid speed."""
-    await _register_components.opp)
+    await _register_components(opp)
 
     # Set vacuum's fan speed to high
     await common.async_set_fan_speed(opp, "high", _TEST_VACUUM)
@@ -487,7 +487,7 @@ def _verify(opp, expected_state, expected_battery_level):
     assert attributes.get(ATTR_BATTERY_LEVEL) == expected_battery_level
 
 
-async def _register_basic_vacuum.opp):
+async def _register_basic_vacuum(opp):
     """Register basic vacuum with only required options for testing."""
     with assert_setup_component(1, "input_select"):
         assert await setup.async_setup_component(
@@ -523,7 +523,7 @@ async def _register_basic_vacuum.opp):
     await opp.async_block_till_done()
 
 
-async def _register_components.opp):
+async def _register_components(opp):
     """Register basic components for testing."""
     with assert_setup_component(2, "input_boolean"):
         assert await setup.async_setup_component(
@@ -613,7 +613,7 @@ async def _register_components.opp):
     await opp.async_block_till_done()
 
 
-async def test_unique_id.opp):
+async def test_unique_id(opp):
     """Test unique_id option only creates one vacuum per id."""
     await setup.async_setup_component(
         opp,

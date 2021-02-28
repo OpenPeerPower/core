@@ -7,7 +7,7 @@ from openpeerpower.components.profiler.const import DOMAIN
 from tests.common import MockConfigEntry
 
 
-async def test_form_user.opp):
+async def test_form_user(opp):
     """Test we can setup by the user."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -35,7 +35,7 @@ async def test_form_user.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_user_only_once.opp):
+async def test_form_user_only_once(opp):
     """Test we can setup by the user only once."""
     MockConfigEntry(domain=DOMAIN).add_to_opp(opp)
     await setup.async_setup_component(opp, "persistent_notification", {})

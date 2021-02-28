@@ -45,7 +45,7 @@ def blueprint_2():
 
 
 @pytest.fixture
-def domain_bps.opp):
+def domain_bps(opp):
     """Domain blueprints fixture."""
     return models.DomainBlueprints.opp, "automation", logging.getLogger(__name__))
 

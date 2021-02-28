@@ -18,7 +18,7 @@ from tests.common import MockConfigEntry
 TEST_LOGIN = {CONF_USERNAME: "test-username", CONF_PASSWORD: "test-password"}
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -45,7 +45,7 @@ async def test_form.opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_invalid_auth.opp):
+async def test_form_invalid_auth(opp):
     """Test we handle invalid auth."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -85,7 +85,7 @@ async def test_form_cannot_connect(opp, side_effect):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_unknown_exception.opp):
+async def test_form_unknown_exception(opp):
     """Test base exception is handled."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -104,7 +104,7 @@ async def test_form_unknown_exception.opp):
     assert result2["errors"] == {"base": "unknown"}
 
 
-async def test_form_duplicate_account.opp):
+async def test_form_duplicate_account(opp):
     """Test that a duplicate account cannot be configured."""
     MockConfigEntry(
         domain=DOMAIN,

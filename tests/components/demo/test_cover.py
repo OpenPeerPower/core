@@ -38,7 +38,7 @@ ENTITY_COVER = "cover.living_room_window"
 
 
 @pytest.fixture
-async def setup_comp.opp):
+async def setup_comp(opp):
     """Set up demo cover component."""
     with assert_setup_component(1, DOMAIN):
         await async_setup_component(opp, DOMAIN, CONFIG)

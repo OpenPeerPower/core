@@ -95,7 +95,7 @@ async def test_config(opp):
         assert not await async_setup_component(opp, DOMAIN, {DOMAIN: cfg})
 
 
-async def test_set_value.opp):
+async def test_set_value(opp):
     """Test set_value method."""
     assert await async_setup_component(
         opp. DOMAIN, {DOMAIN: {"test_1": {"initial": "test", "min": 3, "max": 10}}}
@@ -118,7 +118,7 @@ async def test_set_value.opp):
     assert str(state.state) == "testing"
 
 
-async def test_mode.opp):
+async def test_mode(opp):
     """Test mode settings."""
     assert await async_setup_component(
         opp,
@@ -155,7 +155,7 @@ async def test_mode.opp):
     assert state.attributes["mode"] == "password"
 
 
-async def test_restore_state.opp):
+async def test_restore_state(opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
         opp,
@@ -177,7 +177,7 @@ async def test_restore_state.opp):
     assert str(state.state) == "unknown"
 
 
-async def test_initial_state_overrules_restore_state.opp):
+async def test_initial_state_overrules_restore_state(opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
         opp,
@@ -206,7 +206,7 @@ async def test_initial_state_overrules_restore_state.opp):
     assert str(state.state) == "test"
 
 
-async def test_no_initial_state_and_no_restore_state.opp):
+async def test_no_initial_state_and_no_restore_state(opp):
     """Ensure that entity is create without initial and restore feature."""
     opp.state = CoreState.starting
 
@@ -240,7 +240,7 @@ async def test_input_text_context(opp, opp_admin_user):
     assert state2.context.user_id == opp_admin_user.id
 
 
-async def test_config_none.opp):
+async def test_config_none(opp):
     """Set up input_text without any config."""
     await async_setup_component(opp, DOMAIN, {DOMAIN: {"b1": None}})
 
@@ -371,7 +371,7 @@ async def test_ws_list(opp, opp_ws_client, storage_setup):
         }
     )
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json({"id": 6, "type": f"{DOMAIN}/list"})
     resp = await client.receive_json()
@@ -393,13 +393,13 @@ async def test_ws_delete(opp, opp_ws_client, storage_setup):
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {"id": 6, "type": f"{DOMAIN}/delete", f"{DOMAIN}_id": f"{input_id}"}
@@ -419,7 +419,7 @@ async def test_update(opp, opp_ws_client, storage_setup):
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     state = opp.states.get(input_entity_id)
     assert state.attributes[ATTR_FRIENDLY_NAME] == "from storage"
@@ -427,7 +427,7 @@ async def test_update(opp, opp_ws_client, storage_setup):
     assert state.state == "loaded from storage"
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is not None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {
@@ -457,13 +457,13 @@ async def test_ws_create(opp, opp_ws_client, storage_setup):
 
     input_id = "new_input"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry.opp)
+    ent_reg = await entity_registry.async_get_registry(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, input_id) is None
 
-    client = await opp_ws_client.opp)
+    client = await opp_ws_client(opp)
 
     await client.send_json(
         {

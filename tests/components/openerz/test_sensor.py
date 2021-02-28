@@ -14,7 +14,7 @@ MOCK_CONFIG = {
 }
 
 
-async def test_sensor_state.opp):
+async def test_sensor_state(opp):
     """Test whether default waste type set properly."""
     with patch(
         "openpeerpower.components.openerz.sensor.OpenERZConnector"

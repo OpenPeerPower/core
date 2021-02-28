@@ -59,7 +59,7 @@ async def test_apns_setup_full(mock_access, mock_isfile, opp):
     assert handle_config[notify.DOMAIN]
 
 
-async def test_apns_setup_missing_name.opp):
+async def test_apns_setup_missing_name(opp):
     """Test setup with missing name."""
     config = {
         "notify": {
@@ -73,7 +73,7 @@ async def test_apns_setup_missing_name.opp):
     assert not handle_config[notify.DOMAIN]
 
 
-async def test_apns_setup_missing_certificate.opp):
+async def test_apns_setup_missing_certificate(opp):
     """Test setup with missing certificate."""
     config = {
         "notify": {
@@ -87,7 +87,7 @@ async def test_apns_setup_missing_certificate.opp):
     assert not handle_config[notify.DOMAIN]
 
 
-async def test_apns_setup_missing_topic.opp):
+async def test_apns_setup_missing_topic(opp):
     """Test setup with missing topic."""
     config = {
         "notify": {
@@ -118,7 +118,7 @@ async def test_register_new_device(mock_write, opp):
         "openpeerpower.components.apns.notify.load_yaml_config_file",
         Mock(return_value=yaml_file),
     ):
-        await _setup_notify.opp)
+        await _setup_notify(opp)
 
     assert await opp.services.async_call(
         apns.DOMAIN,
@@ -151,7 +151,7 @@ async def test_register_device_without_name(mock_write, opp):
         "openpeerpower.components.apns.notify.load_yaml_config_file",
         Mock(return_value=yaml_file),
     ):
-        await _setup_notify.opp)
+        await _setup_notify(opp)
 
     assert await opp.services.async_call(
         apns.DOMAIN, "apns_test_app", {"push_id": "1234"}, blocking=True
@@ -182,7 +182,7 @@ async def test_update_existing_device(mock_write, opp):
         "openpeerpower.components.apns.notify.load_yaml_config_file",
         Mock(return_value=yaml_file),
     ):
-        await _setup_notify.opp)
+        await _setup_notify(opp)
 
     assert await opp.services.async_call(
         apns.DOMAIN,
@@ -222,7 +222,7 @@ async def test_update_existing_device_with_tracking_id(mock_write, opp):
         "openpeerpower.components.apns.notify.load_yaml_config_file",
         Mock(return_value=yaml_file),
     ):
-        await _setup_notify.opp)
+        await _setup_notify(opp)
 
     assert await opp.services.async_call(
         apns.DOMAIN,
@@ -254,7 +254,7 @@ async def test_send(mock_client, opp):
         "openpeerpower.components.apns.notify.load_yaml_config_file",
         Mock(return_value=yaml_file),
     ):
-        await _setup_notify.opp)
+        await _setup_notify(opp)
 
     assert await opp.services.async_call(
         "notify",
@@ -290,7 +290,7 @@ async def test_send_when_disabled(mock_client, opp):
         "openpeerpower.components.apns.notify.load_yaml_config_file",
         Mock(return_value=yaml_file),
     ):
-        await _setup_notify.opp)
+        await _setup_notify(opp)
 
     assert await opp.services.async_call(
         "notify",
@@ -370,7 +370,7 @@ async def test_disable_when_unregistered(mock_write, mock_client, opp):
         "openpeerpower.components.apns.notify.load_yaml_config_file",
         Mock(return_value=yaml_file),
     ):
-        await _setup_notify.opp)
+        await _setup_notify(opp)
 
     assert await opp.services.async_call(
         "notify", "test_app", {"message": "Hello"}, blocking=True

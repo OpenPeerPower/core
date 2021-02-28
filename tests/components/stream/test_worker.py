@@ -205,7 +205,7 @@ async def async_decode_stream(opp, packets, py_av=None):
     return py_av.capture_buffer
 
 
-async def test_stream_open_fails.opp):
+async def test_stream_open_fails(opp):
     """Test failure on stream open."""
     stream = Stream.opp, STREAM_SOURCE)
     stream.add_provider(STREAM_OUTPUT_FORMAT)
@@ -217,7 +217,7 @@ async def test_stream_open_fails.opp):
         av_open.assert_called_once()
 
 
-async def test_stream_worker_success.opp):
+async def test_stream_worker_success(opp):
     """Test a short stream that ends and outputs everything correctly."""
     decoded_stream = await async_decode_stream(
         opp. PacketSequence(TEST_SEQUENCE_LENGTH)
@@ -234,7 +234,7 @@ async def test_stream_worker_success.opp):
     assert len(decoded_stream.audio_packets) == 0
 
 
-async def test_skip_out_of_order_packet.opp):
+async def test_skip_out_of_order_packet(opp):
     """Skip a single out of order packet."""
     packets = list(PacketSequence(TEST_SEQUENCE_LENGTH))
     # This packet is out of order
@@ -268,7 +268,7 @@ async def test_skip_out_of_order_packet.opp):
     assert len(decoded_stream.audio_packets) == 0
 
 
-async def test_discard_old_packets.opp):
+async def test_discard_old_packets(opp):
     """Skip a series of out of order packets."""
 
     packets = list(PacketSequence(TEST_SEQUENCE_LENGTH))
@@ -287,7 +287,7 @@ async def test_discard_old_packets.opp):
     assert len(decoded_stream.audio_packets) == 0
 
 
-async def test_packet_overflow.opp):
+async def test_packet_overflow(opp):
     """Packet is too far out of order, and looks like overflow, ending stream early."""
 
     packets = list(PacketSequence(TEST_SEQUENCE_LENGTH))
@@ -306,7 +306,7 @@ async def test_packet_overflow.opp):
     assert len(decoded_stream.audio_packets) == 0
 
 
-async def test_skip_initial_bad_packets.opp):
+async def test_skip_initial_bad_packets(opp):
     """Tests a small number of initial "bad" packets with missing dts."""
 
     num_packets = LONGER_TEST_SEQUENCE_LENGTH
@@ -329,7 +329,7 @@ async def test_skip_initial_bad_packets.opp):
     assert len(decoded_stream.audio_packets) == 0
 
 
-async def test_too_many_initial_bad_packets_fails.opp):
+async def test_too_many_initial_bad_packets_fails(opp):
     """Test initial bad packets are too high, causing it to never start."""
 
     num_packets = LONGER_TEST_SEQUENCE_LENGTH
@@ -345,7 +345,7 @@ async def test_too_many_initial_bad_packets_fails.opp):
     assert len(decoded_stream.audio_packets) == 0
 
 
-async def test_skip_missing_dts.opp):
+async def test_skip_missing_dts(opp):
     """Test packets in the middle of the stream missing DTS are skipped."""
 
     num_packets = LONGER_TEST_SEQUENCE_LENGTH
@@ -368,7 +368,7 @@ async def test_skip_missing_dts.opp):
     assert len(decoded_stream.audio_packets) == 0
 
 
-async def test_too_many_bad_packets.opp):
+async def test_too_many_bad_packets(opp):
     """Test bad packets are too many, causing it to end."""
 
     num_packets = LONGER_TEST_SEQUENCE_LENGTH
@@ -385,7 +385,7 @@ async def test_too_many_bad_packets.opp):
     assert len(decoded_stream.audio_packets) == 0
 
 
-async def test_no_video_stream.opp):
+async def test_no_video_stream(opp):
     """Test no video stream in the container means no resulting output."""
     py_av = MockPyAv(video=False)
 
@@ -399,7 +399,7 @@ async def test_no_video_stream.opp):
     assert len(decoded_stream.audio_packets) == 0
 
 
-async def test_audio_packets_not_found.opp):
+async def test_audio_packets_not_found(opp):
     """Set up an audio stream, but no audio packets are found."""
     py_av = MockPyAv(audio=True)
 
@@ -413,7 +413,7 @@ async def test_audio_packets_not_found.opp):
     assert len(decoded_stream.audio_packets) == 0
 
 
-async def test_audio_is_first_packet.opp):
+async def test_audio_is_first_packet(opp):
     """Set up an audio stream and audio packet is the first packet in the stream."""
     py_av = MockPyAv(audio=True)
 
@@ -435,7 +435,7 @@ async def test_audio_is_first_packet.opp):
     assert len(decoded_stream.audio_packets) == 1
 
 
-async def test_audio_packets_found.opp):
+async def test_audio_packets_found(opp):
     """Set up an audio stream and audio packets are found at the start of the stream."""
     py_av = MockPyAv(audio=True)
 
@@ -453,7 +453,7 @@ async def test_audio_packets_found.opp):
     assert len(decoded_stream.audio_packets) == 1
 
 
-async def test_pts_out_of_order.opp):
+async def test_pts_out_of_order(opp):
     """Test pts can be out of order and still be valid."""
 
     # Create a sequence of packets with some out of order pts
@@ -475,7 +475,7 @@ async def test_pts_out_of_order.opp):
     assert len(decoded_stream.audio_packets) == 0
 
 
-async def test_stream_stopped_while_decoding.opp):
+async def test_stream_stopped_while_decoding(opp):
     """Tests that worker quits when stop() is called while decodign."""
     # Add some synchronization so that the test can pause the background
     # worker. When the worker is stopped, the test invokes stop() which
@@ -506,7 +506,7 @@ async def test_stream_stopped_while_decoding.opp):
         stream.stop()
 
 
-async def test_update_stream_source.opp):
+async def test_update_stream_source(opp):
     """Tests that the worker is re-invoked when the stream source is updated."""
     worker_open = threading.Event()
     worker_wake = threading.Event()

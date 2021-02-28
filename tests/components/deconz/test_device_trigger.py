@@ -130,7 +130,7 @@ async def test_helper_no_match(opp, aioclient_mock):
     assert deconz_event is None
 
 
-async def test_helper_no_gateway_exist.opp):
+async def test_helper_no_gateway_exist(opp):
     """Verify trigger helper returns None when no gateway exist."""
     deconz_event = device_trigger._get_deconz_event_from_device_id(opp, "mock-id")
     assert deconz_event is None

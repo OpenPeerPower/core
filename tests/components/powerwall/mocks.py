@@ -17,7 +17,7 @@ from tesla_powerwall import (
 from tests.common import load_fixture
 
 
-async def _mock_powerwall_with_fixtures.opp):
+async def _mock_powerwall_with_fixtures(opp):
     """Mock data used to build powerwall state."""
     meters = await _async_load_json_fixture(opp, "meters.json")
     sitemaster = await _async_load_json_fixture(opp, "sitemaster.json")

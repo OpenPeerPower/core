@@ -19,7 +19,7 @@ VALID_CONFIG = {
 }
 
 
-async def test_show_form.opp):
+async def test_show_form(opp):
     """Test that the form is served with no input."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -29,7 +29,7 @@ async def test_show_form.opp):
     assert result["step_id"] == SOURCE_USER
 
 
-async def test_api_key_too_short.opp):
+async def test_api_key_too_short(opp):
     """Test that errors are shown when API key is too short."""
     # The API key length check is done by the library without polling the AccuWeather
     # server so we don't need to patch the library method.
@@ -47,7 +47,7 @@ async def test_api_key_too_short.opp):
     assert result["errors"] == {CONF_API_KEY: "invalid_api_key"}
 
 
-async def test_invalid_api_key.opp):
+async def test_invalid_api_key(opp):
     """Test that errors are shown when API key is invalid."""
     with patch(
         "accuweather.AccuWeather._async_get_data",
@@ -119,7 +119,7 @@ async def test_integration_already_exists(opp):
         assert result["reason"] == "single_instance_allowed"
 
 
-async def test_create_entry.opp):
+async def test_create_entry(opp):
     """Test that the user step works."""
     with patch(
         "accuweather.AccuWeather._async_get_data",
@@ -142,7 +142,7 @@ async def test_create_entry.opp):
         assert result["data"][CONF_API_KEY] == "32-character-string-1234567890qw"
 
 
-async def test_options_flow.opp):
+async def test_options_flow(opp):
     """Test config flow options."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,

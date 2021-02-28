@@ -9,7 +9,7 @@ from openpeerpower.const import EVENT_STATE_CHANGED
 from openpeerpower.core import callback
 
 
-async def test_cached_event_message.opp):
+async def test_cached_event_message(opp):
     """Test that we cache event messages."""
 
     events = []
@@ -47,7 +47,7 @@ async def test_cached_event_message.opp):
     assert cache_info.currsize == 2
 
 
-async def test_cached_event_message_with_different_idens.opp):
+async def test_cached_event_message_with_different_idens(opp):
     """Test that we cache event messages when the subscrition idens differ."""
 
     events = []

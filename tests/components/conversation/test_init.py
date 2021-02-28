@@ -9,7 +9,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import async_mock_intent, async_mock_service
 
 
-async def test_calling_intent.opp):
+async def test_calling_intent(opp):
     """Test calling an intent from a conversation."""
     intents = async_mock_intent(opp, "OrderBeer")
 

@@ -12,7 +12,7 @@ from openpeerpower.helpers.device_registry import async_get_registry
 async def test_websocket_api(opp, integration, multisensor_6, opp_ws_client):
     """Test the network and node status websocket commands."""
     entry = integration
-    ws_client = await opp_ws_client.opp)
+    ws_client = await opp_ws_client(opp)
 
     await ws_client.send_json(
         {ID: 2, TYPE: "zwave_js/network_status", ENTRY_ID: entry.entry_id}
@@ -47,7 +47,7 @@ async def test_add_node(
 ):
     """Test the add_node websocket command."""
     entry = integration
-    ws_client = await opp_ws_client.opp)
+    ws_client = await opp_ws_client(opp)
 
     client.async_send_command.return_value = {"success": True}
 
@@ -79,7 +79,7 @@ async def test_add_node(
 async def test_cancel_inclusion_exclusion(opp, integration, client, opp_ws_client):
     """Test cancelling the inclusion and exclusion process."""
     entry = integration
-    ws_client = await opp_ws_client.opp)
+    ws_client = await opp_ws_client(opp)
 
     client.async_send_command.return_value = {"success": True}
 
@@ -108,7 +108,7 @@ async def test_remove_node(
 ):
     """Test the remove_node websocket command."""
     entry = integration
-    ws_client = await opp_ws_client.opp)
+    ws_client = await opp_ws_client(opp)
 
     client.async_send_command.return_value = {"success": True}
 
@@ -135,7 +135,7 @@ async def test_remove_node(
     # Add mock node to controller
     client.driver.controller.nodes[67] = nortek_thermostat
 
-    dev_reg = await async_get_registry.opp)
+    dev_reg = await async_get_registry(opp)
 
     # Create device registry entry for mock node
     device = dev_reg.async_get_or_create(

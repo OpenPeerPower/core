@@ -52,14 +52,14 @@ ENTITY_HEATPUMP = "climate.heatpump"
 
 
 @pytest.fixture(autouse=True)
-async def setup_demo_climate.opp):
+async def setup_demo_climate(opp):
     """Initialize setup demo climate."""
     opp.config.units = METRIC_SYSTEM
     assert await async_setup_component(opp, DOMAIN, {"climate": {"platform": "demo"}})
     await opp.async_block_till_done()
 
 
-def test_setup_params.opp):
+def test_setup_params(opp):
     """Test the initial parameters."""
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.state == HVAC_MODE_COOL
@@ -80,7 +80,7 @@ def test_setup_params.opp):
     ]
 
 
-def test_default_setup_params.opp):
+def test_default_setup_params(opp):
     """Test the setup with default parameters."""
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get(ATTR_MIN_TEMP) == 7
@@ -89,7 +89,7 @@ def test_default_setup_params.opp):
     assert state.attributes.get(ATTR_MAX_HUMIDITY) == 99
 
 
-async def test_set_only_target_temp_bad_attr.opp):
+async def test_set_only_target_temp_bad_attr(opp):
     """Test setting the target temperature without required attribute."""
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get(ATTR_TEMPERATURE) == 21
@@ -106,7 +106,7 @@ async def test_set_only_target_temp_bad_attr.opp):
     assert state.attributes.get(ATTR_TEMPERATURE) == 21
 
 
-async def test_set_only_target_temp.opp):
+async def test_set_only_target_temp(opp):
     """Test the setting of the target temperature."""
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get(ATTR_TEMPERATURE) == 21
@@ -122,7 +122,7 @@ async def test_set_only_target_temp.opp):
     assert state.attributes.get(ATTR_TEMPERATURE) == 30.0
 
 
-async def test_set_only_target_temp_with_convert.opp):
+async def test_set_only_target_temp_with_convert(opp):
     """Test the setting of the target temperature."""
     state = opp.states.get(ENTITY_HEATPUMP)
     assert state.attributes.get(ATTR_TEMPERATURE) == 20
@@ -138,7 +138,7 @@ async def test_set_only_target_temp_with_convert.opp):
     assert state.attributes.get(ATTR_TEMPERATURE) == 21.0
 
 
-async def test_set_target_temp_range.opp):
+async def test_set_target_temp_range(opp):
     """Test the setting of the target temperature with range."""
     state = opp.states.get(ENTITY_ECOBEE)
     assert state.attributes.get(ATTR_TEMPERATURE) is None
@@ -162,7 +162,7 @@ async def test_set_target_temp_range.opp):
     assert state.attributes.get(ATTR_TARGET_TEMP_HIGH) == 25.0
 
 
-async def test_set_target_temp_range_bad_attr.opp):
+async def test_set_target_temp_range_bad_attr(opp):
     """Test setting the target temperature range without attribute."""
     state = opp.states.get(ENTITY_ECOBEE)
     assert state.attributes.get(ATTR_TEMPERATURE) is None
@@ -187,7 +187,7 @@ async def test_set_target_temp_range_bad_attr.opp):
     assert state.attributes.get(ATTR_TARGET_TEMP_HIGH) == 24.0
 
 
-async def test_set_target_humidity_bad_attr.opp):
+async def test_set_target_humidity_bad_attr(opp):
     """Test setting the target humidity without required attribute."""
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get(ATTR_HUMIDITY) == 67
@@ -204,7 +204,7 @@ async def test_set_target_humidity_bad_attr.opp):
     assert state.attributes.get(ATTR_HUMIDITY) == 67
 
 
-async def test_set_target_humidity.opp):
+async def test_set_target_humidity(opp):
     """Test the setting of the target humidity."""
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get(ATTR_HUMIDITY) == 67
@@ -220,7 +220,7 @@ async def test_set_target_humidity.opp):
     assert state.attributes.get(ATTR_HUMIDITY) == 64.0
 
 
-async def test_set_fan_mode_bad_attr.opp):
+async def test_set_fan_mode_bad_attr(opp):
     """Test setting fan mode without required attribute."""
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get(ATTR_FAN_MODE) == "On High"
@@ -237,7 +237,7 @@ async def test_set_fan_mode_bad_attr.opp):
     assert state.attributes.get(ATTR_FAN_MODE) == "On High"
 
 
-async def test_set_fan_mode.opp):
+async def test_set_fan_mode(opp):
     """Test setting of new fan mode."""
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get(ATTR_FAN_MODE) == "On High"
@@ -253,7 +253,7 @@ async def test_set_fan_mode.opp):
     assert state.attributes.get(ATTR_FAN_MODE) == "On Low"
 
 
-async def test_set_swing_mode_bad_attr.opp):
+async def test_set_swing_mode_bad_attr(opp):
     """Test setting swing mode without required attribute."""
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get(ATTR_SWING_MODE) == "Off"
@@ -270,7 +270,7 @@ async def test_set_swing_mode_bad_attr.opp):
     assert state.attributes.get(ATTR_SWING_MODE) == "Off"
 
 
-async def test_set_swing.opp):
+async def test_set_swing(opp):
     """Test setting of new swing mode."""
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get(ATTR_SWING_MODE) == "Off"
@@ -286,7 +286,7 @@ async def test_set_swing.opp):
     assert state.attributes.get(ATTR_SWING_MODE) == "Auto"
 
 
-async def test_set_hvac_bad_attr_and_state.opp):
+async def test_set_hvac_bad_attr_and_state(opp):
     """Test setting hvac mode without required attribute.
 
     Also check the state.
@@ -308,7 +308,7 @@ async def test_set_hvac_bad_attr_and_state.opp):
     assert state.state == HVAC_MODE_COOL
 
 
-async def test_set_hvac.opp):
+async def test_set_hvac(opp):
     """Test setting of new hvac mode."""
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.state == HVAC_MODE_COOL
@@ -324,7 +324,7 @@ async def test_set_hvac.opp):
     assert state.state == HVAC_MODE_HEAT
 
 
-async def test_set_hold_mode_away.opp):
+async def test_set_hold_mode_away(opp):
     """Test setting the hold mode away."""
     await opp.services.async_call(
         DOMAIN,
@@ -337,7 +337,7 @@ async def test_set_hold_mode_away.opp):
     assert state.attributes.get(ATTR_PRESET_MODE) == PRESET_AWAY
 
 
-async def test_set_hold_mode_eco.opp):
+async def test_set_hold_mode_eco(opp):
     """Test setting the hold mode eco."""
     await opp.services.async_call(
         DOMAIN,
@@ -350,7 +350,7 @@ async def test_set_hold_mode_eco.opp):
     assert state.attributes.get(ATTR_PRESET_MODE) == PRESET_ECO
 
 
-async def test_set_aux_heat_bad_attr.opp):
+async def test_set_aux_heat_bad_attr(opp):
     """Test setting the auxiliary heater without required attribute."""
     state = opp.states.get(ENTITY_CLIMATE)
     assert state.attributes.get(ATTR_AUX_HEAT) == STATE_OFF
@@ -367,7 +367,7 @@ async def test_set_aux_heat_bad_attr.opp):
     assert state.attributes.get(ATTR_AUX_HEAT) == STATE_OFF
 
 
-async def test_set_aux_heat_on.opp):
+async def test_set_aux_heat_on(opp):
     """Test setting the axillary heater on/true."""
     await opp.services.async_call(
         DOMAIN,
@@ -380,7 +380,7 @@ async def test_set_aux_heat_on.opp):
     assert state.attributes.get(ATTR_AUX_HEAT) == STATE_ON
 
 
-async def test_set_aux_heat_off.opp):
+async def test_set_aux_heat_off(opp):
     """Test setting the auxiliary heater off/false."""
     await opp.services.async_call(
         DOMAIN,
@@ -393,7 +393,7 @@ async def test_set_aux_heat_off.opp):
     assert state.attributes.get(ATTR_AUX_HEAT) == STATE_OFF
 
 
-async def test_turn_on.opp):
+async def test_turn_on(opp):
     """Test turn on device."""
     await opp.services.async_call(
         DOMAIN,
@@ -412,7 +412,7 @@ async def test_turn_on.opp):
     assert state.state == HVAC_MODE_HEAT
 
 
-async def test_turn_off.opp):
+async def test_turn_off(opp):
     """Test turn on device."""
     await opp.services.async_call(
         DOMAIN,

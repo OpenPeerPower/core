@@ -14,7 +14,7 @@ NAME = "Solarlog test 1 2 3"
 HOST = "http://1.1.1.1"
 
 
-async def test_form.opp):
+async def test_form(opp):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -54,7 +54,7 @@ def mock_controller():
         yield
 
 
-def init_config_flow.opp):
+def init_config_flow(opp):
     """Init a configuration flow."""
     flow = config_flow.SolarLogConfigFlow()
     flow.opp = opp
@@ -63,7 +63,7 @@ def init_config_flow.opp):
 
 async def test_user(opp, test_connect):
     """Test user config."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -78,7 +78,7 @@ async def test_user(opp, test_connect):
 
 async def test_import(opp, test_connect):
     """Test import step."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
 
     # import with only host
     result = await flow.async_step_import({CONF_HOST: HOST})
@@ -101,7 +101,7 @@ async def test_import(opp, test_connect):
 
 async def test_abort_if_already_setup_opp, test_connect):
     """Test we abort if the device is already setup."""
-    flow = init_config_flow.opp)
+    flow = init_config_flow(opp)
     MockConfigEntry(
         domain="solarlog", data={CONF_NAME: NAME, CONF_HOST: HOST}
     ).add_to_opp(opp)

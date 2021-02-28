@@ -67,9 +67,9 @@ def mock_coap():
 
 
 @pytest.fixture
-def device_reg.opp):
+def device_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_device_registry.opp)
+    return mock_device_registry(opp)
 
 
 @pytest.fixture
@@ -87,7 +87,7 @@ def events.opp):
 
 
 @pytest.fixture
-async def coap_wrapper.opp):
+async def coap_wrapper(opp):
     """Setups a coap wrapper with mocked device."""
     await async_setup_component(opp, "shelly", {})
 

@@ -105,7 +105,7 @@ def sent_messages_fixture():
 
 
 @pytest.fixture(name="fan_msg")
-async def fan_msg_fixture.opp):
+async def fan_msg_fixture(opp):
     """Return a mock MQTT msg with a fan actuator message."""
     fan_json = json.loads(
         await opp.async_add_executor_job(load_fixture, "ozw/fan.json")
@@ -116,7 +116,7 @@ async def fan_msg_fixture.opp):
 
 
 @pytest.fixture(name="light_msg")
-async def light_msg_fixture.opp):
+async def light_msg_fixture(opp):
     """Return a mock MQTT msg with a light actuator message."""
     light_json = json.loads(
         await opp.async_add_executor_job(load_fixture, "ozw/light.json")
@@ -127,7 +127,7 @@ async def light_msg_fixture.opp):
 
 
 @pytest.fixture(name="light_no_rgb_msg")
-async def light_no_rgb_msg_fixture.opp):
+async def light_no_rgb_msg_fixture(opp):
     """Return a mock MQTT msg with a light actuator message."""
     light_json = json.loads(
         await opp.async_add_executor_job(load_fixture, "ozw/light_no_rgb.json")
@@ -138,7 +138,7 @@ async def light_no_rgb_msg_fixture.opp):
 
 
 @pytest.fixture(name="light_rgb_msg")
-async def light_rgb_msg_fixture.opp):
+async def light_rgb_msg_fixture(opp):
     """Return a mock MQTT msg with a light actuator message."""
     light_json = json.loads(
         await opp.async_add_executor_job(load_fixture, "ozw/light_rgb.json")
@@ -149,7 +149,7 @@ async def light_rgb_msg_fixture.opp):
 
 
 @pytest.fixture(name="light_pure_rgb_msg")
-async def light_pure_rgb_msg_fixture.opp):
+async def light_pure_rgb_msg_fixture(opp):
     """Return a mock MQTT msg with a pure rgb light actuator message."""
     light_json = json.loads(
         await opp.async_add_executor_job(load_fixture, "ozw/light_pure_rgb.json")
@@ -160,7 +160,7 @@ async def light_pure_rgb_msg_fixture.opp):
 
 
 @pytest.fixture(name="switch_msg")
-async def switch_msg_fixture.opp):
+async def switch_msg_fixture(opp):
     """Return a mock MQTT msg with a switch actuator message."""
     switch_json = json.loads(
         await opp.async_add_executor_job(load_fixture, "ozw/switch.json")
@@ -171,7 +171,7 @@ async def switch_msg_fixture.opp):
 
 
 @pytest.fixture(name="sensor_msg")
-async def sensor_msg_fixture.opp):
+async def sensor_msg_fixture(opp):
     """Return a mock MQTT msg with a sensor change message."""
     sensor_json = json.loads(
         await opp.async_add_executor_job(load_fixture, "ozw/sensor.json")
@@ -182,7 +182,7 @@ async def sensor_msg_fixture.opp):
 
 
 @pytest.fixture(name="binary_sensor_msg")
-async def binary_sensor_msg_fixture.opp):
+async def binary_sensor_msg_fixture(opp):
     """Return a mock MQTT msg with a binary_sensor change message."""
     sensor_json = json.loads(
         await opp.async_add_executor_job(load_fixture, "ozw/binary_sensor.json")
@@ -193,7 +193,7 @@ async def binary_sensor_msg_fixture.opp):
 
 
 @pytest.fixture(name="binary_sensor_alt_msg")
-async def binary_sensor_alt_msg_fixture.opp):
+async def binary_sensor_alt_msg_fixture(opp):
     """Return a mock MQTT msg with a binary_sensor change message."""
     sensor_json = json.loads(
         await opp.async_add_executor_job(load_fixture, "ozw/binary_sensor_alt.json")
@@ -204,7 +204,7 @@ async def binary_sensor_alt_msg_fixture.opp):
 
 
 @pytest.fixture(name="cover_msg")
-async def cover_msg_fixture.opp):
+async def cover_msg_fixture(opp):
     """Return a mock MQTT msg with a cover level change message."""
     sensor_json = json.loads(
         await opp.async_add_executor_job(load_fixture, "ozw/cover.json")
@@ -215,7 +215,7 @@ async def cover_msg_fixture.opp):
 
 
 @pytest.fixture(name="cover_gdo_msg")
-async def cover_gdo_msg_fixture.opp):
+async def cover_gdo_msg_fixture(opp):
     """Return a mock MQTT msg with a cover barrier state change message."""
     sensor_json = json.loads(
         await opp.async_add_executor_job(load_fixture, "ozw/cover_gdo.json")
@@ -226,7 +226,7 @@ async def cover_gdo_msg_fixture.opp):
 
 
 @pytest.fixture(name="climate_msg")
-async def climate_msg_fixture.opp):
+async def climate_msg_fixture(opp):
     """Return a mock MQTT msg with a climate mode change message."""
     sensor_json = json.loads(
         await opp.async_add_executor_job(load_fixture, "ozw/climate.json")
@@ -237,7 +237,7 @@ async def climate_msg_fixture.opp):
 
 
 @pytest.fixture(name="lock_msg")
-async def lock_msg_fixture.opp):
+async def lock_msg_fixture(opp):
     """Return a mock MQTT msg with a lock actuator message."""
     lock_json = json.loads(
         await opp.async_add_executor_job(load_fixture, "ozw/lock.json")
@@ -273,7 +273,7 @@ def mock_get_addon_discovery_info():
 
 
 @pytest.fixture(name="mqtt")
-async def mock_mqtt_fixture.opp):
+async def mock_mqtt_fixture(opp):
     """Mock the MQTT integration."""
     mqtt_entry = MockConfigEntry(domain="mqtt", state=ENTRY_STATE_LOADED)
     mqtt_entry.add_to_opp(opp)

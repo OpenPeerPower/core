@@ -97,7 +97,7 @@ async def test_flow_link_connection_error(opp):
     assert result["reason"] == "connection_aborted"
 
 
-async def test_flow_link_press_button.opp):
+async def test_flow_link_press_button(opp):
     """Test config flow ask for pressing the blue button."""
     with patch(
         "openpeerpower.components.homematicip_cloud.hap.HomematicipAuth.async_checkbutton",
@@ -115,7 +115,7 @@ async def test_flow_link_press_button.opp):
     assert result["errors"] == {"base": "press_the_button"}
 
 
-async def test_init_flow_show_form.opp):
+async def test_init_flow_show_form(opp):
     """Test config flow shows up with a form."""
 
     result = await opp.config_entries.flow.async_init(
@@ -125,7 +125,7 @@ async def test_init_flow_show_form.opp):
     assert result["step_id"] == "init"
 
 
-async def test_init_already_configured.opp):
+async def test_init_already_configured(opp):
     """Test accesspoint is already configured."""
     MockConfigEntry(domain=HMIPC_DOMAIN, unique_id="ABC123").add_to_opp(opp)
     with patch(

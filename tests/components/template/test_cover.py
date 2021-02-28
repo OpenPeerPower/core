@@ -27,7 +27,7 @@ ENTITY_COVER = "cover.test_template_cover"
 
 
 @pytest.fixture(name="calls")
-def calls_fixture.opp):
+def calls_fixture(opp):
     """Track calls to a mock service."""
     return async_mock_service(opp, "test", "automation")
 
@@ -1033,7 +1033,7 @@ async def test_invalid_device_class(opp, calls):
     assert not state
 
 
-async def test_unique_id.opp):
+async def test_unique_id(opp):
     """Test unique_id option only creates one cover per id."""
     await setup.async_setup_component(
         opp,
@@ -1078,7 +1078,7 @@ async def test_unique_id.opp):
     assert len(opp.states.async_all()) == 1
 
 
-async def test_state_gets_lowercased.opp):
+async def test_state_gets_lowercased(opp):
     """Test True/False is lowercased."""
 
     opp.states.async_set("binary_sensor.garage_door_sensor", "off")

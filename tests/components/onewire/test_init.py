@@ -17,7 +17,7 @@ from . import setup_onewire_owserver_integration, setup_onewire_sysbus_integrati
 from tests.common import MockConfigEntry
 
 
-async def test_owserver_connect_failure.opp):
+async def test_owserver_connect_failure(opp):
     """Test connection failure raises ConfigEntryNotReady."""
     config_entry_owserver = MockConfigEntry(
         domain=DOMAIN,
@@ -46,7 +46,7 @@ async def test_owserver_connect_failure.opp):
     assert not opp.data.get(DOMAIN)
 
 
-async def test_failed_owserver_listing.opp):
+async def test_failed_owserver_listing(opp):
     """Create the 1-Wire integration."""
     config_entry_owserver = MockConfigEntry(
         domain=DOMAIN,
@@ -71,10 +71,10 @@ async def test_failed_owserver_listing.opp):
         return config_entry_owserver
 
 
-async def test_unload_entry.opp):
+async def test_unload_entry(opp):
     """Test being able to unload an entry."""
-    config_entry_owserver = await setup_onewire_owserver_integration.opp)
-    config_entry_sysbus = await setup_onewire_sysbus_integration.opp)
+    config_entry_owserver = await setup_onewire_owserver_integration(opp)
+    config_entry_sysbus = await setup_onewire_sysbus_integration(opp)
 
     assert len(opp.config_entries.async_entries(DOMAIN)) == 2
     assert config_entry_owserver.state == ENTRY_STATE_LOADED

@@ -49,7 +49,7 @@ async def test_get_actions(opp, device_ias):
 
     ieee_address = str(device_ias[0].ieee)
 
-    ha_device_registry = await async_get_registry.opp)
+    ha_device_registry = await async_get_registry(opp)
     reg_device = ha_device_registry.async_get_device({(DOMAIN, ieee_address)})
 
     actions = await async_get_device_automations(opp, "action", reg_device.id)
@@ -72,7 +72,7 @@ async def test_action(opp, device_ias):
 
     ieee_address = str(zha_device.ieee)
 
-    ha_device_registry = await async_get_registry.opp)
+    ha_device_registry = await async_get_registry(opp)
     reg_device = ha_device_registry.async_get_device({(DOMAIN, ieee_address)})
 
     with patch(

@@ -69,7 +69,7 @@ async def test_setup_opp):
 
 
 @patch("os.path.isfile", Mock(return_value=True))
-async def test_multi_jails.opp):
+async def test_multi_jails(opp):
     """Test that multiple jails can be set up as sensors.."""
     config = {"sensor": {"platform": "fail2ban", "jails": ["jail_one", "jail_two"]}}
     mock_fh = mock_open()
@@ -79,7 +79,7 @@ async def test_multi_jails.opp):
     assert_setup_component(2, "sensor")
 
 
-async def test_single_ban.opp):
+async def test_single_ban(opp):
     """Test that log is parsed correctly for single ban."""
     log_parser = BanLogParser("/test/fail2ban.log")
     sensor = BanSensor("fail2ban", "jail_one", log_parser)
@@ -93,7 +93,7 @@ async def test_single_ban.opp):
     assert sensor.state_attributes[STATE_ALL_BANS] == ["111.111.111.111"]
 
 
-async def test_ipv6_ban.opp):
+async def test_ipv6_ban(opp):
     """Test that log is parsed correctly for IPV6 bans."""
     log_parser = BanLogParser("/test/fail2ban.log")
     sensor = BanSensor("fail2ban", "jail_one", log_parser)
@@ -107,7 +107,7 @@ async def test_ipv6_ban.opp):
     assert sensor.state_attributes[STATE_ALL_BANS] == ["2607:f0d0:1002:51::4"]
 
 
-async def test_multiple_ban.opp):
+async def test_multiple_ban(opp):
     """Test that log is parsed correctly for multiple ban."""
     log_parser = BanLogParser("/test/fail2ban.log")
     sensor = BanSensor("fail2ban", "jail_one", log_parser)
@@ -127,7 +127,7 @@ async def test_multiple_ban.opp):
     ]
 
 
-async def test_unban_all.opp):
+async def test_unban_all(opp):
     """Test that log is parsed correctly when unbanning."""
     log_parser = BanLogParser("/test/fail2ban.log")
     sensor = BanSensor("fail2ban", "jail_one", log_parser)
@@ -144,7 +144,7 @@ async def test_unban_all.opp):
     ]
 
 
-async def test_unban_one.opp):
+async def test_unban_one(opp):
     """Test that log is parsed correctly when unbanning one ip."""
     log_parser = BanLogParser("/test/fail2ban.log")
     sensor = BanSensor("fail2ban", "jail_one", log_parser)
@@ -161,7 +161,7 @@ async def test_unban_one.opp):
     ]
 
 
-async def test_multi_jail.opp):
+async def test_multi_jail(opp):
     """Test that log is parsed correctly when using multiple jails."""
     log_parser = BanLogParser("/test/fail2ban.log")
     sensor1 = BanSensor("fail2ban", "jail_one", log_parser)
@@ -181,7 +181,7 @@ async def test_multi_jail.opp):
     assert sensor2.state_attributes[STATE_ALL_BANS] == ["222.222.222.222"]
 
 
-async def test_ban_active_after_update.opp):
+async def test_ban_active_after_update(opp):
     """Test that ban persists after subsequent update."""
     log_parser = BanLogParser("/test/fail2ban.log")
     sensor = BanSensor("fail2ban", "jail_one", log_parser)

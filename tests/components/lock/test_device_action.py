@@ -19,15 +19,15 @@ from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
 
 
 @pytest.fixture
-def device_reg.opp):
+def device_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_device_registry.opp)
+    return mock_device_registry(opp)
 
 
 @pytest.fixture
-def entity_reg.opp):
+def entity_reg(opp):
     """Return an empty, loaded, registry."""
-    return mock_registry.opp)
+    return mock_registry(opp)
 
 
 async def test_get_actions_support_open(opp, device_reg, entity_reg):
@@ -112,7 +112,7 @@ async def test_get_actions_not_support_open(opp, device_reg, entity_reg):
     assert_lists_same(actions, expected_actions)
 
 
-async def test_action.opp):
+async def test_action(opp):
     """Test for lock actions."""
     assert await async_setup_component(
         opp,

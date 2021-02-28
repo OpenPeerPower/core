@@ -7,7 +7,7 @@ from openpeerpower.const import STATE_UNKNOWN
 from openpeerpower.setup import async_setup_component
 
 
-async def test_query.opp):
+async def test_query(opp):
     """Test the SQL sensor."""
     config = {
         "sensor": {
@@ -31,7 +31,7 @@ async def test_query.opp):
     assert state.attributes["value"] == 5
 
 
-async def test_invalid_query.opp):
+async def test_invalid_query(opp):
     """Test the SQL sensor for invalid queries."""
     with pytest.raises(vol.Invalid):
         validate_sql_select("DROP TABLE *")

@@ -78,7 +78,7 @@ async def setup_verisure_locks(opp, config):
         assert len(opp.states.async_all()) == 2
 
 
-async def test_verisure_no_default_code.opp):
+async def test_verisure_no_default_code(opp):
     """Test configs without a default lock code."""
     await setup_verisure_locks(opp, NO_DEFAULT_LOCK_CODE_CONFIG)
     with mock_hub(NO_DEFAULT_LOCK_CODE_CONFIG, STATE_UNLOCKED) as hub:
@@ -112,7 +112,7 @@ async def test_verisure_no_default_code.opp):
         assert mock.call_args == call("12345", LOCKS[0], "unlock")
 
 
-async def test_verisure_default_code.opp):
+async def test_verisure_default_code(opp):
     """Test configs with a default lock code."""
     await setup_verisure_locks(opp, DEFAULT_LOCK_CODE_CONFIG)
     with mock_hub(DEFAULT_LOCK_CODE_CONFIG, STATE_UNLOCKED) as hub:

@@ -479,7 +479,7 @@ async def test_info_from_service_non_utf8.opp):
     assert raw_info["non-utf8-value"] is NON_UTF8_VALUE
 
 
-async def test_info_from_service_with_addresses.opp):
+async def test_info_from_service_with_addresses(opp):
     """Test info_from_service does not throw when there are no addresses."""
     service_type = "_test._tcp.local."
     info = zeroconf.info_from_service(

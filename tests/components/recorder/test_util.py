@@ -147,9 +147,9 @@ def test_validate_or_move_away_sqlite_database_without_integrity_check(
     assert util.validate_or_move_away_sqlite_database(dburl, db_integrity_check) is True
 
 
-async def test_last_run_was_recently_clean.opp):
+async def test_last_run_was_recently_clean(opp):
     """Test we can check if the last recorder run was recently clean."""
-    await async_init_recorder_component.opp)
+    await async_init_recorder_component(opp)
     await opp.async_block_till_done()
 
     cursor = opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
