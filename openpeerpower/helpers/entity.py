@@ -41,7 +41,7 @@ SOURCE_PLATFORM_CONFIG = "platform_config"
 
 
 @callback
-@bind.opp
+@bind_opp
 def entity_sources(opp: OpenPeerPower) -> Dict[str, Dict[str, str]]:
     """Get the entity sources."""
     return opp.data.get(DATA_ENTITY_SOURCE, {})

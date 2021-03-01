@@ -53,20 +53,20 @@ STATUS_UNREAD = "unread"
 STATUS_READ = "read"
 
 
-@bind.opp
+@bind_opp
 def create.opp, message, title=None, notification_id=None):
     """Generate a notification."""
     opp.add_job(async_create, opp, message, title, notification_id)
 
 
-@bind.opp
+@bind_opp
 def dismiss.opp, notification_id):
     """Remove a notification."""
     opp.add_job(async_dismiss, opp, notification_id)
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_create(
     opp: OpenPeerPower,
     message: str,
@@ -88,7 +88,7 @@ def async_create(
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_dismiss(opp: OpenPeerPower, notification_id: str) -> None:
     """Remove a notification."""
     data = {ATTR_NOTIFICATION_ID: notification_id}

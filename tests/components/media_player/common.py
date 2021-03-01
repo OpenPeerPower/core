@@ -43,7 +43,7 @@ async def async_turn_on(opp, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(DOMAIN, SERVICE_TURN_ON, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def turn_on(opp, entity_id=ENTITY_MATCH_ALL):
     """Turn on specified media player or all."""
     opp.add_job(async_turn_on, opp, entity_id)
@@ -55,7 +55,7 @@ async def async_turn_off(opp, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(DOMAIN, SERVICE_TURN_OFF, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def turn_off(opp, entity_id=ENTITY_MATCH_ALL):
     """Turn off specified media player or all."""
     opp.add_job(async_turn_off, opp, entity_id)
@@ -67,7 +67,7 @@ async def async_toggle(opp, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(DOMAIN, SERVICE_TOGGLE, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def toggle.opp, entity_id=ENTITY_MATCH_ALL):
     """Toggle specified media player or all."""
     opp.add_job(async_toggle, opp, entity_id)
@@ -79,7 +79,7 @@ async def async_volume_up(opp, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(DOMAIN, SERVICE_VOLUME_UP, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def volume_up(opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for volume up."""
     opp.add_job(async_volume_up, opp, entity_id)
@@ -91,7 +91,7 @@ async def async_volume_down(opp, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(DOMAIN, SERVICE_VOLUME_DOWN, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def volume_down(opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for volume down."""
     opp.add_job(async_volume_down, opp, entity_id)
@@ -107,7 +107,7 @@ async def async_mute_volume(opp, mute, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(DOMAIN, SERVICE_VOLUME_MUTE, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def mute_volume(opp, mute, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for muting the volume."""
     opp.add_job(async_mute_volume, opp, mute, entity_id)
@@ -123,7 +123,7 @@ async def async_set_volume_level(opp, volume, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(DOMAIN, SERVICE_VOLUME_SET, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def set_volume_level(opp, volume, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for setting the volume."""
     opp.add_job(async_set_volume_level, opp, volume, entity_id)
@@ -137,7 +137,7 @@ async def async_media_play_pause(opp, entity_id=ENTITY_MATCH_ALL):
     )
 
 
-@bind.opp
+@bind_opp
 def media_play_pause(opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for play/pause."""
     opp.add_job(async_media_play_pause, opp, entity_id)
@@ -149,7 +149,7 @@ async def async_media_play(opp, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(DOMAIN, SERVICE_MEDIA_PLAY, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def media_play(opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for play/pause."""
     opp.add_job(async_media_play, opp, entity_id)
@@ -161,7 +161,7 @@ async def async_media_pause(opp, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(DOMAIN, SERVICE_MEDIA_PAUSE, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def media_pause(opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for pause."""
     opp.add_job(async_media_pause, opp, entity_id)
@@ -173,7 +173,7 @@ async def async_media_stop(opp, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(DOMAIN, SERVICE_MEDIA_STOP, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def media_stop(opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for stop."""
     opp.add_job(async_media_stop, opp, entity_id)
@@ -187,7 +187,7 @@ async def async_media_next_track(opp, entity_id=ENTITY_MATCH_ALL):
     )
 
 
-@bind.opp
+@bind_opp
 def media_next_track(opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for next track."""
     opp.add_job(async_media_next_track, opp, entity_id)
@@ -201,7 +201,7 @@ async def async_media_previous_track(opp, entity_id=ENTITY_MATCH_ALL):
     )
 
 
-@bind.opp
+@bind_opp
 def media_previous_track(opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for prev track."""
     opp.add_job(async_media_previous_track, opp, entity_id)
@@ -214,7 +214,7 @@ async def async_media_seek(opp, position, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(DOMAIN, SERVICE_MEDIA_SEEK, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def media_seek(opp, position, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command to seek in current playing media."""
     opp.add_job(async_media_seek, opp, position, entity_id)
@@ -235,7 +235,7 @@ async def async_play_media(
     await opp.services.async_call(DOMAIN, SERVICE_PLAY_MEDIA, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def play_media(opp, media_type, media_id, entity_id=ENTITY_MATCH_ALL, enqueue=None):
     """Send the media player the command for playing media."""
     opp.add_job(async_play_media, opp, media_type, media_id, entity_id, enqueue)
@@ -251,7 +251,7 @@ async def async_select_source(opp, source, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(DOMAIN, SERVICE_SELECT_SOURCE, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def select_source(opp, source, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command to select input source."""
     opp.add_job(async_select_source, opp, source, entity_id)
@@ -263,7 +263,7 @@ async def async_clear_playlist(opp, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(DOMAIN, SERVICE_CLEAR_PLAYLIST, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def clear_playlist(opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for clear playlist."""
     opp.add_job(async_clear_playlist, opp, entity_id)

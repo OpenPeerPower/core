@@ -18,7 +18,7 @@ class NoURLAvailableError(OpenPeerPowerError):
     """An URL to the Open Peer Power instance is not available."""
 
 
-@bind.opp
+@bind_opp
 def is_internal_request(opp: OpenPeerPower) -> bool:
     """Test if the current request is internal."""
     try:
@@ -28,7 +28,7 @@ def is_internal_request(opp: OpenPeerPower) -> bool:
         return False
 
 
-@bind.opp
+@bind_opp
 def get_url(
     opp: OpenPeerPower,
     *,
@@ -85,7 +85,7 @@ def get_url(
     if (
         require_current_request
         and request_host is not None
-        and.opp.config.api is not None
+        and opp.config.api is not None
     ):
         scheme = "https" if opp.config.api.use_ssl else "http"
         current_url = yarl.URL.build(
@@ -125,7 +125,7 @@ def _get_request_host() -> Optional[str]:
     return yarl.URL(request.url).host
 
 
-@bind.opp
+@bind_opp
 def _get_internal_url(
     opp: OpenPeerPower,
     *,
@@ -162,7 +162,7 @@ def _get_internal_url(
     raise NoURLAvailableError
 
 
-@bind.opp
+@bind_opp
 def _get_external_url(
     opp: OpenPeerPower,
     *,
@@ -207,7 +207,7 @@ def _get_external_url(
     raise NoURLAvailableError
 
 
-@bind.opp
+@bind_opp
 def _get_cloud_url(opp: OpenPeerPower, require_current_request: bool = False) -> str:
     """Get external Open Peer Power Cloud URL of this instance."""
     if "cloud" in opp.config.components:

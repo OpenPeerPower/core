@@ -27,7 +27,7 @@ def _handle_errors(func):
 
         error = None
         try:
-            result = await func.opp, connection, msg, config)
+            result = await func(opp, connection, msg, config)
         except ConfigNotFound:
             error = "config_not_found", "No config found."
         except OpenPeerPowerError as err:

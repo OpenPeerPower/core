@@ -89,7 +89,7 @@ STORAGE_KEY = DOMAIN
 STORAGE_VERSION = 1
 
 
-@bind.opp
+@bind_opp
 def async_active_zone(
     opp: OpenPeerPower, latitude: float, longitude: float, radius: int = 0
 ) -> Optional[State]:

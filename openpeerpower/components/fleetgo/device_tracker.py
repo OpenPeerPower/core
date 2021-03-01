@@ -63,7 +63,7 @@ class FleetGoDeviceScanner:
     def login(self, opp):
         """Perform a login on the FleetGO API."""
         if self._api.login():
-            self.setup_opp)
+            self.setup(opp)
             return True
         return False
 

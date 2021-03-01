@@ -131,7 +131,7 @@ LIGHT_TURN_ON_SCHEMA = {
 _LOGGER = logging.getLogger(__name__)
 
 
-@bind.opp
+@bind_opp
 def is_on(opp, entity_id):
     """Return if the lights are on based on the statemachine."""
     return opp.states.is_state(entity_id, STATE_ON)

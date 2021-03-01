@@ -106,13 +106,13 @@ LOG_MESSAGE_SCHEMA = vol.Schema(
 )
 
 
-@bind.opp
+@bind_opp
 def log_entry(opp, name, message, domain=None, entity_id=None, context=None):
     """Add an entry to the logbook."""
     opp.add_job(async_log_entry, opp, name, message, domain, entity_id, context)
 
 
-@bind.opp
+@bind_opp
 def async_log_entry(opp, name, message, domain=None, entity_id=None, context=None):
     """Add an entry to the logbook."""
     data = {ATTR_NAME: name, ATTR_MESSAGE: message}

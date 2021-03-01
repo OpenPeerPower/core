@@ -37,7 +37,7 @@ async def async_setup(opp, config):
     """
     opp.data[DATA_ECOBEE_CONFIG] = config.get(DOMAIN, {})
 
-    if not opp.config_entries.async_entries(DOMAIN) and.opp.data[DATA_ECOBEE_CONFIG]:
+    if not opp.config_entries.async_entries(DOMAIN) and opp.data[DATA_ECOBEE_CONFIG]:
         # No config entry exists and configuration.yaml config exists, trigger the import flow.
         opp.async_create_task(
             opp.config_entries.flow.async_init(

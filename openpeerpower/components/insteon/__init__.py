@@ -108,8 +108,8 @@ async def async_setup_entry(opp, entry):
     if (
         not entry.options
         and entry.source == SOURCE_IMPORT
-        and.opp.data.get(DOMAIN)
-        and.opp.data[DOMAIN].get(OPTIONS)
+        and opp.data.get(DOMAIN)
+        and opp.data[DOMAIN].get(OPTIONS)
     ):
         opp.config_entries.async_update_entry(
             entry=entry,

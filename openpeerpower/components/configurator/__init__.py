@@ -40,7 +40,7 @@ STATE_CONFIGURE = "configure"
 STATE_CONFIGURED = "configured"
 
 
-@bind.opp
+@bind_opp
 @async_callback
 def async_request_config(
     opp,
@@ -81,7 +81,7 @@ def async_request_config(
     return request_id
 
 
-@bind.opp
+@bind_opp
 def request_config(opp, *args, **kwargs):
     """Create a new request for configuration.
 
@@ -92,7 +92,7 @@ def request_config(opp, *args, **kwargs):
     ).result()
 
 
-@bind.opp
+@bind_opp
 @async_callback
 def async_notify_errors(opp, request_id, error):
     """Add errors to a config request."""
@@ -103,7 +103,7 @@ def async_notify_errors(opp, request_id, error):
         pass
 
 
-@bind.opp
+@bind_opp
 def notify_errors(opp, request_id, error):
     """Add errors to a config request."""
     return run_callback_threadsafe(
@@ -111,7 +111,7 @@ def notify_errors(opp, request_id, error):
     ).result()
 
 
-@bind.opp
+@bind_opp
 @async_callback
 def async_request_done(opp, request_id):
     """Mark a configuration request as done."""
@@ -122,7 +122,7 @@ def async_request_done(opp, request_id):
         pass
 
 
-@bind.opp
+@bind_opp
 def request_done(opp, request_id):
     """Mark a configuration request as done."""
     return run_callback_threadsafe(

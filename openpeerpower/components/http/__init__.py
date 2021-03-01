@@ -101,7 +101,7 @@ HTTP_SCHEMA = vol.All(
 CONFIG_SCHEMA = vol.Schema({DOMAIN: HTTP_SCHEMA}, extra=vol.ALLOW_EXTRA)
 
 
-@bind.opp
+@bind_opp
 async def async_get_last_config(opp: OpenPeerPower) -> Optional[dict]:
     """Return the last known working config."""
     store = storage.Store.opp, STORAGE_VERSION, STORAGE_KEY)

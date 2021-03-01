@@ -99,7 +99,7 @@ async def _update_duckdns(session, domain, token, *, txt=_SENTINEL, clear=False)
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_track_time_interval_backoff(opp, action, intervals) -> CALLBACK_TYPE:
     """Add a listener that fires repetitively at every timedelta interval."""
     if not iscoroutinefunction:

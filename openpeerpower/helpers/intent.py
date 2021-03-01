@@ -30,7 +30,7 @@ SPEECH_TYPE_SSML = "ssml"
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_register(opp: OpenPeerPowerType, handler: IntentHandler) -> None:
     """Register an intent with Open Peer Power."""
     intents = opp.data.get(DATA_KEY)
@@ -47,7 +47,7 @@ def async_register(opp: OpenPeerPowerType, handler: IntentHandler) -> None:
     intents[handler.intent_type] = handler
 
 
-@bind.opp
+@bind_opp
 async def async_handle(
     opp: OpenPeerPowerType,
     platform: str,
@@ -101,7 +101,7 @@ class IntentUnexpectedError(IntentError):
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_match_state(
     opp: OpenPeerPowerType, name: str, states: Optional[Iterable[State]] = None
 ) -> State:

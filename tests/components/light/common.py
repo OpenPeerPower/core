@@ -29,7 +29,7 @@ from openpeerpower.const import (
 from openpeerpower.loader import bind_opp
 
 
-@bind.opp
+@bind_opp
 def turn_on(
     opp,
     entity_id=ENTITY_MATCH_ALL,
@@ -110,7 +110,7 @@ async def async_turn_on(
     await opp.services.async_call(DOMAIN, SERVICE_TURN_ON, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def turn_off(opp, entity_id=ENTITY_MATCH_ALL, transition=None):
     """Turn all or specified light off."""
     opp.add_job(async_turn_off, opp, entity_id, transition)
@@ -127,7 +127,7 @@ async def async_turn_off(opp, entity_id=ENTITY_MATCH_ALL, transition=None):
     await opp.services.async_call(DOMAIN, SERVICE_TURN_OFF, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def toggle(
     opp,
     entity_id=ENTITY_MATCH_ALL,

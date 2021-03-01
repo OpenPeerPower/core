@@ -77,7 +77,7 @@ class InputBooleanStorageCollection(collection.StorageCollection):
         return {**data, **update_data}
 
 
-@bind.opp
+@bind_opp
 def is_on(opp, entity_id):
     """Test if input_boolean is True."""
     return opp.states.is_state(entity_id, STATE_ON)

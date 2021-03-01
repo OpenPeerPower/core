@@ -67,7 +67,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 
     await async_setup_reload_service(opp, DOMAIN, PLATFORMS)
 
-    async_add_entities([GenericCamera.opp, config)])
+    async_add_entities([GenericCamera(opp, config)])
 
 
 class GenericCamera(Camera):

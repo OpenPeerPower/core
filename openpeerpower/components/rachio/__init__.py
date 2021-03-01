@@ -36,7 +36,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok=all(
+    unload_ok = all(
         await asyncio.gather(
             *[
                 opp.config_entries.async_forward_entry_unload(entry, component)

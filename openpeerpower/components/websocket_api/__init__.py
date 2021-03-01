@@ -39,7 +39,7 @@ DOMAIN = const.DOMAIN
 DEPENDENCIES = ("http",)
 
 
-@bind.opp
+@bind_opp
 @callback
 def async_register_command(
     opp: OpenPeerPower,

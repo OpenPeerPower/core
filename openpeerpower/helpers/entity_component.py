@@ -30,7 +30,7 @@ DEFAULT_SCAN_INTERVAL = timedelta(seconds=15)
 DATA_INSTANCES = "entity_components"
 
 
-@bind.opp
+@bind_opp
 async def async_update_entity(opp: OpenPeerPower, entity_id: str) -> None:
     """Trigger an update for an entity."""
     domain = entity_id.split(".", 1)[0]

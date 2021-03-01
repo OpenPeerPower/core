@@ -18,7 +18,7 @@ DATA_LOCATION_CACHE = "astral_location_cache"
 
 
 @callback
-@bind.opp
+@bind_opp
 def get_astral_location(opp: OpenPeerPowerType) -> astral.Location:
     """Get an astral location for the current Open Peer Power configuration."""
     from astral import Location  # pylint: disable=import-outside-toplevel
@@ -40,7 +40,7 @@ def get_astral_location(opp: OpenPeerPowerType) -> astral.Location:
 
 
 @callback
-@bind.opp
+@bind_opp
 def get_astral_event_next(
     opp: OpenPeerPowerType,
     event: str,
@@ -87,7 +87,7 @@ def get_location_astral_event_next(
 
 
 @callback
-@bind.opp
+@bind_opp
 def get_astral_event_date(
     opp: OpenPeerPowerType,
     event: str,
@@ -112,7 +112,7 @@ def get_astral_event_date(
 
 
 @callback
-@bind.opp
+@bind_opp
 def is_up(
     opp: OpenPeerPowerType, utc_point_in_time: Optional[datetime.datetime] = None
 ) -> bool:

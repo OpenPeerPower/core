@@ -12,7 +12,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_register_signal_handling(opp: OpenPeerPower) -> None:
     """Register system signal handler for core."""
     if sys.platform != "win32":

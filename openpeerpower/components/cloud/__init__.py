@@ -108,21 +108,21 @@ class CloudNotAvailable(OpenPeerPowerError):
     """Raised when an action requires the cloud but it's not available."""
 
 
-@bind.opp
+@bind_opp
 @callback
 def async_is_logged_in(opp) -> bool:
     """Test if user is logged in."""
     return DOMAIN in opp.data and opp.data[DOMAIN].is_logged_in
 
 
-@bind.opp
+@bind_opp
 @callback
 def async_active_subscription(opp) -> bool:
     """Test if user has an active subscription."""
     return async_is_logged_in(opp) and not opp.data[DOMAIN].subscription_expired
 
 
-@bind.opp
+@bind_opp
 async def async_create_cloudhook(opp, webhook_id: str) -> str:
     """Create a cloudhook."""
     if not async_is_logged_in(opp):
@@ -132,7 +132,7 @@ async def async_create_cloudhook(opp, webhook_id: str) -> str:
     return hook["cloudhook_url"]
 
 
-@bind.opp
+@bind_opp
 async def async_delete_cloudhook(opp, webhook_id: str) -> None:
     """Delete a cloudhook."""
     if DOMAIN not in opp.data:
@@ -141,7 +141,7 @@ async def async_delete_cloudhook(opp, webhook_id: str) -> None:
     await opp.data[DOMAIN].cloudhooks.async_delete(webhook_id)
 
 
-@bind.opp
+@bind_opp
 @callback
 def async_remote_ui_url(opp) -> str:
     """Get the remote UI URL."""
@@ -154,7 +154,7 @@ def async_remote_ui_url(opp) -> str:
     if not opp.data[DOMAIN].remote.instance_domain:
         raise CloudNotAvailable
 
-    return f"https://.opp.data[DOMAIN].remote.instance_domain}"
+    return f"https://{opp.data[DOMAIN].remote.instance_domain}"
 
 
 def is_cloudhook_request(request):
@@ -230,6 +230,6 @@ async def async_setup(opp, config):
     await cloud.start()
     await http_api.async_setup(opp)
 
-    account_link.async_setup_opp)
+    account_link.async_setup(opp)
 
     return True

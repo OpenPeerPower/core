@@ -92,7 +92,7 @@ class LovelaceStorage(LovelaceConfig):
 
         super().__init__.opp, url_path, config)
 
-        self._store = storage.Store.opp, CONFIG_STORAGE_VERSION, storage_key)
+        self._store = storage.Store(opp, CONFIG_STORAGE_VERSION, storage_key)
         self._data = None
 
     @property
@@ -226,7 +226,7 @@ class DashboardsCollection(collection.StorageCollection):
     def __init__(self, opp):
         """Initialize the dashboards collection."""
         super().__init__(
-            storage.Store.opp, DASHBOARDS_STORAGE_VERSION, DASHBOARDS_STORAGE_KEY),
+            storage.Store(opp, DASHBOARDS_STORAGE_VERSION, DASHBOARDS_STORAGE_KEY),
             _LOGGER,
         )
 

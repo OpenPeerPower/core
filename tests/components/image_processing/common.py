@@ -9,14 +9,14 @@ from openpeerpower.core import callback
 from openpeerpower.loader import bind_opp
 
 
-@bind.opp
+@bind_opp
 def scan.opp, entity_id=ENTITY_MATCH_ALL):
     """Force process of all cameras or given entity."""
     opp.add_job(async_scan, opp, entity_id)
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_scan(opp, entity_id=ENTITY_MATCH_ALL):
     """Force process of all cameras or given entity."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else None

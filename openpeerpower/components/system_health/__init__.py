@@ -22,7 +22,7 @@ DOMAIN = "system_health"
 INFO_CALLBACK_TIMEOUT = 5
 
 
-@bind.opp
+@bind_opp
 @callback
 def async_register_info(
     opp: OpenPeerPower,

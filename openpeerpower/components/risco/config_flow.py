@@ -21,7 +21,7 @@ from .const import (
     CONF_CODE_ARM_REQUIRED,
     CONF_CODE_DISARM_REQUIRED,
     CONF_OP_STATES_TO_RISCO,
-    CONF_RISCO_STATES_TO_HA,
+    CONF_RISCO_STATES_TO_OP,
     DEFAULT_OPTIONS,
     RISCO_STATES,
 )
@@ -118,27 +118,27 @@ class RiscoOptionsFlowHandler(config_entries.OptionsFlow):
         """Manage the options."""
         if user_input is not None:
             self._data = {**self._data, **user_input}
-            return await self.async_step_risco_to_ha()
+            return await self.async_step_risco_to_op()
 
         return self.async_show_form(step_id="init", data_schema=self._options_schema())
 
-    async def async_step_risco_to_ha(self, user_input=None):
+    async def async_step_risco_to_op(self, user_input=None):
         """Map Risco states to HA states."""
         if user_input is not None:
-            self._data[CONF_RISCO_STATES_TO_HA] = user_input
+            self._data[CONF_RISCO_STATES_TO_OP] = user_input
             return await self.async_step_op_to_risco()
 
-        risco_to_ha = self._data[CONF_RISCO_STATES_TO_HA]
+        risco_to_op = self._data[CONF_RISCO_STATES_TO_OP]
         options = vol.Schema(
             {
-                vol.Required(risco_state, default=risco_to_ha[risco_state]): vol.In(
+                vol.Required(risco_state, default=risco_to_op[risco_state]): vol.In(
                     OP_STATES
                 )
                 for risco_state in RISCO_STATES
             }
         )
 
-        return self.async_show_form(step_id="risco_to_ha", data_schema=options)
+        return self.async_show_form(step_id="risco_to_op", data_schema=options)
 
     async def async_step_op_to_risco(self, user_input=None):
         """Map HA states to Risco states."""
@@ -147,7 +147,7 @@ class RiscoOptionsFlowHandler(config_entries.OptionsFlow):
             return self.async_create_entry(title="", data=self._data)
 
         options = {}
-        risco_to_ha = self._data[CONF_RISCO_STATES_TO_HA]
+        risco_to_op = self._data[CONF_RISCO_STATES_TO_OP]
         # we iterate over OP_STATES, instead of set(self._risco_to_op.values())
         # to ensure a consistent order
         for op_state in OP_STATES:
@@ -157,7 +157,7 @@ class RiscoOptionsFlowHandler(config_entries.OptionsFlow):
             values = [
                 risco_state
                 for risco_state in RISCO_STATES
-                if risco_to_ha[risco_state] == op_state
+                if risco_to_op[risco_state] == op_state
             ]
             current = self._data[CONF_OP_STATES_TO_RISCO].get(op_state)
             if current not in values:

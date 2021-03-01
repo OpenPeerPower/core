@@ -48,7 +48,7 @@ DEVICE_CLASSES = [DEVICE_CLASS_HUMIDIFIER, DEVICE_CLASS_DEHUMIDIFIER]
 DEVICE_CLASSES_SCHEMA = vol.All(vol.Lower, vol.In(DEVICE_CLASSES))
 
 
-@bind.opp
+@bind_opp
 def is_on(opp, entity_id):
     """Return if the humidifier is on based on the statemachine.
 

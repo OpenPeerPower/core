@@ -112,7 +112,7 @@ class GroupIntegrationRegistry:
         self.on_states_by_domain[current_domain.get()] = set(on_states)
 
 
-@bind.opp
+@bind_opp
 def is_on(opp, entity_id):
     """Test if the group state is in its ON-state."""
     if REG_KEY not in opp.data:
@@ -127,7 +127,7 @@ def is_on(opp, entity_id):
     return False
 
 
-@bind.opp
+@bind_opp
 def expand_entity_ids(opp: OpenPeerPowerType, entity_ids: Iterable[Any]) -> List[str]:
     """Return entity_ids with group entity ids replaced by their members.
 
@@ -169,7 +169,7 @@ def expand_entity_ids(opp: OpenPeerPowerType, entity_ids: Iterable[Any]) -> List
     return found_ids
 
 
-@bind.opp
+@bind_opp
 def get_entity_ids(
     opp: OpenPeerPowerType, entity_id: str, domain_filter: Optional[str] = None
 ) -> List[str]:
@@ -191,7 +191,7 @@ def get_entity_ids(
     return [ent_id for ent_id in entity_ids if ent_id.startswith(domain_filter)]
 
 
-@bind.opp
+@bind_opp
 def groups_with_entity(opp: OpenPeerPowerType, entity_id: str) -> List[str]:
     """Get all groups that contain this entity.
 

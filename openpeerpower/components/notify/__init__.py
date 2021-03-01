@@ -63,7 +63,7 @@ PERSISTENT_NOTIFICATION_SERVICE_SCHEMA = vol.Schema(
 )
 
 
-@bind.opp
+@bind_opp
 async def async_reload(opp: OpenPeerPowerType, integration_name: str) -> None:
     """Register notify services for an integration."""
     if not _async_integration_has_notify_services(opp, integration_name):
@@ -77,7 +77,7 @@ async def async_reload(opp: OpenPeerPowerType, integration_name: str) -> None:
     await asyncio.gather(*tasks)
 
 
-@bind.opp
+@bind_opp
 async def async_reset_platform(opp: OpenPeerPowerType, integration_name: str) -> None:
     """Unregister notify services for an integration."""
     if not _async_integration_has_notify_services(opp, integration_name):

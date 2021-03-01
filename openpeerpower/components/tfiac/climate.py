@@ -70,7 +70,7 @@ async def async_setup_platform(opp, config, async_add_devices, discovery_info=No
     except futures.TimeoutError:
         _LOGGER.error("Unable to connect to %s", config[CONF_HOST])
         return
-    async_add_devices([TfiacClimate.opp, tfiac_client)])
+    async_add_devices([TfiacClimate(opp, tfiac_client)])
 
 
 class TfiacClimate(ClimateEntity):

@@ -36,7 +36,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up PoolSense from a config entry."""
 
-    poolsense=PoolSense(
+    poolsense = PoolSense(
         aiohttp_client.async_get_clientsession(opp),
         entry.data[CONF_EMAIL],
         entry.data[CONF_PASSWORD],

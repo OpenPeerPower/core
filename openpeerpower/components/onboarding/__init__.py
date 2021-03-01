@@ -23,7 +23,7 @@ class OnboadingStorage(Store):
         return old_data
 
 
-@bind.opp
+@bind_opp
 @callback
 def async_is_onboarded(opp):
     """Return if Open Peer Power has been onboarded."""
@@ -31,7 +31,7 @@ def async_is_onboarded(opp):
     return data is None or data is True
 
 
-@bind.opp
+@bind_opp
 @callback
 def async_is_user_onboarded(opp):
     """Return if a user has been created as part of onboarding."""

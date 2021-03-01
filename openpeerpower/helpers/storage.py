@@ -18,7 +18,7 @@ STORAGE_DIR = ".storage"
 _LOGGER = logging.getLogger(__name__)
 
 
-@bind.opp
+@bind_opp
 async def async_migrator(
     opp,
     old_path,
@@ -60,7 +60,7 @@ async def async_migrator(
     return config
 
 
-@bind.opp
+@bind_opp
 class Store:
     """Class to help storing data."""
 

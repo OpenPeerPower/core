@@ -21,7 +21,7 @@ from openpeerpower.loader import bind_opp
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_see(
     opp: OpenPeerPowerType,
     mac: str = None,

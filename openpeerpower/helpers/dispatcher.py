@@ -13,7 +13,7 @@ _LOGGER = logging.getLogger(__name__)
 DATA_DISPATCHER = "dispatcher"
 
 
-@bind.opp
+@bind_opp
 def dispatcher_connect(
     opp: OpenPeerPowerType, signal: str, target: Callable[..., None]
 ) -> Callable[[], None]:
@@ -30,7 +30,7 @@ def dispatcher_connect(
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_dispatcher_connect(
     opp: OpenPeerPowerType, signal: str, target: Callable[..., Any]
 ) -> Callable[[], None]:
@@ -68,14 +68,14 @@ def async_dispatcher_connect(
     return async_remove_dispatcher
 
 
-@bind.opp
+@bind_opp
 def dispatcher_send(opp: OpenPeerPowerType, signal: str, *args: Any) -> None:
     """Send signal and data."""
     opp.loop.call_soon_threadsafe(async_dispatcher_send, opp, signal, *args)
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_dispatcher_send(opp: OpenPeerPowerType, signal: str, *args: Any) -> None:
     """Send signal and data.
 

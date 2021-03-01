@@ -104,7 +104,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
     return True
 
 
-@bind.opp
+@bind_opp
 async def async_scan_tag(opp, tag_id, device_id, context=None):
     """Handle when a tag is scanned."""
     if DOMAIN not in opp.config.components:

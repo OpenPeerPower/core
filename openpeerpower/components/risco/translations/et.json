@@ -38,7 +38,7 @@
                 },
                 "title": "Seadista valikud"
             },
-            "risco_to_ha": {
+            "risco_to_op": {
                 "data": {
                     "A": "Grupp A",
                     "B": "Grupp B",

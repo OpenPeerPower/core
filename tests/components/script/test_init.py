@@ -30,7 +30,7 @@ from tests.components.logbook.test_init import MockLazyEventPartialState
 ENTITY_ID = "script.test"
 
 
-@bind.opp
+@bind_opp
 def turn_on(opp, entity_id, variables=None, context=None):
     """Turn script on.
 
@@ -41,7 +41,7 @@ def turn_on(opp, entity_id, variables=None, context=None):
     opp.services.call(DOMAIN, object_id, variables, context=context)
 
 
-@bind.opp
+@bind_opp
 def turn_off(opp, entity_id):
     """Turn script on.
 
@@ -50,7 +50,7 @@ def turn_off(opp, entity_id):
     opp.services.call(DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: entity_id})
 
 
-@bind.opp
+@bind_opp
 def toggle.opp, entity_id):
     """Toggle the script.
 
@@ -59,7 +59,7 @@ def toggle.opp, entity_id):
     opp.services.call(DOMAIN, SERVICE_TOGGLE, {ATTR_ENTITY_ID: entity_id})
 
 
-@bind.opp
+@bind_opp
 def reload(opp):
     """Reload script component.
 

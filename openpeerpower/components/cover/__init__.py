@@ -80,7 +80,7 @@ ATTR_POSITION = "position"
 ATTR_TILT_POSITION = "tilt_position"
 
 
-@bind.opp
+@bind_opp
 def is_closed(opp, entity_id):
     """Return if the cover is closed based on the statemachine."""
     return opp.states.is_state(entity_id, STATE_CLOSED)

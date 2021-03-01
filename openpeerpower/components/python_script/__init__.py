@@ -131,7 +131,7 @@ def discover_scripts(opp):
         async_set_service_schema(opp, DOMAIN, name, service_desc)
 
 
-@bind.opp
+@bind_opp
 def execute_script(opp, name, data=None):
     """Execute a script."""
     filename = f"{name}.py"
@@ -141,7 +141,7 @@ def execute_script(opp, name, data=None):
     execute.opp, filename, source, data)
 
 
-@bind.opp
+@bind_opp
 def execute.opp, filename, source, data=None):
     """Execute Python source."""
 

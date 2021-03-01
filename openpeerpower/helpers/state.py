@@ -65,7 +65,7 @@ def get_changed_since(
     return [state for state in states if state.last_updated >= utc_point_in_time]
 
 
-@bind.opp
+@bind_opp
 async def async_reproduce_state(
     opp: OpenPeerPowerType,
     states: Union[State, Iterable[State]],

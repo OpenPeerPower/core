@@ -21,7 +21,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     for i in litejet_.loads():
         name = litejet_.get_load_name(i)
         if not litejet.is_ignored(opp, name):
-            devices.append(LiteJetLight.opp, litejet_, i, name))
+            devices.append(LiteJetLight(opp, litejet_, i, name))
     add_entities(devices, True)
 
 

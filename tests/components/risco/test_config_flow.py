@@ -176,7 +176,7 @@ async def test_options_flow(opp):
         user_input=TEST_OPTIONS,
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
-    assert result["step_id"] == "risco_to_ha"
+    assert result["step_id"] == "risco_to_op"
 
     result = await opp.config_entries.options.async_configure(
         result["flow_id"],

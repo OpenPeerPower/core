@@ -65,7 +65,7 @@ def storage_setup_opp, opp_storage):
     return _storage
 
 
-@bind.opp
+@bind_opp
 def select_option(opp, entity_id, option):
     """Set value of input_select.
 
@@ -80,7 +80,7 @@ def select_option(opp, entity_id, option):
     )
 
 
-@bind.opp
+@bind_opp
 def select_next(opp, entity_id):
     """Set next value of input_select.
 
@@ -93,7 +93,7 @@ def select_next(opp, entity_id):
     )
 
 
-@bind.opp
+@bind_opp
 def select_previous(opp, entity_id):
     """Set previous value of input_select.
 
@@ -106,7 +106,7 @@ def select_previous(opp, entity_id):
     )
 
 
-@bind.opp
+@bind_opp
 def select_first(opp, entity_id):
     """Set first value of input_select.
 
@@ -119,7 +119,7 @@ def select_first(opp, entity_id):
     )
 
 
-@bind.opp
+@bind_opp
 def select_last(opp, entity_id):
     """Set last value of input_select.
 

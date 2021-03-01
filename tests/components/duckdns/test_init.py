@@ -18,7 +18,7 @@ _LOGGER = logging.getLogger(__name__)
 INTERVAL = duckdns.INTERVAL
 
 
-@bind.opp
+@bind_opp
 async def async_set_txt(opp, txt):
     """Set the txt record. Pass in None to remove it.
 

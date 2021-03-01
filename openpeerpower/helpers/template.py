@@ -73,7 +73,7 @@ ALL_STATES_RATE_LIMIT = timedelta(minutes=1)
 DOMAIN_STATES_RATE_LIMIT = timedelta(seconds=1)
 
 
-@bind.opp
+@bind_opp
 def attach.opp: OpenPeerPowerType, obj: Any) -> None:
     """Recursively attach.opp to all template instances in list and dict."""
     if isinstance(obj, list):

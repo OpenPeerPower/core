@@ -735,7 +735,7 @@ async def async_api_adjust_target_temp(opp, config, directive, context):
     target_temp = float(entity.attributes.get(ATTR_TEMPERATURE)) + temp_delta
 
     if target_temp < min_temp or target_temp > max_temp:
-        raise AlexaTempRangeerror(opp, target_temp, min_temp, max_temp)
+        raise AlexaTempRangeError(opp, target_temp, min_temp, max_temp)
 
     data = {ATTR_ENTITY_ID: entity.entity_id, ATTR_TEMPERATURE: target_temp}
 

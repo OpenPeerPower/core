@@ -15,7 +15,7 @@ from openpeerpower.loader import bind_opp
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_increment(opp, entity_id):
     """Increment a counter."""
     opp.async_add_job(
@@ -24,7 +24,7 @@ def async_increment(opp, entity_id):
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_decrement(opp, entity_id):
     """Decrement a counter."""
     opp.async_add_job(
@@ -33,7 +33,7 @@ def async_decrement(opp, entity_id):
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_reset(opp, entity_id):
     """Reset a counter."""
     opp.async_add_job(

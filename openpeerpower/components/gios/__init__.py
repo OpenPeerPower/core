@@ -56,7 +56,7 @@ class GiosDataUpdateCoordinator(DataUpdateCoordinator):
         """Class to manage fetching GIOS data API."""
         self.gios = Gios(station_id, session)
 
-        super().__init__.opp, _LOGGER, name=DOMAIN, update_interval=SCAN_INTERVAL)
+        super().__init__(opp, _LOGGER, name=DOMAIN, update_interval=SCAN_INTERVAL)
 
     async def _async_update_data(self):
         """Update data via library."""

@@ -27,7 +27,7 @@ SCHEMA_WS_LIST = websocket_api.BASE_COMMAND_MESSAGE_SCHEMA.extend(
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_register(opp, domain, name, webhook_id, handler):
     """Register a webhook."""
     handlers = opp.data.setdefault(DOMAIN, {})
@@ -39,7 +39,7 @@ def async_register(opp, domain, name, webhook_id, handler):
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_unregister(opp, webhook_id):
     """Remove a webhook."""
     handlers = opp.data.setdefault(DOMAIN, {})
@@ -53,7 +53,7 @@ def async_generate_id():
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_generate_url(opp, webhook_id):
     """Generate the full URL for a webhook_id."""
     return "{}{}".format(
@@ -68,7 +68,7 @@ def async_generate_path(webhook_id):
     return URL_WEBHOOK_PATH.format(webhook_id=webhook_id)
 
 
-@bind.opp
+@bind_opp
 async def async_handle_webhook(opp, webhook_id, request):
     """Handle a webhook."""
     handlers = opp.data.setdefault(DOMAIN, {})

@@ -26,7 +26,7 @@ from .const import (
     CONF_CODE_ARM_REQUIRED,
     CONF_CODE_DISARM_REQUIRED,
     CONF_OP_STATES_TO_RISCO,
-    CONF_RISCO_STATES_TO_HA,
+    CONF_RISCO_STATES_TO_OP,
     DATA_COORDINATOR,
     DEFAULT_OPTIONS,
     DOMAIN,
@@ -69,7 +69,7 @@ class RiscoAlarm(AlarmControlPanelEntity, RiscoEntity):
         self._code = code
         self._code_arm_required = options[CONF_CODE_ARM_REQUIRED]
         self._code_disarm_required = options[CONF_CODE_DISARM_REQUIRED]
-        self._risco_to_ha = options[CONF_RISCO_STATES_TO_HA]
+        self._risco_to_op = options[CONF_RISCO_STATES_TO_OP]
         self._op_to_risco = options[CONF_OP_STATES_TO_RISCO]
         self._supported_states = 0
         for state in self._op_to_risco:
@@ -107,13 +107,13 @@ class RiscoAlarm(AlarmControlPanelEntity, RiscoEntity):
         if self._partition.disarmed:
             return STATE_ALARM_DISARMED
         if self._partition.armed:
-            return self._risco_to_ha[RISCO_ARM]
+            return self._risco_to_op[RISCO_ARM]
         if self._partition.partially_armed:
             for group, armed in self._partition.groups.items():
                 if armed:
-                    return self._risco_to_ha[group]
+                    return self._risco_to_op[group]
 
-            return self._risco_to_ha[RISCO_PARTIAL_ARM]
+            return self._risco_to_op[RISCO_PARTIAL_ARM]
 
         return None
 

@@ -126,14 +126,14 @@ class Image:
     content: bytes = attr.ib()
 
 
-@bind.opp
+@bind_opp
 async def async_request_stream(opp, entity_id, fmt):
     """Request a stream for a camera entity."""
     camera = _get_camera_from_entity_id(opp, entity_id)
     return await _async_stream_endpoint_url(opp, camera, fmt)
 
 
-@bind.opp
+@bind_opp
 async def async_get_image(opp, entity_id, timeout=10):
     """Fetch an image from a camera entity."""
     camera = _get_camera_from_entity_id(opp, entity_id)
@@ -148,7 +148,7 @@ async def async_get_image(opp, entity_id, timeout=10):
     raise OpenPeerPowerError("Unable to get image")
 
 
-@bind.opp
+@bind_opp
 async def async_get_stream_source(opp, entity_id):
     """Fetch the stream source for a camera entity."""
     camera = _get_camera_from_entity_id(opp, entity_id)
@@ -156,7 +156,7 @@ async def async_get_stream_source(opp, entity_id):
     return await camera.stream_source()
 
 
-@bind.opp
+@bind_opp
 async def async_get_mjpeg_stream(opp, request, entity_id):
     """Fetch an mjpeg stream from a camera entity."""
     camera = _get_camera_from_entity_id(opp, entity_id)

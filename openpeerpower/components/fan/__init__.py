@@ -108,7 +108,7 @@ class NotValidPresetModeError(ValueError):
     """Exception class when the preset_mode in not in the preset_modes list."""
 
 
-@bind.opp
+@bind_opp
 def is_on(opp, entity_id: str) -> bool:
     """Return if the fans are on based on the statemachine."""
     state = opp.states.get(entity_id)

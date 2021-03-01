@@ -65,7 +65,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-@bind.opp
+@bind_opp
 async def async_register_panel(
     opp,
     # The url to serve the panel

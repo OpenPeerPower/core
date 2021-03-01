@@ -10,7 +10,7 @@ from openpeerpower.setup import ATTR_COMPONENT, EVENT_COMPONENT_LOADED
 _LOGGER = logging.getLogger(__name__)
 
 
-@bind.opp
+@bind_opp
 async def async_process_integration_platforms(
     opp: OpenPeerPower,
     platform_name: str,

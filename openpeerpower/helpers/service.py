@@ -114,7 +114,7 @@ class SelectedEntities:
         _LOGGER.warning("Unable to find referenced %s", ", ".join(parts))
 
 
-@bind.opp
+@bind_opp
 def call_from_config(
     opp: OpenPeerPowerType,
     config: ConfigType,
@@ -129,7 +129,7 @@ def call_from_config(
     ).result()
 
 
-@bind.opp
+@bind_opp
 async def async_call_from_config(
     opp: OpenPeerPowerType,
     config: ConfigType,
@@ -152,7 +152,7 @@ async def async_call_from_config(
 
 
 @op.callback
-@bind.opp
+@bind_opp
 def async_prepare_call_from_config(
     opp: OpenPeerPowerType,
     config: ConfigType,
@@ -216,7 +216,7 @@ def async_prepare_call_from_config(
     }
 
 
-@bind.opp
+@bind_opp
 def extract_entity_ids(
     opp: OpenPeerPowerType, service_call: op.ServiceCall, expand_group: bool = True
 ) -> Set[str]:
@@ -229,7 +229,7 @@ def extract_entity_ids(
     ).result()
 
 
-@bind.opp
+@bind_opp
 async def async_extract_entities(
     opp: OpenPeerPowerType,
     entities: Iterable[Entity],
@@ -268,7 +268,7 @@ async def async_extract_entities(
     return found
 
 
-@bind.opp
+@bind_opp
 async def async_extract_entity_ids(
     opp: OpenPeerPowerType, service_call: op.ServiceCall, expand_group: bool = True
 ) -> Set[str]:
@@ -282,7 +282,7 @@ async def async_extract_entity_ids(
     return referenced.referenced | referenced.indirectly_referenced
 
 
-@bind.opp
+@bind_opp
 async def async_extract_referenced_entity_ids(
     opp: OpenPeerPowerType, service_call: op.ServiceCall, expand_group: bool = True
 ) -> SelectedEntities:
@@ -397,7 +397,7 @@ def _load_services_files(
     return [_load_services_file(opp, integration) for integration in integrations]
 
 
-@bind.opp
+@bind_opp
 async def async_get_all_descriptions(
     opp: OpenPeerPowerType,
 ) -> Dict[str, Dict[str, Any]]:
@@ -464,7 +464,7 @@ async def async_get_all_descriptions(
 
 
 @op.callback
-@bind.opp
+@bind_opp
 def async_set_service_schema(
     opp: OpenPeerPowerType, domain: str, service: str, schema: Dict[str, Any]
 ) -> None:
@@ -479,7 +479,7 @@ def async_set_service_schema(
     opp.data[SERVICE_DESCRIPTION_CACHE][f"{domain}.{service}"] = description
 
 
-@bind.opp
+@bind_opp
 async def entity_service_call(
     opp: OpenPeerPowerType,
     platforms: Iterable["EntityPlatform"],
@@ -666,7 +666,7 @@ async def _handle_entity_call(
         await result  # type: ignore
 
 
-@bind.opp
+@bind_opp
 @op.callback
 def async_register_admin_service(
     opp: OpenPeerPowerType,
@@ -693,7 +693,7 @@ def async_register_admin_service(
     opp.services.async_register(domain, service, admin_handler, schema)
 
 
-@bind.opp
+@bind_opp
 @op.callback
 def verify_domain_control(
     opp: OpenPeerPowerType, domain: str

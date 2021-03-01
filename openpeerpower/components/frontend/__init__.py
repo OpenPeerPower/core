@@ -166,7 +166,7 @@ class Panel:
         }
 
 
-@bind.opp
+@bind_opp
 @callback
 def async_register_built_in_panel(
     opp,
@@ -199,7 +199,7 @@ def async_register_built_in_panel(
     opp.bus.async_fire(EVENT_PANELS_UPDATED)
 
 
-@bind.opp
+@bind_opp
 @callback
 def async_remove_panel(opp, frontend_url_path):
     """Remove a built-in panel."""
@@ -394,7 +394,7 @@ async def _async_setup_themes(opp, themes):
             opp.data[DATA_DEFAULT_THEME] = DEFAULT_THEME
         if (
             opp.data.get(DATA_DEFAULT_DARK_THEME)
-            and.opp.data.get(DATA_DEFAULT_DARK_THEME) not in new_themes
+            and opp.data.get(DATA_DEFAULT_DARK_THEME) not in new_themes
         ):
             opp.data[DATA_DEFAULT_DARK_THEME] = None
         update_theme_and_fire_event()

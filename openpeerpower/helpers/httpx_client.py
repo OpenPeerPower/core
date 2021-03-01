@@ -19,7 +19,7 @@ USER_AGENT = "User-Agent"
 
 
 @callback
-@bind.opp
+@bind_opp
 def get_async_client(
     opp: OpenPeerPowerType, verify_ssl: bool = True
 ) -> httpx.AsyncClient:

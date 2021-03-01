@@ -206,7 +206,7 @@ class HomeAccessory(Accessory):
         aid,
         config,
         *args,
-        category = CATEGORY_OTHER,
+        category=CATEGORY_OTHER,
         **kwargs,
     ):
         """Initialize a Accessory object."""

@@ -143,7 +143,7 @@ def threaded_listener_factory(
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_track_state_change(
     opp: OpenPeerPower,
     entity_ids: Union[str, Iterable[str]],
@@ -237,7 +237,7 @@ def async_track_state_change(
 track_state_change = threaded_listener_factory(async_track_state_change)
 
 
-@bind.opp
+@bind_opp
 def async_track_state_change_event(
     opp: OpenPeerPower,
     entity_ids: Union[str, Iterable[str]],
@@ -334,7 +334,7 @@ def _async_remove_indexed_listeners(
         del.opp.data[listener_key]
 
 
-@bind.opp
+@bind_opp
 def async_track_entity_registry_updated_event(
     opp: OpenPeerPower,
     entity_ids: Union[str, Iterable[str]],
@@ -420,7 +420,7 @@ def _async_dispatch_domain_event(
             )
 
 
-@bind.opp
+@bind_opp
 def async_track_state_added_domain(
     opp: OpenPeerPower,
     domains: Union[str, Iterable[str]],
@@ -473,7 +473,7 @@ def async_track_state_added_domain(
     return remove_listener
 
 
-@bind.opp
+@bind_opp
 def async_track_state_removed_domain(
     opp: OpenPeerPower,
     domains: Union[str, Iterable[str]],
@@ -658,7 +658,7 @@ class _TrackStateChangeFiltered:
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_track_state_change_filtered(
     opp: OpenPeerPower,
     track_states: TrackStates,
@@ -687,7 +687,7 @@ def async_track_state_change_filtered(
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_track_template(
     opp: OpenPeerPower,
     template: Template,
@@ -1025,7 +1025,7 @@ TrackTemplateResultListener = Callable[
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_track_template_result(
     opp: OpenPeerPower,
     track_templates: Iterable[TrackTemplate],
@@ -1071,7 +1071,7 @@ def async_track_template_result(
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_track_same_state(
     opp: OpenPeerPower,
     period: timedelta,
@@ -1141,7 +1141,7 @@ track_same_state = threaded_listener_factory(async_track_same_state)
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_track_point_in_time(
     opp: OpenPeerPower,
     action: Union[OppJob, Callable[..., None]],
@@ -1162,7 +1162,7 @@ track_point_in_time = threaded_listener_factory(async_track_point_in_time)
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_track_point_in_utc_time(
     opp: OpenPeerPower,
     action: Union[OppJob, Callable[..., None]],
@@ -1215,7 +1215,7 @@ track_point_in_utc_time = threaded_listener_factory(async_track_point_in_utc_tim
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_call_later(
     opp: OpenPeerPower, delay: float, action: Union[OppJob, Callable[..., None]]
 ) -> CALLBACK_TYPE:
@@ -1229,7 +1229,7 @@ call_later = threaded_listener_factory(async_call_later)
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_track_time_interval(
     opp: OpenPeerPower,
     action: Callable[..., Union[None, Awaitable]],
@@ -1330,7 +1330,7 @@ class SunListener:
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_track_sunrise(
     opp: OpenPeerPower, action: Callable[..., None], offset: Optional[timedelta] = None
 ) -> CALLBACK_TYPE:
@@ -1344,7 +1344,7 @@ track_sunrise = threaded_listener_factory(async_track_sunrise)
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_track_sunset(
     opp: OpenPeerPower, action: Callable[..., None], offset: Optional[timedelta] = None
 ) -> CALLBACK_TYPE:
@@ -1361,7 +1361,7 @@ time_tracker_utcnow = dt_util.utcnow
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_track_utc_time_change(
     opp: OpenPeerPower,
     action: Callable[..., None],
@@ -1427,7 +1427,7 @@ track_utc_time_change = threaded_listener_factory(async_track_utc_time_change)
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_track_time_change(
     opp: OpenPeerPower,
     action: Callable[..., None],

@@ -232,7 +232,7 @@ async def setup_smartapp_endpoint(opp: OpenPeerPowerType):
     cloudhook_url = config.get(CONF_CLOUDHOOK_URL)
     if (
         cloudhook_url is None
-        and.opp.components.cloud.async_active_subscription()
+        and opp.components.cloud.async_active_subscription()
         and not opp.config_entries.async_entries(DOMAIN)
     ):
         cloudhook_url = await opp.components.cloud.async_create_cloudhook(
@@ -282,7 +282,7 @@ async def unload_smartapp_endpoint(opp: OpenPeerPowerType):
         return
     # Remove the cloudhook if it was created
     cloudhook_url = opp.data[DOMAIN][CONF_CLOUDHOOK_URL]
-    if cloudhook_url and.opp.components.cloud.async_is_logged_in():
+    if cloudhook_url and opp.components.cloud.async_is_logged_in():
         await opp.components.cloud.async_delete_cloudhook(
             opp.data[DOMAIN][CONF_WEBHOOK_ID]
         )

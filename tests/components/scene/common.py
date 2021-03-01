@@ -8,7 +8,7 @@ from openpeerpower.const import ATTR_ENTITY_ID, ENTITY_MATCH_ALL, SERVICE_TURN_O
 from openpeerpower.loader import bind_opp
 
 
-@bind.opp
+@bind_opp
 def activate.opp, entity_id=ENTITY_MATCH_ALL):
     """Activate a scene."""
     data = {}

@@ -70,7 +70,7 @@ def storage_setup_opp, opp_storage):
     return _storage
 
 
-@bind.opp
+@bind_opp
 def set_value(opp, entity_id, value):
     """Set input_text to value.
 

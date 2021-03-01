@@ -177,7 +177,7 @@ ATTR_TO_PROPERTY = [
 ]
 
 
-@bind.opp
+@bind_opp
 def is_on(opp, entity_id=None):
     """
     Return true if specified media player entity_id is on.

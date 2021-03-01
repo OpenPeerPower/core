@@ -31,8 +31,8 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     token = entry.data[CONF_ACCESS_TOKEN]
     config_entry_id = entry.entry_id
 
-    bond=Bond(host=host, token=token, timeout=ClientTimeout(total=_API_TIMEOUT))
-    hub=BondHub(bond)
+    bond = Bond(host=host, token=token, timeout=ClientTimeout(total=_API_TIMEOUT))
+    hub = BondHub(bond)
     try:
         await hub.setup()
     except (ClientError, AsyncIOTimeoutError, OSError) as error:

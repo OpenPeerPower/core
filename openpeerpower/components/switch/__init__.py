@@ -45,7 +45,7 @@ DEVICE_CLASSES_SCHEMA = vol.All(vol.Lower, vol.In(DEVICE_CLASSES))
 _LOGGER = logging.getLogger(__name__)
 
 
-@bind.opp
+@bind_opp
 def is_on(opp, entity_id):
     """Return if the switch is on based on the statemachine.
 

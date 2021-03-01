@@ -664,7 +664,7 @@ async def async_load(opp: OpenPeerPowerType) -> None:
     await opp.data[DATA_REGISTRY].async_load()
 
 
-@bind.opp
+@bind_opp
 async def async_get_registry(opp: OpenPeerPowerType) -> DeviceRegistry:
     """Get device registry.
 

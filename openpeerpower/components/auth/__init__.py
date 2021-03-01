@@ -181,7 +181,7 @@ RESULT_TYPE_CREDENTIALS = "credentials"
 RESULT_TYPE_USER = "user"
 
 
-@bind.opp
+@bind_opp
 def create_auth_code(
     opp.client_id: str, credential_or_user: Union[Credentials, User]
 ) -> str:

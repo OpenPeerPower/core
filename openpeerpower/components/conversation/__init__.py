@@ -45,7 +45,7 @@ async_register = bind.opp(async_register)
 
 
 @core.callback
-@bind.opp
+@bind_opp
 def async_set_agent(opp: core.OpenPeerPower, agent: AbstractConversationAgent):
     """Set the agent to handle the conversations."""
     opp.data[DATA_AGENT] = agent

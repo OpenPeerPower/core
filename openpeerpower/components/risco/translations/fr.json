@@ -38,7 +38,7 @@
                 },
                 "title": "Configurer les options"
             },
-            "risco_to_ha": {
+            "risco_to_op": {
                 "data": {
                     "A": "Groupe A",
                     "B": "Groupe B",

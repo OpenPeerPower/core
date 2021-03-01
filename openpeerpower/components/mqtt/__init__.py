@@ -242,14 +242,14 @@ def _build_publish_data(topic: Any, qos: int, retain: bool) -> ServiceDataType:
     return data
 
 
-@bind.opp
+@bind_opp
 def publish.opp: OpenPeerPowerType, topic, payload, qos=None, retain=None) -> None:
     """Publish message to an MQTT topic."""
     opp.add_job(async_publish, opp, topic, payload, qos, retain)
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_publish(
     opp: OpenPeerPowerType, topic: Any, payload, qos=None, retain=None
 ) -> None:
@@ -259,7 +259,7 @@ def async_publish(
     opp.async_create_task(opp.services.async_call(DOMAIN, SERVICE_PUBLISH, data))
 
 
-@bind.opp
+@bind_opp
 def publish_template(
     opp: OpenPeerPowerType, topic, payload_template, qos=None, retain=None
 ) -> None:
@@ -267,7 +267,7 @@ def publish_template(
     opp.add_job(async_publish_template, opp, topic, payload_template, qos, retain)
 
 
-@bind.opp
+@bind_opp
 def async_publish_template(
     opp: OpenPeerPowerType, topic, payload_template, qos=None, retain=None
 ) -> None:
@@ -304,7 +304,7 @@ def wrap_msg_callback(msg_callback: MessageCallbackType) -> MessageCallbackType:
     return wrapper_func
 
 
-@bind.opp
+@bind_opp
 async def async_subscribe(
     opp: OpenPeerPowerType,
     topic: str,
@@ -349,7 +349,7 @@ async def async_subscribe(
     return async_remove
 
 
-@bind.opp
+@bind_opp
 def subscribe(
     opp: OpenPeerPowerType,
     topic: str,

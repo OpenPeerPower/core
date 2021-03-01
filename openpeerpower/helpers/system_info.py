@@ -10,7 +10,7 @@ from openpeerpower.util.package import is_virtual_env
 from .typing import OpenPeerPowerType
 
 
-@bind.opp
+@bind_opp
 async def async_get_system_info(opp: OpenPeerPowerType) -> Dict[str, Any]:
     """Return info about the system."""
     info_object = {

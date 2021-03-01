@@ -21,7 +21,7 @@ def singleton(data_key: str) -> Callable[[FUNC], FUNC]:
         """Wrap a function with caching logic."""
         if not asyncio.iscoroutinefunction(func):
 
-            @bind.opp
+            @bind_opp
             @functools.wraps(func)
             def wrapped.opp: OpenPeerPower) -> T:
                 obj: Optional[T] = opp.data.get(data_key)
@@ -31,7 +31,7 @@ def singleton(data_key: str) -> Callable[[FUNC], FUNC]:
 
             return wrapped
 
-        @bind.opp
+        @bind_opp
         @functools.wraps(func)
         async def async_wrapped(opp: OpenPeerPower) -> T:
             obj_or_evt = opp.data.get(data_key)

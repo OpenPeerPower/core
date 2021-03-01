@@ -88,7 +88,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-@bind.opp
+@bind_opp
 async def async_create_person(opp, name, *, user_id=None, device_trackers=None):
     """Create a new person."""
     await opp.data[DOMAIN][1].async_create_item(
@@ -100,7 +100,7 @@ async def async_create_person(opp, name, *, user_id=None, device_trackers=None):
     )
 
 
-@bind.opp
+@bind_opp
 async def async_add_user_device_tracker(
     opp: OpenPeerPower, user_id: str, device_tracker_entity_id: str
 ):

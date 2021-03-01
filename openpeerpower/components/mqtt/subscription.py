@@ -59,7 +59,7 @@ class EntitySubscription:
         )
 
 
-@bind.opp
+@bind_opp
 async def async_subscribe_topics(
     opp: OpenPeerPowerType,
     new_state: Optional[Dict[str, EntitySubscription]],
@@ -103,7 +103,7 @@ async def async_subscribe_topics(
     return new_state
 
 
-@bind.opp
+@bind_opp
 async def async_unsubscribe_topics(opp: OpenPeerPowerType, sub_state: dict):
     """Unsubscribe from all MQTT topics managed by async_subscribe_topics."""
     return await async_subscribe_topics(opp, sub_state, {})

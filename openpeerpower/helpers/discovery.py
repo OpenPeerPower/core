@@ -20,7 +20,7 @@ ATTR_PLATFORM = "platform"
 # mypy: disallow-any-generics
 
 
-@bind.opp
+@bind_opp
 def listen(
     opp, core.OpenPeerPower,
     service: Union[str, Collection[str]],
@@ -34,7 +34,7 @@ def listen(
 
 
 @core.callback
-@bind.opp
+@bind_opp
 def async_listen(
     opp, core.OpenPeerPower,
     service: Union[str, Collection[str]],
@@ -63,7 +63,7 @@ def async_listen(
     opp.bus.async_listen(EVENT_PLATFORM_DISCOVERED, discovery_event_listener)
 
 
-@bind.opp
+@bind_opp
 def discover(
     opp, core.OpenPeerPower,
     service: str,
@@ -79,7 +79,7 @@ def discover(
     )
 
 
-@bind.opp
+@bind_opp
 async def async_discover(
     opp, core.OpenPeerPower,
     service: str,
@@ -99,7 +99,7 @@ async def async_discover(
     opp.bus.async_fire(EVENT_PLATFORM_DISCOVERED, data)
 
 
-@bind.opp
+@bind_opp
 def listen_platform(
     opp, core.OpenPeerPower, component: str, callback: CALLBACK_TYPE
 ) -> None:
@@ -109,7 +109,7 @@ def listen_platform(
     ).result()
 
 
-@bind.opp
+@bind_opp
 def async_listen_platform(
     opp, core.OpenPeerPower,
     component: str,
@@ -139,7 +139,7 @@ def async_listen_platform(
     opp.bus.async_listen(EVENT_PLATFORM_DISCOVERED, discovery_platform_listener)
 
 
-@bind.opp
+@bind_opp
 def load_platform(
     opp, core.OpenPeerPower,
     component: str,
@@ -164,7 +164,7 @@ def load_platform(
     )
 
 
-@bind.opp
+@bind_opp
 async def async_load_platform(
     opp, core.OpenPeerPower,
     component: str,

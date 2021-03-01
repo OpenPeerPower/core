@@ -278,7 +278,7 @@ class _TranslationCache:
                     category_cache[f"component.{component}.{category}"] = resource
 
 
-@bind.opp
+@bind_opp
 async def async_get_translations(
     opp: OpenPeerPowerType,
     language: str,

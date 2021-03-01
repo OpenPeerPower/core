@@ -47,7 +47,7 @@ def require_admin(func: const.WebSocketCommandHandler) -> const.WebSocketCommand
         if user is None or not user.is_admin:
             raise Unauthorized()
 
-        func.opp, connection, msg)
+        func(opp, connection, msg)
 
     return with_admin
 
@@ -101,7 +101,7 @@ def ws_require_user(
                 output_error("only_inactive_user", "Not allowed as active user")
                 return
 
-            return func.opp, connection, msg)
+            return func(opp, connection, msg)
 
         return check_current_user
 

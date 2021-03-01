@@ -90,7 +90,7 @@ async def discover(opp):
     return servers
 
 
-async def authenticate.opp: core.OpenPeerPower, host, servers):
+async def authenticate(opp: core.OpenPeerPower, host, servers):
     """Connect and authenticate open peer power."""
 
     hub = RoonHub(opp)

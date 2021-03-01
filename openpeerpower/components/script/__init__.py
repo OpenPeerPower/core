@@ -82,7 +82,7 @@ SCRIPT_TURN_ONOFF_SCHEMA = make_entity_service_schema(
 RELOAD_SERVICE_SCHEMA = vol.Schema({})
 
 
-@bind.opp
+@bind_opp
 def is_on(opp, entity_id):
     """Return if the script is on based on the statemachine."""
     return opp.states.is_state(entity_id, STATE_ON)

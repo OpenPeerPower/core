@@ -13,7 +13,7 @@ from openpeerpower.components.notify import (
 from openpeerpower.loader import bind_opp
 
 
-@bind.opp
+@bind_opp
 def send_message(opp, message, title=None, data=None):
     """Send a notification message."""
     info = {ATTR_MESSAGE: message}

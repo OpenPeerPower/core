@@ -38,7 +38,7 @@
                 },
                 "title": "Konfigurer alternativer"
             },
-            "risco_to_ha": {
+            "risco_to_op": {
                 "data": {
                     "A": "Gruppe A",
                     "B": "Gruppe B",

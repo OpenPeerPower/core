@@ -42,7 +42,7 @@ async def async_set_preset_mode(opp, preset_mode, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(DOMAIN, SERVICE_SET_PRESET_MODE, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def set_preset_mode(opp, preset_mode, entity_id=ENTITY_MATCH_ALL):
     """Set new preset mode."""
     data = {ATTR_PRESET_MODE: preset_mode}
@@ -63,7 +63,7 @@ async def async_set_aux_heat(opp, aux_heat, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(DOMAIN, SERVICE_SET_AUX_HEAT, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def set_aux_heat(opp, aux_heat, entity_id=ENTITY_MATCH_ALL):
     """Turn all or specified climate devices auxiliary heater on."""
     data = {ATTR_AUX_HEAT: aux_heat}
@@ -100,7 +100,7 @@ async def async_set_temperature(
     )
 
 
-@bind.opp
+@bind_opp
 def set_temperature(
     opp,
     temperature=None,
@@ -135,7 +135,7 @@ async def async_set_humidity(opp, humidity, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(DOMAIN, SERVICE_SET_HUMIDITY, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def set_humidity(opp, humidity, entity_id=ENTITY_MATCH_ALL):
     """Set new target humidity."""
     data = {ATTR_HUMIDITY: humidity}
@@ -156,7 +156,7 @@ async def async_set_fan_mode(opp, fan, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(DOMAIN, SERVICE_SET_FAN_MODE, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def set_fan_mode(opp, fan, entity_id=ENTITY_MATCH_ALL):
     """Set all or specified climate devices fan mode on."""
     data = {ATTR_FAN_MODE: fan}
@@ -177,7 +177,7 @@ async def async_set_hvac_mode(opp, hvac_mode, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(DOMAIN, SERVICE_SET_HVAC_MODE, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def set_operation_mode(opp, hvac_mode, entity_id=ENTITY_MATCH_ALL):
     """Set new target operation mode."""
     data = {ATTR_HVAC_MODE: hvac_mode}
@@ -198,7 +198,7 @@ async def async_set_swing_mode(opp, swing_mode, entity_id=ENTITY_MATCH_ALL):
     await opp.services.async_call(DOMAIN, SERVICE_SET_SWING_MODE, data, blocking=True)
 
 
-@bind.opp
+@bind_opp
 def set_swing_mode(opp, swing_mode, entity_id=ENTITY_MATCH_ALL):
     """Set new target swing mode."""
     data = {ATTR_SWING_MODE: swing_mode}

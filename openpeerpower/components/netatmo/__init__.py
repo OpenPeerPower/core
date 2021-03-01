@@ -228,7 +228,7 @@ async def async_remove_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Cleanup when entry is removed."""
     if (
         CONF_WEBHOOK_ID in entry.data
-        and.opp.components.cloud.async_active_subscription()
+        and opp.components.cloud.async_active_subscription()
     ):
         try:
             _LOGGER.debug(

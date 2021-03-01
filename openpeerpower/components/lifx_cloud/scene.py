@@ -53,7 +53,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     status = scenes_resp.status
     if status == HTTP_OK:
         data = await scenes_resp.json()
-        devices = [LifxCloudScene.opp, headers, timeout, scene) for scene in data]
+        devices = [LifxCloudScene(opp, headers, timeout, scene) for scene in data]
         async_add_entities(devices)
         return True
     if status == HTTP_UNAUTHORIZED:

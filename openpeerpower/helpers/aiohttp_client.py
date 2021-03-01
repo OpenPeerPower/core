@@ -27,7 +27,7 @@ SERVER_SOFTWARE = "OpenPeerPower/{0} aiohttp/{1} Python/{2[0]}.{2[1]}".format(
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_get_clientsession(
     opp: OpenPeerPowerType, verify_ssl: bool = True
 ) -> aiohttp.ClientSession:
@@ -47,7 +47,7 @@ def async_get_clientsession(
 
 
 @callback
-@bind.opp
+@bind_opp
 def async_create_clientsession(
     opp: OpenPeerPowerType,
     verify_ssl: bool = True,
@@ -80,7 +80,7 @@ def async_create_clientsession(
     return clientsession
 
 
-@bind.opp
+@bind_opp
 async def async_aiohttp_proxy_web(
     opp: OpenPeerPowerType,
     request: web.BaseRequest,
@@ -113,7 +113,7 @@ async def async_aiohttp_proxy_web(
         req.close()
 
 
-@bind.opp
+@bind_opp
 async def async_aiohttp_proxy_stream(
     opp: OpenPeerPowerType,
     request: web.BaseRequest,
