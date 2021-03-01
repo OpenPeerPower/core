@@ -77,7 +77,7 @@ def _create_processor_from_config(opp, camera_entity, config):
     classifier_config = config.get(CONF_CLASSIFIER)
     name = f"{config[CONF_NAME]} {split_entity_id(camera_entity)[1].replace('_', ' ')}"
 
-    processor = OpenCVImageProcessor.opp, camera_entity, name, classifier_config)
+    processor = OpenCVImageProcessor(opp, camera_entity, name, classifier_config)
 
     return processor
 

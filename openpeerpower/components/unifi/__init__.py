@@ -32,7 +32,7 @@ async def async_setup_entry(opp, config_entry):
     # Flat configuration was introduced with 2021.3
     await async_flatten_entry_data(opp, config_entry)
 
-    controller = UniFiController.opp, config_entry)
+    controller = UniFiController(opp, config_entry)
     if not await controller.async_setup():
         return False
 

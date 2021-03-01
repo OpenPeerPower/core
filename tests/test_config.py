@@ -840,7 +840,7 @@ async def test_auth_provider_config(opp):
         ],
         CONF_AUTH_MFA_MODULES: [{"type": "totp"}, {"type": "totp", "id": "second"}],
     }
-    if hasattr.opp, "auth"):
+    if hasattr(opp, "auth"):
         del.opp.auth
     await config_util.async_process_op_core_config(opp, core_config)
 
@@ -862,7 +862,7 @@ async def test_auth_provider_config_default(opp):
         CONF_UNIT_SYSTEM: CONF_UNIT_SYSTEM_IMPERIAL,
         "time_zone": "GMT",
     }
-    if hasattr.opp, "auth"):
+    if hasattr(opp, "auth"):
         del.opp.auth
     await config_util.async_process_op_core_config(opp, core_config)
 

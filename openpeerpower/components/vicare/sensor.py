@@ -263,7 +263,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 
     add_entities(
         [
-            ViCareSensor.opp.data[VICARE_DOMAIN][VICARE_NAME], vicare_api, sensor)
+            ViCareSensor(opp.data[VICARE_DOMAIN][VICARE_NAME], vicare_api, sensor)
             for sensor in sensors
         ]
     )

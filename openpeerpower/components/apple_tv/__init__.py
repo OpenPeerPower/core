@@ -49,7 +49,7 @@ async def async_setup(opp, config):
 
 async def async_setup_entry(opp, entry):
     """Set up a config entry for Apple TV."""
-    manager = AppleTVManager.opp, entry)
+    manager = AppleTVManager(opp, entry)
     opp.data.setdefault(DOMAIN, {})[entry.unique_id] = manager
 
     async def on.opp_stop(event):

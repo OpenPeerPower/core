@@ -256,7 +256,7 @@ class TensorFlowImageProcessor(ImageProcessingEntity):
                 area_config.get(CONF_RIGHT),
             ]
 
-        template.attach.opp, self._file_out)
+        template.attach(opp, self._file_out)
 
         self._matches = {}
         self._total_matches = 0

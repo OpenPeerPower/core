@@ -1575,7 +1575,7 @@ async def test_water_heater(opp, hk_driver, events):
 
     opp.states.async_set(entity_id, HVAC_MODE_HEAT)
     await opp.async_block_till_done()
-    acc = WaterHeater.opp, hk_driver, "WaterHeater", entity_id, 2, None)
+    acc = WaterHeater(opp, hk_driver, "WaterHeater", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -1654,7 +1654,7 @@ async def test_water_heater_fahrenheit(opp, hk_driver, events):
     opp.states.async_set(entity_id, HVAC_MODE_HEAT)
     await opp.async_block_till_done()
     with patch.object.opp.config.units, CONF_TEMPERATURE_UNIT, new=TEMP_FAHRENHEIT):
-        acc = WaterHeater.opp, hk_driver, "WaterHeater", entity_id, 2, None)
+        acc = WaterHeater(opp, hk_driver, "WaterHeater", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -1685,7 +1685,7 @@ async def test_water_heater_get_temperature_range(opp, hk_driver):
 
     opp.states.async_set(entity_id, HVAC_MODE_HEAT)
     await opp.async_block_till_done()
-    acc = WaterHeater.opp, hk_driver, "WaterHeater", entity_id, 2, None)
+    acc = WaterHeater(opp, hk_driver, "WaterHeater", entity_id, 2, None)
 
     opp.states.async_set(
         entity_id, HVAC_MODE_HEAT, {ATTR_MIN_TEMP: 20, ATTR_MAX_TEMP: 25}

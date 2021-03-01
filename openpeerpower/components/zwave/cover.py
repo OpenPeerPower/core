@@ -48,7 +48,7 @@ def get_device(opp, values, node_config, **kwargs):
         values.primary.command_class == COMMAND_CLASS_SWITCH_MULTILEVEL
         and values.primary.index == 0
     ):
-        return ZwaveRollershutter.opp, values, invert_buttons, invert_percent)
+        return ZwaveRollershutter(opp, values, invert_buttons, invert_percent)
     if values.primary.command_class == COMMAND_CLASS_SWITCH_BINARY:
         return ZwaveGarageDoorSwitch(values)
     if values.primary.command_class == COMMAND_CLASS_BARRIER_OPERATOR:

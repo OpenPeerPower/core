@@ -71,7 +71,7 @@ async def async_get_service(opp, config, discovery_info=None):
     if not aws_config:
         # no platform config, use the first aws component credential instead
         if opp.data[DATA_SESSIONS]:
-            session = next(iter.opp.data[DATA_SESSIONS].values()))
+            session = next(iter(opp.data[DATA_SESSIONS].values()))
         else:
             _LOGGER.error("Missing aws credential for %s", config[CONF_NAME])
             return None

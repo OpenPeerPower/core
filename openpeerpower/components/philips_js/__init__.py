@@ -32,7 +32,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
     tvapi = PhilipsTV(entry.data[CONF_HOST], entry.data[CONF_API_VERSION])
 
-    coordinator = PhilipsTVDataUpdateCoordinator.opp, tvapi)
+    coordinator = PhilipsTVDataUpdateCoordinator(opp, tvapi)
 
     await coordinator.async_refresh()
     opp.data[DOMAIN][entry.entry_id] = coordinator

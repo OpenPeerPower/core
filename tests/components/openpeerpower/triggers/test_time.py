@@ -260,7 +260,7 @@ async def test_if_action_before.opp.calls):
     assert len(calls) == 1
 
 
-async def test_if_action_after.opp.calls):
+async def test_if_action_after(opp.calls):
     """Test for if action after."""
     assert await async_setup_component(
         opp,
@@ -395,7 +395,7 @@ async def test_untrack_time_change(opp,
     assert len(mock_track_time_change.mock_calls) == 3
 
 
-async def test_if_fires_using_at_sensor.opp.calls):
+async def test_if_fires_using_at_sensor(opp.calls):
     """Test for firing at sensor time."""
     now = dt_util.now()
 

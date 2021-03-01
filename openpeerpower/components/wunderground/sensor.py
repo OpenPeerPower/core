@@ -1108,7 +1108,7 @@ async def async_setup_platform(
         unique_id_base = pws_id
     sensors = []
     for variable in config[CONF_MONITORED_CONDITIONS]:
-        sensors.append(WUndergroundSensor.opp, rest, variable, unique_id_base))
+        sensors.append(WUndergroundSensor(opp, rest, variable, unique_id_base))
 
     await rest.async_update()
     if not rest.data:

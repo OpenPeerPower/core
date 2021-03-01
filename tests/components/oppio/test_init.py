@@ -244,7 +244,7 @@ async def test_warn_when_cannot_connect(opp, caplog):
     assert "Not connected with Opp.io / system too busy!" in caplog.text
 
 
-async def test_service_register.oppio_env, opp):
+async def test_service_register(oppio_env, opp):
     """Check if service will be setup."""
     assert await async_setup_component(opp,  opp.o", {})
     assert opp.services.has_service(.oppio", "addon_start")

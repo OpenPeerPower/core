@@ -56,7 +56,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     password = entry.data[CONF_PASSWORD]
     fallback = entry.options.get(CONF_FALLBACK, True)
 
-    tadoconnector = TadoConnector.opp, username, password, fallback)
+    tadoconnector = TadoConnector(opp, username, password, fallback)
 
     try:
         await opp.async_add_executor_job(tadoconnector.setup)

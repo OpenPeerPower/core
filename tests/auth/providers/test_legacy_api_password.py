@@ -13,7 +13,7 @@ def store.opp):
 
 
 @pytest.fixture
-def provider.opp, store):
+def provider(opp, store):
     """Mock provider."""
     return legacy_api_password.LegacyApiPasswordAuthProvider(
         opp, store, {"type": "legacy_api_password", "api_password": "test-password"}
@@ -21,9 +21,9 @@ def provider.opp, store):
 
 
 @pytest.fixture
-def manager.opp, store, provider):
+def manager(opp, store, provider):
     """Mock manager."""
-    return auth.AuthManager.opp, store, {(provider.type, provider.id): provider}, {})
+    return auth.AuthManager(opp, store, {(provider.type, provider.id): provider}, {})
 
 
 async def test_create_new_credential(manager, provider):

@@ -231,7 +231,7 @@ class WemoDiscovery:
                 *[self.async_add_from_upnp_entry(entry) for entry in entries],
             )
         finally:
-            # Run discovery more frequently after.opp has just started.
+            # Run discovery more frequently after opp has just started.
             self._scan_delay = min(
                 self._scan_delay + self.ADDITIONAL_SECONDS_BETWEEN_SCANS,
                 self.MAX_SECONDS_BETWEEN_SCANS,

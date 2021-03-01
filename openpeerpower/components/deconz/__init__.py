@@ -64,7 +64,7 @@ async def async_unload_entry(opp, config_entry):
 
     elif gateway.master:
         await async_update_master_gateway(opp, config_entry)
-        new_master_gateway = next(iter.opp.data[DOMAIN].values()))
+        new_master_gateway = next(iter(opp.data[DOMAIN].values()))
         await async_update_master_gateway(opp, new_master_gateway.config_entry)
 
     return await gateway.async_reset()

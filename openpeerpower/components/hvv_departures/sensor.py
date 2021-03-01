@@ -39,7 +39,7 @@ async def async_setup_entry(opp, config_entry, async_add_devices):
 
     session = aiohttp_client.async_get_clientsession(opp)
 
-    sensor = HVVDepartureSensor.opp, config_entry, session, hub)
+    sensor = HVVDepartureSensor(opp, config_entry, session, hub)
     async_add_devices([sensor], True)
 
 

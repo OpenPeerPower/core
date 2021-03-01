@@ -46,7 +46,7 @@ def setup(opp, config):
         name = unit[CONF_NAME]
 
         try:
-            reader = IdteckReader.opp, host, port, name)
+            reader = IdteckReader(opp, host, port, name)
             reader.connect()
             opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, reader.stop)
         except OSError as error:

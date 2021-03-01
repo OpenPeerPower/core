@@ -55,7 +55,7 @@ def setup(opp, config):
         _LOGGER.error("Not able to connect to Graphite")
         return False
 
-    GraphiteFeeder.opp, host, port, prefix)
+    GraphiteFeeder(opp, host, port, prefix)
     return True
 
 

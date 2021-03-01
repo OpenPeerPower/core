@@ -857,7 +857,7 @@ async def test_template_string.opp.calls, below):
     )
 
 
-async def test_not_fires_on_attr_change_with_attr_not_below_multiple_attr.opp.calls):
+async def test_not_fires_on_attr_change_with_attr_not_below_multiple_attr(opp.calls):
     """Test if not fired changed attributes."""
     assert await async_setup_component(
         opp,
@@ -939,7 +939,7 @@ async def test_if_action.opp.calls, above, below):
         ("input_number.value_8", "input_number.value_12"),
     ),
 )
-async def test_if_fails_setup_bad_for.opp.calls, above, below):
+async def test_if_fails_setup_bad_for(opp.calls, above, below):
     """Test for setup failure for bad for."""
     opp.tates.async_set("test.entity", 5)
     await opp.async_block_till_done()
@@ -995,7 +995,7 @@ async def test_if_fails_setup_for_without_above_below.opp.calls):
         ("input_number.value_8", "input_number.value_12"),
     ),
 )
-async def test_if_not_fires_on_entity_change_with_for.opp.calls, above, below):
+async def test_if_not_fires_on_entity_change_with_for(opp.calls, above, below):
     """Test for not firing on entity change with for."""
     assert await async_setup_component(
         opp,
@@ -1139,7 +1139,7 @@ async def test_if_fires_on_entity_change_with_for_attribute_change(
         ("input_number.value_8", "input_number.value_12"),
     ),
 )
-async def test_if_fires_on_entity_change_with_for.opp.calls, above, below):
+async def test_if_fires_on_entity_change_with_for(opp.calls, above, below):
     """Test for firing on entity change with for."""
     opp.tates.async_set("test.entity", 0)
     await opp.async_block_till_done()
@@ -1169,7 +1169,7 @@ async def test_if_fires_on_entity_change_with_for.opp.calls, above, below):
 
 
 @pytest.mark.parametrize("above", (10, "input_number.value_10"))
-async def test_wait_template_with_trigger.opp.calls, above):
+async def test_wait_template_with_trigger(opp.calls, above):
     """Test using wait template with 'trigger.entity_id'."""
     opp.tates.async_set("test.entity", "0")
     await opp.async_block_till_done()

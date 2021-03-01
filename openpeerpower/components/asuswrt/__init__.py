@@ -120,7 +120,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     if not entry.options and yaml_options:
         opp.config_entries.async_update_entry(entry, options=yaml_options)
 
-    router = AsusWrtRouter.opp, entry)
+    router = AsusWrtRouter(opp, entry)
     await router.setup()
 
     router.async_on_close(entry.add_update_listener(update_listener))

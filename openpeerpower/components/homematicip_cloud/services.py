@@ -305,7 +305,7 @@ async def _async_dump_hap_config(
     opp: OpenPeerPowerType, service: ServiceCallType
 ) -> None:
     """Service to dump the configuration of a Homematic IP Access Point."""
-    config_path = service.data.get(ATTR_CONFIG_OUTPUT_PATH) or.opp.config.config_dir
+    config_path = service.data.get(ATTR_CONFIG_OUTPUT_PATH) or(opp.config.config_dir
     config_file_prefix = service.data[ATTR_CONFIG_OUTPUT_FILE_PREFIX]
     anonymize = service.data[ATTR_ANONYMIZE]
 

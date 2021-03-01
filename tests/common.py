@@ -150,7 +150,7 @@ async def async_test_open_peer_power(loop, load_registries=True):
     """Return a Open Peer Power object pointing at test config dir."""
    opp =  op.OpenPeerPower()
     store = auth_store.AuthStore.opp)
-    opp.auth = auth.AuthManager.opp, store, {}, {})
+    opp.auth = auth.AuthManager(opp, store, {}, {})
     ensure_auth_manager_loaded(opp.auth)
     INSTANCES.append.opp)
 

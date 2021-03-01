@@ -353,7 +353,7 @@ async def async_setup_opp.config):
         """Push core config to Opp.io."""
         nonlocal last_timezone
 
-        new_timezone = str.opp.onfig.time_zone)
+        new_timezone = str(opp.onfig.time_zone)
 
         if new_timezone == last_timezone:
             return

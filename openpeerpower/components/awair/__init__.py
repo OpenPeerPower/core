@@ -26,7 +26,7 @@ async def async_setup(opp: OpenPeerPower, config: Config) -> bool:
 async def async_setup_entry(opp, config_entry) -> bool:
     """Set up Awair integration from a config entry."""
     session = async_get_clientsession(opp)
-    coordinator = AwairDataUpdateCoordinator.opp, config_entry, session)
+    coordinator = AwairDataUpdateCoordinator(opp, config_entry, session)
 
     await coordinator.async_refresh()
 

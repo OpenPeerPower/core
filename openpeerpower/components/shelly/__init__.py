@@ -122,7 +122,7 @@ async def async_device_setup(
     """Set up a device that is online."""
     device_wrapper = opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][
         COAP
-    ] = ShellyDeviceWrapper.opp, entry, device)
+    ] = ShellyDeviceWrapper(opp, entry, device)
     await device_wrapper.async_setup()
 
     platforms = SLEEPING_PLATFORMS
@@ -130,7 +130,7 @@ async def async_device_setup(
     if not entry.data.get("sleep_period"):
         opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][
             REST
-        ] = ShellyDeviceRestWrapper.opp, device)
+        ] = ShellyDeviceRestWrapper(opp, device)
         platforms = PLATFORMS
 
     for component in platforms:

@@ -107,7 +107,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         AUTH: api.ConfigEntryNetatmoAuth.opp, entry, implementation)
     }
 
-    data_handler = NetatmoDataHandler.opp, entry)
+    data_handler = NetatmoDataHandler(opp, entry)
     await data_handler.async_setup()
     opp.data[DOMAIN][entry.entry_id][DATA_HANDLER] = data_handler
 

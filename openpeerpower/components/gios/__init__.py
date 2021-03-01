@@ -27,7 +27,7 @@ async def async_setup_entry(opp, config_entry):
 
     websession = async_get_clientsession(opp)
 
-    coordinator = GiosDataUpdateCoordinator.opp, websession, station_id)
+    coordinator = GiosDataUpdateCoordinator(opp, websession, station_id)
     await coordinator.async_refresh()
 
     if not coordinator.last_update_success:

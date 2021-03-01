@@ -300,8 +300,8 @@ def setup_services(opp, opp_config, track_new_found_calendars, calendar_service)
                 call.data[EVENT_START_DATETIME].strftime("%Y-%m-%dT%H:%M:%S")
             )
             end_dt = str(call.data[EVENT_END_DATETIME].strftime("%Y-%m-%dT%H:%M:%S"))
-            start = {"dateTime": start_dt, "timeZone": str.opp.config.time_zone)}
-            end = {"dateTime": end_dt, "timeZone": str.opp.config.time_zone)}
+            start = {"dateTime": start_dt, "timeZone": str(opp.config.time_zone)}
+            end = {"dateTime": end_dt, "timeZone": str(opp.config.time_zone)}
 
         event = {
             "summary": call.data[EVENT_SUMMARY],

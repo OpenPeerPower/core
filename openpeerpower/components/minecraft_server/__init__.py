@@ -42,7 +42,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry) -
         config_entry.data[CONF_NAME],
         config_entry.data[CONF_HOST],
     )
-    server = MinecraftServer.opp, unique_id, config_entry.data)
+    server = MinecraftServer(opp, unique_id, config_entry.data)
     domain_data[unique_id] = server
     await server.async_update()
     server.start_periodic_update()

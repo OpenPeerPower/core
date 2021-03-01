@@ -53,7 +53,7 @@ SUPPORTED_OPTIONS = [CONF_PERSON, CONF_PITCH, CONF_SPEED, CONF_VOLUME]
 
 def get_engine(opp, config, discovery_info=None):
     """Set up Baidu TTS component."""
-    return BaiduTTSProvider.opp, config)
+    return BaiduTTSProvider(opp, config)
 
 
 class BaiduTTSProvider(Provider):

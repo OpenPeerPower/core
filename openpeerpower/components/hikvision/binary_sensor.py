@@ -128,7 +128,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
             )
             if not ignore:
                 entities.append(
-                    HikvisionBinarySensor.opp, sensor, channel[1], data, delay)
+                    HikvisionBinarySensor(opp, sensor, channel[1], data, delay)
                 )
 
     add_entities(entities)

@@ -44,7 +44,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up WLED from a config entry."""
 
     # Create WLED instance for this entry
-    coordinator = WLEDDataUpdateCoordinator.opp, host=entry.data[CONF_HOST])
+    coordinator = WLEDDataUpdateCoordinator(opp, host=entry.data[CONF_HOST])
     await coordinator.async_refresh()
 
     if not coordinator.last_update_success:

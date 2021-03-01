@@ -36,7 +36,7 @@ async def async_setup(opp: OpenPeerPower, config: Config) -> bool:
 
 async def async_setup_entry(opp, config_entry):
     """Set up Met as config entry."""
-    coordinator = MetDataUpdateCoordinator.opp, config_entry)
+    coordinator = MetDataUpdateCoordinator(opp, config_entry)
     await coordinator.async_refresh()
 
     if not coordinator.last_update_success:

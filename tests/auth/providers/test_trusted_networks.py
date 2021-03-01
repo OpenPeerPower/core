@@ -17,7 +17,7 @@ def store.opp):
 
 
 @pytest.fixture
-def provider.opp, store):
+def provider(opp, store):
     """Mock provider."""
     return tn_auth.TrustedNetworksAuthProvider(
         opp,
@@ -84,9 +84,9 @@ def provider_bypass_login(opp, store):
 
 
 @pytest.fixture
-def manager.opp, store, provider):
+def manager(opp, store, provider):
     """Mock manager."""
-    return auth.AuthManager.opp, store, {(provider.type, provider.id): provider}, {})
+    return auth.AuthManager(opp, store, {(provider.type, provider.id): provider}, {})
 
 
 @pytest.fixture

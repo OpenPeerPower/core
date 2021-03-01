@@ -61,7 +61,7 @@ async def async_setup(opp, config):
 
 async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     """Set up Freebox component."""
-    router = FreeboxRouter.opp, entry)
+    router = FreeboxRouter(opp, entry)
     await router.setup()
 
     opp.data.setdefault(DOMAIN, {})

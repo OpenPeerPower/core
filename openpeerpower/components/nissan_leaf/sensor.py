@@ -95,7 +95,7 @@ class LeafRangeSensor(LeafEntity):
         else:
             ret = self.car.data[DATA_RANGE_AC_OFF]
 
-        if not self.car.opp.config.units.is_metric or self.car.force_miles:
+        if not self.car(opp.config.units.is_metric or self.car.force_miles:
             ret = IMPERIAL_SYSTEM.length(ret, METRIC_SYSTEM.length_unit)
 
         return round(ret)
@@ -103,7 +103,7 @@ class LeafRangeSensor(LeafEntity):
     @property
     def unit_of_measurement(self):
         """Battery range unit."""
-        if not self.car.opp.config.units.is_metric or self.car.force_miles:
+        if not self.car(opp.config.units.is_metric or self.car.force_miles:
             return LENGTH_MILES
         return LENGTH_KILOMETERS
 

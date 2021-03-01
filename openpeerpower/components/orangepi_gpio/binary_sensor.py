@@ -19,7 +19,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 
     for port_num, port_name in ports.items():
         binary_sensors.append(
-            OPiGPIOBinarySensor.opp, port_name, port_num, invert_logic)
+            OPiGPIOBinarySensor(opp, port_name, port_num, invert_logic)
         )
     async_add_entities(binary_sensors)
 

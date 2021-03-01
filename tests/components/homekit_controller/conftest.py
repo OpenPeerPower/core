@@ -22,7 +22,7 @@ def utcnow(request):
 
 
 @pytest.fixture
-def controller.opp):
+def controller(opp):
     """Replace aiohomekit.Controller with an instance of aiohomekit.testing.FakeController."""
     instance = FakeController()
     with unittest.mock.patch("aiohomekit.Controller", return_value=instance):

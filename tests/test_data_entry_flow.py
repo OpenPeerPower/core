@@ -221,7 +221,7 @@ async def test_finish_callback_change_result_type(opp):
                     result["result"] = result["data"]["count"]
             return result
 
-    manager = FlowManager.opp)
+    manager = FlowManager(opp)
 
     result = await manager.async_init("test")
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM

@@ -72,7 +72,7 @@ async def test_get_actions(opp, device_reg, entity_reg):
 
 async def test_action(opp, calls):
     """Test for turn_on and turn_off actions."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
 
     platform.init()
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})

@@ -53,7 +53,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 
     dweet = DweetData(device)
 
-    add_entities([DweetSensor.opp, dweet, name, value_template, unit)], True)
+    add_entities([DweetSensor(opp, dweet, name, value_template, unit)], True)
 
 
 class DweetSensor(Entity):

@@ -81,7 +81,7 @@ class RoonHub:
         return (token, core_id)
 
 
-async def discover.opp):
+async def discover(opp):
     """Connect and authenticate open peer power."""
 
     hub = RoonHub.opp)

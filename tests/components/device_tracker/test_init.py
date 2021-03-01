@@ -133,7 +133,7 @@ async def test_duplicate_mac_dev_id(mock_warning, opp):
             opp, True, True, "your_device", "AB:01", "Your device", None, None, False
         ),
     ]
-    legacy.DeviceTracker.opp, False, True, {}, devices)
+    legacy.DeviceTracker(opp, False, True, {}, devices)
     _LOGGER.debug(mock_warning.call_args_list)
     assert (
         mock_warning.call_count == 1
@@ -150,7 +150,7 @@ async def test_duplicate_mac_dev_id(mock_warning, opp):
             opp, True, True, "my_device", None, "Your device", None, None, False
         ),
     ]
-    legacy.DeviceTracker.opp, False, True, {}, devices)
+    legacy.DeviceTracker(opp, False, True, {}, devices)
 
     _LOGGER.debug(mock_warning.call_args_list)
     assert (
@@ -226,7 +226,7 @@ async def test_discover_platform(mock_demo_setup_scanner, mock_see, opp):
 async def test_update_stale(opp, mock_device_tracker_conf):
     """Test stalled update."""
 
-    scanner = getattr.opp.components, "test.device_tracker").SCANNER
+    scanner = getattr(opp.components, "test.device_tracker").SCANNER
     scanner.reset()
     scanner.come_home("DEV1")
 
@@ -451,7 +451,7 @@ async def test_see_passive_zone_state(opp, mock_device_tracker_conf):
 
         await async_setup_component(opp, zone.DOMAIN, {"zone": zone_info})
 
-    scanner = getattr.opp.components, "test.device_tracker").SCANNER
+    scanner = getattr(opp.components, "test.device_tracker").SCANNER
     scanner.reset()
     scanner.come_home("dev1")
 
@@ -508,7 +508,7 @@ async def test_see_passive_zone_state(opp, mock_device_tracker_conf):
 async def test_see_failures(mock_warning, opp, mock_device_tracker_conf):
     """Test that the device tracker see failures."""
     devices = mock_device_tracker_conf
-    tracker = legacy.DeviceTracker.opp, timedelta(seconds=60), 0, {}, [])
+    tracker = legacy.DeviceTracker(opp, timedelta(seconds=60), 0, {}, [])
 
     # MAC is not a string (but added)
     await tracker.async_see(mac=567, host_name="Number MAC")
@@ -563,7 +563,7 @@ async def test_bad_platform(opp):
 
 async def test_adding_unknown_device_to_config(mock_device_tracker_conf, opp):
     """Test the adding of unknown devices to configuration file."""
-    scanner = getattr.opp.components, "test.device_tracker").SCANNER
+    scanner = getattr(opp.components, "test.device_tracker").SCANNER
     scanner.reset()
     scanner.come_home("DEV1")
 
@@ -581,7 +581,7 @@ async def test_adding_unknown_device_to_config(mock_device_tracker_conf, opp):
 
 async def test_picture_and_icon_on_see_discovery(mock_device_tracker_conf, opp):
     """Test that picture and icon are set in initial see."""
-    tracker = legacy.DeviceTracker.opp, timedelta(seconds=60), False, {}, [])
+    tracker = legacy.DeviceTracker(opp, timedelta(seconds=60), False, {}, [])
     await tracker.async_see(dev_id=11, picture="pic_url", icon="mdi:icon")
     await opp.async_block_till_done()
     assert len(mock_device_tracker_conf) == 1

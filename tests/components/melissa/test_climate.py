@@ -330,7 +330,7 @@ async def test_melissa_fan_to.opp.opp):
 
 
 async def test.opp_mode_to_melissa(opp):
-    """Test for.opp operations to melssa."""
+    """Test for(opp operations to melssa."""
     with patch(
         "openpeerpower.components.melissa.climate._LOGGER.warning"
     ) as mocked_warning:

@@ -231,7 +231,7 @@ async def test_exclude_and_light_ids(
     )
 
     # Assert the entries were setup correctly.
-    config_entry = next(iter.opp.config_entries.async_entries(DOMAIN)))
+    config_entry = next(iter(opp.config_entries.async_entries(DOMAIN)))
     assert config_entry.options[CONF_LIGHTS] == [4, 10, 12]
     assert config_entry.options[CONF_EXCLUDE] == [1]
 

@@ -212,7 +212,7 @@ async def test_search(opp):
         ("automation", "automation.wled_entity"),
         ("automation", "automation.wled_device"),
     ):
-        searcher = search.Searcher.opp, device_reg, entity_reg)
+        searcher = search.Searcher(opp, device_reg, entity_reg)
         results = searcher.async_search(search_type, search_id)
         # Add the item we searched for, it's omitted from results
         results.setdefault(search_type, set()).add(search_id)
@@ -245,7 +245,7 @@ async def test_search(opp):
         ("scene", "scene.scene_wled_hue"),
         ("group", "group.wled_hue"),
     ):
-        searcher = search.Searcher.opp, device_reg, entity_reg)
+        searcher = search.Searcher(opp, device_reg, entity_reg)
         results = searcher.async_search(search_type, search_id)
         # Add the item we searched for, it's omitted from results
         results.setdefault(search_type, set()).add(search_id)
@@ -267,7 +267,7 @@ async def test_search(opp):
         ("script", "script.non_existing"),
         ("automation", "automation.non_existing"),
     ):
-        searcher = search.Searcher.opp, device_reg, entity_reg)
+        searcher = search.Searcher(opp, device_reg, entity_reg)
         assert searcher.async_search(search_type, search_id) == {}
 
 

@@ -1335,7 +1335,7 @@ def async_track_sunrise(
     opp: OpenPeerPower, action: Callable[..., None], offset: Optional[timedelta] = None
 ) -> CALLBACK_TYPE:
     """Add a listener that will fire a specified offset from sunrise daily."""
-    listener = SunListener.opp, OppJob(action), SUN_EVENT_SUNRISE, offset)
+    listener = SunListener(opp, OppJob(action), SUN_EVENT_SUNRISE, offset)
     listener.async_attach()
     return listener.async_detach
 
@@ -1349,7 +1349,7 @@ def async_track_sunset(
     opp: OpenPeerPower, action: Callable[..., None], offset: Optional[timedelta] = None
 ) -> CALLBACK_TYPE:
     """Add a listener that will fire a specified offset from sunset daily."""
-    listener = SunListener.opp, OppJob(action), SUN_EVENT_SUNSET, offset)
+    listener = SunListener(opp, OppJob(action), SUN_EVENT_SUNSET, offset)
     listener.async_attach()
     return listener.async_detach
 

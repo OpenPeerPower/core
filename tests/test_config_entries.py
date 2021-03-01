@@ -40,7 +40,7 @@ def mock_handlers():
 
 
 @pytest.fixture
-def manager.opp):
+def manager(opp):
     """Fixture of a loaded config manager."""
     manager = config_entries.ConfigEntries.opp, {})
     manager._entries = []
@@ -1236,7 +1236,7 @@ async def test_support_entry_unload(opp):
 
 async def test_reload_entry_entity_registry_ignores_no_entry(opp):
     """Test reloading entry in entity registry skips if no config entry linked."""
-    handler = config_entries.EntityRegistryDisabledHandler.opp)
+    handler = config_entries.EntityRegistryDisabledHandler(opp)
     registry = mock_registry(opp)
 
     # Test we ignore entities without config entry
@@ -1249,7 +1249,7 @@ async def test_reload_entry_entity_registry_ignores_no_entry(opp):
 
 async def test_reload_entry_entity_registry_works(opp):
     """Test we schedule an entry to be reloaded if disabled_by is updated."""
-    handler = config_entries.EntityRegistryDisabledHandler.opp)
+    handler = config_entries.EntityRegistryDisabledHandler(opp)
     handler.async_setup()
     registry = mock_registry(opp)
 

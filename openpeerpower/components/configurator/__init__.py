@@ -67,7 +67,7 @@ def async_request_config(
     instance = opp.data.get(_KEY_INSTANCE)
 
     if instance is None:
-        instance = opp.data[_KEY_INSTANCE] = Configurator.opp)
+        instance = opp.data[_KEY_INSTANCE] = Configurator(opp)
 
     request_id = instance.async_request_config(
         name, callback, description, submit_caption, fields, entity_picture

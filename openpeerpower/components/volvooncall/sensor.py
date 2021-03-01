@@ -6,7 +6,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     """Set up the Volvo sensors."""
     if discovery_info is None:
         return
-    async_add_entities([VolvoSensor.opp.data[DATA_KEY], *discovery_info)])
+    async_add_entities([VolvoSensor(opp.data[DATA_KEY], *discovery_info)])
 
 
 class VolvoSensor(VolvoEntity):

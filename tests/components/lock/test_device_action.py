@@ -32,7 +32,7 @@ def entity_reg(opp):
 
 async def test_get_actions_support_open(opp, device_reg, entity_reg):
     """Test we get the expected actions from a lock which supports open."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
@@ -76,7 +76,7 @@ async def test_get_actions_support_open(opp, device_reg, entity_reg):
 
 async def test_get_actions_not_support_open(opp, device_reg, entity_reg):
     """Test we get the expected actions from a lock which doesn't support open."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()

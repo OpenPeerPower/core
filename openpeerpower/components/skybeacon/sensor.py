@@ -49,7 +49,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     mac = config.get(CONF_MAC)
     _LOGGER.debug("Setting up...")
 
-    mon = Monitor.opp, mac, name)
+    mon = Monitor(opp, mac, name)
     add_entities([SkybeaconTemp(name, mon)])
     add_entities([SkybeaconHumid(name, mon)])
 

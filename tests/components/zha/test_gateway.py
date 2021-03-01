@@ -41,7 +41,7 @@ async def zha_dev_basic(opp, zha_device_restored, zigpy_dev_basic):
 
 
 @pytest.fixture
-async def coordinator.opp, zigpy_device_mock, zha_device_joined):
+async def coordinator(opp, zigpy_device_mock, zha_device_joined):
     """Test zha light platform."""
 
     zigpy_device = zigpy_device_mock(

@@ -86,7 +86,7 @@ async def async_setup_entry(opp, config_entry):
     if unit_system == CONF_UNIT_SYSTEM_IMPERIAL:
         radius = METRIC_SYSTEM.length(radius, LENGTH_MILES)
     # Create feed entity manager for all platforms.
-    manager = GeonetnzVolcanoFeedEntityManager.opp, config_entry, radius, unit_system)
+    manager = GeonetnzVolcanoFeedEntityManager(opp, config_entry, radius, unit_system)
     opp.data[DOMAIN][FEED][config_entry.entry_id] = manager
     _LOGGER.debug("Feed entity manager added for %s", config_entry.entry_id)
     await manager.async_init()

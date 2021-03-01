@@ -30,7 +30,7 @@ ACCESS_TOKEN = "superdoublesecret"
 
 
 @pytest.fixture
-def auth_header.opp_access_token):
+def auth_header(opp_access_token):
     """Generate an HTTP header with bearer token authorization."""
     return {AUTHORIZATION: f"Bearer  opp.access_token}"}
 

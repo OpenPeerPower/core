@@ -71,7 +71,7 @@ async def async_setup(opp, config):
 
 async def async_setup_entry(opp, config_entry):
     """Set up the Speedtest.net component."""
-    coordinator = SpeedTestDataCoordinator.opp, config_entry)
+    coordinator = SpeedTestDataCoordinator(opp, config_entry)
     await coordinator.async_setup()
 
     async def _enable_scheduled_speedtests(*_):

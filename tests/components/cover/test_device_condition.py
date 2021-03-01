@@ -45,7 +45,7 @@ def calls(opp):
 
 async def test_get_conditions(opp, device_reg, entity_reg):
     """Test we get the expected conditions from a cover."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[0]
 
@@ -96,7 +96,7 @@ async def test_get_conditions(opp, device_reg, entity_reg):
 
 async def test_get_conditions_set_pos(opp, device_reg, entity_reg):
     """Test we get the expected conditions from a cover."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[1]
 
@@ -154,7 +154,7 @@ async def test_get_conditions_set_pos(opp, device_reg, entity_reg):
 
 async def test_get_conditions_set_tilt_pos(opp, device_reg, entity_reg):
     """Test we get the expected conditions from a cover."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[2]
 
@@ -212,7 +212,7 @@ async def test_get_conditions_set_tilt_pos(opp, device_reg, entity_reg):
 
 async def test_get_condition_capabilities(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a cover condition."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[0]
 
@@ -239,7 +239,7 @@ async def test_get_condition_capabilities(opp, device_reg, entity_reg):
 
 async def test_get_condition_capabilities_set_pos(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a cover condition."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[1]
 
@@ -289,7 +289,7 @@ async def test_get_condition_capabilities_set_pos(opp, device_reg, entity_reg):
 
 async def test_get_condition_capabilities_set_tilt_pos(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a cover condition."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[2]
 
@@ -451,7 +451,7 @@ async def test_if_state(opp, calls):
 
 async def test_if_position(opp, calls):
     """Test for position conditions."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[1]
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
@@ -555,7 +555,7 @@ async def test_if_position(opp, calls):
 
 async def test_if_tilt_position(opp, calls):
     """Test for tilt position conditions."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[2]
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})

@@ -184,7 +184,7 @@ async def stop_opp():
     with patch("openpeerpower.core.OpenPeerPower", mock.opp):
         yield
 
-    for.opp_inst in created:
+    for opp_inst in created:
         if opp_inst.state == op.CoreState.stopped:
             continue
 
@@ -459,7 +459,7 @@ async def mqtt_mock(opp, mqtt_client_mock, mqtt_config):
     await opp.async_block_till_done()
 
     # Workaround: asynctest==0.13 fails on @functools.lru_cache
-    spec = dir.opp.data["mqtt"])
+    spec = dir(opp.data["mqtt"])
     spec.remove("_matching_subscriptions")
 
     mqtt_component_mock = MagicMock(

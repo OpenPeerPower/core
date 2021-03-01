@@ -51,7 +51,7 @@ async def test_valid_data(opp):
     """Test processing valid data."""
     sensor = plant.Plant("my plant", GOOD_CONFIG)
     sensor.entity_id = "sensor.mqtt_plant_battery"
-    sensor.opp = opp
+    sensor(opp = opp
     for reading, value in GOOD_DATA.items():
         sensor.state_changed(
             GOOD_CONFIG["sensors"][reading],
@@ -69,7 +69,7 @@ async def test_low_battery(opp):
     """Test processing with low battery data and limit set."""
     sensor = plant.Plant("other plant", GOOD_CONFIG)
     sensor.entity_id = "sensor.mqtt_plant_battery"
-    sensor.opp = opp
+    sensor(opp = opp
     assert sensor.state_attributes["problem"] == "none"
     sensor.state_changed(
         "sensor.mqtt_plant_battery",

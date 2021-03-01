@@ -52,7 +52,7 @@ async def async_setup_platform(opp, config, async_add_devices, discovery_info=No
     else:
         resolver = config[CONF_RESOLVER]
 
-    async_add_devices([WanIpSensor.opp, name, hostname, resolver, ipv6)], True)
+    async_add_devices([WanIpSensor(opp, name, hostname, resolver, ipv6)], True)
 
 
 class WanIpSensor(Entity):

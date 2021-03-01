@@ -126,7 +126,7 @@ async def test_heater_input_boolean(opp, setup_comp_1):
 
 async def test_heater_switch(opp, setup_comp_1):
     """Test heater switching test switch."""
-    platform = getattr.opp.components, "test.switch")
+    platform = getattr(opp.components, "test.switch")
     platform.init()
     switch_1 = platform.ENTITIES[1]
     assert await async_setup_component(

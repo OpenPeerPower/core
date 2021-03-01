@@ -92,7 +92,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Radarr platform."""
     conditions = config.get(CONF_MONITORED_CONDITIONS)
-    add_entities([RadarrSensor.opp, config, sensor) for sensor in conditions], True)
+    add_entities([RadarrSensor(opp, config, sensor) for sensor in conditions], True)
 
 
 class RadarrSensor(Entity):
@@ -113,7 +113,7 @@ class RadarrSensor(Entity):
         self.ssl = "https" if conf.get(CONF_SSL) else "http"
         self._state = None
         self.data = []
-        self._tz = timezone(str.opp.config.time_zone))
+        self._tz = timezone(str(opp.config.time_zone))
         self.type = sensor_type
         self._name = SENSOR_TYPES[self.type][0]
         if self.type == "diskspace":

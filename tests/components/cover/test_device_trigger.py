@@ -45,7 +45,7 @@ def calls(opp):
 
 async def test_get_triggers(opp, device_reg, entity_reg):
     """Test we get the expected triggers from a cover."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[0]
 
@@ -96,7 +96,7 @@ async def test_get_triggers(opp, device_reg, entity_reg):
 
 async def test_get_triggers_set_pos(opp, device_reg, entity_reg):
     """Test we get the expected triggers from a cover."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[1]
 
@@ -154,7 +154,7 @@ async def test_get_triggers_set_pos(opp, device_reg, entity_reg):
 
 async def test_get_triggers_set_tilt_pos(opp, device_reg, entity_reg):
     """Test we get the expected triggers from a cover."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[2]
 
@@ -212,7 +212,7 @@ async def test_get_triggers_set_tilt_pos(opp, device_reg, entity_reg):
 
 async def test_get_trigger_capabilities(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a cover trigger."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[0]
 
@@ -239,7 +239,7 @@ async def test_get_trigger_capabilities(opp, device_reg, entity_reg):
 
 async def test_get_trigger_capabilities_set_pos(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a cover trigger."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[1]
 
@@ -289,7 +289,7 @@ async def test_get_trigger_capabilities_set_pos(opp, device_reg, entity_reg):
 
 async def test_get_trigger_capabilities_set_tilt_pos(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a cover trigger."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[2]
 
@@ -461,7 +461,7 @@ async def test_if_fires_on_state_change(opp, calls):
 
 async def test_if_fires_on_position(opp, calls):
     """Test for position triggers."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[1]
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
@@ -588,7 +588,7 @@ async def test_if_fires_on_position(opp, calls):
 
 async def test_if_fires_on_tilt_position(opp, calls):
     """Test for tilt position triggers."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[1]
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})

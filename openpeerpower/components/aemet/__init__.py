@@ -28,7 +28,7 @@ async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
     longitude = config_entry.data[CONF_LONGITUDE]
 
     aemet = AEMET(api_key)
-    weather_coordinator = WeatherUpdateCoordinator.opp, aemet, latitude, longitude)
+    weather_coordinator = WeatherUpdateCoordinator(opp, aemet, latitude, longitude)
 
     await weather_coordinator.async_refresh()
 

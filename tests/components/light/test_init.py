@@ -108,7 +108,7 @@ async def test_methods(opp):
 
 async def test_services(opp, mock_light_profiles):
     """Test the provided services."""
-    platform = getattr.opp.components, "test.light")
+    platform = getattr(opp.components, "test.light")
 
     platform.init()
     assert await async_setup_component(
@@ -494,7 +494,7 @@ async def test_light_profiles(
     opp, mock_light_profiles, profile_name, expected_data, last_call
 ):
     """Test light profiles."""
-    platform = getattr.opp.components, "test.light")
+    platform = getattr(opp.components, "test.light")
     platform.init()
 
     profile_mock_data = {
@@ -537,7 +537,7 @@ async def test_light_profiles(
 
 async def test_default_profiles_group(opp, mock_light_profiles):
     """Test default turn-on light profile for all lights."""
-    platform = getattr.opp.components, "test.light")
+    platform = getattr(opp.components, "test.light")
     platform.init()
 
     assert await async_setup_component(
@@ -614,7 +614,7 @@ async def test_default_profiles_light(
     opp, mock_light_profiles, extra_call_params, expected_params
 ):
     """Test default turn-on light profile for a specific light."""
-    platform = getattr.opp.components, "test.light")
+    platform = getattr(opp.components, "test.light")
     platform.init()
 
     assert await async_setup_component(
@@ -659,7 +659,7 @@ async def test_default_profiles_light(
 
 async def test_light_context(opp, opp_admin_user):
     """Test that light context works."""
-    platform = getattr.opp.components, "test.light")
+    platform = getattr(opp.components, "test.light")
     platform.init()
     assert await async_setup_component(opp, "light", {"light": {"platform": "test"}})
     await opp.async_block_till_done()
@@ -683,7 +683,7 @@ async def test_light_context(opp, opp_admin_user):
 
 async def test_light_turn_on_auth(opp, opp_admin_user):
     """Test that light context works."""
-    platform = getattr.opp.components, "test.light")
+    platform = getattr(opp.components, "test.light")
     platform.init()
     assert await async_setup_component(opp, "light", {"light": {"platform": "test"}})
     await opp.async_block_till_done()
@@ -705,7 +705,7 @@ async def test_light_turn_on_auth(opp, opp_admin_user):
 
 async def test_light_brightness_step(opp):
     """Test that light context works."""
-    platform = getattr.opp.components, "test.light")
+    platform = getattr(opp.components, "test.light")
     platform.init()
     entity = platform.ENTITIES[0]
     entity.supported_features = light.SUPPORT_BRIGHTNESS
@@ -740,7 +740,7 @@ async def test_light_brightness_step(opp):
 
 async def test_light_brightness_pct_conversion(opp):
     """Test that light brightness percent conversion."""
-    platform = getattr.opp.components, "test.light")
+    platform = getattr(opp.components, "test.light")
     platform.init()
     entity = platform.ENTITIES[0]
     entity.supported_features = light.SUPPORT_BRIGHTNESS

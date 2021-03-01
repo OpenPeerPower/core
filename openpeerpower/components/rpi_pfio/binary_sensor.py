@@ -36,7 +36,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         invert_logic = port_entity[CONF_INVERT_LOGIC]
 
         binary_sensors.append(
-            RPiPFIOBinarySensor.opp, port, name, settle_time, invert_logic)
+            RPiPFIOBinarySensor(opp, port, name, settle_time, invert_logic)
         )
     add_entities(binary_sensors, True)
 

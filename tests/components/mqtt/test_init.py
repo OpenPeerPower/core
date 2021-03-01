@@ -1277,7 +1277,7 @@ async def test_debug_info_multiple_entities_triggers(opp, mqtt_mock):
 async def test_debug_info_non_mqtt(opp, device_reg, entity_reg):
     """Test we get empty debug_info for a device with non MQTT entities."""
     DOMAIN = "sensor"
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
 
     config_entry = MockConfigEntry(domain="test", data={})

@@ -43,7 +43,7 @@ def calls(opp):
 
 async def test_get_triggers(opp, device_reg, entity_reg):
     """Test we get the expected triggers from a binary_sensor."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
 
     config_entry = MockConfigEntry(domain="test", data={})
@@ -102,7 +102,7 @@ async def test_get_trigger_capabilities(opp, device_reg, entity_reg):
 
 async def test_if_fires_on_state_change(opp, calls):
     """Test for on and off triggers firing."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
     await opp.async_block_till_done()
@@ -186,7 +186,7 @@ async def test_if_fires_on_state_change(opp, calls):
 
 async def test_if_fires_on_state_change_with_for(opp, calls):
     """Test for triggers firing with delay."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
 
     platform.init()
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})

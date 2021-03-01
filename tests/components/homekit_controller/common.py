@@ -169,4 +169,4 @@ async def setup_test_component(opp, setup_accessory, capitalize=False, suffix=No
 
     config_entry, pairing = await setup_test_accessories(opp, [accessory])
     entity = "testdevice" if suffix is None else f"testdevice_{suffix}"
-    return Helper.opp, ".".join((domain, entity)), pairing, accessory, config_entry)
+    return Helper(opp, ".".join((domain, entity)), pairing, accessory, config_entry)

@@ -33,7 +33,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Atag integration from a config entry."""
     session = async_get_clientsession(opp)
 
-    coordinator = AtagDataUpdateCoordinator.opp, session, entry)
+    coordinator = AtagDataUpdateCoordinator(opp, session, entry)
     await coordinator.async_refresh()
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady

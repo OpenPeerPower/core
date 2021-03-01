@@ -89,7 +89,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     # devices as appropriate:
     paired_sensor_manager = opp.data[DOMAIN][DATA_PAIRED_SENSOR_MANAGER][
         entry.entry_id
-    ] = PairedSensorManager.opp, entry, client, api_lock)
+    ] = PairedSensorManager(opp, entry, client, api_lock)
     await paired_sensor_manager.async_process_latest_paired_sensor_uids()
 
     @callback

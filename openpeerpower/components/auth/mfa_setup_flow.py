@@ -48,7 +48,7 @@ class MfaFlowManager(data_entry_flow.FlowManager):
 
 async def async_setup_opp):
     """Init mfa setup flow manager."""
-    opp.data[DATA_SETUP_FLOW_MGR] = MfaFlowManager.opp)
+    opp.data[DATA_SETUP_FLOW_MGR] = MfaFlowManager(opp)
 
     opp.components.websocket_api.async_register_command(
         WS_TYPE_SETUP_MFA, websocket_setup_mfa, SCHEMA_WS_SETUP_MFA

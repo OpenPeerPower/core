@@ -62,7 +62,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry) -
         CONF_APPS not in opp.data[DOMAIN]
         and config_entry.data[CONF_DEVICE_CLASS] == DEVICE_CLASS_TV
     ):
-        coordinator = VizioAppsDataUpdateCoordinator.opp)
+        coordinator = VizioAppsDataUpdateCoordinator(opp)
         await coordinator.async_refresh()
         opp.data[DOMAIN][CONF_APPS] = coordinator
 

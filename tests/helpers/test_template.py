@@ -2353,7 +2353,7 @@ async def test_state_attributes(opp):
         "{{ states.sensor.test.last_changed }}",
         opp,
     )
-    assert tpl.async_render() == str.opp.states.get("sensor.test").last_changed)
+    assert tpl.async_render() == str(opp.states.get("sensor.test").last_changed)
 
     tpl = template.Template(
         "{{ states.sensor.test.object_id }}",

@@ -60,7 +60,7 @@ async def test_media_player_set_state(opp, hk_driver, events):
         {ATTR_SUPPORTED_FEATURES: 20873, ATTR_MEDIA_VOLUME_MUTED: False},
     )
     await opp.async_block_till_done()
-    acc = MediaPlayer.opp, hk_driver, "MediaPlayer", entity_id, 2, config)
+    acc = MediaPlayer(opp, hk_driver, "MediaPlayer", entity_id, 2, config)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -202,7 +202,7 @@ async def test_media_player_television(opp, hk_driver, events, caplog):
         },
     )
     await opp.async_block_till_done()
-    acc = TelevisionMediaPlayer.opp, hk_driver, "MediaPlayer", entity_id, 2, None)
+    acc = TelevisionMediaPlayer(opp, hk_driver, "MediaPlayer", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -374,7 +374,7 @@ async def test_media_player_television_basic(opp, hk_driver, events, caplog):
         {ATTR_DEVICE_CLASS: DEVICE_CLASS_TV, ATTR_SUPPORTED_FEATURES: 384},
     )
     await opp.async_block_till_done()
-    acc = TelevisionMediaPlayer.opp, hk_driver, "MediaPlayer", entity_id, 2, None)
+    acc = TelevisionMediaPlayer(opp, hk_driver, "MediaPlayer", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -410,7 +410,7 @@ async def test_media_player_television_supports_source_select_no_sources(
         {ATTR_DEVICE_CLASS: DEVICE_CLASS_TV, ATTR_SUPPORTED_FEATURES: 3469},
     )
     await opp.async_block_till_done()
-    acc = TelevisionMediaPlayer.opp, hk_driver, "MediaPlayer", entity_id, 2, None)
+    acc = TelevisionMediaPlayer(opp, hk_driver, "MediaPlayer", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 

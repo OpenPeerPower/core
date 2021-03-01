@@ -157,7 +157,7 @@ async def test_queue_listener():
     """Tests QueueListener firing events on Open Peer Power event bus."""
    opp = MagicMock()
 
-    queue_listener = QueueListener.opp)
+    queue_listener = QueueListener(opp)
     queue_listener.start()
 
     queue_entry = {

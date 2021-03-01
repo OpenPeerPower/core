@@ -126,7 +126,7 @@ class ZHAGateway:
             DEBUG_LEVEL_CURRENT: async_capture_log_levels(),
         }
         self.debug_enabled = False
-        self._log_relay_handler = LogRelayHandler.opp, self)
+        self._log_relay_handler = LogRelayHandler(opp, self)
         self._config_entry = config_entry
         self._unsubs = []
 

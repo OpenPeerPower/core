@@ -373,7 +373,7 @@ async def _async_process_config(opp, config, component):
                 icon=icon,
                 object_id=object_id,
                 mode=mode,
-                order.opp.data[GROUP_ORDER],
+                order(opp.data[GROUP_ORDER],
             )
         )
 

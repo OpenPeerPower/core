@@ -40,7 +40,7 @@ def calls(opp):
 
 async def test_get_conditions(opp, device_reg, entity_reg):
     """Test we get the expected conditions from a sensor."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
 
     config_entry = MockConfigEntry(domain="test", data={})
@@ -78,7 +78,7 @@ async def test_get_conditions(opp, device_reg, entity_reg):
 
 async def test_get_condition_capabilities(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a sensor condition."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
 
     config_entry = MockConfigEntry(domain="test", data={})
@@ -124,7 +124,7 @@ async def test_get_condition_capabilities(opp, device_reg, entity_reg):
 
 async def test_get_condition_capabilities_none(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a sensor condition."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
 
     config_entry = MockConfigEntry(domain="test", data={})
@@ -160,7 +160,7 @@ async def test_get_condition_capabilities_none(opp, device_reg, entity_reg):
 
 async def test_if_state_not_above_below(opp, calls, caplog):
     """Test for bad value conditions."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
 
     platform.init()
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
@@ -194,7 +194,7 @@ async def test_if_state_not_above_below(opp, calls, caplog):
 
 async def test_if_state_above(opp, calls):
     """Test for value conditions."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
 
     platform.init()
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
@@ -252,7 +252,7 @@ async def test_if_state_above(opp, calls):
 
 async def test_if_state_below(opp, calls):
     """Test for value conditions."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
 
     platform.init()
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
@@ -310,7 +310,7 @@ async def test_if_state_below(opp, calls):
 
 async def test_if_state_between(opp, calls):
     """Test for value conditions."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
 
     platform.init()
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})

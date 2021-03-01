@@ -72,7 +72,7 @@ def async_generate_entity_id(
         return ensure_unique_string(preferred_string, current_ids)
 
     if opp is None:
-        raise ValueError("Missing required parameter current_ids or.opp")
+        raise ValueError("Missing required parameter current_ids or opp")
 
     test_string = preferred_string
     tries = 1

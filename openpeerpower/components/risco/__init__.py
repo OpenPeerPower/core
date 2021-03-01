@@ -46,7 +46,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         return False
 
     scan_interval = entry.options.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)
-    coordinator = RiscoDataUpdateCoordinator.opp, risco, scan_interval)
+    coordinator = RiscoDataUpdateCoordinator(opp, risco, scan_interval)
     await coordinator.async_refresh()
     events_coordinator = RiscoEventsDataUpdateCoordinator(
         opp, risco, entry.entry_id, 60

@@ -63,7 +63,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         devices.append(EddystoneTemp(name, namespace, instance))
 
     if devices:
-        mon = Monitor.opp, devices, bt_device_id)
+        mon = Monitor(opp, devices, bt_device_id)
 
         def monitor_stop(_service_or_event):
             """Stop the monitor thread."""

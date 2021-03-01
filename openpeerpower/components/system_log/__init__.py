@@ -206,7 +206,7 @@ async def async_setup(opp, config):
     queue_handler.setLevel(logging.WARN)
     logging.root.addHandler(queue_handler)
 
-    handler = LogErrorHandler.opp, conf[CONF_MAX_ENTRIES], conf[CONF_FIRE_EVENT])
+    handler = LogErrorHandler(opp, conf[CONF_MAX_ENTRIES], conf[CONF_FIRE_EVENT])
 
     opp.data[DOMAIN] = handler
 

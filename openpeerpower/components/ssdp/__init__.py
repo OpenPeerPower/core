@@ -44,7 +44,7 @@ async def async_setup(opp, config):
     """Set up the SSDP integration."""
 
     async def initialize(_):
-        scanner = Scanner.opp, await async_get_ssdp(opp))
+        scanner = Scanner(opp, await async_get_ssdp(opp))
         await scanner.async_scan(None)
         async_track_time_interval(opp, scanner.async_scan, SCAN_INTERVAL)
 

@@ -42,7 +42,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         )
         devices.append(device)
 
-    coordinators = [DeviceDataUpdateCoordinator.opp, d) for d in devices]
+    coordinators = [DeviceDataUpdateCoordinator(opp, d) for d in devices]
     await asyncio.gather(*[x.async_refresh() for x in coordinators])
 
     opp.data[DOMAIN][COORDINATOR] = coordinators

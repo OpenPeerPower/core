@@ -46,7 +46,7 @@ async def async_setup_opp: OpenPeerPowerType, config: Dict) -> bool:
 
 async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     """Set up Roku from a config entry."""
-    coordinator = RokuDataUpdateCoordinator.opp, host=entry.data[CONF_HOST])
+    coordinator = RokuDataUpdateCoordinator(opp, host=entry.data[CONF_HOST])
     await coordinator.async_refresh()
 
     if not coordinator.last_update_success:

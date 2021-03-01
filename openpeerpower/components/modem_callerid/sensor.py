@@ -41,7 +41,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         _LOGGER.error("Unable to initialize modem")
         return
 
-    add_entities([ModemCalleridSensor.opp, name, port, modem)])
+    add_entities([ModemCalleridSensor(opp, name, port, modem)])
 
 
 class ModemCalleridSensor(Entity):

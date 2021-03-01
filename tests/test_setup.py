@@ -443,8 +443,8 @@ class TestSetup:
 
         def component1_setup_opp, config):
             """Set up mock component."""
-            discovery.discover.opp, "test_component2", {}, "test_component2", {})
-            discovery.discover.opp, "test_component3", {}, "test_component3", {})
+            discovery.discover(opp, "test_component2", {}, "test_component2", {})
+            discovery.discover(opp, "test_component3", {}, "test_component3", {})
             return True
 
         def component_track_setup_opp, config):

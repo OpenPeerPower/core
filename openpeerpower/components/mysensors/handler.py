@@ -40,7 +40,7 @@ async def handle_internal(
     handler = HANDLERS.get(internal.name)
     if handler is None:
         return
-    await handler.opp, gateway_id, msg)
+    await handler(opp, gateway_id, msg)
 
 
 @HANDLERS.register("I_BATTERY_LEVEL")

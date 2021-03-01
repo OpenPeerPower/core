@@ -97,7 +97,7 @@ async def async_setup_entry(opp, config_entry):
     if opp.config.units.name == CONF_UNIT_SYSTEM_IMPERIAL:
         radius = METRIC_SYSTEM.length(radius, LENGTH_MILES)
     # Create feed entity manager for all platforms.
-    manager = GeonetnzQuakesFeedEntityManager.opp, config_entry, radius)
+    manager = GeonetnzQuakesFeedEntityManager(opp, config_entry, radius)
     feeds[config_entry.entry_id] = manager
     _LOGGER.debug("Feed entity manager added for %s", config_entry.entry_id)
     await manager.async_init()

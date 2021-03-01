@@ -33,7 +33,7 @@ def entity_reg(opp):
 
 async def test_get_actions(opp, device_reg, entity_reg):
     """Test we get the expected actions from a cover."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[0]
 
@@ -75,7 +75,7 @@ async def test_get_actions(opp, device_reg, entity_reg):
 
 async def test_get_actions_tilt(opp, device_reg, entity_reg):
     """Test we get the expected actions from a cover."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[3]
 
@@ -129,7 +129,7 @@ async def test_get_actions_tilt(opp, device_reg, entity_reg):
 
 async def test_get_actions_set_pos(opp, device_reg, entity_reg):
     """Test we get the expected actions from a cover."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[1]
 
@@ -159,7 +159,7 @@ async def test_get_actions_set_pos(opp, device_reg, entity_reg):
 
 async def test_get_actions_set_tilt_pos(opp, device_reg, entity_reg):
     """Test we get the expected actions from a cover."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[2]
 
@@ -207,7 +207,7 @@ async def test_get_actions_set_tilt_pos(opp, device_reg, entity_reg):
 
 async def test_get_action_capabilities(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a cover action."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[0]
 
@@ -235,7 +235,7 @@ async def test_get_action_capabilities(opp, device_reg, entity_reg):
 
 async def test_get_action_capabilities_set_pos(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a cover action."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[1]
 
@@ -278,7 +278,7 @@ async def test_get_action_capabilities_set_pos(opp, device_reg, entity_reg):
 
 async def test_get_action_capabilities_set_tilt_pos(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a cover action."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     ent = platform.ENTITIES[2]
 
@@ -321,7 +321,7 @@ async def test_get_action_capabilities_set_tilt_pos(opp, device_reg, entity_reg)
 
 async def test_action(opp):
     """Test for cover actions."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
 
@@ -387,7 +387,7 @@ async def test_action(opp):
 
 async def test_action_tilt(opp):
     """Test for cover tilt actions."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
 
@@ -440,7 +440,7 @@ async def test_action_tilt(opp):
 
 async def test_action_set_position(opp):
     """Test for cover set position actions."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
 

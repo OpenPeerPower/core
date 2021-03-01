@@ -81,7 +81,7 @@ SUPPORTED_OPTIONS = [CONF_CODEC, CONF_VOICE, CONF_EMOTION, CONF_SPEED]
 
 async def async_get_engine(opp, config, discovery_info=None):
     """Set up VoiceRSS speech component."""
-    return YandexSpeechKitProvider.opp, config)
+    return YandexSpeechKitProvider(opp, config)
 
 
 class YandexSpeechKitProvider(Provider):

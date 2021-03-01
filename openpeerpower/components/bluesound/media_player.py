@@ -137,7 +137,7 @@ def _add_player(opp, async_add_entities, host, port=None, name=None):
 
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _stop_polling)
 
-    player = BluesoundPlayer.opp, host, port, name, _add_player_cb)
+    player = BluesoundPlayer(opp, host, port, name, _add_player_cb)
     opp.data[DATA_BLUESOUND].append(player)
 
     if opp.is_running:

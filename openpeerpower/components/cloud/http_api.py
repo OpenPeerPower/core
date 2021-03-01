@@ -337,7 +337,7 @@ def _require_cloud_login(handler):
             )
             return
 
-        handler.opp, connection, msg)
+        handler(opp, connection, msg)
 
     return with_cloud_auth
 

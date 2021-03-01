@@ -20,9 +20,9 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     """Set up the Demo covers."""
     async_add_entities(
         [
-            DemoCover.opp, "cover_1", "Kitchen Window"),
-            DemoCover.opp, "cover_2", "Hall Window", 10),
-            DemoCover.opp, "cover_3", "Living Room Window", 70, 50),
+            DemoCover(opp, "cover_1", "Kitchen Window"),
+            DemoCover(opp, "cover_2", "Hall Window", 10),
+            DemoCover(opp, "cover_3", "Living Room Window", 70, 50),
             DemoCover(
                 opp,
                 "cover_4",

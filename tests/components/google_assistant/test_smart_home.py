@@ -749,7 +749,7 @@ async def test_device_class_switch(opp, device_class, google_type):
         assumed=False,
         device_class=device_class,
     )
-    sensor.opp = opp
+    sensor(opp = opp
     sensor.entity_id = "switch.demo_sensor"
     await sensor.async_update_op_state()
 
@@ -794,7 +794,7 @@ async def test_device_class_binary_sensor(opp, device_class, google_type):
     sensor = DemoBinarySensor(
         None, "Demo Sensor", state=False, device_class=device_class
     )
-    sensor.opp = opp
+    sensor(opp = opp
     sensor.entity_id = "binary_sensor.demo_sensor"
     await sensor.async_update_op_state()
 
@@ -838,7 +838,7 @@ async def test_device_class_binary_sensor(opp, device_class, google_type):
 async def test_device_class_cover(opp, device_class, google_type):
     """Test that a binary entity syncs to the correct device type."""
     sensor = DemoCover(None, opp, "Demo Sensor", device_class=device_class)
-    sensor.opp = opp
+    sensor(opp = opp
     sensor.entity_id = "cover.demo_sensor"
     await sensor.async_update_op_state()
 
@@ -883,7 +883,7 @@ async def test_device_class_cover(opp, device_class, google_type):
 async def test_device_media_player(opp, device_class, google_type):
     """Test that a binary entity syncs to the correct device type."""
     sensor = AbstractDemoPlayer("Demo", device_class=device_class)
-    sensor.opp = opp
+    sensor(opp = opp
     sensor.entity_id = "media_player.demo"
     await sensor.async_update_op_state()
 

@@ -27,7 +27,7 @@ async def test_service_show_view(opp, mock_zeroconf):
 
     assert len(calls) == 1
     controller, entity_id, view_path, url_path = calls[0]
-    assert controller.opp_url == "https://example.com"
+    assert controller(opp_url == "https://example.com"
     assert controller.client_id is None
     # Verify user did not accidentally submit their dev app id
     assert controller.supporting_app_id == "B12CE3CA"
@@ -87,7 +87,7 @@ async def test_use_cloud_url(opp, mock_zeroconf):
 
     assert len(calls) == 1
     controller = calls[0][0]
-    assert controller.opp_url == "https://something.nabu.casa"
+    assert controller(opp_url == "https://something.nabu.casa"
 
 
 async def test_remove_entry(opp, mock_zeroconf):

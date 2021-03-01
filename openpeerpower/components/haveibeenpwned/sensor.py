@@ -109,7 +109,7 @@ class HaveIBeenPwnedSensor(Entity):
         # Schedule a forced update 5 seconds in the future if the update above
         # returned no data for this sensors email. This is mainly to make sure
         # that we don't get HTTP Error "too many requests" and to have initial
-        # data after.opp startup once we have the data it will update as
+        # data after(opp startup once we have the data it will update as
         # normal using update
         if self._email not in self._data.data:
             track_point_in_time(

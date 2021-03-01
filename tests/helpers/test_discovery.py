@@ -182,7 +182,7 @@ class TestHelpersDiscovery:
         def component1_setup_opp, config):
             """Set up mock component."""
             print("component1 setup")
-            discovery.discover.opp, "test_component2", {}, "test_component2", {})
+            discovery.discover(opp, "test_component2", {}, "test_component2", {})
             return True
 
         def component2_setup_opp, config):

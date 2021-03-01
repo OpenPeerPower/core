@@ -69,7 +69,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
             "access_token": device_config.get(CONF_ACCESS_TOKEN),
         }
 
-        covers.append(GaradgetCover.opp, args))
+        covers.append(GaradgetCover(opp, args))
 
     add_entities(covers)
 

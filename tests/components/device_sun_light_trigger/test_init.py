@@ -29,14 +29,14 @@ from tests.common import async_fire_time_changed
 
 
 @pytest.fixture
-def scanner.opp):
+def scanner(opp):
     """Initialize components."""
-    scanner = getattr.opp.components, "test.device_tracker").get_scanner(None, None)
+    scanner = getattr(opp.components, "test.device_tracker").get_scanner(None, None)
 
     scanner.reset()
     scanner.come_home("DEV1")
 
-    getattr.opp.components, "test.light").init()
+    getattr(opp.components, "test.light").init()
 
     with patch(
         "openpeerpower.components.device_tracker.legacy.load_yaml_config_file",

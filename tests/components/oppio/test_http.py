@@ -106,7 +106,7 @@ async def test_forward_log_request.oppio_client, aioclient_mock):
     assert len(aioclient_mock.mock_calls) == 1
 
 
-async def test_bad_gateway_when_cannot_find_supervisor.oppio_client):
+async def test_bad_gateway_when_cannot_find_supervisor(oppio_client):
     """Test we get a bad gateway error if we can't find supervisor."""
     with patch(
         "openpeerpower.components.oppio.http.async_timeout.timeout",

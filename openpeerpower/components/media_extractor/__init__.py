@@ -43,7 +43,7 @@ def setup(opp, config):
 
     def play_media(call):
         """Get stream URL and send it to the play_media service."""
-        MediaExtractor.opp, config[DOMAIN], call.data).extract_and_send()
+        MediaExtractor(opp, config[DOMAIN], call.data).extract_and_send()
 
     opp.services.register(
         DOMAIN,

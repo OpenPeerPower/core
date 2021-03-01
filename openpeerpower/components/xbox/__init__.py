@@ -92,7 +92,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         consoles.dict(),
     )
 
-    coordinator = XboxUpdateCoordinator.opp, client, consoles)
+    coordinator = XboxUpdateCoordinator(opp, client, consoles)
     await coordinator.async_refresh()
 
     opp.data[DOMAIN][entry.entry_id] = {

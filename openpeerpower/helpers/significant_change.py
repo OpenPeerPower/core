@@ -70,7 +70,7 @@ async def create_checker(
 ) -> SignificantlyChangedChecker:
     """Create a significantly changed checker for a domain."""
     await _initialize(opp)
-    return SignificantlyChangedChecker.opp, extra_significant_check)
+    return SignificantlyChangedChecker(opp, extra_significant_check)
 
 
 # Marked as singleton so multiple calls all wait for same output.

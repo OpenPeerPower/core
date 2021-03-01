@@ -107,7 +107,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
     client = GeniusHub(*args, **kwargs, session=async_get_clientsession(opp))
 
-    broker = opp.data[DOMAIN]["broker"] = GeniusBroker.opp, client, hub_uid)
+    broker = opp.data[DOMAIN]["broker"] = GeniusBroker(opp, client, hub_uid)
 
     try:
         await client.update()

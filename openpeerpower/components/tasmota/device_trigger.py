@@ -66,7 +66,7 @@ class TriggerInstance:
             self.remove()
         # Note: No lock needed, event_trigger.async_attach_trigger is an synchronous function
         self.remove = await event_trigger.async_attach_trigger(
-            self.trigger.opp,
+            self.trigger(opp,
             event_config,
             self.action,
             self.automation_info,

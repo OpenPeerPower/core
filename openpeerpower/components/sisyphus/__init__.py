@@ -46,7 +46,7 @@ async def async_setup(opp, config):
 
     async def add_table(host, name=None):
         """Add platforms for a single table with the given hostname."""
-        tables[host] = TableHolder.opp, session, host, name)
+        tables[host] = TableHolder(opp, session, host, name)
 
         opp.async_create_task(
             async_load_platform(opp, "light", DOMAIN, {CONF_HOST: host}, config)

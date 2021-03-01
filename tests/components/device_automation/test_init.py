@@ -618,7 +618,7 @@ def calls(opp):
 async def test_automation_with_sub_condition(opp, calls):
     """Test automation with device condition under and/or conditions."""
     DOMAIN = "light"
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
 
     platform.init()
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})

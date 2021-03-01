@@ -90,7 +90,7 @@ def setup_scanner(opp, config, see, discovery_info=None):
     """Set up device scanner."""
     config = opp.data[DOMAIN]["config"]
     apis = opp.data[DOMAIN]["apis"]
-    Life360Scanner.opp, config, see, apis)
+    Life360Scanner(opp, config, see, apis)
     return True
 
 

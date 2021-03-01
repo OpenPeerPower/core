@@ -40,7 +40,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_scanner(opp, config: ConfigType, see, discovery_info=None):
     """Set up the Google Maps Location sharing scanner."""
-    scanner = GoogleMapsScanner.opp, config, see)
+    scanner = GoogleMapsScanner(opp, config, see)
     return scanner.success_init
 
 

@@ -51,7 +51,7 @@ async def test_garage_door_open_close(opp, hk_driver, events):
 
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
-    acc = GarageDoorOpener.opp, hk_driver, "Garage Door", entity_id, 2, None)
+    acc = GarageDoorOpener(opp, hk_driver, "Garage Door", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 

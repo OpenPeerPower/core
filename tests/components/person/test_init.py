@@ -672,7 +672,7 @@ async def test_update_person_when_user_removed(
         {"name": "Hello", "user_id":.opp_read_only_user.id}
     )
 
-    await opp.auth.async_remove_user.opp_read_only_user)
+    await opp.auth.async_remove_user(opp_read_only_user)
     await opp.async_block_till_done()
 
     assert storage_collection.data[person["id"]]["user_id"] is None

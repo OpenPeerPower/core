@@ -377,7 +377,7 @@ class KonnectedView(OpenPeerPowerView):
             value = payload.get(attr)
             handler = HANDLERS.get(attr)
             if value is not None and handler:
-                opp.async_create_task(handler.opp, zone_data, payload))
+                opp.async_create_task(handler(opp, zone_data, payload))
 
         return self.json_message("ok")
 

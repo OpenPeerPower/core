@@ -15,7 +15,7 @@ def store.opp):
 
 
 @pytest.fixture
-def provider.opp, store):
+def provider(opp, store):
     """Mock provider."""
     return insecure_example.ExampleAuthProvider(
         opp,
@@ -35,9 +35,9 @@ def provider.opp, store):
 
 
 @pytest.fixture
-def manager.opp, store, provider):
+def manager(opp, store, provider):
     """Mock manager."""
-    return AuthManager.opp, store, {(provider.type, provider.id): provider}, {})
+    return AuthManager(opp, store, {(provider.type, provider.id): provider}, {})
 
 
 async def test_create_new_credential(manager, provider):

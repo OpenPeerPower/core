@@ -43,7 +43,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         return False
 
     async_add_entities(
-        [TimeDateSensor.opp, variable) for variable in config[CONF_DISPLAY_OPTIONS]]
+        [TimeDateSensor(opp, variable) for variable in config[CONF_DISPLAY_OPTIONS]]
     )
 
 

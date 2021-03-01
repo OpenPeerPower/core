@@ -43,7 +43,7 @@ def calls(opp):
 
 async def test_get_conditions(opp, device_reg, entity_reg):
     """Test we get the expected conditions from a binary_sensor."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
 
     config_entry = MockConfigEntry(domain="test", data={})
@@ -102,7 +102,7 @@ async def test_get_condition_capabilities(opp, device_reg, entity_reg):
 
 async def test_if_state(opp, calls):
     """Test for turn_on and turn_off conditions."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
 
     platform.init()
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})
@@ -179,7 +179,7 @@ async def test_if_fires_on_for_condition(opp, calls):
     point2 = point1 + timedelta(seconds=10)
     point3 = point2 + timedelta(seconds=10)
 
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
 
     platform.init()
     assert await async_setup_component(opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "test"}})

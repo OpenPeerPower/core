@@ -11,7 +11,7 @@ ICON = "mdi:speedometer"
 
 async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Fast.com sensor."""
-    async_add_entities([SpeedtestSensor.opp.data[FASTDOTCOM_DOMAIN])])
+    async_add_entities([SpeedtestSensor(opp.data[FASTDOTCOM_DOMAIN])])
 
 
 class SpeedtestSensor(RestoreEntity):

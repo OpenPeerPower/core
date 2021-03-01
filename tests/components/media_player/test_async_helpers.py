@@ -140,7 +140,7 @@ class SimpleMediaPlayer(mp.MediaPlayerEntity):
 
 
 @pytest.fixture(params=[ExtendedMediaPlayer, SimpleMediaPlayer])
-def player.opp, request):
+def player(opp, request):
     """Return a media player."""
     return request.param.opp)
 

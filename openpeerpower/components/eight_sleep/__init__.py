@@ -110,7 +110,7 @@ async def async_setup(opp, config):
         _LOGGER.error("Timezone is not set in Open Peer Power")
         return False
 
-    timezone = str.opp.config.time_zone)
+    timezone = str(opp.config.time_zone)
 
     eight = EightSleep(user, password, timezone, partner, None, opp.loop)
 

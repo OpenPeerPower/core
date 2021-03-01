@@ -28,7 +28,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     host = entry.data[CONF_HOST]
     port = entry.data[CONF_PORT]
 
-    coordinator = CertExpiryDataUpdateCoordinator.opp, host, port)
+    coordinator = CertExpiryDataUpdateCoordinator(opp, host, port)
     await coordinator.async_refresh()
 
     if not coordinator.last_update_success:

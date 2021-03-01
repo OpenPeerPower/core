@@ -59,7 +59,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     data = CommandSensorData.opp, command, command_timeout)
 
     add_entities(
-        [CommandSensor.opp, data, name, unit, value_template, json_attributes)], True
+        [CommandSensor(opp, data, name, unit, value_template, json_attributes)], True
     )
 
 

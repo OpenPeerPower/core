@@ -81,7 +81,7 @@ async def test_if_fires_on_entity_change(opp, calls):
     assert len(calls) == 1
 
 
-async def test_if_fires_on_entity_change_with_from_filter.opp.calls):
+async def test_if_fires_on_entity_change_with_from_filter(opp.calls):
     """Test for firing on entity change with filter."""
     assert await async_setup_component(
         opp,
@@ -314,7 +314,7 @@ async def test_if_fails_setup_if_from_boolean_value.opp.calls):
         )
 
 
-async def test_if_fails_setup_bad_for.opp.calls):
+async def test_if_fails_setup_bad_for(opp.calls):
     """Test for setup failure for bad for."""
     assert await async_setup_component(
         opp,
@@ -338,7 +338,7 @@ async def test_if_fails_setup_bad_for.opp.calls):
         assert mock_logger.error.called
 
 
-async def test_if_not_fires_on_entity_change_with_for.opp.calls):
+async def test_if_not_fires_on_entity_change_with_for(opp.calls):
     """Test for not firing on entity change with for."""
     assert await async_setup_component(
         opp,
@@ -483,7 +483,7 @@ async def test_if_fires_on_entity_change_with_for_multiple_force_update.opp.call
         assert len(calls) == 1
 
 
-async def test_if_fires_on_entity_change_with_for.opp.calls):
+async def test_if_fires_on_entity_change_with_for(opp.calls):
     """Test for firing on entity change with for."""
     assert await async_setup_component(
         opp,
@@ -769,7 +769,7 @@ async def test_if_fails_setup_for_without_entity.opp.calls):
         )
 
 
-async def test_wait_template_with_trigger.opp.calls):
+async def test_wait_template_with_trigger(opp.calls):
     """Test using wait template with 'trigger.entity_id'."""
     assert await async_setup_component(
         opp,
@@ -1011,7 +1011,7 @@ async def test_if_fires_on_change_with_for_template_4.opp.calls):
     assert len(calls) == 1
 
 
-async def test_if_fires_on_change_from_with_for.opp.calls):
+async def test_if_fires_on_change_from_with_for(opp.calls):
     """Test for firing on change with from/for."""
     assert await async_setup_component(
         opp,
@@ -1040,7 +1040,7 @@ async def test_if_fires_on_change_from_with_for.opp.calls):
     assert len(calls) == 1
 
 
-async def test_if_not_fires_on_change_from_with_for.opp.calls):
+async def test_if_not_fires_on_change_from_with_for(opp.calls):
     """Test for firing on change with from/for."""
     assert await async_setup_component(
         opp,

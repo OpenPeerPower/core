@@ -39,7 +39,7 @@ async def test_temperature(opp, hk_driver):
 
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
-    acc = TemperatureSensor.opp, hk_driver, "Temperature", entity_id, 2, None)
+    acc = TemperatureSensor(opp, hk_driver, "Temperature", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -73,7 +73,7 @@ async def test_humidity(opp, hk_driver):
 
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
-    acc = HumiditySensor.opp, hk_driver, "Humidity", entity_id, 2, None)
+    acc = HumiditySensor(opp, hk_driver, "Humidity", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -97,7 +97,7 @@ async def test_air_quality(opp, hk_driver):
 
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
-    acc = AirQualitySensor.opp, hk_driver, "Air Quality", entity_id, 2, None)
+    acc = AirQualitySensor(opp, hk_driver, "Air Quality", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -129,7 +129,7 @@ async def test_co(opp, hk_driver):
 
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
-    acc = CarbonMonoxideSensor.opp, hk_driver, "CO", entity_id, 2, None)
+    acc = CarbonMonoxideSensor(opp, hk_driver, "CO", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -169,7 +169,7 @@ async def test_co2.opp, hk_driver):
 
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
-    acc = CarbonDioxideSensor.opp, hk_driver, "CO2", entity_id, 2, None)
+    acc = CarbonDioxideSensor(opp, hk_driver, "CO2", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -209,7 +209,7 @@ async def test_light(opp, hk_driver):
 
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
-    acc = LightSensor.opp, hk_driver, "Light", entity_id, 2, None)
+    acc = LightSensor(opp, hk_driver, "Light", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -234,7 +234,7 @@ async def test_binary(opp, hk_driver):
     opp.states.async_set(entity_id, STATE_UNKNOWN, {ATTR_DEVICE_CLASS: "opening"})
     await opp.async_block_till_done()
 
-    acc = BinarySensor.opp, hk_driver, "Window Opening", entity_id, 2, None)
+    acc = BinarySensor(opp, hk_driver, "Window Opening", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -273,7 +273,7 @@ async def test_motion_uses_bool(opp, hk_driver):
     )
     await opp.async_block_till_done()
 
-    acc = BinarySensor.opp, hk_driver, "Motion Sensor", entity_id, 2, None)
+    acc = BinarySensor(opp, hk_driver, "Motion Sensor", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -317,7 +317,7 @@ async def test_binary_device_classes(opp, hk_driver):
         opp.states.async_set(entity_id, STATE_OFF, {ATTR_DEVICE_CLASS: device_class})
         await opp.async_block_till_done()
 
-        acc = BinarySensor.opp, hk_driver, "Binary Sensor", entity_id, 2, None)
+        acc = BinarySensor(opp, hk_driver, "Binary Sensor", entity_id, 2, None)
         assert acc.get_service(service).display_name == service
         assert acc.char_detected.display_name == char
 

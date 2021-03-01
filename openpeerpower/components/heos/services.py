@@ -25,7 +25,7 @@ HEOS_SIGN_IN_SCHEMA = vol.Schema(
 HEOS_SIGN_OUT_SCHEMA = vol.Schema({})
 
 
-def register.opp: OpenPeerPowerType, controller: Heos):
+def register(opp: OpenPeerPowerType, controller: Heos):
     """Register HEOS services."""
     opp.services.async_register(
         DOMAIN,

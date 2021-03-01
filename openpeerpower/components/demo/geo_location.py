@@ -39,7 +39,7 @@ SOURCE = "demo"
 
 def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the Demo geolocations."""
-    DemoManager.opp, add_entities)
+    DemoManager(opp, add_entities)
 
 
 class DemoManager:

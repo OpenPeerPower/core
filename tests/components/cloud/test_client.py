@@ -170,7 +170,7 @@ async def test_webhook_msg(opp, caplog):
 
     received = []
 
-    async def handler.opp, webhook_id, request):
+    async def handler(opp, webhook_id, request):
         """Handle a webhook."""
         received.append(request)
         return web.json_response({"from": "handler"})

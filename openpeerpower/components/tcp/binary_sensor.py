@@ -8,7 +8,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({})
 
 def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the TCP binary sensor."""
-    add_entities([TcpBinarySensor.opp, config)])
+    add_entities([TcpBinarySensor(opp, config)])
 
 
 class TcpBinarySensor(BinarySensorEntity, TcpSensor):

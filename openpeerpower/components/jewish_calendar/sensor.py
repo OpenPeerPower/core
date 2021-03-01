@@ -19,11 +19,11 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         return
 
     sensors = [
-        JewishCalendarSensor.opp.data[DOMAIN], sensor, sensor_info)
+        JewishCalendarSensor(opp.data[DOMAIN], sensor, sensor_info)
         for sensor, sensor_info in SENSOR_TYPES["data"].items()
     ]
     sensors.extend(
-        JewishCalendarTimeSensor.opp.data[DOMAIN], sensor, sensor_info)
+        JewishCalendarTimeSensor(opp.data[DOMAIN], sensor, sensor_info)
         for sensor, sensor_info in SENSOR_TYPES["time"].items()
     )
 

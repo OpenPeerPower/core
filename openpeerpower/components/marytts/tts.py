@@ -39,7 +39,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def get_engine(opp, config, discovery_info=None):
     """Set up MaryTTS speech component."""
-    return MaryTTSProvider.opp, config)
+    return MaryTTSProvider(opp, config)
 
 
 class MaryTTSProvider(Provider):

@@ -25,7 +25,7 @@ def get_astral_location(opp: OpenPeerPowerType) -> astral.Location:
 
     latitude = opp.config.latitude
     longitude = opp.config.longitude
-    timezone = str.opp.config.time_zone)
+    timezone = str(opp.config.time_zone)
     elevation = opp.config.elevation
     info = ("", "", latitude, longitude, timezone, elevation)
 

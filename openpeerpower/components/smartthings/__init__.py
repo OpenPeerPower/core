@@ -154,7 +154,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
         )
 
         # Setup device broker
-        broker = DeviceBroker.opp, entry, token, smart_app, devices, scenes)
+        broker = DeviceBroker(opp, entry, token, smart_app, devices, scenes)
         broker.connect()
         opp.data[DOMAIN][DATA_BROKERS][entry.entry_id] = broker
 

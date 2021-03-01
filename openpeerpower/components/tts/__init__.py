@@ -109,7 +109,7 @@ SCHEMA_SERVICE_CLEAR_CACHE = vol.Schema({})
 
 async def async_setup(opp, config):
     """Set up TTS."""
-    tts = SpeechManager.opp)
+    tts = SpeechManager(opp)
 
     try:
         conf = config[DOMAIN][0] if config.get(DOMAIN, []) else {}

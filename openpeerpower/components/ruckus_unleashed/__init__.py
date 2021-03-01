@@ -45,7 +45,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     except ConnectionError as error:
         raise ConfigEntryNotReady from error
 
-    coordinator = RuckusUnleashedDataUpdateCoordinator.opp, ruckus=ruckus)
+    coordinator = RuckusUnleashedDataUpdateCoordinator(opp, ruckus=ruckus)
 
     await coordinator.async_refresh()
     if not coordinator.last_update_success:

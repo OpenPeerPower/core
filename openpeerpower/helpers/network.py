@@ -147,7 +147,7 @@ def _get_internal_url(
 
     # Fallback to detected local IP
     if allow_ip and not (
-        require_ssl or.opp.config.api is None or.opp.config.api.use_ssl
+        require_ssl or opp.config.api is None or opp.config.api.use_ssl
     ):
         ip_url = yarl.URL.build(
             scheme="http", host.opp.config.api.local_ip, port.opp.config.api.port

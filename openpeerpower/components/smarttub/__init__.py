@@ -21,7 +21,7 @@ async def async_setup(opp, config):
 async def async_setup_entry(opp, entry):
     """Set up a smarttub config entry."""
 
-    controller = SmartTubController.opp)
+    controller = SmartTubController(opp)
     opp.data[DOMAIN][entry.entry_id] = {
         SMARTTUB_CONTROLLER: controller,
     }

@@ -101,7 +101,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
         _LOGGER.debug("Unable to retrieve players and sources: %s", error)
         raise ConfigEntryNotReady from error
 
-    controller_manager = ControllerManager.opp, controller)
+    controller_manager = ControllerManager(opp, controller)
     await controller_manager.connect_listeners()
 
     source_manager = SourceManager(favorites, inputs)
@@ -113,7 +113,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
         MEDIA_PLAYER_DOMAIN: players,
     }
 
-    services.register.opp, controller)
+    services.register(opp, controller)
 
     opp.async_create_task(
         opp.config_entries.async_forward_entry_setup(entry, MEDIA_PLAYER_DOMAIN)

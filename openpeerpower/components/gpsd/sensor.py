@@ -62,7 +62,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         _LOGGER.error("Not able to connect to GPSD")
         return False
 
-    add_entities([GpsdSensor.opp, name, host, port)])
+    add_entities([GpsdSensor(opp, name, host, port)])
 
 
 class GpsdSensor(Entity):

@@ -81,7 +81,7 @@ class KeyboardRemote:
         self.monitor_task = None
 
         for dev_block in config:
-            handler = self.DeviceHandler.opp, dev_block)
+            handler = self.DeviceHandler(opp, dev_block)
             descriptor = dev_block.get(DEVICE_DESCRIPTOR)
             if descriptor is not None:
                 self.handlers_by_descriptor[descriptor] = handler

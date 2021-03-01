@@ -133,7 +133,7 @@ async def async_setup_coordinator(opp: OpenPeerPower, entry: ConfigEntry):
     else:
         update_interval = timedelta(minutes=DEFAULT_SCAN_INTERVAL)
 
-    coordinator = PlaatoCoordinator.opp, auth_token, device_type, update_interval)
+    coordinator = PlaatoCoordinator(opp, auth_token, device_type, update_interval)
     await coordinator.async_refresh()
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady

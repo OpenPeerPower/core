@@ -390,4 +390,4 @@ async def async_handle_message(opp, context, message):
 
     handler = HANDLERS.get(msgtype, async_handle_unsupported_msg)
 
-    await handler.opp, context, message)
+    await handler(opp, context, message)

@@ -94,7 +94,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     implementation = await async_get_config_entry_implementation(opp, entry)
     session = OAuth2Session.opp, entry, implementation)
 
-    coordinator = ToonDataUpdateCoordinator.opp, entry=entry, session=session)
+    coordinator = ToonDataUpdateCoordinator(opp, entry=entry, session=session)
     await coordinator.toon.activate_agreement(
         agreement_id=entry.data[CONF_AGREEMENT_ID]
     )

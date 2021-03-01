@@ -88,7 +88,7 @@ async def _async_setup_entity(
     opp, async_add_entities, config, config_entry=None, discovery_data=None
 ):
     """Set up the MQTT binary sensor."""
-    async_add_entities([MqttBinarySensor.opp, config, config_entry, discovery_data)])
+    async_add_entities([MqttBinarySensor(opp, config, config_entry, discovery_data)])
 
 
 class MqttBinarySensor(MqttEntity, BinarySensorEntity):

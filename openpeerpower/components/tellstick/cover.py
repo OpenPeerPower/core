@@ -21,7 +21,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 
     add_entities(
         [
-            TellstickCover.opp.data[DATA_TELLSTICK][tellcore_id], signal_repetitions)
+            TellstickCover(opp.data[DATA_TELLSTICK][tellcore_id], signal_repetitions)
             for tellcore_id in discovery_info[ATTR_DISCOVER_DEVICES]
         ],
         True,

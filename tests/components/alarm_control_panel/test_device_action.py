@@ -118,7 +118,7 @@ async def test_get_actions_arm_night_only(opp, device_reg, entity_reg):
 
 async def test_get_action_capabilities(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a sensor trigger."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
 
     config_entry = MockConfigEntry(domain="test", data={})
@@ -156,7 +156,7 @@ async def test_get_action_capabilities(opp, device_reg, entity_reg):
 
 async def test_get_action_capabilities_arm_code(opp, device_reg, entity_reg):
     """Test we get the expected capabilities from a sensor trigger."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
 
     config_entry = MockConfigEntry(domain="test", data={})
@@ -200,7 +200,7 @@ async def test_get_action_capabilities_arm_code(opp, device_reg, entity_reg):
 
 async def test_action(opp):
     """Test for turn_on and turn_off actions."""
-    platform = getattr.opp.components, f"test.{DOMAIN}")
+    platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
 
     assert await async_setup_component(

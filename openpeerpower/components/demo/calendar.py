@@ -11,8 +11,8 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     calendar_data_current = DemoGoogleCalendarDataCurrent()
     add_entities(
         [
-            DemoGoogleCalendar.opp, calendar_data_future, "Calendar 1"),
-            DemoGoogleCalendar.opp, calendar_data_current, "Calendar 2"),
+            DemoGoogleCalendar(opp, calendar_data_future, "Calendar 1"),
+            DemoGoogleCalendar(opp, calendar_data_current, "Calendar 2"),
         ]
     )
 

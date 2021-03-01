@@ -14,7 +14,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 
     async_add_entities(
         [
-            JewishCalendarBinarySensor.opp.data[DOMAIN], sensor, sensor_info)
+            JewishCalendarBinarySensor(opp.data[DOMAIN], sensor, sensor_info)
             for sensor, sensor_info in SENSOR_TYPES["binary"].items()
         ]
     )

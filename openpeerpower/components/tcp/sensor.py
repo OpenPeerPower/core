@@ -45,7 +45,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the TCP Sensor."""
-    add_entities([TcpSensor.opp, config)])
+    add_entities([TcpSensor(opp, config)])
 
 
 class TcpSensor(Entity):
