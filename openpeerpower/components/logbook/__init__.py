@@ -147,7 +147,7 @@ async def async_setup(opp, config):
         async_log_entry(opp, name, message, domain, entity_id)
 
     opp.components.frontend.async_register_built_in_panel(
-        "logbook", "logbook",  opp.format-list-bulleted-type"
+        "logbook", "logbook",  "opp.format-list-bulleted-type"
     )
 
     conf = config.get(DOMAIN, {})
@@ -228,7 +228,7 @@ class LogbookView(OpenPeerPowerView):
             if end_day is None:
                 return self.json_message("Invalid end_time", HTTP_BAD_REQUEST)
 
-       opp = request.app[.opp"]
+        opp = request.app["opp"]
 
         entity_matches_only = "entity_matches_only" in request.query
 
@@ -249,7 +249,7 @@ class LogbookView(OpenPeerPowerView):
         return await opp.async_add_executor_job(json_events)
 
 
-def humanify.opp, events, entity_attr_cache, context_lookup):
+def humanify(opp, events, entity_attr_cache, context_lookup):
     """Generate a converted list of events into Entry objects.
 
     Will try to group events if possible:
@@ -415,7 +415,7 @@ def _get_events(
     entity_matches_only=False,
 ):
     """Get events for a period of time."""
-    entity_attr_cache = EntityAttributeCache.opp)
+    entity_attr_cache = EntityAttributeCache(opp)
     context_lookup = {None: None}
 
     def yield_events(query):
@@ -469,7 +469,7 @@ def _get_events(
         query = query.order_by(Events.time_fired)
 
         return list(
-            humanify.opp, yield_events(query), entity_attr_cache, context_lookup)
+            humanify(opp, yield_events(query), entity_attr_cache, context_lookup)
         )
 
 
@@ -553,7 +553,7 @@ def _apply_event_time_filter(events_query, start_day, end_day):
 
 def _apply_event_types_filter(opp, query, event_types):
     return query.filter(
-        Events.event_type.in_(event_types + list.opp.data.get(DOMAIN, {})))
+        Events.event_type.in_(event_types + list(opp.data.get(DOMAIN, {})))
     )
 
 

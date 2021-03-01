@@ -111,7 +111,7 @@ async def async_setup(opp, config):
     location = hdate.Location(
         latitude=latitude,
         longitude=longitude,
-        timezone.opp.config.time_zone,
+        timezone=opp.config.time_zone,
         diaspora=diaspora,
     )
 

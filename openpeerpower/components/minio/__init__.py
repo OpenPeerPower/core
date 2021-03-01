@@ -87,7 +87,7 @@ def setup(opp, config):
     secret_key = conf[CONF_SECRET_KEY]
     secure = conf[CONF_SECURE]
 
-    queue_listener = QueueListener.opp)
+    queue_listener = QueueListener(opp)
     queue = queue_listener.queue
 
     opp.bus.listen_once(EVENT_OPENPEERPOWER_START, queue_listener.start_handler)

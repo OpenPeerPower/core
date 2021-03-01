@@ -83,7 +83,7 @@ def is_on(opp, entity_id):
     return opp.states.is_state(entity_id, STATE_ON)
 
 
-async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up an input boolean."""
     component = EntityComponent(_LOGGER, DOMAIN, opp)
     id_manager = collection.IDManager()
@@ -96,7 +96,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
     )
 
     storage_collection = InputBooleanStorageCollection(
-        Store.opp, STORAGE_VERSION, STORAGE_KEY),
+        Store(opp, STORAGE_VERSION, STORAGE_KEY),
         logging.getLogger(f"{__name__}.storage_collection"),
         id_manager,
     )
@@ -111,7 +111,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
     collection.StorageCollectionWebsocket(
         storage_collection, DOMAIN, DOMAIN, CREATE_FIELDS, UPDATE_FIELDS
-    ).async_setup_opp)
+    ).async_setup(opp)
 
     async def reload_service_handler(service_call: ServiceCallType) -> None:
         """Remove all input booleans and load new ones from config."""
@@ -190,7 +190,7 @@ class InputBoolean(ToggleEntity, RestoreEntity):
         return self._config[CONF_ID]
 
     async def async_added_to_opp(self):
-        """Call when entity about to be added to.opp."""
+        """Call when entity about to be added to opp."""
         # If not None, we got an initial value.
         await super().async_added_to_opp()
         if self._state is not None:

@@ -99,8 +99,8 @@ def get_model_detection_function(model):
 def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up the TensorFlow image processing platform."""
     model_config = config[CONF_MODEL]
-    model_dir = model_config.get(CONF_MODEL_DIR) or.opp.config.path("tensorflow")
-    labels = model_config.get(CONF_LABELS) or.opp.config.path(
+    model_dir = model_config.get(CONF_MODEL_DIR) or opp.config.path("tensorflow")
+    labels = model_config.get(CONF_LABELS) or opp.config.path(
         "tensorflow", "object_detection", "data", "mscoco_label_map.pbtxt"
     )
     checkpoint = os.path.join(model_config[CONF_GRAPH], "checkpoint")
@@ -146,8 +146,8 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 
     opp.data[DOMAIN] = {CONF_MODEL: None}
 
-    def tensorflow.opp_start(_event):
-        """Set up TensorFlow model on.opp start."""
+    def tensorflow_opp_start(_event):
+        """Set up TensorFlow model on opp start."""
         start = time.perf_counter()
 
         # Load pipeline config and build a detection model
@@ -178,7 +178,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         _LOGGER.debug("Model load took %d seconds", time.perf_counter() - start)
         opp.data[DOMAIN][CONF_MODEL] = model
 
-    opp.bus.listen_once(EVENT_OPENPEERPOWER_START, tensorflow.opp_start)
+    opp.bus.listen_once(EVENT_OPENPEERPOWER_START, tensorflow_opp_start)
 
     category_index = label_map_util.create_category_index_from_labelmap(
         labels, use_display_name=True

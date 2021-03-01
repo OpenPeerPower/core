@@ -57,7 +57,7 @@ class OpenThermClimate(ClimateEntity):
         """Initialize the device."""
         self._gateway = gw_dev
         self.entity_id = async_generate_entity_id(
-            ENTITY_ID_FORMAT, gw_dev.gw_id, opp=gw_dev(opp
+            ENTITY_ID_FORMAT, gw_dev.gw_id, opp=gw_dev.opp
         )
         self.friendly_name = gw_dev.name
         self.floor_temp = options.get(CONF_FLOOR_TEMP, DEFAULT_FLOOR_TEMP)
@@ -92,7 +92,7 @@ class OpenThermClimate(ClimateEntity):
             self.opp, self._gateway.options_update_signal, self.update_options
         )
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Unsubscribe from updates from the component."""
         _LOGGER.debug("Removing OpenTherm Gateway climate %s", self.friendly_name)
         self._unsub_options()

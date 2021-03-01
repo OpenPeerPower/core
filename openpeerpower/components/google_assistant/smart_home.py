@@ -54,7 +54,7 @@ async def _process(opp, data, message):
         }
 
     try:
-        result = await handler.opp, data, inputs[0].get("payload"))
+        result = await handler(opp, data, inputs[0].get("payload"))
     except SmartHomeError as err:
         return {"requestId": data.request_id, "payload": {"errorCode": err.code}}
     except Exception:  # pylint: disable=broad-except
@@ -136,7 +136,7 @@ async def async_devices_query(opp, data, payload):
             devices[devid] = {"online": False}
             continue
 
-        entity = GoogleEntity.opp, data.config, state)
+        entity = GoogleEntity(opp, data.config, state)
         try:
             devices[devid] = entity.query_serialize()
         except Exception:  # pylint: disable=broad-except
@@ -207,7 +207,7 @@ async def handle_devices_execute(opp, data, payload):
                 }
                 continue
 
-            entities[entity_id] = GoogleEntity.opp, data.config, state)
+            entities[entity_id] = GoogleEntity(opp, data.config, state)
             executions[entity_id] = [execution]
 
     execute_results = await asyncio.gather(

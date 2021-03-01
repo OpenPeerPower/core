@@ -418,7 +418,7 @@ class AutomationEntity(ToggleEntity, RestoreEntity):
 
     async def async_will_remove_from_opp(self):
         """Remove listeners when removing automation from Open Peer Power."""
-        await super().async_will_remove_from(opp)
+        await super().async_will_remove_from_opp())
         await self.async_disable()
 
     async def async_enable(self):

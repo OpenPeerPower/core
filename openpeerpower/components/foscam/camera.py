@@ -127,7 +127,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
         verbose=False,
     )
 
-    async_add_entities([ OppFoscamCamera(camera, config_entry)])
+    async_add_entities([OppFoscamCamera(camera, config_entry)])
 
 
 class OppFoscamCamera(Camera):

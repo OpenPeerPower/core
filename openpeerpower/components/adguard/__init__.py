@@ -44,7 +44,7 @@ SERVICE_REFRESH_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up the AdGuard Home components."""
     return True
 
@@ -126,7 +126,7 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigType) -> bool:
     for component in "sensor", "switch":
         await opp.config_entries.async_forward_entry_unload(entry, component)
 
-    del.opp.data[DOMAIN]
+    del opp.data[DOMAIN]
 
     return True
 

@@ -62,7 +62,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Spotify from a config entry."""
     implementation = await async_get_config_entry_implementation(opp, entry)
-    session = OAuth2Session.opp, entry, implementation)
+    session = OAuth2Session(opp, entry, implementation)
 
     try:
         await session.async_ensure_token_valid()
@@ -104,8 +104,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     await opp.config_entries.async_forward_entry_unload(entry, MEDIA_PLAYER_DOMAIN)
 
     # Cleanup
-    del.opp.data[DOMAIN][entry.entry_id]
+    del opp.data[DOMAIN][entry.entry_id]
     if not opp.data[DOMAIN]:
-        del.opp.data[DOMAIN]
+        del opp.data[DOMAIN]
 
     return True

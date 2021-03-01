@@ -79,7 +79,7 @@ def setup(opp, config):
     try:
         bot = MatrixBot(
             opp,
-            os.path.join opp.config.path(), SESSION_FILE),
+            os.path.join(opp.config.path(), SESSION_FILE),
             config[CONF_HOMESERVER],
             config[CONF_VERIFY_SSL],
             config[CONF_USERNAME],

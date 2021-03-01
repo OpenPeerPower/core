@@ -545,7 +545,7 @@ class LIFXLight(LightEntity):
             return f"lifx_effect_{effect.name}"
         return None
 
-    async def update.opp(self, now=None):
+    async def update_opp(self, now=None):
         """Request new status and push it to opp."""
         self.postponed_update = None
         await self.async_update()

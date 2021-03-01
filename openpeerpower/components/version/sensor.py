@@ -35,7 +35,7 @@ ALL_IMAGES = [
     "odroid-n2",
     "odroid-xu",
 ]
-ALL_SOURCES = ["local", "pypi",  opp.o", "docker", "haio"]
+ALL_SOURCES = ["local", "pypi", "oppio", "docker", "haio"]
 
 CONF_BETA = "beta"
 CONF_IMAGE = "image"
@@ -75,15 +75,15 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         branch = "stable"
 
     if source == "pypi":
-        haversion = VersionData(PyPiVersion.opp.loop, session, branch))
-    elif source == oppio":
-        haversion = VersionData( OppioVersion.opp.loop, session, branch, image))
+        haversion = VersionData(PyPiVersion(opp.loop, session, branch))
+    elif source == "oppio":
+        haversion = VersionData( OppioVersion(opp.loop, session, branch, image))
     elif source == "docker":
-        haversion = VersionData(DockerVersion.opp.loop, session, branch, image))
+        haversion = VersionData(DockerVersion(opp.loop, session, branch, image))
     elif source == "haio":
-        haversion = VersionData(HaIoVersion.opp.loop, session))
+        haversion = VersionData(HaIoVersion(opp.loop, session))
     else:
-        haversion = VersionData(LocalVersion.opp.loop, session))
+        haversion = VersionData(LocalVersion(opp.loop, session))
 
     if not name:
         if source == DEFAULT_SOURCE:

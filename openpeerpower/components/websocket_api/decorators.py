@@ -15,7 +15,7 @@ from .connection import ActiveConnection
 async def _handle_async_response(func, opp, connection, msg):
     """Create a response and handle exception."""
     try:
-        await func.opp, connection, msg)
+        await func(opp, connection, msg)
     except Exception as err:  # pylint: disable=broad-except
         connection.async_handle_exception(msg, err)
 

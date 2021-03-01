@@ -107,7 +107,7 @@ async def async_setup(opp, config):
     name = conf.get(CONF_NAME)
 
     client = Vallox(host)
-    state_proxy = ValloxStateProxy.opp, client)
+    state_proxy = ValloxStateProxy(opp, client)
     service_handler = ValloxServiceHandler(client, state_proxy)
 
     opp.data[DOMAIN] = {"client": client, "state_proxy": state_proxy, "name": name}

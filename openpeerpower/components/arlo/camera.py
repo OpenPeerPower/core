@@ -43,7 +43,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 
     cameras = []
     for camera in arlo.cameras:
-        cameras.append(ArloCam.opp, camera, config))
+        cameras.append(ArloCam(opp, camera, config))
 
     add_entities(cameras)
 

@@ -67,7 +67,7 @@ def setup(opp, config):
     _LOGGER.info("Bridge found: %s (%s)", bridge.uuid.hex(), bridge.host)
 
     # Setup ComfoConnect Bridge
-    ccb = ComfoConnectBridge.opp, bridge, name, token, user_agent, pin)
+    ccb = ComfoConnectBridge(opp, bridge, name, token, user_agent, pin)
     opp.data[DOMAIN] = ccb
 
     # Start connection with bridge

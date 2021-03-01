@@ -28,7 +28,7 @@ SCAN_INTERVAL = timedelta(seconds=30)
 async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Platform setup."""
     api = await real_time_api(config[CONF_IP_ADDRESS], config[CONF_PORT])
-    endpoint = RealTimeDataEndpoint.opp, api)
+    endpoint = RealTimeDataEndpoint(opp, api)
     resp = await api.get_data()
     serial = resp.serial_number
     opp.async_add_job(endpoint.async_refresh)

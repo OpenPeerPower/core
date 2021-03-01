@@ -357,8 +357,8 @@ class ZWaveClimateEntity(ZWaveDeviceEntity, ClimateEntity):
             for val in self.values.mode.value[VALUE_LIST]:
                 if val[VALUE_ID] in MODES_LIST:
                     # treat value as hvac mode
-                    opp.mode = ZW_HVAC_MODE_MAPPINGS.get(val[VALUE_ID])
-                    all_modes(opp_mode] = val[VALUE_ID]
+                    opp_mode = ZW_HVAC_MODE_MAPPINGS.get(val[VALUE_ID])
+                    all_modes[opp_mode] = val[VALUE_ID]
                 else:
                     # treat value as hvac preset
                     all_presets[val[VALUE_LABEL]] = val[VALUE_ID]
