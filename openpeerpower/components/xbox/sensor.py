@@ -75,7 +75,7 @@ async def async_remove_entities(
     current: Dict[str, XboxSensorEntity],
 ) -> None:
     """Remove friend sensors from Open Peer Power."""
-    registry = await async_get_entity_registry(coordinator.opp)
+    registry = await async_get_entity_registry(coordinator(opp)
     entities = current[xuid]
     for entity in entities:
         if entity.entity_id in registry.entities:

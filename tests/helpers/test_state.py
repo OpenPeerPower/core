@@ -34,7 +34,7 @@ async def test_async_track_states(opp):
     with patch("openpeerpower.core.dt_util.utcnow") as mock_utcnow:
         mock_utcnow.return_value = point2
 
-        with state.AsyncTrackStates.opp) as states:
+        with state.AsyncTrackStates(opp) as states:
             mock_utcnow.return_value = point1
             opp.states.async_set("light.test", "on")
 

@@ -28,7 +28,7 @@ def mock.opp(loop):
     return.opp
 
 
-async def test_auth_manager_from_config_validates_config(mock.opp):
+async def test_auth_manager_from_config_validates_config(mock(opp):
     """Test get auth providers."""
     with pytest.raises(vol.Invalid):
         manager = await auth.auth_manager_from_config(
@@ -69,7 +69,7 @@ async def test_auth_manager_from_config_validates_config(mock.opp):
     ]
 
 
-async def test_auth_manager_from_config_auth_modules(mock.opp):
+async def test_auth_manager_from_config_auth_modules(mock(opp):
     """Test get auth modules."""
     with pytest.raises(vol.Invalid):
         manager = await auth.auth_manager_from_config(
@@ -180,7 +180,7 @@ async def test_create_new_user(opp):
     assert events[0].data["user_id"] == user.id
 
 
-async def test_login_as_existing_user(mock.opp):
+async def test_login_as_existing_user(mock(opp):
     """Test login as existing user."""
     manager = await auth.auth_manager_from_config(
         mock.opp,
@@ -319,7 +319,7 @@ async def test_saving_loading(opp, opp_storage):
 
     await flush_store(manager._store._store)
 
-    store2 = auth_store.AuthStore.opp)
+    store2 = auth_store.AuthStore(opp)
     users = await store2.async_get_users()
     assert len(users) == 1
     assert users[0].permissions == user.permissions
@@ -468,7 +468,7 @@ async def test_refresh_token_type_long_lived_access_token(opp):
     assert token.token_type == auth_models.TOKEN_TYPE_LONG_LIVED_ACCESS_TOKEN
 
 
-async def test_refresh_token_provider_validation(mock.opp):
+async def test_refresh_token_provider_validation(mock(opp):
     """Test that creating access token from refresh token checks with provider."""
     manager = await auth.auth_manager_from_config(
         mock.opp,
@@ -508,7 +508,7 @@ async def test_refresh_token_provider_validation(mock.opp):
     call.assert_called_with(refresh_token, ip)
 
 
-async def test_cannot_deactive_owner(mock.opp):
+async def test_cannot_deactive_owner(mock(opp):
     """Test that we cannot deactivate the owner."""
     manager = await auth.auth_manager_from_config(mock.opp, [], [])
     owner = MockUser(is_owner=True).add_to_auth_manager(manager)
@@ -517,7 +517,7 @@ async def test_cannot_deactive_owner(mock.opp):
         await manager.async_deactivate_user(owner)
 
 
-async def test_remove_refresh_token(mock.opp):
+async def test_remove_refresh_token(mock(opp):
     """Test that we can remove a refresh token."""
     manager = await auth.auth_manager_from_config(mock.opp, [], [])
     user = MockUser().add_to_auth_manager(manager)
@@ -530,7 +530,7 @@ async def test_remove_refresh_token(mock.opp):
     assert await manager.async_validate_access_token(access_token) is None
 
 
-async def test_create_access_token(mock.opp):
+async def test_create_access_token(mock(opp):
     """Test normal refresh_token's jwt_key keep same after used."""
     manager = await auth.auth_manager_from_config(mock.opp, [], [])
     user = MockUser().add_to_auth_manager(manager)
@@ -547,7 +547,7 @@ async def test_create_access_token(mock.opp):
     )
 
 
-async def test_create_long_lived_access_token(mock.opp):
+async def test_create_long_lived_access_token(mock(opp):
     """Test refresh_token's jwt_key changed for long-lived access token."""
     manager = await auth.auth_manager_from_config(mock.opp, [], [])
     user = MockUser().add_to_auth_manager(manager)
@@ -566,7 +566,7 @@ async def test_create_long_lived_access_token(mock.opp):
     )
 
 
-async def test_one_long_lived_access_token_per_refresh_token(mock.opp):
+async def test_one_long_lived_access_token_per_refresh_token(mock(opp):
     """Test one refresh_token can only have one long-lived access token."""
     manager = await auth.auth_manager_from_config(mock.opp, [], [])
     user = MockUser().add_to_auth_manager(manager)
@@ -618,7 +618,7 @@ async def test_one_long_lived_access_token_per_refresh_token(mock.opp):
     )
 
 
-async def test_login_with_auth_module(mock.opp):
+async def test_login_with_auth_module(mock(opp):
     """Test login as existing user with auth module."""
     manager = await auth.auth_manager_from_config(
         mock.opp,
@@ -688,7 +688,7 @@ async def test_login_with_auth_module(mock.opp):
     assert step["result"].id == "mock-id"
 
 
-async def test_login_with_multi_auth_module(mock.opp):
+async def test_login_with_multi_auth_module(mock(opp):
     """Test login as existing user with multiple auth modules."""
     manager = await auth.auth_manager_from_config(
         mock.opp,
@@ -761,7 +761,7 @@ async def test_login_with_multi_auth_module(mock.opp):
     assert step["result"].id == "mock-id"
 
 
-async def test_auth_module_expired_session(mock.opp):
+async def test_auth_module_expired_session(mock(opp):
     """Test login as existing user."""
     manager = await auth.auth_manager_from_config(
         mock.opp,
@@ -948,7 +948,7 @@ async def test_async_remove_user(opp):
     assert events[0].data["user_id"] == user.id
 
 
-async def test_new_users(mock.opp):
+async def test_new_users(mock(opp):
     """Test newly created users."""
     manager = await auth.auth_manager_from_config(
         mock.opp,

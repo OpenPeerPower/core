@@ -149,10 +149,10 @@ def get_test_open_peer_power():
 async def async_test_open_peer_power(loop, load_registries=True):
     """Return a Open Peer Power object pointing at test config dir."""
    opp =  op.OpenPeerPower()
-    store = auth_store.AuthStore.opp)
+    store = auth_store.AuthStore(opp)
     opp.auth = auth.AuthManager(opp, store, {}, {})
     ensure_auth_manager_loaded(opp.auth)
-    INSTANCES.append.opp)
+    INSTANCES.append(opp)
 
     orig_async_add_job = opp.async_add_job
     orig_async_add_executor_job = opp.async_add_executor_job
@@ -307,7 +307,7 @@ async def async_test_open_peer_power(loop, load_registries=True):
     @op.callback
     def clear_instance(event):
         """Clear global instance."""
-        INSTANCES.remove.opp)
+        INSTANCES.remove(opp)
 
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_CLOSE, clear_instance)
 
@@ -430,7 +430,7 @@ def mock_component(opp, component):
 
 def mock_registry(opp, mock_entries=None):
     """Mock the Entity Registry."""
-    registry = entity_registry.EntityRegistry.opp)
+    registry = entity_registry.EntityRegistry(opp)
     registry.entities = mock_entries or OrderedDict()
     registry._rebuild_index()
 
@@ -440,7 +440,7 @@ def mock_registry(opp, mock_entries=None):
 
 def mock_area_registry(opp, mock_entries=None):
     """Mock the Area Registry."""
-    registry = area_registry.AreaRegistry.opp)
+    registry = area_registry.AreaRegistry(opp)
     registry.areas = mock_entries or OrderedDict()
 
     opp.data[area_registry.DATA_REGISTRY] = registry
@@ -449,7 +449,7 @@ def mock_area_registry(opp, mock_entries=None):
 
 def mock_device_registry(opp, mock_entries=None, mock_deleted_entries=None):
     """Mock the Device Registry."""
-    registry = device_registry.DeviceRegistry.opp)
+    registry = device_registry.DeviceRegistry(opp)
     registry.devices = mock_entries or OrderedDict()
     registry.deleted_devices = mock_deleted_entries or OrderedDict()
     registry._rebuild_index()
@@ -897,7 +897,7 @@ async def async_init_recorder_component(opp, add_config=None):
 def mock_restore_cache(opp, states):
     """Mock the DATA_RESTORE_CACHE."""
     key = restore_state.DATA_RESTORE_STATE_TASK
-    data = restore_state.RestoreStateData.opp)
+    data = restore_state.RestoreStateData(opp)
     now = date_util.utcnow()
 
     last_states = {}

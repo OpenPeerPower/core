@@ -195,7 +195,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
             _LOGGER.warning("Panel url path %s is not unique", url_path)
 
     # Process storage dashboards
-    dashboards_collection = dashboard.DashboardsCollection.opp)
+    dashboards_collection = dashboard.DashboardsCollection(opp)
 
     dashboards_collection.async_add_listener(storage_dashboard_changed)
     await dashboards_collection.async_load()

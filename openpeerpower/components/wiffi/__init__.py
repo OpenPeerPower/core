@@ -44,7 +44,7 @@ async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
         config_entry.add_update_listener(async_update_options)
 
     # create api object
-    api = WiffiIntegrationApi.opp)
+    api = WiffiIntegrationApi(opp)
     api.async_setup(config_entry)
 
     # store api object

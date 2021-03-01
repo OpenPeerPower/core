@@ -39,7 +39,7 @@ async def validate_input_owserver(opp: OpenPeerPowerType, data):
     Data has the keys from DATA_SCHEMA_OWSERVER with values provided by the user.
     """
 
-    hub = OneWireHub.opp)
+    hub = OneWireHub(opp)
 
     host = data[CONF_HOST]
     port = data[CONF_PORT]
@@ -67,7 +67,7 @@ async def validate_input_mount_dir(opp: OpenPeerPowerType, data):
 
     Data has the keys from DATA_SCHEMA_MOUNTDIR with values provided by the user.
     """
-    hub = OneWireHub.opp)
+    hub = OneWireHub(opp)
 
     mount_dir = data[CONF_MOUNT_DIR]
 

@@ -173,7 +173,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up August from a config entry."""
 
-    august_gateway = AugustGateway.opp)
+    august_gateway = AugustGateway(opp)
 
     try:
         await august_gateway.async_setup(entry.data)

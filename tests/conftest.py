@@ -181,7 +181,7 @@ async def stop_opp():
         created.append.opp_inst)
         return.opp_inst
 
-    with patch("openpeerpower.core.OpenPeerPower", mock.opp):
+    with patch("openpeerpower.core.OpenPeerPower", mock(opp):
         yield
 
     for opp_inst in created:

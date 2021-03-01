@@ -12,29 +12,29 @@ def mock.opp():
     return Mock(data={})
 
 
-async def test_singleton_async(mock.opp):
+async def test_singleton_async(mock(opp):
     """Test singleton with async function."""
 
     @singleton.singleton("test_key")
-    async def something.opp):
+    async def something(opp):
         return object()
 
-    result1 = await something(mock.opp)
-    result2 = await something(mock.opp)
+    result1 = await something(mock(opp)
+    result2 = await something(mock(opp)
     assert result1 is result2
     assert "test_key" in mock.opp.data
     assert mock.opp.data["test_key"] is result1
 
 
-def test_singleton(mock.opp):
+def test_singleton(mock(opp):
     """Test singleton with function."""
 
     @singleton.singleton("test_key")
-    def something.opp):
+    def something(opp):
         return object()
 
-    result1 = something(mock.opp)
-    result2 = something(mock.opp)
+    result1 = something(mock(opp)
+    result2 = something(mock(opp)
     assert result1 is result2
     assert "test_key" in mock.opp.data
     assert mock.opp.data["test_key"] is result1

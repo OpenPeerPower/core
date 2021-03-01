@@ -23,7 +23,7 @@ MOCK_DATA2 = {"goodbye": "cruel world"}
 
 
 @pytest.fixture
-def store.opp):
+def store(opp):
     """Fixture of a store that prevents writing on Open Peer Power stop."""
     yield storage.Store.opp, MOCK_VERSION, MOCK_KEY)
 

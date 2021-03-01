@@ -160,7 +160,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     subscriber = GoogleNestSubscriber(
         auth, config[CONF_PROJECT_ID], config[CONF_SUBSCRIBER_ID]
     )
-    callback = SignalUpdateCallback.opp)
+    callback = SignalUpdateCallback(opp)
     subscriber.set_update_callback(callback.async_handle_event)
 
     try:

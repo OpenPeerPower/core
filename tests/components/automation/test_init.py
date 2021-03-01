@@ -1134,7 +1134,7 @@ async def test_logbook_humanify_automation_triggered_event(opp):
     opp.config.components.add("recorder")
     await async_setup_component(opp, automation.DOMAIN, {})
     await async_setup_component(opp, "logbook", {})
-    entity_attr_cache = logbook.EntityAttributeCache.opp)
+    entity_attr_cache = logbook.EntityAttributeCache(opp)
 
     event1, event2 = list(
         logbook.humanify(

@@ -79,7 +79,7 @@ async def async_setup(opp, config):
             "Elevation is now configured in Open Peer Power core. "
             "See https://www.open-peer-power.io/docs/configuration/basic/"
         )
-    Sun.opp)
+    Sun(opp)
     return True
 
 

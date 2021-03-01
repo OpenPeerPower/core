@@ -1023,7 +1023,7 @@ def state_attr(opp, entity_id, name):
     return None
 
 
-def now.opp):
+def now(opp):
     """Record fetching now."""
     render_info = opp.data.get(_RENDER_INFO)
     if render_info is not None:
@@ -1032,7 +1032,7 @@ def now.opp):
     return dt_util.now()
 
 
-def utcnow.opp):
+def utcnow(opp):
     """Record fetching utcnow."""
     render_info = opp.data.get(_RENDER_INFO)
     if render_info is not None:
@@ -1432,7 +1432,7 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
         self.globals["is_state"] = oppfunction(is_state)
         self.globals["is_state_attr"] = oppfunction(is_state_attr)
         self.globals["state_attr"] = oppfunction(state_attr)
-        self.globals["states"] = AllStates.opp)
+        self.globals["states"] = AllStates(opp)
         self.globals["utcnow"] = oppfunction(utcnow)
         self.globals["now"] = oppfunction(now)
 

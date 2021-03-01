@@ -46,7 +46,7 @@ def run(args):
 async def run_benchmark(bench):
     """Run a benchmark."""
    opp = core.OpenPeerPower()
-    runtime = await bench.opp)
+    runtime = await bench(opp)
     print(f"Benchmark {bench.__name__} done in {runtime}s")
     await opp.async_stop()
 
@@ -282,7 +282,7 @@ async def _logbook_filtering(opp, last_changed, last_updated):
         entity_id, dt_util.utcnow(), old_state, new_state
     )
 
-    entity_attr_cache = logbook.EntityAttributeCache.opp)
+    entity_attr_cache = logbook.EntityAttributeCache(opp)
 
     entities_filter = convert_include_exclude_filter(
         logbook.INCLUDE_EXCLUDE_BASE_FILTER_SCHEMA({})

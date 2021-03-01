@@ -187,7 +187,7 @@ async def async_setup(opp, config):
     )
     await component.async_setup(config)
 
-    profiles = opp.data[DATA_PROFILES] = Profiles.opp)
+    profiles = opp.data[DATA_PROFILES] = Profiles(opp)
     await profiles.async_initialize()
 
     def preprocess_data(data):

@@ -8,7 +8,7 @@ from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 
 
 @fixture
-async def surepetcare.opp):
+async def surepetcare(opp):
     """Mock the SurePetcare for easier testing."""
     with patch("openpeerpower.components.surepetcare.SurePetcare") as mock_surepetcare:
         instance = mock_surepetcare.return_value = SurePetcare(

@@ -11,7 +11,7 @@ def test_create_new(opp):
     with patch("builtins.open", mock_open()), patch(
         "os.path.isfile", Mock(return_value=False)
     ), patch.object(rtm.RememberTheMilkConfiguration, "save_config"):
-        config = rtm.RememberTheMilkConfiguration.opp)
+        config = rtm.RememberTheMilkConfiguration(opp)
         config.set_token(PROFILE, TOKEN)
     assert config.get_token(PROFILE) == TOKEN
 
@@ -21,7 +21,7 @@ def test_load_config(opp):
     with patch("builtins.open", mock_open(read_data=JSON_STRING)), patch(
         "os.path.isfile", Mock(return_value=True)
     ):
-        config = rtm.RememberTheMilkConfiguration.opp)
+        config = rtm.RememberTheMilkConfiguration(opp)
     assert config.get_token(PROFILE) == TOKEN
 
 
@@ -30,7 +30,7 @@ def test_invalid_data(opp):
     with patch("builtins.open", mock_open(read_data="random characters")), patch(
         "os.path.isfile", Mock(return_value=True)
     ):
-        config = rtm.RememberTheMilkConfiguration.opp)
+        config = rtm.RememberTheMilkConfiguration(opp)
     assert config is not None
 
 
@@ -43,7 +43,7 @@ def test_id_map(opp):
     with patch("builtins.open", mock_open()), patch(
         "os.path.isfile", Mock(return_value=False)
     ), patch.object(rtm.RememberTheMilkConfiguration, "save_config"):
-        config = rtm.RememberTheMilkConfiguration.opp)
+        config = rtm.RememberTheMilkConfiguration(opp)
 
         assert config.get_rtm_id(PROFILE, opp_id) is None
         config.set_rtm_id(PROFILE, opp_id, list_id, timeseries_id, rtm_id)
@@ -57,5 +57,5 @@ def test_load_key_map(opp):
     with patch("builtins.open", mock_open(read_data=JSON_STRING)), patch(
         "os.path.isfile", Mock(return_value=True)
     ):
-        config = rtm.RememberTheMilkConfiguration.opp)
+        config = rtm.RememberTheMilkConfiguration(opp)
     assert ("0", "1", "2") == config.get_rtm_id(PROFILE, "1234")

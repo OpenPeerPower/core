@@ -52,16 +52,16 @@ async def test_and_condition(opp):
     )
 
     with pytest.raises(ConditionError):
-        test.opp)
+        test(opp)
 
     opp.states.async_set("sensor.temperature", 120)
-    assert not test.opp)
+    assert not test(opp)
 
     opp.states.async_set("sensor.temperature", 105)
-    assert not test.opp)
+    assert not test(opp)
 
     opp.states.async_set("sensor.temperature", 100)
-    assert test.opp)
+    assert test(opp)
 
 
 async def test_and_condition_with_template(opp):
@@ -86,13 +86,13 @@ async def test_and_condition_with_template(opp):
     )
 
     opp.states.async_set("sensor.temperature", 120)
-    assert not test.opp)
+    assert not test(opp)
 
     opp.states.async_set("sensor.temperature", 105)
-    assert not test.opp)
+    assert not test(opp)
 
     opp.states.async_set("sensor.temperature", 100)
-    assert test.opp)
+    assert test(opp)
 
 
 async def test_or_condition(opp):
@@ -118,16 +118,16 @@ async def test_or_condition(opp):
     )
 
     with pytest.raises(ConditionError):
-        test.opp)
+        test(opp)
 
     opp.states.async_set("sensor.temperature", 120)
-    assert not test.opp)
+    assert not test(opp)
 
     opp.states.async_set("sensor.temperature", 105)
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set("sensor.temperature", 100)
-    assert test.opp)
+    assert test(opp)
 
 
 async def test_or_condition_with_template(opp):
@@ -148,13 +148,13 @@ async def test_or_condition_with_template(opp):
     )
 
     opp.states.async_set("sensor.temperature", 120)
-    assert not test.opp)
+    assert not test(opp)
 
     opp.states.async_set("sensor.temperature", 105)
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set("sensor.temperature", 100)
-    assert test.opp)
+    assert test(opp)
 
 
 async def test_not_condition(opp):
@@ -180,19 +180,19 @@ async def test_not_condition(opp):
     )
 
     with pytest.raises(ConditionError):
-        test.opp)
+        test(opp)
 
     opp.states.async_set("sensor.temperature", 101)
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set("sensor.temperature", 50)
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set("sensor.temperature", 49)
-    assert not test.opp)
+    assert not test(opp)
 
     opp.states.async_set("sensor.temperature", 100)
-    assert not test.opp)
+    assert not test(opp)
 
 
 async def test_not_condition_with_template(opp):
@@ -216,16 +216,16 @@ async def test_not_condition_with_template(opp):
     )
 
     opp.states.async_set("sensor.temperature", 101)
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set("sensor.temperature", 50)
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set("sensor.temperature", 49)
-    assert not test.opp)
+    assert not test(opp)
 
     opp.states.async_set("sensor.temperature", 100)
-    assert not test.opp)
+    assert not test(opp)
 
 
 async def test_time_window(opp):
@@ -375,12 +375,12 @@ async def test_if_numeric_state_raises_on_unavailable(opp, caplog):
 
     opp.states.async_set("sensor.temperature", "unavailable")
     with pytest.raises(ConditionError):
-        test.opp)
+        test(opp)
     assert len(caplog.record_tuples) == 0
 
     opp.states.async_set("sensor.temperature", "unknown")
     with pytest.raises(ConditionError):
-        test.opp)
+        test(opp)
     assert len(caplog.record_tuples) == 0
 
 
@@ -397,7 +397,7 @@ async def test_state_raises(opp):
             },
         )
 
-        test.opp)
+        test(opp)
 
     # Unknown attribute
     with pytest.raises(ConditionError, match=r"Attribute .* does not exist"):
@@ -412,7 +412,7 @@ async def test_state_raises(opp):
         )
 
         opp.states.async_set("sensor.door", "open")
-        test.opp)
+        test(opp)
 
 
 async def test_state_multiple_entities(opp):
@@ -433,15 +433,15 @@ async def test_state_multiple_entities(opp):
 
     opp.states.async_set("sensor.temperature_1", 100)
     opp.states.async_set("sensor.temperature_2", 100)
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set("sensor.temperature_1", 101)
     opp.states.async_set("sensor.temperature_2", 100)
-    assert not test.opp)
+    assert not test(opp)
 
     opp.states.async_set("sensor.temperature_1", 100)
     opp.states.async_set("sensor.temperature_2", 101)
-    assert not test.opp)
+    assert not test(opp)
 
 
 async def test_multiple_states(opp):
@@ -462,13 +462,13 @@ async def test_multiple_states(opp):
     )
 
     opp.states.async_set("sensor.temperature", 100)
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set("sensor.temperature", 200)
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set("sensor.temperature", 42)
-    assert not test.opp)
+    assert not test(opp)
 
 
 async def test_state_attribute(opp):
@@ -490,19 +490,19 @@ async def test_state_attribute(opp):
 
     opp.states.async_set("sensor.temperature", 100, {"unkown_attr": 200})
     with pytest.raises(ConditionError):
-        test.opp)
+        test(opp)
 
     opp.states.async_set("sensor.temperature", 100, {"attribute1": 200})
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set("sensor.temperature", 100, {"attribute1": "200"})
-    assert not test.opp)
+    assert not test(opp)
 
     opp.states.async_set("sensor.temperature", 100, {"attribute1": 201})
-    assert not test.opp)
+    assert not test(opp)
 
     opp.states.async_set("sensor.temperature", 100, {"attribute1": None})
-    assert not test.opp)
+    assert not test(opp)
 
 
 async def test_state_attribute_boolean(opp):
@@ -518,17 +518,17 @@ async def test_state_attribute_boolean(opp):
     )
 
     opp.states.async_set("sensor.temperature", 100, {"happening": 200})
-    assert not test.opp)
+    assert not test(opp)
 
     opp.states.async_set("sensor.temperature", 100, {"happening": True})
-    assert not test.opp)
+    assert not test(opp)
 
     opp.states.async_set("sensor.temperature", 100, {"no_happening": 201})
     with pytest.raises(ConditionError):
-        test.opp)
+        test(opp)
 
     opp.states.async_set("sensor.temperature", 100, {"happening": False})
-    assert test.opp)
+    assert test(opp)
 
 
 async def test_state_using_input_entities(opp):
@@ -573,13 +573,13 @@ async def test_state_using_input_entities(opp):
     )
 
     opp.states.async_set("sensor.salut", "goodbye")
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set("sensor.salut", "salut")
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set("sensor.salut", "hello")
-    assert not test.opp)
+    assert not test(opp)
 
     await opp.services.async_call(
         "input_text",
@@ -590,13 +590,13 @@ async def test_state_using_input_entities(opp):
         },
         blocking=True,
     )
-    assert not test.opp)
+    assert not test(opp)
 
     opp.states.async_set("sensor.salut", "hi")
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set("sensor.salut", "cya")
-    assert test.opp)
+    assert test(opp)
 
     await opp.services.async_call(
         "input_select",
@@ -607,10 +607,10 @@ async def test_state_using_input_entities(opp):
         },
         blocking=True,
     )
-    assert not test.opp)
+    assert not test(opp)
 
     opp.states.async_set("sensor.salut", "welcome")
-    assert test.opp)
+    assert test(opp)
 
 
 async def test_numeric_state_raises(opp):
@@ -626,7 +626,7 @@ async def test_numeric_state_raises(opp):
             },
         )
 
-        test.opp)
+        test(opp)
 
     # Unknown attribute
     with pytest.raises(ConditionError, match=r"Attribute .* does not exist"):
@@ -641,7 +641,7 @@ async def test_numeric_state_raises(opp):
         )
 
         opp.states.async_set("sensor.temperature", 50)
-        test.opp)
+        test(opp)
 
     # Template error
     with pytest.raises(ConditionError, match="ZeroDivisionError"):
@@ -656,7 +656,7 @@ async def test_numeric_state_raises(opp):
         )
 
         opp.states.async_set("sensor.temperature", 50)
-        test.opp)
+        test(opp)
 
     # Unavailable state
     with pytest.raises(ConditionError, match="State is not available"):
@@ -670,7 +670,7 @@ async def test_numeric_state_raises(opp):
         )
 
         opp.states.async_set("sensor.temperature", "unavailable")
-        test.opp)
+        test(opp)
 
     # Bad number
     with pytest.raises(ConditionError, match="cannot be processed as a number"):
@@ -684,7 +684,7 @@ async def test_numeric_state_raises(opp):
         )
 
         opp.states.async_set("sensor.temperature", "fifty")
-        test.opp)
+        test(opp)
 
     # Below entity missing
     with pytest.raises(ConditionError, match="below entity"):
@@ -698,7 +698,7 @@ async def test_numeric_state_raises(opp):
         )
 
         opp.states.async_set("sensor.temperature", 50)
-        test.opp)
+        test(opp)
 
     # Above entity missing
     with pytest.raises(ConditionError, match="above entity"):
@@ -712,7 +712,7 @@ async def test_numeric_state_raises(opp):
         )
 
         opp.states.async_set("sensor.temperature", 50)
-        test.opp)
+        test(opp)
 
 
 async def test_numeric_state_multiple_entities(opp):
@@ -734,15 +734,15 @@ async def test_numeric_state_multiple_entities(opp):
 
     opp.states.async_set("sensor.temperature_1", 49)
     opp.states.async_set("sensor.temperature_2", 49)
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set("sensor.temperature_1", 50)
     opp.states.async_set("sensor.temperature_2", 49)
-    assert not test.opp)
+    assert not test(opp)
 
     opp.states.async_set("sensor.temperature_1", 49)
     opp.states.async_set("sensor.temperature_2", 50)
-    assert not test.opp)
+    assert not test(opp)
 
 
 async def test_numeric_state_attribute(opp):
@@ -764,20 +764,20 @@ async def test_numeric_state_attribute(opp):
 
     opp.states.async_set("sensor.temperature", 100, {"unkown_attr": 10})
     with pytest.raises(ConditionError):
-        assert test.opp)
+        assert test(opp)
 
     opp.states.async_set("sensor.temperature", 100, {"attribute1": 49})
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set("sensor.temperature", 100, {"attribute1": "49"})
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set("sensor.temperature", 100, {"attribute1": 51})
-    assert not test.opp)
+    assert not test(opp)
 
     opp.states.async_set("sensor.temperature", 100, {"attribute1": None})
     with pytest.raises(ConditionError):
-        assert test.opp)
+        assert test(opp)
 
 
 async def test_numeric_state_using_input_number(opp):
@@ -809,13 +809,13 @@ async def test_numeric_state_using_input_number(opp):
     )
 
     opp.states.async_set("sensor.temperature", 42)
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set("sensor.temperature", 10)
-    assert not test.opp)
+    assert not test(opp)
 
     opp.states.async_set("sensor.temperature", 100)
-    assert not test.opp)
+    assert not test(opp)
 
     await opp.services.async_call(
         "input_number",
@@ -826,7 +826,7 @@ async def test_numeric_state_using_input_number(opp):
         },
         blocking=True,
     )
-    assert test.opp)
+    assert test(opp)
 
     with pytest.raises(ConditionError):
         condition.async_numeric_state(
@@ -850,7 +850,7 @@ async def test_zone_raises(opp):
     )
 
     with pytest.raises(ConditionError, match="Unknown zone"):
-        test.opp)
+        test(opp)
 
     opp.states.async_set(
         "zone.home",
@@ -859,7 +859,7 @@ async def test_zone_raises(opp):
     )
 
     with pytest.raises(ConditionError, match="Unknown entity"):
-        test.opp)
+        test(opp)
 
     opp.states.async_set(
         "device_tracker.cat",
@@ -868,7 +868,7 @@ async def test_zone_raises(opp):
     )
 
     with pytest.raises(ConditionError, match="latitude"):
-        test.opp)
+        test(opp)
 
     opp.states.async_set(
         "device_tracker.cat",
@@ -877,7 +877,7 @@ async def test_zone_raises(opp):
     )
 
     with pytest.raises(ConditionError, match="longitude"):
-        test.opp)
+        test(opp)
 
     opp.states.async_set(
         "device_tracker.cat",
@@ -886,7 +886,7 @@ async def test_zone_raises(opp):
     )
 
     # All okay, now test multiple failed conditions
-    assert test.opp)
+    assert test(opp)
 
     test = await condition.async_from_config(
         opp,
@@ -898,10 +898,10 @@ async def test_zone_raises(opp):
     )
 
     with pytest.raises(ConditionError, match="dog"):
-        test.opp)
+        test(opp)
 
     with pytest.raises(ConditionError, match="work"):
-        test.opp)
+        test(opp)
 
     opp.states.async_set(
         "zone.work",
@@ -915,7 +915,7 @@ async def test_zone_raises(opp):
         {"friendly_name": "dog", "latitude": 20.1, "longitude": 10.1},
     )
 
-    assert test.opp)
+    assert test(opp)
 
 
 async def test_zone_multiple_entities(opp):
@@ -951,7 +951,7 @@ async def test_zone_multiple_entities(opp):
         "home",
         {"friendly_name": "person_2", "latitude": 2.1, "longitude": 1.1},
     )
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set(
         "device_tracker.person_1",
@@ -963,7 +963,7 @@ async def test_zone_multiple_entities(opp):
         "home",
         {"friendly_name": "person_2", "latitude": 2.1, "longitude": 1.1},
     )
-    assert not test.opp)
+    assert not test(opp)
 
     opp.states.async_set(
         "device_tracker.person_1",
@@ -975,7 +975,7 @@ async def test_zone_multiple_entities(opp):
         "home",
         {"friendly_name": "person_2", "latitude": 20.1, "longitude": 10.1},
     )
-    assert not test.opp)
+    assert not test(opp)
 
 
 async def test_multiple_zones(opp):
@@ -1010,21 +1010,21 @@ async def test_multiple_zones(opp):
         "home",
         {"friendly_name": "person", "latitude": 2.1, "longitude": 1.1},
     )
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set(
         "device_tracker.person",
         "home",
         {"friendly_name": "person", "latitude": 20.1, "longitude": 10.1},
     )
-    assert test.opp)
+    assert test(opp)
 
     opp.states.async_set(
         "device_tracker.person",
         "home",
         {"friendly_name": "person", "latitude": 50.1, "longitude": 20.1},
     )
-    assert not test.opp)
+    assert not test(opp)
 
 
 async def test_extract_entities():
@@ -1159,7 +1159,7 @@ async def test_condition_template_error(opp):
     )
 
     with pytest.raises(ConditionError, match="template"):
-        test.opp)
+        test(opp)
 
 
 async def test_condition_template_invalid_results(opp):
@@ -1167,19 +1167,19 @@ async def test_condition_template_invalid_results(opp):
     test = await condition.async_from_config(
         opp, {"condition": "template", "value_template": "{{ 'string' }}"}
     )
-    assert not test.opp)
+    assert not test(opp)
 
     test = await condition.async_from_config(
         opp, {"condition": "template", "value_template": "{{ 10.1 }}"}
     )
-    assert not test.opp)
+    assert not test(opp)
 
     test = await condition.async_from_config(
         opp, {"condition": "template", "value_template": "{{ 42 }}"}
     )
-    assert not test.opp)
+    assert not test(opp)
 
     test = await condition.async_from_config(
         opp, {"condition": "template", "value_template": "{{ [1, 2, 3] }}"}
     )
-    assert not test.opp)
+    assert not test(opp)

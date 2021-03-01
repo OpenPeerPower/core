@@ -142,7 +142,7 @@ class SimpleMediaPlayer(mp.MediaPlayerEntity):
 @pytest.fixture(params=[ExtendedMediaPlayer, SimpleMediaPlayer])
 def player(opp, request):
     """Return a media player."""
-    return request.param.opp)
+    return request.param(opp)
 
 
 async def test_volume_up(player):

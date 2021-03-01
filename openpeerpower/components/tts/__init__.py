@@ -588,7 +588,7 @@ class TextToSpeechUrlView(OpenPeerPowerView):
             _LOGGER.error("Error on init tts: %s", err)
             return self.json({"error": err}, HTTP_BAD_REQUEST)
 
-        base = self.tts.base_url or get_url(self.tts.opp)
+        base = self.tts.base_url or get_url(self.tts(opp)
         url = base + path
 
         return self.json({"url": url, "path": path})

@@ -15,7 +15,7 @@ def client(opp, opp_ws_client):
 
 
 @pytest.fixture
-def registry.opp):
+def registry(opp):
     """Return an empty, loaded, registry."""
     return mock_device_registry(opp)
 

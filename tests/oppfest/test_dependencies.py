@@ -68,7 +68,7 @@ def test.opp_components_var(mock_collector):
     mock_collector.visit(
         ast.parse(
             """
-def bla.opp):
+def bla(opp):
     opp.components.opp_components_var.async_do_something()
 """
         )
@@ -103,7 +103,7 @@ from openpeerpower.components.child_import_field import bla
 
 import openpeerpower.components.renamed_absolute as hue
 
-def bla.opp):
+def bla(opp):
     opp.components.opp_components_var.async_do_something()
 
 class Hello:

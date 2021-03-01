@@ -14,9 +14,9 @@ from openpeerpower.auth.providers import (
 
 
 @pytest.fixture
-def data.opp):
+def data(opp):
     """Create a loaded data class."""
-    data = opp_auth.Data.opp)
+    data = opp_auth.Data(opp)
     opp.loop.run_until_complete(data.async_load())
     return data
 
@@ -24,7 +24,7 @@ def data.opp):
 @pytest.fixture
 def legacy_data(opp):
     """Create a loaded legacy data class."""
-    data = opp_auth.Data.opp)
+    data = opp_auth.Data(opp)
     opp.loop.run_until_complete(data.async_load())
     data.is_legacy = True
     return data
@@ -111,7 +111,7 @@ async def test_login_flow_validates(data, opp):
     await data.async_save()
 
     provider = opp_auth. OppAuthProvider(
-        opp, auth_store.AuthStore.opp), {"type": "openpeerpower"}
+        opp, auth_store.AuthStore(opp), {"type": "openpeerpower"}
     )
     flow = await provider.async_login_flow({})
     result = await flow.async_step_init()
@@ -142,7 +142,7 @@ async def test_saving_loading(data, opp):
     data.add_auth("second-user", "second-pass")
     await data.async_save()
 
-    data = opp_auth.Data.opp)
+    data = opp_auth.Data(opp)
     await data.async_load()
     data.validate_login("test-user ", "test-pass")
     data.validate_login("second-user ", "second-pass")
@@ -212,7 +212,7 @@ async def test_legacy_login_flow_validates(legacy_data, opp):
     await legacy_data.async_save()
 
     provider = opp_auth. OppAuthProvider(
-        opp, auth_store.AuthStore.opp), {"type": "openpeerpower"}
+        opp, auth_store.AuthStore(opp), {"type": "openpeerpower"}
     )
     flow = await provider.async_login_flow({})
     result = await flow.async_step_init()
@@ -243,7 +243,7 @@ async def test_legacy_saving_loading(legacy_data, opp):
     legacy_data.add_auth("second-user", "second-pass")
     await legacy_data.async_save()
 
-    legacy_data = opp_auth.Data.opp)
+    legacy_data = opp_auth.Data(opp)
     await legacy_data.async_load()
     legacy_data.is_legacy = True
     legacy_data.validate_login("test-user", "test-pass")
@@ -287,7 +287,7 @@ async def test_race_condition_in_data_loading(opp):
         await asyncio.sleep(0)
 
     provider = opp_auth. OppAuthProvider(
-        opp, auth_store.AuthStore.opp), {"type": "openpeerpower"}
+        opp, auth_store.AuthStore(opp), {"type": "openpeerpower"}
     )
     with patch("openpeerpower.helpers.storage.Store.async_load", new=mock_load):
         task1 = provider.async_validate_login("user", "pass")

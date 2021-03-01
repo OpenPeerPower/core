@@ -150,7 +150,7 @@ async def test_update_entity(opp, client):
             )
         },
     )
-    platform = MockEntityPlatform.opp)
+    platform = MockEntityPlatform(opp)
     entity = MockEntity(unique_id="1234")
     await platform.async_add_entities([entity])
 
@@ -256,7 +256,7 @@ async def test_update_entity_require_restart(opp, client):
             )
         },
     )
-    platform = MockEntityPlatform.opp)
+    platform = MockEntityPlatform(opp)
     entity = MockEntity(unique_id="1234")
     await platform.async_add_entities([entity])
 
@@ -321,7 +321,7 @@ async def test_enable_entity_disabled_device(opp, client, device_registry):
             )
         },
     )
-    platform = MockEntityPlatform.opp)
+    platform = MockEntityPlatform(opp)
     entity = MockEntity(unique_id="1234")
     await platform.async_add_entities([entity])
 
@@ -357,7 +357,7 @@ async def test_update_entity_no_changes(opp, client):
             )
         },
     )
-    platform = MockEntityPlatform.opp)
+    platform = MockEntityPlatform(opp)
     entity = MockEntity(unique_id="1234")
     await platform.async_add_entities([entity])
 
@@ -439,7 +439,7 @@ async def test_update_entity_id(opp, client):
             )
         },
     )
-    platform = MockEntityPlatform.opp)
+    platform = MockEntityPlatform(opp)
     entity = MockEntity(unique_id="1234")
     await platform.async_add_entities([entity])
 
@@ -496,7 +496,7 @@ async def test_update_existing_entity_id(opp, client):
             ),
         },
     )
-    platform = MockEntityPlatform.opp)
+    platform = MockEntityPlatform(opp)
     entities = [MockEntity(unique_id="1234"), MockEntity(unique_id="2345")]
     await platform.async_add_entities(entities)
 
@@ -527,7 +527,7 @@ async def test_update_invalid_entity_id(opp, client):
             )
         },
     )
-    platform = MockEntityPlatform.opp)
+    platform = MockEntityPlatform(opp)
     entities = [MockEntity(unique_id="1234"), MockEntity(unique_id="2345")]
     await platform.async_add_entities(entities)
 

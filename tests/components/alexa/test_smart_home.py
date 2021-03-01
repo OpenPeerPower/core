@@ -46,7 +46,7 @@ from tests.common import async_mock_service
 
 
 @pytest.fixture
-def events.opp):
+def events(opp):
     """Fixture that catches alexa events."""
     events = []
     opp.bus.async_listen(

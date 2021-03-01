@@ -28,14 +28,14 @@ _ACTIVITY_TUPLE = ("not", "used")
 
 async def test_no_callbacks(opp):
     """Ensure we handle no subscriptions."""
-    subscriber = HarmonySubscriberMixin.opp)
+    subscriber = HarmonySubscriberMixin(opp)
     _call_all_callbacks(subscriber)
     await opp.async_block_till_done()
 
 
 async def test_empty_callbacks(opp):
     """Ensure we handle a missing callback in a subscription."""
-    subscriber = HarmonySubscriberMixin.opp)
+    subscriber = HarmonySubscriberMixin(opp)
 
     callbacks = {k: None for k in _ALL_CALLBACK_NAMES}
     subscriber.async_subscribe(HarmonyCallback(**callbacks))
@@ -45,7 +45,7 @@ async def test_empty_callbacks(opp):
 
 async def test_async_callbacks(opp):
     """Ensure we handle async callbacks."""
-    subscriber = HarmonySubscriberMixin.opp)
+    subscriber = HarmonySubscriberMixin(opp)
 
     callbacks = {k: AsyncMock() for k in _ALL_CALLBACK_NAMES}
     subscriber.async_subscribe(HarmonyCallback(**callbacks))
@@ -63,7 +63,7 @@ async def test_async_callbacks(opp):
 
 async def test_long_async_callbacks(opp):
     """Ensure we handle async callbacks that may have sleeps."""
-    subscriber = HarmonySubscriberMixin.opp)
+    subscriber = HarmonySubscriberMixin(opp)
 
     blocker_event = asyncio.Event()
     notifier_event_one = asyncio.Event()
@@ -89,7 +89,7 @@ async def test_long_async_callbacks(opp):
 
 async def test_callbacks(opp):
     """Ensure we handle non-async callbacks."""
-    subscriber = HarmonySubscriberMixin.opp)
+    subscriber = HarmonySubscriberMixin(opp)
 
     callbacks = {k: MagicMock() for k in _ALL_CALLBACK_NAMES}
     subscriber.async_subscribe(HarmonyCallback(**callbacks))
@@ -107,7 +107,7 @@ async def test_callbacks(opp):
 
 async def test_subscribe_unsubscribe(opp):
     """Ensure we handle subscriptions and unsubscriptions correctly."""
-    subscriber = HarmonySubscriberMixin.opp)
+    subscriber = HarmonySubscriberMixin(opp)
 
     callback_one = {k: MagicMock() for k in _ALL_CALLBACK_NAMES}
     unsub_one = subscriber.async_subscribe(HarmonyCallback(**callback_one))

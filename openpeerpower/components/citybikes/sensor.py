@@ -160,7 +160,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         radius = distance.convert(radius, LENGTH_FEET, LENGTH_METERS)
 
     # Create a single instance of CityBikesNetworks.
-    networks = opp.data.setdefault(CITYBIKES_NETWORKS, CityBikesNetworks.opp))
+    networks = opp.data.setdefault(CITYBIKES_NETWORKS, CityBikesNetworks(opp))
 
     if not network_id:
         network_id = await networks.get_closest_network_id(latitude, longitude)

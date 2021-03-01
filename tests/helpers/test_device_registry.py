@@ -17,7 +17,7 @@ from tests.common import (
 
 
 @pytest.fixture
-def registry.opp):
+def registry(opp):
     """Return an empty, loaded, registry."""
     return mock_device_registry(opp)
 
@@ -550,7 +550,7 @@ async def test_loading_saving_data(opp, registry, area_registry):
     )
 
     # Now load written data in new registry
-    registry2 = device_registry.DeviceRegistry.opp)
+    registry2 = device_registry.DeviceRegistry(opp)
     await flush_store(registry._store)
     await registry2.async_load()
 

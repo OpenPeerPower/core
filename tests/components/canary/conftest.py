@@ -12,7 +12,7 @@ def mock_ffmpeg(opp):
 
 
 @fixture
-def canary.opp):
+def canary(opp):
     """Mock the CanaryApi for easier testing."""
     with patch.object(Api, "login", return_value=True), patch(
         "openpeerpower.components.canary.Api"

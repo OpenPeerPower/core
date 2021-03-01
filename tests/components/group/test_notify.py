@@ -12,8 +12,8 @@ from openpeerpower.setup import async_setup_component
 
 async def test_send_message_with_data(opp):
     """Test sending a message with to a notify group."""
-    service1 = demo.DemoNotificationService.opp)
-    service2 = demo.DemoNotificationService.opp)
+    service1 = demo.DemoNotificationService(opp)
+    service2 = demo.DemoNotificationService(opp)
 
     service1.send_message = MagicMock(autospec=True)
     service2.send_message = MagicMock(autospec=True)

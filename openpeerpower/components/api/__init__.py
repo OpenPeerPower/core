@@ -375,7 +375,7 @@ class APIDomainServicesView(OpenPeerPowerView):
         except ValueError:
             return self.json_message("Data should be valid JSON.", HTTP_BAD_REQUEST)
 
-        with AsyncTrackStates.opp) as changed_states:
+        with AsyncTrackStates(opp) as changed_states:
             try:
                 await opp.services.async_call(
                     domain, service, data, blocking=True, context=self.context(request)

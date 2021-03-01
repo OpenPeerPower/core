@@ -18,7 +18,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry):
     """Set up a 1-Wire proxy for a config entry."""
     opp.data.setdefault(DOMAIN, {})
 
-    onewirehub = OneWireHub.opp)
+    onewirehub = OneWireHub(opp)
     try:
         await onewirehub.initialize(config_entry)
     except CannotConnect as exc:

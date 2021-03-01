@@ -290,7 +290,7 @@ class YeelightScanner:
     def async_get(cls, opp: OpenPeerPower):
         """Get scanner instance."""
         if cls._scanner is None:
-            cls._scanner = cls.opp)
+            cls._scanner = cls(opp)
         return cls._scanner
 
     def __init__(self, opp: OpenPeerPower):

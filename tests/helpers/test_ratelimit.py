@@ -18,7 +18,7 @@ async def test_hit(opp):
         refresh_called = True
         return
 
-    rate_limiter = ratelimit.KeyedRateLimit.opp)
+    rate_limiter = ratelimit.KeyedRateLimit(opp)
     rate_limiter.async_triggered("key1", dt_util.utcnow())
 
     assert (
@@ -55,7 +55,7 @@ async def test_miss(opp):
         refresh_called = True
         return
 
-    rate_limiter = ratelimit.KeyedRateLimit.opp)
+    rate_limiter = ratelimit.KeyedRateLimit(opp)
     assert (
         rate_limiter.async_schedule_action(
             "key1", timedelta(seconds=0.1), dt_util.utcnow(), _refresh
@@ -87,7 +87,7 @@ async def test_no_limit(opp):
         refresh_called = True
         return
 
-    rate_limiter = ratelimit.KeyedRateLimit.opp)
+    rate_limiter = ratelimit.KeyedRateLimit(opp)
     rate_limiter.async_triggered("key1", dt_util.utcnow())
 
     assert (

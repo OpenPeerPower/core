@@ -25,7 +25,7 @@ DISTANCE_MILES = 3632.78
 
 
 @pytest.fixture
-async def session.opp):
+async def session(opp):
     """Return aioclient session."""
     return opp.helpers.aiohttp_client.async_get_clientsession()
 

@@ -694,7 +694,7 @@ async def test_warn_slow_write_state_custom_component(opp, caplog):
 
 async def test_setup_source(opp):
     """Check that we register sources correctly."""
-    platform = MockEntityPlatform.opp)
+    platform = MockEntityPlatform(opp)
 
     entity_platform = MockEntity(name="Platform Config Source")
     await platform.async_add_entities([entity_platform])

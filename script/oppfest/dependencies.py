@@ -59,13 +59,13 @@ class ImportCollector(ast.NodeVisitor):
     def visit_Attribute(self, node):
         """Visit Attribute node."""
         #.opp.components.hue.async_create()
-        # Name(id.opp)
+        # Name(id(opp)
         #   .Attribute(attr=hue)
         #   .Attribute(attr=async_create)
 
         # self.opp.components.hue.async_create()
         # Name(id=self)
-        #   .Attribute(attr.opp) or .Attribute(attr= opp)
+        #   .Attribute(attr(opp) or .Attribute(attr= opp)
         #   .Attribute(attr=hue)
         #   .Attribute(attr=async_create)
         if (

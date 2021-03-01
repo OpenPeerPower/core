@@ -55,7 +55,7 @@ async def async_start_discovery_service(opp: OpenPeerPowerType):
         return disco
 
     # discovery local services
-    disco = DiscoveryService.opp)
+    disco = DiscoveryService(opp)
     opp.data[DATA_DISCOVERY_SERVICE] = disco
 
     # Start the pizone discovery service, disco is the listener

@@ -231,7 +231,7 @@ async def async_setup(opp, config):
         _LOGGER, DOMAIN, opp, SCAN_INTERVAL
     )
 
-    prefs = CameraPreferences.opp)
+    prefs = CameraPreferences(opp)
     await prefs.async_initialize()
     opp.data[DATA_CAMERA_PREFS] = prefs
 

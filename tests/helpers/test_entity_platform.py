@@ -508,7 +508,7 @@ async def test_registry_respect_entity_disabled(opp):
             )
         },
     )
-    platform = MockEntityPlatform.opp)
+    platform = MockEntityPlatform(opp)
     entity = MockEntity(unique_id="1234")
     await platform.async_add_entities([entity])
     assert entity.entity_id == "test_domain.world"
@@ -529,7 +529,7 @@ async def test_entity_registry_updates_name(opp):
             )
         },
     )
-    platform = MockEntityPlatform.opp)
+    platform = MockEntityPlatform(opp)
     entity = MockEntity(unique_id="1234")
     await platform.async_add_entities([entity])
 
@@ -633,7 +633,7 @@ async def test_entity_registry_updates_entity_id(opp):
             )
         },
     )
-    platform = MockEntityPlatform.opp)
+    platform = MockEntityPlatform(opp)
     entity = MockEntity(unique_id="1234")
     await platform.async_add_entities([entity])
 
@@ -670,7 +670,7 @@ async def test_entity_registry_updates_invalid_entity_id(opp):
             ),
         },
     )
-    platform = MockEntityPlatform.opp)
+    platform = MockEntityPlatform(opp)
     entity = MockEntity(unique_id="1234")
     await platform.async_add_entities([entity])
 
@@ -933,7 +933,7 @@ async def test_platforms_sharing_services(opp):
 
 async def test_invalid_entity_id(opp):
     """Test specifying an invalid entity id."""
-    platform = MockEntityPlatform.opp)
+    platform = MockEntityPlatform(opp)
     entity = MockEntity(entity_id="invalid_entity_id")
     with pytest.raises(OpenPeerPowerError):
         await platform.async_add_entities([entity])

@@ -36,7 +36,7 @@ REQ_ID = "ff36a3cc-ec34-11e6-b1a0-64510650abcf"
 
 
 @pytest.fixture
-def registries.opp):
+def registries(opp):
     """Registry mock setup."""
     from types import SimpleNamespace
 

@@ -42,7 +42,7 @@ DEFAULT_UPDATE_INTERVAL = timedelta(seconds=10)
 
 
 @pytest.fixture
-def crd.opp):
+def crd(opp):
     """Coordinator mock with default update interval."""
     return get_crd(opp, DEFAULT_UPDATE_INTERVAL)
 

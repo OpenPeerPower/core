@@ -135,7 +135,7 @@ async def async_get_registry(opp: OpenPeerPowerType) -> ZhaStorage:
     if task is None:
 
         async def _load_reg() -> ZhaStorage:
-            registry = ZhaStorage.opp)
+            registry = ZhaStorage(opp)
             await registry.async_load()
             return registry
 

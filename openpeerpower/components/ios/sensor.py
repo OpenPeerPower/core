@@ -25,7 +25,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up iOS from a config entry."""
     dev = []
-    for device_name, device in ios.devices.opp).items():
+    for device_name, device in ios.devices(opp).items():
         for sensor_type in ("level", "state"):
             dev.append(IOSSensor(sensor_type, device_name, device))
 

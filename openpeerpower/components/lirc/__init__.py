@@ -25,7 +25,7 @@ def setup(opp, config):
     # also by not blocking, we allow.opp to shut down the thread gracefully
     # on exit.
     lirc.init("open-peer-power", blocking=False)
-    lirc_interface = LircInterface.opp)
+    lirc_interface = LircInterface(opp)
 
     def _start_lirc(_event):
         lirc_interface.start()

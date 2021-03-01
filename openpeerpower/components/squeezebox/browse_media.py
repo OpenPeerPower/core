@@ -68,7 +68,7 @@ BROWSE_LIMIT = 1000
 
 async def build_item_response(entity, player, payload):
     """Create response payload for search described by payload."""
-    internal_request = is_internal_request(entity.opp)
+    internal_request = is_internal_request(entity(opp)
 
     search_id = payload["search_id"]
     search_type = payload["search_type"]

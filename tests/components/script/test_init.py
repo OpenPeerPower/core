@@ -60,7 +60,7 @@ def toggle.opp, entity_id):
 
 
 @bind.opp
-def reload.opp):
+def reload(opp):
     """Reload script component.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -501,7 +501,7 @@ async def test_logbook_humanify_script_started_event(opp):
     opp.config.components.add("recorder")
     await async_setup_component(opp, DOMAIN, {})
     await async_setup_component(opp, "logbook", {})
-    entity_attr_cache = logbook.EntityAttributeCache.opp)
+    entity_attr_cache = logbook.EntityAttributeCache(opp)
 
     event1, event2 = list(
         logbook.humanify(

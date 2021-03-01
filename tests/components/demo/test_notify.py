@@ -18,7 +18,7 @@ CONFIG = {notify.DOMAIN: {"platform": "demo"}}
 
 
 @pytest.fixture
-def events.opp):
+def events(opp):
     """Fixture that catches notify events."""
     events = []
     opp.bus.async_listen(demo.EVENT_NOTIFY, callback(lambda e: events.append(e)))

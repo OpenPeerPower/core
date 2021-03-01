@@ -228,7 +228,7 @@ def enabled_push_ids(opp):
     return push_ids
 
 
-def devices.opp):
+def devices(opp):
     """Return a dictionary of all identified devices."""
     return opp.data[DOMAIN][ATTR_DEVICES]
 

@@ -9,9 +9,9 @@ from openpeerpower.auth.providers import insecure_example
 
 
 @pytest.fixture
-def store.opp):
+def store(opp):
     """Mock store."""
-    return auth_store.AuthStore.opp)
+    return auth_store.AuthStore(opp)
 
 
 @pytest.fixture

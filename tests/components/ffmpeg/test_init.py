@@ -105,7 +105,7 @@ async def test_setup_component_test_register(opp):
         await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
 
     opp.bus.async_listen_once = MagicMock()
-    ffmpeg_dev = MockFFmpegDev.opp)
+    ffmpeg_dev = MockFFmpegDev(opp)
     await ffmpeg_dev.async_added_to_opp()
 
     assert opp.bus.async_listen_once.called

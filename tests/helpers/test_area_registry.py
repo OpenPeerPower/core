@@ -8,7 +8,7 @@ from tests.common import flush_store, mock_area_registry
 
 
 @pytest.fixture
-def registry.opp):
+def registry(opp):
     """Return an empty, loaded, registry."""
     return mock_area_registry(opp)
 
@@ -180,7 +180,7 @@ async def test_load_area(opp, registry):
 
     assert len(registry.areas) == 2
 
-    registry2 = area_registry.AreaRegistry.opp)
+    registry2 = area_registry.AreaRegistry(opp)
     await flush_store(registry._store)
     await registry2.async_load()
 

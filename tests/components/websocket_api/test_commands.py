@@ -790,7 +790,7 @@ async def test_manifest_get(opp, websocket_client):
 
 async def test_entity_source_admin(opp, websocket_client, opp_admin_user):
     """Check that we fetch sources correctly."""
-    platform = MockEntityPlatform.opp)
+    platform = MockEntityPlatform(opp)
 
     await platform.async_add_entities(
         [MockEntity(name="Entity 1"), MockEntity(name="Entity 2")]

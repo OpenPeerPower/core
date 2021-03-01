@@ -79,7 +79,7 @@ def calls(opp):
 
 
 @pytest.fixture
-def events.opp):
+def events(opp):
     """Yield caught shelly_click events."""
     op_events = []
     opp.bus.async_listen(EVENT_SHELLY_CLICK, op_callback(op_events.append))

@@ -815,7 +815,7 @@ def test_deprecated_base_class(caplog):
 
 async def test_profiles(opp):
     """Test profiles loading."""
-    profiles = orig_Profiles.opp)
+    profiles = orig_Profiles(opp)
     await profiles.async_initialize()
     assert profiles.data == {
         "concentrate": light.Profile("concentrate", 0.5119, 0.4147, 219, None),
@@ -852,7 +852,7 @@ invalid_brightness_2,0,0,256
 invalid_no_brightness_no_color_no_transition,,,
 """
 
-    profiles = orig_Profiles.opp)
+    profiles = orig_Profiles(opp)
     with patch("builtins.open", mock_open(read_data=csv_file)):
         await profiles.async_initialize()
         await opp.async_block_till_done()

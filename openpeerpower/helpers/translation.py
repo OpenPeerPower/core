@@ -307,7 +307,7 @@ async def async_get_translations(
         }
 
     async with lock:
-        cache = opp.data.setdefault(TRANSLATION_FLATTEN_CACHE, _TranslationCache.opp))
+        cache = opp.data.setdefault(TRANSLATION_FLATTEN_CACHE, _TranslationCache(opp))
         cached = await cache.async_fetch(language, category, components)
 
     return dict(ChainMap(*cached))

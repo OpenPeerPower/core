@@ -117,7 +117,7 @@ async def async_setup(opp, config):
         ("pck", Pck),
     ):
         opp.services.async_register(
-            DOMAIN, service_name, service.opp).async_call_service, service.schema
+            DOMAIN, service_name, service(opp).async_call_service, service.schema
         )
 
     return True

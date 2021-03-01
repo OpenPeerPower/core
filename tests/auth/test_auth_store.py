@@ -62,7 +62,7 @@ async def test_loading_no_group_data_format(opp, opp_storage):
         },
     }
 
-    store = auth_store.AuthStore.opp)
+    store = auth_store.AuthStore(opp)
     groups = await store.async_get_groups()
     assert len(groups) == 3
     admin_group = groups[0]
@@ -158,7 +158,7 @@ async def test_loading_all_access_group_data_format(opp, opp_storage):
         },
     }
 
-    store = auth_store.AuthStore.opp)
+    store = auth_store.AuthStore(opp)
     groups = await store.async_get_groups()
     assert len(groups) == 3
     admin_group = groups[0]
@@ -196,7 +196,7 @@ async def test_loading_all_access_group_data_format(opp, opp_storage):
 
 async def test_loading_empty_data(opp, opp_storage):
     """Test we correctly load with no existing data."""
-    store = auth_store.AuthStore.opp)
+    store = auth_store.AuthStore(opp)
     groups = await store.async_get_groups()
     assert len(groups) == 3
     admin_group = groups[0]
@@ -221,7 +221,7 @@ async def test_system_groups_store_id_and_name(opp, opp_storage):
 
     Name is stored so that we remain backwards compat with < 0.82.
     """
-    store = auth_store.AuthStore.opp)
+    store = auth_store.AuthStore(opp)
     await store._async_load()
     data = store._data_to_save()
     assert len(data["users"]) == 0
@@ -234,7 +234,7 @@ async def test_system_groups_store_id_and_name(opp, opp_storage):
 
 async def test_loading_race_condition(opp):
     """Test only one storage load called when concurrent loading occurred ."""
-    store = auth_store.AuthStore.opp)
+    store = auth_store.AuthStore(opp)
     with patch(
         "openpeerpower.helpers.entity_registry.async_get_registry"
     ) as mock_ent_registry, patch(

@@ -146,7 +146,7 @@ async def async_setup_entry(opp, config):
         DOMAIN, SERVICE_RECONNECT, bot.async_handle_reconnect, schema=vol.Schema({})
     )
 
-    intent.async_register(opp, HelpIntent.opp))
+    intent.async_register(opp, HelpIntent(opp))
 
     return True
 

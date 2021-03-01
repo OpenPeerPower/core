@@ -10,7 +10,7 @@ async def async_get_service(opp, config, discovery_info=None):
     )
     if not new_devices:
         return None
-    return MySensorsNotificationService.opp)
+    return MySensorsNotificationService(opp)
 
 
 class MySensorsNotificationDevice(mysensors.device.MySensorsDevice):

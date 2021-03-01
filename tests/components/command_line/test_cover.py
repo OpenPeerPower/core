@@ -21,7 +21,7 @@ from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture
-def rs.opp):
+def rs(opp):
     """Return CommandCover instance."""
     return cmd_rs.CommandCover(
         opp,

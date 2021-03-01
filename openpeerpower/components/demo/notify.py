@@ -6,7 +6,7 @@ EVENT_NOTIFY = "notify"
 
 def get_service(opp, config, discovery_info=None):
     """Get the demo notification service."""
-    return DemoNotificationService.opp)
+    return DemoNotificationService(opp)
 
 
 class DemoNotificationService(BaseNotificationService):

@@ -13,9 +13,9 @@ from openpeerpower.const import CONF_TYPE
 
 
 @pytest.fixture
-def store.opp):
+def store(opp):
     """Mock store."""
-    return auth_store.AuthStore.opp)
+    return auth_store.AuthStore(opp)
 
 
 @pytest.fixture

@@ -55,14 +55,14 @@ async def test_component_dependencies(opp):
 
 def test_component_loader(opp):
     """Test loading components."""
-    components = loader.Components.opp)
+    components = loader.Components(opp)
     assert components.http.CONFIG_SCHEMA is http.CONFIG_SCHEMA
     assert opp.components.http.CONFIG_SCHEMA is http.CONFIG_SCHEMA
 
 
 def test_component_loader_non_existing(opp):
     """Test loading components."""
-    components = loader.Components.opp)
+    components = loader.Components(opp)
     with pytest.raises(ImportError):
         components.non_existing
 
@@ -71,7 +71,7 @@ async def test_component_wrapper(opp):
     """Test component wrapper."""
     calls = async_mock_service(opp, "persistent_notification", "create")
 
-    components = loader.Components.opp)
+    components = loader.Components(opp)
     components.persistent_notification.async_create("message")
     await opp.async_block_till_done()
 
@@ -80,7 +80,7 @@ async def test_component_wrapper(opp):
 
 async def test_helpers_wrapper(opp):
     """Test helpers wrapper."""
-    helpers = loader.Helpers.opp)
+    helpers = loader.Helpers(opp)
 
     result = []
 

@@ -60,7 +60,7 @@ async def async_setup_gateway_entry(
         opp.config_entries.async_update_entry(entry, unique_id=entry.data["mac"])
 
     # Connect to gateway
-    gateway = ConnectXiaomiGateway.opp)
+    gateway = ConnectXiaomiGateway(opp)
     if not await gateway.async_connect_gateway(host, token):
         return False
     gateway_info = gateway.gateway_info

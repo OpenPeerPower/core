@@ -17,7 +17,7 @@ from openpeerpower.loader import bind_opp
 
 
 @bind.opp
-def reload.opp):
+def reload(opp):
     """Reload the automation from config."""
     opp.add_job(async_reload, opp)
 

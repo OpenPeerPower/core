@@ -60,7 +60,7 @@ async def test_humanifying_deconz_event(opp, aioclient_mock):
 
     opp.config.components.add("recorder")
     assert await async_setup_component(opp, "logbook", {})
-    entity_attr_cache = logbook.EntityAttributeCache.opp)
+    entity_attr_cache = logbook.EntityAttributeCache(opp)
 
     events = list(
         logbook.humanify(

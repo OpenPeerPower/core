@@ -38,7 +38,7 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup(opp, config):
     """Set up the Fast.com component."""
     conf = config[DOMAIN]
-    data = opp.data[DOMAIN] = SpeedtestData.opp)
+    data = opp.data[DOMAIN] = SpeedtestData(opp)
 
     if not conf[CONF_MANUAL]:
         async_track_time_interval(opp, data.update, conf[CONF_SCAN_INTERVAL])

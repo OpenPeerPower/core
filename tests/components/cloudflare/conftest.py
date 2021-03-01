@@ -7,7 +7,7 @@ from . import _get_mock_cfupdate
 
 
 @fixture
-def cfupdate.opp):
+def cfupdate(opp):
     """Mock the CloudflareUpdater for easier testing."""
     mock_cfupdate = _get_mock_cfupdate()
     with patch(

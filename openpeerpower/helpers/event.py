@@ -794,7 +794,7 @@ class _TrackTemplateResultInfo:
 
         self._last_result: Dict[Template, Union[str, TemplateError]] = {}
 
-        self._rate_limit = KeyedRateLimit.opp)
+        self._rate_limit = KeyedRateLimit(opp)
         self._info: Dict[Template, RenderInfo] = {}
         self._track_state_changes: Optional[_TrackStateChangeFiltered] = None
         self._time_listeners: Dict[Template, Callable] = {}

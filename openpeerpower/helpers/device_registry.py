@@ -660,7 +660,7 @@ def async_get(opp: OpenPeerPowerType) -> DeviceRegistry:
 async def async_load(opp: OpenPeerPowerType) -> None:
     """Load device registry."""
     assert DATA_REGISTRY not in opp.data
-    opp.data[DATA_REGISTRY] = DeviceRegistry.opp)
+    opp.data[DATA_REGISTRY] = DeviceRegistry(opp)
     await opp.data[DATA_REGISTRY].async_load()
 
 

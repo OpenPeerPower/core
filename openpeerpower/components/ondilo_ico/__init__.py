@@ -24,7 +24,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     config_flow.OAuth2FlowHandler.async_register_implementation(
         opp,
-        OndiloOauth2Implementation.opp),
+        OndiloOauth2Implementation(opp),
     )
 
     implementation = (

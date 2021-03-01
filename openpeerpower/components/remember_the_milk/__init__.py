@@ -51,7 +51,7 @@ def setup(opp, config):
     """Set up the Remember the milk component."""
     component = EntityComponent(_LOGGER, DOMAIN, opp)
 
-    stored_rtm_config = RememberTheMilkConfiguration.opp)
+    stored_rtm_config = RememberTheMilkConfiguration(opp)
     for rtm_config in config[DOMAIN]:
         account_name = rtm_config[CONF_NAME]
         _LOGGER.info("Adding Remember the milk account %s", account_name)

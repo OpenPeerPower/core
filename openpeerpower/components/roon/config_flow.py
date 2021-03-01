@@ -84,7 +84,7 @@ class RoonHub:
 async def discover(opp):
     """Connect and authenticate open peer power."""
 
-    hub = RoonHub.opp)
+    hub = RoonHub(opp)
     servers = await hub.discover()
 
     return servers
@@ -93,7 +93,7 @@ async def discover(opp):
 async def authenticate.opp: core.OpenPeerPower, host, servers):
     """Connect and authenticate open peer power."""
 
-    hub = RoonHub.opp)
+    hub = RoonHub(opp)
     (token, core_id) = await hub.authenticate(host, servers)
     if token is None:
         raise InvalidAuth

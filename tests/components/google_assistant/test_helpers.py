@@ -172,7 +172,7 @@ async def test_agent_user_id_storage(opp, opp_storage):
         "data": {"agent_user_ids": {"agent_1": {}}},
     }
 
-    store = helpers.GoogleConfigStore.opp)
+    store = helpers.GoogleConfigStore(opp)
     await store.async_load()
 
     assert opp_storage["google_assistant"] == {

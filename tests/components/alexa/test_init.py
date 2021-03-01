@@ -12,7 +12,7 @@ async def test_humanify_alexa_event(opp):
     await async_setup_component(opp, "alexa", {})
     await async_setup_component(opp, "logbook", {})
     opp.states.async_set("light.kitchen", "on", {"friendly_name": "Kitchen Light"})
-    entity_attr_cache = logbook.EntityAttributeCache.opp)
+    entity_attr_cache = logbook.EntityAttributeCache(opp)
 
     results = list(
         logbook.humanify(

@@ -45,7 +45,7 @@ async def test_import_cannot_connect(opp):
     assert len(opp.config_entries.async_entries(DOMAIN)) == 0
 
 
-async def test.oppio.opp):
+async def test.oppio(opp):
     """Test that Opp.io can discover this integration."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

@@ -22,7 +22,7 @@ def hk_driver(loop):
 
 
 @pytest.fixture
-def events.opp):
+def events(opp):
     """Yield caught homekit_changed events."""
     events = []
     opp.bus.async_listen(

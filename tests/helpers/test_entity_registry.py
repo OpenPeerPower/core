@@ -18,7 +18,7 @@ YAML__OPEN_PATH = "openpeerpower.util.yaml.loader.open"
 
 
 @pytest.fixture
-def registry.opp):
+def registry(opp):
     """Return an empty, loaded, registry."""
     return mock_registry(opp)
 
@@ -173,7 +173,7 @@ async def test_loading_saving_data(opp, registry):
     assert len(registry.entities) == 2
 
     # Now load written data in new registry
-    registry2 = entity_registry.EntityRegistry.opp)
+    registry2 = entity_registry.EntityRegistry(opp)
     await flush_store(registry._store)
     await registry2.async_load()
 

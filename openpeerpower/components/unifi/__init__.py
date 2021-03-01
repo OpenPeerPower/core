@@ -19,7 +19,7 @@ STORAGE_VERSION = 1
 
 async def async_setup(opp, config):
     """Component doesn't support configuration through configuration.yaml."""
-    opp.data[UNIFI_WIRELESS_CLIENTS] = wireless_clients = UnifiWirelessClients.opp)
+    opp.data[UNIFI_WIRELESS_CLIENTS] = wireless_clients = UnifiWirelessClients(opp)
     await wireless_clients.async_load()
 
     return True

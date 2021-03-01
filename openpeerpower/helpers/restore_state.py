@@ -70,7 +70,7 @@ class RestoreStateData:
         @singleton(DATA_RESTORE_STATE_TASK)
         async def load_instance(opp: OpenPeerPower) -> RestoreStateData:
             """Get the singleton instance of this data helper."""
-            data = cls.opp)
+            data = cls(opp)
 
             try:
                 stored_states = await data.store.async_load()

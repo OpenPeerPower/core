@@ -92,7 +92,7 @@ async def async_setup_entry(opp, config_entry):
         else:
             await data.async_update(item["id"], {"name": name, "complete": True})
 
-    data = opp.data[DOMAIN] = ShoppingData.opp)
+    data = opp.data[DOMAIN] = ShoppingData(opp)
     await data.async_load()
 
     opp.services.async_register(

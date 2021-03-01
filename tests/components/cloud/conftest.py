@@ -26,7 +26,7 @@ def mock_cloud_fixture(opp):
 @pytest.fixture
 async def cloud_prefs(opp):
     """Fixture for cloud preferences."""
-    cloud_prefs = prefs.CloudPreferences.opp)
+    cloud_prefs = prefs.CloudPreferences(opp)
     await cloud_prefs.async_initialize()
     return cloud_prefs
 

@@ -13,7 +13,7 @@ def mock_light_profiles():
     data = {}
 
     def mock_profiles_class(opp):
-        profiles = Profiles.opp)
+        profiles = Profiles(opp)
         profiles.data = data
         profiles.async_initialize = AsyncMock()
         return profiles
