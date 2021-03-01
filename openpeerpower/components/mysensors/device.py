@@ -52,7 +52,7 @@ class MySensorsDevice:
         self.child_type = self._child.type
         self._values = {}
         self._update_scheduled = False
-        self opp =None
+        self.opp =None
 
     @property
     def dev_id(self) -> DevId:

@@ -464,7 +464,7 @@ class ConfigEntriesFlowManager(data_entry_flow.FlowManager):
         """Initialize the config entry flow manager."""
         super().__init__( opp)
         self.config_entries = config_entries
-        self opp_config = opp_config
+        self.opp_config = opp_config
 
     async def async_finish_flow(
         self, flow: data_entry_flow.FlowHandler, result: Dict[str, Any]

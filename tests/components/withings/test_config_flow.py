@@ -79,7 +79,7 @@ async def test_config_reauth_profile(
         },
     )
 
-    client: TestClient = await aiohttp_client.opp.http.app)
+    client: TestClient = await aiohttp_client(opp.http.app)
     resp = await client.get(f"{AUTH_CALLBACK_PATH}?code=abcd&state={state}")
     assert resp.status == 200
     assert resp.headers["content-type"] == "text/html; charset=utf-8"

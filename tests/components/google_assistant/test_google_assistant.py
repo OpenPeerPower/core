@@ -56,7 +56,7 @@ def assistant_client(loop, opp, aiohttp_client):
         )
     )
 
-    return loop.run_until_complete(aiohttp_client.opp.http.app))
+    return loop.run_until_complete(aiohttp_client(opp.http.app))
 
 
 @pytest.fixture

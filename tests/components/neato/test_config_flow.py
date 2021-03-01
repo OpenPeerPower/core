@@ -50,7 +50,7 @@ async def test_full_flow(
         "&scope=public_profile+control_robots+maps"
     )
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
     resp = await client.get(f"/auth/external/callback?code=abcd&state={state}")
     assert resp.status == 200
     assert resp.headers["content-type"] == "text/html; charset=utf-8"
@@ -127,7 +127,7 @@ async def test_reauth(
         },
     )
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
     resp = await client.get(f"/auth/external/callback?code=abcd&state={state}")
     assert resp.status == 200
 

@@ -3,7 +3,7 @@ import asyncio
 
 from openpeerpower import bootstrap, config_entries
 from openpeerpower.const import ATTR_ENTITY_ID, EVENT_OPENPEERPOWER_START
-import openpeerpower.core as ha
+import openpeerpower.core as op
 
 DOMAIN = "demo"
 

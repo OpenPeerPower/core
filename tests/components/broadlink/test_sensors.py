@@ -7,7 +7,7 @@ from . import get_device
 from tests.common import mock_device_registry, mock_registry
 
 
-async def test_a1_sensor_setup_opp):
+async def test_a1_sensor_setup(opp):
     """Test a successful e-Sensor setup."""
     device = get_device("Bedroom")
     mock_api = device.get_mock_api()

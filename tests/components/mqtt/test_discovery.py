@@ -13,7 +13,7 @@ from openpeerpower.components.mqtt.abbreviations import (
 )
 from openpeerpower.components.mqtt.discovery import ALREADY_DISCOVERED, async_start
 from openpeerpower.const import EVENT_STATE_CHANGED, STATE_OFF, STATE_ON
-import openpeerpower.core as ha
+import openpeerpower.core as op
 
 from tests.common import (
     async_fire_mqtt_message,

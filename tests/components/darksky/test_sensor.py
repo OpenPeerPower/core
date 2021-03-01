@@ -100,7 +100,7 @@ class TestDarkSkySetup(unittest.TestCase):
 
     def setUp(self):
         """Initialize values for this testcase class."""
-        self opp =get_test_open_peer_power()
+        self.opp =get_test_open_peer_power()
         self.key = "foo"
         self.lat = self.opp.config.latitude = 37.8267
         self.lon = self.opp.config.longitude = -122.423

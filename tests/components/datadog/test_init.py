@@ -9,7 +9,7 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.setup import async_setup_component
 
 from tests.common import assert_setup_component

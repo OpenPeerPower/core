@@ -20,7 +20,7 @@ import uuid
 
 from aiohttp.test_utils import unused_port as get_test_instance_port  # noqa
 
-from openpeerpower import auth, config_entries, core as ha, loader
+from openpeerpower import auth, config_entries, core as op, loader
 from openpeerpower.auth import (
     auth_store,
     models as auth_models,

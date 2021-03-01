@@ -1,7 +1,7 @@
 """Support for alexa Smart Home Skill API."""
 import logging
 
-import openpeerpower.core as ha
+import openpeerpower.core as op
 
 from .const import API_DIRECTIVE, API_HEADER, EVENT_ALEXA_SMART_HOME
 from .errors import AlexaBridgeUnreachableError, AlexaError

@@ -112,7 +112,7 @@ async def test_if_fires_on_change_str_crazy(opp, calls):
     assert len(calls) == 1
 
 
-async def test_if_not_fires_when_true_at_setup_opp, calls):
+async def test_if_not_fires_when_true_at_setup(opp, calls):
     """Test for not firing during startup."""
     assert await async_setup_component(
         opp,
@@ -391,7 +391,7 @@ async def test_if_fires_on_no_change_with_template_advanced(opp, calls):
     assert len(calls) == 0
 
 
-async def test_if_fires_on_change_with_template_2.opp, calls):
+async def test_if_fires_on_change_with_template_2(opp, calls):
     """Test for firing on change with template."""
     assert await async_setup_component(
         opp,

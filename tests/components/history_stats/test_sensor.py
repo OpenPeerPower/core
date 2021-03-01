@@ -12,7 +12,7 @@ from openpeerpower import config as opp_config
 from openpeerpower.components.history_stats import DOMAIN
 from openpeerpower.components.history_stats.sensor import HistoryStatsSensor
 from openpeerpower.const import SERVICE_RELOAD, STATE_UNKNOWN
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.helpers.template import Template
 from openpeerpower.setup import async_setup_component, setup_component
 import openpeerpower.util.dt as dt_util
@@ -25,7 +25,7 @@ class TestHistoryStatsSensor(unittest.TestCase):
 
     def setUp(self):
         """Set up things to be run when tests are started."""
-        self opp =get_test_open_peer_power()
+        self.opp =get_test_open_peer_power()
         self.addCleanup(self.opp.stop)
 
     def test_setup(self):

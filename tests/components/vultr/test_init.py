@@ -19,7 +19,7 @@ class TestVultr(unittest.TestCase):
 
     def setUp(self):
         """Initialize values for this test case class."""
-        self opp =get_test_open_peer_power()
+        self.opp =get_test_open_peer_power()
         self.config = VALID_CONFIG
         self.addCleanup(self.tear_down_cleanup)
 

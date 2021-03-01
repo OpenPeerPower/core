@@ -28,7 +28,7 @@ async def test_create_doorbell(opp, aiohttp_client):
             "entity_picture"
         ]
 
-        client = await aiohttp_client.opp.http.app)
+        client = await aiohttp_client(opp.http.app)
         resp = await client.get(url)
         assert resp.status == 200
         body = await resp.text()

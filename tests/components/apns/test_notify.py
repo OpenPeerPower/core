@@ -32,11 +32,11 @@ def mock_apns_notify_open():
 
 @patch("os.path.isfile", Mock(return_value=True))
 @patch("os.access", Mock(return_value=True))
-async def _setup_notify.opp_):
+async def _setup_notify(opp_):
     assert isinstance(apns.load_yaml_config_file, Mock), "Found unmocked load_yaml"
 
     with assert_setup_component(1) as handle_config:
-        assert await async_setup_component.opp_, notify.DOMAIN, CONFIG)
+        assert await async_setup_component(opp_, notify.DOMAIN, CONFIG)
     assert handle_config[notify.DOMAIN]
 
 

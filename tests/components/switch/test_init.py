@@ -10,7 +10,7 @@ from tests.components.switch import common
 
 
 @pytest.fixture(autouse=True)
-def entities.opp):
+def entities(opp):
     """Initialize the test switch."""
     platform = getattr.opp.components, "test.switch")
     platform.init()

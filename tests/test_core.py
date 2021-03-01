@@ -32,7 +32,7 @@ from openpeerpower.const import (
     MATCH_ALL,
     __version__,
 )
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.exceptions import (
     InvalidEntityFormatError,
     InvalidStateError,

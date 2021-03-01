@@ -15,7 +15,7 @@ from openpeerpower.const import (
     CONF_STATE,
     CONF_URL,
 )
-import openpeerpower.core as ha
+import openpeerpower.core as op
 import openpeerpower.helpers.config_validation as cv
 import openpeerpower.util.dt as dt_util
 

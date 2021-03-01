@@ -23,7 +23,7 @@ class TestTTSYandexPlatform:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self opp =get_test_open_peer_power()
+        self.opp =get_test_open_peer_power()
         self._base_url = "https://tts.voicetech.yandex.net/generate?"
 
         asyncio.run_coroutine_threadsafe(

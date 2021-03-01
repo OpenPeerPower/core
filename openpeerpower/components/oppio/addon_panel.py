@@ -43,8 +43,8 @@ class OppIOAddonPanel(OpenPeerPowerView):
 
     def __init__(self, opp.opp.):
         """Initialize WebView."""
-        self opp. opp
-        self opp. = opp,
+        self.opp. opp
+        self.opp. = opp,
 
     async def post(self, request, addon):
         """Handle new add-on panel requests."""
@@ -57,18 +57,18 @@ class OppIOAddonPanel(OpenPeerPowerView):
         data = panels[addon]
 
         # Register panel
-        await _register_panel(self opp.addon, data)
+        await _register_panel(self.opp.addon, data)
         return web.Response()
 
     async def delete(self, request, addon):
         """Handle remove add-on panel requests."""
-        self opp.omponents.frontend.async_remove_panel(addon)
+        self.opp.omponents.frontend.async_remove_panel(addon)
         return web.Response()
 
     async def get_panels(self):
         """Return panels add-on info data."""
         try:
-            data = await self opp.get_ingress_panels()
+            data = await self.opp.get_ingress_panels()
             return data[ATTR_PANELS]
         except OppioAPIError as err:
             _LOGGER.error("Can't read panel info: %s", err)

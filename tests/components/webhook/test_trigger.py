@@ -43,7 +43,7 @@ async def test_webhook_json(opp, aiohttp_client):
     )
     await opp.async_block_till_done()
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
 
     await client.post("/api/webhook/json_webhook", json={"hello": "world"})
     await opp.async_block_till_done()
@@ -78,7 +78,7 @@ async def test_webhook_post(opp, aiohttp_client):
     )
     await opp.async_block_till_done()
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
 
     await client.post("/api/webhook/post_webhook", data={"hello": "world"})
     await opp.async_block_till_done()
@@ -113,7 +113,7 @@ async def test_webhook_query(opp, aiohttp_client):
     )
     await opp.async_block_till_done()
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
 
     await client.post("/api/webhook/query_webhook?hello=world")
     await opp.async_block_till_done()
@@ -148,7 +148,7 @@ async def test_webhook_reload(opp, aiohttp_client):
     )
     await opp.async_block_till_done()
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
 
     await client.post("/api/webhook/post_webhook", data={"hello": "world"})
     await opp.async_block_till_done()

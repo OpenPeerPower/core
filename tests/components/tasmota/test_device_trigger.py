@@ -81,7 +81,7 @@ async def test_get_triggers_swc(opp, device_reg, entity_reg, mqtt_mock, setup_ta
 
 
 async def test_get_unknown_triggers(
-    opp. device_reg, entity_reg, mqtt_mock, setup_tasmota
+    opp, device_reg, entity_reg, mqtt_mock, setup_tasmota
 ):
     """Test we don't get unknown triggers."""
     # Discover a device without device triggers
@@ -122,7 +122,7 @@ async def test_get_unknown_triggers(
 
 
 async def test_get_non_existing_triggers(
-    opp. device_reg, entity_reg, mqtt_mock, setup_tasmota
+    opp, device_reg, entity_reg, mqtt_mock, setup_tasmota
 ):
     """Test getting non existing triggers."""
     # Discover a device without device triggers
@@ -140,7 +140,7 @@ async def test_get_non_existing_triggers(
 
 @pytest.mark.no_fail_on_log_exception
 async def test_discover_bad_triggers(
-    opp. device_reg, entity_reg, mqtt_mock, setup_tasmota
+    opp, device_reg, entity_reg, mqtt_mock, setup_tasmota
 ):
     """Test exception handling when discovering trigger."""
     config = copy.deepcopy(DEFAULT_CONFIG)
@@ -153,7 +153,7 @@ async def test_discover_bad_triggers(
         return_value=[object()],
     ):
         async_fire_mqtt_message(
-            opp. f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config)
+            opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config)
         )
         await opp.async_block_till_done()
 
@@ -185,7 +185,7 @@ async def test_discover_bad_triggers(
         ],
     ):
         async_fire_mqtt_message(
-            opp. f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config)
+            opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config)
         )
         await opp.async_block_till_done()
 
@@ -212,7 +212,7 @@ async def test_discover_bad_triggers(
 
 
 async def test_update_remove_triggers(
-    opp. device_reg, entity_reg, mqtt_mock, setup_tasmota
+    opp, device_reg, entity_reg, mqtt_mock, setup_tasmota
 ):
     """Test triggers can be updated and removed."""
     # Discover a device with toggle + hold trigger
@@ -275,7 +275,7 @@ async def test_update_remove_triggers(
 
 
 async def test_if_fires_on_mqtt_message_btn(
-    opp. device_reg, calls, mqtt_mock, setup_tasmota
+    opp, device_reg, calls, mqtt_mock, setup_tasmota
 ):
     """Test button triggers firing."""
     # Discover a device with 2 device triggers
@@ -344,7 +344,7 @@ async def test_if_fires_on_mqtt_message_btn(
 
 
 async def test_if_fires_on_mqtt_message_swc(
-    opp. device_reg, calls, mqtt_mock, setup_tasmota
+    opp, device_reg, calls, mqtt_mock, setup_tasmota
 ):
     """Test switch triggers firing."""
     # Discover a device with 2 device triggers
@@ -436,7 +436,7 @@ async def test_if_fires_on_mqtt_message_swc(
 
 
 async def test_if_fires_on_mqtt_message_late_discover(
-    opp. device_reg, calls, mqtt_mock, setup_tasmota
+    opp, device_reg, calls, mqtt_mock, setup_tasmota
 ):
     """Test triggers firing of MQTT device triggers discovered after setup."""
     # Discover a device without device triggers
@@ -513,7 +513,7 @@ async def test_if_fires_on_mqtt_message_late_discover(
 
 
 async def test_if_fires_on_mqtt_message_after_update(
-    opp. device_reg, calls, mqtt_mock, setup_tasmota
+    opp, device_reg, calls, mqtt_mock, setup_tasmota
 ):
     """Test triggers firing after update."""
     # Discover a device with device trigger
@@ -637,7 +637,7 @@ async def test_no_resubscribe_same_topic(opp, device_reg, mqtt_mock, setup_tasmo
 
 
 async def test_not_fires_on_mqtt_message_after_remove_by_mqtt(
-    opp. device_reg, calls, mqtt_mock, setup_tasmota
+    opp, device_reg, calls, mqtt_mock, setup_tasmota
 ):
     """Test triggers not firing after removal."""
     # Discover a device with device trigger
@@ -706,7 +706,7 @@ async def test_not_fires_on_mqtt_message_after_remove_by_mqtt(
 
 
 async def test_not_fires_on_mqtt_message_after_remove_from_registry(
-    opp. device_reg, calls, mqtt_mock, setup_tasmota
+    opp, device_reg, calls, mqtt_mock, setup_tasmota
 ):
     """Test triggers not firing after removal."""
     # Discover a device with device trigger
@@ -962,7 +962,7 @@ async def test_attach_remove_unknown1.opp, device_reg, mqtt_mock, setup_tasmota)
 
 
 async def test_attach_unknown_remove_device_from_registry(
-    opp. device_reg, mqtt_mock, setup_tasmota
+    opp, device_reg, mqtt_mock, setup_tasmota
 ):
     """Test attach and removal of device with unknown trigger."""
     # Discover a device without device triggers

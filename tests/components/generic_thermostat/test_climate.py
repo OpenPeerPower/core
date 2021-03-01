@@ -33,7 +33,7 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     TEMP_FAHRENHEIT,
 )
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.core import DOMAIN as OPP_DOMAIN, CoreState, State, callback
 from openpeerpower.setup import async_setup_component
 from openpeerpower.util.unit_system import METRIC_SYSTEM

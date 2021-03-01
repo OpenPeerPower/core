@@ -14,7 +14,7 @@ async def test_websocket_api(opp, aiohttp_client, opp_access_token, legacy_auth)
     )
     await opp.async_block_till_done()
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
     ws = await client.ws_connect(URL)
 
     auth_ok = await ws.receive_json()

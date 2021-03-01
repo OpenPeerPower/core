@@ -31,7 +31,7 @@ class TestTemplateLight:
 
     def setup_method(self, method):
         """Set up things to be run when tests are started."""
-        self opp =get_test_open_peer_power()
+        self.opp =get_test_open_peer_power()
         self.calls = []
 
         @callback

@@ -35,7 +35,7 @@ from openpeerpower.const import (
     ENTITY_MATCH_ALL,
     ENTITY_MATCH_NONE,
 )
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.exceptions import (
     OpenPeerPowerError,
     TemplateError,

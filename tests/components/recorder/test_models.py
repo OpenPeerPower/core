@@ -15,7 +15,7 @@ from openpeerpower.components.recorder.models import (
     process_timestamp_to_utc_isoformat,
 )
 from openpeerpower.const import EVENT_STATE_CHANGED
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.exceptions import InvalidEntityFormatError
 from openpeerpower.util import dt
 import openpeerpower.util.dt as dt_util

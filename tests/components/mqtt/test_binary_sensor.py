@@ -13,7 +13,7 @@ from openpeerpower.const import (
     STATE_ON,
     STATE_UNAVAILABLE,
 )
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.setup import async_setup_component
 import openpeerpower.util.dt as dt_util
 

@@ -46,7 +46,7 @@ def track_connected(opp):
 
 
 async def test_auth_events(
-    opp. no_auth_websocket_client, legacy_auth, opp_access_token, track_connected
+    opp, no_auth_websocket_client, legacy_auth, opp_access_token, track_connected
 ):
     """Test authenticating."""
 
@@ -110,7 +110,7 @@ async def test_pre_auth_only_auth_allowed(no_auth_websocket_client):
 
 
 async def test_auth_active_with_token(
-    opp. no_auth_websocket_client, opp_access_token
+    opp, no_auth_websocket_client, opp_access_token
 ):
     """Test authenticating with a token."""
     await no_auth_websocket_client.send_json(
@@ -128,7 +128,7 @@ async def test_auth_active_user_inactive(opp, aiohttp_client, opp_access_token):
     assert await async_setup_component(opp, "websocket_api", {})
     await opp.async_block_till_done()
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
 
     async with client.ws_connect(URL) as ws:
         auth_msg = await ws.receive_json()
@@ -145,7 +145,7 @@ async def test_auth_active_with_password_not_allow(opp, aiohttp_client):
     assert await async_setup_component(opp, "websocket_api", {})
     await opp.async_block_till_done()
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
 
     async with client.ws_connect(URL) as ws:
         auth_msg = await ws.receive_json()
@@ -162,7 +162,7 @@ async def test_auth_legacy_support_with_password(opp, aiohttp_client, legacy_aut
     assert await async_setup_component(opp, "websocket_api", {})
     await opp.async_block_till_done()
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
 
     async with client.ws_connect(URL) as ws:
         auth_msg = await ws.receive_json()
@@ -179,7 +179,7 @@ async def test_auth_with_invalid_token(opp, aiohttp_client):
     assert await async_setup_component(opp, "websocket_api", {})
     await opp.async_block_till_done()
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
 
     async with client.ws_connect(URL) as ws:
         auth_msg = await ws.receive_json()

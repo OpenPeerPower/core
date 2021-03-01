@@ -21,7 +21,7 @@ class TestSetupImageProcessing:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self opp =get_test_open_peer_power()
+        self.opp =get_test_open_peer_power()
 
     def teardown_method(self):
         """Stop everything that was started."""
@@ -49,7 +49,7 @@ class TestImageProcessing:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self opp =get_test_open_peer_power()
+        self.opp =get_test_open_peer_power()
 
         setup_component(
             self.opp,
@@ -106,7 +106,7 @@ class TestImageProcessingAlpr:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self opp =get_test_open_peer_power()
+        self.opp =get_test_open_peer_power()
 
         config = {ip.DOMAIN: {"platform": "demo"}, "camera": {"platform": "demo"}}
 
@@ -212,7 +212,7 @@ class TestImageProcessingFace:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self opp =get_test_open_peer_power()
+        self.opp =get_test_open_peer_power()
 
         config = {ip.DOMAIN: {"platform": "demo"}, "camera": {"platform": "demo"}}
 

@@ -8,7 +8,7 @@ import pytest
 import voluptuous as vol
 
 # To prevent circular import when running just this file
-from openpeerpower import core as ha, exceptions
+from openpeerpower import core as op, exceptions
 from openpeerpower.auth.permissions import PolicyPermissions
 import openpeerpower.components  # noqa: F401, pylint: disable=unused-import
 from openpeerpower.const import (

@@ -18,7 +18,7 @@ async def no_auth_websocket_client(opp, aiohttp_client):
     assert await async_setup_component(opp, "websocket_api", {})
     await opp.async_block_till_done()
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
     ws = await client.ws_connect(URL)
 
     auth_ok = await ws.receive_json()

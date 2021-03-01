@@ -7,7 +7,7 @@ import pytest
 
 from openpeerpower.components import scene
 from openpeerpower.const import ATTR_ENTITY_ID, SERVICE_TURN_ON
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.setup import async_setup_component
 
 from .test_common import (

@@ -592,7 +592,7 @@ async def test_invalid_service_calls(opp):
     """Test invalid service call arguments get discarded."""
     add_entities = MagicMock()
     await group.async_setup_platform(
-        opp. {"entities": ["light.test1", "light.test2"]}, add_entities
+        opp, {"entities": ["light.test1", "light.test2"]}, add_entities
     )
     await opp.async_block_till_done()
     await opp.async_start()
@@ -600,9 +600,9 @@ async def test_invalid_service_calls(opp):
 
     assert add_entities.call_count == 1
     grouped_light = add_entities.call_args[0][0][0]
-    grouped_light(opp = opp
+    grouped_light.opp = opp
 
-    with unittest.mock.patch.object.opp.services, "async_call") as mock_call:
+    with unittest.mock.patch.object(opp.services, "async_call") as mock_call:
         await grouped_light.async_turn_on(brightness=150, four_oh_four="404")
         data = {ATTR_ENTITY_ID: ["light.test1", "light.test2"], ATTR_BRIGHTNESS: 150}
         mock_call.assert_called_once_with(
@@ -668,7 +668,7 @@ async def test_reload(opp):
         "fixtures",
         "group/configuration.yaml",
     )
-    with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
+    with patch.object(opp_config, "YAML_CONFIG_FILE", yaml_path):
         await opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
@@ -682,7 +682,7 @@ async def test_reload(opp):
     assert opp.states.get("light.outside_patio_lights_g") is not None
 
 
-async def test_reload_with_platform_not_setup_opp):
+async def test_reload_with_platform_not_setup(opp):
     """Test the ability to reload lights."""
     opp.states.async_set("light.bowl", STATE_ON)
     await async_setup_component(
@@ -710,7 +710,7 @@ async def test_reload_with_platform_not_setup_opp):
         "fixtures",
         "group/configuration.yaml",
     )
-    with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
+    with patch.object(opp_config, "YAML_CONFIG_FILE", yaml_path):
         await opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
@@ -724,7 +724,7 @@ async def test_reload_with_platform_not_setup_opp):
     assert opp.states.get("light.outside_patio_lights_g") is not None
 
 
-async def test_reload_with_base_integration_platform_not_setup_opp):
+async def test_reload_with_base_integration_platform_not_setup(opp):
     """Test the ability to reload lights."""
     assert await async_setup_component(
         opp,
@@ -747,7 +747,7 @@ async def test_reload_with_base_integration_platform_not_setup_opp):
         "fixtures",
         "group/configuration.yaml",
     )
-    with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
+    with patch.object(opp_config, "YAML_CONFIG_FILE", yaml_path):
         await opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,

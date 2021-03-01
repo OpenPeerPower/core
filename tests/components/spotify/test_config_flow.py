@@ -42,7 +42,7 @@ async def test_zeroconf_abort_if_existing_entry(opp):
 
 
 async def test_full_flow(
-    opp. aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Check a full flow."""
     assert await setup.async_setup_component(
@@ -78,7 +78,7 @@ async def test_full_flow(
         "user-top-read,user-read-playback-position,user-read-recently-played,user-follow-read"
     )
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
     resp = await client.get(f"/auth/external/callback?code=abcd&state={state}")
     assert resp.status == 200
     assert resp.headers["content-type"] == "text/html; charset=utf-8"
@@ -112,7 +112,7 @@ async def test_full_flow(
 
 
 async def test_abort_if_spotify_error(
-    opp. aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Check Spotify errors causes flow to abort."""
     await setup.async_setup_component(
@@ -136,7 +136,7 @@ async def test_abort_if_spotify_error(
             "redirect_uri": "https://example.com/auth/external/callback",
         },
     )
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
     await client.get(f"/auth/external/callback?code=abcd&state={state}")
 
     aioclient_mock.post(
@@ -160,7 +160,7 @@ async def test_abort_if_spotify_error(
 
 
 async def test_reauthentication(
-    opp. aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test Spotify reauthentication."""
     await setup.async_setup_component(
@@ -197,7 +197,7 @@ async def test_reauthentication(
             "redirect_uri": "https://example.com/auth/external/callback",
         },
     )
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
     await client.get(f"/auth/external/callback?code=abcd&state={state}")
 
     aioclient_mock.post(
@@ -225,7 +225,7 @@ async def test_reauthentication(
 
 
 async def test_reauth_account_mismatch(
-    opp. aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test Spotify reauthentication with different account."""
     await setup.async_setup_component(
@@ -260,7 +260,7 @@ async def test_reauth_account_mismatch(
             "redirect_uri": "https://example.com/auth/external/callback",
         },
     )
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
     await client.get(f"/auth/external/callback?code=abcd&state={state}")
 
     aioclient_mock.post(

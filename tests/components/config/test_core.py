@@ -13,7 +13,7 @@ ORIG_TIME_ZONE = dt_util.DEFAULT_TIME_ZONE
 
 
 @pytest.fixture
-async def client.opp, opp_ws_client):
+async def client(opp, opp_ws_client):
     """Fixture that can interact with the config manager API."""
     with patch.object(config, "SECTIONS", ["core"]):
         assert await async_setup_component(opp, "config", {})

@@ -40,7 +40,7 @@ async def rpi_fixture(opp, aioclient_mock, mock_supervisor):
             "data": {"version_latest": "1.0.0", "machine": "raspberrypi3"},
         },
     )
-    assert await async_setup_component(opp,  opp.o", {})
+    assert await async_setup_component(opp,  "oppio", {})
     await opp.async_block_till_done()
 
 
@@ -54,7 +54,7 @@ async def no_rpi_fixture(opp, aioclient_mock, mock_supervisor):
             "data": {"version_latest": "1.0.0", "machine": "odroid-n2"},
         },
     )
-    assert await async_setup_component(opp,  opp.o", {})
+    assert await async_setup_component(opp,  "oppio", {})
     await opp.async_block_till_done()
 
 
@@ -150,7 +150,7 @@ async def test_onboarding_user(opp, opp_storage, aiohttp_client):
     )
 
     assert resp.status == 200
-    assert const.STEP_USER in.opp_storage[const.DOMAIN]["data"]["done"]
+    assert const.STEP_USER in opp_storage[const.DOMAIN]["data"]["done"]
 
     data = await resp.json()
     assert "auth_code" in data
@@ -276,7 +276,7 @@ async def test_onboarding_integration(opp, opp_storage, opp_client, opp_admin_us
     )
 
     assert resp.status == 200
-    assert const.STEP_INTEGRATION in.opp_storage[const.DOMAIN]["data"]["done"]
+    assert const.STEP_INTEGRATION in opp_storage[const.DOMAIN]["data"]["done"]
     tokens = await resp.json()
 
     assert (
@@ -289,7 +289,7 @@ async def test_onboarding_integration(opp, opp_storage, opp_client, opp_admin_us
 
 
 async def test_onboarding_integration_missing_credential(
-    opp. opp_storage, opp_client, opp_access_token
+    opp, opp_storage, opp_client, opp_access_token
 ):
     """Test that we fail integration step if user is missing credentials."""
     mock_storage(opp_storage, {"done": [const.STEP_USER]})
@@ -311,7 +311,7 @@ async def test_onboarding_integration_missing_credential(
 
 
 async def test_onboarding_integration_invalid_redirect_uri(
-    opp. opp_storage, opp_client
+    opp, opp_storage, opp_client
 ):
     """Test finishing integration step."""
     mock_storage(opp_storage, {"done": [const.STEP_USER]})
@@ -329,7 +329,7 @@ async def test_onboarding_integration_invalid_redirect_uri(
     assert resp.status == 400
 
     # We will still mark the last step as done because there is nothing left.
-    assert const.STEP_INTEGRATION in.opp_storage[const.DOMAIN]["data"]["done"]
+    assert const.STEP_INTEGRATION in opp_storage[const.DOMAIN]["data"]["done"]
 
     # Only refresh token from onboarding should be there
     for user in await opp.auth.async_get_users():
@@ -370,7 +370,7 @@ async def test_onboarding_core_sets_up_met(opp, opp_storage, opp_client):
 
 
 async def test_onboarding_core_sets_up_rpi_power(
-    opp. opp_storage, opp_client, aioclient_mock, rpi
+    opp, opp_storage, opp_client, aioclient_mock, rpi
 ):
     """Test that the core step sets up rpi_power on RPi."""
     mock_storage(opp_storage, {"done": [const.STEP_USER]})
@@ -395,7 +395,7 @@ async def test_onboarding_core_sets_up_rpi_power(
 
 
 async def test_onboarding_core_no_rpi_power(
-    opp. opp_storage, opp_client, aioclient_mock, no_rpi
+    opp, opp_storage, opp_client, aioclient_mock, no_rpi
 ):
     """Test that the core step do not set up rpi_power on non RPi."""
     mock_storage(opp_storage, {"done": [const.STEP_USER]})

@@ -127,7 +127,7 @@ async def geofency_client(loop, opp, aiohttp_client):
     await opp.async_block_till_done()
 
     with patch("openpeerpower.components.device_tracker.legacy.update_config"):
-        return await aiohttp_client.opp.http.app)
+        return await aiohttp_client(opp.http.app)
 
 
 @pytest.fixture(autouse=True)

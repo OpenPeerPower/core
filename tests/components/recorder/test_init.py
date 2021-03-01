@@ -44,7 +44,7 @@ async def test_shutdown_before_startup_finishes(opp):
     await async_init_recorder_component(opp)
     await opp.async_block_till_done()
 
-    session = await opp.async_add_executor_job.opp.data[DATA_INSTANCE].get_session)
+    session = await opp.async_add_executor_job(opp.data[DATA_INSTANCE].get_session)
 
     with patch.object.opp.data[DATA_INSTANCE], "engine"):
         opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)

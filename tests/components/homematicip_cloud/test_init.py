@@ -56,7 +56,7 @@ async def test_config_with_accesspoint_passed_to_config_entry(
         "name": "name",
     }
     # defined access_point created for config_entry
-    assert isinstance.opp.data[HMIPC_DOMAIN]["ABC123"], HomematicipHAP)
+    assert isinstance(opp.data[HMIPC_DOMAIN]["ABC123"], HomematicipHAP)
 
 
 async def test_config_already_registered_not_passed_to_config_entry(

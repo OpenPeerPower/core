@@ -470,7 +470,7 @@ async def test_api(opp, aiohttp_client, mock_panel):
         is True
     )
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
 
     # Test the get endpoint for switch status polling
     resp = await client.get("/api/konnected")
@@ -642,7 +642,7 @@ async def test_state_updates_zone(opp, aiohttp_client, mock_panel):
         is True
     )
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
 
     # Test updating a binary sensor
     resp = await client.post(
@@ -797,7 +797,7 @@ async def test_state_updates_pin(opp, aiohttp_client, mock_panel):
         is True
     )
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
 
     # Test updating a binary sensor
     resp = await client.post(

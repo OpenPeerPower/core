@@ -52,7 +52,7 @@ def.oppio_client.oppio_stubs, opp, opp_client):
 @pytest.fixture
 def.oppio_noauth_client.oppio_stubs, opp, aiohttp_client):
     """Return a Opp.io HTTP client without auth."""
-    return opp.loop.run_until_complete(aiohttp_client.opp.http.app))
+    return opp.loop.run_until_complete(aiohttp_client(opp.http.app))
 
 
 @pytest.fixture

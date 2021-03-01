@@ -14,7 +14,7 @@ from openpeerpower.const import (
     STATE_ON,
     STATE_UNAVAILABLE,
 )
-import openpeerpower.core as ha
+import openpeerpower.core as op
 import openpeerpower.util.dt as dt_util
 
 from tests.common import async_fire_time_changed

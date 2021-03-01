@@ -135,7 +135,7 @@ async def test_unauthorized(opp):
         assert not registry.async_is_registered(SECOND_ENTITY_ID)
 
 
-async def test_setup_opp, two_part_alarm):
+async def test_setup(opp, two_part_alarm):
     """Test entity setup."""
     registry = await opp.helpers.entity_registry.async_get_registry()
 
@@ -224,7 +224,7 @@ async def test_states(opp, two_part_alarm):
 
 
 async def _test_service_call(
-    opp. service, method, entity_id, partition_id, *args, **kwargs
+    opp, service, method, entity_id, partition_id, *args, **kwargs
 ):
     with patch(f"openpeerpower.components.risco.RiscoAPI.{method}") as set_mock:
         await _call_alarm_service(opp, service, entity_id, **kwargs)
@@ -232,7 +232,7 @@ async def _test_service_call(
 
 
 async def _test_no_service_call(
-    opp. service, method, entity_id, partition_id, **kwargs
+    opp, service, method, entity_id, partition_id, **kwargs
 ):
     with patch(f"openpeerpower.components.risco.RiscoAPI.{method}") as set_mock:
         await _call_alarm_service(opp, service, entity_id, **kwargs)

@@ -13,7 +13,7 @@ from tests.common import async_mock_service
 
 async def test_reload_config_service(opp):
     """Test the reload config service."""
-    assert await async_setup_component(opp,"scene", {})
+    assert await async_setup_component(opp, "scene", {})
 
     test_reloaded_event = []
     opp.us.async_listen(
@@ -46,8 +46,8 @@ async def test_reload_config_service(opp):
 
 async def test_apply_service(opp):
     """Test the apply service."""
-    assert await async_setup_component(opp,"scene", {})
-    assert await async_setup_component(opp,"light", {"light": {"platform": "demo"}})
+    assert await async_setup_component(opp, "scene", {})
+    assert await async_setup_component(opp, "light", {"light": {"platform": "demo"}})
     await opp.async_block_till_done()
 
     assert await opp.services.async_call(
@@ -67,7 +67,7 @@ async def test_apply_service(opp):
     assert state.state == "on"
     assert state.attributes["brightness"] == 50
 
-    turn_on_calls = async_mock_service(opp,"light", "turn_on")
+    turn_on_calls = async_mock_service(opp, "light", "turn_on")
     assert await opp.services.async_call(
         "scene",
         "apply",

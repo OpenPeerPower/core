@@ -6,7 +6,7 @@ from pytest import mark
 
 import openpeerpower.components.sun as sun
 from openpeerpower.const import EVENT_STATE_CHANGED
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.setup import async_setup_component
 import openpeerpower.util.dt as dt_util
 

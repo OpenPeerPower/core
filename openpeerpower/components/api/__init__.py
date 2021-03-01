@@ -31,7 +31,7 @@ from openpeerpower.const import (
     URL_API_TEMPLATE,
     __version__,
 )
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.exceptions import ServiceNotFound, TemplateError, Unauthorized
 from openpeerpower.helpers import template
 from openpeerpower.helpers.json import JSONEncoder

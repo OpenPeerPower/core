@@ -29,7 +29,7 @@ async def test_config_flow_registers_webhook(opp, aiohttp_client):
 
     opp.bus.async_listen(twilio.RECEIVED_DATA, handle_event)
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
     await client.post(f"/api/webhook/{webhook_id}", data={"hello": "twilio"})
 
     assert len(twilio_events) == 1

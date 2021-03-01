@@ -372,7 +372,7 @@ async def test_call_service_context_with_user(opp, aiohttp_client, opp_access_to
     assert await async_setup_component(opp, "websocket_api", {})
 
     calls = async_mock_service(opp, "domain_test", "test_service")
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
 
     async with client.ws_connect(URL) as ws:
         auth_msg = await ws.receive_json()

@@ -17,7 +17,7 @@ from openpeerpower.components.filter.sensor import (
 )
 from openpeerpower.components.sensor import DEVICE_CLASS_TEMPERATURE
 from openpeerpower.const import SERVICE_RELOAD, STATE_UNAVAILABLE, STATE_UNKNOWN
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.setup import async_setup_component
 import openpeerpower.util.dt as dt_util
 

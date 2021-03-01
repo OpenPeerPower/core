@@ -9,7 +9,7 @@ import voluptuous as vol
 
 from openpeerpower import const
 from openpeerpower.bootstrap import DATA_LOGGING
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.setup import async_setup_component
 
 from tests.common import async_mock_service
@@ -380,7 +380,7 @@ async def test_api_error_log(opp, aiohttp_client, opp_access_token, opp_admin_us
     """Test if we can fetch the error log."""
     opp.data[DATA_LOGGING] = "/some/path"
     await async_setup_component(opp, "api", {})
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
 
     resp = await client.get(const.URL_API_ERROR_LOG)
     # Verify auth required
@@ -520,7 +520,7 @@ async def test_rendering_template_legacy_user(
 ):
     """Test rendering a template with legacy API password."""
     opp.states.async_set("sensor.temperature", 10)
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
     resp = await client.post(
         const.URL_API_TEMPLATE,
         json={"template": "{{ states.sensor.temperature.state }}"},

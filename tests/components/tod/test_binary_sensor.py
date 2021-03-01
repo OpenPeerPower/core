@@ -6,7 +6,7 @@ import pytest
 import pytz
 
 from openpeerpower.const import STATE_OFF, STATE_ON
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.helpers.sun import get_astral_event_date, get_astral_event_next
 from openpeerpower.setup import async_setup_component
 import openpeerpower.util.dt as dt_util

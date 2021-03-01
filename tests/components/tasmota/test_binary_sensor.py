@@ -19,7 +19,7 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-import openpeerpower.core as ha
+import openpeerpower.core as op
 import openpeerpower.util.dt as dt_util
 
 from .test_common import (

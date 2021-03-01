@@ -18,7 +18,7 @@ from openpeerpower.const import (
     SERVICE_TURN_OFF,
     SERVICE_TURN_ON,
 )
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.exceptions import OpenPeerPowerError, Unauthorized, UnknownUser
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.helpers.service import async_extract_referenced_entity_ids

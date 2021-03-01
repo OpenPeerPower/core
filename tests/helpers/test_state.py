@@ -18,7 +18,7 @@ from openpeerpower.const import (
     STATE_OPEN,
     STATE_UNLOCKED,
 )
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.helpers import state
 from openpeerpower.util import dt as dt_util
 

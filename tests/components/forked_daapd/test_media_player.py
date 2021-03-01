@@ -374,7 +374,7 @@ def test_master_state(opp, mock_api_object):
 
 
 async def test_no_update_when_get_request_returns_none(
-    opp. config_entry, mock_api_object
+    opp, config_entry, mock_api_object
 ):
     """Test when get request returns None."""
 
@@ -384,13 +384,13 @@ async def test_no_update_when_get_request_returns_none(
     mock_api_object.get_request.side_effect = get_request_side_effect
     updater_update = mock_api_object.start_websocket_handler.call_args[0][2]
     signal_output_call = async_mock_signal(
-        opp. SIGNAL_UPDATE_OUTPUTS.format(config_entry.entry_id)
+        opp, SIGNAL_UPDATE_OUTPUTS.format(config_entry.entry_id)
     )
     signal_player_call = async_mock_signal(
-        opp. SIGNAL_UPDATE_PLAYER.format(config_entry.entry_id)
+        opp, SIGNAL_UPDATE_PLAYER.format(config_entry.entry_id)
     )
     signal_queue_call = async_mock_signal(
-        opp. SIGNAL_UPDATE_QUEUE.format(config_entry.entry_id)
+        opp, SIGNAL_UPDATE_QUEUE.format(config_entry.entry_id)
     )
     await updater_update(["outputs", "player", "queue"])
     await opp.async_block_till_done()
@@ -400,7 +400,7 @@ async def test_no_update_when_get_request_returns_none(
 
 
 async def _service_call(
-    opp. entity_name, service, additional_service_data=None, blocking=True
+    opp, entity_name, service, additional_service_data=None, blocking=True
 ):
     if additional_service_data is None:
         additional_service_data = {}
@@ -425,18 +425,18 @@ async def test_zone(opp, mock_api_object):
     await _service_call(opp, zone_entity_name, SERVICE_TURN_OFF)
     await _service_call(opp, zone_entity_name, SERVICE_TOGGLE)
     await _service_call(
-        opp. zone_entity_name, SERVICE_VOLUME_SET, {ATTR_MEDIA_VOLUME_LEVEL: 0.3}
+        opp, zone_entity_name, SERVICE_VOLUME_SET, {ATTR_MEDIA_VOLUME_LEVEL: 0.3}
     )
     await _service_call(
-        opp. zone_entity_name, SERVICE_VOLUME_MUTE, {ATTR_MEDIA_VOLUME_MUTED: True}
+        opp, zone_entity_name, SERVICE_VOLUME_MUTE, {ATTR_MEDIA_VOLUME_MUTED: True}
     )
     await _service_call(
-        opp. zone_entity_name, SERVICE_VOLUME_MUTE, {ATTR_MEDIA_VOLUME_MUTED: False}
+        opp, zone_entity_name, SERVICE_VOLUME_MUTE, {ATTR_MEDIA_VOLUME_MUTED: False}
     )
     zone_entity_name = TEST_ZONE_ENTITY_NAMES[2]
     await _service_call(opp, zone_entity_name, SERVICE_TOGGLE)
     await _service_call(
-        opp. zone_entity_name, SERVICE_VOLUME_MUTE, {ATTR_MEDIA_VOLUME_MUTED: True}
+        opp, zone_entity_name, SERVICE_VOLUME_MUTE, {ATTR_MEDIA_VOLUME_MUTED: True}
     )
     output_id = SAMPLE_OUTPUTS_ON[0]["id"]
     initial_volume = SAMPLE_OUTPUTS_ON[0]["volume"]
@@ -458,7 +458,7 @@ async def test_last_outputs_master(opp, mock_api_object):
     assert mock_api_object.change_output.call_count == 0
     assert mock_api_object.set_enabled_outputs.call_count == 1
     await _service_call(
-        opp. TEST_MASTER_ENTITY_NAME, SERVICE_TURN_OFF
+        opp, TEST_MASTER_ENTITY_NAME, SERVICE_TURN_OFF
     )  # should have stored last outputs
     assert mock_api_object.change_output.call_count == 0
     assert mock_api_object.set_enabled_outputs.call_count == 2
@@ -503,7 +503,7 @@ async def test_bunch_of_stuff_master(opp, get_request_return_values, mock_api_ob
     )
     await _service_call(opp, TEST_MASTER_ENTITY_NAME, SERVICE_CLEAR_PLAYLIST)
     await _service_call(
-        opp. TEST_MASTER_ENTITY_NAME, SERVICE_SHUFFLE_SET, {ATTR_MEDIA_SHUFFLE: False}
+        opp, TEST_MASTER_ENTITY_NAME, SERVICE_SHUFFLE_SET, {ATTR_MEDIA_SHUFFLE: False}
     )
     # stop player and run more stuff
     state = opp.states.get(TEST_MASTER_ENTITY_NAME)
@@ -568,7 +568,7 @@ async def test_async_play_media_from_paused(opp, mock_api_object):
 
 
 async def test_async_play_media_from_stopped(
-    opp. get_request_return_values, mock_api_object
+    opp, get_request_return_values, mock_api_object
 ):
     """Test async play media from stopped."""
     updater_update = mock_api_object.start_websocket_handler.call_args[0][2]
@@ -652,7 +652,7 @@ async def test_clear_source(opp, mock_api_object):
 
 @pytest.fixture(name="pipe_control_api_object")
 async def pipe_control_api_object_fixture(
-    opp. config_entry, get_request_return_values, mock_api_object
+    opp, config_entry, get_request_return_values, mock_api_object
 ):
     """Fixture for mock librespot_java api."""
     with patch(
@@ -683,7 +683,7 @@ async def pipe_control_api_object_fixture(
 
 
 async def test_librespot_java_stuff(
-    opp. get_request_return_values, mock_api_object, pipe_control_api_object
+    opp, get_request_return_values, mock_api_object, pipe_control_api_object
 ):
     """Test options update and librespot-java stuff."""
     state = opp.states.get(TEST_MASTER_ENTITY_NAME)

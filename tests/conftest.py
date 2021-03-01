@@ -12,7 +12,7 @@ import multidict
 import pytest
 import requests_mock as _requests_mock
 
-from openpeerpower import core as ha, loader, runner, util
+from openpeerpower import core as op, loader, runner, util
 from openpeerpower.auth.const import GROUP_ID_ADMIN, GROUP_ID_READ_ONLY
 from openpeerpower.auth.models import Credentials
 from openpeerpower.auth.providers import openpeerpower, legacy_api_password

@@ -32,4 +32,4 @@ async def async_setup_auth(
     await async_setup_component(opp, "auth", {})
     if setup_api:
         await async_setup_component(opp, "api", {})
-    return await aiohttp_client.opp.http.app)
+    return await aiohttp_client(opp.http.app)

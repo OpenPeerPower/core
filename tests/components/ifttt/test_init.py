@@ -30,7 +30,7 @@ async def test_config_flow_registers_webhook(opp, aiohttp_client):
 
     opp.bus.async_listen(ifttt.EVENT_RECEIVED, handle_event)
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
     await client.post(f"/api/webhook/{webhook_id}", json={"hello": "ifttt"})
 
     assert len(ifttt_events) == 1

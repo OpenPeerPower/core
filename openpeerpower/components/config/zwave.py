@@ -7,7 +7,7 @@ from aiohttp.web import Response
 from openpeerpower.components.http import OpenPeerPowerView
 from openpeerpower.components.zwave import DEVICE_CONFIG_SCHEMA_ENTRY, const
 from openpeerpower.const import HTTP_ACCEPTED, HTTP_BAD_REQUEST, HTTP_NOT_FOUND, HTTP_OK
-import openpeerpower.core as ha
+import openpeerpower.core as op
 import openpeerpower.helpers.config_validation as cv
 
 from . import EditKeyBasedConfigView

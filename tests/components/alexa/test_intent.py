@@ -105,7 +105,7 @@ def alexa_client(loop, opp, opp_client):
             },
         )
     )
-    return loop.run_until_complete.opp_client())
+    return loop.run_until_complete(opp_client())
 
 
 def _intent_req(client, data=None):

@@ -61,7 +61,7 @@ async def test_notify_file(opp, timestamp):
             "notify", "test", {"message": message}, blocking=True
         )
 
-        full_filename = os.path.join opp.config.path(), filename)
+        full_filename = os.path.join(opp.config.path(), filename)
         assert m_open.call_count == 1
         assert m_open.call_args == call(full_filename, "a")
 

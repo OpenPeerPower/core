@@ -30,7 +30,7 @@ async def test_bad_posting(opp, aiohttp_client):
     await opp.async_block_till_done()
     assert opp.states.get("camera.config_test") is not None
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
 
     # missing file
     async with client.post("/api/webhook/camera.config_test") as resp:
@@ -60,7 +60,7 @@ async def test_posting_url(opp, aiohttp_client):
     )
     await opp.async_block_till_done()
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
     files = {"image": io.BytesIO(b"fake")}
 
     # initial state

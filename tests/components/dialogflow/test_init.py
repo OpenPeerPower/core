@@ -92,7 +92,7 @@ async def fixture.opp, aiohttp_client):
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     webhook_id = result["result"].data["webhook_id"]
 
-    return await aiohttp_client.opp.http.app), webhook_id
+    return await aiohttp_client(opp.http.app), webhook_id
 
 
 class _Data:

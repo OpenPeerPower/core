@@ -56,7 +56,7 @@ class TestSetup:
     # pylint: disable=invalid-name, no-self-use
     def setup_method(self, method):
         """Set up the test."""
-        self opp =get_test_open_peer_power()
+        self.opp =get_test_open_peer_power()
 
     def teardown_method(self, method):
         """Clean up."""

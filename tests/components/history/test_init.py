@@ -8,7 +8,7 @@ from unittest.mock import patch, sentinel
 
 from openpeerpower.components import history, recorder
 from openpeerpower.components.recorder.models import process_timestamp
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.helpers.json import JSONEncoder
 from openpeerpower.setup import async_setup_component, setup_component
 import openpeerpower.util.dt as dt_util
@@ -26,7 +26,7 @@ class TestComponentHistory(unittest.TestCase):
 
     def setUp(self):  # pylint: disable=invalid-name
         """Set up things to be run when tests are started."""
-        self opp =get_test_open_peer_power()
+        self.opp =get_test_open_peer_power()
         self.addCleanup(self.tear_down_cleanup)
 
     def tear_down_cleanup(self):
@@ -763,7 +763,7 @@ async def test_fetch_period_api(opp, opp_client):
     """Test the fetch period view for history."""
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component(opp, "history", {})
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp.async_add_executor_job(opp.data[recorder.DATA_INSTANCE].block_till_done)
     client = await opp_client()
     response = await client.get(f"/api/history/period/{dt_util.utcnow().isoformat()}")
     assert response.status == 200
@@ -775,7 +775,7 @@ async def test_fetch_period_api_with_use_include_order(opp, opp_client):
     await async_setup_component(
         opp, "history", {history.DOMAIN: {history.CONF_ORDER: True}}
     )
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp.async_add_executor_job(opp.data[recorder.DATA_INSTANCE].block_till_done)
     client = await opp_client()
     response = await client.get(f"/api/history/period/{dt_util.utcnow().isoformat()}")
     assert response.status == 200
@@ -785,7 +785,7 @@ async def test_fetch_period_api_with_minimal_response(opp, opp_client):
     """Test the fetch period view for history with minimal_response."""
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component(opp, "history", {})
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp.async_add_executor_job(opp.data[recorder.DATA_INSTANCE].block_till_done)
     client = await opp_client()
     response = await client.get(
         f"/api/history/period/{dt_util.utcnow().isoformat()}?minimal_response"
@@ -797,7 +797,7 @@ async def test_fetch_period_api_with_no_timestamp(opp, opp_client):
     """Test the fetch period view for history with no timestamp."""
     await opp.async_add_executor_job(init_recorder_component, opp)
     await async_setup_component(opp, "history", {})
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp.async_add_executor_job(opp.data[recorder.DATA_INSTANCE].block_till_done)
     client = await opp_client()
     response = await client.get("/api/history/period")
     assert response.status == 200
@@ -816,7 +816,7 @@ async def test_fetch_period_api_with_include_order(opp, opp_client):
             }
         },
     )
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp.async_add_executor_job(opp.data[recorder.DATA_INSTANCE].block_till_done)
     client = await opp_client()
     response = await client.get(
         f"/api/history/period/{dt_util.utcnow().isoformat()}",
@@ -837,7 +837,7 @@ async def test_fetch_period_api_with_entity_glob_include(opp, opp_client):
             }
         },
     )
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp.async_add_executor_job(opp.data[recorder.DATA_INSTANCE].block_till_done)
     opp.states.async_set("light.kitchen", "on")
     opp.states.async_set("light.cow", "on")
     opp.states.async_set("light.nomatch", "on")
@@ -846,7 +846,7 @@ async def test_fetch_period_api_with_entity_glob_include(opp, opp_client):
 
     await opp.async_add_executor_job(trigger_db_commit, opp)
     await opp.async_block_till_done()
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp.async_add_executor_job(opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     client = await opp_client()
     response = await client.get(
@@ -873,7 +873,7 @@ async def test_fetch_period_api_with_entity_glob_exclude(opp, opp_client):
             }
         },
     )
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp.async_add_executor_job(opp.data[recorder.DATA_INSTANCE].block_till_done)
     opp.states.async_set("light.kitchen", "on")
     opp.states.async_set("light.cow", "on")
     opp.states.async_set("light.match", "on")
@@ -884,7 +884,7 @@ async def test_fetch_period_api_with_entity_glob_exclude(opp, opp_client):
 
     await opp.async_add_executor_job(trigger_db_commit, opp)
     await opp.async_block_till_done()
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp.async_add_executor_job(opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     client = await opp_client()
     response = await client.get(
@@ -916,7 +916,7 @@ async def test_fetch_period_api_with_entity_glob_include_and_exclude(opp, opp_cl
             }
         },
     )
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp.async_add_executor_job(opp.data[recorder.DATA_INSTANCE].block_till_done)
     opp.states.async_set("light.kitchen", "on")
     opp.states.async_set("light.cow", "on")
     opp.states.async_set("light.match", "on")
@@ -928,7 +928,7 @@ async def test_fetch_period_api_with_entity_glob_include_and_exclude(opp, opp_cl
 
     await opp.async_add_executor_job(trigger_db_commit, opp)
     await opp.async_block_till_done()
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp.async_add_executor_job(opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     client = await opp_client()
     response = await client.get(
@@ -950,7 +950,7 @@ async def test_entity_ids_limit_via_api(opp, opp_client):
         "history",
         {"history": {}},
     )
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp.async_add_executor_job(opp.data[recorder.DATA_INSTANCE].block_till_done)
     opp.states.async_set("light.kitchen", "on")
     opp.states.async_set("light.cow", "on")
     opp.states.async_set("light.nomatch", "on")
@@ -959,7 +959,7 @@ async def test_entity_ids_limit_via_api(opp, opp_client):
 
     await opp.async_add_executor_job(trigger_db_commit, opp)
     await opp.async_block_till_done()
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp.async_add_executor_job(opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     client = await opp_client()
     response = await client.get(
@@ -980,7 +980,7 @@ async def test_entity_ids_limit_via_api_with_skip_initial_state(opp, opp_client)
         "history",
         {"history": {}},
     )
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp.async_add_executor_job(opp.data[recorder.DATA_INSTANCE].block_till_done)
     opp.states.async_set("light.kitchen", "on")
     opp.states.async_set("light.cow", "on")
     opp.states.async_set("light.nomatch", "on")
@@ -989,7 +989,7 @@ async def test_entity_ids_limit_via_api_with_skip_initial_state(opp, opp_client)
 
     await opp.async_add_executor_job(trigger_db_commit, opp)
     await opp.async_block_till_done()
-    await opp.async_add_executor_job.opp.data[recorder.DATA_INSTANCE].block_till_done)
+    await opp.async_add_executor_job(opp.data[recorder.DATA_INSTANCE].block_till_done)
 
     client = await opp_client()
     response = await client.get(

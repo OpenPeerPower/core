@@ -162,7 +162,7 @@ import pytest
 from openpeerpower import config as opp_config
 from openpeerpower.components import light
 from openpeerpower.const import ATTR_ASSUMED_STATE, SERVICE_RELOAD, STATE_OFF, STATE_ON
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.setup import async_setup_component
 
 from .test_common import (

@@ -12,7 +12,7 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.setup import setup_component
 
 from tests.common import get_test_open_peer_power
@@ -23,7 +23,7 @@ class TestGraphite(unittest.TestCase):
 
     def setup_method(self, method):
         """Set up things to be run when tests are started."""
-        self opp =get_test_open_peer_power()
+        self.opp =get_test_open_peer_power()
         self.gf = graphite.GraphiteFeeder(self.opp, "foo", 123, "ha")
 
     def teardown_method(self, method):

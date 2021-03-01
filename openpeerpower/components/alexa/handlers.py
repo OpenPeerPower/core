@@ -2,7 +2,7 @@
 import logging
 import math
 
-from openpeerpower import core as ha
+from openpeerpower import core as op
 from openpeerpower.components import (
     camera,
     cover,

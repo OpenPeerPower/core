@@ -18,7 +18,7 @@ def test_get_device_detects_none(opp, mock_openzwave):
     value = MockValue(data=0, node=node)
     values = MockEntityValues(primary=value, node=node)
 
-    device = cover.get_device(opp=opp node=node, values=values, node_config={})
+    device = cover.get_device(opp=opp, node=node, values=values, node_config={})
     assert device is None
 
 

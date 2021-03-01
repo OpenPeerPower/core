@@ -6,7 +6,7 @@ from aiohttp import web
 import prometheus_client
 import voluptuous as vol
 
-from openpeerpower import core as hacore
+from openpeerpower import core as opcore
 from openpeerpower.components.climate.const import (
     ATTR_CURRENT_TEMPERATURE,
     ATTR_HVAC_ACTION,
@@ -149,7 +149,7 @@ class PrometheusMetrics:
 
         entity_id = state.entity_id
         _LOGGER.debug("Handling state update for %s", entity_id)
-        domain, _ = hacore.split_entity_id(entity_id)
+        domain, _ = opcore.split_entity_id(entity_id)
 
         if not self._filter(state.entity_id):
             return

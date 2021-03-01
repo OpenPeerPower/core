@@ -35,8 +35,8 @@ async def test_get_clientsession_with_ssl(opp):
     """Test init clientsession with ssl."""
     client.async_get_clientsession(opp)
 
-    assert isinstance.opp.data[client.DATA_CLIENTSESSION], aiohttp.ClientSession)
-    assert isinstance.opp.data[client.DATA_CONNECTOR], aiohttp.TCPConnector)
+    assert isinstance(opp.data[client.DATA_CLIENTSESSION], aiohttp.ClientSession)
+    assert isinstance(opp.data[client.DATA_CONNECTOR], aiohttp.TCPConnector)
 
 
 async def test_get_clientsession_without_ssl(opp):
@@ -46,29 +46,29 @@ async def test_get_clientsession_without_ssl(opp):
     assert isinstance(
         opp.data[client.DATA_CLIENTSESSION_NOTVERIFY], aiohttp.ClientSession
     )
-    assert isinstance.opp.data[client.DATA_CONNECTOR_NOTVERIFY], aiohttp.TCPConnector)
+    assert isinstance(opp.data[client.DATA_CONNECTOR_NOTVERIFY], aiohttp.TCPConnector)
 
 
 async def test_create_clientsession_with_ssl_and_cookies(opp):
     """Test create clientsession with ssl."""
     session = client.async_create_clientsession(opp, cookies={"bla": True})
     assert isinstance(session, aiohttp.ClientSession)
-    assert isinstance.opp.data[client.DATA_CONNECTOR], aiohttp.TCPConnector)
+    assert isinstance(opp.data[client.DATA_CONNECTOR], aiohttp.TCPConnector)
 
 
 async def test_create_clientsession_without_ssl_and_cookies(opp):
     """Test create clientsession without ssl."""
     session = client.async_create_clientsession(opp, False, cookies={"bla": True})
     assert isinstance(session, aiohttp.ClientSession)
-    assert isinstance.opp.data[client.DATA_CONNECTOR_NOTVERIFY], aiohttp.TCPConnector)
+    assert isinstance(opp.data[client.DATA_CONNECTOR_NOTVERIFY], aiohttp.TCPConnector)
 
 
 async def test_get_clientsession_cleanup(opp):
     """Test init clientsession with ssl."""
     client.async_get_clientsession(opp)
 
-    assert isinstance.opp.data[client.DATA_CLIENTSESSION], aiohttp.ClientSession)
-    assert isinstance.opp.data[client.DATA_CONNECTOR], aiohttp.TCPConnector)
+    assert isinstance(opp.data[client.DATA_CLIENTSESSION], aiohttp.ClientSession)
+    assert isinstance(opp.data[client.DATA_CONNECTOR], aiohttp.TCPConnector)
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_CLOSE)
     await opp.async_block_till_done()
@@ -84,7 +84,7 @@ async def test_get_clientsession_cleanup_without_ssl(opp):
     assert isinstance(
         opp.data[client.DATA_CLIENTSESSION_NOTVERIFY], aiohttp.ClientSession
     )
-    assert isinstance.opp.data[client.DATA_CONNECTOR_NOTVERIFY], aiohttp.TCPConnector)
+    assert isinstance(opp.data[client.DATA_CONNECTOR_NOTVERIFY], aiohttp.TCPConnector)
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_CLOSE)
     await opp.async_block_till_done()
@@ -98,8 +98,8 @@ async def test_get_clientsession_patched_close(opp):
     with patch("aiohttp.ClientSession.close") as mock_close:
         session = client.async_get_clientsession(opp)
 
-        assert isinstance.opp.data[client.DATA_CLIENTSESSION], aiohttp.ClientSession)
-        assert isinstance.opp.data[client.DATA_CONNECTOR], aiohttp.TCPConnector)
+        assert isinstance(opp.data[client.DATA_CLIENTSESSION], aiohttp.ClientSession)
+        assert isinstance(opp.data[client.DATA_CONNECTOR], aiohttp.TCPConnector)
 
         with pytest.raises(RuntimeError):
             await session.close()

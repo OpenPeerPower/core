@@ -209,7 +209,7 @@ async def test_if_fires_on_event(opp, mock_devices, calls):
 
 
 async def test_device_offline_fires(
-    opp. zigpy_device_mock, zha_device_restored, calls
+    opp, zigpy_device_mock, zha_device_restored, calls
 ):
     """Test for device offline triggers firing."""
 

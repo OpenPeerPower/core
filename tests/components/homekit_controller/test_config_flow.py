@@ -221,7 +221,7 @@ async def test_abort_duplicate_flow(opp, controller):
     assert result["reason"] == "already_in_progress"
 
 
-async def test_pair_already_paired_1.opp, controller):
+async def test_pair_already_paired_1(opp, controller):
     """Already paired."""
     device = setup_mock_accessory(controller)
     discovery_info = get_device_discovery_info(device)

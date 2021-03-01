@@ -45,7 +45,7 @@ async def test_migration_creates_new_flow(opp, smartthings_mock, config_entry):
 
 
 async def test_unrecoverable_api_errors_create_new_flow(
-    opp. config_entry, smartthings_mock
+    opp, config_entry, smartthings_mock
 ):
     """
     Test a new config flow is initiated when there are API errors.
@@ -76,7 +76,7 @@ async def test_unrecoverable_api_errors_create_new_flow(
 
 
 async def test_recoverable_api_errors_raise_not_ready(
-    opp. config_entry, smartthings_mock
+    opp, config_entry, smartthings_mock
 ):
     """Test config entry not ready raised for recoverable API errors."""
     config_entry.add_to_opp(opp)
@@ -90,7 +90,7 @@ async def test_recoverable_api_errors_raise_not_ready(
 
 
 async def test_scenes_api_errors_raise_not_ready(
-    opp. config_entry, app, installed_app, smartthings_mock
+    opp, config_entry, app, installed_app, smartthings_mock
 ):
     """Test if scenes are unauthorized we continue to load platforms."""
     config_entry.add_to_opp(opp)
@@ -114,7 +114,7 @@ async def test_connection_errors_raise_not_ready(opp, config_entry, smartthings_
 
 
 async def test_base_url_no_longer_https_does_not_load(
-    opp. config_entry, app, smartthings_mock
+    opp, config_entry, app, smartthings_mock
 ):
     """Test base_url no longer valid creates a new flow."""
     await async_process_op_core_config(
@@ -130,7 +130,7 @@ async def test_base_url_no_longer_https_does_not_load(
 
 
 async def test_unauthorized_installed_app_raises_not_ready(
-    opp. config_entry, app, installed_app, smartthings_mock
+    opp, config_entry, app, installed_app, smartthings_mock
 ):
     """Test config entry not ready raised when the app isn't authorized."""
     config_entry.add_to_opp(opp)
@@ -323,7 +323,7 @@ async def test_remove_entry_already_deleted(opp, config_entry, smartthings_mock)
 
 
 async def test_remove_entry_installedapp_api_error(
-    opp. config_entry, smartthings_mock
+    opp, config_entry, smartthings_mock
 ):
     """Test raises exceptions removing the installed app."""
     request_info = Mock(real_url="http://example.com")
@@ -340,7 +340,7 @@ async def test_remove_entry_installedapp_api_error(
 
 
 async def test_remove_entry_installedapp_unknown_error(
-    opp. config_entry, smartthings_mock
+    opp, config_entry, smartthings_mock
 ):
     """Test raises exceptions removing the installed app."""
     # Arrange
@@ -404,7 +404,7 @@ async def test_broker_regenerates_token(opp, config_entry):
 
 
 async def test_event_handler_dispatches_updated_devices(
-    opp. config_entry, device_factory, event_request_factory, event_factory
+    opp, config_entry, device_factory, event_request_factory, event_factory
 ):
     """Test the event handler dispatches updated devices."""
     devices = [
@@ -455,7 +455,7 @@ async def test_event_handler_dispatches_updated_devices(
 
 
 async def test_event_handler_ignores_other_installed_app(
-    opp. config_entry, device_factory, event_request_factory
+    opp, config_entry, device_factory, event_request_factory
 ):
     """Test the event handler dispatches updated devices."""
     device = device_factory("Bedroom 1 Switch", ["switch"])
@@ -478,7 +478,7 @@ async def test_event_handler_ignores_other_installed_app(
 
 
 async def test_event_handler_fires_button_events(
-    opp. config_entry, device_factory, event_factory, event_request_factory
+    opp, config_entry, device_factory, event_factory, event_request_factory
 ):
     """Test the event handler fires button events."""
     device = device_factory("Button 1", ["button"])

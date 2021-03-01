@@ -177,7 +177,7 @@ class TestBlackbirdMediaPlayer(unittest.TestCase):
     def setUp(self):
         """Set up the test case."""
         self.blackbird = MockBlackbird()
-        self opp =tests.common.get_test_open_peer_power()
+        self.opp =tests.common.get_test_open_peer_power()
         self.opp.start()
         # Note, source dictionary is unsorted!
         with mock.patch(

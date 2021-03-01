@@ -114,7 +114,7 @@ async def test_camera_stream(opp):
     assert trait.CameraStreamTrait.supported(camera.DOMAIN, camera.SUPPORT_STREAM, None)
 
     trt = trait.CameraStreamTrait(
-        opp. State("camera.bla", camera.STATE_IDLE, {}), BASIC_CONFIG
+        opp, State("camera.bla", camera.STATE_IDLE, {}), BASIC_CONFIG
     )
 
     assert trt.sync_attributes() == {
@@ -142,13 +142,13 @@ async def test_onoff_group(opp):
     assert helpers.get_google_type(group.DOMAIN, None) is not None
     assert trait.OnOffTrait.supported(group.DOMAIN, 0, None)
 
-    trt_on = trait.OnOffTrait.opp, State("group.bla", STATE_ON), BASIC_CONFIG)
+    trt_on = trait.OnOffTrait(opp, State("group.bla", STATE_ON), BASIC_CONFIG)
 
     assert trt_on.sync_attributes() == {}
 
     assert trt_on.query_attributes() == {"on": True}
 
-    trt_off = trait.OnOffTrait.opp, State("group.bla", STATE_OFF), BASIC_CONFIG)
+    trt_off = trait.OnOffTrait(opp, State("group.bla", STATE_OFF), BASIC_CONFIG)
 
     assert trt_off.query_attributes() == {"on": False}
 
@@ -175,7 +175,7 @@ async def test_onoff_input_boolean(opp):
     assert trt_on.query_attributes() == {"on": True}
 
     trt_off = trait.OnOffTrait(
-        opp. State("input_boolean.bla", STATE_OFF), BASIC_CONFIG
+        opp, State("input_boolean.bla", STATE_OFF), BASIC_CONFIG
     )
 
     assert trt_off.query_attributes() == {"on": False}
@@ -207,7 +207,7 @@ async def test_onoff_switch(opp):
     assert trt_off.query_attributes() == {"on": False}
 
     trt_assumed = trait.OnOffTrait(
-        opp. State("switch.bla", STATE_OFF, {"assumed_state": True}), BASIC_CONFIG
+        opp, State("switch.bla", STATE_OFF, {"assumed_state": True}), BASIC_CONFIG
     )
     assert trt_assumed.sync_attributes() == {"commandOnlyOnOff": True}
 
@@ -987,7 +987,7 @@ async def test_lock_unlock_lock(opp):
     assert trait.LockUnlockTrait.might_2fa(lock.DOMAIN, lock.SUPPORT_OPEN, None)
 
     trt = trait.LockUnlockTrait(
-        opp. State("lock.front_door", lock.STATE_LOCKED), PIN_CONFIG
+        opp,State("lock.front_door", lock.STATE_LOCKED), PIN_CONFIG
     )
 
     assert trt.sync_attributes() == {}
@@ -1010,7 +1010,7 @@ async def test_lock_unlock_unlock(opp):
     assert trait.LockUnlockTrait.supported(lock.DOMAIN, lock.SUPPORT_OPEN, None)
 
     trt = trait.LockUnlockTrait(
-        opp. State("lock.front_door", lock.STATE_LOCKED), PIN_CONFIG
+        opp,State("lock.front_door", lock.STATE_LOCKED), PIN_CONFIG
     )
 
     assert trt.sync_attributes() == {}
@@ -1046,7 +1046,7 @@ async def test_lock_unlock_unlock(opp):
 
     # Test without pin
     trt = trait.LockUnlockTrait(
-        opp. State("lock.front_door", lock.STATE_LOCKED), BASIC_CONFIG
+        opp,State("lock.front_door", lock.STATE_LOCKED), BASIC_CONFIG
     )
 
     with pytest.raises(error.SmartHomeError) as err:
@@ -1113,7 +1113,7 @@ async def test_arm_disarm_arm_away(opp):
     )
 
     calls = async_mock_service(
-        opp. alarm_control_panel.DOMAIN, alarm_control_panel.SERVICE_ALARM_ARM_AWAY
+        opp,alarm_control_panel.DOMAIN, alarm_control_panel.SERVICE_ALARM_ARM_AWAY
     )
 
     # Test with no secure_pin configured
@@ -1272,7 +1272,7 @@ async def test_arm_disarm_disarm(opp):
     assert trt.can_execute(trait.COMMAND_ARMDISARM, {"arm": False})
 
     calls = async_mock_service(
-        opp. alarm_control_panel.DOMAIN, alarm_control_panel.SERVICE_ALARM_DISARM
+        opp,alarm_control_panel.DOMAIN, alarm_control_panel.SERVICE_ALARM_DISARM
     )
 
     # Test without secure_pin configured
@@ -1574,7 +1574,7 @@ async def test_inputselector(opp):
     )
 
     calls = async_mock_service(
-        opp. media_player.DOMAIN, media_player.SERVICE_SELECT_SOURCE
+        opp,media_player.DOMAIN, media_player.SERVICE_SELECT_SOURCE
     )
     await trt.execute(
         trait.COMMAND_INPUT,
@@ -1614,7 +1614,7 @@ async def test_inputselector_nextprev(opp, sources, source, source_next, source_
     assert trt.can_execute("action.devices.commands.PreviousInput", params={})
 
     calls = async_mock_service(
-        opp. media_player.DOMAIN, media_player.SERVICE_SELECT_SOURCE
+        opp,media_player.DOMAIN, media_player.SERVICE_SELECT_SOURCE
     )
     await trt.execute(
         "action.devices.commands.NextInput",
@@ -1746,7 +1746,7 @@ async def test_modes_input_select(opp):
     )
 
     calls = async_mock_service(
-        opp. input_select.DOMAIN, input_select.SERVICE_SELECT_OPTION
+        opp,input_select.DOMAIN, input_select.SERVICE_SELECT_OPTION
     )
     await trt.execute(
         trait.COMMAND_MODES,
@@ -1894,7 +1894,7 @@ async def test_sound_modes(opp):
     )
 
     calls = async_mock_service(
-        opp. media_player.DOMAIN, media_player.SERVICE_SELECT_SOUND_MODE
+        opp,media_player.DOMAIN, media_player.SERVICE_SELECT_SOUND_MODE
     )
     await trt.execute(
         trait.COMMAND_MODES,
@@ -2219,7 +2219,7 @@ async def test_volume_media_player(opp):
     assert trt.query_attributes() == {"currentVolume": 30}
 
     calls = async_mock_service(
-        opp. media_player.DOMAIN, media_player.SERVICE_VOLUME_SET
+        opp,media_player.DOMAIN, media_player.SERVICE_VOLUME_SET
     )
     await trt.execute(trait.COMMAND_SET_VOLUME, BASIC_DATA, {"volumeLevel": 60}, {})
     assert len(calls) == 1
@@ -2229,7 +2229,7 @@ async def test_volume_media_player(opp):
     }
 
     calls = async_mock_service(
-        opp. media_player.DOMAIN, media_player.SERVICE_VOLUME_SET
+        opp, media_player.DOMAIN, media_player.SERVICE_VOLUME_SET
     )
     await trt.execute(
         trait.COMMAND_VOLUME_RELATIVE, BASIC_DATA, {"relativeSteps": 10}, {}
@@ -2271,7 +2271,7 @@ async def test_volume_media_player_relative(opp):
     assert trt.query_attributes() == {}
 
     calls = async_mock_service(
-        opp. media_player.DOMAIN, media_player.SERVICE_VOLUME_UP
+        opp, media_player.DOMAIN, media_player.SERVICE_VOLUME_UP
     )
 
     await trt.execute(
@@ -2287,7 +2287,7 @@ async def test_volume_media_player_relative(opp):
         }
 
     calls = async_mock_service(
-        opp. media_player.DOMAIN, media_player.SERVICE_VOLUME_DOWN
+        opp, media_player.DOMAIN, media_player.SERVICE_VOLUME_DOWN
     )
     await trt.execute(
         trait.COMMAND_VOLUME_RELATIVE,
@@ -2339,7 +2339,7 @@ async def test_media_player_mute(opp):
     assert trt.query_attributes() == {"isMuted": False}
 
     mute_calls = async_mock_service(
-        opp. media_player.DOMAIN, media_player.SERVICE_VOLUME_MUTE
+        opp, media_player.DOMAIN, media_player.SERVICE_VOLUME_MUTE
     )
     await trt.execute(
         trait.COMMAND_MUTE,
@@ -2354,7 +2354,7 @@ async def test_media_player_mute(opp):
     }
 
     unmute_calls = async_mock_service(
-        opp. media_player.DOMAIN, media_player.SERVICE_VOLUME_MUTE
+        opp, media_player.DOMAIN, media_player.SERVICE_VOLUME_MUTE
     )
     await trt.execute(
         trait.COMMAND_MUTE,
@@ -2485,7 +2485,7 @@ async def test_transport_control(opp):
 
     # COMMAND_MEDIA_SEEK_RELATIVE
     calls = async_mock_service(
-        opp. media_player.DOMAIN, media_player.SERVICE_MEDIA_SEEK
+        opp, media_player.DOMAIN, media_player.SERVICE_MEDIA_SEEK
     )
 
     # Patch to avoid time ticking over during the command failing the test
@@ -2505,7 +2505,7 @@ async def test_transport_control(opp):
 
     # COMMAND_MEDIA_SEEK_TO_POSITION
     calls = async_mock_service(
-        opp. media_player.DOMAIN, media_player.SERVICE_MEDIA_SEEK
+        opp, media_player.DOMAIN, media_player.SERVICE_MEDIA_SEEK
     )
     await trt.execute(
         trait.COMMAND_MEDIA_SEEK_TO_POSITION, BASIC_DATA, {"absPositionMs": 50000}, {}
@@ -2518,7 +2518,7 @@ async def test_transport_control(opp):
 
     # COMMAND_MEDIA_NEXT
     calls = async_mock_service(
-        opp. media_player.DOMAIN, media_player.SERVICE_MEDIA_NEXT_TRACK
+        opp, media_player.DOMAIN, media_player.SERVICE_MEDIA_NEXT_TRACK
     )
     await trt.execute(trait.COMMAND_MEDIA_NEXT, BASIC_DATA, {}, {})
     assert len(calls) == 1
@@ -2526,7 +2526,7 @@ async def test_transport_control(opp):
 
     # COMMAND_MEDIA_PAUSE
     calls = async_mock_service(
-        opp. media_player.DOMAIN, media_player.SERVICE_MEDIA_PAUSE
+        opp, media_player.DOMAIN, media_player.SERVICE_MEDIA_PAUSE
     )
     await trt.execute(trait.COMMAND_MEDIA_PAUSE, BASIC_DATA, {}, {})
     assert len(calls) == 1
@@ -2534,7 +2534,7 @@ async def test_transport_control(opp):
 
     # COMMAND_MEDIA_PREVIOUS
     calls = async_mock_service(
-        opp. media_player.DOMAIN, media_player.SERVICE_MEDIA_PREVIOUS_TRACK
+        opp, media_player.DOMAIN, media_player.SERVICE_MEDIA_PREVIOUS_TRACK
     )
     await trt.execute(trait.COMMAND_MEDIA_PREVIOUS, BASIC_DATA, {}, {})
     assert len(calls) == 1
@@ -2542,7 +2542,7 @@ async def test_transport_control(opp):
 
     # COMMAND_MEDIA_RESUME
     calls = async_mock_service(
-        opp. media_player.DOMAIN, media_player.SERVICE_MEDIA_PLAY
+        opp, media_player.DOMAIN, media_player.SERVICE_MEDIA_PLAY
     )
     await trt.execute(trait.COMMAND_MEDIA_RESUME, BASIC_DATA, {}, {})
     assert len(calls) == 1
@@ -2550,7 +2550,7 @@ async def test_transport_control(opp):
 
     # COMMAND_MEDIA_SHUFFLE
     calls = async_mock_service(
-        opp. media_player.DOMAIN, media_player.SERVICE_SHUFFLE_SET
+        opp, media_player.DOMAIN, media_player.SERVICE_SHUFFLE_SET
     )
     await trt.execute(trait.COMMAND_MEDIA_SHUFFLE, BASIC_DATA, {}, {})
     assert len(calls) == 1
@@ -2561,7 +2561,7 @@ async def test_transport_control(opp):
 
     # COMMAND_MEDIA_STOP
     calls = async_mock_service(
-        opp. media_player.DOMAIN, media_player.SERVICE_MEDIA_STOP
+        opp, media_player.DOMAIN, media_player.SERVICE_MEDIA_STOP
     )
     await trt.execute(trait.COMMAND_MEDIA_STOP, BASIC_DATA, {}, {})
     assert len(calls) == 1

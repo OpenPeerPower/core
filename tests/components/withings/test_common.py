@@ -82,7 +82,7 @@ async def test_webhook_post(
     await component_factory.setup_profile(person0.user_id)
     data_manager = get_data_manager_by_user_id(opp, user_id)
 
-    client: TestClient = await aiohttp_client.opp.http.app)
+    client: TestClient = await aiohttp_client(opp.http.app)
 
     post_data = {}
     if arg_user_id is not None:
@@ -115,7 +115,7 @@ async def test_webhook_head(
     await component_factory.setup_profile(person0.user_id)
     data_manager = get_data_manager_by_user_id(opp, person0.user_id)
 
-    client: TestClient = await aiohttp_client.opp.http.app)
+    client: TestClient = await aiohttp_client(opp.http.app)
     resp = await client.head(urlparse(data_manager.webhook_config.url).path)
     assert resp.status == 200
 
@@ -132,7 +132,7 @@ async def test_webhook_put(
     await component_factory.setup_profile(person0.user_id)
     data_manager = get_data_manager_by_user_id(opp, person0.user_id)
 
-    client: TestClient = await aiohttp_client.opp.http.app)
+    client: TestClient = await aiohttp_client(opp.http.app)
     resp = await client.put(urlparse(data_manager.webhook_config.url).path)
 
     # Wait for remaining tasks to complete.

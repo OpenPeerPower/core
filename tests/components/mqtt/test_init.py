@@ -958,7 +958,7 @@ async def test_dump_service(opp, mqtt_mock):
 
 
 async def test_mqtt_ws_remove_discovered_device(
-    opp. device_reg, entity_reg, opp_ws_client, mqtt_mock
+    opp, device_reg, entity_reg, opp_ws_client, mqtt_mock
 ):
     """Test MQTT websocket device removal."""
     data = (
@@ -987,7 +987,7 @@ async def test_mqtt_ws_remove_discovered_device(
 
 
 async def test_mqtt_ws_remove_discovered_device_twice(
-    opp. device_reg, opp_ws_client, mqtt_mock
+    opp, device_reg, opp_ws_client, mqtt_mock
 ):
     """Test MQTT websocket device removal."""
     data = (
@@ -1018,7 +1018,7 @@ async def test_mqtt_ws_remove_discovered_device_twice(
 
 
 async def test_mqtt_ws_remove_discovered_device_same_topic(
-    opp. device_reg, opp_ws_client, mqtt_mock
+    opp, device_reg, opp_ws_client, mqtt_mock
 ):
     """Test MQTT websocket device removal."""
     data = (
@@ -1050,7 +1050,7 @@ async def test_mqtt_ws_remove_discovered_device_same_topic(
 
 
 async def test_mqtt_ws_remove_non_mqtt_device(
-    opp. device_reg, opp_ws_client, mqtt_mock
+    opp, device_reg, opp_ws_client, mqtt_mock
 ):
     """Test MQTT websocket device removal of device belonging to other domain."""
     config_entry = MockConfigEntry(domain="test")
@@ -1072,7 +1072,7 @@ async def test_mqtt_ws_remove_non_mqtt_device(
 
 
 async def test_mqtt_ws_get_device_debug_info(
-    opp. device_reg, opp_ws_client, mqtt_mock
+    opp, device_reg, opp_ws_client, mqtt_mock
 ):
     """Test MQTT websocket device debug info."""
     config = {

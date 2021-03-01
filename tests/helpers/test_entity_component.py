@@ -9,7 +9,7 @@ import pytest
 import voluptuous as vol
 
 from openpeerpower.const import ENTITY_MATCH_ALL, ENTITY_MATCH_NONE
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.exceptions import PlatformNotReady
 from openpeerpower.helpers import discovery
 from openpeerpower.helpers.entity_component import EntityComponent

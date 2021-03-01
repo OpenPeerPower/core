@@ -10,7 +10,7 @@ import pytest
 
 from openpeerpower.components import sun
 from openpeerpower.const import MATCH_ALL
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.core import callback
 from openpeerpower.exceptions import TemplateError
 from openpeerpower.helpers.entity_registry import EVENT_ENTITY_REGISTRY_UPDATED

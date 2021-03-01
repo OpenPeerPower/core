@@ -12,7 +12,7 @@ from tests.common import async_mock_service
 
 
 @pytest.fixture(autouse=True)
-def entities.opp):
+def entities(opp):
     """Initialize the test light."""
     platform = getattr.opp.components, "test.light")
     platform.init()

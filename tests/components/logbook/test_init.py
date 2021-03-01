@@ -31,7 +31,7 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.helpers.entityfilter import CONF_ENTITY_GLOBS
 from openpeerpower.helpers.json import JSONEncoder
 from openpeerpower.setup import async_setup_component, setup_component

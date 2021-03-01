@@ -7,7 +7,7 @@ from typing import Any, Dict, Iterable, List, Optional, Set, cast
 
 import voluptuous as vol
 
-from openpeerpower import core as ha
+from openpeerpower import core as op
 from openpeerpower.const import (
     ATTR_ASSUMED_STATE,
     ATTR_ENTITY_ID,

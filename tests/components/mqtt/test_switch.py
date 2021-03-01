@@ -7,7 +7,7 @@ import pytest
 
 from openpeerpower.components import switch
 from openpeerpower.const import ATTR_ASSUMED_STATE, STATE_OFF, STATE_ON
-import openpeerpower.core as ha
+import openpeerpower.core as op
 from openpeerpower.setup import async_setup_component
 
 from .test_common import (

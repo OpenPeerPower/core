@@ -124,9 +124,9 @@ def threaded_listener_factory(
     @ft.wraps(async_factory)
     def factory(*args: Any, **kwargs: Any) -> CALLBACK_TYPE:
         """Call async event helper safely."""
-       opp = args[0]
+        opp = args[0]
 
-        if not isinstance.opp: OpenPeerPower):
+        if not isinstance(opp, OpenPeerPower):
             raise TypeError("First parameter needs to be a.opp instance")
 
         async_remove = run_callback_threadsafe(

@@ -43,7 +43,7 @@ async def test_device_remove(
 
 
 async def test_device_remove_non_tasmota_device(
-    opp. device_reg, opp_ws_client, mqtt_mock, setup_tasmota
+    opp, device_reg, opp_ws_client, mqtt_mock, setup_tasmota
 ):
     """Test removing a non Tasmota device through device registry."""
     config_entry = MockConfigEntry(domain="test")
@@ -68,7 +68,7 @@ async def test_device_remove_non_tasmota_device(
 
 
 async def test_device_remove_stale_tasmota_device(
-    opp. device_reg, opp_ws_client, mqtt_mock, setup_tasmota
+    opp, device_reg, opp_ws_client, mqtt_mock, setup_tasmota
 ):
     """Test removing a stale (undiscovered) Tasmota device through device registry."""
     config_entry = opp.config_entries.async_entries("tasmota")[0]
@@ -99,7 +99,7 @@ async def test_device_remove_stale_tasmota_device(
 
 
 async def test_tasmota_ws_remove_discovered_device(
-    opp. device_reg, entity_reg, opp_ws_client, mqtt_mock, setup_tasmota
+    opp, device_reg, entity_reg, opp_ws_client, mqtt_mock, setup_tasmota
 ):
     """Test Tasmota websocket device removal."""
     config = copy.deepcopy(DEFAULT_CONFIG)
@@ -125,7 +125,7 @@ async def test_tasmota_ws_remove_discovered_device(
 
 
 async def test_tasmota_ws_remove_discovered_device_twice(
-    opp. device_reg, opp_ws_client, mqtt_mock, setup_tasmota
+    opp, device_reg, opp_ws_client, mqtt_mock, setup_tasmota
 ):
     """Test Tasmota websocket device removal."""
     config = copy.deepcopy(DEFAULT_CONFIG)
@@ -155,7 +155,7 @@ async def test_tasmota_ws_remove_discovered_device_twice(
 
 
 async def test_tasmota_ws_remove_non_tasmota_device(
-    opp. device_reg, opp_ws_client, mqtt_mock, setup_tasmota
+    opp, device_reg, opp_ws_client, mqtt_mock, setup_tasmota
 ):
     """Test Tasmota websocket device removal of device belonging to other domain."""
     config_entry = MockConfigEntry(domain="test")

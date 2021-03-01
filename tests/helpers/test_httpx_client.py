@@ -13,14 +13,14 @@ async def test_get_async_client_with_ssl(opp):
     """Test init async client with ssl."""
     client.get_async_client(opp)
 
-    assert isinstance.opp.data[client.DATA_ASYNC_CLIENT], httpx.AsyncClient)
+    assert isinstance(opp.data[client.DATA_ASYNC_CLIENT], httpx.AsyncClient)
 
 
 async def test_get_async_client_without_ssl(opp):
     """Test init async client without ssl."""
     client.get_async_client(opp, verify_ssl=False)
 
-    assert isinstance.opp.data[client.DATA_ASYNC_CLIENT_NOVERIFY], httpx.AsyncClient)
+    assert isinstance(opp.data[client.DATA_ASYNC_CLIENT_NOVERIFY], httpx.AsyncClient)
 
 
 async def test_create_async_httpx_client_with_ssl_and_cookies(opp):
@@ -47,7 +47,7 @@ async def test_get_async_client_cleanup(opp):
     """Test init async client with ssl."""
     client.get_async_client(opp)
 
-    assert isinstance.opp.data[client.DATA_ASYNC_CLIENT], httpx.AsyncClient)
+    assert isinstance(opp.data[client.DATA_ASYNC_CLIENT], httpx.AsyncClient)
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_CLOSE)
     await opp.async_block_till_done()
@@ -59,7 +59,7 @@ async def test_get_async_client_cleanup_without_ssl(opp):
     """Test init async client without ssl."""
     client.get_async_client(opp, verify_ssl=False)
 
-    assert isinstance.opp.data[client.DATA_ASYNC_CLIENT_NOVERIFY], httpx.AsyncClient)
+    assert isinstance(opp.data[client.DATA_ASYNC_CLIENT_NOVERIFY], httpx.AsyncClient)
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_CLOSE)
     await opp.async_block_till_done()
@@ -72,7 +72,7 @@ async def test_get_async_client_patched_close(opp):
 
     with patch("httpx.AsyncClient.aclose") as mock_aclose:
         httpx_session = client.get_async_client(opp)
-        assert isinstance.opp.data[client.DATA_ASYNC_CLIENT], httpx.AsyncClient)
+        assert isinstance(opp.data[client.DATA_ASYNC_CLIENT], httpx.AsyncClient)
 
         with pytest.raises(RuntimeError):
             await httpx_session.aclose()

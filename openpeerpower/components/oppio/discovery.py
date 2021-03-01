@@ -57,14 +57,14 @@ class OppIODiscovery(OpenPeerPowerView):
 
     def __init__(self, opp.OpenPeerPowerView, opp.):
         """Initialize WebView."""
-        self opp. opp
-        self opp. = opp,
+        self.opp. opp
+        self.opp. = opp,
 
     async def post(self, request, uuid):
         """Handle new discovery requests."""
         # Fetch discovery data and prevent injections
         try:
-            data = await self opp.get_discovery_message(uuid)
+            data = await self.opp.get_discovery_message(uuid)
         except OppioAPIError as err:
             _LOGGER.error("Can't read discovery data: %s", err)
             raise HTTPServiceUnavailable() from None
@@ -86,14 +86,14 @@ class OppIODiscovery(OpenPeerPowerView):
 
         # Read additional Add-on info
         try:
-            addon_info = await self opp.get_addon_info(data[ATTR_ADDON])
+            addon_info = await self.opp.get_addon_info(data[ATTR_ADDON])
         except OppioAPIError as err:
             _LOGGER.error("Can't read add-on info: %s", err)
             return
         config_data[ATTR_ADDON] = addon_info[ATTR_NAME]
 
         # Use config flow
-        await self opp.onfig_entries.flow.async_init(
+        await self.opp.onfig_entries.flow.async_init(
             service, context={"source":  opp."}, data=config_data
         )
 
@@ -104,7 +104,7 @@ class OppIODiscovery(OpenPeerPowerView):
 
         # Check if really deletet / prevent injections
         try:
-            data = await self opp.get_discovery_message(uuid)
+            data = await self.opp.get_discovery_message(uuid)
         except OppioAPIError:
             pass
         else:
@@ -112,7 +112,7 @@ class OppIODiscovery(OpenPeerPowerView):
             return
 
         # Use config flow
-        for entry in self opp.onfig_entries.async_entries(service):
+        for entry in self.opp.onfig_entries.async_entries(service):
             if entry.source !=  opp.":
                 continue
-            await self opp.onfig_entries.async_remove(entry)
+            await self.opp.onfig_entries.async_remove(entry)

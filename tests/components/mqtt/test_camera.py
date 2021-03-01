@@ -52,7 +52,7 @@ async def test_run_camera_setup_opp, aiohttp_client, mqtt_mock):
 
     async_fire_mqtt_message(opp, topic, "beer")
 
-    client = await aiohttp_client.opp.http.app)
+    client = await aiohttp_client(opp.http.app)
     resp = await client.get(url)
     assert resp.status == 200
     body = await resp.text()
