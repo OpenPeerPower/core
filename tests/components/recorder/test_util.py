@@ -39,7 +39,7 @@ def.opp_recorder():
 
 def test_recorder_bad_commit.opp_recorder):
     """Bad _commit should retry 3 times."""
-   opp =  opp_recorder()
+   opp = opp_recorder()
 
     def work(session):
         """Bad work."""
@@ -47,7 +47,7 @@ def test_recorder_bad_commit.opp_recorder):
 
     with patch(
         "openpeerpower.components.recorder.time.sleep"
-    ) as e_mock, util.session_scope.opp.opp) as session:
+    ) as e_mock, util.session_scope(opp=opp) as session:
         res = util.commit(session, work)
     assert res is False
     assert e_mock.call_count == 3
@@ -75,7 +75,7 @@ def test_recorder_bad_execute.opp_recorder):
 
 
 def test_validate_or_move_away_sqlite_database_with_integrity_check(
-    opp. tmpdir, caplog
+    opp, tmpdir, caplog
 ):
     """Ensure a malformed sqlite database is moved away.
 
@@ -111,7 +111,7 @@ def test_validate_or_move_away_sqlite_database_with_integrity_check(
 
 
 def test_validate_or_move_away_sqlite_database_without_integrity_check(
-    opp. tmpdir, caplog
+    opp, tmpdir, caplog
 ):
     """Ensure a malformed sqlite database is moved away.
 
@@ -181,7 +181,7 @@ async def test_last_run_was_recently_clean(opp):
 
 def test_basic_sanity_check.opp_recorder):
     """Test the basic sanity checks with a missing table."""
-   opp =  opp_recorder()
+   opp = opp_recorder()
 
     cursor = opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
 
@@ -195,7 +195,7 @@ def test_basic_sanity_check.opp_recorder):
 
 def test_combined_checks.opp_recorder, caplog):
     """Run Checks on the open database."""
-   opp =  opp_recorder()
+   opp = opp_recorder()
 
     cursor = opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
 

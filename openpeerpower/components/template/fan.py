@@ -218,31 +218,31 @@ class TemplateFan(TemplateEntity, FanEntity):
         self._set_speed_script = None
         if set_speed_action:
             self._set_speed_script = Script(
-                opp. set_speed_action, friendly_name, domain
+                opp, set_speed_action, friendly_name, domain
             )
 
         self._set_percentage_script = None
         if set_percentage_action:
             self._set_percentage_script = Script(
-                opp. set_percentage_action, friendly_name, domain
+                opp, set_percentage_action, friendly_name, domain
             )
 
         self._set_preset_mode_script = None
         if set_preset_mode_action:
             self._set_preset_mode_script = Script(
-                opp. set_preset_mode_action, friendly_name, domain
+                opp, set_preset_mode_action, friendly_name, domain
             )
 
         self._set_oscillating_script = None
         if set_oscillating_action:
             self._set_oscillating_script = Script(
-                opp. set_oscillating_action, friendly_name, domain
+                opp, set_oscillating_action, friendly_name, domain
             )
 
         self._set_direction_script = None
         if set_direction_action:
             self._set_direction_script = Script(
-                opp. set_direction_action, friendly_name, domain
+                opp, set_direction_action, friendly_name, domain
             )
 
         self._state = STATE_OFF

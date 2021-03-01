@@ -221,7 +221,7 @@ def media_seek(opp, position, entity_id=ENTITY_MATCH_ALL):
 
 
 async def async_play_media(
-    opp. media_type, media_id, entity_id=ENTITY_MATCH_ALL, enqueue=None
+    opp, media_type, media_id, entity_id=ENTITY_MATCH_ALL, enqueue=None
 ):
     """Send the media player the command for playing media."""
     data = {ATTR_MEDIA_CONTENT_TYPE: media_type, ATTR_MEDIA_CONTENT_ID: media_id}

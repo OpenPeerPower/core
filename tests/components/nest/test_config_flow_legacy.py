@@ -186,7 +186,7 @@ async def test_step_import(opp):
     """Test that we trigger import when configuring with client."""
     with patch("os.path.isfile", return_value=False):
         assert await async_setup_component(
-            opp. DOMAIN, {DOMAIN: {"client_id": "bla", "client_secret": "bla"}}
+            opp, DOMAIN, {DOMAIN: {"client_id": "bla", "client_secret": "bla"}}
         )
         await opp.async_block_till_done()
 
@@ -206,7 +206,7 @@ async def test_step_import_with_token_cache(opp):
         "openpeerpower.components.nest.async_setup_entry", return_value=mock_coro(True)
     ):
         assert await async_setup_component(
-            opp. DOMAIN, {DOMAIN: {"client_id": "bla", "client_secret": "bla"}}
+            opp, DOMAIN, {DOMAIN: {"client_id": "bla", "client_secret": "bla"}}
         )
         await opp.async_block_till_done()
 

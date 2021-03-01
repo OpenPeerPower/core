@@ -89,7 +89,7 @@ class UpCloudDataUpdateCoordinator(
     ) -> None:
         """Initialize coordinator."""
         super().__init__(
-            opp. _LOGGER, name=f"{username}@UpCloud", update_interval=update_interval
+            opp, _LOGGER, name=f"{username}@UpCloud", update_interval=update_interval
         )
         self.cloud_manager = cloud_manager
         self.unsub_handlers: List[CALLBACK_TYPE] = []
@@ -159,7 +159,7 @@ async def _async_signal_options_update(
 ) -> None:
     """Signal config entry options update."""
     async_dispatcher_send(
-        opp. _config_entry_update_signal_name(config_entry), config_entry
+        opp, _config_entry_update_signal_name(config_entry), config_entry
     )
 
 

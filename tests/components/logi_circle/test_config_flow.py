@@ -59,7 +59,7 @@ def mock_logi_circle():
 
 
 async def test_step_import(
-    opp. mock_logi_circle  # pylint: disable=redefined-outer-name
+    opp, mock_logi_circle  # pylint: disable=redefined-outer-name
 ):
     """Test that we trigger import when configuring with client."""
     flow = init_config_flow(opp)
@@ -70,7 +70,7 @@ async def test_step_import(
 
 
 async def test_full_flow_implementation(
-    opp. mock_logi_circle  # pylint: disable=redefined-outer-name
+    opp, mock_logi_circle  # pylint: disable=redefined-outer-name
 ):
     """Test registering an implementation and finishing flow works."""
     config_flow.register_flow_implementation(
@@ -151,7 +151,7 @@ async def test_abort_if_already_setup_opp):
     ],
 )
 async def test_abort_if_authorize_fails(
-    opp. mock_logi_circle, side_effect, error
+    opp, mock_logi_circle, side_effect, error
 ):  # pylint: disable=redefined-outer-name
     """Test we abort if authorizing fails."""
     flow = init_config_flow(opp)
@@ -175,7 +175,7 @@ async def test_not_pick_implementation_if_only_one(opp):
 
 
 async def test_gen_auth_url(
-    opp. mock_logi_circle
+    opp, mock_logi_circle
 ):  # pylint: disable=redefined-outer-name
     """Test generating authorize URL from Logi Circle API."""
     config_flow.register_flow_implementation(
@@ -205,7 +205,7 @@ async def test_callback_view_rejects_missing_code(opp):
 
 
 async def test_callback_view_accepts_code(
-    opp. mock_logi_circle
+    opp, mock_logi_circle
 ):  # pylint: disable=redefined-outer-name
     """Test the auth callback view handles requests with auth code."""
     init_config_flow(opp)

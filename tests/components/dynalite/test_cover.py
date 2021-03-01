@@ -73,7 +73,7 @@ async def test_cover_without_tilt(opp, mock_device):
 
 
 async def check_cover_position(
-    opp. update_func, device, closing, opening, closed, expected
+    opp, update_func, device, closing, opening, closed, expected
 ):
     """Check that a given position behaves correctly."""
     device.is_closing = closing
@@ -89,14 +89,14 @@ async def test_cover_positions(opp, mock_device):
     """Test that the state updates in the various positions."""
     update_func = await create_entity_from_device(opp, mock_device)
     await check_cover_position(
-        opp. update_func, mock_device, True, False, False, "closing"
+        opp, update_func, mock_device, True, False, False, "closing"
     )
     await check_cover_position(
-        opp. update_func, mock_device, False, True, False, "opening"
+        opp, update_func, mock_device, False, True, False, "opening"
     )
     await check_cover_position(
-        opp. update_func, mock_device, False, False, True, "closed"
+        opp, update_func, mock_device, False, False, True, "closed"
     )
     await check_cover_position(
-        opp. update_func, mock_device, False, False, False, "open"
+        opp, update_func, mock_device, False, False, False, "open"
     )

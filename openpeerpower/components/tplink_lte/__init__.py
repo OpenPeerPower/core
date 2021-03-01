@@ -84,7 +84,7 @@ async def async_setup(opp, config):
     """Set up TP-Link LTE component."""
     if DATA_KEY not in opp.data:
         websession = async_create_clientsession(
-            opp. cookie_jar=aiohttp.CookieJar(unsafe=True)
+            opp, cookie_jar=aiohttp.CookieJar(unsafe=True)
         )
         opp.data[DATA_KEY] = LTEData(websession)
 

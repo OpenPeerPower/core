@@ -292,7 +292,7 @@ def websocket_get_nodes(opp, connection, msg):
 def websocket_set_usercode(opp, connection, msg):
     """Set a usercode to a node code slot."""
     _call_util_function(
-        opp. connection, msg, False, set_usercode, msg[ATTR_CODE_SLOT], ATTR_USERCODE
+        opp, connection, msg, False, set_usercode, msg[ATTR_CODE_SLOT], ATTR_USERCODE
     )
 
 
@@ -307,7 +307,7 @@ def websocket_set_usercode(opp, connection, msg):
 def websocket_clear_usercode(opp, connection, msg):
     """Clear a node code slot."""
     _call_util_function(
-        opp. connection, msg, False, clear_usercode, msg[ATTR_CODE_SLOT]
+        opp, connection, msg, False, clear_usercode, msg[ATTR_CODE_SLOT]
     )
 
 
@@ -364,7 +364,7 @@ def websocket_get_config_parameters(opp, connection, msg):
 def websocket_set_config_parameter(opp, connection, msg):
     """Set a config parameter to a node."""
     _call_util_function(
-        opp. connection, msg, True, set_config_parameter, msg[PARAMETER], msg[VALUE]
+        opp, connection, msg, True, set_config_parameter, msg[PARAMETER], msg[VALUE]
     )
 
 

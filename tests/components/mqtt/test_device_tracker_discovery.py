@@ -237,7 +237,7 @@ async def test_setting_device_tracker_value_via_mqtt_message(opp, mqtt_mock, cap
 
 
 async def test_setting_device_tracker_value_via_mqtt_message_and_template(
-    opp. mqtt_mock, caplog
+    opp, mqtt_mock, caplog
 ):
     """Test the setting of the value via MQTT."""
     async_fire_mqtt_message(
@@ -261,7 +261,7 @@ async def test_setting_device_tracker_value_via_mqtt_message_and_template(
 
 
 async def test_setting_device_tracker_value_via_mqtt_message_and_template2(
-    opp. mqtt_mock, caplog
+    opp, mqtt_mock, caplog
 ):
     """Test the setting of the value via MQTT."""
     async_fire_mqtt_message(
@@ -288,7 +288,7 @@ async def test_setting_device_tracker_value_via_mqtt_message_and_template2(
 
 
 async def test_setting_device_tracker_location_via_mqtt_message(
-    opp. mqtt_mock, caplog
+    opp, mqtt_mock, caplog
 ):
     """Test the setting of the location via MQTT."""
     async_fire_mqtt_message(
@@ -308,7 +308,7 @@ async def test_setting_device_tracker_location_via_mqtt_message(
 
 
 async def test_setting_device_tracker_location_via_lat_lon_message(
-    opp. mqtt_mock, caplog
+    opp, mqtt_mock, caplog
 ):
     """Test the setting of the latitude and longitude via MQTT."""
     async_fire_mqtt_message(

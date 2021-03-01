@@ -255,7 +255,7 @@ async def test_get_entity_ids_with_domain_filter(opp):
     )
 
     assert ["switch.ac"] == group.get_entity_ids(
-        opp. mixed_group.entity_id, domain_filter="switch"
+        opp, mixed_group.entity_id, domain_filter="switch"
     )
 
 

@@ -109,7 +109,7 @@ async def test_discovery_shows_create_form(opp, controller, discovery_data):
 
 
 async def test_discovery_flow_aborts_already_setup(
-    opp. controller, discovery_data, config_entry
+    opp, controller, discovery_data, config_entry
 ):
     """Test discovery flow aborts when entry already setup."""
     config_entry.add_to_opp(opp)

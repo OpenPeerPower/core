@@ -50,7 +50,7 @@ async def test_humidifier(opp, hk_driver, events):
     opp.states.async_set(entity_id, STATE_OFF)
     await opp.async_block_till_done()
     acc = HumidifierDehumidifier(
-        opp. hk_driver, "HumidifierDehumidifier", entity_id, 1, None
+        opp, hk_driver, "HumidifierDehumidifier", entity_id, 1, None
     )
     hk_driver.add_accessory(acc)
 
@@ -131,7 +131,7 @@ async def test_dehumidifier(opp, hk_driver, events):
     )
     await opp.async_block_till_done()
     acc = HumidifierDehumidifier(
-        opp. hk_driver, "HumidifierDehumidifier", entity_id, 1, None
+        opp, hk_driver, "HumidifierDehumidifier", entity_id, 1, None
     )
     hk_driver.add_accessory(acc)
 
@@ -216,7 +216,7 @@ async def test_hygrostat_power_state(opp, hk_driver, events):
     )
     await opp.async_block_till_done()
     acc = HumidifierDehumidifier(
-        opp. hk_driver, "HumidifierDehumidifier", entity_id, 1, None
+        opp, hk_driver, "HumidifierDehumidifier", entity_id, 1, None
     )
     hk_driver.add_accessory(acc)
 
@@ -294,7 +294,7 @@ async def test_hygrostat_get_humidity_range(opp, hk_driver):
     )
     await opp.async_block_till_done()
     acc = HumidifierDehumidifier(
-        opp. hk_driver, "HumidifierDehumidifier", entity_id, 1, None
+        opp, hk_driver, "HumidifierDehumidifier", entity_id, 1, None
     )
     hk_driver.add_accessory(acc)
 
@@ -397,7 +397,7 @@ async def test_humidifier_as_dehumidifier(opp, hk_driver, events, caplog):
     opp.states.async_set(entity_id, STATE_OFF)
     await opp.async_block_till_done()
     acc = HumidifierDehumidifier(
-        opp. hk_driver, "HumidifierDehumidifier", entity_id, 1, None
+        opp, hk_driver, "HumidifierDehumidifier", entity_id, 1, None
     )
     hk_driver.add_accessory(acc)
 

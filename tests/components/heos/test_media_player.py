@@ -140,7 +140,7 @@ async def test_updates_from_signals(opp, config_entry, config, controller, favor
 
 
 async def test_updates_from_connection_event(
-    opp. config_entry, config, controller, caplog
+    opp, config_entry, config, controller, caplog
 ):
     """Tests player updates from connection event after connection failure."""
     await setup_platform(opp, config_entry, config)
@@ -186,7 +186,7 @@ async def test_updates_from_connection_event(
 
 
 async def test_updates_from_sources_updated(
-    opp. config_entry, config, controller, input_sources
+    opp, config_entry, config, controller, input_sources
 ):
     """Tests player updates from changes in sources list."""
     await setup_platform(opp, config_entry, config)
@@ -210,7 +210,7 @@ async def test_updates_from_sources_updated(
 
 
 async def test_updates_from_players_changed(
-    opp. config_entry, config, controller, change_data, caplog
+    opp, config_entry, config, controller, change_data, caplog
 ):
     """Test player updates from changes to available players."""
     await setup_platform(opp, config_entry, config)
@@ -233,7 +233,7 @@ async def test_updates_from_players_changed(
 
 
 async def test_updates_from_players_changed_new_ids(
-    opp. config_entry, config, controller, change_data_mapped_ids, caplog
+    opp, config_entry, config, controller, change_data_mapped_ids, caplog
 ):
     """Test player updates from changes to available players."""
     await setup_platform(opp, config_entry, config)
@@ -506,7 +506,7 @@ async def test_select_radio_favorite(opp, config_entry, config, controller, favo
 
 
 async def test_select_radio_favorite_command_error(
-    opp. config_entry, config, controller, favorites, caplog
+    opp, config_entry, config, controller, favorites, caplog
 ):
     """Tests command error logged when playing favorite."""
     await setup_platform(opp, config_entry, config)
@@ -525,7 +525,7 @@ async def test_select_radio_favorite_command_error(
 
 
 async def test_select_input_source(
-    opp. config_entry, config, controller, input_sources
+    opp, config_entry, config, controller, input_sources
 ):
     """Tests selecting input source and state."""
     await setup_platform(opp, config_entry, config)
@@ -566,7 +566,7 @@ async def test_select_input_unknown(opp, config_entry, config, controller, caplo
 
 
 async def test_select_input_command_error(
-    opp. config_entry, config, controller, caplog, input_sources
+    opp, config_entry, config, controller, caplog, input_sources
 ):
     """Tests selecting an unknown input."""
     await setup_platform(opp, config_entry, config)
@@ -640,7 +640,7 @@ async def test_play_media_music(opp, config_entry, config, controller, caplog):
 
 
 async def test_play_media_quick_select(
-    opp. config_entry, config, controller, caplog, quick_selects
+    opp, config_entry, config, controller, caplog, quick_selects
 ):
     """Test the play media service with type quick_select."""
     await setup_platform(opp, config_entry, config)
@@ -690,7 +690,7 @@ async def test_play_media_quick_select(
 
 
 async def test_play_media_playlist(
-    opp. config_entry, config, controller, caplog, playlists
+    opp, config_entry, config, controller, caplog, playlists
 ):
     """Test the play media service with type playlist."""
     await setup_platform(opp, config_entry, config)
@@ -741,7 +741,7 @@ async def test_play_media_playlist(
 
 
 async def test_play_media_favorite(
-    opp. config_entry, config, controller, caplog, favorites
+    opp, config_entry, config, controller, caplog, favorites
 ):
     """Test the play media service with type favorite."""
     await setup_platform(opp, config_entry, config)

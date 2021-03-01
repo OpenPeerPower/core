@@ -111,7 +111,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
         logging.getLogger(f"{__name__}.yaml_collection"), id_manager
     )
     collection.sync_entity_lifecycle(
-        opp. DOMAIN, DOMAIN, component, yaml_collection, InputDatetime.from_yaml
+        opp, DOMAIN, DOMAIN, component, yaml_collection, InputDatetime.from_yaml
     )
 
     storage_collection = DateTimeStorageCollection(
@@ -120,7 +120,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
         id_manager,
     )
     collection.sync_entity_lifecycle(
-        opp. DOMAIN, DOMAIN, component, storage_collection, InputDatetime
+        opp, DOMAIN, DOMAIN, component, storage_collection, InputDatetime
     )
 
     await yaml_collection.async_load(

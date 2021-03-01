@@ -43,7 +43,7 @@ async def async_setup_entry(opp, config_entry) -> bool:
     websession = async_get_clientsession(opp)
 
     coordinator = AccuWeatherDataUpdateCoordinator(
-        opp. websession, api_key, location_key, forecast
+        opp, websession, api_key, location_key, forecast
     )
     await coordinator.async_refresh()
 

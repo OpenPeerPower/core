@@ -58,7 +58,7 @@ async def async_setup_entry(opp, entry, async_add_entities):
 
     manager.listeners.append(
         async_dispatcher_connect(
-            opp. manager.async_event_new_entity(), async_add_geolocation
+            opp, manager.async_event_new_entity(), async_add_geolocation
         )
     )
     # Do not wait for update here so that the setup can be completed and because an

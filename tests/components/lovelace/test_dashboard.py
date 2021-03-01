@@ -62,7 +62,7 @@ async def test_lovelace_from_storage(opp, opp_ws_client, opp_storage):
 
 
 async def test_lovelace_from_storage_save_before_load(
-    opp. opp_ws_client, opp_storage
+    opp, opp_ws_client, opp_storage
 ):
     """Test we can load lovelace config from storage."""
     assert await async_setup_component(opp, "lovelace", {})

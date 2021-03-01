@@ -266,7 +266,7 @@ async def test_zeroconf_form_unexpected_error(opp: core.OpenPeerPower):
 
 
 async def _help_test_form_unexpected_error(
-    opp. core.OpenPeerPower,
+    opp: core.OpenPeerPower,
     *,
     source: str,
     initial_input: Dict[str, Any] = None,

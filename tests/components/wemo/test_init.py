@@ -129,7 +129,7 @@ async def test_discovery(opp, pywemo_registry):
         "pywemo.discovery.device_from_uuid_and_location", side_effect=create_device
     ), patch("pywemo.ssdp.scan", return_value=upnp_entries) as mock_scan:
         assert await async_setup_component(
-            opp. DOMAIN, {DOMAIN: {CONF_DISCOVERY: True}}
+            opp, DOMAIN, {DOMAIN: {CONF_DISCOVERY: True}}
         )
         await pywemo_registry.semaphore.acquire()  # Returns after platform setup.
         mock_scan.assert_called()

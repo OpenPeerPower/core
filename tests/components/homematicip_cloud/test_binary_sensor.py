@@ -48,7 +48,7 @@ async def test_hmip_home_cloud_connection_sensor(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_ON
@@ -69,7 +69,7 @@ async def test_hmip_acceleration_sensor(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_ON
@@ -82,14 +82,14 @@ async def test_hmip_acceleration_sensor(opp, default_mock_hap_factory):
     service_call_counter = len(hmip_device.mock_calls)
 
     await async_manipulate_test_data(
-        opp. hmip_device, "accelerationSensorTriggered", False
+        opp, hmip_device, "accelerationSensorTriggered", False
     )
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OFF
     assert len(hmip_device.mock_calls) == service_call_counter + 1
 
     await async_manipulate_test_data(
-        opp. hmip_device, "accelerationSensorTriggered", True
+        opp, hmip_device, "accelerationSensorTriggered", True
     )
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_ON
@@ -106,7 +106,7 @@ async def test_hmip_tilt_vibration_sensor(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_ON
@@ -118,14 +118,14 @@ async def test_hmip_tilt_vibration_sensor(opp, default_mock_hap_factory):
     service_call_counter = len(hmip_device.mock_calls)
 
     await async_manipulate_test_data(
-        opp. hmip_device, "accelerationSensorTriggered", False
+        opp, hmip_device, "accelerationSensorTriggered", False
     )
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OFF
     assert len(hmip_device.mock_calls) == service_call_counter + 1
 
     await async_manipulate_test_data(
-        opp. hmip_device, "accelerationSensorTriggered", True
+        opp, hmip_device, "accelerationSensorTriggered", True
     )
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_ON
@@ -142,7 +142,7 @@ async def test_hmip_contact_interface(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_OFF
@@ -165,7 +165,7 @@ async def test_hmip_shutter_contact(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_ON
@@ -177,7 +177,7 @@ async def test_hmip_shutter_contact(opp, default_mock_hap_factory):
     assert op_state.attributes[ATTR_WINDOW_STATE] == WindowState.OPEN
 
     await async_manipulate_test_data(
-        opp. hmip_device, "windowState", WindowState.CLOSED
+        opp, hmip_device, "windowState", WindowState.CLOSED
     )
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OFF
@@ -205,7 +205,7 @@ async def test_hmip_shutter_contact_optical(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_OFF
@@ -235,7 +235,7 @@ async def test_hmip_motion_detector(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_OFF
@@ -254,7 +254,7 @@ async def test_hmip_presence_detector(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_OFF
@@ -269,7 +269,7 @@ async def test_hmip_presence_detector(opp, default_mock_hap_factory):
 
 
 async def test_hmip_pluggable_mains_failure_surveillance_sensor(
-    opp. default_mock_hap_factory
+    opp, default_mock_hap_factory
 ):
     """Test HomematicipPresenceDetector."""
     entity_id = "binary_sensor.netzausfalluberwachung"
@@ -280,7 +280,7 @@ async def test_hmip_pluggable_mains_failure_surveillance_sensor(
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_ON
@@ -299,7 +299,7 @@ async def test_hmip_smoke_detector(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_OFF
@@ -331,7 +331,7 @@ async def test_hmip_water_detector(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_OFF
@@ -366,7 +366,7 @@ async def test_hmip_storm_sensor(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_OFF
@@ -385,7 +385,7 @@ async def test_hmip_rain_sensor(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_OFF
@@ -404,7 +404,7 @@ async def test_hmip_sunshine_sensor(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_ON
@@ -424,7 +424,7 @@ async def test_hmip_battery_sensor(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_OFF
@@ -443,7 +443,7 @@ async def test_hmip_security_zone_sensor_group(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_OFF
@@ -476,7 +476,7 @@ async def test_hmip_security_sensor_group(opp, default_mock_hap_factory):
     mock_hap = await default_mock_hap_factory.async_get_mock_hap(test_groups=["Büro"])
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     await async_manipulate_test_data(
@@ -493,7 +493,7 @@ async def test_hmip_security_sensor_group(opp, default_mock_hap_factory):
         == SmokeDetectorAlarmType.PRIMARY_ALARM
     )
     await async_manipulate_test_data(
-        opp. hmip_device, "smokeDetectorAlarmType", SmokeDetectorAlarmType.IDLE_OFF
+        opp, hmip_device, "smokeDetectorAlarmType", SmokeDetectorAlarmType.IDLE_OFF
     )
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_OFF
@@ -550,12 +550,12 @@ async def test_hmip_multi_contact_interface(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_OFF
     await async_manipulate_test_data(
-        opp. hmip_device, "windowState", WindowState.OPEN, channel=5
+        opp, hmip_device, "windowState", WindowState.OPEN, channel=5
     )
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_ON

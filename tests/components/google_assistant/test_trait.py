@@ -168,7 +168,7 @@ async def test_onoff_input_boolean(opp):
     assert helpers.get_google_type(input_boolean.DOMAIN, None) is not None
     assert trait.OnOffTrait.supported(input_boolean.DOMAIN, 0, None)
 
-    trt_on = trait.OnOffTrait.opp, State("input_boolean.bla", STATE_ON), BASIC_CONFIG)
+    trt_on = trait.OnOffTrait(opp, State("input_boolean.bla", STATE_ON), BASIC_CONFIG)
 
     assert trt_on.sync_attributes() == {}
 
@@ -196,13 +196,13 @@ async def test_onoff_switch(opp):
     assert helpers.get_google_type(switch.DOMAIN, None) is not None
     assert trait.OnOffTrait.supported(switch.DOMAIN, 0, None)
 
-    trt_on = trait.OnOffTrait.opp, State("switch.bla", STATE_ON), BASIC_CONFIG)
+    trt_on = trait.OnOffTrait(opp, State("switch.bla", STATE_ON), BASIC_CONFIG)
 
     assert trt_on.sync_attributes() == {}
 
     assert trt_on.query_attributes() == {"on": True}
 
-    trt_off = trait.OnOffTrait.opp, State("switch.bla", STATE_OFF), BASIC_CONFIG)
+    trt_off = trait.OnOffTrait(opp, State("switch.bla", STATE_OFF), BASIC_CONFIG)
 
     assert trt_off.query_attributes() == {"on": False}
 
@@ -227,13 +227,13 @@ async def test_onoff_fan(opp):
     assert helpers.get_google_type(fan.DOMAIN, None) is not None
     assert trait.OnOffTrait.supported(fan.DOMAIN, 0, None)
 
-    trt_on = trait.OnOffTrait.opp, State("fan.bla", STATE_ON), BASIC_CONFIG)
+    trt_on = trait.OnOffTrait(opp, State("fan.bla", STATE_ON), BASIC_CONFIG)
 
     assert trt_on.sync_attributes() == {}
 
     assert trt_on.query_attributes() == {"on": True}
 
-    trt_off = trait.OnOffTrait.opp, State("fan.bla", STATE_OFF), BASIC_CONFIG)
+    trt_off = trait.OnOffTrait(opp, State("fan.bla", STATE_OFF), BASIC_CONFIG)
     assert trt_off.query_attributes() == {"on": False}
 
     on_calls = async_mock_service(opp, fan.DOMAIN, SERVICE_TURN_ON)
@@ -252,13 +252,13 @@ async def test_onoff_light(opp):
     assert helpers.get_google_type(light.DOMAIN, None) is not None
     assert trait.OnOffTrait.supported(light.DOMAIN, 0, None)
 
-    trt_on = trait.OnOffTrait.opp, State("light.bla", STATE_ON), BASIC_CONFIG)
+    trt_on = trait.OnOffTrait(opp, State("light.bla", STATE_ON), BASIC_CONFIG)
 
     assert trt_on.sync_attributes() == {}
 
     assert trt_on.query_attributes() == {"on": True}
 
-    trt_off = trait.OnOffTrait.opp, State("light.bla", STATE_OFF), BASIC_CONFIG)
+    trt_off = trait.OnOffTrait(opp, State("light.bla", STATE_OFF), BASIC_CONFIG)
 
     assert trt_off.query_attributes() == {"on": False}
 
@@ -278,13 +278,13 @@ async def test_onoff_media_player(opp):
     assert helpers.get_google_type(media_player.DOMAIN, None) is not None
     assert trait.OnOffTrait.supported(media_player.DOMAIN, 0, None)
 
-    trt_on = trait.OnOffTrait.opp, State("media_player.bla", STATE_ON), BASIC_CONFIG)
+    trt_on = trait.OnOffTrait(opp, State("media_player.bla", STATE_ON), BASIC_CONFIG)
 
     assert trt_on.sync_attributes() == {}
 
     assert trt_on.query_attributes() == {"on": True}
 
-    trt_off = trait.OnOffTrait.opp, State("media_player.bla", STATE_OFF), BASIC_CONFIG)
+    trt_off = trait.OnOffTrait(opp, State("media_player.bla", STATE_OFF), BASIC_CONFIG)
 
     assert trt_off.query_attributes() == {"on": False}
 
@@ -305,13 +305,13 @@ async def test_onoff_humidifier(opp):
     assert helpers.get_google_type(humidifier.DOMAIN, None) is not None
     assert trait.OnOffTrait.supported(humidifier.DOMAIN, 0, None)
 
-    trt_on = trait.OnOffTrait.opp, State("humidifier.bla", STATE_ON), BASIC_CONFIG)
+    trt_on = trait.OnOffTrait(opp, State("humidifier.bla", STATE_ON), BASIC_CONFIG)
 
     assert trt_on.sync_attributes() == {}
 
     assert trt_on.query_attributes() == {"on": True}
 
-    trt_off = trait.OnOffTrait.opp, State("humidifier.bla", STATE_OFF), BASIC_CONFIG)
+    trt_off = trait.OnOffTrait(opp, State("humidifier.bla", STATE_OFF), BASIC_CONFIG)
 
     assert trt_off.query_attributes() == {"on": False}
 
@@ -332,7 +332,7 @@ async def test_dock_vacuum(opp):
     assert helpers.get_google_type(vacuum.DOMAIN, None) is not None
     assert trait.DockTrait.supported(vacuum.DOMAIN, 0, None)
 
-    trt = trait.DockTrait.opp, State("vacuum.bla", vacuum.STATE_IDLE), BASIC_CONFIG)
+    trt = trait.DockTrait(opp, State("vacuum.bla", vacuum.STATE_IDLE), BASIC_CONFIG)
 
     assert trt.sync_attributes() == {}
 
@@ -655,7 +655,7 @@ async def test_scene_scene(opp):
     assert helpers.get_google_type(scene.DOMAIN, None) is not None
     assert trait.SceneTrait.supported(scene.DOMAIN, 0, None)
 
-    trt = trait.SceneTrait.opp, State("scene.bla", scene.STATE), BASIC_CONFIG)
+    trt = trait.SceneTrait(opp, State("scene.bla", scene.STATE), BASIC_CONFIG)
     assert trt.sync_attributes() == {}
     assert trt.query_attributes() == {}
     assert trt.can_execute(trait.COMMAND_ACTIVATE_SCENE, {})
@@ -671,7 +671,7 @@ async def test_scene_script(opp):
     assert helpers.get_google_type(script.DOMAIN, None) is not None
     assert trait.SceneTrait.supported(script.DOMAIN, 0, None)
 
-    trt = trait.SceneTrait.opp, State("script.bla", STATE_OFF), BASIC_CONFIG)
+    trt = trait.SceneTrait(opp, State("script.bla", STATE_OFF), BASIC_CONFIG)
     assert trt.sync_attributes() == {}
     assert trt.query_attributes() == {}
     assert trt.can_execute(trait.COMMAND_ACTIVATE_SCENE, {})

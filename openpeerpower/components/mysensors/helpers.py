@@ -33,7 +33,7 @@ SCHEMAS = Registry()
 
 @callback
 def discover_mysensors_platform(
-    opp. gateway_id: GatewayId, platform: str, new_devices: List[DevId]
+    opp, gateway_id: GatewayId, platform: str, new_devices: List[DevId]
 ) -> None:
     """Discover a MySensors platform."""
     _LOGGER.debug("Discovering platform %s with devIds: %s", platform, new_devices)

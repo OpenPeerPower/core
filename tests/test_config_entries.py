@@ -486,7 +486,7 @@ async def test_domains_gets_uniques(manager):
 async def test_saving_and_loading(opp):
     """Test that we're saving and loading correctly."""
     mock_integration(
-        opp. MockModule("test", async_setup_entry=lambda *args: mock_coro(True))
+        opp, MockModule("test", async_setup_entry=lambda *args: mock_coro(True))
     )
     mock_entity_platform(opp, "config_flow.test", None)
 
@@ -555,12 +555,12 @@ async def test_forward_entry_sets_up_component(opp):
 
     mock_original_setup_entry = AsyncMock(return_value=True)
     mock_integration(
-        opp. MockModule("original", async_setup_entry=mock_original_setup_entry)
+        opp, MockModule("original", async_setup_entry=mock_original_setup_entry)
     )
 
     mock_forwarded_setup_entry = AsyncMock(return_value=True)
     mock_integration(
-        opp. MockModule("forwarded", async_setup_entry=mock_forwarded_setup_entry)
+        opp, MockModule("forwarded", async_setup_entry=mock_forwarded_setup_entry)
     )
 
     await opp.config_entries.async_forward_entry_setup(entry, "forwarded")

@@ -152,7 +152,7 @@ async def websocket_add_node(
         controller.on("inclusion stopped", forward_event),
         controller.on("node added", node_added),
         async_dispatcher_connect(
-            opp. EVENT_DEVICE_ADDED_TO_REGISTRY, device_registered
+            opp, EVENT_DEVICE_ADDED_TO_REGISTRY, device_registered
         ),
     ]
 

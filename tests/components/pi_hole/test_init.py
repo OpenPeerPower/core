@@ -42,7 +42,7 @@ async def test_setup_minimal_config(opp):
     mocked_hole = _create_mocked_hole()
     with _patch_config_flow_hole(mocked_hole), _patch_init_hole(mocked_hole):
         assert await async_setup_component(
-            opp. pi_hole.DOMAIN, {pi_hole.DOMAIN: [{"host": "pi.hole"}]}
+            opp, pi_hole.DOMAIN, {pi_hole.DOMAIN: [{"host": "pi.hole"}]}
         )
 
     await opp.async_block_till_done()

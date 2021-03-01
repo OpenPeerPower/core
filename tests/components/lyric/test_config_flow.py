@@ -42,7 +42,7 @@ async def test_abort_if_no_configuration(opp):
 
 
 async def test_full_flow(
-    opp. aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Check full flow."""
     assert await setup.async_setup_component(
@@ -115,7 +115,7 @@ async def test_full_flow(
 
 
 async def test_abort_if_authorization_timeout(
-    opp. mock_impl, current_request_with_host
+    opp, mock_impl, current_request_with_host
 ):
     """Check Somfy authorization timeout."""
     result = await opp.config_entries.flow.async_init(

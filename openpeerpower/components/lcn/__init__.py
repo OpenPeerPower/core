@@ -96,7 +96,7 @@ async def async_setup(opp, config):
         if conf_key in config[DOMAIN]:
             opp.async_create_task(
                 async_load_platform(
-                    opp. component, DOMAIN, config[DOMAIN][conf_key], config
+                    opp, component, DOMAIN, config[DOMAIN][conf_key], config
                 )
             )
 

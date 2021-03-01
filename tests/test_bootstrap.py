@@ -96,7 +96,7 @@ async def test_core_failure_loads_safe_mode(opp, caplog):
 async def test_setting_up_config(opp):
     """Test we set up domains in config."""
     await bootstrap._async_set_up_integrations(
-        opp. {"group hello": {}, "openpeerpower": {}}
+        opp, {"group hello": {}, "openpeerpower": {}}
     )
 
     assert "group" in opp.config.components
@@ -115,7 +115,7 @@ async def test_setup_after_deps_all_present(opp):
         return async_setup
 
     mock_integration(
-        opp. MockModule(domain="root", async_setup=gen_domain_setup("root"))
+        opp, MockModule(domain="root", async_setup=gen_domain_setup("root"))
     )
     mock_integration(
         opp,
@@ -138,7 +138,7 @@ async def test_setup_after_deps_all_present(opp):
         "openpeerpower.components.logger.async_setup", gen_domain_setup("logger")
     ):
         await bootstrap._async_set_up_integrations(
-            opp. {"root": {}, "first_dep": {}, "second_dep": {}, "logger": {}}
+            opp, {"root": {}, "first_dep": {}, "second_dep": {}, "logger": {}}
         )
 
     assert "root" in opp.config.components
@@ -186,7 +186,7 @@ async def test_setup_after_deps_in_stage_1_ignored(opp):
     )
 
     await bootstrap._async_set_up_integrations(
-        opp. {"cloud": {}, "normal_integration": {}, "an_after_dep": {}}
+        opp, {"cloud": {}, "normal_integration": {}, "an_after_dep": {}}
     )
 
     assert "normal_integration" in opp.config.components
@@ -235,7 +235,7 @@ async def test_setup_after_deps_via_platform(opp):
     opp.bus.async_listen_once("component_loaded", continue_loading)
 
     await bootstrap._async_set_up_integrations(
-        opp. {"light": {"platform": "platform_int"}, "after_dep_of_platform_int": {}}
+        opp, {"light": {"platform": "platform_int"}, "after_dep_of_platform_int": {}}
     )
 
     assert "light" in opp.config.components
@@ -257,7 +257,7 @@ async def test_setup_after_deps_not_trigger_load(opp):
         return async_setup
 
     mock_integration(
-        opp. MockModule(domain="root", async_setup=gen_domain_setup("root"))
+        opp, MockModule(domain="root", async_setup=gen_domain_setup("root"))
     )
     mock_integration(
         opp,
@@ -296,7 +296,7 @@ async def test_setup_after_deps_not_present(opp):
         return async_setup
 
     mock_integration(
-        opp. MockModule(domain="root", async_setup=gen_domain_setup("root"))
+        opp, MockModule(domain="root", async_setup=gen_domain_setup("root"))
     )
     mock_integration(
         opp,
@@ -308,7 +308,7 @@ async def test_setup_after_deps_not_present(opp):
     )
 
     await bootstrap._async_set_up_integrations(
-        opp. {"root": {}, "first_dep": {}, "second_dep": {}}
+        opp, {"root": {}, "first_dep": {}, "second_dep": {}}
     )
 
     assert "root" in opp.config.components

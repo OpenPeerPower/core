@@ -141,7 +141,7 @@ async def async_call_from_config(
     """Call a service based on a config hash."""
     try:
         params = async_prepare_call_from_config(
-            opp. config, variables, validate_config
+            opp, config, variables, validate_config
         )
     except OpenPeerPowerError as ex:
         if blocking:
@@ -246,7 +246,7 @@ async def async_extract_entities(
         return [entity for entity in entities if entity.available]
 
     referenced = await async_extract_referenced_entity_ids(
-        opp. service_call, expand_group
+        opp, service_call, expand_group
     )
     combined = referenced.referenced | referenced.indirectly_referenced
 
@@ -277,7 +277,7 @@ async def async_extract_entity_ids(
     Will convert group entity ids to the entity ids it represents.
     """
     referenced = await async_extract_referenced_entity_ids(
-        opp. service_call, expand_group
+        opp, service_call, expand_group
     )
     return referenced.referenced | referenced.indirectly_referenced
 

@@ -426,7 +426,7 @@ def _get_events(
             if event.event_type == EVENT_CALL_SERVICE:
                 continue
             if event.event_type == EVENT_STATE_CHANGED or _keep_event(
-                opp. event, entities_filter
+                opp, event, entities_filter
             ):
                 yield event
 
@@ -440,7 +440,7 @@ def _get_events(
             query = _generate_events_query_without_states(session)
             query = _apply_event_time_filter(query, start_day, end_day)
             query = _apply_event_types_filter(
-                opp. query, ALL_EVENT_TYPES_EXCEPT_STATE_CHANGED
+                opp, query, ALL_EVENT_TYPES_EXCEPT_STATE_CHANGED
             )
             if entity_matches_only:
                 # When entity_matches_only is provided, contexts and events that do not
@@ -456,7 +456,7 @@ def _get_events(
             query = _generate_events_query(session)
             query = _apply_event_time_filter(query, start_day, end_day)
             query = _apply_events_types_and_states_filter(
-                opp. query, old_state
+                opp, query, old_state
             ).filter(
                 (States.last_updated == States.last_changed)
                 | (Events.event_type != EVENT_STATE_CHANGED)

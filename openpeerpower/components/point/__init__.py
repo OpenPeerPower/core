@@ -60,7 +60,7 @@ async def async_setup(opp, config):
     conf = config[DOMAIN]
 
     config_flow.register_flow_implementation(
-        opp. DOMAIN, conf[CONF_CLIENT_ID], conf[CONF_CLIENT_SECRET]
+        opp, DOMAIN, conf[CONF_CLIENT_ID], conf[CONF_CLIENT_SECRET]
     )
 
     opp.async_create_task(

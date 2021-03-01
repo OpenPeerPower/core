@@ -216,7 +216,7 @@ async def test_single_available_server(opp, mock_plex_calls):
 
 
 async def test_multiple_servers_with_selection(
-    opp. mock_plex_calls, requests_mock, plextv_resources_base
+    opp, mock_plex_calls, requests_mock, plextv_resources_base
 ):
     """Test creating an entry with multiple servers available."""
 
@@ -272,7 +272,7 @@ async def test_multiple_servers_with_selection(
 
 
 async def test_adding_last_unconfigured_server(
-    opp. mock_plex_calls, requests_mock, plextv_resources_base
+    opp, mock_plex_calls, requests_mock, plextv_resources_base
 ):
     """Test automatically adding last unconfigured server when multiple servers on account."""
 
@@ -330,7 +330,7 @@ async def test_adding_last_unconfigured_server(
 
 
 async def test_all_available_servers_configured(
-    opp. entry, requests_mock, plextv_account, plextv_resources_base
+    opp, entry, requests_mock, plextv_account, plextv_resources_base
 ):
     """Test when all available servers are already configured."""
 

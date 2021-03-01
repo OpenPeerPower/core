@@ -354,63 +354,63 @@ async def _test_self_reset(opp, config, start_time, expect_reset=True):
 async def test_self_reset_quarter_hourly(opp, legacy_patchable_time):
     """Test quarter-hourly reset of meter."""
     await _test_self_reset(
-        opp. gen_config("quarter-hourly"), "2017-12-31T23:59:00.000000+00:00"
+        opp, gen_config("quarter-hourly"), "2017-12-31T23:59:00.000000+00:00"
     )
 
 
 async def test_self_reset_quarter_hourly_first_quarter(opp, legacy_patchable_time):
     """Test quarter-hourly reset of meter."""
     await _test_self_reset(
-        opp. gen_config("quarter-hourly"), "2017-12-31T23:14:00.000000+00:00"
+        opp, gen_config("quarter-hourly"), "2017-12-31T23:14:00.000000+00:00"
     )
 
 
 async def test_self_reset_quarter_hourly_second_quarter(opp, legacy_patchable_time):
     """Test quarter-hourly reset of meter."""
     await _test_self_reset(
-        opp. gen_config("quarter-hourly"), "2017-12-31T23:29:00.000000+00:00"
+        opp, gen_config("quarter-hourly"), "2017-12-31T23:29:00.000000+00:00"
     )
 
 
 async def test_self_reset_quarter_hourly_third_quarter(opp, legacy_patchable_time):
     """Test quarter-hourly reset of meter."""
     await _test_self_reset(
-        opp. gen_config("quarter-hourly"), "2017-12-31T23:44:00.000000+00:00"
+        opp, gen_config("quarter-hourly"), "2017-12-31T23:44:00.000000+00:00"
     )
 
 
 async def test_self_reset_hourly(opp, legacy_patchable_time):
     """Test hourly reset of meter."""
     await _test_self_reset(
-        opp. gen_config("hourly"), "2017-12-31T23:59:00.000000+00:00"
+        opp, gen_config("hourly"), "2017-12-31T23:59:00.000000+00:00"
     )
 
 
 async def test_self_reset_daily(opp, legacy_patchable_time):
     """Test daily reset of meter."""
     await _test_self_reset(
-        opp. gen_config("daily"), "2017-12-31T23:59:00.000000+00:00"
+        opp, gen_config("daily"), "2017-12-31T23:59:00.000000+00:00"
     )
 
 
 async def test_self_reset_weekly(opp, legacy_patchable_time):
     """Test weekly reset of meter."""
     await _test_self_reset(
-        opp. gen_config("weekly"), "2017-12-31T23:59:00.000000+00:00"
+        opp, gen_config("weekly"), "2017-12-31T23:59:00.000000+00:00"
     )
 
 
 async def test_self_reset_monthly(opp, legacy_patchable_time):
     """Test monthly reset of meter."""
     await _test_self_reset(
-        opp. gen_config("monthly"), "2017-12-31T23:59:00.000000+00:00"
+        opp, gen_config("monthly"), "2017-12-31T23:59:00.000000+00:00"
     )
 
 
 async def test_self_reset_bimonthly(opp, legacy_patchable_time):
     """Test bimonthly reset of meter occurs on even months."""
     await _test_self_reset(
-        opp. gen_config("bimonthly"), "2017-12-31T23:59:00.000000+00:00"
+        opp, gen_config("bimonthly"), "2017-12-31T23:59:00.000000+00:00"
     )
 
 
@@ -427,14 +427,14 @@ async def test_self_no_reset_bimonthly(opp, legacy_patchable_time):
 async def test_self_reset_quarterly(opp, legacy_patchable_time):
     """Test quarterly reset of meter."""
     await _test_self_reset(
-        opp. gen_config("quarterly"), "2017-03-31T23:59:00.000000+00:00"
+        opp, gen_config("quarterly"), "2017-03-31T23:59:00.000000+00:00"
     )
 
 
 async def test_self_reset_yearly(opp, legacy_patchable_time):
     """Test yearly reset of meter."""
     await _test_self_reset(
-        opp. gen_config("yearly"), "2017-12-31T23:59:00.000000+00:00"
+        opp, gen_config("yearly"), "2017-12-31T23:59:00.000000+00:00"
     )
 
 

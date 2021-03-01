@@ -317,10 +317,10 @@ async def test_time_using_input_datetime(opp):
         return_value=dt.now().replace(hour=3),
     ):
         assert not condition.time(
-            opp. after="input_datetime.am", before="input_datetime.pm"
+            opp, after="input_datetime.am", before="input_datetime.pm"
         )
         assert condition.time(
-            opp. after="input_datetime.pm", before="input_datetime.am"
+            opp, after="input_datetime.pm", before="input_datetime.am"
         )
 
     with patch(
@@ -328,10 +328,10 @@ async def test_time_using_input_datetime(opp):
         return_value=dt.now().replace(hour=9),
     ):
         assert condition.time(
-            opp. after="input_datetime.am", before="input_datetime.pm"
+            opp, after="input_datetime.am", before="input_datetime.pm"
         )
         assert not condition.time(
-            opp. after="input_datetime.pm", before="input_datetime.am"
+            opp, after="input_datetime.pm", before="input_datetime.am"
         )
 
     with patch(
@@ -339,10 +339,10 @@ async def test_time_using_input_datetime(opp):
         return_value=dt.now().replace(hour=15),
     ):
         assert condition.time(
-            opp. after="input_datetime.am", before="input_datetime.pm"
+            opp, after="input_datetime.am", before="input_datetime.pm"
         )
         assert not condition.time(
-            opp. after="input_datetime.pm", before="input_datetime.am"
+            opp, after="input_datetime.pm", before="input_datetime.am"
         )
 
     with patch(
@@ -350,10 +350,10 @@ async def test_time_using_input_datetime(opp):
         return_value=dt.now().replace(hour=21),
     ):
         assert not condition.time(
-            opp. after="input_datetime.am", before="input_datetime.pm"
+            opp, after="input_datetime.am", before="input_datetime.pm"
         )
         assert condition.time(
-            opp. after="input_datetime.pm", before="input_datetime.am"
+            opp, after="input_datetime.pm", before="input_datetime.am"
         )
 
     with pytest.raises(ConditionError):
@@ -830,11 +830,11 @@ async def test_numeric_state_using_input_number(opp):
 
     with pytest.raises(ConditionError):
         condition.async_numeric_state(
-            opp. entity="sensor.temperature", below="input_number.not_exist"
+            opp, entity="sensor.temperature", below="input_number.not_exist"
         )
     with pytest.raises(ConditionError):
         condition.async_numeric_state(
-            opp. entity="sensor.temperature", above="input_number.not_exist"
+            opp, entity="sensor.temperature", above="input_number.not_exist"
         )
 
 
@@ -1155,7 +1155,7 @@ async def test_extract_devices():
 async def test_condition_template_error(opp):
     """Test invalid template."""
     test = await condition.async_from_config(
-        opp. {"condition": "template", "value_template": "{{ undefined.state }}"}
+        opp, {"condition": "template", "value_template": "{{ undefined.state }}"}
     )
 
     with pytest.raises(ConditionError, match="template"):
@@ -1165,21 +1165,21 @@ async def test_condition_template_error(opp):
 async def test_condition_template_invalid_results(opp):
     """Test template condition render false with invalid results."""
     test = await condition.async_from_config(
-        opp. {"condition": "template", "value_template": "{{ 'string' }}"}
+        opp, {"condition": "template", "value_template": "{{ 'string' }}"}
     )
     assert not test.opp)
 
     test = await condition.async_from_config(
-        opp. {"condition": "template", "value_template": "{{ 10.1 }}"}
+        opp, {"condition": "template", "value_template": "{{ 10.1 }}"}
     )
     assert not test.opp)
 
     test = await condition.async_from_config(
-        opp. {"condition": "template", "value_template": "{{ 42 }}"}
+        opp, {"condition": "template", "value_template": "{{ 42 }}"}
     )
     assert not test.opp)
 
     test = await condition.async_from_config(
-        opp. {"condition": "template", "value_template": "{{ [1, 2, 3] }}"}
+        opp, {"condition": "template", "value_template": "{{ [1, 2, 3] }}"}
     )
     assert not test.opp)

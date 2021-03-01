@@ -42,7 +42,7 @@ class ToonDataUpdateCoordinator(DataUpdateCoordinator[Status]):
         )
 
         super().__init__(
-            opp. _LOGGER, name=DOMAIN, update_interval=DEFAULT_SCAN_INTERVAL
+            opp, _LOGGER, name=DOMAIN, update_interval=DEFAULT_SCAN_INTERVAL
         )
 
     def update_listeners(self) -> None:

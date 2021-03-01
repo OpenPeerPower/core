@@ -193,7 +193,7 @@ def do_authentication(opp, opp_config, config):
         )
 
     listener = track_time_change(
-        opp. step2_exchange, second=range(0, 60, dev_flow.interval)
+        opp, step2_exchange, second=range(0, 60, dev_flow.interval)
     )
 
     return True

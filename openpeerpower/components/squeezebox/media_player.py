@@ -188,7 +188,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
             if entity:
                 await player.async_update()
                 async_dispatcher_send(
-                    opp. SIGNAL_PLAYER_REDISCOVERED, player.player_id, player.connected
+                    opp, SIGNAL_PLAYER_REDISCOVERED, player.player_id, player.connected
                 )
 
             if not entity:

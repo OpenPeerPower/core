@@ -116,7 +116,7 @@ class PhilipsTVDataUpdateCoordinator(DataUpdateCoordinator[None]):
             name=DOMAIN,
             update_interval=timedelta(seconds=30),
             request_refresh_debouncer=Debouncer(
-                opp. LOGGER, cooldown=2.0, immediate=False
+                opp, LOGGER, cooldown=2.0, immediate=False
             ),
         )
 

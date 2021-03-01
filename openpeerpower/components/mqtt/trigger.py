@@ -77,6 +77,6 @@ async def async_attach_trigger(opp, config, action, automation_info):
     )
 
     remove = await mqtt.async_subscribe(
-        opp. topic, mqtt_automation_listener, encoding=encoding, qos=qos
+        opp, topic, mqtt_automation_listener, encoding=encoding, qos=qos
     )
     return remove

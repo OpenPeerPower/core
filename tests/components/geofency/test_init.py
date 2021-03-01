@@ -122,7 +122,7 @@ async def geofency_client(loop, opp, aiohttp_client):
     assert await async_setup_component(opp, "persistent_notification", {})
 
     assert await async_setup_component(
-        opp. DOMAIN, {DOMAIN: {CONF_MOBILE_BEACONS: ["Car 1"]}}
+        opp, DOMAIN, {DOMAIN: {CONF_MOBILE_BEACONS: ["Car 1"]}}
     )
     await opp.async_block_till_done()
 

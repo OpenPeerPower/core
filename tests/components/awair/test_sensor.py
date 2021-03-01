@@ -56,7 +56,7 @@ async def setup_awair(opp, fixtures):
 
 
 def assert_expected_properties(
-    opp. registry, name, unique_id, state_value, attributes
+    opp, registry, name, unique_id, state_value, attributes
 ):
     """Assert expected properties from a dict."""
 

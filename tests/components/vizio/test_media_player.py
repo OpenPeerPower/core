@@ -191,7 +191,7 @@ async def _test_setup_speaker(
             await _add_config_entry_to.opp.opp, config_entry)
 
             attr = _get_attr_and_assert_base_attr(
-                opp. DEVICE_CLASS_SPEAKER, op_power_state
+                opp, DEVICE_CLASS_SPEAKER, op_power_state
             )
             if op_power_state == STATE_ON:
                 _assert_sources_and_volume(attr, VIZIO_DEVICE_CLASS_SPEAKER)
@@ -381,10 +381,10 @@ async def test_services(
         "USB",
     )
     await _test_service(
-        opp. MP_DOMAIN, "vol_up", SERVICE_VOLUME_UP, None, num=DEFAULT_VOLUME_STEP
+        opp, MP_DOMAIN, "vol_up", SERVICE_VOLUME_UP, None, num=DEFAULT_VOLUME_STEP
     )
     await _test_service(
-        opp. MP_DOMAIN, "vol_down", SERVICE_VOLUME_DOWN, None, num=DEFAULT_VOLUME_STEP
+        opp, MP_DOMAIN, "vol_down", SERVICE_VOLUME_DOWN, None, num=DEFAULT_VOLUME_STEP
     )
     await _test_service(
         opp,
@@ -455,7 +455,7 @@ async def test_options_update(
     )
     assert config_entry.options == updated_options
     await _test_service(
-        opp. MP_DOMAIN, "vol_up", SERVICE_VOLUME_UP, None, num=VOLUME_STEP
+        opp, MP_DOMAIN, "vol_up", SERVICE_VOLUME_UP, None, num=VOLUME_STEP
     )
 
 
@@ -530,7 +530,7 @@ async def test_setup_with_apps(
 ) -> None:
     """Test device setup with apps."""
     async with _cm_for_test_setup_tv_with_apps(
-        opp. MOCK_USER_VALID_TV_CONFIG, CURRENT_APP_CONFIG
+        opp, MOCK_USER_VALID_TV_CONFIG, CURRENT_APP_CONFIG
     ):
         attr = opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + APP_NAME_LIST), attr)
@@ -558,7 +558,7 @@ async def test_setup_with_apps_include(
 ) -> None:
     """Test device setup with apps and apps["include"] in config."""
     async with _cm_for_test_setup_tv_with_apps(
-        opp. MOCK_TV_WITH_INCLUDE_CONFIG, CURRENT_APP_CONFIG
+        opp, MOCK_TV_WITH_INCLUDE_CONFIG, CURRENT_APP_CONFIG
     ):
         attr = opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + [CURRENT_APP]), attr)
@@ -576,7 +576,7 @@ async def test_setup_with_apps_exclude(
 ) -> None:
     """Test device setup with apps and apps["exclude"] in config."""
     async with _cm_for_test_setup_tv_with_apps(
-        opp. MOCK_TV_WITH_EXCLUDE_CONFIG, CURRENT_APP_CONFIG
+        opp, MOCK_TV_WITH_EXCLUDE_CONFIG, CURRENT_APP_CONFIG
     ):
         attr = opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + [CURRENT_APP]), attr)
@@ -670,7 +670,7 @@ async def test_setup_with_unknown_app_config(
 ) -> None:
     """Test device setup with apps where app config returned is unknown."""
     async with _cm_for_test_setup_tv_with_apps(
-        opp. MOCK_USER_VALID_TV_CONFIG, UNKNOWN_APP_CONFIG
+        opp, MOCK_USER_VALID_TV_CONFIG, UNKNOWN_APP_CONFIG
     ):
         attr = opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + APP_NAME_LIST), attr)
@@ -687,7 +687,7 @@ async def test_setup_with_no_running_app(
 ) -> None:
     """Test device setup with apps where no app is running."""
     async with _cm_for_test_setup_tv_with_apps(
-        opp. MOCK_USER_VALID_TV_CONFIG, vars(AppConfig())
+        opp, MOCK_USER_VALID_TV_CONFIG, vars(AppConfig())
     ):
         attr = opp.states.get(ENTITY_ID).attributes
         _assert_source_list_with_apps(list(INPUT_LIST_WITH_APPS + APP_NAME_LIST), attr)
@@ -732,7 +732,7 @@ async def test_apps_update(
         return_value=None,
     ):
         async with _cm_for_test_setup_tv_with_apps(
-            opp. MOCK_USER_VALID_TV_CONFIG, vars(AppConfig())
+            opp, MOCK_USER_VALID_TV_CONFIG, vars(AppConfig())
         ):
             # Check source list, remove TV inputs, and verify that the integration is
             # using the default APPS list

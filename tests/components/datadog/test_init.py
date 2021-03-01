@@ -19,7 +19,7 @@ async def test_invalid_config(opp):
     """Test invalid configuration."""
     with assert_setup_component(0):
         assert not await async_setup_component(
-            opp. datadog.DOMAIN, {datadog.DOMAIN: {"host1": "host1"}}
+            opp, datadog.DOMAIN, {datadog.DOMAIN: {"host1": "host1"}}
         )
 
 

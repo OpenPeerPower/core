@@ -204,7 +204,7 @@ async def async_setup(opp, config):
         opp.bus.async_fire(EVENT_AUTOMATION_RELOADED, context=service_call.context)
 
     async_register_admin_service(
-        opp. DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})
+        opp, DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})
     )
 
     return True

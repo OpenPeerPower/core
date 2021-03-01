@@ -98,7 +98,7 @@ async def async_reproduce_state(
             return
 
         await platform.async_reproduce_states(  # type: ignore
-            opp. states_by_domain, context=context, reproduce_options=reproduce_options
+            opp, states_by_domain, context=context, reproduce_options=reproduce_options
         )
 
     if to_call:

@@ -149,7 +149,7 @@ async def test_optimistic_states(opp):
     assert state.state == "unknown"
 
     await common.async_alarm_arm_away(
-        opp. entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await opp.async_block_till_done()
     state = opp.states.get("alarm_control_panel.test_template_panel")
@@ -157,21 +157,21 @@ async def test_optimistic_states(opp):
     assert state.state == STATE_ALARM_ARMED_AWAY
 
     await common.async_alarm_arm_home(
-        opp. entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     state = opp.states.get("alarm_control_panel.test_template_panel")
     await opp.async_block_till_done()
     assert state.state == STATE_ALARM_ARMED_HOME
 
     await common.async_alarm_arm_night(
-        opp. entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     state = opp.states.get("alarm_control_panel.test_template_panel")
     await opp.async_block_till_done()
     assert state.state == STATE_ALARM_ARMED_NIGHT
 
     await common.async_alarm_disarm(
-        opp. entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     state = opp.states.get("alarm_control_panel.test_template_panel")
     await opp.async_block_till_done()
@@ -203,7 +203,7 @@ async def test_no_action_scripts(opp):
     await opp.async_block_till_done()
 
     await common.async_alarm_arm_away(
-        opp. entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await opp.async_block_till_done()
     state = opp.states.get("alarm_control_panel.test_template_panel")
@@ -211,7 +211,7 @@ async def test_no_action_scripts(opp):
     assert state.state == STATE_ALARM_ARMED_AWAY
 
     await common.async_alarm_arm_home(
-        opp. entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await opp.async_block_till_done()
     state = opp.states.get("alarm_control_panel.test_template_panel")
@@ -219,7 +219,7 @@ async def test_no_action_scripts(opp):
     assert state.state == STATE_ALARM_ARMED_AWAY
 
     await common.async_alarm_arm_night(
-        opp. entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await opp.async_block_till_done()
     state = opp.states.get("alarm_control_panel.test_template_panel")
@@ -227,7 +227,7 @@ async def test_no_action_scripts(opp):
     assert state.state == STATE_ALARM_ARMED_AWAY
 
     await common.async_alarm_disarm(
-        opp. entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await opp.async_block_till_done()
     state = opp.states.get("alarm_control_panel.test_template_panel")
@@ -450,7 +450,7 @@ async def test_arm_home_action(opp):
     service_calls = async_mock_service(opp, "test", "automation")
 
     await common.async_alarm_arm_home(
-        opp. entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await opp.async_block_till_done()
 
@@ -497,7 +497,7 @@ async def test_arm_away_action(opp):
     service_calls = async_mock_service(opp, "test", "automation")
 
     await common.async_alarm_arm_away(
-        opp. entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await opp.async_block_till_done()
 
@@ -544,7 +544,7 @@ async def test_arm_night_action(opp):
     service_calls = async_mock_service(opp, "test", "automation")
 
     await common.async_alarm_arm_night(
-        opp. entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await opp.async_block_till_done()
 
@@ -591,7 +591,7 @@ async def test_disarm_action(opp):
     service_calls = async_mock_service(opp, "test", "automation")
 
     await common.async_alarm_disarm(
-        opp. entity_id="alarm_control_panel.test_template_panel"
+        opp, entity_id="alarm_control_panel.test_template_panel"
     )
     await opp.async_block_till_done()
 

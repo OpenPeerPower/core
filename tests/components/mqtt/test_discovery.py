@@ -96,7 +96,7 @@ async def test_only_valid_components(opp, mqtt_mock, caplog):
         mock_dispatcher_send = AsyncMock(return_value=None)
 
         async_fire_mqtt_message(
-            opp. f"openpeerpower/{invalid_component}/bla/config", "{}"
+            opp, f"openpeerpower/{invalid_component}/bla/config", "{}"
         )
 
     await opp.async_block_till_done()
@@ -565,7 +565,7 @@ async def test_complex_discovery_topic_prefix(opp, mqtt_mock, caplog):
 
 
 async def test_mqtt_integration_discovery_subscribe_unsubscribe(
-    opp. mqtt_client_mock, mqtt_mock
+    opp, mqtt_client_mock, mqtt_mock
 ):
     """Check MQTT integration discovery subscribe and unsubscribe."""
     mock_entity_platform(opp, "config_flow.comp", None)

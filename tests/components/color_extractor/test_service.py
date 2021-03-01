@@ -58,7 +58,7 @@ def _close_enough(actual_rgb, testing_rgb):
 async def setup_light(opp):
     """Configure our light component to work against for testing."""
     assert await async_setup_component(
-        opp. LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": "demo"}}
+        opp, LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 

@@ -15,11 +15,11 @@ from .common import wait_recording_done
 
 def test_purge_old_states(opp, opp_recorder):
     """Test deleting old states."""
-   opp =  opp_recorder()
+   opp = opp_recorder()
     _add_test_states(opp)
 
     # make sure we start with 6 states
-    with session_scope.opp.opp) as session:
+    with session_scope(opp=opp) as session:
         states = session.query(States)
         assert states.count() == 6
 
@@ -39,10 +39,10 @@ def test_purge_old_states(opp, opp_recorder):
 
 def test_purge_old_events(opp, opp_recorder):
     """Test deleting old events."""
-   opp =  opp_recorder()
+   opp = opp_recorder()
     _add_test_events(opp)
 
-    with session_scope.opp.opp) as session:
+    with session_scope(opp=opp) as session:
         events = session.query(Events).filter(Events.event_type.like("EVENT_TEST%"))
         assert events.count() == 6
 
@@ -63,11 +63,11 @@ def test_purge_old_events(opp, opp_recorder):
 
 def test_purge_old_recorder_runs(opp, opp_recorder):
     """Test deleting old recorder runs keeps current run."""
-   opp =  opp_recorder()
+   opp = opp_recorder()
     _add_test_recorder_runs(opp)
 
     # make sure we start with 7 recorder runs
-    with session_scope.opp.opp) as session:
+    with session_scope(opp=opp) as session:
         recorder_runs = session.query(RecorderRuns)
         assert recorder_runs.count() == 7
 
@@ -79,14 +79,14 @@ def test_purge_old_recorder_runs(opp, opp_recorder):
 
 def test_purge_method(opp, opp_recorder):
     """Test purge method."""
-   opp =  opp_recorder()
+   opp = opp_recorder()
     service_data = {"keep_days": 4}
     _add_test_events(opp)
     _add_test_states(opp)
     _add_test_recorder_runs(opp)
 
     # make sure we start with 6 states
-    with session_scope.opp.opp) as session:
+    with session_scope(opp=opp) as session:
         states = session.query(States)
         assert states.count() == 6
 
@@ -154,7 +154,7 @@ def _add_test_states(opp):
     opp.data[DATA_INSTANCE].block_till_done()
     wait_recording_done(opp)
 
-    with recorder.session_scope.opp.opp) as session:
+    with recorder.session_scope(opp=opp) as session:
         for event_id in range(6):
             if event_id < 2:
                 timestamp = eleven_days_ago
@@ -191,7 +191,7 @@ def _add_test_events(opp):
     opp.data[DATA_INSTANCE].block_till_done()
     wait_recording_done(opp)
 
-    with recorder.session_scope.opp.opp) as session:
+    with recorder.session_scope(opp=opp) as session:
         for event_id in range(6):
             if event_id < 2:
                 timestamp = eleven_days_ago
@@ -224,7 +224,7 @@ def _add_test_recorder_runs(opp):
     opp.data[DATA_INSTANCE].block_till_done()
     wait_recording_done(opp)
 
-    with recorder.session_scope.opp.opp) as session:
+    with recorder.session_scope(opp=opp) as session:
         for rec_id in range(6):
             if rec_id < 2:
                 timestamp = eleven_days_ago

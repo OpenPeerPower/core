@@ -63,7 +63,7 @@ async def test_setup_g2.opp):
 async def test_setup_g1.opp):
     """Test setup with a G1 vehicle."""
     entry = await setup_subaru_integration(
-        opp. vehicle_list=[TEST_VIN_1_G1], vehicle_data=VEHICLE_DATA[TEST_VIN_1_G1]
+        opp, vehicle_list=[TEST_VIN_1_G1], vehicle_data=VEHICLE_DATA[TEST_VIN_1_G1]
     )
     check_entry = opp.config_entries.async_get_entry(entry.entry_id)
     assert check_entry
@@ -101,7 +101,7 @@ async def test_invalid_credentials(opp):
 async def test_update_skip_unsubscribed(opp):
     """Test update function skips vehicles without subscription."""
     await setup_subaru_integration(
-        opp. vehicle_list=[TEST_VIN_1_G1], vehicle_data=VEHICLE_DATA[TEST_VIN_1_G1]
+        opp, vehicle_list=[TEST_VIN_1_G1], vehicle_data=VEHICLE_DATA[TEST_VIN_1_G1]
     )
 
     with patch(MOCK_API_FETCH) as mock_fetch:

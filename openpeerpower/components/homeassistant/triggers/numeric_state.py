@@ -63,7 +63,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_attach_trigger(
-    opp. config, action, automation_info, *, platform_type="numeric_state"
+    opp, config, action, automation_info, *, platform_type="numeric_state"
 ) -> CALLBACK_TYPE:
     """Listen for state changes based on configuration."""
     entity_ids = config.get(CONF_ENTITY_ID)
@@ -102,7 +102,7 @@ async def async_attach_trigger(
     def check_numeric_state(entity_id, from_s, to_s):
         """Return whether the criteria are met, raise ConditionError if unknown."""
         return condition.async_numeric_state(
-            opp. to_s, below, above, value_template, variables(entity_id), attribute
+            opp, to_s, below, above, value_template, variables(entity_id), attribute
         )
 
     # Each entity that starts outside the range is already armed (ready to fire).

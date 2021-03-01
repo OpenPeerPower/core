@@ -15,7 +15,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
     opp.http.register_view(IntentHandleView())
 
     await integration_platform.async_process_integration_platforms(
-        opp. DOMAIN, _async_process_intent
+        opp, DOMAIN, _async_process_intent
     )
 
     opp.helpers.intent.async_register(
@@ -66,7 +66,7 @@ class IntentHandleView(http.OpenPeerPowerView):
                 key: {"value": value} for key, value in data.get("data", {}).items()
             }
             intent_result = await intent.async_handle(
-                opp. DOMAIN, intent_name, slots, "", self.context(request)
+                opp, DOMAIN, intent_name, slots, "", self.context(request)
             )
         except intent.IntentHandleError as err:
             intent_result = intent.IntentResponse()

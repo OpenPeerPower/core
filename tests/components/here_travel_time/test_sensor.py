@@ -619,7 +619,7 @@ async def test_location_zone(opp, requests_mock_truck_response, legacy_patchable
 
 
 async def test_location_sensor(
-    opp. requests_mock_truck_response, legacy_patchable_time
+    opp, requests_mock_truck_response, legacy_patchable_time
 ):
     """Test that origin/destination supplied by a sensor works."""
     utcnow = dt_util.utcnow()
@@ -661,7 +661,7 @@ async def test_location_sensor(
 
 
 async def test_location_person(
-    opp. requests_mock_truck_response, legacy_patchable_time
+    opp, requests_mock_truck_response, legacy_patchable_time
 ):
     """Test that origin/destination supplied by a person works."""
     utcnow = dt_util.utcnow()
@@ -712,7 +712,7 @@ async def test_location_person(
 
 
 async def test_location_device_tracker(
-    opp. requests_mock_truck_response, legacy_patchable_time
+    opp, requests_mock_truck_response, legacy_patchable_time
 ):
     """Test that origin/destination supplied by a device_tracker works."""
     utcnow = dt_util.utcnow()
@@ -763,7 +763,7 @@ async def test_location_device_tracker(
 
 
 async def test_location_device_tracker_added_after_update(
-    opp. requests_mock_truck_response, legacy_patchable_time, caplog
+    opp, requests_mock_truck_response, legacy_patchable_time, caplog
 ):
     """Test that device_tracker added after first update works."""
     caplog.set_level(logging.ERROR)
@@ -819,7 +819,7 @@ async def test_location_device_tracker_added_after_update(
 
 
 async def test_location_device_tracker_in_zone(
-    opp. requests_mock_truck_response, caplog
+    opp, requests_mock_truck_response, caplog
 ):
     """Test that device_tracker in zone uses device_tracker state works."""
     caplog.set_level(logging.DEBUG)

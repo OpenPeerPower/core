@@ -65,11 +65,11 @@ async def async_setup_entry(opp, config_entry):
     websession = async_get_clientsession(opp)
     # Change update_interval for other Airly instances
     update_interval = set_update_interval(
-        opp. len(opp.config_entries.async_entries(DOMAIN))
+        opp, len(opp.config_entries.async_entries(DOMAIN))
     )
 
     coordinator = AirlyDataUpdateCoordinator(
-        opp. websession, api_key, latitude, longitude, update_interval, use_nearest
+        opp, websession, api_key, latitude, longitude, update_interval, use_nearest
     )
     await coordinator.async_refresh()
 

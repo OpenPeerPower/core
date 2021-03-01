@@ -60,7 +60,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
         return True
 
     register_oauth2_implementations(
-        opp. config[DOMAIN][CONF_CLIENT_ID], config[DOMAIN][CONF_CLIENT_SECRET]
+        opp, config[DOMAIN][CONF_CLIENT_ID], config[DOMAIN][CONF_CLIENT_SECRET]
     )
 
     opp.async_create_task(

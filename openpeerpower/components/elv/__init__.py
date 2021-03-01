@@ -26,7 +26,7 @@ def setup(opp, config):
 
     for platform in ELV_PLATFORMS:
         discovery.load_platform(
-            opp. platform, DOMAIN, {"device": config[DOMAIN][CONF_DEVICE]}, config
+            opp, platform, DOMAIN, {"device": config[DOMAIN][CONF_DEVICE]}, config
         )
 
     return True

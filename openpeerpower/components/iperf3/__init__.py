@@ -102,7 +102,7 @@ async def async_setup(opp, config):
 
     opp.async_create_task(
         async_load_platform(
-            opp. SENSOR_DOMAIN, DOMAIN, conf[CONF_MONITORED_CONDITIONS], config
+            opp, SENSOR_DOMAIN, DOMAIN, conf[CONF_MONITORED_CONDITIONS], config
         )
     )
 

@@ -71,7 +71,7 @@ async def async_attach_trigger(opp, config, action, automation_info):
             opp.add_job(call_action)
         if held_more_than is not None and held_less_than is None:
             cancel_pressed_more_than = track_point_in_utc_time(
-                opp. pressed_more_than_satisfied, dt_util.utcnow() + held_more_than
+                opp, pressed_more_than_satisfied, dt_util.utcnow() + held_more_than
             )
 
     def released():

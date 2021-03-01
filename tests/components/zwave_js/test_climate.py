@@ -34,7 +34,7 @@ CLIMATE_FLOOR_THERMOSTAT_ENTITY = "climate.floor_thermostat"
 
 
 async def test_thermostat_v2(
-    opp. client, climate_radio_thermostat_ct100_plus, integration
+    opp, client, climate_radio_thermostat_ct100_plus, integration
 ):
     """Test a thermostat v2 command class entity."""
     node = climate_radio_thermostat_ct100_plus
@@ -387,7 +387,7 @@ async def test_thermostat_v2(
 
 
 async def test_thermostat_different_endpoints(
-    opp. client, climate_radio_thermostat_ct100_plus_different_endpoints, integration
+    opp, client, climate_radio_thermostat_ct100_plus_different_endpoints, integration
 ):
     """Test an entity with values on a different endpoint from the primary value."""
     state = opp.states.get(CLIMATE_RADIO_THERMOSTAT_ENTITY)

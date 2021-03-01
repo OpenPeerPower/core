@@ -128,7 +128,7 @@ async def async_setup(opp, config):
         async_dispatcher_send(opp, SIGNAL_UPDATE_HEAT)
 
         async_track_point_in_utc_time(
-            opp. async_update_heat_data, utcnow() + HEAT_SCAN_INTERVAL
+            opp, async_update_heat_data, utcnow() + HEAT_SCAN_INTERVAL
         )
 
     async def async_update_user_data(now):
@@ -137,7 +137,7 @@ async def async_setup(opp, config):
         async_dispatcher_send(opp, SIGNAL_UPDATE_USER)
 
         async_track_point_in_utc_time(
-            opp. async_update_user_data, utcnow() + USER_SCAN_INTERVAL
+            opp, async_update_user_data, utcnow() + USER_SCAN_INTERVAL
         )
 
     await async_update_heat_data(None)

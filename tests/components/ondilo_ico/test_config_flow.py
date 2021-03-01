@@ -30,7 +30,7 @@ async def test_abort_if_existing_entry(opp):
 
 
 async def test_full_flow(
-    opp. aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Check full flow."""
     assert await setup.async_setup_component(

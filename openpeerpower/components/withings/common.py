@@ -1037,7 +1037,7 @@ async def async_get_data_manager(
                 opp.opp,
                 config_entry=config_entry,
                 implementation=await config_entry_oauth2_flow.async_get_config_entry_implementation(
-                    opp. config_entry
+                    opp, config_entry
                 ),
             ),
             config_entry.data["token"]["userid"],

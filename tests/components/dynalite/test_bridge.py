@@ -41,7 +41,7 @@ async def test_update_device(opp):
     async_dispatcher_connect(opp, f"dynalite-update-{host}", wide_func)
     specific_func = Mock()
     async_dispatcher_connect(
-        opp. f"dynalite-update-{host}-{device.unique_id}", specific_func
+        opp, f"dynalite-update-{host}-{device.unique_id}", specific_func
     )
     update_device_func()
     await opp.async_block_till_done()

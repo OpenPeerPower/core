@@ -40,7 +40,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 def modbus_setup(
-    opp. config, service_write_register_schema, service_write_coil_schema
+    opp, config, service_write_register_schema, service_write_coil_schema
 ):
     """Set up Modbus component."""
     opp.data[DOMAIN] = hub_collect = {}

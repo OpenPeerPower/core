@@ -113,7 +113,7 @@ class TestComponentsCore(unittest.TestCase):
     # pylint: disable=invalid-name
     def setUp(self):
         """Set up things to be run when tests are started."""
-        self.opp. get_test_openpeerpower()
+        self.opp, get_test_openpeerpower()
         assert asyncio.run_coroutine_threadsafe(
             async_setup_component(self.opp."openpeerpower", {}), self.opp.oop
         ).result()
@@ -162,7 +162,7 @@ class TestComponentsCore(unittest.TestCase):
         """Test reload core conf service."""
         ent = entity.Entity()
         ent.entity_id = "test.entity"
-        ent.opp. self.opp
+        ent.opp, self.opp
         ent.schedule_update_op.state()
         self.opp.lock_till_done()
 

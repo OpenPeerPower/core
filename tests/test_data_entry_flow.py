@@ -259,7 +259,7 @@ async def test_external_step(opp, manager):
             return self.async_create_entry(title=self.data["title"], data=self.data)
 
     events = async_capture_events(
-        opp. data_entry_flow.EVENT_DATA_ENTRY_FLOW_PROGRESSED
+        opp, data_entry_flow.EVENT_DATA_ENTRY_FLOW_PROGRESSED
     )
 
     result = await manager.async_init("test")
@@ -314,7 +314,7 @@ async def test_show_progress(opp, manager):
             return self.async_create_entry(title=self.data["title"], data=self.data)
 
     events = async_capture_events(
-        opp. data_entry_flow.EVENT_DATA_ENTRY_FLOW_PROGRESSED
+        opp, data_entry_flow.EVENT_DATA_ENTRY_FLOW_PROGRESSED
     )
 
     result = await manager.async_init("test")

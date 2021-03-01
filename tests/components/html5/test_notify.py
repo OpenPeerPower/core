@@ -157,7 +157,7 @@ class TestHtml5Notify:
         m = mock_open(read_data=json.dumps(data))
         with patch("openpeerpower.util.json.open", m, create=True):
             service = html5.get_service(
-                opp. {"gcm_sender_id": "100", "gcm_api_key": "Y6i0JdZ0mj9LOaSI"}
+                opp, {"gcm_sender_id": "100", "gcm_api_key": "Y6i0JdZ0mj9LOaSI"}
             )
 
         assert service is not None

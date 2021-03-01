@@ -67,23 +67,23 @@ def.opp_fixture(loop, opp):
 
     loop.run_until_complete(
         setup.async_setup_component(
-            opp. light.DOMAIN, {"light": [{"platform": "demo"}]}
+            opp, light.DOMAIN, {"light": [{"platform": "demo"}]}
         )
     )
     loop.run_until_complete(
         setup.async_setup_component(
-            opp. switch.DOMAIN, {"switch": [{"platform": "demo"}]}
+            opp, switch.DOMAIN, {"switch": [{"platform": "demo"}]}
         )
     )
     loop.run_until_complete(
         setup.async_setup_component(
-            opp. cover.DOMAIN, {"cover": [{"platform": "demo"}]}
+            opp, cover.DOMAIN, {"cover": [{"platform": "demo"}]}
         )
     )
 
     loop.run_until_complete(
         setup.async_setup_component(
-            opp. media_player.DOMAIN, {"media_player": [{"platform": "demo"}]}
+            opp, media_player.DOMAIN, {"media_player": [{"platform": "demo"}]}
         )
     )
 
@@ -93,13 +93,13 @@ def.opp_fixture(loop, opp):
 
     loop.run_until_complete(
         setup.async_setup_component(
-            opp. climate.DOMAIN, {"climate": [{"platform": "demo"}]}
+            opp, climate.DOMAIN, {"climate": [{"platform": "demo"}]}
         )
     )
 
     loop.run_until_complete(
         setup.async_setup_component(
-            opp. humidifier.DOMAIN, {"humidifier": [{"platform": "demo"}]}
+            opp, humidifier.DOMAIN, {"humidifier": [{"platform": "demo"}]}
         )
     )
 

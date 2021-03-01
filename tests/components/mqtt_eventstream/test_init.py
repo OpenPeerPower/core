@@ -26,7 +26,7 @@ async def add_eventstream(opp, sub_topic=None, pub_topic=None, ignore_event=None
     if ignore_event:
         config["ignore_event"] = ignore_event
     return await async_setup_component(
-        opp. eventstream.DOMAIN, {eventstream.DOMAIN: config}
+        opp, eventstream.DOMAIN, {eventstream.DOMAIN: config}
     )
 
 

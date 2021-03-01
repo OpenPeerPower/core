@@ -10,7 +10,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up a BleBox entry."""
 
     create_blebox_entities(
-        opp. config_entry, async_add_entities, BleBoxSensorEntity, "sensors"
+        opp, config_entry, async_add_entities, BleBoxSensorEntity, "sensors"
     )
 
 

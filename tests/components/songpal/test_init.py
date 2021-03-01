@@ -41,7 +41,7 @@ async def test_setup_opp):
     with _patch_config_flow_device(mocked_device), _patch_media_setup() as setup:
         assert (
             await async_setup_component(
-                opp. songpal.DOMAIN, {songpal.DOMAIN: [CONF_DATA]}
+                opp, songpal.DOMAIN, {songpal.DOMAIN: [CONF_DATA]}
             )
             is True
         )

@@ -32,7 +32,7 @@ async def async_setup_opp: core.OpenPeerPower, config: dict):
 
 
 async def async_setup_entry(
-    opp. core.OpenPeerPower, entry: config_entries.ConfigEntry
+    opp, core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Set up the Xiaomi Miio components from a config entry."""
     opp.data.setdefault(DOMAIN, {})
@@ -47,7 +47,7 @@ async def async_setup_entry(
 
 
 async def async_setup_gateway_entry(
-    opp. core.OpenPeerPower, entry: config_entries.ConfigEntry
+    opp, core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Set up the Xiaomi Gateway component from a config entry."""
     host = entry.data[CONF_HOST]
@@ -111,7 +111,7 @@ async def async_setup_gateway_entry(
 
 
 async def async_setup_device_entry(
-    opp. core.OpenPeerPower, entry: config_entries.ConfigEntry
+    opp, core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Set up the Xiaomi Miio device component from a config entry."""
     model = entry.data[CONF_MODEL]

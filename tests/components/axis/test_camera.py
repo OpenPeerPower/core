@@ -18,7 +18,7 @@ async def test_platform_manually_configured(opp):
     """Test that nothing happens when platform is manually configured."""
     assert (
         await async_setup_component(
-            opp. CAMERA_DOMAIN, {CAMERA_DOMAIN: {"platform": AXIS_DOMAIN}}
+            opp, CAMERA_DOMAIN, {CAMERA_DOMAIN: {"platform": AXIS_DOMAIN}}
         )
         is True
     )

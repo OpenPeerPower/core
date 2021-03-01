@@ -14,7 +14,7 @@ from tests.common import async_mock_service
 @pytest.fixture(autouse=True)
 def entities(opp):
     """Initialize the test light."""
-    platform = getattr.opp.components, "test.light")
+    platform = getattr(opp.components, "test.light")
     platform.init()
     yield platform.ENTITIES[0:2]
 
@@ -56,7 +56,7 @@ async def test_config_yaml_alias_anchor(opp, entities):
     )
     await opp.async_block_till_done()
 
-    await activate.opp, "scene.test")
+    await activate(opp, "scene.test")
 
     assert light.is_on(opp, light_1.entity_id)
     assert light.is_on(opp, light_2.entity_id)
@@ -84,7 +84,7 @@ async def test_config_yaml_bool(opp, entities):
     assert await async_setup_component(opp, scene.DOMAIN, doc)
     await opp.async_block_till_done()
 
-    await activate.opp, "scene.test")
+    await activate(opp, "scene.test")
 
     assert light.is_on(opp, light_1.entity_id)
     assert light.is_on(opp, light_2.entity_id)
@@ -111,7 +111,7 @@ async def test_activate_scene(opp, entities):
         },
     )
     await opp.async_block_till_done()
-    await activate.opp, "scene.test")
+    await activate(opp, "scene.test")
 
     assert light.is_on(opp, light_1.entity_id)
     assert light.is_on(opp, light_2.entity_id)
@@ -130,7 +130,7 @@ async def test_activate_scene(opp, entities):
     assert calls[0].data.get("transition") == 42
 
 
-async def activate.opp, entity_id=ENTITY_MATCH_ALL):
+async def activate(opp, entity_id=ENTITY_MATCH_ALL):
     """Activate a scene."""
     data = {}
 
@@ -151,7 +151,7 @@ async def test_services_registered(opp):
 async def setup_lights(opp, entities):
     """Set up the light component."""
     assert await async_setup_component(
-        opp. light.DOMAIN, {light.DOMAIN: {"platform": "test"}}
+        opp, light.DOMAIN, {light.DOMAIN: {"platform": "test"}}
     )
     await opp.async_block_till_done()
 

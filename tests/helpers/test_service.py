@@ -310,11 +310,11 @@ async def test_extract_entity_ids(opp):
     call = op.ServiceCall("light", "turn_on", {ATTR_ENTITY_ID: "group.test"})
 
     assert {"light.ceiling", "light.kitchen"} == await service.async_extract_entity_ids(
-        opp. call
+        opp, call
     )
 
     assert {"group.test"} == await service.async_extract_entity_ids(
-        opp. call, expand_group=False
+        opp, call, expand_group=False
     )
 
     assert (
@@ -351,7 +351,7 @@ async def test_extract_entity_ids_from_area(opp, area_mock):
 
     assert (
         await service.async_extract_entity_ids(
-            opp. op.ServiceCall("light", "turn_on", {"area_id": ENTITY_MATCH_NONE})
+            opp, op.ServiceCall("light", "turn_on", {"area_id": ENTITY_MATCH_NONE})
         )
         == set()
     )
@@ -512,7 +512,7 @@ async def test_call_context_target_all(opp, mock_handle_entity_call, mock_entiti
 
 
 async def test_call_context_target_specific(
-    opp. mock_handle_entity_call, mock_entities
+    opp, mock_handle_entity_call, mock_entities
 ):
     """Check targeting specific entities."""
     with patch(
@@ -540,7 +540,7 @@ async def test_call_context_target_specific(
 
 
 async def test_call_context_target_specific_no_auth(
-    opp. mock_handle_entity_call, mock_entities
+    opp, mock_handle_entity_call, mock_entities
 ):
     """Check targeting specific entities without auth."""
     with pytest.raises(exceptions.Unauthorized) as err:
@@ -582,7 +582,7 @@ async def test_call_no_context_target_all(opp, mock_handle_entity_call, mock_ent
 
 
 async def test_call_no_context_target_specific(
-    opp. mock_handle_entity_call, mock_entities
+    opp, mock_handle_entity_call, mock_entities
 ):
     """Check we can target specified entities."""
     await service.entity_service_call(
@@ -601,7 +601,7 @@ async def test_call_no_context_target_specific(
 
 
 async def test_call_with_match_all(
-    opp. mock_handle_entity_call, mock_entities, caplog
+    opp, mock_handle_entity_call, mock_entities, caplog
 ):
     """Check we only target allowed entities if targeting all."""
     await service.entity_service_call(

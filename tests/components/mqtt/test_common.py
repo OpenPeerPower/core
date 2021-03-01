@@ -468,7 +468,7 @@ async def help_test_discovery_update_availability(
 
 
 async def help_test_setting_attribute_via_mqtt_json_message(
-    opp. mqtt_mock, domain, config
+    opp, mqtt_mock, domain, config
 ):
     """Test the setting of attribute via MQTT with JSON payload.
 
@@ -516,7 +516,7 @@ async def help_test_setting_attribute_with_template(opp, mqtt_mock, domain, conf
 
 
 async def help_test_update_with_json_attrs_not_dict(
-    opp. mqtt_mock, caplog, domain, config
+    opp, mqtt_mock, caplog, domain, config
 ):
     """Test attributes get extracted from a JSON result.
 
@@ -540,7 +540,7 @@ async def help_test_update_with_json_attrs_not_dict(
 
 
 async def help_test_update_with_json_attrs_bad_JSON(
-    opp. mqtt_mock, caplog, domain, config
+    opp, mqtt_mock, caplog, domain, config
 ):
     """Test JSON validation of attributes.
 
@@ -678,7 +678,7 @@ async def help_test_discovery_update(
 
 
 async def help_test_discovery_update_unchanged(
-    opp. mqtt_mock, caplog, domain, data1, discovery_update
+    opp, mqtt_mock, caplog, domain, data1, discovery_update
 ):
     """Test update of discovered component without changes.
 
@@ -822,7 +822,7 @@ async def help_test_entity_device_info_update(opp, mqtt_mock, domain, config):
 
 
 async def help_test_entity_id_update_subscriptions(
-    opp. mqtt_mock, domain, config, topics=None
+    opp, mqtt_mock, domain, config, topics=None
 ):
     """Test MQTT subscriptions are managed when entity_id is updated."""
     # Add unique_id to config
@@ -863,7 +863,7 @@ async def help_test_entity_id_update_subscriptions(
 
 
 async def help_test_entity_id_update_discovery_update(
-    opp. mqtt_mock, domain, config, topic=None
+    opp, mqtt_mock, domain, config, topic=None
 ):
     """Test MQTT discovery update after entity_id is updated."""
     # Add unique_id to config
@@ -989,7 +989,7 @@ async def help_test_entity_debug_info_max_messages(opp, mqtt_mock, domain, confi
 
 
 async def help_test_entity_debug_info_message(
-    opp. mqtt_mock, domain, config, topic=None, payload=None
+    opp, mqtt_mock, domain, config, topic=None, payload=None
 ):
     """Test debug_info message overflow.
 

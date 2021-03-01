@@ -240,7 +240,7 @@ async def test_remove_orphaned_entries_service(opp, aioclient_mock):
     data["lights"] = deepcopy(LIGHT)
     data["sensors"] = deepcopy(SWITCH)
     config_entry = await setup_deconz_integration(
-        opp. aioclient_mock, get_state_response=data
+        opp, aioclient_mock, get_state_response=data
     )
 
     data = {CONF_BRIDGE_ID: BRIDGEID}

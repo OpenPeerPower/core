@@ -11,7 +11,7 @@ class TestFFmpegNoiseSetup:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp =get_test_open_peer_power()
+        self.opp = get_test_open_peer_power()
 
         self.config = {
             "binary_sensor": {"platform": "ffmpeg_noise", "input": "testinputvideo"}
@@ -73,7 +73,7 @@ class TestFFmpegMotionSetup:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp =get_test_open_peer_power()
+        self.opp = get_test_open_peer_power()
 
         self.config = {
             "binary_sensor": {"platform": "ffmpeg_motion", "input": "testinputvideo"}

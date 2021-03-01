@@ -382,7 +382,7 @@ def _get_domains(opp: core.OpenPeerPower, config: Dict[str, Any]) -> Set[str]:
 
 
 async def _async_log_pending_setups(
-    opp. core.OpenPeerPower, domains: Set[str], setup_started: Dict[str, datetime]
+    opp, core.OpenPeerPower, domains: Set[str], setup_started: Dict[str, datetime]
 ) -> None:
     """Periodic log of setups that are pending for longer than LOG_SLOW_STARTUP_INTERVAL."""
     while True:
@@ -526,7 +526,7 @@ async def _async_set_up_integrations(
                 STAGE_1_TIMEOUT, cool_down=COOLDOWN_TIME
             ):
                 await async_setup_multi_components(
-                    opp. stage_1_domains, config, setup_started
+                    opp, stage_1_domains, config, setup_started
                 )
         except asyncio.TimeoutError:
             _LOGGER.warning("Setup timed out for stage 1 - moving forward")

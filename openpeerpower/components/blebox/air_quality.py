@@ -8,7 +8,7 @@ from . import BleBoxEntity, create_blebox_entities
 async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up a BleBox air quality entity."""
     create_blebox_entities(
-        opp. config_entry, async_add_entities, BleBoxAirQualityEntity, "air_qualities"
+        opp, config_entry, async_add_entities, BleBoxAirQualityEntity, "air_qualities"
     )
 
 

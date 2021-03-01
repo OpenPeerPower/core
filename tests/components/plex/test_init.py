@@ -190,7 +190,7 @@ async def test_tokenless_server(entry, setup_plex_server):
 
 
 async def test_bad_token_with_tokenless_server(
-    opp. entry, mock_websocket, setup_plex_server, requests_mock
+    opp, entry, mock_websocket, setup_plex_server, requests_mock
 ):
     """Test setup with a bad token and a server with token auth disabled."""
     requests_mock.get("https://plex.tv/users/account", status_code=401)

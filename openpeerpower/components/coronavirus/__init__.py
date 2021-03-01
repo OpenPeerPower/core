@@ -38,7 +38,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
             return {"new_unique_id": f"{entry.title}-{info_type}"}
 
         await entity_registry.async_migrate_entries(
-            opp. entry.entry_id, _async_migrator
+            opp, entry.entry_id, _async_migrator
         )
 
     if not entry.unique_id:

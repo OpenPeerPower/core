@@ -29,7 +29,7 @@ async def test_validate(opp):
 async def test_setup_user(opp):
     """Test setup user."""
     auth_module = await auth_mfa_module_from_config(
-        opp. {"type": "insecure_example", "data": []}
+        opp, {"type": "insecure_example", "data": []}
     )
 
     await auth_module.async_setup_user("test-user", {"pin": "123456"})

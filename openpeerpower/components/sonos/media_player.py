@@ -364,11 +364,11 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
             await SonosEntity.unjoin_multi(opp, entities)
         elif service_call.service == SERVICE_SNAPSHOT:
             await SonosEntity.snapshot_multi(
-                opp. entities, service_call.data[ATTR_WITH_GROUP]
+                opp, entities, service_call.data[ATTR_WITH_GROUP]
             )
         elif service_call.service == SERVICE_RESTORE:
             await SonosEntity.restore_multi(
-                opp. entities, service_call.data[ATTR_WITH_GROUP]
+                opp, entities, service_call.data[ATTR_WITH_GROUP]
             )
 
     opp.services.async_register(

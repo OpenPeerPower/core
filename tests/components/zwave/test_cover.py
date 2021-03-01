@@ -31,7 +31,7 @@ def test_get_device_detects_rollershutter(opp, mock_openzwave):
     )
     values = MockEntityValues(primary=value, open=None, close=None, node=node)
 
-    device = cover.get_device(opp=opp node=node, values=values, node_config={})
+    device = cover.get_device(opp=opp, node=node, values=values, node_config={})
     assert isinstance(device, cover.ZwaveRollershutter)
 
 
@@ -43,7 +43,7 @@ def test_get_device_detects_garagedoor_switch(opp, mock_openzwave):
     )
     values = MockEntityValues(primary=value, node=node)
 
-    device = cover.get_device(opp=opp node=node, values=values, node_config={})
+    device = cover.get_device(opp=opp, node=node, values=values, node_config={})
     assert isinstance(device, cover.ZwaveGarageDoorSwitch)
     assert device.device_class == "garage"
     assert device.supported_features == SUPPORT_OPEN | SUPPORT_CLOSE
@@ -57,7 +57,7 @@ def test_get_device_detects_garagedoor_barrier(opp, mock_openzwave):
     )
     values = MockEntityValues(primary=value, node=node)
 
-    device = cover.get_device(opp=opp node=node, values=values, node_config={})
+    device = cover.get_device(opp=opp, node=node, values=values, node_config={})
     assert isinstance(device, cover.ZwaveGarageDoorBarrier)
     assert device.device_class == "garage"
     assert device.supported_features == SUPPORT_OPEN | SUPPORT_CLOSE
@@ -230,7 +230,7 @@ def test_switch_garage_commands(opp, mock_openzwave):
         data=False, node=node, command_class=const.COMMAND_CLASS_SWITCH_BINARY
     )
     values = MockEntityValues(primary=value, node=node)
-    device = cover.get_device(opp=opp node=node, values=values, node_config={})
+    device = cover.get_device(opp=opp, node=node, values=values, node_config={})
 
     assert value.data is False
     device.open_cover()
@@ -246,7 +246,7 @@ def test_barrier_garage_value_changed(opp, mock_openzwave):
         data="Closed", node=node, command_class=const.COMMAND_CLASS_BARRIER_OPERATOR
     )
     values = MockEntityValues(primary=value, node=node)
-    device = cover.get_device(opp=opp node=node, values=values, node_config={})
+    device = cover.get_device(opp=opp, node=node, values=values, node_config={})
 
     assert device.is_closed
     assert not device.is_opening
@@ -278,7 +278,7 @@ def test_barrier_garage_commands(opp, mock_openzwave):
         data="Closed", node=node, command_class=const.COMMAND_CLASS_BARRIER_OPERATOR
     )
     values = MockEntityValues(primary=value, node=node)
-    device = cover.get_device(opp=opp node=node, values=values, node_config={})
+    device = cover.get_device(opp=opp, node=node, values=values, node_config={})
 
     assert value.data == "Closed"
     device.open_cover()

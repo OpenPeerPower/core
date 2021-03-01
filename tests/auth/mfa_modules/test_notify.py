@@ -296,13 +296,13 @@ async def test_include_exclude_config(opp):
     async_mock_service(opp, "other", "exclude3", NOTIFY_SERVICE_SCHEMA)
 
     notify_auth_module = await auth_mfa_module_from_config(
-        opp. {"type": "notify", "exclude": ["exclude1", "exclude2", "exclude3"]}
+        opp, {"type": "notify", "exclude": ["exclude1", "exclude2", "exclude3"]}
     )
     services = notify_auth_module.aync_get_available_notify_services()
     assert services == ["include1", "include2"]
 
     notify_auth_module = await auth_mfa_module_from_config(
-        opp. {"type": "notify", "include": ["include1", "include2", "include3"]}
+        opp, {"type": "notify", "include": ["include1", "include2", "include3"]}
     )
     services = notify_auth_module.aync_get_available_notify_services()
     assert services == ["include1", "include2"]
@@ -324,7 +324,7 @@ async def test_setup_user_no_notify_service(opp):
     """Test setup flow abort if there is no available notify service."""
     async_mock_service(opp, "notify", "test1", NOTIFY_SERVICE_SCHEMA)
     notify_auth_module = await auth_mfa_module_from_config(
-        opp. {"type": "notify", "exclude": "test1"}
+        opp, {"type": "notify", "exclude": "test1"}
     )
 
     services = notify_auth_module.aync_get_available_notify_services()

@@ -69,7 +69,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
             )
 
     async_register_admin_service(
-        opp. DOMAIN, SERVICE_START, debug_start, schema=vol.Schema({})
+        opp, DOMAIN, SERVICE_START, debug_start, schema=vol.Schema({})
     )
 
     # If set to start the debugger on startup, do so

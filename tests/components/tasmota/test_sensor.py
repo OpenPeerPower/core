@@ -360,7 +360,7 @@ async def test_single_shot_status_sensor_state_via_mqtt(opp, mqtt_mock, setup_ta
 @pytest.mark.parametrize("status_sensor_disabled", [False])
 @patch.object(hatasmota.status_sensor, "datetime", Mock(wraps=datetime.datetime))
 async def test_restart_time_status_sensor_state_via_mqtt(
-    opp. mqtt_mock, setup_tasmota
+    opp, mqtt_mock, setup_tasmota
 ):
     """Test state update via MQTT."""
     entity_reg = await opp.helpers.entity_registry.async_get_registry()
@@ -570,7 +570,7 @@ async def test_enable_status_sensor(opp, mqtt_mock, setup_tasmota):
 
 
 async def test_availability_when_connection_lost(
-    opp. mqtt_client_mock, mqtt_mock, setup_tasmota
+    opp, mqtt_client_mock, mqtt_mock, setup_tasmota
 ):
     """Test availability after MQTT disconnection."""
     config = copy.deepcopy(DEFAULT_CONFIG)
@@ -615,7 +615,7 @@ async def test_availability_discovery_update(opp, mqtt_mock, setup_tasmota):
 
 
 async def test_availability_poll_state(
-    opp. mqtt_client_mock, mqtt_mock, setup_tasmota
+    opp, mqtt_client_mock, mqtt_mock, setup_tasmota
 ):
     """Test polling after MQTT connection (re)established."""
     config = copy.deepcopy(DEFAULT_CONFIG)
@@ -653,7 +653,7 @@ async def test_discovery_removal_sensor(opp, mqtt_mock, caplog, setup_tasmota):
 
 
 async def test_discovery_update_unchanged_sensor(
-    opp. mqtt_mock, caplog, setup_tasmota
+    opp, mqtt_mock, caplog, setup_tasmota
 ):
     """Test update of discovered sensor."""
     config = copy.deepcopy(DEFAULT_CONFIG)
@@ -680,7 +680,7 @@ async def test_discovery_device_remove(opp, mqtt_mock, setup_tasmota):
     sensor_config = copy.deepcopy(DEFAULT_SENSOR_CONFIG)
     unique_id = f"{DEFAULT_CONFIG['mac']}_sensor_sensor_DHT11_Temperature"
     await help_test_discovery_device_remove(
-        opp. mqtt_mock, sensor.DOMAIN, unique_id, config, sensor_config
+        opp, mqtt_mock, sensor.DOMAIN, unique_id, config, sensor_config
     )
 
 

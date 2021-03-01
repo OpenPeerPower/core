@@ -232,7 +232,7 @@ async def async_setup_entry(opp, entry, async_add_entities):
             async_add_entities(new_entities)
 
     async_dispatcher_connect(
-        opp. f"signal-{DOMAIN}-public-update-{entry.entry_id}", add_public_entities
+        opp, f"signal-{DOMAIN}-public-update-{entry.entry_id}", add_public_entities
     )
 
     entry.add_update_listener(async_config_entry_updated)

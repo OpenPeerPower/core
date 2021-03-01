@@ -467,7 +467,7 @@ async def help_test_discovery_update_unchanged(
 
 
 async def help_test_discovery_device_remove(
-    opp. mqtt_mock, domain, unique_id, config, sensor_config=None
+    opp, mqtt_mock, domain, unique_id, config, sensor_config=None
 ):
     """Test domain entity is removed when device is removed."""
     device_reg = await opp.helpers.device_registry.async_get_registry()
@@ -499,7 +499,7 @@ async def help_test_discovery_device_remove(
 
 
 async def help_test_entity_id_update_subscriptions(
-    opp. mqtt_mock, domain, config, topics=None, sensor_config=None, entity_id="test"
+    opp, mqtt_mock, domain, config, topics=None, sensor_config=None, entity_id="test"
 ):
     """Test MQTT subscriptions are managed when entity_id is updated."""
     entity_reg = await opp.helpers.entity_registry.async_get_registry()
@@ -545,7 +545,7 @@ async def help_test_entity_id_update_subscriptions(
 
 
 async def help_test_entity_id_update_discovery_update(
-    opp. mqtt_mock, domain, config, sensor_config=None, entity_id="test"
+    opp, mqtt_mock, domain, config, sensor_config=None, entity_id="test"
 ):
     """Test MQTT discovery update after entity_id is updated."""
     entity_reg = await opp.helpers.entity_registry.async_get_registry()

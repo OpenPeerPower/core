@@ -76,7 +76,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
 
 
 async def _async_setup_entity(
-    opp. async_add_entities, config: ConfigType, config_entry=None, discovery_data=None
+    opp, async_add_entities, config: ConfigType, config_entry=None, discovery_data=None
 ):
     """Set up MQTT sensor."""
     async_add_entities([MqttSensor.opp, config, config_entry, discovery_data)])

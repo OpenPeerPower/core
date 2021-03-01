@@ -20,7 +20,7 @@ from tests.common import async_fire_time_changed
 async def test_jewish_calendar_min_config(opp):
     """Test minimum jewish calendar configuration."""
     assert await async_setup_component(
-        opp. jewish_calendar.DOMAIN, {"jewish_calendar": {}}
+        opp, jewish_calendar.DOMAIN, {"jewish_calendar": {}}
     )
     await opp.async_block_till_done()
     assert opp.states.get("sensor.jewish_calendar_date") is not None
@@ -29,7 +29,7 @@ async def test_jewish_calendar_min_config(opp):
 async def test_jewish_calendar_hebrew(opp):
     """Test jewish calendar sensor with language set to hebrew."""
     assert await async_setup_component(
-        opp. jewish_calendar.DOMAIN, {"jewish_calendar": {"language": "hebrew"}}
+        opp, jewish_calendar.DOMAIN, {"jewish_calendar": {"language": "hebrew"}}
     )
     await opp.async_block_till_done()
     assert opp.states.get("sensor.jewish_calendar_date") is not None
@@ -596,7 +596,7 @@ async def test_omer_sensor(opp, legacy_patchable_time, test_time, result):
 
     with alter_time(test_time):
         assert await async_setup_component(
-            opp. jewish_calendar.DOMAIN, {"jewish_calendar": {"name": "test"}}
+            opp, jewish_calendar.DOMAIN, {"jewish_calendar": {"name": "test"}}
         )
         await opp.async_block_till_done()
 
@@ -630,7 +630,7 @@ async def test_dafyomi_sensor(opp, legacy_patchable_time, test_time, result):
 
     with alter_time(test_time):
         assert await async_setup_component(
-            opp. jewish_calendar.DOMAIN, {"jewish_calendar": {"name": "test"}}
+            opp, jewish_calendar.DOMAIN, {"jewish_calendar": {"name": "test"}}
         )
         await opp.async_block_till_done()
 

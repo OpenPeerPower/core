@@ -117,7 +117,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         update_interval=DEFAULT_SCAN_INTERVAL,
         failed_update_interval=FAILED_SCAN_INTERVAL,
         request_refresh_debouncer=debounce.Debouncer(
-            opp. _LOGGER, cooldown=DEBOUNCE_TIME, immediate=True
+            opp, _LOGGER, cooldown=DEBOUNCE_TIME, immediate=True
         ),
     )
 
@@ -129,7 +129,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         update_interval=DEFAULT_SCAN_INTERVAL,
         failed_update_interval=FAILED_SCAN_INTERVAL,
         request_refresh_debouncer=debounce.Debouncer(
-            opp. _LOGGER, cooldown=DEBOUNCE_TIME, immediate=True
+            opp, _LOGGER, cooldown=DEBOUNCE_TIME, immediate=True
         ),
     )
 
@@ -141,7 +141,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         update_interval=DEFAULT_SCAN_INTERVAL,
         failed_update_interval=FAILED_SCAN_INTERVAL,
         request_refresh_debouncer=debounce.Debouncer(
-            opp. _LOGGER, cooldown=DEBOUNCE_TIME, immediate=True
+            opp, _LOGGER, cooldown=DEBOUNCE_TIME, immediate=True
         ),
     )
     nws.opp_data = opp.data.setdefault(DOMAIN, {})

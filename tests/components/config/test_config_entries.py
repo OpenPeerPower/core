@@ -292,7 +292,7 @@ async def test_create_account(opp, client):
     mock_entity_platform(opp, "config_flow.test", None)
 
     mock_integration(
-        opp. MockModule("test", async_setup_entry=AsyncMock(return_value=True))
+        opp, MockModule("test", async_setup_entry=AsyncMock(return_value=True))
     )
 
     class TestFlow(core_ce.ConfigFlow):
@@ -329,7 +329,7 @@ async def test_create_account(opp, client):
 async def test_two_step_flow(opp, client):
     """Test we can finish a two step flow."""
     mock_integration(
-        opp. MockModule("test", async_setup_entry=AsyncMock(return_value=True))
+        opp, MockModule("test", async_setup_entry=AsyncMock(return_value=True))
     )
     mock_entity_platform(opp, "config_flow.test", None)
 
@@ -388,7 +388,7 @@ async def test_two_step_flow(opp, client):
 async def test_continue_flow_unauth(opp, client, opp_admin_user):
     """Test we can't finish a two step flow."""
     mock_integration(
-        opp. MockModule("test", async_setup_entry=AsyncMock(return_value=True))
+        opp, MockModule("test", async_setup_entry=AsyncMock(return_value=True))
     )
     mock_entity_platform(opp, "config_flow.test", None)
 
@@ -592,7 +592,7 @@ async def test_options_flow(opp, client):
 async def test_two_step_options_flow(opp, client):
     """Test we can finish a two step options flow."""
     mock_integration(
-        opp. MockModule("test", async_setup_entry=AsyncMock(return_value=True))
+        opp, MockModule("test", async_setup_entry=AsyncMock(return_value=True))
     )
 
     class TestFlow(core_ce.ConfigFlow):
@@ -840,7 +840,7 @@ async def test_ignore_flow(opp, opp_ws_client):
     """Test we can ignore a flow."""
     assert await async_setup_component(opp, "config", {})
     mock_integration(
-        opp. MockModule("test", async_setup_entry=AsyncMock(return_value=True))
+        opp, MockModule("test", async_setup_entry=AsyncMock(return_value=True))
     )
     mock_entity_platform(opp, "config_flow.test", None)
 

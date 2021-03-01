@@ -145,7 +145,7 @@ async def async_setup(opp, config):
 
         try:
             intent_response = await intent.async_handle(
-                opp. DOMAIN, intent_type, slots, request["input"]
+                opp, DOMAIN, intent_type, slots, request["input"]
             )
             notification = {"sessionId": request.get("sessionId", "default")}
 

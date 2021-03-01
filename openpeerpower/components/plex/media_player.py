@@ -69,7 +69,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
         _async_add_entities(opp, registry, async_add_entities, server_id, new_entities)
 
     unsub = async_dispatcher_connect(
-        opp. PLEX_NEW_MP_SIGNAL.format(server_id), async_new_media_players
+        opp, PLEX_NEW_MP_SIGNAL.format(server_id), async_new_media_players
     )
     opp.data[PLEX_DOMAIN][DISPATCHERS][server_id].append(unsub)
     _LOGGER.debug("New entity listener created")

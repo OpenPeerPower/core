@@ -28,7 +28,7 @@ def _schema_value(value):
 
 
 async def async_attach_trigger(
-    opp. config, action, automation_info, *, platform_type="event"
+    opp, config, action, automation_info, *, platform_type="event"
 ):
     """Listen for events based on configuration."""
     variables = None

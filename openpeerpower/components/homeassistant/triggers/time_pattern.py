@@ -83,5 +83,5 @@ async def async_attach_trigger(opp, config, action, automation_info):
         )
 
     return async_track_time_change(
-        opp. time_automation_listener, hour=hours, minute=minutes, second=seconds
+        opp, time_automation_listener, hour=hours, minute=minutes, second=seconds
     )

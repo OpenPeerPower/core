@@ -52,7 +52,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     radius_in_km = config[CONF_RADIUS]
     # Initialize the entity manager.
     feed = GeoJsonFeedEntityManager(
-        opp. add_entities, scan_interval, coordinates, url, radius_in_km
+        opp, add_entities, scan_interval, coordinates, url, radius_in_km
     )
 
     def start_feed_manager(event):

@@ -70,7 +70,7 @@ async def async_setup_entry(
 
     # Register to handle router data updates
     disconnect_dispatcher = async_dispatcher_connect(
-        opp. UPDATE_SIGNAL, _async_maybe_add_new_entities
+        opp, UPDATE_SIGNAL, _async_maybe_add_new_entities
     )
     router.unload_handlers.append(disconnect_dispatcher)
 

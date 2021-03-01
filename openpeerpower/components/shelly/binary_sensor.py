@@ -110,7 +110,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
         )
     else:
         await async_setup_entry_attribute_entities(
-            opp. config_entry, async_add_entities, SENSORS, ShellyBinarySensor
+            opp, config_entry, async_add_entities, SENSORS, ShellyBinarySensor
         )
         await async_setup_entry_rest(
             opp,

@@ -501,7 +501,7 @@ async def test_xiaomi_vacuum_clean_segment_service(opp, caplog, mock_mirobo_is_o
 
 
 async def test_xiaomi_vacuum_clean_segment_service_single_segment(
-    opp. caplog, mock_mirobo_is_on
+    opp, caplog, mock_mirobo_is_on
 ):
     """Test vacuum supported features."""
     entity_name = "test_vacuum_cleaner_2"

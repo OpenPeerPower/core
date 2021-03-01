@@ -82,7 +82,7 @@ async def test_load_platform(opp):
     assert not mock_discover.called
     assert mock_platform.called
     mock_platform.assert_called_with(
-        opp. SERVICE_COMPONENT, SERVICE, SERVICE_INFO, BASE_CONFIG
+        opp, SERVICE_COMPONENT, SERVICE, SERVICE_INFO, BASE_CONFIG
     )
 
 

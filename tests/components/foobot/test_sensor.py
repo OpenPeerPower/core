@@ -65,7 +65,7 @@ async def test_setup_timeout_error(opp, aioclient_mock):
     )
     with pytest.raises(PlatformNotReady):
         await foobot.async_setup_platform(
-            opp. {"sensor": VALID_CONFIG}, fake_async_add_entities
+            opp, {"sensor": VALID_CONFIG}, fake_async_add_entities
         )
 
 
@@ -77,7 +77,7 @@ async def test_setup_permanent_error(opp, aioclient_mock):
     for error in errors:
         aioclient_mock.get(re.compile("api.foobot.io/v2/owner/.*"), status=error)
         result = await foobot.async_setup_platform(
-            opp. {"sensor": VALID_CONFIG}, fake_async_add_entities
+            opp, {"sensor": VALID_CONFIG}, fake_async_add_entities
         )
         assert result is None
 
@@ -91,5 +91,5 @@ async def test_setup_temporary_error(opp, aioclient_mock):
         aioclient_mock.get(re.compile("api.foobot.io/v2/owner/.*"), status=error)
         with pytest.raises(PlatformNotReady):
             await foobot.async_setup_platform(
-                opp. {"sensor": VALID_CONFIG}, fake_async_add_entities
+                opp, {"sensor": VALID_CONFIG}, fake_async_add_entities
             )

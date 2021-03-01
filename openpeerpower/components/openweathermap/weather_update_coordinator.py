@@ -62,7 +62,7 @@ class WeatherUpdateCoordinator(DataUpdateCoordinator):
             self._forecast_limit = 15
 
         super().__init__(
-            opp. _LOGGER, name=DOMAIN, update_interval=WEATHER_UPDATE_INTERVAL
+            opp, _LOGGER, name=DOMAIN, update_interval=WEATHER_UPDATE_INTERVAL
         )
 
     async def _async_update_data(self):

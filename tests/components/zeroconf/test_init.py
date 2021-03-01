@@ -158,7 +158,7 @@ async def test_setup_with_default_interface(opp, mock_zeroconf):
     ):
         mock_zeroconf.get_service_info.side_effect = get_service_info_mock
         assert await async_setup_component(
-            opp. zeroconf.DOMAIN, {zeroconf.DOMAIN: {CONF_DEFAULT_INTERFACE: True}}
+            opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {CONF_DEFAULT_INTERFACE: True}}
         )
         opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
@@ -173,7 +173,7 @@ async def test_setup_without_default_interface(opp, mock_zeroconf):
     ):
         mock_zeroconf.get_service_info.side_effect = get_service_info_mock
         assert await async_setup_component(
-            opp. zeroconf.DOMAIN, {zeroconf.DOMAIN: {CONF_DEFAULT_INTERFACE: False}}
+            opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {CONF_DEFAULT_INTERFACE: False}}
         )
 
     assert mock_zeroconf.called_with()
@@ -186,7 +186,7 @@ async def test_setup_without_ipv6.opp, mock_zeroconf):
     ):
         mock_zeroconf.get_service_info.side_effect = get_service_info_mock
         assert await async_setup_component(
-            opp. zeroconf.DOMAIN, {zeroconf.DOMAIN: {CONF_IPV6: False}}
+            opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {CONF_IPV6: False}}
         )
         opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
@@ -201,7 +201,7 @@ async def test_setup_with_ipv6.opp, mock_zeroconf):
     ):
         mock_zeroconf.get_service_info.side_effect = get_service_info_mock
         assert await async_setup_component(
-            opp. zeroconf.DOMAIN, {zeroconf.DOMAIN: {CONF_IPV6: True}}
+            opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {CONF_IPV6: True}}
         )
         opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()

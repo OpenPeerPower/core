@@ -17,6 +17,6 @@ async def system_health_info(opp):
     """Get info for the info page."""
     return {
         "api_endpoint_reachable": system_health.async_check_can_reach_url(
-            opp. IPMA_API_URL
+            opp, IPMA_API_URL
         )
     }

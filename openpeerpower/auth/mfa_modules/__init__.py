@@ -167,7 +167,7 @@ async def _load_mfa_module(opp: OpenPeerPower, module_name: str) -> types.Module
 
     # https://github.com/python/mypy/issues/1424
     await requirements.async_process_requirements(
-        opp. module_path, module.REQUIREMENTS  # type: ignore
+        opp, module_path, module.REQUIREMENTS  # type: ignore
     )
 
     processed.add(module_name)

@@ -766,7 +766,7 @@ def async_track_template(
         )
 
     info = async_track_template_result(
-        opp. [TrackTemplate(template, variables)], _template_changed_listener
+        opp, [TrackTemplate(template, variables)], _template_changed_listener
     )
 
     return info.async_remove
@@ -1120,7 +1120,7 @@ def async_track_same_state(
             clear_listener()
 
     async_remove_state_for_listener = async_track_point_in_utc_time(
-        opp. state_for_listener, dt_util.utcnow() + period
+        opp, state_for_listener, dt_util.utcnow() + period
     )
 
     if entity_ids == MATCH_ALL:
@@ -1221,7 +1221,7 @@ def async_call_later(
 ) -> CALLBACK_TYPE:
     """Add a listener that is called in <delay>."""
     return async_track_point_in_utc_time(
-        opp. action, dt_util.utcnow() + timedelta(seconds=delay)
+        opp, action, dt_util.utcnow() + timedelta(seconds=delay)
     )
 
 
@@ -1252,7 +1252,7 @@ def async_track_time_interval(
         nonlocal interval_listener_job
 
         remove = async_track_point_in_utc_time(
-            opp. interval_listener_job, next_interval()  # type: ignore
+            opp, interval_listener_job, next_interval()  # type: ignore
         )
         opp.async_run(opp_job(job, now)
 
@@ -1411,7 +1411,7 @@ def async_track_utc_time_change(
         )
 
     time_listener = async_track_point_in_utc_time(
-        opp. pattern_time_change_listener, calculate_next(dt_util.utcnow())
+        opp, pattern_time_change_listener, calculate_next(dt_util.utcnow())
     )
 
     @callback

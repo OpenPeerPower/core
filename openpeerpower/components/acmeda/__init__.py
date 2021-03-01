@@ -17,7 +17,7 @@ async def async_setup_opp: core.OpenPeerPower, config: dict):
 
 
 async def async_setup_entry(
-    opp. core.OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp, core.OpenPeerPower, config_entry: config_entries.ConfigEntry
 ):
     """Set up Rollease Acmeda Automate hub from a config entry."""
     hub = PulseHub.opp, config_entry)
@@ -37,7 +37,7 @@ async def async_setup_entry(
 
 
 async def async_unload_entry(
-    opp. core.OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp, core.OpenPeerPower, config_entry: config_entries.ConfigEntry
 ):
     """Unload a config entry."""
     hub = opp.data[DOMAIN][config_entry.entry_id]

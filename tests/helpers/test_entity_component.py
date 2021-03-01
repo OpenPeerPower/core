@@ -91,7 +91,7 @@ async def test_setup_does_discovery(mock_setup_component, mock_setup, opp):
     component.setup({})
 
     discovery.load_platform(
-        opp. DOMAIN, "platform_test", {"msg": "discovery_info"}, {DOMAIN: {}}
+        opp, DOMAIN, "platform_test", {"msg": "discovery_info"}, {DOMAIN: {}}
     )
 
     await opp.async_block_till_done()
@@ -274,7 +274,7 @@ async def test_setup_dependencies_platform(opp):
     with the same name has already been loaded.
     """
     mock_integration(
-        opp. MockModule("test_component", dependencies=["test_component2"])
+        opp, MockModule("test_component", dependencies=["test_component2"])
     )
     mock_integration(opp, MockModule("test_component2"))
     mock_entity_platform(opp, "test_domain.test_component", MockPlatform())

@@ -69,7 +69,7 @@ async def async_setup(opp, config):
     async def activate_on_start(_):
         """Activate automation."""
         await activate_automation(
-            opp. device_group, light_group, light_profile, disable_turn_off
+            opp, device_group, light_group, light_profile, disable_turn_off
         )
 
     if opp.is_running:
@@ -177,7 +177,7 @@ async def activate_automation(
             )
 
     async_track_point_in_utc_time(
-        opp. schedule_light_turn_on, get_astral_event_next(opp, SUN_EVENT_SUNRISE)
+        opp, schedule_light_turn_on, get_astral_event_next(opp, SUN_EVENT_SUNRISE)
     )
 
     # If the sun is already above horizon schedule the time-based pre-sun set
@@ -211,7 +211,7 @@ async def activate_automation(
         # Check this by seeing if current time is later then the point
         # in time when we would start putting the lights on.
         elif start_point and start_point < now < get_astral_event_next(
-            opp. SUN_EVENT_SUNSET
+            opp, SUN_EVENT_SUNSET
         ):
 
             # Check for every light if it would be on if someone was home

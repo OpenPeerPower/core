@@ -1308,7 +1308,7 @@ async def test_unlinked_light2.opp, mqtt_mock, setup_tasmota):
 
 
 async def test_discovery_update_reconfigure_light(
-    opp. mqtt_mock, caplog, setup_tasmota
+    opp, mqtt_mock, caplog, setup_tasmota
 ):
     """Test reconfigure of discovered light."""
     config = copy.deepcopy(DEFAULT_CONFIG)
@@ -1340,14 +1340,14 @@ async def test_discovery_update_reconfigure_light(
 
 
 async def test_availability_when_connection_lost(
-    opp. mqtt_client_mock, mqtt_mock, setup_tasmota
+    opp, mqtt_client_mock, mqtt_mock, setup_tasmota
 ):
     """Test availability after MQTT disconnection."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 2
     config["lt_st"] = 1  # 1 channel light (Dimmer)
     await help_test_availability_when_connection_lost(
-        opp. mqtt_client_mock, mqtt_mock, light.DOMAIN, config
+        opp, mqtt_client_mock, mqtt_mock, light.DOMAIN, config
     )
 
 
@@ -1368,7 +1368,7 @@ async def test_availability_discovery_update(opp, mqtt_mock, setup_tasmota):
 
 
 async def test_availability_poll_state(
-    opp. mqtt_client_mock, mqtt_mock, setup_tasmota
+    opp, mqtt_client_mock, mqtt_mock, setup_tasmota
 ):
     """Test polling after MQTT connection (re)established."""
     config = copy.deepcopy(DEFAULT_CONFIG)
@@ -1376,7 +1376,7 @@ async def test_availability_poll_state(
     config["lt_st"] = 1  # 1 channel light (Dimmer)
     poll_topic = "tasmota_49A3BC/cmnd/STATE"
     await help_test_availability_poll_state(
-        opp. mqtt_client_mock, mqtt_mock, light.DOMAIN, config, poll_topic, ""
+        opp, mqtt_client_mock, mqtt_mock, light.DOMAIN, config, poll_topic, ""
     )
 
 
@@ -1390,7 +1390,7 @@ async def test_discovery_removal_light(opp, mqtt_mock, caplog, setup_tasmota):
     config2["lt_st"] = 0
 
     await help_test_discovery_removal(
-        opp. mqtt_mock, caplog, light.DOMAIN, config1, config2
+        opp, mqtt_mock, caplog, light.DOMAIN, config1, config2
     )
 
 
@@ -1404,12 +1404,12 @@ async def test_discovery_removal_relay_as_light(opp, mqtt_mock, caplog, setup_ta
     config2["so"]["30"] = 0  # Disable Open Peer Power auto-discovery as light
 
     await help_test_discovery_removal(
-        opp. mqtt_mock, caplog, light.DOMAIN, config1, config2
+        opp, mqtt_mock, caplog, light.DOMAIN, config1, config2
     )
 
 
 async def test_discovery_removal_relay_as_light2(
-    opp. mqtt_mock, caplog, setup_tasmota
+    opp, mqtt_mock, caplog, setup_tasmota
 ):
     """Test removal of discovered relay as light."""
     config1 = copy.deepcopy(DEFAULT_CONFIG)
@@ -1420,7 +1420,7 @@ async def test_discovery_removal_relay_as_light2(
     config2["so"]["30"] = 0  # Disable Open Peer Power auto-discovery as light
 
     await help_test_discovery_removal(
-        opp. mqtt_mock, caplog, light.DOMAIN, config1, config2
+        opp, mqtt_mock, caplog, light.DOMAIN, config1, config2
     )
 
 
@@ -1433,7 +1433,7 @@ async def test_discovery_update_unchanged_light(opp, mqtt_mock, caplog, setup_ta
         "openpeerpower.components.tasmota.light.TasmotaLight.discovery_update"
     ) as discovery_update:
         await help_test_discovery_update_unchanged(
-            opp. mqtt_mock, caplog, light.DOMAIN, config, discovery_update
+            opp, mqtt_mock, caplog, light.DOMAIN, config, discovery_update
         )
 
 
@@ -1444,7 +1444,7 @@ async def test_discovery_device_remove(opp, mqtt_mock, setup_tasmota):
     config["lt_st"] = 1  # 1 channel light (Dimmer)
     unique_id = f"{DEFAULT_CONFIG['mac']}_light_light_0"
     await help_test_discovery_device_remove(
-        opp. mqtt_mock, light.DOMAIN, unique_id, config
+        opp, mqtt_mock, light.DOMAIN, unique_id, config
     )
 
 
@@ -1455,7 +1455,7 @@ async def test_discovery_device_remove_relay_as_light(opp, mqtt_mock, setup_tasm
     config["so"]["30"] = 1  # Enforce Open Peer Power auto-discovery as light
     unique_id = f"{DEFAULT_CONFIG['mac']}_light_relay_0"
     await help_test_discovery_device_remove(
-        opp. mqtt_mock, light.DOMAIN, unique_id, config
+        opp, mqtt_mock, light.DOMAIN, unique_id, config
     )
 
 
@@ -1470,7 +1470,7 @@ async def test_entity_id_update_subscriptions(opp, mqtt_mock, setup_tasmota):
         get_topic_tele_will(config),
     ]
     await help_test_entity_id_update_subscriptions(
-        opp. mqtt_mock, light.DOMAIN, config, topics
+        opp, mqtt_mock, light.DOMAIN, config, topics
     )
 
 
@@ -1480,5 +1480,5 @@ async def test_entity_id_update_discovery_update(opp, mqtt_mock, setup_tasmota):
     config["rl"][0] = 2
     config["lt_st"] = 1  # 1 channel light (Dimmer)
     await help_test_entity_id_update_discovery_update(
-        opp. mqtt_mock, light.DOMAIN, config
+        opp, mqtt_mock, light.DOMAIN, config
     )

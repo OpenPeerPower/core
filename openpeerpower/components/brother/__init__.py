@@ -34,7 +34,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     snmp_engine = get_snmp_engine(opp)
 
     coordinator = BrotherDataUpdateCoordinator(
-        opp. host=host, kind=kind, snmp_engine=snmp_engine
+        opp, host=host, kind=kind, snmp_engine=snmp_engine
     )
     await coordinator.async_refresh()
 

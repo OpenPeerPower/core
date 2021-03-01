@@ -128,7 +128,7 @@ async def setup_automation(opp, trigger):
 async def test_simple(opp, calls, mock_lj):
     """Test the simplest form of a LiteJet trigger."""
     await setup_automation(
-        opp. {"platform": "litejet", "number": ENTITY_OTHER_SWITCH_NUMBER}
+        opp, {"platform": "litejet", "number": ENTITY_OTHER_SWITCH_NUMBER}
     )
 
     await simulate_press(opp, mock_lj, ENTITY_OTHER_SWITCH_NUMBER)

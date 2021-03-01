@@ -226,7 +226,7 @@ async def test_migrate_zwave(opp, migration_data, opp_ws_client, zwave_integrati
 
 
 async def test_migrate_zwave_dry_run(
-    opp. migration_data, opp_ws_client, zwave_integration
+    opp, migration_data, opp_ws_client, zwave_integration
 ):
     """Test the zwave to ozw migration websocket api dry run."""
     await setup_ozw(opp, fixture=migration_data)

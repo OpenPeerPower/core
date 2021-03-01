@@ -203,7 +203,7 @@ def test_entities_areas_area_true(opp):
         },
     )
     device_registry = mock_device_registry(
-        opp. {"mock-dev-id": DeviceEntry(id="mock-dev-id", area_id="mock-area-id")}
+        opp, {"mock-dev-id": DeviceEntry(id="mock-dev-id", area_id="mock-area-id")}
     )
 
     policy = {"area_ids": {"mock-area-id": {"read": True, "control": True}}}

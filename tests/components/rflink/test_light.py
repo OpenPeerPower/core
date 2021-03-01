@@ -40,7 +40,7 @@ async def test_default_setup_opp, monkeypatch):
     """Test all basic functionality of the RFLink switch component."""
     # setup mocking rflink module
     event_callback, create, protocol, _ = await mock_rflink(
-        opp. CONFIG, DOMAIN, monkeypatch
+        opp, CONFIG, DOMAIN, monkeypatch
     )
 
     # make sure arguments are passed
@@ -206,7 +206,7 @@ async def test_signal_repetitions(opp, monkeypatch):
 
     # setup mocking rflink module
     event_callback, _, protocol, _ = await mock_rflink(
-        opp. config, DOMAIN, monkeypatch
+        opp, config, DOMAIN, monkeypatch
     )
 
     # test if signal repetition is performed according to configuration

@@ -55,7 +55,7 @@ async def test_get_url_internal(opp: OpenPeerPower):
 
         with pytest.raises(NoURLAvailableError):
             _get_internal_url(
-                opp. require_current_request=True, require_standard_port=True
+                opp, require_current_request=True, require_standard_port=True
             )
 
         with pytest.raises(NoURLAvailableError):
@@ -154,7 +154,7 @@ async def test_get_url_internal(opp: OpenPeerPower):
 
         with pytest.raises(NoURLAvailableError):
             _get_internal_url(
-                opp. require_current_request=True, require_standard_port=True
+                opp, require_current_request=True, require_standard_port=True
             )
 
         with pytest.raises(NoURLAvailableError):
@@ -255,7 +255,7 @@ async def test_get_url_external(opp: OpenPeerPower):
 
         with pytest.raises(NoURLAvailableError):
             _get_external_url(
-                opp. require_current_request=True, require_standard_port=True
+                opp, require_current_request=True, require_standard_port=True
             )
 
         with pytest.raises(NoURLAvailableError):

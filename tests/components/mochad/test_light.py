@@ -39,8 +39,6 @@ async def test_setup_adds_proper_devices(opp):
 @pytest.mark.parametrize(
     "brightness,expected", [(32, "on"), (256, "xdim 255"), (64, "xdim 63")]
 )
-
-
 async def test_turn_on_with_no_brightness(light_mock, expected):
     """Test turn_on."""
     light_mock.turn_on()

@@ -1621,7 +1621,7 @@ async def test_water_heater(opp, hk_driver, events):
 
     # Set from HomeKit
     call_set_temperature = async_mock_service(
-        opp. DOMAIN_WATER_HEATER, "set_temperature"
+        opp, DOMAIN_WATER_HEATER, "set_temperature"
     )
 
     await opp.async_add_executor_job(acc.char_target_temp.client_update_value, 52.0)
@@ -1666,7 +1666,7 @@ async def test_water_heater_fahrenheit(opp, hk_driver, events):
 
     # Set from HomeKit
     call_set_temperature = async_mock_service(
-        opp. DOMAIN_WATER_HEATER, "set_temperature"
+        opp, DOMAIN_WATER_HEATER, "set_temperature"
     )
 
     await opp.async_add_executor_job(acc.char_target_temp.client_update_value, 60)
@@ -1733,7 +1733,7 @@ async def test_water_heater_restore(opp, hk_driver, events):
     }
 
     acc = WaterHeater(
-        opp. hk_driver, "WaterHeater", "water_heater.all_info_set", 2, None
+        opp, hk_driver, "WaterHeater", "water_heater.all_info_set", 2, None
     )
     assert acc.category == 9
     assert acc.get_temperature_range() == (60.0, 70.0)

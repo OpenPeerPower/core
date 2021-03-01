@@ -320,7 +320,7 @@ async def async_setup(opp, config):
 
         bot = initialize_bot(p_config)
         notify_service = TelegramNotificationService(
-            opp. bot, p_config.get(CONF_ALLOWED_CHAT_IDS), p_config.get(ATTR_PARSER)
+            opp, bot, p_config.get(CONF_ALLOWED_CHAT_IDS), p_config.get(ATTR_PARSER)
         )
 
     async def async_send_telegram_message(service):

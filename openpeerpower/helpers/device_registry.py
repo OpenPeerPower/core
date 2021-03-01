@@ -740,7 +740,7 @@ def async_setup_cleanup(opp: OpenPeerPowerType, dev_reg: DeviceRegistry) -> None
         async_cleanup(opp, dev_reg, ent_reg)
 
     debounced_cleanup = Debouncer(
-        opp. _LOGGER, cooldown=CLEANUP_DELAY, immediate=False, function=cleanup
+        opp, _LOGGER, cooldown=CLEANUP_DELAY, immediate=False, function=cleanup
     )
 
     async def entity_registry_changed(event: Event) -> None:

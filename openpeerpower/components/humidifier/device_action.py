@@ -93,7 +93,7 @@ async def async_call_action_from_config(
         service_data[const.ATTR_MODE] = config[const.ATTR_MODE]
     else:
         return await toggle_entity.async_call_action_from_config(
-            opp. config, variables, context, DOMAIN
+            opp, config, variables, context, DOMAIN
         )
 
     await opp.services.async_call(

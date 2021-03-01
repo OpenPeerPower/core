@@ -1521,7 +1521,7 @@ async def test_arm_away_after_disabled_disarmed(opp, legacy_patchable_time):
 async def test_restore_armed_state(opp):
     """Ensure armed state is restored on startup."""
     mock_restore_cache(
-        opp. (State("alarm_control_panel.test", STATE_ALARM_ARMED_AWAY),)
+        opp, (State("alarm_control_panel.test", STATE_ALARM_ARMED_AWAY),)
     )
 
     opp.state = CoreState.starting

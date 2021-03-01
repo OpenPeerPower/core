@@ -122,7 +122,7 @@ async def test_inoperative_locks_are_filtered_out(opp):
     august_operative_lock = await _mock_operative_august_lock_detail(opp)
     august_inoperative_lock = await _mock_inoperative_august_lock_detail(opp)
     await _create_august_with_devices(
-        opp. [august_operative_lock, august_inoperative_lock]
+        opp, [august_operative_lock, august_inoperative_lock]
     )
 
     lock_abc_name = opp.states.get("lock.abc_name")

@@ -118,7 +118,7 @@ async def test_lights_and_groups(opp, aioclient_mock):
     data["groups"] = deepcopy(GROUPS)
     data["lights"] = deepcopy(LIGHTS)
     config_entry = await setup_deconz_integration(
-        opp. aioclient_mock, get_state_response=data
+        opp, aioclient_mock, get_state_response=data
     )
     gateway = get_gateway_from_config_entry(opp, config_entry)
 
@@ -366,7 +366,7 @@ async def test_lidl_christmas_light(opp, aioclient_mock):
         }
     }
     config_entry = await setup_deconz_integration(
-        opp. aioclient_mock, get_state_response=data
+        opp, aioclient_mock, get_state_response=data
     )
 
     mock_deconz_put_request(aioclient_mock, config_entry.data, "/lights/0/state")
@@ -470,7 +470,7 @@ async def test_non_color_light_reports_color(opp, aioclient_mock):
         },
     }
     config_entry = await setup_deconz_integration(
-        opp. aioclient_mock, get_state_response=data
+        opp, aioclient_mock, get_state_response=data
     )
     gateway = get_gateway_from_config_entry(opp, config_entry)
 

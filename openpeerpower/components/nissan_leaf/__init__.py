@@ -127,7 +127,7 @@ def setup(opp, config):
                 check_charge_at = utcnow() + timedelta(minutes=1)
                 data_store.next_update = check_charge_at
                 async_track_point_in_utc_time(
-                    opp. data_store.async_update_data, check_charge_at
+                    opp, data_store.async_update_data, check_charge_at
                 )
 
         else:
@@ -174,7 +174,7 @@ def setup(opp, config):
             load_platform(opp, component, DOMAIN, {}, car_config)
 
         async_track_point_in_utc_time(
-            opp. data_store.async_update_data, utcnow() + INITIAL_UPDATE
+            opp, data_store.async_update_data, utcnow() + INITIAL_UPDATE
         )
 
     opp.data[DATA_LEAF] = {}

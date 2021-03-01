@@ -34,7 +34,7 @@ TRIGGER_SCHEMA = vol.Schema(
 
 
 async def async_attach_trigger(
-    opp. config, action, automation_info, *, platform_type: str = "zone"
+    opp, config, action, automation_info, *, platform_type: str = "zone"
 ) -> CALLBACK_TYPE:
     """Listen for state changes based on configuration."""
     entity_id = config.get(CONF_ENTITY_ID)

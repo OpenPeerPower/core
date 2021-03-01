@@ -173,7 +173,7 @@ async def async_setup_integration(opp: OpenPeerPowerType, config: ConfigType) ->
 
     # Clean up stale devices
     async_track_utc_time_change(
-        opp. tracker.async_update_stale, second=range(0, 60, 5)
+        opp, tracker.async_update_stale, second=range(0, 60, 5)
     )
 
     async def async_see_service(call):
@@ -233,7 +233,7 @@ class DeviceTrackerPlatform:
                 )
             elif hasattr(self.platform, "async_setup_scanner"):
                 setup = await self.platform.async_setup_scanner(
-                    opp. self.config, tracker.async_see, discovery_info
+                    opp, self.config, tracker.async_see, discovery_info
                 )
             elif hasattr(self.platform, "setup_scanner"):
                 setup = await opp.async_add_executor_job(
@@ -248,7 +248,7 @@ class DeviceTrackerPlatform:
 
             if scanner:
                 async_setup_scanner_platform(
-                    opp. self.config, scanner, tracker.async_see, self.type
+                    opp, self.config, scanner, tracker.async_see, self.type
                 )
                 return
 

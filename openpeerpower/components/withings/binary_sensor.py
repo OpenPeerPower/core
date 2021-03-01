@@ -20,7 +20,7 @@ async def async_setup_entry(
 ) -> None:
     """Set up the sensor config entry."""
     entities = await async_create_entities(
-        opp. entry, WithingsHealthBinarySensor, BINARY_SENSOR_DOMAIN
+        opp, entry, WithingsHealthBinarySensor, BINARY_SENSOR_DOMAIN
     )
 
     async_add_entities(entities, True)

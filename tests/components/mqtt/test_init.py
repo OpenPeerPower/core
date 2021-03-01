@@ -78,7 +78,7 @@ def record_calls(calls):
 
 
 async def test_mqtt_connects_on_open_peer_power_mqtt_setup(
-    opp. mqtt_client_mock, mqtt_mock
+    opp, mqtt_client_mock, mqtt_mock
 ):
     """Test if client is connected after mqtt init on bootstrap."""
     assert mqtt_client_mock.connect.call_count == 1
@@ -287,7 +287,7 @@ def test_entity_device_info_schema():
 
 
 async def test_receiving_non_utf8_message_gets_logged(
-    opp. mqtt_mock, calls, record_calls, caplog
+    opp, mqtt_mock, calls, record_calls, caplog
 ):
     """Test receiving a non utf8 encoded message."""
     await mqtt.async_subscribe(opp, "test-topic", record_calls)
@@ -301,7 +301,7 @@ async def test_receiving_non_utf8_message_gets_logged(
 
 
 async def test_all_subscriptions_run_when_decode_fails(
-    opp. mqtt_mock, calls, record_calls
+    opp, mqtt_mock, calls, record_calls
 ):
     """Test all other subscriptions still run when decode fails for one."""
     await mqtt.async_subscribe(opp, "test-topic", record_calls, encoding="ascii")
@@ -406,7 +406,7 @@ async def test_subscribe_topic_level_wildcard(opp, mqtt_mock, calls, record_call
 
 
 async def test_subscribe_topic_level_wildcard_no_subtree_match(
-    opp. mqtt_mock, calls, record_calls
+    opp, mqtt_mock, calls, record_calls
 ):
     """Test the subscription of wildcard topics."""
     await mqtt.async_subscribe(opp, "test-topic/+/on", record_calls)
@@ -418,7 +418,7 @@ async def test_subscribe_topic_level_wildcard_no_subtree_match(
 
 
 async def test_subscribe_topic_level_wildcard_root_topic_no_subtree_match(
-    opp. mqtt_mock, calls, record_calls
+    opp, mqtt_mock, calls, record_calls
 ):
     """Test the subscription of wildcard topics."""
     await mqtt.async_subscribe(opp, "test-topic/#", record_calls)
@@ -430,7 +430,7 @@ async def test_subscribe_topic_level_wildcard_root_topic_no_subtree_match(
 
 
 async def test_subscribe_topic_subtree_wildcard_subtree_topic(
-    opp. mqtt_mock, calls, record_calls
+    opp, mqtt_mock, calls, record_calls
 ):
     """Test the subscription of wildcard topics."""
     await mqtt.async_subscribe(opp, "test-topic/#", record_calls)
@@ -444,7 +444,7 @@ async def test_subscribe_topic_subtree_wildcard_subtree_topic(
 
 
 async def test_subscribe_topic_subtree_wildcard_root_topic(
-    opp. mqtt_mock, calls, record_calls
+    opp, mqtt_mock, calls, record_calls
 ):
     """Test the subscription of wildcard topics."""
     await mqtt.async_subscribe(opp, "test-topic/#", record_calls)
@@ -458,7 +458,7 @@ async def test_subscribe_topic_subtree_wildcard_root_topic(
 
 
 async def test_subscribe_topic_subtree_wildcard_no_match(
-    opp. mqtt_mock, calls, record_calls
+    opp, mqtt_mock, calls, record_calls
 ):
     """Test the subscription of wildcard topics."""
     await mqtt.async_subscribe(opp, "test-topic/#", record_calls)
@@ -470,7 +470,7 @@ async def test_subscribe_topic_subtree_wildcard_no_match(
 
 
 async def test_subscribe_topic_level_wildcard_and_wildcard_root_topic(
-    opp. mqtt_mock, calls, record_calls
+    opp, mqtt_mock, calls, record_calls
 ):
     """Test the subscription of wildcard topics."""
     await mqtt.async_subscribe(opp, "+/test-topic/#", record_calls)
@@ -484,7 +484,7 @@ async def test_subscribe_topic_level_wildcard_and_wildcard_root_topic(
 
 
 async def test_subscribe_topic_level_wildcard_and_wildcard_subtree_topic(
-    opp. mqtt_mock, calls, record_calls
+    opp, mqtt_mock, calls, record_calls
 ):
     """Test the subscription of wildcard topics."""
     await mqtt.async_subscribe(opp, "+/test-topic/#", record_calls)
@@ -498,7 +498,7 @@ async def test_subscribe_topic_level_wildcard_and_wildcard_subtree_topic(
 
 
 async def test_subscribe_topic_level_wildcard_and_wildcard_level_no_match(
-    opp. mqtt_mock, calls, record_calls
+    opp, mqtt_mock, calls, record_calls
 ):
     """Test the subscription of wildcard topics."""
     await mqtt.async_subscribe(opp, "+/test-topic/#", record_calls)
@@ -510,7 +510,7 @@ async def test_subscribe_topic_level_wildcard_and_wildcard_level_no_match(
 
 
 async def test_subscribe_topic_level_wildcard_and_wildcard_no_match(
-    opp. mqtt_mock, calls, record_calls
+    opp, mqtt_mock, calls, record_calls
 ):
     """Test the subscription of wildcard topics."""
     await mqtt.async_subscribe(opp, "+/test-topic/#", record_calls)
@@ -534,7 +534,7 @@ async def test_subscribe_topic_sys_root(opp, mqtt_mock, calls, record_calls):
 
 
 async def test_subscribe_topic_sys_root_and_wildcard_topic(
-    opp. mqtt_mock, calls, record_calls
+    opp, mqtt_mock, calls, record_calls
 ):
     """Test the subscription of $ root and wildcard topics."""
     await mqtt.async_subscribe(opp, "$test-topic/#", record_calls)
@@ -548,7 +548,7 @@ async def test_subscribe_topic_sys_root_and_wildcard_topic(
 
 
 async def test_subscribe_topic_sys_root_and_wildcard_subtree_topic(
-    opp. mqtt_mock, calls, record_calls
+    opp, mqtt_mock, calls, record_calls
 ):
     """Test the subscription of $ root and wildcard subtree topics."""
     await mqtt.async_subscribe(opp, "$test-topic/subtree/#", record_calls)
@@ -609,7 +609,7 @@ async def test_subscribe_same_topic(opp, mqtt_client_mock, mqtt_mock):
 
 
 async def test_not_calling_unsubscribe_with_active_subscribers(
-    opp. mqtt_client_mock, mqtt_mock
+    opp, mqtt_client_mock, mqtt_mock
 ):
     """Test not calling unsubscribe() when other subscribers are active."""
     # Fake that the client is connected
@@ -650,7 +650,7 @@ async def test_restore_subscriptions_on_reconnect(opp, mqtt_client_mock, mqtt_mo
     [{mqtt.CONF_BROKER: "mock-broker", mqtt.CONF_DISCOVERY: False}],
 )
 async def test_restore_all_active_subscriptions_on_reconnect(
-    opp. mqtt_client_mock, mqtt_mock
+    opp, mqtt_client_mock, mqtt_mock
 ):
     """Test active subscriptions are restored correctly on reconnect."""
     # Fake that the client is connected

@@ -67,7 +67,7 @@ async def async_setup(opp, config):
 
 
 async def async_setup_entry(
-    opp. core.OpenPeerPower, entry: config_entries.ConfigEntry
+    opp, core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Set up a bridge from a config entry."""
 

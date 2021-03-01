@@ -46,7 +46,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType):
     opp.data.setdefault(DOMAIN, {})
 
     await integration_platform.async_process_integration_platforms(
-        opp. DOMAIN, _register_system_health_platform
+        opp, DOMAIN, _register_system_health_platform
     )
 
     return True

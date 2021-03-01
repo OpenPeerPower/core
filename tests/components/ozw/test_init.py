@@ -220,7 +220,7 @@ async def test_setup_entry_without_addon_info(opp, get_addon_discovery_info):
 
 
 async def test_unload_entry_with_addon(
-    opp. get_addon_discovery_info, generic_data, switch_msg, caplog
+    opp, get_addon_discovery_info, generic_data, switch_msg, caplog
 ):
     """Test unload the config entry using the OpenZWave add-on."""
     entry = MockConfigEntry(

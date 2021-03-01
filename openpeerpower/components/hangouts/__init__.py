@@ -112,11 +112,11 @@ async def async_setup_entry(opp, config):
         return False
 
     dispatcher.async_dispatcher_connect(
-        opp. EVENT_HANGOUTS_CONNECTED, bot.async_handle_update_users_and_conversations
+        opp, EVENT_HANGOUTS_CONNECTED, bot.async_handle_update_users_and_conversations
     )
 
     dispatcher.async_dispatcher_connect(
-        opp. EVENT_HANGOUTS_CONVERSATIONS_CHANGED, bot.async_resolve_conversations
+        opp, EVENT_HANGOUTS_CONVERSATIONS_CHANGED, bot.async_resolve_conversations
     )
 
     dispatcher.async_dispatcher_connect(

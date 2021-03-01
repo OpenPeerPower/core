@@ -169,7 +169,7 @@ def setup_platform(opp, config, add_entities_callback, discovery_info=None):
         destination = config.get(CONF_DESTINATION)
 
         sensor = GoogleTravelTimeSensor(
-            opp. name, api_key, origin, destination, options
+            opp, name, api_key, origin, destination, options
         )
         opp.data[DATA_KEY].append(sensor)
 

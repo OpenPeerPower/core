@@ -63,7 +63,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
 
     gateway.listeners.append(
         async_dispatcher_connect(
-            opp. gateway.async_signal_new_device(NEW_LIGHT), async_add_light
+            opp, gateway.async_signal_new_device(NEW_LIGHT), async_add_light
         )
     )
 
@@ -89,7 +89,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
 
     gateway.listeners.append(
         async_dispatcher_connect(
-            opp. gateway.async_signal_new_device(NEW_GROUP), async_add_group
+            opp, gateway.async_signal_new_device(NEW_GROUP), async_add_group
         )
     )
 

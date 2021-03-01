@@ -15,7 +15,7 @@ async def test_binary_sensors(opp, config_entry, aioclient_mock_fixture):
     """Test Flo by Moen sensors."""
     config_entry.add_to_opp(opp)
     assert await async_setup_component(
-        opp. FLO_DOMAIN, {CONF_USERNAME: TEST_USER_ID, CONF_PASSWORD: TEST_PASSWORD}
+        opp, FLO_DOMAIN, {CONF_USERNAME: TEST_USER_ID, CONF_PASSWORD: TEST_PASSWORD}
     )
     await opp.async_block_till_done()
 

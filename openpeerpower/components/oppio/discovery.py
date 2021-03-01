@@ -57,8 +57,8 @@ class OppIODiscovery(OpenPeerPowerView):
 
     def __init__(self, opp.OpenPeerPowerView, opp.):
         """Initialize WebView."""
-        self.opp. opp
-        self.opp. = opp,
+        self.opp, opp
+        self.opp, = opp,
 
     async def post(self, request, uuid):
         """Handle new discovery requests."""

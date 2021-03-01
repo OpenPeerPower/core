@@ -21,7 +21,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_platform(
-    opp. config, async_add_entities, discovery_info=None
+    opp, config, async_add_entities, discovery_info=None
 ) -> None:
     """Set up Sure PetCare Flaps sensors based on a config entry."""
     if discovery_info is None:

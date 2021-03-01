@@ -74,7 +74,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         )
         await opp.async_add_executor_job(_log_objects)
         domain_data[LOG_INTERVAL_SUB] = async_track_time_interval(
-            opp. _log_objects, call.data[CONF_SCAN_INTERVAL]
+            opp, _log_objects, call.data[CONF_SCAN_INTERVAL]
         )
 
     async def _async_stop_log_objects(call: ServiceCall):

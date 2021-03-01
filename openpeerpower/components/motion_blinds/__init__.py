@@ -31,7 +31,7 @@ def setup_opp: core.OpenPeerPower, config: dict):
 
 
 async def async_setup_entry(
-    opp. core.OpenPeerPower, entry: config_entries.ConfigEntry
+    opp, core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Set up the motion_blinds components from a config entry."""
     opp.data.setdefault(DOMAIN, {})
@@ -116,7 +116,7 @@ async def async_setup_entry(
 
 
 async def async_unload_entry(
-    opp. core.OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp, core.OpenPeerPower, config_entry: config_entries.ConfigEntry
 ):
     """Unload a config entry."""
     unload_ok = all(

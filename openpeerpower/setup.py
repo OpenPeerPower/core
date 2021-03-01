@@ -42,7 +42,7 @@ def setup_component(opp: core.OpenPeerPower, domain: str, config: ConfigType) ->
 
 
 async def async_setup_component(
-    opp. core.OpenPeerPower, domain: str, config: ConfigType
+    opp, core.OpenPeerPower, domain: str, config: ConfigType
 ) -> bool:
     """Set up a component and all its dependencies.
 
@@ -68,7 +68,7 @@ async def async_setup_component(
 
 
 async def _async_process_dependencies(
-    opp. core.OpenPeerPower, config: ConfigType, integration: loader.Integration
+    opp, core.OpenPeerPower, config: ConfigType, integration: loader.Integration
 ) -> bool:
     """Ensure all dependencies are set up."""
     dependencies_tasks = {
@@ -126,7 +126,7 @@ async def _async_process_dependencies(
 
 
 async def _async_setup_component(
-    opp. core.OpenPeerPower, domain: str, config: ConfigType
+    opp, core.OpenPeerPower, domain: str, config: ConfigType
 ) -> bool:
     """Set up a component for Open Peer Power.
 
@@ -172,7 +172,7 @@ async def _async_setup_component(
         return False
 
     processed_config = await conf_util.async_process_component_config(
-        opp. config, integration
+        opp, config, integration
     )
 
     if processed_config is None:
@@ -267,7 +267,7 @@ async def _async_setup_component(
 
 
 async def async_prepare_setup_platform(
-    opp. core.OpenPeerPower, opp_config: ConfigType, domain: str, platform_name: str
+    opp, core.OpenPeerPower, opp_config: ConfigType, domain: str, platform_name: str
 ) -> Optional[ModuleType]:
     """Load a platform and makes sure dependencies are setup.
 
@@ -322,7 +322,7 @@ async def async_prepare_setup_platform(
 
 
 async def async_process_deps_reqs(
-    opp. core.OpenPeerPower, config: ConfigType, integration: loader.Integration
+    opp, core.OpenPeerPower, config: ConfigType, integration: loader.Integration
 ) -> None:
     """Process all dependencies and requirements for a module.
 
@@ -341,7 +341,7 @@ async def async_process_deps_reqs(
     if not opp.config.skip_pip and integration.requirements:
         async with.opp.timeout.async_freeze(integration.domain):
             await requirements.async_get_integration_with_requirements(
-                opp. integration.domain
+                opp, integration.domain
             )
 
     processed.add(integration.domain)
@@ -349,7 +349,7 @@ async def async_process_deps_reqs(
 
 @core.callback
 def async_when_setup(
-    opp. core.OpenPeerPower,
+    opp, core.OpenPeerPower,
     component: str,
     when_setup_cb: Callable[[core.OpenPeerPower, str], Awaitable[None]],
 ) -> None:

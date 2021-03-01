@@ -175,7 +175,7 @@ async def async_setup_platform(
         server_port = config.get(CONF_LISTEN_PORT, DEFAULT_LISTEN_PORT)
         callback_url_override = config.get(CONF_CALLBACK_URL_OVERRIDE)
         event_handler = await async_start_event_handler(
-            opp. server_host, server_port, requester, callback_url_override
+            opp, server_host, server_port, requester, callback_url_override
         )
 
     # create upnp device

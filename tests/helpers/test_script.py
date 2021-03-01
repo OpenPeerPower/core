@@ -55,7 +55,7 @@ async def test_firing_event_basic(opp, caplog):
         {"alias": alias, "event": event, "event_data": {"hello": "world"}}
     )
     script_obj = script.Script(
-        opp. sequence, "Test Name", "test_domain", running_description="test script"
+        opp, sequence, "Test Name", "test_domain", running_description="test script"
     )
 
     await script_obj.async_run(context=context)
@@ -229,7 +229,7 @@ async def test_multiple_runs_no_wait(opp):
         ]
     )
     script_obj = script.Script(
-        opp. sequence, "Test Name", "test_domain", script_mode="parallel", max_runs=2
+        opp, sequence, "Test Name", "test_domain", script_mode="parallel", max_runs=2
     )
 
     # Start script twice in such a way that second run will be started while first run
@@ -364,7 +364,7 @@ async def test_multiple_runs_delay(opp):
         ]
     )
     script_obj = script.Script(
-        opp. sequence, "Test Name", "test_domain", script_mode="parallel", max_runs=2
+        opp, sequence, "Test Name", "test_domain", script_mode="parallel", max_runs=2
     )
     delay_started_flag = async_watch_for_action(script_obj, "delay")
 
@@ -656,7 +656,7 @@ async def test_multiple_runs_wait(opp, action_type):
         ]
     )
     script_obj = script.Script(
-        opp. sequence, "Test Name", "test_domain", script_mode="parallel", max_runs=2
+        opp, sequence, "Test Name", "test_domain", script_mode="parallel", max_runs=2
     )
     wait_started_flag = async_watch_for_action(script_obj, "wait")
 
@@ -805,7 +805,7 @@ async def test_wait_timeout(opp, caplog, timeout_param, action_type):
 )
 @pytest.mark.parametrize("action_type", ["template", "trigger"])
 async def test_wait_continue_on_timeout(
-    opp. continue_on_timeout, n_events, action_type
+    opp, continue_on_timeout, n_events, action_type
 ):
     """Test the wait continue_on_timeout option."""
     event = "test_event"
@@ -1118,7 +1118,7 @@ async def test_condition_created_once(async_from_config, opp):
         }
     )
     script_obj = script.Script(
-        opp. sequence, "Test Name", "test_domain", script_mode="parallel", max_runs=2
+        opp, sequence, "Test Name", "test_domain", script_mode="parallel", max_runs=2
     )
 
     async_from_config.reset_mock()
@@ -1215,7 +1215,7 @@ async def test_repeat_condition_warning(opp, caplog, condition):
     }
 
     script_obj = script.Script(
-        opp. cv.SCRIPT_SCHEMA(sequence), f"Test {condition}", "test_domain"
+        opp, cv.SCRIPT_SCHEMA(sequence), f"Test {condition}", "test_domain"
     )
 
     # wait_started = async_watch_for_action(script_obj, "wait")
@@ -1275,7 +1275,7 @@ async def test_repeat_conditional(opp, condition, direct_template):
                 "value_template": template,
             }
     script_obj = script.Script(
-        opp. cv.SCRIPT_SCHEMA(sequence), "Test Name", "test_domain"
+        opp, cv.SCRIPT_SCHEMA(sequence), "Test Name", "test_domain"
     )
 
     wait_started = async_watch_for_action(script_obj, "wait")
@@ -1325,7 +1325,7 @@ async def test_repeat_var_in_condition(opp, condition):
             "value_template": "{{ repeat.index == 2 }}",
         }
     script_obj = script.Script(
-        opp. cv.SCRIPT_SCHEMA(sequence), "Test Name", "test_domain"
+        opp, cv.SCRIPT_SCHEMA(sequence), "Test Name", "test_domain"
     )
 
     with mock.patch(

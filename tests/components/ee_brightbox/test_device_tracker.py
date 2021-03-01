@@ -60,7 +60,7 @@ async def test_missing_credentials(eebrightbox_mock, opp):
     _configure_mock_get_devices(eebrightbox_mock)
 
     result = await async_setup_component(
-        opp. DOMAIN, {DOMAIN: {CONF_PLATFORM: "ee_brightbox"}}
+        opp, DOMAIN, {DOMAIN: {CONF_PLATFORM: "ee_brightbox"}}
     )
 
     assert result

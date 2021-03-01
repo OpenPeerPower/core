@@ -28,7 +28,7 @@ async def async_setup_entry(opp, config_entry):
         """Discover and add a Tasmota device automation."""
         if tasmota_automation.automation_type == AUTOMATION_TYPE_TRIGGER:
             await device_trigger.async_setup_trigger(
-                opp. tasmota_automation, config_entry, discovery_hash
+                opp, tasmota_automation, config_entry, discovery_hash
             )
 
     opp.data[

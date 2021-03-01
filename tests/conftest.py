@@ -309,7 +309,7 @@ def legacy_auth(opp):
 def local_auth(opp):
     """Load local auth provider."""
     prv = openpeerpower.OppAuthProvider(
-        opp. opp.auth._store, {"type": "openpeerpower"}
+        opp, opp.auth._store, {"type": "openpeerpower"}
     )
     opp.loop.run_until_complete(prv.async_initialize())
     opp.auth._providers[(prv.type, prv.id)] = prv
@@ -522,7 +522,7 @@ def legacy_patchable_time():
     @op.callback
     @loader.bind_opp
     def async_track_utc_time_change(
-        opp. action, hour=None, minute=None, second=None, local=False
+        opp, action, hour=None, minute=None, second=None, local=False
     ):
         """Add a listener that will fire if time matches a pattern."""
 

@@ -43,7 +43,7 @@ async def test_async_send_command(mock_hc, opp, mock_write_config):
 
     # No device provided
     await _send_commands_and_wait(
-        opp. {ATTR_ENTITY_ID: ENTITY_REMOTE, ATTR_COMMAND: PLAY_COMMAND}
+        opp, {ATTR_ENTITY_ID: ENTITY_REMOTE, ATTR_COMMAND: PLAY_COMMAND}
     )
     send_commands_mock.assert_not_awaited()
 

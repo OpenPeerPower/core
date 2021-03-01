@@ -114,7 +114,7 @@ async def async_attach_trigger(opp, config, action, automation_info):
 
     numeric_state_config = numeric_state_trigger.TRIGGER_SCHEMA(numeric_state_config)
     return await numeric_state_trigger.async_attach_trigger(
-        opp. numeric_state_config, action, automation_info, platform_type="device"
+        opp, numeric_state_config, action, automation_info, platform_type="device"
     )
 
 

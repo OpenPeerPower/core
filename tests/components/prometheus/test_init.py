@@ -38,12 +38,12 @@ async def prometheus_client(opp, opp_client):
     await async_setup_component(opp, sensor.DOMAIN, {"sensor": [{"platform": "demo"}]})
 
     await async_setup_component(
-        opp. climate.DOMAIN, {"climate": [{"platform": "demo"}]}
+        opp, climate.DOMAIN, {"climate": [{"platform": "demo"}]}
     )
     await opp.async_block_till_done()
 
     await async_setup_component(
-        opp. humidifier.DOMAIN, {"humidifier": [{"platform": "demo"}]}
+        opp, humidifier.DOMAIN, {"humidifier": [{"platform": "demo"}]}
     )
 
     sensor1 = DemoSensor(

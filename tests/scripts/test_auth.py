@@ -38,7 +38,7 @@ async def test_add_user(opp, provider, capsys, opp_storage):
     """Test we can add a user."""
     data = provider.data
     await script_auth.add_user(
-        opp. provider, Mock(username="paulus", password="test-pass")
+        opp, provider, Mock(username="paulus", password="test-pass")
     )
 
     assert len.opp_storage(opp_auth.STORAGE_KEY]["data"]["users"]) == 1
@@ -56,19 +56,19 @@ async def test_validate_login(opp, provider, capsys):
     data.add_auth("test-user", "test-pass")
 
     await script_auth.validate_login(
-        opp. provider, Mock(username="test-user", password="test-pass")
+        opp, provider, Mock(username="test-user", password="test-pass")
     )
     captured = capsys.readouterr()
     assert captured.out == "Auth valid\n"
 
     await script_auth.validate_login(
-        opp. provider, Mock(username="test-user", password="invalid-pass")
+        opp, provider, Mock(username="test-user", password="invalid-pass")
     )
     captured = capsys.readouterr()
     assert captured.out == "Auth invalid\n"
 
     await script_auth.validate_login(
-        opp. provider, Mock(username="invalid-user", password="test-pass")
+        opp, provider, Mock(username="invalid-user", password="test-pass")
     )
     captured = capsys.readouterr()
     assert captured.out == "Auth invalid\n"
@@ -80,7 +80,7 @@ async def test_change_password(opp, provider, capsys, opp_storage):
     data.add_auth("test-user", "test-pass")
 
     await script_auth.change_password(
-        opp. provider, Mock(username="test-user", new_password="new-pass")
+        opp, provider, Mock(username="test-user", new_password="new-pass")
     )
 
     assert len.opp_storage(opp_auth.STORAGE_KEY]["data"]["users"]) == 1
@@ -97,7 +97,7 @@ async def test_change_password_invalid_user(opp, provider, capsys, opp_storage):
     data.add_auth("test-user", "test-pass")
 
     await script_auth.change_password(
-        opp. provider, Mock(username="invalid-user", new_password="new-pass")
+        opp, provider, Mock(username="invalid-user", new_password="new-pass")
     )
 
     assert opp_auth.STORAGE_KEY not in.opp_storage

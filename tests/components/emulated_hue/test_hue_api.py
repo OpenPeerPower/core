@@ -103,7 +103,7 @@ def.opp_hue(loop, opp):
 
     loop.run_until_complete(
         setup.async_setup_component(
-            opp. http.DOMAIN, {http.DOMAIN: {http.CONF_SERVER_PORT: HTTP_SERVER_PORT}}
+            opp, http.DOMAIN, {http.DOMAIN: {http.CONF_SERVER_PORT: HTTP_SERVER_PORT}}
         )
     )
 
@@ -123,7 +123,7 @@ def.opp_hue(loop, opp):
 
     loop.run_until_complete(
         setup.async_setup_component(
-            opp. light.DOMAIN, {"light": [{"platform": "demo"}]}
+            opp, light.DOMAIN, {"light": [{"platform": "demo"}]}
         )
     )
 
@@ -151,19 +151,19 @@ def.opp_hue(loop, opp):
 
     loop.run_until_complete(
         setup.async_setup_component(
-            opp. climate.DOMAIN, {"climate": [{"platform": "demo"}]}
+            opp, climate.DOMAIN, {"climate": [{"platform": "demo"}]}
         )
     )
 
     loop.run_until_complete(
         setup.async_setup_component(
-            opp. humidifier.DOMAIN, {"humidifier": [{"platform": "demo"}]}
+            opp, humidifier.DOMAIN, {"humidifier": [{"platform": "demo"}]}
         )
     )
 
     loop.run_until_complete(
         setup.async_setup_component(
-            opp. media_player.DOMAIN, {"media_player": [{"platform": "demo"}]}
+            opp, media_player.DOMAIN, {"media_player": [{"platform": "demo"}]}
         )
     )
 
@@ -173,7 +173,7 @@ def.opp_hue(loop, opp):
 
     loop.run_until_complete(
         setup.async_setup_component(
-            opp. cover.DOMAIN, {"cover": [{"platform": "demo"}]}
+            opp, cover.DOMAIN, {"cover": [{"platform": "demo"}]}
         )
     )
 
@@ -300,7 +300,7 @@ async def test_lights_all_dimmable(opp, aiohttp_client):
     # create a lamp without brightness support
     opp.states.async_set("light.no_brightness", "on", {})
     await setup.async_setup_component(
-        opp. http.DOMAIN, {http.DOMAIN: {http.CONF_SERVER_PORT: HTTP_SERVER_PORT}}
+        opp, http.DOMAIN, {http.DOMAIN: {http.CONF_SERVER_PORT: HTTP_SERVER_PORT}}
     )
     await opp.async_block_till_done()
     hue_config = {

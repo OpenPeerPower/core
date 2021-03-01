@@ -36,7 +36,7 @@ from tests.components.nws.const import (
     ],
 )
 async def test_imperial_metric(
-    opp. units, result_observation, result_forecast, mock_simple_nws
+    opp, units, result_observation, result_forecast, mock_simple_nws
 ):
     """Test with imperial and metric units."""
     # enable the hourly entity

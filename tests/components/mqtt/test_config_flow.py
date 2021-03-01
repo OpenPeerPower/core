@@ -105,7 +105,7 @@ async def test_oppio_single_instance(opp):
     MockConfigEntry(domain="mqtt").add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
-        "mqtt", context={"source":  "opp.o"}
+        "mqtt", context={"source": "opp.o"}
     )
     assert result["type"] == "abort"
     assert result["reason"] == "single_instance_allowed"
@@ -125,7 +125,7 @@ async def test_oppio_confirm(opp, mock_try_connection, mock_finish_setup):
             "password": "mock-pass",
             "protocol": "3.1.1",
         },
-        context={"source":  "opp.o"},
+        context={"source": "opp.o"},
     )
     assert result["type"] == "form"
     assert result["step_id"] == "oppio_confirm"

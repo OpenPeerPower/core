@@ -181,7 +181,7 @@ async def test_configuring_discovery_disabled(opp):
         "openpeerpower.components.tplink.common.Discover.discover", return_value=[]
     ) as discover:
         await async_setup_component(
-            opp. tplink.DOMAIN, {tplink.DOMAIN: {tplink.CONF_DISCOVERY: False}}
+            opp, tplink.DOMAIN, {tplink.DOMAIN: {tplink.CONF_DISCOVERY: False}}
         )
         await opp.async_block_till_done()
 

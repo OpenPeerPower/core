@@ -59,7 +59,7 @@ async def async_setup(opp, config):
         try:
             if hasattr(platform, "async_get_handler"):
                 mailbox = await platform.async_get_handler(
-                    opp. p_config, discovery_info
+                    opp, p_config, discovery_info
                 )
             elif hasattr(platform, "get_handler"):
                 mailbox = await opp.async_add_executor_job(

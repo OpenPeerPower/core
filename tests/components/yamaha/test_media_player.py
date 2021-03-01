@@ -62,7 +62,7 @@ async def test_setup_no_host(opp, device, main_zone):
     """Test set up integration without host."""
     with patch("rxv.find", return_value=[device]):
         assert await async_setup_component(
-            opp. mp.DOMAIN, {"media_player": {"platform": "yamaha"}}
+            opp, mp.DOMAIN, {"media_player": {"platform": "yamaha"}}
         )
         await opp.async_block_till_done()
 
@@ -81,7 +81,7 @@ async def test_setup_discovery(opp, device, main_zone):
         "description_url": "http://receiver/description",
     }
     await async_load_platform(
-        opp. mp.DOMAIN, "yamaha", discovery_info, {mp.DOMAIN: {}}
+        opp, mp.DOMAIN, "yamaha", discovery_info, {mp.DOMAIN: {}}
     )
     await opp.async_block_till_done()
 

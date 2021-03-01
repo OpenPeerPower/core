@@ -288,7 +288,7 @@ class MockStatusPlayingBluetooth(Status):
 async def test_ensure_setup_config(mocked_status, mocked_volume, opp, one_device):
     """Test setup OK with custom config."""
     await setup_soundtouch(
-        opp. get_config(host="192.168.1.44", port=8888, name="custom_sound")
+        opp, get_config(host="192.168.1.44", port=8888, name="custom_sound")
     )
 
     assert one_device.call_count == 1

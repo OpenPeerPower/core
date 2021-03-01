@@ -232,7 +232,7 @@ async def test_turn_on(
     device_id,
 ):
     """Test turning on a light."""
-    # Note pytradfri style, not opp. Values not really important.
+    # Note pytradfri style, not opp, Values not really important.
     initial_state = {
         "state": False,
         "dimmer": 0,

@@ -693,7 +693,7 @@ async def merge_packages_config(
 
             try:
                 integration = await async_get_integration_with_requirements(
-                    opp. domain
+                    opp, domain
                 )
                 component = integration.get_component()
             except INTEGRATION_LOAD_EXCEPTIONS as ex:
@@ -774,7 +774,7 @@ async def async_process_component_config(
     ):
         try:
             return await config_validator.async_validate_config(  # type: ignore
-                opp. config
+                opp, config
             )
         except (vol.Invalid, OpenPeerPowerError) as ex:
             async_log_exception(ex, domain, config, opp, integration.documentation)
@@ -916,5 +916,5 @@ def async_notify_setup_error(
     message += "\nPlease check your config and [logs](/config/logs)."
 
     persistent_notification.async_create(
-        opp. message, "Invalid config", "invalid_config"
+        opp, message, "Invalid config", "invalid_config"
     )

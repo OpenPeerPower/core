@@ -146,7 +146,7 @@ async def test_restore_state(opp):
 async def test_initial_state_overrules_restore_state(opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
-        opp. (State("input_boolean.b1", "on"), State("input_boolean.b2", "off"))
+        opp, (State("input_boolean.b1", "on"), State("input_boolean.b2", "off"))
     )
 
     opp.state = CoreState.starting

@@ -80,5 +80,5 @@ async def async_attach_trigger(opp, config, action, automation_info):
             )
 
     return async_track_state_change_filtered(
-        opp. TrackStates(False, set(), {DOMAIN}), state_change_listener
+        opp, TrackStates(False, set(), {DOMAIN}), state_change_listener
     ).async_remove

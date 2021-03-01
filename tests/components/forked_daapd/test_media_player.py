@@ -270,7 +270,7 @@ SAMPLE_PLAYLISTS = [{"id": 7, "name": "test_playlist", "uri": "library:playlist:
 
 @pytest.fixture(name="config_entry")
 def config_entry_fixture():
-    """Create.opp config_entry fixture."""
+    """Create opp config_entry fixture."""
     data = {
         CONF_HOST: "192.168.1.1",
         CONF_PORT: "2345",
@@ -318,7 +318,7 @@ async def mock_api_object_fixture(opp, config_entry, get_request_return_values):
         mock_api.return_value.get_pipes.return_value = SAMPLE_PIPES
         mock_api.return_value.get_playlists.return_value = SAMPLE_PLAYLISTS
         config_entry.add_to_opp(opp)
-        await config_entry.async_setup_opp)
+        await config_entry.async_setup(opp)
         await opp.async_block_till_done()
 
     mock_api.return_value.start_websocket_handler.assert_called_once()

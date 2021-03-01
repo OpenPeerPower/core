@@ -162,7 +162,7 @@ async def test_setup_with_custom_location(opp):
 
         with assert_setup_component(1, geo_location.DOMAIN):
             assert await async_setup_component(
-                opp. geo_location.DOMAIN, CONFIG_WITH_CUSTOM_LOCATION
+                opp, geo_location.DOMAIN, CONFIG_WITH_CUSTOM_LOCATION
             )
             await opp.async_block_till_done()
 

@@ -1142,27 +1142,27 @@ async def test_services_androidtv(opp):
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[patch_key]:
         with patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
             assert await async_setup_component(
-                opp. DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER
+                opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER
             )
             await opp.async_block_till_done()
 
         with patchers.patch_shell(SHELL_RESPONSE_STANDBY)[patch_key]:
             await _test_service(
-                opp. entity_id, SERVICE_MEDIA_NEXT_TRACK, "media_next_track"
+                opp, entity_id, SERVICE_MEDIA_NEXT_TRACK, "media_next_track"
             )
             await _test_service(opp, entity_id, SERVICE_MEDIA_PAUSE, "media_pause")
             await _test_service(opp, entity_id, SERVICE_MEDIA_PLAY, "media_play")
             await _test_service(
-                opp. entity_id, SERVICE_MEDIA_PLAY_PAUSE, "media_play_pause"
+                opp, entity_id, SERVICE_MEDIA_PLAY_PAUSE, "media_play_pause"
             )
             await _test_service(
-                opp. entity_id, SERVICE_MEDIA_PREVIOUS_TRACK, "media_previous_track"
+                opp, entity_id, SERVICE_MEDIA_PREVIOUS_TRACK, "media_previous_track"
             )
             await _test_service(opp, entity_id, SERVICE_MEDIA_STOP, "media_stop")
             await _test_service(opp, entity_id, SERVICE_TURN_OFF, "turn_off")
             await _test_service(opp, entity_id, SERVICE_TURN_ON, "turn_on")
             await _test_service(
-                opp. entity_id, SERVICE_VOLUME_DOWN, "volume_down", return_value=0.1
+                opp, entity_id, SERVICE_VOLUME_DOWN, "volume_down", return_value=0.1
             )
             await _test_service(
                 opp,
@@ -1180,7 +1180,7 @@ async def test_services_androidtv(opp):
                 0.5,
             )
             await _test_service(
-                opp. entity_id, SERVICE_VOLUME_UP, "volume_up", return_value=0.2
+                opp, entity_id, SERVICE_VOLUME_UP, "volume_up", return_value=0.2
             )
 
 
@@ -1209,7 +1209,7 @@ async def test_connection_closed_on_op_stop(opp):
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[patch_key]:
         with patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
             assert await async_setup_component(
-                opp. DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER
+                opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER
             )
             await opp.async_block_till_done()
 

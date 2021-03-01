@@ -60,12 +60,12 @@ async def async_setup_entry_from_discovery(opp, config_entry, async_add_entities
         _async_setup_entity, opp, async_add_entities, config_entry=config_entry
     )
     await async_setup_entry_helper(
-        opp. device_tracker.DOMAIN, setup, PLATFORM_SCHEMA_DISCOVERY
+        opp, device_tracker.DOMAIN, setup, PLATFORM_SCHEMA_DISCOVERY
     )
 
 
 async def _async_setup_entity(
-    opp. async_add_entities, config, config_entry=None, discovery_data=None
+    opp, async_add_entities, config, config_entry=None, discovery_data=None
 ):
     """Set up the MQTT Device Tracker entity."""
     async_add_entities([MqttDeviceTracker.opp, config, config_entry, discovery_data)])

@@ -295,7 +295,7 @@ async def test_auth_static_token_success(opp: OpenPeerPowerType) -> None:
     ):
         result = await _configure_flow(opp, result, user_input=TEST_HOST_PORT)
         result = await _configure_flow(
-            opp. result, user_input={CONF_CREATE_TOKEN: False, CONF_TOKEN: TEST_TOKEN}
+            opp, result, user_input={CONF_CREATE_TOKEN: False, CONF_TOKEN: TEST_TOKEN}
         )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -325,7 +325,7 @@ async def test_auth_static_token_login_fail(opp: OpenPeerPowerType) -> None:
     ):
         result = await _configure_flow(opp, result, user_input=TEST_HOST_PORT)
         result = await _configure_flow(
-            opp. result, user_input={CONF_CREATE_TOKEN: False, CONF_TOKEN: TEST_TOKEN}
+            opp, result, user_input={CONF_CREATE_TOKEN: False, CONF_TOKEN: TEST_TOKEN}
         )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -354,7 +354,7 @@ async def test_auth_create_token_approval_declined(opp: OpenPeerPowerType) -> No
         return_value=TEST_AUTH_ID,
     ):
         result = await _configure_flow(
-            opp. result, user_input={CONF_CREATE_TOKEN: True}
+            opp, result, user_input={CONF_CREATE_TOKEN: True}
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -399,7 +399,7 @@ async def test_auth_create_token_when_issued_token_fails(
         return_value=TEST_AUTH_ID,
     ):
         result = await _configure_flow(
-            opp. result, user_input={CONF_CREATE_TOKEN: True}
+            opp, result, user_input={CONF_CREATE_TOKEN: True}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "create_token"
@@ -443,7 +443,7 @@ async def test_auth_create_token_success(opp: OpenPeerPowerType) -> None:
         return_value=TEST_AUTH_ID,
     ):
         result = await _configure_flow(
-            opp. result, user_input={CONF_CREATE_TOKEN: True}
+            opp, result, user_input={CONF_CREATE_TOKEN: True}
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result["step_id"] == "create_token"
@@ -565,7 +565,7 @@ async def test_ssdp_failure_bad_port_ui(opp: OpenPeerPowerType) -> None:
         client.async_request_token = AsyncMock(return_value=TEST_REQUEST_TOKEN_FAIL)
 
         result = await _configure_flow(
-            opp. result, user_input={CONF_CREATE_TOKEN: True}
+            opp, result, user_input={CONF_CREATE_TOKEN: True}
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -585,10 +585,10 @@ async def test_ssdp_abort_duplicates(opp: OpenPeerPowerType) -> None:
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
     ):
         result_1 = await _init_flow(
-            opp. source=SOURCE_SSDP, data=TEST_SSDP_SERVICE_INFO
+            opp, source=SOURCE_SSDP, data=TEST_SSDP_SERVICE_INFO
         )
         result_2 = await _init_flow(
-            opp. source=SOURCE_SSDP, data=TEST_SSDP_SERVICE_INFO
+            opp, source=SOURCE_SSDP, data=TEST_SSDP_SERVICE_INFO
         )
         await opp.async_block_till_done()
 
@@ -660,7 +660,7 @@ async def test_reauth_success(opp: OpenPeerPowerType) -> None:
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
         result = await _configure_flow(
-            opp. result, user_input={CONF_CREATE_TOKEN: False, CONF_TOKEN: TEST_TOKEN}
+            opp, result, user_input={CONF_CREATE_TOKEN: False, CONF_TOKEN: TEST_TOKEN}
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT

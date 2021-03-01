@@ -16,7 +16,7 @@ async def test_setting_rising(opp, legacy_patchable_time):
     utc_now = datetime(2016, 11, 1, 8, 0, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.helpers.condition.dt_util.utcnow", return_value=utc_now):
         await async_setup_component(
-            opp. sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
+            opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
         )
 
     await opp.async_block_till_done()
@@ -107,7 +107,7 @@ async def test_state_change(opp, legacy_patchable_time):
     now = datetime(2016, 6, 1, 8, 0, 0, tzinfo=dt_util.UTC)
     with patch("openpeerpower.helpers.condition.dt_util.utcnow", return_value=now):
         await async_setup_component(
-            opp. sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
+            opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
         )
 
     await opp.async_block_till_done()
@@ -144,7 +144,7 @@ async def test_norway_in_june(opp):
 
     with patch("openpeerpower.helpers.condition.dt_util.utcnow", return_value=june):
         assert await async_setup_component(
-            opp. sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
+            opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
         )
 
     state = opp.states.get(sun.ENTITY_ID)
@@ -172,7 +172,7 @@ async def test_state_change_count(opp):
 
     with patch("openpeerpower.helpers.condition.dt_util.utcnow", return_value=now):
         assert await async_setup_component(
-            opp. sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
+            opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
         )
 
     events = []

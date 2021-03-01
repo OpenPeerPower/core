@@ -110,7 +110,7 @@ async def test_setup_api_push_api_data(opp, aioclient_mock):
     """Test setup with API push."""
     with patch.dict(os.environ, MOCK_ENVIRON):
         result = await async_setup_component(
-            opp.  opp.o", {"http": {"server_port": 9999},  opp.o": {}}
+            opp,  opp.o", {"http": {"server_port": 9999},  opp.o": {}}
         )
         assert result
 

@@ -48,11 +48,11 @@ class TestView(http.OpenPeerPowerView):
 
 
 async def test_registering_view_while_running(
-    opp. aiohttp_client, aiohttp_unused_port
+    opp, aiohttp_client, aiohttp_unused_port
 ):
     """Test that we can register a view while the server is running."""
     await async_setup_component(
-        opp. http.DOMAIN, {http.DOMAIN: {http.CONF_SERVER_PORT: aiohttp_unused_port()}}
+        opp, http.DOMAIN, {http.DOMAIN: {http.CONF_SERVER_PORT: aiohttp_unused_port()}}
     )
 
     await opp.async_start()

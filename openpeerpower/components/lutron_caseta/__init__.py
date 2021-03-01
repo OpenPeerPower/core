@@ -168,7 +168,7 @@ async def async_setup_lip(opp, config_entry, lip_devices):
     _LOGGER.debug("Connected to Lutron Caseta bridge via LIP at %s:23", host)
     button_devices_by_lip_id = _async_merge_lip_leap_data(lip_devices, bridge)
     button_devices_by_dr_id = await _async_register_button_devices(
-        opp. config_entry_id, bridge_device, button_devices_by_lip_id
+        opp, config_entry_id, bridge_device, button_devices_by_lip_id
     )
     _async_subscribe_pico_remote_events(opp, lip, button_devices_by_lip_id)
     data[BUTTON_DEVICES] = button_devices_by_dr_id
@@ -217,7 +217,7 @@ async def _async_register_bridge_device(opp, config_entry_id, bridge_device):
 
 
 async def _async_register_button_devices(
-    opp. config_entry_id, bridge_device, button_devices_by_id
+    opp, config_entry_id, bridge_device, button_devices_by_id
 ):
     """Register button devices (Pico Remotes) in the device registry."""
     device_registry = await dr.async_get_registry(opp)

@@ -1,4 +1,4 @@
-"""Websocekt API handlers for the opp. integration."""
+"""Websocekt API handlers for the opp, integration."""
 import logging
 
 import voluptuous as vol

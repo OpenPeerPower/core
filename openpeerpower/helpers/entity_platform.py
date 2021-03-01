@@ -225,7 +225,7 @@ class EntityPlatform:
                 await self._async_setup_platform(async_create_setup_task, tries)
 
             self._async_cancel_retry_setup = async_call_later(
-                opp. wait_time, setup_again
+                opp, wait_time, setup_again
             )
             return False
         except asyncio.TimeoutError:

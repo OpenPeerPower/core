@@ -50,7 +50,7 @@ async def async_call_action_from_config(
 ) -> None:
     """Perform an action based on configuration."""
     await ZOP_ACTION_TYPES[DEVICE_ACTION_TYPES[config[CONF_TYPE]]](
-        opp. config, variables, context
+        opp, config, variables, context
     )
 
 

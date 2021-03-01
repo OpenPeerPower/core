@@ -30,7 +30,7 @@ AUTH_CALLBACK_NAME = "api:logi_circle"
 
 @callback
 def register_flow_implementation(
-    opp. domain, client_id, client_secret, api_key, redirect_uri, sensors
+    opp, domain, client_id, client_secret, api_key, redirect_uri, sensors
 ):
     """Register a flow implementation.
 

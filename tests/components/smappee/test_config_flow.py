@@ -335,7 +335,7 @@ async def test_abort_cloud_flow_if_local_device_exists(opp):
 
 
 async def test_full_user_flow(
-    opp. aiohttp_client, aioclient_mock, current_request_with_host
+    opp, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Check full flow."""
     assert await setup.async_setup_component(

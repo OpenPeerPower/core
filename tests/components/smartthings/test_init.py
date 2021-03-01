@@ -170,7 +170,7 @@ async def test_scenes_unauthorized_loads_platforms(
     ]
     smartthings_mock.subscriptions.return_value = subscriptions
 
-    with patch.object.opp.config_entries, "async_forward_entry_setup") as forward_mock:
+    with patch.object(opp.config_entries, "async_forward_entry_setup") as forward_mock:
         assert await smartthings.async_setup_entry(opp, config_entry)
         # Assert platforms loaded
         await opp.async_block_till_done()
@@ -202,7 +202,7 @@ async def test_config_entry_loads_platforms(
     ]
     smartthings_mock.subscriptions.return_value = subscriptions
 
-    with patch.object.opp.config_entries, "async_forward_entry_setup") as forward_mock:
+    with patch.object(opp.config_entries, "async_forward_entry_setup") as forward_mock:
         assert await smartthings.async_setup_entry(opp, config_entry)
         # Assert platforms loaded
         await opp.async_block_till_done()
@@ -234,7 +234,7 @@ async def test_config_entry_loads_unconnected_cloud(
         subscription_factory(capability) for capability in device.capabilities
     ]
     smartthings_mock.subscriptions.return_value = subscriptions
-    with patch.object.opp.config_entries, "async_forward_entry_setup") as forward_mock:
+    with patch.object(opp.config_entries, "async_forward_entry_setup") as forward_mock:
         assert await smartthings.async_setup_entry(opp, config_entry)
         await opp.async_block_till_done()
         assert forward_mock.call_count == len(SUPPORTED_PLATFORMS)
@@ -245,7 +245,7 @@ async def test_unload_entry(opp, config_entry):
     connect_disconnect = Mock()
     smart_app = Mock()
     smart_app.connect_event.return_value = connect_disconnect
-    broker = smartthings.DeviceBroker.opp, config_entry, Mock(), smart_app, [], [])
+    broker = smartthings.DeviceBroker(opp, config_entry, Mock(), smart_app, [], [])
     broker.connect()
     opp.data[DOMAIN][DATA_BROKERS][config_entry.entry_id] = broker
 
@@ -394,7 +394,7 @@ async def test_broker_regenerates_token(opp, config_entry):
         "openpeerpower.components.smartthings.async_track_time_interval",
         new=async_track_time_interval,
     ):
-        broker = smartthings.DeviceBroker.opp, config_entry, token, Mock(), [], [])
+        broker = smartthings.DeviceBroker(opp, config_entry, token, Mock(), [], [])
         broker.connect()
 
     assert stored_action
@@ -440,7 +440,7 @@ async def test_event_handler_dispatches_updated_devices(
 
     async_dispatcher_connect(opp, SIGNAL_SMARTTHINGS_UPDATE, signal)
 
-    broker = smartthings.DeviceBroker.opp, config_entry, Mock(), Mock(), devices, [])
+    broker = smartthings.DeviceBroker(opp, config_entry, Mock(), Mock(), devices, [])
     broker.connect()
 
     # pylint:disable=protected-access
@@ -467,7 +467,7 @@ async def test_event_handler_ignores_other_installed_app(
         called = True
 
     async_dispatcher_connect(opp, SIGNAL_SMARTTHINGS_UPDATE, signal)
-    broker = smartthings.DeviceBroker.opp, config_entry, Mock(), Mock(), [device], [])
+    broker = smartthings.DeviceBroker(opp, config_entry, Mock(), Mock(), [device], [])
     broker.connect()
 
     # pylint:disable=protected-access
@@ -505,7 +505,7 @@ async def test_event_handler_fires_button_events(
         }
 
     opp.bus.async_listen(EVENT_BUTTON, handler)
-    broker = smartthings.DeviceBroker.opp, config_entry, Mock(), Mock(), [device], [])
+    broker = smartthings.DeviceBroker(opp, config_entry, Mock(), Mock(), [device], [])
     broker.connect()
 
     # pylint:disable=protected-access

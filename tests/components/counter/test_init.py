@@ -197,7 +197,7 @@ async def test_methods_with_config(opp):
 async def test_initial_state_overrules_restore_state(opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
-        opp. (State("counter.test1", "11"), State("counter.test2", "-22"))
+        opp, (State("counter.test1", "11"), State("counter.test2", "-22"))
     )
 
     opp.state = CoreState.starting
@@ -239,7 +239,7 @@ async def test_restore_state_overrules_initial_state(opp):
     opp.state = CoreState.starting
 
     await async_setup_component(
-        opp. DOMAIN, {DOMAIN: {"test1": {}, "test2": {CONF_INITIAL: 10}, "test3": {}}}
+        opp, DOMAIN, {DOMAIN: {"test1": {}, "test2": {CONF_INITIAL: 10}, "test3": {}}}
     )
 
     state = opp.states.get("counter.test1")

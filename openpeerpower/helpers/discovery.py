@@ -22,7 +22,7 @@ ATTR_PLATFORM = "platform"
 
 @bind.opp
 def listen(
-    opp. core.OpenPeerPower,
+    opp, core.OpenPeerPower,
     service: Union[str, Collection[str]],
     callback: CALLBACK_TYPE,
 ) -> None:
@@ -36,7 +36,7 @@ def listen(
 @core.callback
 @bind.opp
 def async_listen(
-    opp. core.OpenPeerPower,
+    opp, core.OpenPeerPower,
     service: Union[str, Collection[str]],
     callback: CALLBACK_TYPE,
 ) -> None:
@@ -65,7 +65,7 @@ def async_listen(
 
 @bind.opp
 def discover(
-    opp. core.OpenPeerPower,
+    opp, core.OpenPeerPower,
     service: str,
     discovered: DiscoveryInfoType,
     component: str,
@@ -74,14 +74,14 @@ def discover(
     """Fire discovery event. Can ensure a component is loaded."""
     opp.add_job(
         async_discover(  # type: ignore
-            opp. service, discovered, component, opp_config
+            opp, service, discovered, component, opp_config
         )
     )
 
 
 @bind.opp
 async def async_discover(
-    opp. core.OpenPeerPower,
+    opp, core.OpenPeerPower,
     service: str,
     discovered: Optional[DiscoveryInfoType],
     component: Optional[str],
@@ -101,7 +101,7 @@ async def async_discover(
 
 @bind.opp
 def listen_platform(
-    opp. core.OpenPeerPower, component: str, callback: CALLBACK_TYPE
+    opp, core.OpenPeerPower, component: str, callback: CALLBACK_TYPE
 ) -> None:
     """Register a platform loader listener."""
     run_callback_threadsafe(
@@ -111,7 +111,7 @@ def listen_platform(
 
 @bind.opp
 def async_listen_platform(
-    opp. core.OpenPeerPower,
+    opp, core.OpenPeerPower,
     component: str,
     callback: Callable[[str, Optional[Dict[str, Any]]], Any],
 ) -> None:
@@ -141,7 +141,7 @@ def async_listen_platform(
 
 @bind.opp
 def load_platform(
-    opp. core.OpenPeerPower,
+    opp, core.OpenPeerPower,
     component: str,
     platform: str,
     discovered: DiscoveryInfoType,
@@ -159,14 +159,14 @@ def load_platform(
     """
     opp.add_job(
         async_load_platform(  # type: ignore
-            opp. component, platform, discovered, opp_config
+            opp, component, platform, discovered, opp_config
         )
     )
 
 
 @bind.opp
 async def async_load_platform(
-    opp. core.OpenPeerPower,
+    opp, core.OpenPeerPower,
     component: str,
     platform: str,
     discovered: DiscoveryInfoType,

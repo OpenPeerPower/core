@@ -81,7 +81,7 @@ async def test_notify_leaving_zone(opp):
         await opp.async_block_till_done()
 
         assert len(mock_call_action.mock_calls) == 1
-         opp. config, variables, _context = mock_call_action.mock_calls[0][1]
+         opp, config, variables, _context = mock_call_action.mock_calls[0][1]
         message_tpl = config.pop("message")
         assert config == {
             "domain": "mobile_app",

@@ -880,7 +880,7 @@ async def test_attach_remove_late(opp, device_reg, mqtt_mock, setup_tasmota):
     assert len(calls) == 1
 
 
-async def test_attach_remove_late2.opp, device_reg, mqtt_mock, setup_tasmota):
+async def test_attach_remove_late2(opp, device_reg, mqtt_mock, setup_tasmota):
     """Test attach and removal of trigger."""
     # Discover a device without device triggers
     config1 = copy.deepcopy(DEFAULT_CONFIG)
@@ -930,7 +930,7 @@ async def test_attach_remove_late2.opp, device_reg, mqtt_mock, setup_tasmota):
     assert len(calls) == 0
 
 
-async def test_attach_remove_unknown1.opp, device_reg, mqtt_mock, setup_tasmota):
+async def test_attach_remove_unknown1(opp, device_reg, mqtt_mock, setup_tasmota):
     """Test attach and removal of unknown trigger."""
     # Discover a device without device triggers
     config1 = copy.deepcopy(DEFAULT_CONFIG)

@@ -398,7 +398,7 @@ async def test_media_player_television_basic(opp, hk_driver, events, caplog):
 
 
 async def test_media_player_television_supports_source_select_no_sources(
-    opp. hk_driver, events, caplog
+    opp, hk_driver, events, caplog
 ):
     """Test if basic tv that supports source select but is missing a source list."""
     entity_id = "media_player.television"
@@ -446,7 +446,7 @@ async def test_tv_restore(opp, hk_driver, events):
     await opp.async_block_till_done()
 
     acc = TelevisionMediaPlayer(
-        opp. hk_driver, "MediaPlayer", "media_player.simple", 2, None
+        opp, hk_driver, "MediaPlayer", "media_player.simple", 2, None
     )
     assert acc.category == 31
     assert acc.chars_tv == [CHAR_REMOTE_KEY]
@@ -455,7 +455,7 @@ async def test_tv_restore(opp, hk_driver, events):
     assert not hasattr(acc, "char_input_source")
 
     acc = TelevisionMediaPlayer(
-        opp. hk_driver, "MediaPlayer", "media_player.all_info_set", 2, None
+        opp, hk_driver, "MediaPlayer", "media_player.all_info_set", 2, None
     )
     assert acc.category == 31
     assert acc.chars_tv == [CHAR_REMOTE_KEY]

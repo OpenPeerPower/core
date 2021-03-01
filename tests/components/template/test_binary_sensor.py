@@ -40,7 +40,7 @@ async def test_setup_no_sensors(opp):
     """Test setup with no sensors."""
     with assert_setup_component(0):
         assert await setup.async_setup_component(
-            opp. binary_sensor.DOMAIN, {"binary_sensor": {"platform": "template"}}
+            opp, binary_sensor.DOMAIN, {"binary_sensor": {"platform": "template"}}
         )
 
 

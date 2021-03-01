@@ -330,7 +330,7 @@ async def test_homekit_add_accessory(opp, mock_zeroconf):
 
 @pytest.mark.parametrize("acc_category", [CATEGORY_TELEVISION, CATEGORY_CAMERA])
 async def test_homekit_warn_add_accessory_bridge(
-    opp. acc_category, mock_zeroconf, caplog
+    opp, acc_category, mock_zeroconf, caplog
 ):
     """Test we warn when adding cameras or tvs to a bridge."""
     entry = await async_init_integration(opp)
@@ -733,7 +733,7 @@ async def test_homekit_too_many_accessories(opp, hk_driver, caplog, mock_zerocon
 
 
 async def test_homekit_finds_linked_batteries(
-    opp. hk_driver, device_reg, entity_reg, mock_zeroconf
+    opp, hk_driver, device_reg, entity_reg, mock_zeroconf
 ):
     """Test HomeKit start method."""
     entry = await async_init_integration(opp)
@@ -819,7 +819,7 @@ async def test_homekit_finds_linked_batteries(
 
 
 async def test_homekit_async_get_integration_fails(
-    opp. hk_driver, device_reg, entity_reg, mock_zeroconf
+    opp, hk_driver, device_reg, entity_reg, mock_zeroconf
 ):
     """Test that we continue if async_get_integration fails."""
     entry = await async_init_integration(opp)
@@ -985,7 +985,7 @@ def _write_data(path: str, data: Dict) -> None:
 
 
 async def test_homekit_ignored_missing_devices(
-    opp. hk_driver, device_reg, entity_reg, mock_zeroconf
+    opp, hk_driver, device_reg, entity_reg, mock_zeroconf
 ):
     """Test HomeKit handles a device in the entity registry but missing from the device registry."""
     entry = await async_init_integration(opp)
@@ -1066,7 +1066,7 @@ async def test_homekit_ignored_missing_devices(
 
 
 async def test_homekit_finds_linked_motion_sensors(
-    opp. hk_driver, device_reg, entity_reg, mock_zeroconf
+    opp, hk_driver, device_reg, entity_reg, mock_zeroconf
 ):
     """Test HomeKit start method."""
     entry = await async_init_integration(opp)
@@ -1141,7 +1141,7 @@ async def test_homekit_finds_linked_motion_sensors(
 
 
 async def test_homekit_finds_linked_humidity_sensors(
-    opp. hk_driver, device_reg, entity_reg, mock_zeroconf
+    opp, hk_driver, device_reg, entity_reg, mock_zeroconf
 ):
     """Test HomeKit start method."""
     entry = await async_init_integration(opp)

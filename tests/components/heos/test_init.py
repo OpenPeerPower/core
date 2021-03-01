@@ -68,7 +68,7 @@ async def test_async_setup_no_config_returns_true(opp, config_entry):
 
 
 async def test_async_setup_entry_loads_platforms(
-    opp. config_entry, controller, input_sources, favorites
+    opp, config_entry, controller, input_sources, favorites
 ):
     """Test load connects to heos, retrieves players, and loads platforms."""
     config_entry.add_to_opp(opp)
@@ -89,7 +89,7 @@ async def test_async_setup_entry_loads_platforms(
 
 
 async def test_async_setup_entry_not_signed_in_loads_platforms(
-    opp. config_entry, controller, input_sources, caplog
+    opp, config_entry, controller, input_sources, caplog
 ):
     """Test setup does not retrieve favorites when not logged in."""
     config_entry.add_to_opp(opp)

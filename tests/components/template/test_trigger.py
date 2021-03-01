@@ -484,7 +484,7 @@ async def test_if_fires_on_change_with_bad_template(opp, calls):
         )
 
 
-async def test_if_fires_on_change_with_bad_template_2.opp, calls):
+async def test_if_fires_on_change_with_bad_template_2(opp, calls):
     """Test for firing on change with bad template."""
     assert await async_setup_component(
         opp,
@@ -622,7 +622,7 @@ async def test_if_fires_on_change_with_for_advanced(opp, calls):
     assert "template - test.entity - hello - world - 0:00:05" == calls[0].data["some"]
 
 
-async def test_if_fires_on_change_with_for_0.opp, calls):
+async def test_if_fires_on_change_with_for_0(opp, calls):
     """Test for firing on change with for: 0."""
     assert await async_setup_component(
         opp,
@@ -685,7 +685,7 @@ async def test_if_fires_on_change_with_for_0_advanced(opp, calls):
     assert calls[0].data["some"] == "template - test.entity - hello - world - 0:00:00"
 
 
-async def test_if_fires_on_change_with_for_2.opp, calls):
+async def test_if_fires_on_change_with_for_2(opp, calls):
     """Test for firing on change with for."""
     context = Context()
     assert await async_setup_component(
@@ -793,7 +793,7 @@ async def test_if_not_fires_when_turned_off_with_for(opp, calls):
     assert len(calls) == 0
 
 
-async def test_if_fires_on_change_with_for_template_1.opp, calls):
+async def test_if_fires_on_change_with_for_template_1(opp, calls):
     """Test for firing on change with for template."""
     assert await async_setup_component(
         opp,
@@ -818,7 +818,7 @@ async def test_if_fires_on_change_with_for_template_1.opp, calls):
     assert len(calls) == 1
 
 
-async def test_if_fires_on_change_with_for_template_2.opp, calls):
+async def test_if_fires_on_change_with_for_template_2(opp, calls):
     """Test for firing on change with for template."""
     assert await async_setup_component(
         opp,
@@ -843,7 +843,7 @@ async def test_if_fires_on_change_with_for_template_2.opp, calls):
     assert len(calls) == 1
 
 
-async def test_if_fires_on_change_with_for_template_3.opp, calls):
+async def test_if_fires_on_change_with_for_template_3(opp, calls):
     """Test for firing on change with for template."""
     assert await async_setup_component(
         opp,
@@ -868,7 +868,7 @@ async def test_if_fires_on_change_with_for_template_3.opp, calls):
     assert len(calls) == 1
 
 
-async def test_invalid_for_template_1.opp, calls):
+async def test_invalid_for_template_1(opp, calls):
     """Test for invalid for template."""
     assert await async_setup_component(
         opp,

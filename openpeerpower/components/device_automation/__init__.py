@@ -93,12 +93,12 @@ async def async_get_device_automation_platform(
 
 
 async def _async_get_device_automations_from_domain(
-    opp. domain, automation_type, device_id
+    opp, domain, automation_type, device_id
 ):
     """List device automations."""
     try:
         platform = await async_get_device_automation_platform(
-            opp. domain, automation_type
+            opp, domain, automation_type
         )
     except InvalidDeviceAutomationConfig:
         return None
@@ -133,7 +133,7 @@ async def _async_get_device_automations(opp, automation_type, device_id):
     device_automations = await asyncio.gather(
         *(
             _async_get_device_automations_from_domain(
-                opp. domain, automation_type, device_id
+                opp, domain, automation_type, device_id
             )
             for domain in domains
         )
@@ -149,7 +149,7 @@ async def _async_get_device_automation_capabilities(opp, automation_type, automa
     """List device automations."""
     try:
         platform = await async_get_device_automation_platform(
-            opp. automation[CONF_DOMAIN], automation_type
+            opp, automation[CONF_DOMAIN], automation_type
         )
     except InvalidDeviceAutomationConfig:
         return {}

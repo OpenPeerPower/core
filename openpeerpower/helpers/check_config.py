@@ -106,7 +106,7 @@ async def async_check_op_config_file(opp: OpenPeerPower) -> OpenPeerPowerConfig:
 
     # Merge packages
     await merge_packages_config(
-        opp. config, core_config.get(CONF_PACKAGES, {}), _pack_error
+        opp, config, core_config.get(CONF_PACKAGES, {}), _pack_error
     )
     core_config.pop(CONF_PACKAGES, None)
 
@@ -145,7 +145,7 @@ async def async_check_op_config_file(opp: OpenPeerPower) -> OpenPeerPowerConfig:
             try:
                 result[domain] = (
                     await config_validator.async_validate_config(  # type: ignore
-                        opp. config
+                        opp, config
                     )
                 )[domain]
                 continue
@@ -199,7 +199,7 @@ async def async_check_op_config_file(opp: OpenPeerPower) -> OpenPeerPowerConfig:
 
             try:
                 p_integration = await async_get_integration_with_requirements(
-                    opp. p_name
+                    opp, p_name
                 )
                 platform = p_integration.get_platform(domain)
             except (

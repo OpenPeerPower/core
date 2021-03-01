@@ -103,7 +103,7 @@ class SpeechResult:
 class Provider(ABC):
     """Represent a single STT provider."""
 
-    opp. Optional[OpenPeerPowerType] = None
+    opp, Optional[OpenPeerPowerType] = None
     name: Optional[str] = None
 
     @property

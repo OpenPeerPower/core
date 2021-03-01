@@ -97,7 +97,7 @@ async def test_heater_input_boolean(opp, setup_comp_1):
     """Test heater switching input_boolean."""
     heater_switch = "input_boolean.test"
     assert await async_setup_component(
-        opp. input_boolean.DOMAIN, {"input_boolean": {"test": None}}
+        opp, input_boolean.DOMAIN, {"input_boolean": {"test": None}}
     )
 
     assert await async_setup_component(
@@ -130,7 +130,7 @@ async def test_heater_switch(opp, setup_comp_1):
     platform.init()
     switch_1 = platform.ENTITIES[1]
     assert await async_setup_component(
-        opp. switch.DOMAIN, {"switch": {"platform": "test"}}
+        opp, switch.DOMAIN, {"switch": {"platform": "test"}}
     )
     await opp.async_block_till_done()
     heater_switch = switch_1.entity_id

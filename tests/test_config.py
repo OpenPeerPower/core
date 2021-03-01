@@ -353,7 +353,7 @@ async def test_loading_configuration_from_storage(opp, opp_storage):
         "version": 1,
     }
     await config_util.async_process_op_core_config(
-        opp. {"allowlist_external_dirs": "/etc"}
+        opp, {"allowlist_external_dirs": "/etc"}
     )
 
     assert opp.config.latitude == 55
@@ -384,7 +384,7 @@ async def test_loading_configuration_from_storage_with_yaml_only(opp, opp_storag
         "version": 1,
     }
     await config_util.async_process_op_core_config(
-        opp. {"media_dirs": {"mymedia": "/usr"}, "allowlist_external_dirs": "/etc"}
+        opp, {"media_dirs": {"mymedia": "/usr"}, "allowlist_external_dirs": "/etc"}
     )
 
     assert opp.config.latitude == 55
@@ -417,7 +417,7 @@ async def test_updating_configuration(opp, opp_storage):
     }
     opp.storage["core.config"] = dict(core_data)
     await config_util.async_process_op_core_config(
-        opp. {"allowlist_external_dirs": "/etc"}
+        opp, {"allowlist_external_dirs": "/etc"}
     )
     await opp.config.async_update(latitude=50)
 
@@ -442,7 +442,7 @@ async def test_override_stored_configuration(opp, opp_storage):
         "version": 1,
     }
     await config_util.async_process_op_core_config(
-        opp. {"latitude": 60, "allowlist_external_dirs": "/etc"}
+        opp, {"latitude": 60, "allowlist_external_dirs": "/etc"}
     )
 
     assert opp.config.latitude == 60

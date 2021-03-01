@@ -139,7 +139,7 @@ async def async_setup(opp, config):
         try:
             if hasattr(platform, "async_get_engine"):
                 provider = await platform.async_get_engine(
-                    opp. p_config, discovery_info
+                    opp, p_config, discovery_info
                 )
             else:
                 provider = await opp.async_add_executor_job(
@@ -490,7 +490,7 @@ class SpeechManager:
 class Provider:
     """Represent a single TTS provider."""
 
-    opp. Optional[OpenPeerPowerType] = None
+    opp, Optional[OpenPeerPowerType] = None
     name: Optional[str] = None
 
     @property

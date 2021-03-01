@@ -344,10 +344,10 @@ def async_register_services(opp):
     )
     async_dispatcher_connect(opp, SIGNAL_SAVE_DEVICES, async_srv_save_devices)
     async_dispatcher_connect(
-        opp. SIGNAL_ADD_DEVICE_OVERRIDE, async_add_device_override
+        opp, SIGNAL_ADD_DEVICE_OVERRIDE, async_add_device_override
     )
     async_dispatcher_connect(
-        opp. SIGNAL_REMOVE_DEVICE_OVERRIDE, async_remove_device_override
+        opp, SIGNAL_REMOVE_DEVICE_OVERRIDE, async_remove_device_override
     )
     async_dispatcher_connect(opp, SIGNAL_ADD_X10_DEVICE, async_add_x10_device)
     async_dispatcher_connect(opp, SIGNAL_REMOVE_X10_DEVICE, async_remove_x10_device)
@@ -380,7 +380,7 @@ def print_aldb_to_log(aldb):
 
 @callback
 def async_add_insteon_entities(
-    opp. platform, entity_type, async_add_entities, discovery_info
+    opp, platform, entity_type, async_add_entities, discovery_info
 ):
     """Add Insteon devices to a platform."""
     new_entities = []

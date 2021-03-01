@@ -79,7 +79,7 @@ async def test_setup_opp):
     """Test the setup with custom settings."""
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(
-            opp. sensor.DOMAIN, {"sensor": VALID_CONFIG}
+            opp, sensor.DOMAIN, {"sensor": VALID_CONFIG}
         )
         await opp.async_block_till_done()
 

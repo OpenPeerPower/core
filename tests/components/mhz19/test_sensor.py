@@ -20,7 +20,7 @@ async def test_setup_missing_config(opp):
     """Test setup with configuration missing required entries."""
     with assert_setup_component(0):
         assert await async_setup_component(
-            opp. DOMAIN, {"sensor": {"platform": "mhz19"}}
+            opp, DOMAIN, {"sensor": {"platform": "mhz19"}}
         )
 
 

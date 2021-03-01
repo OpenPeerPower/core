@@ -21,7 +21,7 @@ _LOGGER = logging.getLogger(__name__)
 def async_setup(opp: OpenPeerPower):
     """Set up cloud account link."""
     config_entry_oauth2_flow.async_add_implementation_provider(
-        opp. DOMAIN, async_provide_implementation
+        opp, DOMAIN, async_provide_implementation
     )
 
 

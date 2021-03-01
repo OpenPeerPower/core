@@ -68,14 +68,14 @@ async def test_sending_mqtt_commands(opp, mqtt_mock):
 async def test_availability_when_connection_lost(opp, mqtt_mock):
     """Test availability after MQTT disconnection."""
     await help_test_availability_when_connection_lost(
-        opp. mqtt_mock, scene.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, scene.DOMAIN, DEFAULT_CONFIG
     )
 
 
 async def test_availability_without_topic(opp, mqtt_mock):
     """Test availability without defined availability topic."""
     await help_test_availability_without_topic(
-        opp. mqtt_mock, scene.DOMAIN, DEFAULT_CONFIG
+        opp, mqtt_mock, scene.DOMAIN, DEFAULT_CONFIG
     )
 
 
@@ -91,7 +91,7 @@ async def test_default_availability_payload(opp, mqtt_mock):
     }
 
     await help_test_default_availability_payload(
-        opp. mqtt_mock, scene.DOMAIN, config, True, "state-topic", "1"
+        opp, mqtt_mock, scene.DOMAIN, config, True, "state-topic", "1"
     )
 
 
@@ -107,7 +107,7 @@ async def test_custom_availability_payload(opp, mqtt_mock):
     }
 
     await help_test_custom_availability_payload(
-        opp. mqtt_mock, scene.DOMAIN, config, True, "state-topic", "1"
+        opp, mqtt_mock, scene.DOMAIN, config, True, "state-topic", "1"
     )
 
 
@@ -166,7 +166,7 @@ async def test_discovery_update_unchanged_scene(opp, mqtt_mock, caplog):
         "openpeerpower.components.mqtt.scene.MqttScene.discovery_update"
     ) as discovery_update:
         await help_test_discovery_update_unchanged(
-            opp. mqtt_mock, caplog, scene.DOMAIN, data1, discovery_update
+            opp, mqtt_mock, caplog, scene.DOMAIN, data1, discovery_update
         )
 
 
@@ -176,5 +176,5 @@ async def test_discovery_broken(opp, mqtt_mock, caplog):
     data1 = '{ "name": "Beer" }'
     data2 = '{ "name": "Milk",' '  "command_topic": "test_topic" }'
     await help_test_discovery_broken(
-        opp. mqtt_mock, caplog, scene.DOMAIN, data1, data2
+        opp, mqtt_mock, caplog, scene.DOMAIN, data1, data2
     )

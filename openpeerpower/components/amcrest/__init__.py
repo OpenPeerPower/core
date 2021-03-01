@@ -232,7 +232,7 @@ def setup(opp, config):
         password = device[CONF_PASSWORD]
 
         api = AmcrestChecker(
-            opp. name, device[CONF_HOST], device[CONF_PORT], username, password
+            opp, name, device[CONF_HOST], device[CONF_PORT], username, password
         )
 
         ffmpeg_arguments = device[CONF_FFMPEG_ARGUMENTS]
@@ -278,7 +278,7 @@ def setup(opp, config):
 
         if sensors:
             discovery.load_platform(
-                opp. SENSOR, DOMAIN, {CONF_NAME: name, CONF_SENSORS: sensors}, config
+                opp, SENSOR, DOMAIN, {CONF_NAME: name, CONF_SENSORS: sensors}, config
             )
 
     if not opp.data[DATA_AMCREST][DEVICES]:

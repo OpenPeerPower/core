@@ -70,7 +70,7 @@ class MetDataUpdateCoordinator(DataUpdateCoordinator):
         """Initialize global Met data updater."""
         self._unsub_track_home = None
         self.weather = MetWeatherData(
-            opp. config_entry.data, opp.config.units.is_metric
+            opp, config_entry.data, opp.config.units.is_metric
         )
         self.weather.init_data()
 

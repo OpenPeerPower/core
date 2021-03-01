@@ -438,7 +438,7 @@ async def test_replay_past_chromecasts(opp):
     zconf_2 = get_fake_zconf(host="host2", port=8009)
 
     discover_cast, _, add_dev1 = await async_setup_cast_internal_discovery(
-        opp. config={"uuid": FakeUUID}
+        opp, config={"uuid": FakeUUID}
     )
 
     with patch(
@@ -474,7 +474,7 @@ async def test_manual_cast_chromecasts_uuid(opp):
 
     # Manual configuration of media player with host "configured_host"
     discover_cast, _, add_dev1 = await async_setup_cast_internal_discovery(
-        opp. config={"uuid": FakeUUID}
+        opp, config={"uuid": FakeUUID}
     )
     with patch(
         "openpeerpower.components.cast.discovery.ChromeCastZeroconf.get_zeroconf",
@@ -1248,7 +1248,7 @@ async def test_failed_cast_internal_url(opp, caplog):
     )
     with assert_setup_component(1, tts.DOMAIN):
         assert await async_setup_component(
-            opp. tts.DOMAIN, {tts.DOMAIN: {"platform": "demo"}}
+            opp, tts.DOMAIN, {tts.DOMAIN: {"platform": "demo"}}
         )
 
     info = get_fake_chromecast_info()

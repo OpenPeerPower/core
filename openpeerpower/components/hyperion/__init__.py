@@ -259,7 +259,7 @@ async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
         for instance_num in set(existing_instances) - running_instances:
             del existing_instances[instance_num]
             async_dispatcher_send(
-                opp. SIGNAL_INSTANCE_REMOVE.format(config_entry.entry_id), instance_num
+                opp, SIGNAL_INSTANCE_REMOVE.format(config_entry.entry_id), instance_num
             )
 
         # Deregister entities that belong to removed instances.

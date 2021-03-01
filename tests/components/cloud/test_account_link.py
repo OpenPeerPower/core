@@ -164,7 +164,7 @@ async def test_implementation(opp, flow_handler):
 
     assert (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(
-            opp. entry
+            opp, entry
         )
         is impl
     )

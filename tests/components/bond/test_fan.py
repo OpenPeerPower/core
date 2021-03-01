@@ -41,7 +41,7 @@ def ceiling_fan(name: str):
 
 
 async def turn_fan_on(
-    opp. core.OpenPeerPower,
+    opp, core.OpenPeerPower,
     fan_id: str,
     speed: Optional[str] = None,
     percentage: Optional[int] = None,
@@ -131,7 +131,7 @@ async def test_fan_speed_with_no_max_seed(opp: core.OpenPeerPower):
 async def test_turn_on_fan_with_speed(opp: core.OpenPeerPower):
     """Tests that turn on command delegates to set speed API."""
     await setup_platform(
-        opp. FAN_DOMAIN, ceiling_fan("name-1"), bond_device_id="test-device-id"
+        opp, FAN_DOMAIN, ceiling_fan("name-1"), bond_device_id="test-device-id"
     )
 
     with patch_bond_action() as mock_set_speed, patch_bond_device_state():
@@ -143,7 +143,7 @@ async def test_turn_on_fan_with_speed(opp: core.OpenPeerPower):
 async def test_turn_on_fan_with_percentage_3_speeds(opp: core.OpenPeerPower):
     """Tests that turn on command delegates to set speed API."""
     await setup_platform(
-        opp. FAN_DOMAIN, ceiling_fan("name-1"), bond_device_id="test-device-id"
+        opp, FAN_DOMAIN, ceiling_fan("name-1"), bond_device_id="test-device-id"
     )
 
     with patch_bond_action() as mock_set_speed, patch_bond_device_state():
@@ -195,7 +195,7 @@ async def test_turn_on_fan_with_percentage_6_speeds(opp: core.OpenPeerPower):
 async def test_turn_on_fan_without_speed(opp: core.OpenPeerPower):
     """Tests that turn on command delegates to turn on API."""
     await setup_platform(
-        opp. FAN_DOMAIN, ceiling_fan("name-1"), bond_device_id="test-device-id"
+        opp, FAN_DOMAIN, ceiling_fan("name-1"), bond_device_id="test-device-id"
     )
 
     with patch_bond_action() as mock_turn_on, patch_bond_device_state():
@@ -207,7 +207,7 @@ async def test_turn_on_fan_without_speed(opp: core.OpenPeerPower):
 async def test_turn_on_fan_with_off_speed(opp: core.OpenPeerPower):
     """Tests that turn on command delegates to turn off API."""
     await setup_platform(
-        opp. FAN_DOMAIN, ceiling_fan("name-1"), bond_device_id="test-device-id"
+        opp, FAN_DOMAIN, ceiling_fan("name-1"), bond_device_id="test-device-id"
     )
 
     with patch_bond_action() as mock_turn_off, patch_bond_device_state():
@@ -219,7 +219,7 @@ async def test_turn_on_fan_with_off_speed(opp: core.OpenPeerPower):
 async def test_set_speed_off(opp: core.OpenPeerPower):
     """Tests that set_speed(off) command delegates to turn off API."""
     await setup_platform(
-        opp. FAN_DOMAIN, ceiling_fan("name-1"), bond_device_id="test-device-id"
+        opp, FAN_DOMAIN, ceiling_fan("name-1"), bond_device_id="test-device-id"
     )
 
     with patch_bond_action() as mock_turn_off, patch_bond_device_state():
@@ -237,7 +237,7 @@ async def test_set_speed_off(opp: core.OpenPeerPower):
 async def test_turn_off_fan(opp: core.OpenPeerPower):
     """Tests that turn off command delegates to API."""
     await setup_platform(
-        opp. FAN_DOMAIN, ceiling_fan("name-1"), bond_device_id="test-device-id"
+        opp, FAN_DOMAIN, ceiling_fan("name-1"), bond_device_id="test-device-id"
     )
 
     with patch_bond_action() as mock_turn_off, patch_bond_device_state():
@@ -299,7 +299,7 @@ async def test_update_reports_direction_reverse(opp: core.OpenPeerPower):
 async def test_set_fan_direction(opp: core.OpenPeerPower):
     """Tests that set direction command delegates to API."""
     await setup_platform(
-        opp. FAN_DOMAIN, ceiling_fan("name-1"), bond_device_id="test-device-id"
+        opp, FAN_DOMAIN, ceiling_fan("name-1"), bond_device_id="test-device-id"
     )
 
     with patch_bond_action() as mock_set_direction, patch_bond_device_state():
@@ -319,5 +319,5 @@ async def test_set_fan_direction(opp: core.OpenPeerPower):
 async def test_fan_available(opp: core.OpenPeerPower):
     """Tests that available state is updated based on API errors."""
     await help_test_entity_available(
-        opp. FAN_DOMAIN, ceiling_fan("name-1"), "fan.name_1"
+        opp, FAN_DOMAIN, ceiling_fan("name-1"), "fan.name_1"
     )

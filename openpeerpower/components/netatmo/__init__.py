@@ -95,7 +95,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Netatmo from a config entry."""
     implementation = (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(
-            opp. entry
+            opp, entry
         )
     )
 
@@ -157,7 +157,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
         try:
             webhook_register(
-                opp. DOMAIN, "Netatmo", entry.data[CONF_WEBHOOK_ID], handle_webhook
+                opp, DOMAIN, "Netatmo", entry.data[CONF_WEBHOOK_ID], handle_webhook
             )
 
             async def handle_event(event):

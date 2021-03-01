@@ -67,7 +67,7 @@ def setup_zop(opp, config_entry, zigpy_app_controller):
         config = config or {}
         with p1:
             status = await async_setup_component(
-                opp. zha_const.DOMAIN, {zha_const.DOMAIN: {**zha_config, **config}}
+                opp, zha_const.DOMAIN, {zha_const.DOMAIN: {**zha_config, **config}}
             )
             assert status is True
             await opp.async_block_till_done()

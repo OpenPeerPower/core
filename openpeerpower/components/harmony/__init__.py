@@ -99,7 +99,7 @@ def _async_import_options_from_data_if_missing(opp: OpenPeerPower, entry: Config
 async def _update_listener(opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
     async_dispatcher_send(
-        opp. f"{HARMONY_OPTIONS_UPDATE}-{entry.unique_id}", entry.options
+        opp, f"{HARMONY_OPTIONS_UPDATE}-{entry.unique_id}", entry.options
     )
 
 

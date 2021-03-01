@@ -413,7 +413,7 @@ async def _async_setup_themes(opp, themes):
     )
 
     service.async_register_admin_service(
-        opp. DOMAIN, SERVICE_RELOAD_THEMES, reload_themes
+        opp, DOMAIN, SERVICE_RELOAD_THEMES, reload_themes
     )
 
 

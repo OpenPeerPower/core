@@ -5,7 +5,7 @@ from plexapi.exceptions import NotFound
 
 
 async def test_plex_tv_clients(
-    opp. entry, setup_plex_server, requests_mock, player_plexweb_resources
+    opp, entry, setup_plex_server, requests_mock, player_plexweb_resources
 ):
     """Test getting Plex clients from plex.tv."""
     requests_mock.get("/resources", text=player_plexweb_resources)

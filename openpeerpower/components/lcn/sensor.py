@@ -17,7 +17,7 @@ from .helpers import get_connection
 
 
 async def async_setup_platform(
-    opp. opp_config, async_add_entities, discovery_info=None
+    opp, opp_config, async_add_entities, discovery_info=None
 ):
     """Set up the LCN sensor platform."""
     if discovery_info is None:

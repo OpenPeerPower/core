@@ -51,7 +51,7 @@ def setup_camera_prefs_fixture(opp):
 async def image_mock_url_fixture(opp):
     """Fixture for get_image tests."""
     await async_setup_component(
-        opp. camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
+        opp, camera.DOMAIN, {camera.DOMAIN: {"platform": "demo"}}
     )
     await opp.async_block_till_done()
 
@@ -153,7 +153,7 @@ async def test_websocket_camera_thumbnail(opp, opp_ws_client, mock_camera):
 
 
 async def test_websocket_stream_no_source(
-    opp. opp_ws_client, mock_camera, mock_stream
+    opp, opp_ws_client, mock_camera, mock_stream
 ):
     """Test camera/stream websocket command with camera with no source."""
     await async_setup_component(opp, "camera", {})
@@ -213,7 +213,7 @@ async def test_websocket_get_prefs(opp, opp_ws_client, mock_camera):
 
 
 async def test_websocket_update_prefs(
-    opp. opp_ws_client, mock_camera, setup_camera_prefs
+    opp, opp_ws_client, mock_camera, setup_camera_prefs
 ):
     """Test updating preference."""
     await async_setup_component(opp, "camera", {})

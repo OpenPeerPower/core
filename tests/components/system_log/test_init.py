@@ -135,7 +135,7 @@ async def test_config_not_fire_event(opp, simple_queue):
 async def test_error_posted_as_event(opp, simple_queue):
     """Test that error are posted as events."""
     await async_setup_component(
-        opp. system_log.DOMAIN, {"system_log": {"max_entries": 2, "fire_event": True}}
+        opp, system_log.DOMAIN, {"system_log": {"max_entries": 2, "fire_event": True}}
     )
     events = []
 

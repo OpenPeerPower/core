@@ -27,7 +27,7 @@ ENTITY_LIGHT = "light.bed_light"
 async def setup_comp(opp):
     """Set up demo component."""
     assert await async_setup_component(
-        opp. LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": DOMAIN}}
+        opp, LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": DOMAIN}}
     )
     await opp.async_block_till_done()
 

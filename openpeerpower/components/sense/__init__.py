@@ -159,7 +159,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     opp.data[DOMAIN][entry.entry_id][
         "track_time_remove_callback"
     ] = async_track_time_interval(
-        opp. async_sense_update, timedelta(seconds=ACTIVE_UPDATE_RATE)
+        opp, async_sense_update, timedelta(seconds=ACTIVE_UPDATE_RATE)
     )
     return True
 

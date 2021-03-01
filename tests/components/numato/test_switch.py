@@ -21,7 +21,7 @@ async def test_failing_setups_no_entities(opp, numato_fixture, monkeypatch):
         assert entity_id not in opp.states.async_entity_ids()
 
 
-async def test_regular.opp_operations(opp, numato_fixture):
+async def test_regular_opp_operations(opp, numato_fixture):
     """Test regular operations from within Open Peer Power."""
     assert await async_setup_component(opp, "numato", NUMATO_CFG)
     await opp.async_block_till_done()  # wait until services are registered
@@ -59,7 +59,7 @@ async def test_regular.opp_operations(opp, numato_fixture):
     assert numato_fixture.devices[0].values[6] == 0
 
 
-async def test_failing.opp_operations(opp, numato_fixture, monkeypatch):
+async def test_failing_opp_operations(opp, numato_fixture, monkeypatch):
     """Test failing operations called from within Open Peer Power.
 
     Switches remain in their initial 'off' state when the device can't

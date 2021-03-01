@@ -212,7 +212,7 @@ def.opp_ms(opp):
 
     async def  opp.ms(meas_sys):
         await config_util.async_process_op_core_config(
-            opp. {CONF_UNIT_SYSTEM: meas_sys}
+            opp, {CONF_UNIT_SYSTEM: meas_sys}
         )
         await opp.async_block_till_done()
         return.opp

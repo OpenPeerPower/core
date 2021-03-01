@@ -1685,7 +1685,7 @@ async def test_cover_position_range(opp):
 
 
 async def assert_percentage_changes(
-    opp. adjustments, namespace, name, endpoint, parameter, service, changed_parameter
+    opp, adjustments, namespace, name, endpoint, parameter, service, changed_parameter
 ):
     """Assert an API request making percentage changes works.
 
@@ -1700,7 +1700,7 @@ async def assert_percentage_changes(
 
 
 async def assert_range_changes(
-    opp. adjustments, namespace, name, endpoint, service, changed_parameter, instance
+    opp, adjustments, namespace, name, endpoint, service, changed_parameter, instance
 ):
     """Assert an API request making range changes works.
 
@@ -2382,7 +2382,7 @@ async def test_disabled(opp):
     call_switch = async_mock_service(opp, "switch", "turn_on")
 
     msg = await smart_home.async_handle_message(
-        opp. DEFAULT_CONFIG, request, enabled=False
+        opp, DEFAULT_CONFIG, request, enabled=False
     )
     await opp.async_block_till_done()
 
@@ -3846,7 +3846,7 @@ async def test_initialize_camera_stream(opp, mock_camera, mock_stream):
     )
 
     await async_process_op_core_config(
-        opp. {"external_url": "https://mycamerastream.test"}
+        opp, {"external_url": "https://mycamerastream.test"}
     )
 
     with patch(

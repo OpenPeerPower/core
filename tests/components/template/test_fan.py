@@ -751,7 +751,7 @@ async def test_custom_speed_list(opp, calls):
 async def test_preset_modes(opp, calls):
     """Test preset_modes."""
     await _register_components(
-        opp. ["off", "low", "medium", "high", "auto", "smart"], ["auto", "smart"]
+        opp, ["off", "low", "medium", "high", "auto", "smart"], ["auto", "smart"]
     )
 
     # Turn on fan

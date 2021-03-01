@@ -217,7 +217,7 @@ async def async_setup_trigger(opp, config, config_entry, discovery_data):
         async_dispatcher_send(opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None)
 
     remove_signal = async_dispatcher_connect(
-        opp. MQTT_DISCOVERY_UPDATED.format(discovery_hash), discovery_update
+        opp, MQTT_DISCOVERY_UPDATED.format(discovery_hash), discovery_update
     )
 
     await _update_device(opp, config_entry, config)
@@ -251,7 +251,7 @@ async def async_setup_trigger(opp, config, config_entry, discovery_data):
             config, discovery_hash, remove_signal
         )
     debug_info.add_trigger_discovery_data(
-        opp. discovery_hash, discovery_data, device.id
+        opp, discovery_hash, discovery_data, device.id
     )
 
     async_dispatcher_send(opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None)

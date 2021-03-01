@@ -20,7 +20,7 @@ from .helper import async_manipulate_test_data, get_and_check_entity_basics
 async def test_manually_configured_platform(opp):
     """Test that we do not set up an access point."""
     assert await async_setup_component(
-        opp. LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": HMIPC_DOMAIN}}
+        opp, LIGHT_DOMAIN, {LIGHT_DOMAIN: {"platform": HMIPC_DOMAIN}}
     )
     assert not opp.data.get(HMIPC_DOMAIN)
 
@@ -35,7 +35,7 @@ async def test_hmip_light(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_ON
@@ -74,7 +74,7 @@ async def test_hmip_notification_light(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_OFF
@@ -126,7 +126,7 @@ async def test_hmip_notification_light(opp, default_mock_hap_factory):
 
     await async_manipulate_test_data(opp, hmip_device, "dimLevel", 1, 2)
     await async_manipulate_test_data(
-        opp. hmip_device, "simpleRGBColorState", RGBColorState.PURPLE, 2
+        opp, hmip_device, "simpleRGBColorState", RGBColorState.PURPLE, 2
     )
     op_state = opp.states.get(entity_id)
     assert op_state.state == STATE_ON
@@ -165,7 +165,7 @@ async def test_hmip_dimmer(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_OFF
@@ -217,7 +217,7 @@ async def test_hmip_light_measuring(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_OFF
@@ -257,7 +257,7 @@ async def test_hmip_wired_multi_dimmer(opp, default_mock_hap_factory):
     )
 
     op_state, hmip_device = get_and_check_entity_basics(
-        opp. mock_hap, entity_id, entity_name, device_model
+        opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert op_state.state == STATE_OFF

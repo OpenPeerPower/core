@@ -175,7 +175,7 @@ async def async_setup(opp, config):
     """Set up Netgear LTE component."""
     if DATA_KEY not in opp.data:
         websession = async_create_clientsession(
-            opp. cookie_jar=aiohttp.CookieJar(unsafe=True)
+            opp, cookie_jar=aiohttp.CookieJar(unsafe=True)
         )
         opp.data[DATA_KEY] = LTEData(websession)
 
@@ -234,7 +234,7 @@ async def async_setup(opp, config):
             }
             opp.async_create_task(
                 discovery.async_load_platform(
-                    opp. NOTIFY_DOMAIN, DOMAIN, discovery_info, config
+                    opp, NOTIFY_DOMAIN, DOMAIN, discovery_info, config
                 )
             )
 
@@ -243,7 +243,7 @@ async def async_setup(opp, config):
         discovery_info = {CONF_HOST: lte_conf[CONF_HOST], SENSOR_DOMAIN: sensor_conf}
         opp.async_create_task(
             discovery.async_load_platform(
-                opp. SENSOR_DOMAIN, DOMAIN, discovery_info, config
+                opp, SENSOR_DOMAIN, DOMAIN, discovery_info, config
             )
         )
 
@@ -255,7 +255,7 @@ async def async_setup(opp, config):
         }
         opp.async_create_task(
             discovery.async_load_platform(
-                opp. BINARY_SENSOR_DOMAIN, DOMAIN, discovery_info, config
+                opp, BINARY_SENSOR_DOMAIN, DOMAIN, discovery_info, config
             )
         )
 

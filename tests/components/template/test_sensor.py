@@ -321,7 +321,7 @@ async def test_no_sensors_does_not_create(opp):
     """Test no sensors."""
     with assert_setup_component(0, sensor.DOMAIN):
         assert await async_setup_component(
-            opp. sensor.DOMAIN, {"sensor": {"platform": "template"}}
+            opp, sensor.DOMAIN, {"sensor": {"platform": "template"}}
         )
 
     await opp.async_block_till_done()
@@ -420,7 +420,7 @@ async def test_creating_sensor_loads_group(opp):
         return True
 
     async def async_setup_template(
-        opp. config, async_add_entities, discovery_info=None
+        opp, config, async_add_entities, discovery_info=None
     ):
         order.append("sensor.template")
         return True

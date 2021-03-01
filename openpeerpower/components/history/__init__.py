@@ -247,17 +247,17 @@ def get_states(opp, utc_point_in_time, entity_ids=None, run=None, filters=None):
 
     with session_scope(opp.opp) as session:
         return _get_states_with_session(
-            opp. session, utc_point_in_time, entity_ids, run, filters
+            opp, session, utc_point_in_time, entity_ids, run, filters
         )
 
 
 def _get_states_with_session(
-    opp. session, utc_point_in_time, entity_ids=None, run=None, filters=None
+    opp, session, utc_point_in_time, entity_ids=None, run=None, filters=None
 ):
     """Return the states at a specific point in time."""
     if entity_ids and len(entity_ids) == 1:
         return _get_single_entity_states_with_session(
-            opp. session, utc_point_in_time, entity_ids[0]
+            opp, session, utc_point_in_time, entity_ids[0]
         )
 
     if run is None:
@@ -367,7 +367,7 @@ def _sorted_states_to_json(
     if include_start_time_state:
         run = recorder.run_information_from_instance(opp, start_time)
         for state in _get_states_with_session(
-            opp. session, start_time, entity_ids, run=run, filters=filters
+            opp, session, start_time, entity_ids, run=run, filters=filters
         ):
             state.last_changed = start_time
             state.last_updated = start_time

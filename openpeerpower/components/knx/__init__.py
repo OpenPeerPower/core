@@ -254,7 +254,7 @@ async def async_setup(opp, config):
         await async_setup_opp, config)
 
     async_register_admin_service(
-        opp. DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})
+        opp, DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})
     )
 
     return True

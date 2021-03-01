@@ -42,7 +42,7 @@ async def test_component_dependencies(opp):
 
     # Having an after dependency 2 deps down that is circular
     mod_1 = mock_integration(
-        opp. MockModule("mod1", partial_manifest={"after_dependencies": ["mod_3"]})
+        opp, MockModule("mod1", partial_manifest={"after_dependencies": ["mod_3"]})
     )
 
     with pytest.raises(loader.CircularDependency):

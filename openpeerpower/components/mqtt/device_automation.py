@@ -38,5 +38,5 @@ async def _async_setup_automation(opp, config, config_entry, discovery_data):
     """Set up an MQTT device automation."""
     if config[CONF_AUTOMATION_TYPE] == AUTOMATION_TYPE_TRIGGER:
         await device_trigger.async_setup_trigger(
-            opp. config, config_entry, discovery_data
+            opp, config, config_entry, discovery_data
         )

@@ -113,7 +113,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
 
     gateway.listeners.append(
         async_dispatcher_connect(
-            opp. gateway.async_signal_new_device(NEW_SENSOR), async_add_sensor
+            opp, gateway.async_signal_new_device(NEW_SENSOR), async_add_sensor
         )
     )
 

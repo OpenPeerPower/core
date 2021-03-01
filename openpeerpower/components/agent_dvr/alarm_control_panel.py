@@ -24,7 +24,7 @@ CONST_ALARM_CONTROL_PANEL_NAME = "Alarm Panel"
 
 
 async def async_setup_entry(
-    opp. config_entry, async_add_entities, discovery_info=None
+    opp, config_entry, async_add_entities, discovery_info=None
 ):
     """Set up the Agent DVR Alarm Control Panels."""
     async_add_entities(

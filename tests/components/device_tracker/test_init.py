@@ -127,10 +127,10 @@ async def test_duplicate_mac_dev_id(mock_warning, opp):
     """Test adding duplicate MACs or device IDs to DeviceTracker."""
     devices = [
         legacy.Device(
-            opp. True, True, "my_device", "AB:01", "My device", None, None, False
+            opp, True, True, "my_device", "AB:01", "My device", None, None, False
         ),
         legacy.Device(
-            opp. True, True, "your_device", "AB:01", "Your device", None, None, False
+            opp, True, True, "your_device", "AB:01", "Your device", None, None, False
         ),
     ]
     legacy.DeviceTracker.opp, False, True, {}, devices)
@@ -144,10 +144,10 @@ async def test_duplicate_mac_dev_id(mock_warning, opp):
     mock_warning.reset_mock()
     devices = [
         legacy.Device(
-            opp. True, True, "my_device", "AB:01", "My device", None, None, False
+            opp, True, True, "my_device", "AB:01", "My device", None, None, False
         ),
         legacy.Device(
-            opp. True, True, "my_device", None, "Your device", None, None, False
+            opp, True, True, "my_device", None, "Your device", None, None, False
         ),
     ]
     legacy.DeviceTracker.opp, False, True, {}, devices)
@@ -210,7 +210,7 @@ async def test_gravatar_and_picture(opp):
 async def test_discover_platform(mock_demo_setup_scanner, mock_see, opp):
     """Test discovery of device_tracker demo platform."""
     await discovery.async_load_platform(
-        opp. device_tracker.DOMAIN, "demo", {"test_key": "test_val"}, {"bla": {}}
+        opp, device_tracker.DOMAIN, "demo", {"test_key": "test_val"}, {"bla": {}}
     )
     await opp.async_block_till_done()
     assert device_tracker.DOMAIN in opp.config.components
@@ -568,7 +568,7 @@ async def test_adding_unknown_device_to_config(mock_device_tracker_conf, opp):
     scanner.come_home("DEV1")
 
     await async_setup_component(
-        opp. device_tracker.DOMAIN, {device_tracker.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, device_tracker.DOMAIN, {device_tracker.DOMAIN: {CONF_PLATFORM: "test"}}
     )
 
     await opp.async_block_till_done()
@@ -592,7 +592,7 @@ async def test_picture_and_icon_on_see_discovery(mock_device_tracker_conf, opp):
 async def test_backward_compatibility_for_track_new(mock_device_tracker_conf, opp):
     """Test backward compatibility for track new."""
     tracker = legacy.DeviceTracker(
-        opp. timedelta(seconds=60), False, {device_tracker.CONF_TRACK_NEW: True}, []
+        opp, timedelta(seconds=60), False, {device_tracker.CONF_TRACK_NEW: True}, []
     )
     await tracker.async_see(dev_id=13)
     await opp.async_block_till_done()
@@ -603,7 +603,7 @@ async def test_backward_compatibility_for_track_new(mock_device_tracker_conf, op
 async def test_old_style_track_new_is_skipped(mock_device_tracker_conf, opp):
     """Test old style config is skipped."""
     tracker = legacy.DeviceTracker(
-        opp. timedelta(seconds=60), None, {device_tracker.CONF_TRACK_NEW: False}, []
+        opp, timedelta(seconds=60), None, {device_tracker.CONF_TRACK_NEW: False}, []
     )
     await tracker.async_see(dev_id=14)
     await opp.async_block_till_done()

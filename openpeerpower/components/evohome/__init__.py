@@ -240,7 +240,7 @@ async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
     opp.data[DOMAIN] = {}
     opp.data[DOMAIN]["broker"] = broker = EvoBroker(
-        opp. client_v2, client_v1, store, config[DOMAIN]
+        opp, client_v2, client_v1, store, config[DOMAIN]
     )
 
     await broker.save_auth_tokens()

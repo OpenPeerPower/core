@@ -126,7 +126,7 @@ def test_invalid_configs(config):
 async def test_set_datetime(opp):
     """Test set_datetime method using date & time."""
     await async_setup_component(
-        opp. DOMAIN, {DOMAIN: {"test_datetime": {"has_time": True, "has_date": True}}}
+        opp, DOMAIN, {DOMAIN: {"test_datetime": {"has_time": True, "has_date": True}}}
     )
 
     entity_id = "input_datetime.test_datetime"
@@ -152,7 +152,7 @@ async def test_set_datetime(opp):
 async def test_set_datetime_2.opp):
     """Test set_datetime method using datetime."""
     await async_setup_component(
-        opp. DOMAIN, {DOMAIN: {"test_datetime": {"has_time": True, "has_date": True}}}
+        opp, DOMAIN, {DOMAIN: {"test_datetime": {"has_time": True, "has_date": True}}}
     )
 
     entity_id = "input_datetime.test_datetime"
@@ -178,7 +178,7 @@ async def test_set_datetime_2.opp):
 async def test_set_datetime_3.opp):
     """Test set_datetime method using timestamp."""
     await async_setup_component(
-        opp. DOMAIN, {DOMAIN: {"test_datetime": {"has_time": True, "has_date": True}}}
+        opp, DOMAIN, {DOMAIN: {"test_datetime": {"has_time": True, "has_date": True}}}
     )
 
     entity_id = "input_datetime.test_datetime"
@@ -204,7 +204,7 @@ async def test_set_datetime_3.opp):
 async def test_set_datetime_time(opp):
     """Test set_datetime method with only time."""
     await async_setup_component(
-        opp. DOMAIN, {DOMAIN: {"test_time": {"has_time": True, "has_date": False}}}
+        opp, DOMAIN, {DOMAIN: {"test_time": {"has_time": True, "has_date": False}}}
     )
 
     entity_id = "input_datetime.test_time"
@@ -284,7 +284,7 @@ async def test_set_invalid_2.opp):
 async def test_set_datetime_date(opp):
     """Test set_datetime method with only date."""
     await async_setup_component(
-        opp. DOMAIN, {DOMAIN: {"test_date": {"has_time": False, "has_date": True}}}
+        opp, DOMAIN, {DOMAIN: {"test_date": {"has_time": False, "has_date": True}}}
     )
 
     entity_id = "input_datetime.test_date"

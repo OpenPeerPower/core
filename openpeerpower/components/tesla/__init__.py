@@ -168,7 +168,7 @@ async def async_setup_entry(opp, config_entry):
         return False
     _async_save_tokens(opp, config_entry, access_token, refresh_token)
     coordinator = TeslaDataUpdateCoordinator(
-        opp. config_entry=config_entry, controller=controller
+        opp, config_entry=config_entry, controller=controller
     )
     # Fetch initial data so we have data when entities subscribe
     entry_data = opp.data[DOMAIN][config_entry.entry_id] = {

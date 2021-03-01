@@ -74,7 +74,7 @@ async def test_disregard_wrong_payload(opp):
 
         # Try set value from data with incorrect payload
         fire_pilight_message(
-            opp. protocol="test-protocol_2", data={"test": "data", "uuid": "0-0-0-0"}
+            opp, protocol="test-protocol_2", data={"test": "data", "uuid": "0-0-0-0"}
         )
         await opp.async_block_till_done()
         state = opp.states.get("sensor.test_2")
@@ -82,7 +82,7 @@ async def test_disregard_wrong_payload(opp):
 
         # Try set value from data with partially matched payload
         fire_pilight_message(
-            opp. protocol="wrong-protocol", data={"test": "data", "uuid": "1-2-3-4"}
+            opp, protocol="wrong-protocol", data={"test": "data", "uuid": "1-2-3-4"}
         )
         await opp.async_block_till_done()
         state = opp.states.get("sensor.test_2")

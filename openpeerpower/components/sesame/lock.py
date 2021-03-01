@@ -21,7 +21,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({vol.Required(CONF_API_KEY): cv.string}
 
 
 def setup_platform(
-    opp. config: ConfigType, add_entities: Callable[[list], None], discovery_info=None
+    opp, config: ConfigType, add_entities: Callable[[list], None], discovery_info=None
 ):
     """Set up the Sesame platform."""
     api_key = config.get(CONF_API_KEY)

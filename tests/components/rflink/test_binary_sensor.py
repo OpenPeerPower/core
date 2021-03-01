@@ -91,7 +91,7 @@ async def test_entity_availability(opp, monkeypatch):
 
     # Create platform and entities
     _, _, _, disconnect_callback = await mock_rflink(
-        opp. config, DOMAIN, monkeypatch, failures=failures
+        opp, config, DOMAIN, monkeypatch, failures=failures
     )
 
     # Entities are available by default

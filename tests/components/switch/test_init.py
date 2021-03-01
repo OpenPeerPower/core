@@ -12,7 +12,7 @@ from tests.components.switch import common
 @pytest.fixture(autouse=True)
 def entities(opp):
     """Initialize the test switch."""
-    platform = getattr.opp.components, "test.switch")
+    platform = getattr(opp.components, "test.switch")
     platform.init()
     yield platform.ENTITIES
 
@@ -21,7 +21,7 @@ async def test_methods(opp, entities):
     """Test is_on, turn_on, turn_off methods."""
     switch_1, switch_2, switch_3 = entities
     assert await async_setup_component(
-        opp. switch.DOMAIN, {switch.DOMAIN: {CONF_PLATFORM: "test"}}
+        opp, switch.DOMAIN, {switch.DOMAIN: {CONF_PLATFORM: "test"}}
     )
     await opp.async_block_till_done()
     assert switch.is_on(opp, switch_1.entity_id)
@@ -63,7 +63,7 @@ async def test_switch_context(opp, entities, opp_admin_user):
         "toggle",
         {"entity_id": state.entity_id},
         True,
-        core.Context(user_id.opp_admin_user.id),
+        core.Context(user_id=opp_admin_user.id),
     )
 
     state2 = opp.states.get("switch.ac")

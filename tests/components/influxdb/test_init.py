@@ -248,7 +248,7 @@ async def test_setup_config_full(opp, mock_client, config_ext, get_write_api):
     indirect=["mock_client"],
 )
 async def test_setup_config_ssl(
-    opp. mock_client, config_base, config_ext, expected_client_args
+    opp, mock_client, config_base, config_ext, expected_client_args
 ):
     """Test the setup with various verify_ssl values."""
     config = {"influxdb": config_base.copy()}
@@ -361,7 +361,7 @@ async def _setup_opp, mock_influx_client, config_ext, get_write_api):
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener."""
     handler_method = await _setup_opp, mock_client, config_ext, get_write_api)
@@ -447,7 +447,7 @@ async def test_event_listener(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_no_units(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener for missing units."""
     handler_method = await _setup_opp, mock_client, config_ext, get_write_api)
@@ -501,7 +501,7 @@ async def test_event_listener_no_units(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_inf(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener with large or invalid numbers."""
     handler_method = await _setup_opp, mock_client, config_ext, get_write_api)
@@ -550,7 +550,7 @@ async def test_event_listener_inf(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_states(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener against ignored states."""
     handler_method = await _setup_opp, mock_client, config_ext, get_write_api)
@@ -634,7 +634,7 @@ def execute_filter_test(opp, tests, handler_method, write_api, get_mock_call):
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_denylist(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener against a denylist."""
     config = {"exclude": {"entities": ["fake.denylisted"]}, "include": {}}
@@ -668,7 +668,7 @@ async def test_event_listener_denylist(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_denylist_domain(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener against a domain denylist."""
     config = {"exclude": {"domains": ["another_fake"]}, "include": {}}
@@ -702,7 +702,7 @@ async def test_event_listener_denylist_domain(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_denylist_glob(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener against a glob denylist."""
     config = {"exclude": {"entity_globs": ["*.excluded_*"]}, "include": {}}
@@ -736,7 +736,7 @@ async def test_event_listener_denylist_glob(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_allowlist(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener against an allowlist."""
     config = {"include": {"entities": ["fake.included"]}, "exclude": {}}
@@ -770,7 +770,7 @@ async def test_event_listener_allowlist(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_allowlist_domain(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener against a domain allowlist."""
     config = {"include": {"domains": ["fake"]}, "exclude": {}}
@@ -804,7 +804,7 @@ async def test_event_listener_allowlist_domain(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_allowlist_glob(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener against a glob allowlist."""
     config = {"include": {"entity_globs": ["*.included_*"]}, "exclude": {}}
@@ -838,7 +838,7 @@ async def test_event_listener_allowlist_glob(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_filtered_allowlist(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener against an allowlist filtered by denylist."""
     config = {
@@ -888,7 +888,7 @@ async def test_event_listener_filtered_allowlist(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_filtered_denylist(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener against a domain/glob denylist with an entity id allowlist."""
     config = {
@@ -928,7 +928,7 @@ async def test_event_listener_filtered_denylist(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_invalid_type(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener when an attribute has an invalid type."""
     handler_method = await _setup_opp, mock_client, config_ext, get_write_api)
@@ -1002,7 +1002,7 @@ async def test_event_listener_invalid_type(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_default_measurement(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener with a default measurement."""
     config = {"default_measurement": "state"}
@@ -1052,7 +1052,7 @@ async def test_event_listener_default_measurement(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_unit_of_measurement_field(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener for unit of measurement field."""
     config = {"override_measurement": "state"}
@@ -1103,7 +1103,7 @@ async def test_event_listener_unit_of_measurement_field(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_tags_attributes(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener when some attributes should be tags."""
     config = {"tags_attributes": ["friendly_fake"]}
@@ -1158,7 +1158,7 @@ async def test_event_listener_tags_attributes(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_component_override_measurement(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener with overridden measurements."""
     config = {
@@ -1224,7 +1224,7 @@ async def test_event_listener_component_override_measurement(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_component_measurement_attr(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener with a different measurement_attr."""
     config = {
@@ -1297,7 +1297,7 @@ async def test_event_listener_component_measurement_attr(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_ignore_attributes(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener with overridden measurements."""
     config = {
@@ -1385,7 +1385,7 @@ async def test_event_listener_ignore_attributes(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_ignore_attributes_overlapping_entities(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener with overridden measurements."""
     config = {
@@ -1439,7 +1439,7 @@ async def test_event_listener_ignore_attributes_overlapping_entities(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_scheduled_write(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener retries after a write failure."""
     config = {"max_retries": 1}
@@ -1492,7 +1492,7 @@ async def test_event_listener_scheduled_write(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_backlog_full(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener drops old events when backlog gets full."""
     handler_method = await _setup_opp, mock_client, config_ext, get_write_api)
@@ -1540,7 +1540,7 @@ async def test_event_listener_backlog_full(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_event_listener_attribute_name_conflict(
-    opp. mock_client, config_ext, get_write_api, get_mock_call
+    opp, mock_client, config_ext, get_write_api, get_mock_call
 ):
     """Test the event listener when an attribute conflicts with another field."""
     handler_method = await _setup_opp, mock_client, config_ext, get_write_api)
@@ -1612,7 +1612,7 @@ async def test_event_listener_attribute_name_conflict(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_connection_failure_on_startup(
-    opp. caplog, mock_client, config_ext, get_write_api, get_mock_call, test_exception
+    opp, caplog, mock_client, config_ext, get_write_api, get_mock_call, test_exception
 ):
     """Test the event listener when it fails to connect to Influx on startup."""
     write_api = get_write_api(mock_client)
@@ -1652,7 +1652,7 @@ async def test_connection_failure_on_startup(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_invalid_inputs_error(
-    opp. caplog, mock_client, config_ext, get_write_api, get_mock_call, test_exception
+    opp, caplog, mock_client, config_ext, get_write_api, get_mock_call, test_exception
 ):
     """
     Test the event listener when influx returns invalid inputs on write.
@@ -1753,7 +1753,7 @@ async def test_invalid_inputs_error(
     indirect=["mock_client", "get_mock_call"],
 )
 async def test_precision(
-    opp. mock_client, config_ext, get_write_api, get_mock_call, precision
+    opp, mock_client, config_ext, get_write_api, get_mock_call, precision
 ):
     """Test the precision setup."""
     config = {

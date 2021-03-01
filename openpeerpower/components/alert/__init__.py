@@ -200,7 +200,7 @@ class Alert(ToggleEntity):
         self.entity_id = f"{DOMAIN}.{entity_id}"
 
         event.async_track_state_change_event(
-            opp. [watched_entity_id], self.watched_entity_change
+            opp, [watched_entity_id], self.watched_entity_change
         )
 
     @property

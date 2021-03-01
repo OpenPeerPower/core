@@ -196,7 +196,7 @@ async def async_start(
                 discovery_id,
             )
             async_dispatcher_send(
-                opp. MQTT_DISCOVERY_UPDATED.format(discovery_hash), payload
+                opp, MQTT_DISCOVERY_UPDATED.format(discovery_hash), payload
             )
         elif payload:
             # Add component
@@ -225,12 +225,12 @@ async def async_start(
                     opp.data[CONFIG_ENTRY_IS_SETUP].add(config_entries_key)
 
             async_dispatcher_send(
-                opp. MQTT_DISCOVERY_NEW.format(component, "mqtt"), payload
+                opp, MQTT_DISCOVERY_NEW.format(component, "mqtt"), payload
             )
         else:
             # Unhandled discovery message
             async_dispatcher_send(
-                opp. MQTT_DISCOVERY_DONE.format(discovery_hash), None
+                opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None
             )
 
     opp.data[DATA_CONFIG_ENTRY_LOCK] = asyncio.Lock()

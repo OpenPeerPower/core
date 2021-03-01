@@ -16,7 +16,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 
 
 async def test_config_flow(
-    opp. legacy_patchable_time, pvpc_aioclient_mock: AiohttpClientMocker
+    opp, legacy_patchable_time, pvpc_aioclient_mock: AiohttpClientMocker
 ):
     """
     Test config flow for pvpc_hourly_pricing.

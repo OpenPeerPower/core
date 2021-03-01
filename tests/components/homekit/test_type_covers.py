@@ -256,7 +256,7 @@ async def test_windowcovering_cover_set_tilt(opp, hk_driver, events):
 
     # set from HomeKit
     call_set_tilt_position = async_mock_service(
-        opp. DOMAIN, SERVICE_SET_COVER_TILT_POSITION
+        opp, DOMAIN, SERVICE_SET_COVER_TILT_POSITION
     )
 
     # HomeKit sets tilts between -90 and 90 (degrees), whereas
@@ -412,7 +412,7 @@ async def test_windowcovering_open_close_stop(opp, hk_driver, events):
 
 
 async def test_windowcovering_open_close_with_position_and_stop(
-    opp. hk_driver, events
+    opp, hk_driver, events
 ):
     """Test if accessory and HA are updated accordingly."""
     entity_id = "cover.stop_window"

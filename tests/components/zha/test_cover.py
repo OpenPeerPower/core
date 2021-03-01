@@ -301,7 +301,7 @@ async def test_shade(opp, zha_device_joined_restored, zigpy_shade_device):
 
     # test rejoin
     await async_test_rejoin(
-        opp. zigpy_shade_device, [cluster_level, cluster_on_off], (1,)
+        opp, zigpy_shade_device, [cluster_level, cluster_on_off], (1,)
     )
     assert opp.states.get(entity_id).state == STATE_OPEN
 

@@ -111,7 +111,7 @@ async def test_config(opp):
 async def test_set_value(opp, caplog):
     """Test set_value method."""
     assert await async_setup_component(
-        opp. DOMAIN, {DOMAIN: {"test_1": {"initial": 50, "min": 0, "max": 100}}}
+        opp, DOMAIN, {DOMAIN: {"test_1": {"initial": 50, "min": 0, "max": 100}}}
     )
     entity_id = "input_number.test_1"
 
@@ -142,7 +142,7 @@ async def test_set_value(opp, caplog):
 async def test_increment(opp):
     """Test increment method."""
     assert await async_setup_component(
-        opp. DOMAIN, {DOMAIN: {"test_2": {"initial": 50, "min": 0, "max": 51}}}
+        opp, DOMAIN, {DOMAIN: {"test_2": {"initial": 50, "min": 0, "max": 51}}}
     )
     entity_id = "input_number.test_2"
 
@@ -165,7 +165,7 @@ async def test_increment(opp):
 async def test_decrement(opp):
     """Test decrement method."""
     assert await async_setup_component(
-        opp. DOMAIN, {DOMAIN: {"test_3": {"initial": 50, "min": 49, "max": 100}}}
+        opp, DOMAIN, {DOMAIN: {"test_3": {"initial": 50, "min": 49, "max": 100}}}
     )
     entity_id = "input_number.test_3"
 
@@ -215,7 +215,7 @@ async def test_mode(opp):
 async def test_restore_state(opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
-        opp. (State("input_number.b1", "70"), State("input_number.b2", "200"))
+        opp, (State("input_number.b1", "70"), State("input_number.b2", "200"))
     )
 
     opp.state = CoreState.starting
@@ -238,7 +238,7 @@ async def test_restore_state(opp):
 async def test_initial_state_overrules_restore_state(opp):
     """Ensure states are restored on startup."""
     mock_restore_cache(
-        opp. (State("input_number.b1", "70"), State("input_number.b2", "200"))
+        opp, (State("input_number.b1", "70"), State("input_number.b2", "200"))
     )
 
     opp.state = CoreState.starting

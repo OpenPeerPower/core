@@ -12,7 +12,7 @@ from tests.common import MockConfigEntry, async_fire_mqtt_message
 
 
 async def test_device_remove(
-    opp. mqtt_mock, caplog, device_reg, entity_reg, setup_tasmota
+    opp, mqtt_mock, caplog, device_reg, entity_reg, setup_tasmota
 ):
     """Test removing a discovered device through device registry."""
     config = copy.deepcopy(DEFAULT_CONFIG)

@@ -73,7 +73,7 @@ CLIENT_REDIRECT_URI = "https://example.com/app/callback"
 def threadsafe_callback_factory(func):
     """Create threadsafe functions out of callbacks.
 
-    Callback needs to have  opp. as first argument.
+    Callback needs to have  opp, as first argument.
     """
 
     @ft.wraps(func)
@@ -90,7 +90,7 @@ def threadsafe_callback_factory(func):
 def threadsafe_coroutine_factory(func):
     """Create threadsafe functions out of coroutine.
 
-    Callback needs to have  opp. as first argument.
+    Callback needs to have  opp, as first argument.
     """
 
     @ft.wraps(func)
@@ -523,7 +523,7 @@ class MockUser(auth_models.User):
 async def register_auth_provider(opp, config):
     """Register an auth provider."""
     provider = await auth_providers.auth_provider_from_config(
-        opp. opp.auth._store, config
+        opp, opp.auth._store, config
     )
     assert provider is not None, "Invalid config specified"
     key = (provider.type, provider.id)
@@ -888,7 +888,7 @@ async def async_init_recorder_component(opp, add_config=None):
 
     with patch("openpeerpower.components.recorder.migration.migrate_schema"):
         assert await async_setup_component(
-            opp. recorder.DOMAIN, {recorder.DOMAIN: config}
+            opp, recorder.DOMAIN, {recorder.DOMAIN: config}
         )
         assert recorder.DOMAIN in opp.config.components
     _LOGGER.info("In-memory recorder successfully started")
@@ -1065,7 +1065,7 @@ async def get_system_health_info(opp, domain):
 def mock_integration(opp, module):
     """Mock an integration."""
     integration = loader.Integration(
-        opp. f"openpeerpower.components.{module.DOMAIN}", None, module.mock_manifest()
+        opp, f"openpeerpower.components.{module.DOMAIN}", None, module.mock_manifest()
     )
 
     def mock_import_platform(platform_name):

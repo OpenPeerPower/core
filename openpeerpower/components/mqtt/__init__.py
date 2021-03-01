@@ -377,7 +377,7 @@ async def _async_setup_discovery(
     This method is a coroutine.
     """
     success: bool = await discovery.async_start(
-        opp. conf[CONF_DISCOVERY_PREFIX], config_entry
+        opp, conf[CONF_DISCOVERY_PREFIX], config_entry
     )
 
     return success
@@ -1045,7 +1045,7 @@ async def websocket_subscribe(opp, connection, msg):
         )
 
     connection.subscriptions[msg["id"]] = await async_subscribe(
-        opp. msg["topic"], forward_messages
+        opp, msg["topic"], forward_messages
     )
 
     connection.send_message(websocket_api.result_message(msg["id"]))

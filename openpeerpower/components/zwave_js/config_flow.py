@@ -48,7 +48,7 @@ async def validate_input(opp: core.OpenPeerPower, user_input: dict) -> VersionIn
 
 
 async def async_get_version_info(
-    opp. core.OpenPeerPower, ws_address: str
+    opp, core.OpenPeerPower, ws_address: str
 ) -> VersionInfo:
     """Return Z-Wave JS version info."""
     async with timeout(10):

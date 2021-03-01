@@ -497,7 +497,7 @@ async def test_component_warn_slow_setup_opp):
 async def test_platform_no_warn_slow(opp):
     """Do not warn for long entity setup time."""
     mock_integration(
-        opp. MockModule("test_component1", platform_schema=PLATFORM_SCHEMA)
+        opp, MockModule("test_component1", platform_schema=PLATFORM_SCHEMA)
     )
     with patch.object(opp.loop, "call_later") as mock_call:
         result = await setup.async_setup_component(opp, "test_component1", {})

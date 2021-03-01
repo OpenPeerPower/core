@@ -79,7 +79,7 @@ async def async_setup_opp: OpenPeerPowerType, config: Dict) -> bool:
                 device_new_data = v2bridge.queue.get_nowait()
                 if device_new_data:
                     async_dispatcher_send(
-                        opp. SIGNAL_SWITCHER_DEVICE_UPDATE, device_new_data
+                        opp, SIGNAL_SWITCHER_DEVICE_UPDATE, device_new_data
                     )
             except QueueEmpty:
                 pass

@@ -465,7 +465,7 @@ class Group(Entity):
         """Initialize a group."""
         return asyncio.run_coroutine_threadsafe(
             Group.async_create_group(
-                opp. name, entity_ids, user_defined, icon, object_id, mode, order
+                opp, name, entity_ids, user_defined, icon, object_id, mode, order
             ),
             opp.loop,
         ).result()

@@ -12,14 +12,14 @@ class ConfigEntryAuth(pybotvac.OAuthSession):
 
     def __init__(
         self,
-        opp. core.OpenPeerPower,
+        opp, core.OpenPeerPower,
         config_entry: config_entries.ConfigEntry,
         implementation: config_entry_oauth2_flow.AbstractOAuth2Implementation,
     ):
         """Initialize Neato Botvac Auth."""
         self.opp = opp
         self.session = config_entry_oauth2_flow.OAuth2Session(
-            opp. config_entry, implementation
+            opp, config_entry, implementation
         )
         super().__init__(self.session.token, vendor=pybotvac.Neato())
 

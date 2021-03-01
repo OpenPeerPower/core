@@ -184,5 +184,5 @@ CONFIG_SCHEMA = vol.Schema(
 def setup(opp, config):
     """Set up Modbus component."""
     return modbus_setup(
-        opp. config, SERVICE_WRITE_REGISTER_SCHEMA, SERVICE_WRITE_COIL_SCHEMA
+        opp, config, SERVICE_WRITE_REGISTER_SCHEMA, SERVICE_WRITE_COIL_SCHEMA
     )

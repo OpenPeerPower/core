@@ -95,7 +95,7 @@ async def test_get_integration_with_requirements(opp):
     """Check getting an integration with loaded requirements."""
     opp.config.skip_pip = False
     mock_integration(
-        opp. MockModule("test_component_dep", requirements=["test-comp-dep==1.0.0"])
+        opp, MockModule("test_component_dep", requirements=["test-comp-dep==1.0.0"])
     )
     mock_integration(
         opp,
@@ -193,7 +193,7 @@ async def test_discovery_requirements_mqtt(opp):
     mqtt = await loader.async_get_integration(opp, "mqtt")
 
     mock_integration(
-        opp. MockModule("mqtt_comp", partial_manifest={"mqtt": ["foo/discovery"]})
+        opp, MockModule("mqtt_comp", partial_manifest={"mqtt": ["foo/discovery"]})
     )
     with patch(
         "openpeerpower.requirements.async_process_requirements",
@@ -210,7 +210,7 @@ async def test_discovery_requirements_ssdp(opp):
     ssdp = await loader.async_get_integration(opp, "ssdp")
 
     mock_integration(
-        opp. MockModule("ssdp_comp", partial_manifest={"ssdp": [{"st": "roku:ecp"}]})
+        opp, MockModule("ssdp_comp", partial_manifest={"ssdp": [{"st": "roku:ecp"}]})
     )
     with patch(
         "openpeerpower.requirements.async_process_requirements",

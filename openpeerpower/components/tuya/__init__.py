@@ -160,11 +160,11 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     }
 
     _update_discovery_interval(
-        opp. entry.options.get(CONF_DISCOVERY_INTERVAL, DEFAULT_DISCOVERY_INTERVAL)
+        opp, entry.options.get(CONF_DISCOVERY_INTERVAL, DEFAULT_DISCOVERY_INTERVAL)
     )
 
     _update_query_interval(
-        opp. entry.options.get(CONF_QUERY_INTERVAL, DEFAULT_QUERY_INTERVAL)
+        opp, entry.options.get(CONF_QUERY_INTERVAL, DEFAULT_QUERY_INTERVAL)
     )
 
     async def async_load_devices(device_list):
@@ -218,7 +218,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
                 opp.data[DOMAIN]["entities"].pop(dev_id)
 
     opp.data[DOMAIN][TUYA_TRACKER] = async_track_time_interval(
-        opp. async_poll_devices_update, timedelta(minutes=2)
+        opp, async_poll_devices_update, timedelta(minutes=2)
     )
 
     opp.services.async_register(
@@ -260,10 +260,10 @@ async def update_listener(opp: OpenPeerPower, entry: ConfigEntry):
     """Update when config_entry options update."""
     opp.data[DOMAIN][TUYA_DEVICES_CONF] = entry.options.copy()
     _update_discovery_interval(
-        opp. entry.options.get(CONF_DISCOVERY_INTERVAL, DEFAULT_DISCOVERY_INTERVAL)
+        opp, entry.options.get(CONF_DISCOVERY_INTERVAL, DEFAULT_DISCOVERY_INTERVAL)
     )
     _update_query_interval(
-        opp. entry.options.get(CONF_QUERY_INTERVAL, DEFAULT_QUERY_INTERVAL)
+        opp, entry.options.get(CONF_QUERY_INTERVAL, DEFAULT_QUERY_INTERVAL)
     )
     async_dispatcher_send(opp, SIGNAL_CONFIG_ENTITY)
 
