@@ -49,7 +49,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     for device_name, device_config in devices.items():
         value_template = device_config.get(CONF_VALUE_TEMPLATE)
         if value_template is not None:
-            value_template(opp = opp
+            value_template.opp = opp
 
         covers.append(
             CommandCover(

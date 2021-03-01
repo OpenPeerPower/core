@@ -74,7 +74,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         if value_template is None:
             return lambda value: value
 
-        value_template(opp = opp
+        value_template.opp = opp
 
         def _render(value):
             try:

@@ -29,7 +29,7 @@ async def test_valid_config(opp):
     )
 
 
-async def test_valid_config2.opp):
+async def test_valid_config2(opp):
     """Test configuration."""
     assert await async_setup_component(
         opp,

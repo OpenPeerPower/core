@@ -442,7 +442,7 @@ async def async_setup(opp, config):
 
     opp.http.register_view(HistoryPeriodView(filters, use_include_order))
     opp.components.frontend.async_register_built_in_panel(
-        "history", "history",  opp.poll-box"
+        "history", "history",  "opp.poll-box"
     )
 
     return True
@@ -502,7 +502,7 @@ class HistoryPeriodView(OpenPeerPowerView):
 
         minimal_response = "minimal_response" in request.query
 
-       opp = request.app[.opp"]
+       opp = request.app["opp"]
 
         if (
             not include_start_time_state

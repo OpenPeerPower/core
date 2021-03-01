@@ -34,7 +34,7 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_opp: OpenPeerPowerType, config):
+async def async_setup(opp: OpenPeerPowerType, config):
     """Set up STT."""
     providers = {}
 
@@ -54,7 +54,7 @@ async def async_setup_opp: OpenPeerPowerType, config):
                 return
 
             provider.name = p_type
-            provider(opp = opp
+            provider.opp = opp
 
             providers[provider.name] = provider
         except Exception:  # pylint: disable=broad-except

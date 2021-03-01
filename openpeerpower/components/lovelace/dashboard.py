@@ -90,7 +90,7 @@ class LovelaceStorage(LovelaceConfig):
             url_path = config[CONF_URL_PATH]
             storage_key = CONFIG_STORAGE_KEY.format(config["id"])
 
-        super().__init__.opp, url_path, config)
+        super().__init__(opp, url_path, config)
 
         self._store = storage.Store(opp, CONFIG_STORAGE_VERSION, storage_key)
         self._data = None
@@ -156,7 +156,7 @@ class LovelaceYAML(LovelaceConfig):
 
     def __init__(self, opp, url_path, config):
         """Initialize the YAML config."""
-        super().__init__.opp, url_path, config)
+        super().__init__(opp, url_path, config)
 
         self.path = opp.config.path(
             config[CONF_FILENAME] if config else LOVELACE_CONFIG_FILE

@@ -45,7 +45,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     app_id = ttn.get(TTN_APP_ID)
     access_key = ttn.get(TTN_ACCESS_KEY)
 
-    ttn_data_storage = TtnDataStorage.opp, app_id, device_id, access_key, values)
+    ttn_data_storage = TtnDataStorage(opp, app_id, device_id, access_key, values)
     success = await ttn_data_storage.async_update()
 
     if not success:
@@ -125,7 +125,7 @@ class TtnDataStorage:
     async def async_update(self):
         """Get the current state from The Things Network Data Storage."""
         try:
-            session = async_get_clientsession(self.opp
+            session = async_get_clientsession(self.opp)
             with async_timeout.timeout(DEFAULT_TIMEOUT):
                 response = await session.get(self._url, headers=self._headers)
 

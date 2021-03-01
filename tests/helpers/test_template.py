@@ -439,7 +439,7 @@ def test_arc_tan(opp):
         )
 
 
-def test_arc_tan2.opp):
+def test_arc_tan2(opp):
     """Test two parameter version of arcus tangent."""
     tests = [
         (-10.0, -10.0, -2.356),

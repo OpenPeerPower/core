@@ -281,7 +281,7 @@ async def test_simple_zone_timeout_freeze_without_timeout_cleanup(opp):
         await asyncio.sleep(0.2)
 
 
-async def test_simple_zone_timeout_freeze_without_timeout_cleanup2.opp):
+async def test_simple_zone_timeout_freeze_without_timeout_cleanup2(opp):
     """Test a simple zone timeout freeze on a zone that does not have a timeout set."""
     timeout = TimeoutManager()
 

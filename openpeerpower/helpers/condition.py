@@ -311,7 +311,7 @@ def async_numeric_state_from_config(
     ) -> bool:
         """Test numeric state condition."""
         if value_template is not None:
-            value_template(opp = opp
+            value_template.opp = opp
 
         return all(
             async_numeric_state(
@@ -510,7 +510,7 @@ def async_template_from_config(
 
     def template_if opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Validate template based if-condition."""
-        value_template(opp = opp
+        value_template.opp = opp
 
         return async_template(opp, value_template, variables)
 

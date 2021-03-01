@@ -60,7 +60,7 @@ async def async_setup(opp, config):
     scan_interval = conf[CONF_SCAN_INTERVAL]
     devices = conf[CONF_DEVICES]
     session = async_get_clientsession(opp)
-    api = opp.data[DOMAIN] = KaiterraApiData.opp, conf, session)
+    api = opp.data[DOMAIN] = KaiterraApiData(opp, conf, session)
 
     await api.async_update()
 

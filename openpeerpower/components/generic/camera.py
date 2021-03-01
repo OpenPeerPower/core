@@ -81,9 +81,9 @@ class GenericCamera(Camera):
         self._name = device_info.get(CONF_NAME)
         self._still_image_url = device_info[CONF_STILL_IMAGE_URL]
         self._stream_source = device_info.get(CONF_STREAM_SOURCE)
-        self._still_image_url(opp = opp
+        self._still_image_url.opp = opp
         if self._stream_source is not None:
-            self._stream_source(opp = opp
+            self._stream_source.opp = opp
         self._limit_refetch = device_info[CONF_LIMIT_REFETCH_TO_URL_CHANGE]
         self._frame_interval = 1 / device_info[CONF_FRAMERATE]
         self._supported_features = SUPPORT_STREAM if self._stream_source else 0

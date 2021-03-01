@@ -147,7 +147,7 @@ async def async_setup(opp, config):
         async_log_entry(opp, name, message, domain, entity_id)
 
     opp.components.frontend.async_register_built_in_panel(
-        "logbook", "logbook",  "opp.format-list-bulleted-type"
+        "logbook", "logbook", "opp.format-list-bulleted-type"
     )
 
     conf = config.get(DOMAIN, {})

@@ -334,7 +334,7 @@ async def async_setup(opp, config):
                 ):
                     data[attribute] = attribute_templ
                 else:
-                    attribute_templ(opp = opp
+                    attribute_templ.opp = opp
                     try:
                         data[attribute] = attribute_templ.async_render(
                             parse_result=False

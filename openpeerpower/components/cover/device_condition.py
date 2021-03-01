@@ -200,7 +200,7 @@ def async_condition_from_config(
     @callback
     def template_if opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Validate template based if-condition."""
-        value_template(opp = opp
+        value_template.opp = opp
 
         return condition.async_numeric_state(
             opp, config[ATTR_ENTITY_ID], max_pos, min_pos, value_template

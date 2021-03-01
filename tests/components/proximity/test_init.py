@@ -332,7 +332,7 @@ async def test_device_tracker_test1_awayfurther_than_test2_first_test1.opp):
     assert state.attributes.get("dir_of_travel") == "unknown"
 
 
-async def test_device_tracker_test1_awayfurther_than_test2_first_test2.opp):
+async def test_device_tracker_test1_awayfurther_than_test2_first_test2(opp):
     """Test for tracker ordering."""
     config_zones(opp)
     await opp.async_block_till_done()

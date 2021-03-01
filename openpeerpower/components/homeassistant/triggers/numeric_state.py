@@ -83,7 +83,7 @@ async def async_attach_trigger(
         _variables = automation_info.get("variables") or {}
 
     if value_template is not None:
-        value_template(opp = opp
+        value_template.opp = opp
 
     def variables(entity_id):
         """Return a dict with trigger variables."""

@@ -214,7 +214,7 @@ async def test_user_not_successful(opp):
         assert result["reason"] == "cannot_connect"
 
 
-async def test_user_not_successful_2.opp):
+async def test_user_not_successful_2(opp):
     """Test starting a flow by user but no connection found."""
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",
@@ -392,7 +392,7 @@ async def test_ssdp_not_successful(opp):
         assert result["reason"] == "cannot_connect"
 
 
-async def test_ssdp_not_successful_2.opp):
+async def test_ssdp_not_successful_2(opp):
     """Test starting a flow from discovery but no device found."""
     with patch(
         "openpeerpower.components.samsungtv.bridge.Remote",

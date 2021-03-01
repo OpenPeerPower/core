@@ -15,5 +15,5 @@ from .schemas import is_blueprint_instance_config  # noqa
 
 async def async_setup(opp, config):
     """Set up the blueprint integration."""
-    websocket_api.async_setup_opp)
+    websocket_api.async_setup(opp)
     return True

@@ -58,7 +58,7 @@ def app.opp):
 
 
 @pytest.fixture
-def app2.opp):
+def app2(opp):
     """Fixture to set up a web.Application without real_ip middleware."""
     app = web.Application()
     app[.opp"] = opp

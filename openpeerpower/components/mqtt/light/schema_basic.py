@@ -157,7 +157,7 @@ async def async_setup_entity_basic(
     if CONF_STATE_VALUE_TEMPLATE not in config and CONF_VALUE_TEMPLATE in config:
         config[CONF_STATE_VALUE_TEMPLATE] = config[CONF_VALUE_TEMPLATE]
 
-    async_add_entities([MqttLight.opp, config, config_entry, discovery_data)])
+    async_add_entities([MqttLight(opp, config, config_entry, discovery_data)])
 
 
 class MqttLight(MqttEntity, LightEntity, RestoreEntity):
@@ -226,7 +226,7 @@ class MqttLight(MqttEntity, LightEntity, RestoreEntity):
         for key in VALUE_TEMPLATE_KEYS & config.keys():
             tpl = config[key]
             value_templates[key] = tpl.async_render_with_possible_json_value
-            tpl opp =self.opp
+            tpl.opp = self.opp
         self._value_templates = value_templates
 
         command_templates = {}
@@ -235,7 +235,7 @@ class MqttLight(MqttEntity, LightEntity, RestoreEntity):
         for key in COMMAND_TEMPLATE_KEYS & config.keys():
             tpl = config[key]
             command_templates[key] = tpl.async_render
-            tpl opp =self.opp
+            tpl.opp = self.opp
         self._command_templates = command_templates
 
         optimistic = config[CONF_OPTIMISTIC]

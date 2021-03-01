@@ -37,7 +37,7 @@ class SharkIqUpdateCoordinator(DataUpdateCoordinator):
         self._config_entry = config_entry
         self._online_dsns = set()
 
-        super().__init__.opp, _LOGGER, name=DOMAIN, update_interval=UPDATE_INTERVAL)
+        super().__init__(opp, _LOGGER, name=DOMAIN, update_interval=UPDATE_INTERVAL)
 
     @property
     def online_dsns(self) -> Set[str]:

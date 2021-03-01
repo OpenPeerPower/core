@@ -175,7 +175,7 @@ def async_prepare_call_from_config(
 
     if isinstance(domain_service, template.Template):
         try:
-            domain_service(opp = opp
+            domain_service.opp = opp
             domain_service = domain_service.async_render(variables)
             domain_service = cv.service(domain_service)
         except TemplateError as ex:

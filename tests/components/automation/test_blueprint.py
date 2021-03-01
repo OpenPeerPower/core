@@ -88,7 +88,7 @@ async def test_notify_leaving_zone(opp):
             "type": "notify",
             "device_id": "abcdefgh",
         }
-        message_tpl(opp = opp
+        message_tpl.opp = opp
         assert message_tpl.async_render(variables) == "Paulus has left School"
 
         # Should not increase when we go to another zone

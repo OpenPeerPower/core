@@ -192,7 +192,7 @@ def _setup_sensor(opp, temp):
 
 
 @pytest.fixture
-async def setup_comp_2.opp):
+async def setup_comp_2(opp):
     """Initialize components."""
     opp.config.units = METRIC_SYSTEM
     assert await async_setup_component(

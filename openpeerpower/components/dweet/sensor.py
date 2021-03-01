@@ -39,7 +39,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     value_template = config.get(CONF_VALUE_TEMPLATE)
     unit = config.get(CONF_UNIT_OF_MEASUREMENT)
     if value_template is not None:
-        value_template(opp = opp
+        value_template.opp = opp
 
     try:
         content = json.dumps(dweepy.get_latest_dweet_for(device)[0]["content"])

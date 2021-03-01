@@ -125,7 +125,7 @@ async def test_warn_slow_update(opp, caplog):
         update_call = True
 
     mock_entity = entity.Entity()
-    mock_entity(opp = opp
+    mock_entity.opp = opp
     mock_entity.entity_id = "comp_test.test_entity"
     mock_entity.async_update = async_update
 
@@ -150,7 +150,7 @@ async def test_warn_slow_update_with_exception(opp, caplog):
         raise AssertionError("Fake update error")
 
     mock_entity = entity.Entity()
-    mock_entity(opp = opp
+    mock_entity.opp = opp
     mock_entity.entity_id = "comp_test.test_entity"
     mock_entity.async_update = async_update
 
@@ -174,7 +174,7 @@ async def test_warn_slow_device_update_disabled(opp, caplog):
         update_call = True
 
     mock_entity = entity.Entity()
-    mock_entity(opp = opp
+    mock_entity.opp = opp
     mock_entity.entity_id = "comp_test.test_entity"
     mock_entity.async_update = async_update
 
@@ -197,7 +197,7 @@ async def test_async_schedule_update_op_state(opp):
         update_call = True
 
     mock_entity = entity.Entity()
-    mock_entity(opp = opp
+    mock_entity.opp = opp
     mock_entity.entity_id = "comp_test.test_entity"
     mock_entity.async_update = async_update
 
@@ -653,7 +653,7 @@ async def test_capability_attrs(opp):
 async def test_warn_slow_write_state(opp, caplog):
     """Check that we log a warning if reading properties takes too long."""
     mock_entity = entity.Entity()
-    mock_entity(opp = opp
+    mock_entity.opp = opp
     mock_entity.entity_id = "comp_test.test_entity"
     mock_entity.platform = MagicMock(platform_name="hue")
 
@@ -678,7 +678,7 @@ async def test_warn_slow_write_state_custom_component(opp, caplog):
         __module__ = "custom_components.bla.sensor"
 
     mock_entity = CustomComponentEntity()
-    mock_entity(opp = opp
+    mock_entity.opp = opp
     mock_entity.entity_id = "comp_test.test_entity"
     mock_entity.platform = MagicMock(platform_name="hue")
 

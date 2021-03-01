@@ -191,7 +191,7 @@ class ManualAlarm(alarm.AlarmControlPanelEntity, RestoreEntity):
         self._name = name
         if code_template:
             self._code = code_template
-            self._code(opp = opp
+            self._code.opp = opp
         else:
             self._code = code or None
         self._code_arm_required = code_arm_required

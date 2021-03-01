@@ -235,7 +235,7 @@ async def test_async_setup_bad_config1.opp):
         await opp.async_block_till_done()
 
 
-async def test_async_setup_bad_config2.opp):
+async def test_async_setup_bad_config2(opp):
     """Test a successful with bad config on numbers."""
     host = "1.2.3.4"
     with patch(

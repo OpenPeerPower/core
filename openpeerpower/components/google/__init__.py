@@ -146,7 +146,7 @@ def do_authentication(opp, opp_config, config):
         dev_flow = oauth.step1_get_device_and_user_codes()
     except OAuth2DeviceCodeError as err:
         opp.components.persistent_notification.create(
-            f"Error: {err}<br />You will need to restart.opp after fixing." "",
+            f"Error: {err}<br />You will need to restart opp after fixing." "",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
@@ -179,9 +179,9 @@ def do_authentication(opp, opp_config, config):
             # not ready yet, call again
             return
 
-        storage = Storage.opp.config.path(TOKEN_FILE))
+        storage = Storage(opp.config.path(TOKEN_FILE))
         storage.put(credentials)
-        do_setup_opp, opp_config, config)
+        do_setup(opp, opp_config, config)
         listener()
         opp.components.persistent_notification.create(
             (
@@ -216,7 +216,7 @@ def setup(opp, config):
         if not check_correct_scopes(token_file):
             do_authentication(opp, config, conf)
         else:
-            do_setup_opp, config, conf)
+            do_setup(opp, config, conf)
 
     return True
 
@@ -318,12 +318,12 @@ def setup_services(opp, opp_config, track_new_found_calendars, calendar_service)
     return True
 
 
-def do_setup_opp, opp_config, config):
+def do_setup(opp, opp_config, config):
     """Run the setup after we have everything configured."""
     # Load calendars the user has configured
     opp.data[DATA_INDEX] = load_config(opp.config.path(YAML_DEVICES))
 
-    calendar_service = GoogleCalendarService.opp.config.path(TOKEN_FILE))
+    calendar_service = GoogleCalendarService(opp.config.path(TOKEN_FILE))
     track_new_found_calendars = convert(
         config.get(CONF_TRACK_NEW), bool, DEFAULT_CONF_TRACK_NEW
     )

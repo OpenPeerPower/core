@@ -149,7 +149,7 @@ async def test_set_datetime(opp):
     assert state.attributes["timestamp"] == dt_obj.timestamp()
 
 
-async def test_set_datetime_2.opp):
+async def test_set_datetime_2(opp):
     """Test set_datetime method using datetime."""
     await async_setup_component(
         opp, DOMAIN, {DOMAIN: {"test_datetime": {"has_time": True, "has_date": True}}}
@@ -251,7 +251,7 @@ async def test_set_invalid(opp):
     assert state.state == initial
 
 
-async def test_set_invalid_2.opp):
+async def test_set_invalid_2(opp):
     """Test set_datetime method with date and datetime."""
     initial = "2017-01-01"
     await async_setup_component(

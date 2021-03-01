@@ -90,7 +90,7 @@ async def test_dataSet1.opp):
     )
 
 
-async def test_dataSet2.opp):
+async def test_dataSet2(opp):
     """Test derivative sensor state."""
     await setup_tests(
         opp,

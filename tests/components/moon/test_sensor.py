@@ -32,7 +32,7 @@ async def test_moon_day1.opp):
     assert opp.states.get("sensor.moon_day1").state == "waxing_crescent"
 
 
-async def test_moon_day2.opp):
+async def test_moon_day2(opp):
     """Test the Moon sensor."""
     config = {"sensor": {"platform": "moon", "name": "moon_day2"}}
 

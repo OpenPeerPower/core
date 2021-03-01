@@ -98,7 +98,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     value_template = config.get(CONF_VALUE_TEMPLATE)
 
     if value_template is not None:
-        value_template(opp = opp
+        value_template.opp = opp
 
     if version == "3":
 

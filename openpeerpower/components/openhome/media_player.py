@@ -48,7 +48,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     if device.Uuid() in openhome_data:
         return True
 
-    entity = OpenhomeDevice.opp, device)
+    entity = OpenhomeDevice(opp, device)
 
     async_add_entities([entity])
     openhome_data.add(device.Uuid())

@@ -55,7 +55,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     value_template = config.get(CONF_VALUE_TEMPLATE)
     command_timeout = config.get(CONF_COMMAND_TIMEOUT)
     if value_template is not None:
-        value_template(opp = opp
+        value_template.opp = opp
     data = CommandSensorData.opp, command, command_timeout)
 
     add_entities(

@@ -47,7 +47,7 @@ async def test_setup_ev(opp, ev_entry):
     assert check_entry.state == ENTRY_STATE_LOADED
 
 
-async def test_setup_g2.opp):
+async def test_setup_g2(opp):
     """Test setup with a G2 vehcile ."""
     entry = await setup_subaru_integration(
         opp,

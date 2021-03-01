@@ -32,7 +32,7 @@ class ScriptVariables:
         """
         if self._has_template is None:
             self._has_template = template.is_complex(self.variables)
-            template.attach.opp, self.variables)
+            template.attach(opp, self.variables)
 
         if not self._has_template:
             if render_as_defaults:

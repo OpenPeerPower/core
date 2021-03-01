@@ -32,7 +32,7 @@ async def async_attach_trigger(
 ):
     """Listen for state changes based on configuration."""
     value_template = config.get(CONF_VALUE_TEMPLATE)
-    value_template(opp = opp
+    value_template.opp = opp
     time_delta = config.get(CONF_FOR)
     template.attach.opp, time_delta)
     delay_cancel = None

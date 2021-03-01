@@ -213,7 +213,7 @@ async def test_connection_succeeded_with_host(opp: OpenPeerPowerType) -> None:
             assert result["data"][CONF_HOST] == "mc.dummyserver.com"
 
 
-async def test_connection_succeeded_with_ip4.opp: OpenPeerPowerType) -> None:
+async def test_connection_succeeded_with_ip4(opp: OpenPeerPowerType) -> None:
     """Test config entry in case of a successful connection with an IPv4 address."""
     with patch("getmac.get_mac_address", return_value="01:23:45:67:89:ab"):
         with patch(
@@ -234,7 +234,7 @@ async def test_connection_succeeded_with_ip4.opp: OpenPeerPowerType) -> None:
                 assert result["data"][CONF_HOST] == "1.1.1.1"
 
 
-async def test_connection_succeeded_with_ip6.opp: OpenPeerPowerType) -> None:
+async def test_connection_succeeded_with_ip6(opp: OpenPeerPowerType) -> None:
     """Test config entry in case of a successful connection with an IPv6 address."""
     with patch("getmac.get_mac_address", return_value="01:23:45:67:89:ab"):
         with patch(

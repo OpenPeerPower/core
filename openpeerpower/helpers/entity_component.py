@@ -21,7 +21,7 @@ from openpeerpower.helpers import (
     service,
 )
 from openpeerpower.helpers.typing import ConfigType, DiscoveryInfoType
-from openpeerpower.loader import async_get_integration, bind.opp
+from openpeerpower.loader import async_get_integration, bind_opp
 from openpeerpower.setup import async_prepare_setup_platform
 
 from .entity_platform import EntityPlatform
@@ -280,7 +280,7 @@ class EntityComponent:
         This method must be run in the event loop.
         """
         try:
-            conf = await conf_util.async.opp_config_yaml(self.opp)
+            conf = await conf_util.async_opp_config_yaml(self.opp)
         except OpenPeerPowerError as err:
             self.logger.error(err)
             return None

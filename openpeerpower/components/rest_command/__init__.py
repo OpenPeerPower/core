@@ -65,7 +65,7 @@ async def async_setup(opp, config):
         method = command_config[CONF_METHOD]
 
         template_url = command_config[CONF_URL]
-        template_url(opp = opp
+        template_url.opp = opp
 
         auth = None
         if CONF_USERNAME in command_config:
@@ -76,13 +76,13 @@ async def async_setup(opp, config):
         template_payload = None
         if CONF_PAYLOAD in command_config:
             template_payload = command_config[CONF_PAYLOAD]
-            template_payload(opp = opp
+            template_payload.opp = opp
 
         template_headers = None
         if CONF_HEADERS in command_config:
             template_headers = command_config[CONF_HEADERS]
             for template_header in template_headers.values():
-                template_header(opp = opp
+                template_header.opp = opp
 
         content_type = None
         if CONF_CONTENT_TYPE in command_config:

@@ -99,7 +99,7 @@ class MediaSourceItem:
         domain = match.group("domain")
         identifier = match.group("identifier")
 
-        return cls.opp, domain, identifier)
+        return cls(opp, domain, identifier)
 
 
 class MediaSource(ABC):

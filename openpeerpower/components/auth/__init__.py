@@ -12,7 +12,7 @@ be in JSON as it's more readable.
 Exchange the authorization code retrieved from the login flow for tokens.
 
 {
-    "client_id": "https:/.oppbian.local:8123/",
+    "client_id": "https://oppbian.local:8123/",
     "grant_type": "authorization_code",
     "code": "411ee2f916e648d691e937ae9344681e"
 }
@@ -183,7 +183,7 @@ RESULT_TYPE_USER = "user"
 
 @bind_opp
 def create_auth_code(
-    opp.client_id: str, credential_or_user: Union[Credentials, User]
+    opp, client_id: str, credential_or_user: Union[Credentials, User]
 ) -> str:
     """Create an authorization code to fetch tokens."""
     return opp.data[DOMAIN](client_id, credential_or_user)
@@ -218,8 +218,8 @@ async def async_setup(opp, config):
         WS_TYPE_SIGN_PATH, websocket_sign_path, SCHEMA_WS_SIGN_PATH
     )
 
-    await login_flow.async_setup_opp, store_result)
-    await mfa_setup_flow.async_setup_opp)
+    await login_flow.async_setup(opp, store_result)
+    await mfa_setup_flow.async_setup(opp)
 
     return True
 
@@ -239,7 +239,7 @@ class TokenView(OpenPeerPowerView):
     @log_invalid_auth
     async def post(self, request):
         """Grant a token."""
-       opp = request.app[.opp"]
+       opp = request.app["opp"]
         data = await request.post()
 
         grant_type = data.get("grant_type")

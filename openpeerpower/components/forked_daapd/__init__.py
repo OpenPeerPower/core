@@ -28,7 +28,7 @@ async def async_unload_entry(opp, entry):
             OPP_DATA_REMOVE_LISTENERS_KEY
         ]:
             remove_listener()
-        del.opp.data[DOMAIN][entry.entry_id]
+        del opp.data[DOMAIN][entry.entry_id]
         if not opp.data[DOMAIN]:
-            del.opp.data[DOMAIN]
+            del opp.data[DOMAIN]
     return status

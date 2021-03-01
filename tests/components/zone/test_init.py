@@ -126,7 +126,7 @@ async def test_active_zone_skips_passive_zones(opp):
     assert active is None
 
 
-async def test_active_zone_skips_passive_zones_2.opp):
+async def test_active_zone_skips_passive_zones_2(opp):
     """Test active and passive zones."""
     assert await setup.async_setup_component(
         opp,
@@ -176,7 +176,7 @@ async def test_active_zone_prefers_smaller_zone_if_same_distance(opp):
     assert "zone.small_zone" == active.entity_id
 
 
-async def test_active_zone_prefers_smaller_zone_if_same_distance_2.opp):
+async def test_active_zone_prefers_smaller_zone_if_same_distance_2(opp):
     """Test zone size preferences."""
     latitude = 32.880600
     longitude = -117.237561

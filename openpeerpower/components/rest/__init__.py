@@ -158,7 +158,7 @@ def create_rest_data_from_config(opp, config):
     timeout = config.get(CONF_TIMEOUT)
 
     if resource_template is not None:
-        resource_template(opp = opp
+        resource_template.opp = opp
         resource = resource_template.async_render(parse_result=False)
 
     if username and password:

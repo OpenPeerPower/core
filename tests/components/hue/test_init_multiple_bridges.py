@@ -122,7 +122,7 @@ def mock_config_entry1.opp):
 
 
 @pytest.fixture
-def mock_config_entry2.opp):
+def mock_config_entry2(opp):
     """Mock a config entry."""
     return create_config_entry()
 
@@ -147,7 +147,7 @@ def mock_bridge1.opp):
 
 
 @pytest.fixture
-def mock_bridge2.opp):
+def mock_bridge2(opp):
     """Mock a Hue bridge."""
     return create_mock_bridge(opp)
 

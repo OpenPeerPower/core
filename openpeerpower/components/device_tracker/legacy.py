@@ -309,7 +309,7 @@ def async_setup_scanner_platform(
     """
     interval = config.get(CONF_SCAN_INTERVAL, SCAN_INTERVAL)
     update_lock = asyncio.Lock()
-    scanner(opp = opp
+    scanner.opp = opp
 
     # Initial scan of each mac we also tell about host name for config
     seen: Any = set()

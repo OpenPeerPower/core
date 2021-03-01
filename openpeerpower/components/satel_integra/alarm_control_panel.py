@@ -116,7 +116,7 @@ class SatelIntegraAlarmPanel(alarm.AlarmControlPanelEntity):
                 opp.alarm_status = op_state
                 break
 
-        return.opp_alarm_status
+        return opp_alarm_status
 
     @property
     def name(self):

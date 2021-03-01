@@ -247,28 +247,28 @@ async def test_time_window(opp):
         return_value=dt.now().replace(hour=3),
     ):
         assert not test1.opp)
-        assert test2.opp)
+        assert test2(opp)
 
     with patch(
         "openpeerpower.helpers.condition.dt_util.now",
         return_value=dt.now().replace(hour=9),
     ):
         assert test1.opp)
-        assert not test2.opp)
+        assert not test2(opp)
 
     with patch(
         "openpeerpower.helpers.condition.dt_util.now",
         return_value=dt.now().replace(hour=15),
     ):
         assert test1.opp)
-        assert not test2.opp)
+        assert not test2(opp)
 
     with patch(
         "openpeerpower.helpers.condition.dt_util.now",
         return_value=dt.now().replace(hour=21),
     ):
         assert not test1.opp)
-        assert test2.opp)
+        assert test2(opp)
 
 
 async def test_time_using_input_datetime(opp):

@@ -83,7 +83,7 @@ async def test_component_platform_not_found(opp):
         assert not res.errors
 
 
-async def test_component_platform_not_found_2.opp):
+async def test_component_platform_not_found_2(opp):
     """Test errors if component or platform not found."""
     # Make sure they don't exist
     files = {YAML_CONFIG_FILE: BASE_CONFIG + "light:\n  platform: beer"}

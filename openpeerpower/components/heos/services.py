@@ -41,7 +41,7 @@ def register(opp: OpenPeerPowerType, controller: Heos):
     )
 
 
-def remove.opp: OpenPeerPowerType):
+def remove(opp: OpenPeerPowerType):
     """Unregister HEOS services."""
     opp.services.async_remove(DOMAIN, SERVICE_SIGN_IN)
     opp.services.async_remove(DOMAIN, SERVICE_SIGN_OUT)

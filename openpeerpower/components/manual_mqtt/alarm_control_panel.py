@@ -222,7 +222,7 @@ class ManualMQTTAlarm(alarm.AlarmControlPanelEntity):
         self._name = name
         if code_template:
             self._code = code_template
-            self._code(opp = opp
+            self._code.opp = opp
         else:
             self._code = code or None
         self._disarm_after_trigger = disarm_after_trigger

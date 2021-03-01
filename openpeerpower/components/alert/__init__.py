@@ -177,15 +177,15 @@ class Alert(ToggleEntity):
 
         self._message_template = message_template
         if self._message_template is not None:
-            self._message_template(opp = opp
+            self._message_template.opp = opp
 
         self._done_message_template = done_message_template
         if self._done_message_template is not None:
-            self._done_message_template(opp = opp
+            self._done_message_template.opp = opp
 
         self._title_template = title_template
         if self._title_template is not None:
-            self._title_template(opp = opp
+            self._title_template.opp = opp
 
         self._notifiers = notifiers
         self._can_ack = can_ack

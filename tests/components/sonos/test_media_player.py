@@ -40,7 +40,7 @@ async def test_services(opp, config_entry, config, opp_read_only_user):
             media_player.SERVICE_JOIN,
             {"master": "media_player.bla", "entity_id": "media_player.blub"},
             blocking=True,
-            context=Context(user_id.opp_read_only_user.id),
+            context=Context(user_id=opp_read_only_user.id),
         )
 
 

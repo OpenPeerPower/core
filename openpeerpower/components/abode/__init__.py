@@ -193,7 +193,7 @@ def setup_opp_services(opp):
 
         target_entities = [
             entity_id
-            for entity_id in(opp.data[DOMAIN].entity_ids
+            for entity_id in opp.data[DOMAIN].entity_ids
             if entity_id in entity_ids
         ]
 
@@ -207,7 +207,7 @@ def setup_opp_services(opp):
 
         target_entities = [
             entity_id
-            for entity_id in(opp.data[DOMAIN].entity_ids
+            for entity_id in opp.data[DOMAIN].entity_ids
             if entity_id in entity_ids
         ]
 
@@ -307,7 +307,7 @@ class AbodeEntity(Entity):
         """Return the polling state."""
         return self._data.polling
 
-    async def async_added_to(opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to Abode connection status updates."""
         await self.opp.async_add_executor_job(
             self._data.abode.events.add_connection_status_callback,
@@ -317,7 +317,7 @@ class AbodeEntity(Entity):
 
         self.opp.data[DOMAIN].entity_ids.add(self.entity_id)
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Unsubscribe from Abode connection status updates."""
         await self.opp.async_add_executor_job(
             self._data.abode.events.remove_connection_status_callback, self.unique_id
@@ -337,7 +337,7 @@ class AbodeDevice(AbodeEntity):
         super().__init__(data)
         self._device = device
 
-    async def async_added_to(opp(self):
+    async def async_added_to_opp(self):
         """Subscribe to device events."""
         await super().async_added_to_opp()
         await self.opp.async_add_executor_job(
