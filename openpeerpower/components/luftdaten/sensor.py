@@ -126,7 +126,7 @@ class LuftdatenSensor(Entity):
             self.opp, TOPIC_UPDATE, update
         )
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Disconnect dispatcher listener when removed."""
         if self._async_unsub_dispatcher_connect:
             self._async_unsub_dispatcher_connect()

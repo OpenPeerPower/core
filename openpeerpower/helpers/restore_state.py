@@ -242,7 +242,7 @@ class RestoreEntity(Entity):
         )
         data.async_restore_entity_added(self.entity_id)
 
-    async def async_internal_will_remove_from(opp(self) -> None:
+    async def async_internal_will_remove_from_opp(self) -> None:
         """Run when entity will be removed from.opp."""
         assert self.opp is not None
         _, data = await asyncio.gather(

@@ -97,7 +97,7 @@ class MotionBatterySensor(CoordinatorEntity, Entity):
         self._blind.Register_callback(self.unique_id, self.schedule_update_op_state)
         await super().async_added_to_opp()
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Unsubscribe when removed."""
         self._blind.Remove_callback(self.unique_id)
         await super().async_will_remove_from(opp()
@@ -201,7 +201,7 @@ class MotionSignalStrengthSensor(CoordinatorEntity, Entity):
         self._device.Register_callback(self.unique_id, self.schedule_update_op_state)
         await super().async_added_to_opp()
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Unsubscribe when removed."""
         self._device.Remove_callback(self.unique_id)
         await super().async_will_remove_from(opp()

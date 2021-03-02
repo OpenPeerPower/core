@@ -44,11 +44,11 @@ async def async_attach_trigger(opp, config, action, automation_info):
     if automation_info:
         variables = automation_info.get("variables")
 
-    template.attach.opp, payload)
+    template.attach(opp, payload)
     if payload:
         payload = payload.async_render(variables, limited=True)
 
-    template.attach.opp, topic)
+    template.attach(opp, topic)
     if isinstance(topic, template.Template):
         topic = topic.async_render(variables, limited=True)
         topic = mqtt.util.valid_subscribe_topic(topic)

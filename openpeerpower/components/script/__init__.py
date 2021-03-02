@@ -334,7 +334,7 @@ class ScriptEntity(ToggleEntity):
         """Turn script off."""
         await self.script.async_stop()
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Stop script and remove service when it will be removed from Open Peer Power."""
         await self.script.async_stop()
 

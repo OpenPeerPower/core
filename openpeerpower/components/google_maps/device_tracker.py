@@ -55,7 +55,7 @@ class GoogleMapsScanner:
         self.scan_interval = config.get(CONF_SCAN_INTERVAL) or timedelta(seconds=60)
         self._prev_seen = {}
 
-        credfile = f".opp.config.path(CREDENTIALS_FILE)}.{slugify(self.username)}"
+        credfile = f"{opp.config.path(CREDENTIALS_FILE)}.{slugify(self.username)}"
         try:
             self.service = Service(credfile, self.username)
             self._update_info()

@@ -324,7 +324,7 @@ class SqueezeBoxEntity(MediaPlayerEntity):
                     self.opp, SIGNAL_PLAYER_REDISCOVERED, self.rediscovered
                 )
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Remove from list of known players when removed from.opp."""
         self.opp.data[DOMAIN][KNOWN_PLAYERS].remove(self)
 

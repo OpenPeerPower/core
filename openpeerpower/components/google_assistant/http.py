@@ -219,7 +219,7 @@ class GoogleAssistantView(OpenPeerPowerView):
         """Handle Google Assistant requests."""
         message: dict = await request.json()
         result = await async_handle_message(
-            request.app[.opp"],
+            request.app["opp"],
             self.config,
             request[.opp_user"].id,
             message,

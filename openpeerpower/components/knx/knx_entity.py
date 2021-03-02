@@ -43,7 +43,7 @@ class KnxEntity(Entity):
         if isinstance(self._device, XknxClimate) and self._device.mode is not None:
             self._device.mode.register_device_updated_cb(self.after_update_callback)
 
-    async def async_will_remove_from(opp(self) -> None:
+    async def async_will_remove_from_opp(self) -> None:
         """Disconnect device object when removed."""
         self._device.unregister_device_updated_cb(self.after_update_callback)
 

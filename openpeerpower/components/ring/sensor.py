@@ -100,7 +100,7 @@ class HealthDataRingSensor(RingSensor):
             self._device, self._health_update_callback
         )
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Disconnect callbacks."""
         await super().async_will_remove_from(opp()
 
@@ -142,7 +142,7 @@ class HistoryRingSensor(RingSensor):
             self._device, self._history_update_callback
         )
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Disconnect callbacks."""
         await super().async_will_remove_from(opp()
 

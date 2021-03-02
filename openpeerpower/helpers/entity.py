@@ -572,7 +572,7 @@ class Entity(ABC):
         To be extended by integrations.
         """
 
-    async def async_will_remove_from(opp(self) -> None:
+    async def async_will_remove_from_opp(self) -> None:
         """Run when entity will be removed from.opp,
 
         To be extended by integrations.
@@ -608,7 +608,7 @@ class Entity(ABC):
                 )
             )
 
-    async def async_internal_will_remove_from(opp(self) -> None:
+    async def async_internal_will_remove_from_opp(self) -> None:
         """Run when entity will be removed from.opp,
 
         Not to be extended by integrations.

@@ -490,7 +490,7 @@ class IndexView(web_urldispatcher.AbstractResource):
 
     async def get(self, request: web.Request) -> web.Response:
         """Serve the index page for panel pages."""
-       opp = request.app[.opp"]
+       opp = request.app["opp"]
 
         if not opp.components.onboarding.async_is_onboarded():
             return web.Response(status=302, headers={"location": "/onboarding.html"})

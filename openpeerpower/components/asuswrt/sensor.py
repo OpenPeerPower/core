@@ -231,6 +231,6 @@ class AsuswrtSensor(CoordinatorEntity):
         self._handler.enable_sensor(self._type)
         await super().async_added_to_opp()
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Call when entity is removed from.opp."""
         self._handler.disable_sensor(self._type)

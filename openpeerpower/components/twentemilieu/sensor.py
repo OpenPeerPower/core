@@ -120,7 +120,7 @@ class TwenteMilieuSensor(Entity):
             self.opp, DATA_UPDATE, self._schedule_immediate_update
         )
 
-    async def async_will_remove_from(opp(self) -> None:
+    async def async_will_remove_from_opp(self) -> None:
         """Disconnect from update signal."""
         self._unsub_dispatcher()
 

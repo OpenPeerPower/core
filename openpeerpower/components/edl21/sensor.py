@@ -238,7 +238,7 @@ class EDL21Entity(Entity):
             self.opp, SIGNAL_EDL21_TELEGRAM, handle_telegram
         )
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Run when entity will be removed from.opp."""
         if self._async_remove_dispatcher:
             self._async_remove_dispatcher()

@@ -222,7 +222,7 @@ class CastDevice(MediaPlayerEntity):
             self.opp, SIGNAL_OPP_CAST_SHOW_VIEW, self._handle_signal_show_view
         )
 
-    async def async_will_remove_from(opp(self) -> None:
+    async def async_will_remove_from_opp(self) -> None:
         """Disconnect Chromecast object when removed."""
         await self._async_disconnect()
         if self._cast_info.uuid is not None:
@@ -510,7 +510,7 @@ class CastDevice(MediaPlayerEntity):
                 )
 
             # prepend external URL
-            opp.url = get_url(self.opp, prefer_external=True)
+            opp_url = get_url(self.opp, prefer_external=True)
             media_id = f".opp_url}{media_id}"
 
         await self.opp.async_add_executor_job(

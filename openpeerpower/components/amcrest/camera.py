@@ -345,7 +345,7 @@ class AmcrestCam(Camera):
         )
         self.opp.data[DATA_AMCREST][CAMERAS].append(self.entity_id)
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Remove camera from list and disconnect from signals."""
         self.opp.data[DATA_AMCREST][CAMERAS].remove(self.entity_id)
         for unsub_dispatcher in self._unsub_dispatcher:

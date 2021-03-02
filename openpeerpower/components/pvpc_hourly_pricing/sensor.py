@@ -58,7 +58,7 @@ class ElecPriceSensor(RestoreEntity):
         self._hourly_tracker = None
         self._price_tracker = None
 
-    async def async_will_remove_from(opp(self) -> None:
+    async def async_will_remove_from_opp(self) -> None:
         """Cancel listeners for sensor updates."""
         self._hourly_tracker()
         self._price_tracker()

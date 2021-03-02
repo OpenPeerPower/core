@@ -18,7 +18,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     devices = []
 
     for dev_name, dev_config in switches.items():
-        devices.append(PilightSwitch.opp, dev_name, dev_config))
+        devices.append(PilightSwitch(opp, dev_name, dev_config))
 
     add_entities(devices)
 

@@ -85,7 +85,7 @@ def setup(opp, base_config):
                     )
 
                 opp.data[LUTRON_BUTTONS].append(
-                    LutronButton.opp, area.name, keypad, button)
+                    LutronButton(opp, area.name, keypad, button)
                 )
         if area.occupancy_group is not None:
             opp.data[LUTRON_DEVICES]["binary_sensor"].append(

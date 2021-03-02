@@ -39,7 +39,7 @@ class WebsocketAPIView(OpenPeerPowerView):
 
     async def get(self, request: web.Request) -> web.WebSocketResponse:
         """Handle an incoming websocket connection."""
-        return await WebSocketHandler(request.app[.opp"], request).async_handle()
+        return await WebSocketHandler(request.app["opp"], request).async_handle()
 
 
 class WebSocketAdapter(logging.LoggerAdapter):

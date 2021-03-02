@@ -289,7 +289,7 @@ class MinecraftServerEntity(Entity):
             self.opp, self._server.signal_name, self._update_callback
         )
 
-    async def async_will_remove_from(opp(self) -> None:
+    async def async_will_remove_from_opp(self) -> None:
         """Disconnect dispatcher before removal."""
         self._disconnect_dispatcher()
 

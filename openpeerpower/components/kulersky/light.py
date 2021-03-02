@@ -111,7 +111,7 @@ class KulerskyLight(LightEntity):
             self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, self.disconnect)
         )
 
-    async def async_will_remove_from(opp(self) -> None:
+    async def async_will_remove_from_opp(self) -> None:
         """Run when entity will be removed from.opp."""
         await self.opp.async_add_executor_job(self.disconnect)
 

@@ -364,7 +364,7 @@ class PS4Device(MediaPlayerEntity):
 
             self._unique_id = format_unique_id(self._creds, status["host-id"])
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Remove Entity from Open Peer Power."""
         # Close TCP Transport.
         if self._ps4.connected:

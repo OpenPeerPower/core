@@ -289,7 +289,7 @@ class HueOneLightStateView(OpenPeerPowerView):
         if not is_local(ip_address(request.remote)):
             return self.json_message("Only local IPs allowed", HTTP_UNAUTHORIZED)
 
-       opp = request.app[.opp"]
+        opp = request.app["opp"]
         opp.entity_id = self.config.number_to_entity_id(entity_id)
 
         if opp_entity_id is None:
@@ -299,7 +299,7 @@ class HueOneLightStateView(OpenPeerPowerView):
             )
             return self.json_message("Entity not found", HTTP_NOT_FOUND)
 
-        entity = opp.states.get.opp_entity_id)
+        entity = opp.states.get(opp_entity_id)
 
         if entity is None:
             _LOGGER.error("Entity not found: %s", opp_entity_id)
@@ -331,7 +331,7 @@ class HueOneLightChangeView(OpenPeerPowerView):
             return self.json_message("Only local IPs allowed", HTTP_UNAUTHORIZED)
 
         config = self.config
-       opp = request.app[.opp"]
+        opp = request.app["opp"]
         entity_id = config.number_to_entity_id(entity_number)
 
         if entity_id is None:
@@ -443,7 +443,7 @@ class HueOneLightChangeView(OpenPeerPowerView):
             if parsed[STATE_ON]:
                 if entity_features & SUPPORT_BRIGHTNESS:
                     if parsed[STATE_BRIGHTNESS] is not None:
-                        data[ATTR_BRIGHTNESS] = hue_brightness_to(opp(
+                        data[ATTR_BRIGHTNESS] = hue_brightness_to_opp(
                             parsed[STATE_BRIGHTNESS]
                         )
 
@@ -459,7 +459,7 @@ class HueOneLightChangeView(OpenPeerPowerView):
                         else:
                             sat = 0
 
-                        # Convert hs values to.opp hs values
+                        # Convert hs values to opp hs values
                         hue = int((hue / HUE_API_STATE_HUE_MAX) * 360)
                         sat = int((sat / HUE_API_STATE_SAT_MAX) * 100)
 
@@ -646,7 +646,7 @@ def get_entity_state(config, entity):
             if hue_sat is not None:
                 hue = hue_sat[0]
                 sat = hue_sat[1]
-                # Convert.opp hs values back to hue hs values
+                # Convert opp hs values back to hue hs values
                 data[STATE_HUE] = int((hue / 360.0) * HUE_API_STATE_HUE_MAX)
                 data[STATE_SATURATION] = int((sat / 100.0) * HUE_API_STATE_SAT_MAX)
             else:
@@ -841,7 +841,7 @@ def create_config_model(config, request):
 
 def create_list_of_entities(config, request):
     """Create a list of all entities."""
-   opp = request.app[.opp"]
+   opp = request.app["opp"]
     json_response = {}
 
     for entity in config.filter_exposed_entities(opp.states.async_all()):
@@ -852,12 +852,12 @@ def create_list_of_entities(config, request):
 
 
 def hue_brightness_to(opp(value):
-    """Convert hue brightness 1..254 to.opp format 0..255."""
+    """Convert hue brightness 1..254 to opp format 0..255."""
     return min(255, round((value / HUE_API_STATE_BRI_MAX) * 255))
 
 
-def.opp_to_hue_brightness(value):
-    """Convert.opp brightness 0..255 to hue 1..254 scale."""
+def opp_to_hue_brightness(value):
+    """Convert opp brightness 0..255 to hue 1..254 scale."""
     return max(1, round((value / 255) * HUE_API_STATE_BRI_MAX))
 
 

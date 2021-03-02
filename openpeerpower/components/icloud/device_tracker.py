@@ -128,7 +128,7 @@ class IcloudTrackerEntity(TrackerEntity):
             self.opp, self._account.signal_device_update, self.async_write_op_state
         )
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Clean up after entity before removal."""
         self._unsub_dispatcher()
 

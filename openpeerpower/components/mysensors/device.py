@@ -66,7 +66,7 @@ class MySensorsDevice:
     def _logger(self):
         return logging.getLogger(f"{__name__}.{self.name}")
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Remove this entity from open peer power."""
         for platform in PLATFORM_TYPES:
             platform_str = MYSENSORS_PLATFORM_DEVICES.format(platform)

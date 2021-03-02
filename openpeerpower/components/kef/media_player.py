@@ -389,7 +389,7 @@ class KefMediaPlayer(MediaPlayerEntity):
             self.opp, self.update_dsp, DSP_SCAN_INTERVAL
         )
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Unsubscribe to DSP updates."""
         self._update_dsp_task_remover()
         self._update_dsp_task_remover = None

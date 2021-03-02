@@ -46,7 +46,7 @@ class AcmedaBase(entity.Entity):
             )
         )
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Entity being removed from.opp."""
         self.roller.callback_unsubscribe(self.notify_update)
 

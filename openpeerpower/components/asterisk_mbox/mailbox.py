@@ -18,7 +18,7 @@ SIGNAL_MESSAGE_UPDATE = "asterisk_mbox.message_updated"
 
 async def async_get_handler(opp, config, discovery_info=None):
     """Set up the Asterix VM platform."""
-    return AsteriskMailbox.opp, ASTERISK_DOMAIN)
+    return AsteriskMailbox(opp, ASTERISK_DOMAIN)
 
 
 class AsteriskMailbox(Mailbox):
@@ -26,7 +26,7 @@ class AsteriskMailbox(Mailbox):
 
     def __init__(self, opp, name):
         """Initialize Asterisk mailbox."""
-        super().__init__.opp, name)
+        super().__init__(opp, name)
         async_dispatcher_connect(
             self.opp, SIGNAL_MESSAGE_UPDATE, self._update_callback
         )

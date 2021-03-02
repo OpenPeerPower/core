@@ -266,11 +266,11 @@ class ConfiguredDoorBird:
     def register_events(self, opp):
         """Register events on device."""
         # Get the URL of this server
-        opp.url = get_url(opp)
+        opp_url = get_url(opp)
 
         # Override url if another is specified in the configuration
         if self.custom_url is not None:
-            opp.url = self.custom_url
+            opp_url = self.custom_url
 
         for event in self.doorstation_events:
             self._register_event(opp_url, event)
@@ -354,7 +354,7 @@ class DoorBirdRequestView(OpenPeerPowerView):
 
     async def get(self, request, event):
         """Respond to requests from the device."""
-       opp = request.app[.opp"]
+       opp = request.app["opp"]
 
         token = request.query.get("token")
 

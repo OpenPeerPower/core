@@ -429,7 +429,7 @@ class SmartThingsEntity(Entity):
             self.opp, SIGNAL_SMARTTHINGS_UPDATE, async_update_state
         )
 
-    async def async_will_remove_from(opp(self) -> None:
+    async def async_will_remove_from_opp(self) -> None:
         """Disconnect the device when removed."""
         if self._dispatcher_remove:
             self._dispatcher_remove()

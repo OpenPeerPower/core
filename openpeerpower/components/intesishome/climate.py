@@ -349,7 +349,7 @@ class IntesisAC(ClimateEntity):
             self._device_id
         )
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Shutdown the controller when the device is being removed."""
         await self._controller.stop()
 

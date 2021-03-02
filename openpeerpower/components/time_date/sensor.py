@@ -85,7 +85,7 @@ class TimeDateSensor(Entity):
             self.opp, self.point_in_time_listener, self.get_next_interval()
         )
 
-    async def async_will_remove_from(opp(self) -> None:
+    async def async_will_remove_from_opp(self) -> None:
         """Cancel next update."""
         if self.unsub:
             self.unsub()

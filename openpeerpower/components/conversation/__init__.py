@@ -41,7 +41,7 @@ CONFIG_SCHEMA = vol.Schema(
     extra=vol.ALLOW_EXTRA,
 )
 
-async_register = bind.opp(async_register)
+async_register = bind_opp(async_register)
 
 
 @core.callback
@@ -130,7 +130,7 @@ class ConversationProcessView(http.OpenPeerPowerView):
     )
     async def post(self, request, data):
         """Send a request for processing."""
-       opp = request.app[.opp"]
+        opp = request.app["opp"]
 
         try:
             intent_result = await _async_converse(
@@ -162,7 +162,7 @@ async def _get_agent(opp: core.OpenPeerPower) -> AbstractConversationAgent:
 
 
 async def _async_converse(
-    opp, core.OpenPeerPower, text: str, conversation_id: str, context: core.Context
+    opp: core.OpenPeerPower, text: str, conversation_id: str, context: core.Context
 ) -> intent.IntentResponse:
     """Process text and get intent."""
     agent = await _get_agent(opp)

@@ -114,7 +114,7 @@ class ZerprocLight(LightEntity):
             )
         )
 
-    async def async_will_remove_from(opp(self, *args) -> None:
+    async def async_will_remove_from_opp(self, *args) -> None:
         """Run when entity will be removed from.opp."""
         try:
             await self._light.disconnect()

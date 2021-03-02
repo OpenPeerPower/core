@@ -77,7 +77,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             entry, unique_id=new_data[HMIPC_HAPID], data=new_data
         )
 
-    hap = HomematicipHAP.opp, entry)
+    hap = HomematicipHAP(opp, entry)
     opp.data[DOMAIN][entry.unique_id] = hap
 
     if not await hap.async_setup():

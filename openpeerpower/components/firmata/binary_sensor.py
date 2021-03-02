@@ -49,7 +49,7 @@ class FirmataBinarySensor(FirmataPinEntity, BinarySensorEntity):
         """Set up a binary sensor."""
         await self._api.start_pin(self.async_write_op_state)
 
-    async def async_will_remove_from(opp(self) -> None:
+    async def async_will_remove_from_opp(self) -> None:
         """Stop reporting a binary sensor."""
         await self._api.stop_pin()
 

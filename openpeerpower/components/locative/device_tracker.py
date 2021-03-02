@@ -68,7 +68,7 @@ class LocativeEntity(TrackerEntity):
             self.opp, TRACKER_UPDATE, self._async_receive_data
         )
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Clean up after entity before removal."""
         self._unsub_dispatcher()
 

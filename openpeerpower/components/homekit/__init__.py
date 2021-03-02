@@ -776,12 +776,12 @@ class HomeKitPairingQRView(OpenPeerPowerView):
         entry_id, secret = request.query_string.split("-")
 
         if (
-            entry_id not in request.app[.opp"].data[DOMAIN]
+            entry_id not in request.app["opp"].data[DOMAIN]
             or secret
-            != request.app[.opp"].data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR_SECRET]
+            != request.app["opp"].data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR_SECRET]
         ):
             raise Unauthorized()
         return web.Response(
-            body=request.app[.opp"].data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR],
+            body=request.app["opp"].data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR],
             content_type="image/svg+xml",
         )

@@ -133,7 +133,7 @@ class MobileAppEntity(TrackerEntity, RestoreEntity):
         data.update({key: attr[key] for key in attr if key in ATTR_KEYS})
         self._data = data
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Call when entity is being removed from.opp."""
         await super().async_will_remove_from(opp()
 

@@ -167,7 +167,7 @@ def setup(opp, config):
             " Don't set the intervals too low"
         )
 
-        data_store = LeafDataStore.opp, leaf, car_config)
+        data_store = LeafDataStore(opp, leaf, car_config)
         opp.data[DATA_LEAF][leaf.vin] = data_store
 
         for component in LEAF_COMPONENTS:

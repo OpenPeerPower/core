@@ -51,7 +51,7 @@ async def get_legacy_user(auth):
 def app.opp):
     """Fixture to set up a web.Application."""
     app = web.Application()
-    app[.opp"] = opp
+    app["opp"] = opp
     app.router.add_get("/", mock_handler)
     async_setup_forwarded(app, [])
     return app
@@ -61,7 +61,7 @@ def app.opp):
 def app2(opp):
     """Fixture to set up a web.Application without real_ip middleware."""
     app = web.Application()
-    app[.opp"] = opp
+    app["opp"] = opp
     app.router.add_get("/", mock_handler)
     return app
 

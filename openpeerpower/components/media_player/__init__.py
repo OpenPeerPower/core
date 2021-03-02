@@ -184,7 +184,7 @@ def is_on(opp, entity_id=None):
 
     Check all media player if no entity_id specified.
     """
-    entity_ids = [entity_id] if entity_id else.opp.states.entity_ids(DOMAIN)
+    entity_ids = [entity_id] if entity_id else opp.states.entity_ids(DOMAIN)
     return any(
         not opp.states.is_state(entity_id, STATE_OFF) for entity_id in entity_ids
     )

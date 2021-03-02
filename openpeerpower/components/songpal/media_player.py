@@ -122,7 +122,7 @@ class SongpalEntity(MediaPlayerEntity):
         """Run when entity is added to.opp."""
         await self.async_activate_websocket()
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Run when entity will be removed from.opp."""
         await self._dev.stop_listen_notifications()
 

@@ -155,7 +155,7 @@ class MikrotikHubTracker(ScannerEntity):
         )
         await self.hub.request_update()
 
-    async def will_remove_from(opp(self):
+    async def will_remove_from_opp(self):
         """Disconnect from dispatcher."""
         if self.unsub_dispatcher:
             self.unsub_dispatcher()

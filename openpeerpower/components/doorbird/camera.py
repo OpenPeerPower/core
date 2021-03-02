@@ -147,7 +147,7 @@ class DoorBirdCamera(DoorBirdEntity, Camera):
         for event in self._doorstation_events:
             event_to_entity_id[event] = self.entity_id
 
-    async def will_remove_from(opp(self):
+    async def will_remove_from_opp(self):
         """Unregister entity_id map for the logbook."""
         event_to_entity_id = self.opp.data[DOMAIN][DOOR_STATION_EVENT_ENTITY_IDS]
         for event in self._doorstation_events:

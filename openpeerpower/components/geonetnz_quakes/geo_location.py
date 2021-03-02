@@ -90,7 +90,7 @@ class GeonetnzQuakesEvent(GeolocationEvent):
             self._update_callback,
         )
 
-    async def async_will_remove_from(opp(self) -> None:
+    async def async_will_remove_from_opp(self) -> None:
         """Call when entity will be removed from.opp."""
         self._remove_signal_delete()
         self._remove_signal_update()

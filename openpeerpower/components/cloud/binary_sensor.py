@@ -71,7 +71,7 @@ class CloudRemoteBinary(BinarySensorEntity):
             self.opp, DISPATCHER_REMOTE_UPDATE, async_state_update
         )
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Register update dispatcher."""
         if self._unsub_dispatcher is not None:
             self._unsub_dispatcher()

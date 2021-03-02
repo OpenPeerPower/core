@@ -162,8 +162,8 @@ async def finish_setup(opp, config):
         # Not all platforms might be loaded.
         if switches is not None:
             await asyncio.sleep(0)
-        switches = sorted.opp.states.async_entity_ids("switch"))
-        lights = sorted.opp.states.async_entity_ids("light"))
+        switches = sorted(opp.states.async_entity_ids("switch"))
+        lights = sorted(opp.states.async_entity_ids("light"))
 
     # Set up scripts
     await bootstrap.async_setup_component(

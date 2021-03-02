@@ -93,7 +93,7 @@ class LogiCam(Camera):
             ]
         )
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Disconnect dispatcher listeners when removed."""
         for detach in self._listeners:
             detach()

@@ -92,10 +92,10 @@ class MqttScene(
         """(Re)Setup the entity."""
         self._config = config
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Unsubscribe when removed."""
-        await MqttAvailability.async_will_remove_from(opp(self)
-        await MqttDiscoveryUpdate.async_will_remove_from(opp(self)
+        await MqttAvailability.async_will_remove_from_opp(self)
+        await MqttDiscoveryUpdate.async_will_remove_from_opp(self)
 
     @property
     def name(self):

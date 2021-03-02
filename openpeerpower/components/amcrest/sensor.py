@@ -130,6 +130,6 @@ class AmcrestSensor(Entity):
             self.async_on_demand_update,
         )
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Disconnect from update signal."""
         self._unsub_dispatcher()

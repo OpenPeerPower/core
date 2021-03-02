@@ -656,7 +656,7 @@ class HuaweiLteBaseEntity(Entity):
         if config_entry.data[CONF_URL] == self.router.url:
             await self.async_update_options(config_entry)
 
-    async def async_will_remove_from(opp(self) -> None:
+    async def async_will_remove_from_opp(self) -> None:
         """Invoke unsubscription handlers."""
         for unsub in self._unsub_handlers:
             unsub()

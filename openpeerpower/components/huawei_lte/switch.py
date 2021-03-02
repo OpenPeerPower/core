@@ -65,9 +65,9 @@ class HuaweiLteBaseSwitch(HuaweiLteBaseEntity, SwitchEntity):
         await super().async_added_to_opp()
         self.router.subscriptions[self.key].add(f"{SWITCH_DOMAIN}/{self.item}")
 
-    async def async_will_remove_from(opp(self) -> None:
+    async def async_will_remove_from_opp(self) -> None:
         """Unsubscribe from needed data on remove."""
-        await super().async_will_remove_from(opp()
+        await super().async_will_remove_from_opp()
         self.router.subscriptions[self.key].remove(f"{SWITCH_DOMAIN}/{self.item}")
 
     async def async_update(self) -> None:

@@ -263,7 +263,7 @@ class CloudRegisterView(OpenPeerPowerView):
     )
     async def post(self, request, data):
         """Handle registration request."""
-       opp = request.app[.opp"]
+       opp = request.app["opp"]
         cloud = opp.data[DOMAIN]
 
         with async_timeout.timeout(REQUEST_TIMEOUT):
@@ -282,7 +282,7 @@ class CloudResendConfirmView(OpenPeerPowerView):
     @RequestDataValidator(vol.Schema({vol.Required("email"): str}))
     async def post(self, request, data):
         """Handle resending confirm email code request."""
-       opp = request.app[.opp"]
+       opp = request.app["opp"]
         cloud = opp.data[DOMAIN]
 
         with async_timeout.timeout(REQUEST_TIMEOUT):
@@ -301,7 +301,7 @@ class CloudForgotPasswordView(OpenPeerPowerView):
     @RequestDataValidator(vol.Schema({vol.Required("email"): str}))
     async def post(self, request, data):
         """Handle forgot password request."""
-       opp = request.app[.opp"]
+       opp = request.app["opp"]
         cloud = opp.data[DOMAIN]
 
         with async_timeout.timeout(REQUEST_TIMEOUT):

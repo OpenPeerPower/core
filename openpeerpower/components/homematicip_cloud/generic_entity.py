@@ -128,7 +128,7 @@ class HomematicipGenericEntity(Entity):
                 self._device.modelType,
             )
 
-    async def async_will_remove_from(opp(self) -> None:
+    async def async_will_remove_from_opp(self) -> None:
         """Run when hmip device will be removed from.opp."""
 
         # Only go further if the device/entity should be removed from registries

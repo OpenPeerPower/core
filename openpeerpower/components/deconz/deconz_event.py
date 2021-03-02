@@ -73,7 +73,7 @@ class DeconzEvent(DeconzBase):
         return self._device
 
     @callback
-    def async_will_remove_from(opp(self) -> None:
+    def async_will_remove_from_opp(self) -> None:
         """Disconnect event object when removed."""
         self._device.remove_callback(self.async_update_callback)
 

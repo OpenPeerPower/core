@@ -63,7 +63,7 @@ class GdacsSensor(Entity):
         # First update is manual because of how the feed entity manager is updated.
         await self.async_update()
 
-    async def async_will_remove_from(opp(self) -> None:
+    async def async_will_remove_from_opp(self) -> None:
         """Call when entity will be removed from.opp."""
         if self._remove_signal_status:
             self._remove_signal_status()

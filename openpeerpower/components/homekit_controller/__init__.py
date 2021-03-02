@@ -68,7 +68,7 @@ class HomeKitEntity(Entity):
         self._accessory.add_pollable_characteristics(self.pollable_characteristics)
         self._accessory.add_watchable_characteristics(self.watchable_characteristics)
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Prepare to be removed from.opp."""
         self._accessory.remove_pollable_characteristics(self._aid)
         self._accessory.remove_watchable_characteristics(self._aid)

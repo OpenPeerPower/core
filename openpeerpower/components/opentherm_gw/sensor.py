@@ -105,7 +105,7 @@ class OpenThermSensor(Entity):
             self.opp, self._gateway.update_signal, self.receive_report
         )
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Unsubscribe from updates from the component."""
         _LOGGER.debug("Removing OpenTherm Gateway sensor %s", self._friendly_name)
         self._unsub_updates()

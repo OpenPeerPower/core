@@ -123,7 +123,7 @@ class GEMSensor(Entity):
         if self._try_connect_to_monitor(monitors):
             monitors.remove_listener(self._on_new_monitor)
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Remove listener from the sensor."""
         if self._sensor:
             self._sensor.remove_listener(self.async_write_op_state)

@@ -333,7 +333,7 @@ class TuyaDevice(Entity):
         )
         self._inc_device_count()
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Call when entity is removed from.opp."""
         self._dec_device_count()
 

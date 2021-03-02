@@ -127,7 +127,7 @@ class FritzBoxCallSensor(Entity):
         )
         self._monitor.connect()
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Disconnect from FRITZ!Box by stopping monitor."""
         if (
             self._monitor

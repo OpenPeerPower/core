@@ -114,7 +114,7 @@ class GeofencyEntity(TrackerEntity, RestoreEntity):
         attr = state.attributes
         self._gps = (attr.get(ATTR_LATITUDE), attr.get(ATTR_LONGITUDE))
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Clean up after entity before removal."""
         await super().async_will_remove_from(opp()
         self._unsub_dispatcher()

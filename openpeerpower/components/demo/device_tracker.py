@@ -16,7 +16,7 @@ def setup_scanner(opp, config, see, discovery_info=None):
         see(
             dev_id=dev_id,
             host_name=name,
-            gps= opp.config.latitude + offset(), opp.config.longitude + offset()),
+            gps=opp.config.latitude + offset(), opp.config.longitude + offset()),
             gps_accuracy=random.randrange(50, 150),
             battery=random.randrange(10, 90),
         )

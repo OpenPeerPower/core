@@ -85,7 +85,7 @@ class MinutPointBinarySensor(MinutPointEntity, BinarySensorEntity):
             self.opp, SIGNAL_WEBHOOK, self._webhook_event
         )
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Disconnect dispatcher listener when removed."""
         await super().async_will_remove_from(opp()
         if self._async_unsub_hook_dispatcher_connect:

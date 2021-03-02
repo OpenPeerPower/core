@@ -64,7 +64,7 @@ CONFIG_SCHEMA = vol.Schema(
 def setup(opp, config):
     """Create the ViCare component."""
     conf = config[DOMAIN]
-    params = {"token_file":.opp.config.path(STORAGE_DIR, "vicare_token.save")}
+    params = {"token_file": opp.config.path(STORAGE_DIR, "vicare_token.save")}
     if conf.get(CONF_CIRCUIT) is not None:
         params["circuit"] = conf[CONF_CIRCUIT]
 

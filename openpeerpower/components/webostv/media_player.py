@@ -136,7 +136,7 @@ class LgWebOSMediaPlayerEntity(MediaPlayerEntity):
             self.async_handle_state_update
         )
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Call disconnect on removal."""
         self._client.unregister_state_update_callback(self.async_handle_state_update)
 

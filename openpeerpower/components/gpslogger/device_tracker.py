@@ -155,7 +155,7 @@ class GPSLoggerEntity(TrackerEntity, RestoreEntity):
         }
         self._battery = attr.get(ATTR_BATTERY_LEVEL)
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Clean up after entity before removal."""
         await super().async_will_remove_from(opp()
         self._unsub_dispatcher()

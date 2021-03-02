@@ -206,6 +206,6 @@ class HyperionComponentSwitch(SwitchEntity):
 
         self._client.add_callbacks(self._client_callbacks)
 
-    async def async_will_remove_from(opp(self) -> None:
+    async def async_will_remove_from_opp(self) -> None:
         """Cleanup prior to.opp removal."""
         self._client.remove_callbacks(self._client_callbacks)

@@ -711,7 +711,7 @@ class Helpers:
         return wrapped
 
 
-def bind.opp(func: CALLABLE_T) -> CALLABLE_T:
+def bind_opp(func: CALLABLE_T) -> CALLABLE_T:
     """Decorate function to indicate that first argument is opp."""
     setattr(func, "__bind(opp", True)
     return func

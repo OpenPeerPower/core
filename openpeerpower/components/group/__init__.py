@@ -648,7 +648,7 @@ class Group(Entity):
             self._reset_tracked_state()
         self._async_start_tracking()
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Handle removal from Open Peer Power."""
         self._async_stop()
 

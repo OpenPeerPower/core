@@ -219,7 +219,7 @@ class MqttAttributes(Entity):
             },
         )
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Unsubscribe when removed."""
         self._attributes_sub_state = await async_unsubscribe_topics(
             self.opp, self._attributes_sub_state
@@ -316,7 +316,7 @@ class MqttAvailability(Entity):
         if not self.opp.is_stopping:
             self.async_write_op_state()
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Unsubscribe when removed."""
         self._availability_sub_state = await async_unsubscribe_topics(
             self.opp, self._availability_sub_state
@@ -447,7 +447,7 @@ class MqttDiscoveryUpdate(Entity):
             )
         super().add_to_platform_abort()
 
-    async def async_will_remove_from(opp(self) -> None:
+    async def async_will_remove_from_opp(self) -> None:
         """Stop listening to signal and cleanup discovery data.."""
         self._cleanup_discovery_on_remove()
 
@@ -554,14 +554,14 @@ class MqttEntity(
         await self._subscribe_topics()
         self.async_write_op_state()
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Unsubscribe when removed."""
         self._sub_state = await subscription.async_unsubscribe_topics(
             self.opp, self._sub_state
         )
-        await MqttAttributes.async_will_remove_from(opp(self)
-        await MqttAvailability.async_will_remove_from(opp(self)
-        await MqttDiscoveryUpdate.async_will_remove_from(opp(self)
+        await MqttAttributes.async_will_remove_from_opp(self)
+        await MqttAvailability.async_will_remove_from_opp(self)
+        await MqttDiscoveryUpdate.async_will_remove_from_opp(self)
 
     @staticmethod
     @abstractmethod
