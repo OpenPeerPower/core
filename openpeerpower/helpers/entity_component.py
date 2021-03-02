@@ -139,7 +139,7 @@ class EntityComponent:
         platform_type = config_entry.domain
         platform = await async_prepare_setup_platform(
             self.opp,
-            # In future PR we should make.opp_config part of the constructor
+            # In future PR we should make opp_config part of the constructor
             # params.
             self.config or {},
             self.domain,
@@ -312,7 +312,7 @@ class EntityComponent:
             scan_interval = self.scan_interval
 
         return EntityPlatform(
-            opp.self.opp,
+            opp=self.opp,
             logger=self.logger,
             domain=self.domain,
             platform_name=platform_type,

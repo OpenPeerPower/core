@@ -40,7 +40,7 @@ async def setup_fritzbox(opp: OpenPeerPowerType, config: dict):
     await opp.async_block_till_done()
 
 
-async def test_setup_opp: OpenPeerPowerType, fritz: Mock):
+async def test_setup(opp: OpenPeerPowerType, fritz: Mock):
     """Test setup of platform."""
     device = FritzDeviceSwitchMock()
     fritz().get_devices.return_value = [device]

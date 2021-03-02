@@ -26,7 +26,7 @@ async def test_light(
     entity_id = "light.dev1_1"
 
     component_data = await vera_component_factory.configure_component(
-        opp.opp,
+        opp=opp,
         controller_config=new_simple_controller_config(devices=(vera_device,)),
     )
     update_callback = component_data.controller_data[0].update_callback

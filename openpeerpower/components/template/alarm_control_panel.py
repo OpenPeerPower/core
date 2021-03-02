@@ -136,7 +136,7 @@ class AlarmControlPanelTemplate(TemplateEntity, AlarmControlPanelEntity):
         """Initialize the panel."""
         super().__init__()
         self.entity_id = async_generate_entity_id(
-            ENTITY_ID_FORMAT, device_id, opp.opp
+            ENTITY_ID_FORMAT, device_id, opp=opp
         )
         self._name = name
         self._template = state_template

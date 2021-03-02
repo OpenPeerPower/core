@@ -173,7 +173,7 @@ def _handle_exception(err) -> bool:
             raise  # we don't expect/handle any other Exceptions
 
 
-async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Create a (EMEA/EU-based) Honeywell TCC system."""
 
     async def load_auth_tokens(store) -> Tuple[Dict, Optional[Dict]]:

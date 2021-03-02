@@ -497,7 +497,7 @@ async def async_setup_entry(opp, config_entry):
             opp.data[DATA_ENTITY_VALUES] = new_values
 
     platform = EntityPlatform(
-        opp.opp,
+        opp=opp,
         logger=_LOGGER,
         domain=DOMAIN,
         platform_name=DOMAIN,

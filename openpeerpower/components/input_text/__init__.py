@@ -113,7 +113,7 @@ CONFIG_SCHEMA = vol.Schema(
 RELOAD_SERVICE_SCHEMA = vol.Schema({})
 
 
-async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up an input text."""
     component = EntityComponent(_LOGGER, DOMAIN, opp)
     id_manager = collection.IDManager()

@@ -77,7 +77,7 @@ async def async_setup(opp, config):
             return Updater(False, "", "")
 
         # Load data from Supervisor
-        if opp.components.oppio.is.oppio():
+        if opp.components.oppio.is oppio():
             core_info = opp.components.oppio.get_core_info()
             newest = core_info["version_latest"]
 

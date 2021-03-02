@@ -303,7 +303,7 @@ async def test_update(opp):
             )
 
 
-async def test_melissa_op_to.opp.opp):
+async def test_melissa_op_to.opp=opp):
     """Test for translate melissa operations to.opp."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
@@ -316,7 +316,7 @@ async def test_melissa_op_to.opp.opp):
         assert thermostat.melissa_op_to.opp(5) is None
 
 
-async def test_melissa_fan_to.opp.opp):
+async def test_melissa_fan_to.opp=opp):
     """Test for translate melissa fan state to.opp."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()

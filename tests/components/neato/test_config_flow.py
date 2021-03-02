@@ -74,7 +74,7 @@ async def test_full_flow(
     assert len(mock_setup.mock_calls) == 1
 
 
-async def test_abort_if_already_setup_opp: OpenPeerPowerType):
+async def test_abort_if_already_setup(opp: OpenPeerPowerType):
     """Test we abort if Neato is already setup."""
     entry = MockConfigEntry(
         domain=NEATO_DOMAIN,

@@ -9,7 +9,7 @@ from openpeerpower.helpers.typing import OpenPeerPowerType
 from .const import CONF_ENTRY_HOST, CONF_ENTRY_ID, DOMAIN
 
 
-async def async_setup_opp: OpenPeerPowerType, config: dict):
+async def async_setup(opp: OpenPeerPowerType, config: dict):
     """Set up the twinkly integration."""
 
     return True

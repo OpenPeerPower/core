@@ -856,7 +856,7 @@ def test_config_defaults():
     """Test config defaults."""
    opp =  Mock()
     config = op.config(opp)
-    assert config(opp is.opp
+    assert config(opp is opp
     assert config.latitude == 0
     assert config.longitude == 0
     assert config.elevation == 0
@@ -1122,7 +1122,7 @@ async def test_opp_start_starts_the_timer(loop):
         assert opp.state == op.CoreState.running
         assert not opp._track_task
         assert len(mock_timer.mock_calls) == 1
-        assert mock_timer.mock_calls[0][1][0] is.opp
+        assert mock_timer.mock_calls[0][1][0] is opp
 
     finally:
         await opp.async_stop()
@@ -1142,7 +1142,7 @@ async def test_start_taking_too_long(loop, caplog):
 
         assert opp.state == op.CoreState.running
         assert len(mock_timer.mock_calls) == 1
-        assert mock_timer.mock_calls[0][1][0] is.opp
+        assert mock_timer.mock_calls[0][1][0] is opp
         assert "Something is blocking Open Peer Power" in caplog.text
 
     finally:

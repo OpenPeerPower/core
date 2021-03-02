@@ -31,7 +31,7 @@ async def test_init(
     entity1_id = "binary_sensor.first_dev_1"
 
     await vera_component_factory.configure_component(
-        opp.opp,
+        opp=opp,
         controller_config=new_simple_controller_config(
             config={CONF_CONTROLLER: "http://127.0.0.1:111"},
             config_source=ConfigSource.CONFIG_FLOW,
@@ -58,7 +58,7 @@ async def test_init_from_file(
     entity1_id = "binary_sensor.first_dev_1"
 
     await vera_component_factory.configure_component(
-        opp.opp,
+        opp=opp,
         controller_config=new_simple_controller_config(
             config={CONF_CONTROLLER: "http://127.0.0.1:111"},
             config_source=ConfigSource.FILE,
@@ -98,7 +98,7 @@ async def test_multiple_controllers_with_legacy_one(
     )
 
     await vera_component_factory.configure_component(
-        opp.opp,
+        opp=opp,
         controller_config=new_simple_controller_config(
             config={CONF_CONTROLLER: "http://127.0.0.1:111"},
             config_source=ConfigSource.FILE,
@@ -108,7 +108,7 @@ async def test_multiple_controllers_with_legacy_one(
     )
 
     await vera_component_factory.configure_component(
-        opp.opp,
+        opp=opp,
         controller_config=new_simple_controller_config(
             config={CONF_CONTROLLER: "http://127.0.0.1:222"},
             config_source=ConfigSource.CONFIG_FLOW,
@@ -139,7 +139,7 @@ async def test_unload(
     vera_device1.is_tripped = False
 
     await vera_component_factory.configure_component(
-        opp.opp, controller_config=new_simple_controller_config()
+        opp=opp, controller_config=new_simple_controller_config()
     )
 
     entries = opp.config_entries.async_entries(DOMAIN)
@@ -160,7 +160,7 @@ async def test_async_setup_entry_error(
         controller.get_scenes.side_effect = RequestException()
 
     await vera_component_factory.configure_component(
-        opp.opp,
+        opp=opp,
         controller_config=new_simple_controller_config(setup_callback=setup_callback),
     )
 
@@ -222,7 +222,7 @@ async def test_exclude_and_light_ids(
     entity_id4 = "light.dev4_4"
 
     component_data = await vera_component_factory.configure_component(
-        opp.opp,
+        opp=opp,
         controller_config=new_simple_controller_config(
             config_source=ConfigSource.CONFIG_ENTRY,
             devices=(vera_device1, vera_device2, vera_device3, vera_device4),

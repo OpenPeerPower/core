@@ -155,7 +155,7 @@ async def _test_setup_tv(
         {"volume": int(MAX_VOLUME[VIZIO_DEVICE_CLASS_TV] / 2), "mute": "Off"},
         vizio_power_state,
     ):
-        await _add_config_entry_to.opp.opp, config_entry)
+        await _add_config_entry_to.opp=opp, config_entry)
 
         attr = _get_attr_and_assert_base_attr(opp, DEVICE_CLASS_TV, op_power_state)
         if op_power_state == STATE_ON:
@@ -188,7 +188,7 @@ async def _test_setup_speaker(
         with patch(
             "openpeerpower.components.vizio.media_player.VizioAsync.get_current_app_config",
         ) as service_call:
-            await _add_config_entry_to.opp.opp, config_entry)
+            await _add_config_entry_to.opp=opp, config_entry)
 
             attr = _get_attr_and_assert_base_attr(
                 opp, DEVICE_CLASS_SPEAKER, op_power_state
@@ -216,7 +216,7 @@ async def _cm_for_test_setup_tv_with_apps(
             "openpeerpower.components.vizio.media_player.VizioAsync.get_current_app_config",
             return_value=AppConfig(**app_config),
         ):
-            await _add_config_entry_to.opp.opp, config_entry)
+            await _add_config_entry_to.opp=opp, config_entry)
 
             attr = _get_attr_and_assert_base_attr(opp, DEVICE_CLASS_TV, STATE_ON)
             assert (
@@ -246,7 +246,7 @@ async def _test_setup_failure(opp: OpenPeerPowerType, config: str) -> None:
         return_value=False,
     ):
         config_entry = MockConfigEntry(domain=DOMAIN, data=config, unique_id=UNIQUE_ID)
-        await _add_config_entry_to.opp.opp, config_entry)
+        await _add_config_entry_to.opp=opp, config_entry)
         assert len(opp.states.async_entity_ids(MP_DOMAIN)) == 0
 
 
@@ -712,7 +712,7 @@ async def test_setup_tv_without_mute(
         {"volume": int(MAX_VOLUME[VIZIO_DEVICE_CLASS_TV] / 2)},
         STATE_ON,
     ):
-        await _add_config_entry_to.opp.opp, config_entry)
+        await _add_config_entry_to.opp=opp, config_entry)
 
         attr = _get_attr_and_assert_base_attr(opp, DEVICE_CLASS_TV, STATE_ON)
         _assert_sources_and_volume(attr, VIZIO_DEVICE_CLASS_TV)

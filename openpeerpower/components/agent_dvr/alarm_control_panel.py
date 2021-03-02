@@ -28,7 +28,7 @@ async def async_setup_entry(
 ):
     """Set up the Agent DVR Alarm Control Panels."""
     async_add_entities(
-        [AgentBaseStation.opp.data[AGENT_DOMAIN][config_entry.entry_id][CONNECTION])]
+        [AgentBaseStation(opp.data[AGENT_DOMAIN][config_entry.entry_id][CONNECTION])]
     )
 
 

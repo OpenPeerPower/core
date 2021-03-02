@@ -51,7 +51,7 @@ def setup_platform(opp, config, add_entities, disc_info=None):
         if not data[CONF_TRACK]:
             continue
         entity_id = generate_entity_id(
-            ENTITY_ID_FORMAT, data[CONF_DEVICE_ID], opp.opp
+            ENTITY_ID_FORMAT, data[CONF_DEVICE_ID], opp=opp
         )
         entity = GoogleCalendarEventDevice(
             calendar_service, disc_info[CONF_CAL_ID], data, entity_id

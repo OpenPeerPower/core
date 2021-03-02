@@ -324,7 +324,7 @@ async def test_setting_location(opp,
     assert opp.onfig.longitude == 40
 
 
-async def test_require_admin opp.opp.ead_only_user):
+async def test_require_admin opp=opp.ead_only_user):
     """Test services requiring admin."""
     await async_setup_component.opp."openpeerpower", {})
 
@@ -354,7 +354,7 @@ async def test_require_admin opp.opp.ead_only_user):
         )
 
 
-async def test_turn_on_off_toggle_schema.opp.opp.ead_only_user):
+async def test_turn_on_off_toggle_schema.opp=opp.ead_only_user):
     """Test the schemas for the turn on/off/toggle services."""
     await async_setup_component.opp."openpeerpower", {})
 

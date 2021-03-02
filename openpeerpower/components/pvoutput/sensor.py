@@ -54,7 +54,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     verify_ssl = DEFAULT_VERIFY_SSL
     headers = {"X-Pvoutput-Apikey": api_key, "X-Pvoutput-SystemId": system_id}
 
-    rest = RestData.opp, method, _ENDPOINT, auth, headers, None, payload, verify_ssl)
+    rest = RestData(opp, method, _ENDPOINT, auth, headers, None, payload, verify_ssl)
     await rest.async_update()
 
     if rest.data is None:

@@ -89,7 +89,7 @@ HISTORY_BAKERY = "history_bakery"
 
 def get_significant_states(opp, *args, **kwargs):
     """Wrap _get_significant_states with a sql session."""
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         return _get_significant_states(opp, session, *args, **kwargs)
 
 
@@ -166,7 +166,7 @@ def _get_significant_states(
 
 def state_changes_during_period(opp, start_time, end_time=None, entity_id=None):
     """Return states changes during UTC period start_time - end_time."""
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         baked_query = opp.data[HISTORY_BAKERY](
             lambda session: session.query(*QUERY_STATES)
         )
@@ -202,7 +202,7 @@ def get_last_state_changes(opp, number_of_states, entity_id):
     """Return the last number_of_states."""
     start_time = dt_util.utcnow()
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         baked_query = opp.data[HISTORY_BAKERY](
             lambda session: session.query(*QUERY_STATES)
         )
@@ -245,7 +245,7 @@ def get_states(opp, utc_point_in_time, entity_ids=None, run=None, filters=None):
         if run is None:
             return []
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         return _get_states_with_session(
             opp, session, utc_point_in_time, entity_ids, run, filters
         )
@@ -538,7 +538,7 @@ class HistoryPeriodView(OpenPeerPowerView):
         """Fetch significant stats from the database as json."""
         timer_start = time.perf_counter()
 
-        with session_scope(opp.opp) as session:
+        with session_scope(opp=opp) as session:
             result = _get_significant_states(
                 opp,
                 session,

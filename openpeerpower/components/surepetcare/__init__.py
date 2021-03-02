@@ -132,7 +132,7 @@ async def async_setup(opp, config) -> bool:
 
     _LOGGER.debug("Devices and Pets to setup: %s", things)
 
-    spc = opp.data[DATA_SURE_PETCARE][SPC] = SurePetcareAPI.opp, surepy, things)
+    spc = opp.data[DATA_SURE_PETCARE][SPC] = SurePetcareAPI(opp, surepy, things)
 
     # initial update
     await spc.async_update()

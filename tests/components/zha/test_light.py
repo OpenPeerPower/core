@@ -260,11 +260,11 @@ async def test_light(
     await async_test_on_off_from_light(opp, cluster_on_off, entity_id)
 
     # test turning the lights on and off from the HA
-    await async_test_on_off_from.opp.opp, cluster_on_off, entity_id)
+    await async_test_on_off_from.opp=opp, cluster_on_off, entity_id)
 
     # test short flashing the lights from the HA
     if cluster_identify:
-        await async_test_flash_from.opp.opp, cluster_identify, entity_id, FLASH_SHORT)
+        await async_test_flash_from.opp=opp, cluster_identify, entity_id, FLASH_SHORT)
 
     # test turning the lights on and off from the HA
     if cluster_level:
@@ -279,7 +279,7 @@ async def test_light(
         )
 
     # test rejoin
-    await async_test_off_from.opp.opp, cluster_on_off, entity_id)
+    await async_test_off_from.opp=opp, cluster_on_off, entity_id)
     clusters = [cluster_on_off]
     if cluster_level:
         clusters.append(cluster_level)
@@ -289,7 +289,7 @@ async def test_light(
 
     # test long flashing the lights from the HA
     if cluster_identify:
-        await async_test_flash_from.opp.opp, cluster_identify, entity_id, FLASH_LONG)
+        await async_test_flash_from.opp=opp, cluster_identify, entity_id, FLASH_LONG)
 
 
 async def async_test_on_off_from_light(opp, cluster, entity_id):
@@ -313,7 +313,7 @@ async def async_test_on_from_light(opp, cluster, entity_id):
     assert opp.states.get(entity_id).state == STATE_ON
 
 
-async def async_test_on_off_from.opp.opp, cluster, entity_id):
+async def async_test_on_off_from.opp=opp, cluster, entity_id):
     """Test on off functionality from.opp."""
     # turn on via UI
     cluster.request.reset_mock()
@@ -326,10 +326,10 @@ async def async_test_on_off_from.opp.opp, cluster, entity_id):
         False, ON, (), expect_reply=True, manufacturer=None, tries=1, tsn=None
     )
 
-    await async_test_off_from.opp.opp, cluster, entity_id)
+    await async_test_off_from.opp=opp, cluster, entity_id)
 
 
-async def async_test_off_from.opp.opp, cluster, entity_id):
+async def async_test_off_from.opp=opp, cluster, entity_id):
     """Test turning off the light from Open Peer Power."""
 
     # turn off via UI
@@ -413,7 +413,7 @@ async def async_test_level_on_off_from.opp(
     on_off_cluster.request.reset_mock()
     level_cluster.request.reset_mock()
 
-    await async_test_off_from.opp.opp, on_off_cluster, entity_id)
+    await async_test_off_from.opp=opp, on_off_cluster, entity_id)
 
 
 async def async_test_dimmer_from_light(opp, cluster, entity_id, level, expected_state):
@@ -430,7 +430,7 @@ async def async_test_dimmer_from_light(opp, cluster, entity_id, level, expected_
     assert opp.states.get(entity_id).attributes.get("brightness") == level
 
 
-async def async_test_flash_from.opp.opp, cluster, entity_id, flash):
+async def async_test_flash_from.opp=opp, cluster, entity_id, flash):
     """Test flash functionality from.opp."""
     # turn on via UI
     cluster.request.reset_mock()
@@ -536,7 +536,7 @@ async def test_zha_group_light_entity(
     assert opp.states.get(group_entity_id).state == STATE_OFF
 
     # test turning the lights on and off from the HA
-    await async_test_on_off_from.opp.opp, group_cluster_on_off, group_entity_id)
+    await async_test_on_off_from.opp=opp, group_cluster_on_off, group_entity_id)
 
     # test short flashing the lights from the HA
     await async_test_flash_from.opp(

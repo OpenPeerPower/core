@@ -111,7 +111,7 @@ class AlmondFlowHandler(config_entry_oauth2_flow.AbstractOAuth2FlowHandler):
             return self.async_create_entry(
                 title=data["addon"],
                 data={
-                    "is.oppio": True,
+                    "is oppio": True,
                     "type": TYPE_LOCAL,
                     "host": f"http://{data['host']}:{data['port']}",
                 },

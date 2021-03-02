@@ -60,7 +60,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     name = conf[CONF_NAME]
 
     coordinator = AuroraDataUpdateCoordinator(
-        opp.opp,
+        opp=opp,
         name=name,
         polling_interval=polling_interval,
         api=api,
@@ -119,7 +119,7 @@ class AuroraDataUpdateCoordinator(DataUpdateCoordinator):
         """Initialize the data updater."""
 
         super().__init__(
-            opp.opp,
+            opp=opp,
             logger=_LOGGER,
             name=name,
             update_interval=timedelta(minutes=polling_interval),

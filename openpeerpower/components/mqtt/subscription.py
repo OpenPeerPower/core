@@ -84,7 +84,7 @@ async def async_subscribe_topics(
             unsubscribe_callback=None,
             qos=value.get("qos", DEFAULT_QOS),
             encoding=value.get("encoding", "utf-8"),
-            opp.opp,
+            opp=opp,
         )
         # Get the current subscription state
         current = current_subscriptions.pop(key, None)

@@ -79,7 +79,7 @@ async def async_setup(opp, config):
     # Process events from a remote server that are received on a queue.
     @callback
     def _event_receiver(msg):
-        """Receive events published by and fire them on this.opp instance."""
+        """Receive events published by and fire them on this opp instance."""
         event = json.loads(msg.payload)
         event_type = event.get("event_type")
         event_data = event.get("event_data")

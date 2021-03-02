@@ -163,7 +163,7 @@ class CoreConfigOnboardingView(_BaseOnboardingView):
             )
 
             if (
-                opp.components.oppio.is.oppio()
+                opp.components.oppio.is oppio()
                 and "raspberrypi" in opp.components.oppio.get_core_info()["machine"]
             ):
                 await opp.config_entries.flow.async_init(

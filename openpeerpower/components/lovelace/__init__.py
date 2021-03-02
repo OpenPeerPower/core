@@ -67,7 +67,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
+async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
     """Set up the Lovelace commands."""
     mode = config[DOMAIN][CONF_MODE]
     yaml_resources = config[DOMAIN].get(CONF_RESOURCES)

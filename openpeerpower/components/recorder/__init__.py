@@ -129,7 +129,7 @@ def run_information(opp, point_in_time: Optional[datetime] = None):
     if run_info:
         return run_info
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         return run_information_with_session(session, point_in_time)
 
 
@@ -177,7 +177,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     exclude = conf[CONF_EXCLUDE]
     exclude_t = exclude.get(CONF_EVENT_TYPES, [])
     instance = opp.data[DATA_INSTANCE] = Recorder(
-        opp.opp,
+        opp=opp,
         auto_purge=auto_purge,
         keep_days=keep_days,
         commit_interval=commit_interval,

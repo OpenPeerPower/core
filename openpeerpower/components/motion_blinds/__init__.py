@@ -25,7 +25,7 @@ from .gateway import ConnectMotionGateway
 _LOGGER = logging.getLogger(__name__)
 
 
-def setup_opp: core.OpenPeerPower, config: dict):
+def setup(opp: core.OpenPeerPower, config: dict):
     """Set up the Motion Blinds component."""
     return True
 

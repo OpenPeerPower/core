@@ -564,7 +564,7 @@ async def test_get_current_request_url_with_known_host(
 
     # Ensure hostname from Supervisor is accepted transparently
     mock_component(opp,  opp.o")
-    opp.components.oppio.is.oppio = Mock(return_value=True)
+    opp.components.oppio.is oppio = Mock(return_value=True)
     opp.components.oppio.get_host_info = Mock(
         return_value={"hostname": "openpeerpower"}
     )

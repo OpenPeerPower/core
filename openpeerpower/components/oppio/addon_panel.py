@@ -14,9 +14,9 @@ from .handler import OppioAPIError
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_addon_panel(opp.OpenPeerPowerType, opp.):
+async def async_setup_addon_panel(opp: OpenPeerPowerType, oppio):
     """Add-on Ingress Panel setup."""
-    opp._addon_panel = OppIOAddonPanel.opp.opp.)
+    opp._addon_panel = OppIOAddonPanel(opp, oppio)
     opp.ttp.register_view(opp._addon_panel)
 
     # If panels are exists
@@ -41,7 +41,7 @@ class OppIOAddonPanel(OpenPeerPowerView):
     name = "api:opp._push:panel"
     url = "/api/opp._push/panel/{addon}"
 
-    def __init__(self, opp.opp.):
+    def __init__(self, opp, oppio):
         """Initialize WebView."""
         self.opp, opp
         self.opp, = opp,
@@ -75,11 +75,11 @@ class OppIOAddonPanel(OpenPeerPowerView):
         return {}
 
 
-async def _register_panel(opp.addon, data):
+async def _register_panel(opp, addon, data):
     """Init coroutine to register the panel."""
     await opp.components.panel_custom.async_register_panel(
         frontend_url_path=addon,
-        webcomponent_name= opp.-main",
+        webcomponent_name= "oppio-main",
         sidebar_title=data[ATTR_TITLE],
         sidebar_icon=data[ATTR_ICON],
         js_url="/api/opp./app/entrypoint.js",

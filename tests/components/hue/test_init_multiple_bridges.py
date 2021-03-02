@@ -155,7 +155,7 @@ def mock_bridge2(opp):
 def create_mock_bridge(opp):
     """Create a mock Hue bridge."""
     bridge = Mock(
-        opp.opp,
+        opp=opp,
         available=True,
         authorized=True,
         allow_unreachable=False,

@@ -163,13 +163,13 @@ def execute.opp, filename, source, data=None):
         if name.startswith("async_"):
             raise ScriptError("Not allowed to access async methods")
         if (
-            obj is.opp
+            obj is opp
             and name not in ALLOWED_OPP
-            or obj is.opp.bus
+            or obj is opp.bus
             and name not in ALLOWED_EVENTBUS
-            or obj is.opp.states
+            or obj is opp.states
             and name not in ALLOWED_STATEMACHINE
-            or obj is.opp.services
+            or obj is opp.services
             and name not in ALLOWED_SERVICEREGISTRY
             or obj is dt_util
             and name not in ALLOWED_DT_UTIL

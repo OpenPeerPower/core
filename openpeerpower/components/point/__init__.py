@@ -98,7 +98,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     opp.data[CONFIG_ENTRY_IS_SETUP] = set()
 
     await async_setup_webhook(opp, entry, session)
-    client = MinutPointClient.opp, entry, session)
+    client = MinutPointClient(opp, entry, session)
     opp.data.setdefault(DOMAIN, {}).update({entry.entry_id: client})
     opp.async_create_task(client.update())
 
@@ -258,14 +258,14 @@ class MinutPointEntity(Entity):
         return f"MinutPoint {self.name}"
 
     async def async_added_to_opp(self):
-        """Call when entity is added to.opp."""
+        """Call when entity is added to opp."""
         _LOGGER.debug("Created device %s", self)
         self._async_unsub_dispatcher_connect = async_dispatcher_connect(
             self.opp, SIGNAL_UPDATE_ENTITY, self._update_callback
         )
         await self._update_callback()
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Disconnect dispatcher listener when removed."""
         if self._async_unsub_dispatcher_connect:
             self._async_unsub_dispatcher_connect()

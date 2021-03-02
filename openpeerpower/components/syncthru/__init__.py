@@ -17,7 +17,7 @@ from .const import DOMAIN
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up."""
     opp.data.setdefault(DOMAIN, {})
     return True

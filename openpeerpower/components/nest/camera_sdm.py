@@ -151,7 +151,7 @@ class NestCamera(Camera):
             self.stream.update_source(self._stream.rtsp_stream_url)
         self._schedule_stream_refresh()
 
-    async def async_will_remove_from(opp(self):
+    async def async_will_remove_from_opp(self):
         """Invalidates the RTSP token when unloaded."""
         if self._stream:
             _LOGGER.debug("Invalidating stream")

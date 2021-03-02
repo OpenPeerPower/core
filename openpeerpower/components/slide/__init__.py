@@ -136,7 +136,7 @@ async def async_setup(opp, config):
 
     async def retry_setup(now):
         """Retry setup if a connection/timeout happens on Slide API."""
-        await async_setup_opp, config)
+        await async_setup(opp, config)
 
     opp.data[DOMAIN] = {}
     opp.data[DOMAIN][SLIDES] = {}

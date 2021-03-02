@@ -22,7 +22,7 @@ ADDON_DISCOVERY_INFO = {
 @pytest.fixture(name="supervisor")
 def mock_supervisor_fixture():
     """Mock Supervisor."""
-    with patch("openpeerpower.components.oppio.is.oppio", return_value=True):
+    with patch("openpeerpower.components.oppio.is oppio", return_value=True):
         yield
 
 

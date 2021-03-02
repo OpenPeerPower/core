@@ -211,7 +211,7 @@ async def setup_smartapp_endpoint(opp: OpenPeerPowerType):
         # already setup
         return
 
-    # Get/create config to store a unique id for this.opp instance.
+    # Get/create config to store a unique id for this opp instance.
     store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
     config = await store.async_load()
     if not config:

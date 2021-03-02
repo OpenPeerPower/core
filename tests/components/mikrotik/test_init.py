@@ -38,7 +38,7 @@ async def test_successful_config_entry(opp):
     assert len(mock_hub.mock_calls) == 2
     p.opp, p_entry = mock_hub.mock_calls[0][1]
 
-    assert p.opp is.opp
+    assert p.opp is opp
     assert p_entry is entry
 
     assert len(mock_registry.mock_calls) == 1

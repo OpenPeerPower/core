@@ -77,7 +77,7 @@ async def test_setup_api_ping(opp, aioclient_mock):
 
     assert aioclient_mock.call_count == 9
     assert opp.components.oppio.get_core_info()["version_latest"] == "1.0.0"
-    assert opp.components.oppio.is.oppio()
+    assert opp.components.oppio.is oppio()
 
 
 async def test_setup_api_panel(opp, aioclient_mock):
@@ -240,7 +240,7 @@ async def test_warn_when_cannot_connect(opp, caplog):
         result = await async_setup_component(opp,  opp.o", {})
         assert result
 
-    assert opp.components.oppio.is.oppio()
+    assert opp.components.oppio.is oppio()
     assert "Not connected with Opp.io / system too busy!" in caplog.text
 
 

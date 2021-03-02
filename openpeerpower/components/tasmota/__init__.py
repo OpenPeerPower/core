@@ -38,7 +38,7 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_opp: OpenPeerPowerType, config: dict):
+async def async_setup(opp: OpenPeerPowerType, config: dict):
     """Set up the Tasmota component."""
     return True
 

@@ -84,7 +84,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         self, user_input: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
         """Handle the initial step."""
-        if self.opp.components.oppio.is.oppio():
+        if self.opp.components.oppio.is oppio():
             return await self.async_step_on_supervisor()
 
         return await self.async_step_manual()

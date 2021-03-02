@@ -80,7 +80,7 @@ async def test_set_up.oppio.opp, aioclient_mock):
     entry = MockConfigEntry(
         domain="almond",
         data={
-            "is.oppio": True,
+            "is oppio": True,
             "type": const.TYPE_LOCAL,
             "host": "http://localhost:9999",
         },

@@ -23,7 +23,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
+async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
     """Register the iZone component config."""
     conf = config.get(IZONE)
     if not conf:

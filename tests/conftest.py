@@ -357,7 +357,7 @@ def current_request_with_host(current_request):
 def.opp_ws_client(aiohttp_client, opp_access_token, opp):
     """Websocket client fixture connected to websocket server."""
 
-    async def create_client(opp.opp, access_token(opp_access_token):
+    async def create_client(opp=opp, access_token(opp_access_token):
         """Create a websocket client."""
         assert await async_setup_component(opp, "websocket_api", {})
 

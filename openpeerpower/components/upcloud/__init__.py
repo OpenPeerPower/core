@@ -119,7 +119,7 @@ class UpCloud OppData:
     scan_interval_migrations: Dict[str, int] = dataclasses.field(default_factory=dict)
 
 
-async def async_setup_opp: OpenPeerPowerType, config) -> bool:
+async def async_setup(opp: OpenPeerPowerType, config) -> bool:
     """Set up UpCloud component."""
     domain_config = config.get(DOMAIN)
     if not domain_config:

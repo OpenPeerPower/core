@@ -292,7 +292,7 @@ The following persons point at invalid users:
     return filtered
 
 
-async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
+async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
     """Set up the person component."""
     entity_component = EntityComponent(_LOGGER, DOMAIN, opp)
     id_manager = collection.IDManager()

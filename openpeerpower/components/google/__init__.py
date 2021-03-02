@@ -364,7 +364,7 @@ def get_calendar_info(opp, calendar):
                     CONF_TRACK: calendar["track"],
                     CONF_NAME: calendar["summary"],
                     CONF_DEVICE_ID: generate_entity_id(
-                        "{}", calendar["summary"], opp.opp
+                        "{}", calendar["summary"], opp=opp
                     ),
                 }
             ],

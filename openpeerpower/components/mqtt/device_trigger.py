@@ -236,7 +236,7 @@ async def async_setup_trigger(opp, config, config_entry, discovery_data):
         opp.data[DEVICE_TRIGGERS] = {}
     if discovery_id not in opp.data[DEVICE_TRIGGERS]:
         opp.data[DEVICE_TRIGGERS][discovery_id] = Trigger(
-            opp.opp,
+            opp=opp,
             device_id=device.id,
             discovery_data=discovery_data,
             type=config[CONF_TYPE],
@@ -316,7 +316,7 @@ async def async_attach_trigger(
 
     if discovery_id not in opp.data[DEVICE_TRIGGERS]:
         opp.data[DEVICE_TRIGGERS][discovery_id] = Trigger(
-            opp.opp,
+            opp=opp,
             device_id=device_id,
             discovery_data=None,
             remove_signal=None,

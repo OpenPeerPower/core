@@ -70,7 +70,7 @@ async def async_setup(opp, config):
 
     _LOGGER.debug("Setting up integration")
 
-    tankerkoenig = TankerkoenigData.opp, conf)
+    tankerkoenig = TankerkoenigData(opp, conf)
 
     latitude = conf.get(CONF_LATITUDE, opp.config.latitude)
     longitude = conf.get(CONF_LONGITUDE, opp.config.longitude)
@@ -92,7 +92,7 @@ async def async_setup(opp, config):
             SENSOR_DOMAIN,
             DOMAIN,
             discovered=tankerkoenig.stations,
-            opp.config=conf,
+            opp_config=conf,
         )
     )
 

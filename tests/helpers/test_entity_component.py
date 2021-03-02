@@ -104,7 +104,7 @@ async def test_setup_does_discovery(mock_setup_component, mock_setup, opp):
 async def test_set_scan_interval_via_config(mock_track, opp):
     """Test the setting of the scan interval via configuration."""
 
-    def platform_setup_opp, config, add_entities, discovery_info=None):
+    def platform_setup(opp, config, add_entities, discovery_info=None):
         """Test the platform setup."""
         add_entities([MockEntity(should_poll=True)])
 
@@ -124,7 +124,7 @@ async def test_set_scan_interval_via_config(mock_track, opp):
 async def test_set_entity_namespace_via_config(opp):
     """Test setting an entity namespace."""
 
-    def platform_setup_opp, config, add_entities, discovery_info=None):
+    def platform_setup(opp, config, add_entities, discovery_info=None):
         """Test the platform setup."""
         add_entities([MockEntity(name="beer"), MockEntity(name=None)])
 
@@ -138,7 +138,7 @@ async def test_set_entity_namespace_via_config(opp):
 
     await opp.async_block_till_done()
 
-    assert sorted.opp.states.async_entity_ids()) == [
+    assert sorted(opp.states.async_entity_ids()) == [
         "test_domain.yummy_beer",
         "test_domain.yummy_unnamed_device",
     ]
@@ -304,8 +304,8 @@ async def test_setup_entry(opp):
 
     assert await component.async_setup_entry(entry)
     assert len(mock_setup_entry.mock_calls) == 1
-    p.opp, p_entry, _ = mock_setup_entry.mock_calls[0][1]
-    assert p.opp is.opp
+    p_opp, p_entry, _ = mock_setup_entry.mock_calls[0][1]
+    assert p_opp is opp
     assert p_entry is entry
 
     assert component._platforms[entry.entry_id].scan_interval == timedelta(seconds=5)

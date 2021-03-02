@@ -346,7 +346,7 @@ async def async_setup_internal(opp, entry: config_entries.ConfigEntry):
     opp.data[DOMAIN][DATA_LISTENER] = listener
     opp.data[DOMAIN][DATA_RFXOBJECT] = rfx_object
 
-    rfx_object.event_callback = lambda event:.opp.add_job(async_handle_receive, event)
+    rfx_object.event_callback = lambda event: opp.add_job(async_handle_receive, event)
 
     def send(call):
         event = call.data[ATTR_EVENT]

@@ -39,7 +39,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp: OpenPeerPowerType, config: ConfigEntry):
+async def async_setup(opp: OpenPeerPowerType, config: ConfigEntry):
     """Establish connection with MELCloud."""
     if DOMAIN not in config:
         return True

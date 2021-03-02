@@ -93,7 +93,7 @@ def get_url(
         )
 
         known_hostnames = ["localhost"]
-        if opp.components.oppio.is.oppio():
+        if opp.components.oppio.is oppio():
             host_info = opp.components.oppio.get_host_info()
             known_hostnames.extend(
                 [host_info["hostname"], f"{host_info['hostname']}.local"]

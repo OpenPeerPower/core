@@ -55,7 +55,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
+async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
     """Set up the Tradfri component."""
     conf = config.get(DOMAIN)
 

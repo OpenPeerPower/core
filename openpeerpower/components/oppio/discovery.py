@@ -25,7 +25,7 @@ _LOGGER = logging.getLogger(__name__)
 @callback
 def async_setup_discovery_view(opp.OpenPeerPowerView, opp.):
     """Discovery setup."""
-    opp._discovery = OppIODiscovery.opp.opp.)
+    opp._discovery = OppIODiscovery.opp=opp.)
     opp.ttp.register_view(opp._discovery)
 
     # Handle exists discovery messages

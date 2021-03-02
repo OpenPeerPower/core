@@ -51,7 +51,7 @@ STORAGE_VERSION = 1
 CONFIG_SCHEMA = vol.Schema({}, extra=vol.ALLOW_EXTRA)
 
 
-async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Stub to allow setting up this component.
 
     Configuration through YAML is not supported at this time.

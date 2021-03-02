@@ -45,7 +45,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp: OpenPeerPowerType, config: Dict) -> bool:
+async def async_setup(opp: OpenPeerPowerType, config: Dict) -> bool:
     """Set up the switcher component."""
     phone_id = config[DOMAIN][CONF_PHONE_ID]
     device_id = config[DOMAIN][CONF_DEVICE_ID]

@@ -35,7 +35,7 @@ async def async_setup(opp, config):
 
     def legacy_cleanup():
         """Clean up old tokens."""
-        old_cache = Path.opp.config.path(".ring_cache.pickle"))
+        old_cache = Path(opp.config.path(".ring_cache.pickle"))
         if old_cache.is_file():
             old_cache.unlink()
 

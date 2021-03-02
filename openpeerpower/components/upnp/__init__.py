@@ -67,7 +67,7 @@ async def async_construct_device(opp: OpenPeerPowerType, udn: str, st: str) -> D
     return await Device.async_create_device(opp, location)
 
 
-async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
+async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
     """Set up UPnP component."""
     _LOGGER.debug("async_setup, config: %s", config)
     conf_default = CONFIG_SCHEMA({DOMAIN: {}})[DOMAIN]

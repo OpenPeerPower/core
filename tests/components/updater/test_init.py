@@ -94,7 +94,7 @@ async def test_disable_reporting(opp, mock_get_uuid, mock_get_newest_version):
     assert opp.states.is_state("binary_sensor.updater", "off")
     await updater.get_newest_version(opp, MOCK_HUUID, MOCK_CONFIG)
     call = mock_get_newest_version.mock_calls[0][1]
-    assert call[0] is.opp
+    assert call[0] is opp
     assert call[1] is None
 
 

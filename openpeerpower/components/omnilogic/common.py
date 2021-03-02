@@ -38,7 +38,7 @@ class OmniLogicUpdateCoordinator(DataUpdateCoordinator):
         self.api = api
 
         super().__init__(
-            opp.opp,
+            opp=opp,
             logger=_LOGGER,
             name=name,
             update_interval=timedelta(seconds=polling_interval),

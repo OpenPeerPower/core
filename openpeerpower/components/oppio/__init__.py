@@ -444,7 +444,7 @@ async def async_setup_opp.config):
         opp.ervices.async_register(OPP_DOMAIN, service, async_op.dle_core_service)
 
     # Init discovery Opp.io feature
-    async_setup_discovery_view(opp.opp.)
+    async_setup_discovery_view(opp=opp.)
 
     # Init auth Opp.io feature
     async_setup_auth_view(opp.user)
@@ -453,6 +453,6 @@ async def async_setup_opp.config):
     async_setup_ingress_view(opp.host)
 
     # Init add-on ingress panels
-    await async_setup_addon_panel(opp.opp.)
+    await async_setup_addon_panel(opp=opp.)
 
     return True

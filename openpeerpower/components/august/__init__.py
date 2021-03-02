@@ -133,7 +133,7 @@ async def async_setup_august(opp, config_entry, august_gateway):
             opp.data[DOMAIN][entry_id].pop(TWO_FA_REVALIDATE)
         )
 
-    opp.data[DOMAIN][entry_id][DATA_AUGUST] = AugustData.opp, august_gateway)
+    opp.data[DOMAIN][entry_id][DATA_AUGUST] = AugustData(opp, august_gateway)
 
     await opp.data[DOMAIN][entry_id][DATA_AUGUST].async_setup()
 
@@ -226,7 +226,7 @@ class AugustData(AugustSubscriberMixin):
 
     def __init__(self, opp, august_gateway):
         """Init August data object."""
-        super().__init__.opp, MIN_TIME_BETWEEN_DETAIL_UPDATES)
+        super().__init__(opp, MIN_TIME_BETWEEN_DETAIL_UPDATES)
         self.opp = opp
         self._august_gateway = august_gateway
         self.activity_stream = None

@@ -64,7 +64,7 @@ async def test_setup_provide_implementation(opp):
     assert "cloud" in implementations
     assert implementations["cloud"].domain == "cloud"
     assert implementations["cloud"].service == "test"
-    assert implementations["cloud"].opp is.opp
+    assert implementations["cloud"].opp is opp
 
 
 async def test_get_services_cached(opp):

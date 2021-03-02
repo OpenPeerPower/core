@@ -26,7 +26,7 @@ PLATFORMS = ["binary_sensor", "sensor"]
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up the Minecraft Server component."""
     return True
 

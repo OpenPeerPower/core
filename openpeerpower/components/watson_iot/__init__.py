@@ -139,7 +139,7 @@ def setup(opp, config):
 
         return out_event
 
-    instance = opp.data[DOMAIN] = WatsonIOTThread.opp, watson_gateway, event_to_json)
+    instance = opp.data[DOMAIN] = WatsonIOTThread(opp, watson_gateway, event_to_json)
     instance.start()
 
     def shutdown(event):

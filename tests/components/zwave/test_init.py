@@ -851,7 +851,7 @@ async def test_entity_discovery(
         zwave, "import_module", mock_import_module
     ):
         values = zwave.ZWaveDeviceEntityValues(
-            opp.opp,
+            opp=opp,
             schema=mock_schema,
             primary_value=value_class.primary,
             zwave_config=zwave_config,
@@ -937,7 +937,7 @@ async def test_entity_existing_values(
         zwave, "import_module", mock_import_module
     ):
         values = zwave.ZWaveDeviceEntityValues(
-            opp.opp,
+            opp=opp,
             schema=mock_schema,
             primary_value=value_class.primary,
             zwave_config=zwave_config,
@@ -991,7 +991,7 @@ async def test_node_schema_mismatch(
         zwave, "import_module", mock_import_module
     ):
         values = zwave.ZWaveDeviceEntityValues(
-            opp.opp,
+            opp=opp,
             schema=mock_schema,
             primary_value=value_class.primary,
             zwave_config=zwave_config,
@@ -1038,7 +1038,7 @@ async def test_entity_workaround_component(
     ):
 
         values = zwave.ZWaveDeviceEntityValues(
-            opp.opp,
+            opp=opp,
             schema=mock_schema,
             primary_value=value_class.primary,
             zwave_config=zwave_config,
@@ -1083,7 +1083,7 @@ async def test_entity_workaround_ignore(
         zwave, "import_module", mock_import_module
     ):
         values = zwave.ZWaveDeviceEntityValues(
-            opp.opp,
+            opp=opp,
             schema=mock_schema,
             primary_value=value_class.primary,
             zwave_config=zwave_config,
@@ -1118,7 +1118,7 @@ async def test_entity_config_ignore(
         zwave, "import_module", mock_import_module
     ):
         values = zwave.ZWaveDeviceEntityValues(
-            opp.opp,
+            opp=opp,
             schema=mock_schema,
             primary_value=value_class.primary,
             zwave_config=zwave_config,
@@ -1163,7 +1163,7 @@ async def test_entity_config_ignore_with_registry(
         zwave, "import_module", mock_import_module
     ):
         zwave.ZWaveDeviceEntityValues(
-            opp.opp,
+            opp=opp,
             schema=mock_schema,
             primary_value=value_class.primary,
             zwave_config=zwave_config,
@@ -1201,7 +1201,7 @@ async def test_entity_platform_ignore(
         zwave, "import_module", import_module
     ):
         zwave.ZWaveDeviceEntityValues(
-            opp.opp,
+            opp=opp,
             schema=mock_schema,
             primary_value=value_class.primary,
             zwave_config=zwave_config,
@@ -1235,7 +1235,7 @@ async def test_config_polling_intensity(
         zwave, "import_module", mock_import_module
     ):
         values = zwave.ZWaveDeviceEntityValues(
-            opp.opp,
+            opp=opp,
             schema=mock_schema,
             primary_value=value_class.primary,
             zwave_config=zwave_config,

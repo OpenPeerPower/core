@@ -63,7 +63,7 @@ class ToonLocalOAuth2Implementation(config_entry_oauth2_flow.LocalOAuth2Implemen
         self.issuer = issuer
 
         super().__init__(
-            opp.opp,
+            opp=opp,
             domain=tenant_id,
             client_id=client_id,
             client_secret=client_secret,

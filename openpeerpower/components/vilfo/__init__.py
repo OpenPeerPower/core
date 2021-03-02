@@ -22,7 +22,7 @@ DEFAULT_SCAN_INTERVAL = timedelta(seconds=30)
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
+async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
     """Set up the Vilfo Router component."""
     opp.data.setdefault(DOMAIN, {})
     return True

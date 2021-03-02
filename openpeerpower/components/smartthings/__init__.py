@@ -53,7 +53,7 @@ from .smartapp import (
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_opp: OpenPeerPowerType, config: ConfigType):
+async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
     """Initialize the SmartThings platform."""
     await setup_smartapp_endpoint(opp)
     return True

@@ -44,7 +44,7 @@ CONFIG_SCHEMA = vol.Schema(
 PLATFORMS = ["alarm_control_panel", "camera", "sensor"]
 
 
-async def async_setup_opp: OpenPeerPowerType, config: dict) -> bool:
+async def async_setup(opp: OpenPeerPowerType, config: dict) -> bool:
     """Set up the Canary integration."""
     opp.data.setdefault(DOMAIN, {})
 

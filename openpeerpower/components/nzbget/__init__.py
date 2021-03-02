@@ -60,7 +60,7 @@ SPEED_LIMIT_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_opp: OpenPeerPowerType, config: dict) -> bool:
+async def async_setup(opp: OpenPeerPowerType, config: dict) -> bool:
     """Set up the NZBGet integration."""
     opp.data.setdefault(DOMAIN, {})
 

@@ -198,7 +198,7 @@ class TemplateFan(TemplateEntity, FanEntity):
         super().__init__(availability_template=availability_template)
         self.opp = opp
         self.entity_id = async_generate_entity_id(
-            ENTITY_ID_FORMAT, device_id, opp.opp
+            ENTITY_ID_FORMAT, device_id, opp=opp
         )
         self._name = friendly_name
 
@@ -212,8 +212,8 @@ class TemplateFan(TemplateEntity, FanEntity):
 
         domain = __name__.split(".")[-2]
 
-        self._on_script = Script.opp, on_action, friendly_name, domain)
-        self._off_script = Script.opp, off_action, friendly_name, domain)
+        self._on_script = Script(opp, on_action, friendly_name, domain)
+        self._off_script = Script(opp, off_action, friendly_name, domain)
 
         self._set_speed_script = None
         if set_speed_action:

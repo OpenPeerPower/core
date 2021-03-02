@@ -293,7 +293,7 @@ async def test_two_accounts_setup(
     assert result["data"][CONF_GPS_ACCURACY_THRESHOLD] == DEFAULT_GPS_ACCURACY_THRESHOLD
 
 
-async def test_already_setup_opp: OpenPeerPowerType):
+async def test_already_setup(opp: OpenPeerPowerType):
     """Test we abort if the account is already setup."""
     MockConfigEntry(
         domain=DOMAIN,

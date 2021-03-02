@@ -37,7 +37,7 @@ def async_register_info(
         "system_health.async_register_info is deprecated. Add a system_health platform instead."
     )
     opp.data.setdefault(DOMAIN, {})
-    SystemHealthRegistration.opp, domain).async_register_info(info_callback)
+    SystemHealthRegistration(opp, domain).async_register_info(info_callback)
 
 
 async def async_setup(opp: OpenPeerPower, config: ConfigType):
@@ -54,7 +54,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType):
 
 async def _register_system_health_platform(opp, integration_domain, platform):
     """Register a system health platform."""
-    platform.async_register(opp, SystemHealthRegistration.opp, integration_domain))
+    platform.async_register(opp, SystemHealthRegistration(opp, integration_domain))
 
 
 async def get_integration_info(
