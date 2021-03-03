@@ -1481,7 +1481,7 @@ async def test_async_entity_ids_count(opp):
 
 
 async def test_oppjob_forbid_coroutine():
-    """Test.oppjob forbids coroutines."""
+    """Test oppjob forbids coroutines."""
 
     async def bla():
         pass

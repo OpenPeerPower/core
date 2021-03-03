@@ -135,7 +135,7 @@ class ZigbeeChannel(LogMixin):
 
     @callback
     def async_send_signal(self, signal: str, *args: Any) -> None:
-        """Send a signal through.opp dispatcher."""
+        """Send a signal through opp dispatcher."""
         self._ch_pool.async_send_signal(signal, *args)
 
     async def bind(self):
@@ -239,7 +239,7 @@ class ZigbeeChannel(LogMixin):
 
     @callback
     def zha_send_event(self, command: str, args: Union[int, dict]) -> None:
-        """Relay events to.opp."""
+        """Relay events to opp."""
         self._ch_pool.zha_send_event(
             {
                 ATTR_UNIQUE_ID: self.unique_id,

@@ -147,7 +147,7 @@ class WemoDispatcher:
     def async_add_unique_device(
         self, opp: OpenPeerPower, device: pywemo.WeMoDevice
     ) -> None:
-        """Add a WeMo device to.opp if it has not already been added."""
+        """Add a WeMo device to opp if it has not already been added."""
         if device.serialnumber in self._added_serial_numbers:
             return
 

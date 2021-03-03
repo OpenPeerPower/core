@@ -1,4 +1,4 @@
-"""Tests for.oppfest dependency finder."""
+"""Tests for oppfest dependency finder."""
 import ast
 
 import pytest
@@ -64,7 +64,7 @@ import openpeerpower.components.renamed_absolute as hue
 
 
 def test.opp_components_var(mock_collector):
-    """Test detecting a.opp_components_var reference."""
+    """Test detecting a opp_components_var reference."""
     mock_collector.visit(
         ast.parse(
             """
@@ -77,7 +77,7 @@ def bla(opp):
 
 
 def test.opp_components_class(mock_collector):
-    """Test detecting a.opp_components_class reference."""
+    """Test detecting a opp_components_class reference."""
     mock_collector.visit(
         ast.parse(
             """

@@ -96,7 +96,7 @@ ENTITY_NUMBERS_BY_ID = {v: k for k, v in ENTITY_IDS_BY_NUMBER.items()}
 
 
 @pytest.fixture
-def.opp_hue(loop, opp):
+def opp_hue(loop, opp):
     """Set up a Open Peer Power instance for these tests."""
     # We need to do this to get access to openpeerpower/turn_(on,off)
     loop.run_until_complete(setup.async_setup_component(opp, "openpeerpower", {}))

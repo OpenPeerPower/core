@@ -1,4 +1,4 @@
-"""The tests for the.oppio component."""
+"""The tests for the oppio component."""
 
 from unittest.mock import Mock, patch
 

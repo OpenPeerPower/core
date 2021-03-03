@@ -33,7 +33,7 @@ BANNED_IPS_WITH_SUPERVISOR = BANNED_IPS + [SUPERVISOR_IP]
 
 @pytest.fixture(name="oppio_env")
 def oppio_env_fixture():
-    """Fixture to inject.oppio env."""
+    """Fixture to inject oppio env."""
     with patch.dict(os.environ, {" OPPIO": "127.0.0.1"}), patch(
         "openpeerpower.components.oppio. OppIO.is_connected",
         return_value={"result": "ok", "data": {}},

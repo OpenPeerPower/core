@@ -8,7 +8,7 @@ from openpeerpower.helpers import singleton
 
 @pytest.fixture
 def mock.opp():
-    """Mock.opp fixture."""
+    """Mock opp fixture."""
     return Mock(data={})
 
 

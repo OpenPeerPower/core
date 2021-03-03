@@ -178,7 +178,7 @@ class StorageCollection(ObservableCollection):
         self.store = store
 
     @property
-    def.opp(self) -> OpenPeerPower:
+    def opp(self) -> OpenPeerPower:
         """Open Peer Power object."""
         return self.store.opp
 

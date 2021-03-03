@@ -857,7 +857,7 @@ class CameraCapabilities(AlexaEntity):
         yield Alexa(self.opp)
 
     def _check_requirements(self):
-        """Check the.opp URL for HTTPS scheme."""
+        """Check the opp URL for HTTPS scheme."""
         if "stream" not in self.opp.config.components:
             _LOGGER.debug(
                 "%s requires stream component for AlexaCameraStreamController",

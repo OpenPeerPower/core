@@ -269,7 +269,7 @@ class InputNumber(RestoreEntity):
         }
 
     async def async_added_to_opp(self):
-        """Run when entity about to be added to.opp."""
+        """Run when entity about to be added to opp."""
         await super().async_added_to_opp()
         if self._current_value is not None:
             return

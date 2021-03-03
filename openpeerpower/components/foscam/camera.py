@@ -147,7 +147,7 @@ class OppFoscamCamera(Camera):
         self._motion_status = False
 
     async def async_added_to_opp(self):
-        """Handle entity addition to.opp."""
+        """Handle entity addition to opp."""
         # Get motion detection status
         ret, response = await self.opp.async_add_executor_job(
             self._foscam_session.get_motion_detect_config

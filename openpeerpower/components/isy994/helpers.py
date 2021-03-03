@@ -399,7 +399,7 @@ async def migrate_old_unique_ids(
             )
 
 
-def convert_isy_value_to(opp(
+def convert_isy_value_to_opp(
     value: Union[int, float, None],
     uom: str,
     precision: Union[int, str],

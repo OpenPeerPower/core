@@ -20,7 +20,7 @@ async def async_setup_entry(
     opp, core.OpenPeerPower, config_entry: config_entries.ConfigEntry
 ):
     """Set up Rollease Acmeda Automate hub from a config entry."""
-    hub = PulseHub.opp, config_entry)
+    hub = PulseHub(opp, config_entry)
 
     if not await hub.async_setup():
         return False

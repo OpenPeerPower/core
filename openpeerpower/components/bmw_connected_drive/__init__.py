@@ -351,7 +351,7 @@ class BMWConnectedDriveBaseEntity(Entity):
         self.schedule_update_op_state(True)
 
     async def async_added_to_opp(self):
-        """Add callback after being added to.opp,
+        """Add callback after being added to opp,
 
         Show latest data after startup.
         """

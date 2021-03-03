@@ -38,7 +38,7 @@ SAMPLE_CONFIG = {
 
 @pytest.fixture(name="config_entry")
 def config_entry_fixture():
-    """Create.opp config_entry fixture."""
+    """Create opp config_entry fixture."""
     data = {
         CONF_HOST: "192.168.1.1",
         CONF_PORT: "2345",

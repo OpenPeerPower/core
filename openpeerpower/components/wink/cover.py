@@ -27,7 +27,7 @@ class WinkCoverEntity(WinkDevice, CoverEntity):
     """Representation of a Wink cover device."""
 
     async def async_added_to_opp(self):
-        """Call when entity is added to.opp."""
+        """Call when entity is added to opp."""
         self.opp.data[DOMAIN]["entities"]["cover"].append(self)
 
     def close_cover(self, **kwargs):

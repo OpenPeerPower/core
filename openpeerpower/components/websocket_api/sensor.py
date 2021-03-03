@@ -27,7 +27,7 @@ class APICount(Entity):
         self.count = 0
 
     async def async_added_to_opp(self):
-        """Added to.opp."""
+        """Added to opp."""
         self.async_on_remove(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
                 SIGNAL_WEBSOCKET_CONNECTED, self._update_count

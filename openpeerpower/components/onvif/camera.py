@@ -173,7 +173,7 @@ class ONVIFCameraEntity(ONVIFBaseEntity, Camera):
             await stream.close()
 
     async def async_added_to_opp(self):
-        """Run when entity about to be added to.opp."""
+        """Run when entity about to be added to opp."""
         uri_no_auth = await self.device.async_get_stream_uri(self.profile)
         self._stream_uri = uri_no_auth.replace(
             "rtsp://", f"rtsp://{self.device.username}:{self.device.password}@", 1

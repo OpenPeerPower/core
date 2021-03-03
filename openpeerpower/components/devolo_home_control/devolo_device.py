@@ -34,7 +34,7 @@ class DevoloDeviceEntity(Entity):
         self.sync_callback = self._sync
 
     async def async_added_to_opp(self) -> None:
-        """Call when entity is added to.opp."""
+        """Call when entity is added to opp."""
         self.subscriber = Subscriber(self._name, callback=self.sync_callback)
         self._homecontrol.publisher.register(
             self._device_instance.uid, self.subscriber, self.sync_callback

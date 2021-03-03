@@ -138,5 +138,5 @@ class KebaSensor(Entity):
         self.async_schedule_update_op_state(True)
 
     async def async_added_to_opp(self):
-        """Add update callback after being added to.opp."""
+        """Add update callback after being added to opp."""
         self._keba.add_update_listener(self.update_callback)

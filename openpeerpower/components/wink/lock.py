@@ -133,7 +133,7 @@ class WinkLockDevice(WinkDevice, LockEntity):
     """Representation of a Wink lock."""
 
     async def async_added_to_opp(self):
-        """Call when entity is added to.opp."""
+        """Call when entity is added to opp."""
         self.opp.data[DOMAIN]["entities"]["lock"].append(self)
 
     @property

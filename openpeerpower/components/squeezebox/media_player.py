@@ -325,7 +325,7 @@ class SqueezeBoxEntity(MediaPlayerEntity):
                 )
 
     async def async_will_remove_from_opp(self):
-        """Remove from list of known players when removed from.opp."""
+        """Remove from list of known players when removed from opp."""
         self.opp.data[DOMAIN][KNOWN_PLAYERS].remove(self)
 
     @property

@@ -70,7 +70,7 @@ async def async_attach_trigger(
     below = config.get(CONF_BELOW)
     above = config.get(CONF_ABOVE)
     time_delta = config.get(CONF_FOR)
-    template.attach.opp, time_delta)
+    template.attach(opp, time_delta)
     value_template = config.get(CONF_VALUE_TEMPLATE)
     unsub_track_same = {}
     armed_entities = set()

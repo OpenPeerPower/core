@@ -212,7 +212,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         _LOGGER.debug("Export meter sensors are not created")
 
     # Create solaredge data service which will retrieve and update the data.
-    data = SolarEdgeData.opp, api)
+    data = SolarEdgeData(opp, api)
 
     # Create a new sensor for each sensor type.
     entities = []

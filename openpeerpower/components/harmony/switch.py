@@ -77,7 +77,7 @@ class HarmonyActivitySwitch(ConnectionStateMixin, SwitchEntity):
         await self._data.async_power_off()
 
     async def async_added_to_opp(self):
-        """Call when entity is added to.opp."""
+        """Call when entity is added to opp."""
 
         callbacks = {
             "connected": self.got_connected,

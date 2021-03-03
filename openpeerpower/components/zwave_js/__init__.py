@@ -136,7 +136,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     @callback
     def async_on_value_notification(notification: ValueNotification) -> None:
-        """Relay stateless value notification events from Z-Wave nodes to.opp."""
+        """Relay stateless value notification events from Z-Wave nodes to opp."""
         device = dev_reg.async_get_device({get_device_id(client, notification.node)})
         value = notification.value
         if notification.metadata.states:
@@ -161,7 +161,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     @callback
     def async_on_notification(notification: Notification) -> None:
-        """Relay stateless notification events from Z-Wave nodes to.opp."""
+        """Relay stateless notification events from Z-Wave nodes to opp."""
         device = dev_reg.async_get_device({get_device_id(client, notification.node)})
         opp.bus.async_fire(
             ZWAVE_JS_EVENT,

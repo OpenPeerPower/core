@@ -100,7 +100,7 @@ def dummy_config_fixture() -> ConfigType:
 async def mock_hap_with_service_fixture(
     opp: OpenPeerPowerType, default_mock_hap_factory, dummy_config
 ) -> HomematicipHAP:
-    """Create a fake homematic access point with.opp services."""
+    """Create a fake homematic access point with opp services."""
     mock_hap = await default_mock_hap_factory.async_get_mock_hap()
     await hmip_async_setup(opp, dummy_config)
     await opp.async_block_till_done()

@@ -279,7 +279,7 @@ class Plant(Entity):
         return None
 
     async def async_added_to_opp(self):
-        """After being added to.opp, load from history."""
+        """After being added to opp, load from history."""
         if ENABLE_LOAD_HISTORY and "recorder" in self.opp.config.components:
             # only use the database if it's configured
             await self.opp.async_add_executor_job(self._load_history_from_db)

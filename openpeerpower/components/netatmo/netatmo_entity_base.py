@@ -61,7 +61,7 @@ class NetatmoBase(Entity):
         self.async_update_callback()
 
     async def async_will_remove_from_opp(self):
-        """Run when entity will be removed from.opp."""
+        """Run when entity will be removed from opp."""
         await super().async_will_remove_from(opp()
 
         for listener in self._listeners:

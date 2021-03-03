@@ -224,7 +224,7 @@ async def fetch_blueprint_from_url(opp: OpenPeerPower, url: str) -> ImportedBlue
         fetch_blueprint_from_github_gist_url,
     ):
         try:
-            imported_bp = await func.opp, url)
+            imported_bp = await func(opp, url)
             imported_bp.blueprint.update_metadata(source_url=url)
             return imported_bp
         except UnsupportedUrl:

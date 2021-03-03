@@ -40,12 +40,12 @@ async def async_setup_entry(
 
 
 def wilight_to(opp_position(value):
-    """Convert wilight position 1..255 to.opp format 0..100."""
+    """Convert wilight position 1..255 to opp format 0..100."""
     return min(100, round((value * 100) / 255))
 
 
-def.opp_to_wilight_position(value):
-    """Convert.opp position 0..100 to wilight 1..255 scale."""
+def opp_to_wilight_position(value):
+    """Convert opp position 0..100 to wilight 1..255 scale."""
     return min(255, round((value * 255) / 100))
 
 

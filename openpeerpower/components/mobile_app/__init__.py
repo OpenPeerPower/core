@@ -116,8 +116,8 @@ async def async_unload_entry(opp, entry):
     webhook_id = entry.data[CONF_WEBHOOK_ID]
 
     webhook_unregister(opp, webhook_id)
-    del.opp.data[DOMAIN][DATA_CONFIG_ENTRIES][webhook_id]
-    del.opp.data[DOMAIN][DATA_DEVICES][webhook_id]
+    del opp.data[DOMAIN][DATA_CONFIG_ENTRIES][webhook_id]
+    del opp.data[DOMAIN][DATA_DEVICES][webhook_id]
     await opp_notify.async_reload(opp, DOMAIN)
 
     return True

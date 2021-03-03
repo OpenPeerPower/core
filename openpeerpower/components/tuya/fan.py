@@ -69,7 +69,7 @@ class TuyaFanDevice(TuyaDevice, FanEntity):
         self.speeds = []
 
     async def async_added_to_opp(self):
-        """Create fan list when add to.opp."""
+        """Create fan list when add to opp."""
         await super().async_added_to_opp()
         self.speeds.extend(self._tuya.speed_list())
 

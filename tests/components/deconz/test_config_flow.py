@@ -510,7 +510,7 @@ async def test_ssdp_discovery_dont_update_existing.oppio_configuration(
 
 
 async def test_flow.oppio_discovery(opp):
-    """Test.oppio discovery flow works."""
+    """Test oppio discovery flow works."""
     result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN,
         data={

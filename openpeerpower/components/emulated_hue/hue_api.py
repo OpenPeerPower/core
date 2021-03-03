@@ -841,7 +841,7 @@ def create_config_model(config, request):
 
 def create_list_of_entities(config, request):
     """Create a list of all entities."""
-   opp = request.app["opp"]
+    opp = request.app["opp"]
     json_response = {}
 
     for entity in config.filter_exposed_entities(opp.states.async_all()):
@@ -851,7 +851,7 @@ def create_list_of_entities(config, request):
     return json_response
 
 
-def hue_brightness_to(opp(value):
+def hue_brightness_to_opp(value):
     """Convert hue brightness 1..254 to opp format 0..255."""
     return min(255, round((value / HUE_API_STATE_BRI_MAX) * 255))
 

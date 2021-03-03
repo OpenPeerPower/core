@@ -35,7 +35,7 @@ async def async_attach_trigger(
     if automation_info:
         variables = automation_info.get("variables")
 
-    template.attach.opp, config[CONF_EVENT_TYPE])
+    template.attach(opp, config[CONF_EVENT_TYPE])
     event_types = template.render_complex(
         config[CONF_EVENT_TYPE], variables, limited=True
     )
@@ -44,7 +44,7 @@ async def async_attach_trigger(
     event_data_schema = None
     if CONF_EVENT_DATA in config:
         # Render the schema input
-        template.attach.opp, config[CONF_EVENT_DATA])
+        template.attach(opp, config[CONF_EVENT_DATA])
         event_data = {}
         event_data.update(
             template.render_complex(config[CONF_EVENT_DATA], variables, limited=True)
@@ -58,7 +58,7 @@ async def async_attach_trigger(
     event_context_schema = None
     if CONF_EVENT_CONTEXT in config:
         # Render the schema input
-        template.attach.opp, config[CONF_EVENT_CONTEXT])
+        template.attach(opp, config[CONF_EVENT_CONTEXT])
         event_context = {}
         event_context.update(
             template.render_complex(config[CONF_EVENT_CONTEXT], variables, limited=True)

@@ -53,7 +53,7 @@ class GdacsSensor(Entity):
         self._remove_signal_status = None
 
     async def async_added_to_opp(self):
-        """Call when entity is added to.opp."""
+        """Call when entity is added to opp."""
         self._remove_signal_status = async_dispatcher_connect(
             self.opp,
             f"gdacs_status_{self._config_entry_id}",
@@ -64,7 +64,7 @@ class GdacsSensor(Entity):
         await self.async_update()
 
     async def async_will_remove_from_opp(self) -> None:
-        """Call when entity will be removed from.opp."""
+        """Call when entity will be removed from opp."""
         if self._remove_signal_status:
             self._remove_signal_status()
 

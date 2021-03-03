@@ -89,11 +89,11 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         )
     )
 
-    session = config_entry_oauth2_flow.OAuth2Session.opp, entry, implementation)
+    session = config_entry_oauth2_flow.OAuth2Session(opp, entry, implementation)
 
-    neato_session = api.ConfigEntryAuth.opp, entry, session)
+    neato_session = api.ConfigEntryAuth(opp, entry, session)
     opp.data[NEATO_DOMAIN][entry.entry_id] = neato_session
-    hub = NeatoHub.opp, Account(neato_session))
+    hub = NeatoHub(opp, Account(neato_session))
 
     try:
         await opp.async_add_executor_job(hub.update_robots)

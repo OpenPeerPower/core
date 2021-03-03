@@ -460,7 +460,7 @@ class ZHAGateway:
         device_info,
         remove_future,
     ):
-        """Record the creation of a.opp entity associated with ieee."""
+        """Record the creation of a opp entity associated with ieee."""
         self._device_registry[ieee].append(
             EntityReference(
                 reference_id=reference_id,

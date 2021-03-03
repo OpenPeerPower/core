@@ -74,15 +74,15 @@ DOMAIN_STATES_RATE_LIMIT = timedelta(seconds=1)
 
 
 @bind_opp
-def attach.opp: OpenPeerPowerType, obj: Any) -> None:
-    """Recursively attach.opp to all template instances in list and dict."""
+def attach(opp: OpenPeerPowerType, obj: Any) -> None:
+    """Recursively attach opp to all template instances in list and dict."""
     if isinstance(obj, list):
         for child in obj:
-            attach.opp, child)
+            attach(opp, child)
     elif isinstance(obj, collections.abc.Mapping):
         for child_key, child_value in obj.items():
-            attach.opp, child_key)
-            attach.opp, child_value)
+            attach(opp, child_key)
+            attach(opp, child_value)
     elif isinstance(obj, Template):
         obj.opp = opp
 
@@ -280,7 +280,7 @@ class Template:
     __slots__ = (
         "__weakref__",
         "template",
-         opp.,
+         oppio,
         "is_static",
         "_compiled_code",
         "_compiled",
@@ -535,7 +535,7 @@ class Template:
             return value if error_value is _SENTINEL else error_value
 
     def _ensure_compiled(self, limited: bool = False) -> Template:
-        """Bind a template to a specific.opp instance."""
+        """Bind a template to a specific opp instance."""
         self.ensure_valid()
 
         assert self.opp is not None,  opp.variable not set on template"
@@ -1382,9 +1382,9 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
         # We mark these as a context functions to ensure they get
         # evaluated fresh with every execution, rather than executed
         # at compile time and the value stored. The context itself
-        # can be discarded, we only need to get at the.opp object.
-        def.oppfunction(func):
-            """Wrap function that depend on.opp."""
+        # can be discarded, we only need to get at the opp object.
+        def oppfunction(func):
+            """Wrap function that depend on opp."""
 
             @wraps(func)
             def wrapper(*args, **kwargs):

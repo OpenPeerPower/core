@@ -91,7 +91,7 @@ class PlaatoEntity(entity.Entity):
         return False
 
     async def async_added_to_opp(self):
-        """When entity is added to.opp."""
+        """When entity is added to opp."""
         if self._coordinator is not None:
             self.async_on_remove(
                 self._coordinator.async_add_listener(self.async_write_op_state)

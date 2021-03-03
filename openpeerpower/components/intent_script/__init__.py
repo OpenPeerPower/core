@@ -47,7 +47,7 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup(opp, config):
     """Activate Alexa component."""
     intents = copy.deepcopy(config[DOMAIN])
-    template.attach.opp, intents)
+    template.attach(opp, intents)
 
     for intent_type, conf in intents.items():
         if CONF_ACTION in conf:

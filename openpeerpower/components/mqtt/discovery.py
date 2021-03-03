@@ -67,7 +67,7 @@ TOPIC_BASE = "~"
 
 def clear_discovery_hash(opp, discovery_hash):
     """Clear entry in ALREADY_DISCOVERED list."""
-    del.opp.data[ALREADY_DISCOVERED][discovery_hash]
+    del opp.data[ALREADY_DISCOVERED][discovery_hash]
 
 
 def set_discovery_hash(opp, discovery_hash):

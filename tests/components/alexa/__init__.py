@@ -92,7 +92,7 @@ async def assert_request_calls_service(
     payload=None,
     instance=None,
 ):
-    """Assert an API request calls a.opp service."""
+    """Assert an API request calls a opp service."""
     context = Context()
     request = get_new_request(namespace, name, endpoint)
     if payload:

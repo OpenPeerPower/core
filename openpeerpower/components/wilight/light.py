@@ -109,22 +109,22 @@ class WiLightLightDimmer(WiLightDevice, LightEntity):
 
 
 def wilight_to(opp_hue(value):
-    """Convert wilight hue 1..255 to.opp 0..360 scale."""
+    """Convert wilight hue 1..255 to opp 0..360 scale."""
     return min(360, round((value * 360) / 255, 3))
 
 
-def.opp_to_wilight_hue(value):
-    """Convert.opp hue 0..360 to wilight 1..255 scale."""
+def opp_to_wilight_hue(value):
+    """Convert opp hue 0..360 to wilight 1..255 scale."""
     return min(255, round((value * 255) / 360))
 
 
 def wilight_to(opp_saturation(value):
-    """Convert wilight saturation 1..255 to.opp 0..100 scale."""
+    """Convert wilight saturation 1..255 to opp 0..100 scale."""
     return min(100, round((value * 100) / 255, 3))
 
 
-def.opp_to_wilight_saturation(value):
-    """Convert.opp saturation 0..100 to wilight 1..255 scale."""
+def opp_to_wilight_saturation(value):
+    """Convert opp saturation 0..100 to wilight 1..255 scale."""
     return min(255, round((value * 255) / 100))
 
 

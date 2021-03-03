@@ -314,7 +314,7 @@ async def async_test_on_from_light(opp, cluster, entity_id):
 
 
 async def async_test_on_off_from.opp=opp, cluster, entity_id):
-    """Test on off functionality from.opp."""
+    """Test on off functionality from opp."""
     # turn on via UI
     cluster.request.reset_mock()
     await opp.services.async_call(
@@ -347,7 +347,7 @@ async def async_test_off_from.opp=opp, cluster, entity_id):
 async def async_test_level_on_off_from.opp(
     opp, on_off_cluster, level_cluster, entity_id
 ):
-    """Test on off functionality from.opp."""
+    """Test on off functionality from opp."""
 
     on_off_cluster.request.reset_mock()
     level_cluster.request.reset_mock()
@@ -431,7 +431,7 @@ async def async_test_dimmer_from_light(opp, cluster, entity_id, level, expected_
 
 
 async def async_test_flash_from.opp=opp, cluster, entity_id, flash):
-    """Test flash functionality from.opp."""
+    """Test flash functionality from opp."""
     # turn on via UI
     cluster.request.reset_mock()
     await opp.services.async_call(

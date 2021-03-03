@@ -316,7 +316,7 @@ async def _login(opp, modem_data, password):
         """Clean up resources."""
         update_unsub()
         await modem_data.modem.logout()
-        del.opp.data[DATA_KEY].modem_data[modem_data.host]
+        del opp.data[DATA_KEY].modem_data[modem_data.host]
 
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, cleanup)
 

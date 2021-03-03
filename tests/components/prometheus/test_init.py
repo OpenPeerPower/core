@@ -32,7 +32,7 @@ class FilterTest:
 
 
 async def prometheus_client(opp, opp_client):
-    """Initialize an.opp_client with Prometheus component."""
+    """Initialize an opp_client with Prometheus component."""
     await async_setup_component(opp, prometheus.DOMAIN, {prometheus.DOMAIN: {}})
 
     await async_setup_component(opp, sensor.DOMAIN, {"sensor": [{"platform": "demo"}]})

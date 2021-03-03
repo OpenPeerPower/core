@@ -92,7 +92,7 @@ class AnthemAVR(MediaPlayerEntity):
         return getattr(self.avr.protocol, propname, dval)
 
     async def async_added_to_opp(self):
-        """When entity is added to.opp."""
+        """When entity is added to opp."""
         self.async_on_remove(
             async_dispatcher_connect(self.opp, DOMAIN, self.async_write_op_state)
         )

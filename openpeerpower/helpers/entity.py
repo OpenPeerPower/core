@@ -525,7 +525,7 @@ class Entity(ABC):
 
     async def add_to_platform_finish(self) -> None:
         """Finish adding an entity to a platform."""
-        await self.async_internal_added_to(opp()
+        await self.async_internal_added_to_opp()
         await self.async_added_to_opp()
         self.async_write_op_state()
 
@@ -567,19 +567,19 @@ class Entity(ABC):
             self.opp.states.async_remove(self.entity_id, context=self._context)
 
     async def async_added_to_opp(self) -> None:
-        """Run when entity about to be added to.opp,
+        """Run when entity about to be added to opp,
 
         To be extended by integrations.
         """
 
     async def async_will_remove_from_opp(self) -> None:
-        """Run when entity will be removed from.opp,
+        """Run when entity will be removed from opp,
 
         To be extended by integrations.
         """
 
-    async def async_internal_added_to(opp(self) -> None:
-        """Run when entity about to be added to.opp,
+    async def async_internal_added_to_opp(self) -> None:
+        """Run when entity about to be added to opp,
 
         Not to be extended by integrations.
         """
@@ -609,7 +609,7 @@ class Entity(ABC):
             )
 
     async def async_internal_will_remove_from_opp(self) -> None:
-        """Run when entity will be removed from.opp,
+        """Run when entity will be removed from opp,
 
         Not to be extended by integrations.
         """

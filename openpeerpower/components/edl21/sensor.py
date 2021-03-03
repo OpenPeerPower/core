@@ -170,7 +170,7 @@ class EDL21:
             self.opp.loop.create_task(self.add_entities(new_entities))
 
     async def add_entities(self, new_entities) -> None:
-        """Migrate old unique IDs, then add entities to.opp."""
+        """Migrate old unique IDs, then add entities to opp."""
         registry = await async_get_registry(self.opp)
 
         for entity in new_entities:
@@ -214,7 +214,7 @@ class EDL21Entity(Entity):
         self._async_remove_dispatcher = None
 
     async def async_added_to_opp(self):
-        """Run when entity about to be added to.opp."""
+        """Run when entity about to be added to opp."""
 
         @callback
         def handle_telegram(electricity_id, telegram):
@@ -239,7 +239,7 @@ class EDL21Entity(Entity):
         )
 
     async def async_will_remove_from_opp(self):
-        """Run when entity will be removed from.opp."""
+        """Run when entity will be removed from opp."""
         if self._async_remove_dispatcher:
             self._async_remove_dispatcher()
 

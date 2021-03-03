@@ -263,7 +263,7 @@ class HKDevice:
         return True
 
     async def async_unload(self):
-        """Stop interacting with device and prepare for removal from.opp."""
+        """Stop interacting with device and prepare for removal from opp."""
         if self._polling_interval_remover:
             self._polling_interval_remover()
 

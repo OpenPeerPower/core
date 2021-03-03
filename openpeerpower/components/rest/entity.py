@@ -59,7 +59,7 @@ class RestEntity(Entity):
         return self.rest.data is not None
 
     async def async_added_to_opp(self) -> None:
-        """When entity is added to.opp."""
+        """When entity is added to opp."""
         await super().async_added_to_opp()
         self._update_from_rest_data()
         if self.coordinator:

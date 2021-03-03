@@ -43,7 +43,7 @@ class PlexSensor(Entity):
         ).async_call
 
     async def async_added_to_opp(self):
-        """Run when about to be added to.opp."""
+        """Run when about to be added to opp."""
         server_id = self._server.machine_identifier
         unsub = async_dispatcher_connect(
             self.opp,

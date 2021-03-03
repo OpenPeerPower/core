@@ -99,7 +99,7 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigType) -> bool:
     # Unload sensors
     await opp.config_entries.async_forward_entry_unload(entry, "sensor")
 
-    del.opp.data[DOMAIN][entry.entry_id]
+    del opp.data[DOMAIN][entry.entry_id]
 
     return True
 

@@ -42,7 +42,7 @@ class MetOfficeWeather(WeatherEntity):
         self._data = opp_data[METOFFICE_DATA]
         self._coordinator = opp_data[METOFFICE_COORDINATOR]
 
-        self._name = f"{DEFAULT_NAME}  opp.data[METOFFICE_NAME]}"
+        self._name = f"{DEFAULT_NAME}  {opp_data[METOFFICE_NAME]}"
         self._unique_id = f"{self._data.latitude}_{self._data.longitude}"
 
         self.metoffice_now = None

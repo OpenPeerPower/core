@@ -99,7 +99,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 
     url = f"{protocol}://{host}"
 
-    data = HikvisionData.opp, url, port, name, username, password)
+    data = HikvisionData(opp, url, port, name, username, password)
 
     if data.sensors is None:
         _LOGGER.error("Hikvision event stream has no data, unable to set up")

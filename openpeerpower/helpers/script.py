@@ -820,7 +820,7 @@ class Script:
 
         self.opp = opp
         self.sequence = sequence
-        template.attach.opp, self.sequence)
+        template.attach(opp, self.sequence)
         self.name = name
         self.domain = domain
         self.running_description = running_description or f"{domain} script"
@@ -849,7 +849,7 @@ class Script:
         self.variables = variables
         self._variables_dynamic = template.is_complex(variables)
         if self._variables_dynamic:
-            template.attach.opp, variables)
+            template.attach(opp, variables)
 
     @property
     def change_listener(self) -> Optional[Callable[..., Any]]:

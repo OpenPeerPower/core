@@ -113,7 +113,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     )
 
     async def on.opp_stop(event):
-        """Close connection when.opp stops."""
+        """Close connection when opp stops."""
         await factory.shutdown()
 
     listeners.append.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on.opp_stop))

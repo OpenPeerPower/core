@@ -1,4 +1,4 @@
-"""Test.oppbian config."""
+"""Test oppbian config."""
 from unittest.mock import patch
 
 import pytest

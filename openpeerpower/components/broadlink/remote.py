@@ -220,7 +220,7 @@ class BroadlinkRemote(RemoteEntity, RestoreEntity):
         return self._flags
 
     async def async_added_to_opp(self):
-        """Call when the remote is added to.opp."""
+        """Call when the remote is added to opp."""
         state = await self.async_get_last_state()
         self._state = state is None or state.state != STATE_OFF
 

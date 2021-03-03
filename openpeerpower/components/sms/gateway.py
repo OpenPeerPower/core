@@ -130,7 +130,7 @@ class Gateway:
 
     @callback
     def _notify_incoming_sms(self, messages):
-        """Notify.opp when an incoming SMS message is received."""
+        """Notify opp when an incoming SMS message is received."""
         for message in messages:
             event_data = {
                 "phone": message["phone"],

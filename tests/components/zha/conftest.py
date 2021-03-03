@@ -214,7 +214,7 @@ def zha_device_mock(opp, zigpy_device_mock):
 
 
 @pytest.fixture
-def.opp_disable_services(opp):
+def opp_disable_services(opp):
     """Mock service register."""
     with patch.object.opp.services, "async_register"), patch.object(
         opp.services, "has_service", return_value=True

@@ -331,7 +331,7 @@ def _async_remove_indexed_listeners(
 
     if not callbacks:
         opp.data[listener_key]()
-        del.opp.data[listener_key]
+        del opp.data[listener_key]
 
 
 @bind_opp

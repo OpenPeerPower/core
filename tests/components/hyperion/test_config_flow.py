@@ -94,7 +94,7 @@ TEST_SSDP_SERVICE_INFO = {
 
 
 async def _create_mock_entry(opp: OpenPeerPowerType) -> MockConfigEntry:
-    """Add a test Hyperion entity to.opp."""
+    """Add a test Hyperion entity to opp."""
     entry: MockConfigEntry = MockConfigEntry(  # type: ignore[no-untyped-call]
         entry_id=TEST_CONFIG_ENTRY_ID,
         domain=DOMAIN,

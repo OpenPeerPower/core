@@ -1303,7 +1303,7 @@ async def test_automation_trigger_variables(opp, caplog):
 
 
 async def test_automation_bad_trigger_variables(opp, caplog):
-    """Test automation trigger variables accessing.opp is rejected."""
+    """Test automation trigger variables accessing opp is rejected."""
     calls = async_mock_service(opp, "test", "automation")
 
     assert await async_setup_component(

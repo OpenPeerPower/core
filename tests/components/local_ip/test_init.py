@@ -8,7 +8,7 @@ from openpeerpower.util import get_local_ip
 
 @pytest.fixture(name="config")
 def config_fixture():
-    """Create.opp config fixture."""
+    """Create opp config fixture."""
     return {DOMAIN: {}}
 
 

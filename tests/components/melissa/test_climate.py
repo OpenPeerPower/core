@@ -304,7 +304,7 @@ async def test_update(opp):
 
 
 async def test_melissa_op_to.opp=opp):
-    """Test for translate melissa operations to.opp."""
+    """Test for translate melissa operations to opp."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
         device = (await api.async_fetch_devices())[_SERIAL]
@@ -317,7 +317,7 @@ async def test_melissa_op_to.opp=opp):
 
 
 async def test_melissa_fan_to.opp=opp):
-    """Test for translate melissa fan state to.opp."""
+    """Test for translate melissa fan state to opp."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
         device = (await api.async_fetch_devices())[_SERIAL]
@@ -349,7 +349,7 @@ async def test.opp_mode_to_melissa(opp):
 
 
 async def test.opp_fan_to_melissa(opp):
-    """Test for translate melissa states to.opp."""
+    """Test for translate melissa states to opp."""
     with patch(
         "openpeerpower.components.melissa.climate._LOGGER.warning"
     ) as mocked_warning:

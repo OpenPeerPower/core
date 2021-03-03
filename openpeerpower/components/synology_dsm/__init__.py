@@ -517,7 +517,7 @@ class SynoApi:
         await self.opp.async_add_executor_job(self.system.shutdown)
 
     async def async_unload(self):
-        """Stop interacting with the NAS and prepare for removal from.opp."""
+        """Stop interacting with the NAS and prepare for removal from opp."""
         self._unsub_dispatcher()
 
     async def async_update(self, now=None):

@@ -257,7 +257,7 @@ class DHCPWatcher(WatcherBase):
         self.process_client(ip_address, hostname, mac_address)
 
     def create_task(self, task):
-        """Pass a task to.opp.add_job since we are in a thread."""
+        """Pass a task to opp.add_job since we are in a thread."""
         self.opp.add_job(task)
 
 

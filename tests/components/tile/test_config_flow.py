@@ -18,7 +18,7 @@ async def test_duplicate_error(opp):
         CONF_PASSWORD: "123abc",
     }
 
-    MockConfigEntry(domain=DOMAIN, unique_id="user@host.com", data=conf).add_to(opp(
+    MockConfigEntry(domain=DOMAIN, unique_id="user@host.com", data=conf).add_to_opp(
         opp
     )
 

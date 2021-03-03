@@ -35,7 +35,7 @@ class OPiGPIOBinarySensor(BinarySensorEntity):
         self._state = None
 
     async def async_added_to_opp(self):
-        """Run when entity about to be added to.opp."""
+        """Run when entity about to be added to opp."""
 
         def gpio_edge_listener(port):
             """Update GPIO when edge change is detected."""

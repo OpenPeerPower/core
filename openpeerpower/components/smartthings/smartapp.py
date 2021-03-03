@@ -61,7 +61,7 @@ def format_unique_id(app_id: str, location_id: str) -> str:
 
 
 async def find_app(opp: OpenPeerPowerType, api):
-    """Find an existing SmartApp for this installation of.opp."""
+    """Find an existing SmartApp for this installation of opp."""
     apps = await api.apps()
     for app in [app for app in apps if app.app_name.startswith(APP_NAME_PREFIX)]:
         # Load settings to compare instance id
@@ -136,7 +136,7 @@ def _get_app_template(opp: OpenPeerPowerType):
 
 
 async def create_app(opp: OpenPeerPowerType, api):
-    """Create a SmartApp for this instance of.opp."""
+    """Create a SmartApp for this instance of opp."""
     # Create app from template attributes
     template = _get_app_template(opp)
     app = App()

@@ -48,7 +48,7 @@ class AlexaFlashBriefingView(http.OpenPeerPowerView):
         """Initialize Alexa view."""
         super().__init__()
         self.flash_briefings = copy.deepcopy(flash_briefings)
-        template.attach.opp, self.flash_briefings)
+        template.attach(opp, self.flash_briefings)
 
     @callback
     def get(self, request, briefing_id):

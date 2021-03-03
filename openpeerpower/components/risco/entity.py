@@ -18,7 +18,7 @@ class RiscoEntity(CoordinatorEntity):
         self.async_write_op_state()
 
     async def async_added_to_opp(self):
-        """When entity is added to.opp."""
+        """When entity is added to opp."""
         self.async_on_remove(
             self.coordinator.async_add_listener(self._refresh_from_coordinator)
         )

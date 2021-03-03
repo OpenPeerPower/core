@@ -107,7 +107,7 @@ class ZerprocLight(LightEntity):
         self._available = True
 
     async def async_added_to_opp(self) -> None:
-        """Run when entity about to be added to.opp."""
+        """Run when entity about to be added to opp."""
         self.async_on_remove(
             self.opp.bus.async_listen_once(
                 EVENT_OPENPEERPOWER_STOP, self.async_will_remove_from(opp
@@ -115,7 +115,7 @@ class ZerprocLight(LightEntity):
         )
 
     async def async_will_remove_from_opp(self, *args) -> None:
-        """Run when entity will be removed from.opp."""
+        """Run when entity will be removed from opp."""
         try:
             await self._light.disconnect()
         except pyzerproc.ZerprocException:

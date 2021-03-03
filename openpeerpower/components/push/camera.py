@@ -106,7 +106,7 @@ class PushCamera(Camera):
         self.webhook_url = opp.components.webhook.async_generate_url(webhook_id)
 
     async def async_added_to_opp(self):
-        """Call when entity is added to.opp."""
+        """Call when entity is added to opp."""
         self.opp.data[PUSH_CAMERA_DATA][self.webhook_id] = self
 
         try:

@@ -31,7 +31,7 @@ def _perform_registry_callback(opp, pywemo_registry, pywemo_device):
 
 
 def _perform_async_update(opp, wemo_entity):
-    """Return a callable method to cause.opp to update the state of the entity."""
+    """Return a callable method to cause opp to update the state of the entity."""
 
     @callback
     def async_callback():
@@ -104,7 +104,7 @@ async def test_async_update_locked_callback_and_update(
 async def test_async_update_locked_multiple_updates(
     opp, pywemo_registry, wemo_entity, pywemo_device, **kwargs
 ):
-    """Test that two.opp async_update state updates do not proceed at the same time."""
+    """Test that two opp async_update state updates do not proceed at the same time."""
     await async_setup_component(opp, OP_DOMAIN, {})
     update = _perform_async_update(opp, wemo_entity)
     await _async_multiple_call_helper(

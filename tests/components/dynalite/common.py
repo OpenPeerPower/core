@@ -22,7 +22,7 @@ def create_mock_device(platform, spec):
 
 
 async def get_entry_id_from(opp=opp):
-    """Get the config entry id from.opp."""
+    """Get the config entry id from opp."""
     ent_reg = await entity_registry.async_get_registry(opp)
     assert ent_reg
     conf_entries = opp.config_entries.async_entries(dynalite.DOMAIN)

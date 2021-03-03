@@ -35,7 +35,7 @@ class WinkLight(WinkDevice, LightEntity):
     """Representation of a Wink light."""
 
     async def async_added_to_opp(self):
-        """Call when entity is added to.opp."""
+        """Call when entity is added to opp."""
         self.opp.data[DOMAIN]["entities"]["light"].append(self)
 
     @property

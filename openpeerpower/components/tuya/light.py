@@ -120,7 +120,7 @@ class TuyaLight(TuyaDevice, LightEntity):
         self._tuya.color_temp_range = (1000, max_color_temp)
 
     async def async_added_to_opp(self):
-        """Set config parameter when add to.opp."""
+        """Set config parameter when add to opp."""
         await super().async_added_to_opp()
         self._process_config()
         self.async_on_remove(

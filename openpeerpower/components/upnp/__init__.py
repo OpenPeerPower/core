@@ -157,9 +157,9 @@ async def async_unload_entry(
 
     udn = config_entry.data.get(CONFIG_ENTRY_UDN)
     if udn in opp.data[DOMAIN][DOMAIN_DEVICES]:
-        del.opp.data[DOMAIN][DOMAIN_DEVICES][udn]
+        del opp.data[DOMAIN][DOMAIN_DEVICES][udn]
     if udn in opp.data[DOMAIN][DOMAIN_COORDINATORS]:
-        del.opp.data[DOMAIN][DOMAIN_COORDINATORS][udn]
+        del opp.data[DOMAIN][DOMAIN_COORDINATORS][udn]
 
     _LOGGER.debug("Deleting sensors")
     return await opp.config_entries.async_forward_entry_unload(config_entry, "sensor")

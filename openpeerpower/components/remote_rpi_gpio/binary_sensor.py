@@ -64,7 +64,7 @@ class RemoteRPiGPIOBinarySensor(BinarySensorEntity):
         self._button = button
 
     async def async_added_to_opp(self):
-        """Run when entity about to be added to.opp."""
+        """Run when entity about to be added to opp."""
 
         def read_gpio():
             """Read state from GPIO."""

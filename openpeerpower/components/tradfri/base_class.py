@@ -63,7 +63,7 @@ class TradfriBaseClass(Entity):
             self._async_start_observe()
 
     async def async_added_to_opp(self):
-        """Start thread when added to.opp."""
+        """Start thread when added to opp."""
         self._async_start_observe()
 
     @property

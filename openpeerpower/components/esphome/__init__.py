@@ -79,7 +79,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         zeroconf_instance=zeroconf_instance,
     )
 
-    # Store client in per-config-entry.opp.data
+    # Store client in per-config-entry opp.data
     store = Store(
         opp, STORAGE_VERSION, f"esphome.{entry.entry_id}", encoder=JSONEncoder
     )
@@ -114,7 +114,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
                 data_template = {
                     key: Template(value) for key, value in service.data_template.items()
                 }
-                template.attach.opp, data_template)
+                template.attach(opp, data_template)
                 service_data.update(
                     template.render_complex(data_template, service.variables)
                 )
@@ -378,7 +378,7 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
     entry_data = await _cleanup_instance(opp, entry)
     tasks = []
     for platform in entry_data.loaded_platforms:
-        tasks.append.opp.config_entries.async_forward_entry_unload(entry, platform))
+        tasks.append(opp.config_entries.async_forward_entry_unload(entry, platform))
     if tasks:
         await asyncio.wait(tasks)
     return True
@@ -477,24 +477,24 @@ def esphome_state_property(func):
 
 
 class EsphomeEnumMapper:
-    """Helper class to convert between.opp and esphome enum values."""
+    """Helper class to convert between opp and esphome enum values."""
 
     def __init__(self, func: Callable[[], Dict[int, str]]):
         """Construct a EsphomeEnumMapper."""
         self._func = func
 
     def from_esphome(self, value: int) -> str:
-        """Convert from an esphome int representation to a.opp string."""
+        """Convert from an esphome int representation to an opp string."""
         return self._func()[value]
 
-    def from.opp(self, value: str) -> int:
-        """Convert from a.opp string to a esphome int representation."""
+    def from_opp(self, value: str) -> int:
+        """Convert from an opp string to a esphome int representation."""
         inverse = {v: k for k, v in self._func().items()}
         return inverse[value]
 
 
 def esphome_map_enum(func: Callable[[], Dict[int, str]]):
-    """Map esphome int enum values to.opp string constants.
+    """Map esphome int enum values to opp string constants.
 
     This class has to be used as a decorator. This ensures the aioesphomeapi
     import is only happening at runtime.

@@ -194,7 +194,7 @@ class HyperionComponentSwitch(SwitchEntity):
         self.async_write_op_state()
 
     async def async_added_to_opp(self) -> None:
-        """Register callbacks when entity added to.opp."""
+        """Register callbacks when entity added to opp."""
         assert self.opp
         self.async_on_remove(
             async_dispatcher_connect(
@@ -207,5 +207,5 @@ class HyperionComponentSwitch(SwitchEntity):
         self._client.add_callbacks(self._client_callbacks)
 
     async def async_will_remove_from_opp(self) -> None:
-        """Cleanup prior to.opp removal."""
+        """Cleanup prior to opp removal."""
         self._client.remove_callbacks(self._client_callbacks)

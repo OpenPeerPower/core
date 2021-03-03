@@ -149,12 +149,12 @@ class Channels:
 
     @callback
     def async_send_signal(self, signal: str, *args: Any) -> None:
-        """Send a signal through.opp dispatcher."""
+        """Send a signal through opp dispatcher."""
         async_dispatcher_send(self.zha_device(opp, signal, *args)
 
     @callback
     def zha_send_event(self, event_data: Dict[str, Union[str, int]]) -> None:
-        """Relay events to.opp."""
+        """Relay events to opp."""
         self.zha_device(opp.bus.async_fire(
             "zha_event",
             {
@@ -224,8 +224,8 @@ class ChannelPool:
         return self._channels.zha_device.manufacturer_code
 
     @property
-    def.opp(self):
-        """Return.opp."""
+    def opp(self):
+        """Return opp."""
         return self._channels.zha_device(opp
 
     @property
@@ -349,7 +349,7 @@ class ChannelPool:
 
     @callback
     def async_send_signal(self, signal: str, *args: Any) -> None:
-        """Send a signal through.opp dispatcher."""
+        """Send a signal through opp dispatcher."""
         self._channels.async_send_signal(signal, *args)
 
     @callback
@@ -366,7 +366,7 @@ class ChannelPool:
 
     @callback
     def zha_send_event(self, event_data: Dict[str, Union[str, int]]) -> None:
-        """Relay events to.opp."""
+        """Relay events to opp."""
         self._channels.zha_send_event(
             {
                 const.ATTR_UNIQUE_ID: self.unique_id,

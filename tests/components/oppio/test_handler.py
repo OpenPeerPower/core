@@ -1,4 +1,4 @@
-"""The tests for the.oppio component."""
+"""The tests for the oppio component."""
 
 import aiohttp
 import pytest

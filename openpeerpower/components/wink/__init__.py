@@ -839,7 +839,7 @@ class WinkSirenDevice(WinkDevice):
     """Representation of a Wink siren device."""
 
     async def async_added_to_opp(self):
-        """Call when entity is added to.opp."""
+        """Call when entity is added to opp."""
         self.opp.data[DOMAIN]["entities"]["switch"].append(self)
 
     @property
@@ -899,7 +899,7 @@ class WinkNimbusDialDevice(WinkDevice):
         self.parent = nimbus
 
     async def async_added_to_opp(self):
-        """Call when entity is added to.opp."""
+        """Call when entity is added to opp."""
         self.opp.data[DOMAIN]["entities"]["sensor"].append(self)
 
     @property

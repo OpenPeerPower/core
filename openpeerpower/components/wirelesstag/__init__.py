@@ -129,7 +129,7 @@ class WirelessTagPlatform:
 
     @property
     def local_base_url(self):
-        """Define base url of.opp in local network."""
+        """Define base url of opp in local network."""
         if self._local_base_url is None:
             self._local_base_url = f"http://{util.get_local_ip()}"
 

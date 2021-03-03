@@ -399,7 +399,7 @@ class FibaroDevice(Entity):
         self.op_id = fibaro_device.op_id
 
     async def async_added_to_opp(self):
-        """Call when entity is added to.opp."""
+        """Call when entity is added to opp."""
         self.controller.register(self.fibaro_device.id, self._update_callback)
 
     def _update_callback(self):

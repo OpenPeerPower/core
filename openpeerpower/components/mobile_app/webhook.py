@@ -8,7 +8,7 @@ from aiohttp.web import HTTPBadRequest, Request, Response, json_response
 from nacl.secret import SecretBox
 import voluptuous as vol
 
-from openpeerpower.components import notify as.opp_notify, tag
+from openpeerpower.components import notify as opp_notify, tag
 from openpeerpower.components.binary_sensor import (
     DEVICE_CLASSES as BINARY_SENSOR_CLASSES,
 )
@@ -136,7 +136,7 @@ def validate_schema(schema):
                 _LOGGER.error("Received invalid webhook payload: %s", err)
                 return empty_okay_response()
 
-            return await func.opp, config_entry, data)
+            return await func(opp, config_entry, data)
 
         return validate_and_run
 
@@ -202,7 +202,7 @@ async def handle_webhook(
 
     # Shield so we make sure we finish the webhook, even if sender hangs up.
     return await asyncio.shield(
-        WEBHOOK_COMMANDS[webhook_type].opp, config_entry, webhook_payload)
+        WEBHOOK_COMMANDS[webhook_type](opp, config_entry, webhook_payload)
     )
 
 
@@ -526,7 +526,7 @@ async def webhook_get_zones(opp, config_entry, data):
     """Handle a get zones webhook."""
     zones = [
         opp.states.get(entity_id)
-        for entity_id in sorted.opp.states.async_entity_ids(ZONE_DOMAIN))
+        for entity_id in sorted(opp.states.async_entity_ids(ZONE_DOMAIN))
     ]
     return webhook_response(zones, registration=config_entry.data)
 
@@ -537,14 +537,14 @@ async def webhook_get_config(opp, config_entry, data):
     opp.config = opp.config.as_dict()
 
     resp = {
-        "latitude":.opp_config["latitude"],
-        "longitude":.opp_config["longitude"],
-        "elevation":.opp_config["elevation"],
-        "unit_system":.opp_config["unit_system"],
-        "location_name":.opp_config["location_name"],
-        "time_zone":.opp_config["time_zone"],
-        "components":.opp_config["components"],
-        "version":.opp_config["version"],
+        "latitude": opp.config["latitude"],
+        "longitude": opp.config["longitude"],
+        "elevation": opp.config["elevation"],
+        "unit_system": opp.config["unit_system"],
+        "location_name": opp.config["location_name"],
+        "time_zone": opp.config["time_zone"],
+        "components": opp.config["components"],
+        "version": opp.config["version"],
         "theme_color": MANIFEST_JSON["theme_color"],
     }
 
@@ -553,7 +553,7 @@ async def webhook_get_config(opp, config_entry, data):
 
     try:
         resp[CONF_REMOTE_UI_URL] = opp.components.cloud.async_remote_ui_url()
-    except.opp.components.cloud.CloudNotAvailable:
+    except opp.components.cloud.CloudNotAvailable:
         pass
 
     return webhook_response(resp, registration=config_entry.data)

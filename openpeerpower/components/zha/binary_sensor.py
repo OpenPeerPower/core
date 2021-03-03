@@ -71,7 +71,7 @@ class BinarySensor(ZhaEntity, BinarySensorEntity):
         self._device_class = self.DEVICE_CLASS
 
     async def async_added_to_opp(self):
-        """Run when about to be added to.opp."""
+        """Run when about to be added to opp."""
         await super().async_added_to_opp()
         self.async_accept_signal(
             self._channel, SIGNAL_ATTR_UPDATED, self.async_set_state

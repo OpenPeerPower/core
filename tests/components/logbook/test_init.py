@@ -44,7 +44,7 @@ EMPTY_CONFIG = logbook.CONFIG_SCHEMA({logbook.DOMAIN: {}})
 
 
 @pytest.fixture
-def.opp_():
+def opp_():
     """Set up things to be run when tests are started."""
    opp = get_test_open_peer_power()
     init_recorder_component(opp)  # Force an in memory DB

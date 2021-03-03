@@ -88,7 +88,7 @@ async def test_setup_opp):
 
 
 async def test_setup_zone_skips_home_zone(opp):
-    """Test that zone named Home should override.opp home zone."""
+    """Test that zone named Home should override opp home zone."""
     info = {"name": "Home", "latitude": 1.1, "longitude": -2.2}
     assert await setup.async_setup_component(opp, zone.DOMAIN, {"zone": info})
 
@@ -98,7 +98,7 @@ async def test_setup_zone_skips_home_zone(opp):
 
 
 async def test_setup_name_can_be_same_on_multiple_zones(opp):
-    """Test that zone named Home should override.opp home zone."""
+    """Test that zone named Home should override opp home zone."""
     info = {"name": "Test Zone", "latitude": 1.1, "longitude": -2.2}
     assert await setup.async_setup_component(opp, zone.DOMAIN, {"zone": [info, info]})
     assert len(opp.states.async_entity_ids("zone")) == 3

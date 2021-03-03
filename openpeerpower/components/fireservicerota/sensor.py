@@ -100,7 +100,7 @@ class IncidentsSensor(RestoreEntity):
         return attr
 
     async def async_added_to_opp(self) -> None:
-        """Run when about to be added to.opp."""
+        """Run when about to be added to opp."""
         await super().async_added_to_opp()
 
         state = await self.async_get_last_state()

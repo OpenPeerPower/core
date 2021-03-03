@@ -75,7 +75,7 @@ class GeonetnzVolcanoSensor(Entity):
         self._remove_signal_update = None
 
     async def async_added_to_opp(self):
-        """Call when entity is added to.opp."""
+        """Call when entity is added to opp."""
         self._remove_signal_update = async_dispatcher_connect(
             self.opp,
             f"geonetnz_volcano_update_{self._external_id}",
@@ -83,7 +83,7 @@ class GeonetnzVolcanoSensor(Entity):
         )
 
     async def async_will_remove_from_opp(self) -> None:
-        """Call when entity will be removed from.opp."""
+        """Call when entity will be removed from opp."""
         if self._remove_signal_update:
             self._remove_signal_update()
 

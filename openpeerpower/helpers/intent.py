@@ -198,7 +198,7 @@ class ServiceIntentHandler(IntentHandler):
         self.speech = speech
 
     async def async_handle(self, intent_obj: Intent) -> IntentResponse:
-        """Handle the.opp intent."""
+        """Handle the opp intent."""
        opp = intent_obj(opp
         slots = self.async_validate_slots(intent_obj.slots)
         state = async_match_state(opp, slots["name"]["value"])

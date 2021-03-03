@@ -35,7 +35,7 @@ from tests.testing_config.custom_components.test.sensor import DEVICE_CLASSES
 
 @pytest.fixture(autouse=True)
 def mock_storage(opp_storage):
-    """Autouse.opp_storage for the TestCase tests."""
+    """Autouse opp_storage for the TestCase tests."""
 
 
 @pytest.fixture

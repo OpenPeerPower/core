@@ -27,7 +27,7 @@ class TelldusLiveEntity(Entity):
         self._async_unsub_dispatcher_connect = None
 
     async def async_added_to_opp(self):
-        """Call when entity is added to.opp."""
+        """Call when entity is added to opp."""
         _LOGGER.debug("Created device %s", self)
         self._async_unsub_dispatcher_connect = async_dispatcher_connect(
             self.opp, SIGNAL_UPDATE_ENTITY, self._update_callback

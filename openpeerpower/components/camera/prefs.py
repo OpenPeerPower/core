@@ -22,7 +22,7 @@ class CameraEntityPreferences:
 
     @property
     def preload_stream(self):
-        """Return if stream is loaded on.opp start."""
+        """Return if stream is loaded on opp start."""
         return self._prefs.get(PREF_PRELOAD_STREAM, False)
 
 

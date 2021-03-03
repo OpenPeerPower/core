@@ -70,7 +70,7 @@ async def test_lock(opp, lock):
 
 
 async def async_lock(opp, cluster, entity_id):
-    """Test lock functionality from.opp."""
+    """Test lock functionality from opp."""
     with patch(
         "zigpy.zcl.Cluster.request", return_value=mock_coro([zcl_f.Status.SUCCESS])
     ):
@@ -84,7 +84,7 @@ async def async_lock(opp, cluster, entity_id):
 
 
 async def async_unlock(opp, cluster, entity_id):
-    """Test lock functionality from.opp."""
+    """Test lock functionality from opp."""
     with patch(
         "zigpy.zcl.Cluster.request", return_value=mock_coro([zcl_f.Status.SUCCESS])
     ):

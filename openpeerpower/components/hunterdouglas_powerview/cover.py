@@ -87,13 +87,13 @@ async def async_setup_entry(opp, entry, async_add_entities):
     async_add_entities(entities)
 
 
-def hd_position_to(opp(hd_position):
-    """Convert hunter douglas position to.opp position."""
+def hd_position_to_opp(hd_position):
+    """Convert hunter douglas position to opp position."""
     return round((hd_position / MAX_POSITION) * 100)
 
 
-def.opp_position_to_hd(opp_positon):
-    """Convert.opp position to hunter douglas position."""
+def opp_position_to_hd(opp_positon):
+    """Convert opp position to hunter douglas position."""
     return int.opp_positon / 100 * MAX_POSITION)
 
 
@@ -141,7 +141,7 @@ class PowerViewShade(ShadeEntity, CoverEntity):
     @property
     def current_cover_position(self):
         """Return the current position of cover."""
-        return hd_position_to(opp(self._current_cover_position)
+        return hd_position_to_opp(self._current_cover_position)
 
     @property
     def device_class(self):
@@ -176,7 +176,7 @@ class PowerViewShade(ShadeEntity, CoverEntity):
 
     async def _async_move(self, target.opp_position):
         """Move the shade to a position."""
-        current.opp_position = hd_position_to(opp(self._current_cover_position)
+        current.opp_position = hd_position_to_opp(self._current_cover_position)
         steps_to_move = abs(current.opp_position - target.opp_position)
         if not steps_to_move:
             return
@@ -267,7 +267,7 @@ class PowerViewShade(ShadeEntity, CoverEntity):
         self.async_write_op_state()
 
     async def async_added_to_opp(self):
-        """When entity is added to.opp."""
+        """When entity is added to opp."""
         self._async_update_current_cover_position()
         self.async_on_remove(
             self.coordinator.async_add_listener(self._async_update_shade_from_group)

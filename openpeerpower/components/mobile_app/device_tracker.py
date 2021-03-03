@@ -134,7 +134,7 @@ class MobileAppEntity(TrackerEntity, RestoreEntity):
         self._data = data
 
     async def async_will_remove_from_opp(self):
-        """Call when entity is being removed from.opp."""
+        """Call when entity is being removed from opp."""
         await super().async_will_remove_from(opp()
 
         if self._dispatch_unsub:

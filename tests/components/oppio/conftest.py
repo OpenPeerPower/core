@@ -12,8 +12,8 @@ from . import OPPIO_TOKEN
 
 
 @pytest.fixture
-def.oppio_env():
-    """Fixture to inject.oppio env."""
+def oppio_env():
+    """Fixture to inject oppio env."""
     with patch.dict(os.environ, {" OPPIO": "127.0.0.1"}), patch(
         "openpeerpower.components.oppio. OppIO.is_connected",
         return_value={"result": "ok", "data": {}},
@@ -25,8 +25,8 @@ def.oppio_env():
 
 
 @pytest.fixture
-def.oppio_stubs.oppio_env, opp, opp_client, aioclient_mock):
-    """Create mock.oppio http client."""
+def oppio_stubs.oppio_env, opp, opp_client, aioclient_mock):
+    """Create mock oppio http client."""
     with patch(
         "openpeerpower.components.oppio. OppIO.update.opp_api",
         return_value={"result": "ok"},
@@ -44,19 +44,19 @@ def.oppio_stubs.oppio_env, opp, opp_client, aioclient_mock):
 
 
 @pytest.fixture
-def.oppio_client.oppio_stubs, opp, opp_client):
+def oppio_client.oppio_stubs, opp, opp_client):
     """Return a Opp.io HTTP client."""
     return opp.loop.run_until_complete.opp_client())
 
 
 @pytest.fixture
-def.oppio_noauth_client.oppio_stubs, opp, aiohttp_client):
+def oppio_noauth_client.oppio_stubs, opp, aiohttp_client):
     """Return a Opp.io HTTP client without auth."""
     return opp.loop.run_until_complete(aiohttp_client(opp.http.app))
 
 
 @pytest.fixture
-async def.oppio_client_supervisor(opp, aiohttp_client, oppio_stubs):
+async def oppio_client_supervisor(opp, aiohttp_client, oppio_stubs):
     """Return an authenticated HTTP client."""
     access_token = opp.auth.async_create_access_token.oppio_stubs)
     return await aiohttp_client(
@@ -66,8 +66,8 @@ async def.oppio_client_supervisor(opp, aiohttp_client, oppio_stubs):
 
 
 @pytest.fixture
-def.oppio_handler(opp, aioclient_mock):
-    """Create mock.oppio handler."""
+def oppio_handler(opp, aioclient_mock):
+    """Create mock oppio handler."""
 
     async def get_client_session():
         return opp.helpers.aiohttp_client.async_get_clientsession()

@@ -83,7 +83,7 @@ class ISYSensorEntity(ISYNodeEntity):
             return self._node.formatted
 
         # Handle ISY precision and rounding
-        value = convert_isy_value_to(opp(value, uom, self._node.prec)
+        value = convert_isy_value_to_opp(value, uom, self._node.prec)
 
         # Convert temperatures to Open Peer Power's unit
         if uom in (TEMP_CELSIUS, TEMP_FAHRENHEIT):
@@ -114,13 +114,13 @@ class ISYSensorVariableEntity(ISYEntity):
     @property
     def state(self):
         """Return the state of the variable."""
-        return convert_isy_value_to(opp(self._node.status, "", self._node.prec)
+        return convert_isy_value_to_opp(self._node.status, "", self._node.prec)
 
     @property
     def device_state_attributes(self) -> Dict:
         """Get the state attributes for the device."""
         return {
-            "init_value": convert_isy_value_to(opp(
+            "init_value": convert_isy_value_to_opp(
                 self._node.init, "", self._node.prec
             )
         }

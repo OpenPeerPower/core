@@ -90,7 +90,7 @@ class FloSwitch(FloEntity, SwitchEntity):
         self.async_write_op_state()
 
     async def async_added_to_opp(self):
-        """When entity is added to.opp."""
+        """When entity is added to opp."""
         self.async_on_remove(self._device.async_add_listener(self.async_update_state))
 
     async def async_set_mode_home(self):

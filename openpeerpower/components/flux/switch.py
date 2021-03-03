@@ -213,7 +213,7 @@ class FluxSwitch(SwitchEntity, RestoreEntity):
         return self.unsub_tracker is not None
 
     async def async_added_to_opp(self):
-        """Call when entity about to be added to.opp."""
+        """Call when entity about to be added to opp."""
         last_state = await self.async_get_last_state()
         if last_state and last_state.state == STATE_ON:
             await self.async_turn_on()

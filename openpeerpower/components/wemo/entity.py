@@ -165,7 +165,7 @@ class WemoSubscriptionEntity(WemoEntity):
         registry.on(self.wemo, None, self._subscription_callback)
 
     async def async_will_remove_from_opp(self) -> None:
-        """Wemo device removed from.opp."""
+        """Wemo device removed from opp."""
         registry = self.opp.data[WEMO_DOMAIN]["registry"]
         await self.opp.async_add_executor_job(registry.unregister, self.wemo)
 

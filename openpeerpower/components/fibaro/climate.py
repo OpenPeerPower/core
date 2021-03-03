@@ -190,7 +190,7 @@ class FibaroThermostat(FibaroDevice, ClimateEntity):
                     self._preset_support.append(OPMODES_PRESET[mode])
 
     async def async_added_to_opp(self):
-        """Call when entity is added to.opp."""
+        """Call when entity is added to opp."""
         _LOGGER.debug(
             "Climate %s\n"
             "- _temp_sensor_device %s\n"

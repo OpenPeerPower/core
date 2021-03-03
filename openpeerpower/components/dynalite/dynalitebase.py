@@ -67,7 +67,7 @@ class DynaliteBase(Entity):
         }
 
     async def async_added_to_opp(self) -> None:
-        """Added to.opp so need to register to dispatch."""
+        """Added to opp so need to register to dispatch."""
         # register for device specific update
         self._unsub_dispatchers.append(
             async_dispatcher_connect(

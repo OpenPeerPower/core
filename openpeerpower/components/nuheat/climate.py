@@ -267,7 +267,7 @@ class NuHeatThermostat(CoordinatorEntity, ClimateEntity):
         await self.coordinator.async_refresh()
 
     async def async_added_to_opp(self) -> None:
-        """When entity is added to.opp."""
+        """When entity is added to opp."""
         await super().async_added_to_opp()
         self._update_internal_state()
 

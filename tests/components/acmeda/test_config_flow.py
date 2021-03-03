@@ -109,7 +109,7 @@ async def test_create_second_entry(opp, mock_hub_run, mock_hub_discover):
 
     mock_hub_discover.return_value = async_generator([dummy_hub_1, dummy_hub_2])
 
-    MockConfigEntry(domain=DOMAIN, unique_id=dummy_hub_1.id, data=CONFIG).add_to(opp(
+    MockConfigEntry(domain=DOMAIN, unique_id=dummy_hub_1.id, data=CONFIG).add_to_opp(
         opp
     )
 
@@ -132,7 +132,7 @@ async def test_already_configured(opp, mock_hub_discover):
 
     mock_hub_discover.return_value = async_generator([dummy_hub_1])
 
-    MockConfigEntry(domain=DOMAIN, unique_id=dummy_hub_1.id, data=CONFIG).add_to(opp(
+    MockConfigEntry(domain=DOMAIN, unique_id=dummy_hub_1.id, data=CONFIG).add_to_opp(
         opp
     )
 

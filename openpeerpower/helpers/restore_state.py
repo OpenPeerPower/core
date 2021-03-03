@@ -184,7 +184,7 @@ class RestoreStateData:
 
     @callback
     def async_restore_entity_added(self, entity_id: str) -> None:
-        """Store this entity's state when.opp is shutdown."""
+        """Store this entity's state when opp is shutdown."""
         self.entity_ids.add(entity_id)
 
     @callback
@@ -233,17 +233,17 @@ def _encode_complex(value: Any) -> Any:
 class RestoreEntity(Entity):
     """Mixin class for restoring previous entity state."""
 
-    async def async_internal_added_to(opp(self) -> None:
+    async def async_internal_added_to_opp(self) -> None:
         """Register this entity as a restorable entity."""
         assert self.opp is not None
         _, data = await asyncio.gather(
-            super().async_internal_added_to(opp(),
+            super().async_internal_added_to_opp(),
             RestoreStateData.async_get_instance(self.opp),
         )
         data.async_restore_entity_added(self.entity_id)
 
     async def async_internal_will_remove_from_opp(self) -> None:
-        """Run when entity will be removed from.opp."""
+        """Run when entity will be removed from opp."""
         assert self.opp is not None
         _, data = await asyncio.gather(
             super().async_internal_will_remove_from(opp(),

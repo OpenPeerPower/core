@@ -138,7 +138,7 @@ class LcnEntity(Entity):
         return False
 
     async def async_added_to_opp(self):
-        """Run when entity about to be added to.opp."""
+        """Run when entity about to be added to opp."""
         if not self.device_connection.is_group:
             self.device_connection.register_for_inputs(self.input_received)
 

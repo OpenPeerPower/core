@@ -164,7 +164,7 @@ class SensorTrend(BinarySensorEntity):
         return False
 
     async def async_added_to_opp(self):
-        """Complete device setup after being added to.opp."""
+        """Complete device setup after being added to opp."""
 
         @callback
         def trend_sensor_state_listener(event):

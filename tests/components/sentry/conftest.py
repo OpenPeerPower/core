@@ -14,5 +14,5 @@ def config_entry_fixture():
 
 @pytest.fixture(name="config")
 def config_fixture():
-    """Create.opp config fixture."""
+    """Create opp config fixture."""
     return {DOMAIN: {"dsn": "http://public@sentry.local/1"}}

@@ -156,7 +156,7 @@ class SwitcherControl(SwitchEntity):
         return self._state in [SWITCHER_STATE_ON, SWITCHER_STATE_OFF]
 
     async def async_added_to_opp(self) -> None:
-        """Run when entity about to be added to.opp."""
+        """Run when entity about to be added to opp."""
         self.async_on_remove(
             async_dispatcher_connect(
                 self.opp, SIGNAL_SWITCHER_DEVICE_UPDATE, self.async_update_data

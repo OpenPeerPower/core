@@ -105,7 +105,7 @@ async def _async_get_device_automations_from_domain(
 
     function_name = TYPES[automation_type][1]
 
-    return await getattr(platform, function_name).opp, device_id)
+    return await getattr(platform, function_name)(opp, device_id)
 
 
 async def _async_get_device_automations(opp, automation_type, device_id):
@@ -161,7 +161,7 @@ async def _async_get_device_automation_capabilities(opp, automation_type, automa
         return {}
 
     try:
-        capabilities = await getattr(platform, function_name).opp, automation)
+        capabilities = await getattr(platform, function_name)(opp, automation)
     except InvalidDeviceAutomationConfig:
         return {}
 
@@ -184,7 +184,7 @@ def handle_device_errors(func):
     @wraps(func)
     async def with_error_handling(opp, connection, msg):
         try:
-            await func.opp, connection, msg)
+            await func(opp, connection, msg)
         except DeviceNotFound:
             connection.send_error(
                 msg["id"], websocket_api.const.ERR_NOT_FOUND, "Device not found"

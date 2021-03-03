@@ -25,7 +25,7 @@ async def async_attach_trigger(opp, config, action, automation_info):
     if event == EVENT_SHUTDOWN:
 
         @callback
-        def.opp_shutdown(event):
+        def opp_shutdown(event):
             """Execute when Open Peer Power is shutting down."""
             opp.async_run(opp_job(
                 job,

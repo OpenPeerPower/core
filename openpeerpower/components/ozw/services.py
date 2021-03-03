@@ -1,4 +1,4 @@
-"""Methods and classes related to executing Z-Wave commands and publishing these to.opp."""
+"""Methods and classes related to executing Z-Wave commands and publishing these to opp."""
 import logging
 
 from openzwavemqtt.const import ATTR_LABEL, ATTR_POSITION, ATTR_VALUE
@@ -14,10 +14,10 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class ZWaveServices:
-    """Class that holds our services ( Zwave Commands) that should be published to.opp."""
+    """Class that holds our services ( Zwave Commands) that should be published to opp."""
 
     def __init__(self, opp, manager):
-        """Initialize with both.opp and ozwmanager objects."""
+        """Initialize with both opp and ozwmanager objects."""
         self.opp = opp
         self._manager = manager
 

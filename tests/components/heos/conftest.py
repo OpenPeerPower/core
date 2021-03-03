@@ -48,7 +48,7 @@ def controller_fixture(
 
 @pytest.fixture(name="config")
 def config_fixture():
-    """Create.opp config fixture."""
+    """Create opp config fixture."""
     return {DOMAIN: {CONF_HOST: "127.0.0.1"}}
 
 

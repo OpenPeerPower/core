@@ -194,7 +194,7 @@ class MySensorsDevice:
 
 
 def get_mysensors_devices(opp, domain: str) -> Dict[DevId, MySensorsDevice]:
-    """Return MySensors devices for a.opp platform name."""
+    """Return MySensors devices for a opp platform name."""
     if MYSENSORS_PLATFORM_DEVICES.format(domain) not in opp.data[DOMAIN]:
         opp.data[DOMAIN][MYSENSORS_PLATFORM_DEVICES.format(domain)] = {}
     return opp.data[DOMAIN][MYSENSORS_PLATFORM_DEVICES.format(domain)]

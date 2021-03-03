@@ -10,7 +10,7 @@ from tests.common import mock_component
 
 
 async def test_config_setup_opp, loop):
-    """Test it sets up.oppbian."""
+    """Test it sets up oppbian."""
     await async_setup_component(opp, "config", {})
     assert "config" in opp.config.components
 

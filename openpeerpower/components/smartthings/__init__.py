@@ -418,7 +418,7 @@ class SmartThingsEntity(Entity):
         self._dispatcher_remove = None
 
     async def async_added_to_opp(self):
-        """Device added to.opp."""
+        """Device added to opp."""
 
         async def async_update_state(devices):
             """Update device state."""

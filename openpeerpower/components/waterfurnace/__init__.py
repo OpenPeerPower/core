@@ -114,7 +114,7 @@ class WaterFurnaceData(threading.Thread):
 
         @callback
         def register():
-            """Connect to.opp for shutdown."""
+            """Connect to opp for shutdown."""
 
             def shutdown(event):
                 """Shutdown the thread."""

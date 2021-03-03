@@ -114,7 +114,7 @@ def bcrypt_cost():
 
 
 @pytest.fixture
-def.opp_storage():
+def opp_storage():
     """Fixture to mock storage."""
     with mock_storage() as stored_data:
         yield stored_data
@@ -131,7 +131,7 @@ def load_registries():
 
 
 @pytest.fixture
-def.opp(loop, load_registries, opp_storage, request):
+def opp(loop, load_registries, opp_storage, request):
     """Fixture to provide a test instance of Open Peer Power."""
 
     def exc_handle(loop, context):
@@ -227,7 +227,7 @@ def mock_device_tracker_conf():
 
 
 @pytest.fixture
-async def.opp_admin_credential(opp, local_auth):
+async def opp_admin_credential(opp, local_auth):
     """Provide credentials for admin user."""
     return Credentials(
         id="mock-credential-id",
@@ -239,7 +239,7 @@ async def.opp_admin_credential(opp, local_auth):
 
 
 @pytest.fixture
-async def.opp_access_token(opp, opp_admin_user, opp_admin_credential):
+async def opp_access_token(opp, opp_admin_user, opp_admin_credential):
     """Return an access token to access Open Peer Power."""
     await opp.auth.async_link_user(opp_admin_user, opp_admin_credential)
 
@@ -250,13 +250,13 @@ async def.opp_access_token(opp, opp_admin_user, opp_admin_credential):
 
 
 @pytest.fixture
-def.opp_owner_user(opp, local_auth):
+def opp_owner_user(opp, local_auth):
     """Return a Open Peer Power admin user."""
     return MockUser(is_owner=True).add_to_opp(opp)
 
 
 @pytest.fixture
-def.opp_admin_user(opp, local_auth):
+def opp_admin_user(opp, local_auth):
     """Return a Open Peer Power admin user."""
     admin_group = opp.loop.run_until_complete(
         opp.auth.async_get_group(GROUP_ID_ADMIN)
@@ -265,7 +265,7 @@ def.opp_admin_user(opp, local_auth):
 
 
 @pytest.fixture
-def.opp_read_only_user(opp, local_auth):
+def opp_read_only_user(opp, local_auth):
     """Return a Open Peer Power read only user."""
     read_only_group = opp.loop.run_until_complete(
         opp.auth.async_get_group(GROUP_ID_READ_ONLY)
@@ -274,7 +274,7 @@ def.opp_read_only_user(opp, local_auth):
 
 
 @pytest.fixture
-def.opp_read_only_access_token(opp, opp_read_only_user, local_auth):
+def opp_read_only_access_token(opp, opp_read_only_user, local_auth):
     """Return a Open Peer Power read only user."""
     credential = Credentials(
         id="mock-readonly-credential-id",
@@ -317,7 +317,7 @@ def local_auth(opp):
 
 
 @pytest.fixture
-def.opp_client(opp, aiohttp_client, opp_access_token):
+def opp_client(opp, aiohttp_client, opp_access_token):
     """Return an authenticated HTTP client."""
 
     async def auth_client():
@@ -354,7 +354,7 @@ def current_request_with_host(current_request):
 
 
 @pytest.fixture
-def.opp_ws_client(aiohttp_client, opp_access_token, opp):
+def opp_ws_client(aiohttp_client, opp_access_token, opp):
     """Websocket client fixture connected to websocket server."""
 
     async def create_client(opp=opp, access_token(opp_access_token):

@@ -46,7 +46,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
 
 
 class TradfriGroup(TradfriBaseClass, LightEntity):
-    """The platform class for light groups required by.opp."""
+    """The platform class for light groups required by opp."""
 
     def __init__(self, device, api, gateway_id):
         """Initialize a Group."""

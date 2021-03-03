@@ -413,9 +413,9 @@ async def async_setup_entry(opp, config_entry):
     # Merge config entry and yaml config
     config = config_entry.data
     if DATA_ZWAVE_CONFIG in opp.data:
-        config = {**config, *.opp.data[DATA_ZWAVE_CONFIG]}
+        config = {**config, **opp.data[DATA_ZWAVE_CONFIG]}
 
-    # Update.opp.data with merged config so we can access it elsewhere
+    # Update opp.data with merged config so we can access it elsewhere
     opp.data[DATA_ZWAVE_CONFIG] = config
 
     # Load configuration
@@ -434,7 +434,7 @@ async def async_setup_entry(opp, config_entry):
     # Setup options
     options = ZWaveOption(
         usb_path,
-        user_path(opp.config.config_dir,
+        user_path=opp.config.config_dir,
         config_path=config.get(CONF_CONFIG_PATH),
     )
 
@@ -550,7 +550,7 @@ async def async_setup_entry(opp, config_entry):
     def node_removed(node):
         node_id = node.node_id
         node_key = f"node-{node_id}"
-        for key in list.opp.data[DATA_DEVICES]):
+        for key in list(opp.data[DATA_DEVICES]):
             if key is None:
                 continue
             if not key.startswith(f"{node_id}-"):
@@ -561,11 +561,11 @@ async def async_setup_entry(opp, config_entry):
                 "Removing Entity - value: %s - entity_id: %s", key, entity.entity_id
             )
             opp.add_job(entity.node_removed())
-            del.opp.data[DATA_DEVICES][key]
+            del opp.data[DATA_DEVICES][key]
 
         entity = opp.data[DATA_DEVICES][node_key]
         opp.add_job(entity.node_removed())
-        del.opp.data[DATA_DEVICES][node_key]
+        del opp.data[DATA_DEVICES][node_key]
 
         opp.add_job(_remove_device(node))
 
@@ -671,7 +671,7 @@ async def async_setup_entry(opp, config_entry):
         node_key = f"node-{node_id}"
         entity = opp.data[DATA_DEVICES][node_key]
         await entity.node_renamed(update_ids)
-        for key in list.opp.data[DATA_DEVICES]):
+        for key in list(opp.data[DATA_DEVICES]):
             if not key.startswith(f"{node_id}-"):
                 continue
             entity = opp.data[DATA_DEVICES][key]

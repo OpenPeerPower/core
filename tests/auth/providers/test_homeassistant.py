@@ -274,7 +274,7 @@ async def test_legacy_get_or_create_credentials(opp, legacy_data):
 
 
 async def test_race_condition_in_data_loading(opp):
-    """Test race condition in the.opp_auth.Data loading.
+    """Test race condition in the opp_auth.Data loading.
 
     Ref issue: https://github.com/open-peer-power/core/issues/21569
     """

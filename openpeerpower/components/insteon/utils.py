@@ -290,7 +290,7 @@ def async_register_services(opp):
         await async_remove_device(address)
 
     async def async_remove_device(address):
-        """Remove the device and all entities from.opp."""
+        """Remove the device and all entities from opp."""
         signal = f"{address.id}_{SIGNAL_REMOVE_ENTITY}"
         async_dispatcher_send(opp, signal)
         dev_registry = await opp.helpers.device_registry.async_get_registry()

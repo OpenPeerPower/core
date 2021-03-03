@@ -142,7 +142,7 @@ async def setup_test_config_entry(
     config_entry: Optional[ConfigEntry] = None,
     hyperion_client: Optional[Mock] = None,
 ) -> ConfigEntry:
-    """Add a test Hyperion entity to.opp."""
+    """Add a test Hyperion entity to opp."""
     config_entry = config_entry or add_test_config_entry(opp)
 
     hyperion_client = hyperion_client or create_mock_client()

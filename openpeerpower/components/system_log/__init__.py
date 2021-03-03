@@ -221,7 +221,7 @@ async def async_setup(opp, config):
         """Cleanup handler."""
         logging.root.removeHandler(queue_handler)
         listener.stop()
-        del.opp.data[DOMAIN]
+        del opp.data[DOMAIN]
 
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_CLOSE, _async_stop_queue_handler)
 

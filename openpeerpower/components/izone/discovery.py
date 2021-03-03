@@ -80,4 +80,4 @@ async def async_stop_discovery_service(opp: OpenPeerPowerType):
         return
 
     await disco.pi_disco.close()
-    del.opp.data[DATA_DISCOVERY_SERVICE]
+    del opp.data[DATA_DISCOVERY_SERVICE]

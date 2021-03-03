@@ -31,7 +31,7 @@ class WinkToggleDevice(WinkDevice, ToggleEntity):
     """Representation of a Wink toggle device."""
 
     async def async_added_to_opp(self):
-        """Call when entity is added to.opp."""
+        """Call when entity is added to opp."""
         self.opp.data[DOMAIN]["entities"]["switch"].append(self)
 
     @property

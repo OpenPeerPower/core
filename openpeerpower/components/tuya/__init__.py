@@ -319,7 +319,7 @@ class TuyaDevice(Entity):
         return dev_conf
 
     async def async_added_to_opp(self):
-        """Call when entity is added to.opp."""
+        """Call when entity is added to opp."""
         self.opp.data[DOMAIN]["entities"][self.object_id] = self.entity_id
         self.async_on_remove(
             async_dispatcher_connect(
@@ -334,7 +334,7 @@ class TuyaDevice(Entity):
         self._inc_device_count()
 
     async def async_will_remove_from_opp(self):
-        """Call when entity is removed from.opp."""
+        """Call when entity is removed from opp."""
         self._dec_device_count()
 
     @property

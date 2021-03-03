@@ -21,7 +21,7 @@ from tests.common import (
 
 
 @pytest.fixture
-def.opp_recorder():
+def opp_recorder():
     """Open Peer Power fixture with in-memory recorder."""
    opp = get_test_open_peer_power()
 

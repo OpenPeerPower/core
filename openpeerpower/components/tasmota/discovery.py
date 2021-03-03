@@ -31,7 +31,7 @@ def clear_discovery_hash(opp, discovery_hash):
     if ALREADY_DISCOVERED not in opp.data:
         # Discovery is shutting down
         return
-    del.opp.data[ALREADY_DISCOVERED][discovery_hash]
+    del opp.data[ALREADY_DISCOVERED][discovery_hash]
 
 
 def set_discovery_hash(opp, discovery_hash):

@@ -130,7 +130,7 @@ class PlexMediaPlayer(MediaPlayerEntity):
         self.session = session
 
     async def async_added_to_opp(self):
-        """Run when about to be added to.opp."""
+        """Run when about to be added to opp."""
         _LOGGER.debug("Added %s [%s]", self.entity_id, self.unique_id)
         self.async_on_remove(
             async_dispatcher_connect(

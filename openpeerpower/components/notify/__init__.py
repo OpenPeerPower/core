@@ -90,7 +90,7 @@ async def async_reset_platform(opp: OpenPeerPowerType, integration_name: str) ->
 
     await asyncio.gather(*tasks)
 
-    del.opp.data[NOTIFY_SERVICES][integration_name]
+    del opp.data[NOTIFY_SERVICES][integration_name]
 
 
 def _async_integration_has_notify_services(

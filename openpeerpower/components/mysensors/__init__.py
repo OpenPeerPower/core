@@ -223,7 +223,7 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
         for fnct in opp.data[DOMAIN][key]:
             fnct()
 
-    del.opp.data[DOMAIN][MYSENSORS_GATEWAYS][entry.entry_id]
+    del opp.data[DOMAIN][MYSENSORS_GATEWAYS][entry.entry_id]
 
     await gw_stop(opp, entry, gateway)
     return True

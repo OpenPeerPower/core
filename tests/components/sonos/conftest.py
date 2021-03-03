@@ -48,7 +48,7 @@ def discover_fixture(soco):
 
 @pytest.fixture(name="config")
 def config_fixture():
-    """Create.opp config fixture."""
+    """Create opp config fixture."""
     return {DOMAIN: {MP_DOMAIN: {CONF_HOSTS: ["192.168.42.1"]}}}
 
 

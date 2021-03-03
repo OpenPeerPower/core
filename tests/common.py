@@ -128,11 +128,11 @@ def get_test_open_peer_power():
     opp._stopped = Mock(set=loop.stop)
 
     def start_opp(*mocks):
-        """Start.opp."""
+        """Start opp."""
         asyncio.run_coroutine_threadsafe(opp.async_start(), loop).result()
 
     def stop_opp():
-        """Stop.opp."""
+        """Stop opp."""
         orig_stop()
         loop_stop_event.wait()
         loop.close()
@@ -470,11 +470,11 @@ class MockGroup(auth_models.Group):
         super().__init__(**kwargs)
 
     def add_to_opp(self, opp):
-        """Test helper to add entry to.opp."""
+        """Test helper to add entry to opp."""
         return self.add_to_auth_manager(opp.auth)
 
     def add_to_auth_manager(self, auth_mgr):
-        """Test helper to add entry to.opp."""
+        """Test helper to add entry to opp."""
         ensure_auth_manager_loaded(auth_mgr)
         auth_mgr._store._groups[self.id] = self
         return self
@@ -506,11 +506,11 @@ class MockUser(auth_models.User):
         super().__init__(**kwargs)
 
     def add_to_opp(self, opp):
-        """Test helper to add entry to.opp."""
+        """Test helper to add entry to opp."""
         return self.add_to_auth_manager(opp.auth)
 
     def add_to_auth_manager(self, auth_mgr):
-        """Test helper to add entry to.opp."""
+        """Test helper to add entry to opp."""
         ensure_auth_manager_loaded(auth_mgr)
         auth_mgr._store._users[self.id] = self
         return self
@@ -771,7 +771,7 @@ class MockConfigEntry(config_entries.ConfigEntry):
         super().__init__(**kwargs)
 
     def add_to_opp(self, opp):
-        """Test helper to add entry to.opp."""
+        """Test helper to add entry to opp."""
         opp.config_entries._entries.append(self)
 
     def add_to_manager(self, manager):

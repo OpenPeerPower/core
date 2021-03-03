@@ -65,7 +65,7 @@ class LcnClimate(LcnEntity, ClimateEntity):
         self._is_on = None
 
     async def async_added_to_opp(self):
-        """Run when entity about to be added to.opp."""
+        """Run when entity about to be added to opp."""
         await super().async_added_to_opp()
         if not self.device_connection.is_group:
             await self.device_connection.activate_status_request_handler(self.variable)

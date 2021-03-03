@@ -29,7 +29,7 @@ async def async_setup_addon_panel(opp: OpenPeerPowerType, oppio):
     for addon, data in panels.items():
         if not data[ATTR_ENABLE]:
             continue
-        jobs.append(_register_panel(opp.addon, data))
+        jobs.append(_register_panel(opp, addon, data))
 
     if jobs:
         await asyncio.wait(jobs)
@@ -43,8 +43,8 @@ class OppIOAddonPanel(OpenPeerPowerView):
 
     def __init__(self, opp, oppio):
         """Initialize WebView."""
-        self.opp, opp
-        self.opp, = opp,
+        self.opp = opp
+        self.oppio = oppio
 
     async def post(self, request, addon):
         """Handle new add-on panel requests."""
@@ -57,7 +57,7 @@ class OppIOAddonPanel(OpenPeerPowerView):
         data = panels[addon]
 
         # Register panel
-        await _register_panel(self.opp.addon, data)
+        await _register_panel(self.opp, addon, data)
         return web.Response()
 
     async def delete(self, request, addon):

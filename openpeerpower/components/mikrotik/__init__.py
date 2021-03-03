@@ -64,7 +64,7 @@ async def async_setup(opp, config):
 async def async_setup_entry(opp, config_entry):
     """Set up the Mikrotik component."""
 
-    hub = MikrotikHub.opp, config_entry)
+    hub = MikrotikHub(opp, config_entry)
     if not await hub.async_setup():
         return False
 

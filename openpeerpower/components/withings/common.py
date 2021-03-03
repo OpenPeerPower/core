@@ -1080,7 +1080,7 @@ def get_all_data_managers(opp: OpenPeerPower) -> Tuple[DataManager, ...]:
 
 def async_remove_data_manager(opp: OpenPeerPower, config_entry: ConfigEntry) -> None:
     """Remove a data manager for a config entry."""
-    del.opp.data[const.DOMAIN][config_entry.entry_id][const.DATA_MANAGER]
+    del opp.data[const.DOMAIN][config_entry.entry_id][const.DATA_MANAGER]
 
 
 async def async_create_entities(

@@ -89,7 +89,7 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     )
 
     if unload_ok:
-        del.opp.data[DOMAIN][entry.entry_id]
+        del opp.data[DOMAIN][entry.entry_id]
 
     return unload_ok
 

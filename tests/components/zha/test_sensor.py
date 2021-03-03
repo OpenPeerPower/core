@@ -207,7 +207,7 @@ def assert_state(opp, entity_id, state, unit_of_measurement):
 
 
 @pytest.fixture
-def.opp_ms(opp):
+def opp_ms(opp):
     """Opp instance with measurement system."""
 
     async def  opp.ms(meas_sys):

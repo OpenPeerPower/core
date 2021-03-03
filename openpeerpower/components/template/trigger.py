@@ -34,7 +34,7 @@ async def async_attach_trigger(
     value_template = config.get(CONF_VALUE_TEMPLATE)
     value_template.opp = opp
     time_delta = config.get(CONF_FOR)
-    template.attach.opp, time_delta)
+    template.attach(opp, time_delta)
     delay_cancel = None
     job = OppJob(action)
     armed = False

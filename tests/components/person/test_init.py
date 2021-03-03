@@ -365,7 +365,7 @@ async def test_duplicate_ids(opp, opp_admin_user):
 
 
 async def test_create_person_during_run(opp):
-    """Test that person is updated if created while.opp is running."""
+    """Test that person is updated if created while opp is running."""
     config = {DOMAIN: {}}
     assert await async_setup_component(opp, DOMAIN, config)
     opp.states.async_set(DEVICE_TRACKER, "home")

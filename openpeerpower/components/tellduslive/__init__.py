@@ -127,8 +127,8 @@ async def async_unload_entry(opp, config_entry):
             for component in opp.data.pop(CONFIG_ENTRY_IS_SETUP)
         ]
     )
-    del.opp.data[DOMAIN]
-    del.opp.data[DATA_CONFIG_ENTRY_LOCK]
+    del opp.data[DOMAIN]
+    del opp.data[DATA_CONFIG_ENTRY_LOCK]
     return True
 
 

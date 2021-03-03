@@ -161,7 +161,7 @@ class ZhaEntity(BaseZhaEntity, RestoreEntity):
         return self._zha_device.available
 
     async def async_added_to_opp(self) -> None:
-        """Run when about to be added to.opp."""
+        """Run when about to be added to opp."""
         self.remove_future = asyncio.Future()
         self.async_accept_signal(
             None,

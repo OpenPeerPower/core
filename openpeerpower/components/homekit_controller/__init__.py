@@ -58,7 +58,7 @@ class HomeKitEntity(Entity):
         return self.accessory.services.iid(self._iid)
 
     async def async_added_to_opp(self):
-        """Entity added to.opp."""
+        """Entity added to opp."""
         self._signals.append(
             self.opp.helpers.dispatcher.async_dispatcher_connect(
                 self._accessory.signal_state_updated, self.async_write_op_state
@@ -69,7 +69,7 @@ class HomeKitEntity(Entity):
         self._accessory.add_watchable_characteristics(self.watchable_characteristics)
 
     async def async_will_remove_from_opp(self):
-        """Prepare to be removed from.opp."""
+        """Prepare to be removed from opp."""
         self._accessory.remove_pollable_characteristics(self._aid)
         self._accessory.remove_watchable_characteristics(self._aid)
 
@@ -210,7 +210,7 @@ async def async_setup_entry(opp, entry):
         )
 
     if not await conn.async_setup():
-        del.opp.data[KNOWN_DEVICES][conn.unique_id]
+        del opp.data[KNOWN_DEVICES][conn.unique_id]
         raise ConfigEntryNotReady
 
     return True

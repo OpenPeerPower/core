@@ -54,7 +54,7 @@ class ZhaDoorLock(ZhaEntity, LockEntity):
         self._doorlock_channel = self.cluster_channels.get(CHANNEL_DOORLOCK)
 
     async def async_added_to_opp(self):
-        """Run when about to be added to.opp."""
+        """Run when about to be added to opp."""
         await super().async_added_to_opp()
         self.async_accept_signal(
             self._doorlock_channel, SIGNAL_ATTR_UPDATED, self.async_set_state

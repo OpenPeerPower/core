@@ -1,1 +1,1 @@
-"""Tests for.oppfest."""
+"""Tests for oppfest."""

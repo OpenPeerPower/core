@@ -197,7 +197,7 @@ def async_prepare_call_from_config(
         if conf not in config:
             continue
         try:
-            template.attach.opp, config[conf])
+            template.attach(opp, config[conf])
             service_data.update(template.render_complex(config[conf], variables))
         except TemplateError as ex:
             raise OpenPeerPowerError(f"Error rendering data template: {ex}") from ex

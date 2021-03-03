@@ -89,7 +89,7 @@ class WinkThermostat(WinkDevice, ClimateEntity):
         return SUPPORT_FLAGS_THERMOSTAT
 
     async def async_added_to_opp(self):
-        """Call when entity is added to.opp."""
+        """Call when entity is added to opp."""
         self.opp.data[DOMAIN]["entities"]["climate"].append(self)
 
     @property

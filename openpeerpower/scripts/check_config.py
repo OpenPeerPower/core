@@ -152,7 +152,7 @@ def run(script_args: List) -> int:
 
 
 def check(config_dir, secrets=False):
-    """Perform a check by mocking.opp load functions."""
+    """Perform a check by mocking opp load functions."""
     logging.getLogger("openpeerpower.loader").setLevel(logging.CRITICAL)
     res: Dict[str, Any] = {
         "yaml_files": OrderedDict(),  # yaml_files loaded
@@ -164,7 +164,7 @@ def check(config_dir, secrets=False):
 
     # pylint: disable=possibly-unused-variable
     def mock_load(filename):
-        """Mock.opp.util.load_yaml to save config file names."""
+        """Mock opp.util.load_yaml to save config file names."""
         res["yaml_files"][filename] = True
         return MOCKS["load"][1](filename)
 

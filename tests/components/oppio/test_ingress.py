@@ -1,4 +1,4 @@
-"""The tests for the.oppio component."""
+"""The tests for the oppio component."""
 
 from aiohttp.hdrs import X_FORWARDED_FOR, X_FORWARDED_HOST, X_FORWARDED_PROTO
 import pytest

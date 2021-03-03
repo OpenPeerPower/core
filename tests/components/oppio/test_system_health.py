@@ -1,4 +1,4 @@
-"""Test.oppio system health."""
+"""Test oppio system health."""
 import asyncio
 import os
 from unittest.mock import patch
@@ -13,7 +13,7 @@ from tests.common import get_system_health_info
 
 
 async def test.oppio_system_health(opp, aioclient_mock):
-    """Test.oppio system health."""
+    """Test oppio system health."""
     aioclient_mock.get("http://127.0.0.1/info", json={"result": "ok", "data": {}})
     aioclient_mock.get("http://127.0.0.1/host/info", json={"result": "ok", "data": {}})
     aioclient_mock.get("http://127.0.0.1/os/info", json={"result": "ok", "data": {}})
@@ -68,7 +68,7 @@ async def test.oppio_system_health(opp, aioclient_mock):
 
 
 async def test.oppio_system_health_with_issues(opp, aioclient_mock):
-    """Test.oppio system health."""
+    """Test oppio system health."""
     aioclient_mock.get("http://127.0.0.1/info", json={"result": "ok", "data": {}})
     aioclient_mock.get("http://127.0.0.1/host/info", json={"result": "ok", "data": {}})
     aioclient_mock.get("http://127.0.0.1/os/info", json={"result": "ok", "data": {}})

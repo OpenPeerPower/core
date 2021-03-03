@@ -265,7 +265,7 @@ class TemplateEntity(Entity):
         result_info.async_refresh()
 
     async def async_added_to_opp(self) -> None:
-        """Run when entity about to be added to.opp."""
+        """Run when entity about to be added to opp."""
         if self._availability_template is not None:
             self.add_template_attribute(
                 "_available", self._availability_template, None, self._update_available

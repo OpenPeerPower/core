@@ -76,7 +76,7 @@ async def async_attach_trigger(
     from_state = config.get(CONF_FROM, MATCH_ALL)
     to_state = config.get(CONF_TO, MATCH_ALL)
     time_delta = config.get(CONF_FOR)
-    template.attach.opp, time_delta)
+    template.attach(opp, time_delta)
     match_all = from_state == MATCH_ALL and to_state == MATCH_ALL
     unsub_track_same = {}
     period: Dict[str, timedelta] = {}

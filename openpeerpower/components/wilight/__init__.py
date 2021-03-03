@@ -55,7 +55,7 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     # Cleanup
     parent = opp.data[DOMAIN][entry.entry_id]
     await parent.async_reset()
-    del.opp.data[DOMAIN][entry.entry_id]
+    del opp.data[DOMAIN][entry.entry_id]
 
     return True
 

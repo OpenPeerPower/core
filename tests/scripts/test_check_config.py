@@ -24,7 +24,7 @@ BAD_CORE_CONFIG = "openpeerpower:\n  unit_system: bad\n\n\n"
 
 @pytest.fixture(autouse=True)
 async def apply_stop(opp(stop.opp):
-    """Make sure all.opp are stopped."""
+    """Make sure all opp are stopped."""
 
 
 def normalize_yaml_files(check_dict):

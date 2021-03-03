@@ -100,7 +100,7 @@ class TodSensor(BinarySensorEntity):
 
     @property
     def current_datetime(self):
-        """Return local current datetime according to.opp configuration."""
+        """Return local current datetime according to opp configuration."""
         return dt_util.utcnow()
 
     @property

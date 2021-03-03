@@ -311,7 +311,7 @@ class Recorder(threading.Thread):
 
                 @callback
                 def notify.opp_started(event):
-                    """Notify that.opp has started."""
+                    """Notify that opp has started."""
                     opp.started.set_result(None)
 
                 self.opp.bus.async_listen_once(

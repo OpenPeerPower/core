@@ -46,7 +46,7 @@ from tests.common import MockConfigEntry
 
 
 async def setup_awair(opp, fixtures):
-    """Add Awair devices to.opp, using specified fixtures for data."""
+    """Add Awair devices to opp, using specified fixtures for data."""
 
     entry = MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG)
     with patch("python_awair.AwairClient.query", side_effect=fixtures):
