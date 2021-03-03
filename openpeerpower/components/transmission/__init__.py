@@ -113,7 +113,7 @@ async def async_setup(opp, config):
 
 async def async_setup_entry(opp, config_entry):
     """Set up the Transmission Component."""
-    client = TransmissionClient.opp, config_entry)
+    client = TransmissionClient(opp, config_entry)
     opp.data.setdefault(DOMAIN, {})[config_entry.entry_id] = client
 
     if not await client.async_setup():

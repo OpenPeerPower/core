@@ -80,7 +80,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     )
 
     session = aiohttp_client.async_get_clientsession(opp)
-    oauth_session = config_entry_oauth2_flow.OAuth2Session.opp, entry, implementation)
+    oauth_session = config_entry_oauth2_flow.OAuth2Session(opp, entry, implementation)
 
     client = ConfigEntryLyricClient(session, oauth_session)
 

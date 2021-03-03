@@ -88,7 +88,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     )
 
     data = opp.data[DOMAIN]
-    data[API] = api.ConfigEntrySomfyApi.opp, entry, implementation)
+    data[API] = api.ConfigEntrySomfyApi(opp, entry, implementation)
 
     async def _update_all_devices():
         """Update all the devices."""

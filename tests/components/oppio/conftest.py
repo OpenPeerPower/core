@@ -30,7 +30,7 @@ def oppio_stubs.oppio_env, opp, opp_client, aioclient_mock):
     with patch(
         "openpeerpower.components.oppio. OppIO.update.opp_api",
         return_value={"result": "ok"},
-    ) as.opp_api, patch(
+    ) as opp_api, patch(
         "openpeerpower.components.oppio. OppIO.update.opp_timezone",
         return_value={"result": "ok"},
     ), patch(

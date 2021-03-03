@@ -62,7 +62,7 @@ class AlexaIntentsView(http.OpenPeerPowerView):
 
     async def post(self, request):
         """Handle Alexa."""
-        opp = "request.app["opp"]
+        opp = request.app["opp"]
         message = await request.json()
 
         _LOGGER.debug("Received Alexa request: %s", message)
@@ -102,7 +102,7 @@ class AlexaIntentsView(http.OpenPeerPowerView):
 def intent_error_response(opp, message, error):
     """Return an Alexa response that will speak the error message."""
     alexa_intent_info = message.get("request").get("intent")
-    alexa_response = AlexaResponse.opp, alexa_intent_info)
+    alexa_response = AlexaResponse(opp, alexa_intent_info)
     alexa_response.add_speech(SpeechType.plaintext, error)
     return alexa_response.as_dict()
 
@@ -147,7 +147,7 @@ async def async_handle_intent(opp, message):
     """
     req = message.get("request")
     alexa_intent_info = req.get("intent")
-    alexa_response = AlexaResponse.opp, alexa_intent_info)
+    alexa_response = AlexaResponse(opp, alexa_intent_info)
 
     if req["type"] == "LaunchRequest":
         intent_name = (

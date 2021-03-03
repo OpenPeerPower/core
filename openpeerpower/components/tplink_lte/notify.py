@@ -16,7 +16,7 @@ async def async_get_service(opp, config, discovery_info=None):
     """Get the notification service."""
     if discovery_info is None:
         return
-    return TplinkNotifyService.opp, discovery_info)
+    return TplinkNotifyService(opp, discovery_info)
 
 
 @attr.s

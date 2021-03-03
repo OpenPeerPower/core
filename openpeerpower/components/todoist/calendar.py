@@ -119,7 +119,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         # Project is an object, not a dict!
         # Because of that, we convert what we need to a dict.
         project_data = {CONF_NAME: project[NAME], CONF_ID: project[ID]}
-        project_devices.append(TodoistProjectDevice.opp, project_data, labels, api))
+        project_devices.append(TodoistProjectDevice(opp, project_data, labels, api))
         # Cache the names so we can easily look up name->ID.
         project_id_lookup[project[NAME].lower()] = project[ID]
 

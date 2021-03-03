@@ -357,10 +357,10 @@ async def test_time_using_input_datetime(opp):
         )
 
     with pytest.raises(ConditionError):
-        condition.time.opp, after="input_datetime.not_existing")
+        condition.time(opp, after="input_datetime.not_existing")
 
     with pytest.raises(ConditionError):
-        condition.time.opp, before="input_datetime.not_existing")
+        condition.time(opp, before="input_datetime.not_existing")
 
 
 async def test_if_numeric_state_raises_on_unavailable(opp, caplog):

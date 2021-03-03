@@ -237,7 +237,7 @@ async def test_google_config_expose_entity(opp, mock_cloud_setup, mock_cloud_log
     assert not gconf.should_expose(state)
 
 
-async def test_google_config_should_2fa.opp, mock_cloud_setup, mock_cloud_login):
+async def test_google_config_should_2fa(opp, mock_cloud_setup, mock_cloud_login):
     """Test Google config disabling 2FA method uses latest config."""
     cloud_client = opp.data[DOMAIN].client
     gconf = await cloud_client.get_google_config()
@@ -259,7 +259,7 @@ async def test_set_username(opp):
         google_enabled=False,
         async_set_username=AsyncMock(return_value=None),
     )
-    client = CloudClient.opp, prefs, None, {}, {})
+    client = CloudClient(opp, prefs, None, {}, {})
     client.cloud = MagicMock(is_logged_in=True, username="mock-username")
     await client.logged_in()
 
@@ -274,7 +274,7 @@ async def test_login_recovers_bad_internet(opp, caplog):
         google_enabled=False,
         async_set_username=AsyncMock(return_value=None),
     )
-    client = CloudClient.opp, prefs, None, {}, {})
+    client = CloudClient(opp, prefs, None, {}, {})
     client.cloud = Mock()
     client._alexa_config = Mock(
         async_enable_proactive_mode=Mock(side_effect=aiohttp.ClientError)

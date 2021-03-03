@@ -87,7 +87,7 @@ async def _async_setup_entity(
     opp, async_add_entities, config, config_entry=None, discovery_data=None
 ):
     """Set up the MQTT switch."""
-    async_add_entities([MqttSwitch.opp, config, config_entry, discovery_data)])
+    async_add_entities([MqttSwitch(opp, config, config_entry, discovery_data)])
 
 
 class MqttSwitch(MqttEntity, SwitchEntity, RestoreEntity):
@@ -122,7 +122,7 @@ class MqttSwitch(MqttEntity, SwitchEntity, RestoreEntity):
 
         template = self._config.get(CONF_VALUE_TEMPLATE)
         if template is not None:
-            template opp =self.opp
+            template.opp =self.opp
 
     async def _subscribe_topics(self):
         """(Re)Subscribe to topics."""

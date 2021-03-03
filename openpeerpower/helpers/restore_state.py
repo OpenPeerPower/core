@@ -190,7 +190,7 @@ class RestoreStateData:
     @callback
     def async_restore_entity_removed(self, entity_id: str) -> None:
         """Unregister this entity from saving state."""
-        # When an entity is being removed from.opp, store its last state. This
+        # When an entity is being removed from(opp, store its last state. This
         # allows us to support state restoration if the entity is removed, then
         # re-added while.opp is still running.
         state = self.opp.states.get(entity_id)

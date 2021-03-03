@@ -122,8 +122,8 @@ class SwitchTemplate(TemplateEntity, SwitchEntity, RestoreEntity):
         self._name = friendly_name
         self._template = state_template
         domain = __name__.split(".")[-2]
-        self._on_script = Script.opp, on_action, friendly_name, domain)
-        self._off_script = Script.opp, off_action, friendly_name, domain)
+        self._on_script = Script(opp, on_action, friendly_name, domain)
+        self._off_script = Script(opp, off_action, friendly_name, domain)
         self._state = False
         self._unique_id = unique_id
 

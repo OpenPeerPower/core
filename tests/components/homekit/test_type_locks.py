@@ -23,7 +23,7 @@ async def test_lock_unlock(opp, hk_driver, events):
 
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
-    acc = Lock.opp, hk_driver, "Lock", entity_id, 2, config)
+    acc = Lock(opp, hk_driver, "Lock", entity_id, 2, config)
     await acc.run()
 
     assert acc.aid == 2
@@ -82,7 +82,7 @@ async def test_no_code(opp, hk_driver, config, events):
 
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
-    acc = Lock.opp, hk_driver, "Lock", entity_id, 2, config)
+    acc = Lock(opp, hk_driver, "Lock", entity_id, 2, config)
 
     # Set from HomeKit
     call_lock = async_mock_service(opp, DOMAIN, "lock")

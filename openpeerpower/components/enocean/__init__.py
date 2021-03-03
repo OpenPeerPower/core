@@ -40,7 +40,7 @@ async def async_setup_entry(
 ):
     """Set up an EnOcean dongle for the given entry."""
     enocean_data = opp.data.setdefault(DATA_ENOCEAN, {})
-    usb_dongle = EnOceanDongle.opp, config_entry.data[CONF_DEVICE])
+    usb_dongle = EnOceanDongle(opp, config_entry.data[CONF_DEVICE])
     await usb_dongle.async_setup()
     enocean_data[ENOCEAN_DONGLE] = usb_dongle
 

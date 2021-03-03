@@ -39,7 +39,7 @@ UPDATE_FIELDS = {
 async def async_setup(opp: OpenPeerPower, config: dict):
     """Set up the Image integration."""
     image_dir = pathlib.Path.opp.config.path(DOMAIN))
-    opp.data[DOMAIN] = storage_collection = ImageStorageCollection.opp, image_dir)
+    opp.data[DOMAIN] = storage_collection = ImageStorageCollection(opp, image_dir)
     await storage_collection.async_load()
     collection.StorageCollectionWebsocket(
         storage_collection,
@@ -63,7 +63,7 @@ class ImageStorageCollection(collection.StorageCollection):
     def __init__(self, opp: OpenPeerPower, image_dir: pathlib.Path) -> None:
         """Initialize media storage collection."""
         super().__init__(
-            Store.opp, STORAGE_VERSION, STORAGE_KEY),
+             Store(opp, STORAGE_VERSION, STORAGE_KEY),
             logging.getLogger(f"{__name__}.storage_collection"),
         )
         self.async_add_listener(self._change_listener)

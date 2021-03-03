@@ -21,7 +21,7 @@ def async_setup_opp: OpenPeerPower):
     """Set up local media source."""
     source = LocalSource(opp)
     opp.data[DOMAIN][DOMAIN] = source
-    opp.http.register_view(LocalMediaView.opp, source))
+    opp.http.register_view(LocalMediaView(opp, source))
 
 
 class LocalSource(MediaSource):

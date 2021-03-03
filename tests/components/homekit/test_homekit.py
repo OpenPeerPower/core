@@ -710,7 +710,7 @@ async def test_homekit_too_many_accessories(opp, hk_driver, caplog, mock_zerocon
     )
 
     def _mock_bridge(*_):
-        mock_bridge = HomeBridge.opp, hk_driver, "mock_bridge")
+        mock_bridge = HomeBridge(opp, hk_driver, "mock_bridge")
         # The bridge itself counts as an accessory
         mock_bridge.accessories = range(MAX_DEVICES)
         return mock_bridge
@@ -752,7 +752,7 @@ async def test_homekit_finds_linked_batteries(
     homekit.driver = hk_driver
     # pylint: disable=protected-access
     homekit._filter = Mock(return_value=True)
-    homekit.bridge = HomeBridge.opp, hk_driver, "mock_bridge")
+    homekit.bridge = HomeBridge(opp, hk_driver, "mock_bridge")
 
     config_entry = MockConfigEntry(domain="test", data={})
     config_entry.add_to_opp(opp)
@@ -838,7 +838,7 @@ async def test_homekit_async_get_integration_fails(
     homekit.driver = hk_driver
     # pylint: disable=protected-access
     homekit._filter = Mock(return_value=True)
-    homekit.bridge = HomeBridge.opp, hk_driver, "mock_bridge")
+    homekit.bridge = HomeBridge(opp, hk_driver, "mock_bridge")
 
     config_entry = MockConfigEntry(domain="test", data={})
     config_entry.add_to_opp(opp)
@@ -1004,7 +1004,7 @@ async def test_homekit_ignored_missing_devices(
     homekit.driver = hk_driver
     # pylint: disable=protected-access
     homekit._filter = Mock(return_value=True)
-    homekit.bridge = HomeBridge.opp, hk_driver, "mock_bridge")
+    homekit.bridge = HomeBridge(opp, hk_driver, "mock_bridge")
 
     config_entry = MockConfigEntry(domain="test", data={})
     config_entry.add_to_opp(opp)
@@ -1085,7 +1085,7 @@ async def test_homekit_finds_linked_motion_sensors(
     homekit.driver = hk_driver
     # pylint: disable=protected-access
     homekit._filter = Mock(return_value=True)
-    homekit.bridge = HomeBridge.opp, hk_driver, "mock_bridge")
+    homekit.bridge = HomeBridge(opp, hk_driver, "mock_bridge")
 
     config_entry = MockConfigEntry(domain="test", data={})
     config_entry.add_to_opp(opp)
@@ -1159,7 +1159,7 @@ async def test_homekit_finds_linked_humidity_sensors(
     )
     homekit.driver = hk_driver
     homekit._filter = Mock(return_value=True)
-    homekit.bridge = HomeBridge.opp, hk_driver, "mock_bridge")
+    homekit.bridge = HomeBridge(opp, hk_driver, "mock_bridge")
 
     config_entry = MockConfigEntry(domain="test", data={})
     config_entry.add_to_opp(opp)

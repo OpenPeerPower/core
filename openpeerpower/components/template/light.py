@@ -177,11 +177,11 @@ class LightTemplate(TemplateEntity, LightEntity):
         self._name = friendly_name
         self._template = state_template
         domain = __name__.split(".")[-2]
-        self._on_script = Script.opp, on_action, friendly_name, domain)
-        self._off_script = Script.opp, off_action, friendly_name, domain)
+        self._on_script = Script(opp, on_action, friendly_name, domain)
+        self._off_script = Script(opp, off_action, friendly_name, domain)
         self._level_script = None
         if level_action is not None:
-            self._level_script = Script.opp, level_action, friendly_name, domain)
+            self._level_script = Script(opp, level_action, friendly_name, domain)
         self._level_template = level_template
         self._temperature_script = None
         if temperature_action is not None:
@@ -191,7 +191,7 @@ class LightTemplate(TemplateEntity, LightEntity):
         self._temperature_template = temperature_template
         self._color_script = None
         if color_action is not None:
-            self._color_script = Script.opp, color_action, friendly_name, domain)
+            self._color_script = Script(opp, color_action, friendly_name, domain)
         self._color_template = color_template
         self._white_value_script = None
         if white_value_action is not None:

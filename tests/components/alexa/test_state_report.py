@@ -206,7 +206,7 @@ async def test_proactive_mode_filter_states(opp, aioclient_mock):
         "off",
         {"friendly_name": "Test Contact Sensor", "device_class": "door"},
     )
-    with patch.object.opp, "state", core.CoreState.stopping):
+    with patch.object(opp, "state", core.CoreState.stopping):
         await opp.async_block_till_done()
         await opp.async_block_till_done()
     assert len(aioclient_mock.mock_calls) == 0

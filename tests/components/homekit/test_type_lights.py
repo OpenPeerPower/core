@@ -35,7 +35,7 @@ async def test_light_basic(opp, hk_driver, events):
 
     opp.states.async_set(entity_id, STATE_ON, {ATTR_SUPPORTED_FEATURES: 0})
     await opp.async_block_till_done()
-    acc = Light.opp, hk_driver, "Light", entity_id, 1, None)
+    acc = Light(opp, hk_driver, "Light", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     assert acc.aid == 1
@@ -108,7 +108,7 @@ async def test_light_brightness(opp, hk_driver, events):
         {ATTR_SUPPORTED_FEATURES: SUPPORT_BRIGHTNESS, ATTR_BRIGHTNESS: 255},
     )
     await opp.async_block_till_done()
-    acc = Light.opp, hk_driver, "Light", entity_id, 1, None)
+    acc = Light(opp, hk_driver, "Light", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     # Initial value can be anything but 0. If it is 0, it might cause HomeKit to set the
@@ -226,7 +226,7 @@ async def test_light_color_temperature(opp, hk_driver, events):
         {ATTR_SUPPORTED_FEATURES: SUPPORT_COLOR_TEMP, ATTR_COLOR_TEMP: 190},
     )
     await opp.async_block_till_done()
-    acc = Light.opp, hk_driver, "Light", entity_id, 1, None)
+    acc = Light(opp, hk_driver, "Light", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     assert acc.char_color_temperature.value == 190
@@ -277,7 +277,7 @@ async def test_light_color_temperature_and_rgb_color(opp, hk_driver, events):
         },
     )
     await opp.async_block_till_done()
-    acc = Light.opp, hk_driver, "Light", entity_id, 2, None)
+    acc = Light(opp, hk_driver, "Light", entity_id, 2, None)
     assert acc.char_hue.value == 260
     assert acc.char_saturation.value == 90
 
@@ -308,7 +308,7 @@ async def test_light_rgb_color(opp, hk_driver, events):
         {ATTR_SUPPORTED_FEATURES: SUPPORT_COLOR, ATTR_HS_COLOR: (260, 90)},
     )
     await opp.async_block_till_done()
-    acc = Light.opp, hk_driver, "Light", entity_id, 1, None)
+    acc = Light(opp, hk_driver, "Light", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     assert acc.char_hue.value == 260
@@ -370,14 +370,14 @@ async def test_light_restore(opp, hk_driver, events):
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
     await opp.async_block_till_done()
 
-    acc = Light.opp, hk_driver, "Light", "light.simple", 1, None)
+    acc = Light(opp, hk_driver, "Light", "light.simple", 1, None)
     hk_driver.add_accessory(acc)
 
     assert acc.category == 5  # Lightbulb
     assert acc.chars == []
     assert acc.char_on.value == 0
 
-    acc = Light.opp, hk_driver, "Light", "light.all_info_set", 2, None)
+    acc = Light(opp, hk_driver, "Light", "light.all_info_set", 2, None)
     assert acc.category == 5  # Lightbulb
     assert acc.chars == ["Brightness"]
     assert acc.char_on.value == 0
@@ -396,7 +396,7 @@ async def test_light_set_brightness_and_color(opp, hk_driver, events):
         },
     )
     await opp.async_block_till_done()
-    acc = Light.opp, hk_driver, "Light", entity_id, 1, None)
+    acc = Light(opp, hk_driver, "Light", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     # Initial value can be anything but 0. If it is 0, it might cause HomeKit to set the
@@ -472,7 +472,7 @@ async def test_light_set_brightness_and_color_temp(opp, hk_driver, events):
         },
     )
     await opp.async_block_till_done()
-    acc = Light.opp, hk_driver, "Light", entity_id, 1, None)
+    acc = Light(opp, hk_driver, "Light", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     # Initial value can be anything but 0. If it is 0, it might cause HomeKit to set the

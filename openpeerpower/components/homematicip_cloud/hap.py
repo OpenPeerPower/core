@@ -118,7 +118,7 @@ class HomematicipHAP:
         There are several occasions for this event to happen.
         1. We are interested to check whether the access point
         is still connected. If not, entity state changes cannot
-        be forwarded to.opp, So if access point is disconnected all devices
+        be forwarded to(opp, So if access point is disconnected all devices
         are set to unavailable.
         2. We need to update home including devices and groups after a reconnect.
         3. We need to update home without devices and groups in all other cases.

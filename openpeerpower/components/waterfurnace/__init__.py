@@ -52,7 +52,7 @@ def setup(opp, base_config):
         _LOGGER.error("Invalid credentials for waterfurnace login")
         return False
 
-    opp.data[DOMAIN] = WaterFurnaceData.opp, wfconn)
+    opp.data[DOMAIN] = WaterFurnaceData(opp, wfconn)
     opp.data[DOMAIN].start()
 
     discovery.load_platform(opp, "sensor", DOMAIN, {}, config)

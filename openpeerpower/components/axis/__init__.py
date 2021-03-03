@@ -22,7 +22,7 @@ async def async_setup_entry(opp, config_entry):
     """Set up the Axis component."""
     opp.data.setdefault(AXIS_DOMAIN, {})
 
-    device = AxisNetworkDevice.opp, config_entry)
+    device = AxisNetworkDevice(opp, config_entry)
 
     if not await device.async_setup():
         return False

@@ -62,7 +62,7 @@ async def async_setup(opp, config):
     """Set up the keyboard_remote."""
     config = config.get(DOMAIN)
 
-    remote = KeyboardRemote.opp, config)
+    remote = KeyboardRemote(opp, config)
     remote.setup()
 
     return True

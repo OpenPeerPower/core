@@ -28,7 +28,7 @@ def get_service(opp, config, discovery_info=None):
     filename = config[CONF_FILENAME]
     timestamp = config[CONF_TIMESTAMP]
 
-    return FileNotificationService.opp, filename, timestamp)
+    return FileNotificationService(opp, filename, timestamp)
 
 
 class FileNotificationService(BaseNotificationService):

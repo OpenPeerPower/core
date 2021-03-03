@@ -92,7 +92,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
     opp.data[DOMAIN] = {}
     id_manager = TagIDManager()
     opp.data[DOMAIN][TAGS] = storage_collection = TagStorageCollection(
-        Store.opp, STORAGE_VERSION, STORAGE_KEY),
+         Store(opp, STORAGE_VERSION, STORAGE_KEY),
         logging.getLogger(f"{__name__}.storage_collection"),
         id_manager,
     )

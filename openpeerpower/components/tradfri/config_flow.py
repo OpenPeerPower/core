@@ -156,7 +156,7 @@ class FlowHandler(config_entries.ConfigFlow):
         return self.async_create_entry(title=host, data=data)
 
 
-async def authenticate.opp, host, security_code):
+async def authenticate(opp, host, security_code):
     """Authenticate with a Tradfri hub."""
 
     identity = uuid4().hex

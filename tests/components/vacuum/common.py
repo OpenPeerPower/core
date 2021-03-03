@@ -53,7 +53,7 @@ async def async_turn_off(opp, entity_id=ENTITY_MATCH_ALL):
 
 
 @bind_opp
-def toggle.opp, entity_id=ENTITY_MATCH_ALL):
+def toggle(opp, entity_id=ENTITY_MATCH_ALL):
     """Toggle all or specified vacuum."""
     opp.add_job(async_toggle, opp, entity_id)
 
@@ -65,7 +65,7 @@ async def async_toggle(opp, entity_id=ENTITY_MATCH_ALL):
 
 
 @bind_opp
-def locate.opp, entity_id=ENTITY_MATCH_ALL):
+def locate(opp, entity_id=ENTITY_MATCH_ALL):
     """Locate all or specified vacuum."""
     opp.add_job(async_locate, opp, entity_id)
 
@@ -113,7 +113,7 @@ async def async_start_pause(opp, entity_id=ENTITY_MATCH_ALL):
 
 
 @bind_opp
-def start.opp, entity_id=ENTITY_MATCH_ALL):
+def start(opp, entity_id=ENTITY_MATCH_ALL):
     """Tell all or specified vacuum to start or resume the current task."""
     opp.add_job(async_start, opp, entity_id)
 
@@ -125,7 +125,7 @@ async def async_start(opp, entity_id=ENTITY_MATCH_ALL):
 
 
 @bind_opp
-def pause.opp, entity_id=ENTITY_MATCH_ALL):
+def pause(opp, entity_id=ENTITY_MATCH_ALL):
     """Tell all or the specified vacuum to pause the current task."""
     opp.add_job(async_pause, opp, entity_id)
 
@@ -137,7 +137,7 @@ async def async_pause(opp, entity_id=ENTITY_MATCH_ALL):
 
 
 @bind_opp
-def stop.opp, entity_id=ENTITY_MATCH_ALL):
+def stop(opp, entity_id=ENTITY_MATCH_ALL):
     """Stop all or specified vacuum."""
     opp.add_job(async_stop, opp, entity_id)
 

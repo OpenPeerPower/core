@@ -19,4 +19,4 @@ def component_factory(
     with patch(
         "openpeerpower.components.withings.common.ConfigEntryWithingsApi"
     ) as api_class_mock:
-        yield ComponentFactory.opp, api_class_mock, aiohttp_client, aioclient_mock)
+        yield ComponentFactory(opp, api_class_mock, aiohttp_client, aioclient_mock)

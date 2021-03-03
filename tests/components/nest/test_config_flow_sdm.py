@@ -86,9 +86,9 @@ class OAuthFixture:
 
 
 @pytest.fixture
-async def oauth.opp, aiohttp_client, aioclient_mock, current_request_with_host):
+async def oauth(opp, aiohttp_client, aioclient_mock, current_request_with_host):
     """Create the simulated oauth flow."""
-    return OAuthFixture.opp, aiohttp_client, aioclient_mock)
+    return OAuthFixture(opp, aiohttp_client, aioclient_mock)
 
 
 async def test_full_flow(opp, oauth):

@@ -136,7 +136,7 @@ def setup(opp, config):
         """Get called when an Octoprint server has been discovered."""
         _LOGGER.debug("Found an Octoprint server: %s", info)
 
-    discovery.listen.opp, SERVICE_OCTOPRINT, device_discovered)
+    discovery.listen(opp, SERVICE_OCTOPRINT, device_discovered)
 
     if DOMAIN not in config:
         # Skip the setup if there is no configuration present

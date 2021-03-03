@@ -42,7 +42,7 @@ async def ignore_frontend_deps(opp):
 
 
 @pytest.fixture
-async def frontend.opp, ignore_frontend_deps):
+async def frontend(opp, ignore_frontend_deps):
     """Frontend setup with themes."""
     assert await async_setup_component(
         opp,
@@ -394,7 +394,7 @@ async def test_get_translations(opp, ws_client):
     """Test get_translations command."""
     with patch(
         "openpeerpower.components.frontend.async_get_translations",
-        side_effect=lambda.opp, lang, category, integration, config_flow: {
+        side_effect=lambda(opp, lang, category, integration, config_flow: {
             "lang": lang
         },
     ):

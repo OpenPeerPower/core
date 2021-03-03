@@ -75,7 +75,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     turn_on_action = discovery_info.get(CONF_ON_ACTION)
 
     client = opp.data[DOMAIN][host]["client"]
-    on_script = Script.opp, turn_on_action, name, DOMAIN) if turn_on_action else None
+    on_script = Script(opp, turn_on_action, name, DOMAIN) if turn_on_action else None
 
     entity = LgWebOSMediaPlayerEntity(client, name, customize, on_script)
 

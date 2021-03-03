@@ -356,7 +356,7 @@ class _ScriptRun:
         self._variables["wait"] = {"remaining": timeout, "completed": False}
 
         wait_template = self._action[CONF_WAIT_TEMPLATE]
-        wait_template opp =self.opp
+        wait_template_opp =self.opp
 
         # check if condition already okay
         if condition.async_template(self.opp, wait_template, self._variables):

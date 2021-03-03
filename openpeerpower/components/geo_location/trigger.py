@@ -50,9 +50,9 @@ async def async_attach_trigger(opp, config, action, automation_info):
         zone_state = opp.states.get(zone_entity_id)
 
         from_match = (
-            condition.zone.opp, zone_state, from_state) if from_state else False
+            condition.zone(opp, zone_state, from_state) if from_state else False
         )
-        to_match = condition.zone.opp, zone_state, to_state) if to_state else False
+        to_match = condition.zone(opp, zone_state, to_state) if to_state else False
 
         if (
             trigger_event == EVENT_ENTER

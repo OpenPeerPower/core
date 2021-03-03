@@ -32,7 +32,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     """Set up X10 switches over a mochad controller."""
     mochad_controller = opp.data[DOMAIN]
     devs = config.get(CONF_DEVICES)
-    add_entities([MochadSwitch.opp, mochad_controller.ctrl, dev) for dev in devs])
+    add_entities([MochadSwitcf(opp, mochad_controller.ctrl, dev) for dev in devs])
     return True
 
 

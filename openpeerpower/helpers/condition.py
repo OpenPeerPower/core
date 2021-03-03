@@ -89,7 +89,7 @@ async def async_from_config(
 
     if asyncio.iscoroutinefunction(check_factory):
         return cast(
-            ConditionCheckerType, await factory.opp, config, config_validation)
+            ConditionCheckerType, await factory(opp, config, config_validation)
         )
     return cast(ConditionCheckerType, factory(config, config_validation))
 
@@ -111,7 +111,7 @@ async def async_and_from_config(
         errors = []
         for check in checks:
             try:
-                if not check.opp, variables):
+                if not check(opp, variables):
                     return False
             except ConditionError as ex:
                 errors.append(str(ex))
@@ -144,7 +144,7 @@ async def async_or_from_config(
         errors = []
         for check in checks:
             try:
-                if check.opp, variables):
+                if check(opp, variables):
                     return True
             except ConditionError as ex:
                 errors.append(str(ex))
@@ -177,7 +177,7 @@ async def async_not_from_config(
         errors = []
         for check in checks:
             try:
-                if check.opp, variables):
+                if check(opp, variables):
                     return False
             except ConditionError as ex:
                 errors.append(str(ex))
@@ -399,7 +399,7 @@ def state_from_config(
     def if_state(opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Test if condition."""
         return all(
-            state.opp, entity_id, req_states, for_period, attribute)
+            state(opp, entity_id, req_states, for_period, attribute)
             for entity_id in entity_ids
         )
 
@@ -474,7 +474,7 @@ def sun_from_config(
 
     def time_if opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Validate time based if-condition."""
-        return sun.opp, before, after, before_offset, after_offset)
+        return sun(opp, before, after, before_offset, after_offset)
 
     return time_if
 
@@ -594,7 +594,7 @@ def time_from_config(
 
     def time_if opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Validate time based if-condition."""
-        return time.opp, before, after, weekday)
+        return time(opp, before, after, weekday)
 
     return time_if
 
@@ -662,7 +662,7 @@ def zone_from_config(
             entity_ok = False
             for zone_entity_id in zone_entity_ids:
                 try:
-                    if zone.opp, zone_entity_id, entity_id):
+                    if zone(opp, zone_entity_id, entity_id):
                         entity_ok = True
                 except ConditionError as ex:
                     errors.append(str(ex))

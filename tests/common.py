@@ -276,7 +276,7 @@ async def async_test_open_peer_power(loop, load_registries=True):
     opp.config.media_dirs = {"local": get_test_config_dir("media")}
     opp.config.skip_pip = True
 
-    opp.config_entries = config_entries.ConfigEntries.opp, {})
+    opp.config_entries = config_entries.ConfigEntries(opp, {})
     opp.config_entries._entries = []
     opp.config_entries._store._async_ensure_stop_listener = lambda: None
 

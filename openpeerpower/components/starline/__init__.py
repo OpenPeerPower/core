@@ -26,7 +26,7 @@ async def async_setup(opp: OpenPeerPower, config: Config) -> bool:
 
 async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Set up the StarLine device from a config entry."""
-    account = StarlineAccount.opp, config_entry)
+    account = StarlineAccount(opp, config_entry)
     await account.update()
     await account.update_obd()
     if not account.api.available:

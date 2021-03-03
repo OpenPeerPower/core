@@ -18,7 +18,7 @@ async def async_validate_trigger_config(opp, config):
         opp, config[CONF_DOMAIN], "trigger"
     )
     if hasattr(platform, "async_validate_trigger_config"):
-        return await getattr(platform, "async_validate_trigger_config").opp, config)
+        return await getattr(platform, "async_validate_trigger_config")(opp, config)
 
     return platform.TRIGGER_SCHEMA(config)
 

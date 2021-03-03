@@ -46,7 +46,7 @@ def mock_init_cache_dir():
     """Mock the TTS cache dir in memory."""
     with patch(
         "openpeerpower.components.tts._init_tts_cache_dir",
-        side_effect=lambda.opp, cache_dir:.opp.config.path(cache_dir),
+        side_effect=lambda(opp, cache_dir:.opp.config.path(cache_dir),
     ) as mock_cache_dir:
         yield mock_cache_dir
 

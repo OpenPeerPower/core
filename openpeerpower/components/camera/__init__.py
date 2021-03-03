@@ -654,7 +654,7 @@ async def async_handle_snapshot_service(camera, service):
 async def async_handle_play_stream_service(camera, service_call):
     """Handle play stream services calls."""
     fmt = service_call.data[ATTR_FORMAT]
-    url = await _async_stream_endpoint_url(camera.opp, camera, fmt)
+    url = await _async_stream_endpoint_url(camera(opp, camera, fmt)
 
    opp = camera.opp
     data = {

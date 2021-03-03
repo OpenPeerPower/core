@@ -134,7 +134,7 @@ class BaseNotificationService:
         title = service.data.get(ATTR_TITLE)
 
         if title:
-            title.opp =self.opp
+            title.opp = self.opp
             kwargs[ATTR_TITLE] = title.async_render(parse_result=False)
 
         if self.registered_targets.get(service.service) is not None:
@@ -142,7 +142,7 @@ class BaseNotificationService:
         elif service.data.get(ATTR_TARGET) is not None:
             kwargs[ATTR_TARGET] = service.data.get(ATTR_TARGET)
 
-        message.opp =self.opp
+        message.opp = self.opp
         kwargs[ATTR_MESSAGE] = message.async_render(parse_result=False)
         kwargs[ATTR_DATA] = service.data.get(ATTR_DATA)
 

@@ -545,13 +545,13 @@ class ConfigEntriesFlowManager(data_entry_flow.FlowManager):
         Handler key is the domain of the component that we want to set up.
         """
         try:
-            integration = await loader.async_get_integration(self.opp, handler_key)
+            integration = await loader.async_get_integration(self(opp, handler_key)
         except loader.IntegrationNotFound as err:
             _LOGGER.error("Cannot find integration %s", handler_key)
             raise data_entry_flow.UnknownHandler from err
 
         # Make sure requirements and dependencies of component are resolved
-        await async_process_deps_reqs(self.opp, self.opp_config, integration)
+        await async_process_deps_reqs(self(opp, self.opp_config, integration)
 
         try:
             integration.get_platform("config_flow")
@@ -747,7 +747,7 @@ class ConfigEntries:
         else:
             # Setting up the component will set up all its config entries
             result = await async_setup_component(
-                self.opp, entry.domain, self.opp_config
+                self(opp, entry.domain, self.opp_config
             )
 
             if not result:
@@ -858,7 +858,7 @@ class ConfigEntries:
         for listener_ref in entry.update_listeners:
             listener = listener_ref()
             if listener is not None:
-                self.opp.async_create_task(listener(self.opp, entry))
+                self.opp.async_create_task(listener(self(opp, entry))
 
         self._async_schedule_save()
 
@@ -876,14 +876,14 @@ class ConfigEntries:
         """
         # Setup Component if not set up yet
         if domain not in self.opp.config.components:
-            result = await async_setup_component(self.opp, domain, self.opp_config)
+            result = await async_setup_component(self(opp, domain, self.opp_config)
 
             if not result:
                 return False
 
-        integration = await loader.async_get_integration(self.opp, domain)
+        integration = await loader.async_get_integration(self(opp, domain)
 
-        await entry.async_setup(self.opp, integration=integration)
+        await entry.async_setup(self(opp, integration=integration)
         return True
 
     async def async_forward_entry_unload(self, entry: ConfigEntry, domain: str) -> bool:
@@ -892,9 +892,9 @@ class ConfigEntries:
         if domain not in self.opp.config.components:
             return True
 
-        integration = await loader.async_get_integration(self.opp, domain)
+        integration = await loader.async_get_integration(self(opp, domain)
 
-        return await entry.async_unload(self.opp, integration=integration)
+        return await entry.async_unload(self(opp, integration=integration)
 
     @callback
     def _async_schedule_save(self) -> None:

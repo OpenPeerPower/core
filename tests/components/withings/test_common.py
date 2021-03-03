@@ -47,7 +47,7 @@ async def test_config_entry_withings_api(opp: OpenPeerPower) -> None:
             json={"status": 0, "body": {"message": "success"}},
         )
 
-        api = ConfigEntryWithingsApi.opp, config_entry, implementation_mock)
+        api = ConfigEntryWithingsApi(opp, config_entry, implementation_mock)
         response = await opp.async_add_executor_job(
             api.request, "test", {"arg1": "val1", "arg2": "val2"}
         )

@@ -39,7 +39,7 @@ async def test_fan_basic(opp, hk_driver, events):
 
     opp.states.async_set(entity_id, STATE_ON, {ATTR_SUPPORTED_FEATURES: 0})
     await opp.async_block_till_done()
-    acc = Fan.opp, hk_driver, "Fan", entity_id, 1, None)
+    acc = Fan(opp, hk_driver, "Fan", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     assert acc.aid == 1
@@ -121,7 +121,7 @@ async def test_fan_direction(opp, hk_driver, events):
         {ATTR_SUPPORTED_FEATURES: SUPPORT_DIRECTION, ATTR_DIRECTION: DIRECTION_FORWARD},
     )
     await opp.async_block_till_done()
-    acc = Fan.opp, hk_driver, "Fan", entity_id, 1, None)
+    acc = Fan(opp, hk_driver, "Fan", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     assert acc.char_direction.value == 0
@@ -189,7 +189,7 @@ async def test_fan_oscillate(opp, hk_driver, events):
         {ATTR_SUPPORTED_FEATURES: SUPPORT_OSCILLATE, ATTR_OSCILLATING: False},
     )
     await opp.async_block_till_done()
-    acc = Fan.opp, hk_driver, "Fan", entity_id, 1, None)
+    acc = Fan(opp, hk_driver, "Fan", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     assert acc.char_swing.value == 0
@@ -262,7 +262,7 @@ async def test_fan_speed(opp, hk_driver, events):
         },
     )
     await opp.async_block_till_done()
-    acc = Fan.opp, hk_driver, "Fan", entity_id, 1, None)
+    acc = Fan(opp, hk_driver, "Fan", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     # Initial value can be anything but 0. If it is 0, it might cause HomeKit to set the
@@ -346,7 +346,7 @@ async def test_fan_set_all_one_shot(opp, hk_driver, events):
         },
     )
     await opp.async_block_till_done()
-    acc = Fan.opp, hk_driver, "Fan", entity_id, 1, None)
+    acc = Fan(opp, hk_driver, "Fan", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     # Initial value can be anything but 0. If it is 0, it might cause HomeKit to set the
@@ -547,14 +547,14 @@ async def test_fan_restore(opp, hk_driver, events):
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
     await opp.async_block_till_done()
 
-    acc = Fan.opp, hk_driver, "Fan", "fan.simple", 2, None)
+    acc = Fan(opp, hk_driver, "Fan", "fan.simple", 2, None)
     assert acc.category == 3
     assert acc.char_active is not None
     assert acc.char_direction is None
     assert acc.char_speed is None
     assert acc.char_swing is None
 
-    acc = Fan.opp, hk_driver, "Fan", "fan.all_info_set", 2, None)
+    acc = Fan(opp, hk_driver, "Fan", "fan.all_info_set", 2, None)
     assert acc.category == 3
     assert acc.char_active is not None
     assert acc.char_direction is not None
@@ -576,7 +576,7 @@ async def test_fan_preset_modes(opp, hk_driver, events):
         },
     )
     await opp.async_block_till_done()
-    acc = Fan.opp, hk_driver, "Fan", entity_id, 1, None)
+    acc = Fan(opp, hk_driver, "Fan", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     assert acc.preset_mode_chars["auto"].value == 1

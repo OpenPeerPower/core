@@ -17,7 +17,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     for i in litejet_.button_switches():
         name = litejet_.get_switch_name(i)
         if not litejet.is_ignored(opp, name):
-            devices.append(LiteJetSwitch.opp, litejet_, i, name))
+            devices.append(LiteJetSwitcf(opp, litejet_, i, name))
     add_entities(devices, True)
 
 

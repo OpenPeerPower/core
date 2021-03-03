@@ -71,7 +71,7 @@ async def async_setup(opp: OpenPeerPower, config: Config) -> bool:
 
 async def async_setup_entry(opp, config_entry):
     """Set up Glances from config entry."""
-    client = GlancesData.opp, config_entry)
+    client = GlancesData(opp, config_entry)
     opp.data.setdefault(DOMAIN, {})[config_entry.entry_id] = client
     if not await client.async_setup():
         return False

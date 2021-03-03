@@ -50,7 +50,7 @@ def get_service(opp, config, discovery_info=None):
     topic = config[CONF_TOPIC]
     sandbox = config[CONF_SANDBOX]
 
-    service = ApnsNotificationService.opp, name, topic, sandbox, cert_file)
+    service = ApnsNotificationService(opp, name, topic, sandbox, cert_file)
     opp.services.register(
         DOMAIN, f"apns_{name}", service.register, schema=REGISTER_SERVICE_SCHEMA
     )

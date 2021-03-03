@@ -368,7 +368,7 @@ async def test_call_rate_delay_throttle_enabled(opp):
     runs = []
     delay = 5.0
 
-    limit = pilight.CallRateDelayThrottle.opp, delay)
+    limit = pilight.CallRateDelayThrottle(opp, delay)
     action = limit.limited(lambda x: runs.append(x))
 
     for i in range(3):
@@ -391,7 +391,7 @@ def test_call_rate_delay_throttle_disabled(opp):
     """Test that the limiter is a noop if no delay set."""
     runs = []
 
-    limit = pilight.CallRateDelayThrottle.opp, 0.0)
+    limit = pilight.CallRateDelayThrottle(opp, 0.0)
     action = limit.limited(lambda x: runs.append(x))
 
     for i in range(3):

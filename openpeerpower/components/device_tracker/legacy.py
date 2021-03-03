@@ -852,7 +852,7 @@ async def async_load_config(
         except vol.Invalid as exp:
             async_log_exception(exp, dev_id, devices, opp)
         else:
-            result.append(Device.opp, **device))
+            result.append(Device(opp, **device))
     return result
 
 

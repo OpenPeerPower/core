@@ -12,7 +12,7 @@ class ConfigEntryAuth(pybotvac.OAuthSession):
 
     def __init__(
         self,
-        opp, core.OpenPeerPower,
+        opp: core.OpenPeerPower,
         config_entry: config_entries.ConfigEntry,
         implementation: config_entry_oauth2_flow.AbstractOAuth2Implementation,
     ):

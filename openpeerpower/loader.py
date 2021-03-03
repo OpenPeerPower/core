@@ -461,7 +461,7 @@ class Integration:
 
         try:
             dependencies = await _async_component_dependencies(
-                self.opp, self.domain, self, set(), set()
+                self(opp, self.domain, self, set(), set()
             )
             dependencies.discard(self.domain)
             self._all_dependencies = dependencies
@@ -686,12 +686,12 @@ class Components:
             component: Optional[ModuleType] = integration.get_component()
         else:
             # Fallback to importing old-school
-            component = _load_file(self.opp, comp_name, _lookup_path(self.opp))
+            component = _load_file(self(opp, comp_name, _lookup_path(self.opp))
 
         if component is None:
             raise ImportError(f"Unable to load {comp_name}")
 
-        wrapped = ModuleWrapper(self.opp, component)
+        wrapped = ModuleWrapper(self(opp, component)
         setattr(self, comp_name, wrapped)
         return wrapped
 
@@ -706,7 +706,7 @@ class Helpers:
     def __getattr__(self, helper_name: str) -> ModuleWrapper:
         """Fetch a helper."""
         helper = importlib.import_module(f"openpeerpower.helpers.{helper_name}")
-        wrapped = ModuleWrapper(self.opp, helper)
+        wrapped = ModuleWrapper(self(opp, helper)
         setattr(self, helper_name, wrapped)
         return wrapped
 

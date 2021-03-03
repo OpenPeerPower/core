@@ -70,7 +70,7 @@ async def async_attach_trigger(opp, config, action, automation_info):
             except ValueError:
                 pass
 
-            opp.async_run(opp_job(job, {"trigger": data})
+            opp.async_run_opp_job(job, {"trigger": data})
 
     _LOGGER.debug(
         "Attaching MQTT trigger for topic: '%s', payload: '%s'", topic, payload

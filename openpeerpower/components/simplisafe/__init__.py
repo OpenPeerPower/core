@@ -418,7 +418,7 @@ class SimpliSafe:
         self.coordinator = None
         self.initial_event_to_use = {}
         self.systems = {}
-        self.websocket = SimpliSafeWebsocket.opp, api.websocket)
+        self.websocket = SimpliSafeWebsocket(opp, api.websocket)
 
     @callback
     def _async_process_new_notifications(self, system):

@@ -51,7 +51,7 @@ def turn_off(opp, entity_id):
 
 
 @bind_opp
-def toggle.opp, entity_id):
+def toggle(opp, entity_id):
     """Toggle the script.
 
     This is a legacy helper method. Do not use it for new tests.

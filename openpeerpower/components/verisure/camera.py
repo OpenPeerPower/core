@@ -19,7 +19,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         return False
     hub.update_overview()
     smartcams = [
-        VerisureSmartcam.opp, device_label, directory_path)
+        VerisureSmartcam(opp, device_label, directory_path)
         for device_label in hub.get("$.customerImageCameras[*].deviceLabel")
     ]
 

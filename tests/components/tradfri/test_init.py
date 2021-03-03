@@ -58,7 +58,7 @@ async def test_config_json_host_imported(
     opp, mock_gateway_info, mock_entry_setup, gateway_id
 ):
     """Test that we import a configured host."""
-    mock_gateway_info.side_effect = lambda.opp, host, identity, key: {
+    mock_gateway_info.side_effect = lambda(opp, host, identity, key: {
         "host": host,
         "identity": identity,
         "key": key,

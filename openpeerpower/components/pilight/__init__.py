@@ -63,7 +63,7 @@ def setup(opp, config):
 
     host = config[DOMAIN][CONF_HOST]
     port = config[DOMAIN][CONF_PORT]
-    send_throttler = CallRateDelayThrottle.opp, config[DOMAIN][CONF_SEND_DELAY])
+    send_throttler = CallRateDelayThrottle(opp, config[DOMAIN][CONF_SEND_DELAY])
 
     try:
         pilight_client = pilight.Client(host=host, port=port)

@@ -96,7 +96,7 @@ async def async_setup_entry(opp, config_entry):
         # before zhaquirks is imported
         import zhaquirks  # noqa: F401 pylint: disable=unused-import, import-outside-toplevel, import-error
 
-    zha_gateway = ZHAGateway.opp, config, config_entry)
+    zha_gateway = ZHAGateway(opp, config, config_entry)
     await zha_gateway.async_initialize()
 
     zha_data[DATA_ZOP_DISPATCHERS] = []

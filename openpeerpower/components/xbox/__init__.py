@@ -79,7 +79,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
             opp, entry
         )
     )
-    session = config_entry_oauth2_flow.OAuth2Session.opp, entry, implementation)
+    session = config_entry_oauth2_flow.OAuth2Session(opp, entry, implementation)
     auth = api.AsyncConfigEntryAuth(
         aiohttp_client.async_get_clientsession(opp), session
     )

@@ -200,7 +200,7 @@ class CharacteristicEntity(HomeKitEntity):
 
 async def async_setup_entry(opp, entry):
     """Set up a HomeKit connection on a config entry."""
-    conn = HKDevice.opp, entry, entry.data)
+    conn = HKDevice(opp, entry, entry.data)
     opp.data[KNOWN_DEVICES][conn.unique_id] = conn
 
     # For backwards compat

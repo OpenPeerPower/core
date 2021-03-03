@@ -167,9 +167,9 @@ class GarageDoorOpener(HomeAccessory):
     @callback
     def async_update_state(self, new_state):
         """Update cover state after state changed."""
-        opp.state = new_state.state
-        target_door_state = DOOR_TARGET_OPP_TO_HK.get.opp_state)
-        current_door_state = DOOR_CURRENT_OPP_TO_HK.get.opp_state)
+        opp_state = new_state.state
+        target_door_state = DOOR_TARGET_OPP_TO_HK.get(opp_state)
+        current_door_state = DOOR_CURRENT_OPP_TO_HK.get(opp_state)
 
         if ATTR_OBSTRUCTION_DETECTED in new_state.attributes:
             obstruction_detected = (
@@ -401,7 +401,7 @@ class WindowCoveringBasic(OpeningDeviceBase, HomeAccessory):
         super().async_update_state(new_state)
 
 
-def  opp.state_to_position_start(state):
+def  opp_state_to_position_start(state):
     """Convert opp state to homekit position state."""
     if state == STATE_OPENING:
         return HK_POSITION_GOING_TO_MAX

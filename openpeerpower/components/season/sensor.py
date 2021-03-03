@@ -72,7 +72,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         hemisphere = EQUATOR
 
     _LOGGER.debug(_type)
-    add_entities([Season.opp, hemisphere, _type, name)], True)
+    add_entities([Season(opp, hemisphere, _type, name)], True)
 
     return True
 

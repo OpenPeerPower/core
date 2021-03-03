@@ -63,7 +63,7 @@ class TestGraphite(unittest.TestCase):
     def test_subscribe(self):
         """Test the subscription."""
         fake opp =mock.MagicMock()
-        gf = graphite.GraphiteFeeder(fake.opp, "foo", 123, "ha")
+        gf = graphite.GraphiteFeeder(fake(opp, "foo", 123, "ha")
         fake.opp.bus.listen_once.has_calls(
             [
                 mock.call(EVENT_OPENPEERPOWER_START, gf.start_listen),

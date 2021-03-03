@@ -93,7 +93,7 @@ class RachioPerson:
                     )
                 continue
 
-            rachio_iro = RachioIro.opp, self.rachio, controller, webhooks)
+            rachio_iro = RachioIro(opp, self.rachio, controller, webhooks)
             rachio_iro.setup()
             self._controllers.append(rachio_iro)
             all_devices.append(rachio_iro.name)

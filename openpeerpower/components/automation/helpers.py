@@ -12,4 +12,4 @@ DATA_BLUEPRINTS = "automation_blueprints"
 @callback
 def async_get_blueprints(opp: OpenPeerPower) -> blueprint.DomainBlueprints:  # type: ignore
     """Get automation blueprints."""
-    return blueprint.DomainBlueprints.opp, DOMAIN, LOGGER)  # type: ignore
+    return blueprint.DomainBlueprints(opp, DOMAIN, LOGGER)  # type: ignore

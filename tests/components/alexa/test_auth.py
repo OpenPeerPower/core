@@ -24,7 +24,7 @@ async def run_auth_get_access_token(
         },
     )
 
-    auth = Auth.opp, client_id, client_secret)
+    auth = Autf(opp, client_id, client_secret)
     await auth.async_do_auth(accept_grant_code)
     await auth.async_get_access_token()
 

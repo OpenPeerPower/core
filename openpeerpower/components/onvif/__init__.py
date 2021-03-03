@@ -69,7 +69,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     if not entry.options:
         await async_populate_options(opp, entry)
 
-    device = ONVIFDevice.opp, entry)
+    device = ONVIFDevice(opp, entry)
 
     if not await device.async_setup():
         await device.device.close()

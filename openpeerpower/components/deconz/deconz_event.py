@@ -34,7 +34,7 @@ async def async_setup_events(gateway) -> None:
 
     gateway.listeners.append(
         async_dispatcher_connect(
-            gateway.opp, gateway.async_signal_new_device(NEW_SENSOR), async_add_sensor
+            gateway(opp, gateway.async_signal_new_device(NEW_SENSOR), async_add_sensor
         )
     )
 

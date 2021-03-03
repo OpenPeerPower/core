@@ -585,7 +585,7 @@ def async_get_entities(opp, config) -> List[GoogleEntity]:
         if state.entity_id in CLOUD_NEVER_EXPOSED_ENTITIES:
             continue
 
-        entity = GoogleEntity.opp, config, state)
+        entity = GoogleEntity(opp, config, state)
 
         if entity.is_supported():
             entities.append(entity)

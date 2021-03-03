@@ -19,7 +19,7 @@ async def test_bridge_setup_opp):
     api = Mock(initialize=AsyncMock())
     entry.data = {"host": "1.2.3.4", "username": "mock-username"}
     entry.options = {CONF_ALLOW_HUE_GROUPS: False, CONF_ALLOW_UNREACHABLE: False}
-    hue_bridge = bridge.HueBridge.opp, entry)
+    hue_bridge = bridge.HueBridge(opp, entry)
 
     with patch("aiohue.Bridge", return_value=api), patch.object(
         opp.config_entries, "async_forward_entry_setup"
@@ -37,7 +37,7 @@ async def test_bridge_setup_invalid_username(opp):
     entry = Mock()
     entry.data = {"host": "1.2.3.4", "username": "mock-username"}
     entry.options = {CONF_ALLOW_HUE_GROUPS: False, CONF_ALLOW_UNREACHABLE: False}
-    hue_bridge = bridge.HueBridge.opp, entry)
+    hue_bridge = bridge.HueBridge(opp, entry)
 
     with patch.object(
         bridge, "authenticate_bridge", side_effect=errors.AuthenticationRequired
@@ -53,7 +53,7 @@ async def test_bridge_setup_timeout(opp):
     entry = Mock()
     entry.data = {"host": "1.2.3.4", "username": "mock-username"}
     entry.options = {CONF_ALLOW_HUE_GROUPS: False, CONF_ALLOW_UNREACHABLE: False}
-    hue_bridge = bridge.HueBridge.opp, entry)
+    hue_bridge = bridge.HueBridge(opp, entry)
 
     with patch.object(
         bridge, "authenticate_bridge", side_effect=errors.CannotConnect
@@ -66,7 +66,7 @@ async def test_reset_if_entry_had_wrong_auth(opp):
     entry = Mock()
     entry.data = {"host": "1.2.3.4", "username": "mock-username"}
     entry.options = {CONF_ALLOW_HUE_GROUPS: False, CONF_ALLOW_UNREACHABLE: False}
-    hue_bridge = bridge.HueBridge.opp, entry)
+    hue_bridge = bridge.HueBridge(opp, entry)
 
     with patch.object(
         bridge, "authenticate_bridge", side_effect=errors.AuthenticationRequired
@@ -83,7 +83,7 @@ async def test_reset_unloads_entry_if_setup_opp):
     entry = Mock()
     entry.data = {"host": "1.2.3.4", "username": "mock-username"}
     entry.options = {CONF_ALLOW_HUE_GROUPS: False, CONF_ALLOW_UNREACHABLE: False}
-    hue_bridge = bridge.HueBridge.opp, entry)
+    hue_bridge = bridge.HueBridge(opp, entry)
 
     with patch.object(bridge, "authenticate_bridge", return_value=Mock()), patch(
         "aiohue.Bridge", return_value=Mock()
@@ -107,7 +107,7 @@ async def test_handle_unauthorized(opp):
     entry = Mock(async_setup=AsyncMock())
     entry.data = {"host": "1.2.3.4", "username": "mock-username"}
     entry.options = {CONF_ALLOW_HUE_GROUPS: False, CONF_ALLOW_UNREACHABLE: False}
-    hue_bridge = bridge.HueBridge.opp, entry)
+    hue_bridge = bridge.HueBridge(opp, entry)
 
     with patch.object(bridge, "authenticate_bridge", return_value=Mock()), patch(
         "aiohue.Bridge", return_value=Mock()
@@ -170,7 +170,7 @@ async def test_hue_activate_scene(opp, mock_api):
         system_options={},
         options={CONF_ALLOW_HUE_GROUPS: True, CONF_ALLOW_UNREACHABLE: False},
     )
-    hue_bridge = bridge.HueBridge.opp, config_entry)
+    hue_bridge = bridge.HueBridge(opp, config_entry)
 
     mock_api.mock_group_responses.append(GROUP_RESPONSE)
     mock_api.mock_scene_responses.append(SCENE_RESPONSE)
@@ -204,7 +204,7 @@ async def test_hue_activate_scene_transition(opp, mock_api):
         system_options={},
         options={CONF_ALLOW_HUE_GROUPS: True, CONF_ALLOW_UNREACHABLE: False},
     )
-    hue_bridge = bridge.HueBridge.opp, config_entry)
+    hue_bridge = bridge.HueBridge(opp, config_entry)
 
     mock_api.mock_group_responses.append(GROUP_RESPONSE)
     mock_api.mock_scene_responses.append(SCENE_RESPONSE)
@@ -239,7 +239,7 @@ async def test_hue_activate_scene_group_not_found(opp, mock_api):
         system_options={},
         options={CONF_ALLOW_HUE_GROUPS: True, CONF_ALLOW_UNREACHABLE: False},
     )
-    hue_bridge = bridge.HueBridge.opp, config_entry)
+    hue_bridge = bridge.HueBridge(opp, config_entry)
 
     mock_api.mock_group_responses.append({})
     mock_api.mock_scene_responses.append(SCENE_RESPONSE)
@@ -269,7 +269,7 @@ async def test_hue_activate_scene_scene_not_found(opp, mock_api):
         system_options={},
         options={CONF_ALLOW_HUE_GROUPS: True, CONF_ALLOW_UNREACHABLE: False},
     )
-    hue_bridge = bridge.HueBridge.opp, config_entry)
+    hue_bridge = bridge.HueBridge(opp, config_entry)
 
     mock_api.mock_group_responses.append(GROUP_RESPONSE)
     mock_api.mock_scene_responses.append({})

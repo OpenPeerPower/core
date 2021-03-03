@@ -53,7 +53,7 @@ async def async_setup_entry(opp, entry):
     api_key = entry.data[CONF_API_KEY]
     refresh_token = entry.data[CONF_REFRESH_TOKEN]
 
-    data = EcobeeData.opp, entry, api_key=api_key, refresh_token=refresh_token)
+    data = EcobeeData(opp, entry, api_key=api_key, refresh_token=refresh_token)
 
     if not await data.refresh():
         return False

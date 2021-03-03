@@ -56,7 +56,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     if value_template is not None:
         value_template.opp = opp
     json_attributes = config.get(CONF_JSON_ATTRIBUTES)
-    data = CommandSensorData.opp, command, command_timeout)
+    data = CommandSensorData(opp, command, command_timeout)
 
     add_entities(
         [CommandSensor(opp, data, name, unit, value_template, json_attributes)], True

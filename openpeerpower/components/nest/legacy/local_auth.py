@@ -12,7 +12,7 @@ from .const import DOMAIN
 
 
 @callback
-def initialize.opp, client_id, client_secret):
+def initialize(opp, client_id, client_secret):
     """Initialize a local auth provider."""
     register_flow_implementation(
         opp,

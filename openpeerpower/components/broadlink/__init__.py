@@ -21,7 +21,7 @@ async def async_setup(opp, config):
 
 async def async_setup_entry(opp, entry):
     """Set up a Broadlink device from a config entry."""
-    device = BroadlinkDevice.opp, entry)
+    device = BroadlinkDevice(opp, entry)
     return await device.async_setup()
 
 

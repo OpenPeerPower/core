@@ -26,7 +26,7 @@ CONFIG_SCHEMA = vol.Schema(
 async def async_setup(opp, config):
     """Set up the velux component."""
     try:
-        opp.data[DATA_VELUX] = VeluxModule.opp, config[DOMAIN])
+        opp.data[DATA_VELUX] = VeluxModule(opp, config[DOMAIN])
         opp.data[DATA_VELUX].setup()
         await opp.data[DATA_VELUX].async_start()
 

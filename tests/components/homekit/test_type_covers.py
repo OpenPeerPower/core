@@ -135,7 +135,7 @@ async def test_windowcovering_set_cover_position(opp, hk_driver, events):
 
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
-    acc = WindowCovering.opp, hk_driver, "Cover", entity_id, 2, None)
+    acc = WindowCovering(opp, hk_driver, "Cover", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -205,7 +205,7 @@ async def test_window_instantiate(opp, hk_driver, events):
 
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
-    acc = Window.opp, hk_driver, "Window", entity_id, 2, None)
+    acc = Window(opp, hk_driver, "Window", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -224,7 +224,7 @@ async def test_windowcovering_cover_set_tilt(opp, hk_driver, events):
         entity_id, STATE_UNKNOWN, {ATTR_SUPPORTED_FEATURES: SUPPORT_SET_TILT_POSITION}
     )
     await opp.async_block_till_done()
-    acc = WindowCovering.opp, hk_driver, "Cover", entity_id, 2, None)
+    acc = WindowCovering(opp, hk_driver, "Cover", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -288,7 +288,7 @@ async def test_windowcovering_open_close(opp, hk_driver, events):
     entity_id = "cover.window"
 
     opp.states.async_set(entity_id, STATE_UNKNOWN, {ATTR_SUPPORTED_FEATURES: 0})
-    acc = WindowCoveringBasic.opp, hk_driver, "Cover", entity_id, 2, None)
+    acc = WindowCoveringBasic(opp, hk_driver, "Cover", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -371,7 +371,7 @@ async def test_windowcovering_open_close_stop(opp, hk_driver, events):
     opp.states.async_set(
         entity_id, STATE_UNKNOWN, {ATTR_SUPPORTED_FEATURES: SUPPORT_STOP}
     )
-    acc = WindowCoveringBasic.opp, hk_driver, "Cover", entity_id, 2, None)
+    acc = WindowCoveringBasic(opp, hk_driver, "Cover", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -422,7 +422,7 @@ async def test_windowcovering_open_close_with_position_and_stop(
         STATE_UNKNOWN,
         {ATTR_SUPPORTED_FEATURES: SUPPORT_STOP | SUPPORT_SET_POSITION},
     )
-    acc = WindowCovering.opp, hk_driver, "Cover", entity_id, 2, None)
+    acc = WindowCovering(opp, hk_driver, "Cover", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -467,13 +467,13 @@ async def test_windowcovering_basic_restore(opp, hk_driver, events):
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
     await opp.async_block_till_done()
 
-    acc = WindowCoveringBasic.opp, hk_driver, "Cover", "cover.simple", 2, None)
+    acc = WindowCoveringBasic(opp, hk_driver, "Cover", "cover.simple", 2, None)
     assert acc.category == 14
     assert acc.char_current_position is not None
     assert acc.char_target_position is not None
     assert acc.char_position_state is not None
 
-    acc = WindowCoveringBasic.opp, hk_driver, "Cover", "cover.all_info_set", 2, None)
+    acc = WindowCoveringBasic(opp, hk_driver, "Cover", "cover.all_info_set", 2, None)
     assert acc.category == 14
     assert acc.char_current_position is not None
     assert acc.char_target_position is not None
@@ -505,13 +505,13 @@ async def test_windowcovering_restore(opp, hk_driver, events):
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
     await opp.async_block_till_done()
 
-    acc = WindowCovering.opp, hk_driver, "Cover", "cover.simple", 2, None)
+    acc = WindowCovering(opp, hk_driver, "Cover", "cover.simple", 2, None)
     assert acc.category == 14
     assert acc.char_current_position is not None
     assert acc.char_target_position is not None
     assert acc.char_position_state is not None
 
-    acc = WindowCovering.opp, hk_driver, "Cover", "cover.all_info_set", 2, None)
+    acc = WindowCovering(opp, hk_driver, "Cover", "cover.all_info_set", 2, None)
     assert acc.category == 14
     assert acc.char_current_position is not None
     assert acc.char_target_position is not None

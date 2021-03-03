@@ -220,7 +220,7 @@ async def _async_process_config(opp, config, component):
         )
 
     script_entities = [
-        ScriptEntity.opp, object_id, cfg)
+        ScriptEntity(opp, object_id, cfg)
         for object_id, cfg in config.get(DOMAIN, {}).items()
     ]
 

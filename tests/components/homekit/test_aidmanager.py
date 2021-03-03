@@ -53,7 +53,7 @@ async def test_aid_generation(opp, device_reg, entity_reg):
     with patch(
         "openpeerpower.components.homekit.aidmanager.AccessoryAidStorage.async_schedule_save"
     ):
-        aid_storage = AccessoryAidStorage.opp, config_entry)
+        aid_storage = AccessoryAidStorage(opp, config_entry)
     await aid_storage.async_initialize()
 
     for _ in range(0, 2):
@@ -110,7 +110,7 @@ async def test_no_aid_collision(opp, device_reg, entity_reg):
     with patch(
         "openpeerpower.components.homekit.aidmanager.AccessoryAidStorage.async_schedule_save"
     ):
-        aid_storage = AccessoryAidStorage.opp, config_entry)
+        aid_storage = AccessoryAidStorage(opp, config_entry)
     await aid_storage.async_initialize()
 
     seen_aids = set()
@@ -131,7 +131,7 @@ async def test_aid_generation_no_unique_ids_handles_collision(
     """Test colliding aids is stable."""
     config_entry = MockConfigEntry(domain="test", data={})
     config_entry.add_to_opp(opp)
-    aid_storage = AccessoryAidStorage.opp, config_entry)
+    aid_storage = AccessoryAidStorage(opp, config_entry)
     await aid_storage.async_initialize()
 
     device_entry = device_reg.async_get_or_create(
@@ -389,7 +389,7 @@ async def test_aid_generation_no_unique_ids_handles_collision(
     await opp.async_block_till_done()
 
     with patch("fnvhash.fnv1a_32", side_effect=Exception):
-        aid_storage = AccessoryAidStorage.opp, config_entry)
+        aid_storage = AccessoryAidStorage(opp, config_entry)
     await aid_storage.async_initialize()
 
     assert aid_storage.allocations == {

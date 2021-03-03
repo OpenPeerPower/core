@@ -6,7 +6,7 @@ import os
 
 from openpeerpower import runner
 from openpeerpower.auth import auth_manager_from_config
-from openpeerpower.auth.providers import openpeerpower as.opp_auth
+from openpeerpower.auth.providers import openpeerpower as opp_auth
 from openpeerpower.config import get_default_config_dir
 from openpeerpower.core import OpenPeerPower
 
@@ -55,7 +55,7 @@ async def run_command(args):
     opp.auth = await auth_manager_from_config(opp, [{"type": "openpeerpower"}], [])
     provider = opp.auth.auth_providers[0]
     await provider.async_initialize()
-    await args.func.opp, provider, args)
+    await args.func(opp, provider, args)
 
     # Triggers save on used storage helpers with delay (core auth)
     logging.getLogger("openpeerpower.core").setLevel(logging.WARNING)

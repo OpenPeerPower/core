@@ -112,7 +112,7 @@ async def test_implementation(opp, flow_handler):
     """Test Cloud OAuth2 implementation."""
     opp.data["cloud"] = None
 
-    impl = account_link.CloudOAuth2Implementation.opp, "test")
+    impl = account_link.CloudOAuth2Implementation(opp, "test")
     assert impl.name == "Open Peer Power Cloud"
     assert impl.domain == "cloud"
 

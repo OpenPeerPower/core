@@ -68,7 +68,7 @@ async def async_toggle(opp, entity_id=ENTITY_MATCH_ALL):
 
 
 @bind_opp
-def toggle.opp, entity_id=ENTITY_MATCH_ALL):
+def toggle(opp, entity_id=ENTITY_MATCH_ALL):
     """Toggle specified media player or all."""
     opp.add_job(async_toggle, opp, entity_id)
 

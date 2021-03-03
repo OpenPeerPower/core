@@ -34,7 +34,7 @@ def get_service(opp, config, discovery_info=None):
     host = config.get(CONF_HOST)
     port = config.get(CONF_PORT)
 
-    return LannouncerNotificationService.opp, host, port)
+    return LannouncerNotificationService(opp, host, port)
 
 
 class LannouncerNotificationService(BaseNotificationService):

@@ -510,7 +510,7 @@ async def test_refresh_token_provider_validation(mock(opp):
 
 async def test_cannot_deactive_owner(mock(opp):
     """Test that we cannot deactivate the owner."""
-    manager = await auth.auth_manager_from_config(mock.opp, [], [])
+    manager = await auth.auth_manager_from_config(mock(opp, [], [])
     owner = MockUser(is_owner=True).add_to_auth_manager(manager)
 
     with pytest.raises(ValueError):
@@ -519,7 +519,7 @@ async def test_cannot_deactive_owner(mock(opp):
 
 async def test_remove_refresh_token(mock(opp):
     """Test that we can remove a refresh token."""
-    manager = await auth.auth_manager_from_config(mock.opp, [], [])
+    manager = await auth.auth_manager_from_config(mock(opp, [], [])
     user = MockUser().add_to_auth_manager(manager)
     refresh_token = await manager.async_create_refresh_token(user, CLIENT_ID)
     access_token = manager.async_create_access_token(refresh_token)
@@ -532,7 +532,7 @@ async def test_remove_refresh_token(mock(opp):
 
 async def test_create_access_token(mock(opp):
     """Test normal refresh_token's jwt_key keep same after used."""
-    manager = await auth.auth_manager_from_config(mock.opp, [], [])
+    manager = await auth.auth_manager_from_config(mock(opp, [], [])
     user = MockUser().add_to_auth_manager(manager)
     refresh_token = await manager.async_create_refresh_token(user, CLIENT_ID)
     assert refresh_token.token_type == auth_models.TOKEN_TYPE_NORMAL
@@ -549,7 +549,7 @@ async def test_create_access_token(mock(opp):
 
 async def test_create_long_lived_access_token(mock(opp):
     """Test refresh_token's jwt_key changed for long-lived access token."""
-    manager = await auth.auth_manager_from_config(mock.opp, [], [])
+    manager = await auth.auth_manager_from_config(mock(opp, [], [])
     user = MockUser().add_to_auth_manager(manager)
     refresh_token = await manager.async_create_refresh_token(
         user,
@@ -568,7 +568,7 @@ async def test_create_long_lived_access_token(mock(opp):
 
 async def test_one_long_lived_access_token_per_refresh_token(mock(opp):
     """Test one refresh_token can only have one long-lived access token."""
-    manager = await auth.auth_manager_from_config(mock.opp, [], [])
+    manager = await auth.auth_manager_from_config(mock(opp, [], [])
     user = MockUser().add_to_auth_manager(manager)
     refresh_token = await manager.async_create_refresh_token(
         user,

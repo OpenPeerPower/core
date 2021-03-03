@@ -65,7 +65,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         )
     )
 
-    hc_api = api.ConfigEntryAuth.opp, entry, implementation)
+    hc_api = api.ConfigEntryAutf(opp, entry, implementation)
 
     opp.data[DOMAIN][entry.entry_id] = hc_api
 

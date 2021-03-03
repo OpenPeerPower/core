@@ -96,7 +96,7 @@ async def test_firing_event_template(opp):
             },
         }
     )
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
 
     await script_obj.async_run(MappingProxyType({"is_world": "yes"}), context=context)
     await opp.async_block_till_done()
@@ -120,7 +120,7 @@ async def test_calling_service_basic(opp, caplog):
     sequence = cv.SCRIPT_SCHEMA(
         {"alias": alias, "service": "test.script", "data": {"hello": "world"}}
     )
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
 
     await script_obj.async_run(context=context)
     await opp.async_block_till_done()
@@ -155,7 +155,7 @@ async def test_calling_service_template(opp):
             },
         }
     )
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
 
     await script_obj.async_run(MappingProxyType({"is_world": "yes"}), context=context)
     await opp.async_block_till_done()
@@ -173,7 +173,7 @@ async def test_data_template_with_templated_key(opp):
     sequence = cv.SCRIPT_SCHEMA(
         {"service": "test.script", "data_template": {"{{ hello_var }}": "world"}}
     )
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
 
     await script_obj.async_run(
         MappingProxyType({"hello_var": "hello"}), context=context
@@ -265,7 +265,7 @@ async def test_activating_scene(opp, caplog):
 
     alias = "scene step"
     sequence = cv.SCRIPT_SCHEMA({"alias": alias, "scene": "scene.hello"})
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
 
     await script_obj.async_run(context=context)
     await opp.async_block_till_done()
@@ -331,7 +331,7 @@ async def test_delay_basic(opp):
     """Test the delay."""
     delay_alias = "delay step"
     sequence = cv.SCRIPT_SCHEMA({"delay": {"seconds": 5}, "alias": delay_alias})
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
     delay_started_flag = async_watch_for_action(script_obj, delay_alias)
 
     try:
@@ -397,7 +397,7 @@ async def test_multiple_runs_delay(opp):
 async def test_delay_template_ok(opp):
     """Test the delay as a template."""
     sequence = cv.SCRIPT_SCHEMA({"delay": "00:00:{{ 5 }}"})
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
     delay_started_flag = async_watch_for_action(script_obj, "delay")
 
     try:
@@ -427,7 +427,7 @@ async def test_delay_template_invalid(opp, caplog):
             {"event": event},
         ]
     )
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
     start_idx = len(caplog.records)
 
     await script_obj.async_run(context=Context())
@@ -445,7 +445,7 @@ async def test_delay_template_invalid(opp, caplog):
 async def test_delay_template_complex_ok(opp):
     """Test the delay with a working complex template."""
     sequence = cv.SCRIPT_SCHEMA({"delay": {"seconds": "{{ 5 }}"}})
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
     delay_started_flag = async_watch_for_action(script_obj, "delay")
 
     try:
@@ -474,7 +474,7 @@ async def test_delay_template_complex_invalid(opp, caplog):
             {"event": event},
         ]
     )
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
     start_idx = len(caplog.records)
 
     await script_obj.async_run(context=Context())
@@ -494,7 +494,7 @@ async def test_cancel_delay(opp):
     event = "test_event"
     events = async_capture_events(opp, event)
     sequence = cv.SCRIPT_SCHEMA([{"delay": {"seconds": 5}}, {"event": event}])
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
     delay_started_flag = async_watch_for_action(script_obj, "delay")
 
     try:
@@ -534,7 +534,7 @@ async def test_wait_basic(opp, action_type):
             "to": "off",
         }
     sequence = cv.SCRIPT_SCHEMA(action)
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
     wait_started_flag = async_watch_for_action(script_obj, wait_alias)
 
     try:
@@ -576,7 +576,7 @@ async def test_wait_for_trigger_variables(opp):
     ]
     sequence = cv.SCRIPT_SCHEMA(actions)
     sequence = await script.async_validate_actions_config(opp, sequence)
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
     wait_started_flag = async_watch_for_action(script_obj, wait_alias)
 
     try:
@@ -612,7 +612,7 @@ async def test_wait_basic_times_out(opp, action_type):
             "to": "off",
         }
     sequence = cv.SCRIPT_SCHEMA(action)
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
     wait_started_flag = async_watch_for_action(script_obj, wait_alias)
     timed_out = False
 
@@ -703,7 +703,7 @@ async def test_cancel_wait(opp, action_type):
             }
         }
     sequence = cv.SCRIPT_SCHEMA([action, {"event": event}])
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
     wait_started_flag = async_watch_for_action(script_obj, "wait")
 
     try:
@@ -741,7 +741,7 @@ async def test_wait_template_not_schedule(opp):
             {"event": event},
         ]
     )
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
 
     opp.states.async_set("switch.test", "on")
     await script_obj.async_run(context=Context())
@@ -772,7 +772,7 @@ async def test_wait_timeout(opp, caplog, timeout_param, action_type):
     action["timeout"] = timeout_param
     action["continue_on_timeout"] = True
     sequence = cv.SCRIPT_SCHEMA([action, {"event": event}])
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
     wait_started_flag = async_watch_for_action(script_obj, "wait")
 
     try:
@@ -824,7 +824,7 @@ async def test_wait_continue_on_timeout(
     if continue_on_timeout is not None:
         action["continue_on_timeout"] = continue_on_timeout
     sequence = cv.SCRIPT_SCHEMA([action, {"event": event}])
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
     wait_started_flag = async_watch_for_action(script_obj, "wait")
 
     try:
@@ -848,7 +848,7 @@ async def test_wait_continue_on_timeout(
 async def test_wait_template_variables_in(opp):
     """Test the wait template with input variables."""
     sequence = cv.SCRIPT_SCHEMA({"wait_template": "{{ is_state(data, 'off') }}"})
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
     wait_started_flag = async_watch_for_action(script_obj, "wait")
 
     try:
@@ -872,7 +872,7 @@ async def test_wait_template_variables_in(opp):
 async def test_wait_template_with_utcnow(opp):
     """Test the wait template with utcnow."""
     sequence = cv.SCRIPT_SCHEMA({"wait_template": "{{ utcnow().hour == 12 }}"})
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
     wait_started_flag = async_watch_for_action(script_obj, "wait")
     start_time = dt_util.utcnow().replace(minute=1) + timedelta(hours=48)
 
@@ -897,7 +897,7 @@ async def test_wait_template_with_utcnow(opp):
 async def test_wait_template_with_utcnow_no_match(opp):
     """Test the wait template with utcnow that does not match."""
     sequence = cv.SCRIPT_SCHEMA({"wait_template": "{{ utcnow().hour == 12 }}"})
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
     wait_started_flag = async_watch_for_action(script_obj, "wait")
     start_time = dt_util.utcnow().replace(minute=1) + timedelta(hours=48)
     timed_out = False
@@ -956,7 +956,7 @@ async def test_wait_variables_out(opp, mode, action_type):
         },
     ]
     sequence = cv.SCRIPT_SCHEMA(sequence)
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
     wait_started_flag = async_watch_for_action(script_obj, "wait")
 
     try:
@@ -1058,7 +1058,7 @@ async def test_condition_warning(opp, caplog):
             {"event": event},
         ]
     )
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
 
     caplog.clear()
     caplog.set_level(logging.WARNING)
@@ -1089,7 +1089,7 @@ async def test_condition_basic(opp, caplog):
             {"event": event},
         ]
     )
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
 
     opp.states.async_set("test.entity", "hello")
     await script_obj.async_run(context=Context())
@@ -1146,7 +1146,7 @@ async def test_condition_all_cached(opp):
             },
         ]
     )
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
 
     opp.states.async_set("test.entity", "hello")
     await script_obj.async_run(context=Context())
@@ -1178,7 +1178,7 @@ async def test_repeat_count(opp, caplog):
             },
         }
     )
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
 
     await script_obj.async_run(context=Context())
     await opp.async_block_till_done()
@@ -1406,7 +1406,7 @@ async def test_repeat_nested(opp, variables, first_last, inside_x):
             },
         ]
     )
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
 
     with mock.patch(
         "openpeerpower.helpers.condition._LOGGER.error",
@@ -1468,7 +1468,7 @@ async def test_choose_warning(opp, caplog):
             "default": {"event": event, "event_data": {"choice": "default"}},
         }
     )
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
 
     opp.states.async_set("test.entity", "9")
     await opp.async_block_till_done()
@@ -1528,7 +1528,7 @@ async def test_choose(opp, caplog, var, result):
             },
         }
     )
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
 
     await script_obj.async_run(MappingProxyType({"var": var}), Context())
     await opp.async_block_till_done()
@@ -1575,7 +1575,7 @@ async def test_last_triggered(opp):
     """Test the last_triggered."""
     event = "test_event"
     sequence = cv.SCRIPT_SCHEMA({"event": event})
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
 
     assert script_obj.last_triggered is None
 
@@ -1592,7 +1592,7 @@ async def test_propagate_error_service_not_found(opp):
     event = "test_event"
     events = async_capture_events(opp, event)
     sequence = cv.SCRIPT_SCHEMA([{"service": "test.script"}, {"event": event}])
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
 
     with pytest.raises(exceptions.ServiceNotFound):
         await script_obj.async_run(context=Context())
@@ -1609,7 +1609,7 @@ async def test_propagate_error_invalid_service_data(opp):
     sequence = cv.SCRIPT_SCHEMA(
         [{"service": "test.script", "data": {"text": 1}}, {"event": event}]
     )
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
 
     with pytest.raises(vol.Invalid):
         await script_obj.async_run(context=Context())
@@ -1632,7 +1632,7 @@ async def test_propagate_error_service_exception(opp):
     opp.services.async_register("test", "script", record_call)
 
     sequence = cv.SCRIPT_SCHEMA([{"service": "test.script"}, {"event": event}])
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
 
     with pytest.raises(ValueError):
         await script_obj.async_run(context=Context())
@@ -1761,7 +1761,7 @@ async def test_script_mode_single(opp, caplog):
             {"event": event, "event_data": {"value": 2}},
         ]
     )
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
     wait_started_flag = async_watch_for_action(script_obj, "wait")
 
     try:
@@ -2054,7 +2054,7 @@ async def test_script_mode_queued_cancel(opp):
 
 async def test_script_logging(opp, caplog):
     """Test script logging."""
-    script_obj = script.Script.opp, [], "Script with % Name", "test_domain")
+    script_obj = script.Script(opp, [], "Script with % Name", "test_domain")
     script_obj._log("Test message with name %s", 1)
 
     assert "Script with % Name: Test message with name 1" in caplog.text
@@ -2064,7 +2064,7 @@ async def test_shutdown_at(opp, caplog):
     """Test stopping scripts at shutdown."""
     delay_alias = "delay step"
     sequence = cv.SCRIPT_SCHEMA({"delay": {"seconds": 120}, "alias": delay_alias})
-    script_obj = script.Script.opp, sequence, "test script", "test_domain")
+    script_obj = script.Script(opp, sequence, "test script", "test_domain")
     delay_started_flag = async_watch_for_action(script_obj, delay_alias)
 
     try:
@@ -2088,7 +2088,7 @@ async def test_shutdown_after(opp, caplog):
     """Test stopping scripts at shutdown."""
     delay_alias = "delay step"
     sequence = cv.SCRIPT_SCHEMA({"delay": {"seconds": 120}, "alias": delay_alias})
-    script_obj = script.Script.opp, sequence, "test script", "test_domain")
+    script_obj = script.Script(opp, sequence, "test script", "test_domain")
     delay_started_flag = async_watch_for_action(script_obj, delay_alias)
 
     opp.state = CoreState.stopping
@@ -2118,7 +2118,7 @@ async def test_shutdown_after(opp, caplog):
 async def test_update_logger(opp, caplog):
     """Test updating logger."""
     sequence = cv.SCRIPT_SCHEMA({"event": "test_event"})
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
 
     await script_obj.async_run(context=Context())
     await opp.async_block_till_done()
@@ -2141,7 +2141,7 @@ async def test_started_action(opp, caplog):
     logger = logging.getLogger("TEST")
 
     sequence = cv.SCRIPT_SCHEMA({"event": event})
-    script_obj = script.Script.opp, sequence, "Test Name", "test_domain")
+    script_obj = script.Script(opp, sequence, "Test Name", "test_domain")
 
     @callback
     def started_action():
@@ -2162,7 +2162,7 @@ async def test_set_variable(opp, caplog):
             {"service": "test.script", "data": {"value": "{{ variable }}"}},
         ]
     )
-    script_obj = script.Script.opp, sequence, "test script", "test_domain")
+    script_obj = script.Script(opp, sequence, "test script", "test_domain")
 
     mock_calls = async_mock_service(opp, "test", "script")
 
@@ -2183,7 +2183,7 @@ async def test_set_redefines_variable(opp, caplog):
             {"service": "test.script", "data": {"value": "{{ variable }}"}},
         ]
     )
-    script_obj = script.Script.opp, sequence, "test script", "test_domain")
+    script_obj = script.Script(opp, sequence, "test script", "test_domain")
 
     mock_calls = async_mock_service(opp, "test", "script")
 

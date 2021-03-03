@@ -38,7 +38,7 @@ async def test_google_entity_sync_serialize_with_local_sdk(opp):
         local_sdk_webhook_id="mock-webhook-id",
         local_sdk_user_id="mock-user-id",
     )
-    entity = helpers.GoogleEntity.opp, config, opp.states.get("light.ceiling_lights"))
+    entity = helpers.GoogleEntity(opp, config, opp.states.get("light.ceiling_lights"))
 
     serialized = await entity.sync_serialize(None)
     assert "otherDeviceIds" not in serialized

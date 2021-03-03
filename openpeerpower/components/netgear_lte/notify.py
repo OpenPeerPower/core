@@ -16,7 +16,7 @@ async def async_get_service(opp, config, discovery_info=None):
     if discovery_info is None:
         return
 
-    return NetgearNotifyService.opp, discovery_info)
+    return NetgearNotifyService(opp, discovery_info)
 
 
 @attr.s

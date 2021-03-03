@@ -89,7 +89,7 @@ async def test_home_accessory(opp, hk_driver):
     assert serv.get_characteristic(CHAR_MODEL).value == "Sensor"
     assert serv.get_characteristic(CHAR_SERIAL_NUMBER).value == "sensor.accessory"
 
-    acc2 = HomeAccessory.opp, hk_driver, "Home Accessory", entity_id2, 3, {})
+    acc2 = HomeAccessory(opp, hk_driver, "Home Accessory", entity_id2, 3, {})
     serv = acc2.services[0]  # SERV_ACCESSORY_INFO
     assert serv.get_characteristic(CHAR_NAME).value == "Home Accessory"
     assert serv.get_characteristic(CHAR_MANUFACTURER).value == f"{MANUFACTURER} Light"
@@ -137,7 +137,7 @@ async def test_home_accessory(opp, hk_driver):
     entity_id = "test_model.demo"
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
-    acc = HomeAccessory.opp, hk_driver, "test_name", entity_id, 2, None)
+    acc = HomeAccessory(opp, hk_driver, "test_name", entity_id, 2, None)
     serv = acc.services[0]  # SERV_ACCESSORY_INFO
     assert serv.get_characteristic(CHAR_MODEL).value == "Test Model"
 
@@ -148,7 +148,7 @@ async def test_battery_service(opp, hk_driver, caplog):
     opp.states.async_set(entity_id, None, {ATTR_BATTERY_LEVEL: 50})
     await opp.async_block_till_done()
 
-    acc = HomeAccessory.opp, hk_driver, "Battery Service", entity_id, 2, None)
+    acc = HomeAccessory(opp, hk_driver, "Battery Service", entity_id, 2, None)
     assert acc._char_battery.value == 0
     assert acc._char_low_battery.value == 0
     assert acc._char_charging.value == 2
@@ -204,7 +204,7 @@ async def test_battery_service(opp, hk_driver, caplog):
     with patch(
         "openpeerpower.components.homekit.accessories.HomeAccessory.async_update_state"
     ):
-        acc = HomeAccessory.opp, hk_driver, "Battery Service", entity_id, 2, None)
+        acc = HomeAccessory(opp, hk_driver, "Battery Service", entity_id, 2, None)
         assert acc._char_battery.value == 0
         assert acc._char_low_battery.value == 0
         assert acc._char_charging.value == 2
@@ -511,7 +511,7 @@ async def test_battery_appears_after_startup(opp, hk_driver, caplog):
     opp.states.async_set(entity_id, None, {})
     await opp.async_block_till_done()
 
-    acc = HomeAccessory.opp, hk_driver, "Accessory without battery", entity_id, 2, {})
+    acc = HomeAccessory(opp, hk_driver, "Accessory without battery", entity_id, 2, {})
     assert acc._char_battery is None
 
     with patch(
@@ -544,7 +544,7 @@ async def test_call_service(opp, hk_driver, events):
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
 
-    acc = HomeAccessory.opp, hk_driver, "Home Accessory", entity_id, 2, {})
+    acc = HomeAccessory(opp, hk_driver, "Home Accessory", entity_id, 2, {})
     call_service = async_mock_service(opp, "cover", "open_cover")
 
     test_domain = "cover"

@@ -300,7 +300,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
         logging.getLogger(f"{__name__}.yaml_collection"), id_manager
     )
     storage_collection = PersonStorageCollection(
-        PersonStore.opp, STORAGE_VERSION, STORAGE_KEY),
+        Person Store(opp, STORAGE_VERSION, STORAGE_KEY),
         logging.getLogger(f"{__name__}.storage_collection"),
         id_manager,
         yaml_collection,

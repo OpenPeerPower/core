@@ -193,7 +193,7 @@ def setup(opp, config):
     try:
         wirelesstags = WirelessTags(username=username, password=password)
 
-        platform = WirelessTagPlatform.opp, wirelesstags)
+        platform = WirelessTagPlatform(opp, wirelesstags)
         platform.load_tags()
         opp.data[DOMAIN] = platform
     except (ConnectTimeout, HTTPError, WirelessTagsException) as ex:

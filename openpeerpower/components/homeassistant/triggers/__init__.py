@@ -1,1 +1,0 @@
-"""Open Peer Power triggers."""

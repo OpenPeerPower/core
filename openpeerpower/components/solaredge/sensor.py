@@ -73,11 +73,11 @@ class SolarEdgeSensorFactory:
         """Initialize the factory."""
         self.platform_name = platform_name
 
-        details = SolarEdgeDetailsDataService.opp, api, site_id)
-        overview = SolarEdgeOverviewDataService.opp, api, site_id)
-        inventory = SolarEdgeInventoryDataService.opp, api, site_id)
-        flow = SolarEdgePowerFlowDataService.opp, api, site_id)
-        energy = SolarEdgeEnergyDetailsService.opp, api, site_id)
+        details = SolarEdgeDetailsDataService(opp, api, site_id)
+        overview = SolarEdgeOverviewDataService(opp, api, site_id)
+        inventory = SolarEdgeInventoryDataService(opp, api, site_id)
+        flow = SolarEdgePowerFlowDataService(opp, api, site_id)
+        energy = SolarEdgeEnergyDetailsService(opp, api, site_id)
 
         self.all_services = (details, overview, inventory, flow, energy)
 

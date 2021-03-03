@@ -100,7 +100,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
         update_method=partial(async_safe_fetch, bridge, bridge.api.lights.update),
         update_interval=SCAN_INTERVAL,
         request_refresh_debouncer=Debouncer(
-            bridge.opp, _LOGGER, cooldown=REQUEST_REFRESH_DELAY, immediate=True
+            bridge(opp, _LOGGER, cooldown=REQUEST_REFRESH_DELAY, immediate=True
         ),
     )
 

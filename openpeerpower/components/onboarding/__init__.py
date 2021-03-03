@@ -40,7 +40,7 @@ def async_is_user_onboarded(opp):
 
 async def async_setup(opp, config):
     """Set up the onboarding component."""
-    store = OnboadingStorage.opp, STORAGE_VERSION, STORAGE_KEY, private=True)
+    store = OnboadingStorage(opp, STORAGE_VERSION, STORAGE_KEY, private=True)
     data = await store.async_load()
 
     if data is None:

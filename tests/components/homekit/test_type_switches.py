@@ -41,7 +41,7 @@ async def test_outlet_set_state(opp, hk_driver, events):
 
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
-    acc = Outlet.opp, hk_driver, "Outlet", entity_id, 2, None)
+    acc = Outlet(opp, hk_driver, "Outlet", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -94,7 +94,7 @@ async def test_switch_set_state(opp, hk_driver, entity_id, attrs, events):
 
     opp.states.async_set(entity_id, None, attrs)
     await opp.async_block_till_done()
-    acc = Switch.opp, hk_driver, "Switch", entity_id, 2, None)
+    acc = Switcf(opp, hk_driver, "Switch", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -138,25 +138,25 @@ async def test_valve_set_state(opp, hk_driver, events):
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
 
-    acc = Valve.opp, hk_driver, "Valve", entity_id, 2, {CONF_TYPE: TYPE_FAUCET})
+    acc = Valve(opp, hk_driver, "Valve", entity_id, 2, {CONF_TYPE: TYPE_FAUCET})
     await acc.run()
     await opp.async_block_till_done()
     assert acc.category == 29  # Faucet
     assert acc.char_valve_type.value == 3  # Water faucet
 
-    acc = Valve.opp, hk_driver, "Valve", entity_id, 2, {CONF_TYPE: TYPE_SHOWER})
+    acc = Valve(opp, hk_driver, "Valve", entity_id, 2, {CONF_TYPE: TYPE_SHOWER})
     await acc.run()
     await opp.async_block_till_done()
     assert acc.category == 30  # Shower
     assert acc.char_valve_type.value == 2  # Shower head
 
-    acc = Valve.opp, hk_driver, "Valve", entity_id, 2, {CONF_TYPE: TYPE_SPRINKLER})
+    acc = Valve(opp, hk_driver, "Valve", entity_id, 2, {CONF_TYPE: TYPE_SPRINKLER})
     await acc.run()
     await opp.async_block_till_done()
     assert acc.category == 28  # Sprinkler
     assert acc.char_valve_type.value == 1  # Irrigation
 
-    acc = Valve.opp, hk_driver, "Valve", entity_id, 2, {CONF_TYPE: TYPE_VALVE})
+    acc = Valve(opp, hk_driver, "Valve", entity_id, 2, {CONF_TYPE: TYPE_VALVE})
     await acc.run()
     await opp.async_block_till_done()
 
@@ -209,7 +209,7 @@ async def test_vacuum_set_state_with_returnhome_and_start_support(
     )
     await opp.async_block_till_done()
 
-    acc = Vacuum.opp, hk_driver, "Vacuum", entity_id, 2, None)
+    acc = Vacuum(opp, hk_driver, "Vacuum", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
     assert acc.aid == 2
@@ -265,7 +265,7 @@ async def test_vacuum_set_state_without_returnhome_and_start_support(
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
 
-    acc = Vacuum.opp, hk_driver, "Vacuum", entity_id, 2, None)
+    acc = Vacuum(opp, hk_driver, "Vacuum", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
     assert acc.aid == 2
@@ -309,7 +309,7 @@ async def test_reset_switch(opp, hk_driver, events):
 
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
-    acc = Switch.opp, hk_driver, "Switch", entity_id, 2, None)
+    acc = Switcf(opp, hk_driver, "Switch", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -346,7 +346,7 @@ async def test_reset_switch_reload(opp, hk_driver, events):
 
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
-    acc = Switch.opp, hk_driver, "Switch", entity_id, 2, None)
+    acc = Switch(opp, hk_driver, "Switch", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()
 

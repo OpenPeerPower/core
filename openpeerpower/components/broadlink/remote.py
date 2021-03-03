@@ -105,8 +105,8 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     device = opp.data[DOMAIN].devices[config_entry.entry_id]
     remote = BroadlinkRemote(
         device,
-        Store.opp, CODE_STORAGE_VERSION, f"broadlink_remote_{device.unique_id}_codes"),
-        Store.opp, FLAG_STORAGE_VERSION, f"broadlink_remote_{device.unique_id}_flags"),
+         Store(opp, CODE_STORAGE_VERSION, f"broadlink_remote_{device.unique_id}_codes"),
+         Store(opp, FLAG_STORAGE_VERSION, f"broadlink_remote_{device.unique_id}_flags"),
     )
 
     loaded = await remote.async_load_storage_files()

@@ -53,7 +53,7 @@ class ResourceStorageCollection(collection.StorageCollection):
     def __init__(self, opp: OpenPeerPower, ll_config: LovelaceConfig):
         """Initialize the storage collection."""
         super().__init__(
-            storage.Store.opp, RESOURCES_STORAGE_VERSION, RESOURCE_STORAGE_KEY),
+            storage. Store(opp, RESOURCES_STORAGE_VERSION, RESOURCE_STORAGE_KEY),
             _LOGGER,
         )
         self.ll_config = ll_config

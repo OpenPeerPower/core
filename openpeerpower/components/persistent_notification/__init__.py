@@ -54,13 +54,13 @@ STATUS_READ = "read"
 
 
 @bind_opp
-def create.opp, message, title=None, notification_id=None):
+def create(opp, message, title=None, notification_id=None):
     """Generate a notification."""
     opp.add_job(async_create, opp, message, title, notification_id)
 
 
 @bind_opp
-def dismiss.opp, notification_id):
+def dismiss(opp, notification_id):
     """Remove a notification."""
     opp.add_job(async_dismiss, opp, notification_id)
 

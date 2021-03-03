@@ -39,7 +39,7 @@ async def async_setup_entry(opp, config_entry):
     if not config_entry.options:
         await async_update_master_gateway(opp, config_entry)
 
-    gateway = DeconzGateway.opp, config_entry)
+    gateway = DeconzGateway(opp, config_entry)
 
     if not await gateway.async_setup():
         return False

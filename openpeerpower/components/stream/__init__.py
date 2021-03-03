@@ -59,7 +59,7 @@ def create_stream(opp, stream_source, options=None):
             **options,
         }
 
-    stream = Stream.opp, stream_source, options=options)
+    stream = Stream(opp, stream_source, options=options)
     opp.data[DOMAIN][ATTR_STREAMS].append(stream)
     return stream
 

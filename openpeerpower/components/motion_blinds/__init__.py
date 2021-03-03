@@ -55,7 +55,7 @@ async def async_setup_entry(
 
     # Connect to motion gateway
     multicast = opp.data[DOMAIN][KEY_MULTICAST_LISTENER]
-    connect_gateway_class = ConnectMotionGateway.opp, multicast)
+    connect_gateway_class = ConnectMotionGateway(opp, multicast)
     if not await connect_gateway_class.async_connect_gateway(host, key):
         raise ConfigEntryNotReady
     motion_gateway = connect_gateway_class.gateway_device

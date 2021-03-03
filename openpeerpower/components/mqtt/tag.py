@@ -141,7 +141,7 @@ class MQTTTagScanner:
         self._value_template = lambda value, error_value: value
         if CONF_VALUE_TEMPLATE in config:
             value_template = config.get(CONF_VALUE_TEMPLATE)
-            value_template opp =self.opp
+            value_template.opp = self.opp
 
             self._value_template = value_template.async_render_with_possible_json_value
 

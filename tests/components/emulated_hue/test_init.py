@@ -8,7 +8,7 @@ def test_config_google_home_entity_id_to_number():
     """Test config adheres to the type."""
     mock opp =Mock()
     mock.opp.config.path = MagicMock("path", return_value="test_path")
-    conf = Config(mock.opp, {"type": "google_home"})
+    conf = Config(mock(opp, {"type": "google_home"})
 
     with patch(
         "openpeerpower.components.emulated_hue.load_json",
@@ -42,7 +42,7 @@ def test_config_google_home_entity_id_to_number_altered():
     """Test config adheres to the type."""
     mock opp =Mock()
     mock.opp.config.path = MagicMock("path", return_value="test_path")
-    conf = Config(mock.opp, {"type": "google_home"})
+    conf = Config(mock(opp, {"type": "google_home"})
 
     with patch(
         "openpeerpower.components.emulated_hue.load_json",
@@ -75,7 +75,7 @@ def test_config_google_home_entity_id_to_number_empty():
     """Test config adheres to the type."""
     mock opp =Mock()
     mock.opp.config.path = MagicMock("path", return_value="test_path")
-    conf = Config(mock.opp, {"type": "google_home"})
+    conf = Config(mock(opp, {"type": "google_home"})
 
     with patch(
         "openpeerpower.components.emulated_hue.load_json", return_value={}

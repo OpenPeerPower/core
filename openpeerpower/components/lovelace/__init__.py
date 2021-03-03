@@ -104,14 +104,14 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
         )
 
     else:
-        default_config = dashboard.LovelaceStorage.opp, None)
+        default_config = dashboard.LovelaceStorage(opp, None)
 
         if yaml_resources is not None:
             _LOGGER.warning(
                 "Lovelace is running in storage mode. Define resources via user interface"
             )
 
-        resource_collection = resources.ResourceStorageCollection.opp, default_config)
+        resource_collection = resources.ResourceStorageCollection(opp, default_config)
 
         collection.StorageCollectionWebsocket(
             resource_collection,

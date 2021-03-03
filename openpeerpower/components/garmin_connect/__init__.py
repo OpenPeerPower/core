@@ -54,7 +54,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         _LOGGER.exception("Unknown error occurred during Garmin Connect login request")
         return False
 
-    garmin_data = GarminConnectData.opp, garmin_client)
+    garmin_data = GarminConnectData(opp, garmin_client)
     opp.data[DOMAIN][entry.entry_id] = garmin_data
 
     for component in PLATFORMS:

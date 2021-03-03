@@ -75,14 +75,14 @@ async def async_setup_entry(opp, config_entry):
 
     on_action = config[CONF_ON_ACTION]
     if on_action is not None:
-        on_action = Script.opp, on_action, config[CONF_NAME], DOMAIN)
+        on_action = Script(opp, on_action, config[CONF_NAME], DOMAIN)
 
     params = {}
     if CONF_APP_ID in config and CONF_ENCRYPTION_KEY in config:
         params["app_id"] = config[CONF_APP_ID]
         params["encryption_key"] = config[CONF_ENCRYPTION_KEY]
 
-    remote = Remote.opp, host, port, on_action, **params)
+    remote = Remote(opp, host, port, on_action, **params)
     await remote.async_create_remote_control(during_setup=True)
 
     panasonic_viera_data[config_entry.entry_id] = {ATTR_REMOTE: remote}

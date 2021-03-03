@@ -38,7 +38,7 @@ class FlowHandler(config_entries.ConfigFlow):
     VERSION = 1
     CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_PUSH
 
-     opp.o_discovery = None
+    _oppio_discovery = None
 
     @staticmethod
     def async_get_options_flow(config_entry):
@@ -94,16 +94,16 @@ class FlowHandler(config_entries.ConfigFlow):
 
         return self.async_create_entry(title="configuration.yaml", data={})
 
-    async def async_step(oppio(self, discovery_info):
+    async def async_step_oppio(self, discovery_info):
         """Receive a Opp.io discovery."""
         if self._async_current_entries():
             return self.async_abort(reason="single_instance_allowed")
 
         self.oppio_discovery = discovery_info
 
-        return await self.async_step(oppio_confirm()
+        return await self.async_step_oppio_confirm()
 
-    async def async_step(oppio_confirm(self, user_input=None):
+    async def async_step_oppio_confirm(self, user_input=None):
         """Confirm a Opp.io discovery."""
         errors = {}
 
@@ -134,7 +134,7 @@ class FlowHandler(config_entries.ConfigFlow):
             errors["base"] = "cannot_connect"
 
         return self.async_show_form(
-            step_id= oppio_confirm",
+            step_id="oppio_confirm",
             description_placeholders={"addon": self.oppio_discovery["addon"]},
             data_schema=vol.Schema(
                 {vol.Optional(CONF_DISCOVERY, default=DEFAULT_DISCOVERY): bool}

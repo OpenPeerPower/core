@@ -312,14 +312,14 @@ async def test_skipfirst(opp):
 
 async def test_noack(opp):
     """Test no ack feature."""
-    entity = alert.Alert.opp, *TEST_NOACK)
+    entity = alert.Alert(opp, *TEST_NOACK)
     opp.async_add_job(entity.begin_alerting)
     await opp.async_block_till_done()
 
 
 async def test_done_message_state_tracker_reset_on_cancel(opp):
     """Test that the done message is reset when canceled."""
-    entity = alert.Alert.opp, *TEST_NOACK)
+    entity = alert.Alert(opp, *TEST_NOACK)
     entity._cancel = lambda *args: None
     assert entity._send_done_message is False
     entity._send_done_message = True

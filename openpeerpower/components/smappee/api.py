@@ -15,7 +15,7 @@ class ConfigEntrySmappeeApi(api.SmappeeApi):
 
     def __init__(
         self,
-        opp, core.OpenPeerPower,
+        opp: core.OpenPeerPower,
         config_entry: config_entries.ConfigEntry,
         implementation: config_entry_oauth2_flow.AbstractOAuth2Implementation,
     ):
@@ -35,7 +35,7 @@ class ConfigEntrySmappeeApi(api.SmappeeApi):
             None,
             None,
             token=self.session.token,
-            farm=platform_to_farm(opp.data[DOMAIN][CONF_PLATFORM]],
+            farm=platform_to_farm[opp.data[DOMAIN][CONF_PLATFORM]],
         )
 
     def refresh_tokens(self) -> dict:

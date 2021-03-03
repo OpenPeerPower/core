@@ -3022,7 +3022,7 @@ async def test_call_later(opp):
         async_call_later(opp, 3, action)
 
     assert len(mock.mock_calls) == 1
-    p.opp, p_action, p_point = mock.mock_calls[0][1]
+    p(opp, p_action, p_point = mock.mock_calls[0][1]
     assert p.opp is opp
     assert p_action is action
     assert p_point == now + timedelta(seconds=3)
@@ -3042,7 +3042,7 @@ async def test_async_call_later(opp):
         remove = async_call_later(opp, 3, action)
 
     assert len(mock.mock_calls) == 1
-    p.opp, p_action, p_point = mock.mock_calls[0][1]
+    p(opp, p_action, p_point = mock.mock_calls[0][1]
     assert p.opp is opp
     assert p_action is action
     assert p_point == now + timedelta(seconds=3)

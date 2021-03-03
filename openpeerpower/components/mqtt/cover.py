@@ -247,23 +247,23 @@ class MqttCover(MqttEntity, CoverEntity):
 
         value_template = self._config.get(CONF_VALUE_TEMPLATE)
         if value_template is not None:
-            value_template opp =self.opp
+            value_template_opp =self.opp
 
         set_position_template = self._config.get(CONF_SET_POSITION_TEMPLATE)
         if set_position_template is not None:
-            set_position_template opp =self.opp
+            set_position_template_opp =self.opp
 
         get_position_template = self._config.get(CONF_GET_POSITION_TEMPLATE)
         if get_position_template is not None:
-            get_position_template opp =self.opp
+            get_position_template_opp =self.opp
 
         set_tilt_template = self._config.get(CONF_TILT_COMMAND_TEMPLATE)
         if set_tilt_template is not None:
-            set_tilt_template opp =self.opp
+            set_tilt_template_opp =self.opp
 
         tilt_status_template = self._config.get(CONF_TILT_STATUS_TEMPLATE)
         if tilt_status_template is not None:
-            tilt_status_template opp =self.opp
+            tilt_status_template_opp =self.opp
 
     async def _subscribe_topics(self):
         """(Re)Subscribe to topics."""

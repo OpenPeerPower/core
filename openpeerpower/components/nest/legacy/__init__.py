@@ -101,7 +101,7 @@ async def async_setup_legacy(opp, config):
 
     conf = config[DOMAIN]
 
-    local_auth.initialize.opp, conf[CONF_CLIENT_ID], conf[CONF_CLIENT_SECRET])
+    local_auth.initialize(opp, conf[CONF_CLIENT_ID], conf[CONF_CLIENT_SECRET])
 
     filename = config.get(CONF_FILENAME, NEST_CONFIG_FILE)
     access_token_cache_file = opp.config.path(filename)
@@ -127,7 +127,7 @@ async def async_setup_legacy_entry(opp, entry):
 
     _LOGGER.debug("proceeding with setup")
     conf = opp.data.get(DATA_NEST_CONFIG, {})
-    opp.data[DATA_NEST] = NestLegacyDevice.opp, conf, nest)
+    opp.data[DATA_NEST] = NestLegacyDevice(opp, conf, nest)
     if not await opp.async_add_executor_job(opp.data[DATA_NEST].initialize):
         return False
 

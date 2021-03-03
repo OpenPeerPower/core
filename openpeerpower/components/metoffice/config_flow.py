@@ -22,7 +22,7 @@ async def validate_input(opp: core.OpenPeerPower, data):
     longitude = data[CONF_LONGITUDE]
     api_key = data[CONF_API_KEY]
 
-    metoffice_data = MetOfficeData.opp, api_key, latitude, longitude)
+    metoffice_data = MetOfficeData(opp, api_key, latitude, longitude)
     await metoffice_data.async_update_site()
     if metoffice_data.site_name is None:
         raise CannotConnect()

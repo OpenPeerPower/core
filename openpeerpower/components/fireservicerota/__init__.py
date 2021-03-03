@@ -40,7 +40,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     opp.data.setdefault(DOMAIN, {})
 
-    client = FireServiceRotaClient.opp, entry)
+    client = FireServiceRotaClient(opp, entry)
     await client.setup()
 
     if client.token_refresh_failure:

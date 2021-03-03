@@ -33,7 +33,7 @@ def async_enable_report_state(opp: OpenPeerPower, google_config: AbstractConfig)
         if not google_config.should_expose(new_state):
             return
 
-        entity = GoogleEntity.opp, google_config, new_state)
+        entity = GoogleEntity(opp, google_config, new_state)
 
         if not entity.is_supported():
             return

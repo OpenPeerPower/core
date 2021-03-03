@@ -27,7 +27,7 @@ from .helper import HAPID, HAPPIN
 async def test_auth_setup_opp):
     """Test auth setup for client registration."""
     config = {HMIPC_HAPID: "ABC123", HMIPC_PIN: "123", HMIPC_NAME: "hmip"}
-    hmip_auth = HomematicipAuth.opp, config)
+    hmip_auth = HomematicipAuth(opp, config)
     with patch.object(hmip_auth, "get_auth"):
         assert await hmip_auth.async_setup()
 
@@ -35,7 +35,7 @@ async def test_auth_setup_opp):
 async def test_auth_setup_connection_error(opp):
     """Test auth setup connection error behaviour."""
     config = {HMIPC_HAPID: "ABC123", HMIPC_PIN: "123", HMIPC_NAME: "hmip"}
-    hmip_auth = HomematicipAuth.opp, config)
+    hmip_auth = HomematicipAuth(opp, config)
     with patch.object(hmip_auth, "get_auth", side_effect=HmipcConnectionError):
         assert not await hmip_auth.async_setup()
 
@@ -44,7 +44,7 @@ async def test_auth_auth_check_and_register(opp):
     """Test auth client registration."""
     config = {HMIPC_HAPID: "ABC123", HMIPC_PIN: "123", HMIPC_NAME: "hmip"}
 
-    hmip_auth = HomematicipAuth.opp, config)
+    hmip_auth = HomematicipAuth(opp, config)
     hmip_auth.auth = Mock(spec=AsyncAuth)
     with patch.object(
         hmip_auth.auth, "isRequestAcknowledged", return_value=True
@@ -60,7 +60,7 @@ async def test_auth_auth_check_and_register(opp):
 async def test_auth_auth_check_and_register_with_exception(opp):
     """Test auth client registration."""
     config = {HMIPC_HAPID: "ABC123", HMIPC_PIN: "123", HMIPC_NAME: "hmip"}
-    hmip_auth = HomematicipAuth.opp, config)
+    hmip_auth = HomematicipAuth(opp, config)
     hmip_auth.auth = Mock(spec=AsyncAuth)
     with patch.object(
         hmip_auth.auth, "isRequestAcknowledged", side_effect=HmipConnectionError
@@ -153,7 +153,7 @@ async def test_hap_create_exception(opp, hmip_config_entry, mock_connection_init
 async def test_auth_create(opp, simple_mock_auth):
     """Mock AsyncAuth to execute get_auth."""
     config = {HMIPC_HAPID: HAPID, HMIPC_PIN: HAPPIN, HMIPC_NAME: "hmip"}
-    hmip_auth = HomematicipAuth.opp, config)
+    hmip_auth = HomematicipAuth(opp, config)
     assert hmip_auth
 
     with patch(
@@ -168,7 +168,7 @@ async def test_auth_create(opp, simple_mock_auth):
 async def test_auth_create_exception(opp, simple_mock_auth):
     """Mock AsyncAuth to execute get_auth."""
     config = {HMIPC_HAPID: HAPID, HMIPC_PIN: HAPPIN, HMIPC_NAME: "hmip"}
-    hmip_auth = HomematicipAuth.opp, config)
+    hmip_auth = HomematicipAuth(opp, config)
     simple_mock_auth.connectionRequest.side_effect = HmipConnectionError
     assert hmip_auth
     with patch(

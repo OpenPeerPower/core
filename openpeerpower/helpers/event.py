@@ -681,7 +681,7 @@ def async_track_state_change_filtered(
     cancel the tracking (async_remove).
 
     """
-    tracker = _TrackStateChangeFiltered.opp, track_states, action)
+    tracker = _TrackStateChangeFiltered(opp, track_states, action)
     tracker.async_setup()
     return tracker
 
@@ -1065,7 +1065,7 @@ def async_track_template_result(
     Info object used to unregister the listener, and refresh the template.
 
     """
-    tracker = _TrackTemplateResultInfo.opp, track_templates, action)
+    tracker = _TrackTemplateResultInfo(opp, track_templates, action)
     tracker.async_setup(raise_on_template_error)
     return tracker
 

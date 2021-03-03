@@ -3,7 +3,7 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from openpeerpower.auth.providers import openpeerpower as.opp_auth
+from openpeerpower.auth.providers import openpeerpower as opp_auth
 from openpeerpower.scripts import auth as script_auth
 
 from tests.common import register_auth_provider

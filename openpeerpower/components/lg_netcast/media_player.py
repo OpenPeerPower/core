@@ -68,7 +68,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 
     client = LgNetCastClient(host, access_token)
     domain = __name__.split(".")[-2]
-    on_action_script = Script.opp, on_action, name, domain) if on_action else None
+    on_action_script = Script(opp, on_action, name, domain) if on_action else None
 
     add_entities([LgTVDevice(client, name, on_action_script)], True)
 

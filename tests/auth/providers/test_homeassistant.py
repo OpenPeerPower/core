@@ -9,7 +9,7 @@ from openpeerpower import data_entry_flow
 from openpeerpower.auth import auth_manager_from_config, auth_store
 from openpeerpower.auth.providers import (
     auth_provider_from_config,
-    openpeerpower as.opp_auth,
+    openpeerpower as opp_auth,
 )
 
 

@@ -40,7 +40,7 @@ def setup(opp, base_config):
 
     opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, cleanup_gc100)
 
-    opp.data[DATA_GC100] = GC100Device.opp, gc_device)
+    opp.data[DATA_GC100] = GC100Device(opp, gc_device)
 
     return True
 

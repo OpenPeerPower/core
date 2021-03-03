@@ -138,7 +138,7 @@ class Thermostat(HomeAccessory):
         """Initialize a Thermostat accessory object."""
         super().__init__(*args, category=CATEGORY_THERMOSTAT)
         self._unit = self.opp.config.units.temperature_unit
-        self.hc_homekit_to opp =None
+        self.hc_homekit_to_opp =None
         self.hc.opp_to_homekit = None
         hc_min_temp, hc_max_temp = self.get_temperature_range()
 
@@ -169,10 +169,10 @@ class Thermostat(HomeAccessory):
         # the value and if 0 is not a valid
         # value this will throw
         self.char_target_heat_cool = serv_thermostat.configure_char(
-            CHAR_TARGET_HEATING_COOLING, value=list(self.hc_homekit_to(opp)[0]
+            CHAR_TARGET_HEATING_COOLING, value=list(self.hc_homekit_to_opp)[0]
         )
         self.char_target_heat_cool.override_properties(
-            valid_values=self.hc.opp_to_homekit
+            valid_values=self.hc_opp_to_homekit
         )
         # Current and target temperature characteristics
 
@@ -258,7 +258,7 @@ class Thermostat(HomeAccessory):
             # Ignore it if its the same mode
             if char_values[CHAR_TARGET_HEATING_COOLING] != homekit_hvac_mode:
                 target_hc = char_values[CHAR_TARGET_HEATING_COOLING]
-                if target_hc not in self.hc_homekit_to(opp:
+                if target_hc not in self.hc_homekit_to_opp:
                     # If the target heating cooling state we want does not
                     # exist on the device, we have to sort it out
                     # based on the the current and target temperature since
@@ -274,7 +274,7 @@ class Thermostat(HomeAccessory):
                     ):
                         hc_fallback_order = HC_HEAT_COOL_PREFER_COOL
                     for hc_fallback in hc_fallback_order:
-                        if hc_fallback in self.hc_homekit_to(opp:
+                        if hc_fallback in self.hc_homekit_to_opp:
                             _LOGGER.debug(
                                 "Siri requested target mode: %s and the device does not support, falling back to %s",
                                 target_hc,
@@ -284,8 +284,8 @@ class Thermostat(HomeAccessory):
                             break
 
                 service = SERVICE_SET_HVAC_MODE_THERMOSTAT
-                opp.value = self.hc_homekit_to(opp[target_hc]
-                params = {ATTR_HVAC_MODE:.opp_value}
+                opp.value = self.hc_homekit_to_opp[target_hc]
+                params = {ATTR_HVAC_MODE: opp_value}
                 events.append(
                     f"{CHAR_TARGET_HEATING_COOLING} to {char_values[CHAR_TARGET_HEATING_COOLING]}"
                 )
@@ -378,7 +378,7 @@ class Thermostat(HomeAccessory):
         # the Open Peer Power spec
         #
         # HVAC_MODE_HEAT_COOL: The device supports heating/cooling to a range
-        self.hc_homekit_to opp ={
+        self.hc_homekit_to_opp ={
             c: s
             for s, c in HC_OPP_TO_HOMEKIT.items()
             if (
@@ -392,7 +392,7 @@ class Thermostat(HomeAccessory):
                 )
             )
         }
-        self.hc.opp_to_homekit = {k: v for v, k in self.hc_homekit_to(opp.items()}
+        self.hc.opp_to_homekit = {k: v for v, k in self.hc_homekit_to_opp.items()}
 
     def get_temperature_range(self):
         """Return min and max temperature range."""
@@ -416,7 +416,7 @@ class Thermostat(HomeAccessory):
         """Update thermostat state after state changed."""
         # We always recheck valid hvac modes as the entity
         # may not have been fully setup when we saw it last
-        original_hc(opp_to_homekit = self.hc.opp_to_homekit
+        original_hc_opp_to_homekit = self.hc.opp_to_homekit
         self._configure_hvac_modes(new_state)
 
         if self.hc.opp_to_homekit != original_hc(opp_to_homekit:

@@ -19,7 +19,7 @@ CONTEXT_NAME = "78a5db95-b7d6-4d50-9c9b-2fc73a5e34c3_id_dialog_context"
 
 
 @pytest.fixture
-async def calls.opp, fixture):
+async def calls(opp, fixture):
     """Return a list of Dialogflow calls triggered."""
     calls = []
 
@@ -34,7 +34,7 @@ async def calls.opp, fixture):
 
 
 @pytest.fixture
-async def fixture.opp, aiohttp_client):
+async def fixture(opp, aiohttp_client):
     """Initialize a Open Peer Power server for testing this module."""
     await async_setup_component(opp, dialogflow.DOMAIN, {"dialogflow": {}})
     await async_setup_component(

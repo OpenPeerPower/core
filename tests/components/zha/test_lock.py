@@ -19,7 +19,7 @@ UNLOCK_DOOR = 1
 
 
 @pytest.fixture
-async def lock.opp, zigpy_device_mock, zha_device_joined_restored):
+async def lock(opp, zigpy_device_mock, zha_device_joined_restored):
     """Lock cluster fixture."""
 
     zigpy_device = zigpy_device_mock(

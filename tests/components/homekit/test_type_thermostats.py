@@ -86,7 +86,7 @@ async def test_thermostat(opp, hk_driver, events):
         },
     )
     await opp.async_block_till_done()
-    acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
+    acc = Thermostat(opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     await acc.run()
@@ -428,7 +428,7 @@ async def test_thermostat_auto(opp, hk_driver, events):
         },
     )
     await opp.async_block_till_done()
-    acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
+    acc = Thermostat(opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     await acc.run()
@@ -567,7 +567,7 @@ async def test_thermostat_humidity(opp, hk_driver, events):
     # support_auto = True
     opp.states.async_set(entity_id, HVAC_MODE_OFF, {ATTR_SUPPORTED_FEATURES: 4})
     await opp.async_block_till_done()
-    acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
+    acc = Thermostat(opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     await acc.run()
@@ -642,7 +642,7 @@ async def test_thermostat_power_state(opp, hk_driver, events):
         },
     )
     await opp.async_block_till_done()
-    acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
+    acc = Thermostat(opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     await acc.run()
@@ -754,7 +754,7 @@ async def test_thermostat_fahrenheit(opp, hk_driver, events):
     )
     await opp.async_block_till_done()
     with patch.object.opp.config.units, CONF_TEMPERATURE_UNIT, new=TEMP_FAHRENHEIT):
-        acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
+        acc = Thermostat(opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
     await acc.run()
     await opp.async_block_till_done()
@@ -854,7 +854,7 @@ async def test_thermostat_get_temperature_range(opp, hk_driver):
 
     opp.states.async_set(entity_id, HVAC_MODE_OFF)
     await opp.async_block_till_done()
-    acc = Thermostat.opp, hk_driver, "Climate", entity_id, 2, None)
+    acc = Thermostat(opp, hk_driver, "Climate", entity_id, 2, None)
 
     opp.states.async_set(
         entity_id, HVAC_MODE_OFF, {ATTR_MIN_TEMP: 20, ATTR_MAX_TEMP: 25}
@@ -876,7 +876,7 @@ async def test_thermostat_temperature_step_whole(opp, hk_driver):
 
     opp.states.async_set(entity_id, HVAC_MODE_OFF, {ATTR_TARGET_TEMP_STEP: 1})
     await opp.async_block_till_done()
-    acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
+    acc = Thermostat(opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     await acc.run()
@@ -911,7 +911,7 @@ async def test_thermostat_restore(opp, hk_driver, events):
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
     await opp.async_block_till_done()
 
-    acc = Thermostat.opp, hk_driver, "Climate", "climate.simple", 2, None)
+    acc = Thermostat(opp, hk_driver, "Climate", "climate.simple", 2, None)
     assert acc.category == 9
     assert acc.get_temperature_range() == (7, 35)
     assert set(acc.char_target_heat_cool.properties["ValidValues"].keys()) == {
@@ -921,7 +921,7 @@ async def test_thermostat_restore(opp, hk_driver, events):
         "off",
     }
 
-    acc = Thermostat.opp, hk_driver, "Climate", "climate.all_info_set", 2, None)
+    acc = Thermostat(opp, hk_driver, "Climate", "climate.all_info_set", 2, None)
     assert acc.category == 9
     assert acc.get_temperature_range() == (60.0, 70.0)
     assert set(acc.char_target_heat_cool.properties["ValidValues"].keys()) == {
@@ -939,7 +939,7 @@ async def test_thermostat_hvac_modes(opp, hk_driver):
     )
 
     await opp.async_block_till_done()
-    acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
+    acc = Thermostat(opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     await acc.run()
@@ -982,7 +982,7 @@ async def test_thermostat_hvac_modes_with_auto_heat_cool(opp, hk_driver):
     call_set_hvac_mode = async_mock_service(opp, DOMAIN_CLIMATE, "set_hvac_mode")
     await opp.async_block_till_done()
 
-    acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
+    acc = Thermostat(opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     await acc.run()
@@ -1038,7 +1038,7 @@ async def test_thermostat_hvac_modes_with_auto_no_heat_cool(opp, hk_driver):
     call_set_hvac_mode = async_mock_service(opp, DOMAIN_CLIMATE, "set_hvac_mode")
     await opp.async_block_till_done()
 
-    acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
+    acc = Thermostat(opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     await acc.run()
@@ -1092,7 +1092,7 @@ async def test_thermostat_hvac_modes_with_auto_only(opp, hk_driver):
     )
 
     await opp.async_block_till_done()
-    acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
+    acc = Thermostat(opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     await acc.run()
@@ -1146,7 +1146,7 @@ async def test_thermostat_hvac_modes_with_heat_only(opp, hk_driver):
     )
 
     await opp.async_block_till_done()
-    acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
+    acc = Thermostat(opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     await acc.run()
@@ -1206,7 +1206,7 @@ async def test_thermostat_hvac_modes_with_cool_only(opp, hk_driver):
     )
 
     await opp.async_block_till_done()
-    acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
+    acc = Thermostat(opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     await acc.run()
@@ -1270,7 +1270,7 @@ async def test_thermostat_hvac_modes_with_heat_cool_only(opp, hk_driver):
     )
 
     await opp.async_block_till_done()
-    acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
+    acc = Thermostat(opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     await acc.run()
@@ -1359,7 +1359,7 @@ async def test_thermostat_hvac_modes_without_off(opp, hk_driver):
     )
 
     await opp.async_block_till_done()
-    acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
+    acc = Thermostat(opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     await acc.run()
@@ -1398,7 +1398,7 @@ async def test_thermostat_without_target_temp_only_range(opp, hk_driver, events)
         {ATTR_SUPPORTED_FEATURES: SUPPORT_TARGET_TEMPERATURE_RANGE},
     )
     await opp.async_block_till_done()
-    acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
+    acc = Thermostat(opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     await acc.run()
@@ -1723,7 +1723,7 @@ async def test_water_heater_restore(opp, hk_driver, events):
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
     await opp.async_block_till_done()
 
-    acc = Thermostat.opp, hk_driver, "WaterHeater", "water_heater.simple", 2, None)
+    acc = Thermostat(opp, hk_driver, "WaterHeater", "water_heater.simple", 2, None)
     assert acc.category == 9
     assert acc.get_temperature_range() == (7, 35)
     assert set(acc.char_current_heat_cool.properties["ValidValues"].keys()) == {
@@ -1759,7 +1759,7 @@ async def test_thermostat_with_no_modes_when_we_first_see(opp, hk_driver, events
         },
     )
     await opp.async_block_till_done()
-    acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
+    acc = Thermostat(opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     await acc.run()
@@ -1812,7 +1812,7 @@ async def test_thermostat_with_no_off_after_recheck(opp, hk_driver, events):
         },
     )
     await opp.async_block_till_done()
-    acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
+    acc = Thermostat(opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     await acc.run()
@@ -1866,7 +1866,7 @@ async def test_thermostat_with_temp_clamps(opp, hk_driver, events):
         },
     )
     await opp.async_block_till_done()
-    acc = Thermostat.opp, hk_driver, "Climate", entity_id, 1, None)
+    acc = Thermostat(opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
 
     await acc.run()

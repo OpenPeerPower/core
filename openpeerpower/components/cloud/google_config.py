@@ -32,7 +32,7 @@ class CloudGoogleConfig(AbstractConfig):
         self, opp, config, cloud_user: str, prefs: CloudPreferences, cloud: Cloud
     ):
         """Initialize the Google config."""
-        super().__init__.opp)
+        super().__init__(opp)
         self._config = config
         self._user = cloud_user
         self._prefs = prefs

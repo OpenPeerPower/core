@@ -27,7 +27,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         nhc = nikohomecontrol.NikoHomeControl(
             {"ip": host, "port": 8000, "timeout": 20000}
         )
-        niko_data = NikoHomeControlData.opp, nhc)
+        niko_data = NikoHomeControlData(opp, nhc)
         await niko_data.async_update()
     except OSError as err:
         _LOGGER.error("Unable to access %s (%s)", host, err)

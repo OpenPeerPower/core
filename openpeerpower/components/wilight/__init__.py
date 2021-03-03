@@ -25,7 +25,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up a wilight config entry."""
 
-    parent = WiLightParent.opp, entry)
+    parent = WiLightParent(opp, entry)
 
     if not await parent.async_setup():
         raise ConfigEntryNotReady

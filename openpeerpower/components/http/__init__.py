@@ -20,7 +20,7 @@ from openpeerpower.helpers import storage
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.loader import bind_opp
 from openpeerpower.setup import ATTR_COMPONENT, EVENT_COMPONENT_LOADED
-import openpeerpower.util as.opp_util
+import openpeerpower.util as opp_util
 from openpeerpower.util import ssl as ssl_util
 
 from .auth import setup_auth
@@ -104,7 +104,7 @@ CONFIG_SCHEMA = vol.Schema({DOMAIN: HTTP_SCHEMA}, extra=vol.ALLOW_EXTRA)
 @bind_opp
 async def async_get_last_config(opp: OpenPeerPower) -> Optional[dict]:
     """Return the last known working config."""
-    store = storage.Store.opp, STORAGE_VERSION, STORAGE_KEY)
+    store = storage. Store(opp, STORAGE_VERSION, STORAGE_KEY)
     return cast(Optional[dict], await store.async_load())
 
 
@@ -385,7 +385,7 @@ async def start_http_server_and_save_config(
     await server.start()  # type: ignore
 
     # If we are set up successful, we store the HTTP settings for safe mode.
-    store = storage.Store.opp, STORAGE_VERSION, STORAGE_KEY)
+    store = storage. Store(opp, STORAGE_VERSION, STORAGE_KEY)
 
     if CONF_TRUSTED_PROXIES in conf:
         conf[CONF_TRUSTED_PROXIES] = [

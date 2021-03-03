@@ -199,7 +199,7 @@ async def test_gen_auth_url(
 async def test_callback_view_rejects_missing_code(opp):
     """Test the auth callback view rejects requests with no code."""
     view = LogiCircleAuthCallbackView()
-    resp = await view.get(MockRequest.opp, {}))
+    resp = await view.get(MockRequest(opp, {}))
 
     assert resp.status == 400
 
@@ -211,7 +211,7 @@ async def test_callback_view_accepts_code(
     init_config_flow(opp)
     view = LogiCircleAuthCallbackView()
 
-    resp = await view.get(MockRequest.opp, {"code": "456"}))
+    resp = await view.get(MockRequest(opp, {"code": "456"}))
     assert resp.status == 200
 
     await opp.async_block_till_done()

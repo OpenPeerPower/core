@@ -189,7 +189,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
         )
 
     # Continue setup
-    api = SynoApi.opp, entry)
+    api = SynoApi(opp, entry)
     try:
         await api.async_setup()
     except (SynologyDSMLoginFailedException, SynologyDSMRequestException) as err:

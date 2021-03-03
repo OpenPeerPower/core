@@ -81,7 +81,7 @@ async def async_new_client(opp, session, entry):
     """Add the hubs associated with the current client to device_registry."""
     interval = entry.data[KEY_SCAN_INTERVAL]
     _LOGGER.debug("Update interval %s seconds", interval)
-    client = TelldusLiveClient.opp, entry, session, interval)
+    client = TelldusLiveClient(opp, entry, session, interval)
     opp.data[DOMAIN] = client
     dev_reg = await opp.helpers.device_registry.async_get_registry()
     for hub in await client.async_get_hubs():

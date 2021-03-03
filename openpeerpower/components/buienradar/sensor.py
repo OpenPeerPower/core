@@ -231,7 +231,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         dev.append(BrSensor(sensor_type, config.get(CONF_NAME), coordinates))
     async_add_entities(dev)
 
-    data = BrData.opp, coordinates, timeframe, dev)
+    data = BrData(opp, coordinates, timeframe, dev)
     # schedule the first update in 1 minute from now:
     await data.schedule_update(1)
 

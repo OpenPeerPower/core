@@ -85,12 +85,12 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
             )
         )
 
-        smappee_api = api.ConfigEntrySmappeeApi.opp, entry, implementation)
+        smappee_api = api.ConfigEntrySmappeeApi(opp, entry, implementation)
 
         smappee = Smappee(api=smappee_api)
         await opp.async_add_executor_job(smappee.load_service_locations)
 
-    opp.data[DOMAIN][entry.entry_id] = SmappeeBase.opp, smappee)
+    opp.data[DOMAIN][entry.entry_id] = SmappeeBase(opp, smappee)
 
     for component in SMAPPEE_PLATFORMS:
         opp.async_create_task(

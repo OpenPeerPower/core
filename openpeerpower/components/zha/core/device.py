@@ -292,7 +292,7 @@ class ZHADevice(LogMixin):
         restored: bool = False,
     ):
         """Create new device."""
-        zha_dev = cls.opp, zigpy_dev, gateway)
+        zha_dev = cls(opp, zigpy_dev, gateway)
         zha_dev.channels = channels.Channels.new(zha_dev)
         zha_dev.unsubs.append(
             async_dispatcher_connect(

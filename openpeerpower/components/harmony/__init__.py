@@ -33,7 +33,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
     address = entry.data[CONF_HOST]
     name = entry.data[CONF_NAME]
-    data = HarmonyData.opp, address, name, entry.unique_id)
+    data = HarmonyData(opp, address, name, entry.unique_id)
     try:
         connected_ok = await data.connect()
     except (asyncio.TimeoutError, ValueError, AttributeError) as err:

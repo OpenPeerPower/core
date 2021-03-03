@@ -62,10 +62,10 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         )
     )
 
-    session = config_entry_oauth2_flow.OAuth2Session.opp, entry, implementation)
+    session = config_entry_oauth2_flow.OAuth2Session(opp, entry, implementation)
 
     # If using a requests-based API lib
-    opp.data[DOMAIN][entry.entry_id] = api.ConfigEntryAuth.opp, session)
+    opp.data[DOMAIN][entry.entry_id] = api.ConfigEntryAutf(opp, session)
 
     # If using an aiohttp-based API lib
     opp.data[DOMAIN][entry.entry_id] = api.AsyncConfigEntryAuth(

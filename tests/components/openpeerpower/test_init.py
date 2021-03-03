@@ -162,7 +162,7 @@ class TestComponentsCore(unittest.TestCase):
         """Test reload core conf service."""
         ent = entity.Entity()
         ent.entity_id = "test.entity"
-        ent.opp, self.opp
+        ent(opp, self.opp
         ent.schedule_update_op.state()
         self.opp.lock_till_done()
 

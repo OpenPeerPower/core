@@ -76,7 +76,7 @@ async def set_value(opp, entity_id, value):
     )
 
 
-async def increment.opp, entity_id):
+async def increment(opp, entity_id):
     """Increment value of entity.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -86,7 +86,7 @@ async def increment.opp, entity_id):
     )
 
 
-async def decrement.opp, entity_id):
+async def decrement(opp, entity_id):
     """Decrement value of entity.
 
     This is a legacy helper method. Do not use it for new tests.
@@ -149,13 +149,13 @@ async def test_increment(opp):
     state = opp.states.get(entity_id)
     assert 50 == float(state.state)
 
-    await increment.opp, entity_id)
+    await increment(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 51 == float(state.state)
 
-    await increment.opp, entity_id)
+    await increment(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
@@ -172,13 +172,13 @@ async def test_decrement(opp):
     state = opp.states.get(entity_id)
     assert 50 == float(state.state)
 
-    await decrement.opp, entity_id)
+    await decrement(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
     assert 49 == float(state.state)
 
-    await decrement.opp, entity_id)
+    await decrement(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)

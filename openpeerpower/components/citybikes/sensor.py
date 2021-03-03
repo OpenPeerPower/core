@@ -166,7 +166,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         network_id = await networks.get_closest_network_id(latitude, longitude)
 
     if network_id not in opp.data[PLATFORM][MONITORED_NETWORKS]:
-        network = CityBikesNetwork.opp, network_id)
+        network = CityBikesNetwork(opp, network_id)
         opp.data[PLATFORM][MONITORED_NETWORKS][network_id] = network
         opp.async_create_task(network.async_refresh())
         async_track_time_interval(opp, network.async_refresh, SCAN_INTERVAL)

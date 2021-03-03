@@ -92,7 +92,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     coordinates = {CONF_LATITUDE: float(latitude), CONF_LONGITUDE: float(longitude)}
 
     # create weather data:
-    data = BrData.opp, coordinates, DEFAULT_TIMEFRAME, None)
+    data = BrData(opp, coordinates, DEFAULT_TIMEFRAME, None)
     # create weather device:
     _LOGGER.debug("Initializing buienradar weather: coordinates %s", coordinates)
 

@@ -308,7 +308,7 @@ async def setup_owntracks(opp, config, ctx_cls=owntracks.OwnTracksContext):
 
 
 @pytest.fixture
-def context.opp, setup_comp):
+def context(opp, setup_comp):
     """Set up the mocked context."""
     orig_context = owntracks.OwnTracksContext
     context = None

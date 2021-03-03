@@ -62,7 +62,7 @@ def _get_media_item(
 
     # We default to our own domain if its only one registered
     domain = None if len(opp.data[DOMAIN]) > 1 else DOMAIN
-    return models.MediaSourceItem.opp, domain, "")
+    return models.MediaSourceItem(opp, domain, "")
 
 
 @bind_opp

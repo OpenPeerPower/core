@@ -99,7 +99,7 @@ async def async_setup_entry(
         data.pop(CONF_ALLOW_HUE_GROUPS)
         opp.config_entries.async_update_entry(entry, data=data, options=options)
 
-    bridge = HueBridge.opp, entry)
+    bridge = HueBridge(opp, entry)
 
     if not await bridge.async_setup():
         return False

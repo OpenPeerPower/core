@@ -132,7 +132,7 @@ def setup(opp, config):
 
 
 async def async_setup_entry(
-    opp, core.OpenPeerPower, entry: config_entries.ConfigEntry
+    opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Set up the xiaomi aqara components from a config entry."""
     opp.data.setdefault(DOMAIN, {})
@@ -153,7 +153,7 @@ async def async_setup_entry(
 
     gateway_discovery = opp.data[DOMAIN].setdefault(
         LISTENER_KEY,
-        XiaomiGatewayDiscovery.opp.add_job, [], entry.data[CONF_INTERFACE]),
+        XiaomiGatewayDiscovery(opp.add_job, [], entry.data[CONF_INTERFACE]),
     )
 
     if len(opp.data[DOMAIN][GATEWAYS_KEY]) == 1:
@@ -197,7 +197,7 @@ async def async_setup_entry(
 
 
 async def async_unload_entry(
-    opp, core.OpenPeerPower, entry: config_entries.ConfigEntry
+    opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Unload a config entry."""
     if entry.data[CONF_KEY] is not None:

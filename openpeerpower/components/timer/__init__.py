@@ -114,7 +114,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     )
 
     storage_collection = TimerStorageCollection(
-        Store.opp, STORAGE_VERSION, STORAGE_KEY),
+         Store(opp, STORAGE_VERSION, STORAGE_KEY),
         logging.getLogger(f"{__name__}.storage_collection"),
         id_manager,
     )

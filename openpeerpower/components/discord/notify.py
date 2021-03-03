@@ -29,7 +29,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({vol.Required(CONF_TOKEN): cv.string})
 def get_service(opp, config, discovery_info=None):
     """Get the Discord notification service."""
     token = config[CONF_TOKEN]
-    return DiscordNotificationService.opp, token)
+    return DiscordNotificationService(opp, token)
 
 
 class DiscordNotificationService(BaseNotificationService):

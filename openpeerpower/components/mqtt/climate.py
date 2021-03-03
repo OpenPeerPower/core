@@ -283,7 +283,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
 async def _async_setup_entity(
     opp, async_add_entities, config, config_entry=None, discovery_data=None):
     """Set up the MQTT climate devices."""
-    async_add_entities([MqttClimate.opp, config, config_entry, discovery_data)])
+    async_add_entities([MqttClimate(opp, config, config_entry, discovery_data)])
 
 
 class MqttClimate(MqttEntity, ClimateEntity):
@@ -351,7 +351,7 @@ class MqttClimate(MqttEntity, ClimateEntity):
             value_templates[key] = lambda value: value
         if CONF_VALUE_TEMPLATE in config:
             value_template = config.get(CONF_VALUE_TEMPLATE)
-            value_template opp =self.opp
+            value_template_opp =self.opp
             value_templates = {
                 key: value_template.async_render_with_possible_json_value
                 for key in VALUE_TEMPLATE_KEYS

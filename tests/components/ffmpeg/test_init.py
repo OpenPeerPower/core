@@ -118,7 +118,7 @@ async def test_setup_component_test_register_no_startup(opp):
         await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
 
     opp.bus.async_listen_once = MagicMock()
-    ffmpeg_dev = MockFFmpegDev.opp, False)
+    ffmpeg_dev = MockFFmpegDev(opp, False)
     await ffmpeg_dev.async_added_to_opp()
 
     assert opp.bus.async_listen_once.called
@@ -130,7 +130,7 @@ async def test_setup_component_test_service_start(opp):
     with assert_setup_component(1):
         await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
 
-    ffmpeg_dev = MockFFmpegDev.opp, False)
+    ffmpeg_dev = MockFFmpegDev(opp, False)
     await ffmpeg_dev.async_added_to_opp()
 
     async_start(opp)
@@ -144,7 +144,7 @@ async def test_setup_component_test_service_stop(opp):
     with assert_setup_component(1):
         await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
 
-    ffmpeg_dev = MockFFmpegDev.opp, False)
+    ffmpeg_dev = MockFFmpegDev(opp, False)
     await ffmpeg_dev.async_added_to_opp()
 
     async_stop(opp)
@@ -158,7 +158,7 @@ async def test_setup_component_test_service_restart(opp):
     with assert_setup_component(1):
         await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
 
-    ffmpeg_dev = MockFFmpegDev.opp, False)
+    ffmpeg_dev = MockFFmpegDev(opp, False)
     await ffmpeg_dev.async_added_to_opp()
 
     async_restart(opp)
@@ -173,7 +173,7 @@ async def test_setup_component_test_service_start_with_entity(opp):
     with assert_setup_component(1):
         await async_setup_component(opp, ffmpeg.DOMAIN, {ffmpeg.DOMAIN: {}})
 
-    ffmpeg_dev = MockFFmpegDev.opp, False)
+    ffmpeg_dev = MockFFmpegDev(opp, False)
     await ffmpeg_dev.async_added_to_opp()
 
     async_start(opp, "test.ffmpeg_device")

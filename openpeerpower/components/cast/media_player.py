@@ -118,7 +118,7 @@ def _async_create_cast_device(opp: OpenPeerPowerType, info: ChromecastInfo):
 
     if info.is_dynamic_group:
         # This is a dynamic group, do not add it but connect to the service.
-        group = DynamicCastGroup.opp, info)
+        group = DynamicCastGroup(opp, info)
         group.async_setup()
         return None
 

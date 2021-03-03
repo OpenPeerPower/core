@@ -401,7 +401,7 @@ async def test_oauth_session(opp, flow_handler, local_impl, aioclient_mock):
     )
 
     now = time.time()
-    session = config_entry_oauth2_flow.OAuth2Session.opp, config_entry, local_impl)
+    session = config_entry_oauth2_flow.OAuth2Session(opp, config_entry, local_impl)
     resp = await session.async_request("post", "https://example.com")
     assert resp.status == 201
 
@@ -447,7 +447,7 @@ async def test_oauth_session_with_clock_slightly_out_of_sync(
     )
 
     now = time.time()
-    session = config_entry_oauth2_flow.OAuth2Session.opp, config_entry, local_impl)
+    session = config_entry_oauth2_flow.OAuth2Session(opp, config_entry, local_impl)
     resp = await session.async_request("post", "https://example.com")
     assert resp.status == 201
 
@@ -489,7 +489,7 @@ async def test_oauth_session_no_token_refresh_needed(
     )
 
     now = time.time()
-    session = config_entry_oauth2_flow.OAuth2Session.opp, config_entry, local_impl)
+    session = config_entry_oauth2_flow.OAuth2Session(opp, config_entry, local_impl)
     resp = await session.async_request("post", "https://example.com")
     assert resp.status == 201
 
@@ -573,6 +573,6 @@ async def test_oauth_session_refresh_failure(
         },
     )
 
-    session = config_entry_oauth2_flow.OAuth2Session.opp, config_entry, local_impl)
+    session = config_entry_oauth2_flow.OAuth2Session(opp, config_entry, local_impl)
     with pytest.raises(aiohttp.client_exceptions.ClientResponseError):
         await session.async_request("post", "https://example.com")

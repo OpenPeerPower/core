@@ -117,7 +117,7 @@ def setup_button(opp, config, add_entities, client, address):
     """Set up a single button device."""
     timeout = config.get(CONF_TIMEOUT)
     ignored_click_types = config.get(CONF_IGNORED_CLICK_TYPES)
-    button = FlicButton.opp, client, address, timeout, ignored_click_types)
+    button = FlicButton(opp, client, address, timeout, ignored_click_types)
     _LOGGER.info("Connected to button %s", address)
 
     add_entities([button])
@@ -225,17 +225,17 @@ class FlicButton(BinarySensorEntity):
             return
 
         # Return if click event is in ignored click types
-        opp.click_type = self.opp_click_types[click_type]
+        opp_click_type = self.opp_click_types[click_type]
         if opp_click_type in self._ignored_click_types:
             return
 
-        self.opp.bus.fire(
+        self._opp.bus.fire(
             EVENT_NAME,
             {
                 EVENT_DATA_NAME: self.name,
                 EVENT_DATA_ADDRESS: self.address,
                 EVENT_DATA_QUEUED_TIME: time_diff,
-                EVENT_DATA_TYPE:.opp_click_type,
+                EVENT_DATA_TYPE: opp_click_type,
             },
         )
 

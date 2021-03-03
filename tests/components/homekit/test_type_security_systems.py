@@ -33,7 +33,7 @@ async def test_switch_set_state(opp, hk_driver, events):
 
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
-    acc = SecuritySystem.opp, hk_driver, "SecuritySystem", entity_id, 2, config)
+    acc = SecuritySystem(opp, hk_driver, "SecuritySystem", entity_id, 2, config)
     await acc.run()
     await opp.async_block_till_done()
 
@@ -123,7 +123,7 @@ async def test_no_alarm_code(opp, hk_driver, config, events):
 
     opp.states.async_set(entity_id, None)
     await opp.async_block_till_done()
-    acc = SecuritySystem.opp, hk_driver, "SecuritySystem", entity_id, 2, config)
+    acc = SecuritySystem(opp, hk_driver, "SecuritySystem", entity_id, 2, config)
 
     # Set from HomeKit
     call_arm_home = async_mock_service(opp, DOMAIN, "alarm_arm_home")
@@ -237,7 +237,7 @@ async def test_supported_states(opp, hk_driver, events):
         opp.states.async_set(entity_id, None, attributes=attrs)
         await opp.async_block_till_done()
 
-        acc = SecuritySystem.opp, hk_driver, "SecuritySystem", entity_id, 2, config)
+        acc = SecuritySystem(opp, hk_driver, "SecuritySystem", entity_id, 2, config)
         await acc.run()
         await opp.async_block_till_done()
 

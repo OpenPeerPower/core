@@ -191,16 +191,16 @@ class TemplateVacuum(TemplateEntity, StateVacuumEntity):
 
         domain = __name__.split(".")[-2]
 
-        self._start_script = Script.opp, start_action, friendly_name, domain)
+        self._start_script = Script(opp, start_action, friendly_name, domain)
 
         self._pause_script = None
         if pause_action:
-            self._pause_script = Script.opp, pause_action, friendly_name, domain)
+            self._pause_script = Script(opp, pause_action, friendly_name, domain)
             self._supported_features |= SUPPORT_PAUSE
 
         self._stop_script = None
         if stop_action:
-            self._stop_script = Script.opp, stop_action, friendly_name, domain)
+            self._stop_script = Script(opp, stop_action, friendly_name, domain)
             self._supported_features |= SUPPORT_STOP
 
         self._return_to_base_script = None
@@ -219,7 +219,7 @@ class TemplateVacuum(TemplateEntity, StateVacuumEntity):
 
         self._locate_script = None
         if locate_action:
-            self._locate_script = Script.opp, locate_action, friendly_name, domain)
+            self._locate_script = Script(opp, locate_action, friendly_name, domain)
             self._supported_features |= SUPPORT_LOCATE
 
         self._set_fan_speed_script = None

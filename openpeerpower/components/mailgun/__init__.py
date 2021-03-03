@@ -73,7 +73,7 @@ async def verify_webhook(opp, token=None, timestamp=None, signature=None):
         return False
 
     hmac_digest = hmac.new(
-        key=bytes.opp.data[DOMAIN][CONF_API_KEY], "utf-8"),
+        key=bytes(opp.data[DOMAIN][CONF_API_KEY], "utf-8"),
         msg=bytes(f"{timestamp}{token}", "utf-8"),
         digestmod=hashlib.sha256,
     ).hexdigest()

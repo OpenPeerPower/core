@@ -33,7 +33,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     host = entry.data[CONF_HOST]
     access_token = entry.data[CONF_ACCESS_TOKEN]
 
-    vilfo_router = VilfoRouterData.opp, host, access_token)
+    vilfo_router = VilfoRouterData(opp, host, access_token)
 
     await vilfo_router.async_update()
 

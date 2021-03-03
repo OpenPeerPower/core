@@ -97,7 +97,7 @@ def sent_messages_fixture():
 
     with patch(
         "openpeerpower.components.mqtt.async_publish",
-        side_effect=lambda.opp, topic, payload: sent_messages.append(
+        side_effect=lambda(opp, topic, payload: sent_messages.append(
             {"topic": topic, "payload": json.loads(payload)}
         ),
     ):

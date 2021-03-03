@@ -77,6 +77,6 @@ def async_condition_from_config(
 
     def test_is_state(opp: OpenPeerPower, variables: TemplateVarsType) -> bool:
         """Test if an entity is a certain state."""
-        return condition.state.opp, config[ATTR_ENTITY_ID], state)
+        return condition.state(opp, config[ATTR_ENTITY_ID], state)
 
     return test_is_state

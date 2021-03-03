@@ -153,7 +153,7 @@ def setup(opp, config):
 
     if publish_states_host:
         zabbix_sender = ZabbixSender(zabbix_server=conf[CONF_HOST])
-        instance = ZabbixThread.opp, zabbix_sender, event_to_metrics)
+        instance = ZabbixThread(opp, zabbix_sender, event_to_metrics)
         instance.setup_opp)
 
     return True

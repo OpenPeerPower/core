@@ -22,7 +22,7 @@ def switch_mock(opp):
     """Mock switch."""
     controller_mock = mock.MagicMock()
     dev_dict = {"address": "a1", "name": "fake_switch"}
-    return mochad.MochadSwitch.opp, controller_mock, dev_dict)
+    return mochad.MochadSwitch(opp, controller_mock, dev_dict)
 
 
 async def test_setup_adds_proper_devices(opp):

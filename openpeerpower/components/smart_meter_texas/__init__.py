@@ -45,7 +45,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     password = entry.data[CONF_PASSWORD]
 
     account = Account(username, password)
-    smart_meter_texas_data = SmartMeterTexasData.opp, entry, account)
+    smart_meter_texas_data = SmartMeterTexasData(opp, entry, account)
     try:
         await smart_meter_texas_data.client.authenticate()
     except SmartMeterTexasAuthError:

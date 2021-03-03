@@ -1,7 +1,7 @@
 """Integrates Native Apps to Open Peer Power."""
 import asyncio
 
-from openpeerpower.components import cloud, notify as.opp_notify
+from openpeerpower.components import cloud, notify as opp_notify
 from openpeerpower.components.webhook import (
     async_register as webhook_register,
     async_unregister as webhook_unregister,

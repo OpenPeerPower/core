@@ -1,7 +1,0 @@
-{
-  "domain": "openpeerpower",
-  "name": "Open Peer Power Core Integration",
-  "documentation": "https://www.open-peer-power.io/integrations/openpeerpower",
-  "codeowners": ["@open-peer-power/core"],
-  "quality_scale": "internal"
-}

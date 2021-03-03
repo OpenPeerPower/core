@@ -25,7 +25,7 @@ MOCK_DATA2 = {"goodbye": "cruel world"}
 @pytest.fixture
 def store(opp):
     """Fixture of a store that prevents writing on Open Peer Power stop."""
-    yield storage.Store.opp, MOCK_VERSION, MOCK_KEY)
+    yield storage. Store(opp, MOCK_VERSION, MOCK_KEY)
 
 
 async def test_loading(opp, store):
@@ -45,7 +45,7 @@ async def test_custom_encoder(opp):
             """Mock JSON encode method."""
             return "9"
 
-    store = storage.Store.opp, MOCK_VERSION, MOCK_KEY, encoder=JSONEncoder)
+    store = storage. Store(opp, MOCK_VERSION, MOCK_KEY, encoder=JSONEncoder)
     await store.async_save(Mock())
     data = await store.async_load()
     assert data == "9"
@@ -85,7 +85,7 @@ async def test_saving_with_delay(opp, store, opp_storage):
 
 async def test_saving_on_final_write(opp, opp_storage):
     """Test delayed saves trigger when we quit Open Peer Power."""
-    store = storage.Store.opp, MOCK_VERSION, MOCK_KEY)
+    store = storage. Store(opp, MOCK_VERSION, MOCK_KEY)
     store.async_delay_save(lambda: MOCK_DATA, 5)
     assert store.key not in opp_storage
 
@@ -108,7 +108,7 @@ async def test_saving_on_final_write(opp, opp_storage):
 
 async def test_not_delayed_saving_while_stopping(opp, opp_storage):
     """Test delayed saves don't write after the stop event has fired."""
-    store = storage.Store.opp, MOCK_VERSION, MOCK_KEY)
+    store = storage. Store(opp, MOCK_VERSION, MOCK_KEY)
     opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
     await opp.async_block_till_done()
     opp.state = CoreState.stopping
@@ -121,7 +121,7 @@ async def test_not_delayed_saving_while_stopping(opp, opp_storage):
 
 async def test_not_delayed_saving_after_stopping(opp, opp_storage):
     """Test delayed saves don't write after stop if issued before stopping Open Peer Power."""
-    store = storage.Store.opp, MOCK_VERSION, MOCK_KEY)
+    store = storage. Store(opp, MOCK_VERSION, MOCK_KEY)
     store.async_delay_save(lambda: MOCK_DATA, 10)
     assert store.key not in opp_storage
 
@@ -137,7 +137,7 @@ async def test_not_delayed_saving_after_stopping(opp, opp_storage):
 
 async def test_not_saving_while_stopping(opp, opp_storage):
     """Test saves don't write when stopping Open Peer Power."""
-    store = storage.Store.opp, MOCK_VERSION, MOCK_KEY)
+    store = storage. Store(opp, MOCK_VERSION, MOCK_KEY)
     opp.state = CoreState.stopping
     await store.async_save(MOCK_DATA)
     assert store.key not in opp_storage

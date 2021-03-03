@@ -36,7 +36,7 @@ def storage_collection(opp):
     """Return an empty storage collection."""
     id_manager = collection.IDManager()
     return person.PersonStorageCollection(
-        person.PersonStore.opp, person.STORAGE_VERSION, person.STORAGE_KEY),
+        person.Person Store(opp, person.STORAGE_VERSION, person.STORAGE_KEY),
         logging.getLogger(f"{person.__name__}.storage_collection"),
         id_manager,
         collection.YamlCollection(

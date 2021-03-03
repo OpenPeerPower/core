@@ -187,7 +187,7 @@ class MockPyAv:
 
 async def async_decode_stream(opp, packets, py_av=None):
     """Start a stream worker that decodes incoming stream packets into output segments."""
-    stream = Stream.opp, STREAM_SOURCE)
+    stream = Stream(opp, STREAM_SOURCE)
     stream.add_provider(STREAM_OUTPUT_FORMAT)
 
     if not py_av:
@@ -207,7 +207,7 @@ async def async_decode_stream(opp, packets, py_av=None):
 
 async def test_stream_open_fails(opp):
     """Test failure on stream open."""
-    stream = Stream.opp, STREAM_SOURCE)
+    stream = Stream(opp, STREAM_SOURCE)
     stream.add_provider(STREAM_OUTPUT_FORMAT)
     with patch("av.open") as av_open:
         av_open.side_effect = av.error.InvalidDataError(-2, "error")
@@ -484,7 +484,7 @@ async def test_stream_stopped_while_decoding(opp):
     worker_open = threading.Event()
     worker_wake = threading.Event()
 
-    stream = Stream.opp, STREAM_SOURCE)
+    stream = Stream(opp, STREAM_SOURCE)
     stream.add_provider(STREAM_OUTPUT_FORMAT)
 
     py_av = MockPyAv()
@@ -511,7 +511,7 @@ async def test_update_stream_source(opp):
     worker_open = threading.Event()
     worker_wake = threading.Event()
 
-    stream = Stream.opp, STREAM_SOURCE)
+    stream = Stream(opp, STREAM_SOURCE)
     stream.add_provider(STREAM_OUTPUT_FORMAT)
     # Note that keepalive is not set here.  The stream is "restarted" even though
     # it is not stopping due to failure.

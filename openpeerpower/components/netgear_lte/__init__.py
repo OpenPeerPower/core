@@ -271,7 +271,7 @@ async def _setup_lte(opp, lte_config):
     websession = opp.data[DATA_KEY].websession
     modem = eternalegypt.Modem(hostname=host, websession=websession)
 
-    modem_data = ModemData.opp, host, modem)
+    modem_data = ModemData(opp, host, modem)
 
     try:
         await _login(opp, modem_data, password)

@@ -41,7 +41,7 @@ def get_service(opp, config, discovery_info=None):
     if ATTR_INTERFACE in config:
         data[ATTR_INTERFACE] = config[ATTR_INTERFACE]
 
-    return HomematicNotificationService.opp, data)
+    return HomematicNotificationService(opp, data)
 
 
 class HomematicNotificationService(BaseNotificationService):

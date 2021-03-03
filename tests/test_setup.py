@@ -313,7 +313,7 @@ class TestSetup:
     def test_component_failing_setup(self):
         """Test component that fails setup."""
         mock_integration(
-            self.opp, MockModule("comp", setup=lambda.opp, config: False)
+            self.opp, MockModule("comp", setup=lambda(opp, config: False)
         )
 
         assert not setup.setup_component(self.opp, "comp", {})
@@ -414,7 +414,7 @@ class TestSetup:
     def test_disable_component_if_invalid_return(self):
         """Test disabling component if invalid return."""
         mock_integration(
-            self.opp, MockModule("disabled_component", setup=lambda.opp, config: None)
+            self.opp, MockModule("disabled_component", setup=lambda(opp, config: None)
         )
 
         assert not setup.setup_component(self.opp, "disabled_component", {})
@@ -423,7 +423,7 @@ class TestSetup:
         self.opp.data.pop(setup.DATA_SETUP)
         mock_integration(
             self.opp,
-            MockModule("disabled_component", setup=lambda.opp, config: False),
+            MockModule("disabled_component", setup=lambda(opp, config: False),
         )
 
         assert not setup.setup_component(self.opp, "disabled_component", {})
@@ -431,7 +431,7 @@ class TestSetup:
 
         self.opp.data.pop(setup.DATA_SETUP)
         mock_integration(
-            self.opp, MockModule("disabled_component", setup=lambda.opp, config: True)
+            self.opp, MockModule("disabled_component", setup=lambda(opp, config: True)
         )
 
         assert setup.setup_component(self.opp, "disabled_component", {})

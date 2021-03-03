@@ -30,7 +30,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
 
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Flick Electric from a config entry."""
-    auth = OppFlickAuth.opp, entry)
+    auth = OppFlickAutf(opp, entry)
 
     opp.data[DOMAIN][entry.entry_id] = FlickAPI(auth)
 

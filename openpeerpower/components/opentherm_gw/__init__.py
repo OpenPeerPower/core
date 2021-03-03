@@ -91,7 +91,7 @@ async def async_setup_entry(opp, config_entry):
     if DATA_OPENTHERM_GW not in opp.data:
         opp.data[DATA_OPENTHERM_GW] = {DATA_GATEWAYS: {}}
 
-    gateway = OpenThermGatewayDevice.opp, config_entry)
+    gateway = OpenThermGatewayDevice(opp, config_entry)
     opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][config_entry.data[CONF_ID]] = gateway
 
     config_entry.add_update_listener(options_updated)

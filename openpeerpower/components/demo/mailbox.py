@@ -13,7 +13,7 @@ MAILBOX_NAME = "DemoMailbox"
 
 async def async_get_handler(opp, config, discovery_info=None):
     """Set up the Demo mailbox."""
-    return DemoMailbox.opp, MAILBOX_NAME)
+    return DemoMailbox(opp, MAILBOX_NAME)
 
 
 class DemoMailbox(Mailbox):

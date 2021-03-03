@@ -88,7 +88,7 @@ def setup(opp, base_config):
     for key_config in config[CONF_KEYPADS]:
         addr = key_config[CONF_ADDR]
         name = key_config[CONF_NAME]
-        HomeworksKeypadEvent.opp, addr, name)
+        HomeworksKeypadEvent(opp, addr, name)
 
     return True
 

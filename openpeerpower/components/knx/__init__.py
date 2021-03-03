@@ -187,7 +187,7 @@ SERVICE_KNX_EVENT_REGISTER_SCHEMA = vol.Schema(
 async def async_setup(opp, config):
     """Set up the KNX component."""
     try:
-        opp.data[DOMAIN] = KNXModule.opp, config)
+        opp.data[DOMAIN] = KNXModule(opp, config)
         opp.data[DOMAIN].async_create_exposures()
         await opp.data[DOMAIN].start()
     except XKNXException as ex:

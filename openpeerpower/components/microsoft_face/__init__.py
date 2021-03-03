@@ -95,7 +95,7 @@ async def async_setup(opp, config):
             await face.call_api("put", f"persongroups/{g_id}", {"name": name})
             face.store[g_id] = {}
 
-            entities[g_id] = MicrosoftFaceGroupEntity.opp, face, g_id, name)
+            entities[g_id] = MicrosoftFaceGroupEntity(opp, face, g_id, name)
             entities[g_id].async_write_op_state()
         except OpenPeerPowerError as err:
             _LOGGER.error("Can't create group '%s' with error: %s", g_id, err)

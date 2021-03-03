@@ -33,7 +33,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         )
     )
 
-    opp.data[DOMAIN][entry.entry_id] = api.OndiloClient.opp, entry, implementation)
+    opp.data[DOMAIN][entry.entry_id] = api.OndiloClient(opp, entry, implementation)
 
     for component in PLATFORMS:
         opp.async_create_task(

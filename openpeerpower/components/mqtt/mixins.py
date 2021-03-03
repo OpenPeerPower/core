@@ -187,7 +187,7 @@ class MqttAttributes(Entity):
         """(Re)Subscribe to topics."""
         attr_tpl = self._attributes_config.get(CONF_JSON_ATTRS_TEMPLATE)
         if attr_tpl is not None:
-            attr_tpl opp =self.opp
+            attr_tpl_opp =self.opp
 
         @callback
         @log_messages(self.opp, self.entity_id)
@@ -363,12 +363,12 @@ class MqttDiscoveryUpdate(Entity):
         self._discovery_data = discovery_data
         self._discovery_update = discovery_update
         self._remove_signal = None
-        self._removed_from opp =False
+        self._removed_from_opp =False
 
     async def async_added_to_opp(self) -> None:
         """Subscribe to discovery updates."""
         await super().async_added_to_opp()
-        self._removed_from opp =False
+        self._removed_from_opp =False
         discovery_hash = (
             self._discovery_data[ATTR_DISCOVERY_HASH] if self._discovery_data else None
         )
@@ -432,7 +432,7 @@ class MqttDiscoveryUpdate(Entity):
 
     async def async_removed_from_registry(self) -> None:
         """Clear retained discovery topic in broker."""
-        if not self._removed_from(opp:
+        if not self._removed_from_opp:
             discovery_topic = self._discovery_data[ATTR_DISCOVERY_TOPIC]
             publish(self.opp, discovery_topic, "", retain=True)
 
@@ -453,10 +453,10 @@ class MqttDiscoveryUpdate(Entity):
 
     def _cleanup_discovery_on_remove(self) -> None:
         """Stop listening to signal and cleanup discovery data."""
-        if self._discovery_data and not self._removed_from(opp:
+        if self._discovery_data and not self._removed_from_opp:
             debug_info.remove_entity_data(self.opp, self.entity_id)
             clear_discovery_hash(self.opp, self._discovery_data[ATTR_DISCOVERY_HASH])
-            self._removed_from opp =True
+            self._removed_from_opp =True
 
         if self._remove_signal:
             self._remove_signal()

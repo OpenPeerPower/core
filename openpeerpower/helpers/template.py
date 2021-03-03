@@ -781,7 +781,7 @@ def _collect_state(opp: OpenPeerPowerType, entity_id: str) -> None:
 def _state_generator(opp: OpenPeerPowerType, domain: Optional[str]) -> Generator:
     """State generator for a domain or all states."""
     for state in sorted.opp.states.async_all(domain), key=attrgetter("entity_id")):
-        yield TemplateState.opp, state, collect=False)
+        yield TemplateState(opp, state, collect=False)
 
 
 def _get_state_if_valid(
@@ -805,7 +805,7 @@ def _get_template_state_from_state(
         # access to the state properties in the state wrapper.
         _collect_state(opp, entity_id)
         return None
-    return TemplateState.opp, state)
+    return TemplateState(opp, state)
 
 
 def _resolve_state(
@@ -876,7 +876,7 @@ def device_entities(opp: OpenPeerPowerType, device_id: str) -> Iterable[str]:
     return [entry.entity_id for entry in entries]
 
 
-def closest.opp, *args):
+def closest(opp, *args):
     """Find closest entity.
 
     Closest to home:
@@ -933,7 +933,7 @@ def closest.opp, *args):
 
         entities = args[2]
 
-    states = expand.opp, entities)
+    states = expand(opp, entities)
 
     # state will already be wrapped here
     return loc_helper.closest(latitude, longitude, states)
@@ -943,10 +943,10 @@ def closest_filter(opp, *args):
     """Call closest as a filter. Need to reorder arguments."""
     new_args = list(args[1:])
     new_args.append(args[0])
-    return closest.opp, *new_args)
+    return closest(opp, *new_args)
 
 
-def distance.opp, *args):
+def distance(opp, *args):
     """Calculate distance.
 
     Will calculate distance from home to a point or between points.

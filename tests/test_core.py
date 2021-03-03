@@ -183,7 +183,7 @@ async def test_shutdown_calls_block_till_done_after_shutdown_run_callback_thread
         nonlocal stop_calls
         stop_calls.append(("shutdown_run_callback_threadsafe", loop))
 
-    with patch.object.opp, "async_block_till_done", _record_block_till_done), patch(
+    with patch.object(opp, "async_block_till_done", _record_block_till_done), patch(
         "openpeerpower.core.shutdown_run_callback_threadsafe",
         _record_shutdown_run_callback_threadsafe,
     ):

@@ -112,11 +112,11 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
         psk=entry.data[CONF_KEY],
     )
 
-    async def on.opp_stop(event):
+    async def on_opp_stop(event):
         """Close connection when opp stops."""
         await factory.shutdown()
 
-    listeners.append.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on.opp_stop))
+    listeners.append(opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on_opp_stop))
 
     api = factory.request
     gateway = Gateway()

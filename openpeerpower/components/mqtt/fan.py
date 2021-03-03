@@ -129,7 +129,7 @@ async def _async_setup_entity(
     opp, async_add_entities, config, config_entry=None, discovery_data=None
 ):
     """Set up the MQTT fan."""
-    async_add_entities([MqttFan.opp, config, config_entry, discovery_data)])
+    async_add_entities([MqttFan(opp, config, config_entry, discovery_data)])
 
 
 class MqttFan(MqttEntity, FanEntity):
@@ -207,7 +207,7 @@ class MqttFan(MqttEntity, FanEntity):
             if tpl is None:
                 self._templates[key] = lambda value: value
             else:
-                tpl opp =self.opp
+                tpl.opp =self.opp
                 self._templates[key] = tpl.async_render_with_possible_json_value
 
     async def _subscribe_topics(self):

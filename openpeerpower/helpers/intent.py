@@ -65,7 +65,7 @@ async def async_handle(
     if context is None:
         context = Context()
 
-    intent = Intent.opp, platform, intent_type, slots or {}, text_input, context)
+    intent = Intent(opp, platform, intent_type, slots or {}, text_input, context)
 
     try:
         _LOGGER.info("Triggering intent handler %s", handler)

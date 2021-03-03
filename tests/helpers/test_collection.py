@@ -161,7 +161,7 @@ async def test_yaml_collection_skipping_duplicate_ids():
 
 async def test_storage_collection(opp):
     """Test storage collection."""
-    store = storage.Store.opp, 1, "test-data")
+    store = storage. Store(opp, 1, "test-data")
     await store.async_save(
         {
             "items": [
@@ -213,7 +213,7 @@ async def test_storage_collection(opp):
 
     await flush_store(store)
 
-    assert await storage.Store.opp, 1, "test-data").async_load() == {
+    assert await storage. Store(opp, 1, "test-data").async_load() == {
         "items": [
             {"id": "mock-1", "name": "Mock 1", "data": 1},
             {"id": "mock-2", "name": "Mock 2 updated", "data": 2},
@@ -263,7 +263,7 @@ async def test_attach_entity_component_collection(opp):
 
 async def test_storage_collection_websocket(opp, opp_ws_client):
     """Test exposing a storage collection via websockets."""
-    store = storage.Store.opp, 1, "test-data")
+    store = storage. Store(opp, 1, "test-data")
     coll = MockStorageCollection(store, _LOGGER)
     changes = track_changes(coll)
     collection.StorageCollectionWebsocket(

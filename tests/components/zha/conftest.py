@@ -207,7 +207,7 @@ def zha_device_mock(opp, zigpy_device_mock):
         zigpy_device = zigpy_device_mock(
             endpoints, ieee, manufacturer, model, node_desc, patch_cluster=patch_cluster
         )
-        zha_device = zha_core_device.ZHADevice.opp, zigpy_device, MagicMock())
+        zha_device = zha_core_device.ZHADevice(opp, zigpy_device, MagicMock())
         return zha_device
 
     return _zha_device

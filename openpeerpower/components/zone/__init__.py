@@ -189,7 +189,7 @@ async def async_setup(opp: OpenPeerPower, config: Dict) -> bool:
     )
 
     storage_collection = ZoneStorageCollection(
-        storage.Store.opp, STORAGE_VERSION, STORAGE_KEY),
+        storage. Store(opp, STORAGE_VERSION, STORAGE_KEY),
         logging.getLogger(f"{__name__}.storage_collection"),
         id_manager,
     )

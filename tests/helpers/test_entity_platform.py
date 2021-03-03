@@ -488,7 +488,7 @@ async def test_overriding_name_from_registry(opp):
 async def test_registry_respect_entity_namespace(opp):
     """Test that the registry respects entity namespace."""
     mock_registry(opp)
-    platform = MockEntityPlatform.opp, entity_namespace="ns")
+    platform = MockEntityPlatform(opp, entity_namespace="ns")
     entity = MockEntity(unique_id="1234", name="Device Name")
     await platform.async_add_entities([entity])
     assert entity.entity_id == "test_domain.ns_device_name"

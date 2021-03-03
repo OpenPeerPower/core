@@ -120,7 +120,7 @@ async def _async_setup_entity(
     opp, async_add_entities, config, config_entry=None, discovery_data=None
 ):
     """Set up the MQTT Alarm Control Panel platform."""
-    async_add_entities([MqttAlarm.opp, config, config_entry, discovery_data)])
+    async_add_entities([MqttAlarm(opp, config, config_entry, discovery_data)])
 
 
 class MqttAlarm(MqttEntity, alarm.AlarmControlPanelEntity):
@@ -141,9 +141,9 @@ class MqttAlarm(MqttEntity, alarm.AlarmControlPanelEntity):
         self._config = config
         value_template = self._config.get(CONF_VALUE_TEMPLATE)
         if value_template is not None:
-            value_template opp =self.opp
+            value_template.opp =self.opp
         command_template = self._config[CONF_COMMAND_TEMPLATE]
-        command_template opp =self.opp
+        command_template.opp =self.opp
 
     async def _subscribe_topics(self):
         """(Re)Subscribe to topics."""

@@ -379,7 +379,7 @@ async def test_config_passed_to_config_entry(opp):
         )
 
     assert len(mock_int.mock_calls) == 3
-    p.opp, p_entry = mock_int.mock_calls[0][1]
+    p(opp, p_entry = mock_int.mock_calls[0][1]
 
     assert p.opp is opp
     assert p_entry is entry

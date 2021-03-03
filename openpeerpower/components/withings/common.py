@@ -483,7 +483,7 @@ class ConfigEntryWithingsApi(AbstractWithingsApi):
         self.opp = opp
         self._config_entry = config_entry
         self._implementation = implementation
-        self.session = OAuth2Session.opp, config_entry, implementation)
+        self.session = OAuth2Session(opp, config_entry, implementation)
 
     def _request(
         self, path: str, params: Dict[str, Any], method: str = "GET"

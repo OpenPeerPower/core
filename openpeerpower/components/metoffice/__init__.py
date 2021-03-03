@@ -36,7 +36,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     api_key = entry.data[CONF_API_KEY]
     site_name = entry.data[CONF_NAME]
 
-    metoffice_data = MetOfficeData.opp, api_key, latitude, longitude)
+    metoffice_data = MetOfficeData(opp, api_key, latitude, longitude)
     await metoffice_data.async_update_site()
     if metoffice_data.site_name is None:
         raise ConfigEntryNotReady()

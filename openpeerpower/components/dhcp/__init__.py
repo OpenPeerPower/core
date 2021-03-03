@@ -55,7 +55,7 @@ async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
         watchers = []
 
         for cls in (DHCPWatcher, DeviceTrackerWatcher):
-            watcher = cls.opp, address_data, integration_matchers)
+            watcher = cls(opp, address_data, integration_matchers)
             await watcher.async_start()
             watchers.append(watcher)
 

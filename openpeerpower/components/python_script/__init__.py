@@ -138,11 +138,11 @@ def execute_script(opp, name, data=None):
     raise_if_invalid_filename(filename)
     with open.opp.config.path(FOLDER, filename)) as fil:
         source = fil.read()
-    execute.opp, filename, source, data)
+    execute(opp, filename, source, data)
 
 
 @bind_opp
-def execute.opp, filename, source, data=None):
+def execute(opp, filename, source, data=None):
     """Execute Python source."""
 
     compiled = compile_restricted_exec(source, filename=filename)

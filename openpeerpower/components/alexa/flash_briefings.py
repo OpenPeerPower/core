@@ -34,7 +34,7 @@ FLASH_BRIEFINGS_API_ENDPOINT = "/api/alexa/flash_briefings/{briefing_id}"
 @callback
 def async_setup(opp, flash_briefing_config):
     """Activate Alexa component."""
-    opp.http.register_view(AlexaFlashBriefingView.opp, flash_briefing_config))
+    opp.http.register_view(AlexaFlashBriefingView(opp, flash_briefing_config))
 
 
 class AlexaFlashBriefingView(http.OpenPeerPowerView):

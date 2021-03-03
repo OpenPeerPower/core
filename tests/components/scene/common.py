@@ -9,7 +9,7 @@ from openpeerpower.loader import bind_opp
 
 
 @bind_opp
-def activate.opp, entity_id=ENTITY_MATCH_ALL):
+def activate(opp, entity_id=ENTITY_MATCH_ALL):
     """Activate a scene."""
     data = {}
 

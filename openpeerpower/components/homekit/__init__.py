@@ -237,7 +237,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     port = conf[CONF_PORT]
     _LOGGER.debug("Begin setup HomeKit for %s", name)
 
-    aid_storage = AccessoryAidStorage.opp, entry.entry_id)
+    aid_storage = AccessoryAidStorage(opp, entry.entry_id)
 
     await aid_storage.async_initialize()
     # ip_address and advertise_ip are yaml only

@@ -78,7 +78,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
             auth = HTTPBasicAuth(username, password)
     else:
         auth = None
-    rest = RestData.opp, method, resource, auth, headers, None, payload, verify_ssl)
+    rest = RestData(opp, method, resource, auth, headers, None, payload, verify_ssl)
     await rest.async_update()
 
     if rest.data is None:

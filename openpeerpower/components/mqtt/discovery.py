@@ -204,7 +204,7 @@ async def async_start(
             opp.data[ALREADY_DISCOVERED][discovery_hash] = None
 
             config_entries_key = f"{component}.mqtt"
-            async with.opp.data[DATA_CONFIG_ENTRY_LOCK]:
+            async with opp.data[DATA_CONFIG_ENTRY_LOCK]:
                 if config_entries_key not in opp.data[CONFIG_ENTRY_IS_SETUP]:
                     if component == "device_automation":
                         # Local import to avoid circular dependencies
@@ -264,7 +264,7 @@ async def async_start(
 
             # Lock to prevent initiating many parallel config flows.
             # Note: The lock is not intended to prevent a race, only for performance
-            async with.opp.data[DATA_CONFIG_FLOW_LOCK]:
+            async with opp.data[DATA_CONFIG_FLOW_LOCK]:
                 # Already unsubscribed
                 if key not in opp.data[INTEGRATION_UNSUBSCRIBE]:
                     return
