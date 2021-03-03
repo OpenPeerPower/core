@@ -31,7 +31,7 @@ def setup_scanner(opp, config, see, discovery_info=None):
     see(
         dev_id="demo_home_boy",
         host_name="Home Boy",
-        gps= [opp.config.latitude - 0.00002, opp.config.longitude + 0.00002],
+        gps=[opp.config.latitude - 0.00002, opp.config.longitude + 0.00002],
         gps_accuracy=20,
         battery=53,
     )

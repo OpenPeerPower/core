@@ -132,7 +132,7 @@ def get_plug_devices(opp, entity_configs):
                 if isinstance(power_val, (float, int)):
                     power = float(power_val)
                 elif isinstance(power_val, str):
-                    power = float.opp.states.get(power_val).state)
+                    power = float(opp.states.get(power_val).state)
                 elif isinstance(power_val, Template):
                     power = float(power_val.async_render())
             elif ATTR_CURRENT_POWER_W in state.attributes:

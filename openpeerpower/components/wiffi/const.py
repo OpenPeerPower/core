@@ -1,6 +1,6 @@
 """Constants for the wiffi component."""
 
-# Component domain, used to store component data in.opp data.
+# Component domain, used to store component data in opp data.
 DOMAIN = "wiffi"
 
 # Default port for TCP server

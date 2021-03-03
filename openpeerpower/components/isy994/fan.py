@@ -29,10 +29,10 @@ async def async_setup_entry(
     opp.isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
     devices = []
 
-    for node in.opp_isy_data[ISY994_NODES][FAN]:
+    for node in opp_isy_data[ISY994_NODES][FAN]:
         devices.append(ISYFanEntity(node))
 
-    for name, status, actions in.opp_isy_data[ISY994_PROGRAMS][FAN]:
+    for name, status, actions in opp_isy_data[ISY994_PROGRAMS][FAN]:
         devices.append(ISYFanProgramEntity(name, status, actions))
 
     await migrate_old_unique_ids(opp, FAN, devices)

@@ -582,7 +582,7 @@ async def test_on_with_speed(opp, calls):
 
     # verify
     assert opp.states.get(_STATE_INPUT_BOOLEAN).state == STATE_ON
-    assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 100
+    assert int(float(opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 100
     _verify(opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
 
 
@@ -626,25 +626,25 @@ async def test_set_percentage(opp, calls):
     await common.async_set_percentage(opp, _TEST_FAN, 100)
 
     # verify
-    assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 100
+    assert int(float(opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 100
 
     _verify(opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
 
     # Set fan's percentage speed to 66
     await common.async_set_percentage(opp, _TEST_FAN, 66)
-    assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 66
+    assert int(float(opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 66
 
     _verify(opp, STATE_ON, SPEED_MEDIUM, 66, None, None, None)
 
     # Set fan's percentage speed to 0
     await common.async_set_percentage(opp, _TEST_FAN, 0)
-    assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 0
+    assert int(float(opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 0
 
     _verify(opp, STATE_OFF, SPEED_OFF, 0, None, None, None)
 
     # Set fan's percentage speed to 50
     await common.async_turn_on(opp, _TEST_FAN, percentage=50)
-    assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 50
+    assert int(float(opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 50
 
     _verify(opp, STATE_ON, SPEED_MEDIUM, 50, None, None, None)
 
@@ -660,31 +660,31 @@ async def test_increase_decrease_speed(opp, calls):
     await common.async_set_percentage(opp, _TEST_FAN, 100)
 
     # verify
-    assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 100
+    assert int(float(opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 100
 
     _verify(opp, STATE_ON, SPEED_HIGH, 100, None, None, None)
 
     # Set fan's percentage speed to 66
     await common.async_decrease_speed(opp, _TEST_FAN)
-    assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 66
+    assert int(float(opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 66
 
     _verify(opp, STATE_ON, SPEED_MEDIUM, 66, None, None, None)
 
     # Set fan's percentage speed to 33
     await common.async_decrease_speed(opp, _TEST_FAN)
-    assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 33
+    assert int(float(opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 33
 
     _verify(opp, STATE_ON, SPEED_LOW, 33, None, None, None)
 
     # Set fan's percentage speed to 0
     await common.async_decrease_speed(opp, _TEST_FAN)
-    assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 0
+    assert int(float(opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 0
 
     _verify(opp, STATE_OFF, SPEED_OFF, 0, None, None, None)
 
     # Set fan's percentage speed to 33
     await common.async_increase_speed(opp, _TEST_FAN)
-    assert int(float.opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 33
+    assert int(float(opp.states.get(_PERCENTAGE_INPUT_NUMBER).state)) == 33
 
     _verify(opp, STATE_ON, SPEED_LOW, 33, None, None, None)
 

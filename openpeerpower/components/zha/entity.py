@@ -193,7 +193,7 @@ class ZhaEntity(BaseZhaEntity, RestoreEntity):
 
     async def async_will_remove_from_opp(self) -> None:
         """Disconnect entity object when removed."""
-        await super().async_will_remove_from(opp()
+        await super().async_will_remove_from_opp()
         self.zha_device.gateway.remove_entity_reference(self)
         self.remove_future.set_result(True)
 
@@ -271,7 +271,7 @@ class ZhaGroupEntity(BaseZhaEntity):
 
     async def async_will_remove_from_opp(self) -> None:
         """Handle removal from Open Peer Power."""
-        await super().async_will_remove_from(opp()
+        await super().async_will_remove_from_opp()
         if self._async_unsub_state_changed is not None:
             self._async_unsub_state_changed()
             self._async_unsub_state_changed = None

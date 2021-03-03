@@ -197,7 +197,7 @@ async def _async_setup_component(
 
     try:
         if hasattr(component, "async_setup"):
-            task = component.async_setup_opp, processed_config)  # type: ignore
+            task = component.async_setup(opp, processed_config)  # type: ignore
         elif hasattr(component, "setup"):
             # This should not be replaced with.opp.async_add_executor_job because
             # we don't want to track this task in case it blocks startup.
@@ -249,7 +249,7 @@ async def _async_setup_component(
 
     await asyncio.gather(
         *[
-            entry.async_setup_opp, integration=integration)
+            entry.async_setup(opp, integration=integration)
             for entry in opp.config_entries.async_entries(domain)
         ]
     )

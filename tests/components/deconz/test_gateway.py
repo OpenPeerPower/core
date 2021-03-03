@@ -123,7 +123,7 @@ async def setup_deconz_integration(
     return config_entry
 
 
-async def test_gateway_setup_opp, aioclient_mock):
+async def test_gateway_setup(opp, aioclient_mock):
     """Successful setup."""
     with patch(
         "openpeerpower.config_entries.ConfigEntries.async_forward_entry_setup",
@@ -228,7 +228,7 @@ async def test_gateway_trigger_reauth_flow(opp):
     assert opp.data[DECONZ_DOMAIN] == {}
 
 
-async def test_reset_after_successful_setup_opp, aioclient_mock):
+async def test_reset_after_successful_setup(opp, aioclient_mock):
     """Make sure that connection status triggers a dispatcher send."""
     config_entry = await setup_deconz_integration(opp, aioclient_mock)
     gateway = get_gateway_from_config_entry(opp, config_entry)

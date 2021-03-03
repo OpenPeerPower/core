@@ -415,7 +415,7 @@ class Light(BaseLight, ZhaEntity):
     async def async_will_remove_from_opp(self) -> None:
         """Disconnect entity object when removed."""
         self._cancel_refresh_handle()
-        await super().async_will_remove_from(opp()
+        await super().async_will_remove_from_opp()
 
     @callback
     def async_restore_last_state(self, last_state):

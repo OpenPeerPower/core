@@ -45,7 +45,7 @@ async def async_setup_events(gateway) -> None:
 def async_unload_events(gateway) -> None:
     """Unload all deCONZ events."""
     for event in gateway.events:
-        event.async_will_remove_from(opp()
+        event.async_will_remove_from_opp()
 
     gateway.events.clear()
 
@@ -54,7 +54,7 @@ class DeconzEvent(DeconzBase):
     """When you want signals instead of entities.
 
     Stateless sensors such as remotes are expected to generate an event
-    instead of a sensor entity in.opp,
+    instead of a sensor entity in opp,
     """
 
     def __init__(self, device, gateway):

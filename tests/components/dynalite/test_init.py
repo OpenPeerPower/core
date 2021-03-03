@@ -20,7 +20,7 @@ async def test_empty_config(opp):
     assert len(opp.config_entries.async_entries(dynalite.DOMAIN)) == 0
 
 
-async def test_async_setup_opp):
+async def test_async_setup(opp):
     """Test a successful setup with all of the different options."""
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices.async_setup",

@@ -143,7 +143,7 @@ async def test_ws_current_user(opp, opp_ws_client, opp_access_token):
     opp.cred = user_dict["credentials"][0]
     assert opp_cred["auth_provider_type"] == "openpeerpower"
     assert opp_cred["auth_provider_id"] is None
-    assert "data" not in.opp_cred
+    assert "data" not in opp_cred
 
 
 async def test_cors_on_token(opp, aiohttp_client):

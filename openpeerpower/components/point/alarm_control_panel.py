@@ -55,7 +55,7 @@ class MinutPointAlarmControl(AlarmControlPanelEntity):
 
     async def async_will_remove_from_opp(self):
         """Disconnect dispatcher listener when removed."""
-        await super().async_will_remove_from(opp()
+        await super().async_will_remove_from_opp()
         if self._async_unsub_hook_dispatcher_connect:
             self._async_unsub_hook_dispatcher_connect()
 

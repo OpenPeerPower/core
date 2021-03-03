@@ -42,7 +42,7 @@ async def mock_panel_fixture():
         yield konn_client
 
 
-async def test_create_and_setup_opp, mock_panel):
+async def test_create_and_setup(opp, mock_panel):
     """Test that we create a Konnected Panel and save the data."""
     device_config = config_flow.CONFIG_ENTRY_SCHEMA(
         {

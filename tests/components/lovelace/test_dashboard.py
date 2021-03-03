@@ -98,7 +98,7 @@ async def test_lovelace_from_storage_delete(opp, opp_ws_client, opp_storage):
     await client.send_json({"id": 7, "type": "lovelace/config/delete"})
     response = await client.receive_json()
     assert response["success"]
-    assert dashboard.CONFIG_STORAGE_KEY_DEFAULT not in.opp_storage
+    assert dashboard.CONFIG_STORAGE_KEY_DEFAULT not in opp_storage
 
     # Fetch data
     await client.send_json({"id": 8, "type": "lovelace/config"})
@@ -424,7 +424,7 @@ async def test_storage_dashboards(opp, opp_ws_client, opp_storage):
     assert response["success"]
 
     assert "created-url-path" not in opp.data[frontend.DATA_PANELS]
-    assert dashboard.CONFIG_STORAGE_KEY.format(dashboard_id) not in.opp_storage
+    assert dashboard.CONFIG_STORAGE_KEY.format(dashboard_id) not in opp_storage
 
 
 async def test_storage_dashboard_migrate(opp, opp_ws_client, opp_storage):

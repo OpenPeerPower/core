@@ -95,7 +95,7 @@ async def async_setup_entry(opp, entry):
 
     opp.data[DOMAIN]["context"] = context
 
-    async_when_setup_opp, "mqtt", async_connect_mqtt)
+    async_when_setup(opp, "mqtt", async_connect_mqtt)
 
     opp.components.webhook.async_register(
         DOMAIN, "OwnTracks", webhook_id, handle_webhook

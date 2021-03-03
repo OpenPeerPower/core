@@ -26,7 +26,7 @@ from tests.components.gdacs import _generate_mock_feed_entry
 CONFIG = {gdacs.DOMAIN: {CONF_RADIUS: 200}}
 
 
-async def test_setup_opp, legacy_patchable_time):
+async def test_setup(opp, legacy_patchable_time):
     """Test the general setup of the integration."""
     # Set up some mock feed entries for this test.
     mock_entry_1 = _generate_mock_feed_entry(

@@ -94,7 +94,7 @@ def hd_position_to_opp(hd_position):
 
 def opp_position_to_hd(opp_positon):
     """Convert opp position to hunter douglas position."""
-    return int.opp_positon / 100 * MAX_POSITION)
+    return int(opp_positon / 100 * MAX_POSITION)
 
 
 class PowerViewShade(ShadeEntity, CoverEntity):
@@ -174,26 +174,26 @@ class PowerViewShade(ShadeEntity, CoverEntity):
             return
         await self._async_move(kwargs[ATTR_POSITION])
 
-    async def _async_move(self, target.opp_position):
+    async def _async_move(self, target_opp_position):
         """Move the shade to a position."""
-        current.opp_position = hd_position_to_opp(self._current_cover_position)
-        steps_to_move = abs(current.opp_position - target.opp_position)
+        current_opp_position = hd_position_to_opp(self._current_cover_position)
+        steps_to_move = abs(current_opp_position - target_opp_position)
         if not steps_to_move:
             return
         self._async_schedule_update_for_transition(steps_to_move)
         self._async_update_from_command(
             await self._shade.move(
                 {
-                    ATTR_POSITION1:.opp_position_to_hd(target.opp_position),
+                    ATTR_POSITION1: opp_position_to_hd(target_opp_position),
                     ATTR_POSKIND1: 1,
                 }
             )
         )
         self._is_opening = False
         self._is_closing = False
-        if target.opp_position > current.opp_position:
+        if target_opp_position > current_opp_position:
             self._is_opening = True
-        elif target.opp_position < current.opp_position:
+        elif target_opp_position < current_opp_position:
             self._is_closing = True
         self.async_write_op_state()
 

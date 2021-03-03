@@ -246,7 +246,7 @@ class RestoreEntity(Entity):
         """Run when entity will be removed from opp."""
         assert self.opp is not None
         _, data = await asyncio.gather(
-            super().async_internal_will_remove_from(opp(),
+            super().async_internal_will_remove_from_opp(),
             RestoreStateData.async_get_instance(self.opp),
         )
         data.async_restore_entity_removed(self.entity_id)

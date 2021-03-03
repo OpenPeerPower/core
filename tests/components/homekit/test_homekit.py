@@ -172,7 +172,7 @@ async def test_setup_auto_start_disabled(opp, mock_zeroconf):
     assert homekit.async_start.called is False
 
 
-async def test_homekit_setup_opp, hk_driver, mock_zeroconf):
+async def test_homekit_setup(opp, hk_driver, mock_zeroconf):
     """Test setup of bridge and driver."""
     entry = MockConfigEntry(
         domain=DOMAIN,

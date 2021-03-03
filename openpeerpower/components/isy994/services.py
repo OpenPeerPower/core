@@ -280,16 +280,16 @@ def async_setup_services(opp: OpenPeerPowerType):
             uuid = opp_isy_data[ISY994_ISY].configuration["uuid"]
 
             for platform in SUPPORTED_PLATFORMS:
-                for node in.opp_isy_data[ISY994_NODES][platform]:
+                for node in opp_isy_data[ISY994_NODES][platform]:
                     if hasattr(node, "address"):
                         current_unique_ids.append(f"{uuid}_{node.address}")
 
             for platform in SUPPORTED_PROGRAM_PLATFORMS:
-                for _, node, _ in.opp_isy_data[ISY994_PROGRAMS][platform]:
+                for _, node, _ in opp_isy_data[ISY994_PROGRAMS][platform]:
                     if hasattr(node, "address"):
                         current_unique_ids.append(f"{uuid}_{node.address}")
 
-            for node in.opp_isy_data[ISY994_VARIABLES]:
+            for node in opp_isy_data[ISY994_VARIABLES]:
                 if hasattr(node, "address"):
                     current_unique_ids.append(f"{uuid}_{node.address}")
 

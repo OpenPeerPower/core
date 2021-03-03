@@ -68,7 +68,7 @@ class AwairDataUpdateCoordinator(DataUpdateCoordinator):
         self._awair = Awair(access_token=access_token, session=session)
         self._config_entry = config_entry
 
-        super().__init__.opp, LOGGER, name=DOMAIN, update_interval=UPDATE_INTERVAL)
+        super().__init__(opp, LOGGER, name=DOMAIN, update_interval=UPDATE_INTERVAL)
 
     async def _async_update_data(self) -> Optional[Any]:
         """Update data via Awair client library."""

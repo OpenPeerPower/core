@@ -29,7 +29,7 @@ async def test_setup_with_config(opp):
     assert await async_setup_component(opp, "sensor", {"wsdot": config})
 
 
-async def test_setup_opp, requests_mock):
+async def test_setup(opp, requests_mock):
     """Test for operational WSDOT sensor with proper attributes."""
     entities = []
 

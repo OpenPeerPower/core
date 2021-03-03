@@ -57,8 +57,8 @@ async def async_attach_trigger(
             return
 
         zone_state = opp.states.get(zone_entity_id)
-        from_match = condition.zone.opp, zone_state, from_s) if from_s else False
-        to_match = condition.zone.opp, zone_state, to_s) if to_s else False
+        from_match = condition.zone(opp, zone_state, from_s) if from_s else False
+        to_match = condition.zone(opp, zone_state, to_s) if to_s else False
 
         if (
             event == EVENT_ENTER
@@ -69,7 +69,7 @@ async def async_attach_trigger(
             and not to_match
         ):
             description = f"{entity} {_EVENT_DESCRIPTION[event]} {zone_state.attributes[ATTR_FRIENDLY_NAME]}"
-            opp.async_run(opp_job(
+            opp.async_run_opp_job(
                 job,
                 {
                     "trigger": {

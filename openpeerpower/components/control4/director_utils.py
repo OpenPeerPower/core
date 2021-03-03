@@ -55,7 +55,7 @@ async def refresh_tokens(opp: OpenPeerPower, entry: ConfigEntry):
     )
     director_token_expiry = director_token_dict["token_expiration"]
 
-    _LOGGER.debug("Saving new tokens in.opp data")
+    _LOGGER.debug("Saving new tokens in opp data")
     entry_data = opp.data[DOMAIN][entry.entry_id]
     entry_data[CONF_ACCOUNT] = account
     entry_data[CONF_DIRECTOR] = director

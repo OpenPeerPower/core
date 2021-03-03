@@ -97,9 +97,9 @@ class APIEventStream(OpenPeerPowerView):
 
     async def get(self, request):
         """Provide a streaming interface for the event bus."""
-        if not request[.opp_user"].is_admin:
+        if not request["opp_user"].is_admin:
             raise Unauthorized()
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         stop_obj = object()
         to_write = asyncio.Queue()
 
@@ -182,7 +182,7 @@ class APIDiscoveryView(OpenPeerPowerView):
 
     async def get(self, request):
         """Get discovery information."""
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         uuid = await opp.helpers.instance_id.async_get()
         system_info = await async_get_system_info(opp)
 
@@ -191,7 +191,7 @@ class APIDiscoveryView(OpenPeerPowerView):
             ATTR_BASE_URL: None,
             ATTR_EXTERNAL_URL: None,
             ATTR_INTERNAL_URL: None,
-            ATTR_LOCATION_NAME:.opp.config.location_name,
+            ATTR_LOCATION_NAME: opp.config.location_name,
             ATTR_INSTALLATION_TYPE: system_info[ATTR_INSTALLATION_TYPE],
             # always needs authentication
             ATTR_REQUIRES_API_PASSWORD: True,
@@ -223,7 +223,7 @@ class APIStatesView(OpenPeerPowerView):
     @op.callback
     def get(self, request):
         """Get current states."""
-        user = request[.opp_user"]
+        user = request["opp_user"]
         entity_perm = user.permissions.check_entity
         states = [
             state
@@ -242,7 +242,7 @@ class APIEntityStateView(OpenPeerPowerView):
     @op.callback
     def get(self, request, entity_id):
         """Retrieve state of entity."""
-        user = request[.opp_user"]
+        user = request["opp_user"]
         if not user.permissions.check_entity(entity_id, POLICY_READ):
             raise Unauthorized(entity_id=entity_id)
 
@@ -253,9 +253,9 @@ class APIEntityStateView(OpenPeerPowerView):
 
     async def post(self, request, entity_id):
         """Update state of entity."""
-        if not request[.opp_user"].is_admin:
+        if not request["opp_user"].is_admin:
             raise Unauthorized(entity_id=entity_id)
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         try:
             data = await request.json()
         except ValueError:
@@ -278,7 +278,7 @@ class APIEntityStateView(OpenPeerPowerView):
 
         # Read the state back for our response
         status_code = HTTP_CREATED if is_new_state else HTTP_OK
-        resp = self.json.opp.states.get(entity_id), status_code)
+        resp = self.json(opp.states.get(entity_id), status_code)
 
         resp.headers.add("Location", f"/api/states/{entity_id}")
 
@@ -287,7 +287,7 @@ class APIEntityStateView(OpenPeerPowerView):
     @op.callback
     def delete(self, request, entity_id):
         """Remove entity."""
-        if not request[.opp_user"].is_admin:
+        if not request["opp_user"].is_admin:
             raise Unauthorized(entity_id=entity_id)
         if request.app["opp"].states.async_remove(entity_id):
             return self.json_message("Entity removed.")
@@ -314,7 +314,7 @@ class APIEventView(OpenPeerPowerView):
 
     async def post(self, request, event_type):
         """Fire events."""
-        if not request[.opp_user"].is_admin:
+        if not request["opp_user"].is_admin:
             raise Unauthorized()
         body = await request.text()
         try:
@@ -368,7 +368,7 @@ class APIDomainServicesView(OpenPeerPowerView):
 
         Returns a list of changed states.
         """
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         body = await request.text()
         try:
             data = json.loads(body) if body else None
@@ -406,7 +406,7 @@ class APITemplateView(OpenPeerPowerView):
 
     async def post(self, request):
         """Render a template."""
-        if not request[.opp_user"].is_admin:
+        if not request["opp_user"].is_admin:
             raise Unauthorized()
         try:
             data = await request.json()
@@ -426,7 +426,7 @@ class APIErrorLog(OpenPeerPowerView):
 
     async def get(self, request):
         """Retrieve API error log."""
-        if not request[.opp_user"].is_admin:
+        if not request["opp_user"].is_admin:
             raise Unauthorized()
         return web.FileResponse(request.app["opp"].data[DATA_LOGGING])
 

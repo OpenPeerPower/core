@@ -66,7 +66,7 @@ class RingBinarySensor(RingEntityMixin, BinarySensorEntity):
 
     async def async_will_remove_from_opp(self):
         """Disconnect callbacks."""
-        await super().async_will_remove_from(opp()
+        await super().async_will_remove_from_opp()
         self.ring_objects["dings_data"].async_remove_listener(
             self._dings_update_callback
         )

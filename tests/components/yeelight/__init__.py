@@ -99,7 +99,7 @@ def _mocked_bulb(cannot_connect=False):
 
 
 def _patch_discovery(prefix, no_device=False):
-    YeelightScanner._scanner = None  # Clear class scanner to reset.opp
+    YeelightScanner._scanner = None  # Clear class scanner to reset opp
 
     def _mocked_discovery(timeout=2, interface=False):
         if no_device:

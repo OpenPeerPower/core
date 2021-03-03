@@ -139,7 +139,7 @@ async def test_update_state_adds_entities_with_update_before_add_false(opp):
 async def test_set_scan_interval_via_platform(mock_track, opp):
     """Test the setting of the scan interval via platform."""
 
-    def platform_setup_opp, config, add_entities, discovery_info=None):
+    def platform_setup(opp, config, add_entities, discovery_info=None):
         """Test the platform setup."""
         add_entities([MockEntity(should_poll=True)])
 
@@ -197,7 +197,7 @@ async def test_platform_warn_slow_setup_opp):
         assert mock_call().cancel.called
 
 
-async def test_platform_error_slow_setup_opp, caplog):
+async def test_platform_error_slow_setup(opp, caplog):
     """Don't block startup more than SLOW_SETUP_MAX_WAIT."""
     with patch.object(entity_platform, "SLOW_SETUP_MAX_WAIT", 0):
         called = []
@@ -874,7 +874,7 @@ async def test_override_restored_entities(opp):
     assert state.state == "on"
 
 
-async def test_platform_with_no_setup_opp, caplog):
+async def test_platform_with_no_setup(opp, caplog):
     """Test setting up a platform that does not support setup."""
     entity_platform = MockEntityPlatform(
         opp, domain="mock-integration", platform_name="mock-platform", platform=None

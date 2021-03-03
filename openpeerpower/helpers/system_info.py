@@ -22,7 +22,7 @@ async def async_get_system_info(opp: OpenPeerPowerType) -> Dict[str, Any]:
         "python_version": platform.python_version(),
         "docker": False,
         "arch": platform.machine(),
-        "timezone": str.opp.config.time_zone),
+        "timezone": str(opp.config.time_zone),
         "os_name": platform.system(),
         "os_version": platform.release(),
     }

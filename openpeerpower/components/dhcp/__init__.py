@@ -140,7 +140,7 @@ class DeviceTrackerWatcher(WatcherBase):
 
     def __init__(self, opp, address_data, integration_matchers):
         """Initialize class."""
-        super().__init__.opp, address_data, integration_matchers)
+        super().__init__(opp, address_data, integration_matchers)
         self._unsub = None
 
     async def async_stop(self):
@@ -192,7 +192,7 @@ class DHCPWatcher(WatcherBase):
 
     def __init__(self, opp, address_data, integration_matchers):
         """Initialize class."""
-        super().__init__.opp, address_data, integration_matchers)
+        super().__init__(opp, address_data, integration_matchers)
         self._sniffer = None
         self._started = threading.Event()
 

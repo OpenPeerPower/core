@@ -222,13 +222,13 @@ def setup(opp, config):
     """Set up the IHC platform."""
     conf = config.get(DOMAIN)
     for index, controller_conf in enumerate(conf):
-        if not ihc_setup_opp, config, controller_conf, index):
+        if not ihc_setup(opp, config, controller_conf, index):
             return False
 
     return True
 
 
-def ihc_setup_opp, config, conf, controller_id):
+def ihc_setup(opp, config, conf, controller_id):
     """Set up the IHC component."""
     url = conf[CONF_URL]
     username = conf[CONF_USERNAME]

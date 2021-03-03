@@ -10,7 +10,7 @@ from tests.common import CLIENT_ID, MockUser
 @pytest.fixture(autouse=True)
 async def setup_config(opp, local_auth):
     """Fixture that sets up the auth provider ."""
-    await auth_op.async_setup_opp)
+    await auth_op.async_setup(opp)
 
 
 @pytest.fixture
@@ -131,7 +131,7 @@ async def test_create_auth(opp, opp_ws_client, opp_storage):
     assert creds.auth_provider_type == "openpeerpower"
     assert creds.auth_provider_id is None
     assert creds.data == {"username": "test-user2"}
-    assert prov_op.STORAGE_KEY in.opp_storage
+    assert prov_op.STORAGE_KEY in opp_storage
     entry = opp_storage[prov_op.STORAGE_KEY]["data"]["users"][1]
     assert entry["username"] == "test-user2"
 

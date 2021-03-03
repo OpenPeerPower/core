@@ -269,7 +269,7 @@ class ConfigEntry:
             async def setup_again(now: Any) -> None:
                 """Run setup again."""
                 self._async_cancel_retry_setup = None
-                await self.async_setup_opp, integration=integration, tries=tries)
+                await self.async_setup(opp, integration=integration, tries=tries)
 
             self._async_cancel_retry_setup = opp.helpers.event.async_call_later(
                 wait_time, setup_again

@@ -32,11 +32,11 @@ async def async_setup_entry(
     opp.isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
     devices = []
 
-    for node in.opp_isy_data[ISY994_NODES][SENSOR]:
+    for node in opp_isy_data[ISY994_NODES][SENSOR]:
         _LOGGER.debug("Loading %s", node.name)
         devices.append(ISYSensorEntity(node))
 
-    for vname, vobj in.opp_isy_data[ISY994_VARIABLES]:
+    for vname, vobj in opp_isy_data[ISY994_VARIABLES]:
         devices.append(ISYSensorVariableEntity(vname, vobj))
 
     await migrate_old_unique_ids(opp, SENSOR, devices)

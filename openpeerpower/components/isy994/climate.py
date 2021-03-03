@@ -67,7 +67,7 @@ async def async_setup_entry(
     entities = []
 
     opp.isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
-    for node in.opp_isy_data[ISY994_NODES][CLIMATE]:
+    for node in opp_isy_data[ISY994_NODES][CLIMATE]:
         entities.append(ISYThermostatEntity(node))
 
     await migrate_old_unique_ids(opp, CLIMATE, entities)

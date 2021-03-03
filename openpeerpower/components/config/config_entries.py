@@ -16,7 +16,7 @@ from openpeerpower.helpers.data_entry_flow import (
 from openpeerpower.loader import async_get_config_flows
 
 
-async def async_setup_opp):
+async def async_setup(opp):
     """Enable the Open Peer Power views."""
     opp.http.register_view(ConfigManagerEntryIndexView)
     opp.http.register_view(ConfigManagerEntryResourceView)

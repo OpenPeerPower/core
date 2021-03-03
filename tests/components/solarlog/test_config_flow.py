@@ -99,7 +99,7 @@ async def test_import(opp, test_connect):
     assert result["data"][CONF_HOST] == HOST
 
 
-async def test_abort_if_already_setup_opp, test_connect):
+async def test_abort_if_already_setup(opp, test_connect):
     """Test we abort if the device is already setup."""
     flow = init_config_flow(opp)
     MockConfigEntry(

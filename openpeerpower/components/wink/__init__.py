@@ -208,7 +208,7 @@ WINK_COMPONENTS = [
 WINK_HUBS = []
 
 
-def _request_app_setup_opp, config):
+def _request_app_setup(opp, config):
     """Assist user with configuring the Wink dev application."""
     opp.data[DOMAIN]["configurator"] = True
     configurator = opp.components.configurator
@@ -323,12 +323,12 @@ def setup(opp, config):
         if os.path.isfile(config_path):
             config_file = load_json(config_path)
             if config_file == DEFAULT_CONFIG:
-                _request_app_setup_opp, config)
+                _request_app_setup(opp, config)
                 return True
             # else move on because the user modified the file
         else:
             save_json(config_path, DEFAULT_CONFIG)
-            _request_app_setup_opp, config)
+            _request_app_setup(opp, config)
             return True
 
         if DOMAIN in opp.data[DOMAIN]["configuring"]:

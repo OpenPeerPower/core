@@ -25,7 +25,7 @@ def mock_responses(mock, single=False):
     )
 
 
-async def test_setup_opp, requests_mock):
+async def test_setup(opp, requests_mock):
     """Test the setup."""
     mock_responses(requests_mock)
 

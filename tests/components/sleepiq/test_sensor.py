@@ -9,7 +9,7 @@ from tests.components.sleepiq.test_init import mock_responses
 CONFIG = {"username": "foo", "password": "bar"}
 
 
-async def test_setup_opp, requests_mock):
+async def test_setup(opp, requests_mock):
     """Test for successfully setting up the SleepIQ platform."""
     mock_responses(requests_mock)
 

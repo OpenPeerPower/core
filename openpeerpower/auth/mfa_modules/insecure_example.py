@@ -30,7 +30,7 @@ class InsecureExampleModule(MultiFactorAuthModule):
 
     def __init__(self, opp: OpenPeerPower, config: Dict[str, Any]) -> None:
         """Initialize the user data store."""
-        super().__init__.opp, config)
+        super().__init__(opp, config)
         self._data = config["data"]
 
     @property

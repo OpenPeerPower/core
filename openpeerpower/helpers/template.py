@@ -1418,9 +1418,9 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
                 "now",
             ]
             opp.filters = ["closest", "expand"]
-            for glob in.opp_globals:
+            for glob in opp_globals:
                 self.globals[glob] = unsupported(glob)
-            for filt in.opp_filters:
+            for filt in opp_filters:
                 self.filters[filt] = unsupported(filt)
             return
 

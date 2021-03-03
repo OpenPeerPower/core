@@ -23,7 +23,7 @@ class AsteriskCDR(Mailbox):
 
     def __init__(self, opp, name):
         """Initialize Asterisk CDR."""
-        super().__init__.opp, name)
+        super().__init__(opp, name)
         self.cdr = []
         async_dispatcher_connect(self.opp, SIGNAL_CDR_UPDATE, self._update_callback)
 

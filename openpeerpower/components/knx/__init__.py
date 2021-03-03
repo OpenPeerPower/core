@@ -251,7 +251,7 @@ async def async_setup(opp, config):
             *[platform.async_reset() for platform in async_get_platforms(opp, DOMAIN)]
         )
 
-        await async_setup_opp, config)
+        await async_setup(opp, config)
 
     async_register_admin_service(
         opp, DOMAIN, SERVICE_RELOAD, reload_service_handler, schema=vol.Schema({})

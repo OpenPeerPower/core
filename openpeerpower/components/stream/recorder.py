@@ -81,7 +81,7 @@ class RecorderOutput(StreamOutput):
 
     def __init__(self, opp: OpenPeerPower, idle_timer: IdleTimer) -> None:
         """Initialize recorder output."""
-        super().__init__.opp, idle_timer)
+        super().__init__(opp, idle_timer)
         self.video_path = None
         self._segments = []
 

@@ -36,7 +36,7 @@ async def test_storage_is_removed(opp, opp_storage):
     entity_map.async_create_or_update_map(hkid, 1, [])
     assert hkid in entity_map.storage_data
     await flush_store(entity_map.store)
-    assert hkid in.opp_storage[ENTITY_MAP]["data"]["pairings"]
+    assert hkid in opp_storage[ENTITY_MAP]["data"]["pairings"]
 
     entity_map.async_delete_map(hkid)
     assert hkid not in opp.data[ENTITY_MAP].storage_data
@@ -78,7 +78,7 @@ async def test_storage_is_updated_on_add(opp, opp_storage, utcnow):
 
     # Is saved out to store?
     await flush_store(entity_map.store)
-    assert hkid in.opp_storage[ENTITY_MAP]["data"]["pairings"]
+    assert hkid in opp_storage[ENTITY_MAP]["data"]["pairings"]
 
 
 async def test_storage_is_removed_on_config_entry_removal(opp, utcnow):

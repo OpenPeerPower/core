@@ -465,7 +465,7 @@ class LeafEntity(Entity):
         self.log_registration()
         self.async_on_remove(
             async_dispatcher_connect(
-                self.car(opp, SIGNAL_UPDATE_LEAF, self._update_callback
+                self.car.opp, SIGNAL_UPDATE_LEAF, self._update_callback
             )
         )
 

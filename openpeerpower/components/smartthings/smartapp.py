@@ -181,11 +181,11 @@ async def update_app(opp: OpenPeerPowerType, app):
 
 def setup_smartapp(opp, app):
     """
-    Configure an individual SmartApp in.opp,
+    Configure an individual SmartApp in opp,
 
     Register the SmartApp with the SmartAppManager so that.opp will service
     lifecycle events (install, event, etc...).  A unique SmartApp is created
-    for each SmartThings account that is configured in.opp,
+    for each SmartThings account that is configured in opp,
     """
     manager = opp.data[DOMAIN][DATA_MANAGER]
     smartapp = manager.smartapps.get(app.app_id)
@@ -201,7 +201,7 @@ def setup_smartapp(opp, app):
 
 async def setup_smartapp_endpoint(opp: OpenPeerPowerType):
     """
-    Configure the SmartApp webhook in.opp,
+    Configure the SmartApp webhook in opp,
 
     SmartApps are an extension point within the SmartThings ecosystem and
     is used to receive push updates (i.e. device updates) from the cloud.

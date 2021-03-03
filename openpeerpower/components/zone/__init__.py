@@ -204,7 +204,7 @@ async def async_setup(opp: OpenPeerPower, config: Dict) -> bool:
 
     collection.StorageCollectionWebsocket(
         storage_collection, DOMAIN, DOMAIN, CREATE_FIELDS, UPDATE_FIELDS
-    ).async_setup_opp)
+    ).async_setup(opp)
 
     async def reload_service_handler(service_call: ServiceCall) -> None:
         """Remove all zones and load new ones from config."""

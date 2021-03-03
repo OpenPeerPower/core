@@ -96,7 +96,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     )
 
     opp.bus.async_listen_once(
-        EVENT_OPENPEERPOWER_STOP, sensor.async_will_remove_from(opp()
+        EVENT_OPENPEERPOWER_STOP, sensor.async_will_remove_from_opp()
     )
 
     async_add_entities([sensor])

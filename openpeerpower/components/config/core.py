@@ -10,7 +10,7 @@ from openpeerpower.helpers import config_validation as cv
 from openpeerpower.util import location
 
 
-async def async_setup_opp):
+async def async_setup(opp):
     """Set up the Oppbian config."""
     opp.http.register_view(CheckConfigView)
     websocket_api.async_register_command(opp, websocket_update_config)

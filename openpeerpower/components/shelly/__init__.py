@@ -89,7 +89,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
             data["model"] = device.settings["device"]["type"]
             opp.config_entries.async_update_entry(entry, data=data)
 
-        opp.async_create_task(async_device_setup_opp, entry, device))
+        opp.async_create_task(async_device_setup(opp, entry, device))
 
     if sleep_period == 0:
         # Not a sleeping device, finish setup
@@ -100,7 +100,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         except (asyncio.TimeoutError, OSError) as err:
             raise ConfigEntryNotReady from err
 
-        await async_device_setup_opp, entry, device)
+        await async_device_setup(opp, entry, device)
     elif sleep_period is None or device_entry is None:
         # Need to get sleep info or first time sleeping device setup, wait for device
         opp.data[DOMAIN][DATA_CONFIG_ENTRY][entry.entry_id][DEVICE] = device
@@ -111,7 +111,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     else:
         # Restore sensors for sleeping device
         _LOGGER.debug("Setting up offline device %s", entry.title)
-        await async_device_setup_opp, entry, device)
+        await async_device_setup(opp, entry, device)
 
     return True
 

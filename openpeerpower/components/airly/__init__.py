@@ -125,7 +125,7 @@ class AirlyDataUpdateCoordinator(DataUpdateCoordinator):
         self.airly = Airly(api_key, session)
         self.use_nearest = use_nearest
 
-        super().__init__.opp, _LOGGER, name=DOMAIN, update_interval=update_interval)
+        super().__init__(opp, _LOGGER, name=DOMAIN, update_interval=update_interval)
 
     async def _async_update_data(self):
         """Update data via library."""

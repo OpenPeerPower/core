@@ -32,7 +32,7 @@ CONFIG = {
 }
 
 
-async def test_default_setup_opp, monkeypatch):
+async def test_default_setup(opp, monkeypatch):
     """Test all basic functionality of the rflink switch component."""
     # setup mocking rflink module
     event_callback, create, protocol, _ = await mock_rflink(

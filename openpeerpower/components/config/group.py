@@ -13,7 +13,7 @@ from openpeerpower.helpers.typing import OpenPeerPowerType
 from . import EditKeyBasedConfigView
 
 
-async def async_setup_opp):
+async def async_setup(opp):
     """Set up the Group config API."""
 
     async def hook(action, config_key):

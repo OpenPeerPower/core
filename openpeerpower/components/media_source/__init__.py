@@ -40,7 +40,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
     opp.components.frontend.async_register_built_in_panel(
         "media-browser", "media_browser",  opp.play-box-multiple"
     )
-    local_source.async_setup_opp)
+    local_source.async_setup(opp)
     await async_process_integration_platforms(
         opp, DOMAIN, _process_media_source_platform
     )

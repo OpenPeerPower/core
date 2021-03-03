@@ -58,7 +58,7 @@ def remote_fixture():
         yield remote
 
 
-async def test_setup_opp, remote):
+async def test_setup(opp, remote):
     """Test Samsung TV integration is setup."""
     with patch("openpeerpower.components.samsungtv.bridge.Remote") as remote:
         await async_setup_component(opp, SAMSUNGTV_DOMAIN, MOCK_CONFIG)

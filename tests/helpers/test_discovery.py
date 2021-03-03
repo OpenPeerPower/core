@@ -132,7 +132,7 @@ class TestHelpersDiscovery:
         component_calls = []
         platform_calls = []
 
-        def component_setup_opp, config):
+        def component_setup(opp, config):
             """Set up mock component."""
             discovery.load_platform(opp, "switch", "test_circular", "disc", config)
             component_calls.append(1)
@@ -179,13 +179,13 @@ class TestHelpersDiscovery:
         """
         component_calls = []
 
-        def component1_setup_opp, config):
+        def component1_setup(opp, config):
             """Set up mock component."""
             print("component1 setup")
             discovery.discover(opp, "test_component2", {}, "test_component2", {})
             return True
 
-        def component2_setup_opp, config):
+        def component2_setup(opp, config):
             """Set up mock component."""
             component_calls.append(1)
             return True

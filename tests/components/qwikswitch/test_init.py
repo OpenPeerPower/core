@@ -170,7 +170,7 @@ async def test_switch_device(opp, aioclient_mock, qs_devices):
     state_obj = opp.states.get("switch.switch_1")
     assert state_obj.state == "off"
 
-    # check if setting the value in the network show in.opp
+    # check if setting the value in the network show in opp
     qs_devices[0]["val"] = "ON"
     listen_mock.queue_response(json=EMPTY_PACKET)
     await opp.async_block_till_done()
@@ -224,7 +224,7 @@ async def test_light_device(opp, aioclient_mock, qs_devices):
     assert state_obj.state == "on"
     assert 16 < state_obj.attributes["brightness"] < 240
 
-    # turn off in the network and see that it is off in.opp as well
+    # turn off in the network and see that it is off in opp as well
     qs_devices[2]["val"] = "280c78"  # off
     listen_mock.queue_response(json=EMPTY_PACKET)
     await asyncio.sleep(0.01)

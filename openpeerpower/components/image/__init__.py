@@ -47,7 +47,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
         DOMAIN,
         CREATE_FIELDS,
         UPDATE_FIELDS,
-    ).async_setup_opp, create_create=False)
+    ).async_setup(opp, create_create=False)
 
     opp.http.register_view(ImageUploadView)
     opp.http.register_view(ImageServeView(image_dir, storage_collection))

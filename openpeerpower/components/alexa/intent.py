@@ -35,7 +35,7 @@ class CardType(enum.Enum):
 
 
 @callback
-def async_setup_opp):
+def async_setup(opp):
     """Activate Alexa component."""
     opp.http.register_view(AlexaIntentsView)
 

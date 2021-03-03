@@ -308,7 +308,7 @@ async def test_discovery_invalid_config_entry(opp, controller):
         unique_id="00:00:00:00:00:00",
     ).add_to_opp(opp)
 
-    # We just added a mock config entry so it must be visible in.opp
+    # We just added a mock config entry so it must be visible in opp
     assert len(opp.config_entries.async_entries()) == 1
 
     device = setup_mock_accessory(controller)

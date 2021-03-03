@@ -344,7 +344,7 @@ class SolarEdgeDetailsDataService(SolarEdgeDataService):
 
     def __init__(self, opp, api, site_id):
         """Initialize the details data service."""
-        super().__init__.opp, api, site_id)
+        super().__init__(opp, api, site_id)
 
         self.data = None
 
@@ -416,7 +416,7 @@ class SolarEdgeEnergyDetailsService(SolarEdgeDataService):
 
     def __init__(self, opp, api, site_id):
         """Initialize the power flow data service."""
-        super().__init__.opp, api, site_id)
+        super().__init__(opp, api, site_id)
 
         self.unit = None
 
@@ -477,7 +477,7 @@ class SolarEdgePowerFlowDataService(SolarEdgeDataService):
 
     def __init__(self, opp, api, site_id):
         """Initialize the power flow data service."""
-        super().__init__.opp, api, site_id)
+        super().__init__(opp, api, site_id)
 
         self.unit = None
 

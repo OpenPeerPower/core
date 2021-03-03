@@ -263,7 +263,7 @@ async def async_entry_changed(opp: OpenPeerPower, entry: ConfigEntry) -> None:
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up a bridge from a config entry."""
     LOGGER.debug("Setting up entry %s", entry.data)
-    bridge = DynaliteBridge.opp, entry.data)
+    bridge = DynaliteBridge(opp, entry.data)
     # need to do it before the listener
     opp.data[DOMAIN][entry.entry_id] = bridge
     entry.add_update_listener(async_entry_changed)

@@ -71,7 +71,7 @@ class TotpAuthModule(MultiFactorAuthModule):
 
     def __init__(self, opp: OpenPeerPower, config: Dict[str, Any]) -> None:
         """Initialize the user data store."""
-        super().__init__.opp, config)
+        super().__init__(opp, config)
         self._users: Optional[Dict[str, str]] = None
         self._user_store = opp.helpers.storage.Store(
             STORAGE_VERSION, STORAGE_KEY, private=True

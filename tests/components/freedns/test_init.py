@@ -35,7 +35,7 @@ def setup_freedns(opp, aioclient_mock):
     )
 
 
-async def test_setup_opp, aioclient_mock):
+async def test_setup(opp, aioclient_mock):
     """Test setup works if update passes."""
     params = {}
     params[ACCESS_TOKEN] = ""

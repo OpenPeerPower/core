@@ -153,7 +153,7 @@ async def test_setup_api_push_api_data_default(opp, aioclient_mock, opp_storage)
     assert oppio_user.system_generated
     assert len.oppio_user.groups) == 1
     assert oppio_user.groups[0].id == GROUP_ID_ADMIN
-    for token in.oppio_user.refresh_tokens.values():
+    for token in oppio_user.refresh_tokens.values():
         if token.token == refresh_token:
             break
     else:

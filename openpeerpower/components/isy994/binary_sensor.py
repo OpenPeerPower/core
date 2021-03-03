@@ -68,7 +68,7 @@ async def async_setup_entry(
     child_nodes = []
 
     opp.isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
-    for node in.opp_isy_data[ISY994_NODES][BINARY_SENSOR]:
+    for node in opp_isy_data[ISY994_NODES][BINARY_SENSOR]:
         device_class, device_type = _detect_device_type_and_class(node)
         if node.protocol == PROTO_INSTEON:
             if node.parent_node is not None:
@@ -166,7 +166,7 @@ async def async_setup_entry(
         device = ISYBinarySensorEntity(node, device_class)
         devices.append(device)
 
-    for name, status, _ in.opp_isy_data[ISY994_PROGRAMS][BINARY_SENSOR]:
+    for name, status, _ in opp_isy_data[ISY994_PROGRAMS][BINARY_SENSOR]:
         devices.append(ISYBinarySensorProgramEntity(name, status))
 
     await migrate_old_unique_ids(opp, BINARY_SENSOR, devices)

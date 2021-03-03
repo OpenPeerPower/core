@@ -157,7 +157,7 @@ async def async_setup(opp: OpenPeerPower, opp_config: ConfigType) -> bool:
     opp.data.setdefault(DOMAIN, {})
     _create_elk_services(opp)
 
-    if DOMAIN not in.opp_config:
+    if DOMAIN not in opp_config:
         return True
 
     for index, conf in enumerate.opp_config[DOMAIN]):

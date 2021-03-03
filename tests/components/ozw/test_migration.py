@@ -279,7 +279,7 @@ async def test_migrate_zwave_dry_run(
         assert await opp.config_entries.async_setup(zwave_config_entry.entry_id)
 
 
-async def test_migrate_zwave_not_setup_opp, migration_data, opp_ws_client):
+async def test_migrate_zwave_not_setup(opp, migration_data, opp_ws_client):
     """Test the zwave to ozw migration websocket without zwave setup."""
     await setup_ozw(opp, fixture=migration_data)
     client = await opp_ws_client(opp)

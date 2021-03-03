@@ -267,7 +267,7 @@ def make_event(entity_id):
     return mock.MagicMock(data={"new_state": state}, time_fired=12345)
 
 
-async def _setup_opp, filter_config):
+async def _setup(opp, filter_config):
     """Shared set up for filtering tests."""
     config = {prometheus.DOMAIN: {"filter": filter_config}}
     assert await async_setup_component(opp, prometheus.DOMAIN, config)

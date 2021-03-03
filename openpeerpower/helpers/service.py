@@ -54,7 +54,7 @@ from openpeerpower.loader import (
     MAX_LOAD_CONCURRENTLY,
     Integration,
     async_get_integration,
-    bind.opp,
+    bind_opp,
 )
 from openpeerpower.util.async_ import gather_with_concurrency
 from openpeerpower.util.yaml import load_yaml

@@ -66,7 +66,7 @@ async def async_setup_entry(opp, config_entry):
     username = config_entry.data[CONF_USERNAME]
     password = config_entry.data[CONF_PASSWORD]
 
-    time_zone = str.opp.config.time_zone)
+    time_zone = str(opp.config.time_zone)
 
     manager = VeSync(username, password, time_zone)
 

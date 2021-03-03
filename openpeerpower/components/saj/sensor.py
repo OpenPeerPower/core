@@ -102,7 +102,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         """Update all the SAJ sensors."""
         values = await saj.read(sensor_def)
 
-        for sensor in.opp_sensors:
+        for sensor in opp_sensors:
             state_unknown = False
             if not values:
                 # SAJ inverters are powered by DC via solar panels and thus are

@@ -54,7 +54,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     opp.data = opp.data["pjlink"]
 
     device_label = f"{host}:{port}"
-    if device_label in.opp_data:
+    if device_label in opp_data:
         return
 
     device = PjLinkDevice(host, port, name, encoding, password)

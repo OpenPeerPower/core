@@ -12,7 +12,7 @@ async def test_setup_opp):
         melissa, "async_load_platform"
     ):
         mocked_melissa.return_value.async_connect = AsyncMock()
-        await melissa.async_setup_opp, VALID_CONFIG)
+        await melissa.async_setup(opp, VALID_CONFIG)
 
         mocked_melissa.assert_called_with(username="********", password="********")
 

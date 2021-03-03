@@ -192,9 +192,9 @@ async def _configure_almond_for_op(
     try:
         with async_timeout.timeout(30):
             await api.async_create_device(
-                {
+                {  
                     "kind": "io.open-peer-power",
-                     "oppUrl": opp_url,
+                    "oppUrl": opp_url,
                     "accessToken": access_token,
                     "refreshToken": "",
                     # 5 years from now in ms.

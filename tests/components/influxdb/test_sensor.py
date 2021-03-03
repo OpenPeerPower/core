@@ -175,7 +175,7 @@ def _set_query_mock_v2(
     return query_api
 
 
-async def _setup_opp, config_ext, queries, expected_sensors):
+async def _setup(opp, config_ext, queries, expected_sensors):
     """Create client and test expected sensors."""
     config = {
         DOMAIN: config_ext,
@@ -208,7 +208,7 @@ async def _setup_opp, config_ext, queries, expected_sensors):
 async def test_minimal_config(opp, mock_client, config_ext, queries, set_query_mock):
     """Test the minimal config and defaults."""
     set_query_mock(mock_client)
-    await _setup_opp, config_ext, queries, ["sensor.test"])
+    await _setup(opp, config_ext, queries, ["sensor.test"])
 
 
 @pytest.mark.parametrize(
@@ -276,7 +276,7 @@ async def test_minimal_config(opp, mock_client, config_ext, queries, set_query_m
 async def test_full_config(opp, mock_client, config_ext, queries, set_query_mock):
     """Test the full config."""
     set_query_mock(mock_client)
-    await _setup_opp, config_ext, queries, ["sensor.test"])
+    await _setup(opp, config_ext, queries, ["sensor.test"])
 
 
 @pytest.mark.parametrize("config_ext", [(BASE_V1_CONFIG), (BASE_V2_CONFIG)])
@@ -315,7 +315,7 @@ async def test_state_matches_query_result(
     """Test state of sensor matches respone from query api."""
     set_query_mock(mock_client, return_value=make_resultset(42))
 
-    sensors = await _setup_opp, config_ext, queries, ["sensor.test"])
+    sensors = await _setup(opp, config_ext, queries, ["sensor.test"])
 
     assert sensors[0].state == "42"
 
@@ -346,7 +346,7 @@ async def test_state_matches_first_query_result_for_multiple_return(
     """Test state of sensor matches respone from query api."""
     set_query_mock(mock_client, return_value=make_resultset(42, "not used"))
 
-    sensors = await _setup_opp, config_ext, queries, ["sensor.test"])
+    sensors = await _setup(opp, config_ext, queries, ["sensor.test"])
     assert sensors[0].state == "42"
     assert (
         len([record for record in caplog.records if record.levelname == "WARNING"]) == 1
@@ -372,7 +372,7 @@ async def test_state_for_no_results(
     """Test state of sensor matches respone from query api."""
     set_query_mock(mock_client)
 
-    sensors = await _setup_opp, config_ext, queries, ["sensor.test"])
+    sensors = await _setup(opp, config_ext, queries, ["sensor.test"])
     assert sensors[0].state == STATE_UNKNOWN
     assert (
         len([record for record in caplog.records if record.levelname == "WARNING"]) == 1
@@ -433,7 +433,7 @@ async def test_error_querying_influx(
     """Test behavior of sensor when influx returns error."""
     set_query_mock(mock_client, query_exception=query_exception)
 
-    sensors = await _setup_opp, config_ext, queries, ["sensor.test"])
+    sensors = await _setup(opp, config_ext, queries, ["sensor.test"])
     assert sensors[0].state == STATE_UNKNOWN
     assert (
         len([record for record in caplog.records if record.levelname == "ERROR"]) == 1
@@ -475,7 +475,7 @@ async def test_error_rendering_template(
     """Test behavior of sensor with error rendering template."""
     set_query_mock(mock_client, return_value=make_resultset(42))
 
-    sensors = await _setup_opp, config_ext, queries, ["sensor.test"])
+    sensors = await _setup(opp, config_ext, queries, ["sensor.test"])
     assert sensors[0].state == STATE_UNKNOWN
     assert (
         len([record for record in caplog.records if record.levelname == "ERROR"]) == 1
@@ -543,7 +543,7 @@ async def test_connection_error_at_startup(
     expected_sensor = "sensor.test"
 
     # Test sensor is not setup first time due to connection error
-    await _setup_opp, config_ext, queries, [])
+    await _setup(opp, config_ext, queries, [])
     assert opp.states.get(expected_sensor) is None
     assert (
         len([record for record in caplog.records if record.levelname == "ERROR"]) == 1
@@ -591,7 +591,7 @@ async def test_data_repository_not_found(
 ):
     """Test sensor is not setup when bucket not available."""
     set_query_mock(mock_client)
-    await _setup_opp, config_ext, queries, [])
+    await _setup(opp, config_ext, queries, [])
     assert opp.states.get("sensor.test") is None
     assert (
         len([record for record in caplog.records if record.levelname == "ERROR"]) == 1

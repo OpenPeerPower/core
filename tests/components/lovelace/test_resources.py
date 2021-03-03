@@ -86,7 +86,7 @@ async def test_storage_resources_import(opp, opp_ws_client, opp_storage):
     )
     assert (
         "resources"
-        not in.opp_storage[dashboard.CONFIG_STORAGE_KEY_DEFAULT]["data"]["config"]
+        not in opp_storage[dashboard.CONFIG_STORAGE_KEY_DEFAULT]["data"]["config"]
     )
 
     # Add a resource
@@ -169,5 +169,5 @@ async def test_storage_resources_import_invalid(opp, opp_ws_client, opp_storage)
     assert response["result"] == []
     assert (
         "resources"
-        in.opp_storage[dashboard.CONFIG_STORAGE_KEY_DEFAULT]["data"]["config"]
+        in opp_storage[dashboard.CONFIG_STORAGE_KEY_DEFAULT]["data"]["config"]
     )

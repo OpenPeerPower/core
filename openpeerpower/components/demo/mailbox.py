@@ -21,7 +21,7 @@ class DemoMailbox(Mailbox):
 
     def __init__(self, opp, name):
         """Initialize Demo mailbox."""
-        super().__init__.opp, name)
+        super().__init__(opp, name)
         self._messages = {}
         txt = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
         for idx in range(0, 10):

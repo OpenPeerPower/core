@@ -165,7 +165,7 @@ def _check_state(opp, category, entity_id):
         assert "zone_entity_id" not in state.attributes
 
 
-async def test_setup_opp, two_zone_alarm):  # noqa: F811
+async def test_setup(opp, two_zone_alarm):  # noqa: F811
     """Test entity setup."""
     registry = await opp.helpers.entity_registry.async_get_registry()
 

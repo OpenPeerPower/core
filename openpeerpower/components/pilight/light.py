@@ -41,7 +41,7 @@ class PilightLight(PilightBaseDevice, LightEntity):
 
     def __init__(self, opp, name, config):
         """Initialize a switch."""
-        super().__init__.opp, name, config)
+        super().__init__(opp, name, config)
         self._dimlevel_min = config.get(CONF_DIMLEVEL_MIN)
         self._dimlevel_max = config.get(CONF_DIMLEVEL_MAX)
 

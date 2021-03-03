@@ -17,7 +17,7 @@ CONFIG_PATH = "zwave_device_config.yaml"
 OZW_LOG_FILENAME = "OZW_Log.txt"
 
 
-async def async_setup_opp):
+async def async_setup(opp):
     """Set up the Z-Wave config API."""
     opp.http.register_view(
         EditKeyBasedConfigView(

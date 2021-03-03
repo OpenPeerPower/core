@@ -87,10 +87,10 @@ async def async_setup(opp, config):
 
     flash_briefings_config = config.get(CONF_FLASH_BRIEFINGS)
 
-    intent.async_setup_opp)
+    intent.async_setup(opp)
 
     if flash_briefings_config:
-        flash_briefings.async_setup_opp, flash_briefings_config)
+        flash_briefings.async_setup(opp, flash_briefings_config)
 
     try:
         smart_home_config = config[CONF_SMART_HOME]
@@ -98,6 +98,6 @@ async def async_setup(opp, config):
         pass
     else:
         smart_home_config = smart_home_config or SMART_HOME_SCHEMA({})
-        await smart_home_http.async_setup_opp, smart_home_config)
+        await smart_home_http.async_setup(opp, smart_home_config)
 
     return True

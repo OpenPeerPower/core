@@ -7,7 +7,7 @@ from openpeerpower.components.websocket_api import decorators
 from openpeerpower.exceptions import Unauthorized
 
 
-async def async_setup_opp):
+async def async_setup(opp):
     """Enable the Open Peer Power views."""
     opp.components.websocket_api.async_register_command(websocket_create)
     opp.components.websocket_api.async_register_command(websocket_delete)

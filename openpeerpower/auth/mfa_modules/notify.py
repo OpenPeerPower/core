@@ -94,7 +94,7 @@ class NotifyAuthModule(MultiFactorAuthModule):
 
     def __init__(self, opp: OpenPeerPower, config: Dict[str, Any]) -> None:
         """Initialize the user data store."""
-        super().__init__.opp, config)
+        super().__init__(opp, config)
         self._user_settings: Optional[_UsersDict] = None
         self._user_store = opp.helpers.storage.Store(
             STORAGE_VERSION, STORAGE_KEY, private=True
@@ -294,7 +294,7 @@ class NotifySetupFlow(SetupFlow):
         """Let user select available notify services."""
         errors: Dict[str, str] = {}
 
-        opp = self._auth_module(opp
+        opp = self._auth_module.opp
         if user_input:
             self._notify_service = user_input["notify_service"]
             self._target = user_input.get("target")
@@ -320,7 +320,7 @@ class NotifySetupFlow(SetupFlow):
         """Verify user can receive one-time password."""
         errors: Dict[str, str] = {}
 
-        opp = self._auth_module(opp
+        opp = self._auth_module.opp
         if user_input:
             verified = await opp.async_add_executor_job(
                 _verify_otp, self._secret, user_input["code"], self._count

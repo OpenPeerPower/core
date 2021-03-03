@@ -61,7 +61,7 @@ async def test_valid_data(opp):
     attrib = sensor.state_attributes
     for reading, value in GOOD_DATA.items():
         # battery level has a different name in
-        # the JSON format than in.opp
+        # the JSON format than in opp
         assert attrib[reading] == value
 
 

@@ -8,7 +8,7 @@ import openpeerpower.helpers.config_validation as cv
 from . import EditKeyBasedConfigView
 
 
-async def async_setup_opp):
+async def async_setup(opp):
     """Set up the script config API."""
 
     async def hook(action, config_key):

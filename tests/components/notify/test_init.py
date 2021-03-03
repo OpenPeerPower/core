@@ -6,7 +6,7 @@ from openpeerpower.core import OpenPeerPower
 async def test_same_targets(opp: OpenPeerPower):
     """Test not changing the targets in a notify service."""
     test = NotificationService(opp)
-    await test.async_setup_opp, "notify", "test")
+    await test.async_setup(opp, "notify", "test")
     await test.async_register_services()
     await opp.async_block_till_done()
 
@@ -21,7 +21,7 @@ async def test_same_targets(opp: OpenPeerPower):
 async def test_change_targets(opp: OpenPeerPower):
     """Test changing the targets in a notify service."""
     test = NotificationService(opp)
-    await test.async_setup_opp, "notify", "test")
+    await test.async_setup(opp, "notify", "test")
     await test.async_register_services()
     await opp.async_block_till_done()
 
@@ -38,7 +38,7 @@ async def test_change_targets(opp: OpenPeerPower):
 async def test_add_targets(opp: OpenPeerPower):
     """Test adding the targets in a notify service."""
     test = NotificationService(opp)
-    await test.async_setup_opp, "notify", "test")
+    await test.async_setup(opp, "notify", "test")
     await test.async_register_services()
     await opp.async_block_till_done()
 
@@ -55,7 +55,7 @@ async def test_add_targets(opp: OpenPeerPower):
 async def test_remove_targets(opp: OpenPeerPower):
     """Test removing targets from the targets in a notify service."""
     test = NotificationService(opp)
-    await test.async_setup_opp, "notify", "test")
+    await test.async_setup(opp, "notify", "test")
     await test.async_register_services()
     await opp.async_block_till_done()
 

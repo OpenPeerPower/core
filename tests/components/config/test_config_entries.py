@@ -31,7 +31,7 @@ def mock_test_component(opp):
 def client(opp, opp_client):
     """Fixture that can interact with the config manager API."""
     opp.loop.run_until_complete(async_setup_component(opp, "http", {}))
-    opp.loop.run_until_complete(config_entries.async_setup_opp))
+    opp.loop.run_until_complete(config_entries.async_setup(opp))
     yield.opp.loop.run_until_complete.opp_client())
 
 

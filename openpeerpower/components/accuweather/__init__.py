@@ -109,7 +109,7 @@ class AccuWeatherDataUpdateCoordinator(DataUpdateCoordinator):
             update_interval *= 2
         _LOGGER.debug("Data will be update every %s", update_interval)
 
-        super().__init__.opp, _LOGGER, name=DOMAIN, update_interval=update_interval)
+        super().__init__(opp, _LOGGER, name=DOMAIN, update_interval=update_interval)
 
     async def _async_update_data(self):
         """Update data via library."""

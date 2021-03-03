@@ -75,7 +75,7 @@ async def _resetup_platform(
         # If the integration has its own way to reset
         # use this method.
         await component.async_reset_platform(opp, integration_name)  # type: ignore
-        await component.async_setup_opp, root_config)  # type: ignore
+        await component.async_setup(opp, root_config)  # type: ignore
         return
 
     # If its an entity platform, we use the entity_platform

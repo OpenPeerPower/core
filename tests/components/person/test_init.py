@@ -46,7 +46,7 @@ def storage_collection(opp):
 
 
 @pytest.fixture
-def storage_setup_opp, opp_storage, opp_admin_user):
+def storage_setup(opp, opp_storage, opp_admin_user):
     """Storage setup."""
     opp.storage[DOMAIN] = {
         "key": DOMAIN,

@@ -10,7 +10,7 @@ from tests.common import CLIENT_ID, MockGroup, MockUser
 @pytest.fixture(autouse=True)
 def setup_config(opp, aiohttp_client):
     """Fixture that sets up the auth provider openpeerpower module."""
-    opp.loop.run_until_complete(auth_config.async_setup_opp))
+    opp.loop.run_until_complete(auth_config.async_setup(opp))
 
 
 async def test_list_requires_admin(opp, opp_ws_client, opp_read_only_access_token):
@@ -67,7 +67,7 @@ async def test_list(opp, opp_ws_client, opp_admin_user):
         "is_owner": False,
         "is_active": True,
         "system_generated": False,
-        "group_ids": [group.id for group in.opp_admin_user.groups],
+        "group_ids": [group.id for group in opp_admin_user.groups],
         "credentials": [{"type": "openpeerpower"}],
     }
     assert data[1] == {

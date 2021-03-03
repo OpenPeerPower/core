@@ -36,7 +36,7 @@ TEST_VAL_MAX = 22
 
 
 @pytest.fixture
-def storage_setup_opp, opp_storage):
+def storage_setup(opp, opp_storage):
     """Storage setup."""
 
     async def _storage(items=None, config=None):

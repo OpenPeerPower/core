@@ -65,6 +65,6 @@ async def async_setup(opp, config):
 
     opp.data[DOMAIN] = data
 
-    await views.async_setup_opp, data, store)
+    await views.async_setup(opp, data, store)
 
     return True

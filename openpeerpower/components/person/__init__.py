@@ -322,7 +322,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
 
     collection.StorageCollectionWebsocket(
         storage_collection, DOMAIN, DOMAIN, CREATE_FIELDS, UPDATE_FIELDS
-    ).async_setup_opp, create_list=False)
+    ).async_setup(opp, create_list=False)
 
     websocket_api.async_register_command(opp, ws_list_person)
 

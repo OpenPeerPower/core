@@ -258,7 +258,7 @@ class ClearCompletedItemsView(http.OpenPeerPowerView):
 
     async def post(self, request):
         """Retrieve if API is running."""
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         await opp.data[DOMAIN].async_clear_completed()
         opp.bus.async_fire(EVENT)
         return self.json_message("Cleared completed items.")

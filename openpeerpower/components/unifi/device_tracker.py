@@ -171,7 +171,7 @@ class UniFiClientTracker(UniFiClient, ScannerEntity):
     async def async_will_remove_from_opp(self) -> None:
         """Disconnect object when removed."""
         self.controller.async_heartbeat(self.unique_id)
-        await super().async_will_remove_from(opp()
+        await super().async_will_remove_from_opp()
 
     @callback
     def async_signal_reachable_callback(self) -> None:
@@ -324,7 +324,7 @@ class UniFiDeviceTracker(UniFiBase, ScannerEntity):
     async def async_will_remove_from_opp(self) -> None:
         """Disconnect object when removed."""
         self.controller.async_heartbeat(self.unique_id)
-        await super().async_will_remove_from(opp()
+        await super().async_will_remove_from_opp()
 
     @callback
     def async_signal_reachable_callback(self) -> None:

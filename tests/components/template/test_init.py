@@ -55,7 +55,7 @@ async def test_reloadable(opp):
 
     assert opp.states.get("sensor.state") is None
     assert opp.states.get("sensor.watching_tv_in_master_bedroom").state == "off"
-    assert float.opp.states.get("sensor.combined_sensor_energy_usage").state) == 0
+    assert float(opp.states.get("sensor.combined_sensor_energy_usage").state) == 0
 
 
 async def test_reloadable_can_remove(opp):
@@ -191,7 +191,7 @@ async def test_reloadable_handles_partial_valid_config(opp):
 
     assert opp.states.get("sensor.state") is None
     assert opp.states.get("sensor.watching_tv_in_master_bedroom").state == "off"
-    assert float.opp.states.get("sensor.combined_sensor_energy_usage").state) == 0
+    assert float(opp.states.get("sensor.combined_sensor_energy_usage").state) == 0
 
 
 async def test_reloadable_multiple_platforms(opp):
@@ -254,7 +254,7 @@ async def test_reloadable_multiple_platforms(opp):
 
     assert opp.states.get("sensor.state") is None
     assert opp.states.get("sensor.watching_tv_in_master_bedroom").state == "off"
-    assert float.opp.states.get("sensor.combined_sensor_energy_usage").state) == 0
+    assert float(opp.states.get("sensor.combined_sensor_energy_usage").state) == 0
 
 
 async def test_reload_sensors_that_reference_other_template_sensors(opp):

@@ -120,7 +120,7 @@ async def async_start_event_handler(
 ):
     """Register notify view."""
     opp.data = opp.data[DLNA_DMR_DATA]
-    if "event_handler" in.opp_data:
+    if "event_handler" in opp_data:
         return.opp_data["event_handler"]
 
     # start event handler

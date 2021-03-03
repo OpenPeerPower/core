@@ -36,7 +36,7 @@ class TasmotaEntity(Entity):
     async def async_will_remove_from_opp(self):
         """Unsubscribe when removed."""
         await self._tasmota_entity.unsubscribe_topics()
-        await super().async_will_remove_from(opp()
+        await super().async_will_remove_from_opp()
 
     async def discovery_update(self, update, write_state=True):
         """Handle updated discovery message."""
@@ -163,4 +163,4 @@ class TasmotaDiscoveryUpdate(TasmotaEntity):
         if not self._removed_from(opp:
             clear_discovery_hash(self.opp, self._discovery_hash)
             self._removed_from opp =True
-        await super().async_will_remove_from(opp()
+        await super().async_will_remove_from_opp()

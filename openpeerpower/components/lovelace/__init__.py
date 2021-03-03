@@ -119,7 +119,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
             "resource",
             RESOURCE_CREATE_FIELDS,
             RESOURCE_UPDATE_FIELDS,
-        ).async_setup_opp, create_list=False)
+        ).async_setup(opp, create_list=False)
 
     opp.components.websocket_api.async_register_command(
         websocket.websocket_lovelace_config
@@ -206,7 +206,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
         "dashboard",
         STORAGE_DASHBOARD_CREATE_FIELDS,
         STORAGE_DASHBOARD_UPDATE_FIELDS,
-    ).async_setup_opp, create_list=False)
+    ).async_setup(opp, create_list=False)
 
     return True
 

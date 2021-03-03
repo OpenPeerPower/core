@@ -195,7 +195,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
                 for platform in SUPPORTED_PLATFORMS_WITH_ENTRY_SUPPORT
             ]
         )
-        await finish_setup_opp, entry, gateway)
+        await finish_setup(opp, entry, gateway)
 
     opp.async_create_task(finish())
 

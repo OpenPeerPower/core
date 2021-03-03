@@ -134,7 +134,7 @@ class BaseNotificationService:
         title = service.data.get(ATTR_TITLE)
 
         if title:
-            title opp =self.opp
+            title.opp =self.opp
             kwargs[ATTR_TITLE] = title.async_render(parse_result=False)
 
         if self.registered_targets.get(service.service) is not None:
@@ -142,7 +142,7 @@ class BaseNotificationService:
         elif service.data.get(ATTR_TARGET) is not None:
             kwargs[ATTR_TARGET] = service.data.get(ATTR_TARGET)
 
-        message opp =self.opp
+        message.opp =self.opp
         kwargs[ATTR_MESSAGE] = message.async_render(parse_result=False)
         kwargs[ATTR_DATA] = service.data.get(ATTR_DATA)
 
@@ -294,7 +294,7 @@ async def async_setup(opp, config):
         target_service_name_prefix = conf_name or integration_name
         service_name = slugify(conf_name or SERVICE_NOTIFY)
 
-        await notify_service.async_setup_opp, service_name, target_service_name_prefix)
+        await notify_service.async_setup(opp, service_name, target_service_name_prefix)
         await notify_service.async_register_services()
 
         opp.data[NOTIFY_SERVICES].setdefault(integration_name, []).append(

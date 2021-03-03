@@ -22,10 +22,10 @@ async def async_setup_entry(
     """Set up the ISY994 lock platform."""
     opp.isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
     devices = []
-    for node in.opp_isy_data[ISY994_NODES][LOCK]:
+    for node in opp_isy_data[ISY994_NODES][LOCK]:
         devices.append(ISYLockEntity(node))
 
-    for name, status, actions in.opp_isy_data[ISY994_PROGRAMS][LOCK]:
+    for name, status, actions in opp_isy_data[ISY994_PROGRAMS][LOCK]:
         devices.append(ISYLockProgramEntity(name, status, actions))
 
     await migrate_old_unique_ids(opp, LOCK, devices)

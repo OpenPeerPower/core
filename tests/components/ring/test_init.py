@@ -13,7 +13,7 @@ VALID_CONFIG = {
 }
 
 
-async def test_setup_opp, requests_mock):
+async def test_setup(opp, requests_mock):
     """Test the setup."""
     await async_setup_component(opp, ring.DOMAIN, {})
 
@@ -37,4 +37,4 @@ async def test_setup_opp, requests_mock):
         text=load_fixture("ring_doorboot_health_attrs.json"),
     )
 
-    assert await ring.async_setup_opp, VALID_CONFIG)
+    assert await ring.async_setup(opp, VALID_CONFIG)

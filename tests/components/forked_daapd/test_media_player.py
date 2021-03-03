@@ -774,7 +774,7 @@ async def test_invalid_websocket_port(opp, config_entry):
     ) as mock_api:
         mock_api.return_value.get_request.return_value = SAMPLE_CONFIG_NO_WEBSOCKET
         config_entry.add_to_opp(opp)
-        await config_entry.async_setup_opp)
+        await config_entry.async_setup(opp)
         await opp.async_block_till_done()
         assert opp.states.get(TEST_MASTER_ENTITY_NAME).state == STATE_UNAVAILABLE
 

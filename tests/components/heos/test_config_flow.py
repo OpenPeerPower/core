@@ -12,7 +12,7 @@ from openpeerpower.config_entries import SOURCE_IMPORT, SOURCE_SSDP
 from openpeerpower.const import CONF_HOST
 
 
-async def test_flow_aborts_already_setup_opp, config_entry):
+async def test_flow_aborts_already_setup(opp, config_entry):
     """Test flow aborts when entry already setup."""
     config_entry.add_to_opp(opp)
     flow = HeosFlowHandler()

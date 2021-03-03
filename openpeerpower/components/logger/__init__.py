@@ -115,7 +115,7 @@ def _get_logger_class(opp_overrides):
 
         def setLevel(self, level) -> None:
             """Set the log level unless overridden."""
-            if self.name in.opp_overrides:
+            if self.name in opp_overrides:
                 return
 
             super().setLevel(level)

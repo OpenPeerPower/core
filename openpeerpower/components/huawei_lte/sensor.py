@@ -389,7 +389,7 @@ class HuaweiLteSensor(HuaweiLteBaseEntity):
 
     async def async_will_remove_from_opp(self) -> None:
         """Unsubscribe from needed data on remove."""
-        await super().async_will_remove_from(opp()
+        await super().async_will_remove_from_opp()
         self.router.subscriptions[self.key].remove(f"{SENSOR_DOMAIN}/{self.item}")
 
     @property

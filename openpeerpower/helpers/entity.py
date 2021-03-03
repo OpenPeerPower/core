@@ -552,8 +552,8 @@ class Entity(ABC):
             while self._on_remove:
                 self._on_remove.pop()()
 
-        await self.async_internal_will_remove_from(opp()
-        await self.async_will_remove_from(opp()
+        await self.async_internal_will_remove_from_opp()
+        await self.async_will_remove_from_opp()
 
         # Check if entry still exists in entity registry (e.g. unloading config entry)
         if (

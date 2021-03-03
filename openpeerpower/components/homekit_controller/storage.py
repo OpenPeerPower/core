@@ -29,7 +29,7 @@ class EntityMapStorage:
     def __init__(self, opp):
         """Create a new entity map store."""
         self.opp = opp
-        self.store = Store.opp, ENTITY_MAP_STORAGE_VERSION, ENTITY_MAP_STORAGE_KEY)
+        self.store = Store(opp, ENTITY_MAP_STORAGE_VERSION, ENTITY_MAP_STORAGE_KEY)
         self.storage_data = {}
 
     async def async_initialize(self):

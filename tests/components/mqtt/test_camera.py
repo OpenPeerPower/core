@@ -38,7 +38,7 @@ DEFAULT_CONFIG = {
 }
 
 
-async def test_run_camera_setup_opp, aiohttp_client, mqtt_mock):
+async def test_run_camera_setup(opp, aiohttp_client, mqtt_mock):
     """Test that it fetches the given payload."""
     topic = "test/camera"
     await async_setup_component(

@@ -99,7 +99,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
     await storage_collection.async_load()
     collection.StorageCollectionWebsocket(
         storage_collection, DOMAIN, DOMAIN, CREATE_FIELDS, UPDATE_FIELDS
-    ).async_setup_opp)
+    ).async_setup(opp)
 
     return True
 

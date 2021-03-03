@@ -122,7 +122,7 @@ class HomeworksKeypadEvent:
     """When you want signals instead of entities.
 
     Stateless sensors such as keypads are expected to generate an event
-    instead of a sensor entity in.opp,
+    instead of a sensor entity in opp,
     """
 
     def __init__(self, opp, addr, name):

@@ -108,7 +108,7 @@ async def test_hap_setup_connection_error():
     assert not opp.config_entries.flow.async_init.mock_calls
 
 
-async def test_hap_reset_unloads_entry_if_setup_opp, default_mock_hap_factory):
+async def test_hap_reset_unloads_entry_if_setup(opp, default_mock_hap_factory):
     """Test calling reset while the entry has been setup."""
     mock_hap = await default_mock_hap_factory.async_get_mock_hap()
     assert opp.data[HMIPC_DOMAIN][HAPID] == mock_hap

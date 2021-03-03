@@ -116,7 +116,7 @@ class GeofencyEntity(TrackerEntity, RestoreEntity):
 
     async def async_will_remove_from_opp(self):
         """Clean up after entity before removal."""
-        await super().async_will_remove_from(opp()
+        await super().async_will_remove_from_opp()
         self._unsub_dispatcher()
         self.opp.data[GF_DOMAIN]["devices"].remove(self._unique_id)
 

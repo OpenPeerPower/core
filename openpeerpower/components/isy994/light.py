@@ -37,7 +37,7 @@ async def async_setup_entry(
     restore_light_state = isy_options.get(CONF_RESTORE_LIGHT_STATE, False)
 
     devices = []
-    for node in.opp_isy_data[ISY994_NODES][LIGHT]:
+    for node in opp_isy_data[ISY994_NODES][LIGHT]:
         devices.append(ISYLightEntity(node, restore_light_state))
 
     await migrate_old_unique_ids(opp, LIGHT, devices)

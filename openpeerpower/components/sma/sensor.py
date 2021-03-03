@@ -162,7 +162,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
             return
         backoff_step = 0
 
-        for sensor in.opp_sensors:
+        for sensor in opp_sensors:
             sensor.async_update_values()
 
     interval = config.get(CONF_SCAN_INTERVAL) or timedelta(seconds=5)

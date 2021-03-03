@@ -69,7 +69,7 @@ async def async_get_service(opp, config, discovery_info=None):
     else:
         auth = None
 
-    return KodiNotificationService.opp, url, auth)
+    return KodiNotificationService(opp, url, auth)
 
 
 class KodiNotificationService(BaseNotificationService):
