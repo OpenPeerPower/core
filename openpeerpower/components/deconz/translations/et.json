@@ -13,7 +13,7 @@
         },
         "flow_title": "deCONZ Zigbee l\u00fc\u00fcs ( {host} )",
         "step": {
-             opp.o_confirm": {
+            "oppio_confirm": {
                 "description": "Kas soovid seadistada Open Peer Power-i \u00fchenduse deCONZ-l\u00fc\u00fcsiga, mida pakub Opp.io lisandmoodul {addon} ?",
                 "title": "deCONZ Zigbee v\u00e4rav Opp.io pistikprogrammi kaudu"
             },

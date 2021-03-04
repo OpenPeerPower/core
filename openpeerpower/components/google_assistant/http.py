@@ -75,7 +75,7 @@ class GoogleConfig(AbstractConfig):
 
     def __init__(self, opp, config):
         """Initialize the config."""
-        super().__init__.opp)
+        super().__init__(opp)
         self._config = config
         self._access_token = None
         self._access_token_renew = None
@@ -221,7 +221,7 @@ class GoogleAssistantView(OpenPeerPowerView):
         result = await async_handle_message(
             request.app["opp"],
             self.config,
-            request[.opp_user"].id,
+            request["opp_user"].id,
             message,
             SOURCE_CLOUD,
         )

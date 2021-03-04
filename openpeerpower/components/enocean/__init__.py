@@ -36,7 +36,7 @@ async def async_setup(opp, config):
 
 
 async def async_setup_entry(
-    opp, core.OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp: core.OpenPeerPower, config_entry: config_entries.ConfigEntry
 ):
     """Set up an EnOcean dongle for the given entry."""
     enocean_data = opp.data.setdefault(DATA_ENOCEAN, {})

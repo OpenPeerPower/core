@@ -15,7 +15,7 @@
                     "host": "Printerens v\u00e6rtsnavn eller IP-adresse",
                     "type": "Type af printer"
                 },
-                "description": "Konfigurer Brother-printerintegration. Hvis du har problemer med konfiguration, kan du g\u00e5 til: https://www.open-peer-power.io/integrations/brother"
+                "description": "Konfigurer Brother-printerintegration. Hvis du har problemer med konfiguration, kan du g\u00e5 til: https://www.openpeerpower.io/integrations/brother"
             },
             "zeroconf_confirm": {
                 "data": {

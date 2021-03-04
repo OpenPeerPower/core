@@ -77,7 +77,7 @@ class ScriptIntentHandler(intent.IntentHandler):
 
         if action is not None:
             if is_async_action:
-                intent_obj(opp.async_create_task(
+                intent_obj.opp.async_create_task(
                     action.async_run(slots, intent_obj.context)
                 )
             else:

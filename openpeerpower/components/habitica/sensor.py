@@ -70,7 +70,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
 
     entities = []
     name = config_entry.data[CONF_NAME]
-    sensor_data = HabitipyData.opp.data[DOMAIN][config_entry.entry_id])
+    sensor_data = HabitipyData(opp.data[DOMAIN][config_entry.entry_id])
     await sensor_data.update()
     for sensor_type in SENSORS_TYPES:
         entities.append(HabitipySensor(name, sensor_type, sensor_data))

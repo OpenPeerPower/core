@@ -1,7 +1,7 @@
 {
   "domain": "device_automation",
   "name": "Device Automation",
-  "documentation": "https://www.open-peer-power.io/integrations/device_automation",
+  "documentation": "https://www.openpeerpower.io/integrations/device_automation",
   "codeowners": ["@open-peer-power/core"],
   "quality_scale": "internal"
 }

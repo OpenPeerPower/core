@@ -54,7 +54,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
                 # Don't create a sensor entity for a gauge that isn't available
                 continue
 
-            entities.append(Measurement.opp.data[DOMAIN][station_key], measure["@id"]))
+            entities.append(Measurement(opp.data[DOMAIN][station_key], measure["@id"]))
             measurements.add(measure["@id"])
 
         async_add_entities(entities)

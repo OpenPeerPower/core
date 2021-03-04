@@ -29,7 +29,7 @@ class BleBoxCoverEntity(BleBoxEntity, CoverEntity):
 
     @property
     def state(self):
-        """Return the equivalent HA cover state."""
+        """Return the equivalent OP cover state."""
         return BLEBOX_TO_OPP_COVER_STATES[self._feature.state]
 
     @property

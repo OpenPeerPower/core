@@ -1,6 +1,6 @@
 {
   "domain": "clicksend_tts",
   "name": "ClickSend TTS",
-  "documentation": "https://www.open-peer-power.io/integrations/clicksend_tts",
+  "documentation": "https://www.openpeerpower.io/integrations/clicksend_tts",
   "codeowners": []
 }

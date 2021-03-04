@@ -65,7 +65,7 @@ async def async_attach_trigger(
         @callback
         def _handle_event(event: Event):
             if event.data[ATTR_ENTITY_ID] == entity_id:
-                opp.async_run(opp_job(
+                opp.async_run_opp_job(
                     job,
                     {"trigger": {**config, "description": f"{DOMAIN} - {entity_id}"}},
                     event.context,

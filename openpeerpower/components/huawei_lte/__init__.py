@@ -302,7 +302,7 @@ class Router:
 class HuaweiLteData:
     """Shared state."""
 
-    opp.config: dict = attr.ib()
+    opp_config: dict = attr.ib()
     # Our YAML config, keyed by router URL
     config: Dict[str, Dict[str, Any]] = attr.ib()
     routers: Dict[str, Router] = attr.ib(init=False, factory=dict)
@@ -486,7 +486,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     # Arrange our YAML config to dict with normalized URLs as keys
     domain_config: Dict[str, Dict[str, Any]] = {}
     if DOMAIN not in opp.data:
-        opp.data[DOMAIN] = HuaweiLteData.opp_config=config, config=domain_config)
+        opp.data[DOMAIN] = HuaweiLteData(opp_config=config, config=domain_config)
     for router_config in config.get(DOMAIN, []):
         domain_config[url_normalize(router_config.pop(CONF_URL))] = router_config
 

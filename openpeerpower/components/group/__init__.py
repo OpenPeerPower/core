@@ -7,7 +7,7 @@ from typing import Any, Dict, Iterable, List, Optional, Set, cast
 
 import voluptuous as vol
 
-from openpeerpower import core as op
+from openpeerpower import core as ha
 from openpeerpower.const import (
     ATTR_ASSUMED_STATE,
     ATTR_ENTITY_ID,
@@ -145,7 +145,7 @@ def expand_entity_ids(opp: OpenPeerPowerType, entity_ids: Iterable[Any]) -> List
 
         try:
             # If entity_id points at a group, expand it
-            domain, _ = op.split_entity_id(entity_id)
+            domain, _ = ha.split_entity_id(entity_id)
 
             if domain == DOMAIN:
                 child_entities = get_entity_ids(opp, entity_id)
@@ -373,7 +373,7 @@ async def _async_process_config(opp, config, component):
                 icon=icon,
                 object_id=object_id,
                 mode=mode,
-                order(opp.data[GROUP_ORDER],
+                order=opp.data[GROUP_ORDER],
             )
         )
 
@@ -733,7 +733,7 @@ class Group(Entity):
         num_on_states = len(self._on_states)
         # If all the entity domains we are tracking
         # have the same on state we use this state
-        # and its.opp.data[REG_KEY].on_off_mapping to off
+        # and its opp.data[REG_KEY].on_off_mapping to off
         if num_on_states == 1:
             on_state = list(self._on_states)[0]
         # If we do not have an on state for any domains

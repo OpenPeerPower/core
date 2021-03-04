@@ -70,7 +70,7 @@ class ClicksendNotificationService(BaseNotificationService):
         data = {
             "messages": [
                 {
-                    "source":  opp.notify",
+                    "source": "opp.notify",
                     "from": self.caller,
                     "to": self.recipient,
                     "body": message,

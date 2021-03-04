@@ -232,13 +232,13 @@ async def async_setup_entry(
         transport = None
         protocol = None
 
-        while.opp.state != CoreState.stopping:
+        while opp.state != CoreState.stopping:
             # Start DSMR asyncio.Protocol reader
             try:
                 transport, protocol = await opp.loop.create_task(reader_factory())
 
                 if transport:
-                    # Register listener to close transport on HA shutdown
+                    # Register listener to close transport on OP shutdown
                     stop_listener = opp.bus.async_listen_once(
                         EVENT_OPENPEERPOWER_STOP, transport.close
                     )
@@ -278,7 +278,7 @@ async def async_setup_entry(
 
                 return
 
-    # Can't be.opp.async_add_job because job runs forever
+    # Can't be opp.async_add_job because job runs forever
     task = asyncio.create_task(connect_and_reconnect())
 
     # Save the task to be able to cancel it when unloading

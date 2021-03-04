@@ -30,7 +30,7 @@ async def async_setup(opp):
 @websocket_api.async_response
 async def websocket_create(opp, connection, msg):
     """Create credentials and attach to a user."""
-    provider = auth_op.async_get_provider(opp)
+    provider = auth_ha.async_get_provider(opp)
     user = await opp.auth.async_get_user(msg["user_id"])
 
     if user is None:
@@ -47,7 +47,7 @@ async def websocket_create(opp, connection, msg):
 
     try:
         await provider.async_add_auth(msg["username"], msg["password"])
-    except auth_op.InvalidUser:
+    except auth_ha.InvalidUser:
         connection.send_error(msg["id"], "username_exists", "Username already exists")
         return
 
@@ -69,7 +69,7 @@ async def websocket_create(opp, connection, msg):
 @websocket_api.async_response
 async def websocket_delete(opp, connection, msg):
     """Delete username and related credential."""
-    provider = auth_op.async_get_provider(opp)
+    provider = auth_ha.async_get_provider(opp)
     credentials = await provider.async_get_or_create_credentials(
         {"username": msg["username"]}
     )
@@ -84,7 +84,7 @@ async def websocket_delete(opp, connection, msg):
 
     try:
         await provider.async_remove_auth(msg["username"])
-    except auth_op.InvalidUser:
+    except auth_ha.InvalidUser:
         connection.send_error(
             msg["id"], "auth_not_found", "Given username was not found."
         )
@@ -108,7 +108,7 @@ async def websocket_change_password(opp, connection, msg):
         connection.send_error(msg["id"], "user_not_found", "User not found")
         return
 
-    provider = auth_op.async_get_provider(opp)
+    provider = auth_ha.async_get_provider(opp)
     username = None
     for credential in user.credentials:
         if credential.auth_provider_type == provider.type:
@@ -123,7 +123,7 @@ async def websocket_change_password(opp, connection, msg):
 
     try:
         await provider.async_validate_login(username, msg["current_password"])
-    except auth_op.InvalidAuth:
+    except auth_ha.InvalidAuth:
         connection.send_error(
             msg["id"], "invalid_current_password", "Invalid current password"
         )
@@ -156,7 +156,7 @@ async def websocket_admin_change_password(opp, connection, msg):
         connection.send_error(msg["id"], "user_not_found", "User not found")
         return
 
-    provider = auth_op.async_get_provider(opp)
+    provider = auth_ha.async_get_provider(opp)
 
     username = None
     for credential in user.credentials:
@@ -173,7 +173,7 @@ async def websocket_admin_change_password(opp, connection, msg):
     try:
         await provider.async_change_password(username, msg["password"])
         connection.send_result(msg["id"])
-    except auth_op.InvalidUser:
+    except auth_ha.InvalidUser:
         connection.send_error(
             msg["id"], "credentials_not_found", "Credentials not found"
         )

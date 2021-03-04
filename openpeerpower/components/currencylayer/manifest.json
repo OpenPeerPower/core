@@ -1,6 +1,6 @@
 {
   "domain": "currencylayer",
   "name": "currencylayer",
-  "documentation": "https://www.open-peer-power.io/integrations/currencylayer",
+  "documentation": "https://www.openpeerpower.io/integrations/currencylayer",
   "codeowners": []
 }

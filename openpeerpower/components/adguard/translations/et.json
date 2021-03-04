@@ -8,7 +8,7 @@
             "cannot_connect": "\u00dchendamine nurjus"
         },
         "step": {
-             opp.o_confirm": {
+            "oppio_confirm": {
                 "description": "Kas soovid seadistada Open Peer Power-i \u00fchenduse AdGuard Home'iga mida pakub Opp.io lisandmoodul: {addon} ?",
                 "title": "AdGuard Home Opp.io pistikprogrammi kaudu"
             },

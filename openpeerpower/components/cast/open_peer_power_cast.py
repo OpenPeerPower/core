@@ -17,7 +17,7 @@ ATTR_URL_PATH = "dashboard_path"
 
 
 async def async_setup_op_cast(
-    opp, core.OpenPeerPower, entry: config_entries.ConfigEntry
+    opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Set up Open Peer Power Cast."""
     user_id: Optional[str] = entry.data.get("user_id")
@@ -46,7 +46,7 @@ async def async_setup_op_cast(
         controller = OpenPeerPowerController(
             # If you are developing Open Peer Power Cast, uncomment and set to your dev app id.
             # app_id="5FE44367",
-            opp_url(opp_url,
+            opp_url=opp_url,
             client_id=None,
             refresh_token=refresh_token.token,
         )

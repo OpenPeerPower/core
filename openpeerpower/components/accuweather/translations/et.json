@@ -16,7 +16,7 @@
                     "longitude": "Pikkuskraad",
                     "name": "Sidumise nimi"
                 },
-                "description": "Kui vajate seadistamisel abi vaadake siit: https://www.open-peer-power.io/integrations/accuweather/ \n\n M\u00f5ni andur pole vaikimisi lubatud. P\u00e4rast sidumise seadistamist saate need \u00fcksused lubada. \n Ilmapennustus pole vaikimisi lubatud. Saate selle lubada sidumise s\u00e4tetes.",
+                "description": "Kui vajate seadistamisel abi vaadake siit: https://www.openpeerpower.io/integrations/accuweather/ \n\n M\u00f5ni andur pole vaikimisi lubatud. P\u00e4rast sidumise seadistamist saate need \u00fcksused lubada. \n Ilmapennustus pole vaikimisi lubatud. Saate selle lubada sidumise s\u00e4tetes.",
                 "title": "AccuWeather"
             }
         }

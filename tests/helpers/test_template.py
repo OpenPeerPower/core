@@ -1161,7 +1161,7 @@ def test_distance_function_with_2_states(opp):
     opp.states.async_set(
         "test.object_2",
         "happy",
-        {"latitude":.opp.config.latitude, "longitude":.opp.config.longitude},
+        {"latitude": opp.config.latitude, "longitude": opp.config.longitude},
     )
     tpl = template.Template(
         "{{ distance(states.test.object, states.test.object_2) | round }}", opp
@@ -1182,7 +1182,7 @@ def test_distance_function_with_2_coords(opp):
     assert (
         template.Template(
             '{{ distance("32.87336", "-117.22943", %s, %s) | round }}'
-            %  opp.config.latitude, opp.config.longitude),
+            % (opp.config.latitude, opp.config.longitude),
             opp,
         ).async_render()
         == 187
@@ -1195,7 +1195,7 @@ def test_distance_function_with_1_state_1_coord(opp):
     opp.states.async_set(
         "test.object_2",
         "happy",
-        {"latitude":.opp.config.latitude, "longitude":.opp.config.longitude},
+        {"latitude": opp.config.latitude, "longitude": opp.config.longitude},
     )
     tpl = template.Template(
         '{{ distance("32.87336", "-117.22943", states.test.object_2) ' "| round }}",
@@ -1228,7 +1228,7 @@ def test_distance_function_return_none_if_invalid_coord(opp):
     opp.states.async_set(
         "test.object_2",
         "happy",
-        {"latitude":.opp.config.latitude, "longitude":.opp.config.longitude},
+        {"latitude": opp.config.latitude, "longitude": opp.config.longitude},
     )
     tpl = template.Template('{{ distance("123", states.test_object_2) }}', opp)
     assert tpl.async_render() is None
@@ -1243,7 +1243,7 @@ def test_distance_function_with_2_entity_ids(opp):
     opp.states.async_set(
         "test.object_2",
         "happy",
-        {"latitude":.opp.config.latitude, "longitude":.opp.config.longitude},
+        {"latitude": opp.config.latitude, "longitude": opp.config.longitude},
     )
     tpl = template.Template(
         '{{ distance("test.object", "test.object_2") | round }}', opp
@@ -1257,7 +1257,7 @@ def test_distance_function_with_1_entity_1_coord(opp):
     opp.states.async_set(
         "test.object",
         "happy",
-        {"latitude":.opp.config.latitude, "longitude":.opp.config.longitude},
+        {"latitude": opp.config.latitude, "longitude": opp.config.longitude},
     )
     tpl = template.Template(
         '{{ distance("test.object", "32.87336", "-117.22943") | round }}', opp
@@ -1271,15 +1271,15 @@ def test_closest_function_home_vs_domain(opp):
         "test_domain.object",
         "happy",
         {
-            "latitude":.opp.config.latitude + 0.1,
-            "longitude":.opp.config.longitude + 0.1,
+            "latitude": opp.config.latitude + 0.1,
+            "longitude": opp.config.longitude + 0.1,
         },
     )
 
     opp.states.async_set(
         "not_test_domain.but_closer",
         "happy",
-        {"latitude":.opp.config.latitude, "longitude":.opp.config.longitude},
+        {"latitude": opp.config.latitude, "longitude": opp.config.longitude},
     )
 
     assert (
@@ -1303,15 +1303,15 @@ def test_closest_function_home_vs_all_states(opp):
         "test_domain.object",
         "happy",
         {
-            "latitude":.opp.config.latitude + 0.1,
-            "longitude":.opp.config.longitude + 0.1,
+            "latitude": opp.config.latitude + 0.1,
+            "longitude": opp.config.longitude + 0.1,
         },
     )
 
     opp.states.async_set(
         "test_domain_2.and_closer",
         "happy",
-        {"latitude":.opp.config.latitude, "longitude":.opp.config.longitude},
+        {"latitude": opp.config.latitude, "longitude": opp.config.longitude},
     )
 
     assert (
@@ -1331,15 +1331,15 @@ async def test_closest_function_home_vs_group_entity_id(opp):
         "test_domain.object",
         "happy",
         {
-            "latitude":.opp.config.latitude + 0.1,
-            "longitude":.opp.config.longitude + 0.1,
+            "latitude": opp.config.latitude + 0.1,
+            "longitude": opp.config.longitude + 0.1,
         },
     )
 
     opp.states.async_set(
         "not_in_group.but_closer",
         "happy",
-        {"latitude":.opp.config.latitude, "longitude":.opp.config.longitude},
+        {"latitude": opp.config.latitude, "longitude": opp.config.longitude},
     )
 
     assert await async_setup_component(opp, "group", {})
@@ -1359,15 +1359,15 @@ async def test_closest_function_home_vs_group_state(opp):
         "test_domain.object",
         "happy",
         {
-            "latitude":.opp.config.latitude + 0.1,
-            "longitude":.opp.config.longitude + 0.1,
+            "latitude": opp.config.latitude + 0.1,
+            "longitude": opp.config.longitude + 0.1,
         },
     )
 
     opp.states.async_set(
         "not_in_group.but_closer",
         "happy",
-        {"latitude":.opp.config.latitude, "longitude":.opp.config.longitude},
+        {"latitude": opp.config.latitude, "longitude": opp.config.longitude},
     )
 
     assert await async_setup_component(opp, "group", {})
@@ -1551,8 +1551,8 @@ def test_closest_function_to_coord(opp):
         "test_domain.closest_home",
         "happy",
         {
-            "latitude":.opp.config.latitude + 0.1,
-            "longitude":.opp.config.longitude + 0.1,
+            "latitude": opp.config.latitude + 0.1,
+            "longitude": opp.config.longitude + 0.1,
         },
     )
 
@@ -1560,8 +1560,8 @@ def test_closest_function_to_coord(opp):
         "test_domain.closest_zone",
         "happy",
         {
-            "latitude":.opp.config.latitude + 0.2,
-            "longitude":.opp.config.longitude + 0.2,
+            "latitude": opp.config.latitude + 0.2,
+            "longitude": opp.config.longitude + 0.2,
         },
     )
 
@@ -1569,14 +1569,14 @@ def test_closest_function_to_coord(opp):
         "zone.far_away",
         "zoning",
         {
-            "latitude":.opp.config.latitude + 0.3,
-            "longitude":.opp.config.longitude + 0.3,
+            "latitude": opp.config.latitude + 0.3,
+            "longitude": opp.config.longitude + 0.3,
         },
     )
 
     tpl = template.Template(
         '{{ closest("%s", %s, states.test_domain).entity_id }}'
-        %  opp.config.latitude + 0.3, opp.config.longitude + 0.3),
+        % (opp.config.latitude + 0.3, opp.config.longitude + 0.3),
         opp,
     )
 
@@ -1584,7 +1584,7 @@ def test_closest_function_to_coord(opp):
 
     tpl = template.Template(
         '{{ (states.test_domain | closest("%s", %s)).entity_id }}'
-        %  opp.config.latitude + 0.3, opp.config.longitude + 0.3),
+        % (opp.config.latitude + 0.3, opp.config.longitude + 0.3),
         opp,
     )
 
@@ -1782,8 +1782,8 @@ def test_closest_function_to_entity_id(opp):
         "test_domain.closest_home",
         "happy",
         {
-            "latitude":.opp.config.latitude + 0.1,
-            "longitude":.opp.config.longitude + 0.1,
+            "latitude": opp.config.latitude + 0.1,
+            "longitude": opp.config.longitude + 0.1,
         },
     )
 
@@ -1791,8 +1791,8 @@ def test_closest_function_to_entity_id(opp):
         "test_domain.closest_zone",
         "happy",
         {
-            "latitude":.opp.config.latitude + 0.2,
-            "longitude":.opp.config.longitude + 0.2,
+            "latitude": opp.config.latitude + 0.2,
+            "longitude": opp.config.longitude + 0.2,
         },
     )
 
@@ -1800,8 +1800,8 @@ def test_closest_function_to_entity_id(opp):
         "zone.far_away",
         "zoning",
         {
-            "latitude":.opp.config.latitude + 0.3,
-            "longitude":.opp.config.longitude + 0.3,
+            "latitude": opp.config.latitude + 0.3,
+            "longitude": opp.config.longitude + 0.3,
         },
     )
 
@@ -1839,8 +1839,8 @@ def test_closest_function_to_state(opp):
         "test_domain.closest_home",
         "happy",
         {
-            "latitude":.opp.config.latitude + 0.1,
-            "longitude":.opp.config.longitude + 0.1,
+            "latitude": opp.config.latitude + 0.1,
+            "longitude": opp.config.longitude + 0.1,
         },
     )
 
@@ -1848,8 +1848,8 @@ def test_closest_function_to_state(opp):
         "test_domain.closest_zone",
         "happy",
         {
-            "latitude":.opp.config.latitude + 0.2,
-            "longitude":.opp.config.longitude + 0.2,
+            "latitude": opp.config.latitude + 0.2,
+            "longitude": opp.config.longitude + 0.2,
         },
     )
 
@@ -1857,8 +1857,8 @@ def test_closest_function_to_state(opp):
         "zone.far_away",
         "zoning",
         {
-            "latitude":.opp.config.latitude + 0.3,
-            "longitude":.opp.config.longitude + 0.3,
+            "latitude": opp.config.latitude + 0.3,
+            "longitude": opp.config.longitude + 0.3,
         },
     )
 
@@ -1876,8 +1876,8 @@ def test_closest_function_invalid_state(opp):
         "test_domain.closest_home",
         "happy",
         {
-            "latitude":.opp.config.latitude + 0.1,
-            "longitude":.opp.config.longitude + 0.1,
+            "latitude": opp.config.latitude + 0.1,
+            "longitude": opp.config.longitude + 0.1,
         },
     )
 
@@ -1893,7 +1893,7 @@ def test_closest_function_state_with_invalid_location(opp):
     opp.states.async_set(
         "test_domain.closest_home",
         "happy",
-        {"latitude": "invalid latitude", "longitude":.opp.config.longitude + 0.1},
+        {"latitude": "invalid latitude", "longitude": opp.config.longitude + 0.1},
     )
 
     assert (
@@ -1910,8 +1910,8 @@ def test_closest_function_invalid_coordinates(opp):
         "test_domain.closest_home",
         "happy",
         {
-            "latitude":.opp.config.latitude + 0.1,
-            "longitude":.opp.config.longitude + 0.1,
+            "latitude": opp.config.latitude + 0.1,
+            "longitude": opp.config.longitude + 0.1,
         },
     )
 

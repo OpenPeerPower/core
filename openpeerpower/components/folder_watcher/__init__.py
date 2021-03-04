@@ -62,7 +62,7 @@ def create_event_handler(patterns, opp):
             self.opp = opp
 
         def process(self, event):
-            """On Watcher event, fire HA event."""
+            """On Watcher event, fire OP event."""
             _LOGGER.debug("process(%s)", event)
             if not event.is_directory:
                 folder, file_name = os.path.split(event.src_path)

@@ -34,7 +34,7 @@ from openpeerpower.const import (
     STATE_UNAVAILABLE,
     STATE_UNKNOWN,
 )
-from openpeerpower.core import DOMAIN as OP_DOMAIN, CoreState, callback
+from openpeerpower.core import DOMAIN as HA_DOMAIN, CoreState, callback
 from openpeerpower.helpers import condition
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.event import (
@@ -486,14 +486,14 @@ class GenericThermostat(ClimateEntity, RestoreEntity):
         """Turn heater toggleable device on."""
         data = {ATTR_ENTITY_ID: self.heater_entity_id}
         await self.opp.services.async_call(
-            OP_DOMAIN, SERVICE_TURN_ON, data, context=self._context
+            HA_DOMAIN, SERVICE_TURN_ON, data, context=self._context
         )
 
     async def _async_heater_turn_off(self):
         """Turn heater toggleable device off."""
         data = {ATTR_ENTITY_ID: self.heater_entity_id}
         await self.opp.services.async_call(
-            OP_DOMAIN, SERVICE_TURN_OFF, data, context=self._context
+            HA_DOMAIN, SERVICE_TURN_OFF, data, context=self._context
         )
 
     async def async_set_preset_mode(self, preset_mode: str):

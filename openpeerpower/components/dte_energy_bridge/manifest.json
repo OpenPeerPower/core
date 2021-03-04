@@ -1,6 +1,6 @@
 {
   "domain": "dte_energy_bridge",
   "name": "DTE Energy Bridge",
-  "documentation": "https://www.open-peer-power.io/integrations/dte_energy_bridge",
+  "documentation": "https://www.openpeerpower.io/integrations/dte_energy_bridge",
   "codeowners": []
 }

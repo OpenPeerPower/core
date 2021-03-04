@@ -7,7 +7,7 @@
             "single_instance_allowed": "D\u00e9j\u00e0 configur\u00e9. Une seule configuration possible."
         },
         "step": {
-             opp.o_confirm": {
+            "oppio_confirm": {
                 "description": "Voulez-vous configurer Open Peer Power pour se connecter \u00e0 Almond fourni par le module compl\u00e9mentaire Opp.io: {addon} ?",
                 "title": "Almonf via le module compl\u00e9mentaire Opp.io"
             },

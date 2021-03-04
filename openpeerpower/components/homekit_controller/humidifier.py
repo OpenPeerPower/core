@@ -25,7 +25,7 @@ HK_MODE_TO_HA = {
     3: "dehumidifying",
 }
 
-OP_MODE_TO_HK = {
+HA_MODE_TO_HK = {
     MODE_AUTO: 0,
     "humidifying": 1,
     "dehumidifying": 2,

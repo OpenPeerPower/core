@@ -35,7 +35,7 @@ ECONET_STATE_TO_HA = {
     WaterHeaterOperationMode.GAS: STATE_GAS,
     WaterHeaterOperationMode.PERFORMANCE: STATE_PERFORMANCE,
 }
-OP_STATE_TO_ECONET = {value: key for key, value in ECONET_STATE_TO_HA.items()}
+HA_STATE_TO_ECONET = {value: key for key, value in ECONET_STATE_TO_HA.items()}
 
 SUPPORT_FLAGS_HEATER = SUPPORT_TARGET_TEMPERATURE | SUPPORT_OPERATION_MODE
 
@@ -61,7 +61,7 @@ class EcoNetWaterHeater(EcoNetEntity, WaterHeaterEntity):
         self._poll = True
         self.water_heater = water_heater
         self.econet_state_to_ha = {}
-        self.op_state_to_econet = {}
+        self.ha_state_to_econet = {}
 
     @callback
     def on_update_received(self):
@@ -102,8 +102,8 @@ class EcoNetWaterHeater(EcoNetEntity, WaterHeaterEntity):
                 mode is not WaterHeaterOperationMode.UNKNOWN
                 and mode is not WaterHeaterOperationMode.VACATION
             ):
-                op_mode = ECONET_STATE_TO_HA[mode]
-                op_list.append(op_mode)
+                ha_mode = ECONET_STATE_TO_HA[mode]
+                op_list.append(ha_mode)
         return op_list
 
     @property
@@ -127,7 +127,7 @@ class EcoNetWaterHeater(EcoNetEntity, WaterHeaterEntity):
 
     def set_operation_mode(self, operation_mode):
         """Set operation mode."""
-        op_mode_to_set = OP_STATE_TO_ECONET.get(operation_mode)
+        op_mode_to_set = HA_STATE_TO_ECONET.get(operation_mode)
         if op_mode_to_set is not None:
             self.water_heater.set_mode(op_mode_to_set)
         else:

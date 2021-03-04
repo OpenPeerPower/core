@@ -1,6 +1,6 @@
 {
   "domain": "derivative",
   "name": "Derivative",
-  "documentation": "https://www.open-peer-power.io/integrations/derivative",
+  "documentation": "https://www.openpeerpower.io/integrations/derivative",
   "codeowners": ["@afaucogney"]
 }

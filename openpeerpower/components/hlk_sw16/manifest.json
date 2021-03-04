@@ -1,7 +1,7 @@
 {
   "domain": "hlk_sw16",
   "name": "Hi-Link HLK-SW16",
-  "documentation": "https://www.open-peer-power.io/integrations/hlk_sw16",
+  "documentation": "https://www.openpeerpower.io/integrations/hlk_sw16",
   "requirements": [
     "hlk-sw16==0.0.9"
   ],

@@ -64,7 +64,7 @@ class EnvisalinkBinarySensor(EnvisalinkDevice, BinarySensorEntity):
         # number of seconds since the last fault, up to a maximum of 327680
         # seconds (65536 5-second ticks).
         #
-        # We don't want the HA event log to fill up with a bunch of no-op
+        # We don't want the OP event log to fill up with a bunch of no-op
         # "state changes" that are just that number ticking up once per poll
         # interval, so we subtract it from the current second-accurate time
         # unless it is already at the maximum value, in which case we set it

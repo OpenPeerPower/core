@@ -15,7 +15,7 @@ MAILBOX_NAME = "asterisk_cdr"
 
 async def async_get_handler(opp, config, discovery_info=None):
     """Set up the Asterix CDR platform."""
-    return AsteriskCDR.opp, MAILBOX_NAME)
+    return AsteriskCDR(opp, MAILBOX_NAME)
 
 
 class AsteriskCDR(Mailbox):

@@ -1,7 +1,7 @@
 {
   "domain": "binary_sensor",
   "name": "Binary Sensor",
-  "documentation": "https://www.open-peer-power.io/integrations/binary_sensor",
+  "documentation": "https://www.openpeerpower.io/integrations/binary_sensor",
   "codeowners": [],
   "quality_scale": "internal"
 }

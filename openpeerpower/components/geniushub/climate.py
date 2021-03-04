@@ -18,11 +18,11 @@ from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
 from . import DOMAIN, GeniusHeatingZone
 
 # GeniusHub Zones support: Off, Timer, Override/Boost, Footprint & Linked modes
-OP_HVAC_TO_GH = {HVAC_MODE_OFF: "off", HVAC_MODE_HEAT: "timer"}
-GH_HVAC_TO_HA = {v: k for k, v in OP_HVAC_TO_GH.items()}
+HA_HVAC_TO_GH = {HVAC_MODE_OFF: "off", HVAC_MODE_HEAT: "timer"}
+GH_HVAC_TO_HA = {v: k for k, v in HA_HVAC_TO_GH.items()}
 
-OP_PRESET_TO_GH = {PRESET_ACTIVITY: "footprint", PRESET_BOOST: "override"}
-GH_PRESET_TO_HA = {v: k for k, v in OP_PRESET_TO_GH.items()}
+HA_PRESET_TO_GH = {PRESET_ACTIVITY: "footprint", PRESET_BOOST: "override"}
+GH_PRESET_TO_HA = {v: k for k, v in HA_PRESET_TO_GH.items()}
 
 GH_ZONES = ["radiator", "wet underfloor"]
 
@@ -69,7 +69,7 @@ class GeniusClimateZone(GeniusHeatingZone, ClimateEntity):
     @property
     def hvac_modes(self) -> List[str]:
         """Return the list of available hvac operation modes."""
-        return list(OP_HVAC_TO_GH)
+        return list(HA_HVAC_TO_GH)
 
     @property
     def hvac_action(self) -> Optional[str]:
@@ -96,8 +96,8 @@ class GeniusClimateZone(GeniusHeatingZone, ClimateEntity):
 
     async def async_set_hvac_mode(self, hvac_mode: str) -> None:
         """Set a new hvac mode."""
-        await self._zone.set_mode(OP_HVAC_TO_GH.get(hvac_mode))
+        await self._zone.set_mode(HA_HVAC_TO_GH.get(hvac_mode))
 
     async def async_set_preset_mode(self, preset_mode: str) -> None:
         """Set a new preset mode."""
-        await self._zone.set_mode(OP_PRESET_TO_GH.get(preset_mode, "timer"))
+        await self._zone.set_mode(HA_PRESET_TO_GH.get(preset_mode, "timer"))

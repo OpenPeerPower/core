@@ -1,7 +1,7 @@
 {
   "domain": "enigma2",
   "name": "Enigma2 (OpenWebif)",
-  "documentation": "https://www.open-peer-power.io/integrations/enigma2",
+  "documentation": "https://www.openpeerpower.io/integrations/enigma2",
   "requirements": ["openwebifpy==3.2.7"],
   "codeowners": ["@fbradyirl"]
 }

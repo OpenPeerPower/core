@@ -1,6 +1,6 @@
 {
   "domain": "huawei_router",
   "name": "Huawei Router",
-  "documentation": "https://www.open-peer-power.io/integrations/huawei_router",
+  "documentation": "https://www.openpeerpower.io/integrations/huawei_router",
   "codeowners": ["@abmantis"]
 }

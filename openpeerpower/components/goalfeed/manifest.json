@@ -1,7 +1,7 @@
 {
   "domain": "goalfeed",
   "name": "Goalfeed",
-  "documentation": "https://www.open-peer-power.io/integrations/goalfeed",
+  "documentation": "https://www.openpeerpower.io/integrations/goalfeed",
   "requirements": ["pysher==1.0.1"],
   "codeowners": []
 }

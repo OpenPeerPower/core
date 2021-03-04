@@ -363,7 +363,7 @@ def async_get_entities(opp, config) -> List[AlexaEntity]:
         if state.domain not in ENTITY_ADAPTERS:
             continue
 
-        alexa_entity = ENTITY_ADAPTERS[state.domain].opp, config, state)
+        alexa_entity = ENTITY_ADAPTERS[state.domain](opp, config, state)
 
         if not list(alexa_entity.interfaces()):
             continue

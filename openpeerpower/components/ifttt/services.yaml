@@ -15,7 +15,7 @@ trigger:
   fields:
     event:
       description: The name of the event to sent.
-      example: "MY_OP_EVENT"
+      example: "MY_HA_EVENT"
     value1:
       description: Generic field to send data via the event.
       example: "Hello World"

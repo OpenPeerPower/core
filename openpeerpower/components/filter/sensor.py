@@ -365,7 +365,7 @@ class FilterState:
     """State abstraction for filter usage."""
 
     def __init__(self, state):
-        """Initialize with HA State object."""
+        """Initialize with OP State object."""
         self.timestamp = state.last_updated
         try:
             self.state = float(state.state)

@@ -1,7 +1,7 @@
 {
   "domain": "apns",
   "name": "Apple Push Notification Service (APNS)",
-  "documentation": "https://www.open-peer-power.io/integrations/apns",
+  "documentation": "https://www.openpeerpower.io/integrations/apns",
   "requirements": ["apns2==0.3.0"],
   "after_dependencies": ["device_tracker"],
   "codeowners": []

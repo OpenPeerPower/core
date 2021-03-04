@@ -2,7 +2,7 @@
   "domain": "acmeda",
   "name": "Rollease Acmeda Automate",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/acmeda",
+  "documentation": "https://www.openpeerpower.io/integrations/acmeda",
   "requirements": ["aiopulse==0.4.2"],
   "codeowners": [
     "@atmurray"

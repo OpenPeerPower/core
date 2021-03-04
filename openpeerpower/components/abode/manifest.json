@@ -2,7 +2,7 @@
   "domain": "abode",
   "name": "Abode",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/abode",
+  "documentation": "https://www.openpeerpower.io/integrations/abode",
   "requirements": ["abodepy==1.2.0"],
   "codeowners": ["@shred86"],
   "homekit": {

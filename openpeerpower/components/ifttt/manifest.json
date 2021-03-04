@@ -2,7 +2,7 @@
   "domain": "ifttt",
   "name": "IFTTT",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/ifttt",
+  "documentation": "https://www.openpeerpower.io/integrations/ifttt",
   "requirements": ["pyfttt==0.3"],
   "dependencies": ["webhook"],
   "codeowners": []

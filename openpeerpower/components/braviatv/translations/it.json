@@ -21,7 +21,7 @@
                 "data": {
                     "host": "Host"
                 },
-                "description": "Configurare l'integrazione TV di Sony Bravia. In caso di problemi con la configurazione visitare: https://www.open-peer-power.io/integrations/braviatv\n\nAssicurarsi che il televisore sia acceso.",
+                "description": "Configurare l'integrazione TV di Sony Bravia. In caso di problemi con la configurazione visitare: https://www.openpeerpower.io/integrations/braviatv\n\nAssicurarsi che il televisore sia acceso.",
                 "title": "Sony Bravia TV"
             }
         }

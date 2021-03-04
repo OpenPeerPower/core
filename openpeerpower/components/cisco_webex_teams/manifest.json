@@ -1,7 +1,7 @@
 {
   "domain": "cisco_webex_teams",
   "name": "Cisco Webex Teams",
-  "documentation": "https://www.open-peer-power.io/integrations/cisco_webex_teams",
+  "documentation": "https://www.openpeerpower.io/integrations/cisco_webex_teams",
   "requirements": ["webexteamssdk==1.1.1"],
   "codeowners": ["@fbradyirl"]
 }

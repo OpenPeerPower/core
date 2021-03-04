@@ -195,7 +195,7 @@ async def test_load_area(opp, registry):
 @pytest.mark.parametrize("load_registries", [False])
 async def test_loading_area_from_storage(opp, opp_storage):
     """Test loading stored areas on start."""
-    opp.storage[area_registry.STORAGE_KEY] = {
+    opp_storage[area_registry.STORAGE_KEY] = {
         "version": area_registry.STORAGE_VERSION,
         "data": {"areas": [{"id": "12345A", "name": "mock"}]},
     }

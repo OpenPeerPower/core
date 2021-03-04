@@ -2,7 +2,7 @@
   "domain": "adguard",
   "name": "AdGuard Home",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/adguard",
+  "documentation": "https://www.openpeerpower.io/integrations/adguard",
   "requirements": ["adguardhome==0.4.2"],
   "codeowners": ["@frenck"]
 }

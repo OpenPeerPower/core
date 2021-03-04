@@ -125,7 +125,7 @@ async def async_setup_entry(opp, config):
         bot.async_update_conversation_commands,
     )
 
-    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, bot.async_handle(opp_stop)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, bot.async_handle_opp_stop)
 
     await bot.async_connect()
 

@@ -3,17 +3,17 @@ import asyncio
 import logging
 from typing import Any, Dict, Iterable, Optional
 
-from openpeerpower.const import SERVICE_TURN_OFF, SERVICE_TURN_ON, STATE_OFF, STATE_ON
+from openpeerpower.const import (
+    ATTR_MODE,
+    SERVICE_TURN_OFF,
+    SERVICE_TURN_ON,
+    STATE_OFF,
+    STATE_ON,
+)
 from openpeerpower.core import Context, State
 from openpeerpower.helpers.typing import OpenPeerPowerType
 
-from .const import (
-    ATTR_HUMIDITY,
-    ATTR_MODE,
-    DOMAIN,
-    SERVICE_SET_HUMIDITY,
-    SERVICE_SET_MODE,
-)
+from .const import ATTR_HUMIDITY, DOMAIN, SERVICE_SET_HUMIDITY, SERVICE_SET_MODE
 
 _LOGGER = logging.getLogger(__name__)
 

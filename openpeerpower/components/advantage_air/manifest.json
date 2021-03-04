@@ -2,7 +2,7 @@
   "domain": "advantage_air",
   "name": "Advantage Air",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/advantage_air",
+  "documentation": "https://www.openpeerpower.io/integrations/advantage_air",
   "codeowners": ["@Bre77"],
   "requirements": ["advantage_air==0.2.1"],
   "quality_scale": "platinum"

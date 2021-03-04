@@ -5,7 +5,7 @@
             "single_instance_allowed": "Solo se permite una \u00fanica configuraci\u00f3n de AdGuard Home."
         },
         "step": {
-             opp.o_confirm": {
+            "oppio_confirm": {
                 "description": "\u00bfDesea configurar Open Peer Power para conectarse a la p\u00e1gina principal de AdGuard proporcionada por el complemento Opp.io: {addon}?",
                 "title": "AdGuard Home a trav\u00e9s del complemento Opp.io"
             },

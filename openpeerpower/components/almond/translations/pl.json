@@ -7,7 +7,7 @@
             "single_instance_allowed": "Ju\u017c skonfigurowano. Mo\u017cliwa jest tylko jedna konfiguracja."
         },
         "step": {
-             opp.o_confirm": {
+            "oppio_confirm": {
                 "description": "Czy chcesz skonfigurowa\u0107 Open Peer Power, aby \u0142\u0105czy\u0142 si\u0119 z Almond dostarczonym przez dodatek Opp.io: {addon}?",
                 "title": "Almond poprzez dodatek Opp.io"
             },

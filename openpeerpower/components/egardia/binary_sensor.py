@@ -27,7 +27,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
             EgardiaBinarySensor(
                 sensor_id=disc_info[sensor]["id"],
                 name=disc_info[sensor]["name"],
-                egardia_system(opp.data[EGARDIA_DEVICE],
+                egardia_system=opp.data[EGARDIA_DEVICE],
                 device_class=EGARDIA_TYPE_TO_DEVICE_CLASS.get(
                     disc_info[sensor]["type"], None
                 ),

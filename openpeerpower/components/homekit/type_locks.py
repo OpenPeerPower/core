@@ -15,7 +15,7 @@ _LOGGER = logging.getLogger(__name__)
 OPP_TO_HOMEKIT = {
     STATE_UNLOCKED: 0,
     STATE_LOCKED: 1,
-    # Value 2 is Jammed which.opp doesn't have a state for
+    # Value 2 is Jammed which opp doesn't have a state for
     STATE_UNKNOWN: 3,
 }
 
@@ -52,8 +52,8 @@ class Lock(HomeAccessory):
         """Set lock state to value if call came from HomeKit."""
         _LOGGER.debug("%s: Set state to %d", self.entity_id, value)
 
-        opp.value = HOMEKIT_TO_OPP.get(value)
-        service = STATE_TO_SERVICE.opp_value]
+        opp_value = HOMEKIT_TO_OPP.get(value)
+        service = STATE_TO_SERVICE[opp_value]
 
         if self.char_current_state.value != value:
             self.char_current_state.set_value(value)
@@ -66,13 +66,13 @@ class Lock(HomeAccessory):
     @callback
     def async_update_state(self, new_state):
         """Update lock after state changed."""
-        opp.state = new_state.state
+        opp_state = new_state.state
         if opp_state in OPP_TO_HOMEKIT:
-            current_lock_state = OPP_TO_HOMEKIT.opp_state]
+            current_lock_state = OPP_TO_HOMEKIT[opp_state]
             _LOGGER.debug(
                 "%s: Updated current state to %s (%d)",
                 self.entity_id,
-                opp.state,
+                opp_state,
                 current_lock_state,
             )
             # LockTargetState only supports locked and unlocked

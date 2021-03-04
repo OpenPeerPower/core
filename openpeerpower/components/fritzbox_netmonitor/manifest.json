@@ -1,7 +1,7 @@
 {
   "domain": "fritzbox_netmonitor",
   "name": "AVM FRITZ!Box Net Monitor",
-  "documentation": "https://www.open-peer-power.io/integrations/fritzbox_netmonitor",
+  "documentation": "https://www.openpeerpower.io/integrations/fritzbox_netmonitor",
   "requirements": ["fritzconnection==1.4.0"],
   "codeowners": []
 }

@@ -1,6 +1,6 @@
 {
   "domain": "citybikes",
   "name": "CityBikes",
-  "documentation": "https://www.open-peer-power.io/integrations/citybikes",
+  "documentation": "https://www.openpeerpower.io/integrations/citybikes",
   "codeowners": []
 }

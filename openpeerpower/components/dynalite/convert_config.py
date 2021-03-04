@@ -1,4 +1,4 @@
-"""Convert the HA config to the dynalite config."""
+"""Convert the OP config to the dynalite config."""
 
 from typing import Any, Dict
 

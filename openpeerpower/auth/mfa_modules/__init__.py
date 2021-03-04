@@ -141,7 +141,7 @@ async def auth_mfa_module_from_config(
         )
         raise
 
-    return MULTI_FACTOR_AUTH_MODULES[module_name].opp, config)  # type: ignore
+    return MULTI_FACTOR_AUTH_MODULES[module_name](opp, config)  # type: ignore
 
 
 async def _load_mfa_module(opp: OpenPeerPower, module_name: str) -> types.ModuleType:

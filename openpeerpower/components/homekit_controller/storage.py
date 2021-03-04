@@ -1,4 +1,4 @@
-"""Helpers for HomeKit data stored in HA storage."""
+"""Helpers for HomeKit data stored in OP storage."""
 
 from openpeerpower.core import callback
 from openpeerpower.helpers.storage import Store
@@ -20,7 +20,7 @@ class EntityMapStorage:
     An endpoint is made of accessories, services and characteristics. It is
     safe to cache this data until the c# discovery data changes.
 
-    Caching this data means we can add HomeKit devices to HA immediately at
+    Caching this data means we can add HomeKit devices to OP immediately at
     start even if discovery hasn't seen them yet or they are out of range. It
     is also important for BLE devices - accessing the entity structure is
     very slow for these devices.

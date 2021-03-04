@@ -1,7 +1,7 @@
 {
   "domain": "gntp",
   "name": "Growl (GnGNTP)",
-  "documentation": "https://www.open-peer-power.io/integrations/gntp",
+  "documentation": "https://www.openpeerpower.io/integrations/gntp",
   "requirements": ["gntp==1.0.3"],
   "codeowners": []
 }

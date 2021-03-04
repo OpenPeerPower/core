@@ -348,7 +348,7 @@ class HistoryStatsHelper:
     def handle_template_exception(ex, field):
         """Log an error nicely if the template cannot be interpreted."""
         if ex.args and ex.args[0].startswith("UndefinedError: 'None' has no attribute"):
-            # Common during HA startup - so just a warning
+            # Common during OP startup - so just a warning
             _LOGGER.warning(ex)
             return
         _LOGGER.error("Error parsing template for field %s", field)

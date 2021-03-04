@@ -2,7 +2,7 @@
   "domain": "glances",
   "name": "Glances",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/glances",
+  "documentation": "https://www.openpeerpower.io/integrations/glances",
   "requirements": ["glances_api==0.2.0"],
   "codeowners": ["@fabaff", "@engrbm87"]
 }

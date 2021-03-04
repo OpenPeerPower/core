@@ -26,7 +26,7 @@ def setup(opp, config):
     _LOGGER.warning(
         "The %s integration has been deprecated. Please move your "
         "configuration to the firmata integration. "
-        "https://www.open-peer-power.io/integrations/firmata",
+        "https://www.openpeerpower.io/integrations/firmata",
         DOMAIN,
     )
 

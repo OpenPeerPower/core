@@ -74,7 +74,7 @@ class FibaroLight(FibaroDevice, LightEntity):
             self._supported_flags |= SUPPORT_WHITE_VALUE
 
         super().__init__(fibaro_device)
-        self.entity_id = f"{DOMAIN}.{self.op_id}"
+        self.entity_id = f"{DOMAIN}.{self.ha_id}"
 
     @property
     def brightness(self):

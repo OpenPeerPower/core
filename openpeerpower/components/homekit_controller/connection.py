@@ -99,7 +99,7 @@ class HKDevice:
         self.platforms = set()
 
         # This just tracks aid/iid pairs so we know if a HK service has been
-        # mapped to a HA entity.
+        # mapped to a OP entity.
         self.entities = []
 
         # A map of aid -> device_id
@@ -337,7 +337,7 @@ class HKDevice:
         self._add_new_entities([add_entities_cb])
 
     def add_entities(self):
-        """Process the entity map and create HA entities."""
+        """Process the entity map and create OP entities."""
         self._add_new_entities(self.listeners)
         self._add_new_entities_for_accessory(self.accessory_factories)
         self._add_new_entities_for_char(self.char_factories)
@@ -427,7 +427,7 @@ class HKDevice:
             _LOGGER.debug("Finished HomeKit controller update")
 
     def process_new_events(self, new_values_dict):
-        """Process events from accessory into HA state."""
+        """Process events from accessory into OP state."""
         self.available = True
 
         # Process any stateless events (via device_triggers)
@@ -451,7 +451,7 @@ class HKDevice:
         """Control a HomeKit device state from Open Peer Power."""
         results = await self.pairing.put_characteristics(characteristics)
 
-        # Feed characteristics back into HA and update the current state
+        # Feed characteristics back into OP and update the current state
         # results will only contain failures, so anythin in characteristics
         # but not in results was applied successfully - we can just have HA
         # reflect the change immediately.

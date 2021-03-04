@@ -2,7 +2,7 @@
     "config": {
         "abort": {
             "already_configured": "La pasarela ya est\u00e1 configurada",
-            "already_in_progress": "El flujo de configuraci\u00f3n para la pasarela ya est\u00e1 en marcop.",
+            "already_in_progress": "El flujo de configuraci\u00f3n para la pasarela ya est\u00e1 en marcha.",
             "no_bridges": "No se han descubierto pasarelas deCONZ",
             "no_hardware_available": "No hay hardware de radio conectado a deCONZ",
             "not_deconz_bridge": "No es una pasarela deCONZ",
@@ -13,8 +13,8 @@
         },
         "flow_title": "pasarela deCONZ Zigbee ({host})",
         "step": {
-             opp.o_confirm": {
-                "description": "\u00bfQuieres configurar Open Peer Power para que se conecte al gateway de deCONZ proporcionado por el add-on {addon} de.opp.io?",
+            "oppio_confirm": {
+                "description": "\u00bfQuieres configurar Open Peer Power para que se conecte al gateway de deCONZ proporcionado por el add-on {addon} de opp.io?",
                 "title": "Add-on deCONZ Zigbee v\u00eda Opp.io"
             },
             "link": {

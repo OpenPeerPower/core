@@ -1,7 +1,7 @@
 {
   "domain": "history",
   "name": "History",
-  "documentation": "https://www.open-peer-power.io/integrations/history",
+  "documentation": "https://www.openpeerpower.io/integrations/history",
   "dependencies": ["http", "recorder"],
   "codeowners": ["@open-peer-power/core"],
   "quality_scale": "internal"

@@ -15,7 +15,7 @@ STATE_AUTO = "auto"
 STATE_MANUAL = "manual"
 
 # Genius Hub HW zones support only Off, Override/Boost & Timer modes
-OP_OPMODE_TO_GH = {STATE_OFF: "off", STATE_AUTO: "timer", STATE_MANUAL: "override"}
+HA_OPMODE_TO_GH = {STATE_OFF: "off", STATE_AUTO: "timer", STATE_MANUAL: "override"}
 GH_STATE_TO_HA = {
     "off": STATE_OFF,
     "timer": STATE_AUTO,
@@ -63,7 +63,7 @@ class GeniusWaterHeater(GeniusHeatingZone, WaterHeaterEntity):
     @property
     def operation_list(self) -> List[str]:
         """Return the list of available operation modes."""
-        return list(OP_OPMODE_TO_GH)
+        return list(HA_OPMODE_TO_GH)
 
     @property
     def current_operation(self) -> str:
@@ -72,4 +72,4 @@ class GeniusWaterHeater(GeniusHeatingZone, WaterHeaterEntity):
 
     async def async_set_operation_mode(self, operation_mode) -> None:
         """Set a new operation mode for this boiler."""
-        await self._zone.set_mode(OP_OPMODE_TO_GH[operation_mode])
+        await self._zone.set_mode(HA_OPMODE_TO_GH[operation_mode])

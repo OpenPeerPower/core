@@ -1,7 +1,7 @@
 {
   "domain": "deluge",
   "name": "Deluge",
-  "documentation": "https://www.open-peer-power.io/integrations/deluge",
+  "documentation": "https://www.openpeerpower.io/integrations/deluge",
   "requirements": ["deluge-client==1.7.1"],
   "codeowners": []
 }

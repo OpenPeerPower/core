@@ -1,7 +1,7 @@
 """Support for alexa Smart Home Skill API."""
 import logging
 
-import openpeerpower.core as op
+import openpeerpower.core as ha
 
 from .const import API_DIRECTIVE, API_HEADER, EVENT_ALEXA_SMART_HOME
 from .errors import AlexaBridgeUnreachableError, AlexaError
@@ -21,7 +21,7 @@ async def async_handle_message(opp, config, request, context=None, enabled=True)
     assert request[API_DIRECTIVE][API_HEADER]["payloadVersion"] == "3"
 
     if context is None:
-        context = op.Context()
+        context = ha.Context()
 
     directive = AlexaDirective(request)
 

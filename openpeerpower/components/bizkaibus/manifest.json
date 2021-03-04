@@ -1,7 +1,7 @@
 {
   "domain": "bizkaibus",
   "name": "Bizkaibus",
-  "documentation": "https://www.open-peer-power.io/integrations/bizkaibus",
+  "documentation": "https://www.openpeerpower.io/integrations/bizkaibus",
   "codeowners": ["@UgaitzEtxebarria"],
   "requirements": ["bizkaibus==0.1.1"]
 }

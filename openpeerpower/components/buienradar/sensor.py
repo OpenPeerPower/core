@@ -332,7 +332,7 @@ class BrSensor(Entity):
                 return False
 
             if self.type.startswith(WINDSPEED):
-                #.opp wants windspeeds in km/h not m/s, so convert:
+                # opp wants windspeeds in km/h not m/s, so convert:
                 try:
                     self._state = data.get(FORECAST)[fcday].get(self.type[:-3])
                     if self._state is not None:
@@ -382,14 +382,14 @@ class BrSensor(Entity):
             return True
 
         if self.type == WINDSPEED or self.type == WINDGUST:
-            #.opp wants windspeeds in km/h not m/s, so convert:
+            # opp wants windspeeds in km/h not m/s, so convert:
             self._state = data.get(self.type)
             if self._state is not None:
                 self._state = round(data.get(self.type) * 3.6, 1)
             return True
 
         if self.type == VISIBILITY:
-            #.opp wants visibility in km (not m), so convert:
+            # opp wants visibility in km (not m), so convert:
             self._state = data.get(self.type)
             if self._state is not None:
                 self._state = round(self._state / 1000, 1)

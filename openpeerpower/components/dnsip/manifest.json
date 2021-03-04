@@ -1,7 +1,7 @@
 {
   "domain": "dnsip",
   "name": "DNS IP",
-  "documentation": "https://www.open-peer-power.io/integrations/dnsip",
+  "documentation": "https://www.openpeerpower.io/integrations/dnsip",
   "requirements": ["aiodns==2.0.0"],
   "codeowners": []
 }

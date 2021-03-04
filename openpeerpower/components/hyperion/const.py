@@ -39,7 +39,7 @@ DEFAULT_PRIORITY = 128
 DOMAIN = "hyperion"
 
 HYPERION_RELEASES_URL = "https://github.com/hyperion-project/hyperion.ng/releases"
-HYPERION_VERSION_WARN_CUTOFF = "2.0.0-alpop.9"
+HYPERION_VERSION_WARN_CUTOFF = "2.0.0-alpha.9"
 
 NAME_SUFFIX_HYPERION_LIGHT = ""
 NAME_SUFFIX_HYPERION_PRIORITY_LIGHT = "Priority"

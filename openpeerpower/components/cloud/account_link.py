@@ -38,7 +38,7 @@ async def async_provide_implementation(opp: OpenPeerPower, domain: str):
 
 @callback
 def _is_older(version: str) -> bool:
-    """Test if a version is older than the current HA version."""
+    """Test if a version is older than the current OP version."""
     version_parts = version.split(".")
 
     if len(version_parts) != 3:

@@ -1,7 +1,7 @@
 {
   "domain": "delijn",
   "name": "De Lijn",
-  "documentation": "https://www.open-peer-power.io/integrations/delijn",
+  "documentation": "https://www.openpeerpower.io/integrations/delijn",
   "codeowners": ["@bollewolle", "@Emilv2"],
   "requirements": ["pydelijn==0.6.1"]
 }

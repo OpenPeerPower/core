@@ -1,6 +1,6 @@
 {
   "domain": "efergy",
   "name": "Efergy",
-  "documentation": "https://www.open-peer-power.io/integrations/efergy",
+  "documentation": "https://www.openpeerpower.io/integrations/efergy",
   "codeowners": []
 }

@@ -2,7 +2,7 @@
   "domain": "apple_tv",
   "name": "Apple TV",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/apple_tv",
+  "documentation": "https://www.openpeerpower.io/integrations/apple_tv",
   "requirements": [
     "pyatv==0.7.6"
   ],

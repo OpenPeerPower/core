@@ -37,8 +37,8 @@ from openpeerpower.helpers.typing import OpenPeerPowerType
 from .const import (
     _LOGGER,
     DOMAIN as ISY994_DOMAIN,
-    OP_FAN_TO_ISY,
-    OP_HVAC_TO_ISY,
+    HA_FAN_TO_ISY,
+    HA_HVAC_TO_ISY,
     ISY994_NODES,
     ISY_HVAC_MODES,
     UOM_FAN_MODES,
@@ -51,7 +51,7 @@ from .const import (
     UOM_TO_STATES,
 )
 from .entity import ISYNodeEntity
-from .helpers import convert_isy_value_to(opp, migrate_old_unique_ids
+from .helpers import convert_isy_value_to_opp, migrate_old_unique_ids
 
 ISY_SUPPORTED_FEATURES = (
     SUPPORT_FAN_MODE | SUPPORT_TARGET_TEMPERATURE | SUPPORT_TARGET_TEMPERATURE_RANGE
@@ -66,7 +66,7 @@ async def async_setup_entry(
     """Set up the ISY994 thermostat platform."""
     entities = []
 
-    opp.isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
+    opp_isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
     for node in opp_isy_data[ISY994_NODES][CLIMATE]:
         entities.append(ISYThermostatEntity(node))
 
@@ -225,7 +225,7 @@ class ISYThermostatEntity(ISYNodeEntity, ClimateEntity):
     def set_fan_mode(self, fan_mode: str) -> None:
         """Set new target fan mode."""
         _LOGGER.debug("Requested fan mode %s", fan_mode)
-        self._node.set_fan_mode(OP_FAN_TO_ISY.get(fan_mode))
+        self._node.set_fan_mode(HA_FAN_TO_ISY.get(fan_mode))
         # Presumptive setting--event stream will correct if cmd fails:
         self._fan_mode = fan_mode
         self.schedule_update_op_state()
@@ -233,7 +233,7 @@ class ISYThermostatEntity(ISYNodeEntity, ClimateEntity):
     def set_hvac_mode(self, hvac_mode: str) -> None:
         """Set new target hvac mode."""
         _LOGGER.debug("Requested operation mode %s", hvac_mode)
-        self._node.set_climate_mode(OP_HVAC_TO_ISY.get(hvac_mode))
+        self._node.set_climate_mode(HA_HVAC_TO_ISY.get(hvac_mode))
         # Presumptive setting--event stream will correct if cmd fails:
         self._hvac_mode = hvac_mode
         self.schedule_update_op_state()

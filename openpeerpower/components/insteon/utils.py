@@ -145,7 +145,7 @@ def register_new_device_callback(opp):
         _LOGGER.debug(
             "Adding new INSTEON device to Open Peer Power with address %s", address
         )
-        await devices.async_save(workdir(opp.config.config_dir)
+        await devices.async_save(workdir=opp.config.config_dir)
         device = devices[address]
         await device.async_status()
         platforms = get_device_platforms(device)

@@ -31,7 +31,7 @@ if TYPE_CHECKING:
 
 SAVE_DELAY = 120
 
-# Mapping from ESPHome info type to HA platform
+# Mapping from ESPHome info type to OP platform
 INFO_TYPE_TO_PLATFORM = {
     BinarySensorInfo: "binary_sensor",
     CameraInfo: "camera",
@@ -57,7 +57,7 @@ class RuntimeEntryData:
     info: Dict[str, Dict[str, Any]] = attr.ib(factory=dict)
 
     # A second list of EntityInfo objects
-    # This is necessary for when an entity is being removed. HA requires
+    # This is necessary for when an entity is being removed. OP requires
     # some static info to be accessible during removal (unique_id, maybe others)
     # If an entity can't find anything in the info array, it will look for info here.
     old_info: Dict[str, Dict[str, Any]] = attr.ib(factory=dict)

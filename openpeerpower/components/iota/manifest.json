@@ -1,7 +1,7 @@
 {
   "domain": "iota",
   "name": "IOTA",
-  "documentation": "https://www.open-peer-power.io/integrations/iota",
+  "documentation": "https://www.openpeerpower.io/integrations/iota",
   "requirements": ["pyota==2.0.5"],
   "codeowners": []
 }

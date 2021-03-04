@@ -13,7 +13,7 @@
         },
         "flow_title": "deCONZ Zigbee gateway ({host})",
         "step": {
-             opp.o_confirm": {
+            "oppio_confirm": {
                 "description": "Do you want to configure Open Peer Power to connect to the deCONZ gateway provided by the Opp.io add-on {addon}?",
                 "title": "deCONZ Zigbee gateway via Opp.io add-on"
             },

@@ -91,7 +91,7 @@ async def async_setup(opp: OpenPeerPower, yaml_config: Dict[str, Any]):
     """Activate Google Actions component."""
     config = yaml_config.get(DOMAIN, {})
 
-    google_config = Googleconfig(opp, config)
+    google_config = GoogleConfig(opp, config)
     await google_config.async_initialize()
 
     opp.http.register_view(GoogleAssistantView(google_config))

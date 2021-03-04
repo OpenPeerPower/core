@@ -36,7 +36,7 @@ async def async_setup(opp, opp_config):
     """Create an Intergas InComfort/Intouch system."""
     incomfort_data = opp.data[DOMAIN] = {}
 
-    credentials = dict.opp_config[DOMAIN])
+    credentials = dict(opp_config[DOMAIN])
     hostname = credentials.pop(CONF_HOST)
 
     client = incomfort_data["client"] = InComfortGateway(

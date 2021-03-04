@@ -1,7 +1,7 @@
 {
   "domain": "blackbird",
   "name": "Monoprice Blackbird Matrix Switch",
-  "documentation": "https://www.open-peer-power.io/integrations/blackbird",
+  "documentation": "https://www.openpeerpower.io/integrations/blackbird",
   "requirements": ["pyblackbird==0.5"],
   "codeowners": []
 }

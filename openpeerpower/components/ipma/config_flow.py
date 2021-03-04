@@ -34,7 +34,7 @@ class IpmaFlowHandler(config_entries.ConfigFlow):
 
             self._errors[CONF_NAME] = "name_exists"
 
-        # default location is set.opp configuration
+        # default location is set opp configuration
         return await self._show_config_form(
             name=HOME_LOCATION_NAME,
             latitude=self.opp.config.latitude,

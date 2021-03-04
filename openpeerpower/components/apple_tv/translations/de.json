@@ -3,8 +3,8 @@
         "abort": {
             "already_configured_device": "Ger\u00e4t ist bereits konfiguriert",
             "already_in_progress": "Der Konfigurationsablauf wird bereits ausgef\u00fchrt",
-            "backoff": "Das Ger\u00e4t akzeptiert derzeit keine  opp.ungsanfragen (M\u00f6glicherweise wurde zu oft ein ung\u00fcltiger PIN-Code eingegeben), versuche es sp\u00e4ter erneut.",
-            "device_did_not_pair": "Es wurde kein Versuch unternommen, den  opp.ungsvorgang vom Ger\u00e4t aus abzuschlie\u00dfen.",
+            "backoff": "Das Ger\u00e4t akzeptiert derzeit keine Kopplungsanfragen (M\u00f6glicherweise wurde zu oft ein ung\u00fcltiger PIN-Code eingegeben), versuche es sp\u00e4ter erneut.",
+            "device_did_not_pair": "Es wurde kein Versuch unternommen, den Kopplungsvorgang vom Ger\u00e4t aus abzuschlie\u00dfen.",
             "invalid_config": "Die Konfiguration f\u00fcr dieses Ger\u00e4t ist unvollst\u00e4ndig. Bitte versuche, es erneut hinzuzuf\u00fcgen.",
             "no_devices_found": "Keine Ger\u00e4te im Netzwerk gefunden",
             "unknown": "Unerwarteter Fehler"
@@ -23,14 +23,14 @@
                 "title": "Best\u00e4tige das Hinzuf\u00fcgen vom Apple TV"
             },
             "pair_no_pin": {
-                "description": "F\u00fcr den Dienst `{protocol}` ist eine  opp.ung erforderlich. Bitte gebe die PIN {pin} am Apple TV ein, um fortzufahren.",
+                "description": "F\u00fcr den Dienst `{protocol}` ist eine Kopplung erforderlich. Bitte gebe die PIN {pin} am Apple TV ein, um fortzufahren.",
                 "title": "Kopplung"
             },
             "pair_with_pin": {
                 "data": {
                     "pin": "PIN-Code"
                 },
-                "description": "F\u00fcr das Protokoll `{protocol}` ist eine  opp.ung erforderlich. Bitte gebe den auf dem Bildschirm angezeigten PIN-Code ein. F\u00fchrende Nullen m\u00fcssen weggelassen werden, d.h. gebe 123 ein, wenn der angezeigte Code 0123 lautet.",
+                "description": "F\u00fcr das Protokoll `{protocol}` ist eine Kopplung erforderlich. Bitte gebe den auf dem Bildschirm angezeigten PIN-Code ein. F\u00fchrende Nullen m\u00fcssen weggelassen werden, d.h. gebe 123 ein, wenn der angezeigte Code 0123 lautet.",
                 "title": "Kopplung"
             },
             "reconfigure": {
@@ -38,7 +38,7 @@
                 "title": "Ger\u00e4teneukonfiguration"
             },
             "service_problem": {
-                "description": "Beim  opp.ln des Protokolls `{protocol}` ist ein Problem aufgetreten. Es wird ignoriert.",
+                "description": "Beim Koppeln des Protokolls `{protocol}` ist ein Problem aufgetreten. Es wird ignoriert.",
                 "title": "Fehler beim Hinzuf\u00fcgen des Dienstes"
             },
             "user": {

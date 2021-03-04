@@ -2,7 +2,7 @@
   "domain": "geofency",
   "name": "Geofency",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/geofency",
+  "documentation": "https://www.openpeerpower.io/integrations/geofency",
   "dependencies": ["webhook"],
   "codeowners": []
 }

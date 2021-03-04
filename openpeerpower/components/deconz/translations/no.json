@@ -13,7 +13,7 @@
         },
         "flow_title": "",
         "step": {
-             opp.o_confirm": {
+            "oppio_confirm": {
                 "description": "Vil du konfigurere Open Peer Power til \u00e5 koble seg til deCONZ-gateway levert av Opp.io-tillegg {addon} ?",
                 "title": "deCONZ Zigbee gateway via Opp.io-tillegg"
             },

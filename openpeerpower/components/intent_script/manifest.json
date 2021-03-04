@@ -1,7 +1,7 @@
 {
   "domain": "intent_script",
   "name": "Intent Script",
-  "documentation": "https://www.open-peer-power.io/integrations/intent_script",
+  "documentation": "https://www.openpeerpower.io/integrations/intent_script",
   "codeowners": [],
   "quality_scale": "internal"
 }

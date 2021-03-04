@@ -1,7 +1,7 @@
 {
   "domain": "cisco_ios",
   "name": "Cisco IOS",
-  "documentation": "https://www.open-peer-power.io/integrations/cisco_ios",
+  "documentation": "https://www.openpeerpower.io/integrations/cisco_ios",
   "requirements": ["pexpect==4.6.0"],
   "codeowners": ["@fbradyirl"]
 }

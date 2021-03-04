@@ -5,7 +5,7 @@
         },
         "step": {
             "user": {
-                "description": "Si necesita ayuda con la configuraci\u00f3n, eche un vistazo aqu\u00ed: https://www.open-peer-power.io/integrations/accuweather/ \n\nAlgunos sensores no est\u00e1n habilitados de forma predeterminada. Puede habilitarlos en el registro de entidades despu\u00e9s de la configuraci\u00f3n de integraci\u00f3n. La previsi\u00f3n meteorol\u00f3gica no est\u00e1 habilitada de forma predeterminada. Puede habilitarlo en las opciones de integraci\u00f3n.",
+                "description": "Si necesita ayuda con la configuraci\u00f3n, eche un vistazo aqu\u00ed: https://www.openpeerpower.io/integrations/accuweather/ \n\nAlgunos sensores no est\u00e1n habilitados de forma predeterminada. Puede habilitarlos en el registro de entidades despu\u00e9s de la configuraci\u00f3n de integraci\u00f3n. La previsi\u00f3n meteorol\u00f3gica no est\u00e1 habilitada de forma predeterminada. Puede habilitarlo en las opciones de integraci\u00f3n.",
                 "title": "AccuWeather"
             }
         }

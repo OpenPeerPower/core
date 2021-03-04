@@ -1,7 +1,7 @@
 {
   "domain": "caldav",
   "name": "CalDAV",
-  "documentation": "https://www.open-peer-power.io/integrations/caldav",
+  "documentation": "https://www.openpeerpower.io/integrations/caldav",
   "requirements": ["caldav==0.7.1"],
   "codeowners": []
 }

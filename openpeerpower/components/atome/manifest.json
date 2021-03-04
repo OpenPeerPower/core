@@ -1,7 +1,7 @@
 {
   "domain": "atome",
   "name": "Atome Linky",
-  "documentation": "https://www.open-peer-power.io/integrations/atome",
+  "documentation": "https://www.openpeerpower.io/integrations/atome",
   "codeowners": ["@baqs"],
   "requirements": ["pyatome==0.1.1"]
 }

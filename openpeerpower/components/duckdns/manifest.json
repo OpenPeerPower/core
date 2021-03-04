@@ -1,6 +1,6 @@
 {
   "domain": "duckdns",
   "name": "Duck DNS",
-  "documentation": "https://www.open-peer-power.io/integrations/duckdns",
+  "documentation": "https://www.openpeerpower.io/integrations/duckdns",
   "codeowners": []
 }

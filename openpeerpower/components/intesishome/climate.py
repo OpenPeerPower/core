@@ -261,7 +261,7 @@ class IntesisAC(ClimateEntity):
             await self._controller.set_temperature(self._device_id, temperature)
             self._target_temp = temperature
 
-        # Write updated temperature to HA state to avoid flapping (API confirmation is slow)
+        # Write updated temperature to OP state to avoid flapping (API confirmation is slow)
         self.async_write_op_state()
 
     async def async_set_hvac_mode(self, hvac_mode):
@@ -362,7 +362,7 @@ class IntesisAC(ClimateEntity):
         return icon
 
     async def async_update_callback(self, device_id=None):
-        """Let HA know there has been an update from the controller."""
+        """Let OP know there has been an update from the controller."""
         # Track changes in connection state
         if not self._controller.is_connected and self._connected:
             # Connection has dropped

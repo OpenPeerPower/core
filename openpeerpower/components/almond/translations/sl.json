@@ -5,7 +5,7 @@
             "missing_configuration": "Prosimo, preverite dokumentacijo o tem, kako nastaviti Almond."
         },
         "step": {
-             opp.o_confirm": {
+            "oppio_confirm": {
                 "description": "Ali \u017eelite konfigurirati Open Peer Power za povezavo z Almondom, ki ga ponuja dodatek Opp.io: {addon} ?",
                 "title": "Almond prek dodatka Opp.io"
             },

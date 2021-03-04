@@ -115,7 +115,7 @@ def _device_name(data):
 
 
 def _set_location(opp, data, location_name):
-    """Fire HA event to set location."""
+    """Fire OP event to set location."""
     device = _device_name(data)
 
     async_dispatcher_send(

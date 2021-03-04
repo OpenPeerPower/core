@@ -232,7 +232,7 @@ class HangoutsBot:
             self._connected = False
             await self._client.disconnect()
 
-    async def async_handle(opp_stop(self, _):
+    async def async_handle_opp_stop(self, _):
         """Run once when Open Peer Power stops."""
         await self.async_disconnect()
 

@@ -1,7 +1,7 @@
 {
   "domain": "aqualogic",
   "name": "AquaLogic",
-  "documentation": "https://www.open-peer-power.io/integrations/aqualogic",
+  "documentation": "https://www.openpeerpower.io/integrations/aqualogic",
   "requirements": ["aqualogic==1.0"],
   "codeowners": []
 }

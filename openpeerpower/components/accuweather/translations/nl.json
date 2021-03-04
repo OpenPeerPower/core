@@ -16,7 +16,7 @@
                     "longitude": "Lengtegraad",
                     "name": "Naam"
                 },
-                "description": "Als je hulp nodig hebt bij de configuratie, kijk dan hier: https://www.open-peer-power.io/integrations/accuweather/ \n\n Sommige sensoren zijn niet standaard ingeschakeld. U kunt ze inschakelen in het entiteitenregister na de integratieconfiguratie.\n Weersvoorspelling is niet standaard ingeschakeld. U kunt het inschakelen in de integratieopties.",
+                "description": "Als je hulp nodig hebt bij de configuratie, kijk dan hier: https://www.openpeerpower.io/integrations/accuweather/ \n\n Sommige sensoren zijn niet standaard ingeschakeld. U kunt ze inschakelen in het entiteitenregister na de integratieconfiguratie.\n Weersvoorspelling is niet standaard ingeschakeld. U kunt het inschakelen in de integratieopties.",
                 "title": "AccuWeather"
             }
         }

@@ -8,6 +8,6 @@ config_entry_flow.register_webhook_flow(
     "IFTTT Webhook",
     {
         "applet_url": "https://ifttt.com/maker_webhooks",
-        "docs_url": "https://www.open-peer-power.io/integrations/ifttt/",
+        "docs_url": "https://www.openpeerpower.io/integrations/ifttt/",
     },
 )

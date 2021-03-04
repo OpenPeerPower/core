@@ -18,8 +18,8 @@ _LOGGER = logging.getLogger(__name__)
 
 STATE_AUTO = "auto"
 
-OP_STATE_TO_EVO = {STATE_AUTO: "", STATE_ON: "On", STATE_OFF: "Off"}
-EVO_STATE_TO_HA = {v: k for k, v in OP_STATE_TO_EVO.items() if k != ""}
+HA_STATE_TO_EVO = {STATE_AUTO: "", STATE_ON: "On", STATE_OFF: "Off"}
+EVO_STATE_TO_HA = {v: k for k, v in HA_STATE_TO_EVO.items() if k != ""}
 
 STATE_ATTRS_DHW = ["dhwId", "activeFaults", "stateStatus", "temperatureStatus"]
 
@@ -72,7 +72,7 @@ class EvoDHW(EvoChild, WaterHeaterEntity):
     @property
     def operation_list(self) -> List[str]:
         """Return the list of available operations."""
-        return list(OP_STATE_TO_EVO)
+        return list(HA_STATE_TO_EVO)
 
     @property
     def is_away_mode_on(self):

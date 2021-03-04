@@ -94,7 +94,7 @@ async def async_setup_entry(opp, entry):
         async_dispatcher_send(opp, f"hlk_sw16_device_available_{entry.entry_id}", True)
 
     async def connect():
-        """Set up connection and hook it into HA for reconnect/shutdown."""
+        """Set up connection and hook it into OP for reconnect/shutdown."""
         _LOGGER.info("Initiating HLK-SW16 connection to %s", address)
 
         client = await create_hlk_sw16_connection(
@@ -158,7 +158,7 @@ class SW16Device(Entity):
 
     @callback
     def handle_event_callback(self, event):
-        """Propagate changes through op."""
+        """Propagate changes through ha."""
         _LOGGER.debug("Relay %s new state callback: %r", self.unique_id, event)
         self._is_on = event
         self.async_write_op_state()

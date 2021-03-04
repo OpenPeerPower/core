@@ -99,7 +99,7 @@ class EsphomeFan(EsphomeEntity, FanEntity):
     async def async_set_direction(self, direction: str):
         """Set direction of the fan."""
         await self._client.fan_command(
-            key=self._static_info.key, direction=_fan_directions.from.opp(direction)
+            key=self._static_info.key, direction=_fan_directions.from_opp(direction)
         )
 
     # https://github.com/PyCQA/pylint/issues/3150 for all @esphome_state_property
@@ -111,7 +111,7 @@ class EsphomeFan(EsphomeEntity, FanEntity):
         return self._state.state
 
     @esphome_state_property
-    def percentage(self) -> Optional[str]:
+    def percentage(self) -> Optional[int]:
         """Return the current speed percentage."""
         if not self._static_info.supports_speed:
             return None

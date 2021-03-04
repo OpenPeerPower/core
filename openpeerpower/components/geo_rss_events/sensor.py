@@ -2,7 +2,7 @@
 Generic GeoRSS events service.
 
 Retrieves current events (typically incidents or alerts) in GeoRSS format, and
-shows information on events filtered by distance to the HA instance's location
+shows information on events filtered by distance to the OP instance's location
 and grouped by category.
 """
 from datetime import timedelta

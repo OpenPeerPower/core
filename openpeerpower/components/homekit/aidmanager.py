@@ -5,9 +5,9 @@ HomeKit needs to allocate unique numbers to each accessory. These need to
 be stable between reboots and upgrades.
 
 Using a hash function to generate them means collisions. It also means you
-can't change the hash without causing breakages for HA users.
+can't change the hash without causing breakages for OP users.
 
-This module generates and stores them in a HA storage.
+This module generates and stores them in a OP storage.
 """
 import random
 

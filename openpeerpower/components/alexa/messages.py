@@ -52,7 +52,7 @@ class AlexaDirective:
         if not self.entity or not config.should_expose(self.entity_id):
             raise AlexaInvalidEndpointError(_endpoint_id)
 
-        self.endpoint = ENTITY_ADAPTERS[self.entity.domain].opp, config, self.entity)
+        self.endpoint = ENTITY_ADAPTERS[self.entity.domain](opp, config, self.entity)
         if "instance" in self._directive[API_HEADER]:
             self.instance = self._directive[API_HEADER]["instance"]
 

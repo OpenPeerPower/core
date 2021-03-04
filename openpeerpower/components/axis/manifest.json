@@ -2,7 +2,7 @@
   "domain": "axis",
   "name": "Axis",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/axis",
+  "documentation": "https://www.openpeerpower.io/integrations/axis",
   "requirements": ["axis==43"],
   "dhcp": [
     { "hostname": "axis-00408c*", "macaddress": "00408C*" },

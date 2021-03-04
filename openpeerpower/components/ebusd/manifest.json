@@ -1,7 +1,7 @@
 {
   "domain": "ebusd",
   "name": "ebusd",
-  "documentation": "https://www.open-peer-power.io/integrations/ebusd",
+  "documentation": "https://www.openpeerpower.io/integrations/ebusd",
   "requirements": ["ebusdpy==0.0.16"],
   "codeowners": []
 }

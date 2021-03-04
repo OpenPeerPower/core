@@ -100,7 +100,7 @@ def setup(opp, config):
                         filename = os.path.basename(url).strip()
 
                     if not filename:
-                        filename = "op_download"
+                        filename = "ha_download"
 
                     # Check the filename
                     raise_if_invalid_filename(filename)

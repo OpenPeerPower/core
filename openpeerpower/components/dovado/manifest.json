@@ -1,7 +1,7 @@
 {
   "domain": "dovado",
   "name": "Dovado",
-  "documentation": "https://www.open-peer-power.io/integrations/dovado",
+  "documentation": "https://www.openpeerpower.io/integrations/dovado",
   "requirements": ["dovado==0.4.1"],
   "codeowners": []
 }

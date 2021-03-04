@@ -1,6 +1,6 @@
 {
   "domain": "flock",
   "name": "Flock",
-  "documentation": "https://www.open-peer-power.io/integrations/flock",
+  "documentation": "https://www.openpeerpower.io/integrations/flock",
   "codeowners": ["@fabaff"]
 }

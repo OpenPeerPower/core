@@ -131,7 +131,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
         )
 
     async def async_close_connection(event):
-        """Close AsusWrt connection on HA Stop."""
+        """Close AsusWrt connection on OP Stop."""
         await router.close()
 
     stop_listener = opp.bus.async_listen_once(

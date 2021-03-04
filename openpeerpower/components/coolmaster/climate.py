@@ -21,7 +21,7 @@ from .const import CONF_SUPPORTED_MODES, DATA_COORDINATOR, DATA_INFO, DOMAIN
 
 SUPPORT_FLAGS = SUPPORT_TARGET_TEMPERATURE | SUPPORT_FAN_MODE
 
-CM_TO_OP_STATE = {
+CM_TO_HA_STATE = {
     "heat": HVAC_MODE_HEAT,
     "cool": HVAC_MODE_COOL,
     "auto": HVAC_MODE_HEAT_COOL,
@@ -29,7 +29,7 @@ CM_TO_OP_STATE = {
     "fan": HVAC_MODE_FAN_ONLY,
 }
 
-OP_STATE_TO_CM = {value: key for key, value in CM_TO_OP_STATE.items()}
+HA_STATE_TO_CM = {value: key for key, value in CM_TO_HA_STATE.items()}
 
 FAN_MODES = ["low", "med", "high", "auto"]
 
@@ -124,7 +124,7 @@ class CoolmasterClimate(CoordinatorEntity, ClimateEntity):
         if not is_on:
             return HVAC_MODE_OFF
 
-        return CM_TO_OP_STATE[mode]
+        return CM_TO_HA_STATE[mode]
 
     @property
     def hvac_modes(self):
@@ -162,7 +162,7 @@ class CoolmasterClimate(CoordinatorEntity, ClimateEntity):
         if hvac_mode == HVAC_MODE_OFF:
             await self.async_turn_off()
         else:
-            self._unit = await self._unit.set_mode(OP_STATE_TO_CM[hvac_mode])
+            self._unit = await self._unit.set_mode(HA_STATE_TO_CM[hvac_mode])
             await self.async_turn_on()
 
     async def async_turn_on(self):

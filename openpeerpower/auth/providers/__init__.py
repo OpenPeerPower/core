@@ -147,7 +147,7 @@ async def auth_provider_from_config(
         )
         raise
 
-    return AUTH_PROVIDERS[provider_name].opp, store, config)  # type: ignore
+    return AUTH_PROVIDERS[provider_name](opp, store, config)  # type: ignore
 
 
 async def load_auth_provider_module(
@@ -189,7 +189,7 @@ class LoginFlow(data_entry_flow.FlowHandler):
         """Initialize the login flow."""
         self._auth_provider = auth_provider
         self._auth_module_id: Optional[str] = None
-        self._auth_manager = auth_provider(opp.auth
+        self._auth_manager = auth_provider.opp.auth
         self.available_mfa_modules: Dict[str, str] = {}
         self.created_at = dt_util.utcnow()
         self.invalid_mfa_times = 0

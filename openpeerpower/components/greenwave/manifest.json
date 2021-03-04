@@ -1,7 +1,7 @@
 {
   "domain": "greenwave",
   "name": "Greenwave Reality",
-  "documentation": "https://www.open-peer-power.io/integrations/greenwave",
+  "documentation": "https://www.openpeerpower.io/integrations/greenwave",
   "requirements": ["greenwavereality==0.5.1"],
   "codeowners": []
 }

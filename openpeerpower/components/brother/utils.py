@@ -23,7 +23,7 @@ def get_snmp_engine(opp):
     def shutdown_listener(ev):
         if opp.data.get(DOMAIN):
             _LOGGER.debug("Unconfiguring SNMP engine")
-            lcd.unconfigure.opp.data[DOMAIN][SNMP], None)
+            lcd.unconfigure(opp.data[DOMAIN][SNMP], None)
 
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, shutdown_listener)
 

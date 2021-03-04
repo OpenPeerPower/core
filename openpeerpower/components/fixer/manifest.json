@@ -1,7 +1,7 @@
 {
   "domain": "fixer",
   "name": "Fixer",
-  "documentation": "https://www.open-peer-power.io/integrations/fixer",
+  "documentation": "https://www.openpeerpower.io/integrations/fixer",
   "requirements": ["fixerio==1.0.0a0"],
   "codeowners": ["@fabaff"]
 }

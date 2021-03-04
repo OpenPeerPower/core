@@ -33,7 +33,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 
     @callback
     def schedule_import(_):
-        """Schedule delayed import after HA is fully started."""
+        """Schedule delayed import after OP is fully started."""
         async_call_later(opp, 10, do_import)
 
     @callback

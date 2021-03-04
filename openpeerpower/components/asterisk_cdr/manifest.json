@@ -1,7 +1,7 @@
 {
   "domain": "asterisk_cdr",
   "name": "Asterisk Call Detail Records",
-  "documentation": "https://www.open-peer-power.io/integrations/asterisk_cdr",
+  "documentation": "https://www.openpeerpower.io/integrations/asterisk_cdr",
   "dependencies": ["asterisk_mbox"],
   "codeowners": []
 }

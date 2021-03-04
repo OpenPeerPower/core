@@ -12,7 +12,7 @@ from adb_shell.exceptions import (
     InvalidResponseError,
     TcpTimeoutException,
 )
-from androidtv import op_state_detection_rules_validator
+from androidtv import ha_state_detection_rules_validator
 from androidtv.adb_manager.adb_manager_sync import ADBPythonSync
 from androidtv.constants import APPS, KEYS
 from androidtv.exceptions import LockNotAcquiredException
@@ -149,14 +149,14 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
         vol.Optional(CONF_TURN_ON_COMMAND): cv.string,
         vol.Optional(CONF_TURN_OFF_COMMAND): cv.string,
         vol.Optional(CONF_STATE_DETECTION_RULES, default={}): vol.Schema(
-            {cv.string: op_state_detection_rules_validator(vol.Invalid)}
+            {cv.string: ha_state_detection_rules_validator(vol.Invalid)}
         ),
         vol.Optional(CONF_EXCLUDE_UNNAMED_APPS, default=False): cv.boolean,
         vol.Optional(CONF_SCREENCAP, default=DEFAULT_SCREENCAP): cv.boolean,
     }
 )
 
-# Translate from `AndroidTV` / `FireTV` reported state to HA state.
+# Translate from `AndroidTV` / `FireTV` reported state to OP state.
 ANDROIDTV_STATES = {
     "off": STATE_OFF,
     "idle": STATE_IDLE,
@@ -230,10 +230,10 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         raise PlatformNotReady
 
     async def _async_close(event):
-        """Close the ADB socket connection when HA stops."""
+        """Close the ADB socket connection when OP stops."""
         await aftv.adb_close()
 
-    # Close the ADB connection when HA stops
+    # Close the ADB connection when OP stops
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _async_close)
 
     device_args = [

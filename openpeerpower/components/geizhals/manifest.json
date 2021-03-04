@@ -1,7 +1,7 @@
 {
   "domain": "geizhals",
   "name": "Geizhals",
-  "documentation": "https://www.open-peer-power.io/integrations/geizhals",
+  "documentation": "https://www.openpeerpower.io/integrations/geizhals",
   "requirements": ["geizhals==0.0.9"],
   "codeowners": []
 }

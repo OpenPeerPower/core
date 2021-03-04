@@ -81,7 +81,7 @@ def setup(opp, config):
             )
             device.disconnect()
 
-    # Listen for HA stop to disconnect.
+    # Listen for OP stop to disconnect.
     opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, stop)
 
     if opp.data[ECOVACS_DEVICES]:

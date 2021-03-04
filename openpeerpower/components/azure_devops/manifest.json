@@ -2,7 +2,7 @@
   "domain": "azure_devops",
   "name": "Azure DevOps",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/azure_devops",
+  "documentation": "https://www.openpeerpower.io/integrations/azure_devops",
   "requirements": ["aioazuredevops==1.3.5"],
   "codeowners": ["@timmo001"]
 }

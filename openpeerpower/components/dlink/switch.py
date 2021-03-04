@@ -53,7 +53,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     smartplug = SmartPlug(host, password, username, use_legacy_protocol)
     data = SmartPlugData(smartplug)
 
-    add_entities([SmartPlugSwitch.opp, data, name)], True)
+    add_entities([SmartPlugSwitch(opp, data, name)], True)
 
 
 class SmartPlugSwitch(SwitchEntity):

@@ -1,7 +1,7 @@
 {
   "domain": "default_config",
   "name": "Default Config",
-  "documentation": "https://www.open-peer-power.io/integrations/default_config",
+  "documentation": "https://www.openpeerpower.io/integrations/default_config",
   "dependencies": [
     "automation",
     "cloud",

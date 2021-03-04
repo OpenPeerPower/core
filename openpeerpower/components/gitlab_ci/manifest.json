@@ -1,7 +1,7 @@
 {
   "domain": "gitlab_ci",
   "name": "GitLab-CI",
-  "documentation": "https://www.open-peer-power.io/integrations/gitlab_ci",
+  "documentation": "https://www.openpeerpower.io/integrations/gitlab_ci",
   "requirements": ["python-gitlab==1.6.0"],
   "codeowners": []
 }

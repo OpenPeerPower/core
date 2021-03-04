@@ -103,7 +103,7 @@ ATTR_EMULATED_HUE_NAME = "emulated_hue_name"
 
 async def async_setup(opp, yaml_config):
     """Activate the emulated_hue component."""
-    config = config(opp, yaml_config.get(DOMAIN, {}))
+    config = Config(opp, yaml_config.get(DOMAIN, {}))
 
     app = web.Application()
     app["opp"] = opp

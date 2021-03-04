@@ -1,7 +1,7 @@
 {
   "domain": "aprs",
   "name": "APRS",
-  "documentation": "https://www.open-peer-power.io/integrations/aprs",
+  "documentation": "https://www.openpeerpower.io/integrations/aprs",
   "codeowners": ["@PhilRW"],
   "requirements": ["aprslib==0.6.46", "geopy==1.21.0"]
 }

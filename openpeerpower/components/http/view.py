@@ -35,7 +35,7 @@ class OpenPeerPowerView:
     @staticmethod
     def context(request: web.Request) -> Context:
         """Generate a context from a request."""
-        user = request.get(.opp_user")
+        user = request.get("opp_user")
         if user is None:
             return Context()
 

@@ -1,7 +1,7 @@
 {
   "domain": "imap",
   "name": "IMAP",
-  "documentation": "https://www.open-peer-power.io/integrations/imap",
+  "documentation": "https://www.openpeerpower.io/integrations/imap",
   "requirements": ["aioimaplib==0.7.15"],
   "codeowners": []
 }

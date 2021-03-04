@@ -94,7 +94,7 @@ async def async_get_trigger_capabilities(opp: OpenPeerPower, config: ConfigType)
     """List trigger capabilities."""
     zones = {
         ent.entity_id: ent.name
-        for ent in sorted.opp.states.async_all(DOMAIN_ZONE), key=lambda ent: ent.name)
+        for ent in sorted(opp.states.async_all(DOMAIN_ZONE), key=lambda ent: ent.name)
     }
     return {
         "extra_fields": vol.Schema(

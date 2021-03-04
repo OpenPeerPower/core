@@ -22,7 +22,7 @@ class FibaroSwitch(FibaroDevice, SwitchEntity):
         """Initialize the Fibaro device."""
         self._state = False
         super().__init__(fibaro_device)
-        self.entity_id = f"{DOMAIN}.{self.op_id}"
+        self.entity_id = f"{DOMAIN}.{self.ha_id}"
 
     def turn_on(self, **kwargs):
         """Turn device on."""

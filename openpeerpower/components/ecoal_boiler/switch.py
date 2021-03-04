@@ -25,7 +25,7 @@ class EcoalSwitch(SwitchEntity):
         """
         Initialize switch.
 
-        Sets HA switch to state as read from controller.
+        Sets OP switch to state as read from controller.
         """
         self._ecoal_contr = ecoal_contr
         self._name = name
