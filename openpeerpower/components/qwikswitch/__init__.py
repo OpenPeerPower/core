@@ -205,7 +205,7 @@ async def async_setup(opp, config):
 
     def callback_qs_listen(qspacket):
         """Typically a button press or update signal."""
-        # If button pressed, fire a.opp event
+        # If button pressed, fire a opp event
         if QS_ID in qspacket:
             if qspacket.get(QS_CMD, "") in cmd_buttons:
                 opp.bus.async_fire(f"qwikswitch.button.{qspacket[QS_ID]}", qspacket)
@@ -215,7 +215,7 @@ async def async_setup(opp, config):
                 _LOGGER.debug("Dispatch %s ((%s))", qspacket[QS_ID], qspacket)
                 opp.helpers.dispatcher.async_dispatcher_send(qspacket[QS_ID], qspacket)
 
-        # Update all op_objects
+        # Update all ha_objects
         opp.async_add_job(qsusb.update_from_devices)
 
     @callback

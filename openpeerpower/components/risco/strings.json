@@ -28,7 +28,7 @@
           "code_disarm_required": "Require [%key:common::config_flow::data::pin%] to disarm"
         }
       },
-      "risco_to_op": {
+      "risco_to_ha": {
         "title": "Map Risco states to Open Peer Power states",
         "description": "Select what state your Open Peer Power alarm will report for every state reported by Risco",
         "data": {
@@ -40,7 +40,7 @@
           "D": "Group D"
         }
       },
-      "op_to_risco": {
+      "ha_to_risco": {
         "title": "Map Open Peer Power states to Risco states",
         "description": "Select what state to set your Risco alarm to when arming the Open Peer Power alarm",
         "data": {

@@ -23,7 +23,7 @@ async def validate_input(opp: core.OpenPeerPower, data):
     ayla_api = get_ayla_api(
         username=data[CONF_USERNAME],
         password=data[CONF_PASSWORD],
-        websession.opp.helpers.aiohttp_client.async_get_clientsession(opp),
+        websession=opp.helpers.aiohttp_client.async_get_clientsession(opp),
     )
 
     try:

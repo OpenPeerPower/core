@@ -18,7 +18,7 @@ _LOGGER = logging.getLogger(__name__)
 DOMAIN = "no_ip"
 
 # We should set a dedicated address for the user agent.
-EMAIL = "hello@open-peer-power.io"
+EMAIL = "hello@openpeerpower.io"
 
 INTERVAL = timedelta(minutes=5)
 
@@ -34,7 +34,7 @@ NO_IP_ERRORS = {
 }
 
 UPDATE_URL = "https://dynupdate.noip.com/nic/update"
-OP_USER_AGENT = f"{SERVER_SOFTWARE} {EMAIL}"
+HA_USER_AGENT = f"{SERVER_SOFTWARE} {EMAIL}"
 
 CONFIG_SCHEMA = vol.Schema(
     {
@@ -84,7 +84,7 @@ async def _update_no_ip(opp, session, domain, auth_str, timeout):
 
     headers = {
         AUTHORIZATION: f"Basic {auth_str.decode('utf-8')}",
-        USER_AGENT: OP_USER_AGENT,
+        USER_AGENT: HA_USER_AGENT,
     }
 
     try:

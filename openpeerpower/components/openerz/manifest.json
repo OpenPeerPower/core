@@ -1,7 +1,7 @@
 {
   "domain": "openerz",
   "name": "Open ERZ",
-  "documentation": "https://www.open-peer-power.io/integrations/openerz",
+  "documentation": "https://www.openpeerpower.io/integrations/openerz",
   "codeowners": ["@misialq"],
   "requirements": ["openerz-api==0.1.0"]
 }

@@ -17,7 +17,7 @@
                 },
                 "description": "Introdueix la informaci\u00f3 de connexi\u00f3 del teu broker MQTT."
             },
-             opp.o_confirm": {
+            "oppio_confirm": {
                 "data": {
                     "discovery": "Habilitar descobriment autom\u00e0tic"
                 },

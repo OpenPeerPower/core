@@ -16,7 +16,7 @@
             "install_addon": "Attendi il termine dell'installazione del componente aggiuntivo OpenZWave. Questa operazione pu\u00f2 richiedere diversi minuti."
         },
         "step": {
-             opp.o_confirm": {
+            "oppio_confirm": {
                 "title": "Configura l'integrazione di OpenZWave con il componente aggiuntivo OpenZWave"
             },
             "install_addon": {

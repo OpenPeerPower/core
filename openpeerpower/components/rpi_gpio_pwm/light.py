@@ -159,11 +159,11 @@ class PwmSimpleLed(LightEntity, RestoreEntity):
             self._led.transition(
                 transition_time,
                 is_on=True,
-                brightness=_from(opp_brightness(self._brightness),
+                brightness=_from_opp_brightness(self._brightness),
             )
         else:
             self._led.set(
-                is_on=True, brightness=_from(opp_brightness(self._brightness)
+                is_on=True, brightness=_from_opp_brightness(self._brightness)
             )
 
         self._is_on = True
@@ -219,26 +219,26 @@ class PwmRgbLed(PwmSimpleLed):
             self._led.transition(
                 transition_time,
                 is_on=True,
-                brightness=_from(opp_brightness(self._brightness),
-                color=_from(opp_color(self._color),
+                brightness=_from_opp_brightness(self._brightness),
+                color=_from_opp_color(self._color),
             )
         else:
             self._led.set(
                 is_on=True,
-                brightness=_from(opp_brightness(self._brightness),
-                color=_from(opp_color(self._color),
+                brightness=_from_opp_brightness(self._brightness),
+                color=_from_opp_color(self._color),
             )
 
         self._is_on = True
         self.schedule_update_op_state()
 
 
-def _from(opp_brightness(brightness):
+def _from_opp_brightness(brightness):
     """Convert Open Peer Power brightness units to percentage."""
     return brightness / 255
 
 
-def _from(opp_color(color):
+def _from_opp_color(color):
     """Convert Open Peer Power RGB list to Color tuple."""
 
     rgb = color_util.color_hs_to_RGB(*color)

@@ -1,7 +1,7 @@
 {
   "domain": "pjlink",
   "name": "PJLink",
-  "documentation": "https://www.open-peer-power.io/integrations/pjlink",
+  "documentation": "https://www.openpeerpower.io/integrations/pjlink",
   "requirements": ["pypjlink2==1.2.1"],
   "codeowners": []
 }

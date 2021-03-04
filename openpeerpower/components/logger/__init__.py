@@ -107,7 +107,7 @@ def _get_logger_class(opp_overrides):
     """Create a logger subclass.
 
     logging.setLoggerClass checks if it is a subclass of Logger and
-    so we cannot use partial to inject.opp_overrides.
+    so we cannot use partial to inject opp_overrides.
     """
 
     class OppLogger(logging.Logger):

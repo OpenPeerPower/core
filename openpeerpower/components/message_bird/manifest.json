@@ -1,7 +1,7 @@
 {
   "domain": "message_bird",
   "name": "MessageBird",
-  "documentation": "https://www.open-peer-power.io/integrations/message_bird",
+  "documentation": "https://www.openpeerpower.io/integrations/message_bird",
   "requirements": ["messagebird==1.2.0"],
   "codeowners": []
 }

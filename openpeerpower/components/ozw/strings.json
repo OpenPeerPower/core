@@ -16,7 +16,7 @@
           "network_key": "Network Key"
         }
       },
-       opp.o_confirm": {
+      "oppio_confirm": {
         "title": "Set up OpenZWave integration with the OpenZWave add-on"
       }
     },

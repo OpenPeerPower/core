@@ -1,4 +1,4 @@
-"""This component provides HA switch support for Ring Door Bell/Chimes."""
+"""This component provides OP switch support for Ring Door Bell/Chimes."""
 from datetime import timedelta
 import logging
 

@@ -1,7 +1,7 @@
 {
   "domain": "rmvtransport",
   "name": "RMV",
-  "documentation": "https://www.open-peer-power.io/integrations/rmvtransport",
+  "documentation": "https://www.openpeerpower.io/integrations/rmvtransport",
   "requirements": [
     "PyRMVtransport==0.3.1"
   ],

@@ -211,7 +211,7 @@ class RememberTheMilkConfiguration:
         list id, timeseries id and the task id.
         """
         self._initialize_profile(profile_name)
-        ids = self._config[profile_name][CONF_ID_MAP].get.opp_id)
+        ids = self._config[profile_name][CONF_ID_MAP].get(opp_id)
         if ids is None:
             return None
         return ids[CONF_LIST_ID], ids[CONF_TIMESERIES_ID], ids[CONF_TASK_ID]
@@ -224,14 +224,14 @@ class RememberTheMilkConfiguration:
             CONF_TIMESERIES_ID: time_series_id,
             CONF_TASK_ID: rtm_task_id,
         }
-        self._config[profile_name][CONF_ID_MAP].opp_id] = id_tuple
+        self._config[profile_name][CONF_ID_MAP][opp_id] = id_tuple
         self.save_config()
 
     def delete_rtm_id(self, profile_name, opp_id):
         """Delete a key mapping."""
         self._initialize_profile(profile_name)
         if opp_id in self._config[profile_name][CONF_ID_MAP]:
-            del self._config[profile_name][CONF_ID_MAP].opp_id]
+            del self._config[profile_name][CONF_ID_MAP][opp_id]
             self.save_config()
 
 
@@ -277,7 +277,7 @@ class RememberTheMilk(Entity):
         """
         try:
             task_name = call.data.get(CONF_NAME)
-            opp.id = call.data.get(CONF_ID)
+            opp_id = call.data.get(CONF_ID)
             rtm_id = None
             if opp_id is not None:
                 rtm_id = self._rtm_config.get_rtm_id(self._name, opp_id)
@@ -293,7 +293,7 @@ class RememberTheMilk(Entity):
                 )
                 self._rtm_config.set_rtm_id(
                     self._name,
-                    opp.id,
+                    opp_id,
                     result.list.id,
                     result.list.taskseries.id,
                     result.list.taskseries.task.id,
@@ -308,7 +308,7 @@ class RememberTheMilk(Entity):
                 )
                 _LOGGER.debug(
                     "Updated task with id '%s' in account %s to name %s",
-                    opp.id,
+                    opp_id,
                     self.name,
                     task_name,
                 )
@@ -323,13 +323,13 @@ class RememberTheMilk(Entity):
 
     def complete_task(self, call):
         """Complete a task that was previously created by this component."""
-        opp.id = call.data.get(CONF_ID)
+        opp_id = call.data.get(CONF_ID)
         rtm_id = self._rtm_config.get_rtm_id(self._name, opp_id)
         if rtm_id is None:
             _LOGGER.error(
                 "Could not find task with ID %s in account %s. "
                 "So task could not be closed",
-                opp.id,
+                opp_id,
                 self._name,
             )
             return False

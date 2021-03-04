@@ -51,14 +51,14 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 
     if "pjlink" not in opp.data:
         opp.data["pjlink"] = {}
-    opp.data = opp.data["pjlink"]
+    opp_data = opp.data["pjlink"]
 
     device_label = f"{host}:{port}"
     if device_label in opp_data:
         return
 
     device = PjLinkDevice(host, port, name, encoding, password)
-    opp.data[device_label] = device
+    opp_data[device_label] = device
     add_entities([device], True)
 
 

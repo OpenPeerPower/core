@@ -146,7 +146,7 @@ class SigfoxDevice(Entity):
 
     @property
     def name(self):
-        """Return the HA name of the sensor."""
+        """Return the OP name of the sensor."""
         return self._name
 
     @property

@@ -1,4 +1,4 @@
-"""This component provides HA sensor support for Ring Door Bell/Chimes."""
+"""This component provides OP sensor support for Ring Door Bell/Chimes."""
 from openpeerpower.const import PERCENTAGE, SIGNAL_STRENGTH_DECIBELS_MILLIWATT
 from openpeerpower.core import callback
 from openpeerpower.helpers.entity import Entity

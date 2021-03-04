@@ -231,13 +231,13 @@ async def async_setup(opp, config):
 
         async_dispatcher_send(opp, SIGNAL_AVAILABILITY, False)
 
-        # If HA is not stopping, initiate new connection
+        # If OP is not stopping, initiate new connection
         if opp.state != CoreState.stopping:
             _LOGGER.warning("disconnected from Rflink, reconnecting")
             opp.async_create_task(connect())
 
     async def connect():
-        """Set up connection and hook it into HA for reconnect/shutdown."""
+        """Set up connection and hook it into OP for reconnect/shutdown."""
         _LOGGER.info("Initiating Rflink connection")
 
         # Rflink create_rflink_connection decides based on the value of host

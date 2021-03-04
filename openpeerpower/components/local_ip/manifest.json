@@ -2,6 +2,6 @@
   "domain": "local_ip",
   "name": "Local IP Address",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/local_ip",
+  "documentation": "https://www.openpeerpower.io/integrations/local_ip",
   "codeowners": ["@issacg"]
 }

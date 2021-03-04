@@ -1,7 +1,7 @@
 {
   "domain": "pcal9535a",
   "name": "PCAL9535A I/O Expander",
-  "documentation": "https://www.open-peer-power.io/integrations/pcal9535a",
+  "documentation": "https://www.openpeerpower.io/integrations/pcal9535a",
   "requirements": ["pcal9535a==0.7"],
   "codeowners": ["@Shulyaka"]
 }

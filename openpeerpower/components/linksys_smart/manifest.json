@@ -1,6 +1,6 @@
 {
   "domain": "linksys_smart",
   "name": "Linksys Smart Wi-Fi",
-  "documentation": "https://www.open-peer-power.io/integrations/linksys_smart",
+  "documentation": "https://www.openpeerpower.io/integrations/linksys_smart",
   "codeowners": []
 }

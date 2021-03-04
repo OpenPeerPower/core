@@ -16,7 +16,7 @@
             "install_addon": "Palun oota kuni OpenZWave lisandmooduli paigaldus l\u00f5peb. See v\u00f5ib v\u00f5tta mitu minutit."
         },
         "step": {
-             opp.o_confirm": {
+            "oppio_confirm": {
                 "title": "Seadista OpenZWave'i sidumine OpenZWave lisandmooduli abil"
             },
             "install_addon": {

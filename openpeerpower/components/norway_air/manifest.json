@@ -1,7 +1,7 @@
 {
   "domain": "norway_air",
   "name": "Om Luftkvalitet i Norge (Norway Air)",
-  "documentation": "https://www.open-peer-power.io/integrations/norway_air",
+  "documentation": "https://www.openpeerpower.io/integrations/norway_air",
   "requirements": ["pyMetno==0.8.1"],
   "codeowners": []
 }

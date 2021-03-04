@@ -1,7 +1,7 @@
 {
   "domain": "script",
   "name": "Scripts",
-  "documentation": "https://www.open-peer-power.io/integrations/script",
+  "documentation": "https://www.openpeerpower.io/integrations/script",
   "codeowners": [
     "@open-peer-power/core"
   ],

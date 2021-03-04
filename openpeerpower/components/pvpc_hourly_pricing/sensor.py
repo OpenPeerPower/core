@@ -31,7 +31,7 @@ async def async_setup_entry(
     name = config_entry.data[CONF_NAME]
     pvpc_data_handler = PVPCData(
         tariff=config_entry.data[ATTR_TARIFF],
-        local_timezone(opp.config.time_zone,
+        local_timezone=opp.config.time_zone,
         websession=async_get_clientsession(opp),
         logger=_LOGGER,
         timeout=_DEFAULT_TIMEOUT,

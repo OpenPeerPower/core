@@ -29,7 +29,7 @@ async def validate_input(opp: core.OpenPeerPower, data):
             password=data[CONF_PASSWORD],
             auto_login=False,
             auto_update=False,
-            device_name(opp.config.location_name,
+            device_name=opp.config.location_name,
             state_file=state_file,
         )
         await opp.async_add_executor_job(nexia_home.login)

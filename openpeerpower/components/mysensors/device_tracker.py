@@ -17,7 +17,7 @@ async def async_setup_scanner(
         DOMAIN,
         discovery_info,
         MySensorsDeviceScanner,
-        device_args= opp, async_see),
+        device_args=(opp, async_see),
     )
     if not new_devices:
         return False

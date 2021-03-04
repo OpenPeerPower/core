@@ -1,7 +1,7 @@
 {
   "domain": "piglow",
   "name": "Piglow",
-  "documentation": "https://www.open-peer-power.io/integrations/piglow",
+  "documentation": "https://www.openpeerpower.io/integrations/piglow",
   "requirements": ["piglow==1.2.4"],
   "codeowners": []
 }

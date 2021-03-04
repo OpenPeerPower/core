@@ -1,6 +1,6 @@
 {
   "domain": "pyload",
   "name": "pyLoad",
-  "documentation": "https://www.open-peer-power.io/integrations/pyload",
+  "documentation": "https://www.openpeerpower.io/integrations/pyload",
   "codeowners": []
 }

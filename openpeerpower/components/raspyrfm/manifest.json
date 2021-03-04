@@ -1,7 +1,7 @@
 {
   "domain": "raspyrfm",
   "name": "RaspyRFM",
-  "documentation": "https://www.open-peer-power.io/integrations/raspyrfm",
+  "documentation": "https://www.openpeerpower.io/integrations/raspyrfm",
   "requirements": ["raspyrfm-client==1.2.8"],
   "codeowners": []
 }

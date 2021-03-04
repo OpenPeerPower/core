@@ -1,7 +1,7 @@
 {
   "domain": "proliphix",
   "name": "Proliphix",
-  "documentation": "https://www.open-peer-power.io/integrations/proliphix",
+  "documentation": "https://www.openpeerpower.io/integrations/proliphix",
   "requirements": ["proliphix==0.4.1"],
   "codeowners": []
 }

@@ -92,7 +92,7 @@ class MyChevyHub(threading.Thread):
     prevent blocking of other parts of Open Peer Power the architecture
     launches a polling loop in a thread.
 
-    When new data is received, sensors are updated, and.opp is
+    When new data is received, sensors are updated, and opp is
     signaled that there are updates. Sensors are not created until the
     first update, which will be 60 - 120 seconds after the platform
     starts.

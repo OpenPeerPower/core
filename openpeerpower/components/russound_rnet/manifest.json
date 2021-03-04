@@ -1,7 +1,7 @@
 {
   "domain": "russound_rnet",
   "name": "Russound RNET",
-  "documentation": "https://www.open-peer-power.io/integrations/russound_rnet",
+  "documentation": "https://www.openpeerpower.io/integrations/russound_rnet",
   "requirements": ["russound==0.1.9"],
   "codeowners": []
 }

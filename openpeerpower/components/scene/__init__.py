@@ -8,7 +8,7 @@ import voluptuous as vol
 
 from openpeerpower.components.light import ATTR_TRANSITION
 from openpeerpower.const import CONF_PLATFORM, SERVICE_TURN_ON
-from openpeerpower.core import DOMAIN as OP_DOMAIN
+from openpeerpower.core import DOMAIN as HA_DOMAIN
 from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.entity_component import EntityComponent
 
@@ -19,10 +19,10 @@ STATE = "scening"
 STATES = "states"
 
 
-def  opp.domain_validator(config):
+def _opp_domain_validator(config):
     """Validate platform in config for openpeerpower domain."""
     if CONF_PLATFORM not in config:
-        config = {CONF_PLATFORM: OP_DOMAIN, STATES: config}
+        config = {CONF_PLATFORM: HA_DOMAIN, STATES: config}
 
     return config
 
@@ -49,7 +49,7 @@ def _platform_validator(config):
 
 PLATFORM_SCHEMA = vol.Schema(
     vol.All(
-         opp.domain_validator,
+        _opp_domain_validator,
         vol.Schema({vol.Required(CONF_PLATFORM): str}, extra=vol.ALLOW_EXTRA),
         _platform_validator,
     ),
@@ -65,7 +65,7 @@ async def async_setup(opp, config):
 
     await component.async_setup(config)
     # Ensure Open Peer Power platform always loaded.
-    await component.async_setup_platform(OP_DOMAIN, {"platform": OP_DOMAIN, STATES: []})
+    await component.async_setup_platform(HA_DOMAIN, {"platform": HA_DOMAIN, STATES: []})
     component.async_register_entity_service(
         SERVICE_TURN_ON,
         {ATTR_TRANSITION: vol.All(vol.Coerce(float), vol.Clamp(min=0, max=6553))},

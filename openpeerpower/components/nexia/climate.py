@@ -89,15 +89,15 @@ SET_HUMIDITY_SCHEMA = vol.Schema(
 # 2. Run Mode  : Hold / Run Schedule
 #
 #
-OP_TO_NEXIA_HVAC_MODE_MAP = {
+HA_TO_NEXIA_HVAC_MODE_MAP = {
     HVAC_MODE_HEAT: OPERATION_MODE_HEAT,
     HVAC_MODE_COOL: OPERATION_MODE_COOL,
     HVAC_MODE_HEAT_COOL: OPERATION_MODE_AUTO,
     HVAC_MODE_AUTO: OPERATION_MODE_AUTO,
     HVAC_MODE_OFF: OPERATION_MODE_OFF,
 }
-NEXIA_TO_OP_HVAC_MODE_MAP = {
-    value: key for key, value in OP_TO_NEXIA_HVAC_MODE_MAP.items()
+NEXIA_TO_HA_HVAC_MODE_MAP = {
+    value: key for key, value in HA_TO_NEXIA_HVAC_MODE_MAP.items()
 }
 
 
@@ -303,7 +303,7 @@ class NexiaZone(NexiaThermostatZoneEntity, ClimateEntity):
         if hold and mode == OPERATION_MODE_AUTO:
             return HVAC_MODE_HEAT_COOL
 
-        return NEXIA_TO_OP_HVAC_MODE_MAP[mode]
+        return NEXIA_TO_HA_HVAC_MODE_MAP[mode]
 
     @property
     def hvac_modes(self):
@@ -418,7 +418,7 @@ class NexiaZone(NexiaThermostatZoneEntity, ClimateEntity):
             self._zone.set_mode(mode=OPERATION_MODE_AUTO)
         else:
             self._zone.call_permanent_hold()
-            self._zone.set_mode(mode=OP_TO_NEXIA_HVAC_MODE_MAP[hvac_mode])
+            self._zone.set_mode(mode=HA_TO_NEXIA_HVAC_MODE_MAP[hvac_mode])
 
         self.schedule_update_op_state()
 

@@ -54,7 +54,7 @@ FORECAST_VALID_TIME = timedelta(minutes=45)
 
 def convert_condition(time, weather):
     """
-    Convert NWS codes to HA condition.
+    Convert NWS codes to OP condition.
 
     Choose first condition in CONDITION_CLASSES that exists in weather code.
     If no match is found, return first condition from NWS
@@ -84,7 +84,7 @@ async def async_setup_entry(
     opp: OpenPeerPowerType, entry: ConfigType, async_add_entities
 ) -> None:
     """Set up the NWS weather platform."""
-    opp.data = opp.data[DOMAIN][entry.entry_id]
+    opp_data = opp.data[DOMAIN][entry.entry_id]
 
     async_add_entities(
         [

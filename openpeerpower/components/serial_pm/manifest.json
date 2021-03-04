@@ -1,7 +1,7 @@
 {
   "domain": "serial_pm",
   "name": "Serial Particulate Matter",
-  "documentation": "https://www.open-peer-power.io/integrations/serial_pm",
+  "documentation": "https://www.openpeerpower.io/integrations/serial_pm",
   "requirements": ["pmsensor==0.4"],
   "codeowners": []
 }

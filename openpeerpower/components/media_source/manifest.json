@@ -1,7 +1,7 @@
 {
   "domain": "media_source",
   "name": "Media Source",
-  "documentation": "https://www.open-peer-power.io/integrations/media_source",
+  "documentation": "https://www.openpeerpower.io/integrations/media_source",
   "dependencies": ["http"],
   "codeowners": ["@hunterjm"]
 }

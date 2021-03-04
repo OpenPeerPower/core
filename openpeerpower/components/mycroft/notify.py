@@ -10,7 +10,7 @@ _LOGGER = logging.getLogger(__name__)
 
 def get_service(opp, config, discovery_info=None):
     """Get the Mycroft notification service."""
-    return MycroftNotificationService.opp.data["mycroft"])
+    return MycroftNotificationService(opp.data["mycroft"])
 
 
 class MycroftNotificationService(BaseNotificationService):

@@ -20,7 +20,7 @@
     },
     "options": {
         "step": {
-            "op_to_risco": {
+            "ha_to_risco": {
                 "data": {
                     "armed_away": "Armada Ausente",
                     "armed_custom_bypass": "Armada Personalizada",
@@ -38,7 +38,7 @@
                 },
                 "title": "Configurar opciones"
             },
-            "risco_to_op": {
+            "risco_to_ha": {
                 "data": {
                     "A": "Grupo A",
                     "B": "Grupo B",

@@ -43,7 +43,7 @@ def setup(opp, config):
         api,
         conf.get(CONF_USERNAME),
         conf.get(CONF_PASSWORD),
-        session_id_cache_file(opp.config.path(SCHLUTER_CONFIG_FILE),
+        session_id_cache_file=opp.config.path(SCHLUTER_CONFIG_FILE),
     )
 
     authentication = None

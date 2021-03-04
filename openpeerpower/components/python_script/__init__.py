@@ -136,7 +136,7 @@ def execute_script(opp, name, data=None):
     """Execute a script."""
     filename = f"{name}.py"
     raise_if_invalid_filename(filename)
-    with open.opp.config.path(FOLDER, filename)) as fil:
+    with open(opp.config.path(FOLDER, filename)) as fil:
         source = fil.read()
     execute(opp, filename, source, data)
 
@@ -207,7 +207,7 @@ def execute(opp, filename, source, data=None):
         "_getitem_": default_guarded_getitem,
         "_iter_unpack_sequence_": guarded_iter_unpack_sequence,
         "_unpack_sequence_": guarded_unpack_sequence,
-         opp.:.opp,
+        "opp": opp,
         "data": data or {},
         "logger": logger,
     }

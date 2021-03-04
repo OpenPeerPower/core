@@ -1,7 +1,7 @@
 {
   "domain": "raincloud",
   "name": "Melnor RainCloud",
-  "documentation": "https://www.open-peer-power.io/integrations/raincloud",
+  "documentation": "https://www.openpeerpower.io/integrations/raincloud",
   "requirements": ["raincloudy==0.0.7"],
   "codeowners": ["@vanstinator"]
 }

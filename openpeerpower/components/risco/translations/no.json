@@ -20,7 +20,7 @@
     },
     "options": {
         "step": {
-            "op_to_risco": {
+            "ha_to_risco": {
                 "data": {
                     "armed_away": "Sikret Borte",
                     "armed_custom_bypass": "Sikret tilpasset bypass",
@@ -38,7 +38,7 @@
                 },
                 "title": "Konfigurer alternativer"
             },
-            "risco_to_op": {
+            "risco_to_ha": {
                 "data": {
                     "A": "Gruppe A",
                     "B": "Gruppe B",

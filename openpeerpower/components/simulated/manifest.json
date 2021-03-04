@@ -1,7 +1,7 @@
 {
   "domain": "simulated",
   "name": "Simulated",
-  "documentation": "https://www.open-peer-power.io/integrations/simulated",
+  "documentation": "https://www.openpeerpower.io/integrations/simulated",
   "codeowners": [],
   "quality_scale": "internal"
 }

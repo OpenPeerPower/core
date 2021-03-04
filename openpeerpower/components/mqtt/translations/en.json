@@ -17,7 +17,7 @@
                 },
                 "description": "Please enter the connection information of your MQTT broker."
             },
-             opp.o_confirm": {
+            "oppio_confirm": {
                 "data": {
                     "discovery": "Enable discovery"
                 },

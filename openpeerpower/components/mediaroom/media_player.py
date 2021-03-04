@@ -130,7 +130,7 @@ class MediaroomDevice(MediaPlayerEntity):
     """Representation of a Mediaroom set-up-box on the network."""
 
     def set_state(self, mediaroom_state):
-        """Map pymediaroom state to HA state."""
+        """Map pymediaroom state to OP state."""
 
         state_map = {
             State.OFF: STATE_OFF,

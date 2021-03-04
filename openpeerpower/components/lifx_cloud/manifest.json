@@ -1,6 +1,6 @@
 {
   "domain": "lifx_cloud",
   "name": "LIFX Cloud",
-  "documentation": "https://www.open-peer-power.io/integrations/lifx_cloud",
+  "documentation": "https://www.openpeerpower.io/integrations/lifx_cloud",
   "codeowners": []
 }

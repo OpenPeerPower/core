@@ -60,7 +60,7 @@ async def async_setup_entry(
         if opp.data[DOMAIN]["discovery"].locked():
             return
 
-        async with.opp.data[DOMAIN]["discovery"]:
+        async with opp.data[DOMAIN]["discovery"]:
             bluetooth_devices = await opp.async_add_executor_job(
                 pykulersky.discover_bluetooth_devices
             )

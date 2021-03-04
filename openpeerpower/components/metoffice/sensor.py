@@ -81,7 +81,7 @@ async def async_setup_entry(
     opp: OpenPeerPowerType, entry: ConfigType, async_add_entities
 ) -> None:
     """Set up the Met Office weather sensor platform."""
-    opp.data = opp.data[DOMAIN][entry.entry_id]
+    opp_data = opp.data[DOMAIN][entry.entry_id]
 
     async_add_entities(
         [
@@ -101,7 +101,7 @@ class MetOfficeCurrentSensor(Entity):
         self._coordinator = opp_data[METOFFICE_COORDINATOR]
 
         self._type = sensor_type
-        self._name = f".opp_data[METOFFICE_NAME]} {SENSOR_TYPES[self._type][0]}"
+        self._name = f"{opp_data[METOFFICE_NAME]} {SENSOR_TYPES[self._type][0]}"
         self._unique_id = f"{SENSOR_TYPES[self._type][0]}_{self._data.latitude}_{self._data.longitude}"
 
         self.metoffice_site_id = None

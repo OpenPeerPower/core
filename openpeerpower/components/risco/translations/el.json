@@ -15,7 +15,7 @@
     },
     "options": {
         "step": {
-            "op_to_risco": {
+            "ha_to_risco": {
                 "data": {
                     "armed_away": "\u039f\u03c0\u03bb\u03b9\u03c3\u03bc\u03cc\u03c2 \u0395\u03ba\u03c4\u03cc\u03c2",
                     "armed_home": "\u039f\u03c0\u03bb\u03b9\u03c3\u03bc\u03cc\u03c2 \u0395\u03bd\u03c4\u03cc\u03c2",
@@ -32,7 +32,7 @@
                 },
                 "title": "\u0394\u03b9\u03b1\u03bc\u03cc\u03c1\u03c6\u03c9\u03c3\u03b7 \u03b5\u03c0\u03b9\u03bb\u03bf\u03b3\u03ce\u03bd"
             },
-            "risco_to_op": {
+            "risco_to_ha": {
                 "data": {
                     "A": "\u039f\u03bc\u03ac\u03b4\u03b1 \u0391",
                     "B": "\u039f\u03bc\u03ac\u03b4\u03b1 \u0392",

@@ -56,11 +56,11 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def setup_platform(opp, config, add_entities, discovery_info=None):
     """Display the current season."""
-    if None in  opp.config.latitude, opp.config.longitude):
+    if None in (opp.config.latitude, opp.config.longitude):
         _LOGGER.error("Latitude or longitude not set in Open Peer Power config")
         return False
 
-    latitude = util.convert.opp.config.latitude, float)
+    latitude = util.convert(opp.config.latitude, float)
     _type = config.get(CONF_TYPE)
     name = config.get(CONF_NAME)
 

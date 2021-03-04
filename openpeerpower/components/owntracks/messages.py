@@ -206,7 +206,7 @@ async def _async_transition_message_enter(opp, context, message, location):
     dev_id, kwargs = _parse_see_args(message, context.mqtt_topic)
 
     if zone is None and message.get("t") == "b":
-        # Not a HA zone, and a beacon so mobile beacon.
+        # Not a OP zone, and a beacon so mobile beacon.
         # kwargs will contain the lat/lon of the beacon
         # which is not where the beacon actually is
         # and is probably set to 0/0
@@ -272,7 +272,7 @@ async def async_handle_transition_message(opp, context, message):
     location = message["desc"].lstrip("-")
 
     # Create a layer of indirection for Owntracks instances that may name
-    # regions differently than their HA names
+    # regions differently than their OP names
     if location in context.region_mapping:
         location = context.region_mapping[location]
 

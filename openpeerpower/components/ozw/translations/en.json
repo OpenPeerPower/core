@@ -16,7 +16,7 @@
             "install_addon": "Please wait while the OpenZWave add-on installation finishes. This can take several minutes."
         },
         "step": {
-             opp.o_confirm": {
+            "oppio_confirm": {
                 "title": "Set up OpenZWave integration with the OpenZWave add-on"
             },
             "install_addon": {

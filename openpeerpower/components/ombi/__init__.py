@@ -5,6 +5,7 @@ import pyombi
 import voluptuous as vol
 
 from openpeerpower.const import (
+    ATTR_NAME,
     CONF_API_KEY,
     CONF_HOST,
     CONF_PASSWORD,
@@ -15,7 +16,6 @@ from openpeerpower.const import (
 import openpeerpower.helpers.config_validation as cv
 
 from .const import (
-    ATTR_NAME,
     ATTR_SEASON,
     CONF_URLBASE,
     DEFAULT_PORT,

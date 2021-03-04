@@ -96,7 +96,7 @@ async def async_setup_entry(opp, config_entry):
 
     config_entry.add_update_listener(options_updated)
 
-    # Schedule directly on the loop to avoid blocking HA startup.
+    # Schedule directly on the loop to avoid blocking OP startup.
     opp.loop.create_task(gateway.connect_and_subscribe())
 
     for comp in [COMP_BINARY_SENSOR, COMP_CLIMATE, COMP_SENSOR]:
@@ -128,14 +128,14 @@ def register_services(opp):
     service_reset_schema = vol.Schema(
         {
             vol.Required(ATTR_GW_ID): vol.All(
-                cv.string, vol.In.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
+                cv.string, vol.In(opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
             )
         }
     )
     service_set_central_heating_ovrd_schema = vol.Schema(
         {
             vol.Required(ATTR_GW_ID): vol.All(
-                cv.string, vol.In.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
+                cv.string, vol.In(opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
             ),
             vol.Required(ATTR_CH_OVRD): cv.boolean,
         }
@@ -143,7 +143,7 @@ def register_services(opp):
     service_set_clock_schema = vol.Schema(
         {
             vol.Required(ATTR_GW_ID): vol.All(
-                cv.string, vol.In.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
+                cv.string, vol.In(opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
             ),
             vol.Optional(ATTR_DATE, default=date.today()): cv.date,
             vol.Optional(ATTR_TIME, default=datetime.now().time()): cv.time,
@@ -152,7 +152,7 @@ def register_services(opp):
     service_set_control_setpoint_schema = vol.Schema(
         {
             vol.Required(ATTR_GW_ID): vol.All(
-                cv.string, vol.In.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
+                cv.string, vol.In(opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
             ),
             vol.Required(ATTR_TEMPERATURE): vol.All(
                 vol.Coerce(float), vol.Range(min=0, max=90)
@@ -163,7 +163,7 @@ def register_services(opp):
     service_set_hot_water_ovrd_schema = vol.Schema(
         {
             vol.Required(ATTR_GW_ID): vol.All(
-                cv.string, vol.In.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
+                cv.string, vol.In(opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
             ),
             vol.Required(ATTR_DHW_OVRD): vol.Any(
                 vol.Equal("A"), vol.All(vol.Coerce(int), vol.Range(min=0, max=1))
@@ -175,7 +175,7 @@ def register_services(opp):
             vol.Schema(
                 {
                     vol.Required(ATTR_GW_ID): vol.All(
-                        cv.string, vol.In.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
+                        cv.string, vol.In(opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
                     ),
                     vol.Required(ATTR_ID): vol.Equal("A"),
                     vol.Required(ATTR_MODE): vol.All(
@@ -186,7 +186,7 @@ def register_services(opp):
             vol.Schema(
                 {
                     vol.Required(ATTR_GW_ID): vol.All(
-                        cv.string, vol.In.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
+                        cv.string, vol.In(opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
                     ),
                     vol.Required(ATTR_ID): vol.Equal("B"),
                     vol.Required(ATTR_MODE): vol.All(
@@ -199,7 +199,7 @@ def register_services(opp):
     service_set_led_mode_schema = vol.Schema(
         {
             vol.Required(ATTR_GW_ID): vol.All(
-                cv.string, vol.In.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
+                cv.string, vol.In(opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
             ),
             vol.Required(ATTR_ID): vol.In("ABCDEF"),
             vol.Required(ATTR_MODE): vol.In("RXTBOFHWCEMP"),
@@ -208,7 +208,7 @@ def register_services(opp):
     service_set_max_mod_schema = vol.Schema(
         {
             vol.Required(ATTR_GW_ID): vol.All(
-                cv.string, vol.In.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
+                cv.string, vol.In(opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
             ),
             vol.Required(ATTR_LEVEL): vol.All(
                 vol.Coerce(int), vol.Range(min=-1, max=100)
@@ -218,7 +218,7 @@ def register_services(opp):
     service_set_oat_schema = vol.Schema(
         {
             vol.Required(ATTR_GW_ID): vol.All(
-                cv.string, vol.In.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
+                cv.string, vol.In(opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
             ),
             vol.Required(ATTR_TEMPERATURE): vol.All(
                 vol.Coerce(float), vol.Range(min=-40, max=99)
@@ -228,7 +228,7 @@ def register_services(opp):
     service_set_sb_temp_schema = vol.Schema(
         {
             vol.Required(ATTR_GW_ID): vol.All(
-                cv.string, vol.In.opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
+                cv.string, vol.In(opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS])
             ),
             vol.Required(ATTR_TEMPERATURE): vol.All(
                 vol.Coerce(float), vol.Range(min=0, max=30)

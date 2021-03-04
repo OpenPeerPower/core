@@ -33,7 +33,7 @@ _LOGGER = logging.getLogger(__name__)
 
 def get_service(opp, config, discovery_info=None):
     """Get the Notify.Events notification service."""
-    return NotifyEventsNotificationService.opp.data[DOMAIN][CONF_TOKEN])
+    return NotifyEventsNotificationService(opp.data[DOMAIN][CONF_TOKEN])
 
 
 class NotifyEventsNotificationService(BaseNotificationService):

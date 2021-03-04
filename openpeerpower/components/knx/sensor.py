@@ -37,7 +37,7 @@ class KNXSensor(KnxEntity, Entity):
     @property
     def device_class(self):
         """Return the device class of the sensor."""
-        device_class = self._device.op_device_class()
+        device_class = self._device.ha_device_class()
         if device_class in DEVICE_CLASSES:
             return device_class
         return None

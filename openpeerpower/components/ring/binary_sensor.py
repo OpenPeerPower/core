@@ -1,4 +1,4 @@
-"""This component provides HA sensor support for Ring Door Bell/Chimes."""
+"""This component provides OP sensor support for Ring Door Bell/Chimes."""
 from datetime import datetime
 
 from openpeerpower.components.binary_sensor import (

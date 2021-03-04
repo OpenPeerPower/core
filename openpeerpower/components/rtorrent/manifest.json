@@ -1,6 +1,6 @@
 {
   "domain": "rtorrent",
   "name": "rTorrent",
-  "documentation": "https://www.open-peer-power.io/integrations/rtorrent",
+  "documentation": "https://www.openpeerpower.io/integrations/rtorrent",
   "codeowners": []
 }

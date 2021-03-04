@@ -71,7 +71,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     _LOGGER.warning("Loading Met.no via platform config is deprecated")
 
     # Add defaults.
-    config = {CONF_ELEVATION:.opp.config.elevation, **config}
+    config = {CONF_ELEVATION: opp.config.elevation, **config}
 
     if config.get(CONF_LATITUDE) is None:
         config[CONF_TRACK_HOME] = True
@@ -221,29 +221,29 @@ class MetWeather(CoordinatorEntity, WeatherEntity):
         else:
             met_forecast = self.coordinator.data.daily_forecast
         required_keys = {ATTR_FORECAST_TEMP, ATTR_FORECAST_TIME}
-        op_forecast = []
+        ha_forecast = []
         for met_item in met_forecast:
             if not set(met_item).issuperset(required_keys):
                 continue
-            op_item = {
+            ha_item = {
                 k: met_item[v]
                 for k, v in FORECAST_MAP.items()
                 if met_item.get(v) is not None
             }
             if not self._is_metric:
-                if ATTR_FORECAST_PRECIPITATION in op_item:
+                if ATTR_FORECAST_PRECIPITATION in ha_item:
                     precip_inches = convert_distance(
-                        op_item[ATTR_FORECAST_PRECIPITATION],
+                        ha_item[ATTR_FORECAST_PRECIPITATION],
                         LENGTH_MILLIMETERS,
                         LENGTH_INCHES,
                     )
-                    op_item[ATTR_FORECAST_PRECIPITATION] = round(precip_inches, 2)
-            if op_item.get(ATTR_FORECAST_CONDITION):
-                op_item[ATTR_FORECAST_CONDITION] = format_condition(
-                    op_item[ATTR_FORECAST_CONDITION]
+                    ha_item[ATTR_FORECAST_PRECIPITATION] = round(precip_inches, 2)
+            if ha_item.get(ATTR_FORECAST_CONDITION):
+                ha_item[ATTR_FORECAST_CONDITION] = format_condition(
+                    ha_item[ATTR_FORECAST_CONDITION]
                 )
-            op_forecast.append(op_item)
-        return op_forecast
+            ha_forecast.append(ha_item)
+        return ha_forecast
 
     @property
     def device_info(self):

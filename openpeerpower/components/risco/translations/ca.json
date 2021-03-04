@@ -20,7 +20,7 @@
     },
     "options": {
         "step": {
-            "op_to_risco": {
+            "ha_to_risco": {
                 "data": {
                     "armed_away": "Activat, mode fora",
                     "armed_custom_bypass": "Activat, bypass personalitzat",
@@ -38,7 +38,7 @@
                 },
                 "title": "Opcions de configuraci\u00f3"
             },
-            "risco_to_op": {
+            "risco_to_ha": {
                 "data": {
                     "A": "Grup A",
                     "B": "Grup B",

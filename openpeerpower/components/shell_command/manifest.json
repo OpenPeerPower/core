@@ -1,7 +1,7 @@
 {
   "domain": "shell_command",
   "name": "Shell Command",
-  "documentation": "https://www.open-peer-power.io/integrations/shell_command",
+  "documentation": "https://www.openpeerpower.io/integrations/shell_command",
   "codeowners": ["@open-peer-power/core"],
   "quality_scale": "internal"
 }

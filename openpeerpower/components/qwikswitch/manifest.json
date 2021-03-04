@@ -1,7 +1,7 @@
 {
   "domain": "qwikswitch",
   "name": "QwikSwitch QSUSB",
-  "documentation": "https://www.open-peer-power.io/integrations/qwikswitch",
+  "documentation": "https://www.openpeerpower.io/integrations/qwikswitch",
   "requirements": ["pyqwikswitch==0.93"],
   "codeowners": ["@kellerza"]
 }

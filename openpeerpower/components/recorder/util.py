@@ -27,7 +27,7 @@ MAX_RESTART_TIME = timedelta(minutes=10)
 @contextmanager
 def session_scope(*, opp=None, session=None):
     """Provide a transactional scope around a series of operations."""
-    if session is None and.opp is not None:
+    if session is None and opp is not None:
         session = opp.data[DATA_INSTANCE].get_session()
 
     if session is None:
@@ -66,7 +66,7 @@ def commit(session, work):
 
 
 def execute(qry, to_native=False, validate_entity_ids=True):
-    """Query the database and convert the objects to HA native form.
+    """Query the database and convert the objects to OP native form.
 
     This method also retries a few times in the case of stale connections.
     """

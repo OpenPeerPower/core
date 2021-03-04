@@ -1,7 +1,7 @@
 {
   "domain": "pulseaudio_loopback",
   "name": "PulseAudio Loopback",
-  "documentation": "https://www.open-peer-power.io/integrations/pulseaudio_loopback",
+  "documentation": "https://www.openpeerpower.io/integrations/pulseaudio_loopback",
   "requirements": ["pulsectl==20.2.4"],
   "codeowners": []
 }

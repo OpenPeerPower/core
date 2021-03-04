@@ -1,7 +1,7 @@
 {
   "domain": "russound_rio",
   "name": "Russound RIO",
-  "documentation": "https://www.open-peer-power.io/integrations/russound_rio",
+  "documentation": "https://www.openpeerpower.io/integrations/russound_rio",
   "requirements": ["russound_rio==0.1.7"],
   "codeowners": []
 }

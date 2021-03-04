@@ -22,7 +22,7 @@ def to_lutron_level(level):
     return int(round((level * 100) / 255))
 
 
-def to.opp_level(level):
+def to_opp_level(level):
     """Convert the given Lutron (0-100) light level to Open Peer Power (0-255)."""
     return int((level * 255) // 100)
 
@@ -58,7 +58,7 @@ class LutronCasetaLight(LutronCasetaDevice, LightEntity):
     @property
     def brightness(self):
         """Return the brightness of the light."""
-        return to.opp_level(self._device["current_state"])
+        return to_opp_level(self._device["current_state"])
 
     async def _set_brightness(self, brightness, **kwargs):
         args = {}

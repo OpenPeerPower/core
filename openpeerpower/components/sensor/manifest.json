@@ -1,7 +1,7 @@
 {
   "domain": "sensor",
   "name": "Sensor",
-  "documentation": "https://www.open-peer-power.io/integrations/sensor",
+  "documentation": "https://www.openpeerpower.io/integrations/sensor",
   "codeowners": [],
   "quality_scale": "internal"
 }

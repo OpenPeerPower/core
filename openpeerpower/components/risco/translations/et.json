@@ -20,7 +20,7 @@
     },
     "options": {
         "step": {
-            "op_to_risco": {
+            "ha_to_risco": {
                 "data": {
                     "armed_away": "Valves eemal",
                     "armed_custom_bypass": "Valves, eranditega",
@@ -38,7 +38,7 @@
                 },
                 "title": "Seadista valikud"
             },
-            "risco_to_op": {
+            "risco_to_ha": {
                 "data": {
                     "A": "Grupp A",
                     "B": "Grupp B",

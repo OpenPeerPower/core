@@ -22,7 +22,7 @@ MOP_EXTENDED = "Extended"
 BRAAVA_MOP_BEHAVIORS = [MOP_STANDARD, MOP_DEEP, MOP_EXTENDED]
 BRAAVA_SPRAY_AMOUNT = [1, 2, 3]
 
-# Braava Jets can set  opp.ng behavior through fanspeed
+# Braava Jets can set mopping behavior through fanspeed
 SUPPORT_BRAAVA = SUPPORT_IROBOT | SUPPORT_FAN_SPEED
 
 
@@ -48,7 +48,7 @@ class BraavaJet(IRobotVacuum):
     @property
     def fan_speed(self):
         """Return the fan speed of the vacuum cleaner."""
-        #  opp.ng behavior and spray amount as fan speed
+        # Mopping behavior and spray amount as fan speed
         rank_overlap = self.vacuum_state.get("rankOverlap", {})
         behavior = None
         if rank_overlap == OVERLAP_STANDARD:

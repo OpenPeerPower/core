@@ -32,12 +32,12 @@ async def async_setup_entry(
     async_add_entities: Callable[[list], None],
 ) -> bool:
     """Set up the ISY994 light platform."""
-    opp.isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
+    opp_isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
     isy_options = entry.options
     restore_light_state = isy_options.get(CONF_RESTORE_LIGHT_STATE, False)
 
     devices = []
-    for node in opp.isy_data[ISY994_NODES][LIGHT]:
+    for node in opp_isy_data[ISY994_NODES][LIGHT]:
         devices.append(ISYLightEntity(node, restore_light_state))
 
     await migrate_old_unique_ids(opp, LIGHT, devices)

@@ -38,7 +38,7 @@ class KNXWeather(KnxEntity, WeatherEntity):
     @property
     def pressure(self):
         """Return current air pressure."""
-        # KNX returns pA - HA requires hPa
+        # KNX returns pA - OP requires hPa
         return (
             self._device.air_pressure / 100
             if self._device.air_pressure is not None
@@ -48,7 +48,7 @@ class KNXWeather(KnxEntity, WeatherEntity):
     @property
     def condition(self):
         """Return current weather condition."""
-        return self._device.op_current_state().value
+        return self._device.ha_current_state().value
 
     @property
     def humidity(self):

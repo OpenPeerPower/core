@@ -30,7 +30,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     if discovery_info is None:
         return
 
-    device = NessAlarmPanel.opp.data[DATA_NESS], "Alarm Panel")
+    device = NessAlarmPanel(opp.data[DATA_NESS], "Alarm Panel")
     async_add_entities([device])
 
 

@@ -1,7 +1,7 @@
 {
   "domain": "signal_messenger",
   "name": "Signal Messenger",
-  "documentation": "https://www.open-peer-power.io/integrations/signal_messenger",
+  "documentation": "https://www.openpeerpower.io/integrations/signal_messenger",
   "codeowners": ["@bbernhard"],
   "requirements": ["pysignalclirestapi==0.3.4"]
 }

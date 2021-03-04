@@ -23,6 +23,7 @@ from openpeerpower.components.frontend import MANIFEST_JSON
 from openpeerpower.components.sensor import DEVICE_CLASSES as SENSOR_CLASSES
 from openpeerpower.components.zone.const import DOMAIN as ZONE_DOMAIN
 from openpeerpower.const import (
+    ATTR_DEVICE_ID,
     ATTR_DOMAIN,
     ATTR_SERVICE,
     ATTR_SERVICE_DATA,
@@ -49,7 +50,6 @@ from .const import (
     ATTR_APP_VERSION,
     ATTR_CAMERA_ENTITY_ID,
     ATTR_COURSE,
-    ATTR_DEVICE_ID,
     ATTR_DEVICE_NAME,
     ATTR_EVENT_DATA,
     ATTR_EVENT_TYPE,
@@ -534,17 +534,17 @@ async def webhook_get_zones(opp, config_entry, data):
 @WEBHOOK_COMMANDS.register("get_config")
 async def webhook_get_config(opp, config_entry, data):
     """Handle a get config webhook."""
-    opp.config = opp.config.as_dict()
+    opp_config = opp.config.as_dict()
 
     resp = {
-        "latitude": opp.config["latitude"],
-        "longitude": opp.config["longitude"],
-        "elevation": opp.config["elevation"],
-        "unit_system": opp.config["unit_system"],
-        "location_name": opp.config["location_name"],
-        "time_zone": opp.config["time_zone"],
-        "components": opp.config["components"],
-        "version": opp.config["version"],
+        "latitude": opp_config["latitude"],
+        "longitude": opp_config["longitude"],
+        "elevation": opp_config["elevation"],
+        "unit_system": opp_config["unit_system"],
+        "location_name": opp_config["location_name"],
+        "time_zone": opp_config["time_zone"],
+        "components": opp_config["components"],
+        "version": opp_config["version"],
         "theme_color": MANIFEST_JSON["theme_color"],
     }
 

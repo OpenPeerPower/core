@@ -86,7 +86,7 @@ class MetDataUpdateCoordinator(DataUpdateCoordinator):
             raise UpdateFailed(f"Update failed: {err}") from err
 
     def track_home(self):
-        """Start tracking changes to HA home setting."""
+        """Start tracking changes to OP home setting."""
         if self._unsub_track_home:
             return
 
@@ -100,7 +100,7 @@ class MetDataUpdateCoordinator(DataUpdateCoordinator):
         )
 
     def untrack_home(self):
-        """Stop tracking changes to HA home setting."""
+        """Stop tracking changes to OP home setting."""
         if self._unsub_track_home:
             self._unsub_track_home()
             self._unsub_track_home = None

@@ -1,7 +1,7 @@
 {
   "domain": "panel_iframe",
   "name": "iframe Panel",
-  "documentation": "https://www.open-peer-power.io/integrations/panel_iframe",
+  "documentation": "https://www.openpeerpower.io/integrations/panel_iframe",
   "dependencies": ["frontend"],
   "codeowners": ["@open-peer-power/frontend"],
   "quality_scale": "internal"

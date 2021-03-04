@@ -106,7 +106,7 @@ def setup(opp, config):
 
     def load_module(platform, idx, module_conf):
         """Set up the KIRA module and load platform."""
-        # note: module_name is not the HA device name. it's just a unique name
+        # note: module_name is not the OP device name. it's just a unique name
         # to ensure the component and platform can share information
         module_name = ("%s_%d" % (DOMAIN, idx)) if idx else DOMAIN
         device_name = module_conf.get(CONF_NAME, DOMAIN)

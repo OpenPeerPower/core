@@ -7,7 +7,7 @@ DOMAIN = "samsungtv"
 DEFAULT_NAME = "Samsung TV"
 
 VALUE_CONF_NAME = "OpenPeerPower"
-VALUE_CONF_ID = "op.component.samsung"
+VALUE_CONF_ID = "ha.component.samsung"
 
 CONF_DESCRIPTION = "description"
 CONF_MANUFACTURER = "manufacturer"

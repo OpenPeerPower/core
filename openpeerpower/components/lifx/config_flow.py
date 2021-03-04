@@ -9,7 +9,7 @@ from .const import DOMAIN
 
 async def _async_has_devices(opp):
     """Return if there are devices that can be discovered."""
-    lifx_ip_addresses = await aiolifx.LifxScan.opp.loop).scan()
+    lifx_ip_addresses = await aiolifx.LifxScan(opp.loop).scan()
     return len(lifx_ip_addresses) > 0
 
 

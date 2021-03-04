@@ -66,7 +66,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     sensor_def = pysaj.Sensors(wifi)
 
     # Use all sensors by default
-    opp.sensors = []
+    opp_sensors = []
 
     kwargs = {}
     if wifi:
@@ -92,7 +92,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 
     for sensor in sensor_def:
         if sensor.enabled:
-            opp.sensors.append(
+            opp_sensors.append(
                 SAJsensor(saj.serialnumber, sensor, inverter_name=config.get(CONF_NAME))
             )
 

@@ -1,7 +1,7 @@
 {
   "domain": "openevse",
   "name": "OpenEVSE",
-  "documentation": "https://www.open-peer-power.io/integrations/openevse",
+  "documentation": "https://www.openpeerpower.io/integrations/openevse",
   "requirements": ["openevsewifi==1.1.0"],
   "codeowners": []
 }

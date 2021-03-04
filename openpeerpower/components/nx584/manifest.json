@@ -1,7 +1,7 @@
 {
   "domain": "nx584",
   "name": "NX584",
-  "documentation": "https://www.open-peer-power.io/integrations/nx584",
+  "documentation": "https://www.openpeerpower.io/integrations/nx584",
   "requirements": ["pynx584==0.5"],
   "codeowners": []
 }

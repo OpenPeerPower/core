@@ -1,7 +1,7 @@
 {
   "domain": "schluter",
   "name": "Schluter",
-  "documentation": "https://www.open-peer-power.io/integrations/schluter",
+  "documentation": "https://www.openpeerpower.io/integrations/schluter",
   "requirements": ["py-schluter==0.1.7"],
   "codeowners": ["@prairieapps"]
 }

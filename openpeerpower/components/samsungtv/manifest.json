@@ -1,10 +1,10 @@
 {
   "domain": "samsungtv",
   "name": "Samsung Smart TV",
-  "documentation": "https://www.open-peer-power.io/integrations/samsungtv",
+  "documentation": "https://www.openpeerpower.io/integrations/samsungtv",
   "requirements": [
     "samsungctl[websocket]==0.7.1",
-    "samsungtvws==1.4.0"
+    "samsungtvws==1.6.0"
   ],
   "ssdp": [
     {

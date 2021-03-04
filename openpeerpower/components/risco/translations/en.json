@@ -20,7 +20,7 @@
     },
     "options": {
         "step": {
-            "op_to_risco": {
+            "ha_to_risco": {
                 "data": {
                     "armed_away": "Armed Away",
                     "armed_custom_bypass": "Armed Custom Bypass",
@@ -38,7 +38,7 @@
                 },
                 "title": "Configure options"
             },
-            "risco_to_op": {
+            "risco_to_ha": {
                 "data": {
                     "A": "Group A",
                     "B": "Group B",

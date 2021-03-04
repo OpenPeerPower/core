@@ -8,6 +8,6 @@ config_entry_flow.register_webhook_flow(
     "Mailgun Webhook",
     {
         "mailgun_url": "https://documentation.mailgun.com/en/latest/user_manual.html#webhooks",
-        "docs_url": "https://www.open-peer-power.io/integrations/mailgun/",
+        "docs_url": "https://www.openpeerpower.io/integrations/mailgun/",
     },
 )

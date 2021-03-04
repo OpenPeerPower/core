@@ -302,6 +302,6 @@ async def async_stop(opp: OpenPeerPowerType) -> bool:
             unsub()
         opp.data[DISCOVERY_UNSUBSCRIBE] = []
     if INTEGRATION_UNSUBSCRIBE in opp.data:
-        for key, unsub in list.opp.data[INTEGRATION_UNSUBSCRIBE].items()):
+        for key, unsub in list(opp.data[INTEGRATION_UNSUBSCRIBE].items()):
             unsub()
             opp.data[INTEGRATION_UNSUBSCRIBE].pop(key)

@@ -84,7 +84,7 @@ class AlarmPanel:
 
     @property
     def stored_configuration(self):
-        """Return the configuration stored in  opp.data` for this device."""
+        """Return the configuration stored in `opp.data` for this device."""
         return self.opp.data[DOMAIN][CONF_DEVICES].get(self.device_id)
 
     @property
@@ -190,7 +190,7 @@ class AlarmPanel:
         raise CannotConnect
 
     async def async_save_data(self):
-        """Save the device configuration to  opp.data`."""
+        """Save the device configuration to `opp.data`."""
         binary_sensors = {}
         for entity in self.options.get(CONF_BINARY_SENSORS) or []:
             zone = entity[CONF_ZONE]

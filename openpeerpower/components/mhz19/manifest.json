@@ -1,7 +1,7 @@
 {
   "domain": "mhz19",
   "name": "MH-Z19 CO2 Sensor",
-  "documentation": "https://www.open-peer-power.io/integrations/mhz19",
+  "documentation": "https://www.openpeerpower.io/integrations/mhz19",
   "requirements": ["pmsensor==0.4"],
   "codeowners": []
 }

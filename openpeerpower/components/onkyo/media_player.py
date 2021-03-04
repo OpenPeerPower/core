@@ -406,10 +406,10 @@ class OnkyoDevice(MediaPlayerEntity):
 
         However full volume on the amp is usually far too loud so allow the user to specify the upper range
         with CONF_MAX_VOLUME.  we change as per max_volume set by user. This means that if max volume is 80 then full
-        volume in HA will give 80% volume on the receiver. Then we convert
+        volume in OP will give 80% volume on the receiver. Then we convert
         that to the correct scale for the receiver.
         """
-        #        OP_VOL * (MAX VOL / 100) * MAX_RECEIVER_VOL
+        #        HA_VOL * (MAX VOL / 100) * MAX_RECEIVER_VOL
         self.command(
             f"volume {int(volume * (self._max_volume / 100) * self._receiver_max_volume)}"
         )
@@ -573,10 +573,10 @@ class OnkyoDeviceZone(OnkyoDevice):
 
         However full volume on the amp is usually far too loud so allow the user to specify the upper range
         with CONF_MAX_VOLUME.  we change as per max_volume set by user. This means that if max volume is 80 then full
-        volume in HA will give 80% volume on the receiver. Then we convert
+        volume in OP will give 80% volume on the receiver. Then we convert
         that to the correct scale for the receiver.
         """
-        # OP_VOL * (MAX VOL / 100) * MAX_RECEIVER_VOL
+        # HA_VOL * (MAX VOL / 100) * MAX_RECEIVER_VOL
         self.command(
             f"zone{self._zone}.volume={int(volume * (self._max_volume / 100) * self._receiver_max_volume)}"
         )
