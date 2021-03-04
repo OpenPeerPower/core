@@ -33,8 +33,8 @@ async def verify_redirect_uri(opp, client_id, redirect_uri):
     # Whitelist the iOS and Android callbacks so that people can link apps
     # without being connected to the internet.
     if redirect_uri == "openpeerpower://auth-callback" and client_id in (
-        "https://open-peer-power.io/android",
-        "https://open-peer-power.io/iOS",
+        "https://openpeerpower.io/android",
+        "https://openpeerpower.io/iOS",
     ):
         return True
 

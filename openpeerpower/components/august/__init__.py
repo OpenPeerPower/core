@@ -21,7 +21,6 @@ import openpeerpower.helpers.config_validation as cv
 
 from .activity import ActivityStream
 from .const import (
-    AUGUST_COMPONENTS,
     CONF_ACCESS_TOKEN_CACHE_FILE,
     CONF_INSTALL_ID,
     CONF_LOGIN_METHOD,
@@ -32,6 +31,7 @@ from .const import (
     DOMAIN,
     LOGIN_METHODS,
     MIN_TIME_BETWEEN_DETAIL_UPDATES,
+    PLATFORMS,
     VERIFICATION_CODE_KEY,
 )
 from .exceptions import CannotConnect, InvalidAuth, RequireValidation
@@ -137,9 +137,9 @@ async def async_setup_august(opp, config_entry, august_gateway):
 
     await opp.data[DOMAIN][entry_id][DATA_AUGUST].async_setup()
 
-    for component in AUGUST_COMPONENTS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, component)
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
     return True
@@ -209,8 +209,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in AUGUST_COMPONENTS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )
@@ -227,7 +227,7 @@ class AugustData(AugustSubscriberMixin):
     def __init__(self, opp, august_gateway):
         """Init August data object."""
         super().__init__(opp, MIN_TIME_BETWEEN_DETAIL_UPDATES)
-        self.opp = opp
+        self._opp = opp
         self._august_gateway = august_gateway
         self.activity_stream = None
         self._api = august_gateway.api
@@ -264,7 +264,7 @@ class AugustData(AugustSubscriberMixin):
         self._remove_inoperative_doorbells()
 
         self.activity_stream = ActivityStream(
-            self.opp, self._api, self._august_gateway, self._house_ids
+            self._opp, self._api, self._august_gateway, self._house_ids
         )
         await self.activity_stream.async_setup()
 

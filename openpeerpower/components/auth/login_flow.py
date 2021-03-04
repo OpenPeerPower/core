@@ -26,9 +26,9 @@ And optional parameter 'type' has to set as 'link_user' if login flow used for
 link credential to exist user. Default 'type' is 'authorize'.
 
 {
-    "client_id": "https:/.oppbian.local:8123/",
+    "client_id": "https://oppbian.local:8123/",
     "handler": ["local_provider", null],
-    "redirect_url": "https:/.oppbian.local:8123/",
+    "redirect_url": "https://oppbian.local:8123/",
     "type': "authorize"
 }
 
@@ -92,8 +92,8 @@ from . import indieauth
 async def async_setup(opp, store_result):
     """Component to allow users to login."""
     opp.http.register_view(AuthProvidersView)
-    opp.http.register_view(LoginFlowIndexView.opp.auth.login_flow, store_result))
-    opp.http.register_view(LoginFlowResourceView.opp.auth.login_flow, store_result))
+    opp.http.register_view(LoginFlowIndexView(opp.auth.login_flow, store_result))
+    opp.http.register_view(LoginFlowResourceView(opp.auth.login_flow, store_result))
 
 
 class AuthProvidersView(OpenPeerPowerView):
@@ -105,7 +105,7 @@ class AuthProvidersView(OpenPeerPowerView):
 
     async def get(self, request):
         """Get available auth providers."""
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         if not opp.components.onboarding.async_is_user_onboarded():
             return self.json_message(
                 message="Onboarding not finished",

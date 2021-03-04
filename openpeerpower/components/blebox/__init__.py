@@ -48,9 +48,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     domain_entry = domain.setdefault(entry.entry_id, {})
     product = domain_entry.setdefault(PRODUCT, product)
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True

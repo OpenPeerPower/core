@@ -20,7 +20,7 @@ class ActivityStream(AugustSubscriberMixin):
     def __init__(self, opp, api, august_gateway, house_ids):
         """Init August activity stream object."""
         super().__init__(opp, ACTIVITY_UPDATE_INTERVAL)
-        self.opp = opp
+        self._opp = opp
         self._august_gateway = august_gateway
         self._api = api
         self._house_ids = house_ids

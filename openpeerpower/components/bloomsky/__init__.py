@@ -18,7 +18,7 @@ from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
 
-BLOOMSKY_TYPE = ["camera", "binary_sensor", "sensor"]
+PLATFORMS = ["camera", "binary_sensor", "sensor"]
 
 DOMAIN = "bloomsky"
 
@@ -32,7 +32,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 
 def setup(opp, config):
-    """Set up the BloomSky component."""
+    """Set up the BloomSky integration."""
     api_key = config[DOMAIN][CONF_API_KEY]
 
     try:
@@ -42,8 +42,8 @@ def setup(opp, config):
 
     opp.data[DOMAIN] = bloomsky
 
-    for component in BLOOMSKY_TYPE:
-        discovery.load_platform(opp, component, DOMAIN, {}, config)
+    for platform in PLATFORMS:
+        discovery.load_platform(opp, platform, DOMAIN, {}, config)
 
     return True
 

@@ -11,7 +11,7 @@ class AugustSubscriberMixin:
     def __init__(self, opp, update_interval):
         """Initialize an subscriber."""
         super().__init__()
-        self.opp = opp
+        self._opp = opp
         self._update_interval = update_interval
         self._subscriptions = {}
         self._unsub_interval = None
@@ -24,7 +24,7 @@ class AugustSubscriberMixin:
         """
         if not self._subscriptions:
             self._unsub_interval = async_track_time_interval(
-                self.opp, self._async_refresh, self._update_interval
+                self._opp, self._async_refresh, self._update_interval
             )
         self._subscriptions.setdefault(device_id, []).append(update_callback)
 

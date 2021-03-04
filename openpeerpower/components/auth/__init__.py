@@ -33,7 +33,7 @@ token.
 Request a new access token using a refresh token.
 
 {
-    "client_id": "https:/.oppbian.local:8123/",
+    "client_id": "https://oppbian.local:8123/",
     "grant_type": "refresh_token",
     "refresh_token": "IJKLMNOPQRST"
 }
@@ -239,7 +239,7 @@ class TokenView(OpenPeerPowerView):
     @log_invalid_auth
     async def post(self, request):
         """Grant a token."""
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         data = await request.post()
 
         grant_type = data.get("grant_type")
@@ -393,8 +393,8 @@ class LinkUserView(OpenPeerPowerView):
     @RequestDataValidator(vol.Schema({"code": str, "client_id": str}))
     async def post(self, request, data):
         """Link a user."""
-       opp = request.app["opp"]
-        user = request[.opp_user"]
+        opp = request.app["opp"]
+        user = request["opp_user"]
 
         credentials = self._retrieve_credentials(
             data["client_id"], RESULT_TYPE_CREDENTIALS, data["code"]

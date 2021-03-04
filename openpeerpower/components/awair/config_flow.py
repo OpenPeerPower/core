@@ -10,7 +10,7 @@ from openpeerpower.config_entries import CONN_CLASS_CLOUD_POLL, ConfigFlow
 from openpeerpower.const import CONF_ACCESS_TOKEN
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 
-from .const import DOMAIN, LOGGER  # pylint: disable=unused-import
+from .const import DOMAIN, LOGGER
 
 
 class AwairFlowHandler(ConfigFlow, domain=DOMAIN):

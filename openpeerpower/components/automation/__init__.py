@@ -32,7 +32,12 @@ from openpeerpower.core import (
     callback,
     split_entity_id,
 )
-from openpeerpower.exceptions import ConditionError, OpenPeerPowerError
+from openpeerpower.exceptions import (
+    ConditionError,
+    ConditionErrorContainer,
+    ConditionErrorIndex,
+    OpenPeerPowerError,
+)
 from openpeerpower.helpers import condition, extract_domain_configs, template
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.entity import ToggleEntity
@@ -54,7 +59,7 @@ from openpeerpower.loader import bind_opp
 from openpeerpower.util.dt import parse_datetime
 
 # Not used except by packages to check config structure
-from .config import PLATFORM_SCHEMA  # noqa
+from .config import PLATFORM_SCHEMA  # noqa: F401
 from .config import async_validate_config_item
 from .const import (
     CONF_ACTION,
@@ -563,7 +568,7 @@ async def _async_process_config(
             )
 
             if CONF_CONDITION in config_block:
-                cond_func = await _async_process_if(opp, config, config_block)
+                cond_func = await _async_process_if(opp, name, config, config_block)
 
                 if cond_func is None:
                     continue
@@ -601,7 +606,7 @@ async def _async_process_config(
     return blueprints_used
 
 
-async def _async_process_if(opp, config, p_config):
+async def _async_process_if(opp, name, config, p_config):
     """Process if checks."""
     if_configs = p_config[CONF_CONDITION]
 
@@ -616,16 +621,23 @@ async def _async_process_if(opp, config, p_config):
     def if_action(variables=None):
         """AND all conditions."""
         errors = []
-        for check in checks:
+        for index, check in enumerate(checks):
             try:
                 if not check(opp, variables):
                     return False
             except ConditionError as ex:
-                errors.append(f"Error in 'condition' evaluation: {ex}")
+                errors.append(
+                    ConditionErrorIndex(
+                        "condition", index=index, total=len(checks), error=ex
+                    )
+                )
 
         if errors:
-            for error in errors:
-                LOGGER.warning("%s", error)
+            LOGGER.warning(
+                "Error evaluating condition in '%s':\n%s",
+                name,
+                ConditionErrorContainer("condition", errors=errors),
+            )
             return False
 
         return True
