@@ -41,7 +41,7 @@ async def test_add_user(opp, provider, capsys, opp_storage):
         opp, provider, Mock(username="paulus", password="test-pass")
     )
 
-    assert len.opp_storage(opp_auth.STORAGE_KEY]["data"]["users"]) == 1
+    assert len(opp_storage[opp_auth.STORAGE_KEY]["data"]["users"]) == 1
 
     captured = capsys.readouterr()
     assert captured.out == "Auth created\n"
@@ -83,11 +83,11 @@ async def test_change_password(opp, provider, capsys, opp_storage):
         opp, provider, Mock(username="test-user", new_password="new-pass")
     )
 
-    assert len.opp_storage(opp_auth.STORAGE_KEY]["data"]["users"]) == 1
+    assert len(opp_storage[opp_auth.STORAGE_KEY]["data"]["users"]) == 1
     captured = capsys.readouterr()
     assert captured.out == "Password changed\n"
     data.validate_login("test-user", "new-pass")
-    with pytest.raises.opp_auth.InvalidAuth):
+    with pytest.raises(opp_auth.InvalidAuth):
         data.validate_login("test-user", "test-pass")
 
 
@@ -104,7 +104,7 @@ async def test_change_password_invalid_user(opp, provider, capsys, opp_storage):
     captured = capsys.readouterr()
     assert captured.out == "User not found\n"
     data.validate_login("test-user", "test-pass")
-    with pytest.raises.opp_auth.InvalidAuth):
+    with pytest.raises(opp_auth.InvalidAuth):
         data.validate_login("invalid-user", "new-pass")
 
 

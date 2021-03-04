@@ -15,7 +15,7 @@ from tests.common import patch
 MODULE = "openpeerpower.components.rpi_power.config_flow.new_under_voltage"
 
 
-async def test_setup_opp: OpenPeerPower) -> None:
+async def test_setup(opp: OpenPeerPower) -> None:
     """Test setting up manually."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

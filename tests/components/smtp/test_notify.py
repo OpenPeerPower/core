@@ -50,7 +50,7 @@ async def test_reload_notify(opp):
         "fixtures",
         "smtp/configuration.yaml",
     )
-    with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path), patch(
+    with patch.object(opp_config, "YAML_CONFIG_FILE", yaml_path), patch(
         "openpeerpower.components.smtp.notify.MailNotificationService.connection_is_valid"
     ):
         await opp.services.async_call(

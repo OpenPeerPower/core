@@ -67,7 +67,7 @@ async def test_setup(opp: OpenPeerPowerType, caplog: LogCaptureFixture):
         client.auth_test.assert_called_once_with()
 
 
-async def test_setup_clienterror(opp: OpenPeerPowerType, caplog: LogCaptureFixture):
+async def test_setup_clientError(opp: OpenPeerPowerType, caplog: LogCaptureFixture):
     """Test setup slack notify with aiohttp.ClientError exception."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config[notify.DOMAIN][0].update({CONF_USERNAME: "user", CONF_ICON: "icon"})
@@ -88,7 +88,7 @@ async def test_setup_clienterror(opp: OpenPeerPowerType, caplog: LogCaptureFixtu
         assert aiohttp.ClientError.__qualname__ in record.message
 
 
-async def test_setup_slackApierror(opp: OpenPeerPowerType, caplog: LogCaptureFixture):
+async def test_setup_slackApiError(opp: OpenPeerPowerType, caplog: LogCaptureFixture):
     """Test setup slack notify with SlackApiError exception."""
     config = DEFAULT_CONFIG
 
@@ -142,7 +142,7 @@ async def test_message_includes_default_icon_url():
     """Tests that overriding the default icon url when sending a message works."""
     mock_client = Mock()
     mock_client.chat_postMessage = AsyncMock()
-    expected_icon = "https://example.com.opp.png"
+    expected_icon = "https://example.com/opp.png"
     service = SlackNotificationService(None, mock_client, "_", "_", expected_icon)
 
     await service.async_send_message("test")
@@ -159,7 +159,7 @@ async def test_message_icon_url_overrides_default():
     mock_client.chat_postMessage = AsyncMock()
     service = SlackNotificationService(None, mock_client, "_", "_", "default_icon")
 
-    expected_icon = "https://example.com.opp.png"
+    expected_icon = "https://example.com/opp.png"
     await service.async_send_message("test", data={"icon": expected_icon})
 
     mock_fn = mock_client.chat_postMessage

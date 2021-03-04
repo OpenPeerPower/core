@@ -14,7 +14,7 @@ from smart_meter_texas.const import (
 )
 
 from openpeerpower.components.openpeerpower import (
-    DOMAIN as OP_DOMAIN,
+    DOMAIN as HA_DOMAIN,
     SERVICE_UPDATE_ENTITY,
 )
 from openpeerpower.components.smart_meter_texas.const import DOMAIN
@@ -42,9 +42,9 @@ async def setup_integration(opp, config_entry, aioclient_mock, **kwargs):
 async def refresh_data(opp, config_entry, aioclient_mock):
     """Request a DataUpdateCoordinator refresh."""
     mock_connection(aioclient_mock)
-    await async_setup_component(opp, OP_DOMAIN, {})
+    await async_setup_component(opp, HA_DOMAIN, {})
     await opp.services.async_call(
-        OP_DOMAIN,
+        HA_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: TEST_ENTITY_ID},
         blocking=True,

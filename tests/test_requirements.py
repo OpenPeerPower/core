@@ -24,7 +24,7 @@ def env_without_wheel_links():
 
 async def test_requirement_installed_in_venv(opp):
     """Test requirement installed in virtual environment."""
-    with patch("os.path.dirname", return_value="op_package_path"), patch(
+    with patch("os.path.dirname", return_value="ha_package_path"), patch(
         "openpeerpower.util.package.is_virtual_env", return_value=True
     ), patch("openpeerpower.util.package.is_docker_env", return_value=False), patch(
         "openpeerpower.util.package.install_package", return_value=True
@@ -37,14 +37,14 @@ async def test_requirement_installed_in_venv(opp):
         assert "comp" in opp.config.components
         assert mock_install.call_args == call(
             "package==0.0.1",
-            constraints=os.path.join("op_package_path", CONSTRAINT_FILE),
+            constraints=os.path.join("ha_package_path", CONSTRAINT_FILE),
             no_cache_dir=False,
         )
 
 
 async def test_requirement_installed_in_deps(opp):
     """Test requirement installed in deps directory."""
-    with patch("os.path.dirname", return_value="op_package_path"), patch(
+    with patch("os.path.dirname", return_value="ha_package_path"), patch(
         "openpeerpower.util.package.is_virtual_env", return_value=False
     ), patch("openpeerpower.util.package.is_docker_env", return_value=False), patch(
         "openpeerpower.util.package.install_package", return_value=True
@@ -57,8 +57,8 @@ async def test_requirement_installed_in_deps(opp):
         assert "comp" in opp.config.components
         assert mock_install.call_args == call(
             "package==0.0.1",
-            target.opp.config.path("deps"),
-            constraints=os.path.join("op_package_path", CONSTRAINT_FILE),
+            target=opp.config.path("deps"),
+            constraints=os.path.join("ha_package_path", CONSTRAINT_FILE),
             no_cache_dir=False,
         )
 
@@ -152,14 +152,14 @@ async def test_install_with_wheels_index(opp):
     ), patch(
         "os.path.dirname"
     ) as mock_dir:
-        mock_dir.return_value = "op_package_path"
+        mock_dir.return_value = "ha_package_path"
         assert await setup.async_setup_component(opp, "comp", {})
         assert "comp" in opp.config.components
 
         assert mock_inst.call_args == call(
             "hello==1.0.0",
             find_links="https://wheels.opp.io/test",
-            constraints=os.path.join("op_package_path", CONSTRAINT_FILE),
+            constraints=os.path.join("ha_package_path", CONSTRAINT_FILE),
             no_cache_dir=True,
         )
 
@@ -176,13 +176,13 @@ async def test_install_on_docker(opp):
     ) as mock_dir, patch.dict(
         os.environ, env_without_wheel_links(), clear=True
     ):
-        mock_dir.return_value = "op_package_path"
+        mock_dir.return_value = "ha_package_path"
         assert await setup.async_setup_component(opp, "comp", {})
         assert "comp" in opp.config.components
 
         assert mock_inst.call_args == call(
             "hello==1.0.0",
-            constraints=os.path.join("op_package_path", CONSTRAINT_FILE),
+            constraints=os.path.join("ha_package_path", CONSTRAINT_FILE),
             no_cache_dir=True,
         )
 

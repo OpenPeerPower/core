@@ -224,7 +224,7 @@ async def test_reload(opp):
         "fixtures",
         "rest/configuration_top_level.yaml",
     )
-    with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
+    with patch.object(opp_config, "YAML_CONFIG_FILE", yaml_path):
         await opp.services.async_call(
             "rest",
             SERVICE_RELOAD,
@@ -276,7 +276,7 @@ async def test_reload_and_remove_all(opp):
         "fixtures",
         "rest/configuration_empty.yaml",
     )
-    with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
+    with patch.object(opp_config, "YAML_CONFIG_FILE", yaml_path):
         await opp.services.async_call(
             "rest",
             SERVICE_RELOAD,
@@ -324,7 +324,7 @@ async def test_reload_fails_to_read_configuration(opp):
         "fixtures",
         "rest/configuration_invalid.notyaml",
     )
-    with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
+    with patch.object(opp_config, "YAML_CONFIG_FILE", yaml_path):
         await opp.services.async_call(
             "rest",
             SERVICE_RELOAD,

@@ -177,7 +177,7 @@ async def test_user(opp: OpenPeerPowerType, service: MagicMock):
     assert result["data"].get(CONF_VOLUMES) is None
 
 
-async def test_user_2sa.opp: OpenPeerPowerType, service_2sa: MagicMock):
+async def test_user_2sa(opp: OpenPeerPowerType, service_2sa: MagicMock):
     """Test user with 2sa authentication config."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

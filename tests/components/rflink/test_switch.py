@@ -75,7 +75,7 @@ async def test_default_setup(opp, monkeypatch):
     # The switch component does not support adding new devices for incoming
     # events because every new unknown device is added as a light by default.
 
-    # test changing state from HA propagates to Rflink
+    # test changing state from OP propagates to Rflink
     opp.async_create_task(
         opp.services.async_call(
             DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}

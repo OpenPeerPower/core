@@ -45,8 +45,8 @@ def mock_http_start_stop():
 
 @patch("openpeerpower.bootstrap.async_enable_logging", Mock())
 async def test_open_peer_power_core_config_validation(opp):
-    """Test if we pass in wrong information for HA conf."""
-    # Extensive HA conf validation testing is done
+    """Test if we pass in wrong information for OP conf."""
+    # Extensive OP conf validation testing is done
     result = await bootstrap.async_from_config_dict(
         {"openpeerpower": {"latitude": "some string"}}, opp
     )
@@ -72,7 +72,7 @@ async def test_load_oppio(opp):
 
 
 @pytest.mark.parametrize("load_registries", [False])
-async def test_empty_setup_opp):
+async def test_empty_setup(opp):
     """Test an empty set up loads the core."""
     await bootstrap.async_from_config_dict({}, opp)
     for domain in bootstrap.CORE_INTEGRATIONS:
@@ -379,7 +379,7 @@ async def test_setup_opp(
         "openpeerpower.config.async_opp_config_yaml",
         return_value={"browser": {}, "frontend": {}},
     ), patch.object(bootstrap, "LOG_SLOW_STARTUP_INTERVAL", 5000):
-       opp =  await bootstrap.async_setup_opp(
+        opp = await bootstrap.async_setup_opp(
             runner.RuntimeConfig(
                 config_dir=get_test_config_dir(),
                 verbose=verbose,
@@ -462,7 +462,7 @@ async def test_setup_opp_invalid_yaml(
     with patch(
         "openpeerpower.config.async_opp_config_yaml", side_effect=OpenPeerPowerError
     ):
-       opp =  await bootstrap.async_setup_opp(
+        opp = await bootstrap.async_setup_opp(
             runner.RuntimeConfig(
                 config_dir=get_test_config_dir(),
                 verbose=False,
@@ -518,7 +518,7 @@ async def test_setup_opp_safe_mode(
         "openpeerpower.config_entries.ConfigEntries.async_domains",
         return_value=["browser"],
     ):
-       opp =  await bootstrap.async_setup_opp(
+        opp = await bootstrap.async_setup_opp(
             runner.RuntimeConfig(
                 config_dir=get_test_config_dir(),
                 verbose=False,
@@ -551,7 +551,7 @@ async def test_setup_opp_invalid_core_config(
         "openpeerpower.config.async_opp_config_yaml",
         return_value={"openpeerpower": {"non-existing": 1}},
     ):
-       opp =  await bootstrap.async_setup_opp(
+        opp = await bootstrap.async_setup_opp(
             runner.RuntimeConfig(
                 config_dir=get_test_config_dir(),
                 verbose=False,
@@ -581,7 +581,7 @@ async def test_setup_safe_mode_if_no_frontend(
     log_no_color = Mock()
 
     with patch(
-        "openpeerpower.config.async.opp_config_yaml",
+        "openpeerpower.config.async_opp_config_yaml",
         return_value={
             "openpeerpower": {
                 "internal_url": "http://192.168.1.100:8123",
@@ -591,7 +591,7 @@ async def test_setup_safe_mode_if_no_frontend(
             "person": {"invalid": True},
         },
     ):
-       opp =  await bootstrap.async_setup_opp(
+        opp = await bootstrap.async_setup_opp(
             runner.RuntimeConfig(
                 config_dir=get_test_config_dir(),
                 verbose=verbose,

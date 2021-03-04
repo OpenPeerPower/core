@@ -4,7 +4,7 @@ config2/*
 tests/testing_config/deps
 tests/testing_config/openpeerpower.log
 
-#.opp-release
+# opp-release
 data/
 .token
 

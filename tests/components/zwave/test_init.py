@@ -31,7 +31,7 @@ def mock_storage(opp_storage):
 
 
 @pytest.fixture
-async def zwave_setup_opp):
+async def zwave_setup(opp):
     """Zwave setup."""
     await async_setup_component(opp, "zwave", {"zwave": {}})
     await opp.async_block_till_done()

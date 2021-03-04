@@ -4,7 +4,7 @@ from unittest.mock import patch
 import pytest
 from subarulink.const import COUNTRY_USA
 
-from openpeerpower.components.openpeerpower import DOMAIN as OP_DOMAIN
+from openpeerpower.components.openpeerpower import DOMAIN as HA_DOMAIN
 from openpeerpower.components.subaru.const import (
     CONF_COUNTRY,
     CONF_UPDATE_ENABLED,
@@ -76,7 +76,7 @@ async def setup_subaru_integration(
     fetch_effect=None,
 ):
     """Create Subaru entry."""
-    assert await async_setup_component(opp, OP_DOMAIN, {})
+    assert await async_setup_component(opp, HA_DOMAIN, {})
     assert await async_setup_component(opp, DOMAIN, {})
 
     config_entry = MockConfigEntry(

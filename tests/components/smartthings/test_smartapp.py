@@ -68,7 +68,7 @@ async def test_smartapp_uninstall(opp, config_entry):
     request = Mock()
     request.installed_app_id = config_entry.data["installed_app_id"]
 
-    with patch.object.opp.config_entries, "async_remove") as remove:
+    with patch.object(opp.config_entries, "async_remove") as remove:
         await smartapp.smartapp_uninstall(opp, request, None, app)
         assert remove.call_count == 1
 

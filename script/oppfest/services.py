@@ -37,6 +37,7 @@ FIELD_SCHEMA = vol.Schema(
 SERVICE_SCHEMA = vol.Schema(
     {
         vol.Required("description"): str,
+        vol.Optional("name"): str,
         vol.Optional("target"): vol.Any(
             selector.TargetSelector.CONFIG_SCHEMA, None  # pylint: disable=no-member
         ),
@@ -67,7 +68,7 @@ def validate_services(integration: Integration):
     has_services = grep_dir(
         integration.path,
         "**/*.py",
-        r".opp\.services\.(register|async_register))|async_register_entity_service",
+        r"(opp\.services\.(register|async_register))|async_register_entity_service",
     )
 
     if not has_services:

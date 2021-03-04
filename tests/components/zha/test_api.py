@@ -10,7 +10,7 @@ import zigpy.zcl.clusters.general as general
 
 from openpeerpower.components.websocket_api import const
 from openpeerpower.components.zha import DOMAIN
-from openpeerpower.components.zop.api import (
+from openpeerpower.components.zha.api import (
     ATTR_DURATION,
     ATTR_INSTALL_CODE,
     ATTR_QR_CODE,
@@ -20,7 +20,7 @@ from openpeerpower.components.zop.api import (
     TYPE,
     async_load_api,
 )
-from openpeerpower.components.zop.core.const import (
+from openpeerpower.components.zha.core.const import (
     ATTR_CLUSTER_ID,
     ATTR_CLUSTER_TYPE,
     ATTR_ENDPOINT_ID,
@@ -33,7 +33,7 @@ from openpeerpower.components.zop.core.const import (
     ATTR_QUIRK_APPLIED,
     CLUSTER_TYPE_IN,
     DATA_ZHA,
-    DATA_ZOP_GATEWAY,
+    DATA_ZHA_GATEWAY,
     GROUP_ID,
     GROUP_IDS,
     GROUP_NAME,
@@ -55,7 +55,7 @@ async def device_switch(opp, zigpy_device_mock, zha_device_joined):
             1: {
                 "in_clusters": [general.OnOff.cluster_id, general.Basic.cluster_id],
                 "out_clusters": [],
-                "device_type": zigpy.profiles.zop.DeviceType.ON_OFF_SWITCH,
+                "device_type": zigpy.profiles.zha.DeviceType.ON_OFF_SWITCH,
             }
         },
         ieee=IEEE_SWITCH_DEVICE,
@@ -78,7 +78,7 @@ async def device_groupable(opp, zigpy_device_mock, zha_device_joined):
                     general.Groups.cluster_id,
                 ],
                 "out_clusters": [],
-                "device_type": zigpy.profiles.zop.DeviceType.ON_OFF_SWITCH,
+                "device_type": zigpy.profiles.zha.DeviceType.ON_OFF_SWITCH,
             }
         },
         ieee=IEEE_GROUPABLE_DEVICE,
@@ -362,7 +362,7 @@ async def test_remove_group(zha_client):
 async def app_controller(opp, setup_zha):
     """Fixture for zigpy Application Controller."""
     await setup_zha()
-    controller = opp.data[DATA_ZHA][DATA_ZOP_GATEWAY].application_controller
+    controller = opp.data[DATA_ZHA][DATA_ZHA_GATEWAY].application_controller
     p1 = patch.object(controller, "permit")
     p2 = patch.object(controller, "permit_with_key", new=AsyncMock())
     with p1, p2:
@@ -392,7 +392,7 @@ async def test_permit_ha12(
     """Test permit service."""
 
     await opp.services.async_call(
-        DOMAIN, SERVICE_PERMIT, params, True, Context(user_id.opp_admin_user.id)
+        DOMAIN, SERVICE_PERMIT, params, True, Context(user_id=opp_admin_user.id)
     )
     assert app_controller.permit.await_count == 1
     assert app_controller.permit.await_args[1]["time_s"] == duration
@@ -427,7 +427,7 @@ async def test_permit_with_install_code(
     """Test permit service with install code."""
 
     await opp.services.async_call(
-        DOMAIN, SERVICE_PERMIT, params, True, Context(user_id.opp_admin_user.id)
+        DOMAIN, SERVICE_PERMIT, params, True, Context(user_id=opp_admin_user.id)
     )
     assert app_controller.permit.await_count == 0
     assert app_controller.permit_with_key.call_count == 1
@@ -479,7 +479,7 @@ async def test_permit_with_install_code_fail(
 
     with pytest.raises(vol.Invalid):
         await opp.services.async_call(
-            DOMAIN, SERVICE_PERMIT, params, True, Context(user_id.opp_admin_user.id)
+            DOMAIN, SERVICE_PERMIT, params, True, Context(user_id=opp_admin_user.id)
         )
     assert app_controller.permit.await_count == 0
     assert app_controller.permit_with_key.call_count == 0
@@ -516,7 +516,7 @@ async def test_permit_with_qr_code(
     """Test permit service with install code from qr code."""
 
     await opp.services.async_call(
-        DOMAIN, SERVICE_PERMIT, params, True, Context(user_id.opp_admin_user.id)
+        DOMAIN, SERVICE_PERMIT, params, True, Context(user_id=opp_admin_user.id)
     )
     assert app_controller.permit.await_count == 0
     assert app_controller.permit_with_key.call_count == 1

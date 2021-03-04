@@ -1225,7 +1225,7 @@ async def test_split_light(opp, mqtt_mock, setup_tasmota):
     await _test_split_light(opp, mqtt_mock, config, 5, 0)
 
 
-async def test_split_light2.opp, mqtt_mock, setup_tasmota):
+async def test_split_light2(opp, mqtt_mock, setup_tasmota):
     """Test multi-channel light split to single-channel dimmers."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 1
@@ -1294,7 +1294,7 @@ async def test_unlinked_light(opp, mqtt_mock, setup_tasmota):
     await _test_unlinked_light(opp, mqtt_mock, config, 0)
 
 
-async def test_unlinked_light2.opp, mqtt_mock, setup_tasmota):
+async def test_unlinked_light2(opp, mqtt_mock, setup_tasmota):
     """Test rgbww light split to rgb+ww."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 1

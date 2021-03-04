@@ -248,7 +248,7 @@ async def test_restoring_invalid_entity_id(opp, opp_storage):
     entity.opp = opp
     entity.entity_id = "test.invalid__entity_id"
     now = dt_util.utcnow().isoformat()
-    opp.storage[STORAGE_KEY] = {
+    opp_storage[STORAGE_KEY] = {
         "version": 1,
         "key": STORAGE_KEY,
         "data": [

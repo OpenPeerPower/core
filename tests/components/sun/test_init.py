@@ -6,7 +6,7 @@ from pytest import mark
 
 import openpeerpower.components.sun as sun
 from openpeerpower.const import EVENT_STATE_CHANGED
-import openpeerpower.core as op
+import openpeerpower.core as ha
 from openpeerpower.setup import async_setup_component
 import openpeerpower.util.dt as dt_util
 
@@ -123,13 +123,13 @@ async def test_state_change(opp, legacy_patchable_time):
     with patch(
         "openpeerpower.helpers.condition.dt_util.utcnow", return_value=patched_time
     ):
-        opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: patched_time})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: patched_time})
         await opp.async_block_till_done()
 
     assert sun.STATE_ABOVE_HORIZON == opp.states.get(sun.ENTITY_ID).state
 
     with patch("openpeerpower.helpers.condition.dt_util.utcnow", return_value=now):
-        await opp.config.async_update(longitude.opp.config.longitude + 90)
+        await opp.config.async_update(longitude=opp.config.longitude + 90)
         await opp.async_block_till_done()
 
     assert sun.STATE_ABOVE_HORIZON == opp.states.get(sun.ENTITY_ID).state
@@ -177,7 +177,7 @@ async def test_state_change_count(opp):
 
     events = []
 
-    @op.callback
+    @ha.callback
     def state_change_listener(event):
         if event.data.get("entity_id") == "sun.sun":
             events.append(event)
@@ -187,7 +187,7 @@ async def test_state_change_count(opp):
 
     for _ in range(24 * 60 * 60):
         now += timedelta(seconds=1)
-        opp.bus.async_fire(op.EVENT_TIME_CHANGED, {op.ATTR_NOW: now})
+        opp.bus.async_fire(ha.EVENT_TIME_CHANGED, {ha.ATTR_NOW: now})
         await opp.async_block_till_done()
 
     assert len(events) < 721

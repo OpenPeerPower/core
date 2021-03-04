@@ -20,7 +20,7 @@ from tests.common import (
 )
 
 
-def test_generate_entity_id_requires(opp_or_ids():
+def test_generate_entity_id_requires_opp_or_ids():
     """Ensure we require at least opp or current ids."""
     with pytest.raises(ValueError):
         entity.generate_entity_id("test.{}", "hello world")
@@ -85,7 +85,7 @@ class TestHelpersEntity:
         """Set up things to be run when tests are started."""
         self.entity = entity.Entity()
         self.entity.entity_id = "test.overwrite_hidden_true"
-        self.opp =self.entity opp =get_test_open_peer_power()
+        self.opp = self.entity.opp = get_test_open_peer_power()
         self.entity.schedule_update_op_state()
         self.opp.block_till_done()
 
@@ -93,7 +93,7 @@ class TestHelpersEntity:
         """Stop everything that was started."""
         self.opp.stop()
 
-    def test_generate_entity_id_given(opp(self):
+    def test_generate_entity_id_given_opp(self):
         """Test generating an entity id given opp object."""
         fmt = "test.{}"
         assert (
@@ -664,7 +664,7 @@ async def test_warn_slow_write_state(opp, caplog):
         "Updating state for comp_test.test_entity "
         "(<class 'openpeerpower.helpers.entity.Entity'>) "
         "took 10.000 seconds. Please create a bug report at "
-        "https://github.com/open-peer-power/core/issues?"
+        "https://github.com/openpeerpower/core/issues?"
         "q=is%3Aopen+is%3Aissue+label%3A%22integration%3A+hue%22"
     ) in caplog.text
 

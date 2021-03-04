@@ -306,7 +306,7 @@ async def test_stop_no_wait(opp, count):
     tasks = []
     for _ in range(count):
         opp.async_create_task(script_obj.async_run(context=Context()))
-        tasks.append.opp.async_create_task(service_started_sem.acquire()))
+        tasks.append(opp.async_create_task(service_started_sem.acquire()))
     await asyncio.wait_for(asyncio.gather(*tasks), 1)
 
     # Can't assert just yet because we haven't verified stopping works yet.
@@ -1849,7 +1849,7 @@ async def test_max_exceeded(opp, caplog, max_exceeded, script_mode, max_runs):
     "script_mode,messages,last_events",
     [("restart", ["Restarting"], [2]), ("parallel", [], [2, 2])],
 )
-async def test_script_mode_2.opp, caplog, script_mode, messages, last_events):
+async def test_script_mode_2(opp, caplog, script_mode, messages, last_events):
     """Test overlapping runs with max_runs > 1."""
     event = "test_event"
     events = async_capture_events(opp, event)

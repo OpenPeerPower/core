@@ -13,7 +13,7 @@ async def checker_fixture(opp):
     checker = await significant_change.create_checker(opp, "test")
 
     def async_check_significant_change(
-         opp, old_state, _old_attrs, new_state, _new_attrs, **kwargs
+        _opp, old_state, _old_attrs, new_state, _new_attrs, **kwargs
     ):
         return abs(float(old_state) - float(new_state)) > 4
 

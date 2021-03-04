@@ -4,7 +4,7 @@ from unittest.mock import patch
 from subarulink import InvalidCredentials, SubaruException
 
 from openpeerpower.components.openpeerpower import (
-    DOMAIN as OP_DOMAIN,
+    DOMAIN as HA_DOMAIN,
     SERVICE_UPDATE_ENTITY,
 )
 from openpeerpower.components.subaru.const import DOMAIN
@@ -60,7 +60,7 @@ async def test_setup_g2(opp):
     assert check_entry.state == ENTRY_STATE_LOADED
 
 
-async def test_setup_g1.opp):
+async def test_setup_g1(opp):
     """Test setup with a G1 vehicle."""
     entry = await setup_subaru_integration(
         opp, vehicle_list=[TEST_VIN_1_G1], vehicle_data=VEHICLE_DATA[TEST_VIN_1_G1]
@@ -106,7 +106,7 @@ async def test_update_skip_unsubscribed(opp):
 
     with patch(MOCK_API_FETCH) as mock_fetch:
         await opp.services.async_call(
-            OP_DOMAIN,
+            HA_DOMAIN,
             SERVICE_UPDATE_ENTITY,
             {ATTR_ENTITY_ID: TEST_ENTITY_ID},
             blocking=True,
@@ -122,7 +122,7 @@ async def test_update_disabled(opp, ev_entry):
         MOCK_API_UPDATE,
     ) as mock_update:
         await opp.services.async_call(
-            OP_DOMAIN,
+            HA_DOMAIN,
             SERVICE_UPDATE_ENTITY,
             {ATTR_ENTITY_ID: TEST_ENTITY_ID},
             blocking=True,

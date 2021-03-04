@@ -14,7 +14,7 @@ from openpeerpower.const import (
     STATE_ON,
     STATE_UNAVAILABLE,
 )
-import openpeerpower.core as op
+import openpeerpower.core as ha
 import openpeerpower.util.dt as dt_util
 
 from tests.common import async_fire_time_changed
@@ -128,7 +128,7 @@ async def test_off_delay(opp, legacy_patchable_time, monkeypatch):
 
     on_event = {"id": "test2", "command": "on"}
 
-    @op.callback
+    @ha.callback
     def callback(event):
         """Verify event got called."""
         events.append(event)

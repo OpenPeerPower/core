@@ -52,13 +52,13 @@ async def test_node_event_activated(opp, mock_openzwave):
 
     opp.bus.async_listen(const.EVENT_NODE_EVENT, listener)
 
-    # Test event before entity added to.opp
+    # Test event before entity added to opp
     value = 234
     opp.async_add_job(mock_receivers[0], node, value)
     await opp.async_block_till_done()
     assert len(events) == 0
 
-    # Add entity to.opp
+    # Add entity to opp
     entity.opp = opp
     entity.entity_id = "zwave.mock_node"
 
@@ -94,13 +94,13 @@ async def test_scene_activated(opp, mock_openzwave):
 
     opp.bus.async_listen(const.EVENT_SCENE_ACTIVATED, listener)
 
-    # Test event before entity added to.opp
+    # Test event before entity added to opp
     scene_id = 123
     opp.async_add_job(mock_receivers[0], node, scene_id)
     await opp.async_block_till_done()
     assert len(events) == 0
 
-    # Add entity to.opp
+    # Add entity to opp
     entity.opp = opp
     entity.entity_id = "zwave.mock_node"
 
@@ -136,7 +136,7 @@ async def test_central_scene_activated(opp, mock_openzwave):
 
     opp.bus.async_listen(const.EVENT_SCENE_ACTIVATED, listener)
 
-    # Test event before entity added to.opp
+    # Test event before entity added to opp
     scene_id = 1
     scene_data = 3
     value = mock_zwave.MockValue(
@@ -146,7 +146,7 @@ async def test_central_scene_activated(opp, mock_openzwave):
     await opp.async_block_till_done()
     assert len(events) == 0
 
-    # Add entity to.opp
+    # Add entity to opp
     entity.opp = opp
     entity.entity_id = "zwave.mock_node"
 
@@ -197,7 +197,7 @@ async def test_application_version(opp, mock_openzwave):
         not in entity.device_state_attributes.keys()
     )
 
-    # Add entity to.opp
+    # Add entity to opp
     entity.opp = opp
     entity.entity_id = "zwave.mock_node"
 

@@ -2085,7 +2085,7 @@ async def test_flow_with_default_discovery_with_unique_id(opp, manager):
             """Test discovery step."""
             await self.async_set_unique_id("mock-unique-id")
             # This call should make no difference, as a unique ID is set
-            await self._async_op.dle_discovery_without_unique_id()
+            await self._async_handle_discovery_without_unique_id()
             return self.async_show_form(step_id="mock")
 
     with patch.dict(config_entries.HANDLERS, {"comp": TestFlow}):

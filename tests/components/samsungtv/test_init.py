@@ -31,7 +31,7 @@ MOCK_CONFIG = {
 REMOTE_CALL = {
     "name": "OpenPeerPower",
     "description": "OpenPeerPower",
-    "id": "op.component.samsung",
+    "id": "ha.component.samsung",
     "method": "legacy",
     "host": MOCK_CONFIG[SAMSUNGTV_DOMAIN][0][CONF_HOST],
     "port": None,

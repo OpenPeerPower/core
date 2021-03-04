@@ -95,7 +95,7 @@ async def test_default_setup(opp, monkeypatch):
 
     assert opp.states.get(f"{DOMAIN}.protocol2_0_1").state == "on"
 
-    # test changing state from HA propagates to RFLink
+    # test changing state from OP propagates to RFLink
     opp.async_create_task(
         opp.services.async_call(
             DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
@@ -155,7 +155,7 @@ async def test_default_setup(opp, monkeypatch):
 
 
 async def test_firing_bus_event(opp, monkeypatch):
-    """Incoming RFLink command events should be put on the HA event bus."""
+    """Incoming RFLink command events should be put on the OP event bus."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
         DOMAIN: {

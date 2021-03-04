@@ -147,7 +147,7 @@ async def test_unique_ids_entry(opp: OpenPeerPower):
 
 
 async def test_bulb_off_while_adding_in_ha(opp: OpenPeerPower):
-    """Test Yeelight off while adding to ha, for example on HA start."""
+    """Test Yeelight off while adding to ha, for example on OP start."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
         data={

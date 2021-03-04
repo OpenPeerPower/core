@@ -142,10 +142,10 @@ async def test_process_before_send(opp: OpenPeerPower):
     assert result["contexts"]
     assert result["contexts"]
 
-    op_context = result["contexts"]["Open Peer Power"]
-    assert op_context["channel"] == "test"
-    assert op_context["custom_components"] == "fridge_opener\nironing_robot"
-    assert op_context["integrations"] == "a_integration\npuppies"
+    ha_context = result["contexts"]["Open Peer Power"]
+    assert ha_context["channel"] == "test"
+    assert ha_context["custom_components"] == "fridge_opener\nironing_robot"
+    assert ha_context["integrations"] == "a_integration\npuppies"
 
     tags = result["tags"]
     assert tags["channel"] == "test"

@@ -36,7 +36,7 @@ async def test_one(opp, rfxtrx):
     assert state.attributes.get("friendly_name") == "AC 213c7f2:48"
 
 
-async def test_one_pt2262.opp, rfxtrx):
+async def test_one_pt2262(opp, rfxtrx):
     """Test with 1 sensor."""
     entry_data = create_rfx_test_cfg(
         devices={

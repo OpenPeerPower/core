@@ -18,7 +18,7 @@ from openpeerpower.const import (
     STATE_OPEN,
     STATE_UNLOCKED,
 )
-import openpeerpower.core as op
+import openpeerpower.core as ha
 from openpeerpower.helpers import state
 from openpeerpower.util import dt as dt_util
 
@@ -63,8 +63,8 @@ async def test_call_to_component(opp):
             climate_fun.return_value = asyncio.Future()
             climate_fun.return_value.set_result(None)
 
-            state_media_player = op.State("media_player.test", "bad")
-            state_climate = op.State("climate.test", "bad")
+            state_media_player = ha.State("media_player.test", "bad")
+            state_climate = ha.State("climate.test", "bad")
             context = "dummy_context"
 
             await state.async_reproduce_state(
@@ -107,7 +107,7 @@ async def test_reproduce_with_no_entity(opp):
     """Test reproduce_state with no entity."""
     calls = async_mock_service(opp, "light", SERVICE_TURN_ON)
 
-    await state.async_reproduce_state(opp, op.State("light.test", "on"))
+    await state.async_reproduce_state(opp, ha.State("light.test", "on"))
 
     await opp.async_block_till_done()
 
@@ -121,7 +121,7 @@ async def test_reproduce_turn_on(opp):
 
     opp.states.async_set("light.test", "off")
 
-    await state.async_reproduce_state(opp, op.State("light.test", "on"))
+    await state.async_reproduce_state(opp, ha.State("light.test", "on"))
 
     await opp.async_block_till_done()
 
@@ -138,7 +138,7 @@ async def test_reproduce_turn_off(opp):
 
     opp.states.async_set("light.test", "on")
 
-    await state.async_reproduce_state(opp, op.State("light.test", "off"))
+    await state.async_reproduce_state(opp, ha.State("light.test", "off"))
 
     await opp.async_block_till_done()
 
@@ -158,7 +158,7 @@ async def test_reproduce_complex_data(opp):
     complex_data = [255, 100, 100]
 
     await state.async_reproduce_state(
-        opp, op.State("light.test", "on", {"rgb_color": complex_data})
+        opp, ha.State("light.test", "on", {"rgb_color": complex_data})
     )
 
     await opp.async_block_till_done()
@@ -176,7 +176,7 @@ async def test_reproduce_bad_state(opp):
 
     opp.states.async_set("light.test", "off")
 
-    await state.async_reproduce_state(opp, op.State("light.test", "bad"))
+    await state.async_reproduce_state(opp, ha.State("light.test", "bad"))
 
     await opp.async_block_till_done()
 
@@ -195,21 +195,21 @@ async def test_as_number_states(opp):
     )
     one_states = (STATE_ON, STATE_OPEN, STATE_LOCKED, STATE_ABOVE_HORIZON, STATE_HOME)
     for _state in zero_states:
-        assert state.state_as_number(op.State("domain.test", _state, {})) == 0
+        assert state.state_as_number(ha.State("domain.test", _state, {})) == 0
     for _state in one_states:
-        assert state.state_as_number(op.State("domain.test", _state, {})) == 1
+        assert state.state_as_number(ha.State("domain.test", _state, {})) == 1
 
 
 async def test_as_number_coercion(opp):
     """Test state_as_number with number."""
     for _state in ("0", "0.0", 0, 0.0):
-        assert state.state_as_number(op.State("domain.test", _state, {})) == 0.0
+        assert state.state_as_number(ha.State("domain.test", _state, {})) == 0.0
     for _state in ("1", "1.0", 1, 1.0):
-        assert state.state_as_number(op.State("domain.test", _state, {})) == 1.0
+        assert state.state_as_number(ha.State("domain.test", _state, {})) == 1.0
 
 
 async def test_as_number_invalid_cases(opp):
     """Test state_as_number with invalid cases."""
     for _state in ("", "foo", "foo.bar", None, False, True, object, object()):
         with pytest.raises(ValueError):
-            state.state_as_number(op.State("domain.test", _state, {}))
+            state.state_as_number(ha.State("domain.test", _state, {}))

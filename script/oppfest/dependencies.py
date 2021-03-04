@@ -58,14 +58,14 @@ class ImportCollector(ast.NodeVisitor):
 
     def visit_Attribute(self, node):
         """Visit Attribute node."""
-        #.opp.components.hue.async_create()
-        # Name(id(opp)
+        # opp.components.hue.async_create()
+        # Name(id=opp)
         #   .Attribute(attr=hue)
         #   .Attribute(attr=async_create)
 
         # self.opp.components.hue.async_create()
         # Name(id=self)
-        #   .Attribute(attr(opp) or .Attribute(attr= opp)
+        #   .Attribute(attr=opp) or .Attribute(attr=_opp)
         #   .Attribute(attr=hue)
         #   .Attribute(attr=async_create)
         if (
@@ -78,7 +78,7 @@ class ImportCollector(ast.NodeVisitor):
                 )
                 or (
                     isinstance(node.value.value, ast.Attribute)
-                    and node.value.value.attr in (.opp", ".opp")
+                    and node.value.value.attr in ("opp", "_opp")
                 )
             )
         ):
@@ -96,7 +96,7 @@ ALLOWED_USED_COMPONENTS = {
     "device_automation",
     "frontend",
     "group",
-     opp.io",
+    "oppio",
     "openpeerpower",
     "input_boolean",
     "input_datetime",
@@ -226,7 +226,7 @@ def validate_dependencies(
     if integration.domain in IGNORE_VIOLATIONS:
         return
 
-    # Find usage of.opp.components
+    # Find usage of opp.components
     collector = ImportCollector(integration)
     collector.collect()
 

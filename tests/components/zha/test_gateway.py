@@ -9,8 +9,8 @@ import zigpy.zcl.clusters.general as general
 import zigpy.zcl.clusters.lighting as lighting
 
 from openpeerpower.components.light import DOMAIN as LIGHT_DOMAIN
-from openpeerpower.components.zop.core.group import GroupMember
-from openpeerpower.components.zop.core.store import TOMBSTONE_LIFETIME
+from openpeerpower.components.zha.core.group import GroupMember
+from openpeerpower.components.zha.core.store import TOMBSTONE_LIFETIME
 
 from .common import async_enable_traffic, async_find_group_entity_id, get_zha_gateway
 
@@ -26,7 +26,7 @@ def zigpy_dev_basic(zigpy_device_mock):
             1: {
                 "in_clusters": [general.Basic.cluster_id],
                 "out_clusters": [],
-                "device_type": zop.DeviceType.ON_OFF_SWITCH,
+                "device_type": zha.DeviceType.ON_OFF_SWITCH,
             }
         }
     )
@@ -49,7 +49,7 @@ async def coordinator(opp, zigpy_device_mock, zha_device_joined):
             1: {
                 "in_clusters": [],
                 "out_clusters": [],
-                "device_type": zop.DeviceType.COLOR_DIMMABLE_LIGHT,
+                "device_type": zha.DeviceType.COLOR_DIMMABLE_LIGHT,
             }
         },
         ieee="00:15:8d:00:02:32:4f:32",
@@ -62,7 +62,7 @@ async def coordinator(opp, zigpy_device_mock, zha_device_joined):
 
 
 @pytest.fixture
-async def device_light_1.opp, zigpy_device_mock, zha_device_joined):
+async def device_light_1(opp, zigpy_device_mock, zha_device_joined):
     """Test zha light platform."""
 
     zigpy_device = zigpy_device_mock(
@@ -75,7 +75,7 @@ async def device_light_1.opp, zigpy_device_mock, zha_device_joined):
                     general.Groups.cluster_id,
                 ],
                 "out_clusters": [],
-                "device_type": zop.DeviceType.COLOR_DIMMABLE_LIGHT,
+                "device_type": zha.DeviceType.COLOR_DIMMABLE_LIGHT,
             }
         },
         ieee=IEEE_GROUPABLE_DEVICE,
@@ -86,7 +86,7 @@ async def device_light_1.opp, zigpy_device_mock, zha_device_joined):
 
 
 @pytest.fixture
-async def device_light_2.opp, zigpy_device_mock, zha_device_joined):
+async def device_light_2(opp, zigpy_device_mock, zha_device_joined):
     """Test zha light platform."""
 
     zigpy_device = zigpy_device_mock(
@@ -99,7 +99,7 @@ async def device_light_2.opp, zigpy_device_mock, zha_device_joined):
                     general.Groups.cluster_id,
                 ],
                 "out_clusters": [],
-                "device_type": zop.DeviceType.COLOR_DIMMABLE_LIGHT,
+                "device_type": zha.DeviceType.COLOR_DIMMABLE_LIGHT,
             }
         },
         ieee=IEEE_GROUPABLE_DEVICE2,
@@ -223,8 +223,8 @@ async def test_cleaning_up_storage(opp, zigpy_dev_basic, zha_dev_basic, opp_stor
     await zha_gateway.zha_storage.async_save()
     await opp.async_block_till_done()
 
-    assert opp_storage["zop.storage"]["data"]["devices"]
-    device = opp_storage["zop.storage"]["data"]["devices"][0]
+    assert opp_storage["zha.storage"]["data"]["devices"]
+    device = opp_storage["zha.storage"]["data"]["devices"][0]
     assert device["ieee"] == str(zha_dev_basic.ieee)
 
     zha_dev_basic.device.last_seen = time.time() - TOMBSTONE_LIFETIME - 1
@@ -232,4 +232,4 @@ async def test_cleaning_up_storage(opp, zigpy_dev_basic, zha_dev_basic, opp_stor
     await opp.async_block_till_done()
     await zha_gateway.zha_storage.async_save()
     await opp.async_block_till_done()
-    assert not.opp_storage["zop.storage"]["data"]["devices"]
+    assert not opp_storage["zha.storage"]["data"]["devices"]

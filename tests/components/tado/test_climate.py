@@ -28,7 +28,7 @@ async def test_air_con(opp):
         "temperature": 17.8,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
 
@@ -55,7 +55,7 @@ async def test_heater(opp):
         "temperature": 20.5,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
 
@@ -85,5 +85,5 @@ async def test_smartac_with_swing(opp):
         "temperature": 20.0,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     assert all(item in state.attributes.items() for item in expected_attributes.items())

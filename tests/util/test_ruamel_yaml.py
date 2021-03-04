@@ -44,7 +44,7 @@ views:
 
         # The picture entity card will represent an entity with a picture
       - type: picture-entity
-        image: https://www.open-peer-power.io/images/default-social.png
+        image: https://www.openpeerpower.io/images/default-social.png
         entity: light.bed_light
 
     # Specify a tab icon if you want the view tab to be an icon.

@@ -50,7 +50,7 @@ def valid_integration_path(integration_path):
 
 def get_config() -> Config:
     """Return config."""
-    parser = argparse.ArgumentParser(description=" Oppfest")
+    parser = argparse.ArgumentParser(description="Oppfest")
     parser.add_argument(
         "--action", type=str, choices=["validate", "generate"], default=None
     )

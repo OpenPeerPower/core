@@ -34,7 +34,7 @@ async def test_setup_empty(opp):
     setup.assert_not_called()
 
 
-async def test_setup_opp):
+async def test_setup(opp):
     """Test setup the platform."""
     mocked_device = _create_mocked_device()
 

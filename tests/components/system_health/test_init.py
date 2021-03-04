@@ -118,7 +118,7 @@ async def test_platform_loading(opp, opp_ws_client, aioclient_mock):
         opp,
         "fake_integration.system_health",
         Mock(
-            async_register=lambda(opp, register: register.async_register_info(
+            async_register=lambda opp, register: register.async_register_info(
                 AsyncMock(
                     return_value={
                         "hello": "info",

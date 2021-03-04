@@ -24,9 +24,9 @@ from openpeerpower.components.fan import (
     NotValidPresetModeError,
 )
 from openpeerpower.components.light import DOMAIN as LIGHT_DOMAIN
-from openpeerpower.components.zop.core.discovery import GROUP_PROBE
-from openpeerpower.components.zop.core.group import GroupMember
-from openpeerpower.components.zop.fan import (
+from openpeerpower.components.zha.core.discovery import GROUP_PROBE
+from openpeerpower.components.zha.core.group import GroupMember
+from openpeerpower.components.zha.fan import (
     PRESET_MODE_AUTO,
     PRESET_MODE_ON,
     PRESET_MODE_SMART,
@@ -61,7 +61,7 @@ def zigpy_device(zigpy_device_mock):
         1: {
             "in_clusters": [hvac.Fan.cluster_id],
             "out_clusters": [],
-            "device_type": zop.DeviceType.ON_OFF_SWITCH,
+            "device_type": zha.DeviceType.ON_OFF_SWITCH,
         }
     }
     return zigpy_device_mock(
@@ -78,7 +78,7 @@ async def coordinator(opp, zigpy_device_mock, zha_device_joined):
             1: {
                 "in_clusters": [general.Groups.cluster_id],
                 "out_clusters": [],
-                "device_type": zop.DeviceType.COLOR_DIMMABLE_LIGHT,
+                "device_type": zha.DeviceType.COLOR_DIMMABLE_LIGHT,
             }
         },
         ieee="00:15:8d:00:02:32:4f:32",
@@ -91,7 +91,7 @@ async def coordinator(opp, zigpy_device_mock, zha_device_joined):
 
 
 @pytest.fixture
-async def device_fan_1.opp, zigpy_device_mock, zha_device_joined):
+async def device_fan_1(opp, zigpy_device_mock, zha_device_joined):
     """Test zha fan platform."""
 
     zigpy_device = zigpy_device_mock(
@@ -103,7 +103,7 @@ async def device_fan_1.opp, zigpy_device_mock, zha_device_joined):
                     hvac.Fan.cluster_id,
                 ],
                 "out_clusters": [],
-                "device_type": zop.DeviceType.ON_OFF_LIGHT,
+                "device_type": zha.DeviceType.ON_OFF_LIGHT,
             },
         },
         ieee=IEEE_GROUPABLE_DEVICE,
@@ -115,7 +115,7 @@ async def device_fan_1.opp, zigpy_device_mock, zha_device_joined):
 
 
 @pytest.fixture
-async def device_fan_2.opp, zigpy_device_mock, zha_device_joined):
+async def device_fan_2(opp, zigpy_device_mock, zha_device_joined):
     """Test zha fan platform."""
 
     zigpy_device = zigpy_device_mock(
@@ -128,7 +128,7 @@ async def device_fan_2.opp, zigpy_device_mock, zha_device_joined):
                     general.LevelControl.cluster_id,
                 ],
                 "out_clusters": [],
-                "device_type": zop.DeviceType.ON_OFF_LIGHT,
+                "device_type": zha.DeviceType.ON_OFF_LIGHT,
             },
         },
         ieee=IEEE_GROUPABLE_DEVICE2,

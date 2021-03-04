@@ -39,7 +39,7 @@ MOCK_SSDP_DATA_NOPREFIX = {
 AUTODETECT_LEGACY = {
     "name": "OpenPeerPower",
     "description": "OpenPeerPower",
-    "id": "op.component.samsung",
+    "id": "ha.component.samsung",
     "method": "legacy",
     "port": None,
     "host": "fake_host",

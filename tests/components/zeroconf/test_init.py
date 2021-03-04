@@ -132,7 +132,7 @@ async def test_setup(opp, mock_zeroconf):
 
 async def test_setup_with_overly_long_url_and_name(opp, mock_zeroconf, caplog):
     """Test we still setup with long urls and names."""
-    with patch.object.opp.config_entries.flow, "async_init"), patch.object(
+    with patch.object(opp.config_entries.flow, "async_init"), patch.object(
         zeroconf, "HaServiceBrowser", side_effect=service_update_mock
     ), patch(
         "openpeerpower.components.zeroconf.get_url",
@@ -153,7 +153,7 @@ async def test_setup_with_overly_long_url_and_name(opp, mock_zeroconf, caplog):
 
 async def test_setup_with_default_interface(opp, mock_zeroconf):
     """Test default interface config."""
-    with patch.object.opp.config_entries.flow, "async_init"), patch.object(
+    with patch.object(opp.config_entries.flow, "async_init"), patch.object(
         zeroconf, "HaServiceBrowser", side_effect=service_update_mock
     ):
         mock_zeroconf.get_service_info.side_effect = get_service_info_mock
@@ -168,7 +168,7 @@ async def test_setup_with_default_interface(opp, mock_zeroconf):
 
 async def test_setup_without_default_interface(opp, mock_zeroconf):
     """Test without default interface config."""
-    with patch.object.opp.config_entries.flow, "async_init"), patch.object(
+    with patch.object(opp.config_entries.flow, "async_init"), patch.object(
         zeroconf, "HaServiceBrowser", side_effect=service_update_mock
     ):
         mock_zeroconf.get_service_info.side_effect = get_service_info_mock
@@ -179,9 +179,9 @@ async def test_setup_without_default_interface(opp, mock_zeroconf):
     assert mock_zeroconf.called_with()
 
 
-async def test_setup_without_ipv6.opp, mock_zeroconf):
+async def test_setup_without_ipv6(opp, mock_zeroconf):
     """Test without ipv6."""
-    with patch.object.opp.config_entries.flow, "async_init"), patch.object(
+    with patch.object(opp.config_entries.flow, "async_init"), patch.object(
         zeroconf, "HaServiceBrowser", side_effect=service_update_mock
     ):
         mock_zeroconf.get_service_info.side_effect = get_service_info_mock
@@ -194,9 +194,9 @@ async def test_setup_without_ipv6.opp, mock_zeroconf):
     assert mock_zeroconf.called_with(ip_version=IPVersion.V4Only)
 
 
-async def test_setup_with_ipv6.opp, mock_zeroconf):
+async def test_setup_with_ipv6(opp, mock_zeroconf):
     """Test without ipv6."""
-    with patch.object.opp.config_entries.flow, "async_init"), patch.object(
+    with patch.object(opp.config_entries.flow, "async_init"), patch.object(
         zeroconf, "HaServiceBrowser", side_effect=service_update_mock
     ):
         mock_zeroconf.get_service_info.side_effect = get_service_info_mock
@@ -211,7 +211,7 @@ async def test_setup_with_ipv6.opp, mock_zeroconf):
 
 async def test_setup_with_ipv6_default(opp, mock_zeroconf):
     """Test without ipv6 as default."""
-    with patch.object.opp.config_entries.flow, "async_init"), patch.object(
+    with patch.object(opp.config_entries.flow, "async_init"), patch.object(
         zeroconf, "HaServiceBrowser", side_effect=service_update_mock
     ):
         mock_zeroconf.get_service_info.side_effect = get_service_info_mock
@@ -464,7 +464,7 @@ async def test_homekit_not_paired(opp, mock_zeroconf):
     assert mock_config_flow.mock_calls[0][1][0] == "homekit_controller"
 
 
-async def test_info_from_service_non_utf8.opp):
+async def test_info_from_service_non_utf8(opp):
     """Test info_from_service handles non UTF-8 property keys and values correctly."""
     service_type = "_test._tcp.local."
     info = zeroconf.info_from_service(
@@ -494,4 +494,4 @@ async def test_get_instance(opp, mock_zeroconf):
     assert await opp.components.zeroconf.async_get_instance() is mock_zeroconf
     opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
     await opp.async_block_till_done()
-    assert len(mock_zeroconf.op_close.mock_calls) == 1
+    assert len(mock_zeroconf.ha_close.mock_calls) == 1

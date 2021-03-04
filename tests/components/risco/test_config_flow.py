@@ -29,7 +29,7 @@ TEST_RISCO_TO_HA = {
     "D": "armed_night",
 }
 
-TEST_OP_TO_RISCO = {
+TEST_HA_TO_RISCO = {
     "armed_away": "arm",
     "armed_home": "partial_arm",
     "armed_night": "C",
@@ -176,7 +176,7 @@ async def test_options_flow(opp):
         user_input=TEST_OPTIONS,
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
-    assert result["step_id"] == "risco_to_op"
+    assert result["step_id"] == "risco_to_ha"
 
     result = await opp.config_entries.options.async_configure(
         result["flow_id"],
@@ -184,19 +184,19 @@ async def test_options_flow(opp):
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
-    assert result["step_id"] == "op_to_risco"
+    assert result["step_id"] == "ha_to_risco"
 
     with patch("openpeerpower.components.risco.async_setup_entry", return_value=True):
         result = await opp.config_entries.options.async_configure(
             result["flow_id"],
-            user_input=TEST_OP_TO_RISCO,
+            user_input=TEST_HA_TO_RISCO,
         )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert entry.options == {
         **TEST_OPTIONS,
         "risco_states_to_ha": TEST_RISCO_TO_HA,
-        "op_states_to_risco": TEST_OP_TO_RISCO,
+        "ha_states_to_risco": TEST_HA_TO_RISCO,
     }
 
 
@@ -221,16 +221,16 @@ async def test_op_to_risco_schema(opp):
         user_input=TEST_RISCO_TO_HA,
     )
 
-    # Test an HA state that isn't used
+    # Test an OP state that isn't used
     with pytest.raises(vol.error.MultipleInvalid):
         await opp.config_entries.options.async_configure(
             result["flow_id"],
-            user_input={**TEST_OP_TO_RISCO, "armed_custom_bypass": "D"},
+            user_input={**TEST_HA_TO_RISCO, "armed_custom_bypass": "D"},
         )
 
     # Test a combo that can't be selected
     with pytest.raises(vol.error.MultipleInvalid):
         await opp.config_entries.options.async_configure(
             result["flow_id"],
-            user_input={**TEST_OP_TO_RISCO, "armed_night": "A"},
+            user_input={**TEST_HA_TO_RISCO, "armed_night": "A"},
         )

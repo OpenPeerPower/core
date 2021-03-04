@@ -54,7 +54,7 @@ def storage_setup(opp, opp_storage):
 
     async def _storage(items=None, config=None):
         if items is None:
-            opp.storage[DOMAIN] = {
+            opp_storage[DOMAIN] = {
                 "key": DOMAIN,
                 "version": 1,
                 "data": {
@@ -68,7 +68,7 @@ def storage_setup(opp, opp_storage):
                 },
             }
         else:
-            opp.storage[DOMAIN] = {
+            opp_storage[DOMAIN] = {
                 "key": DOMAIN,
                 "version": 1,
                 "data": {"items": items},
@@ -308,13 +308,13 @@ async def test_config_reload(opp, opp_admin_user, opp_read_only_user):
                 DOMAIN,
                 SERVICE_RELOAD,
                 blocking=True,
-                context=Context(user_id.opp_read_only_user.id),
+                context=Context(user_id=opp_read_only_user.id),
             )
         await opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
-            context=Context(user_id.opp_admin_user.id),
+            context=Context(user_id=opp_admin_user.id),
         )
         await opp.async_block_till_done()
 
@@ -591,7 +591,7 @@ async def test_setup_no_config(opp, opp_admin_user):
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
-            context=Context(user_id.opp_admin_user.id),
+            context=Context(user_id=opp_admin_user.id),
         )
         await opp.async_block_till_done()
 

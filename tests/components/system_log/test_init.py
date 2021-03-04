@@ -324,7 +324,7 @@ async def test_openpeerpower_path(opp, simple_queue, opp_client):
 async def test_config_path(opp, simple_queue, opp_client):
     """Test error logged from config path."""
     await async_setup_component(opp, system_log.DOMAIN, BASIC_CONFIG)
-    with patch.object.opp.config, "config_dir", new="config"):
+    with patch.object(opp.config, "config_dir", new="config"):
         await async_log_error_from_test_path(
             opp, "config/custom_component/test.py", simple_queue
         )

@@ -85,7 +85,7 @@ async def test_set_auto_off_service(
     opp: OpenPeerPowerType,
     mock_bridge: Generator[None, Any, None],
     mock_api: Generator[None, Any, None],
-    opp.owner_user: MockUser,
+    opp_owner_user: MockUser,
 ) -> None:
     """Test the set_auto_off service."""
     assert await async_setup_component(opp, DOMAIN, MANDATORY_CONFIGURATION)
@@ -99,7 +99,7 @@ async def test_set_auto_off_service(
         SERVICE_SET_AUTO_OFF_NAME,
         {CONF_ENTITY_ID: SWITCH_ENTITY_ID, CONF_AUTO_OFF: DUMMY_AUTO_OFF_SET},
         blocking=True,
-        context=Context(user_id(opp_owner_user.id),
+        context=Context(user_id=opp_owner_user.id),
     )
 
     with raises(UnknownUser) as unknown_user_exc:
@@ -133,7 +133,7 @@ async def test_turn_on_with_timer_service(
     opp: OpenPeerPowerType,
     mock_bridge: Generator[None, Any, None],
     mock_api: Generator[None, Any, None],
-    opp.owner_user: MockUser,
+    opp_owner_user: MockUser,
 ) -> None:
     """Test the set_auto_off service."""
     assert await async_setup_component(opp, DOMAIN, MANDATORY_CONFIGURATION)
@@ -147,7 +147,7 @@ async def test_turn_on_with_timer_service(
         SERVICE_TURN_ON_WITH_TIMER_NAME,
         {CONF_ENTITY_ID: SWITCH_ENTITY_ID, CONF_TIMER_MINUTES: DUMMY_TIMER_MINUTES_SET},
         blocking=True,
-        context=Context(user_id(opp_owner_user.id),
+        context=Context(user_id=opp_owner_user.id),
     )
 
     with raises(UnknownUser) as unknown_user_exc:

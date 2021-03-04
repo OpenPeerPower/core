@@ -208,7 +208,7 @@ async def test_bad_return_code(opp, aioclient_mock):
         "https://www.start.ca/support/usage/api?key=NOTAKEY", status=HTTP_NOT_FOUND
     )
 
-    scd = StartcaData.opp.loop, async_get_clientsession(opp), "NOTAKEY", 400)
+    scd = StartcaData(opp.loop, async_get_clientsession(opp), "NOTAKEY", 400)
 
     result = await scd.async_update()
     assert result is False
@@ -220,7 +220,7 @@ async def test_bad_json_decode(opp, aioclient_mock):
         "https://www.start.ca/support/usage/api?key=NOTAKEY", text="this is not xml"
     )
 
-    scd = StartcaData.opp.loop, async_get_clientsession(opp), "NOTAKEY", 400)
+    scd = StartcaData(opp.loop, async_get_clientsession(opp), "NOTAKEY", 400)
 
     result = await scd.async_update()
     assert result is False

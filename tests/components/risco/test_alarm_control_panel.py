@@ -49,23 +49,23 @@ TEST_FULL_RISCO_TO_HA = {
     **TEST_RISCO_TO_HA,
     "D": STATE_ALARM_ARMED_CUSTOM_BYPASS,
 }
-TEST_OP_TO_RISCO = {
+TEST_HA_TO_RISCO = {
     STATE_ALARM_ARMED_AWAY: "arm",
     STATE_ALARM_ARMED_HOME: "partial_arm",
     STATE_ALARM_ARMED_NIGHT: "C",
 }
-TEST_FULL_OP_TO_RISCO = {
-    **TEST_OP_TO_RISCO,
+TEST_FULL_HA_TO_RISCO = {
+    **TEST_HA_TO_RISCO,
     STATE_ALARM_ARMED_CUSTOM_BYPASS: "D",
 }
 CUSTOM_MAPPING_OPTIONS = {
     "risco_states_to_ha": TEST_RISCO_TO_HA,
-    "op_states_to_risco": TEST_OP_TO_RISCO,
+    "ha_states_to_risco": TEST_HA_TO_RISCO,
 }
 
 FULL_CUSTOM_MAPPING = {
     "risco_states_to_ha": TEST_FULL_RISCO_TO_HA,
-    "op_states_to_risco": TEST_FULL_OP_TO_RISCO,
+    "ha_states_to_risco": TEST_FULL_HA_TO_RISCO,
 }
 
 EXPECTED_FEATURES = (

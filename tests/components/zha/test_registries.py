@@ -3,7 +3,7 @@ from unittest import mock
 
 import pytest
 
-import openpeerpower.components.zop.core.registries as registries
+import openpeerpower.components.zha.core.registries as registries
 
 MANUFACTURER = "mock manufacturer"
 MODEL = "mock model"

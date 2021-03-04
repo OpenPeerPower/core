@@ -871,7 +871,7 @@ async def test_play_everywhere(
     assert mocked_create_zone.call_count == 1
 
     # no slaves, create zone must not be called
-    for entity in list.opp.data[DATA_SOUNDTOUCH]):
+    for entity in list(opp.data[DATA_SOUNDTOUCH]):
         if entity.entity_id == "media_player.soundtouch_1":
             continue
         opp.data[DATA_SOUNDTOUCH].remove(entity)

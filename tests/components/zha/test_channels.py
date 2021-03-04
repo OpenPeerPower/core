@@ -8,10 +8,10 @@ import zigpy.profiles.zha
 import zigpy.types as t
 import zigpy.zcl.clusters
 
-import openpeerpower.components.zop.core.channels as zha_channels
-import openpeerpower.components.zop.core.channels.base as base_channels
-import openpeerpower.components.zop.core.const as zha_const
-import openpeerpower.components.zop.core.registries as registries
+import openpeerpower.components.zha.core.channels as zha_channels
+import openpeerpower.components.zha.core.channels.base as base_channels
+import openpeerpower.components.zha.core.const as zha_const
+import openpeerpower.components.zha.core.registries as registries
 
 from .common import get_zha_gateway, make_zcl_header
 
@@ -293,10 +293,10 @@ def test_epch_claim_channels(channel):
 
 
 @mock.patch(
-    "openpeerpower.components.zop.core.channels.ChannelPool.add_client_channels"
+    "openpeerpower.components.zha.core.channels.ChannelPool.add_client_channels"
 )
 @mock.patch(
-    "openpeerpower.components.zop.core.discovery.PROBE.discover_entities",
+    "openpeerpower.components.zha.core.discovery.PROBE.discover_entities",
     mock.MagicMock(),
 )
 def test_ep_channels_all_channels(m1, zha_device_mock):
@@ -306,7 +306,7 @@ def test_ep_channels_all_channels(m1, zha_device_mock):
             1: {
                 "in_clusters": [0, 1, 6, 8],
                 "out_clusters": [],
-                "device_type": zigpy.profiles.zop.DeviceType.ON_OFF_SWITCH,
+                "device_type": zigpy.profiles.zha.DeviceType.ON_OFF_SWITCH,
             },
             2: {
                 "in_clusters": [0, 1, 6, 8, 768],
@@ -344,10 +344,10 @@ def test_ep_channels_all_channels(m1, zha_device_mock):
 
 
 @mock.patch(
-    "openpeerpower.components.zop.core.channels.ChannelPool.add_client_channels"
+    "openpeerpower.components.zha.core.channels.ChannelPool.add_client_channels"
 )
 @mock.patch(
-    "openpeerpower.components.zop.core.discovery.PROBE.discover_entities",
+    "openpeerpower.components.zha.core.discovery.PROBE.discover_entities",
     mock.MagicMock(),
 )
 def test_channel_power_config(m1, zha_device_mock):

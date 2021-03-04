@@ -18,7 +18,7 @@ def mock_shopping_list_io():
 
 
 @pytest.fixture
-async def sl_setup_opp):
+async def sl_setup(opp):
     """Set up the shopping list."""
 
     entry = MockConfigEntry(domain="shopping_list")

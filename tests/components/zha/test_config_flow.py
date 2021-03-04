@@ -9,7 +9,7 @@ import zigpy.config
 
 from openpeerpower import setup
 from openpeerpower.components.zha import config_flow
-from openpeerpower.components.zop.core.const import CONF_RADIO_TYPE, DOMAIN, RadioType
+from openpeerpower.components.zha.core.const import CONF_RADIO_TYPE, DOMAIN, RadioType
 from openpeerpower.config_entries import SOURCE_USER
 from openpeerpower.const import CONF_SOURCE
 from openpeerpower.data_entry_flow import RESULT_TYPE_CREATE_ENTRY, RESULT_TYPE_FORM
@@ -30,7 +30,7 @@ def com_port():
 
 @patch("serial.tools.list_ports.comports", MagicMock(return_value=[com_port()]))
 @patch(
-    "openpeerpower.components.zop.config_flow.detect_radios",
+    "openpeerpower.components.zha.config_flow.detect_radios",
     return_value={CONF_RADIO_TYPE: "test_radio"},
 )
 async def test_user_flow(detect_mock, opp):
@@ -53,7 +53,7 @@ async def test_user_flow(detect_mock, opp):
 
 @patch("serial.tools.list_ports.comports", MagicMock(return_value=[com_port()]))
 @patch(
-    "openpeerpower.components.zop.config_flow.detect_radios",
+    "openpeerpower.components.zha.config_flow.detect_radios",
     return_value=None,
 )
 async def test_user_flow_not_detected(detect_mock, opp):
@@ -186,7 +186,7 @@ async def test_user_port_config_fail(probe_mock, opp):
     assert probe_mock.await_count == 1
 
 
-@patch("openpeerpower.components.zop.async_setup_entry", AsyncMock(return_value=True))
+@patch("openpeerpower.components.zha.async_setup_entry", AsyncMock(return_value=True))
 @patch("bellows.zigbee.application.ControllerApplication.probe", return_value=True)
 async def test_user_port_config(probe_mock, opp):
     """Test port config."""

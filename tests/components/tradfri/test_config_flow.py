@@ -20,7 +20,7 @@ def mock_auth():
 
 async def test_user_connection_successful(opp, mock_auth, mock_entry_setup):
     """Test a successful connection."""
-    mock_auth.side_effect = lambda(opp, host, code: {"host": host, "gateway_id": "bla"}
+    mock_auth.side_effect = lambda opp, host, code: {"host": host, "gateway_id": "bla"}
 
     flow = await opp.config_entries.flow.async_init(
         "tradfri", context={"source": "user"}
@@ -78,7 +78,7 @@ async def test_user_connection_bad_key(opp, mock_auth, mock_entry_setup):
 
 async def test_discovery_connection(opp, mock_auth, mock_entry_setup):
     """Test a connection via discovery."""
-    mock_auth.side_effect = lambda(opp, host, code: {"host": host, "gateway_id": "bla"}
+    mock_auth.side_effect = lambda opp, host, code: {"host": host, "gateway_id": "bla"}
 
     flow = await opp.config_entries.flow.async_init(
         "tradfri",
@@ -103,7 +103,7 @@ async def test_discovery_connection(opp, mock_auth, mock_entry_setup):
 
 async def test_import_connection(opp, mock_auth, mock_entry_setup):
     """Test a connection via import."""
-    mock_auth.side_effect = lambda(opp, host, code: {
+    mock_auth.side_effect = lambda opp, host, code: {
         "host": host,
         "gateway_id": "bla",
         "identity": "mock-iden",
@@ -134,7 +134,7 @@ async def test_import_connection(opp, mock_auth, mock_entry_setup):
 
 async def test_import_connection_no_groups(opp, mock_auth, mock_entry_setup):
     """Test a connection via import and no groups allowed."""
-    mock_auth.side_effect = lambda(opp, host, code: {
+    mock_auth.side_effect = lambda opp, host, code: {
         "host": host,
         "gateway_id": "bla",
         "identity": "mock-iden",
@@ -165,7 +165,7 @@ async def test_import_connection_no_groups(opp, mock_auth, mock_entry_setup):
 
 async def test_import_connection_legacy(opp, mock_gateway_info, mock_entry_setup):
     """Test a connection via import."""
-    mock_gateway_info.side_effect = lambda(opp, host, identity, key: {
+    mock_gateway_info.side_effect = lambda opp, host, identity, key: {
         "host": host,
         "identity": identity,
         "key": key,
@@ -195,7 +195,7 @@ async def test_import_connection_legacy_no_groups(
     opp, mock_gateway_info, mock_entry_setup
 ):
     """Test a connection via legacy import and no groups allowed."""
-    mock_gateway_info.side_effect = lambda(opp, host, identity, key: {
+    mock_gateway_info.side_effect = lambda opp, host, identity, key: {
         "host": host,
         "identity": identity,
         "key": key,

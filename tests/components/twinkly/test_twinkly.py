@@ -154,7 +154,7 @@ async def test_update_name(opp: OpenPeerPower):
 
     Validate that if device name is changed from the Twinkly app,
     then the name of the entity is updated and it's also persisted,
-    so it can be restored when starting HA while Twinkly is offline.
+    so it can be restored when starting OP while Twinkly is offline.
     """
     entity, _, client = await _create_entries(opp)
 

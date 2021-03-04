@@ -198,7 +198,7 @@ async def test_setup_websocket(opp, remotews, mock_now):
         assert opp.states.get(ENTITY_ID)
 
 
-async def test_setup_websocket_2.opp, mock_now):
+async def test_setup_websocket_2(opp, mock_now):
     """Test setup of platform from config entry."""
     entity_id = f"{DOMAIN}.fake"
 

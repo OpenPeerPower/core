@@ -56,16 +56,16 @@ def mock_tellduslive(supports_local_api, authorize):
         yield Session, tellduslive_supports_local_api
 
 
-async def test_abort_if_already_setup_opp):
+async def test_abort_if_already_setup(opp):
     """Test we abort if TelldusLive is already setup."""
     flow = init_config_flow(opp)
 
-    with patch.object.opp.config_entries, "async_entries", return_value=[{}]):
+    with patch.object(opp.config_entries, "async_entries", return_value=[{}]):
         result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_setup"
 
-    with patch.object.opp.config_entries, "async_entries", return_value=[{}]):
+    with patch.object(opp.config_entries, "async_entries", return_value=[{}]):
         result = await flow.async_step_import(None)
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_setup"

@@ -28,7 +28,7 @@ async def test_invalid_json(websocket_client):
     assert msg.type == WSMsgType.close
 
 
-async def test_quiting.opp=opp, websocket_client):
+async def test_quiting_opp(opp, websocket_client):
     """Test sending invalid JSON."""
     with patch.object(opp.loop, "stop"):
         await opp.async_stop()

@@ -7,7 +7,7 @@ import voluptuous as vol
 
 import openpeerpower.components.statsd as statsd
 from openpeerpower.const import EVENT_STATE_CHANGED, STATE_OFF, STATE_ON
-import openpeerpower.core as op
+import openpeerpower.core as ha
 from openpeerpower.setup import async_setup_component
 
 
@@ -54,7 +54,7 @@ async def test_statsd_setup_defaults(opp):
         assert await async_setup_component(opp, statsd.DOMAIN, config)
 
         assert mock_init.call_count == 1
-        assert mock_init.call_args == mock.call(host="host", port=8125, prefix= opp")
+        assert mock_init.call_args == mock.call(host="host", port=8125, prefix="opp")
     assert opp.bus.listen.called
 
 
@@ -87,7 +87,7 @@ async def test_event_listener_defaults(opp, mock_client):
 
     for invalid in ("foo", "", object):
         handler_method(
-            MagicMock(data={"new_state": op.State("domain.test", invalid, {})})
+            MagicMock(data={"new_state": ha.State("domain.test", invalid, {})})
         )
         assert not mock_client.gauge.called
         assert mock_client.incr.called
@@ -127,7 +127,7 @@ async def test_event_listener_attr_details(opp, mock_client):
 
     for invalid in ("foo", "", object):
         handler_method(
-            MagicMock(data={"new_state": op.State("domain.test", invalid, {})})
+            MagicMock(data={"new_state": ha.State("domain.test", invalid, {})})
         )
         assert not mock_client.gauge.called
         assert mock_client.incr.called

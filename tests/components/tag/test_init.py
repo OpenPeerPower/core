@@ -15,13 +15,13 @@ def storage_setup(opp, opp_storage):
 
     async def _storage(items=None):
         if items is None:
-            opp.storage[DOMAIN] = {
+            opp_storage[DOMAIN] = {
                 "key": DOMAIN,
                 "version": 1,
                 "data": {"items": [{"id": "test tag"}]},
             }
         else:
-            opp.storage[DOMAIN] = items
+            opp_storage[DOMAIN] = items
         config = {DOMAIN: {}}
         return await async_setup_component(opp, DOMAIN, config)
 
@@ -114,7 +114,7 @@ def track_changes(coll: collection.ObservableCollection):
 async def test_tag_id_exists(opp, opp_ws_client, storage_setup):
     """Test scanning tags."""
     assert await storage_setup()
-    changes = track_changes.opp.data[DOMAIN][TAGS])
+    changes = track_changes(opp.data[DOMAIN][TAGS])
     client = await opp_ws_client(opp)
 
     await client.send_json({"id": 2, "type": f"{DOMAIN}/create", "tag_id": "test tag"})

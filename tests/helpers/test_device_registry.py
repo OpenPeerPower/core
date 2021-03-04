@@ -161,7 +161,7 @@ async def test_multiple_config_entries(registry):
 @pytest.mark.parametrize("load_registries", [False])
 async def test_loading_from_storage(opp, opp_storage):
     """Test loading stored devices on start."""
-    opp.storage[device_registry.STORAGE_KEY] = {
+    opp_storage[device_registry.STORAGE_KEY] = {
         "version": device_registry.STORAGE_VERSION,
         "data": {
             "devices": [

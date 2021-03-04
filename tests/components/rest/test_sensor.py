@@ -447,7 +447,7 @@ async def test_update_with_json_attrs_not_dict(opp, caplog):
 
 
 @respx.mock
-async def test_update_with_json_attrs_bad_JSON.opp, caplog):
+async def test_update_with_json_attrs_bad_JSON(opp, caplog):
     """Test attributes get extracted from a JSON result."""
 
     respx.get("http://localhost").respond(
@@ -740,7 +740,7 @@ async def test_reload(opp):
         "fixtures",
         "rest/configuration.yaml",
     )
-    with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
+    with patch.object(opp_config, "YAML_CONFIG_FILE", yaml_path):
         await opp.services.async_call(
             "rest",
             SERVICE_RELOAD,

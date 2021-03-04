@@ -58,7 +58,7 @@ async def test_setup_entry_connection_error(opp):
     assert entry.state == ENTRY_STATE_SETUP_RETRY
 
 
-async def test_router_device_setup_opp):
+async def test_router_device_setup(opp):
     """Test a router device is created."""
     await init_integration(opp)
 
@@ -92,7 +92,7 @@ async def test_unload_entry(opp):
     assert not opp.data.get(DOMAIN)
 
 
-async def test_config_not_ready_during_setup_opp):
+async def test_config_not_ready_during_setup(opp):
     """Test we throw a ConfigNotReady if Coordinator update fails."""
     entry = mock_config_entry()
     with patch(

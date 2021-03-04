@@ -2,7 +2,7 @@
 from unittest.mock import patch
 
 from openpeerpower.components.openpeerpower import (
-    DOMAIN as OP_DOMAIN,
+    DOMAIN as HA_DOMAIN,
     SERVICE_UPDATE_ENTITY,
 )
 from openpeerpower.components.smart_meter_texas.const import (
@@ -49,10 +49,10 @@ async def test_attributes(opp, config_entry, aioclient_mock):
 async def test_generic_entity_update_service(opp, config_entry, aioclient_mock):
     """Test generic update entity service homeasasistant/update_entity."""
     await setup_integration(opp, config_entry, aioclient_mock)
-    await async_setup_component(opp, OP_DOMAIN, {})
+    await async_setup_component(opp, HA_DOMAIN, {})
     with patch("smart_meter_texas.Meter.read_meter") as updater:
         await opp.services.async_call(
-            OP_DOMAIN,
+            HA_DOMAIN,
             SERVICE_UPDATE_ENTITY,
             {ATTR_ENTITY_ID: TEST_ENTITY_ID},
             blocking=True,

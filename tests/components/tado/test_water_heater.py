@@ -24,7 +24,7 @@ async def test_water_heater_create_sensors(opp):
         "temperature": 65.0,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
     state = opp.states.get("water_heater.second_water_heater")
@@ -43,5 +43,5 @@ async def test_water_heater_create_sensors(opp):
         "temperature": 30.0,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     assert all(item in state.attributes.items() for item in expected_attributes.items())

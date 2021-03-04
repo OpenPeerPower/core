@@ -84,7 +84,7 @@ async def test_import(opp, controller):
     assert result["title"] == "velbus_import"
 
 
-async def test_abort_if_already_setup_opp):
+async def test_abort_if_already_setup(opp):
     """Test we abort if Daikin is already setup."""
     flow = init_config_flow(opp)
     MockConfigEntry(

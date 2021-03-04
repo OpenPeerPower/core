@@ -7,7 +7,7 @@ import zigpy.zcl.clusters.general as general
 import zigpy.zcl.foundation as zcl_f
 
 from openpeerpower.components.switch import DOMAIN
-from openpeerpower.components.zop.core.group import GroupMember
+from openpeerpower.components.zha.core.group import GroupMember
 from openpeerpower.const import STATE_OFF, STATE_ON, STATE_UNAVAILABLE
 
 from .common import (
@@ -34,7 +34,7 @@ def zigpy_device(zigpy_device_mock):
         1: {
             "in_clusters": [general.Basic.cluster_id, general.OnOff.cluster_id],
             "out_clusters": [],
-            "device_type": zop.DeviceType.ON_OFF_SWITCH,
+            "device_type": zha.DeviceType.ON_OFF_SWITCH,
         }
     }
     return zigpy_device_mock(endpoints)
@@ -49,7 +49,7 @@ async def coordinator(opp, zigpy_device_mock, zha_device_joined):
             1: {
                 "in_clusters": [],
                 "out_clusters": [],
-                "device_type": zop.DeviceType.COLOR_DIMMABLE_LIGHT,
+                "device_type": zha.DeviceType.COLOR_DIMMABLE_LIGHT,
             }
         },
         ieee="00:15:8d:00:02:32:4f:32",
@@ -62,7 +62,7 @@ async def coordinator(opp, zigpy_device_mock, zha_device_joined):
 
 
 @pytest.fixture
-async def device_switch_1.opp, zigpy_device_mock, zha_device_joined):
+async def device_switch_1(opp, zigpy_device_mock, zha_device_joined):
     """Test zha switch platform."""
 
     zigpy_device = zigpy_device_mock(
@@ -70,7 +70,7 @@ async def device_switch_1.opp, zigpy_device_mock, zha_device_joined):
             1: {
                 "in_clusters": [general.OnOff.cluster_id, general.Groups.cluster_id],
                 "out_clusters": [],
-                "device_type": zop.DeviceType.ON_OFF_SWITCH,
+                "device_type": zha.DeviceType.ON_OFF_SWITCH,
             }
         },
         ieee=IEEE_GROUPABLE_DEVICE,
@@ -82,7 +82,7 @@ async def device_switch_1.opp, zigpy_device_mock, zha_device_joined):
 
 
 @pytest.fixture
-async def device_switch_2.opp, zigpy_device_mock, zha_device_joined):
+async def device_switch_2(opp, zigpy_device_mock, zha_device_joined):
     """Test zha switch platform."""
 
     zigpy_device = zigpy_device_mock(
@@ -90,7 +90,7 @@ async def device_switch_2.opp, zigpy_device_mock, zha_device_joined):
             1: {
                 "in_clusters": [general.OnOff.cluster_id, general.Groups.cluster_id],
                 "out_clusters": [],
-                "device_type": zop.DeviceType.ON_OFF_SWITCH,
+                "device_type": zha.DeviceType.ON_OFF_SWITCH,
             }
         },
         ieee=IEEE_GROUPABLE_DEVICE2,

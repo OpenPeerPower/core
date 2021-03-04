@@ -149,6 +149,6 @@ async def test_discovery(opp, pywemo_registry):
     entity_entries = list(entity_reg.entities.values())
     assert len(entity_entries) == 3
 
-    # Verify that.opp stops cleanly.
+    # Verify that opp stops cleanly.
     await opp.async_stop()
     await opp.async_block_till_done()

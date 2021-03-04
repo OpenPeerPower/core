@@ -68,7 +68,7 @@ async def test_show_ssdp_form(opp: OpenPeerPowerType) -> None:
     }
 
 
-async def test_ssdp_not_wilight_abort_1.opp: OpenPeerPowerType) -> None:
+async def test_ssdp_not_wilight_abort_1(opp: OpenPeerPowerType) -> None:
     """Test that the ssdp aborts not_wilight."""
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO_WRONG_MANUFACTORER.copy()
@@ -80,7 +80,7 @@ async def test_ssdp_not_wilight_abort_1.opp: OpenPeerPowerType) -> None:
     assert result["reason"] == "not_wilight_device"
 
 
-async def test_ssdp_not_wilight_abort_2.opp: OpenPeerPowerType) -> None:
+async def test_ssdp_not_wilight_abort_2(opp: OpenPeerPowerType) -> None:
     """Test that the ssdp aborts not_wilight."""
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO_MISSING_MANUFACTORER.copy()

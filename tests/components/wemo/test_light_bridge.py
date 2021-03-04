@@ -5,7 +5,7 @@ import pytest
 import pywemo
 
 from openpeerpower.components.openpeerpower import (
-    DOMAIN as OP_DOMAIN,
+    DOMAIN as HA_DOMAIN,
     SERVICE_UPDATE_ENTITY,
 )
 from openpeerpower.components.wemo.light import MIN_TIME_BETWEEN_SCANS
@@ -92,12 +92,12 @@ async def test_light_update_entity(
     opp, pywemo_registry, pywemo_bridge_light, wemo_entity
 ):
     """Verify that the light performs state updates."""
-    await async_setup_component(opp, OP_DOMAIN, {})
+    await async_setup_component(opp, HA_DOMAIN, {})
 
     # On state.
     pywemo_bridge_light.state = {"onoff": 1}
     await opp.services.async_call(
-        OP_DOMAIN,
+        HA_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: [wemo_entity.entity_id]},
         blocking=True,
@@ -107,7 +107,7 @@ async def test_light_update_entity(
     # Off state.
     pywemo_bridge_light.state = {"onoff": 0}
     await opp.services.async_call(
-        OP_DOMAIN,
+        HA_DOMAIN,
         SERVICE_UPDATE_ENTITY,
         {ATTR_ENTITY_ID: [wemo_entity.entity_id]},
         blocking=True,

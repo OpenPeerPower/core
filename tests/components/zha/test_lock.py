@@ -27,7 +27,7 @@ async def lock(opp, zigpy_device_mock, zha_device_joined_restored):
             1: {
                 "in_clusters": [closures.DoorLock.cluster_id, general.Basic.cluster_id],
                 "out_clusters": [],
-                "device_type": zigpy.profiles.zop.DeviceType.DOOR_LOCK,
+                "device_type": zigpy.profiles.zha.DeviceType.DOOR_LOCK,
             }
         },
     )

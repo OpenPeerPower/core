@@ -1,12 +1,12 @@
 """Test code shared between test files."""
 
-from tuyaop.devices import climate, light, switch
+from tuyaha.devices import climate, light, switch
 
 CLIMATE_ID = "1"
 CLIMATE_DATA = {
     "data": {"state": "true", "temp_unit": climate.UNIT_CELSIUS},
     "id": CLIMATE_ID,
-    "op_type": "climate",
+    "ha_type": "climate",
     "name": "TestClimate",
     "dev_type": "climate",
 }
@@ -15,7 +15,7 @@ LIGHT_ID = "2"
 LIGHT_DATA = {
     "data": {"state": "true"},
     "id": LIGHT_ID,
-    "op_type": "light",
+    "ha_type": "light",
     "name": "TestLight",
     "dev_type": "light",
 }
@@ -24,7 +24,7 @@ SWITCH_ID = "3"
 SWITCH_DATA = {
     "data": {"state": True},
     "id": SWITCH_ID,
-    "op_type": "switch",
+    "ha_type": "switch",
     "name": "TestSwitch",
     "dev_type": "switch",
 }
@@ -33,7 +33,7 @@ LIGHT_ID_FAKE1 = "9998"
 LIGHT_DATA_FAKE1 = {
     "data": {"state": "true"},
     "id": LIGHT_ID_FAKE1,
-    "op_type": "light",
+    "ha_type": "light",
     "name": "TestLightFake1",
     "dev_type": "light",
 }
@@ -42,7 +42,7 @@ LIGHT_ID_FAKE2 = "9999"
 LIGHT_DATA_FAKE2 = {
     "data": {"state": "true"},
     "id": LIGHT_ID_FAKE2,
-    "op_type": "light",
+    "ha_type": "light",
     "name": "TestLightFake2",
     "dev_type": "light",
 }

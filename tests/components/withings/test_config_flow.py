@@ -10,7 +10,7 @@ from openpeerpower.const import (
     CONF_UNIT_SYSTEM,
     CONF_UNIT_SYSTEM_METRIC,
 )
-from openpeerpower.core import DOMAIN as OP_DOMAIN, OpenPeerPower
+from openpeerpower.core import DOMAIN as HA_DOMAIN, OpenPeerPower
 from openpeerpower.helpers import config_entry_oauth2_flow
 from openpeerpower.helpers.config_entry_oauth2_flow import AUTH_CALLBACK_PATH
 from openpeerpower.setup import async_setup_component
@@ -37,8 +37,8 @@ async def test_config_reauth_profile(
     opp: OpenPeerPower, aiohttp_client, aioclient_mock
 ) -> None:
     """Test reauth an existing profile re-creates the config entry."""
-    opp.config = {
-        OP_DOMAIN: {
+    opp_config = {
+        HA_DOMAIN: {
             CONF_UNIT_SYSTEM: CONF_UNIT_SYSTEM_METRIC,
             CONF_EXTERNAL_URL: "http://127.0.0.1:8080/",
         },
@@ -48,7 +48,7 @@ async def test_config_reauth_profile(
             const.CONF_USE_WEBHOOK: False,
         },
     }
-    await async_process_op_core_config(opp, opp_config.get(OP_DOMAIN))
+    await async_process_op_core_config(opp, opp_config.get(HA_DOMAIN))
     assert await async_setup_component(opp, const.DOMAIN, opp_config)
     await opp.async_block_till_done()
 
