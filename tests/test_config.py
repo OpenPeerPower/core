@@ -225,8 +225,8 @@ async def _compute_state(opp, config):
 
     entity = Entity()
     entity.entity_id = "test.test"
-    entity opp =opp
-    entity.schedule_update_op.state()
+    entity.opp = opp
+    entity.schedule_update_op_state()
 
     await opp.async_block_till_done()
 
@@ -252,21 +252,21 @@ async def test_entity_customization(opp):
 @patch("openpeerpower.config.is_docker_env", return_value=False)
 def test_remove_lib_on_upgrade(mock_docker, mock_os, mock_shutil, opp):
     """Test removal of library on upgrade from before 0.50."""
-    op_version = "0.49.0"
+    ha_version = "0.49.0"
     mock_os.path.isdir = mock.Mock(return_value=True)
     mock_open = mock.mock_open()
     with patch("openpeerpower.config.open", mock_open, create=True):
         opened_file = mock_open.return_value
         # pylint: disable=no-member
-        opened_file.readline.return_value = op_version
+        opened_file.readline.return_value = ha_version
         opp.config.path = mock.Mock()
         config_util.process_op_config_upgrade(opp)
-        opp.path = opp.config.path.return_value
+        opp_path = opp.config.path.return_value
 
         assert mock_os.path.isdir.call_count == 1
-        assert mock_os.path.isdir.call_args == mock.call.opp_path)
+        assert mock_os.path.isdir.call_args == mock.call(opp_path)
         assert mock_shutil.rmtree.call_count == 1
-        assert mock_shutil.rmtree.call_args == mock.call.opp_path)
+        assert mock_shutil.rmtree.call_args == mock.call(opp_path)
 
 
 @patch("openpeerpower.config.shutil")
@@ -274,26 +274,26 @@ def test_remove_lib_on_upgrade(mock_docker, mock_os, mock_shutil, opp):
 @patch("openpeerpower.config.is_docker_env", return_value=True)
 def test_remove_lib_on_upgrade_94(mock_docker, mock_os, mock_shutil, opp):
     """Test removal of library on upgrade from before 0.94 and in Docker."""
-    op_version = "0.93.0.dev0"
+    ha_version = "0.93.0.dev0"
     mock_os.path.isdir = mock.Mock(return_value=True)
     mock_open = mock.mock_open()
     with patch("openpeerpower.config.open", mock_open, create=True):
         opened_file = mock_open.return_value
         # pylint: disable=no-member
-        opened_file.readline.return_value = op_version
+        opened_file.readline.return_value = ha_version
         opp.config.path = mock.Mock()
         config_util.process_op_config_upgrade(opp)
-        opp.path = opp.config.path.return_value
+        opp_path = opp.config.path.return_value
 
         assert mock_os.path.isdir.call_count == 1
-        assert mock_os.path.isdir.call_args == mock.call.opp_path)
+        assert mock_os.path.isdir.call_args == mock.call(opp_path)
         assert mock_shutil.rmtree.call_count == 1
-        assert mock_shutil.rmtree.call_args == mock.call.opp_path)
+        assert mock_shutil.rmtree.call_args == mock.call(opp_path)
 
 
 def test_process_config_upgrade(opp):
     """Test update of version on upgrade."""
-    op_version = "0.92.0"
+    ha_version = "0.92.0"
 
     mock_open = mock.mock_open()
     with patch("openpeerpower.config.open", mock_open, create=True), patch.object(
@@ -301,7 +301,7 @@ def test_process_config_upgrade(opp):
     ):
         opened_file = mock_open.return_value
         # pylint: disable=no-member
-        opened_file.readline.return_value = op_version
+        opened_file.readline.return_value = ha_version
 
         config_util.process_op_config_upgrade(opp)
 
@@ -311,13 +311,13 @@ def test_process_config_upgrade(opp):
 
 def test_config_upgrade_same_version(opp):
     """Test no update of version on no upgrade."""
-    op_version = __version__
+    ha_version = __version__
 
     mock_open = mock.mock_open()
     with patch("openpeerpower.config.open", mock_open, create=True):
         opened_file = mock_open.return_value
         # pylint: disable=no-member
-        opened_file.readline.return_value = op_version
+        opened_file.readline.return_value = ha_version
 
         config_util.process_op_config_upgrade(opp)
 
@@ -338,7 +338,7 @@ def test_config_upgrade_no_file(opp):
 
 async def test_loading_configuration_from_storage(opp, opp_storage):
     """Test loading core config onto opp object."""
-    opp.storage["core.config"] = {
+    opp_storage["core.config"] = {
         "data": {
             "elevation": 10,
             "latitude": 55,
@@ -371,7 +371,7 @@ async def test_loading_configuration_from_storage(opp, opp_storage):
 
 async def test_loading_configuration_from_storage_with_yaml_only(opp, opp_storage):
     """Test loading core and YAML config onto opp object."""
-    opp.storage["core.config"] = {
+    opp_storage["core.config"] = {
         "data": {
             "elevation": 10,
             "latitude": 55,
@@ -415,7 +415,7 @@ async def test_updating_configuration(opp, opp_storage):
         "key": "core.config",
         "version": 1,
     }
-    opp.storage["core.config"] = dict(core_data)
+    opp_storage["core.config"] = dict(core_data)
     await config_util.async_process_op_core_config(
         opp, {"allowlist_external_dirs": "/etc"}
     )
@@ -429,7 +429,7 @@ async def test_updating_configuration(opp, opp_storage):
 
 async def test_override_stored_configuration(opp, opp_storage):
     """Test loading core and YAML config onto opp object."""
-    opp.storage["core.config"] = {
+    opp_storage["core.config"] = {
         "data": {
             "elevation": 10,
             "latitude": 55,

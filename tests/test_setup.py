@@ -50,13 +50,13 @@ def mock_handlers():
 class TestSetup:
     """Test the bootstrap utils."""
 
-   opp =  None
+    opp = None
     backup_cache = None
 
     # pylint: disable=invalid-name, no-self-use
     def setup_method(self, method):
         """Set up the test."""
-        self.opp =get_test_open_peer_power()
+        self.opp = get_test_open_peer_power()
 
     def teardown_method(self, method):
         """Clean up."""
@@ -313,7 +313,7 @@ class TestSetup:
     def test_component_failing_setup(self):
         """Test component that fails setup."""
         mock_integration(
-            self.opp, MockModule("comp", setup=lambda(opp, config: False)
+            self.opp, MockModule("comp", setup=lambda opp, config: False)
         )
 
         assert not setup.setup_component(self.opp, "comp", {})
@@ -414,7 +414,7 @@ class TestSetup:
     def test_disable_component_if_invalid_return(self):
         """Test disabling component if invalid return."""
         mock_integration(
-            self.opp, MockModule("disabled_component", setup=lambda(opp, config: None)
+            self.opp, MockModule("disabled_component", setup=lambda opp, config: None)
         )
 
         assert not setup.setup_component(self.opp, "disabled_component", {})
@@ -423,7 +423,7 @@ class TestSetup:
         self.opp.data.pop(setup.DATA_SETUP)
         mock_integration(
             self.opp,
-            MockModule("disabled_component", setup=lambda(opp, config: False),
+            MockModule("disabled_component", setup=lambda opp, config: False),
         )
 
         assert not setup.setup_component(self.opp, "disabled_component", {})
@@ -431,7 +431,7 @@ class TestSetup:
 
         self.opp.data.pop(setup.DATA_SETUP)
         mock_integration(
-            self.opp, MockModule("disabled_component", setup=lambda(opp, config: True)
+            self.opp, MockModule("disabled_component", setup=lambda opp, config: True)
         )
 
         assert setup.setup_component(self.opp, "disabled_component", {})
@@ -441,10 +441,14 @@ class TestSetup:
         """Test all init work done till start."""
         call_order = []
 
-        def component1_setup(opp, config):
+        async def component1_setup(opp, config):
             """Set up mock component."""
-            discovery.discover(opp, "test_component2", {}, "test_component2", {})
-            discovery.discover(opp, "test_component3", {}, "test_component3", {})
+            await discovery.async_discover(
+                opp, "test_component2", {}, "test_component2", {}
+            )
+            await discovery.async_discover(
+                opp, "test_component3", {}, "test_component3", {}
+            )
             return True
 
         def component_track_setup(opp, config):
@@ -453,7 +457,7 @@ class TestSetup:
             return True
 
         mock_integration(
-            self.opp, MockModule("test_component1", setup=component1_setup)
+            self.opp, MockModule("test_component1", async_setup=component1_setup)
         )
 
         mock_integration(
@@ -477,7 +481,7 @@ class TestSetup:
         assert call_order == [1, 1, 2]
 
 
-async def test_component_warn_slow_setup_opp):
+async def test_component_warn_slow_setup(opp):
     """Warn we log when a component setup takes a long time."""
     mock_integration(opp, MockModule("test_component1"))
     with patch.object(opp.loop, "call_later") as mock_call:
@@ -559,7 +563,7 @@ async def test_setup_import_blows_up(opp):
         assert not await setup.async_setup_component(opp, "sun", {})
 
 
-async def test_parallel_entry_setup_opp):
+async def test_parallel_entry_setup(opp):
     """Test config entries are set up in parallel."""
     MockConfigEntry(domain="comp", data={"value": 1}).add_to_opp(opp)
     MockConfigEntry(domain="comp", data={"value": 2}).add_to_opp(opp)

@@ -239,7 +239,7 @@ async def test_finish_callback_change_result_type(opp):
 
 async def test_external_step(opp, manager):
     """Test external step logic."""
-    manager opp =opp
+    manager.opp = opp
 
     @manager.mock_reg_handler("test")
     class TestFlow(data_entry_flow.FlowHandler):
@@ -267,7 +267,7 @@ async def test_external_step(opp, manager):
     assert len(manager.async_progress()) == 1
 
     # Mimic external step
-    # Called by integrations:  opp.config_entries.flow.async_configure(…)`
+    # Called by integrations: `opp.config_entries.flow.async_configure(…)`
     result = await manager.async_configure(result["flow_id"], {"title": "Hello"})
     assert result["type"] == data_entry_flow.RESULT_TYPE_EXTERNAL_STEP_DONE
 
@@ -287,7 +287,7 @@ async def test_external_step(opp, manager):
 
 async def test_show_progress(opp, manager):
     """Test show progress logic."""
-    manager opp =opp
+    manager.opp = opp
 
     @manager.mock_reg_handler("test")
     class TestFlow(data_entry_flow.FlowHandler):
@@ -323,7 +323,7 @@ async def test_show_progress(opp, manager):
     assert len(manager.async_progress()) == 1
 
     # Mimic task one done and moving to task two
-    # Called by integrations:  opp.config_entries.flow.async_configure(…)`
+    # Called by integrations: `opp.config_entries.flow.async_configure(…)`
     result = await manager.async_configure(result["flow_id"])
     assert result["type"] == data_entry_flow.RESULT_TYPE_SHOW_PROGRESS
     assert result["progress_action"] == "task_two"
@@ -337,7 +337,7 @@ async def test_show_progress(opp, manager):
     }
 
     # Mimic task two done and continuing step
-    # Called by integrations:  opp.config_entries.flow.async_configure(…)`
+    # Called by integrations: `opp.config_entries.flow.async_configure(…)`
     result = await manager.async_configure(result["flow_id"], {"title": "Hello"})
     assert result["type"] == data_entry_flow.RESULT_TYPE_SHOW_PROGRESS_DONE
 

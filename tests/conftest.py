@@ -12,7 +12,7 @@ import multidict
 import pytest
 import requests_mock as _requests_mock
 
-from openpeerpower import core as op, loader, runner, util
+from openpeerpower import core as ha, loader, runner, util
 from openpeerpower.auth.const import GROUP_ID_ADMIN, GROUP_ID_READ_ONLY
 from openpeerpower.auth.models import Credentials
 from openpeerpower.auth.providers import openpeerpower, legacy_api_password
@@ -151,11 +151,11 @@ def opp(loop, load_registries, opp_storage, request):
         orig_exception_handler(loop, context)
 
     exceptions = []
-   opp = loop.run_until_complete(async_test_open_peer_power(loop, load_registries))
+    opp = loop.run_until_complete(async_test_open_peer_power(loop, load_registries))
     orig_exception_handler = loop.get_exception_handler()
     loop.set_exception_handler(exc_handle)
 
-    yield.opp
+    yield opp
 
     loop.run_until_complete(opp.async_stop(force=True))
     for ex in exceptions:
@@ -172,23 +172,23 @@ def opp(loop, load_registries, opp_storage, request):
 @pytest.fixture
 async def stop_opp():
     """Make sure all opp are stopped."""
-    orig_opp = op.OpenPeerPower
+    orig_opp = ha.OpenPeerPower
 
     created = []
 
-    def mock.opp():
-        opp.inst = orig.opp()
-        created.append.opp_inst)
-        return.opp_inst
+    def mock_opp():
+        opp_inst = orig_opp()
+        created.append(opp_inst)
+        return opp_inst
 
-    with patch("openpeerpower.core.OpenPeerPower", mock(opp):
+    with patch("openpeerpower.core.OpenPeerPower", mock_opp):
         yield
 
     for opp_inst in created:
-        if opp_inst.state == op.CoreState.stopped:
+        if opp_inst.state == ha.CoreState.stopped:
             continue
 
-        with patch.object.opp_inst.loop, "stop"):
+        with patch.object(opp_inst.loop, "stop"):
             await opp_inst.async_block_till_done()
             await opp_inst.async_stop(force=True)
 
@@ -244,7 +244,7 @@ async def opp_access_token(opp, opp_admin_user, opp_admin_credential):
     await opp.auth.async_link_user(opp_admin_user, opp_admin_credential)
 
     refresh_token = await opp.auth.async_create_refresh_token(
-        opp.admin_user, CLIENT_ID, credential.opp_admin_credential
+        opp_admin_user, CLIENT_ID, credential=opp_admin_credential
     )
     return opp.auth.async_create_access_token(refresh_token)
 
@@ -283,11 +283,11 @@ def opp_read_only_access_token(opp, opp_read_only_user, local_auth):
         data={"username": "readonly"},
         is_new=False,
     )
-    opp.read_only_user.credentials.append(credential)
+    opp_read_only_user.credentials.append(credential)
 
     refresh_token = opp.loop.run_until_complete(
         opp.auth.async_create_refresh_token(
-            opp.read_only_user, CLIENT_ID, credential=credential
+            opp_read_only_user, CLIENT_ID, credential=credential
         )
     )
     return opp.auth.async_create_access_token(refresh_token)
@@ -323,7 +323,7 @@ def opp_client(opp, aiohttp_client, opp_access_token):
     async def auth_client():
         """Return an authenticated client."""
         return await aiohttp_client(
-            opp.http.app, headers={"Authorization": f"Bearer  opp.access_token}"}
+            opp.http.app, headers={"Authorization": f"Bearer {opp_access_token}"}
         )
 
     return auth_client
@@ -357,7 +357,7 @@ def current_request_with_host(current_request):
 def opp_ws_client(aiohttp_client, opp_access_token, opp):
     """Websocket client fixture connected to websocket server."""
 
-    async def create_client(opp=opp, access_token(opp_access_token):
+    async def create_client(opp=opp, access_token=opp_access_token):
         """Create a websocket client."""
         assert await async_setup_component(opp, "websocket_api", {})
 
@@ -423,7 +423,7 @@ def mqtt_client_mock(opp):
 
     with patch("paho.mqtt.client.Client") as mock_client:
 
-        @op.callback
+        @ha.callback
         def _async_fire_mqtt_message(topic, payload, qos, retain):
             async_fire_mqtt_message(opp, topic, payload, qos, retain)
             mid = get_mid()
@@ -463,9 +463,9 @@ async def mqtt_mock(opp, mqtt_client_mock, mqtt_config):
     spec.remove("_matching_subscriptions")
 
     mqtt_component_mock = MagicMock(
-        return_value(opp.data["mqtt"],
+        return_value=opp.data["mqtt"],
         spec_set=spec,
-        wraps.opp.data["mqtt"],
+        wraps=opp.data["mqtt"],
     )
     mqtt_component_mock._mqttc = mqtt_client_mock
 
@@ -486,7 +486,7 @@ def mock_zeroconf():
 def legacy_patchable_time():
     """Allow time to be patchable by using event listeners instead of asyncio loop."""
 
-    @op.callback
+    @ha.callback
     @loader.bind_opp
     def async_track_point_in_utc_time(opp, action, point_in_time):
         """Add a listener that fires once after a specific point in UTC time."""
@@ -495,9 +495,9 @@ def legacy_patchable_time():
 
         # Since this is called once, we accept a OppJob so we can avoid
         # having to figure out how to call the action every time its called.
-        job = action if isinstance(action, op.OppJob) else op.OppJob(action)
+        job = action if isinstance(action, ha.OppJob) else ha.OppJob(action)
 
-        @op.callback
+        @ha.callback
         def point_in_time_listener(event):
             """Listen for matching time_changed events."""
             now = event.data[ATTR_NOW]
@@ -519,19 +519,19 @@ def legacy_patchable_time():
 
         return async_unsub
 
-    @op.callback
+    @ha.callback
     @loader.bind_opp
     def async_track_utc_time_change(
         opp, action, hour=None, minute=None, second=None, local=False
     ):
         """Add a listener that will fire if time matches a pattern."""
 
-        job = op.OppJob(action)
+        job = ha.OppJob(action)
         # We do not have to wrap the function with time pattern matching logic
         # if no pattern given
         if all(val is None for val in (hour, minute, second)):
 
-            @op.callback
+            @ha.callback
             def time_change_listener(ev) -> None:
                 """Fire every time event that comes in."""
                 opp.async_run_opp_job(job, ev.data[ATTR_NOW])
@@ -557,7 +557,7 @@ def legacy_patchable_time():
         # triggering.
         last_now = None
 
-        @op.callback
+        @ha.callback
         def pattern_time_change_listener(ev) -> None:
             """Listen for matching time_changed events."""
             nonlocal next_time, last_now

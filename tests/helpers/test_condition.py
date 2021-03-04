@@ -246,28 +246,28 @@ async def test_time_window(opp):
         "openpeerpower.helpers.condition.dt_util.now",
         return_value=dt.now().replace(hour=3),
     ):
-        assert not test1.opp)
+        assert not test1(opp)
         assert test2(opp)
 
     with patch(
         "openpeerpower.helpers.condition.dt_util.now",
         return_value=dt.now().replace(hour=9),
     ):
-        assert test1.opp)
+        assert test1(opp)
         assert not test2(opp)
 
     with patch(
         "openpeerpower.helpers.condition.dt_util.now",
         return_value=dt.now().replace(hour=15),
     ):
-        assert test1.opp)
+        assert test1(opp)
         assert not test2(opp)
 
     with patch(
         "openpeerpower.helpers.condition.dt_util.now",
         return_value=dt.now().replace(hour=21),
     ):
-        assert not test1.opp)
+        assert not test1(opp)
         assert test2(opp)
 
 
@@ -386,21 +386,26 @@ async def test_if_numeric_state_raises_on_unavailable(opp, caplog):
 
 async def test_state_raises(opp):
     """Test that state raises ConditionError on errors."""
-    # Unknown entity_id
-    with pytest.raises(ConditionError, match="Unknown entity"):
-        test = await condition.async_from_config(
-            opp,
-            {
-                "condition": "state",
-                "entity_id": "sensor.door_unknown",
-                "state": "open",
-            },
-        )
+    # No entity
+    with pytest.raises(ConditionError, match="no entity"):
+        condition.state(opp, entity=None, req_state="missing")
 
+    # Unknown entities
+    test = await condition.async_from_config(
+        opp,
+        {
+            "condition": "state",
+            "entity_id": ["sensor.door_unknown", "sensor.window_unknown"],
+            "state": "open",
+        },
+    )
+    with pytest.raises(ConditionError, match="unknown entity.*door"):
+        test(opp)
+    with pytest.raises(ConditionError, match="unknown entity.*window"):
         test(opp)
 
     # Unknown attribute
-    with pytest.raises(ConditionError, match=r"Attribute .* does not exist"):
+    with pytest.raises(ConditionError, match=r"attribute .* does not exist"):
         test = await condition.async_from_config(
             opp,
             {
@@ -408,6 +413,20 @@ async def test_state_raises(opp):
                 "entity_id": "sensor.door",
                 "attribute": "model",
                 "state": "acme",
+            },
+        )
+
+        opp.states.async_set("sensor.door", "open")
+        test(opp)
+
+    # Unknown state entity
+    with pytest.raises(ConditionError, match="input_text.missing"):
+        test = await condition.async_from_config(
+            opp,
+            {
+                "condition": "state",
+                "entity_id": "sensor.door",
+                "state": "input_text.missing",
             },
         )
 
@@ -564,7 +583,6 @@ async def test_state_using_input_entities(opp):
                     "state": [
                         "input_text.hello",
                         "input_select.hello",
-                        "input_number.not_exist",
                         "salut",
                     ],
                 },
@@ -615,21 +633,22 @@ async def test_state_using_input_entities(opp):
 
 async def test_numeric_state_raises(opp):
     """Test that numeric_state raises ConditionError on errors."""
-    # Unknown entity_id
-    with pytest.raises(ConditionError, match="Unknown entity"):
-        test = await condition.async_from_config(
-            opp,
-            {
-                "condition": "numeric_state",
-                "entity_id": "sensor.temperature_unknown",
-                "above": 0,
-            },
-        )
-
+    # Unknown entities
+    test = await condition.async_from_config(
+        opp,
+        {
+            "condition": "numeric_state",
+            "entity_id": ["sensor.temperature_unknown", "sensor.humidity_unknown"],
+            "above": 0,
+        },
+    )
+    with pytest.raises(ConditionError, match="unknown entity.*temperature"):
+        test(opp)
+    with pytest.raises(ConditionError, match="unknown entity.*humidity"):
         test(opp)
 
     # Unknown attribute
-    with pytest.raises(ConditionError, match=r"Attribute .* does not exist"):
+    with pytest.raises(ConditionError, match=r"attribute .* does not exist"):
         test = await condition.async_from_config(
             opp,
             {
@@ -659,7 +678,7 @@ async def test_numeric_state_raises(opp):
         test(opp)
 
     # Unavailable state
-    with pytest.raises(ConditionError, match="State is not available"):
+    with pytest.raises(ConditionError, match="state of .* is unavailable"):
         test = await condition.async_from_config(
             opp,
             {
@@ -687,7 +706,7 @@ async def test_numeric_state_raises(opp):
         test(opp)
 
     # Below entity missing
-    with pytest.raises(ConditionError, match="below entity"):
+    with pytest.raises(ConditionError, match="'below' entity"):
         test = await condition.async_from_config(
             opp,
             {
@@ -700,8 +719,16 @@ async def test_numeric_state_raises(opp):
         opp.states.async_set("sensor.temperature", 50)
         test(opp)
 
+    # Below entity not a number
+    with pytest.raises(
+        ConditionError,
+        match="'below'.*input_number.missing.*cannot be processed as a number",
+    ):
+        opp.states.async_set("input_number.missing", "number")
+        test(opp)
+
     # Above entity missing
-    with pytest.raises(ConditionError, match="above entity"):
+    with pytest.raises(ConditionError, match="'above' entity"):
         test = await condition.async_from_config(
             opp,
             {
@@ -712,6 +739,14 @@ async def test_numeric_state_raises(opp):
         )
 
         opp.states.async_set("sensor.temperature", 50)
+        test(opp)
+
+    # Above entity not a number
+    with pytest.raises(
+        ConditionError,
+        match="'above'.*input_number.missing.*cannot be processed as a number",
+    ):
+        opp.states.async_set("input_number.missing", "number")
         test(opp)
 
 
@@ -849,7 +884,10 @@ async def test_zone_raises(opp):
         },
     )
 
-    with pytest.raises(ConditionError, match="Unknown zone"):
+    with pytest.raises(ConditionError, match="no zone"):
+        condition.zone(opp, zone_ent=None, entity="sensor.any")
+
+    with pytest.raises(ConditionError, match="unknown zone"):
         test(opp)
 
     opp.states.async_set(
@@ -858,7 +896,10 @@ async def test_zone_raises(opp):
         {"name": "home", "latitude": 2.1, "longitude": 1.1, "radius": 10},
     )
 
-    with pytest.raises(ConditionError, match="Unknown entity"):
+    with pytest.raises(ConditionError, match="no entity"):
+        condition.zone(opp, zone_ent="zone.home", entity=None)
+
+    with pytest.raises(ConditionError, match="unknown entity"):
         test(opp)
 
     opp.states.async_set(

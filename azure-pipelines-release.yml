@@ -224,30 +224,30 @@ stages:
           local tag_l=$1
           local tag_r=$2
 
-          docker manifest create openpeerpower/open-peer-power:${tag_l} \
+          docker manifest create openpeerpower/openpeerpower:${tag_l} \
             openpeerpower/amd64-openpeerpower:${tag_r} \
             openpeerpower/i386-openpeerpower:${tag_r} \
             openpeerpower/armhf-openpeerpower:${tag_r} \
             openpeerpower/armv7-openpeerpower:${tag_r} \
             openpeerpower/aarch64-openpeerpower:${tag_r}
 
-          docker manifest annotate openpeerpower/open-peer-power:${tag_l} \
+          docker manifest annotate openpeerpower/openpeerpower:${tag_l} \
             openpeerpower/amd64-openpeerpower:${tag_r} \
             --os linux --arch amd64
 
-          docker manifest annotate openpeerpower/open-peer-power:${tag_l} \
+          docker manifest annotate openpeerpower/openpeerpower:${tag_l} \
             openpeerpower/i386-openpeerpower:${tag_r} \
             --os linux --arch 386
 
-          docker manifest annotate openpeerpower/open-peer-power:${tag_l} \
+          docker manifest annotate openpeerpower/openpeerpower:${tag_l} \
             openpeerpower/armhf-openpeerpower:${tag_r} \
             --os linux --arch arm --variant=v6
 
-          docker manifest annotate openpeerpower/open-peer-power:${tag_l} \
+          docker manifest annotate openpeerpower/openpeerpower:${tag_l} \
             openpeerpower/armv7-openpeerpower:${tag_r} \
             --os linux --arch arm --variant=v7
 
-          docker manifest annotate openpeerpower/open-peer-power:${tag_l} \
+          docker manifest annotate openpeerpower/openpeerpower:${tag_l} \
             openpeerpower/aarch64-openpeerpower:${tag_r} \
             --os linux --arch arm64 --variant=v8
 

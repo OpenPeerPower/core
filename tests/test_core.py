@@ -32,7 +32,7 @@ from openpeerpower.const import (
     MATCH_ALL,
     __version__,
 )
-import openpeerpower.core as op
+import openpeerpower.core as ha
 from openpeerpower.exceptions import (
     InvalidEntityFormatError,
     InvalidStateError,
@@ -48,15 +48,15 @@ PST = pytz.timezone("America/Los_Angeles")
 
 def test_split_entity_id():
     """Test split_entity_id."""
-    assert op_split_entity_id("domain.object_id") == ["domain", "object_id"]
+    assert ha.split_entity_id("domain.object_id") == ["domain", "object_id"]
 
 
 def test_async_add_opp_job_schedule_callback():
     """Test that we schedule coroutines and add jobs to the job pool."""
-   opp =  MagicMock()
+    opp = MagicMock()
     job = MagicMock()
 
-    op.OpenPeerPower.async_add_opp_job(opp, op.OppJob(op.callback(job)))
+    ha.OpenPeerPower.async_add_opp_job(opp, ha.OppJob(ha.callback(job)))
     assert len(opp.loop.call_soon.mock_calls) == 1
     assert len(opp.loop.create_task.mock_calls) == 0
     assert len(opp.add_job.mock_calls) == 0
@@ -64,11 +64,11 @@ def test_async_add_opp_job_schedule_callback():
 
 def test_async_add_opp_job_schedule_partial_callback():
     """Test that we schedule partial coros and add jobs to the job pool."""
-   opp =  MagicMock()
+    opp = MagicMock()
     job = MagicMock()
-    partial = functools.partial(op.callback(job))
+    partial = functools.partial(ha.callback(job))
 
-    op.OpenPeerPower.async_add_opp_job(opp, op.OppJob(partial))
+    ha.OpenPeerPower.async_add_opp_job(opp, ha.OppJob(partial))
     assert len(opp.loop.call_soon.mock_calls) == 1
     assert len(opp.loop.create_task.mock_calls) == 0
     assert len(opp.add_job.mock_calls) == 0
@@ -76,12 +76,12 @@ def test_async_add_opp_job_schedule_partial_callback():
 
 def test_async_add_opp_job_schedule_coroutinefunction(loop):
     """Test that we schedule coroutines and add jobs to the job pool."""
-   opp =  MagicMock(loop=MagicMock(wraps=loop))
+    opp = MagicMock(loop=MagicMock(wraps=loop))
 
     async def job():
         pass
 
-    op.OpenPeerPower.async_add_opp_job(opp, op.OppJob(job))
+    ha.OpenPeerPower.async_add_opp_job(opp, ha.OppJob(job))
     assert len(opp.loop.call_soon.mock_calls) == 0
     assert len(opp.loop.create_task.mock_calls) == 1
     assert len(opp.add_job.mock_calls) == 0
@@ -89,14 +89,14 @@ def test_async_add_opp_job_schedule_coroutinefunction(loop):
 
 def test_async_add_opp_job_schedule_partial_coroutinefunction(loop):
     """Test that we schedule partial coros and add jobs to the job pool."""
-   opp =  MagicMock(loop=MagicMock(wraps=loop))
+    opp = MagicMock(loop=MagicMock(wraps=loop))
 
     async def job():
         pass
 
     partial = functools.partial(job)
 
-    op.OpenPeerPower.async_add_opp_job(opp, op.OppJob(partial))
+    ha.OpenPeerPower.async_add_opp_job(opp, ha.OppJob(partial))
     assert len(opp.loop.call_soon.mock_calls) == 0
     assert len(opp.loop.create_task.mock_calls) == 1
     assert len(opp.add_job.mock_calls) == 0
@@ -104,12 +104,12 @@ def test_async_add_opp_job_schedule_partial_coroutinefunction(loop):
 
 def test_async_add_job_add_opp_threaded_job_to_pool():
     """Test that we schedule coroutines and add jobs to the job pool."""
-   opp =  MagicMock()
+    opp = MagicMock()
 
     def job():
         pass
 
-    op.OpenPeerPower.async_add_opp_job(opp, op.OppJob(job))
+    ha.OpenPeerPower.async_add_opp_job(opp, ha.OppJob(job))
     assert len(opp.loop.call_soon.mock_calls) == 0
     assert len(opp.loop.create_task.mock_calls) == 0
     assert len(opp.loop.run_in_executor.mock_calls) == 1
@@ -117,12 +117,12 @@ def test_async_add_job_add_opp_threaded_job_to_pool():
 
 def test_async_create_task_schedule_coroutine(loop):
     """Test that we schedule coroutines and add jobs to the job pool."""
-   opp =  MagicMock(loop=MagicMock(wraps=loop))
+    opp = MagicMock(loop=MagicMock(wraps=loop))
 
     async def job():
         pass
 
-    op.OpenPeerPower.async_create_task(opp, job())
+    ha.OpenPeerPower.async_create_task(opp, job())
     assert len(opp.loop.call_soon.mock_calls) == 0
     assert len(opp.loop.create_task.mock_calls) == 1
     assert len(opp.add_job.mock_calls) == 0
@@ -130,26 +130,26 @@ def test_async_create_task_schedule_coroutine(loop):
 
 def test_async_run_opp_job_calls_callback():
     """Test that the callback annotation is respected."""
-   opp =  MagicMock()
+    opp = MagicMock()
     calls = []
 
     def job():
         calls.append(1)
 
-    op.OpenPeerPower.async_run_opp_job(opp, op.OppJob(op.callback(job)))
+    ha.OpenPeerPower.async_run_opp_job(opp, ha.OppJob(ha.callback(job)))
     assert len(calls) == 1
     assert len(opp.async_add_job.mock_calls) == 0
 
 
 def test_async_run_opp_job_delegates_non_async():
     """Test that the callback annotation is respected."""
-   opp =  MagicMock()
+    opp = MagicMock()
     calls = []
 
     def job():
         calls.append(1)
 
-    op.OpenPeerPower.async_run_opp_job(opp, op.OppJob(job))
+    ha.OpenPeerPower.async_run_opp_job(opp, ha.OppJob(job))
     assert len(calls) == 0
     assert len(opp.async_add_opp_job.mock_calls) == 1
 
@@ -204,7 +204,7 @@ async def test_pending_sheduler(opp):
     for _ in range(3):
         opp.async_add_job(test_coro())
 
-    await asyncio.wait.opp._pending_tasks)
+    await asyncio.wait(opp._pending_tasks)
 
     assert len(opp._pending_tasks) == 3
     assert len(call_count) == 3
@@ -260,7 +260,7 @@ async def test_async_add_job_pending_tasks_callback(opp):
     """Run a callback in pending tasks."""
     call_count = []
 
-    @op.callback
+    @ha.callback
     def test_callback():
         """Test callback."""
         call_count.append("call")
@@ -291,9 +291,9 @@ def test_event_eq():
     """Test events."""
     now = dt_util.utcnow()
     data = {"some": "attr"}
-    context = op.Context()
+    context = ha.Context()
     event1, event2 = [
-        op.Event("some_type", data, time_fired=now, context=context) for _ in range(2)
+        ha.Event("some_type", data, time_fired=now, context=context) for _ in range(2)
     ]
 
     assert event1 == event2
@@ -301,10 +301,10 @@ def test_event_eq():
 
 def test_event_repr():
     """Test that Event repr method works."""
-    assert str(op.Event("TestEvent")) == "<Event TestEvent[L]>"
+    assert str(ha.Event("TestEvent")) == "<Event TestEvent[L]>"
 
     assert (
-        str(op.Event("TestEvent", {"beer": "nice"}, op.EventOrigin.remote))
+        str(ha.Event("TestEvent", {"beer": "nice"}, ha.EventOrigin.remote))
         == "<Event TestEvent[R]: beer=nice>"
     )
 
@@ -315,7 +315,7 @@ def test_event_as_dict():
     now = dt_util.utcnow()
     data = {"some": "attr"}
 
-    event = op.Event(event_type, data, op.EventOrigin.local, now)
+    event = ha.Event(event_type, data, ha.EventOrigin.local, now)
     expected = {
         "event_type": event_type,
         "data": data,
@@ -335,7 +335,7 @@ def test_event_as_dict():
 def test_state_as_dict():
     """Test a State as dictionary."""
     last_time = datetime(1984, 12, 8, 12, 0, 0)
-    state = op.State(
+    state = ha.State(
         "happy.happy",
         "on",
         {"pig": "dog"},
@@ -383,12 +383,12 @@ async def test_eventbus_filtered_listener(opp):
     """Test we can prefilter events."""
     calls = []
 
-    @op.callback
+    @ha.callback
     def listener(event):
         """Mock listener."""
         calls.append(event)
 
-    @op.callback
+    @ha.callback
     def filter(event):
         """Mock filter."""
         return not event.data["filtered"]
@@ -412,7 +412,7 @@ async def test_eventbus_unsubscribe_listener(opp):
     """Test unsubscribe listener from returned function."""
     calls = []
 
-    @op.callback
+    @ha.callback
     def listener(event):
         """Mock listener."""
         calls.append(event)
@@ -436,7 +436,7 @@ async def test_eventbus_listen_once_event_with_callback(opp):
     """Test listen_once_event method."""
     runs = []
 
-    @op.callback
+    @ha.callback
     def event_handler(event):
         runs.append(event)
 
@@ -501,7 +501,7 @@ async def test_eventbus_callback_event_listener(opp):
     """Test callback event listener."""
     callback_calls = []
 
-    @op.callback
+    @ha.callback
     def callback_listener(event):
         callback_calls.append(event)
 
@@ -527,50 +527,50 @@ async def test_eventbus_coroutine_event_listener(opp):
 def test_state_init():
     """Test state.init."""
     with pytest.raises(InvalidEntityFormatError):
-        op.State("invalid_entity_format", "test_state")
+        ha.State("invalid_entity_format", "test_state")
 
     with pytest.raises(InvalidStateError):
-        op.State("domain.long_state", "t" * 256)
+        ha.State("domain.long_state", "t" * 256)
 
 
 def test_state_domain():
     """Test domain."""
-    state = op.State("some_domain.hello", "world")
+    state = ha.State("some_domain.hello", "world")
     assert state.domain == "some_domain"
 
 
 def test_state_object_id():
     """Test object ID."""
-    state = op.State("domain.hello", "world")
+    state = ha.State("domain.hello", "world")
     assert state.object_id == "hello"
 
 
 def test_state_name_if_no_friendly_name_attr():
     """Test if there is no friendly name."""
-    state = op.State("domain.hello_world", "world")
+    state = ha.State("domain.hello_world", "world")
     assert state.name == "hello world"
 
 
 def test_state_name_if_friendly_name_attr():
     """Test if there is a friendly name."""
     name = "Some Unique Name"
-    state = op.State("domain.hello_world", "world", {ATTR_FRIENDLY_NAME: name})
+    state = ha.State("domain.hello_world", "world", {ATTR_FRIENDLY_NAME: name})
     assert state.name == name
 
 
 def test_state_dict_conversion():
     """Test conversion of dict."""
-    state = op.State("domain.hello", "world", {"some": "attr"})
-    assert state == op.State.from_dict(state.as_dict())
+    state = ha.State("domain.hello", "world", {"some": "attr"})
+    assert state == ha.State.from_dict(state.as_dict())
 
 
 def test_state_dict_conversion_with_wrong_data():
     """Test conversion with wrong data."""
-    assert op.State.from_dict(None) is None
-    assert op.State.from_dict({"state": "yes"}) is None
-    assert op.State.from_dict({"entity_id": "yes"}) is None
+    assert ha.State.from_dict(None) is None
+    assert ha.State.from_dict({"state": "yes"}) is None
+    assert ha.State.from_dict({"entity_id": "yes"}) is None
     # Make sure invalid context data doesn't crash
-    wrong_context = op.State.from_dict(
+    wrong_context = ha.State.from_dict(
         {
             "entity_id": "light.kitchen",
             "state": "on",
@@ -584,13 +584,13 @@ def test_state_dict_conversion_with_wrong_data():
 def test_state_repr():
     """Test state.repr."""
     assert (
-        str(op.State("happy.happy", "on", last_changed=datetime(1984, 12, 8, 12, 0, 0)))
+        str(ha.State("happy.happy", "on", last_changed=datetime(1984, 12, 8, 12, 0, 0)))
         == "<state happy.happy=on @ 1984-12-08T12:00:00+00:00>"
     )
 
     assert (
         str(
-            op.State(
+            ha.State(
                 "happy.happy",
                 "on",
                 {"brightness": 144},
@@ -692,17 +692,17 @@ async def test_statemachine_force_update(opp):
 
 def test_service_call_repr():
     """Test ServiceCall repr."""
-    call = op.ServiceCall("openpeerpower", "start")
+    call = ha.ServiceCall("openpeerpower", "start")
     assert str(call) == f"<ServiceCall openpeerpower.start (c:{call.context.id})>"
 
-    call2 = op.ServiceCall("openpeerpower", "start", {"fast": "yes"})
+    call2 = ha.ServiceCall("openpeerpower", "start", {"fast": "yes"})
     assert (
         str(call2)
         == f"<ServiceCall openpeerpower.start (c:{call2.context.id}): fast=yes>"
     )
 
 
-async def test_serviceregistry_op._service(opp):
+async def test_serviceregistry_has_service(opp):
     """Test has_service method."""
     opp.services.async_register("test_domain", "test_service", lambda call: None)
     assert len(opp.services.async_services()) == 1
@@ -729,7 +729,7 @@ async def test_serviceregistry_call_with_blocking_done_in_time(opp):
 
 async def test_serviceregistry_call_non_existing_with_blocking(opp):
     """Test non-existing with blocking."""
-    with pytest.raises(op.ServiceNotFound):
+    with pytest.raises(ha.ServiceNotFound):
         await opp.services.async_call("test_domain", "i_do_not_exist", blocking=True)
 
 
@@ -772,7 +772,7 @@ async def test_serviceregistry_callback_service(opp):
     """Test registering and calling an async service."""
     calls = []
 
-    @op.callback
+    @ha.callback
     def service_handler(call):
         """Service handler coroutine."""
         calls.append(call)
@@ -835,7 +835,7 @@ async def test_serviceregistry_async_service_raise_exception(opp):
 async def test_serviceregistry_callback_service_raise_exception(opp):
     """Test registering and calling an callback service raise exception."""
 
-    @op.callback
+    @ha.callback
     def service_handler(_):
         """Service handler coroutine."""
         raise ValueError
@@ -854,9 +854,9 @@ async def test_serviceregistry_callback_service_raise_exception(opp):
 
 def test_config_defaults():
     """Test config defaults."""
-   opp =  Mock()
-    config = op.config(opp)
-    assert config(opp is opp
+    opp = Mock()
+    config = ha.Config(opp)
+    assert config.opp is opp
     assert config.latitude == 0
     assert config.longitude == 0
     assert config.elevation == 0
@@ -878,24 +878,24 @@ def test_config_defaults():
 
 def test_config_path_with_file():
     """Test get_config_path method."""
-    config = op.Config(None)
+    config = ha.Config(None)
     config.config_dir = "/test/ha-config"
     assert config.path("test.conf") == "/test/ha-config/test.conf"
 
 
 def test_config_path_with_dir_and_file():
     """Test get_config_path method."""
-    config = op.Config(None)
+    config = ha.Config(None)
     config.config_dir = "/test/ha-config"
     assert config.path("dir", "test.conf") == "/test/ha-config/dir/test.conf"
 
 
 def test_config_as_dict():
     """Test as dict."""
-    config = op.Config(None)
+    config = ha.Config(None)
     config.config_dir = "/test/ha-config"
-    config opp =MagicMock()
-    type(config(opp.state).value = PropertyMock(return_value="RUNNING")
+    config.opp = MagicMock()
+    type(config.opp.state).value = PropertyMock(return_value="RUNNING")
     expected = {
         "latitude": 0,
         "longitude": 0,
@@ -921,7 +921,7 @@ def test_config_as_dict():
 
 def test_config_is_allowed_path():
     """Test is_allowed_path method."""
-    config = op.Config(None)
+    config = ha.Config(None)
     with TemporaryDirectory() as tmp_dir:
         # The created dir is in /tmp. This is a symlink on OS X
         # causing this test to fail unless we resolve path first.
@@ -938,7 +938,7 @@ def test_config_is_allowed_path():
         config.allowlist_external_dirs = {"/home", "/var"}
 
         invalid = [
-            ".opp/config/secure",
+            "/opp/config/secure",
             "/etc/passwd",
             "/root/secure_file",
             "/var/../etc/passwd",
@@ -953,7 +953,7 @@ def test_config_is_allowed_path():
 
 def test_config_is_allowed_external_url():
     """Test is_allowed_external_url method."""
-    config = op.Config(None)
+    config = ha.Config(None)
     config.allowlist_external_urls = [
         "http://x.com/",
         "https://y.com/bla/",
@@ -984,7 +984,7 @@ async def test_event_on_update(opp):
     """Test that event is fired on update."""
     events = []
 
-    @op.callback
+    @ha.callback
     def callback(event):
         events.append(event)
 
@@ -1009,9 +1009,9 @@ async def test_bad_timezone_raises_value_error(opp):
 @patch("openpeerpower.core.monotonic")
 def test_create_timer(mock_monotonic, loop):
     """Test create timer."""
-   opp =  MagicMock()
+    opp = MagicMock()
     funcs = []
-    orig_callback = op.callback
+    orig_callback = ha.callback
 
     def mock_callback(func):
         funcs.append(func)
@@ -1023,7 +1023,7 @@ def test_create_timer(mock_monotonic, loop):
         "openpeerpower.core.dt_util.utcnow",
         return_value=datetime(2018, 12, 31, 3, 4, 5, 333333),
     ):
-        op._async_create_timer(opp)
+        ha._async_create_timer(opp)
 
     assert len(funcs) == 2
     fire_time_event, stop_timer = funcs
@@ -1061,9 +1061,9 @@ def test_create_timer(mock_monotonic, loop):
 @patch("openpeerpower.core.monotonic")
 def test_timer_out_of_sync(mock_monotonic, loop):
     """Test create timer."""
-   opp =  MagicMock()
+    opp = MagicMock()
     funcs = []
-    orig_callback = op.callback
+    orig_callback = ha.callback
 
     def mock_callback(func):
         funcs.append(func)
@@ -1075,7 +1075,7 @@ def test_timer_out_of_sync(mock_monotonic, loop):
         "openpeerpower.core.dt_util.utcnow",
         return_value=datetime(2018, 12, 31, 3, 4, 5, 333333),
     ):
-        op._async_create_timer(opp)
+        ha._async_create_timer(opp)
 
     delay, callback, target = opp.loop.call_later.mock_calls[0][1]
 
@@ -1113,25 +1113,25 @@ def test_timer_out_of_sync(mock_monotonic, loop):
 
 async def test_opp_start_starts_the_timer(loop):
     """Test when opp starts, it starts the timer."""
-   opp =  op.OpenPeerPower()
+    opp = ha.OpenPeerPower()
 
     try:
         with patch("openpeerpower.core._async_create_timer") as mock_timer:
             await opp.async_start()
 
-        assert opp.state == op.CoreState.running
+        assert opp.state == ha.CoreState.running
         assert not opp._track_task
         assert len(mock_timer.mock_calls) == 1
         assert mock_timer.mock_calls[0][1][0] is opp
 
     finally:
         await opp.async_stop()
-        assert opp.state == op.CoreState.stopped
+        assert opp.state == ha.CoreState.stopped
 
 
 async def test_start_taking_too_long(loop, caplog):
     """Test when async_start takes too long."""
-   opp =  op.OpenPeerPower()
+    opp = ha.OpenPeerPower()
     caplog.set_level(logging.WARNING)
 
     try:
@@ -1140,19 +1140,19 @@ async def test_start_taking_too_long(loop, caplog):
         ), patch("openpeerpower.core._async_create_timer") as mock_timer:
             await opp.async_start()
 
-        assert opp.state == op.CoreState.running
+        assert opp.state == ha.CoreState.running
         assert len(mock_timer.mock_calls) == 1
         assert mock_timer.mock_calls[0][1][0] is opp
         assert "Something is blocking Open Peer Power" in caplog.text
 
     finally:
         await opp.async_stop()
-        assert opp.state == op.CoreState.stopped
+        assert opp.state == ha.CoreState.stopped
 
 
 async def test_track_task_functions(loop):
     """Test function to start/stop track task and initial state."""
-   opp =  op.OpenPeerPower()
+    opp = ha.OpenPeerPower()
     try:
         assert opp._track_task
 
@@ -1168,7 +1168,7 @@ async def test_track_task_functions(loop):
 async def test_service_executed_with_subservices(opp):
     """Test we block correctly till all services done."""
     calls = async_mock_service(opp, "test", "inner")
-    context = op.Context()
+    context = ha.Context()
 
     async def handle_outer(call):
         """Handle outer service call."""
@@ -1195,7 +1195,7 @@ async def test_service_call_event_contains_original_data(opp):
     """Test that service call event contains original data."""
     events = []
 
-    @op.callback
+    @ha.callback
     def callback(event):
         events.append(event)
 
@@ -1205,7 +1205,7 @@ async def test_service_call_event_contains_original_data(opp):
         opp, "test", "service", vol.Schema({"number": vol.Coerce(int)})
     )
 
-    context = op.Context()
+    context = ha.Context()
     await opp.services.async_call(
         "test", "service", {"number": "23"}, blocking=True, context=context
     )
@@ -1220,12 +1220,12 @@ async def test_service_call_event_contains_original_data(opp):
 
 def test_context():
     """Test context init."""
-    c = op.Context()
+    c = ha.Context()
     assert c.user_id is None
     assert c.parent_id is None
     assert c.id is not None
 
-    c = op.Context(23, 100)
+    c = ha.Context(23, 100)
     assert c.user_id == 23
     assert c.parent_id == 100
     assert c.id is not None
@@ -1235,7 +1235,7 @@ async def test_async_functions_with_callback(opp):
     """Test we deal with async functions accidentally marked as callback."""
     runs = []
 
-    @op.callback
+    @ha.callback
     async def test():
         runs.append(True)
 
@@ -1246,7 +1246,7 @@ async def test_async_functions_with_callback(opp):
     await opp.async_block_till_done()
     assert len(runs) == 2
 
-    @op.callback
+    @ha.callback
     async def service_handler(call):
         runs.append(True)
 
@@ -1308,7 +1308,7 @@ def test_valid_entity_id():
         "light.Kitchen",
         "lightkitchen",
     ]:
-        assert not op.valid_entity_id(invalid), invalid
+        assert not ha.valid_entity_id(invalid), invalid
 
     for valid in [
         "1.a",
@@ -1320,13 +1320,13 @@ def test_valid_entity_id():
         "light.kitchen",
         "light.something_yoo",
     ]:
-        assert op.valid_entity_id(valid), valid
+        assert ha.valid_entity_id(valid), valid
 
 
 async def test_additional_data_in_core_config(opp, opp_storage):
     """Test that we can handle additional data in core configuration."""
-    config = op.config(opp)
-    opp.storage[op.CORE_STORAGE_KEY] = {
+    config = ha.Config(opp)
+    opp_storage[ha.CORE_STORAGE_KEY] = {
         "version": 1,
         "data": {"location_name": "Test Name", "additional_valid_key": "value"},
     }
@@ -1336,11 +1336,11 @@ async def test_additional_data_in_core_config(opp, opp_storage):
 
 async def test_start_events(opp):
     """Test events fired when starting Open Peer Power."""
-    opp.state = op.CoreState.not_running
+    opp.state = ha.CoreState.not_running
 
     all_events = []
 
-    @op.callback
+    @ha.callback
     def capture_events(ev):
         all_events.append(ev.event_type)
 
@@ -1348,9 +1348,9 @@ async def test_start_events(opp):
 
     core_states = []
 
-    @op.callback
+    @ha.callback
     def capture_core_state(_):
-        core_states.append.opp.state)
+        core_states.append(opp.state)
 
     opp.bus.async_listen(EVENT_CORE_CONFIG_UPDATE, capture_core_state)
 
@@ -1363,7 +1363,7 @@ async def test_start_events(opp):
         EVENT_CORE_CONFIG_UPDATE,
         EVENT_OPENPEERPOWER_STARTED,
     ]
-    assert core_states == [op.CoreState.starting, op.CoreState.running]
+    assert core_states == [ha.CoreState.starting, ha.CoreState.running]
 
 
 async def test_log_blocking_events(opp, caplog):
@@ -1489,7 +1489,7 @@ async def test_oppjob_forbid_coroutine():
     coro = bla()
 
     with pytest.raises(ValueError):
-        op.OppJob(coro)
+        ha.OppJob(coro)
 
     # To avoid warning about unawaited coro
     await coro
@@ -1503,14 +1503,14 @@ async def test_reserving_states(opp):
     opp.states.async_set("light.bedroom", "on")
     assert opp.states.async_available("light.bedroom") is False
 
-    with pytest.raises(op.OpenPeerPowerError):
+    with pytest.raises(ha.OpenPeerPowerError):
         opp.states.async_reserve("light.bedroom")
 
     opp.states.async_remove("light.bedroom")
     assert opp.states.async_available("light.bedroom") is True
     opp.states.async_set("light.bedroom", "on")
 
-    with pytest.raises(op.OpenPeerPowerError):
+    with pytest.raises(ha.OpenPeerPowerError):
         opp.states.async_reserve("light.bedroom")
 
     assert opp.states.async_available("light.bedroom") is False
@@ -1523,11 +1523,11 @@ async def test_state_change_events_match_state_time(opp):
 
     events = []
 
-    @op.callback
+    @ha.callback
     def _event_listener(event):
         events.append(event)
 
-    opp.bus.async_listen(op.EVENT_STATE_CHANGED, _event_listener)
+    opp.bus.async_listen(ha.EVENT_STATE_CHANGED, _event_listener)
 
     opp.states.async_set("light.bedroom", "on")
     await opp.async_block_till_done()

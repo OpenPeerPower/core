@@ -101,8 +101,8 @@ def test_url():
         "invalid",
         None,
         100,
-        "htp://op.io",
-        "http//op.io",
+        "htp://ha.io",
+        "http//ha.io",
         "http://??,**",
         "https://??,**",
     ):
@@ -112,9 +112,9 @@ def test_url():
     for value in (
         "http://localhost",
         "https://localhost/test/index.html",
-        "http://open-peer-power.io",
-        "http://open-peer-power.io/test/",
-        "https://community.open-peer-power.io/",
+        "http://openpeerpower.io",
+        "http://openpeerpower.io/test/",
+        "https://community.openpeerpower.io/",
     ):
         assert schema(value)
 
@@ -425,7 +425,7 @@ def test_string_with_no_html():
         3,
         "Hello",
         "**Hello**",
-        "This has no HTML [Link](https://open-peer-power.io)",
+        "This has no HTML [Link](https://openpeerpower.io)",
     ):
         schema(value)
 

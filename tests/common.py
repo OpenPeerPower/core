@@ -18,9 +18,9 @@ from typing import Any, Awaitable, Collection, Optional
 from unittest.mock import AsyncMock, Mock, patch
 import uuid
 
-from aiohttp.test_utils import unused_port as get_test_instance_port  # noqa
+from aiohttp.test_utils import unused_port as get_test_instance_port  # noqa: F401
 
-from openpeerpower import auth, config_entries, core as op, loader
+from openpeerpower import auth, config_entries, core as ha, loader
 from openpeerpower.auth import (
     auth_store,
     models as auth_models,
@@ -36,11 +36,8 @@ from openpeerpower.components.device_automation import (  # noqa: F401
 from openpeerpower.components.mqtt.models import Message
 from openpeerpower.config import async_process_component_config
 from openpeerpower.const import (
-    ATTR_DISCOVERED,
-    ATTR_SERVICE,
     DEVICE_DEFAULT_NAME,
     EVENT_OPENPEERPOWER_CLOSE,
-    EVENT_PLATFORM_DISCOVERED,
     EVENT_STATE_CHANGED,
     EVENT_TIME_CHANGED,
     STATE_OFF,
@@ -73,13 +70,13 @@ CLIENT_REDIRECT_URI = "https://example.com/app/callback"
 def threadsafe_callback_factory(func):
     """Create threadsafe functions out of callbacks.
 
-    Callback needs to have  opp, as first argument.
+    Callback needs to have `opp` as first argument.
     """
 
     @ft.wraps(func)
     def threadsafe(*args, **kwargs):
         """Call func threadsafe."""
-       opp = args[0]
+        opp = args[0]
         return run_callback_threadsafe(
             opp.loop, ft.partial(func, *args, **kwargs)
         ).result()
@@ -90,13 +87,13 @@ def threadsafe_callback_factory(func):
 def threadsafe_coroutine_factory(func):
     """Create threadsafe functions out of coroutine.
 
-    Callback needs to have  opp, as first argument.
+    Callback needs to have `opp` as first argument.
     """
 
     @ft.wraps(func)
     def threadsafe(*args, **kwargs):
         """Call func threadsafe."""
-       opp = args[0]
+        opp = args[0]
         return asyncio.run_coroutine_threadsafe(
             func(*args, **kwargs), opp.loop
         ).result()
@@ -113,7 +110,7 @@ def get_test_open_peer_power():
     """Return a Open Peer Power object pointing at test config directory."""
     loop = asyncio.new_event_loop()
     asyncio.set_event_loop(loop)
-   opp = loop.run_until_complete(async_test_open_peer_power(loop))
+    opp = loop.run_until_complete(async_test_open_peer_power(loop))
 
     loop_stop_event = threading.Event()
 
@@ -142,13 +139,13 @@ def get_test_open_peer_power():
 
     threading.Thread(name="LoopThread", target=run_loop, daemon=False).start()
 
-    return.opp
+    return opp
 
 
 # pylint: disable=protected-access
 async def async_test_open_peer_power(loop, load_registries=True):
     """Return a Open Peer Power object pointing at test config dir."""
-   opp =  op.OpenPeerPower()
+    opp = ha.OpenPeerPower()
     store = auth_store.AuthStore(opp)
     opp.auth = auth.AuthManager(opp, store, {}, {})
     ensure_auth_manager_loaded(opp.auth)
@@ -289,7 +286,7 @@ async def async_test_open_peer_power(loop, load_registries=True):
         )
         await opp.async_block_till_done()
 
-    opp.state = op.CoreState.running
+    opp.state = ha.CoreState.running
 
     # Mock async_start
     orig_start = opp.async_start
@@ -304,21 +301,21 @@ async def async_test_open_peer_power(loop, load_registries=True):
 
     opp.async_start = mock_async_start
 
-    @op.callback
+    @ha.callback
     def clear_instance(event):
         """Clear global instance."""
         INSTANCES.remove(opp)
 
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_CLOSE, clear_instance)
 
-    return.opp
+    return opp
 
 
 def async_mock_service(opp, domain, service, schema=None):
     """Set up a fake service & return a calls log list to this service."""
     calls = []
 
-    @op.callback
+    @ha.callback
     def mock_service_log(call):  # pylint: disable=unnecessary-lambda
         """Mock service call."""
         calls.append(call)
@@ -331,7 +328,7 @@ def async_mock_service(opp, domain, service, schema=None):
 mock_service = threadsafe_callback_factory(async_mock_service)
 
 
-@op.callback
+@ha.callback
 def async_mock_intent(opp, intent_typ):
     """Set up a fake intent handler."""
     intents = []
@@ -349,7 +346,7 @@ def async_mock_intent(opp, intent_typ):
     return intents
 
 
-@op.callback
+@ha.callback
 def async_fire_mqtt_message(opp, topic, payload, qos=0, retain=False):
     """Fire the MQTT message."""
     if isinstance(payload, str):
@@ -361,19 +358,19 @@ def async_fire_mqtt_message(opp, topic, payload, qos=0, retain=False):
 fire_mqtt_message = threadsafe_callback_factory(async_fire_mqtt_message)
 
 
-@op.callback
+@ha.callback
 def async_fire_time_changed(opp, datetime_, fire_all=False):
     """Fire a time changes event."""
     opp.bus.async_fire(EVENT_TIME_CHANGED, {"now": date_util.as_utc(datetime_)})
 
-    for task in list.opp.loop._scheduled):
+    for task in list(opp.loop._scheduled):
         if not isinstance(task, asyncio.TimerHandle):
             continue
         if task.cancelled():
             continue
 
         mock_seconds_into_future = datetime_.timestamp() - time.time()
-        future_seconds = task.when() -.opp.loop.time()
+        future_seconds = task.when() - opp.loop.time()
 
         if fire_all or mock_seconds_into_future >= future_seconds:
             with patch(
@@ -385,21 +382,6 @@ def async_fire_time_changed(opp, datetime_, fire_all=False):
 
 
 fire_time_changed = threadsafe_callback_factory(async_fire_time_changed)
-
-
-def fire_service_discovered(opp, service, info):
-    """Fire the MQTT message."""
-    opp.bus.fire(
-        EVENT_PLATFORM_DISCOVERED, {ATTR_SERVICE: service, ATTR_DISCOVERED: info}
-    )
-
-
-@op.callback
-def async_fire_service_discovered(opp, service, info):
-    """Fire the MQTT message."""
-    opp.bus.async_fire(
-        EVENT_PLATFORM_DISCOVERED, {ATTR_SERVICE: service, ATTR_DISCOVERED: info}
-    )
 
 
 def load_fixture(filename):
@@ -419,7 +401,7 @@ def mock_state_change_event(opp, new_state, old_state=None):
     opp.bus.fire(EVENT_STATE_CHANGED, event_data, context=new_state.context)
 
 
-@op.callback
+@ha.callback
 def mock_component(opp, component):
     """Mock a component is setup."""
     if component in opp.config.components:
@@ -536,7 +518,7 @@ async def register_auth_provider(opp, config):
     return provider
 
 
-@op.callback
+@ha.callback
 def ensure_auth_manager_loaded(auth_mgr):
     """Ensure an auth manager is considered loaded."""
     store = auth_mgr._store
@@ -804,7 +786,7 @@ def patch_yaml_files(files_dict, endswith=True):
                 setattr(res, "name", fname)
                 return res
 
-        # Fallback for.opp.components (i.e. services.yaml)
+        # Fallback for opp.components (i.e. services.yaml)
         if "openpeerpower/components" in fname:
             _LOGGER.debug("patch_yaml_files using real file: %s", fname)
             return open(fname, encoding="utf-8")
@@ -1113,7 +1095,7 @@ def async_capture_events(opp, event_name):
     """Create a helper that captures events."""
     events = []
 
-    @op.callback
+    @ha.callback
     def capture_events(event):
         events.append(event)
 
@@ -1122,12 +1104,12 @@ def async_capture_events(opp, event_name):
     return events
 
 
-@op.callback
+@ha.callback
 def async_mock_signal(opp, signal):
     """Catch all dispatches to a signal."""
     calls = []
 
-    @op.callback
+    @ha.callback
     def mock_signal_handler(*args):
         """Mock service call."""
         calls.append(args)

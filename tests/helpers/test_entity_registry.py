@@ -164,10 +164,10 @@ async def test_loading_saving_data(opp, registry):
         device_class="mock-device-class",
         disabled_by=entity_registry.DISABLED_OPP,
         original_name="Original Name",
-        original_icon= opp:original-icon",
+        original_icon="opp:original-icon",
     )
     orig_entry2 = registry.async_update_entity(
-        orig_entry2.entity_id, name="User Name", icon= opp:user-icon"
+        orig_entry2.entity_id, name="User Name", icon="opp:user-icon"
     )
 
     assert len(registry.entities) == 2
@@ -192,9 +192,9 @@ async def test_loading_saving_data(opp, registry):
     assert new_entry2.supported_features == 5
     assert new_entry2.device_class == "mock-device-class"
     assert new_entry2.name == "User Name"
-    assert new_entry2.icon == opp:user-icon"
+    assert new_entry2.icon == "opp:user-icon"
     assert new_entry2.original_name == "Original Name"
-    assert new_entry2.original_icon == opp:original-icon"
+    assert new_entry2.original_icon == "opp:original-icon"
 
 
 def test_generate_entity_considers_registered_entities(registry):
@@ -220,7 +220,7 @@ def test_is_registered(registry):
 @pytest.mark.parametrize("load_registries", [False])
 async def test_loading_extra_values(opp, opp_storage):
     """Test we load extra data from the registry."""
-    opp.storage[entity_registry.STORAGE_KEY] = {
+    opp_storage[entity_registry.STORAGE_KEY] = {
         "version": entity_registry.STORAGE_VERSION,
         "data": {
             "entities": [
@@ -242,16 +242,16 @@ async def test_loading_extra_values(opp, opp_storage):
                     "disabled_by": "user",
                 },
                 {
-                    "entity_id": "test.disabled.opp",
+                    "entity_id": "test.disabled_opp",
                     "platform": "super_platform",
-                    "unique_id": "disabled.opp",
-                    "disabled_by":  opp.,
+                    "unique_id": "disabled-opp",
+                    "disabled_by": "opp",
                 },
                 {
                     "entity_id": "test.invalid__entity",
                     "platform": "super_platform",
-                    "unique_id": "invalid.opp",
-                    "disabled_by":  opp.,
+                    "unique_id": "invalid-opp",
+                    "disabled_by": "opp",
                 },
             ]
         },
@@ -272,14 +272,14 @@ async def test_loading_extra_values(opp, opp_storage):
     assert entry_without_name.name is None
     assert not entry_with_name.disabled
 
-    entry_disabled opp =registry.async_get_or_create(
-        "test", "super_platform", "disabled.opp"
+    entry_disabled_opp = registry.async_get_or_create(
+        "test", "super_platform", "disabled-opp"
     )
     entry_disabled_user = registry.async_get_or_create(
         "test", "super_platform", "disabled-user"
     )
-    assert entry_disabled(opp.disabled
-    assert entry_disabled(opp.disabled_by == entity_registry.DISABLED_OPP
+    assert entry_disabled_opp.disabled
+    assert entry_disabled_opp.disabled_by == entity_registry.DISABLED_OPP
     assert entry_disabled_user.disabled
     assert entry_disabled_user.disabled_by == entity_registry.DISABLED_USER
 
@@ -313,7 +313,7 @@ async def test_updating_config_entry_id(opp, registry, update_events):
     assert update_events[0]["entity_id"] == entry.entity_id
     assert update_events[1]["action"] == "update"
     assert update_events[1]["entity_id"] == entry.entity_id
-    assert update_events[1]["changes"] == ["config_entry_id"]
+    assert update_events[1]["changes"] == {"config_entry_id": "mock-id-1"}
 
 
 async def test_removing_config_entry_id(opp, registry, update_events):
@@ -361,7 +361,7 @@ async def test_migration(opp):
             "unique_id": "test-unique",
             "platform": "test-platform",
             "name": "Test Name",
-            "disabled_by":  opp.,
+            "disabled_by": "opp",
         }
     }
     with patch("os.path.isfile", return_value=True), patch("os.remove"), patch(
@@ -378,13 +378,13 @@ async def test_migration(opp):
         config_entry=mock_config,
     )
     assert entry.name == "Test Name"
-    assert entry.disabled_by == opp"
+    assert entry.disabled_by == "opp"
     assert entry.config_entry_id == "test-config-id"
 
 
 async def test_loading_invalid_entity_id(opp, opp_storage):
     """Test we autofix invalid entity IDs."""
-    opp.storage[entity_registry.STORAGE_KEY] = {
+    opp_storage[entity_registry.STORAGE_KEY] = {
         "version": entity_registry.STORAGE_VERSION,
         "data": {
             "entities": [
@@ -497,13 +497,13 @@ async def test_update_entity(registry):
 
 async def test_disabled_by(registry):
     """Test that we can disable an entry when we create it."""
-    entry = registry.async_get_or_create("light", "hue", "5678", disabled_by= opp")
-    assert entry.disabled_by == opp"
+    entry = registry.async_get_or_create("light", "hue", "5678", disabled_by="opp")
+    assert entry.disabled_by == "opp"
 
     entry = registry.async_get_or_create(
         "light", "hue", "5678", disabled_by="integration"
     )
-    assert entry.disabled_by == opp"
+    assert entry.disabled_by == "opp"
 
     entry2 = registry.async_get_or_create("light", "hue", "1234")
     assert entry2.disabled_by is None
@@ -556,7 +556,7 @@ async def test_restore_states(opp):
         supported_features=5,
         device_class="mock-device-class",
         original_name="Mock Original Name",
-        original_icon= opp:original-icon",
+        original_icon="opp:original-icon",
     )
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
@@ -579,7 +579,7 @@ async def test_restore_states(opp):
         "device_class": "mock-device-class",
         "restored": True,
         "friendly_name": "Mock Original Name",
-        "icon":  opp.original-icon",
+        "icon": "opp:original-icon",
     }
 
     registry.async_remove("light.disabled")

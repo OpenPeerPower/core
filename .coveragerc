@@ -145,6 +145,7 @@ omit =
     openpeerpower/components/clickatell/notify.py
     openpeerpower/components/clicksend/notify.py
     openpeerpower/components/clicksend_tts/notify.py
+    openpeerpower/components/climacell/weather.py
     openpeerpower/components/cmus/media_player.py
     openpeerpower/components/co2signal/*
     openpeerpower/components/coinbase/*
@@ -271,6 +272,8 @@ omit =
     openpeerpower/components/evohome/*
     openpeerpower/components/ezviz/*
     openpeerpower/components/familyhub/camera.py
+    openpeerpower/components/faa_delays/__init__.py
+    openpeerpower/components/faa_delays/binary_sensor.py
     openpeerpower/components/fastdotcom/*
     openpeerpower/components/ffmpeg/camera.py
     openpeerpower/components/fibaro/*
@@ -311,7 +314,6 @@ omit =
     openpeerpower/components/foscam/camera.py
     openpeerpower/components/foursquare/*
     openpeerpower/components/free_mobile/notify.py
-    openpeerpower/components/freebox/__init__.py
     openpeerpower/components/freebox/device_tracker.py
     openpeerpower/components/freebox/router.py
     openpeerpower/components/freebox/sensor.py
@@ -374,6 +376,9 @@ omit =
     openpeerpower/components/harmony/data.py
     openpeerpower/components/harmony/remote.py
     openpeerpower/components/harmony/util.py
+    openpeerpower/components/oppio/binary_sensor.py
+    openpeerpower/components/oppio/entity.py
+    openpeerpower/components/oppio/sensor.py
     openpeerpower/components/haveibeenpwned/sensor.py
     openpeerpower/components/hdmi_cec/*
     openpeerpower/components/heatmiser/climate.py
@@ -585,6 +590,9 @@ omit =
     openpeerpower/components/mpd/media_player.py
     openpeerpower/components/mqtt_room/sensor.py
     openpeerpower/components/msteams/notify.py
+    openpeerpower/components/mullvad/__init__.py
+    openpeerpower/components/mullvad/binary_sensor.py
+    openpeerpower/components/nest/const.py
     openpeerpower/components/mvglive/sensor.py
     openpeerpower/components/mychevy/*
     openpeerpower/components/mycroft/*
@@ -717,6 +725,7 @@ omit =
     openpeerpower/components/pencom/switch.py
     openpeerpower/components/philips_js/__init__.py
     openpeerpower/components/philips_js/media_player.py
+    openpeerpower/components/philips_js/remote.py
     openpeerpower/components/pi_hole/sensor.py
     openpeerpower/components/pi4ioe5v9xxxx/binary_sensor.py
     openpeerpower/components/pi4ioe5v9xxxx/switch.py
@@ -978,7 +987,10 @@ omit =
     openpeerpower/components/toon/sensor.py
     openpeerpower/components/toon/switch.py
     openpeerpower/components/torque/sensor.py
-    openpeerpower/components/totalconnect/*
+    openpeerpower/components/totalconnect/__init__.py
+    openpeerpower/components/totalconnect/alarm_control_panel.py
+    openpeerpower/components/totalconnect/binary_sensor.py
+    openpeerpower/components/totalconnect/const.py
     openpeerpower/components/touchline/climate.py
     openpeerpower/components/tplink/common.py
     openpeerpower/components/tplink/switch.py
@@ -1042,6 +1054,7 @@ omit =
     openpeerpower/components/vesync/common.py
     openpeerpower/components/vesync/const.py
     openpeerpower/components/vesync/fan.py
+    openpeerpower/components/vesync/light.py
     openpeerpower/components/vesync/switch.py
     openpeerpower/components/viaggiatreno/sensor.py
     openpeerpower/components/vicare/*

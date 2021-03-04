@@ -14,14 +14,14 @@ PROJECT_COPYRIGHT = f" 2013-{dt.now().year}, {PROJECT_AUTHOR}"
 PROJECT_URL = "https://www.openpeerpower.io/"
 PROJECT_EMAIL = "hello@openpeerpower.io"
 
-PROJECT_GITHUB_USERNAME = "openpeerpower"
+PROJECT_GITHUB_USERNAME = "open-peer-power"
 PROJECT_GITHUB_REPOSITORY = "core"
 
 PYPI_URL = f"https://pypi.python.org/pypi/{PROJECT_PACKAGE_NAME}"
 GITHUB_PATH = f"{PROJECT_GITHUB_USERNAME}/{PROJECT_GITHUB_REPOSITORY}"
 GITHUB_URL = f"https://github.com/{GITHUB_PATH}"
 
-DOWNLOAD_URL = f"{GITHUB_URL}/archive/ opp_const.__version__}.zip"
+DOWNLOAD_URL = f"{GITHUB_URL}/archive/{opp_const.__version__}.zip"
 PROJECT_URLS = {
     "Bug Reports": f"{GITHUB_URL}/issues",
     "Dev Docs": "https://developers.openpeerpower.io/",
@@ -32,11 +32,11 @@ PROJECT_URLS = {
 PACKAGES = find_packages(exclude=["tests", "tests.*"])
 
 REQUIRES = [
-    "aiohttp==3.7.3",
+    "aiohttp==3.7.4",
     "astral==1.10.1",
     "async_timeout==3.0.1",
     "attrs==19.3.0",
-    "awesomeversion==21.2.2",
+    "awesomeversion==21.2.3",
     "bcrypt==3.1.7",
     "certifi>=2020.12.5",
     "ciso8601==2.1.3",
@@ -60,7 +60,7 @@ MIN_PY_VERSION = ".".join(map(str, opp_const.REQUIRED_PYTHON_VER))
 
 setup(
     name=PROJECT_PACKAGE_NAME,
-    version opp_const.__version__,
+    version=opp_const.__version__,
     url=PROJECT_URL,
     download_url=DOWNLOAD_URL,
     project_urls=PROJECT_URLS,
