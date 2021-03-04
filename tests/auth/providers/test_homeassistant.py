@@ -32,13 +32,13 @@ def legacy_data(opp):
 
 async def test_validating_password_invalid_user(data, opp):
     """Test validating an invalid user."""
-    with pytest.raises.opp_auth.InvalidAuth):
+    with pytest.raises(opp_auth.InvalidAuth):
         data.validate_login("non-existing", "pw")
 
 
 async def test_not_allow_set_id():
     """Test we are not allowed to set an ID in config."""
-   opp = Mock()
+    opp = Mock()
     with pytest.raises(vol.Invalid):
         await auth_provider_from_config(
             opp, None, {"type": "openpeerpower", "id": "invalid"}
@@ -60,7 +60,7 @@ async def test_new_users_populate_values(opp, data):
 
 async def test_changing_password_raises_invalid_user(data, opp):
     """Test that changing password raises invalid user."""
-    with pytest.raises.opp_auth.InvalidUser):
+    with pytest.raises(opp_auth.InvalidUser):
         data.change_password("non-existing", "pw")
 
 
@@ -76,7 +76,7 @@ async def test_adding_user(data, opp):
 async def test_adding_user_duplicate_username(data, opp):
     """Test adding a user with duplicate username."""
     data.add_auth("test-user", "test-pass")
-    with pytest.raises.opp_auth.InvalidUser):
+    with pytest.raises(opp_auth.InvalidUser):
         data.add_auth("TEST-user ", "other-pass")
 
 
@@ -84,13 +84,13 @@ async def test_validating_password_invalid_password(data, opp):
     """Test validating an invalid password."""
     data.add_auth("test-user", "test-pass")
 
-    with pytest.raises.opp_auth.InvalidAuth):
+    with pytest.raises(opp_auth.InvalidAuth):
         data.validate_login(" test-user ", "invalid-pass")
 
-    with pytest.raises.opp_auth.InvalidAuth):
+    with pytest.raises(opp_auth.InvalidAuth):
         data.validate_login("test-user", "test-pass ")
 
-    with pytest.raises.opp_auth.InvalidAuth):
+    with pytest.raises(opp_auth.InvalidAuth):
         data.validate_login("test-user", "Test-pass")
 
 
@@ -99,7 +99,7 @@ async def test_changing_password(data, opp):
     data.add_auth("test-user", "test-pass")
     data.change_password("TEST-USER ", "new-pass")
 
-    with pytest.raises.opp_auth.InvalidAuth):
+    with pytest.raises(opp_auth.InvalidAuth):
         data.validate_login("test-user", "test-pass")
 
     data.validate_login("test-UsEr", "new-pass")
@@ -110,7 +110,7 @@ async def test_login_flow_validates(data, opp):
     data.add_auth("test-user", "test-pass")
     await data.async_save()
 
-    provider = opp_auth. OppAuthProvider(
+    provider = opp_auth.OppAuthProvider(
         opp, auth_store.AuthStore(opp), {"type": "openpeerpower"}
     )
     flow = await provider.async_login_flow({})
@@ -173,7 +173,7 @@ async def test_legacy_adding_user(legacy_data, opp):
 async def test_legacy_adding_user_duplicate_username(legacy_data, opp):
     """Test in legacy mode adding a user with duplicate username."""
     legacy_data.add_auth("test-user", "test-pass")
-    with pytest.raises.opp_auth.InvalidUser):
+    with pytest.raises(opp_auth.InvalidUser):
         legacy_data.add_auth("test-user", "other-pass")
     # Not considered duplicate
     legacy_data.add_auth("test-user ", "test-pass")
@@ -184,7 +184,7 @@ async def test_legacy_validating_password_invalid_password(legacy_data, opp):
     """Test in legacy mode validating an invalid password."""
     legacy_data.add_auth("test-user", "test-pass")
 
-    with pytest.raises.opp_auth.InvalidAuth):
+    with pytest.raises(opp_auth.InvalidAuth):
         legacy_data.validate_login("test-user", "invalid-pass")
 
 
@@ -194,7 +194,7 @@ async def test_legacy_changing_password(legacy_data, opp):
     legacy_data.add_auth(user, "test-pass")
     legacy_data.change_password(user, "new-pass")
 
-    with pytest.raises.opp_auth.InvalidAuth):
+    with pytest.raises(opp_auth.InvalidAuth):
         legacy_data.validate_login(user, "test-pass")
 
     legacy_data.validate_login(user, "new-pass")
@@ -202,7 +202,7 @@ async def test_legacy_changing_password(legacy_data, opp):
 
 async def test_legacy_changing_password_raises_invalid_user(legacy_data, opp):
     """Test in legacy mode that we initialize an empty config."""
-    with pytest.raises.opp_auth.InvalidUser):
+    with pytest.raises(opp_auth.InvalidUser):
         legacy_data.change_password("non-existing", "pw")
 
 
@@ -211,7 +211,7 @@ async def test_legacy_login_flow_validates(legacy_data, opp):
     legacy_data.add_auth("test-user", "test-pass")
     await legacy_data.async_save()
 
-    provider = opp_auth. OppAuthProvider(
+    provider = opp_auth.OppAuthProvider(
         opp, auth_store.AuthStore(opp), {"type": "openpeerpower"}
     )
     flow = await provider.async_login_flow({})
@@ -249,7 +249,7 @@ async def test_legacy_saving_loading(legacy_data, opp):
     legacy_data.validate_login("test-user", "test-pass")
     legacy_data.validate_login("second-user", "second-pass")
 
-    with pytest.raises.opp_auth.InvalidAuth):
+    with pytest.raises(opp_auth.InvalidAuth):
         legacy_data.validate_login("test-user ", "test-pass")
 
 
@@ -276,7 +276,7 @@ async def test_legacy_get_or_create_credentials(opp, legacy_data):
 async def test_race_condition_in_data_loading(opp):
     """Test race condition in the opp_auth.Data loading.
 
-    Ref issue: https://github.com/open-peer-power/core/issues/21569
+    Ref issue: https://github.com/openpeerpower/core/issues/21569
     """
     counter = 0
 
@@ -286,7 +286,7 @@ async def test_race_condition_in_data_loading(opp):
         counter += 1
         await asyncio.sleep(0)
 
-    provider = opp_auth. OppAuthProvider(
+    provider = opp_auth.OppAuthProvider(
         opp, auth_store.AuthStore(opp), {"type": "openpeerpower"}
     )
     with patch("openpeerpower.helpers.storage.Store.async_load", new=mock_load):

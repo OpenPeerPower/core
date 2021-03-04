@@ -16,7 +16,7 @@
                     "name": "K\u00f6zponti egys\u00e9g neve",
                     "token": "API Token"
                 },
-                "description": "Sz\u00fcks\u00e9ge lesz az API Tokenre, tov\u00e1bbi inforaciok: https://www.open-peer-power.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token",
+                "description": "Sz\u00fcks\u00e9ge lesz az API Tokenre, tov\u00e1bbi inforaciok: https://www.openpeerpower.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token",
                 "title": "Csatlakozzon egy Xiaomi K\u00f6zponti egys\u00e9ghez"
             },
             "user": {

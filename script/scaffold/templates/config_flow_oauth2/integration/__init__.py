@@ -65,16 +65,16 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     session = config_entry_oauth2_flow.OAuth2Session(opp, entry, implementation)
 
     # If using a requests-based API lib
-    opp.data[DOMAIN][entry.entry_id] = api.ConfigEntryAutf(opp, session)
+    opp.data[DOMAIN][entry.entry_id] = api.ConfigEntryAuth(opp, session)
 
     # If using an aiohttp-based API lib
     opp.data[DOMAIN][entry.entry_id] = api.AsyncConfigEntryAuth(
         aiohttp_client.async_get_clientsession(opp), session
     )
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -85,8 +85,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

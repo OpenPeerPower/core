@@ -13,7 +13,7 @@
                     "name": "Ime prehoda",
                     "token": "API \u017eeton"
                 },
-                "description": "Potrebujete API \u017deton, glej https://www.open-peer-power.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token za navodila.",
+                "description": "Potrebujete API \u017deton, glej https://www.openpeerpower.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token za navodila.",
                 "title": "Pove\u017eite se s prehodom Xiaomi"
             },
             "user": {

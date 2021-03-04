@@ -2,7 +2,7 @@
   "domain": "upcloud",
   "name": "UpCloud",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/upcloud",
+  "documentation": "https://www.openpeerpower.io/integrations/upcloud",
   "requirements": ["upcloud-api==0.4.5"],
   "codeowners": ["@scop"]
 }

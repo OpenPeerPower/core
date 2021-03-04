@@ -16,7 +16,7 @@
                     "name": "\u7f51\u5173\u540d\u79f0",
                     "token": "API Token"
                 },
-                "description": "\u60a8\u9700\u8981\u83b7\u53d6\u4e00\u4e2a 32 \u4f4d\u7684 API Token\u3002\u5982\u9700\u5e2e\u52a9\uff0c\u8bf7\u53c2\u9605\u4ee5\u4e0b\u94fe\u63a5: https://www.open-peer-power.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token \u3002\u8bf7\u6ce8\u610f\u6b64 token \u4e0d\u540c\u4e8e\u201cXiaomi Aqara\u201d\u96c6\u6210\u6240\u9700\u7684 key\u3002",
+                "description": "\u60a8\u9700\u8981\u83b7\u53d6\u4e00\u4e2a 32 \u4f4d\u7684 API Token\u3002\u5982\u9700\u5e2e\u52a9\uff0c\u8bf7\u53c2\u9605\u4ee5\u4e0b\u94fe\u63a5: https://www.openpeerpower.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token \u3002\u8bf7\u6ce8\u610f\u6b64 token \u4e0d\u540c\u4e8e\u201cXiaomi Aqara\u201d\u96c6\u6210\u6240\u9700\u7684 key\u3002",
                 "title": "\u8fde\u63a5\u5230\u5c0f\u7c73\u7f51\u5173"
             },
             "user": {

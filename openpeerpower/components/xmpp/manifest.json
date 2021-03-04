@@ -1,7 +1,7 @@
 {
   "domain": "xmpp",
   "name": "Jabber (XMPP)",
-  "documentation": "https://www.open-peer-power.io/integrations/xmpp",
+  "documentation": "https://www.openpeerpower.io/integrations/xmpp",
   "requirements": ["slixmpp==1.7.0"],
   "codeowners": ["@fabaff", "@flowolf"]
 }

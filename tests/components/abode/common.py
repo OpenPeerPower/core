@@ -16,7 +16,7 @@ async def setup_platform(opp, platform):
     )
     mock_entry.add_to_opp(opp)
 
-    with patch("openpeerpower.components.abode.ABODE_PLATFORMS", [platform]), patch(
+    with patch("openpeerpower.components.abode.PLATFORMS", [platform]), patch(
         "abodepy.event_controller.sio"
     ), patch("abodepy.utils.save_cache"):
         assert await async_setup_component(opp, ABODE_DOMAIN, {})

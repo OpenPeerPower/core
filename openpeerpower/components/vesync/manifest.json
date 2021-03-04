@@ -1,7 +1,7 @@
 {
   "domain": "vesync",
   "name": "VeSync",
-  "documentation": "https://www.open-peer-power.io/integrations/vesync",
+  "documentation": "https://www.openpeerpower.io/integrations/vesync",
   "codeowners": [
     "@markperdue",
     "@webdjoe",

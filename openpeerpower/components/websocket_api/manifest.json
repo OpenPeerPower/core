@@ -1,7 +1,7 @@
 {
   "domain": "websocket_api",
   "name": "Open Peer Power WebSocket API",
-  "documentation": "https://www.open-peer-power.io/integrations/websocket_api",
+  "documentation": "https://www.openpeerpower.io/integrations/websocket_api",
   "dependencies": ["http"],
   "codeowners": ["@open-peer-power/core"],
   "quality_scale": "internal"

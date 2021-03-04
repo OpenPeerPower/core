@@ -4,6 +4,7 @@ from __future__ import annotations
 from collections import OrderedDict
 import logging
 import os
+from pathlib import Path
 from typing import List, NamedTuple, Optional
 
 import voluptuous as vol
@@ -42,7 +43,7 @@ class OpenPeerPowerConfig(OrderedDict):
     """Configuration result with errors attribute."""
 
     def __init__(self) -> None:
-        """Initialize HA config."""
+        """Initialize OP config."""
         super().__init__()
         self.errors: List[CheckConfigError] = []
 
@@ -87,13 +88,18 @@ async def async_check_op_config_file(opp: OpenPeerPower) -> OpenPeerPowerConfig:
     try:
         if not await opp.async_add_executor_job(os.path.isfile, config_path):
             return result.add_error("File configuration.yaml not found.")
-        config = await opp.async_add_executor_job(load_yaml_config_file, config_path)
+
+        assert opp.config.config_dir is not None
+
+        config = await opp.async_add_executor_job(
+            load_yaml_config_file,
+            config_path,
+            yaml_loader.Secrets(Path(opp.config.config_dir)),
+        )
     except FileNotFoundError:
         return result.add_error(f"File not found: {config_path}")
     except OpenPeerPowerError as err:
         return result.add_error(f"Error loading {config_path}: {err}")
-    finally:
-        yaml_loader.clear_secret_cache()
 
     # Extract and validate core [openpeerpower] config
     try:

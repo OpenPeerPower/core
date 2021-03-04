@@ -1,7 +1,7 @@
 {
   "domain": "tts",
   "name": "Text-to-Speech (TTS)",
-  "documentation": "https://www.open-peer-power.io/integrations/tts",
+  "documentation": "https://www.openpeerpower.io/integrations/tts",
   "requirements": ["mutagen==1.45.1"],
   "dependencies": ["http"],
   "after_dependencies": ["media_player"],

@@ -12,7 +12,7 @@ from openpeerpower.util import dt as dt_util
 from .typing import OpenPeerPowerType
 
 if TYPE_CHECKING:
-    import astral  # pylint: disable=unused-import
+    import astral
 
 DATA_LOCATION_CACHE = "astral_location_cache"
 

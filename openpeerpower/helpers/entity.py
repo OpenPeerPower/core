@@ -51,7 +51,7 @@ def generate_entity_id(
     entity_id_format: str,
     name: Optional[str],
     current_ids: Optional[List[str]] = None,
-    opp, Optional[OpenPeerPower] = None,
+    opp: Optional[OpenPeerPower] = None,
 ) -> str:
     """Generate a unique entity ID based on given entity IDs or used IDs."""
     return async_generate_entity_id(entity_id_format, name, current_ids, opp)
@@ -62,7 +62,7 @@ def async_generate_entity_id(
     entity_id_format: str,
     name: Optional[str],
     current_ids: Optional[Iterable[str]] = None,
-    opp, Optional[OpenPeerPower] = None,
+    opp: Optional[OpenPeerPower] = None,
 ) -> str:
     """Generate a unique entity ID based on given entity IDs or used IDs."""
     name = (name or DEVICE_DEFAULT_NAME).lower()
@@ -91,8 +91,8 @@ class Entity(ABC):
     # this class. These may be used to customize the behavior of the entity.
     entity_id = None  # type: str
 
-    # Owning.opp instance. Will be set by EntityPlatform
-    opp, Optional[OpenPeerPower] = None
+    # Owning opp instance. Will be set by EntityPlatform
+    opp: Optional[OpenPeerPower] = None
 
     # Owning platform instance. Will be set by EntityPlatform
     platform: Optional[EntityPlatform] = None
@@ -264,7 +264,7 @@ class Entity(ABC):
         This method must be run in the event loop.
         """
         if self.opp is None:
-            raise RuntimeError(f"Attribute.opp is None for {self}")
+            raise RuntimeError(f"Attribute opp is None for {self}")
 
         if self.entity_id is None:
             raise NoEntitySpecifiedError(
@@ -285,7 +285,7 @@ class Entity(ABC):
     def async_write_op_state(self) -> None:
         """Write the state to the state machine."""
         if self.opp is None:
-            raise RuntimeError(f"Attribute.opp is None for {self}")
+            raise RuntimeError(f"Attribute opp is None for {self}")
 
         if self.entity_id is None:
             raise NoEntitySpecifiedError(
@@ -361,7 +361,7 @@ class Entity(ABC):
             else:
                 extra = (
                     "Please create a bug report at "
-                    "https://github.com/open-peer-power/core/issues?q=is%3Aopen+is%3Aissue"
+                    "https://github.com/openpeerpower/core/issues?q=is%3Aopen+is%3Aissue"
                 )
                 if self.platform:
                     extra += (
@@ -518,7 +518,7 @@ class Entity(ABC):
     @callback
     def add_to_platform_abort(self) -> None:
         """Abort adding an entity to a platform."""
-        self.opp =None
+        self.opp = None
         self.platform = None
         self.parallel_updates = None
         self._added = False
@@ -567,19 +567,19 @@ class Entity(ABC):
             self.opp.states.async_remove(self.entity_id, context=self._context)
 
     async def async_added_to_opp(self) -> None:
-        """Run when entity about to be added to opp,
+        """Run when entity about to be added to opp.
 
         To be extended by integrations.
         """
 
     async def async_will_remove_from_opp(self) -> None:
-        """Run when entity will be removed from opp,
+        """Run when entity will be removed from opp.
 
         To be extended by integrations.
         """
 
     async def async_internal_added_to_opp(self) -> None:
-        """Run when entity about to be added to opp,
+        """Run when entity about to be added to opp.
 
         Not to be extended by integrations.
         """
@@ -609,7 +609,7 @@ class Entity(ABC):
             )
 
     async def async_internal_will_remove_from_opp(self) -> None:
-        """Run when entity will be removed from opp,
+        """Run when entity will be removed from opp.
 
         Not to be extended by integrations.
         """

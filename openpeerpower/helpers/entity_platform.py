@@ -62,7 +62,7 @@ class EntityPlatform:
         self.scan_interval = scan_interval
         self.entity_namespace = entity_namespace
         self.config_entry: Optional[config_entries.ConfigEntry] = None
-        self.entities: Dict[str, Entity] = {}  # pylint: disable=used-before-assignment
+        self.entities: Dict[str, Entity] = {}
         self._tasks: List[asyncio.Future] = []
         # Stop tracking tasks after setup is completed
         self._setup_complete = False
@@ -143,7 +143,7 @@ class EntityPlatform:
                     discovery_info,
                 )
 
-            # This should not be replaced with.opp.async_add_job because
+            # This should not be replaced with opp.async_add_job because
             # we don't want to track this task in case it blocks startup.
             return opp.loop.run_in_executor(  # type: ignore[return-value]
                 None,

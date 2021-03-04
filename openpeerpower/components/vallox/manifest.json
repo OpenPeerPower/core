@@ -1,7 +1,7 @@
 {
   "domain": "vallox",
   "name": "Vallox",
-  "documentation": "https://www.open-peer-power.io/integrations/vallox",
+  "documentation": "https://www.openpeerpower.io/integrations/vallox",
   "requirements": ["vallox-websocket-api==2.4.0"],
   "codeowners": []
 }

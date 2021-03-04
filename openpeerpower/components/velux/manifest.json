@@ -1,7 +1,7 @@
 {
   "domain": "velux",
   "name": "Velux",
-  "documentation": "https://www.open-peer-power.io/integrations/velux",
+  "documentation": "https://www.openpeerpower.io/integrations/velux",
   "requirements": ["pyvlx==0.2.18"],
   "codeowners": ["@Julius2342"]
 }

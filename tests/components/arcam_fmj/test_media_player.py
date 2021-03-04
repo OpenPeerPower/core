@@ -23,7 +23,7 @@ MOCK_TURN_ON = {
 async def update(player, force_refresh=False):
     """Force a update of player and return current state data."""
     await player.async_update_op_state(force_refresh=force_refresh)
-    return player(opp.states.get(player.entity_id)
+    return player.opp.states.get(player.entity_id)
 
 
 async def test_properties(player, state):
@@ -325,17 +325,17 @@ async def test_added_to_opp(player, state):
     def _connect(signal, fun):
         connectors[signal] = fun
 
-    player(opp =MagicMock()
-    player(opp.helpers.dispatcher.async_dispatcher_connect.side_effects = _connect
+    player.opp = MagicMock()
+    player.opp.helpers.dispatcher.async_dispatcher_connect.side_effects = _connect
 
     await player.async_added_to_opp()
     state.start.assert_called_with()
-    player(opp.helpers.dispatcher.async_dispatcher_connect.assert_any_call(
+    player.opp.helpers.dispatcher.async_dispatcher_connect.assert_any_call(
         SIGNAL_CLIENT_DATA, ANY
     )
-    player(opp.helpers.dispatcher.async_dispatcher_connect.assert_any_call(
+    player.opp.helpers.dispatcher.async_dispatcher_connect.assert_any_call(
         SIGNAL_CLIENT_STARTED, ANY
     )
-    player(opp.helpers.dispatcher.async_dispatcher_connect.assert_any_call(
+    player.opp.helpers.dispatcher.async_dispatcher_connect.assert_any_call(
         SIGNAL_CLIENT_STOPPED, ANY
     )

@@ -21,7 +21,6 @@ COMMENT_REQUIREMENTS = (
     "blinkt",
     "bluepy",
     "bme680",
-    "credstash",
     "decora",
     "decora_wifi",
     "envirophat",
@@ -47,10 +46,10 @@ COMMENT_REQUIREMENTS = (
     "VL53L1X2",
 )
 
-IGNORE_PIN = ("colorlog>2.1,<3", "keyring>=9.3,<10.0", "urllib3")
+IGNORE_PIN = ("colorlog>2.1,<3", "urllib3")
 
 URL_PIN = (
-    "https://developers.open-peer-power.io/docs/"
+    "https://developers.openpeerpower.io/docs/"
     "creating_platform_code_review.html#1-requirements"
 )
 
@@ -76,7 +75,7 @@ httpcore>=0.12.3
 httplib2>=0.19.0
 
 # gRPC 1.32+ currently causes issues on ARMv7, see:
-# https://github.com/open-peer-power/core/issues/40148
+# https://github.com/openpeerpower/core/issues/40148
 grpcio==1.31.0
 
 # This is a old unmaintained library and is replaced with pycryptodome
@@ -346,7 +345,7 @@ def diff_file(filename, content):
 def main(validate):
     """Run the script."""
     if not os.path.isfile("requirements_all.txt"):
-        print("Run this from HA root dir")
+        print("Run this from OP root dir")
         return 1
 
     data = gather_modules()

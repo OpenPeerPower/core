@@ -5,71 +5,64 @@ There are two different types of discoveries that can be fired/listened for.
  - listen_platform/discover_platform is for platforms. These are used by
    components to allow discovery of their platforms.
 """
-from typing import Any, Callable, Collection, Dict, Optional, Union
+from typing import Any, Callable, Dict, Optional, TypedDict
 
 from openpeerpower import core, setup
-from openpeerpower.const import ATTR_DISCOVERED, ATTR_SERVICE, EVENT_PLATFORM_DISCOVERED
 from openpeerpower.core import CALLBACK_TYPE
-from openpeerpower.helpers.typing import ConfigType, DiscoveryInfoType
 from openpeerpower.loader import bind_opp
-from openpeerpower.util.async_ import run_callback_threadsafe
 
+from .dispatcher import async_dispatcher_connect, async_dispatcher_send
+from .typing import ConfigType, DiscoveryInfoType
+
+SIGNAL_PLATFORM_DISCOVERED = "discovery.platform_discovered_{}"
 EVENT_LOAD_PLATFORM = "load_platform.{}"
 ATTR_PLATFORM = "platform"
+ATTR_DISCOVERED = "discovered"
 
 # mypy: disallow-any-generics
 
 
-@bind_opp
-def listen(
-    opp, core.OpenPeerPower,
-    service: Union[str, Collection[str]],
-    callback: CALLBACK_TYPE,
-) -> None:
-    """Set up listener for discovery of specific service.
+class DiscoveryDict(TypedDict):
+    """Discovery data."""
 
-    Service can be a string or a list/tuple.
-    """
-    run_callback_threadsafe(opp.loop, async_listen, opp, service, callback).result()
+    service: str
+    platform: Optional[str]
+    discovered: Optional[DiscoveryInfoType]
 
 
 @core.callback
 @bind_opp
 def async_listen(
-    opp, core.OpenPeerPower,
-    service: Union[str, Collection[str]],
+    opp: core.OpenPeerPower,
+    service: str,
     callback: CALLBACK_TYPE,
 ) -> None:
     """Set up listener for discovery of specific service.
 
     Service can be a string or a list/tuple.
     """
-    if isinstance(service, str):
-        service = (service,)
-    else:
-        service = tuple(service)
-
     job = core.OppJob(callback)
 
-    async def discovery_event_listener(event: core.Event) -> None:
+    async def discovery_event_listener(discovered: DiscoveryDict) -> None:
         """Listen for discovery events."""
-        if ATTR_SERVICE in event.data and event.data[ATTR_SERVICE] in service:
-            task = opp.async_run(opp_job(
-                job, event.data[ATTR_SERVICE], event.data.get(ATTR_DISCOVERED)
-            )
-            if task:
-                await task
+        task = opp.async_run_opp_job(
+            job, discovered["service"], discovered["discovered"]
+        )
+        if task:
+            await task
 
-    opp.bus.async_listen(EVENT_PLATFORM_DISCOVERED, discovery_event_listener)
+    async_dispatcher_connect(
+        opp, SIGNAL_PLATFORM_DISCOVERED.format(service), discovery_event_listener
+    )
 
 
 @bind_opp
 def discover(
-    opp, core.OpenPeerPower,
+    opp: core.OpenPeerPower,
     service: str,
     discovered: DiscoveryInfoType,
     component: str,
-    opp.config: ConfigType,
+    opp_config: ConfigType,
 ) -> None:
     """Fire discovery event. Can ensure a component is loaded."""
     opp.add_job(
@@ -81,37 +74,28 @@ def discover(
 
 @bind_opp
 async def async_discover(
-    opp, core.OpenPeerPower,
+    opp: core.OpenPeerPower,
     service: str,
     discovered: Optional[DiscoveryInfoType],
     component: Optional[str],
-    opp.config: ConfigType,
+    opp_config: ConfigType,
 ) -> None:
     """Fire discovery event. Can ensure a component is loaded."""
     if component is not None and component not in opp.config.components:
         await setup.async_setup_component(opp, component, opp_config)
 
-    data: Dict[str, Any] = {ATTR_SERVICE: service}
+    data: DiscoveryDict = {
+        "service": service,
+        "platform": None,
+        "discovered": discovered,
+    }
 
-    if discovered is not None:
-        data[ATTR_DISCOVERED] = discovered
-
-    opp.bus.async_fire(EVENT_PLATFORM_DISCOVERED, data)
-
-
-@bind_opp
-def listen_platform(
-    opp, core.OpenPeerPower, component: str, callback: CALLBACK_TYPE
-) -> None:
-    """Register a platform loader listener."""
-    run_callback_threadsafe(
-        opp.loop, async_listen_platform, opp, component, callback
-    ).result()
+    async_dispatcher_send(opp, SIGNAL_PLATFORM_DISCOVERED.format(service), data)
 
 
 @bind_opp
 def async_listen_platform(
-    opp, core.OpenPeerPower,
+    opp: core.OpenPeerPower,
     component: str,
     callback: Callable[[str, Optional[Dict[str, Any]]], Any],
 ) -> None:
@@ -122,41 +106,31 @@ def async_listen_platform(
     service = EVENT_LOAD_PLATFORM.format(component)
     job = core.OppJob(callback)
 
-    async def discovery_platform_listener(event: core.Event) -> None:
+    async def discovery_platform_listener(discovered: DiscoveryDict) -> None:
         """Listen for platform discovery events."""
-        if event.data.get(ATTR_SERVICE) != service:
-            return
-
-        platform = event.data.get(ATTR_PLATFORM)
+        platform = discovered["platform"]
 
         if not platform:
             return
 
-        task = opp.async_run(opp_job(job, platform, event.data.get(ATTR_DISCOVERED))
+        task = opp.async_run_opp_job(job, platform, discovered.get("discovered"))
         if task:
             await task
 
-    opp.bus.async_listen(EVENT_PLATFORM_DISCOVERED, discovery_platform_listener)
+    async_dispatcher_connect(
+        opp, SIGNAL_PLATFORM_DISCOVERED.format(service), discovery_platform_listener
+    )
 
 
 @bind_opp
 def load_platform(
-    opp, core.OpenPeerPower,
+    opp: core.OpenPeerPower,
     component: str,
     platform: str,
     discovered: DiscoveryInfoType,
-    opp.config: ConfigType,
+    opp_config: ConfigType,
 ) -> None:
-    """Load a component and platform dynamically.
-
-    Target components will be loaded and an EVENT_PLATFORM_DISCOVERED will be
-    fired to load the platform. The event will contain:
-        { ATTR_SERVICE = EVENT_LOAD_PLATFORM + '.' + <<component>>
-          ATTR_PLATFORM = <<platform>>
-          ATTR_DISCOVERED = <<discovery info>> }
-
-    Use `listen_platform` to register a callback for these events.
-    """
+    """Load a component and platform dynamically."""
     opp.add_job(
         async_load_platform(  # type: ignore
             opp, component, platform, discovered, opp_config
@@ -166,44 +140,36 @@ def load_platform(
 
 @bind_opp
 async def async_load_platform(
-    opp, core.OpenPeerPower,
+    opp: core.OpenPeerPower,
     component: str,
     platform: str,
     discovered: DiscoveryInfoType,
-    opp.config: ConfigType,
+    opp_config: ConfigType,
 ) -> None:
     """Load a component and platform dynamically.
 
-    Target components will be loaded and an EVENT_PLATFORM_DISCOVERED will be
-    fired to load the platform. The event will contain:
-        { ATTR_SERVICE = EVENT_LOAD_PLATFORM + '.' + <<component>>
-          ATTR_PLATFORM = <<platform>>
-          ATTR_DISCOVERED = <<discovery info>> }
-
-    Use `listen_platform` to register a callback for these events.
+    Use `async_listen_platform` to register a callback for these events.
 
     Warning: Do not await this inside a setup method to avoid a dead lock.
-    Use  opp.async_create_task(async_load_platform(..))` instead.
-
-    This method is a coroutine.
+    Use `opp.async_create_task(async_load_platform(..))` instead.
     """
-    assert opp_config, "You need to pass in the real.opp config"
+    assert opp_config, "You need to pass in the real opp config"
 
     setup_success = True
 
     if component not in opp.config.components:
         setup_success = await setup.async_setup_component(opp, component, opp_config)
 
-    # No need to fire event if we could not set up component
+    # No need to send signal if we could not set up component
     if not setup_success:
         return
 
-    data: Dict[str, Any] = {
-        ATTR_SERVICE: EVENT_LOAD_PLATFORM.format(component),
-        ATTR_PLATFORM: platform,
+    service = EVENT_LOAD_PLATFORM.format(component)
+
+    data: DiscoveryDict = {
+        "service": service,
+        "platform": platform,
+        "discovered": discovered,
     }
 
-    if discovered is not None:
-        data[ATTR_DISCOVERED] = discovered
-
-    opp.bus.async_fire(EVENT_PLATFORM_DISCOVERED, data)
+    async_dispatcher_send(opp, SIGNAL_PLATFORM_DISCOVERED.format(service), data)

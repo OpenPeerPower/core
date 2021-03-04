@@ -280,7 +280,7 @@ class Template:
     __slots__ = (
         "__weakref__",
         "template",
-         oppio,
+        "opp",
         "is_static",
         "_compiled_code",
         "_compiled",
@@ -328,7 +328,7 @@ class Template:
     ) -> Any:
         """Render given template.
 
-        If limited is True, the template is not allowed to access any function or filter depending on.opp or the state machine.
+        If limited is True, the template is not allowed to access any function or filter depending on opp or the state machine.
         """
         if self.is_static:
             if self.opp.config.legacy_templates or not parse_result:
@@ -352,7 +352,7 @@ class Template:
 
         This method must be run in the event loop.
 
-        If limited is True, the template is not allowed to access any function or filter depending on.opp or the state machine.
+        If limited is True, the template is not allowed to access any function or filter depending on opp or the state machine.
         """
         if self.is_static:
             if self.opp.config.legacy_templates or not parse_result:
@@ -366,7 +366,7 @@ class Template:
 
         try:
             render_result = compiled.render(kwargs)
-        except Exception as err:  # pylint: disable=broad-except
+        except Exception as err:
             raise TemplateError(err) from err
 
         render_result = render_result.strip()
@@ -538,7 +538,7 @@ class Template:
         """Bind a template to a specific opp instance."""
         self.ensure_valid()
 
-        assert self.opp is not None,  opp.variable not set on template"
+        assert self.opp is not None, "opp variable not set on template"
         assert (
             self._limited is None or self._limited == limited
         ), "can't change between limited and non limited template"
@@ -571,16 +571,16 @@ class Template:
 
 
 class AllStates:
-    """Class to expose all HA states as attributes."""
+    """Class to expose all OP states as attributes."""
 
     def __init__(self, opp: OpenPeerPowerType) -> None:
         """Initialize all states."""
-        self.opp = opp
+        self._opp = opp
 
     def __getattr__(self, name):
         """Return the domain state."""
         if "." in name:
-            return _get_state_if_valid(self.opp, name)
+            return _get_state_if_valid(self._opp, name)
 
         if name in _RESERVED_NAMES:
             return None
@@ -588,35 +588,35 @@ class AllStates:
         if not valid_entity_id(f"{name}.entity"):
             raise TemplateError(f"Invalid domain name '{name}'")
 
-        return DomainStates(self.opp, name)
+        return DomainStates(self._opp, name)
 
     # Jinja will try __getitem__ first and it avoids the need
     # to call is_safe_attribute
     __getitem__ = __getattr__
 
     def _collect_all(self) -> None:
-        render_info = self.opp.data.get(_RENDER_INFO)
+        render_info = self._opp.data.get(_RENDER_INFO)
         if render_info is not None:
             render_info.all_states = True
 
     def _collect_all_lifecycle(self) -> None:
-        render_info = self.opp.data.get(_RENDER_INFO)
+        render_info = self._opp.data.get(_RENDER_INFO)
         if render_info is not None:
             render_info.all_states_lifecycle = True
 
     def __iter__(self):
         """Return all states."""
         self._collect_all()
-        return _state_generator(self.opp, None)
+        return _state_generator(self._opp, None)
 
     def __len__(self) -> int:
         """Return number of states."""
         self._collect_all_lifecycle()
-        return self.opp.states.async_entity_ids_count()
+        return self._opp.states.async_entity_ids_count()
 
     def __call__(self, entity_id):
         """Return the states."""
-        state = _get_state(self.opp, entity_id)
+        state = _get_state(self._opp, entity_id)
         return STATE_UNKNOWN if state is None else state.state
 
     def __repr__(self) -> str:
@@ -625,40 +625,40 @@ class AllStates:
 
 
 class DomainStates:
-    """Class to expose a specific HA domain as attributes."""
+    """Class to expose a specific OP domain as attributes."""
 
     def __init__(self, opp: OpenPeerPowerType, domain: str) -> None:
         """Initialize the domain states."""
-        self.opp = opp
+        self._opp = opp
         self._domain = domain
 
     def __getattr__(self, name):
         """Return the states."""
-        return _get_state_if_valid(self.opp, f"{self._domain}.{name}")
+        return _get_state_if_valid(self._opp, f"{self._domain}.{name}")
 
     # Jinja will try __getitem__ first and it avoids the need
     # to call is_safe_attribute
     __getitem__ = __getattr__
 
     def _collect_domain(self) -> None:
-        entity_collect = self.opp.data.get(_RENDER_INFO)
+        entity_collect = self._opp.data.get(_RENDER_INFO)
         if entity_collect is not None:
             entity_collect.domains.add(self._domain)
 
     def _collect_domain_lifecycle(self) -> None:
-        entity_collect = self.opp.data.get(_RENDER_INFO)
+        entity_collect = self._opp.data.get(_RENDER_INFO)
         if entity_collect is not None:
             entity_collect.domains_lifecycle.add(self._domain)
 
     def __iter__(self):
         """Return the iteration over all the states."""
         self._collect_domain()
-        return _state_generator(self.opp, self._domain)
+        return _state_generator(self._opp, self._domain)
 
     def __len__(self) -> int:
         """Return number of states."""
         self._collect_domain_lifecycle()
-        return self.opp.states.async_entity_ids_count(self._domain)
+        return self._opp.states.async_entity_ids_count(self._domain)
 
     def __repr__(self) -> str:
         """Representation of Domain States."""
@@ -668,7 +668,7 @@ class DomainStates:
 class TemplateState(State):
     """Class to represent a state object in a template."""
 
-    __slots__ = (".opp", "_state", "_collect")
+    __slots__ = ("_opp", "_state", "_collect")
 
     # Inheritance is done so functions that check against State keep working
     # pylint: disable=super-init-not-called
@@ -676,13 +676,13 @@ class TemplateState(State):
         self, opp: OpenPeerPowerType, state: State, collect: bool = True
     ) -> None:
         """Initialize template state."""
-        self.opp = opp
+        self._opp = opp
         self._state = state
         self._collect = collect
 
     def _collect_state(self) -> None:
-        if self._collect and _RENDER_INFO in self.opp.data:
-            self.opp.data[_RENDER_INFO].entities.add(self._state.entity_id)
+        if self._collect and _RENDER_INFO in self._opp.data:
+            self._opp.data[_RENDER_INFO].entities.add(self._state.entity_id)
 
     # Jinja will try __getitem__ first and it avoids the need
     # to call is_safe_attribute
@@ -690,8 +690,8 @@ class TemplateState(State):
         """Return a property as an attribute for jinja."""
         if item in _COLLECTABLE_STATE_ATTRIBUTES:
             # _collect_state inlined here for performance
-            if self._collect and _RENDER_INFO in self.opp.data:
-                self.opp.data[_RENDER_INFO].entities.add(self._state.entity_id)
+            if self._collect and _RENDER_INFO in self._opp.data:
+                self._opp.data[_RENDER_INFO].entities.add(self._state.entity_id)
             return getattr(self._state, item)
         if item == "entity_id":
             return self._state.entity_id
@@ -780,7 +780,7 @@ def _collect_state(opp: OpenPeerPowerType, entity_id: str) -> None:
 
 def _state_generator(opp: OpenPeerPowerType, domain: Optional[str]) -> Generator:
     """State generator for a domain or all states."""
-    for state in sorted.opp.states.async_all(domain), key=attrgetter("entity_id")):
+    for state in sorted(opp.states.async_all(domain), key=attrgetter("entity_id")):
         yield TemplateState(opp, state, collect=False)
 
 
@@ -837,7 +837,7 @@ def result_as_boolean(template_result: Optional[str]) -> bool:
         return False
 
 
-def expand.opp: OpenPeerPowerType, *args: Any) -> Iterable[State]:
+def expand(opp: OpenPeerPowerType, *args: Any) -> Iterable[State]:
     """Expand out any groups into entity states."""
     search = list(args)
     found = {}
@@ -1388,7 +1388,7 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
 
             @wraps(func)
             def wrapper(*args, **kwargs):
-                return func.opp, *args[1:], **kwargs)
+                return func(opp, *args[1:], **kwargs)
 
             return contextfunction(wrapper)
 
@@ -1406,7 +1406,7 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
 
                 return warn_unsupported
 
-            opp.globals = [
+            opp_globals = [
                 "closest",
                 "distance",
                 "expand",
@@ -1417,7 +1417,7 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
                 "utcnow",
                 "now",
             ]
-            opp.filters = ["closest", "expand"]
+            opp_filters = ["closest", "expand"]
             for glob in opp_globals:
                 self.globals[glob] = unsupported(glob)
             for filt in opp_filters:
@@ -1427,7 +1427,7 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
         self.globals["expand"] = oppfunction(expand)
         self.filters["expand"] = contextfilter(self.globals["expand"])
         self.globals["closest"] = oppfunction(closest)
-        self.filters["closest"] = contextfilter.oppfunction(closest_filter))
+        self.filters["closest"] = contextfilter(oppfunction(closest_filter))
         self.globals["distance"] = oppfunction(distance)
         self.globals["is_state"] = oppfunction(is_state)
         self.globals["is_state_attr"] = oppfunction(is_state_attr)

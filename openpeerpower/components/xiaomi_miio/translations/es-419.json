@@ -10,7 +10,7 @@
                     "name": "Nombre de la puerta de enlace",
                     "token": "Token API"
                 },
-                "description": "Necesitar\u00e1 el token API, consulte https://www.open-peer-power.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token para obtener instrucciones.",
+                "description": "Necesitar\u00e1 el token API, consulte https://www.openpeerpower.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token para obtener instrucciones.",
                 "title": "Conectarse a una puerta de enlace Xiaomi"
             },
             "user": {

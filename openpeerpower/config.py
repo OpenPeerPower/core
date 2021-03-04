@@ -99,7 +99,7 @@ scene: !include {SCENE_CONFIG_PATH}
 """
 DEFAULT_SECRETS = """
 # Use this file to store secrets like usernames and passwords.
-# Learn more at https://www.open-peer-power.io/docs/configuration/secrets/
+# Learn more at https://www.openpeerpower.io/docs/configuration/secrets/
 some_password: welcome
 """
 TTS_PRE_92 = """

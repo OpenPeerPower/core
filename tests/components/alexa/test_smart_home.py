@@ -26,7 +26,7 @@ from openpeerpower.components.media_player.const import (
 import openpeerpower.components.vacuum as vacuum
 from openpeerpower.config import async_process_op_core_config
 from openpeerpower.const import TEMP_CELSIUS, TEMP_FAHRENHEIT
-from openpeerpower.core import Context, callback
+from openpeerpower.core import Context
 from openpeerpower.helpers import entityfilter
 from openpeerpower.setup import async_setup_component
 
@@ -42,17 +42,13 @@ from . import (
     reported_properties,
 )
 
-from tests.common import async_mock_service
+from tests.common import async_capture_events, async_mock_service
 
 
 @pytest.fixture
 def events(opp):
     """Fixture that catches alexa events."""
-    events = []
-    opp.bus.async_listen(
-        smart_home.EVENT_ALEXA_SMART_HOME, callback(lambda e: events.append(e))
-    )
-    yield events
+    return async_capture_events(opp, smart_home.EVENT_ALEXA_SMART_HOME)
 
 
 @pytest.fixture
@@ -2166,7 +2162,7 @@ async def test_exclude_filters(opp):
 
     opp.states.async_set("cover.deny", "off", {"friendly_name": "Blocked cover"})
 
-    alexa_config = Mockconfig(opp)
+    alexa_config = MockConfig(opp)
     alexa_config.should_expose = entityfilter.generate_filter(
         include_domains=[],
         include_entities=[],
@@ -2197,7 +2193,7 @@ async def test_include_filters(opp):
 
     opp.states.async_set("group.allow", "off", {"friendly_name": "Allowed group"})
 
-    alexa_config = Mockconfig(opp)
+    alexa_config = MockConfig(opp)
     alexa_config.should_expose = entityfilter.generate_filter(
         include_domains=["automation", "group"],
         include_entities=["script.deny"],
@@ -2222,7 +2218,7 @@ async def test_never_exposed_entities(opp):
 
     opp.states.async_set("group.allow", "off", {"friendly_name": "Allowed group"})
 
-    alexa_config = Mockconfig(opp)
+    alexa_config = MockConfig(opp)
     alexa_config.should_expose = entityfilter.generate_filter(
         include_domains=["group"],
         include_entities=[],
@@ -2299,7 +2295,7 @@ async def test_entity_config(opp):
     opp.states.async_set("light.test_1", "on", {"friendly_name": "Test light 1"})
     opp.states.async_set("scene.test_1", "scening", {"friendly_name": "Test 1"})
 
-    alexa_config = Mockconfig(opp)
+    alexa_config = MockConfig(opp)
     alexa_config.entity_config = {
         "light.test_1": {
             "name": "Config *name*",
@@ -3826,7 +3822,7 @@ async def test_camera_discovery_without_stream(opp):
         ("https://correctschemaandport.org", 3),
     ],
 )
-async def test_camera.opp_urls(opp, mock_stream, url, result):
+async def test_camera_opp_urls(opp, mock_stream, url, result):
     """Test camera discovery with unsupported urls."""
     device = (
         "camera.test",

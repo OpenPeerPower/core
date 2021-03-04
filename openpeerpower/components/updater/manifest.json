@@ -1,7 +1,7 @@
 {
   "domain": "updater",
   "name": "Updater",
-  "documentation": "https://www.open-peer-power.io/integrations/updater",
+  "documentation": "https://www.openpeerpower.io/integrations/updater",
   "requirements": ["distro==1.5.0"],
   "codeowners": ["@open-peer-power/core"],
   "quality_scale": "internal"

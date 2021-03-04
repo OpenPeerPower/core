@@ -2,7 +2,7 @@
   "domain": "wemo",
   "name": "Belkin WeMo",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/wemo",
+  "documentation": "https://www.openpeerpower.io/integrations/wemo",
   "requirements": ["pywemo==0.6.3"],
   "ssdp": [
     {

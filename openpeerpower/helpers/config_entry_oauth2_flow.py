@@ -130,12 +130,12 @@ class LocalOAuth2Implementation(AbstractOAuth2Implementation):
         if req is None:
             raise RuntimeError("No current request in context")
 
-        op_host = req.headers.get(HEADER_FRONTEND_BASE)
+        ha_host = req.headers.get(HEADER_FRONTEND_BASE)
 
-        if op_host is None:
+        if ha_host is None:
             raise RuntimeError("No header in request")
 
-        return f"{op_host}{AUTH_CALLBACK_PATH}"
+        return f"{ha_host}{AUTH_CALLBACK_PATH}"
 
     @property
     def extra_authorize_data(self) -> dict:
@@ -278,7 +278,7 @@ class AbstractOAuth2FlowHandler(config_entries.ConfigFlow, metaclass=ABCMeta):
             return self.async_abort(
                 reason="no_url_available",
                 description_placeholders={
-                    "docs_url": "https://www.open-peer-power.io/more-info/no-url-available"
+                    "docs_url": "https://www.openpeerpower.io/more-info/no-url-available"
                 },
             )
 
@@ -420,7 +420,7 @@ class OAuth2AuthorizeCallbackView(http.OpenPeerPowerView):
                 text=f"Missing code or state parameter in {request.url}"
             )
 
-       opp = request.app["opp"]
+        opp = request.app["opp"]
 
         state = _decode_jwt(opp, request.query["state"])
 

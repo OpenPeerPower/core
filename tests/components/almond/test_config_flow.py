@@ -45,16 +45,16 @@ async def test_import_cannot_connect(opp):
     assert len(opp.config_entries.async_entries(DOMAIN)) == 0
 
 
-async def test.oppio(opp):
+async def test_oppio(opp):
     """Test that Opp.io can discover this integration."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
-        context={"source":  opp.o"},
+        context={"source": "oppio"},
         data={"addon": "Almond add-on", "host": "almond-addon", "port": "1234"},
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
-    assert result["step_id"] == oppio_confirm"
+    assert result["step_id"] == "oppio_confirm"
 
     with patch(
         "openpeerpower.components.almond.async_setup_entry", return_value=True
@@ -86,7 +86,7 @@ async def test_abort_if_existing_entry(opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "single_instance_allowed"
 
-    result = await flow.async_step.oppio({})
+    result = await flow.async_step_oppio({})
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "single_instance_allowed"
 

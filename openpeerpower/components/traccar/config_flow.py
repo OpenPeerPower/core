@@ -6,5 +6,5 @@ from .const import DOMAIN
 config_entry_flow.register_webhook_flow(
     DOMAIN,
     "Traccar Webhook",
-    {"docs_url": "https://www.open-peer-power.io/integrations/traccar/"},
+    {"docs_url": "https://www.openpeerpower.io/integrations/traccar/"},
 )

@@ -18,7 +18,11 @@ async def test_airly_system_health(opp, aioclient_mock):
 
     opp.data[DOMAIN] = {}
     opp.data[DOMAIN]["0123xyz"] = Mock(
-        airly=Mock(AIRLY_API_URL="https://airapi.airly.eu/v2/")
+        airly=Mock(
+            AIRLY_API_URL="https://airapi.airly.eu/v2/",
+            requests_remaining=42,
+            requests_per_day=100,
+        )
     )
 
     info = await get_system_health_info(opp, DOMAIN)
@@ -27,7 +31,9 @@ async def test_airly_system_health(opp, aioclient_mock):
         if asyncio.iscoroutine(val):
             info[key] = await val
 
-    assert info == {"can_reach_server": "ok"}
+    assert info["can_reach_server"] == "ok"
+    assert info["requests_remaining"] == 42
+    assert info["requests_per_day"] == 100
 
 
 async def test_airly_system_health_fail(opp, aioclient_mock):
@@ -38,7 +44,11 @@ async def test_airly_system_health_fail(opp, aioclient_mock):
 
     opp.data[DOMAIN] = {}
     opp.data[DOMAIN]["0123xyz"] = Mock(
-        airly=Mock(AIRLY_API_URL="https://airapi.airly.eu/v2/")
+        airly=Mock(
+            AIRLY_API_URL="https://airapi.airly.eu/v2/",
+            requests_remaining=0,
+            requests_per_day=1000,
+        )
     )
 
     info = await get_system_health_info(opp, DOMAIN)
@@ -47,4 +57,6 @@ async def test_airly_system_health_fail(opp, aioclient_mock):
         if asyncio.iscoroutine(val):
             info[key] = await val
 
-    assert info == {"can_reach_server": {"type": "failed", "error": "unreachable"}}
+    assert info["can_reach_server"] == {"type": "failed", "error": "unreachable"}
+    assert info["requests_remaining"] == 0
+    assert info["requests_per_day"] == 1000

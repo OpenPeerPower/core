@@ -1,7 +1,7 @@
 {
   "domain": "tuya",
   "name": "Tuya",
-  "documentation": "https://www.open-peer-power.io/integrations/tuya",
+  "documentation": "https://www.openpeerpower.io/integrations/tuya",
   "requirements": ["tuyaha==0.0.10"],
   "codeowners": ["@ollo69"],
   "config_flow": true

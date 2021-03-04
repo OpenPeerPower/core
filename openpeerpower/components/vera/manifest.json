@@ -2,7 +2,7 @@
   "domain": "vera",
   "name": "Vera",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/vera",
+  "documentation": "https://www.openpeerpower.io/integrations/vera",
   "requirements": ["pyvera==0.3.13"],
   "codeowners": ["@vangorra"]
 }

@@ -17,9 +17,9 @@ from openpeerpower.loader import bind_opp
 _LOGGER = logging.getLogger(__name__)
 _SlotsType = Dict[str, Any]
 
-INTENT_TURN_OFF = " OppTurnOff"
-INTENT_TURN_ON = " OppTurnOn"
-INTENT_TOGGLE = " OppToggle"
+INTENT_TURN_OFF = "OppTurnOff"
+INTENT_TURN_ON = "OppTurnOn"
+INTENT_TOGGLE = "OppToggle"
 
 SLOT_SCHEMA = vol.Schema({}, extra=vol.ALLOW_EXTRA)
 
@@ -199,7 +199,7 @@ class ServiceIntentHandler(IntentHandler):
 
     async def async_handle(self, intent_obj: Intent) -> IntentResponse:
         """Handle the opp intent."""
-       opp = intent_obj(opp
+        opp = intent_obj.opp
         slots = self.async_validate_slots(intent_obj.slots)
         state = async_match_state(opp, slots["name"]["value"])
 
@@ -218,7 +218,7 @@ class ServiceIntentHandler(IntentHandler):
 class Intent:
     """Hold the intent."""
 
-    __slots__ = [.opp", "platform", "intent_type", "slots", "text_input", "context"]
+    __slots__ = ["opp", "platform", "intent_type", "slots", "text_input", "context"]
 
     def __init__(
         self,

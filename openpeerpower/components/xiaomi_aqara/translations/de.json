@@ -6,7 +6,7 @@
         },
         "error": {
             "discovery_error": "Es konnte kein Xiaomi Aqara Gateway gefunden werden, versuche die IP von Open Peer Power als Interface zu nutzen",
-            "invalid_host": "Ung\u00fcltiger Hostname oder IP-Adresse, schau unter https://www.open-peer-power.io/integrations/xiaomi_aqara/#connection-problem",
+            "invalid_host": "Ung\u00fcltiger Hostname oder IP-Adresse, schau unter https://www.openpeerpower.io/integrations/xiaomi_aqara/#connection-problem",
             "invalid_mac": "Ung\u00fcltige MAC-Adresse"
         },
         "flow_title": "Xiaomi Aqara Gateway: {name}",

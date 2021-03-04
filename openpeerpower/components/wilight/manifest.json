@@ -2,7 +2,7 @@
   "domain": "wilight",
   "name": "WiLight",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/wilight",
+  "documentation": "https://www.openpeerpower.io/integrations/wilight",
   "requirements": ["pywilight==0.0.68"],
   "ssdp": [
     {
