@@ -2,7 +2,7 @@
   "domain": "starline",
   "name": "StarLine",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/starline",
+  "documentation": "https://www.openpeerpower.io/integrations/starline",
   "requirements": ["starline==0.1.5"],
   "codeowners": ["@anonym-tsk"]
 }

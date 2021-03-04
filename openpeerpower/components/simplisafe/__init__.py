@@ -71,7 +71,7 @@ EVENT_SIMPLISAFE_NOTIFICATION = "SIMPLISAFE_NOTIFICATION"
 
 DEFAULT_SOCKET_MIN_RETRY = 15
 
-SUPPORTED_PLATFORMS = (
+PLATFORMS = (
     "alarm_control_panel",
     "binary_sensor",
     "lock",
@@ -154,8 +154,8 @@ async def async_get_client_id(opp):
 
     Note that SimpliSafe requires full, "dashed" versions of UUIDs.
     """
-    opp.id = await opp.helpers.instance_id.async_get()
-    return str(UUID.opp_id))
+    opp_id = await opp.helpers.instance_id.async_get()
+    return str(UUID(opp_id))
 
 
 async def async_register_base_station(opp, system, config_entry_id):
@@ -219,7 +219,7 @@ async def async_setup_entry(opp, config_entry):
     )
     await simplisafe.async_init()
 
-    for platform in SUPPORTED_PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
             opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
@@ -327,8 +327,8 @@ async def async_unload_entry(opp, entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in SUPPORTED_PLATFORMS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )
@@ -350,7 +350,7 @@ class SimpliSafeWebsocket:
 
     def __init__(self, opp, websocket):
         """Initialize."""
-        self.opp = opp
+        self._opp = opp
         self._websocket = websocket
 
     @staticmethod
@@ -367,7 +367,7 @@ class SimpliSafeWebsocket:
         """Define a handler to fire when a new SimpliSafe event arrives."""
         LOGGER.debug("New websocket event: %s", event)
         async_dispatcher_send(
-            self.opp, TOPIC_UPDATE_WEBSOCKET.format(event.system_id), event
+            self._opp, TOPIC_UPDATE_WEBSOCKET.format(event.system_id), event
         )
 
         if event.event_type not in WEBSOCKET_EVENTS_TO_TRIGGER_OPP_EVENT:
@@ -378,7 +378,7 @@ class SimpliSafeWebsocket:
         else:
             sensor_type = None
 
-        self.opp.bus.async_fire(
+        self._opp.bus.async_fire(
             EVENT_SIMPLISAFE_EVENT,
             event_data={
                 ATTR_LAST_EVENT_CHANGED_BY: event.changed_by,
@@ -412,7 +412,7 @@ class SimpliSafe:
         """Initialize."""
         self._api = api
         self._emergency_refresh_token_used = False
-        self.opp = opp
+        self._opp = opp
         self._system_notifications = {}
         self.config_entry = config_entry
         self.coordinator = None
@@ -423,7 +423,7 @@ class SimpliSafe:
     @callback
     def _async_process_new_notifications(self, system):
         """Act on any new system notifications."""
-        if self.opp.state != CoreState.running:
+        if self._opp.state != CoreState.running:
             # If OPP isn't fully running yet, it may cause the SIMPLISAFE_NOTIFICATION
             # event to fire before dependent components (like automation) are fully
             # ready. If that's the case, skip:
@@ -447,7 +447,7 @@ class SimpliSafe:
             if notification.link:
                 text = f"{text} For more information: {notification.link}"
 
-            self.opp.bus.async_fire(
+            self._opp.bus.async_fire(
                 EVENT_SIMPLISAFE_NOTIFICATION,
                 event_data={
                     ATTR_CATEGORY: notification.category,
@@ -465,8 +465,8 @@ class SimpliSafe:
             """Define an event handler to disconnect from the websocket."""
             await self.websocket.async_disconnect()
 
-        self.opp.data[DOMAIN][DATA_LISTENER][self.config_entry.entry_id].append(
-            self.opp.bus.async_listen_once(
+        self._opp.data[DOMAIN][DATA_LISTENER][self.config_entry.entry_id].append(
+            self._opp.bus.async_listen_once(
                 EVENT_OPENPEERPOWER_STOP, async_websocket_disconnect
             )
         )
@@ -475,9 +475,9 @@ class SimpliSafe:
         for system in self.systems.values():
             self._system_notifications[system.system_id] = set()
 
-            self.opp.async_create_task(
+            self._opp.async_create_task(
                 async_register_base_station(
-                    self.opp, system, self.config_entry.entry_id
+                    self._opp, system, self.config_entry.entry_id
                 )
             )
 
@@ -493,7 +493,7 @@ class SimpliSafe:
                 self.initial_event_to_use[system.system_id] = {}
 
         self.coordinator = DataUpdateCoordinator(
-            self.opp,
+            self._opp,
             LOGGER,
             name=self.config_entry.data[CONF_USERNAME],
             update_interval=DEFAULT_SCAN_INTERVAL,
@@ -516,15 +516,15 @@ class SimpliSafe:
                 if self._emergency_refresh_token_used:
                     matching_flows = [
                         flow
-                        for flow in self.opp.config_entries.flow.async_progress()
+                        for flow in self._opp.config_entries.flow.async_progress()
                         if flow["context"].get("source") == SOURCE_REAUTH
                         and flow["context"].get("unique_id")
                         == self.config_entry.unique_id
                     ]
 
                     if not matching_flows:
-                        self.opp.async_create_task(
-                            self.opp.config_entries.flow.async_init(
+                        self._opp.async_create_task(
+                            self._opp.config_entries.flow.async_init(
                                 DOMAIN,
                                 context={
                                     "source": SOURCE_REAUTH,
@@ -560,7 +560,7 @@ class SimpliSafe:
 
         if self._api.refresh_token != self.config_entry.data[CONF_TOKEN]:
             _async_save_refresh_token(
-                self.opp, self.config_entry, self._api.refresh_token
+                self._opp, self.config_entry, self._api.refresh_token
             )
 
         # If we've reached this point using an emergency refresh token, we're in the

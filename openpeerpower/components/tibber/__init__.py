@@ -53,7 +53,7 @@ async def async_setup_entry(opp, entry):
     tibber_connection = tibber.Tibber(
         access_token=entry.data[CONF_ACCESS_TOKEN],
         websession=async_get_clientsession(opp),
-        time_zone=dt_util.DEFAULT_TIME_ZONE
+        time_zone=dt_util.DEFAULT_TIME_ZONE,
     )
     opp.data[DOMAIN] = tibber_connection
 
@@ -73,9 +73,9 @@ async def async_setup_entry(opp, entry):
         _LOGGER.error("Failed to login. %s", exp)
         return False
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     # set up notify platform, no entry support for notify component yet,
@@ -93,8 +93,8 @@ async def async_unload_entry(opp, config_entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(config_entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_unload(config_entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

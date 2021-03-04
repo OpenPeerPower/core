@@ -41,7 +41,7 @@ STATE_ATTR_NEXT_SETTING = "next_setting"
 # The algorithm used here is somewhat complicated. It aims to cut down
 # the number of sensor updates over the day. It's documented best in
 # the PR for the change, see the Discussion section of:
-# https://github.com/open-peer-power/core/pull/23832
+# https://github.com/openpeerpower/core/pull/23832
 
 
 # As documented in wikipedia: https://en.wikipedia.org/wiki/Twilight
@@ -77,7 +77,7 @@ async def async_setup(opp, config):
     if config.get(CONF_ELEVATION) is not None:
         _LOGGER.warning(
             "Elevation is now configured in Open Peer Power core. "
-            "See https://www.open-peer-power.io/docs/configuration/basic/"
+            "See https://www.openpeerpower.io/docs/configuration/basic/"
         )
     Sun(opp)
     return True

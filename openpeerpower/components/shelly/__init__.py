@@ -108,6 +108,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
             "Setup for device %s will resume when device is online", entry.title
         )
         device.subscribe_updates(_async_device_online)
+        await device.coap_request("s")
     else:
         # Restore sensors for sleeping device
         _LOGGER.debug("Setting up offline device %s", entry.title)
@@ -133,9 +134,9 @@ async def async_device_setup(
         ] = ShellyDeviceRestWrapper(opp, device)
         platforms = PLATFORMS
 
-    for component in platforms:
+    for platform in platforms:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
 
@@ -322,8 +323,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in platforms
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in platforms
             ]
         )
     )

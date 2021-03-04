@@ -15,7 +15,7 @@ from openpeerpower.const import (
     CONF_STATE,
     CONF_URL,
 )
-import openpeerpower.core as op
+import openpeerpower.core as ha
 import openpeerpower.helpers.config_validation as cv
 import openpeerpower.util.dt as dt_util
 
@@ -260,14 +260,14 @@ class APISpaceApiView(OpenPeerPowerView):
             sensor_data[ATTR_UNIT] = sensor_state.attributes[ATTR_UNIT_OF_MEASUREMENT]
         return sensor_data
 
-    @op.callback
+    @ha.callback
     def get(self, request):
         """Get SpaceAPI data."""
-       opp = request.app["opp"]
-        spaceapi = dict.opp.data[DATA_SPACEAPI])
+        opp = request.app["opp"]
+        spaceapi = dict(opp.data[DATA_SPACEAPI])
         is_sensors = spaceapi.get("sensors")
 
-        location = {ATTR_LAT:.opp.config.latitude, ATTR_LON:.opp.config.longitude}
+        location = {ATTR_LAT: opp.config.latitude, ATTR_LON: opp.config.longitude}
 
         try:
             location[ATTR_ADDRESS] = spaceapi[ATTR_LOCATION][CONF_ADDRESS]

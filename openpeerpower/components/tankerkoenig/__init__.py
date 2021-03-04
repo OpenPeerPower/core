@@ -109,7 +109,7 @@ class TankerkoenigData:
         self.fuel_types = conf[CONF_FUEL_TYPES]
         self.update_interval = conf[CONF_SCAN_INTERVAL]
         self.show_on_map = conf[CONF_SHOW_ON_MAP]
-        self.opp = opp
+        self._opp = opp
 
     def setup(self, latitude, longitude, radius, additional_stations):
         """Set up the tankerkoenig API.
@@ -186,7 +186,7 @@ class TankerkoenigData:
         # The API seems to only return at most 10 results, so split the list in chunks of 10
         # and merge it together.
         for index in range(ceil(len(station_ids) / 10)):
-            data = await self.opp.async_add_executor_job(
+            data = await self._opp.async_add_executor_job(
                 pytankerkoenig.getPriceList,
                 self._api_key,
                 station_ids[index * 10 : (index + 1) * 10],

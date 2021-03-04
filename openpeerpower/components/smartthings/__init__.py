@@ -36,8 +36,8 @@ from .const import (
     DATA_MANAGER,
     DOMAIN,
     EVENT_BUTTON,
+    PLATFORMS,
     SIGNAL_SMARTTHINGS_UPDATE,
-    SUPPORTED_PLATFORMS,
     TOKEN_REFRESH_INTERVAL,
 )
 from .smartapp import (
@@ -184,9 +184,9 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
             )
         return False
 
-    for component in SUPPORTED_PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
     return True
 
@@ -213,8 +213,8 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
         broker.disconnect()
 
     tasks = [
-        opp.config_entries.async_forward_entry_unload(entry, component)
-        for component in SUPPORTED_PLATFORMS
+        opp.config_entries.async_forward_entry_unload(entry, platform)
+        for platform in PLATFORMS
     ]
     return all(await asyncio.gather(*tasks))
 
@@ -276,7 +276,7 @@ class DeviceBroker:
         scenes: Iterable,
     ):
         """Create a new instance of the DeviceBroker."""
-        self.opp = opp
+        self._opp = opp
         self._entry = entry
         self._installed_app_id = entry.data[CONF_INSTALLED_APP_ID]
         self._smart_app = smart_app
@@ -293,11 +293,13 @@ class DeviceBroker:
         for device in devices:
             capabilities = device.capabilities.copy()
             slots = {}
-            for platform_name in SUPPORTED_PLATFORMS:
-                platform = importlib.import_module(f".{platform_name}", self.__module__)
-                if not hasattr(platform, "get_capabilities"):
+            for platform in PLATFORMS:
+                platform_module = importlib.import_module(
+                    f".{platform}", self.__module__
+                )
+                if not hasattr(platform_module, "get_capabilities"):
                     continue
-                assigned = platform.get_capabilities(capabilities)
+                assigned = platform_module.get_capabilities(capabilities)
                 if not assigned:
                     continue
                 # Draw-down capabilities and set slot assignment
@@ -305,7 +307,7 @@ class DeviceBroker:
                     if capability not in capabilities:
                         continue
                     capabilities.remove(capability)
-                    slots[capability] = platform_name
+                    slots[capability] = platform
             assignments[device.device_id] = slots
         return assignments
 
@@ -319,7 +321,7 @@ class DeviceBroker:
                 self._entry.data[CONF_CLIENT_ID],
                 self._entry.data[CONF_CLIENT_SECRET],
             )
-            self.opp.config_entries.async_update_entry(
+            self._opp.config_entries.async_update_entry(
                 self._entry,
                 data={
                     **self._entry.data,
@@ -332,7 +334,7 @@ class DeviceBroker:
             )
 
         self._regenerate_token_remove = async_track_time_interval(
-            self.opp, regenerate_refresh_token, TOKEN_REFRESH_INTERVAL
+            self._opp, regenerate_refresh_token, TOKEN_REFRESH_INTERVAL
         )
 
         # Connect handler to incoming device events
@@ -390,7 +392,7 @@ class DeviceBroker:
                     "name": device.label,
                     "data": evt.data,
                 }
-                self.opp.bus.async_fire(EVENT_BUTTON, data)
+                self._opp.bus.async_fire(EVENT_BUTTON, data)
                 _LOGGER.debug("Fired button event: %s", data)
             else:
                 data = {
@@ -406,7 +408,7 @@ class DeviceBroker:
 
             updated_devices.add(device.device_id)
 
-        async_dispatcher_send(self.opp, SIGNAL_SMARTTHINGS_UPDATE, updated_devices)
+        async_dispatcher_send(self._opp, SIGNAL_SMARTTHINGS_UPDATE, updated_devices)
 
 
 class SmartThingsEntity(Entity):

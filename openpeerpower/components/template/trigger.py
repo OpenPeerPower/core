@@ -41,7 +41,9 @@ async def async_attach_trigger(
 
     # Arm at setup if the template is already false.
     try:
-        if not result_as_boolean(value_template.async_render()):
+        if not result_as_boolean(
+            value_template.async_render(automation_info["variables"])
+        ):
             armed = True
     except exceptions.TemplateError as ex:
         _LOGGER.warning(
@@ -104,7 +106,7 @@ async def async_attach_trigger(
         def call_action(*_):
             """Call action with right context."""
             nonlocal trigger_variables
-            opp.async_run(opp_job(
+            opp.async_run_opp_job(
                 job,
                 {"trigger": {**template_variables, **trigger_variables}},
                 (to_s.context if to_s else None),

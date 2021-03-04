@@ -1,7 +1,7 @@
 {
   "domain": "tahoma",
   "name": "Tahoma",
-  "documentation": "https://www.open-peer-power.io/integrations/tahoma",
+  "documentation": "https://www.openpeerpower.io/integrations/tahoma",
   "requirements": ["tahoma-api==0.0.16"],
   "codeowners": ["@philklei"]
 }

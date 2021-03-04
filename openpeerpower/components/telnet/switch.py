@@ -98,7 +98,7 @@ class TelnetSwitch(SwitchEntity):
         timeout,
     ):
         """Initialize the switch."""
-        self.opp = opp
+        self._opp = opp
         self.entity_id = ENTITY_ID_FORMAT.format(object_id)
         self._resource = resource
         self._port = port

@@ -5,7 +5,7 @@ import logging
 import time
 
 from aiohttp import ClientConnectionError, ClientResponseError
-from.opp_splunk import SplunkPayloadError, opp_splunk
+from opp_splunk import SplunkPayloadError, opp_splunk
 import voluptuous as vol
 
 from openpeerpower.const import (
@@ -31,7 +31,7 @@ CONF_FILTER = "filter"
 DEFAULT_HOST = "localhost"
 DEFAULT_PORT = 8088
 DEFAULT_SSL = False
-DEFAULT_NAME = " OPP"
+DEFAULT_NAME = "OPP"
 
 CONFIG_SCHEMA = vol.Schema(
     {

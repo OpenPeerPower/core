@@ -13,7 +13,7 @@ from openpeerpower.helpers.typing import OpenPeerPowerType
 
 DOMAIN = "smarthab"
 DATA_HUB = "hub"
-COMPONENTS = ["light", "cover"]
+PLATFORMS = ["light", "cover"]
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -69,9 +69,9 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     # Pass hub object to child platforms
     opp.data[DOMAIN][entry.entry_id] = {DATA_HUB: hub}
 
-    for component in COMPONENTS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -83,8 +83,8 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     result = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in COMPONENTS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

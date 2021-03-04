@@ -1,7 +1,7 @@
 {
   "domain": "syncthru",
   "name": "Samsung SyncThru Printer",
-  "documentation": "https://www.open-peer-power.io/integrations/syncthru",
+  "documentation": "https://www.openpeerpower.io/integrations/syncthru",
   "config_flow": true,
   "requirements": ["pysyncthru==0.7.0", "url-normalize==1.4.1"],
   "ssdp": [

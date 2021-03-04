@@ -1,7 +1,7 @@
 {
   "domain": "switchmate",
   "name": "Switchmate SimplySmart Home",
-  "documentation": "https://www.open-peer-power.io/integrations/switchmate",
+  "documentation": "https://www.openpeerpower.io/integrations/switchmate",
   "requirements": ["pySwitchmate==0.4.6"],
   "codeowners": ["@danielhiversen"]
 }

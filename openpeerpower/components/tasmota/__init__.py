@@ -92,8 +92,8 @@ async def async_setup_entry(opp, entry):
         await device_automation.async_setup_entry(opp, entry)
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_setup(entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_setup(entry, platform)
+                for platform in PLATFORMS
             ]
         )
 
@@ -113,8 +113,8 @@ async def async_unload_entry(opp, entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )
@@ -128,8 +128,8 @@ async def async_unload_entry(opp, entry):
     for unsub in opp.data[DATA_UNSUB]:
         unsub()
     opp.data.pop(DATA_REMOVE_DISCOVER_COMPONENT.format("device_automation"))()
-    for component in PLATFORMS:
-        opp.data.pop(DATA_REMOVE_DISCOVER_COMPONENT.format(component))()
+    for platform in PLATFORMS:
+        opp.data.pop(DATA_REMOVE_DISCOVER_COMPONENT.format(platform))()
 
     # deattach device triggers
     device_registry = await opp.helpers.device_registry.async_get_registry()

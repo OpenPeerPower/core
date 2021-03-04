@@ -1,7 +1,7 @@
 {
   "domain": "sun",
   "name": "Sun",
-  "documentation": "https://www.open-peer-power.io/integrations/sun",
+  "documentation": "https://www.openpeerpower.io/integrations/sun",
   "codeowners": ["@Swamp-Ig"],
   "quality_scale": "internal"
 }

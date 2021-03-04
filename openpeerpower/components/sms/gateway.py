@@ -1,10 +1,8 @@
 """The sms gateway to interact with a GSM modem."""
 import logging
 
-import gammu  # pylint: disable=import-error, no-member
-from gammu.asyncworker import (  # pylint: disable=import-error, no-member
-    GammuAsyncWorker,
-)
+import gammu  # pylint: disable=import-error
+from gammu.asyncworker import GammuAsyncWorker  # pylint: disable=import-error
 
 from openpeerpower.core import callback
 
@@ -19,7 +17,7 @@ class Gateway:
     def __init__(self, worker, opp):
         """Initialize the sms gateway."""
         self._worker = worker
-        self.opp = opp
+        self._opp = opp
 
     async def init_async(self):
         """Initialize the sms gateway asynchronously."""
@@ -68,7 +66,7 @@ class Gateway:
             _LOGGER.debug("Append event data:%s", event_data)
             data.append(event_data)
 
-        self.opp.add_job(self._notify_incoming_sms, data)
+        self._opp.add_job(self._notify_incoming_sms, data)
 
     # pylint: disable=no-self-use
     def get_and_delete_all_sms(self, state_machine, force=False):
@@ -137,7 +135,7 @@ class Gateway:
                 "date": message["date"],
                 "text": message["message"],
             }
-            self.opp.bus.async_fire(f"{DOMAIN}.incoming_sms", event_data)
+            self._opp.bus.async_fire(f"{DOMAIN}.incoming_sms", event_data)
 
     async def send_sms_async(self, message):
         """Send sms message via the worker."""
@@ -165,6 +163,6 @@ async def create_sms_gateway(config, opp):
         gateway = Gateway(worker, opp)
         await gateway.init_async()
         return gateway
-    except gammu.GSMError as exc:  # pylint: disable=no-member
+    except gammu.GSMError as exc:
         _LOGGER.error("Failed to initialize, error %s", exc)
         return None

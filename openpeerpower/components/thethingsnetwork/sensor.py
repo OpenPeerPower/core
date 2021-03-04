@@ -81,8 +81,8 @@ class TtnDataSensor(Entity):
         """Return the state of the entity."""
         if self._ttn_data_storage.data is not None:
             try:
-                return round(self._state[self._value], 1)
-            except (KeyError, TypeError):
+                return self._state[self._value]
+            except KeyError:
                 return None
         return None
 
@@ -113,7 +113,7 @@ class TtnDataStorage:
     def __init__(self, opp, app_id, device_id, access_key, values):
         """Initialize the data object."""
         self.data = None
-        self.opp = opp
+        self._opp = opp
         self._app_id = app_id
         self._device_id = device_id
         self._values = values
@@ -125,7 +125,7 @@ class TtnDataStorage:
     async def async_update(self):
         """Get the current state from The Things Network Data Storage."""
         try:
-            session = async_get_clientsession(self.opp)
+            session = async_get_clientsession(self._opp)
             with async_timeout.timeout(DEFAULT_TIMEOUT):
                 response = await session.get(self._url, headers=self._headers)
 

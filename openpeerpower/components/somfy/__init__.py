@@ -48,7 +48,7 @@ CONFIG_SCHEMA = vol.Schema(
     extra=vol.ALLOW_EXTRA,
 )
 
-SOMFY_COMPONENTS = ["climate", "cover", "sensor", "switch"]
+PLATFORMS = ["climate", "cover", "sensor", "switch"]
 
 
 async def async_setup(opp, config):
@@ -134,9 +134,9 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
             model=hub.type,
         )
 
-    for component in SOMFY_COMPONENTS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -147,8 +147,8 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     opp.data[DOMAIN].pop(API, None)
     await asyncio.gather(
         *[
-            opp.config_entries.async_forward_entry_unload(entry, component)
-            for component in SOMFY_COMPONENTS
+            opp.config_entries.async_forward_entry_unload(entry, platform)
+            for platform in PLATFORMS
         ]
     )
     return True

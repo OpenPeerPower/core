@@ -73,7 +73,7 @@ class SmartThingsFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 reason="invalid_webhook_url",
                 description_placeholders={
                     "webhook_url": webhook_url,
-                    "component_url": "https://www.open-peer-power.io/integrations/smartthings/",
+                    "component_url": "https://www.openpeerpower.io/integrations/smartthings/",
                 },
             )
 
@@ -223,7 +223,7 @@ class SmartThingsFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             errors=errors,
             description_placeholders={
                 "token_url": "https://account.smartthings.com/tokens",
-                "component_url": "https://www.open-peer-power.io/integrations/smartthings/",
+                "component_url": "https://www.openpeerpower.io/integrations/smartthings/",
             },
         )
 

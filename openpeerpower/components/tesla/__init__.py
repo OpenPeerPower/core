@@ -39,7 +39,7 @@ from .const import (
     DOMAIN,
     ICONS,
     MIN_SCAN_INTERVAL,
-    TESLA_COMPONENTS,
+    PLATFORMS,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -190,10 +190,10 @@ async def async_setup_entry(opp, config_entry):
     for device in all_devices:
         entry_data["devices"][device.opp_type].append(device)
 
-    for component in TESLA_COMPONENTS:
-        _LOGGER.debug("Loading %s", component)
+    for platform in PLATFORMS:
+        _LOGGER.debug("Loading %s", platform)
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, component)
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
     return True
 
@@ -203,8 +203,8 @@ async def async_unload_entry(opp, config_entry) -> bool:
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(config_entry, component)
-                for component in TESLA_COMPONENTS
+                opp.config_entries.async_forward_entry_unload(config_entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

@@ -2,11 +2,11 @@
   "domain": "smarttub",
   "name": "SmartTub",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/smarttub",
+  "documentation": "https://www.openpeerpower.io/integrations/smarttub",
   "dependencies": [],
   "codeowners": ["@mdz"],
   "requirements": [
-      "python-smarttub==0.0.6"
+      "python-smarttub==0.0.19"
   ],
   "quality_scale": "platinum"
 }

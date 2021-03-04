@@ -1,7 +1,7 @@
 {
   "domain": "sonarr",
   "name": "Sonarr",
-  "documentation": "https://www.open-peer-power.io/integrations/sonarr",
+  "documentation": "https://www.openpeerpower.io/integrations/sonarr",
   "codeowners": ["@ctalkington"],
   "requirements": ["sonarr==0.3.0"],
   "config_flow": true,

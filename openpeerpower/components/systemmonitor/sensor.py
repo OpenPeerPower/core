@@ -139,7 +139,7 @@ IF_ADDRS_FAMILY = {"ipv4_address": socket.AF_INET, "ipv6_address": socket.AF_INE
 # platforms / hardware combinations.
 # Taken from last version of "glances" integration before they moved to
 # a generic temperature sensor logic.
-# https://github.com/open-peer-power/core/blob/5e15675593ba94a2c11f9f929cdad317e27ce190/openpeerpower/components/glances/sensor.py#L199
+# https://github.com/openpeerpower/core/blob/5e15675593ba94a2c11f9f929cdad317e27ce190/openpeerpower/components/glances/sensor.py#L199
 CPU_SENSOR_PREFIXES = [
     "amdgpu 1",
     "aml_thermal",

@@ -21,7 +21,7 @@ from .const import (
     CONF_SERIALNUMBER,
     DOMAIN,
     MIN_TIME_BETWEEN_UPDATES,
-    SMAPPEE_PLATFORMS,
+    PLATFORMS,
     TOKEN_URL,
 )
 
@@ -92,9 +92,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
     opp.data[DOMAIN][entry.entry_id] = SmappeeBase(opp, smappee)
 
-    for component in SMAPPEE_PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -105,8 +105,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in SMAPPEE_PLATFORMS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

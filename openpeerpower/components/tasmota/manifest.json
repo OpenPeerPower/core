@@ -2,7 +2,7 @@
   "domain": "tasmota",
   "name": "Tasmota",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/tasmota",
+  "documentation": "https://www.openpeerpower.io/integrations/tasmota",
   "requirements": ["hatasmota==0.2.9"],
   "dependencies": ["mqtt"],
   "mqtt": ["tasmota/discovery/#"],

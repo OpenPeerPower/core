@@ -1,6 +1,6 @@
 {
   "domain": "telnet",
   "name": "Telnet",
-  "documentation": "https://www.open-peer-power.io/integrations/telnet",
+  "documentation": "https://www.openpeerpower.io/integrations/telnet",
   "codeowners": []
 }

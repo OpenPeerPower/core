@@ -119,12 +119,12 @@ class TasmotaDiscoveryUpdate(TasmotaEntity):
     def __init__(self, discovery_hash, **kwds) -> None:
         """Initialize the discovery update mixin."""
         self._discovery_hash = discovery_hash
-        self._removed_from opp =False
+        self._removed_from_opp = False
         super().__init__(**kwds)
 
     async def async_added_to_opp(self) -> None:
         """Subscribe to discovery updates."""
-        self._removed_from opp =False
+        self._removed_from_opp = False
         await super().async_added_to_opp()
 
         async def discovery_callback(config):
@@ -160,7 +160,7 @@ class TasmotaDiscoveryUpdate(TasmotaEntity):
 
     async def async_will_remove_from_opp(self) -> None:
         """Stop listening to signal and cleanup discovery data.."""
-        if not self._removed_from(opp:
+        if not self._removed_from_opp:
             clear_discovery_hash(self.opp, self._discovery_hash)
-            self._removed_from opp =True
+            self._removed_from_opp = True
         await super().async_will_remove_from_opp()

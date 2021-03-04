@@ -12,7 +12,7 @@ from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers.event import async_call_later
 from openpeerpower.util.decorator import Registry
 
-from .const import ATTR_STREAMS, DOMAIN, MAX_SEGMENTS
+from .const import ATTR_STREAMS, DOMAIN
 
 PROVIDERS = Registry()
 
@@ -49,7 +49,7 @@ class IdleTimer:
         self, opp: OpenPeerPower, timeout: int, idle_callback: Callable[[], None]
     ):
         """Initialize IdleTimer."""
-        self.opp = opp
+        self._opp = opp
         self._timeout = timeout
         self._callback = idle_callback
         self._unsub = None
@@ -59,14 +59,14 @@ class IdleTimer:
         """Start the idle timer if not already started."""
         self.idle = False
         if self._unsub is None:
-            self._unsub = async_call_later(self.opp, self._timeout, self.fire)
+            self._unsub = async_call_later(self._opp, self._timeout, self.fire)
 
     def awake(self):
         """Keep the idle time alive by resetting the timeout."""
         self.idle = False
         # Reset idle timeout
         self.clear()
-        self._unsub = async_call_later(self.opp, self._timeout, self.fire)
+        self._unsub = async_call_later(self._opp, self._timeout, self.fire)
 
     def clear(self):
         """Clear and disable the timer if it has not already fired."""
@@ -83,13 +83,15 @@ class IdleTimer:
 class StreamOutput:
     """Represents a stream output."""
 
-    def __init__(self, opp: OpenPeerPower, idle_timer: IdleTimer) -> None:
+    def __init__(
+        self, opp: OpenPeerPower, idle_timer: IdleTimer, deque_maxlen: int = None
+    ) -> None:
         """Initialize a stream output."""
-        self.opp = opp
+        self._opp = opp
         self._idle_timer = idle_timer
         self._cursor = None
         self._event = asyncio.Event()
-        self._segments = deque(maxlen=MAX_SEGMENTS)
+        self._segments = deque(maxlen=deque_maxlen)
 
     @property
     def name(self) -> str:
@@ -100,26 +102,6 @@ class StreamOutput:
     def idle(self) -> bool:
         """Return True if the output is idle."""
         return self._idle_timer.idle
-
-    @property
-    def format(self) -> str:
-        """Return container format."""
-        return None
-
-    @property
-    def audio_codecs(self) -> str:
-        """Return desired audio codecs."""
-        return None
-
-    @property
-    def video_codecs(self) -> tuple:
-        """Return desired video codecs."""
-        return None
-
-    @property
-    def container_options(self) -> Callable[[int], dict]:
-        """Return Callable which takes a sequence number and returns container options."""
-        return None
 
     @property
     def segments(self) -> List[int]:
@@ -162,7 +144,7 @@ class StreamOutput:
 
     def put(self, segment: Segment) -> None:
         """Store output."""
-        self.opp.loop.call_soon_threadsafe(self._async_put, segment)
+        self._opp.loop.call_soon_threadsafe(self._async_put, segment)
 
     @callback
     def _async_put(self, segment: Segment) -> None:
@@ -177,7 +159,7 @@ class StreamOutput:
         """Handle cleanup."""
         self._event.set()
         self._idle_timer.clear()
-        self._segments = deque(maxlen=MAX_SEGMENTS)
+        self._segments = deque(maxlen=self._segments.maxlen)
 
 
 class StreamView(OpenPeerPowerView):
@@ -193,7 +175,7 @@ class StreamView(OpenPeerPowerView):
 
     async def get(self, request, token, sequence=None):
         """Start a GET request."""
-       opp = request.app["opp"]
+        opp = request.app["opp"]
 
         stream = next(
             (s for s in opp.data[DOMAIN][ATTR_STREAMS] if s.access_token == token),

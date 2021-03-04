@@ -24,7 +24,7 @@ CONFIG_SCHEMA = vol.Schema(
     extra=vol.ALLOW_EXTRA,
 )
 
-SOMA_COMPONENTS = ["cover", "sensor"]
+PLATFORMS = ["cover", "sensor"]
 
 
 async def async_setup(opp, config):
@@ -50,9 +50,9 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     devices = await opp.async_add_executor_job(opp.data[DOMAIN][API].list_devices)
     opp.data[DOMAIN][DEVICES] = devices["shades"]
 
-    for component in SOMA_COMPONENTS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -63,8 +63,8 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in SOMA_COMPONENTS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

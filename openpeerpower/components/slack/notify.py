@@ -4,7 +4,7 @@ from __future__ import annotations
 import asyncio
 import logging
 import os
-from typing import Any, List, Optional, TypedDict
+from typing import Any, TypedDict
 from urllib.parse import urlparse
 
 from aiohttp import BasicAuth, FormData
@@ -106,14 +106,14 @@ class MessageT(TypedDict, total=False):
     username: str  # Optional key
     icon_url: str  # Optional key
     icon_emoji: str  # Optional key
-    blocks: List[Any]  # Optional key
+    blocks: list[Any]  # Optional key
 
 
 async def async_get_service(
     opp: OpenPeerPowerType,
     config: ConfigType,
-    discovery_info: Optional[DiscoveryInfoType] = None,
-) -> Optional[SlackNotificationService]:
+    discovery_info: DiscoveryInfoType | None = None,
+) -> SlackNotificationService | None:
     """Set up the Slack notification service."""
     session = aiohttp_client.async_get_clientsession(opp)
     client = WebClient(token=config[CONF_API_KEY], run_async=True, session=session)
@@ -147,7 +147,7 @@ def _async_get_filename_from_url(url: str) -> str:
 
 
 @callback
-def _async_sanitize_channel_names(channel_list: List[str]) -> List[str]:
+def _async_sanitize_channel_names(channel_list: list[str]) -> list[str]:
     """Remove any # symbols from a channel list."""
     return [channel.lstrip("#") for channel in channel_list]
 
@@ -174,25 +174,25 @@ class SlackNotificationService(BaseNotificationService):
         opp: OpenPeerPowerType,
         client: WebClient,
         default_channel: str,
-        username: Optional[str],
-        icon: Optional[str],
+        username: str | None,
+        icon: str | None,
     ) -> None:
         """Initialize."""
         self._client = client
         self._default_channel = default_channel
-        self.opp = opp
+        self._opp = opp
         self._icon = icon
         self._username = username
 
     async def _async_send_local_file_message(
         self,
         path: str,
-        targets: List[str],
+        targets: list[str],
         message: str,
-        title: Optional[str],
+        title: str | None,
     ) -> None:
         """Upload a local file (with message) to Slack."""
-        if not self.opp.config.is_allowed_path(path):
+        if not self._opp.config.is_allowed_path(path):
             _LOGGER.error("Path does not exist or is not allowed: %s", path)
             return
 
@@ -213,12 +213,12 @@ class SlackNotificationService(BaseNotificationService):
     async def _async_send_remote_file_message(
         self,
         url: str,
-        targets: List[str],
+        targets: list[str],
         message: str,
-        title: Optional[str],
+        title: str | None,
         *,
-        username: Optional[str] = None,
-        password: Optional[str] = None,
+        username: str | None = None,
+        password: str | None = None,
     ) -> None:
         """Upload a remote file (with message) to Slack.
 
@@ -226,12 +226,12 @@ class SlackNotificationService(BaseNotificationService):
         as the former would require us to download the entire remote file into memory
         first before uploading it to Slack.
         """
-        if not self.opp.config.is_allowed_external_url(url):
+        if not self._opp.config.is_allowed_external_url(url):
             _LOGGER.error("URL is not allowed: %s", url)
             return
 
         filename = _async_get_filename_from_url(url)
-        session = aiohttp_client.async_get_clientsession(self.opp)
+        session = aiohttp_client.async_get_clientsession(self._opp)
 
         kwargs: AuthDictT = {}
         if username and password is not None:
@@ -263,13 +263,13 @@ class SlackNotificationService(BaseNotificationService):
 
     async def _async_send_text_only_message(
         self,
-        targets: List[str],
+        targets: list[str],
         message: str,
-        title: Optional[str],
+        title: str | None,
         *,
-        username: Optional[str] = None,
-        icon: Optional[str] = None,
-        blocks: Optional[Any] = None,
+        username: str | None = None,
+        icon: str | None = None,
+        blocks: Any | None = None,
     ) -> None:
         """Send a text-only message."""
         message_dict: MessageT = {"link_names": True, "text": message}
@@ -321,7 +321,7 @@ class SlackNotificationService(BaseNotificationService):
         if ATTR_FILE not in data:
             if ATTR_BLOCKS_TEMPLATE in data:
                 blocks = _async_templatize_blocks(
-                    self.opp, data[ATTR_BLOCKS_TEMPLATE]
+                    self._opp, data[ATTR_BLOCKS_TEMPLATE]
                 )
             elif ATTR_BLOCKS in data:
                 blocks = data[ATTR_BLOCKS]

@@ -2,7 +2,7 @@
   "domain": "tile",
   "name": "Tile",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/tile",
+  "documentation": "https://www.openpeerpower.io/integrations/tile",
   "requirements": ["pytile==5.2.0"],
   "codeowners": ["@bachya"]
 }

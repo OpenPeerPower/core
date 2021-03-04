@@ -1,7 +1,7 @@
 {
   "domain": "tankerkoenig",
   "name": "Tankerkoenig",
-  "documentation": "https://www.open-peer-power.io/integrations/tankerkoenig",
+  "documentation": "https://www.openpeerpower.io/integrations/tankerkoenig",
   "requirements": ["pytankerkoenig==0.0.6"],
   "codeowners": ["@guillempages"]
 }

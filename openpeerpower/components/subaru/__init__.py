@@ -22,7 +22,7 @@ from .const import (
     ENTRY_COORDINATOR,
     ENTRY_VEHICLES,
     FETCH_INTERVAL,
-    SUPPORTED_PLATFORMS,
+    PLATFORMS,
     UPDATE_INTERVAL,
     VEHICLE_API_GEN,
     VEHICLE_HAS_EV,
@@ -94,9 +94,9 @@ async def async_setup_entry(opp, entry):
         ENTRY_VEHICLES: vehicle_info,
     }
 
-    for component in SUPPORTED_PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -107,8 +107,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in SUPPORTED_PLATFORMS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

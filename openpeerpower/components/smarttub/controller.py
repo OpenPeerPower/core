@@ -26,7 +26,7 @@ class SmartTubController:
 
     def __init__(self, opp):
         """Initialize an interface to SmartTub."""
-        self.opp = opp
+        self._opp = opp
         self._account = None
         self.spas = set()
         self._spa_devices = {}
@@ -59,7 +59,7 @@ class SmartTubController:
         self.spas = await self._account.get_spas()
 
         self.coordinator = DataUpdateCoordinator(
-            self.opp,
+            self._opp,
             _LOGGER,
             name=DOMAIN,
             update_method=self.async_update_data,
@@ -86,11 +86,20 @@ class SmartTubController:
         return data
 
     async def _get_spa_data(self, spa):
-        return {"status": await spa.get_status()}
+        status, pumps, lights = await asyncio.gather(
+            spa.get_status(),
+            spa.get_pumps(),
+            spa.get_lights(),
+        )
+        return {
+            "status": status,
+            "pumps": {pump.id: pump for pump in pumps},
+            "lights": {light.zone: light for light in lights},
+        }
 
     async def async_register_devices(self, entry):
         """Register devices with the device registry for all spas."""
-        device_registry = await dr.async_get_registry(self.opp)
+        device_registry = await dr.async_get_registry(self._opp)
         for spa in self.spas:
             device = device_registry.async_get_or_create(
                 config_entry_id=entry.entry_id,
@@ -107,7 +116,7 @@ class SmartTubController:
         Returns None if the credentials are invalid.
         """
 
-        api = SmartTub(async_get_clientsession(self.opp))
+        api = SmartTub(async_get_clientsession(self._opp))
 
         await api.login(email, password)
         return await api.get_account()

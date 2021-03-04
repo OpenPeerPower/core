@@ -1,7 +1,7 @@
 {
   "domain": "slack",
   "name": "Slack",
-  "documentation": "https://www.open-peer-power.io/integrations/slack",
+  "documentation": "https://www.openpeerpower.io/integrations/slack",
   "requirements": ["slackclient==2.5.0"],
   "codeowners": ["@bachya"]
 }

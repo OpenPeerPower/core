@@ -14,7 +14,7 @@ from sharkiqpy import (
 from openpeerpower import exceptions
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
 
-from .const import _LOGGER, API_TIMEOUT, COMPONENTS, DOMAIN
+from .const import _LOGGER, API_TIMEOUT, DOMAIN, PLATFORMS
 from .update_coordinator import SharkIqUpdateCoordinator
 
 
@@ -49,7 +49,7 @@ async def async_setup_entry(opp, config_entry):
     ayla_api = get_ayla_api(
         username=config_entry.data[CONF_USERNAME],
         password=config_entry.data[CONF_PASSWORD],
-        websession.opp.helpers.aiohttp_client.async_get_clientsession(),
+        websession=opp.helpers.aiohttp_client.async_get_clientsession(),
     )
 
     try:
@@ -70,9 +70,9 @@ async def async_setup_entry(opp, config_entry):
 
     opp.data[DOMAIN][config_entry.entry_id] = coordinator
 
-    for component in COMPONENTS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, component)
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
     return True
@@ -98,8 +98,8 @@ async def async_unload_entry(opp, config_entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(config_entry, component)
-                for component in COMPONENTS
+                opp.config_entries.async_forward_entry_unload(config_entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

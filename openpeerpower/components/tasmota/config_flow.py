@@ -4,11 +4,7 @@ import voluptuous as vol
 from openpeerpower import config_entries
 from openpeerpower.components.mqtt import valid_subscribe_topic
 
-from .const import (  # pylint:disable=unused-import
-    CONF_DISCOVERY_PREFIX,
-    DEFAULT_PREFIX,
-    DOMAIN,
-)
+from .const import CONF_DISCOVERY_PREFIX, DEFAULT_PREFIX, DOMAIN
 
 
 class FlowHandler(config_entries.ConfigFlow, domain=DOMAIN):

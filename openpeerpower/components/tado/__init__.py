@@ -31,10 +31,10 @@ from .const import (
 _LOGGER = logging.getLogger(__name__)
 
 
-TADO_COMPONENTS = ["binary_sensor", "sensor", "climate", "water_heater"]
+PLATFORMS = ["binary_sensor", "sensor", "climate", "water_heater"]
 
-MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=10)
-SCAN_INTERVAL = timedelta(seconds=15)
+MIN_TIME_BETWEEN_UPDATES = timedelta(minutes=4)
+SCAN_INTERVAL = timedelta(minutes=5)
 
 CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 
@@ -92,9 +92,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         UPDATE_LISTENER: update_listener,
     }
 
-    for component in TADO_COMPONENTS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -118,8 +118,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in TADO_COMPONENTS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

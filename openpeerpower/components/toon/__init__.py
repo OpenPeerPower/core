@@ -27,7 +27,7 @@ from .const import CONF_AGREEMENT_ID, CONF_MIGRATE, DEFAULT_SCAN_INTERVAL, DOMAI
 from .coordinator import ToonDataUpdateCoordinator
 from .oauth2 import register_oauth2_implementations
 
-ENTITY_COMPONENTS = {
+PLATFORMS = {
     BINARY_SENSOR_DOMAIN,
     CLIMATE_DOMAIN,
     SENSOR_DOMAIN,
@@ -119,9 +119,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     )
 
     # Spin up the platforms
-    for component in ENTITY_COMPONENTS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     # If Open Peer Power is already in a running state, register the webhook
@@ -146,8 +146,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     unload_ok = all(
         await asyncio.gather(
             *(
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in ENTITY_COMPONENTS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             )
         )
     )

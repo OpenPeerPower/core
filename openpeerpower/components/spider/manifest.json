@@ -1,7 +1,7 @@
 {
   "domain": "spider",
   "name": "Itho Daalderop Spider",
-  "documentation": "https://www.open-peer-power.io/integrations/spider",
+  "documentation": "https://www.openpeerpower.io/integrations/spider",
   "requirements": [
     "spiderpy==1.4.2"
   ],
