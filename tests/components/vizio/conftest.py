@@ -157,6 +157,9 @@ def vizio_cant_connect_fixture():
     with patch(
         "openpeerpower.components.vizio.config_flow.VizioAsync.validate_op_config",
         AsyncMock(return_value=False),
+    ), patch(
+        "openpeerpower.components.vizio.media_player.VizioAsync.get_power_state",
+        return_value=None,
     ):
         yield
 

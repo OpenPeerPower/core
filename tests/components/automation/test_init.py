@@ -30,7 +30,12 @@ from openpeerpower.exceptions import OpenPeerPowerError, Unauthorized
 from openpeerpower.setup import async_setup_component
 import openpeerpower.util.dt as dt_util
 
-from tests.common import assert_setup_component, async_mock_service, mock_restore_cache
+from tests.common import (
+    assert_setup_component,
+    async_capture_events,
+    async_mock_service,
+    mock_restore_cache,
+)
 from tests.components.logbook.test_init import MockLazyEventPartialState
 
 
@@ -496,10 +501,7 @@ async def test_reload_config_service(opp, calls, opp_admin_user, opp_read_only_u
     assert len(calls) == 1
     assert calls[0].data.get("event") == "test_event"
 
-    test_reload_event = []
-    opp.bus.async_listen(
-        EVENT_AUTOMATION_RELOADED, lambda event: test_reload_event.append(event)
-    )
+    test_reload_event = async_capture_events(opp, EVENT_AUTOMATION_RELOADED)
 
     with patch(
         "openpeerpower.config.load_yaml_config_file",
@@ -519,13 +521,13 @@ async def test_reload_config_service(opp, calls, opp_admin_user, opp_read_only_u
             await opp.services.async_call(
                 automation.DOMAIN,
                 SERVICE_RELOAD,
-                context=Context(user_id(opp_read_only_user.id),
+                context=Context(user_id=opp_read_only_user.id),
                 blocking=True,
             )
         await opp.services.async_call(
             automation.DOMAIN,
             SERVICE_RELOAD,
-            context=Context(user_id(opp_admin_user.id),
+            context=Context(user_id=opp_admin_user.id),
             blocking=True,
         )
         # De-flake ?!
@@ -957,7 +959,7 @@ async def test_automation_with_error_in_script(opp, caplog):
     assert "Traceback" not in caplog.text
 
 
-async def test_automation_with_error_in_script_2.opp, caplog):
+async def test_automation_with_error_in_script_2(opp, caplog):
     """Test automation with an error in script."""
     assert await async_setup_component(
         opp,

@@ -1,7 +1,7 @@
 """
 Test against characteristics captured from a Velux Gateway.
 
-https://github.com/open-peer-power/core/issues/44314
+https://github.com/openpeerpower/core/issues/44314
 """
 
 from openpeerpower.components.cover import (
@@ -17,7 +17,7 @@ from tests.components.homekit_controller.common import (
 )
 
 
-async def test_simpleconnect_cover_setup_opp):
+async def test_simpleconnect_cover_setup(opp):
     """Test that a velux gateway can be correctly setup in HA."""
     accessories = await setup_accessories_from_file(opp, "velux_gateway.json")
     config_entry, pairing = await setup_test_accessories(opp, accessories)

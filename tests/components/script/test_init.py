@@ -74,7 +74,7 @@ class TestScriptComponent(unittest.TestCase):
     # pylint: disable=invalid-name
     def setUp(self):
         """Set up things to be run when tests are started."""
-        self.opp =get_test_open_peer_power()
+        self.opp = get_test_open_peer_power()
 
         self.addCleanup(self.tear_down_cleanup)
 

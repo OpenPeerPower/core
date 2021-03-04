@@ -34,10 +34,10 @@ BANNED_IPS_WITH_SUPERVISOR = BANNED_IPS + [SUPERVISOR_IP]
 @pytest.fixture(name="oppio_env")
 def oppio_env_fixture():
     """Fixture to inject oppio env."""
-    with patch.dict(os.environ, {" OPPIO": "127.0.0.1"}), patch(
-        "openpeerpower.components.oppio. OppIO.is_connected",
+    with patch.dict(os.environ, {"OPPIO": "127.0.0.1"}), patch(
+        "openpeerpower.components.oppio.OppIO.is_connected",
         return_value={"result": "ok", "data": {}},
-    ), patch.dict(os.environ, {" OPPIO_TOKEN": "123456"}):
+    ), patch.dict(os.environ, {"OPPIO_TOKEN": "123456"}):
         yield
 
 
@@ -98,7 +98,7 @@ async def test_access_from_supervisor_ip(
     ):
         client = await aiohttp_client(app)
 
-    assert await async_setup_component(opp,  "oppio", {"oppio": {}})
+    assert await async_setup_component(opp, "oppio", {"oppio": {}})
 
     m_open = mock_open()
 

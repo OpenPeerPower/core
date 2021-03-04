@@ -38,7 +38,7 @@ class TestStatisticsSensor(unittest.TestCase):
 
     def setup_method(self, method):
         """Set up things to be run when tests are started."""
-        self.opp =get_test_open_peer_power()
+        self.opp = get_test_open_peer_power()
         self.values = [17, 20, 15.2, 5, 3.8, 9.2, 6.7, 14, 6]
         self.count = len(self.values)
         self.min = min(self.values)
@@ -483,7 +483,7 @@ async def test_reload(opp):
         "fixtures",
         "statistics/configuration.yaml",
     )
-    with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
+    with patch.object(opp_config, "YAML_CONFIG_FILE", yaml_path):
         await opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,

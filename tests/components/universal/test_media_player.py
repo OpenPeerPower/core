@@ -205,7 +205,7 @@ class TestMediaPlayer(unittest.TestCase):
 
     def setUp(self):  # pylint: disable=invalid-name
         """Set up things to be run when tests are started."""
-        self.opp =get_test_open_peer_power()
+        self.opp = get_test_open_peer_power()
 
         self.mock_mp_1 = MockMediaPlayer(self.opp, "mock1")
         self.mock_mp_1.schedule_update_op_state()
@@ -1006,7 +1006,7 @@ async def test_reload(opp):
         "fixtures",
         "universal/configuration.yaml",
     )
-    with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
+    with patch.object(opp_config, "YAML_CONFIG_FILE", yaml_path):
         await opp.services.async_call(
             "universal",
             SERVICE_RELOAD,

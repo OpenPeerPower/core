@@ -16,7 +16,7 @@ from openpeerpower.helpers.device_registry import async_get_registry
 from openpeerpower.setup import async_setup_component
 
 from tests.common import async_mock_service, mock_coro
-from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
+from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa: F401
 
 SHORT_PRESS = "remote_button_short_press"
 COMMAND = "command"
@@ -33,7 +33,7 @@ async def device_ias(opp, zigpy_device_mock, zha_device_joined_restored):
             1: {
                 "in_clusters": [c.cluster_id for c in clusters],
                 "out_clusters": [general.OnOff.cluster_id],
-                "device_type": zigpy.profiles.zop.DeviceType.ON_OFF_SWITCH,
+                "device_type": zigpy.profiles.zha.DeviceType.ON_OFF_SWITCH,
             }
         },
     )

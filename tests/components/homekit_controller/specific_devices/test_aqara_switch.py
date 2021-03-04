@@ -4,7 +4,7 @@ Regression tests for Aqara AR004.
 This device has a non-standard programmable stateless switch service that has a
 service-label-index despite not being linked to a service-label.
 
-https://github.com/open-peer-power/core/pull/39090
+https://github.com/openpeerpower/core/pull/39090
 """
 
 from tests.common import assert_lists_same, async_get_device_automations
@@ -14,7 +14,7 @@ from tests.components.homekit_controller.common import (
 )
 
 
-async def test_aqara_switch_setup_opp):
+async def test_aqara_switch_setup(opp):
     """Test that a Aqara Switch can be correctly setup in HA."""
     accessories = await setup_accessories_from_file(opp, "aqara_switch.json")
     config_entry, pairing = await setup_test_accessories(opp, accessories)

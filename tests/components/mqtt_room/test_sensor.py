@@ -5,7 +5,7 @@ from unittest.mock import patch
 
 from openpeerpower.components.mqtt import CONF_QOS, CONF_STATE_TOPIC, DEFAULT_QOS
 import openpeerpower.components.sensor as sensor
-from openpeerpower.const import CONF_NAME, CONF_PLATFORM
+from openpeerpower.const import CONF_DEVICE_ID, CONF_NAME, CONF_PLATFORM, CONF_TIMEOUT
 from openpeerpower.setup import async_setup_component
 from openpeerpower.util import dt
 
@@ -20,9 +20,6 @@ BEDROOM_TOPIC = f"room_presence/{BEDROOM}"
 LIVING_ROOM_TOPIC = f"room_presence/{LIVING_ROOM}"
 
 SENSOR_STATE = f"sensor.{NAME}"
-
-CONF_DEVICE_ID = "device_id"
-CONF_TIMEOUT = "timeout"
 
 NEAR_MESSAGE = {"id": DEVICE_ID, "name": NAME, "distance": 1}
 

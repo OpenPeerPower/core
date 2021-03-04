@@ -68,7 +68,7 @@ async def test_owserver_binary_sensor(owproxy, opp, device_id):
         item["default_disabled"] = False
 
     with patch(
-        "openpeerpower.components.onewire.SUPPORTED_PLATFORMS", [BINARY_SENSOR_DOMAIN]
+        "openpeerpower.components.onewire.PLATFORMS", [BINARY_SENSOR_DOMAIN]
     ), patch.dict(
         "openpeerpower.components.onewire.binary_sensor.DEVICE_BINARY_SENSORS",
         patch_device_binary_sensors,

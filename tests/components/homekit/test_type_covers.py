@@ -46,7 +46,7 @@ from tests.common import async_mock_service
 
 
 async def test_garage_door_open_close(opp, hk_driver, events):
-    """Test if accessory and HA are updated accordingly."""
+    """Test if accessory and OP are updated accordingly."""
     entity_id = "cover.garage_door"
 
     opp.states.async_set(entity_id, None)
@@ -130,7 +130,7 @@ async def test_garage_door_open_close(opp, hk_driver, events):
 
 
 async def test_windowcovering_set_cover_position(opp, hk_driver, events):
-    """Test if accessory and HA are updated accordingly."""
+    """Test if accessory and OP are updated accordingly."""
     entity_id = "cover.window"
 
     opp.states.async_set(entity_id, None)
@@ -217,7 +217,7 @@ async def test_window_instantiate(opp, hk_driver, events):
 
 
 async def test_windowcovering_cover_set_tilt(opp, hk_driver, events):
-    """Test if accessory and HA update slat tilt accordingly."""
+    """Test if accessory and OP update slat tilt accordingly."""
     entity_id = "cover.window"
 
     opp.states.async_set(
@@ -260,7 +260,7 @@ async def test_windowcovering_cover_set_tilt(opp, hk_driver, events):
     )
 
     # HomeKit sets tilts between -90 and 90 (degrees), whereas
-    #  OpenPeerPower expects a % between 0 and 100. Keep that in mind
+    # Homeassistant expects a % between 0 and 100. Keep that in mind
     # when comparing
     await opp.async_add_executor_job(acc.char_target_tilt.client_update_value, 90)
     await opp.async_block_till_done()
@@ -284,7 +284,7 @@ async def test_windowcovering_cover_set_tilt(opp, hk_driver, events):
 
 
 async def test_windowcovering_open_close(opp, hk_driver, events):
-    """Test if accessory and HA are updated accordingly."""
+    """Test if accessory and OP are updated accordingly."""
     entity_id = "cover.window"
 
     opp.states.async_set(entity_id, STATE_UNKNOWN, {ATTR_SUPPORTED_FEATURES: 0})
@@ -365,7 +365,7 @@ async def test_windowcovering_open_close(opp, hk_driver, events):
 
 
 async def test_windowcovering_open_close_stop(opp, hk_driver, events):
-    """Test if accessory and HA are updated accordingly."""
+    """Test if accessory and OP are updated accordingly."""
     entity_id = "cover.window"
 
     opp.states.async_set(
@@ -414,7 +414,7 @@ async def test_windowcovering_open_close_stop(opp, hk_driver, events):
 async def test_windowcovering_open_close_with_position_and_stop(
     opp, hk_driver, events
 ):
-    """Test if accessory and HA are updated accordingly."""
+    """Test if accessory and OP are updated accordingly."""
     entity_id = "cover.stop_window"
 
     opp.states.async_set(
@@ -519,7 +519,7 @@ async def test_windowcovering_restore(opp, hk_driver, events):
 
 
 async def test_garage_door_with_linked_obstruction_sensor(opp, hk_driver, events):
-    """Test if accessory and HA are updated accordingly with a linked obstruction sensor."""
+    """Test if accessory and OP are updated accordingly with a linked obstruction sensor."""
     linked_obstruction_sensor_entity_id = "binary_sensor.obstruction"
     entity_id = "cover.garage_door"
 

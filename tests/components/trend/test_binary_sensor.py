@@ -14,11 +14,11 @@ from tests.common import assert_setup_component, get_test_open_peer_power
 class TestTrendBinarySensor:
     """Test the Trend sensor."""
 
-   opp = None
+    opp = None
 
     def setup_method(self, method):
         """Set up things to be run when tests are started."""
-        self.opp =get_test_open_peer_power()
+        self.opp = get_test_open_peer_power()
 
     def teardown_method(self, method):
         """Stop everything that was started."""
@@ -400,7 +400,7 @@ async def test_reload(opp):
         "fixtures",
         "trend/configuration.yaml",
     )
-    with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
+    with patch.object(opp_config, "YAML_CONFIG_FILE", yaml_path):
         await opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,

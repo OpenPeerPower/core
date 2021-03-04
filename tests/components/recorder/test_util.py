@@ -23,7 +23,7 @@ from tests.common import (
 @pytest.fixture
 def opp_recorder():
     """Open Peer Power fixture with in-memory recorder."""
-   opp = get_test_open_peer_power()
+    opp = get_test_open_peer_power()
 
     def setup_recorder(config=None):
         """Set up with params."""
@@ -31,15 +31,15 @@ def opp_recorder():
         opp.start()
         opp.block_till_done()
         opp.data[DATA_INSTANCE].block_till_done()
-        return.opp
+        return opp
 
     yield setup_recorder
     opp.stop()
 
 
-def test_recorder_bad_commit.opp_recorder):
+def test_recorder_bad_commit(opp_recorder):
     """Bad _commit should retry 3 times."""
-   opp = opp_recorder()
+    opp = opp_recorder()
 
     def work(session):
         """Bad work."""
@@ -53,11 +53,11 @@ def test_recorder_bad_commit.opp_recorder):
     assert e_mock.call_count == 3
 
 
-def test_recorder_bad_execute.opp_recorder):
+def test_recorder_bad_execute(opp_recorder):
     """Bad execute, retry 3 times."""
     from sqlalchemy.exc import SQLAlchemyError
 
-    opp.recorder()
+    opp_recorder()
 
     def to_native(validate_entity_id=True):
         """Raise exception."""
@@ -179,9 +179,9 @@ async def test_last_run_was_recently_clean(opp):
         )
 
 
-def test_basic_sanity_check.opp_recorder):
+def test_basic_sanity_check(opp_recorder):
     """Test the basic sanity checks with a missing table."""
-   opp = opp_recorder()
+    opp = opp_recorder()
 
     cursor = opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
 
@@ -193,9 +193,9 @@ def test_basic_sanity_check.opp_recorder):
         util.basic_sanity_check(cursor)
 
 
-def test_combined_checks.opp_recorder, caplog):
+def test_combined_checks(opp_recorder, caplog):
     """Run Checks on the open database."""
-   opp = opp_recorder()
+    opp = opp_recorder()
 
     cursor = opp.data[DATA_INSTANCE].engine.raw_connection().cursor()
 

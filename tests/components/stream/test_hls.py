@@ -229,7 +229,6 @@ async def test_stream_keepalive(opp):
     stream = create_stream(opp, source)
     track = stream.add_provider("hls")
     track.num_segments = 2
-    stream.start()
 
     cur_time = 0
 

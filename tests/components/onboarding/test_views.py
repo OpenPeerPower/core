@@ -40,7 +40,7 @@ async def rpi_fixture(opp, aioclient_mock, mock_supervisor):
             "data": {"version_latest": "1.0.0", "machine": "raspberrypi3"},
         },
     )
-    assert await async_setup_component(opp,  "oppio", {})
+    assert await async_setup_component(opp, "oppio", {})
     await opp.async_block_till_done()
 
 
@@ -54,7 +54,7 @@ async def no_rpi_fixture(opp, aioclient_mock, mock_supervisor):
             "data": {"version_latest": "1.0.0", "machine": "odroid-n2"},
         },
     )
-    assert await async_setup_component(opp,  "oppio", {})
+    assert await async_setup_component(opp, "oppio", {})
     await opp.async_block_till_done()
 
 
@@ -63,26 +63,26 @@ async def mock_supervisor_fixture(opp, aioclient_mock):
     """Mock supervisor."""
     aioclient_mock.post("http://127.0.0.1/openpeerpower/options", json={"result": "ok"})
     aioclient_mock.post("http://127.0.0.1/supervisor/options", json={"result": "ok"})
-    with patch.dict(os.environ, {" OPPIO": "127.0.0.1"}), patch(
-        "openpeerpower.components.oppio. OppIO.is_connected",
+    with patch.dict(os.environ, {"OPPIO": "127.0.0.1"}), patch(
+        "openpeerpower.components.oppio.OppIO.is_connected",
         return_value=True,
     ), patch(
-        "openpeerpower.components.oppio. OppIO.get_info",
+        "openpeerpower.components.oppio.OppIO.get_info",
         return_value={},
     ), patch(
-        "openpeerpower.components.oppio. OppIO.get_host_info",
+        "openpeerpower.components.oppio.OppIO.get_host_info",
         return_value={},
     ), patch(
-        "openpeerpower.components.oppio. OppIO.get_supervisor_info",
+        "openpeerpower.components.oppio.OppIO.get_supervisor_info",
         return_value={},
     ), patch(
-        "openpeerpower.components.oppio. OppIO.get_os_info",
+        "openpeerpower.components.oppio.OppIO.get_os_info",
         return_value={},
     ), patch(
-        "openpeerpower.components.oppio. OppIO.get_ingress_panels",
+        "openpeerpower.components.oppio.OppIO.get_ingress_panels",
         return_value={"panels": {}},
     ), patch.dict(
-        os.environ, {" OPPIO_TOKEN": "123456"}
+        os.environ, {"OPPIO_TOKEN": "123456"}
     ):
         yield
 

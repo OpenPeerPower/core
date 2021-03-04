@@ -15,18 +15,18 @@ from tests.common import async_fire_time_changed, async_mock_service, mock_compo
 
 
 @pytest.fixture
-def calls.opp,
+def calls(opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp."test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
 @pytest.fixture(autouse=True)
-def setup_comp(opp,
+def setup_comp(opp):
     """Initialize components."""
-    mock_component.opp."group")
+    mock_component(opp, "group")
 
 
-async def test_if_fires_when_hour_matches.opp.calls):
+async def test_if_fires_when_hour_matches(opp, calls):
     """Test for firing if hour is matching."""
     now = dt_util.utcnow()
     time_that_will_not_match_right_away = dt_util.utcnow().replace(
@@ -51,7 +51,7 @@ async def test_if_fires_when_hour_matches.opp.calls):
             },
         )
 
-    async_fire_time_changed.opp.now.replace(year=now.year + 2, hour=0))
+    async_fire_time_changed(opp, now.replace(year=now.year + 2, hour=0))
     await opp.async_block_till_done()
     assert len(calls) == 1
 
@@ -62,12 +62,12 @@ async def test_if_fires_when_hour_matches.opp.calls):
         blocking=True,
     )
 
-    async_fire_time_changed.opp.now.replace(year=now.year + 1, hour=0))
+    async_fire_time_changed(opp, now.replace(year=now.year + 1, hour=0))
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_if_fires_when_minute_matches.opp.calls):
+async def test_if_fires_when_minute_matches(opp, calls):
     """Test for firing if minutes are matching."""
     now = dt_util.utcnow()
     time_that_will_not_match_right_away = dt_util.utcnow().replace(
@@ -92,13 +92,13 @@ async def test_if_fires_when_minute_matches.opp.calls):
             },
         )
 
-    async_fire_time_changed.opp.now.replace(year=now.year + 2, minute=0))
+    async_fire_time_changed(opp, now.replace(year=now.year + 2, minute=0))
 
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_if_fires_when_second_matches.opp.calls):
+async def test_if_fires_when_second_matches(opp, calls):
     """Test for firing if seconds are matching."""
     now = dt_util.utcnow()
     time_that_will_not_match_right_away = dt_util.utcnow().replace(
@@ -123,13 +123,13 @@ async def test_if_fires_when_second_matches.opp.calls):
             },
         )
 
-    async_fire_time_changed.opp.now.replace(year=now.year + 2, second=0))
+    async_fire_time_changed(opp, now.replace(year=now.year + 2, second=0))
 
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_if_fires_when_second_as_string_matches.opp.calls):
+async def test_if_fires_when_second_as_string_matches(opp, calls):
     """Test for firing if seconds are matching."""
     now = dt_util.utcnow()
     time_that_will_not_match_right_away = dt_util.utcnow().replace(
@@ -155,14 +155,14 @@ async def test_if_fires_when_second_as_string_matches.opp.calls):
         )
 
     async_fire_time_changed(
-        opp.time_that_will_not_match_right_away + timedelta(seconds=15)
+        opp, time_that_will_not_match_right_away + timedelta(seconds=15)
     )
 
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_if_fires_when_all_matches.opp.calls):
+async def test_if_fires_when_all_matches(opp, calls):
     """Test for firing if everything matches."""
     now = dt_util.utcnow()
     time_that_will_not_match_right_away = dt_util.utcnow().replace(
@@ -188,14 +188,14 @@ async def test_if_fires_when_all_matches.opp.calls):
         )
 
     async_fire_time_changed(
-        opp.now.replace(year=now.year + 2, hour=1, minute=2, second=3)
+        opp, now.replace(year=now.year + 2, hour=1, minute=2, second=3)
     )
 
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_if_fires_periodic_seconds.opp.calls):
+async def test_if_fires_periodic_seconds(opp, calls):
     """Test for firing periodically every second."""
     now = dt_util.utcnow()
     time_that_will_not_match_right_away = dt_util.utcnow().replace(
@@ -221,14 +221,14 @@ async def test_if_fires_periodic_seconds.opp.calls):
         )
 
     async_fire_time_changed(
-        opp.now.replace(year=now.year + 2, hour=0, minute=0, second=10)
+        opp, now.replace(year=now.year + 2, hour=0, minute=0, second=10)
     )
 
     await opp.async_block_till_done()
     assert len(calls) >= 1
 
 
-async def test_if_fires_periodic_minutes.opp.calls):
+async def test_if_fires_periodic_minutes(opp, calls):
     """Test for firing periodically every minute."""
 
     now = dt_util.utcnow()
@@ -255,14 +255,14 @@ async def test_if_fires_periodic_minutes.opp.calls):
         )
 
     async_fire_time_changed(
-        opp.now.replace(year=now.year + 2, hour=0, minute=2, second=0)
+        opp, now.replace(year=now.year + 2, hour=0, minute=2, second=0)
     )
 
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_if_fires_periodic_hours.opp.calls):
+async def test_if_fires_periodic_hours(opp, calls):
     """Test for firing periodically every hour."""
     now = dt_util.utcnow()
     time_that_will_not_match_right_away = dt_util.utcnow().replace(
@@ -288,14 +288,14 @@ async def test_if_fires_periodic_hours.opp.calls):
         )
 
     async_fire_time_changed(
-        opp.now.replace(year=now.year + 2, hour=2, minute=0, second=0)
+        opp, now.replace(year=now.year + 2, hour=2, minute=0, second=0)
     )
 
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_default_values.opp.calls):
+async def test_default_values(opp, calls):
     """Test for firing at 2 minutes every hour."""
     now = dt_util.utcnow()
     time_that_will_not_match_right_away = dt_util.utcnow().replace(
@@ -316,28 +316,28 @@ async def test_default_values.opp.calls):
         )
 
     async_fire_time_changed(
-        opp.now.replace(year=now.year + 2, hour=1, minute=2, second=0)
+        opp, now.replace(year=now.year + 2, hour=1, minute=2, second=0)
     )
 
     await opp.async_block_till_done()
     assert len(calls) == 1
 
     async_fire_time_changed(
-        opp.now.replace(year=now.year + 2, hour=1, minute=2, second=1)
+        opp, now.replace(year=now.year + 2, hour=1, minute=2, second=1)
     )
 
     await opp.async_block_till_done()
     assert len(calls) == 1
 
     async_fire_time_changed(
-        opp.now.replace(year=now.year + 2, hour=2, minute=2, second=0)
+        opp, now.replace(year=now.year + 2, hour=2, minute=2, second=0)
     )
 
     await opp.async_block_till_done()
     assert len(calls) == 2
 
 
-async def test_invalid_schemas.opp.calls):
+async def test_invalid_schemas(opp, calls):
     """Test invalid schemas."""
     schemas = (
         None,

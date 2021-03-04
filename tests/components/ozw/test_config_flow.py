@@ -22,7 +22,7 @@ ADDON_DISCOVERY_INFO = {
 @pytest.fixture(name="supervisor")
 def mock_supervisor_fixture():
     """Mock Supervisor."""
-    with patch("openpeerpower.components.oppio.is oppio", return_value=True):
+    with patch("openpeerpower.components.oppio.is_oppio", return_value=True):
         yield
 
 
@@ -106,7 +106,7 @@ async def test_user_not_supervisor_create_entry(opp, mqtt):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_mqtt_not_setup_opp):
+async def test_mqtt_not_setup(opp):
     """Test that mqtt is required."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -497,7 +497,7 @@ async def test_discovery_addon_not_running(
         data=ADDON_DISCOVERY_INFO,
     )
 
-    assert result["step_id"] == oppio_confirm"
+    assert result["step_id"] == "oppio_confirm"
     assert result["type"] == "form"
 
     result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
@@ -519,7 +519,7 @@ async def test_discovery_addon_not_installed(
         data=ADDON_DISCOVERY_INFO,
     )
 
-    assert result["step_id"] == oppio_confirm"
+    assert result["step_id"] == "oppio_confirm"
     assert result["type"] == "form"
 
     result = await opp.config_entries.flow.async_configure(result["flow_id"], {})

@@ -26,7 +26,7 @@ class TestKiraSensor(unittest.TestCase):
 
     def setUp(self):
         """Initialize values for this testcase class."""
-        self.opp =get_test_open_peer_power()
+        self.opp = get_test_open_peer_power()
         self.mock_kira = MagicMock()
         self.opp.data[kira.DOMAIN] = {kira.CONF_REMOTE: {}}
         self.opp.data[kira.DOMAIN][kira.CONF_REMOTE]["kira"] = self.mock_kira

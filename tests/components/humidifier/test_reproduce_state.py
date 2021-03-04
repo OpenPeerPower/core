@@ -4,7 +4,6 @@ import pytest
 
 from openpeerpower.components.humidifier.const import (
     ATTR_HUMIDITY,
-    ATTR_MODE,
     DOMAIN,
     MODE_AWAY,
     MODE_ECO,
@@ -13,7 +12,13 @@ from openpeerpower.components.humidifier.const import (
     SERVICE_SET_MODE,
 )
 from openpeerpower.components.humidifier.reproduce_state import async_reproduce_states
-from openpeerpower.const import SERVICE_TURN_OFF, SERVICE_TURN_ON, STATE_OFF, STATE_ON
+from openpeerpower.const import (
+    ATTR_MODE,
+    SERVICE_TURN_OFF,
+    SERVICE_TURN_ON,
+    STATE_OFF,
+    STATE_ON,
+)
 from openpeerpower.core import Context, State
 
 from tests.common import async_mock_service

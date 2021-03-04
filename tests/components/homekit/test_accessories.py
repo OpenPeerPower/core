@@ -572,8 +572,8 @@ async def test_call_service(opp, hk_driver, events):
 
 def test_home_bridge(hk_driver):
     """Test HomeBridge class."""
-    bridge = HomeBridge(.opp", hk_driver, BRIDGE_NAME)
-    assert bridge.opp == opp"
+    bridge = HomeBridge("opp", hk_driver, BRIDGE_NAME)
+    assert bridge.opp == "opp"
     assert bridge.display_name == BRIDGE_NAME
     assert bridge.category == 2  # Category.BRIDGE
     assert len(bridge.services) == 1
@@ -585,7 +585,7 @@ def test_home_bridge(hk_driver):
     assert serv.get_characteristic(CHAR_MODEL).value == BRIDGE_MODEL
     assert serv.get_characteristic(CHAR_SERIAL_NUMBER).value == BRIDGE_SERIAL_NUMBER
 
-    bridge = HomeBridge(.opp", hk_driver, "test_name")
+    bridge = HomeBridge("opp", hk_driver, "test_name")
     assert bridge.display_name == "test_name"
     assert len(bridge.services) == 1
     serv = bridge.services[0]  # SERV_ACCESSORY_INFO
@@ -603,13 +603,19 @@ def test_home_driver():
 
     with patch("pyhap.accessory_driver.AccessoryDriver.__init__") as mock_driver:
         driver = HomeDriver(
-             opp., "entry_id", "name", address=ip_address, port=port, persist_file=path
+            "opp",
+            "entry_id",
+            "name",
+            "title",
+            address=ip_address,
+            port=port,
+            persist_file=path,
         )
 
     mock_driver.assert_called_with(address=ip_address, port=port, persist_file=path)
-    driver.state = Mock(pincode=pin)
+    driver.state = Mock(pincode=pin, paired=False)
     xhm_uri_mock = Mock(return_value="X-HM://0")
-    driver.accessory = Mock(xhm_uri=xhm_uri_mock)
+    driver.accessory = Mock(display_name="any", xhm_uri=xhm_uri_mock)
 
     # pair
     with patch("pyhap.accessory_driver.AccessoryDriver.pair") as mock_pair, patch(
@@ -618,7 +624,7 @@ def test_home_driver():
         driver.pair("client_uuid", "client_public")
 
     mock_pair.assert_called_with("client_uuid", "client_public")
-    mock_dissmiss_msg.assert_called_with(.opp", "entry_id")
+    mock_dissmiss_msg.assert_called_with("opp", "entry_id")
 
     # unpair
     with patch("pyhap.accessory_driver.AccessoryDriver.unpair") as mock_unpair, patch(
@@ -627,4 +633,4 @@ def test_home_driver():
         driver.unpair("client_uuid")
 
     mock_unpair.assert_called_with("client_uuid")
-    mock_show_msg.assert_called_with(.opp", "entry_id", "name", pin, "X-HM://0")
+    mock_show_msg.assert_called_with("opp", "entry_id", "title (any)", pin, "X-HM://0")

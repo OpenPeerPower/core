@@ -54,7 +54,7 @@ class TestHoneywell(unittest.TestCase):
         with pytest.raises(vol.Invalid):
             honeywell.PLATFORM_SCHEMA(bad_region_config)
 
-       opp = mock.MagicMock()
+        opp = mock.MagicMock()
         add_entities = mock.MagicMock()
 
         locations = [mock.MagicMock(), mock.MagicMock()]
@@ -79,7 +79,7 @@ class TestHoneywell(unittest.TestCase):
     @mock.patch("somecomfort.SomeComfort")
     def test_setup_us_failures(self, mock_sc):
         """Test the US setup."""
-       opp = mock.MagicMock()
+        opp = mock.MagicMock()
         add_entities = mock.MagicMock()
         config = {
             CONF_USERNAME: "user",
@@ -126,7 +126,7 @@ class TestHoneywell(unittest.TestCase):
             ),
         }
         mock_sc.return_value = mock.MagicMock(locations_by_id=locations)
-       opp = mock.MagicMock()
+        opp = mock.MagicMock()
         add_entities = mock.MagicMock()
         assert honeywell.setup_platform(opp, config, add_entities) is True
 
@@ -166,7 +166,7 @@ class TestHoneywell(unittest.TestCase):
             honeywell.CONF_REGION: "eu",
         }
         mock_evo.return_value.temperatures.return_value = [{"id": "foo"}, {"id": "bar"}]
-       opp = mock.MagicMock()
+        opp = mock.MagicMock()
         add_entities = mock.MagicMock()
         assert honeywell.setup_platform(opp, config, add_entities)
         assert mock_evo.call_count == 1
@@ -195,7 +195,7 @@ class TestHoneywell(unittest.TestCase):
 
         mock_evo.return_value.temperatures.return_value = [{"id": "foo"}, {"id": "bar"}]
 
-       opp = mock.MagicMock()
+        opp = mock.MagicMock()
         add_entities = mock.MagicMock()
         assert honeywell.setup_platform(opp, config, add_entities)
         mock_round.assert_has_calls(
@@ -231,7 +231,7 @@ class TestHoneywell(unittest.TestCase):
             requests.exceptions.RequestException
         )
         add_entities = mock.MagicMock()
-       opp = mock.MagicMock()
+        opp = mock.MagicMock()
         assert not honeywell.setup_platform(opp, config, add_entities)
 
 

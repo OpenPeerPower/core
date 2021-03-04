@@ -4,7 +4,7 @@ import voluptuous_serialize
 
 import openpeerpower.components.automation as automation
 from openpeerpower.components.humidifier import DOMAIN, const, device_condition
-from openpeerpower.const import STATE_OFF, STATE_ON
+from openpeerpower.const import ATTR_MODE, STATE_OFF, STATE_ON
 from openpeerpower.helpers import config_validation as cv, device_registry
 from openpeerpower.setup import async_setup_component
 
@@ -17,7 +17,7 @@ from tests.common import (
     mock_device_registry,
     mock_registry,
 )
-from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
+from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa: F401
 
 
 @pytest.fixture
@@ -51,7 +51,7 @@ async def test_get_conditions(opp, device_reg, entity_reg):
         f"{DOMAIN}.test_5678",
         STATE_ON,
         {
-            const.ATTR_MODE: const.MODE_AWAY,
+            ATTR_MODE: const.MODE_AWAY,
             const.ATTR_AVAILABLE_MODES: [const.MODE_HOME, const.MODE_AWAY],
         },
     )
@@ -98,7 +98,7 @@ async def test_get_conditions_toggle_only(opp, device_reg, entity_reg):
         f"{DOMAIN}.test_5678",
         STATE_ON,
         {
-            const.ATTR_MODE: const.MODE_AWAY,
+            ATTR_MODE: const.MODE_AWAY,
             const.ATTR_AVAILABLE_MODES: [const.MODE_HOME, const.MODE_AWAY],
         },
     )
@@ -127,9 +127,7 @@ async def test_get_conditions_toggle_only(opp, device_reg, entity_reg):
 
 async def test_if_state(opp, calls):
     """Test for turn_on and turn_off conditions."""
-    opp.states.async_set(
-        "humidifier.entity", STATE_ON, {const.ATTR_MODE: const.MODE_AWAY}
-    )
+    opp.states.async_set("humidifier.entity", STATE_ON, {ATTR_MODE: const.MODE_AWAY})
 
     assert await async_setup_component(
         opp,
@@ -213,9 +211,7 @@ async def test_if_state(opp, calls):
     assert len(calls) == 2
     assert calls[1].data["some"] == "is_off event - test_event2"
 
-    opp.states.async_set(
-        "humidifier.entity", STATE_ON, {const.ATTR_MODE: const.MODE_AWAY}
-    )
+    opp.states.async_set("humidifier.entity", STATE_ON, {ATTR_MODE: const.MODE_AWAY})
 
     opp.bus.async_fire("test_event3")
     await opp.async_block_till_done()
@@ -223,9 +219,7 @@ async def test_if_state(opp, calls):
     assert len(calls) == 3
     assert calls[2].data["some"] == "is_mode - event - test_event3"
 
-    opp.states.async_set(
-        "humidifier.entity", STATE_ON, {const.ATTR_MODE: const.MODE_HOME}
-    )
+    opp.states.async_set("humidifier.entity", STATE_ON, {ATTR_MODE: const.MODE_HOME})
 
     # Should not fire
     opp.bus.async_fire("test_event3")
@@ -239,7 +233,7 @@ async def test_capabilities(opp):
         "humidifier.entity",
         STATE_ON,
         {
-            const.ATTR_MODE: const.MODE_AWAY,
+            ATTR_MODE: const.MODE_AWAY,
             const.ATTR_AVAILABLE_MODES: [const.MODE_HOME, const.MODE_AWAY],
         },
     )

@@ -1,4 +1,6 @@
 """Test HomeKit util module."""
+from unittest.mock import Mock
+
 import pytest
 import voluptuous as vol
 
@@ -22,6 +24,7 @@ from openpeerpower.components.homekit.const import (
     TYPE_VALVE,
 )
 from openpeerpower.components.homekit.util import (
+    accessory_friendly_name,
     async_find_next_available_port,
     cleanup_name_for_homekit,
     convert_to_float,
@@ -193,7 +196,7 @@ def test_cleanup_name_for_homekit():
 
 
 def test_temperature_to_homekit():
-    """Test temperature conversion from HA to HomeKit."""
+    """Test temperature conversion from OP to HomeKit."""
     assert temperature_to_homekit(20.46, TEMP_CELSIUS) == 20.5
     assert temperature_to_homekit(92.1, TEMP_FAHRENHEIT) == 33.4
 
@@ -284,3 +287,12 @@ async def test_format_sw_version():
     assert format_sw_version("56.0-76060") == "56.0.76060"
     assert format_sw_version(3.6) == "3.6"
     assert format_sw_version("unknown") is None
+
+
+async def test_accessory_friendly_name():
+    """Test we provide a helpful friendly name."""
+
+    accessory = Mock()
+    accessory.display_name = "same"
+    assert accessory_friendly_name("same", accessory) == "same"
+    assert accessory_friendly_name("opp title", accessory) == "opp title (same)"

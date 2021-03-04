@@ -1,117 +1,115 @@
 """The tests for the command line notification platform."""
 import os
+import subprocess
 import tempfile
-import unittest
 from unittest.mock import patch
 
-import openpeerpower.components.notify as notify
-from openpeerpower.setup import async_setup_component, setup_component
-
-from tests.common import assert_setup_component, get_test_open_peer_power
-
-
-class TestCommandLine(unittest.TestCase):
-    """Test the command line notifications."""
-
-    def setUp(self):  # pylint: disable=invalid-name
-        """Set up things to be run when tests are started."""
-        self.opp =get_test_open_peer_power()
-        self.addCleanup(self.tear_down_cleanup)
-
-    def tear_down_cleanup(self):
-        """Stop down everything that was started."""
-        self.opp.stop()
-
-    def test_setup(self):
-        """Test setup."""
-        with assert_setup_component(1) as handle_config:
-            assert setup_component(
-                self.opp,
-                "notify",
-                {
-                    "notify": {
-                        "name": "test",
-                        "platform": "command_line",
-                        "command": "echo $(cat); exit 1",
-                    }
-                },
-            )
-        assert handle_config[notify.DOMAIN]
-
-    def test_bad_config(self):
-        """Test set up the platform with bad/missing configuration."""
-        config = {notify.DOMAIN: {"name": "test", "platform": "command_line"}}
-        with assert_setup_component(0) as handle_config:
-            assert setup_component(self.opp, notify.DOMAIN, config)
-        assert not handle_config[notify.DOMAIN]
-
-    def test_command_line_output(self):
-        """Test the command line output."""
-        with tempfile.TemporaryDirectory() as tempdirname:
-            filename = os.path.join(tempdirname, "message.txt")
-            message = "one, two, testing, testing"
-            with assert_setup_component(1) as handle_config:
-                assert setup_component(
-                    self.opp,
-                    notify.DOMAIN,
-                    {
-                        "notify": {
-                            "name": "test",
-                            "platform": "command_line",
-                            "command": f"echo $(cat) > {filename}",
-                        }
-                    },
-                )
-            assert handle_config[notify.DOMAIN]
-
-            assert self.opp.services.call(
-                "notify", "test", {"message": message}, blocking=True
-            )
-
-            with open(filename) as fil:
-                # the echo command adds a line break
-                assert fil.read() == f"{message}\n"
-
-    @patch("openpeerpower.components.command_line.notify._LOGGER.error")
-    def test_error_for_none_zero_exit_code(self, mock_error):
-        """Test if an error is logged for non zero exit codes."""
-        with assert_setup_component(1) as handle_config:
-            assert setup_component(
-                self.opp,
-                notify.DOMAIN,
-                {
-                    "notify": {
-                        "name": "test",
-                        "platform": "command_line",
-                        "command": "echo $(cat); exit 1",
-                    }
-                },
-            )
-        assert handle_config[notify.DOMAIN]
-
-        assert self.opp.services.call(
-            "notify", "test", {"message": "error"}, blocking=True
-        )
-        assert mock_error.call_count == 1
+from openpeerpower import setup
+from openpeerpower.components.notify import DOMAIN
+from openpeerpower.helpers.typing import Any, Dict, OpenPeerPowerType
 
 
-async def test_timeout(opp, caplog):
-    """Test we do not block forever."""
-    assert await async_setup_component(
+async def setup_test_service(
+    opp: OpenPeerPowerType, config_dict: Dict[str, Any]
+) -> None:
+    """Set up a test command line notify service."""
+    assert await setup.async_setup_component(
         opp,
-        notify.DOMAIN,
+        DOMAIN,
         {
-            "notify": {
-                "name": "test",
-                "platform": "command_line",
-                "command": "sleep 10000",
-                "command_timeout": 0.0000001,
-            }
+            DOMAIN: [
+                {"platform": "command_line", "name": "Test", **config_dict},
+            ]
         },
     )
     await opp.async_block_till_done()
-    assert await opp.services.async_call(
-        "notify", "test", {"message": "error"}, blocking=True
+
+
+async def test_setup(opp: OpenPeerPowerType) -> None:
+    """Test sensor setup."""
+    await setup_test_service(opp, {"command": "exit 0"})
+    assert opp.services.has_service(DOMAIN, "test")
+
+
+async def test_bad_config(opp: OpenPeerPowerType) -> None:
+    """Test set up the platform with bad/missing configuration."""
+    await setup_test_service(opp, {})
+    assert not opp.services.has_service(DOMAIN, "test")
+
+
+async def test_command_line_output(opp: OpenPeerPowerType) -> None:
+    """Test the command line output."""
+    with tempfile.TemporaryDirectory() as tempdirname:
+        filename = os.path.join(tempdirname, "message.txt")
+        message = "one, two, testing, testing"
+        await setup_test_service(
+            opp,
+            {
+                "command": f"cat > {filename}",
+            },
+        )
+
+        assert opp.services.has_service(DOMAIN, "test")
+
+        assert await opp.services.async_call(
+            DOMAIN, "test", {"message": message}, blocking=True
+        )
+        with open(filename) as handle:
+            # the echo command adds a line break
+            assert message == handle.read()
+
+
+async def test_error_for_none_zero_exit_code(
+    caplog: Any, opp: OpenPeerPowerType
+) -> None:
+    """Test if an error is logged for non zero exit codes."""
+    await setup_test_service(
+        opp,
+        {
+            "command": "exit 1",
+        },
     )
-    await opp.async_block_till_done()
+
+    assert await opp.services.async_call(
+        DOMAIN, "test", {"message": "error"}, blocking=True
+    )
+    assert "Command failed" in caplog.text
+
+
+async def test_timeout(caplog: Any, opp: OpenPeerPowerType) -> None:
+    """Test blocking is not forever."""
+    await setup_test_service(
+        opp,
+        {
+            "command": "sleep 10000",
+            "command_timeout": 0.0000001,
+        },
+    )
+    assert await opp.services.async_call(
+        DOMAIN, "test", {"message": "error"}, blocking=True
+    )
     assert "Timeout" in caplog.text
+
+
+async def test_subprocess_exceptions(caplog: Any, opp: OpenPeerPowerType) -> None:
+    """Test that notify subprocess exceptions are handled correctly."""
+
+    with patch(
+        "openpeerpower.components.command_line.notify.subprocess.Popen",
+        side_effect=[
+            subprocess.TimeoutExpired("cmd", 10),
+            subprocess.SubprocessError(),
+        ],
+    ) as check_output:
+        await setup_test_service(opp, {"command": "exit 0"})
+        assert await opp.services.async_call(
+            DOMAIN, "test", {"message": "error"}, blocking=True
+        )
+        assert check_output.call_count == 1
+        assert "Timeout for command" in caplog.text
+
+        assert await opp.services.async_call(
+            DOMAIN, "test", {"message": "error"}, blocking=True
+        )
+        assert check_output.call_count == 2
+        assert "Error trying to exec command" in caplog.text

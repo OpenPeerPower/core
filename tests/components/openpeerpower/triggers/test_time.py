@@ -20,18 +20,18 @@ from tests.common import (
 
 
 @pytest.fixture
-def calls.opp,
+def calls(opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp."test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
 @pytest.fixture(autouse=True)
-def setup_comp(opp,
+def setup_comp(opp):
     """Initialize components."""
-    mock_component.opp."group")
+    mock_component(opp, "group")
 
 
-async def test_if_fires_using_at.opp.calls):
+async def test_if_fires_using_at(opp, calls):
     """Test for firing at."""
     now = dt_util.now()
 
@@ -59,7 +59,7 @@ async def test_if_fires_using_at.opp.calls):
         )
         await opp.async_block_till_done()
 
-    async_fire_time_changed.opp.trigger_dt + timedelta(seconds=1))
+    async_fire_time_changed(opp, trigger_dt + timedelta(seconds=1))
     await opp.async_block_till_done()
 
     assert len(calls) == 1
@@ -69,12 +69,12 @@ async def test_if_fires_using_at.opp.calls):
 @pytest.mark.parametrize(
     "has_date,has_time", [(True, True), (True, False), (False, True)]
 )
-async def test_if_fires_using_at_input_datetime.opp.calls, has_date, has_time):
+async def test_if_fires_using_at_input_datetime(opp, calls, has_date, has_time):
     """Test for firing at input_datetime."""
     await async_setup_component(
         opp,
         "input_datetime",
-        {"input_datetime": {"trigger": {"has_date": op._date, "has_time": op._time}}},
+        {"input_datetime": {"trigger": {"has_date": has_date, "has_time": has_time}}},
     )
     now = dt_util.now()
 
@@ -114,7 +114,7 @@ async def test_if_fires_using_at_input_datetime.opp.calls, has_date, has_time):
         )
         await opp.async_block_till_done()
 
-    async_fire_time_changed.opp.trigger_dt + timedelta(seconds=1))
+    async_fire_time_changed(opp, trigger_dt + timedelta(seconds=1))
     await opp.async_block_till_done()
 
     assert len(calls) == 1
@@ -138,7 +138,7 @@ async def test_if_fires_using_at_input_datetime.opp.calls, has_date, has_time):
         blocking=True,
     )
 
-    async_fire_time_changed.opp.trigger_dt + timedelta(seconds=1))
+    async_fire_time_changed(opp, trigger_dt + timedelta(seconds=1))
     await opp.async_block_till_done()
 
     assert len(calls) == 2
@@ -148,7 +148,7 @@ async def test_if_fires_using_at_input_datetime.opp.calls, has_date, has_time):
     )
 
 
-async def test_if_fires_using_multiple_at.opp.calls):
+async def test_if_fires_using_multiple_at(opp, calls):
     """Test for firing at."""
 
     now = dt_util.now()
@@ -177,20 +177,20 @@ async def test_if_fires_using_multiple_at.opp.calls):
         )
         await opp.async_block_till_done()
 
-    async_fire_time_changed.opp.trigger_dt + timedelta(seconds=1))
+    async_fire_time_changed(opp, trigger_dt + timedelta(seconds=1))
     await opp.async_block_till_done()
 
     assert len(calls) == 1
     assert calls[0].data["some"] == "time - 5"
 
-    async_fire_time_changed.opp.trigger_dt + timedelta(hours=1, seconds=1))
+    async_fire_time_changed(opp, trigger_dt + timedelta(hours=1, seconds=1))
     await opp.async_block_till_done()
 
     assert len(calls) == 2
     assert calls[1].data["some"] == "time - 6"
 
 
-async def test_if_not_fires_using_wrong_at.opp.calls):
+async def test_if_not_fires_using_wrong_at(opp, calls):
     """YAML translates time values to total seconds.
 
     This should break the before rule.
@@ -222,14 +222,14 @@ async def test_if_not_fires_using_wrong_at.opp.calls):
         await opp.async_block_till_done()
 
     async_fire_time_changed(
-        opp.now.replace(year=now.year + 1, hour=1, minute=0, second=5)
+        opp, now.replace(year=now.year + 1, hour=1, minute=0, second=5)
     )
 
     await opp.async_block_till_done()
     assert len(calls) == 0
 
 
-async def test_if_action_before.opp.calls):
+async def test_if_action_before(opp, calls):
     """Test for if action before."""
     assert await async_setup_component(
         opp,
@@ -248,19 +248,19 @@ async def test_if_action_before.opp.calls):
     after_10 = dt_util.now().replace(hour=14)
 
     with patch("openpeerpower.helpers.condition.dt_util.now", return_value=before_10):
-        opp.us.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
 
     assert len(calls) == 1
 
     with patch("openpeerpower.helpers.condition.dt_util.now", return_value=after_10):
-        opp.us.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
 
     assert len(calls) == 1
 
 
-async def test_if_action_after(opp.calls):
+async def test_if_action_after(opp, calls):
     """Test for if action after."""
     assert await async_setup_component(
         opp,
@@ -279,19 +279,19 @@ async def test_if_action_after(opp.calls):
     after_10 = dt_util.now().replace(hour=14)
 
     with patch("openpeerpower.helpers.condition.dt_util.now", return_value=before_10):
-        opp.us.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
 
     assert len(calls) == 0
 
     with patch("openpeerpower.helpers.condition.dt_util.now", return_value=after_10):
-        opp.us.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
 
     assert len(calls) == 1
 
 
-async def test_if_action_one_weekday.opp.calls):
+async def test_if_action_one_weekday(opp, calls):
     """Test for if action with one weekday."""
     assert await async_setup_component(
         opp,
@@ -311,19 +311,19 @@ async def test_if_action_one_weekday.opp.calls):
     tuesday = monday + timedelta(days=1)
 
     with patch("openpeerpower.helpers.condition.dt_util.now", return_value=monday):
-        opp.us.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
 
     assert len(calls) == 1
 
     with patch("openpeerpower.helpers.condition.dt_util.now", return_value=tuesday):
-        opp.us.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
 
     assert len(calls) == 1
 
 
-async def test_if_action_list_weekday.opp.calls):
+async def test_if_action_list_weekday(opp, calls):
     """Test for action with a list of weekdays."""
     assert await async_setup_component(
         opp,
@@ -344,25 +344,25 @@ async def test_if_action_list_weekday.opp.calls):
     wednesday = tuesday + timedelta(days=1)
 
     with patch("openpeerpower.helpers.condition.dt_util.now", return_value=monday):
-        opp.us.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
 
     assert len(calls) == 1
 
     with patch("openpeerpower.helpers.condition.dt_util.now", return_value=tuesday):
-        opp.us.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
 
     assert len(calls) == 2
 
     with patch("openpeerpower.helpers.condition.dt_util.now", return_value=wednesday):
-        opp.us.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
 
     assert len(calls) == 2
 
 
-async def test_untrack_time_change(opp,
+async def test_untrack_time_change(opp):
     """Test for removing tracked time changes."""
     mock_track_time_change = Mock()
     with patch(
@@ -395,13 +395,13 @@ async def test_untrack_time_change(opp,
     assert len(mock_track_time_change.mock_calls) == 3
 
 
-async def test_if_fires_using_at_sensor(opp.calls):
+async def test_if_fires_using_at_sensor(opp, calls):
     """Test for firing at sensor time."""
     now = dt_util.now()
 
     trigger_dt = now.replace(hour=5, minute=0, second=0, microsecond=0) + timedelta(2)
 
-    opp.tates.async_set(
+    opp.states.async_set(
         "sensor.next_alarm",
         trigger_dt.isoformat(),
         {ATTR_DEVICE_CLASS: sensor.DEVICE_CLASS_TIMESTAMP},
@@ -429,7 +429,7 @@ async def test_if_fires_using_at_sensor(opp.calls):
         )
         await opp.async_block_till_done()
 
-    async_fire_time_changed.opp.trigger_dt + timedelta(seconds=1))
+    async_fire_time_changed(opp, trigger_dt + timedelta(seconds=1))
     await opp.async_block_till_done()
 
     assert len(calls) == 1
@@ -440,14 +440,14 @@ async def test_if_fires_using_at_sensor(opp.calls):
 
     trigger_dt += timedelta(days=1, hours=1)
 
-    opp.tates.async_set(
+    opp.states.async_set(
         "sensor.next_alarm",
         trigger_dt.isoformat(),
         {ATTR_DEVICE_CLASS: sensor.DEVICE_CLASS_TIMESTAMP},
     )
     await opp.async_block_till_done()
 
-    async_fire_time_changed.opp.trigger_dt + timedelta(seconds=1))
+    async_fire_time_changed(opp, trigger_dt + timedelta(seconds=1))
     await opp.async_block_till_done()
 
     assert len(calls) == 2
@@ -457,39 +457,39 @@ async def test_if_fires_using_at_sensor(opp.calls):
     )
 
     for broken in ("unknown", "unavailable", "invalid-ts"):
-        opp.tates.async_set(
+        opp.states.async_set(
             "sensor.next_alarm",
             trigger_dt.isoformat(),
             {ATTR_DEVICE_CLASS: sensor.DEVICE_CLASS_TIMESTAMP},
         )
         await opp.async_block_till_done()
-        opp.tates.async_set(
+        opp.states.async_set(
             "sensor.next_alarm",
             broken,
             {ATTR_DEVICE_CLASS: sensor.DEVICE_CLASS_TIMESTAMP},
         )
         await opp.async_block_till_done()
 
-        async_fire_time_changed.opp.trigger_dt + timedelta(seconds=1))
+        async_fire_time_changed(opp, trigger_dt + timedelta(seconds=1))
         await opp.async_block_till_done()
 
         # We should not have listened to anything
         assert len(calls) == 2
 
     # Now without device class
-    opp.tates.async_set(
+    opp.states.async_set(
         "sensor.next_alarm",
         trigger_dt.isoformat(),
         {ATTR_DEVICE_CLASS: sensor.DEVICE_CLASS_TIMESTAMP},
     )
     await opp.async_block_till_done()
-    opp.tates.async_set(
+    opp.states.async_set(
         "sensor.next_alarm",
         trigger_dt.isoformat(),
     )
     await opp.async_block_till_done()
 
-    async_fire_time_changed.opp.trigger_dt + timedelta(seconds=1))
+    async_fire_time_changed(opp, trigger_dt + timedelta(seconds=1))
     await opp.async_block_till_done()
 
     # We should not have listened to anything
@@ -523,7 +523,7 @@ def test_schema_invalid(conf):
         time.TRIGGER_SCHEMA(conf)
 
 
-async def test_datetime_in_past_on_load.opp.calls):
+async def test_datetime_in_past_on_load(opp, calls):
     """Test time trigger works if input_datetime is in past."""
     await async_setup_component(
         opp,
@@ -561,7 +561,7 @@ async def test_datetime_in_past_on_load.opp.calls):
         },
     )
 
-    async_fire_time_changed.opp.now)
+    async_fire_time_changed(opp, now)
     await opp.async_block_till_done()
 
     assert len(calls) == 0
@@ -576,7 +576,7 @@ async def test_datetime_in_past_on_load.opp.calls):
         blocking=True,
     )
 
-    async_fire_time_changed.opp.future + timedelta(seconds=1))
+    async_fire_time_changed(opp, future + timedelta(seconds=1))
     await opp.async_block_till_done()
 
     assert len(calls) == 1

@@ -6,7 +6,7 @@ import pytest
 from openpeerpower.components.oppio.handler import OppioAPIError
 
 
-async def test_api_ping.oppio_handler, aioclient_mock):
+async def test_api_ping(oppio_handler, aioclient_mock):
     """Test setup with API ping."""
     aioclient_mock.get("http://127.0.0.1/supervisor/ping", json={"result": "ok"})
 
@@ -22,7 +22,7 @@ async def test_api_ping_error(oppio_handler, aioclient_mock):
     assert aioclient_mock.call_count == 1
 
 
-async def test_api_ping_exeption.oppio_handler, aioclient_mock):
+async def test_api_ping_exeption(oppio_handler, aioclient_mock):
     """Test setup with API ping exception."""
     aioclient_mock.get("http://127.0.0.1/supervisor/ping", exc=aiohttp.ClientError())
 
@@ -30,19 +30,19 @@ async def test_api_ping_exeption.oppio_handler, aioclient_mock):
     assert aioclient_mock.call_count == 1
 
 
-async def test_api_info.oppio_handler, aioclient_mock):
+async def test_api_info(oppio_handler, aioclient_mock):
     """Test setup with API generic info."""
     aioclient_mock.get(
         "http://127.0.0.1/info",
         json={
             "result": "ok",
-            "data": {"supervisor": "222", "openpeerpower": "0.110.0",  opp.s": None},
+            "data": {"supervisor": "222", "openpeerpower": "0.110.0", "oppos": None},
         },
     )
 
     data = await oppio_handler.get_info()
     assert aioclient_mock.call_count == 1
-    assert data[.oppos"] is None
+    assert data["oppos"] is None
     assert data["openpeerpower"] == "0.110.0"
     assert data["supervisor"] == "222"
 
@@ -53,20 +53,20 @@ async def test_api_info_error(oppio_handler, aioclient_mock):
         "http://127.0.0.1/info", json={"result": "error", "message": None}
     )
 
-    with pytest.raises( OppioAPIError):
+    with pytest.raises(OppioAPIError):
         await oppio_handler.get_info()
 
     assert aioclient_mock.call_count == 1
 
 
-async def test_api_host_info.oppio_handler, aioclient_mock):
+async def test_api_host_info(oppio_handler, aioclient_mock):
     """Test setup with API Host info."""
     aioclient_mock.get(
         "http://127.0.0.1/host/info",
         json={
             "result": "ok",
             "data": {
-                ".oppis": "vm",
+                "coppis": "vm",
                 "operating_system": "Debian GNU/Linux 10 (buster)",
                 "kernel": "4.19.0-6-amd64",
             },
@@ -75,12 +75,12 @@ async def test_api_host_info.oppio_handler, aioclient_mock):
 
     data = await oppio_handler.get_host_info()
     assert aioclient_mock.call_count == 1
-    assert data[".oppis"] == "vm"
+    assert data["coppis"] == "vm"
     assert data["kernel"] == "4.19.0-6-amd64"
     assert data["operating_system"] == "Debian GNU/Linux 10 (buster)"
 
 
-async def test_api_supervisor_info.oppio_handler, aioclient_mock):
+async def test_api_supervisor_info(oppio_handler, aioclient_mock):
     """Test setup with API Supervisor info."""
     aioclient_mock.get(
         "http://127.0.0.1/supervisor/info",
@@ -97,7 +97,7 @@ async def test_api_supervisor_info.oppio_handler, aioclient_mock):
     assert data["channel"] == "stable"
 
 
-async def test_api_os_info.oppio_handler, aioclient_mock):
+async def test_api_os_info(oppio_handler, aioclient_mock):
     """Test setup with API OS info."""
     aioclient_mock.get(
         "http://127.0.0.1/os/info",
@@ -119,13 +119,13 @@ async def test_api_host_info_error(oppio_handler, aioclient_mock):
         "http://127.0.0.1/host/info", json={"result": "error", "message": None}
     )
 
-    with pytest.raises( OppioAPIError):
+    with pytest.raises(OppioAPIError):
         await oppio_handler.get_host_info()
 
     assert aioclient_mock.call_count == 1
 
 
-async def test_api_core_info.oppio_handler, aioclient_mock):
+async def test_api_core_info(oppio_handler, aioclient_mock):
     """Test setup with API Open Peer Power Core info."""
     aioclient_mock.get(
         "http://127.0.0.1/core/info",
@@ -143,13 +143,13 @@ async def test_api_core_info_error(oppio_handler, aioclient_mock):
         "http://127.0.0.1/core/info", json={"result": "error", "message": None}
     )
 
-    with pytest.raises( OppioAPIError):
+    with pytest.raises(OppioAPIError):
         await oppio_handler.get_core_info()
 
     assert aioclient_mock.call_count == 1
 
 
-async def test_api_openpeerpower_stop.oppio_handler, aioclient_mock):
+async def test_api_openpeerpower_stop(oppio_handler, aioclient_mock):
     """Test setup with API Open Peer Power stop."""
     aioclient_mock.post("http://127.0.0.1/openpeerpower/stop", json={"result": "ok"})
 
@@ -157,7 +157,7 @@ async def test_api_openpeerpower_stop.oppio_handler, aioclient_mock):
     assert aioclient_mock.call_count == 1
 
 
-async def test_api_openpeerpower_restart.oppio_handler, aioclient_mock):
+async def test_api_openpeerpower_restart(oppio_handler, aioclient_mock):
     """Test setup with API Open Peer Power restart."""
     aioclient_mock.post("http://127.0.0.1/openpeerpower/restart", json={"result": "ok"})
 
@@ -165,7 +165,7 @@ async def test_api_openpeerpower_restart.oppio_handler, aioclient_mock):
     assert aioclient_mock.call_count == 1
 
 
-async def test_api_addon_info.oppio_handler, aioclient_mock):
+async def test_api_addon_info(oppio_handler, aioclient_mock):
     """Test setup with API Add-on info."""
     aioclient_mock.get(
         "http://127.0.0.1/addons/test/info",
@@ -177,7 +177,7 @@ async def test_api_addon_info.oppio_handler, aioclient_mock):
     assert aioclient_mock.call_count == 1
 
 
-async def test_api_discovery_message.oppio_handler, aioclient_mock):
+async def test_api_discovery_message(oppio_handler, aioclient_mock):
     """Test setup with API discovery message."""
     aioclient_mock.get(
         "http://127.0.0.1/discovery/test",
@@ -189,7 +189,7 @@ async def test_api_discovery_message.oppio_handler, aioclient_mock):
     assert aioclient_mock.call_count == 1
 
 
-async def test_api_retrieve_discovery.oppio_handler, aioclient_mock):
+async def test_api_retrieve_discovery(oppio_handler, aioclient_mock):
     """Test setup with API discovery message."""
     aioclient_mock.get(
         "http://127.0.0.1/discovery",
@@ -201,7 +201,7 @@ async def test_api_retrieve_discovery.oppio_handler, aioclient_mock):
     assert aioclient_mock.call_count == 1
 
 
-async def test_api_ingress_panels.oppio_handler, aioclient_mock):
+async def test_api_ingress_panels(oppio_handler, aioclient_mock):
     """Test setup with API Ingress panels."""
     aioclient_mock.get(
         "http://127.0.0.1/ingress/panels",

@@ -1,15 +1,10 @@
 """The tests the cover command line platform."""
 import os
-from os import path
 import tempfile
-from unittest import mock
 from unittest.mock import patch
 
-import pytest
-
-from openpeerpower import config as opp_config
-import openpeerpower.components.command_line.cover as cmd_rs
-from openpeerpower.components.cover import DOMAIN
+from openpeerpower import config as opp_config, setup
+from openpeerpower.components.cover import DOMAIN, SCAN_INTERVAL
 from openpeerpower.const import (
     ATTR_ENTITY_ID,
     SERVICE_CLOSE_COVER,
@@ -17,105 +12,132 @@ from openpeerpower.const import (
     SERVICE_RELOAD,
     SERVICE_STOP_COVER,
 )
-from openpeerpower.setup import async_setup_component
+from openpeerpower.helpers.typing import Any, Dict, OpenPeerPowerType
+import openpeerpower.util.dt as dt_util
+
+from tests.common import async_fire_time_changed
 
 
-@pytest.fixture
-def rs(opp):
-    """Return CommandCover instance."""
-    return cmd_rs.CommandCover(
+async def setup_test_entity(
+    opp: OpenPeerPowerType, config_dict: Dict[str, Any]
+) -> None:
+    """Set up a test command line notify service."""
+    assert await setup.async_setup_component(
         opp,
-        "foo",
-        "command_open",
-        "command_close",
-        "command_stop",
-        "command_state",
-        None,
-        15,
+        DOMAIN,
+        {
+            DOMAIN: [
+                {"platform": "command_line", "covers": config_dict},
+            ]
+        },
     )
+    await opp.async_block_till_done()
 
 
-def test_should_poll_new(rs):
-    """Test the setting of polling."""
-    assert rs.should_poll is True
-    rs._command_state = None
-    assert rs.should_poll is False
+async def test_no_covers(caplog: Any, opp: OpenPeerPowerType) -> None:
+    """Test that the cover does not polls when there's no state command."""
+
+    with patch(
+        "openpeerpower.components.command_line.subprocess.check_output",
+        return_value=b"50\n",
+    ):
+        await setup_test_entity(opp, {})
+        assert "No covers added" in caplog.text
 
 
-def test_query_state_value(rs):
-    """Test with state value."""
-    with mock.patch("subprocess.check_output") as mock_run:
-        mock_run.return_value = b" foo bar "
-        result = rs._query_state_value("runme")
-        assert "foo bar" == result
-        assert mock_run.call_count == 1
-        assert mock_run.call_args == mock.call(
-            "runme", shell=True, timeout=15  # nosec # shell by design
+async def test_no_poll_when_cover_has_no_command_state(opp: OpenPeerPowerType) -> None:
+    """Test that the cover does not polls when there's no state command."""
+
+    with patch(
+        "openpeerpower.components.command_line.subprocess.check_output",
+        return_value=b"50\n",
+    ) as check_output:
+        await setup_test_entity(opp, {"test": {}})
+        async_fire_time_changed(opp, dt_util.utcnow() + SCAN_INTERVAL)
+        await opp.async_block_till_done()
+        assert not check_output.called
+
+
+async def test_poll_when_cover_has_command_state(opp: OpenPeerPowerType) -> None:
+    """Test that the cover polls when there's a state  command."""
+
+    with patch(
+        "openpeerpower.components.command_line.subprocess.check_output",
+        return_value=b"50\n",
+    ) as check_output:
+        await setup_test_entity(opp, {"test": {"command_state": "echo state"}})
+        async_fire_time_changed(opp, dt_util.utcnow() + SCAN_INTERVAL)
+        await opp.async_block_till_done()
+        check_output.assert_called_once_with(
+            "echo state", shell=True, timeout=15  # nosec # shell by design
         )
 
 
-async def test_state_value(opp):
+async def test_state_value(opp: OpenPeerPowerType) -> None:
     """Test with state value."""
     with tempfile.TemporaryDirectory() as tempdirname:
         path = os.path.join(tempdirname, "cover_status")
-        test_cover = {
-            "command_state": f"cat {path}",
-            "command_open": f"echo 1 > {path}",
-            "command_close": f"echo 1 > {path}",
-            "command_stop": f"echo 0 > {path}",
-            "value_template": "{{ value }}",
-        }
-        assert (
-            await async_setup_component(
-                opp,
-                DOMAIN,
-                {"cover": {"platform": "command_line", "covers": {"test": test_cover}}},
-            )
-            is True
+        await setup_test_entity(
+            opp,
+            {
+                "test": {
+                    "command_state": f"cat {path}",
+                    "command_open": f"echo 1 > {path}",
+                    "command_close": f"echo 1 > {path}",
+                    "command_stop": f"echo 0 > {path}",
+                    "value_template": "{{ value }}",
+                }
+            },
         )
-        await opp.async_block_till_done()
 
-        assert "unknown" == opp.states.get("cover.test").state
+        entity_state = opp.states.get("cover.test")
+        assert entity_state
+        assert entity_state.state == "unknown"
 
         await opp.services.async_call(
             DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
         )
-        assert "open" == opp.states.get("cover.test").state
+        entity_state = opp.states.get("cover.test")
+        assert entity_state
+        assert entity_state.state == "open"
 
         await opp.services.async_call(
             DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
         )
-        assert "open" == opp.states.get("cover.test").state
+        entity_state = opp.states.get("cover.test")
+        assert entity_state
+        assert entity_state.state == "open"
 
         await opp.services.async_call(
             DOMAIN, SERVICE_STOP_COVER, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
         )
-        assert "closed" == opp.states.get("cover.test").state
+        entity_state = opp.states.get("cover.test")
+        assert entity_state
+        assert entity_state.state == "closed"
 
 
-async def test_reload(opp):
+async def test_reload(opp: OpenPeerPowerType) -> None:
     """Verify we can reload command_line covers."""
 
-    test_cover = {
-        "command_state": "echo open",
-        "value_template": "{{ value }}",
-    }
-    await async_setup_component(
+    await setup_test_entity(
         opp,
-        DOMAIN,
-        {"cover": {"platform": "command_line", "covers": {"test": test_cover}}},
+        {
+            "test": {
+                "command_state": "echo open",
+                "value_template": "{{ value }}",
+            }
+        },
     )
-    await opp.async_block_till_done()
+    entity_state = opp.states.get("cover.test")
+    assert entity_state
+    assert entity_state.state == "unknown"
 
-    assert len(opp.states.async_all()) == 1
-    assert opp.states.get("cover.test").state
-
-    yaml_path = path.join(
-        _get_fixtures_base_path(),
+    yaml_path = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
         "fixtures",
         "command_line/configuration.yaml",
     )
-    with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
+    with patch.object(opp_config, "YAML_CONFIG_FILE", yaml_path):
         await opp.services.async_call(
             "command_line",
             SERVICE_RELOAD,
@@ -126,9 +148,18 @@ async def test_reload(opp):
 
     assert len(opp.states.async_all()) == 1
 
-    assert opp.states.get("cover.test") is None
+    assert not opp.states.get("cover.test")
     assert opp.states.get("cover.from_yaml")
 
 
-def _get_fixtures_base_path():
-    return path.dirname(path.dirname(path.dirname(__file__)))
+async def test_move_cover_failure(caplog: Any, opp: OpenPeerPowerType) -> None:
+    """Test with state value."""
+
+    await setup_test_entity(
+        opp,
+        {"test": {"command_open": "exit 1"}},
+    )
+    await opp.services.async_call(
+        DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: "cover.test"}, blocking=True
+    )
+    assert "Command failed" in caplog.text

@@ -47,7 +47,7 @@ from openpeerpower.const import (
 from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
-from tests.components.light.conftest import mock_light_profiles  # noqa
+from tests.components.light.conftest import mock_light_profiles  # noqa: F401
 
 COMPONENT_PREFIX = "openpeerpower.components.smartthings."
 
@@ -77,7 +77,7 @@ async def setup_platform(opp, platform: str, *, devices=None, scenes=None):
 @pytest.fixture(autouse=True)
 async def setup_component(opp, config_file, opp_storage):
     """Load the SmartThing component."""
-    opp.storage[STORAGE_KEY] = {"data": config_file, "version": STORAGE_VERSION}
+    opp_storage[STORAGE_KEY] = {"data": config_file, "version": STORAGE_VERSION}
     await async_process_op_core_config(
         opp,
         {"external_url": "https://test.local"},
@@ -113,7 +113,7 @@ async def app_fixture(opp, config_file):
     app.app_type = "WEBHOOK_SMART_APP"
     app.classifications = [CLASSIFICATION_AUTOMATION]
     app.display_name = "Open Peer Power"
-    app.description = f".opp.config.location_name} at https://test.local"
+    app.description = f"{opp.config.location_name} at https://test.local"
     app.single_instance = True
     app.webhook_target_url = webhook.async_generate_url(
         opp, opp.data[DOMAIN][CONF_WEBHOOK_ID]

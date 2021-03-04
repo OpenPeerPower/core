@@ -206,7 +206,7 @@ async def test_service_request_channel_level(opp):
         assert mock_req_chan_lvl.mock_calls == [call(4, 5), call(4, 5)]
 
 
-async def test_async_setup_bad_config1.opp):
+async def test_async_setup_bad_config1(opp):
     """Test a successful with bad config on templates."""
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices.async_setup",
@@ -277,9 +277,7 @@ async def test_unload_entry(opp):
     ) as mock_unload:
         assert await opp.config_entries.async_unload(entry.entry_id)
         await opp.async_block_till_done()
-        assert mock_unload.call_count == len(dynalite.ENTITY_PLATFORMS)
-        expected_calls = [
-            call(entry, platform) for platform in dynalite.ENTITY_PLATFORMS
-        ]
+        assert mock_unload.call_count == len(dynalite.PLATFORMS)
+        expected_calls = [call(entry, platform) for platform in dynalite.PLATFORMS]
         for cur_call in mock_unload.mock_calls:
             assert cur_call in expected_calls

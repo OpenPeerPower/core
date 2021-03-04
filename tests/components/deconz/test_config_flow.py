@@ -197,7 +197,7 @@ async def test_manual_configuration_after_discovery_timeout(opp, aioclient_mock)
     assert not opp.config_entries.flow._progress[result["flow_id"]].bridges
 
 
-async def test_manual_configuration_after_discovery_Responseerror(opp, aioclient_mock):
+async def test_manual_configuration_after_discovery_ResponseError(opp, aioclient_mock):
     """Test failed discovery fallbacks to manual configuration."""
     aioclient_mock.get(pydeconz.utils.URL_DISCOVER, exc=pydeconz.errors.ResponseError)
 
@@ -342,7 +342,7 @@ async def test_manual_configuration_timeout_get_bridge(opp, aioclient_mock):
     assert result["reason"] == "no_bridges"
 
 
-async def test_link_get_api_key_Responseerror(opp, aioclient_mock):
+async def test_link_get_api_key_ResponseError(opp, aioclient_mock):
     """Test config flow should abort if no API key was possible to retrieve."""
     aioclient_mock.get(
         pydeconz.utils.URL_DISCOVER,
@@ -486,7 +486,7 @@ async def test_ssdp_discovery_dont_update_configuration(opp, aioclient_mock):
     assert config_entry.data[CONF_HOST] == "1.2.3.4"
 
 
-async def test_ssdp_discovery_dont_update_existing.oppio_configuration(
+async def test_ssdp_discovery_dont_update_existing_oppio_configuration(
     opp, aioclient_mock
 ):
     """Test to ensure the SSDP discovery does not update an Opp.io entry."""
@@ -509,7 +509,7 @@ async def test_ssdp_discovery_dont_update_existing.oppio_configuration(
     assert config_entry.data[CONF_HOST] == "1.2.3.4"
 
 
-async def test_flow.oppio_discovery(opp):
+async def test_flow_oppio_discovery(opp):
     """Test oppio discovery flow works."""
     result = await opp.config_entries.flow.async_init(
         DECONZ_DOMAIN,
@@ -523,7 +523,7 @@ async def test_flow.oppio_discovery(opp):
         context={"source": SOURCE_OPPIO},
     )
     assert result["type"] == RESULT_TYPE_FORM
-    assert result["step_id"] == oppio_confirm"
+    assert result["step_id"] == "oppio_confirm"
     assert result["description_placeholders"] == {"addon": "Mock Addon"}
 
     with patch(
@@ -547,7 +547,7 @@ async def test_flow.oppio_discovery(opp):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test.oppio_discovery_update_configuration(opp, aioclient_mock):
+async def test_oppio_discovery_update_configuration(opp, aioclient_mock):
     """Test we can update an existing config entry."""
     config_entry = await setup_deconz_integration(opp, aioclient_mock)
 
@@ -575,7 +575,7 @@ async def test.oppio_discovery_update_configuration(opp, aioclient_mock):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test.oppio_discovery_dont_update_configuration(opp, aioclient_mock):
+async def test_oppio_discovery_dont_update_configuration(opp, aioclient_mock):
     """Test we can update an existing config entry."""
     await setup_deconz_integration(opp, aioclient_mock)
 

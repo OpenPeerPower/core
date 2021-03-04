@@ -1,7 +1,7 @@
 """
 Make sure that existing RainMachine support isn't broken.
 
-https://github.com/open-peer-power/core/issues/31745
+https://github.com/openpeerpower/core/issues/31745
 """
 
 from tests.components.homekit_controller.common import (
@@ -11,7 +11,7 @@ from tests.components.homekit_controller.common import (
 )
 
 
-async def test_rainmachine_pro_8_setup_opp):
+async def test_rainmachine_pro_8_setup(opp):
     """Test that a RainMachine can be correctly setup in HA."""
     accessories = await setup_accessories_from_file(opp, "rainmachine-pro-8.json")
     config_entry, pairing = await setup_test_accessories(opp, accessories)

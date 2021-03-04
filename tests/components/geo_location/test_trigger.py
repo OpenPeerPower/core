@@ -7,7 +7,7 @@ from openpeerpower.core import Context
 from openpeerpower.setup import async_setup_component
 
 from tests.common import async_mock_service, mock_component
-from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
+from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa: F401
 
 
 @pytest.fixture

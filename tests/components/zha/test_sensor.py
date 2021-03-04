@@ -73,7 +73,7 @@ async def async_test_electrical_measurement(opp, cluster, entity_id):
     """Test electrical measurement sensor."""
     with mock.patch(
         (
-            "openpeerpower.components.zop.core.channels.homeautomation"
+            "openpeerpower.components.zha.core.channels.homeautomation"
             ".ElectricalMeasurementChannel.divisor"
         ),
         new_callable=mock.PropertyMock,
@@ -165,7 +165,7 @@ async def test_sensor(
             1: {
                 "in_clusters": [cluster_id, general.Basic.cluster_id],
                 "out_cluster": [],
-                "device_type": zigpy.profiles.zop.DeviceType.ON_OFF_SWITCH,
+                "device_type": zigpy.profiles.zha.DeviceType.ON_OFF_SWITCH,
             }
         }
     )
@@ -201,7 +201,7 @@ def assert_state(opp, entity_id, state, unit_of_measurement):
     This is used to ensure that the logic in each sensor class handled the
     attribute report it received correctly.
     """
-    opp.state = opp.states.get(entity_id)
+    opp_state = opp.states.get(entity_id)
     assert opp_state.state == state
     assert opp_state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == unit_of_measurement
 
@@ -210,24 +210,24 @@ def assert_state(opp, entity_id, state, unit_of_measurement):
 def opp_ms(opp):
     """Opp instance with measurement system."""
 
-    async def  opp.ms(meas_sys):
+    async def _opp_ms(meas_sys):
         await config_util.async_process_op_core_config(
             opp, {CONF_UNIT_SYSTEM: meas_sys}
         )
         await opp.async_block_till_done()
-        return.opp
+        return opp
 
-    return  opp.ms
+    return _opp_ms
 
 
 @pytest.fixture
-def core_rs.opp_storage):
+def core_rs(opp_storage):
     """Core.restore_state fixture."""
 
     def _storage(entity_id, uom, state):
         now = dt_util.utcnow().isoformat()
 
-        opp.storage[restore_state.STORAGE_KEY] = {
+        opp_storage[restore_state.STORAGE_KEY] = {
             "version": restore_state.STORAGE_VERSION,
             "key": restore_state.STORAGE_KEY,
             "data": [
@@ -266,7 +266,7 @@ async def test_temp_uom(
     raw_temp,
     expected,
     restore,
-    opp.ms,
+    opp_ms,
     core_rs,
     zigpy_device_mock,
     zha_device_restored,
@@ -277,7 +277,7 @@ async def test_temp_uom(
     if restore:
         core_rs(entity_id, uom, state=(expected - 2))
 
-   opp = await opp_ms(
+    opp = await opp_ms(
         CONF_UNIT_SYSTEM_METRIC if uom == TEMP_CELSIUS else CONF_UNIT_SYSTEM_IMPERIAL
     )
 
@@ -289,7 +289,7 @@ async def test_temp_uom(
                     general.Basic.cluster_id,
                 ],
                 "out_cluster": [],
-                "device_type": zigpy.profiles.zop.DeviceType.ON_OFF_SWITCH,
+                "device_type": zigpy.profiles.zha.DeviceType.ON_OFF_SWITCH,
             }
         }
     )
@@ -329,7 +329,7 @@ async def test_electrical_measurement_init(
             1: {
                 "in_clusters": [cluster_id, general.Basic.cluster_id],
                 "out_cluster": [],
-                "device_type": zigpy.profiles.zop.DeviceType.ON_OFF_SWITCH,
+                "device_type": zigpy.profiles.zha.DeviceType.ON_OFF_SWITCH,
             }
         }
     )
@@ -344,7 +344,7 @@ async def test_electrical_measurement_init(
     assert opp.states.get(entity_id).state == STATE_UNKNOWN
 
     await send_attributes_report(opp, cluster, {0: 1, 1291: 100, 10: 1000})
-    assert int.opp.states.get(entity_id).state) == 100
+    assert int(opp.states.get(entity_id).state) == 100
 
     channel = zha_device.channels.pools[0].all_channels["1:0x0b04"]
     assert channel.divisor == 1

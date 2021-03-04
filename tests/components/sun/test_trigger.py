@@ -18,7 +18,7 @@ from openpeerpower.setup import async_setup_component
 import openpeerpower.util.dt as dt_util
 
 from tests.common import async_fire_time_changed, async_mock_service, mock_component
-from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
+from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa: F401
 
 ORIG_TIME_ZONE = dt_util.DEFAULT_TIME_ZONE
 
@@ -33,7 +33,7 @@ def calls(opp):
 def setup_comp(opp):
     """Initialize components."""
     mock_component(opp, "group")
-    dt_util.set_default_time_zone.opp.config.time_zone)
+    dt_util.set_default_time_zone(opp.config.time_zone)
     opp.loop.run_until_complete(
         async_setup_component(opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}})
     )

@@ -30,7 +30,12 @@ from openpeerpower.setup import async_setup_component
 
 from . import BASIC_CONFIG, MockConfig
 
-from tests.common import mock_area_registry, mock_device_registry, mock_registry
+from tests.common import (
+    async_capture_events,
+    mock_area_registry,
+    mock_device_registry,
+    mock_registry,
+)
 
 REQ_ID = "ff36a3cc-ec34-11e6-b1a0-64510650abcf"
 
@@ -77,8 +82,7 @@ async def test_sync_message(opp):
         },
     )
 
-    events = []
-    opp.bus.async_listen(EVENT_SYNC_RECEIVED, events.append)
+    events = async_capture_events(opp, EVENT_SYNC_RECEIVED)
 
     result = await sh.async_handle_message(
         opp,
@@ -192,8 +196,7 @@ async def test_sync_in_area(area_on_device, opp, registries):
 
     config = MockConfig(should_expose=lambda _: True, entity_config={})
 
-    events = []
-    opp.bus.async_listen(EVENT_SYNC_RECEIVED, events.append)
+    events = async_capture_events(opp, EVENT_SYNC_RECEIVED)
 
     result = await sh.async_handle_message(
         opp,
@@ -295,8 +298,7 @@ async def test_query_message(opp):
     light3.entity_id = "light.color_temp_light"
     await light3.async_update_op_state()
 
-    events = []
-    opp.bus.async_listen(EVENT_QUERY_RECEIVED, events.append)
+    events = async_capture_events(opp, EVENT_QUERY_RECEIVED)
 
     result = await sh.async_handle_message(
         opp,
@@ -387,11 +389,8 @@ async def test_execute(opp):
         "light", "turn_off", {"entity_id": "light.ceiling_lights"}, blocking=True
     )
 
-    events = []
-    opp.bus.async_listen(EVENT_COMMAND_RECEIVED, events.append)
-
-    service_events = []
-    opp.bus.async_listen(EVENT_CALL_SERVICE, service_events.append)
+    events = async_capture_events(opp, EVENT_COMMAND_RECEIVED)
+    service_events = async_capture_events(opp, EVENT_CALL_SERVICE)
 
     result = await sh.async_handle_message(
         opp,
@@ -570,8 +569,7 @@ async def test_raising_error_trait(opp):
         {ATTR_MIN_TEMP: 15, ATTR_MAX_TEMP: 30, ATTR_UNIT_OF_MEASUREMENT: TEMP_CELSIUS},
     )
 
-    events = []
-    opp.bus.async_listen(EVENT_COMMAND_RECEIVED, events.append)
+    events = async_capture_events(opp, EVENT_COMMAND_RECEIVED)
     await opp.async_block_till_done()
 
     result = await sh.async_handle_message(
@@ -660,8 +658,7 @@ async def test_unavailable_state_does_sync(opp):
     light._available = False  # pylint: disable=protected-access
     await light.async_update_op_state()
 
-    events = []
-    opp.bus.async_listen(EVENT_SYNC_RECEIVED, events.append)
+    events = async_capture_events(opp, EVENT_SYNC_RECEIVED)
 
     result = await sh.async_handle_message(
         opp,
@@ -921,7 +918,7 @@ async def test_device_media_player(opp, device_class, google_type):
 
 async def test_query_disconnect(opp):
     """Test a disconnect message."""
-    config = Mockconfig(opp=opp)
+    config = MockConfig(opp=opp)
     config.async_enable_report_state()
     assert config._unsub_report_state is not None
     with patch.object(config, "async_disconnect_agent_user") as mock_disconnect:
@@ -1174,7 +1171,7 @@ async def test_sync_message_recovery(opp, caplog):
         "on",
         {
             "min_mireds": "badvalue",
-            "supported_features":.opp.components.light.SUPPORT_COLOR_TEMP,
+            "supported_features": opp.components.light.SUPPORT_COLOR_TEMP,
         },
     )
 
@@ -1223,7 +1220,7 @@ async def test_query_recover(opp, caplog):
         "light.good",
         "on",
         {
-            "supported_features":.opp.components.light.SUPPORT_BRIGHTNESS,
+            "supported_features": opp.components.light.SUPPORT_BRIGHTNESS,
             "brightness": 50,
         },
     )
@@ -1231,7 +1228,7 @@ async def test_query_recover(opp, caplog):
         "light.bad",
         "on",
         {
-            "supported_features":.opp.components.light.SUPPORT_BRIGHTNESS,
+            "supported_features": opp.components.light.SUPPORT_BRIGHTNESS,
             "brightness": "shoe",
         },
     )
@@ -1258,7 +1255,7 @@ async def test_query_recover(opp, caplog):
     )
 
     assert (
-        f"Unexpected error serializing query for  opp.states.get('light.bad')}"
+        f"Unexpected error serializing query for {opp.states.get('light.bad')}"
         in caplog.text
     )
     assert result == {

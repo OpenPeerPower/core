@@ -14,6 +14,7 @@ from openpeerpower.const import (
     STATE_ALARM_ARMED_HOME,
     STATE_ALARM_DISARMED,
 )
+from openpeerpower.exceptions import OpenPeerPowerError
 
 from .common import (
     RESPONSE_ARM_FAILURE,
@@ -23,6 +24,7 @@ from .common import (
     RESPONSE_DISARM_FAILURE,
     RESPONSE_DISARM_SUCCESS,
     RESPONSE_DISARMED,
+    RESPONSE_USER_CODE_INVALID,
     setup_platform,
 )
 
@@ -72,12 +74,31 @@ async def test_arm_home_failure(opp):
         await setup_platform(opp, ALARM_DOMAIN)
         assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
 
-        with pytest.raises(Exception) as e:
+        with pytest.raises(OpenPeerPowerError) as err:
             await opp.services.async_call(
                 ALARM_DOMAIN, SERVICE_ALARM_ARM_HOME, DATA, blocking=True
             )
             await opp.async_block_till_done()
-        assert f"{e.value}" == "TotalConnect failed to arm home test."
+        assert f"{err.value}" == "TotalConnect failed to arm home test."
+        assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
+
+
+async def test_arm_home_invalid_usercode(opp):
+    """Test arm home method with invalid usercode."""
+    responses = [RESPONSE_DISARMED, RESPONSE_USER_CODE_INVALID, RESPONSE_DISARMED]
+    with patch(
+        "openpeerpower.components.totalconnect.TotalConnectClient.TotalConnectClient.request",
+        side_effect=responses,
+    ):
+        await setup_platform(opp, ALARM_DOMAIN)
+        assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
+
+        with pytest.raises(OpenPeerPowerError) as err:
+            await opp.services.async_call(
+                ALARM_DOMAIN, SERVICE_ALARM_ARM_HOME, DATA, blocking=True
+            )
+            await opp.async_block_till_done()
+        assert f"{err.value}" == "TotalConnect failed to arm home test."
         assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
 
 
@@ -108,12 +129,12 @@ async def test_arm_away_failure(opp):
         await setup_platform(opp, ALARM_DOMAIN)
         assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
 
-        with pytest.raises(Exception) as e:
+        with pytest.raises(OpenPeerPowerError) as err:
             await opp.services.async_call(
                 ALARM_DOMAIN, SERVICE_ALARM_ARM_AWAY, DATA, blocking=True
             )
             await opp.async_block_till_done()
-        assert f"{e.value}" == "TotalConnect failed to arm away test."
+        assert f"{err.value}" == "TotalConnect failed to arm away test."
         assert STATE_ALARM_DISARMED == opp.states.get(ENTITY_ID).state
 
 
@@ -144,10 +165,29 @@ async def test_disarm_failure(opp):
         await setup_platform(opp, ALARM_DOMAIN)
         assert STATE_ALARM_ARMED_AWAY == opp.states.get(ENTITY_ID).state
 
-        with pytest.raises(Exception) as e:
+        with pytest.raises(OpenPeerPowerError) as err:
             await opp.services.async_call(
                 ALARM_DOMAIN, SERVICE_ALARM_DISARM, DATA, blocking=True
             )
             await opp.async_block_till_done()
-        assert f"{e.value}" == "TotalConnect failed to disarm test."
+        assert f"{err.value}" == "TotalConnect failed to disarm test."
+        assert STATE_ALARM_ARMED_AWAY == opp.states.get(ENTITY_ID).state
+
+
+async def test_disarm_invalid_usercode(opp):
+    """Test disarm method failure."""
+    responses = [RESPONSE_ARMED_AWAY, RESPONSE_USER_CODE_INVALID, RESPONSE_ARMED_AWAY]
+    with patch(
+        "openpeerpower.components.totalconnect.TotalConnectClient.TotalConnectClient.request",
+        side_effect=responses,
+    ):
+        await setup_platform(opp, ALARM_DOMAIN)
+        assert STATE_ALARM_ARMED_AWAY == opp.states.get(ENTITY_ID).state
+
+        with pytest.raises(OpenPeerPowerError) as err:
+            await opp.services.async_call(
+                ALARM_DOMAIN, SERVICE_ALARM_DISARM, DATA, blocking=True
+            )
+            await opp.async_block_till_done()
+        assert f"{err.value}" == "TotalConnect failed to disarm test."
         assert STATE_ALARM_ARMED_AWAY == opp.states.get(ENTITY_ID).state

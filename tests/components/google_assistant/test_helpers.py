@@ -5,7 +5,7 @@ from unittest.mock import Mock, call, patch
 import pytest
 
 from openpeerpower.components.google_assistant import helpers
-from openpeerpower.components.google_assistant.const import (  # noqa: F401
+from openpeerpower.components.google_assistant.const import (
     EVENT_COMMAND_RECEIVED,
     NOT_EXPOSE_LOCAL,
 )
@@ -166,7 +166,7 @@ async def test_config_local_sdk_if_disabled(opp, opp_client):
 async def test_agent_user_id_storage(opp, opp_storage):
     """Test a disconnect message."""
 
-    opp.storage["google_assistant"] = {
+    opp_storage["google_assistant"] = {
         "version": 1,
         "key": "google_assistant",
         "data": {"agent_user_ids": {"agent_1": {}}},

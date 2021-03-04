@@ -1,12 +1,11 @@
 """The sensor tests for the Nightscout platform."""
 
 from openpeerpower.components.nightscout.const import (
-    ATTR_DATE,
     ATTR_DELTA,
     ATTR_DEVICE,
     ATTR_DIRECTION,
 )
-from openpeerpower.const import ATTR_ICON, STATE_UNAVAILABLE
+from openpeerpower.const import ATTR_DATE, ATTR_ICON, STATE_UNAVAILABLE
 
 from tests.components.nightscout import (
     GLUCOSE_READINGS,

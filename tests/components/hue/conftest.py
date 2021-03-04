@@ -12,7 +12,7 @@ from openpeerpower import config_entries
 from openpeerpower.components import hue
 from openpeerpower.components.hue import sensor_base as hue_sensor_base
 
-from tests.components.light.conftest import mock_light_profiles  # noqa
+from tests.components.light.conftest import mock_light_profiles  # noqa: F401
 
 
 @pytest.fixture(autouse=True)

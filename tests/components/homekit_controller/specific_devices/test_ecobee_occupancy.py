@@ -1,7 +1,7 @@
 """
 Regression tests for Ecobee occupancy.
 
-https://github.com/open-peer-power/core/issues/31827
+https://github.com/openpeerpower/core/issues/31827
 """
 
 from tests.components.homekit_controller.common import (
@@ -11,7 +11,7 @@ from tests.components.homekit_controller.common import (
 )
 
 
-async def test_ecobee_occupancy_setup_opp):
+async def test_ecobee_occupancy_setup(opp):
     """Test that an Ecbobee occupancy sensor be correctly setup in HA."""
     accessories = await setup_accessories_from_file(opp, "ecobee_occupancy.json")
     config_entry, pairing = await setup_test_accessories(opp, accessories)

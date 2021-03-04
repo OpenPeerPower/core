@@ -5,7 +5,7 @@ from unittest.mock import patch
 from openpeerpower.bootstrap import async_setup_component
 from openpeerpower.components import config
 
-from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
+from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa: F401
 
 
 async def test_get_device_config(opp, opp_client):
@@ -49,7 +49,7 @@ async def test_update_device_config(opp, opp_client):
 
     with patch("openpeerpower.components.config._read", mock_read), patch(
         "openpeerpower.components.config._write", mock_write
-    ), patch("openpeerpower.config.async.opp_config_yaml", return_value={}):
+    ), patch("openpeerpower.config.async_opp_config_yaml", return_value={}):
         resp = await client.post(
             "/api/config/automation/config/moon",
             data=json.dumps({"trigger": [], "action": [], "condition": []}),
@@ -91,7 +91,7 @@ async def test_bad_formatted_automations(opp, opp_client):
 
     with patch("openpeerpower.components.config._read", mock_read), patch(
         "openpeerpower.components.config._write", mock_write
-    ), patch("openpeerpower.config.async.opp_config_yaml", return_value={}):
+    ), patch("openpeerpower.config.async_opp_config_yaml", return_value={}):
         resp = await client.post(
             "/api/config/automation/config/moon",
             data=json.dumps({"trigger": [], "action": [], "condition": []}),
@@ -152,7 +152,7 @@ async def test_delete_automation(opp, opp_client):
 
     with patch("openpeerpower.components.config._read", mock_read), patch(
         "openpeerpower.components.config._write", mock_write
-    ), patch("openpeerpower.config.async.opp_config_yaml", return_value={}):
+    ), patch("openpeerpower.config.async_opp_config_yaml", return_value={}):
         resp = await client.delete("/api/config/automation/config/sun")
         await opp.async_block_till_done()
 

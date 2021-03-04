@@ -36,7 +36,7 @@ def test_invalid_data(opp):
 
 def test_id_map(opp):
     """Test the opp to rtm task is mapping."""
-    opp.id = opp-id-1234"
+    opp_id = "opp-id-1234"
     list_id = "mylist"
     timeseries_id = "my_timeseries"
     rtm_id = "rtm-id-4567"

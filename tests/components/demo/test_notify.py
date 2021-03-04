@@ -12,7 +12,7 @@ from openpeerpower.core import callback
 from openpeerpower.helpers import discovery
 from openpeerpower.setup import async_setup_component
 
-from tests.common import assert_setup_component
+from tests.common import assert_setup_component, async_capture_events
 
 CONFIG = {notify.DOMAIN: {"platform": "demo"}}
 
@@ -20,9 +20,7 @@ CONFIG = {notify.DOMAIN: {"platform": "demo"}}
 @pytest.fixture
 def events(opp):
     """Fixture that catches notify events."""
-    events = []
-    opp.bus.async_listen(demo.EVENT_NOTIFY, callback(lambda e: events.append(e)))
-    yield events
+    return async_capture_events(opp, demo.EVENT_NOTIFY)
 
 
 @pytest.fixture

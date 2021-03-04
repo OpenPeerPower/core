@@ -12,7 +12,7 @@ from openpeerpower import config as opp_config
 from openpeerpower.components.history_stats import DOMAIN
 from openpeerpower.components.history_stats.sensor import HistoryStatsSensor
 from openpeerpower.const import SERVICE_RELOAD, STATE_UNKNOWN
-import openpeerpower.core as op
+import openpeerpower.core as ha
 from openpeerpower.helpers.template import Template
 from openpeerpower.setup import async_setup_component, setup_component
 import openpeerpower.util.dt as dt_util
@@ -25,7 +25,7 @@ class TestHistoryStatsSensor(unittest.TestCase):
 
     def setUp(self):
         """Set up things to be run when tests are started."""
-        self.opp =get_test_open_peer_power()
+        self.opp = get_test_open_peer_power()
         self.addCleanup(self.opp.stop)
 
     def test_setup(self):
@@ -130,9 +130,9 @@ class TestHistoryStatsSensor(unittest.TestCase):
 
         fake_states = {
             "binary_sensor.test_id": [
-                op.State("binary_sensor.test_id", "on", last_changed=t0),
-                op.State("binary_sensor.test_id", "off", last_changed=t1),
-                op.State("binary_sensor.test_id", "on", last_changed=t2),
+                ha.State("binary_sensor.test_id", "on", last_changed=t0),
+                ha.State("binary_sensor.test_id", "off", last_changed=t1),
+                ha.State("binary_sensor.test_id", "on", last_changed=t2),
             ]
         }
 
@@ -186,9 +186,9 @@ class TestHistoryStatsSensor(unittest.TestCase):
 
         fake_states = {
             "input_select.test_id": [
-                op.State("input_select.test_id", "orange", last_changed=t0),
-                op.State("input_select.test_id", "default", last_changed=t1),
-                op.State("input_select.test_id", "blue", last_changed=t2),
+                ha.State("input_select.test_id", "orange", last_changed=t0),
+                ha.State("input_select.test_id", "default", last_changed=t1),
+                ha.State("input_select.test_id", "blue", last_changed=t2),
             ]
         }
 
@@ -372,7 +372,7 @@ async def test_reload(opp):
         init_recorder_component, opp
     )  # force in memory db
 
-    opp.state = op.CoreState.not_running
+    opp.state = ha.CoreState.not_running
     opp.states.async_set("binary_sensor.test_id", "on")
 
     await async_setup_component(
@@ -402,7 +402,7 @@ async def test_reload(opp):
         "fixtures",
         "history_stats/configuration.yaml",
     )
-    with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
+    with patch.object(opp_config, "YAML_CONFIG_FILE", yaml_path):
         await opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,

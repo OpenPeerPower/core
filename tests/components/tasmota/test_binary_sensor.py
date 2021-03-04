@@ -19,7 +19,7 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-import openpeerpower.core as op
+import openpeerpower.core as ha
 import openpeerpower.util.dt as dt_util
 
 from .test_common import (
@@ -94,6 +94,12 @@ async def test_controlling_state_via_mqtt(opp, mqtt_mock, setup_tasmota):
     )
     state = opp.states.get("binary_sensor.tasmota_binary_sensor_1")
     assert state.state == STATE_OFF
+
+    # Test force update flag
+    entity = opp.data["entity_components"]["binary_sensor"].get_entity(
+        "binary_sensor.tasmota_binary_sensor_1"
+    )
+    assert entity.force_update
 
 
 async def test_controlling_state_via_mqtt_switchname(opp, mqtt_mock, setup_tasmota):
@@ -242,7 +248,7 @@ async def test_off_delay(opp, mqtt_mock, setup_tasmota):
 
     events = []
 
-    @op.callback
+    @ha.callback
     def callback(event):
         """Verify event got called."""
         events.append(event.data["new_state"].state)

@@ -24,7 +24,7 @@ from . import DEMO_DEVICES
 
 API_PASSWORD = "test1234"
 
-PROJECT_ID = opptest-1234"
+PROJECT_ID = "opptest-1234"
 CLIENT_ID = "helloworld"
 ACCESS_TOKEN = "superdoublesecret"
 
@@ -32,7 +32,7 @@ ACCESS_TOKEN = "superdoublesecret"
 @pytest.fixture
 def auth_header(opp_access_token):
     """Generate an HTTP header with bearer token authorization."""
-    return {AUTHORIZATION: f"Bearer  opp.access_token}"}
+    return {AUTHORIZATION: f"Bearer {opp_access_token}"}
 
 
 @pytest.fixture
@@ -115,13 +115,13 @@ def opp_fixture(loop, opp):
         )
     )
 
-    return.opp
+    return opp
 
 
 # pylint: disable=redefined-outer-name
 
 
-async def test_sync_request.opp_fixture, assistant_client, auth_header):
+async def test_sync_request(opp_fixture, assistant_client, auth_header):
     """Test a sync request."""
     reqid = "5711642932632160983"
     data = {"requestId": reqid, "inputs": [{"intent": "action.devices.SYNC"}]}
@@ -150,7 +150,7 @@ async def test_sync_request.opp_fixture, assistant_client, auth_header):
         assert dev["type"] == demo["type"]
 
 
-async def test_query_request.opp_fixture, assistant_client, auth_header):
+async def test_query_request(opp_fixture, assistant_client, auth_header):
     """Test a query request."""
     reqid = "5711642932632160984"
     data = {
@@ -191,7 +191,7 @@ async def test_query_request.opp_fixture, assistant_client, auth_header):
     assert devices["media_player.lounge_room"]["on"] is True
 
 
-async def test_query_climate_request.opp_fixture, assistant_client, auth_header):
+async def test_query_climate_request(opp_fixture, assistant_client, auth_header):
     """Test a query request."""
     reqid = "5711642932632160984"
     data = {
@@ -243,14 +243,14 @@ async def test_query_climate_request.opp_fixture, assistant_client, auth_header)
     }
 
 
-async def test_query_climate_request_f.opp_fixture, assistant_client, auth_header):
+async def test_query_climate_request_f(opp_fixture, assistant_client, auth_header):
     """Test a query request."""
     # Mock demo devices as fahrenheit to see if we convert to celsius
-    opp.fixture.config.units.temperature_unit = const.TEMP_FAHRENHEIT
+    opp_fixture.config.units.temperature_unit = const.TEMP_FAHRENHEIT
     for entity_id in ("climate.hvac", "climate.heatpump", "climate.ecobee"):
         state = opp_fixture.states.get(entity_id)
         attr = dict(state.attributes)
-        opp.fixture.states.async_set(entity_id, state.state, attr)
+        opp_fixture.states.async_set(entity_id, state.state, attr)
 
     reqid = "5711642932632160984"
     data = {
@@ -300,10 +300,10 @@ async def test_query_climate_request_f.opp_fixture, assistant_client, auth_heade
         "thermostatHumidityAmbient": 54,
         "currentFanSpeedSetting": "On High",
     }
-    opp.fixture.config.units.temperature_unit = const.TEMP_CELSIUS
+    opp_fixture.config.units.temperature_unit = const.TEMP_CELSIUS
 
 
-async def test_query_humidifier_request.opp_fixture, assistant_client, auth_header):
+async def test_query_humidifier_request(opp_fixture, assistant_client, auth_header):
     """Test a query request."""
     reqid = "5711642932632160984"
     data = {
@@ -349,7 +349,7 @@ async def test_query_humidifier_request.opp_fixture, assistant_client, auth_head
     }
 
 
-async def test_execute_request.opp_fixture, assistant_client, auth_header):
+async def test_execute_request(opp_fixture, assistant_client, auth_header):
     """Test an execute request."""
     reqid = "5711642932632160985"
     data = {
@@ -473,4 +473,4 @@ async def test_execute_request.opp_fixture, assistant_client, auth_header):
     assert dehumidifier.attributes.get(humidifier.ATTR_HUMIDITY) == 45
 
     hygrostat = opp_fixture.states.get("humidifier.hygrostat")
-    assert hygrostat.attributes.get(humidifier.ATTR_MODE) == "eco"
+    assert hygrostat.attributes.get(const.ATTR_MODE) == "eco"

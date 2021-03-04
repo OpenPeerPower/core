@@ -71,7 +71,7 @@ def test_client_id_user_pass():
 
 def test_client_id_hostname():
     """Test we enforce valid hostname."""
-    assert indieauth._parse_client_id("http://www.open-peer-power.io/")
+    assert indieauth._parse_client_id("http://www.openpeerpower.io/")
     assert indieauth._parse_client_id("http://[::1]")
     assert indieauth._parse_client_id("http://127.0.0.1")
     assert indieauth._parse_client_id("http://10.0.0.0")
@@ -137,8 +137,8 @@ async def test_find_link_tag(opp, mock_session):
 <!doctype html>
 <html>
   <head>
-    <link rel="redirect_uri" href= opp://oauth2_redirect">
-    <link rel="other_value" href= opp://oauth2_redirect">
+    <link rel="redirect_uri" href="opp://oauth2_redirect">
+    <link rel="other_value" href="opp://oauth2_redirect">
     <link rel="redirect_uri" href="/beer">
   </head>
   ...
@@ -167,7 +167,7 @@ async def test_find_link_tag_max_size(opp, mock_session):
 
 @pytest.mark.parametrize(
     "client_id",
-    ["https://open-peer-power.io/android", "https://open-peer-power.io/iOS"],
+    ["https://openpeerpower.io/android", "https://openpeerpower.io/iOS"],
 )
 async def test_verify_redirect_uri_android_ios(client_id):
     """Test that we verify redirect uri correctly for Android/iOS."""

@@ -22,10 +22,7 @@ from openpeerpower.components.unifi.const import (
     DOMAIN as UNIFI_DOMAIN,
     UNIFI_WIRELESS_CLIENTS,
 )
-from openpeerpower.components.unifi.controller import (
-    SUPPORTED_PLATFORMS,
-    get_controller,
-)
+from openpeerpower.components.unifi.controller import PLATFORMS, get_controller
 from openpeerpower.components.unifi.errors import AuthenticationRequired, CannotConnect
 from openpeerpower.const import (
     CONF_HOST,
@@ -211,7 +208,7 @@ async def test_controller_setup(opp, aioclient_mock):
         controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
 
     entry = controller.config_entry
-    assert len(forward_entry_setup.mock_calls) == len(SUPPORTED_PLATFORMS)
+    assert len(forward_entry_setup.mock_calls) == len(PLATFORMS)
     assert forward_entry_setup.mock_calls[0][1] == (entry, TRACKER_DOMAIN)
     assert forward_entry_setup.mock_calls[1][1] == (entry, SENSOR_DOMAIN)
     assert forward_entry_setup.mock_calls[2][1] == (entry, SWITCH_DOMAIN)
@@ -263,7 +260,7 @@ async def test_controller_trigger_reauth_flow(opp):
     with patch(
         "openpeerpower.components.unifi.controller.get_controller",
         side_effect=AuthenticationRequired,
-    ), patch.object.opp.config_entries.flow, "async_init") as mock_flow_init:
+    ), patch.object(opp.config_entries.flow, "async_init") as mock_flow_init:
         await setup_unifi_integration(opp)
         mock_flow_init.assert_called_once()
     assert opp.data[UNIFI_DOMAIN] == {}

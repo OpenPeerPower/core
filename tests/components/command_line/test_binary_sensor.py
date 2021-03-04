@@ -1,68 +1,65 @@
 """The tests for the Command line Binary sensor platform."""
-import unittest
-
-from openpeerpower.components.command_line import binary_sensor as command_line
+from openpeerpower import setup
+from openpeerpower.components.binary_sensor import DOMAIN
 from openpeerpower.const import STATE_OFF, STATE_ON
-from openpeerpower.helpers import template
-
-from tests.common import get_test_open_peer_power
+from openpeerpower.helpers.typing import Any, Dict, OpenPeerPowerType
 
 
-class TestCommandSensorBinarySensor(unittest.TestCase):
-    """Test the Command line Binary sensor."""
+async def setup_test_entity(
+    opp: OpenPeerPowerType, config_dict: Dict[str, Any]
+) -> None:
+    """Set up a test command line binary_sensor entity."""
+    assert await setup.async_setup_component(
+        opp,
+        DOMAIN,
+        {DOMAIN: {"platform": "command_line", "name": "Test", **config_dict}},
+    )
+    await opp.async_block_till_done()
 
-    def setUp(self):
-        """Set up things to be run when tests are started."""
-        self.opp = get_test_open_peer_power()
-        self.addCleanup(self.opp.stop)
 
-    def test_setup(self):
-        """Test sensor setup."""
-        config = {
-            "name": "Test",
+async def test_setup(opp: OpenPeerPowerType) -> None:
+    """Test sensor setup."""
+    await setup_test_entity(
+        opp,
+        {
             "command": "echo 1",
             "payload_on": "1",
             "payload_off": "0",
-            "command_timeout": 15,
-        }
+        },
+    )
 
-        devices = []
+    entity_state = opp.states.get("binary_sensor.test")
+    assert entity_state
+    assert entity_state.state == STATE_ON
+    assert entity_state.name == "Test"
 
-        def add_dev_callback(devs, update):
-            """Add callback to add devices."""
-            for dev in devs:
-                devices.append(dev)
 
-        command_line.setup_platform(self.opp, config, add_dev_callback)
+async def test_template(opp: OpenPeerPowerType) -> None:
+    """Test setting the state with a template."""
 
-        assert 1 == len(devices)
-        entity = devices[0]
-        entity.update()
-        assert "Test" == entity.name
-        assert STATE_ON == entity.state
+    await setup_test_entity(
+        opp,
+        {
+            "command": "echo 10",
+            "payload_on": "1.0",
+            "payload_off": "0",
+            "value_template": "{{ value | multiply(0.1) }}",
+        },
+    )
 
-    def test_template(self):
-        """Test setting the state with a template."""
-        data = command_line.CommandSensorData(self.opp, "echo 10", 15)
+    entity_state = opp.states.get("binary_sensor.test")
+    assert entity_state.state == STATE_ON
 
-        entity = command_line.CommandBinarySensor(
-            self.opp,
-            data,
-            "test",
-            None,
-            "1.0",
-            "0",
-            template.Template("{{ value | multiply(0.1) }}", self.opp),
-        )
-        entity.update()
-        assert STATE_ON == entity.state
 
-    def test_sensor_off(self):
-        """Test setting the state with a template."""
-        data = command_line.CommandSensorData(self.opp, "echo 0", 15)
-
-        entity = command_line.CommandBinarySensor(
-            self.opp, data, "test", None, "1", "0", None
-        )
-        entity.update()
-        assert STATE_OFF == entity.state
+async def test_sensor_off(opp: OpenPeerPowerType) -> None:
+    """Test setting the state with a template."""
+    await setup_test_entity(
+        opp,
+        {
+            "command": "echo 0",
+            "payload_on": "1",
+            "payload_off": "0",
+        },
+    )
+    entity_state = opp.states.get("binary_sensor.test")
+    assert entity_state.state == STATE_OFF

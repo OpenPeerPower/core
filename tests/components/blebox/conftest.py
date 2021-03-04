@@ -10,7 +10,7 @@ from openpeerpower.const import CONF_HOST, CONF_PORT
 from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
-from tests.components.light.conftest import mock_light_profiles  # noqa
+from tests.components.light.conftest import mock_light_profiles  # noqa: F401
 
 
 def patch_product_identify(path=None, **kwargs):
@@ -60,7 +60,7 @@ def mock_feature(category, spec, **kwargs):
 
 
 def mock_config(ip_address="172.100.123.4"):
-    """Return a Mock of the HA entity config."""
+    """Return a Mock of the OP entity config."""
     return MockConfigEntry(domain=DOMAIN, data={CONF_HOST: ip_address, CONF_PORT: 80})
 
 

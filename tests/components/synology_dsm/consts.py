@@ -7,7 +7,7 @@ SERIAL_2 = "mySerial2"
 PORT = 1234
 USE_SSL = True
 VERIFY_SSL = False
-USERNAME = "OpenPeerPower
+USERNAME = "Open_Peer_Power"
 PASSWORD = "password"
 DEVICE_TOKEN = "Dév!cè_T0k€ñ"
 

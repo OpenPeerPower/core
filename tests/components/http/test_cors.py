@@ -17,9 +17,9 @@ from openpeerpower.components.http.cors import setup_cors
 from openpeerpower.components.http.view import OpenPeerPowerView
 from openpeerpower.setup import async_setup_component
 
-from . import HTTP_HEADER_OP_AUTH
+from . import HTTP_HEADER_HA_AUTH
 
-TRUSTED_ORIGIN = "https://open-peer-power.io"
+TRUSTED_ORIGIN = "https://openpeerpower.io"
 
 
 async def test_cors_middleware_loaded_by_default(opp):
@@ -36,7 +36,7 @@ async def test_cors_middleware_loaded_from_config(opp):
         await async_setup_component(
             opp,
             "http",
-            {"http": {"cors_allowed_origins": ["http://open-peer-power.io"]}},
+            {"http": {"cors_allowed_origins": ["http://openpeerpower.io"]}},
         )
 
     assert len(mock_setup.mock_calls) == 1
@@ -71,7 +71,7 @@ async def test_cors_requests(client):
 
     # With password in headers
     req = await client.get(
-        "/", headers={HTTP_HEADER_OP_AUTH: "some-pass", ORIGIN: TRUSTED_ORIGIN}
+        "/", headers={HTTP_HEADER_HA_AUTH: "some-pass", ORIGIN: TRUSTED_ORIGIN}
     )
     assert req.status == 200
     assert req.headers[ACCESS_CONTROL_ALLOW_ORIGIN] == TRUSTED_ORIGIN
@@ -119,7 +119,7 @@ async def test_cors_middleware_with_cors_allowed_view(opp):
             return "test"
 
     assert await async_setup_component(
-        opp, "http", {"http": {"cors_allowed_origins": ["http://open-peer-power.io"]}}
+        opp, "http", {"http": {"cors_allowed_origins": ["http://openpeerpower.io"]}}
     )
 
     opp.http.register_view(MyView("/api/test", "api:test"))
@@ -135,7 +135,7 @@ async def test_cors_works_with_frontend(opp, opp_client):
     assert await async_setup_component(
         opp,
         "frontend",
-        {"http": {"cors_allowed_origins": ["http://open-peer-power.io"]}},
+        {"http": {"cors_allowed_origins": ["http://openpeerpower.io"]}},
     )
     client = await opp_client()
     resp = await client.get("/")

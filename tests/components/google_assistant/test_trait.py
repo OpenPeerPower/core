@@ -31,6 +31,7 @@ from openpeerpower.const import (
     ATTR_ASSUMED_STATE,
     ATTR_DEVICE_CLASS,
     ATTR_ENTITY_ID,
+    ATTR_MODE,
     ATTR_SUPPORTED_FEATURES,
     ATTR_TEMPERATURE,
     SERVICE_TURN_OFF,
@@ -49,12 +50,12 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     TEMP_FAHRENHEIT,
 )
-from openpeerpower.core import DOMAIN as OP_DOMAIN, EVENT_CALL_SERVICE, State
+from openpeerpower.core import DOMAIN as HA_DOMAIN, EVENT_CALL_SERVICE, State
 from openpeerpower.util import color
 
 from . import BASIC_CONFIG, MockConfig
 
-from tests.common import async_mock_service
+from tests.common import async_capture_events, async_mock_service
 
 REQ_ID = "ff36a3cc-ec34-11e6-b1a0-64510650abcf"
 
@@ -84,8 +85,7 @@ async def test_brightness_light(opp):
 
     assert trt.query_attributes() == {"brightness": 95}
 
-    events = []
-    opp.bus.async_listen(EVENT_CALL_SERVICE, events.append)
+    events = async_capture_events(opp, EVENT_CALL_SERVICE)
 
     calls = async_mock_service(opp, light.DOMAIN, light.SERVICE_TURN_ON)
     await trt.execute(
@@ -152,12 +152,12 @@ async def test_onoff_group(opp):
 
     assert trt_off.query_attributes() == {"on": False}
 
-    on_calls = async_mock_service(opp, OP_DOMAIN, SERVICE_TURN_ON)
+    on_calls = async_mock_service(opp, HA_DOMAIN, SERVICE_TURN_ON)
     await trt_on.execute(trait.COMMAND_ONOFF, BASIC_DATA, {"on": True}, {})
     assert len(on_calls) == 1
     assert on_calls[0].data == {ATTR_ENTITY_ID: "group.bla"}
 
-    off_calls = async_mock_service(opp, OP_DOMAIN, SERVICE_TURN_OFF)
+    off_calls = async_mock_service(opp, HA_DOMAIN, SERVICE_TURN_OFF)
     await trt_on.execute(trait.COMMAND_ONOFF, BASIC_DATA, {"on": False}, {})
     assert len(off_calls) == 1
     assert off_calls[0].data == {ATTR_ENTITY_ID: "group.bla"}
@@ -987,7 +987,7 @@ async def test_lock_unlock_lock(opp):
     assert trait.LockUnlockTrait.might_2fa(lock.DOMAIN, lock.SUPPORT_OPEN, None)
 
     trt = trait.LockUnlockTrait(
-        opp,State("lock.front_door", lock.STATE_LOCKED), PIN_CONFIG
+        opp, State("lock.front_door", lock.STATE_LOCKED), PIN_CONFIG
     )
 
     assert trt.sync_attributes() == {}
@@ -1010,7 +1010,7 @@ async def test_lock_unlock_unlock(opp):
     assert trait.LockUnlockTrait.supported(lock.DOMAIN, lock.SUPPORT_OPEN, None)
 
     trt = trait.LockUnlockTrait(
-        opp,State("lock.front_door", lock.STATE_LOCKED), PIN_CONFIG
+        opp, State("lock.front_door", lock.STATE_LOCKED), PIN_CONFIG
     )
 
     assert trt.sync_attributes() == {}
@@ -1046,7 +1046,7 @@ async def test_lock_unlock_unlock(opp):
 
     # Test without pin
     trt = trait.LockUnlockTrait(
-        opp,State("lock.front_door", lock.STATE_LOCKED), BASIC_CONFIG
+        opp, State("lock.front_door", lock.STATE_LOCKED), BASIC_CONFIG
     )
 
     with pytest.raises(error.SmartHomeError) as err:
@@ -1113,7 +1113,7 @@ async def test_arm_disarm_arm_away(opp):
     )
 
     calls = async_mock_service(
-        opp,alarm_control_panel.DOMAIN, alarm_control_panel.SERVICE_ALARM_ARM_AWAY
+        opp, alarm_control_panel.DOMAIN, alarm_control_panel.SERVICE_ALARM_ARM_AWAY
     )
 
     # Test with no secure_pin configured
@@ -1272,7 +1272,7 @@ async def test_arm_disarm_disarm(opp):
     assert trt.can_execute(trait.COMMAND_ARMDISARM, {"arm": False})
 
     calls = async_mock_service(
-        opp,alarm_control_panel.DOMAIN, alarm_control_panel.SERVICE_ALARM_DISARM
+        opp, alarm_control_panel.DOMAIN, alarm_control_panel.SERVICE_ALARM_DISARM
     )
 
     # Test without secure_pin configured
@@ -1574,7 +1574,7 @@ async def test_inputselector(opp):
     )
 
     calls = async_mock_service(
-        opp,media_player.DOMAIN, media_player.SERVICE_SELECT_SOURCE
+        opp, media_player.DOMAIN, media_player.SERVICE_SELECT_SOURCE
     )
     await trt.execute(
         trait.COMMAND_INPUT,
@@ -1614,7 +1614,7 @@ async def test_inputselector_nextprev(opp, sources, source, source_next, source_
     assert trt.can_execute("action.devices.commands.PreviousInput", params={})
 
     calls = async_mock_service(
-        opp,media_player.DOMAIN, media_player.SERVICE_SELECT_SOURCE
+        opp, media_player.DOMAIN, media_player.SERVICE_SELECT_SOURCE
     )
     await trt.execute(
         "action.devices.commands.NextInput",
@@ -1746,7 +1746,7 @@ async def test_modes_input_select(opp):
     )
 
     calls = async_mock_service(
-        opp,input_select.DOMAIN, input_select.SERVICE_SELECT_OPTION
+        opp, input_select.DOMAIN, input_select.SERVICE_SELECT_OPTION
     )
     await trt.execute(
         trait.COMMAND_MODES,
@@ -1779,7 +1779,7 @@ async def test_modes_humidifier(opp):
                 humidifier.ATTR_MIN_HUMIDITY: 30,
                 humidifier.ATTR_MAX_HUMIDITY: 99,
                 humidifier.ATTR_HUMIDITY: 50,
-                humidifier.ATTR_MODE: humidifier.MODE_AUTO,
+                ATTR_MODE: humidifier.MODE_AUTO,
             },
         ),
         BASIC_CONFIG,
@@ -1894,7 +1894,7 @@ async def test_sound_modes(opp):
     )
 
     calls = async_mock_service(
-        opp,media_player.DOMAIN, media_player.SERVICE_SELECT_SOUND_MODE
+        opp, media_player.DOMAIN, media_player.SERVICE_SELECT_SOUND_MODE
     )
     await trt.execute(
         trait.COMMAND_MODES,
@@ -2219,7 +2219,7 @@ async def test_volume_media_player(opp):
     assert trt.query_attributes() == {"currentVolume": 30}
 
     calls = async_mock_service(
-        opp,media_player.DOMAIN, media_player.SERVICE_VOLUME_SET
+        opp, media_player.DOMAIN, media_player.SERVICE_VOLUME_SET
     )
     await trt.execute(trait.COMMAND_SET_VOLUME, BASIC_DATA, {"volumeLevel": 60}, {})
     assert len(calls) == 1

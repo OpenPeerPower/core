@@ -20,15 +20,15 @@ from tests.common import (
 
 
 @pytest.fixture
-def calls(opp)
+def calls(opp):
     """Track calls to a mock service."""
-    return async_mock_service.opp."test", "automation")
+    return async_mock_service(opp, "test", "automation")
 
 
 @pytest.fixture(autouse=True)
-def setup_comp(opp)
+def setup_comp(opp):
     """Initialize components."""
-    mock_component.opp."group")
+    mock_component(opp, "group")
     opp.states.async_set("test.entity", "hello")
 
 
@@ -81,7 +81,7 @@ async def test_if_fires_on_entity_change(opp, calls):
     assert len(calls) == 1
 
 
-async def test_if_fires_on_entity_change_with_from_filter(opp.calls):
+async def test_if_fires_on_entity_change_with_from_filter(opp, calls):
     """Test for firing on entity change with filter."""
     assert await async_setup_component(
         opp,
@@ -225,7 +225,7 @@ async def test_if_not_fires_if_from_filter_not_match(opp, calls):
     assert len(calls) == 0
 
 
-async def test_if_not_fires_if_entity_not_match.opp.calls):
+async def test_if_not_fires_if_entity_not_match(opp, calls):
     """Test for not firing if entity is not matching."""
     assert await async_setup_component(
         opp,
@@ -244,7 +244,7 @@ async def test_if_not_fires_if_entity_not_match.opp.calls):
     assert len(calls) == 0
 
 
-async def test_if_action.opp.calls):
+async def test_if_action(opp, calls):
     """Test for to action."""
     entity_id = "domain.test_entity"
     test_state = "new_state"
@@ -264,19 +264,19 @@ async def test_if_action.opp.calls):
     await opp.async_block_till_done()
 
     opp.states.async_set(entity_id, test_state)
-    opp.us.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
 
     assert len(calls) == 1
 
     opp.states.async_set(entity_id, test_state + "something")
-    opp.us.async_fire("test_event")
+    opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
 
     assert len(calls) == 1
 
 
-async def test_if_fails_setup_if_to_boolean_value.opp.calls):
+async def test_if_fails_setup_if_to_boolean_value(opp, calls):
     """Test for setup failure for boolean to."""
     with assert_setup_component(0, automation.DOMAIN):
         assert await async_setup_component(
@@ -295,7 +295,7 @@ async def test_if_fails_setup_if_to_boolean_value.opp.calls):
         )
 
 
-async def test_if_fails_setup_if_from_boolean_value.opp.calls):
+async def test_if_fails_setup_if_from_boolean_value(opp, calls):
     """Test for setup failure for boolean from."""
     with assert_setup_component(0, automation.DOMAIN):
         assert await async_setup_component(
@@ -314,7 +314,7 @@ async def test_if_fails_setup_if_from_boolean_value.opp.calls):
         )
 
 
-async def test_if_fails_setup_bad_for(opp.calls):
+async def test_if_fails_setup_bad_for(opp, calls):
     """Test for setup failure for bad for."""
     assert await async_setup_component(
         opp,
@@ -338,7 +338,7 @@ async def test_if_fails_setup_bad_for(opp.calls):
         assert mock_logger.error.called
 
 
-async def test_if_not_fires_on_entity_change_with_for(opp.calls):
+async def test_if_not_fires_on_entity_change_with_for(opp, calls):
     """Test for not firing on entity change with for."""
     assert await async_setup_component(
         opp,
@@ -361,12 +361,12 @@ async def test_if_not_fires_on_entity_change_with_for(opp.calls):
     await opp.async_block_till_done()
     opp.states.async_set("test.entity", "not_world")
     await opp.async_block_till_done()
-    async_fire_time_changed.opp.dt_util.utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert len(calls) == 0
 
 
-async def test_if_not_fires_on_entities_change_with_for_after_stop.opp.calls):
+async def test_if_not_fires_on_entities_change_with_for_after_stop(opp, calls):
     """Test for not firing on entity change with for after stop trigger."""
     assert await async_setup_component(
         opp,
@@ -388,7 +388,7 @@ async def test_if_not_fires_on_entities_change_with_for_after_stop.opp.calls):
     opp.states.async_set("test.entity_1", "world")
     opp.states.async_set("test.entity_2", "world")
     await opp.async_block_till_done()
-    async_fire_time_changed.opp.dt_util.utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert len(calls) == 1
 
@@ -405,12 +405,12 @@ async def test_if_not_fires_on_entities_change_with_for_after_stop.opp.calls):
         blocking=True,
     )
 
-    async_fire_time_changed.opp.dt_util.utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_if_fires_on_entity_change_with_for_attribute_change.opp.calls):
+async def test_if_fires_on_entity_change_with_for_attribute_change(opp, calls):
     """Test for firing on entity change with for and attribute change."""
     assert await async_setup_component(
         opp,
@@ -435,19 +435,19 @@ async def test_if_fires_on_entity_change_with_for_attribute_change.opp.calls):
         opp.states.async_set("test.entity", "world")
         await opp.async_block_till_done()
         mock_utcnow.return_value += timedelta(seconds=4)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         opp.states.async_set(
             "test.entity", "world", attributes={"mock_attr": "attr_change"}
         )
         await opp.async_block_till_done()
         assert len(calls) == 0
         mock_utcnow.return_value += timedelta(seconds=4)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         await opp.async_block_till_done()
         assert len(calls) == 1
 
 
-async def test_if_fires_on_entity_change_with_for_multiple_force_update.opp.calls):
+async def test_if_fires_on_entity_change_with_for_multiple_force_update(opp, calls):
     """Test for firing on entity change with for and force update."""
     assert await async_setup_component(
         opp,
@@ -473,17 +473,17 @@ async def test_if_fires_on_entity_change_with_for_multiple_force_update.opp.call
         await opp.async_block_till_done()
         for _ in range(4):
             mock_utcnow.return_value += timedelta(seconds=1)
-            async_fire_time_changed.opp.mock_utcnow.return_value)
+            async_fire_time_changed(opp, mock_utcnow.return_value)
             opp.states.async_set("test.force_entity", "world", None, True)
             await opp.async_block_till_done()
         assert len(calls) == 0
         mock_utcnow.return_value += timedelta(seconds=4)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         await opp.async_block_till_done()
         assert len(calls) == 1
 
 
-async def test_if_fires_on_entity_change_with_for(opp.calls):
+async def test_if_fires_on_entity_change_with_for(opp, calls):
     """Test for firing on entity change with for."""
     assert await async_setup_component(
         opp,
@@ -504,12 +504,12 @@ async def test_if_fires_on_entity_change_with_for(opp.calls):
 
     opp.states.async_set("test.entity", "world")
     await opp.async_block_till_done()
-    async_fire_time_changed.opp.dt_util.utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert 1 == len(calls)
 
 
-async def test_if_fires_on_entity_change_with_for_without_to.opp.calls):
+async def test_if_fires_on_entity_change_with_for_without_to(opp, calls):
     """Test for firing on entity change with for."""
     assert await async_setup_component(
         opp,
@@ -530,23 +530,23 @@ async def test_if_fires_on_entity_change_with_for_without_to.opp.calls):
     opp.states.async_set("test.entity", "hello")
     await opp.async_block_till_done()
 
-    async_fire_time_changed.opp.dt_util.utcnow() + timedelta(seconds=2))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=2))
     await opp.async_block_till_done()
     assert len(calls) == 0
 
     opp.states.async_set("test.entity", "world")
     await opp.async_block_till_done()
 
-    async_fire_time_changed.opp.dt_util.utcnow() + timedelta(seconds=4))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=4))
     await opp.async_block_till_done()
     assert len(calls) == 0
 
-    async_fire_time_changed.opp.dt_util.utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_if_does_not_fires_on_entity_change_with_for_without_to_2.opp.calls):
+async def test_if_does_not_fires_on_entity_change_with_for_without_to_2(opp, calls):
     """Test for firing on entity change with for."""
     assert await async_setup_component(
         opp,
@@ -573,13 +573,13 @@ async def test_if_does_not_fires_on_entity_change_with_for_without_to_2.opp.call
             await opp.async_block_till_done()
 
             mock_utcnow.return_value += timedelta(seconds=1)
-            async_fire_time_changed.opp.mock_utcnow.return_value)
+            async_fire_time_changed(opp, mock_utcnow.return_value)
             await opp.async_block_till_done()
 
     assert len(calls) == 0
 
 
-async def test_if_fires_on_entity_creation_and_removal.opp.calls):
+async def test_if_fires_on_entity_creation_and_removal(opp, calls):
     """Test for firing on entity creation and removal, with to/from constraints."""
     # set automations for multiple combinations to/from
     assert await async_setup_component(
@@ -644,7 +644,7 @@ async def test_if_fires_on_entity_creation_and_removal.opp.calls):
     assert calls[3].context.parent_id == context_0.id
 
 
-async def test_if_fires_on_for_condition.opp.calls):
+async def test_if_fires_on_for_condition(opp, calls):
     """Test for firing if condition is on."""
     point1 = dt_util.utcnow()
     point2 = point1 + timedelta(seconds=10)
@@ -670,18 +670,18 @@ async def test_if_fires_on_for_condition.opp.calls):
         await opp.async_block_till_done()
 
         # not enough time has passed
-        opp.us.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 0
 
         # Time travel 10 secs into the future
         mock_utcnow.return_value = point2
-        opp.us.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
 
-async def test_if_fires_on_for_condition_attribute_change.opp.calls):
+async def test_if_fires_on_for_condition_attribute_change(opp, calls):
     """Test for firing if condition is on with attribute change."""
     point1 = dt_util.utcnow()
     point2 = point1 + timedelta(seconds=4)
@@ -708,7 +708,7 @@ async def test_if_fires_on_for_condition_attribute_change.opp.calls):
         await opp.async_block_till_done()
 
         # not enough time has passed
-        opp.us.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 0
 
@@ -717,18 +717,18 @@ async def test_if_fires_on_for_condition_attribute_change.opp.calls):
         opp.states.async_set(
             "test.entity", "on", attributes={"mock_attr": "attr_change"}
         )
-        opp.us.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 0
 
         # Enough time has now passed
         mock_utcnow.return_value = point3
-        opp.us.async_fire("test_event")
+        opp.bus.async_fire("test_event")
         await opp.async_block_till_done()
         assert len(calls) == 1
 
 
-async def test_if_fails_setup_for_without_time.opp.calls):
+async def test_if_fails_setup_for_without_time(opp, calls):
     """Test for setup failure if no time is provided."""
     with assert_setup_component(0, automation.DOMAIN):
         assert await async_setup_component(
@@ -749,7 +749,7 @@ async def test_if_fails_setup_for_without_time.opp.calls):
         )
 
 
-async def test_if_fails_setup_for_without_entity.opp.calls):
+async def test_if_fails_setup_for_without_entity(opp, calls):
     """Test for setup failure if no entity is provided."""
     with assert_setup_component(0, automation.DOMAIN):
         assert await async_setup_component(
@@ -769,7 +769,7 @@ async def test_if_fails_setup_for_without_entity.opp.calls):
         )
 
 
-async def test_wait_template_with_trigger(opp.calls):
+async def test_wait_template_with_trigger(opp, calls):
     """Test using wait template with 'trigger.entity_id'."""
     assert await async_setup_component(
         opp,
@@ -811,7 +811,7 @@ async def test_wait_template_with_trigger(opp.calls):
     assert calls[0].data["some"] == "state - test.entity - hello - world"
 
 
-async def test_if_fires_on_entities_change_no_overlap.opp.calls):
+async def test_if_fires_on_entities_change_no_overlap(opp, calls):
     """Test for firing on entities change with no overlap."""
     assert await async_setup_component(
         opp,
@@ -839,7 +839,7 @@ async def test_if_fires_on_entities_change_no_overlap.opp.calls):
         opp.states.async_set("test.entity_1", "world")
         await opp.async_block_till_done()
         mock_utcnow.return_value += timedelta(seconds=10)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         await opp.async_block_till_done()
         assert len(calls) == 1
         assert calls[0].data["some"] == "test.entity_1"
@@ -847,13 +847,13 @@ async def test_if_fires_on_entities_change_no_overlap.opp.calls):
         opp.states.async_set("test.entity_2", "world")
         await opp.async_block_till_done()
         mock_utcnow.return_value += timedelta(seconds=10)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         await opp.async_block_till_done()
         assert len(calls) == 2
         assert calls[1].data["some"] == "test.entity_2"
 
 
-async def test_if_fires_on_entities_change_overlap.opp.calls):
+async def test_if_fires_on_entities_change_overlap(opp, calls):
     """Test for firing on entities change with overlap."""
     assert await async_setup_component(
         opp,
@@ -881,32 +881,32 @@ async def test_if_fires_on_entities_change_overlap.opp.calls):
         opp.states.async_set("test.entity_1", "world")
         await opp.async_block_till_done()
         mock_utcnow.return_value += timedelta(seconds=1)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         opp.states.async_set("test.entity_2", "world")
         await opp.async_block_till_done()
         mock_utcnow.return_value += timedelta(seconds=1)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         opp.states.async_set("test.entity_2", "hello")
         await opp.async_block_till_done()
         mock_utcnow.return_value += timedelta(seconds=1)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         opp.states.async_set("test.entity_2", "world")
         await opp.async_block_till_done()
         assert len(calls) == 0
         mock_utcnow.return_value += timedelta(seconds=3)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         await opp.async_block_till_done()
         assert len(calls) == 1
         assert calls[0].data["some"] == "test.entity_1"
 
         mock_utcnow.return_value += timedelta(seconds=3)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         await opp.async_block_till_done()
         assert len(calls) == 2
         assert calls[1].data["some"] == "test.entity_2"
 
 
-async def test_if_fires_on_change_with_for_template_1.opp.calls):
+async def test_if_fires_on_change_with_for_template_1(opp, calls):
     """Test for firing on change with for template."""
     assert await async_setup_component(
         opp,
@@ -927,12 +927,12 @@ async def test_if_fires_on_change_with_for_template_1.opp.calls):
     opp.states.async_set("test.entity", "world")
     await opp.async_block_till_done()
     assert len(calls) == 0
-    async_fire_time_changed.opp.dt_util.utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_if_fires_on_change_with_for_template_2.opp.calls):
+async def test_if_fires_on_change_with_for_template_2(opp, calls):
     """Test for firing on change with for template."""
     assert await async_setup_component(
         opp,
@@ -953,12 +953,12 @@ async def test_if_fires_on_change_with_for_template_2.opp.calls):
     opp.states.async_set("test.entity", "world")
     await opp.async_block_till_done()
     assert len(calls) == 0
-    async_fire_time_changed.opp.dt_util.utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_if_fires_on_change_with_for_template_3.opp.calls):
+async def test_if_fires_on_change_with_for_template_3(opp, calls):
     """Test for firing on change with for template."""
     assert await async_setup_component(
         opp,
@@ -979,12 +979,12 @@ async def test_if_fires_on_change_with_for_template_3.opp.calls):
     opp.states.async_set("test.entity", "world")
     await opp.async_block_till_done()
     assert len(calls) == 0
-    async_fire_time_changed.opp.dt_util.utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_if_fires_on_change_with_for_template_4.opp.calls):
+async def test_if_fires_on_change_with_for_template_4(opp, calls):
     """Test for firing on change with for template."""
     assert await async_setup_component(
         opp,
@@ -1006,12 +1006,12 @@ async def test_if_fires_on_change_with_for_template_4.opp.calls):
     opp.states.async_set("test.entity", "world")
     await opp.async_block_till_done()
     assert len(calls) == 0
-    async_fire_time_changed.opp.dt_util.utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
-async def test_if_fires_on_change_from_with_for(opp.calls):
+async def test_if_fires_on_change_from_with_for(opp, calls):
     """Test for firing on change with from/for."""
     assert await async_setup_component(
         opp,
@@ -1040,7 +1040,7 @@ async def test_if_fires_on_change_from_with_for(opp.calls):
     assert len(calls) == 1
 
 
-async def test_if_not_fires_on_change_from_with_for(opp.calls):
+async def test_if_not_fires_on_change_from_with_for(opp, calls):
     """Test for firing on change with from/for."""
     assert await async_setup_component(
         opp,
@@ -1064,12 +1064,12 @@ async def test_if_not_fires_on_change_from_with_for(opp.calls):
     await opp.async_block_till_done()
     opp.states.async_set("media_player.foo", "playing")
     await opp.async_block_till_done()
-    async_fire_time_changed.opp.dt_util.utcnow() + timedelta(minutes=1))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(minutes=1))
     await opp.async_block_till_done()
     assert len(calls) == 0
 
 
-async def test_invalid_for_template_1.opp.calls):
+async def test_invalid_for_template_1(opp, calls):
     """Test for invalid for template."""
     assert await async_setup_component(
         opp,
@@ -1093,7 +1093,7 @@ async def test_invalid_for_template_1.opp.calls):
         assert mock_logger.error.called
 
 
-async def test_if_fires_on_entities_change_overlap_for_template.opp.calls):
+async def test_if_fires_on_entities_change_overlap_for_template(opp, calls):
     """Test for firing on entities change with overlap and for template."""
     assert await async_setup_component(
         opp,
@@ -1124,36 +1124,36 @@ async def test_if_fires_on_entities_change_overlap_for_template.opp.calls):
         opp.states.async_set("test.entity_1", "world")
         await opp.async_block_till_done()
         mock_utcnow.return_value += timedelta(seconds=1)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         opp.states.async_set("test.entity_2", "world")
         await opp.async_block_till_done()
         mock_utcnow.return_value += timedelta(seconds=1)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         opp.states.async_set("test.entity_2", "hello")
         await opp.async_block_till_done()
         mock_utcnow.return_value += timedelta(seconds=1)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         opp.states.async_set("test.entity_2", "world")
         await opp.async_block_till_done()
         assert len(calls) == 0
         mock_utcnow.return_value += timedelta(seconds=3)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         await opp.async_block_till_done()
         assert len(calls) == 1
         assert calls[0].data["some"] == "test.entity_1 - 0:00:05"
 
         mock_utcnow.return_value += timedelta(seconds=3)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         await opp.async_block_till_done()
         assert len(calls) == 1
         mock_utcnow.return_value += timedelta(seconds=5)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         await opp.async_block_till_done()
         assert len(calls) == 2
         assert calls[1].data["some"] == "test.entity_2 - 0:00:10"
 
 
-async def test_attribute_if_fires_on_entity_change_with_both_filters.opp.calls):
+async def test_attribute_if_fires_on_entity_change_with_both_filters(opp, calls):
     """Test for firing if both filters are match attribute."""
     opp.states.async_set("test.entity", "bla", {"name": "hello"})
 
@@ -1180,7 +1180,7 @@ async def test_attribute_if_fires_on_entity_change_with_both_filters.opp.calls):
     assert len(calls) == 1
 
 
-async def test_attribute_if_fires_on_entity_where_attr_stays_constant.opp.calls):
+async def test_attribute_if_fires_on_entity_where_attr_stays_constant(opp, calls):
     """Test for firing if attribute stays the same."""
     opp.states.async_set("test.entity", "bla", {"name": "hello", "other": "old_value"})
 
@@ -1217,7 +1217,7 @@ async def test_attribute_if_fires_on_entity_where_attr_stays_constant.opp.calls)
 
 
 async def test_attribute_if_not_fires_on_entities_change_with_for_after_stop(
-    opp.calls
+    opp, calls
 ):
     """Test for not firing on entity change with for after stop trigger."""
     opp.states.async_set("test.entity", "bla", {"name": "hello"})
@@ -1246,12 +1246,12 @@ async def test_attribute_if_not_fires_on_entities_change_with_for_after_stop(
     await opp.async_block_till_done()
     assert len(calls) == 0
 
-    async_fire_time_changed.opp.dt_util.utcnow() + timedelta(seconds=2))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=2))
     opp.states.async_set("test.entity", "bla", {"name": "world", "something": "else"})
     await opp.async_block_till_done()
     assert len(calls) == 0
 
-    async_fire_time_changed.opp.dt_util.utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert len(calls) == 1
 
@@ -1264,13 +1264,13 @@ async def test_attribute_if_not_fires_on_entities_change_with_for_after_stop(
     opp.states.async_remove("test.entity")
     await opp.async_block_till_done()
 
-    async_fire_time_changed.opp.dt_util.utcnow() + timedelta(seconds=10))
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
     await opp.async_block_till_done()
     assert len(calls) == 1
 
 
 async def test_attribute_if_fires_on_entity_change_with_both_filters_boolean(
-    opp.calls
+    opp, calls
 ):
     """Test for firing if both filters are match attribute."""
     opp.states.async_set("test.entity", "bla", {"happening": False})
@@ -1298,7 +1298,7 @@ async def test_attribute_if_fires_on_entity_change_with_both_filters_boolean(
     assert len(calls) == 1
 
 
-async def test_variables_priority.opp.calls):
+async def test_variables_priority(opp, calls):
     """Test an externally defined trigger variable is overridden."""
     assert await async_setup_component(
         opp,
@@ -1330,30 +1330,30 @@ async def test_variables_priority.opp.calls):
         opp.states.async_set("test.entity_1", "world")
         await opp.async_block_till_done()
         mock_utcnow.return_value += timedelta(seconds=1)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         opp.states.async_set("test.entity_2", "world")
         await opp.async_block_till_done()
         mock_utcnow.return_value += timedelta(seconds=1)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         opp.states.async_set("test.entity_2", "hello")
         await opp.async_block_till_done()
         mock_utcnow.return_value += timedelta(seconds=1)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         opp.states.async_set("test.entity_2", "world")
         await opp.async_block_till_done()
         assert len(calls) == 0
         mock_utcnow.return_value += timedelta(seconds=3)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         await opp.async_block_till_done()
         assert len(calls) == 1
         assert calls[0].data["some"] == "test.entity_1 - 0:00:05"
 
         mock_utcnow.return_value += timedelta(seconds=3)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         await opp.async_block_till_done()
         assert len(calls) == 1
         mock_utcnow.return_value += timedelta(seconds=5)
-        async_fire_time_changed.opp.mock_utcnow.return_value)
+        async_fire_time_changed(opp, mock_utcnow.return_value)
         await opp.async_block_till_done()
         assert len(calls) == 2
         assert calls[1].data["some"] == "test.entity_2 - 0:00:10"

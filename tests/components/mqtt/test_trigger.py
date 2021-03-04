@@ -8,7 +8,7 @@ from openpeerpower.const import ATTR_ENTITY_ID, ENTITY_MATCH_ALL, SERVICE_TURN_O
 from openpeerpower.setup import async_setup_component
 
 from tests.common import async_fire_mqtt_message, async_mock_service, mock_component
-from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
+from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa: F401
 
 
 @pytest.fixture
@@ -81,6 +81,31 @@ async def test_if_fires_on_topic_and_payload_match(opp, calls):
     assert len(calls) == 1
 
 
+async def test_if_fires_on_topic_and_payload_match2(opp, calls):
+    """Test if message is fired on topic and payload match.
+
+    Make sure a payload which would render as a non string can still be matched.
+    """
+    assert await async_setup_component(
+        opp,
+        automation.DOMAIN,
+        {
+            automation.DOMAIN: {
+                "trigger": {
+                    "platform": "mqtt",
+                    "topic": "test-topic",
+                    "payload": "0",
+                },
+                "action": {"service": "test.automation"},
+            }
+        },
+    )
+
+    async_fire_mqtt_message(opp, "test-topic", "0")
+    await opp.async_block_till_done()
+    assert len(calls) == 1
+
+
 async def test_if_fires_on_templated_topic_and_payload_match(opp, calls):
     """Test if message is fired on templated topic and payload match."""
     assert await async_setup_component(
@@ -107,6 +132,37 @@ async def test_if_fires_on_templated_topic_and_payload_match(opp, calls):
     assert len(calls) == 0
 
     async_fire_mqtt_message(opp, "test-topic-4", "bar")
+    await opp.async_block_till_done()
+    assert len(calls) == 1
+
+
+async def test_if_fires_on_payload_template(opp, calls):
+    """Test if message is fired on templated topic and payload match."""
+    assert await async_setup_component(
+        opp,
+        automation.DOMAIN,
+        {
+            automation.DOMAIN: {
+                "trigger": {
+                    "platform": "mqtt",
+                    "topic": "test-topic",
+                    "payload": "hello",
+                    "value_template": "{{ value_json.wanted_key }}",
+                },
+                "action": {"service": "test.automation"},
+            }
+        },
+    )
+
+    async_fire_mqtt_message(opp, "test-topic", "hello")
+    await opp.async_block_till_done()
+    assert len(calls) == 0
+
+    async_fire_mqtt_message(opp, "test-topic", '{"unwanted_key":"hello"}')
+    await opp.async_block_till_done()
+    assert len(calls) == 0
+
+    async_fire_mqtt_message(opp, "test-topic", '{"wanted_key":"hello"}')
     await opp.async_block_till_done()
     assert len(calls) == 1
 

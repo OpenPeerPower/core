@@ -79,7 +79,7 @@ from .const import (
 from tests.common import MockConfigEntry, async_fire_time_changed
 
 
-async def _add_config_entry_to.opp(
+async def _add_config_entry_to_opp(
     opp: OpenPeerPowerType, config_entry: MockConfigEntry
 ) -> None:
     config_entry.add_to_opp(opp)
@@ -88,7 +88,7 @@ async def _add_config_entry_to.opp(
 
 
 def _get_op_power_state(vizio_power_state: Optional[bool]) -> str:
-    """Return HA power state given Vizio power state."""
+    """Return OP power state given Vizio power state."""
     if vizio_power_state:
         return STATE_ON
 
@@ -143,7 +143,7 @@ async def _test_setup_tv(
     opp: OpenPeerPowerType, vizio_power_state: Optional[bool]
 ) -> None:
     """Test Vizio TV entity setup."""
-    op_power_state = _get_op_power_state(vizio_power_state)
+    ha_power_state = _get_op_power_state(vizio_power_state)
 
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -155,10 +155,10 @@ async def _test_setup_tv(
         {"volume": int(MAX_VOLUME[VIZIO_DEVICE_CLASS_TV] / 2), "mute": "Off"},
         vizio_power_state,
     ):
-        await _add_config_entry_to.opp=opp, config_entry)
+        await _add_config_entry_to_opp(opp, config_entry)
 
-        attr = _get_attr_and_assert_base_attr(opp, DEVICE_CLASS_TV, op_power_state)
-        if op_power_state == STATE_ON:
+        attr = _get_attr_and_assert_base_attr(opp, DEVICE_CLASS_TV, ha_power_state)
+        if ha_power_state == STATE_ON:
             _assert_sources_and_volume(attr, VIZIO_DEVICE_CLASS_TV)
             assert "sound_mode" not in attr
 
@@ -167,7 +167,7 @@ async def _test_setup_speaker(
     opp: OpenPeerPowerType, vizio_power_state: Optional[bool]
 ) -> None:
     """Test Vizio Speaker entity setup."""
-    op_power_state = _get_op_power_state(vizio_power_state)
+    ha_power_state = _get_op_power_state(vizio_power_state)
 
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -188,12 +188,12 @@ async def _test_setup_speaker(
         with patch(
             "openpeerpower.components.vizio.media_player.VizioAsync.get_current_app_config",
         ) as service_call:
-            await _add_config_entry_to.opp=opp, config_entry)
+            await _add_config_entry_to_opp(opp, config_entry)
 
             attr = _get_attr_and_assert_base_attr(
-                opp, DEVICE_CLASS_SPEAKER, op_power_state
+                opp, DEVICE_CLASS_SPEAKER, ha_power_state
             )
-            if op_power_state == STATE_ON:
+            if ha_power_state == STATE_ON:
                 _assert_sources_and_volume(attr, VIZIO_DEVICE_CLASS_SPEAKER)
                 assert not service_call.called
                 assert "sound_mode" in attr
@@ -216,7 +216,7 @@ async def _cm_for_test_setup_tv_with_apps(
             "openpeerpower.components.vizio.media_player.VizioAsync.get_current_app_config",
             return_value=AppConfig(**app_config),
         ):
-            await _add_config_entry_to.opp=opp, config_entry)
+            await _add_config_entry_to_opp(opp, config_entry)
 
             attr = _get_attr_and_assert_base_attr(opp, DEVICE_CLASS_TV, STATE_ON)
             assert (
@@ -239,22 +239,11 @@ def _assert_source_list_with_apps(
     assert attr["source_list"] == list_to_test
 
 
-async def _test_setup_failure(opp: OpenPeerPowerType, config: str) -> None:
-    """Test generic Vizio entity setup failure."""
-    with patch(
-        "openpeerpower.components.vizio.media_player.VizioAsync.can_connect_with_auth_check",
-        return_value=False,
-    ):
-        config_entry = MockConfigEntry(domain=DOMAIN, data=config, unique_id=UNIQUE_ID)
-        await _add_config_entry_to.opp=opp, config_entry)
-        assert len(opp.states.async_entity_ids(MP_DOMAIN)) == 0
-
-
 async def _test_service(
     opp: OpenPeerPowerType,
     domain: str,
     vizio_func_name: str,
-    op_service_name: str,
+    ha_service_name: str,
     additional_service_data: Optional[Dict[str, Any]],
     *args,
     **kwargs,
@@ -270,7 +259,7 @@ async def _test_service(
     ) as service_call:
         await opp.services.async_call(
             domain,
-            op_service_name,
+            ha_service_name,
             service_data=service_data,
             blocking=True,
         )
@@ -334,18 +323,28 @@ async def test_init_tv_unavailable(
     await _test_setup_tv(opp, None)
 
 
-async def test_setup_failure_speaker(
-    opp: OpenPeerPowerType, vizio_connect: pytest.fixture
+async def test_setup_unavailable_speaker(
+    opp: OpenPeerPowerType, vizio_cant_connect: pytest.fixture
 ) -> None:
-    """Test speaker entity setup failure."""
-    await _test_setup_failure(opp, MOCK_SPEAKER_CONFIG)
+    """Test speaker entity sets up as unavailable."""
+    config_entry = MockConfigEntry(
+        domain=DOMAIN, data=MOCK_SPEAKER_CONFIG, unique_id=UNIQUE_ID
+    )
+    await _add_config_entry_to_opp(opp, config_entry)
+    assert len(opp.states.async_entity_ids(MP_DOMAIN)) == 1
+    assert opp.states.get("media_player.vizio").state == STATE_UNAVAILABLE
 
 
-async def test_setup_failure_tv(
-    opp: OpenPeerPowerType, vizio_connect: pytest.fixture
+async def test_setup_unavailable_tv(
+    opp: OpenPeerPowerType, vizio_cant_connect: pytest.fixture
 ) -> None:
-    """Test TV entity setup failure."""
-    await _test_setup_failure(opp, MOCK_USER_VALID_TV_CONFIG)
+    """Test TV entity sets up as unavailable."""
+    config_entry = MockConfigEntry(
+        domain=DOMAIN, data=MOCK_USER_VALID_TV_CONFIG, unique_id=UNIQUE_ID
+    )
+    await _add_config_entry_to_opp(opp, config_entry)
+    assert len(opp.states.async_entity_ids(MP_DOMAIN)) == 1
+    assert opp.states.get("media_player.vizio").state == STATE_UNAVAILABLE
 
 
 async def test_services(
@@ -712,7 +711,7 @@ async def test_setup_tv_without_mute(
         {"volume": int(MAX_VOLUME[VIZIO_DEVICE_CLASS_TV] / 2)},
         STATE_ON,
     ):
-        await _add_config_entry_to.opp=opp, config_entry)
+        await _add_config_entry_to_opp(opp, config_entry)
 
         attr = _get_attr_and_assert_base_attr(opp, DEVICE_CLASS_TV, STATE_ON)
         _assert_sources_and_volume(attr, VIZIO_DEVICE_CLASS_TV)

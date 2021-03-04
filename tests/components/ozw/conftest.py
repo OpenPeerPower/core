@@ -9,7 +9,7 @@ from openpeerpower.config_entries import ENTRY_STATE_LOADED
 from .common import MQTTMessage
 
 from tests.common import MockConfigEntry, load_fixture
-from tests.components.light.conftest import mock_light_profiles  # noqa
+from tests.components.light.conftest import mock_light_profiles  # noqa: F401
 
 
 @pytest.fixture(name="generic_data", scope="session")
@@ -97,7 +97,7 @@ def sent_messages_fixture():
 
     with patch(
         "openpeerpower.components.mqtt.async_publish",
-        side_effect=lambda(opp, topic, payload: sent_messages.append(
+        side_effect=lambda opp, topic, payload: sent_messages.append(
             {"topic": topic, "payload": json.loads(payload)}
         ),
     ):

@@ -78,7 +78,7 @@ async def test_record_stream(opp, opp_client, stream_worker_sync, record_worker_
     # Setup demo track
     source = generate_h264_video()
     stream = create_stream(opp, source)
-    with patch.object.opp.config, "is_allowed_path", return_value=True):
+    with patch.object(opp.config, "is_allowed_path", return_value=True):
         await stream.async_record("/example/path")
 
     recorder = stream.add_provider("recorder")
@@ -111,7 +111,7 @@ async def test_record_lookback(
     stream.add_provider("hls")
     stream.start()
 
-    with patch.object.opp.config, "is_allowed_path", return_value=True):
+    with patch.object(opp.config, "is_allowed_path", return_value=True):
         await stream.async_record("/example/path", lookback=4)
 
     # This test does not need recorder cleanup since it is not fully exercised
@@ -135,7 +135,7 @@ async def test_recorder_timeout(opp, opp_client, stream_worker_sync):
         source = generate_h264_video()
 
         stream = create_stream(opp, source)
-        with patch.object.opp.config, "is_allowed_path", return_value=True):
+        with patch.object(opp.config, "is_allowed_path", return_value=True):
             await stream.async_record("/example/path")
         recorder = stream.add_provider("recorder")
 
@@ -174,10 +174,35 @@ async def test_recorder_save(tmpdir):
     filename = f"{tmpdir}/test.mp4"
 
     # Run
-    recorder_save_worker(filename, [Segment(1, source, 4)], "mp4")
+    recorder_save_worker(filename, [Segment(1, source, 4)])
 
     # Assert
     assert os.path.exists(filename)
+
+
+async def test_recorder_discontinuity(tmpdir):
+    """Test recorder save across a discontinuity."""
+    # Setup
+    source = generate_h264_video()
+    filename = f"{tmpdir}/test.mp4"
+
+    # Run
+    recorder_save_worker(filename, [Segment(1, source, 4, 0), Segment(2, source, 4, 1)])
+
+    # Assert
+    assert os.path.exists(filename)
+
+
+async def test_recorder_no_segements(tmpdir):
+    """Test recorder behavior with a stream failure which causes no segments."""
+    # Setup
+    filename = f"{tmpdir}/test.mp4"
+
+    # Run
+    recorder_save_worker("unused-file", [])
+
+    # Assert
+    assert not os.path.exists(filename)
 
 
 async def test_record_stream_audio(
@@ -205,7 +230,7 @@ async def test_record_stream_audio(
             container_format="mov", audio_codec=a_codec
         )  # mov can store PCM
         stream = create_stream(opp, source)
-        with patch.object.opp.config, "is_allowed_path", return_value=True):
+        with patch.object(opp.config, "is_allowed_path", return_value=True):
             await stream.async_record("/example/path")
         recorder = stream.add_provider("recorder")
 

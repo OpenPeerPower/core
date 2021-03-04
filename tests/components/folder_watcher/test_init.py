@@ -6,7 +6,7 @@ from openpeerpower.components import folder_watcher
 from openpeerpower.setup import async_setup_component
 
 
-async def test_invalid_path_setup_opp):
+async def test_invalid_path_setup(opp):
     """Test that an invalid path is not set up."""
     assert not await async_setup_component(
         opp,
@@ -15,7 +15,7 @@ async def test_invalid_path_setup_opp):
     )
 
 
-async def test_valid_path_setup_opp):
+async def test_valid_path_setup(opp):
     """Test that a valid path is setup."""
     cwd = os.path.join(os.path.dirname(__file__))
     opp.config.allowlist_external_dirs = {cwd}
@@ -40,7 +40,7 @@ def test_event():
         "openpeerpower.components.folder_watcher.PatternMatchingEventHandler",
         MockPatternMatchingEventHandler,
     ):
-       opp = Mock()
+        opp = Mock()
         handler = folder_watcher.create_event_handler(["*"], opp)
         handler.on_created(
             Mock(is_directory=False, src_path="/hello/world.txt", event_type="created")

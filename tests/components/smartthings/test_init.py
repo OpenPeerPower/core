@@ -14,8 +14,8 @@ from openpeerpower.components.smartthings.const import (
     DATA_BROKERS,
     DOMAIN,
     EVENT_BUTTON,
+    PLATFORMS,
     SIGNAL_SMARTTHINGS_UPDATE,
-    SUPPORTED_PLATFORMS,
 )
 from openpeerpower.config import async_process_op_core_config
 from openpeerpower.const import HTTP_FORBIDDEN, HTTP_INTERNAL_SERVER_ERROR
@@ -174,7 +174,7 @@ async def test_scenes_unauthorized_loads_platforms(
         assert await smartthings.async_setup_entry(opp, config_entry)
         # Assert platforms loaded
         await opp.async_block_till_done()
-        assert forward_mock.call_count == len(SUPPORTED_PLATFORMS)
+        assert forward_mock.call_count == len(PLATFORMS)
 
 
 async def test_config_entry_loads_platforms(
@@ -206,7 +206,7 @@ async def test_config_entry_loads_platforms(
         assert await smartthings.async_setup_entry(opp, config_entry)
         # Assert platforms loaded
         await opp.async_block_till_done()
-        assert forward_mock.call_count == len(SUPPORTED_PLATFORMS)
+        assert forward_mock.call_count == len(PLATFORMS)
 
 
 async def test_config_entry_loads_unconnected_cloud(
@@ -237,7 +237,7 @@ async def test_config_entry_loads_unconnected_cloud(
     with patch.object(opp.config_entries, "async_forward_entry_setup") as forward_mock:
         assert await smartthings.async_setup_entry(opp, config_entry)
         await opp.async_block_till_done()
-        assert forward_mock.call_count == len(SUPPORTED_PLATFORMS)
+        assert forward_mock.call_count == len(PLATFORMS)
 
 
 async def test_unload_entry(opp, config_entry):
@@ -258,7 +258,7 @@ async def test_unload_entry(opp, config_entry):
         assert config_entry.entry_id not in opp.data[DOMAIN][DATA_BROKERS]
         # Assert platforms unloaded
         await opp.async_block_till_done()
-        assert forward_mock.call_count == len(SUPPORTED_PLATFORMS)
+        assert forward_mock.call_count == len(PLATFORMS)
 
 
 async def test_remove_entry(opp, config_entry, smartthings_mock):

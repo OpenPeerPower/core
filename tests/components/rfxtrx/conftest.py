@@ -9,7 +9,7 @@ from openpeerpower.components.rfxtrx import DOMAIN
 from openpeerpower.util.dt import utcnow
 
 from tests.common import MockConfigEntry, async_fire_time_changed
-from tests.components.light.conftest import mock_light_profiles  # noqa
+from tests.components.light.conftest import mock_light_profiles  # noqa: F401
 
 
 def create_rfx_test_cfg(device="abcd", automatic_add=False, devices=None):
@@ -62,7 +62,7 @@ async def rfxtrx_automatic_fixture(opp, rfxtrx):
 
 
 @pytest.fixture
-async def timestep.opp):
+async def timestep(opp):
     """Step system time forward."""
 
     with patch("openpeerpower.core.dt_util.utcnow") as mock_utcnow:

@@ -9,14 +9,14 @@ import zigpy.group
 import zigpy.types
 
 from openpeerpower.components.zha import DOMAIN
-import openpeerpower.components.zop.core.const as zha_const
-import openpeerpower.components.zop.core.device as zha_core_device
+import openpeerpower.components.zha.core.const as zha_const
+import openpeerpower.components.zha.core.device as zha_core_device
 from openpeerpower.setup import async_setup_component
 
 from .common import FakeDevice, FakeEndpoint, get_zha_gateway
 
 from tests.common import MockConfigEntry
-from tests.components.light.conftest import mock_light_profiles  # noqa
+from tests.components.light.conftest import mock_light_profiles  # noqa: F401
 
 FIXTURE_GRP_ID = 0x1001
 FIXTURE_GRP_NAME = "fixture group"
@@ -54,7 +54,7 @@ async def config_entry_fixture(opp):
 
 
 @pytest.fixture
-def setup_zop(opp, config_entry, zigpy_app_controller):
+def setup_zha(opp, config_entry, zigpy_app_controller):
     """Set up ZHA component."""
     zha_config = {zha_const.CONF_ENABLE_QUIRKS: False}
 
@@ -150,7 +150,7 @@ def zha_device_restored(opp, zigpy_app_controller, setup_zha, opp_storage):
         zigpy_app_controller.devices[zigpy_dev.ieee] = zigpy_dev
 
         if last_seen is not None:
-            opp.storage[f"{DOMAIN}.storage"] = {
+            opp_storage[f"{DOMAIN}.storage"] = {
                 "key": f"{DOMAIN}.storage",
                 "version": 1,
                 "data": {
@@ -165,7 +165,7 @@ def zha_device_restored(opp, zigpy_app_controller, setup_zha, opp_storage):
             }
 
         await setup_zha()
-        zha_gateway = opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZOP_GATEWAY]
+        zha_gateway = opp.data[zha_const.DATA_ZHA][zha_const.DATA_ZHA_GATEWAY]
         return zha_gateway.get_device(zigpy_dev.ieee)
 
     return _zha_device
@@ -216,7 +216,7 @@ def zha_device_mock(opp, zigpy_device_mock):
 @pytest.fixture
 def opp_disable_services(opp):
     """Mock service register."""
-    with patch.object.opp.services, "async_register"), patch.object(
+    with patch.object(opp.services, "async_register"), patch.object(
         opp.services, "has_service", return_value=True
     ):
-        yield.opp
+        yield opp

@@ -9,7 +9,7 @@ from openpeerpower.const import ATTR_ENTITY_ID, SERVICE_TURN_OFF
 from openpeerpower.setup import async_setup_component
 
 from tests.common import async_mock_service
-from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa
+from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa: F401
 
 
 @pytest.fixture
@@ -18,13 +18,13 @@ def tag_setup(opp, opp_storage):
 
     async def _storage(items=None):
         if items is None:
-            opp.storage[DOMAIN] = {
+            opp_storage[DOMAIN] = {
                 "key": DOMAIN,
                 "version": 1,
                 "data": {"items": [{"id": "test tag"}]},
             }
         else:
-            opp.storage[DOMAIN] = items
+            opp_storage[DOMAIN] = items
         config = {DOMAIN: {}}
         return await async_setup_component(opp, DOMAIN, config)
 

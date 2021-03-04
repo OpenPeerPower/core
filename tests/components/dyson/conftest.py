@@ -13,7 +13,7 @@ from tests.common import async_setup_component
 
 
 @pytest.fixture()
-async def device.opp: OpenPeerPower, request) -> DysonDevice:
+async def device(opp: OpenPeerPower, request) -> DysonDevice:
     """Fixture to provide Dyson 360 Eye device."""
     platform = request.module.PLATFORM_DOMAIN
     get_device = request.module.async_get_device
@@ -26,8 +26,8 @@ async def device.opp: OpenPeerPower, request) -> DysonDevice:
         device = get_device()
     with patch(f"{BASE_PATH}.DysonAccount.login", return_value=True), patch(
         f"{BASE_PATH}.DysonAccount.devices", return_value=[device]
-    ), patch(f"{BASE_PATH}.DYSON_PLATFORMS", [platform]):
-        # DYSON_PLATFORMS is patched so that only the platform being tested is set up
+    ), patch(f"{BASE_PATH}.PLATFORMS", [platform]):
+        # PLATFORMS is patched so that only the platform being tested is set up
         await async_setup_component(
             opp,
             DOMAIN,

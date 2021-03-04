@@ -16,7 +16,7 @@ def blueprint_1():
             "blueprint": {
                 "name": "Hello",
                 "domain": "automation",
-                "source_url": "https://github.com/balloob/open-peer-power-config/blob/main/blueprints/automation/motion_light.yaml",
+                "source_url": "https://github.com/balloob/openpeerpower-config/blob/main/blueprints/automation/motion_light.yaml",
                 "input": {"test-input": {"name": "Name", "description": "Description"}},
             },
             "example": Input("test-input"),
@@ -32,7 +32,7 @@ def blueprint_2():
             "blueprint": {
                 "name": "Hello",
                 "domain": "automation",
-                "source_url": "https://github.com/balloob/open-peer-power-config/blob/main/blueprints/automation/motion_light.yaml",
+                "source_url": "https://github.com/balloob/openpeerpower-config/blob/main/blueprints/automation/motion_light.yaml",
                 "input": {
                     "test-input": {"name": "Name", "description": "Description"},
                     "test-input-default": {"default": "test"},
@@ -79,7 +79,7 @@ def test_blueprint_properties(blueprint_1):
     assert blueprint_1.metadata == {
         "name": "Hello",
         "domain": "automation",
-        "source_url": "https://github.com/balloob/open-peer-power-config/blob/main/blueprints/automation/motion_light.yaml",
+        "source_url": "https://github.com/balloob/openpeerpower-config/blob/main/blueprints/automation/motion_light.yaml",
         "input": {"test-input": {"name": "Name", "description": "Description"}},
     }
     assert blueprint_1.domain == "automation"

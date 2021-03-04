@@ -22,7 +22,7 @@ def async_start(opp, entity_id=None):
     This is a legacy helper method. Do not use it for new tests.
     """
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_START, data))
+    opp.async_add_job(opp.services.async_call(DOMAIN, SERVICE_START, data))
 
 
 @callback
@@ -32,7 +32,7 @@ def async_stop(opp, entity_id=None):
     This is a legacy helper method. Do not use it for new tests.
     """
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_STOP, data))
+    opp.async_add_job(opp.services.async_call(DOMAIN, SERVICE_STOP, data))
 
 
 @callback
@@ -42,7 +42,7 @@ def async_restart(opp, entity_id=None):
     This is a legacy helper method. Do not use it for new tests.
     """
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    opp.async_add_job.opp.services.async_call(DOMAIN, SERVICE_RESTART, data))
+    opp.async_add_job(opp.services.async_call(DOMAIN, SERVICE_RESTART, data))
 
 
 class MockFFmpegDev(ffmpeg.FFmpegBase):
@@ -76,7 +76,7 @@ class TestFFmpegSetup:
 
     def setup_method(self):
         """Set up things to be run when tests are started."""
-        self.opp =get_test_open_peer_power()
+        self.opp = get_test_open_peer_power()
 
     def teardown_method(self):
         """Stop everything that was started."""

@@ -134,7 +134,7 @@ async def test_call_service_child_not_found(opp, websocket_client):
     assert msg["id"] == 5
     assert msg["type"] == const.TYPE_RESULT
     assert not msg["success"]
-    assert msg["error"]["code"] == const.ERR_OPEN_PEER_POWER_ERROR
+    assert msg["error"]["code"] == const.ERR_HOME_ASSISTANT_ERROR
 
 
 async def test_call_service_schema_validation_error(
@@ -212,10 +212,10 @@ async def test_call_service_error(opp, websocket_client):
     """Test call service command with error."""
 
     @callback
-    def op_error_call(_):
+    def ha_error_call(_):
         raise OpenPeerPowerError("error_message")
 
-    opp.services.async_register("domain_test", "op_error", op_error_call)
+    opp.services.async_register("domain_test", "ha_error", ha_error_call)
 
     async def unknown_error_call(_):
         raise ValueError("value_error")
@@ -227,7 +227,7 @@ async def test_call_service_error(opp, websocket_client):
             "id": 5,
             "type": "call_service",
             "domain": "domain_test",
-            "service": "op_error",
+            "service": "ha_error",
         }
     )
 
@@ -259,7 +259,7 @@ async def test_call_service_error(opp, websocket_client):
 
 async def test_subscribe_unsubscribe_events(opp, websocket_client):
     """Test subscribe/unsubscribe events command."""
-    init_count = sum.opp.bus.async_listeners().values())
+    init_count = sum(opp.bus.async_listeners().values())
 
     await websocket_client.send_json(
         {"id": 5, "type": "subscribe_events", "event_type": "test_event"}
@@ -271,7 +271,7 @@ async def test_subscribe_unsubscribe_events(opp, websocket_client):
     assert msg["success"]
 
     # Verify we have a new listener
-    assert sum.opp.bus.async_listeners().values()) == init_count + 1
+    assert sum(opp.bus.async_listeners().values()) == init_count + 1
 
     opp.bus.async_fire("ignore_event")
     opp.bus.async_fire("test_event", {"hello": "world"})
@@ -298,7 +298,7 @@ async def test_subscribe_unsubscribe_events(opp, websocket_client):
     assert msg["success"]
 
     # Check our listener got unsubscribed
-    assert sum.opp.bus.async_listeners().values()) == init_count
+    assert sum(opp.bus.async_listeners().values()) == init_count
 
 
 async def test_get_states(opp, websocket_client):
@@ -378,7 +378,7 @@ async def test_call_service_context_with_user(opp, aiohttp_client, opp_access_to
         auth_msg = await ws.receive_json()
         assert auth_msg["type"] == TYPE_AUTH_REQUIRED
 
-        await ws.send_json({"type": TYPE_AUTH, "access_token":.opp_access_token})
+        await ws.send_json({"type": TYPE_AUTH, "access_token": opp_access_token})
 
         auth_msg = await ws.receive_json()
         assert auth_msg["type"] == TYPE_AUTH_OK
@@ -396,7 +396,7 @@ async def test_call_service_context_with_user(opp, aiohttp_client, opp_access_to
         msg = await ws.receive_json()
         assert msg["success"]
 
-        refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
+        refresh_token = await opp.auth.async_validate_access_token(opp_access_token)
 
         assert len(calls) == 1
         call = calls[0]
@@ -408,7 +408,7 @@ async def test_call_service_context_with_user(opp, aiohttp_client, opp_access_to
 
 async def test_subscribe_requires_admin(websocket_client, opp_admin_user):
     """Test subscribing events without being admin."""
-    opp.admin_user.groups = []
+    opp_admin_user.groups = []
     await websocket_client.send_json(
         {"id": 5, "type": "subscribe_events", "event_type": "test_event"}
     )
@@ -420,7 +420,7 @@ async def test_subscribe_requires_admin(websocket_client, opp_admin_user):
 
 async def test_states_filters_visible(opp, opp_admin_user, websocket_client):
     """Test we only get entities that we're allowed to see."""
-    opp.admin_user.mock_policy({"entities": {"entity_ids": {"test.entity": True}}})
+    opp_admin_user.mock_policy({"entities": {"entity_ids": {"test.entity": True}}})
     opp.states.async_set("test.entity", "hello")
     opp.states.async_set("test.not_visible_entity", "invisible")
     await websocket_client.send_json({"id": 5, "type": "get_states"})
@@ -449,7 +449,7 @@ async def test_subscribe_unsubscribe_events_whitelist(
     opp, websocket_client, opp_admin_user
 ):
     """Test subscribe/unsubscribe events on whitelist."""
-    opp.admin_user.groups = []
+    opp_admin_user.groups = []
 
     await websocket_client.send_json(
         {"id": 5, "type": "subscribe_events", "event_type": "not-in-whitelist"}
@@ -486,8 +486,8 @@ async def test_subscribe_unsubscribe_events_state_changed(
     opp, websocket_client, opp_admin_user
 ):
     """Test subscribe/unsubscribe state_changed events."""
-    opp.admin_user.groups = []
-    opp.admin_user.mock_policy({"entities": {"entity_ids": {"light.permitted": True}}})
+    opp_admin_user.groups = []
+    opp_admin_user.mock_policy({"entities": {"entity_ids": {"light.permitted": True}}})
 
     await websocket_client.send_json(
         {"id": 7, "type": "subscribe_events", "event_type": "state_changed"}
@@ -870,8 +870,8 @@ async def test_entity_source_admin(opp, websocket_client, opp_admin_user):
     assert msg["error"]["code"] == const.ERR_NOT_FOUND
 
     # Mock policy
-    opp.admin_user.groups = []
-    opp.admin_user.mock_policy(
+    opp_admin_user.groups = []
+    opp_admin_user.mock_policy(
         {"entities": {"entity_ids": {"test_domain.entity_2": True}}}
     )
 
@@ -903,7 +903,7 @@ async def test_entity_source_admin(opp, websocket_client, opp_admin_user):
 
 async def test_subscribe_trigger(opp, websocket_client):
     """Test subscribing to a trigger."""
-    init_count = sum.opp.bus.async_listeners().values())
+    init_count = sum(opp.bus.async_listeners().values())
 
     await websocket_client.send_json(
         {
@@ -920,7 +920,7 @@ async def test_subscribe_trigger(opp, websocket_client):
     assert msg["success"]
 
     # Verify we have a new listener
-    assert sum.opp.bus.async_listeners().values()) == init_count + 1
+    assert sum(opp.bus.async_listeners().values()) == init_count + 1
 
     context = Context()
 
@@ -952,7 +952,7 @@ async def test_subscribe_trigger(opp, websocket_client):
     assert msg["success"]
 
     # Check our listener got unsubscribed
-    assert sum.opp.bus.async_listeners().values()) == init_count
+    assert sum(opp.bus.async_listeners().values()) == init_count
 
 
 async def test_test_condition(opp, websocket_client):

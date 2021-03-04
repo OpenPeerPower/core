@@ -1,7 +1,7 @@
 """
 Regression tests for Aqara Gateway V3.
 
-https://github.com/open-peer-power/core/issues/20885
+https://github.com/openpeerpower/core/issues/20885
 """
 
 from openpeerpower.components.climate.const import (
@@ -16,7 +16,7 @@ from tests.components.homekit_controller.common import (
 )
 
 
-async def test_lennox_e30_setup_opp):
+async def test_lennox_e30_setup(opp):
     """Test that a Lennox E30 can be correctly setup in HA."""
     accessories = await setup_accessories_from_file(opp, "lennox_e30.json")
     config_entry, pairing = await setup_test_accessories(opp, accessories)

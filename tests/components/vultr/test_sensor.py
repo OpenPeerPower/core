@@ -33,7 +33,7 @@ class TestVultrSensorSetup(unittest.TestCase):
 
     def setUp(self):
         """Initialize values for this testcase class."""
-        self.opp =get_test_open_peer_power()
+        self.opp = get_test_open_peer_power()
         self.configs = [
             {
                 CONF_NAME: vultr.DEFAULT_NAME,

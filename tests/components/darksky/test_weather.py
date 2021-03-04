@@ -19,7 +19,7 @@ class TestDarkSky(unittest.TestCase):
 
     def setUp(self):
         """Set up things to be run when tests are started."""
-        self.opp =get_test_open_peer_power()
+        self.opp = get_test_open_peer_power()
         self.opp.config.units = METRIC_SYSTEM
         self.lat = self.opp.config.latitude = 37.8267
         self.lon = self.opp.config.longitude = -122.423

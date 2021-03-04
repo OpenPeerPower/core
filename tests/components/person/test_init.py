@@ -36,7 +36,7 @@ def storage_collection(opp):
     """Return an empty storage collection."""
     id_manager = collection.IDManager()
     return person.PersonStorageCollection(
-        person.Person Store(opp, person.STORAGE_VERSION, person.STORAGE_KEY),
+        person.PersonStore(opp, person.STORAGE_VERSION, person.STORAGE_KEY),
         logging.getLogger(f"{person.__name__}.storage_collection"),
         id_manager,
         collection.YamlCollection(
@@ -48,7 +48,7 @@ def storage_collection(opp):
 @pytest.fixture
 def storage_setup(opp, opp_storage, opp_admin_user):
     """Storage setup."""
-    opp.storage[DOMAIN] = {
+    opp_storage[DOMAIN] = {
         "key": DOMAIN,
         "version": 1,
         "data": {
@@ -56,7 +56,7 @@ def storage_setup(opp, opp_storage, opp_admin_user):
                 {
                     "id": "1234",
                     "name": "tracked person",
-                    "user_id":.opp_admin_user.id,
+                    "user_id": opp_admin_user.id,
                     "device_trackers": [DEVICE_TRACKER],
                 }
             ]
@@ -65,7 +65,7 @@ def storage_setup(opp, opp_storage, opp_admin_user):
     assert opp.loop.run_until_complete(async_setup_component(opp, DOMAIN, {}))
 
 
-async def test_minimal_setup_opp):
+async def test_minimal_setup(opp):
     """Test minimal config with only name."""
     config = {DOMAIN: {"id": "1234", "name": "test person"}}
     assert await async_setup_component(opp, DOMAIN, config)
@@ -406,7 +406,7 @@ async def test_load_person_storage(opp, opp_admin_user, storage_setup):
 
 async def test_load_person_storage_two_nonlinked(opp, opp_storage):
     """Test loading two users with both not having a user linked."""
-    opp.storage[DOMAIN] = {
+    opp_storage[DOMAIN] = {
         "key": DOMAIN,
         "version": 1,
         "data": {
@@ -459,7 +459,7 @@ async def test_ws_create(opp, opp_ws_client, storage_setup, opp_read_only_user):
             "type": "person/create",
             "name": "Hello",
             "device_trackers": [DEVICE_TRACKER],
-            "user_id":.opp_read_only_user.id,
+            "user_id": opp_read_only_user.id,
             "picture": "/bla",
         }
     )
@@ -476,7 +476,7 @@ async def test_ws_create_requires_admin(
     opp, opp_ws_client, storage_setup, opp_admin_user, opp_read_only_user
 ):
     """Test creating via WS requires admin."""
-    opp.admin_user.groups = []
+    opp_admin_user.groups = []
     manager = opp.data[DOMAIN][1]
 
     client = await opp_ws_client(opp)
@@ -487,7 +487,7 @@ async def test_ws_create_requires_admin(
             "type": "person/create",
             "name": "Hello",
             "device_trackers": [DEVICE_TRACKER],
-            "user_id":.opp_read_only_user.id,
+            "user_id": opp_read_only_user.id,
         }
     )
     resp = await client.receive_json()
@@ -549,7 +549,7 @@ async def test_ws_update_require_admin(
     opp, opp_ws_client, storage_setup, opp_admin_user
 ):
     """Test updating via WS requires admin."""
-    opp.admin_user.groups = []
+    opp_admin_user.groups = []
     manager = opp.data[DOMAIN][1]
 
     client = await opp_ws_client(opp)
@@ -597,7 +597,7 @@ async def test_ws_delete_require_admin(
     opp, opp_ws_client, storage_setup, opp_admin_user
 ):
     """Test deleting via WS requires admin."""
-    opp.admin_user.groups = []
+    opp_admin_user.groups = []
     manager = opp.data[DOMAIN][1]
 
     client = await opp_ws_client(opp)
@@ -630,25 +630,25 @@ async def test_create_invalid_user_id(opp, storage_collection):
 async def test_create_duplicate_user_id(opp, opp_admin_user, storage_collection):
     """Test we do not allow duplicate user ID during creation."""
     await storage_collection.async_create_item(
-        {"name": "Hello", "user_id":.opp_admin_user.id}
+        {"name": "Hello", "user_id": opp_admin_user.id}
     )
 
     with pytest.raises(ValueError):
         await storage_collection.async_create_item(
-            {"name": "Hello", "user_id":.opp_admin_user.id}
+            {"name": "Hello", "user_id": opp_admin_user.id}
         )
 
 
 async def test_update_double_user_id(opp, opp_admin_user, storage_collection):
     """Test we do not allow double user ID during update."""
     await storage_collection.async_create_item(
-        {"name": "Hello", "user_id":.opp_admin_user.id}
+        {"name": "Hello", "user_id": opp_admin_user.id}
     )
     person = await storage_collection.async_create_item({"name": "Hello"})
 
     with pytest.raises(ValueError):
         await storage_collection.async_update_item(
-            person["id"], {"user_id":.opp_admin_user.id}
+            person["id"], {"user_id": opp_admin_user.id}
         )
 
 
@@ -669,7 +669,7 @@ async def test_update_person_when_user_removed(
     storage_collection = opp.data[DOMAIN][1]
 
     person = await storage_collection.async_create_item(
-        {"name": "Hello", "user_id":.opp_read_only_user.id}
+        {"name": "Hello", "user_id": opp_read_only_user.id}
     )
 
     await opp.auth.async_remove_user(opp_read_only_user)
@@ -702,7 +702,7 @@ async def test_add_user_device_tracker(opp, storage_setup, opp_read_only_user):
     pers = await storage_collection.async_create_item(
         {
             "name": "Hello",
-            "user_id":.opp_read_only_user.id,
+            "user_id": opp_read_only_user.id,
             "device_trackers": ["device_tracker.on_create"],
         }
     )
@@ -756,7 +756,7 @@ async def test_reload(opp, opp_admin_user):
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
-            context=Context(user_id.opp_admin_user.id),
+            context=Context(user_id=opp_admin_user.id),
         )
         await opp.async_block_till_done()
 

@@ -6,7 +6,7 @@ from openpeerpower.const import EVENT_OPENPEERPOWER_START
 from openpeerpower.setup import async_setup_component
 
 
-async def test.oppio_discovery_startup(opp, aioclient_mock, oppio_client):
+async def test_oppio_discovery_startup(opp, aioclient_mock, oppio_client):
     """Test startup and discovery after event."""
     aioclient_mock.get(
         "http://127.0.0.1/discovery",
@@ -38,7 +38,7 @@ async def test.oppio_discovery_startup(opp, aioclient_mock, oppio_client):
     assert aioclient_mock.call_count == 0
 
     with patch(
-        "openpeerpower.components.mqtt.config_flow.FlowHandler.async_step.oppio",
+        "openpeerpower.components.mqtt.config_flow.FlowHandler.async_step_oppio",
         return_value={"type": "abort"},
     ) as mock_mqtt:
         opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
@@ -58,7 +58,7 @@ async def test.oppio_discovery_startup(opp, aioclient_mock, oppio_client):
         )
 
 
-async def test.oppio_discovery_startup_done(opp, aioclient_mock, oppio_client):
+async def test_oppio_discovery_startup_done(opp, aioclient_mock, oppio_client):
     """Test startup and discovery with opp discovery."""
     aioclient_mock.post(
         "http://127.0.0.1/supervisor/options",
@@ -92,17 +92,17 @@ async def test.oppio_discovery_startup_done(opp, aioclient_mock, oppio_client):
     )
 
     with patch(
-        "openpeerpower.components.oppio. OppIO.update.opp_api",
+        "openpeerpower.components.oppio.OppIO.update_opp_api",
         return_value={"result": "ok"},
     ), patch(
-        "openpeerpower.components.oppio. OppIO.get_info",
-        Mock(side_effect= OppioAPIError()),
+        "openpeerpower.components.oppio.OppIO.get_info",
+        Mock(side_effect=OppioAPIError()),
     ), patch(
-        "openpeerpower.components.mqtt.config_flow.FlowHandler.async_step.oppio",
+        "openpeerpower.components.mqtt.config_flow.FlowHandler.async_step_oppio",
         return_value={"type": "abort"},
     ) as mock_mqtt:
         await opp.async_start()
-        await async_setup_component(opp,  opp.o", {})
+        await async_setup_component(opp, "oppio", {})
         await opp.async_block_till_done()
 
         assert aioclient_mock.call_count == 2
@@ -119,7 +119,7 @@ async def test.oppio_discovery_startup_done(opp, aioclient_mock, oppio_client):
         )
 
 
-async def test.oppio_discovery_webhook(opp, aioclient_mock, oppio_client):
+async def test_oppio_discovery_webhook(opp, aioclient_mock, oppio_client):
     """Test discovery webhook."""
     aioclient_mock.get(
         "http://127.0.0.1/discovery/testuuid",
@@ -145,11 +145,11 @@ async def test.oppio_discovery_webhook(opp, aioclient_mock, oppio_client):
     )
 
     with patch(
-        "openpeerpower.components.mqtt.config_flow.FlowHandler.async_step.oppio",
+        "openpeerpower.components.mqtt.config_flow.FlowHandler.async_step_oppio",
         return_value={"type": "abort"},
     ) as mock_mqtt:
         resp = await oppio_client.post(
-            "/api.oppio_push/discovery/testuuid",
+            "/api/oppio_push/discovery/testuuid",
             json={"addon": "mosquitto", "service": "mqtt", "uuid": "testuuid"},
         )
         await opp.async_block_till_done()

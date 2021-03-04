@@ -94,7 +94,7 @@ async def test_owserver_switch(owproxy, opp, device_id):
         item["default_disabled"] = False
 
     with patch(
-        "openpeerpower.components.onewire.SUPPORTED_PLATFORMS", [SWITCH_DOMAIN]
+        "openpeerpower.components.onewire.PLATFORMS", [SWITCH_DOMAIN]
     ), patch.dict(
         "openpeerpower.components.onewire.switch.DEVICE_SWITCHES", patch_device_switches
     ):

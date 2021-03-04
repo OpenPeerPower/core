@@ -23,19 +23,20 @@ def patch_setup_entry(domain: str, *, enabled: bool = True):
 
 
 async def setup_bond_entity(
-    opp, core.OpenPeerPower,
+    opp: core.OpenPeerPower,
     config_entry: MockConfigEntry,
     *,
     patch_version=False,
     patch_device_ids=False,
     patch_platforms=False,
     patch_bridge=False,
+    patch_token=False,
 ):
     """Set up Bond entity."""
     config_entry.add_to_opp(opp)
 
-    with patch_start_bpup(), patch_bond_bridge(
-        enabled=patch_bridge
+    with patch_start_bpup(), patch_bond_bridge(enabled=patch_bridge), patch_bond_token(
+        enabled=patch_token
     ), patch_bond_version(enabled=patch_version), patch_bond_device_ids(
         enabled=patch_device_ids
     ), patch_setup_entry(
@@ -51,7 +52,7 @@ async def setup_bond_entity(
 
 
 async def setup_platform(
-    opp, core.OpenPeerPower,
+    opp: core.OpenPeerPower,
     platform: str,
     discovered_device: Dict[str, Any],
     *,
@@ -60,6 +61,7 @@ async def setup_platform(
     props: Dict[str, Any] = None,
     state: Dict[str, Any] = None,
     bridge: Dict[str, Any] = None,
+    token: Dict[str, Any] = None,
 ):
     """Set up the specified Bond platform."""
     mock_entry = MockConfigEntry(
@@ -71,7 +73,7 @@ async def setup_platform(
     with patch("openpeerpower.components.bond.PLATFORMS", [platform]):
         with patch_bond_version(return_value=bond_version), patch_bond_bridge(
             return_value=bridge
-        ), patch_bond_device_ids(
+        ), patch_bond_token(return_value=token), patch_bond_device_ids(
             return_value=[bond_device_id]
         ), patch_start_bpup(), patch_bond_device(
             return_value=discovered_device
@@ -119,6 +121,23 @@ def patch_bond_bridge(
 
     return patch(
         "openpeerpower.components.bond.Bond.bridge",
+        return_value=return_value,
+        side_effect=side_effect,
+    )
+
+
+def patch_bond_token(
+    enabled: bool = True, return_value: Optional[dict] = None, side_effect=None
+):
+    """Patch Bond API token endpoint."""
+    if not enabled:
+        return nullcontext()
+
+    if return_value is None:
+        return_value = {"locked": 1}
+
+    return patch(
+        "openpeerpower.components.bond.Bond.token",
         return_value=return_value,
         side_effect=side_effect,
     )
@@ -184,7 +203,7 @@ def patch_bond_device_state(return_value=None, side_effect=None):
 
 
 async def help_test_entity_available(
-    opp, core.OpenPeerPower, domain: str, device: Dict[str, Any], entity_id: str
+    opp: core.OpenPeerPower, domain: str, device: Dict[str, Any], entity_id: str
 ):
     """Run common test to verify available property."""
     await setup_platform(opp, domain, device)

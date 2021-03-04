@@ -416,7 +416,7 @@ async def test_device_trigger_reauth_flow(opp):
     """Failed authentication trigger a reauthentication flow."""
     with patch.object(
         axis.device, "get_device", side_effect=axis.errors.AuthenticationRequired
-    ), patch.object.opp.config_entries.flow, "async_init") as mock_flow_init:
+    ), patch.object(opp.config_entries.flow, "async_init") as mock_flow_init:
         await setup_axis_integration(opp)
         mock_flow_init.assert_called_once()
     assert opp.data[AXIS_DOMAIN] == {}
@@ -446,7 +446,7 @@ async def test_new_event_sends_signal(opp):
 
 async def test_shutdown():
     """Successful shutdown."""
-   opp = Mock()
+    opp = Mock()
     entry = Mock()
     entry.data = ENTRY_CONFIG
 

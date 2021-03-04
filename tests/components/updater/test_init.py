@@ -13,7 +13,7 @@ NEW_VERSION = "10000.0"
 MOCK_VERSION = "10.0"
 MOCK_DEV_VERSION = "10.0.dev0"
 MOCK_HUUID = "abcdefg"
-MOCK_RESPONSE = {"version": "0.15", "release-notes": "https://open-peer-power.io"}
+MOCK_RESPONSE = {"version": "0.15", "release-notes": "https://openpeerpower.io"}
 MOCK_CONFIG = {updater.DOMAIN: {"reporting": True}}
 RELEASE_NOTES = "test release notes"
 
@@ -149,13 +149,13 @@ async def test_error_fetching_new_version_invalid_response(opp, aioclient_mock):
         await updater.get_newest_version(opp, MOCK_HUUID, False)
 
 
-async def test_new_version_shows_entity_after_hour(oppio(
+async def test_new_version_shows_entity_after_hour_oppio(
     opp, mock_get_uuid, mock_get_newest_version
 ):
     """Test if binary sensor gets updated if new version is available / Opp.io."""
     mock_get_uuid.return_value = MOCK_HUUID
-    mock_component(opp,  opp.o")
-    opp.data[.oppio_core_info"] = {"version_latest": "999.0"}
+    mock_component(opp, "oppio")
+    opp.data["oppio_core_info"] = {"version_latest": "999.0"}
 
     assert await async_setup_component(opp, updater.DOMAIN, {updater.DOMAIN: {}})
 

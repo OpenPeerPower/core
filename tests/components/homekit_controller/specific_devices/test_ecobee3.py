@@ -1,7 +1,7 @@
 """
 Regression tests for Ecobee 3.
 
-https://github.com/open-peer-power/core/issues/15336
+https://github.com/openpeerpower/core/issues/15336
 """
 
 from unittest import mock
@@ -25,7 +25,7 @@ from tests.components.homekit_controller.common import (
 )
 
 
-async def test_ecobee3_setup_opp):
+async def test_ecobee3_setup(opp):
     """Test that a Ecbobee 3 can be correctly setup in HA."""
     accessories = await setup_accessories_from_file(opp, "ecobee3.json")
     config_entry, pairing = await setup_test_accessories(opp, accessories)
@@ -96,7 +96,7 @@ async def test_ecobee3_setup_from_cache(opp, opp_storage):
     """Test that Ecbobee can be correctly setup from its cached entity map."""
     accessories = await setup_accessories_from_file(opp, "ecobee3.json")
 
-    opp.storage["homekit_controller-entity-map"] = {
+    opp_storage["homekit_controller-entity-map"] = {
         "version": 1,
         "data": {
             "pairings": {
@@ -147,7 +147,7 @@ async def test_ecobee3_setup_connection_failure(opp):
     climate = entity_registry.async_get("climate.homew")
     assert climate is None
 
-    # When accessory raises ConfigEntryNoteReady HA will retry - lets make
+    # When accessory raises ConfigEntryNoteReady OP will retry - lets make
     # sure there is no cruft causing conflicts left behind by now doing
     # a successful setup.
 

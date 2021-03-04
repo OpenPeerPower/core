@@ -1,12 +1,8 @@
 """The tests for the litejet component."""
-import unittest
-from unittest import mock
+from openpeerpower.components import scene
+from openpeerpower.const import ATTR_ENTITY_ID, SERVICE_TURN_ON
 
-from openpeerpower import setup
-from openpeerpower.components import litejet
-
-from tests.common import get_test_open_peer_power
-from tests.components.scene import common
+from . import async_init_integration
 
 ENTITY_SCENE = "scene.mock_scene_1"
 ENTITY_SCENE_NUMBER = 1
@@ -14,46 +10,31 @@ ENTITY_OTHER_SCENE = "scene.mock_scene_2"
 ENTITY_OTHER_SCENE_NUMBER = 2
 
 
-class TestLiteJetScene(unittest.TestCase):
-    """Test the litejet component."""
+async def test_disabled_by_default(opp, mock_litejet):
+    """Test the scene is disabled by default."""
+    await async_init_integration(opp)
 
-    @mock.patch("openpeerpower.components.litejet.LiteJet")
-    def setup_method(self, method, mock_pylitejet):
-        """Set up things to be run when tests are started."""
-        self.opp =get_test_open_peer_power()
-        self.opp.start()
+    registry = await opp.helpers.entity_registry.async_get_registry()
 
-        def get_scene_name(number):
-            return f"Mock Scene #{number}"
+    state = opp.states.get(ENTITY_SCENE)
+    assert state is None
 
-        self.mock_lj = mock_pylitejet.return_value
-        self.mock_lj.loads.return_value = range(0)
-        self.mock_lj.button_switches.return_value = range(0)
-        self.mock_lj.all_switches.return_value = range(0)
-        self.mock_lj.scenes.return_value = range(1, 3)
-        self.mock_lj.get_scene_name.side_effect = get_scene_name
+    entry = registry.async_get(ENTITY_SCENE)
+    assert entry
+    assert entry.disabled
+    assert entry.disabled_by == "integration"
 
-        assert setup.setup_component(
-            self.opp,
-            litejet.DOMAIN,
-            {"litejet": {"port": "/dev/serial/by-id/mock-litejet"}},
-        )
-        self.opp.block_till_done()
 
-    def teardown_method(self, method):
-        """Stop everything that was started."""
-        self.opp.stop()
+async def test_activate(opp, mock_litejet):
+    """Test activating the scene."""
 
-    def scene(self):
-        """Get the current scene."""
-        return self.opp.states.get(ENTITY_SCENE)
+    await async_init_integration(opp, use_scene=True)
 
-    def other_scene(self):
-        """Get the other scene."""
-        return self.opp.states.get(ENTITY_OTHER_SCENE)
+    state = opp.states.get(ENTITY_SCENE)
+    assert state is not None
 
-    def test_activate(self):
-        """Test activating the scene."""
-        common.activate(self.opp, ENTITY_SCENE)
-        self.opp.block_till_done()
-        self.mock_lj.activate_scene.assert_called_once_with(ENTITY_SCENE_NUMBER)
+    await opp.services.async_call(
+        scene.DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_SCENE}, blocking=True
+    )
+
+    mock_litejet.activate_scene.assert_called_once_with(ENTITY_SCENE_NUMBER)
