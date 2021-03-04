@@ -52,18 +52,18 @@ async def async_setup_entry(opp, entry):
     manager = AppleTVManager(opp, entry)
     opp.data.setdefault(DOMAIN, {})[entry.unique_id] = manager
 
-    async def on.opp_stop(event):
+    async def on_opp_stop(event):
         """Stop push updates when opp stops."""
         await manager.disconnect()
 
-    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on.opp_stop)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on_opp_stop)
 
     async def setup_platforms():
         """Set up platforms and initiate connection."""
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_setup(entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_setup(entry, platform)
+                for platform in PLATFORMS
             ]
         )
         await manager.init()

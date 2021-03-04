@@ -34,7 +34,7 @@ from openpeerpower.const import (
 )
 
 ATTRIBUTION = "Powered by AEMET OpenData"
-COMPONENTS = ["sensor", "weather"]
+PLATFORMS = ["sensor", "weather"]
 DEFAULT_NAME = "AEMET"
 DOMAIN = "aemet"
 ENTRY_NAME = "name"

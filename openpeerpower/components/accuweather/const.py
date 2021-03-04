@@ -17,6 +17,7 @@ from openpeerpower.components.weather import (
 )
 from openpeerpower.const import (
     ATTR_DEVICE_CLASS,
+    ATTR_ICON,
     CONCENTRATION_PARTS_PER_CUBIC_METER,
     DEVICE_CLASS_TEMPERATURE,
     LENGTH_FEET,
@@ -33,7 +34,6 @@ from openpeerpower.const import (
 )
 
 ATTRIBUTION = "Data provided by AccuWeather"
-ATTR_ICON = "icon"
 ATTR_FORECAST = CONF_FORECAST = "forecast"
 ATTR_LABEL = "label"
 ATTR_UNIT_IMPERIAL = "Imperial"

@@ -174,7 +174,7 @@ async def test_adding_entities_with_generator_and_thread_callback(opp):
     await component.async_add_entities(create_entity(i) for i in range(2))
 
 
-async def test_platform_warn_slow_setup_opp):
+async def test_platform_warn_slow_setup(opp):
     """Warn we log when platform setup takes a long time."""
     platform = MockPlatform()
 
@@ -588,7 +588,7 @@ async def test_setup_entry_platform_not_ready(opp, caplog):
     assert len(mock_call_later.mock_calls) == 1
 
 
-async def test_reset_cancels_retry_setup_opp):
+async def test_reset_cancels_retry_setup(opp):
     """Test that resetting a platform will cancel scheduled a setup retry."""
     async_setup_entry = Mock(side_effect=PlatformNotReady)
     platform = MockPlatform(async_setup_entry=async_setup_entry)
@@ -610,7 +610,7 @@ async def test_reset_cancels_retry_setup_opp):
     assert ent_platform._async_cancel_retry_setup is None
 
 
-async def test_not_fails_with_adding_empty_entities_.opp):
+async def test_not_fails_with_adding_empty_entities_(opp):
     """Test for not fails on empty entities list."""
     component = EntityComponent(_LOGGER, DOMAIN, opp)
 
@@ -818,9 +818,9 @@ async def test_entity_disabled_by_integration(opp):
 
     await component.async_add_entities([entity_default, entity_disabled])
 
-    assert entity_default(opp is not None
+    assert entity_default.opp is not None
     assert entity_default.platform is not None
-    assert entity_disabled(opp is None
+    assert entity_disabled.opp is None
     assert entity_disabled.platform is None
 
     registry = await opp.helpers.entity_registry.async_get_registry()

@@ -122,18 +122,18 @@ async def async_setup_entry(opp: OpenPeerPower, entry: config_entries.ConfigEntr
     agent = AlmondAgent(opp, api, entry)
 
     # Opp.io does its own configuration.
-    if not entry.data.get("is oppio"):
+    if not entry.data.get("is_oppio"):
         # If we're not starting or local, set up Almond right away
         if opp.state != CoreState.not_running or entry.data["type"] == TYPE_LOCAL:
-            await _configure_almond_for_op(opp, entry, api)
+            await _configure_almond_for_ha(opp, entry, api)
 
         else:
-            # OAuth2 implementations can potentially rely on the HA Cloud url.
+            # OAuth2 implementations can potentially rely on the OP Cloud url.
             # This url is not be available until 30 seconds after boot.
 
             async def configure_almond(_now):
                 try:
-                    await _configure_almond_for_op(opp, entry, api)
+                    await _configure_almond_for_ha(opp, entry, api)
                 except ConfigEntryNotReady:
                     _LOGGER.warning(
                         "Unable to configure Almond to connect to Open Peer Power"
@@ -148,10 +148,10 @@ async def async_setup_entry(opp: OpenPeerPower, entry: config_entries.ConfigEntr
     return True
 
 
-async def _configure_almond_for_op(
+async def _configure_almond_for_ha(
     opp: OpenPeerPower, entry: config_entries.ConfigEntry, api: WebAlmondAPI
 ):
-    """Configure Almond to connect to OPP."""
+    """Configure Almond to connect to HA."""
     try:
         if entry.data["type"] == TYPE_OAUTH2:
             # If we're connecting over OAuth2, we will only set up connection
@@ -265,7 +265,7 @@ class AlmondAgent(conversation.AbstractConversationAgent):
             return None
 
         host = self.entry.data["host"]
-        if self.entry.data.get("is oppio"):
+        if self.entry.data.get("is_oppio"):
             host = "/core_almond"
         return {
             "text": "Would you like to opt-in to share your anonymized commands with Stanford to improve Almond's responses?",

@@ -2,6 +2,7 @@
 from collections import OrderedDict
 import logging
 import os
+from pathlib import Path
 import re
 import shutil
 from types import ModuleType
@@ -59,7 +60,7 @@ from openpeerpower.requirements import (
 )
 from openpeerpower.util.package import is_docker_env
 from openpeerpower.util.unit_system import IMPERIAL_SYSTEM, METRIC_SYSTEM
-from openpeerpower.util.yaml import SECRET_YAML, load_yaml
+from openpeerpower.util.yaml import SECRET_YAML, Secrets, load_yaml
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -67,9 +68,9 @@ DATA_PERSISTENT_ERRORS = "bootstrap_persistent_errors"
 RE_YAML_ERROR = re.compile(r"openpeerpower\.util\.yaml")
 RE_ASCII = re.compile(r"\033\[[^m]*m")
 YAML_CONFIG_FILE = "configuration.yaml"
-VERSION_FILE = ".OP_VERSION"
+VERSION_FILE = ".HA_VERSION"
 CONFIG_DIR_NAME = ".openpeerpower"
-DATA_CUSTOMIZE = opp_customize"
+DATA_CUSTOMIZE = "opp_customize"
 
 GROUP_CONFIG_PATH = "groups.yaml"
 AUTOMATION_CONFIG_PATH = "automations.yaml"
@@ -312,29 +313,39 @@ def _write_default_config(config_dir: str) -> bool:
         return False
 
 
-async def async(opp_config_yaml(opp: OpenPeerPower) -> Dict:
+async def async_opp_config_yaml(opp: OpenPeerPower) -> Dict:
     """Load YAML from a Open Peer Power configuration file.
 
     This function allow a component inside the asyncio loop to reload its
     configuration by itself. Include package merge.
     """
+    if opp.config.config_dir is None:
+        secrets = None
+    else:
+        secrets = Secrets(Path(opp.config.config_dir))
+
     # Not using async_add_executor_job because this is an internal method.
     config = await opp.loop.run_in_executor(
-        None, load_yaml_config_file, opp.config.path(YAML_CONFIG_FILE)
+        None,
+        load_yaml_config_file,
+        opp.config.path(YAML_CONFIG_FILE),
+        secrets,
     )
     core_config = config.get(CONF_CORE, {})
     await merge_packages_config(opp, config, core_config.get(CONF_PACKAGES, {}))
     return config
 
 
-def load_yaml_config_file(config_path: str) -> Dict[Any, Any]:
+def load_yaml_config_file(
+    config_path: str, secrets: Optional[Secrets] = None
+) -> Dict[Any, Any]:
     """Parse a YAML configuration file.
 
     Raises FileNotFoundError or OpenPeerPowerError.
 
     This method needs to run in an executor.
     """
-    conf_dict = load_yaml(config_path)
+    conf_dict = load_yaml(config_path, secrets)
 
     if not isinstance(conf_dict, dict):
         msg = (
@@ -525,10 +536,10 @@ async def async_process_op_core_config(opp: OpenPeerPower, config: Dict) -> None
         if is_docker_env():
             hac.media_dirs = {"local": "/media"}
         else:
-            hac.media_dirs = {"local":.opp.config.path("media")}
+            hac.media_dirs = {"local": opp.config.path("media")}
 
     # Init whitelist external dir
-    hac.allowlist_external_dirs = opp.config.path("www"), *hac.media_dirs.values()}
+    hac.allowlist_external_dirs = {opp.config.path("www"), *hac.media_dirs.values()}
     if CONF_ALLOWLIST_EXTERNAL_DIRS in config:
         hac.allowlist_external_dirs.update(set(config[CONF_ALLOWLIST_EXTERNAL_DIRS]))
 

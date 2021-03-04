@@ -103,7 +103,7 @@ def get_arguments() -> argparse.Namespace:
         "--log-file",
         type=str,
         default=None,
-        help="Log file to write to.  If not set, CONFIG/open-peer-power.log is used",
+        help="Log file to write to.  If not set, CONFIG/openpeerpower.log is used",
     )
     parser.add_argument(
         "--log-no-color", action="store_true", help="Disable color logs"

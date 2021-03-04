@@ -1,5 +1,8 @@
 """Support for Ambient Weather Station binary sensors."""
-from openpeerpower.components.binary_sensor import BinarySensorEntity
+from openpeerpower.components.binary_sensor import (
+    DOMAIN as BINARY_SENSOR,
+    BinarySensorEntity,
+)
 from openpeerpower.const import ATTR_NAME
 from openpeerpower.core import callback
 
@@ -18,13 +21,7 @@ from . import (
     TYPE_BATTOUT,
     AmbientWeatherEntity,
 )
-from .const import (
-    ATTR_LAST_DATA,
-    ATTR_MONITORED_CONDITIONS,
-    DATA_CLIENT,
-    DOMAIN,
-    TYPE_BINARY_SENSOR,
-)
+from .const import ATTR_LAST_DATA, ATTR_MONITORED_CONDITIONS, DATA_CLIENT, DOMAIN
 
 
 async def async_setup_entry(opp, entry, async_add_entities):
@@ -35,7 +32,7 @@ async def async_setup_entry(opp, entry, async_add_entities):
     for mac_address, station in ambient.stations.items():
         for condition in station[ATTR_MONITORED_CONDITIONS]:
             name, _, kind, device_class = SENSOR_TYPES[condition]
-            if kind == TYPE_BINARY_SENSOR:
+            if kind == BINARY_SENSOR:
                 binary_sensor_list.append(
                     AmbientWeatherBinarySensor(
                         ambient,

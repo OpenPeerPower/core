@@ -28,7 +28,6 @@ from openpeerpower.setup import (
 from openpeerpower.util.async_ import gather_with_concurrency
 from openpeerpower.util.logging import async_activate_log_queue_handler
 from openpeerpower.util.package import async_get_user_site, is_virtual_env
-from openpeerpower.util.yaml import clear_secret_cache
 
 if TYPE_CHECKING:
     from .runner import RuntimeConfig
@@ -37,7 +36,7 @@ _LOGGER = logging.getLogger(__name__)
 
 ERROR_LOG_FILENAME = "open-peer-power.log"
 
-# opp data key for logging information.
+# opp.data key for logging information.
 DATA_LOGGING = "logging"
 
 LOG_SLOW_STARTUP_INTERVAL = 60
@@ -78,7 +77,7 @@ async def async_setup_opp(
     runtime_config: "RuntimeConfig",
 ) -> Optional[core.OpenPeerPower]:
     """Set up Open Peer Power."""
-    opp =  core.OpenPeerPower()
+    opp = core.OpenPeerPower()
     opp.config.config_dir = runtime_config.config_dir
 
     async_enable_logging(
@@ -106,7 +105,7 @@ async def async_setup_opp(
     safe_mode = runtime_config.safe_mode
 
     if not safe_mode:
-        await opp_async_add_executor_job(conf_util.process_op_config_upgrade, opp)
+        await opp.async_add_executor_job(conf_util.process_op_config_upgrade, opp)
 
         try:
             config_dict = await conf_util.async_opp_config_yaml(opp)
@@ -122,8 +121,6 @@ async def async_setup_opp(
             basic_setup_success = (
                 await async_from_config_dict(config_dict, opp) is not None
             )
-        finally:
-            clear_secret_cache()
 
     if config_dict is None:
         safe_mode = True
@@ -146,7 +143,7 @@ async def async_setup_opp(
         safe_mode = True
         old_config = opp.config
 
-        opp =  core.OpenPeerPower()
+        opp = core.OpenPeerPower()
         opp.config.skip_pip = old_config.skip_pip
         opp.config.internal_url = old_config.internal_url
         opp.config.external_url = old_config.external_url
@@ -179,7 +176,7 @@ def open_opp_ui(opp: core.OpenPeerPower) -> None:
 
     scheme = "https" if opp.config.api.use_ssl else "http"
     url = str(
-        yarl.URL.build(scheme=scheme, host="127.0.0.1", port opp.config.api.port)
+        yarl.URL.build(scheme=scheme, host="127.0.0.1", port=opp.config.api.port)
     )
 
     if not webbrowser.open(url):
@@ -372,7 +369,7 @@ def _get_domains(opp: core.OpenPeerPower, config: Dict[str, Any]) -> Set[str]:
 
     # Add config entry domains
     if not opp.config.safe_mode:
-        domains.update opp.config_entries.async_domains())
+        domains.update(opp.config_entries.async_domains())
 
     # Make sure the Opp.io component is loaded
     if "OPPIO" in os.environ:
@@ -382,7 +379,7 @@ def _get_domains(opp: core.OpenPeerPower, config: Dict[str, Any]) -> Set[str]:
 
 
 async def _async_log_pending_setups(
-    opp, core.OpenPeerPower, domains: Set[str], setup_started: Dict[str, datetime]
+    opp: core.OpenPeerPower, domains: Set[str], setup_started: Dict[str, datetime]
 ) -> None:
     """Periodic log of setups that are pending for longer than LOG_SLOW_STARTUP_INTERVAL."""
     while True:

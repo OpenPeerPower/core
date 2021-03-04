@@ -8,7 +8,7 @@ from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_API_KEY, CONF_LATITUDE, CONF_LONGITUDE, CONF_NAME
 from openpeerpower.core import OpenPeerPower
 
-from .const import COMPONENTS, DOMAIN, ENTRY_NAME, ENTRY_WEATHER_COORDINATOR
+from .const import DOMAIN, ENTRY_NAME, ENTRY_WEATHER_COORDINATOR, PLATFORMS
 from .weather_update_coordinator import WeatherUpdateCoordinator
 
 _LOGGER = logging.getLogger(__name__)
@@ -37,9 +37,9 @@ async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
         ENTRY_WEATHER_COORDINATOR: weather_coordinator,
     }
 
-    for component in COMPONENTS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, component)
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
     return True
@@ -50,8 +50,8 @@ async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(config_entry, component)
-                for component in COMPONENTS
+                opp.config_entries.async_forward_entry_unload(config_entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

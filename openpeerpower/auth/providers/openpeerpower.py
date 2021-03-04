@@ -37,7 +37,7 @@ def async_get_provider(opp: OpenPeerPower) -> OppAuthProvider:
     """Get the provider."""
     for prv in opp.auth.auth_providers:
         if prv.type == "openpeerpower":
-            return cast( OppAuthProvider, prv)
+            return cast(OppAuthProvider, prv)
 
     raise RuntimeError("Provider not found")
 
@@ -325,7 +325,7 @@ class OppLoginFlow(LoginFlow):
 
         if user_input is not None:
             try:
-                await cast( OppAuthProvider, self._auth_provider).async_validate_login(
+                await cast(OppAuthProvider, self._auth_provider).async_validate_login(
                     user_input["username"], user_input["password"]
                 )
             except InvalidAuth:

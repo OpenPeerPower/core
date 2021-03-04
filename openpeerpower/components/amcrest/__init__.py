@@ -118,7 +118,7 @@ class AmcrestChecker(Http):
 
     def __init__(self, opp, name, host, port, user, password):
         """Initialize."""
-        self.opp = opp
+        self._opp = opp
         self._wrap_name = name
         self._wrap_errors = 0
         self._wrap_lock = threading.Lock()
@@ -147,9 +147,9 @@ class AmcrestChecker(Http):
 
     def _start_recovery(self):
         self._wrap_event_flag.clear()
-        dispatcher_send(self.opp, service_signal(SERVICE_UPDATE, self._wrap_name))
+        dispatcher_send(self._opp, service_signal(SERVICE_UPDATE, self._wrap_name))
         self._unsub_recheck = track_time_interval(
-            self.opp, self._wrap_test_online, RECHECK_INTERVAL
+            self._opp, self._wrap_test_online, RECHECK_INTERVAL
         )
 
     def command(self, *args, **kwargs):
@@ -185,7 +185,7 @@ class AmcrestChecker(Http):
             self._unsub_recheck = None
             _LOGGER.error("%s camera back online", self._wrap_name)
             self._wrap_event_flag.set()
-            dispatcher_send(self.opp, service_signal(SERVICE_UPDATE, self._wrap_name))
+            dispatcher_send(self._opp, service_signal(SERVICE_UPDATE, self._wrap_name))
         return ret
 
     def _wrap_test_online(self, now):
@@ -216,7 +216,7 @@ def _start_event_monitor(opp, name, api, event_codes):
     thread = threading.Thread(
         target=_monitor_events,
         name=f"Amcrest {name}",
-        args= opp, name, api, event_codes),
+        args=(opp, name, api, event_codes),
         daemon=True,
     )
     thread.start()

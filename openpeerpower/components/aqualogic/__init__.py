@@ -50,7 +50,7 @@ class AquaLogicProcessor(threading.Thread):
     def __init__(self, opp, host, port):
         """Initialize the data object."""
         super().__init__(daemon=True)
-        self.opp = opp
+        self._opp = opp
         self._host = host
         self._port = port
         self._shutdown = False
@@ -68,7 +68,7 @@ class AquaLogicProcessor(threading.Thread):
 
     def data_changed(self, panel):
         """Aqualogic data changed callback."""
-        self.opp.helpers.dispatcher.dispatcher_send(UPDATE_TOPIC)
+        self._opp.helpers.dispatcher.dispatcher_send(UPDATE_TOPIC)
 
     def run(self):
         """Event thread."""

@@ -20,7 +20,7 @@ httpx==0.16.1
 jinja2>=2.11.3
 netdisco==2.8.2
 paho-mqtt==1.5.1
-pillow==8.1.0
+pillow==8.1.1
 pip>=8.0.3,<20.3
 python-slugify==4.0.1
 pytz>=2021.1
@@ -51,7 +51,7 @@ httpcore>=0.12.3
 httplib2>=0.19.0
 
 # gRPC 1.32+ currently causes issues on ARMv7, see:
-# https://github.com/open-peer-power/core/issues/40148
+# https://github.com/openpeerpower/core/issues/40148
 grpcio==1.31.0
 
 # This is a old unmaintained library and is replaced with pycryptodome

@@ -20,11 +20,11 @@ class AlexaConfig(AbstractConfig):
 
     def __init__(self, opp, config):
         """Initialize Alexa config."""
-        super().__init__.opp)
+        super().__init__(opp)
         self._config = config
 
         if config.get(CONF_CLIENT_ID) and config.get(CONF_CLIENT_SECRET):
-            self._auth = Auth.opp, config[CONF_CLIENT_ID], config[CONF_CLIENT_SECRET])
+            self._auth = Auth(opp, config[CONF_CLIENT_ID], config[CONF_CLIENT_SECRET])
         else:
             self._auth = None
 
@@ -85,7 +85,7 @@ async def async_setup(opp, config):
     Even if that's disabled, the functionality in this module may still be used
     by the cloud component which will call async_handle_message directly.
     """
-    smart_home_config = Alexaconfig(opp, config)
+    smart_home_config = AlexaConfig(opp, config)
     opp.http.register_view(SmartHomeView(smart_home_config))
 
     if smart_home_config.should_report_state:
@@ -109,8 +109,8 @@ class SmartHomeView(OpenPeerPowerView):
         Lambda, which will need to forward the requests to here and pass back
         the response.
         """
-       opp = request.app["opp"]
-        user = request[.opp_user"]
+        opp = request.app["opp"]
+        user = request["opp_user"]
         message = await request.json()
 
         _LOGGER.debug("Received Alexa Smart Home request: %s", message)

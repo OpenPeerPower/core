@@ -17,7 +17,7 @@ async def async_setup(opp: core.OpenPeerPower, config: dict):
 
 
 async def async_setup_entry(
-    opp, core.OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp: core.OpenPeerPower, config_entry: config_entries.ConfigEntry
 ):
     """Set up Rollease Acmeda Automate hub from a config entry."""
     hub = PulseHub(opp, config_entry)
@@ -28,16 +28,16 @@ async def async_setup_entry(
     opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][config_entry.entry_id] = hub
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, component)
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
     return True
 
 
 async def async_unload_entry(
-    opp, core.OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp: core.OpenPeerPower, config_entry: config_entries.ConfigEntry
 ):
     """Unload a config entry."""
     hub = opp.data[DOMAIN][config_entry.entry_id]
@@ -45,8 +45,8 @@ async def async_unload_entry(
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(config_entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_unload(config_entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

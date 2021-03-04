@@ -11,10 +11,9 @@ import weakref
 import attr
 
 from openpeerpower import data_entry_flow, loader
-from openpeerpower.const import EVENT_CONFIG_ENTRY_DISABLED_BY_UPDATED
 from openpeerpower.core import CALLBACK_TYPE, OpenPeerPower, callback
 from openpeerpower.exceptions import ConfigEntryNotReady, OpenPeerPowerError
-from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers import device_registry, entity_registry
 from openpeerpower.helpers.event import Event
 from openpeerpower.helpers.typing import UNDEFINED, UndefinedType
 from openpeerpower.setup import async_process_deps_reqs, async_setup_component
@@ -24,7 +23,7 @@ import openpeerpower.util.uuid as uuid_util
 _LOGGER = logging.getLogger(__name__)
 
 SOURCE_DISCOVERY = "discovery"
-SOURCE_OPPIO = oppio"
+SOURCE_OPPIO = "oppio"
 SOURCE_HOMEKIT = "homekit"
 SOURCE_IMPORT = "import"
 SOURCE_INTEGRATION_DISCOVERY = "integration_discovery"
@@ -69,8 +68,6 @@ ENTRY_STATE_SETUP_RETRY = "setup_retry"
 ENTRY_STATE_NOT_LOADED = "not_loaded"
 # An error occurred when trying to unload the entry
 ENTRY_STATE_FAILED_UNLOAD = "failed_unload"
-# The config entry is disabled
-ENTRY_STATE_DISABLED = "disabled"
 
 UNRECOVERABLE_STATES = (ENTRY_STATE_MIGRATION_ERROR, ENTRY_STATE_FAILED_UNLOAD)
 
@@ -259,12 +256,19 @@ class ConfigEntry:
             self.state = ENTRY_STATE_SETUP_RETRY
             wait_time = 2 ** min(tries, 4) * 5
             tries += 1
-            _LOGGER.warning(
-                "Config entry '%s' for %s integration not ready yet. Retrying in %d seconds",
-                self.title,
-                self.domain,
-                wait_time,
-            )
+            if tries == 1:
+                _LOGGER.warning(
+                    "Config entry '%s' for %s integration not ready yet. Retrying in background",
+                    self.title,
+                    self.domain,
+                )
+            else:
+                _LOGGER.debug(
+                    "Config entry '%s' for %s integration not ready yet. Retrying in %d seconds",
+                    self.title,
+                    self.domain,
+                    wait_time,
+                )
 
             async def setup_again(now: Any) -> None:
                 """Run setup again."""
@@ -291,7 +295,7 @@ class ConfigEntry:
             self.state = ENTRY_STATE_SETUP_ERROR
 
     async def async_unload(
-            self.opp: OpenPeerPower, *, integration: Optional[loader.Integration] = None
+        self, opp: OpenPeerPower, *, integration: Optional[loader.Integration] = None
     ) -> bool:
         """Unload an entry.
 
@@ -462,9 +466,9 @@ class ConfigEntriesFlowManager(data_entry_flow.FlowManager):
         self, opp: OpenPeerPower, config_entries: "ConfigEntries", opp_config: dict
     ):
         """Initialize the config entry flow manager."""
-        super().__init__( opp)
+        super().__init__(opp)
         self.config_entries = config_entries
-        self.opp_config = opp_config
+        self._opp_config = opp_config
 
     async def async_finish_flow(
         self, flow: data_entry_flow.FlowHandler, result: Dict[str, Any]
@@ -545,13 +549,13 @@ class ConfigEntriesFlowManager(data_entry_flow.FlowManager):
         Handler key is the domain of the component that we want to set up.
         """
         try:
-            integration = await loader.async_get_integration(self(opp, handler_key)
+            integration = await loader.async_get_integration(self.opp, handler_key)
         except loader.IntegrationNotFound as err:
             _LOGGER.error("Cannot find integration %s", handler_key)
             raise data_entry_flow.UnknownHandler from err
 
         # Make sure requirements and dependencies of component are resolved
-        await async_process_deps_reqs(self(opp, self.opp_config, integration)
+        await async_process_deps_reqs(self.opp, self._opp_config, integration)
 
         try:
             integration.get_platform("config_flow")
@@ -606,7 +610,7 @@ class ConfigEntriesFlowManager(data_entry_flow.FlowManager):
 class ConfigEntries:
     """Manage the configuration entries.
 
-    An instance of this object is available via  opp.config_entries`.
+    An instance of this object is available via `opp.config_entries`.
     """
 
     def __init__(self, opp: OpenPeerPower, opp_config: dict) -> None:
@@ -614,7 +618,7 @@ class ConfigEntries:
         self.opp = opp
         self.flow = ConfigEntriesFlowManager(opp, self, opp_config)
         self.options = OptionsFlowManager(opp)
-        self.opp_config = opp_config
+        self._opp_config = opp_config
         self._entries: List[ConfigEntry] = []
         self._store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
         EntityRegistryDisabledHandler(opp).async_setup()
@@ -747,7 +751,7 @@ class ConfigEntries:
         else:
             # Setting up the component will set up all its config entries
             result = await async_setup_component(
-                self(opp, entry.domain, self.opp_config
+                self.opp, entry.domain, self._opp_config
             )
 
             if not result:
@@ -802,11 +806,23 @@ class ConfigEntries:
         entry.disabled_by = disabled_by
         self._async_schedule_save()
 
-        self.opp.bus.async_fire(
-            EVENT_CONFIG_ENTRY_DISABLED_BY_UPDATED, {"config_entry_id": entry_id}
-        )
+        dev_reg = device_registry.async_get(self.opp)
+        ent_reg = entity_registry.async_get(self.opp)
 
-        return await self.async_reload(entry_id)
+        if not entry.disabled_by:
+            # The config entry will no longer be disabled, enable devices and entities
+            device_registry.async_config_entry_disabled_by_changed(dev_reg, entry)
+            entity_registry.async_config_entry_disabled_by_changed(ent_reg, entry)
+
+        # Load or unload the config entry
+        reload_result = await self.async_reload(entry_id)
+
+        if entry.disabled_by:
+            # The config entry has been disabled, disable devices and entities
+            device_registry.async_config_entry_disabled_by_changed(dev_reg, entry)
+            entity_registry.async_config_entry_disabled_by_changed(ent_reg, entry)
+
+        return reload_result
 
     @callback
     def async_update_entry(
@@ -858,7 +874,7 @@ class ConfigEntries:
         for listener_ref in entry.update_listeners:
             listener = listener_ref()
             if listener is not None:
-                self.opp.async_create_task(listener(self(opp, entry))
+                self.opp.async_create_task(listener(self.opp, entry))
 
         self._async_schedule_save()
 
@@ -876,14 +892,14 @@ class ConfigEntries:
         """
         # Setup Component if not set up yet
         if domain not in self.opp.config.components:
-            result = await async_setup_component(self(opp, domain, self.opp_config)
+            result = await async_setup_component(self.opp, domain, self._opp_config)
 
             if not result:
                 return False
 
-        integration = await loader.async_get_integration(self(opp, domain)
+        integration = await loader.async_get_integration(self.opp, domain)
 
-        await entry.async_setup(self(opp, integration=integration)
+        await entry.async_setup(self.opp, integration=integration)
         return True
 
     async def async_forward_entry_unload(self, entry: ConfigEntry, domain: str) -> bool:
@@ -892,9 +908,9 @@ class ConfigEntries:
         if domain not in self.opp.config.components:
             return True
 
-        integration = await loader.async_get_integration(self(opp, domain)
+        integration = await loader.async_get_integration(self.opp, domain)
 
-        return await entry.async_unload(self(opp, integration=integration)
+        return await entry.async_unload(self.opp, integration=integration)
 
     @callback
     def _async_schedule_save(self) -> None:
@@ -926,7 +942,6 @@ class ConfigFlow(data_entry_flow.FlowHandler):
     @property
     def unique_id(self) -> Optional[str]:
         """Return unique ID if available."""
-        # pylint: disable=no-member
         if not self.context:
             return None
 
@@ -975,7 +990,7 @@ class ConfigFlow(data_entry_flow.FlowHandler):
         Returns optionally existing config entry with same ID.
         """
         if unique_id is None:
-            self.context["unique_id"] = None  # pylint: disable=no-member
+            self.context["unique_id"] = None
             return None
 
         if raise_on_progress:
@@ -983,7 +998,7 @@ class ConfigFlow(data_entry_flow.FlowHandler):
                 if progress["context"].get("unique_id") == unique_id:
                     raise data_entry_flow.AbortFlow("already_in_progress")
 
-        self.context["unique_id"] = unique_id  # pylint: disable=no-member
+        self.context["unique_id"] = unique_id
 
         # Abort discoveries done using the default discovery unique id
         if unique_id != DEFAULT_DISCOVERY_UNIQUE_ID:
@@ -1243,8 +1258,16 @@ class EntityRegistryDisabledHandler:
 
 @callback
 def _handle_entry_updated_filter(event: Event) -> bool:
-    """Handle entity registry entry update filter."""
-    if event.data["action"] != "update" or "disabled_by" not in event.data["changes"]:
+    """Handle entity registry entry update filter.
+
+    Only handle changes to "disabled_by".
+    If "disabled_by" was DISABLED_CONFIG_ENTRY, reload is not needed.
+    """
+    if (
+        event.data["action"] != "update"
+        or "disabled_by" not in event.data["changes"]
+        or event.data["changes"]["disabled_by"] == entity_registry.DISABLED_CONFIG_ENTRY
+    ):
         return False
     return True
 

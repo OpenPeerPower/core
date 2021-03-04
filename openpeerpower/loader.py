@@ -461,7 +461,7 @@ class Integration:
 
         try:
             dependencies = await _async_component_dependencies(
-                self(opp, self.domain, self, set(), set()
+                self.opp, self.domain, self, set(), set()
             )
             dependencies.discard(self.domain)
             self._all_dependencies = dependencies
@@ -656,15 +656,15 @@ class ModuleWrapper:
 
     def __init__(self, opp: "OpenPeerPower", module: ModuleType) -> None:
         """Initialize the module wrapper."""
-        self.opp = opp
+        self._opp = opp
         self._module = module
 
     def __getattr__(self, attr: str) -> Any:
         """Fetch an attribute."""
         value = getattr(self._module, attr)
 
-        if hasattr(value, "__bind(opp"):
-            value = ft.partial(value, self.opp)
+        if hasattr(value, "__bind_opp"):
+            value = ft.partial(value, self._opp)
 
         setattr(self, attr, value)
         return value
@@ -675,23 +675,23 @@ class Components:
 
     def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize the Components class."""
-        self.opp = opp
+        self._opp = opp
 
     def __getattr__(self, comp_name: str) -> ModuleWrapper:
         """Fetch a component."""
         # Test integration cache
-        integration = self.opp.data.get(DATA_INTEGRATIONS, {}).get(comp_name)
+        integration = self._opp.data.get(DATA_INTEGRATIONS, {}).get(comp_name)
 
         if isinstance(integration, Integration):
             component: Optional[ModuleType] = integration.get_component()
         else:
             # Fallback to importing old-school
-            component = _load_file(self(opp, comp_name, _lookup_path(self.opp))
+            component = _load_file(self._opp, comp_name, _lookup_path(self._opp))
 
         if component is None:
             raise ImportError(f"Unable to load {comp_name}")
 
-        wrapped = ModuleWrapper(self(opp, component)
+        wrapped = ModuleWrapper(self._opp, component)
         setattr(self, comp_name, wrapped)
         return wrapped
 
@@ -701,19 +701,19 @@ class Helpers:
 
     def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize the Helpers class."""
-        self.opp = opp
+        self._opp = opp
 
     def __getattr__(self, helper_name: str) -> ModuleWrapper:
         """Fetch a helper."""
         helper = importlib.import_module(f"openpeerpower.helpers.{helper_name}")
-        wrapped = ModuleWrapper(self(opp, helper)
+        wrapped = ModuleWrapper(self._opp, helper)
         setattr(self, helper_name, wrapped)
         return wrapped
 
 
 def bind_opp(func: CALLABLE_T) -> CALLABLE_T:
     """Decorate function to indicate that first argument is opp."""
-    setattr(func, "__bind(opp", True)
+    setattr(func, "__bind_opp", True)
     return func
 
 

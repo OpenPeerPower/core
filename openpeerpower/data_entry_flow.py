@@ -123,7 +123,7 @@ class FlowManager(abc.ABC):
         if not flow:
             self._initializing[handler].remove(init_done)
             raise UnknownFlow("Flow was not created")
-        flow opp =self.opp
+        flow.opp = self.opp
         flow.handler = handler
         flow.flow_id = uuid.uuid4().hex
         flow.context = context
@@ -266,11 +266,10 @@ class FlowHandler:
 
     # Set by flow manager
     cur_step: Optional[Dict[str, str]] = None
-    # Ignore types, pylint workaround: https://github.com/PyCQA/pylint/issues/3167
+    # Ignore types: https://github.com/PyCQA/pylint/issues/3167
     flow_id: str = None  # type: ignore
     opp: OpenPeerPower = None  # type: ignore
     handler: str = None  # type: ignore
-    # Pylint workaround: https://github.com/PyCQA/pylint/issues/3167
     # Ensure the attribute has a subscriptable, but immutable, default value.
     context: Dict = MappingProxyType({})  # type: ignore
 
