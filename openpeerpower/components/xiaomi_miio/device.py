@@ -16,7 +16,7 @@ class ConnectXiaomiDevice:
 
     def __init__(self, opp):
         """Initialize the entity."""
-        self.opp = opp
+        self._opp = opp
         self._device = None
         self._device_info = None
 
@@ -36,7 +36,7 @@ class ConnectXiaomiDevice:
         try:
             self._device = Device(host, token)
             # get the device info
-            self._device_info = await self.opp.async_add_executor_job(
+            self._device_info = await self._opp.async_add_executor_job(
                 self._device.info
             )
         except DeviceException:
@@ -78,10 +78,14 @@ class XiaomiMiioEntity(Entity):
     @property
     def device_info(self):
         """Return the device info."""
-        return {
-            "connections": {(dr.CONNECTION_NETWORK_MAC, self._mac)},
+        device_info = {
             "identifiers": {(DOMAIN, self._device_id)},
             "manufacturer": "Xiaomi",
             "name": self._name,
             "model": self._model,
         }
+
+        if self._mac is not None:
+            device_info["connections"] = {(dr.CONNECTION_NETWORK_MAC, self._mac)}
+
+        return device_info

@@ -27,12 +27,12 @@ AUTH_MESSAGE_SCHEMA = vol.Schema(
 
 def auth_ok_message():
     """Return an auth_ok message."""
-    return {"type": TYPE_AUTH_OK, "op_version": __version__}
+    return {"type": TYPE_AUTH_OK, "ha_version": __version__}
 
 
 def auth_required_message():
     """Return an auth_required message."""
-    return {"type": TYPE_AUTH_REQUIRED, "op_version": __version__}
+    return {"type": TYPE_AUTH_REQUIRED, "ha_version": __version__}
 
 
 def auth_invalid_message(message):
@@ -45,7 +45,7 @@ class AuthPhase:
 
     def __init__(self, logger, opp, send_message, request):
         """Initialize the authentiated connection."""
-        self.opp = opp
+        self._opp = opp
         self._send_message = send_message
         self._logger = logger
         self._request = request
@@ -66,7 +66,7 @@ class AuthPhase:
 
         if "access_token" in msg:
             self._logger.debug("Received access_token")
-            refresh_token = await self.opp.auth.async_validate_access_token(
+            refresh_token = await self._opp.auth.async_validate_access_token(
                 msg["access_token"]
             )
             if refresh_token is not None:
@@ -84,5 +84,5 @@ class AuthPhase:
         await process_success_login(self._request)
         self._send_message(auth_ok_message())
         return ActiveConnection(
-            self._logger, self.opp, self._send_message, user, refresh_token
+            self._logger, self._opp, self._send_message, user, refresh_token
         )

@@ -59,9 +59,9 @@ async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
         _LOGGER.error("Port %s already in use", config_entry.data[CONF_PORT])
         raise ConfigEntryNotReady from exc
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, component)
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
     return True
@@ -80,8 +80,8 @@ async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(config_entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_unload(config_entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )
@@ -102,7 +102,7 @@ class WiffiIntegrationApi:
 
     def __init__(self, opp):
         """Initialize the instance."""
-        self.opp = opp
+        self._opp = opp
         self._server = None
         self._known_devices = {}
         self._periodic_callback = None
@@ -111,7 +111,7 @@ class WiffiIntegrationApi:
         """Set up api instance."""
         self._server = WiffiTcpServer(config_entry.data[CONF_PORT], self)
         self._periodic_callback = async_track_time_interval(
-            self.opp, self._periodic_tick, timedelta(seconds=10)
+            self._opp, self._periodic_tick, timedelta(seconds=10)
         )
 
     def shutdown(self):
@@ -132,10 +132,10 @@ class WiffiIntegrationApi:
         for metric in metrics:
             if metric.id not in self._known_devices[device.mac_address]:
                 self._known_devices[device.mac_address].add(metric.id)
-                async_dispatcher_send(self.opp, CREATE_ENTITY_SIGNAL, device, metric)
+                async_dispatcher_send(self._opp, CREATE_ENTITY_SIGNAL, device, metric)
             else:
                 async_dispatcher_send(
-                    self.opp,
+                    self._opp,
                     f"{UPDATE_ENTITY_SIGNAL}-{generate_unique_id(device, metric)}",
                     device,
                     metric,
@@ -149,7 +149,7 @@ class WiffiIntegrationApi:
     @callback
     def _periodic_tick(self, now=None):
         """Check if any entity has timed out because it has not been updated."""
-        async_dispatcher_send(self.opp, CHECK_ENTITIES_SIGNAL)
+        async_dispatcher_send(self._opp, CHECK_ENTITIES_SIGNAL)
 
 
 class WiffiEntity(Entity):

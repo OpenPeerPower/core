@@ -1,7 +1,7 @@
 """Support for Xiaomi Mi WiFi Repeater 2."""
 import logging
 
-from miio import DeviceException, WifiRepeater  # pylint: disable=import-error
+from miio import DeviceException, WifiRepeater
 import voluptuous as vol
 
 from openpeerpower.components.device_tracker import (

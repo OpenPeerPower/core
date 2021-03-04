@@ -148,9 +148,9 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
         sw_version=gateway_info.firmware_version,
     )
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     async def async_keep_alive(now):
@@ -174,8 +174,8 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

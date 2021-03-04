@@ -6,10 +6,10 @@ import voluptuous as vol
 from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.loader import bind_opp
 
-from . import commands, connection, const, decorators, http, messages  # noqa
-from .connection import ActiveConnection  # noqa
-from .const import (  # noqa
-    ERR_OPEN_PEER_POWER_ERROR,
+from . import commands, connection, const, decorators, http, messages  # noqa: F401
+from .connection import ActiveConnection  # noqa: F401
+from .const import (  # noqa: F401
+    ERR_HOME_ASSISTANT_ERROR,
     ERR_INVALID_FORMAT,
     ERR_NOT_FOUND,
     ERR_NOT_SUPPORTED,
@@ -19,13 +19,13 @@ from .const import (  # noqa
     ERR_UNKNOWN_COMMAND,
     ERR_UNKNOWN_ERROR,
 )
-from .decorators import (  # noqa
+from .decorators import (  # noqa: F401
     async_response,
     require_admin,
     websocket_command,
     ws_require_user,
 )
-from .messages import (  # noqa
+from .messages import (  # noqa: F401
     BASE_COMMAND_MESSAGE_SCHEMA,
     error_message,
     event_message,

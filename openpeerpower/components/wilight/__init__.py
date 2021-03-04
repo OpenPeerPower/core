@@ -33,9 +33,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     opp.data[DOMAIN][entry.entry_id] = parent
 
     # Set up all platforms for this device/entry.
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -47,8 +47,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     # Unload entities for this entry/device.
     await asyncio.gather(
         *(
-            opp.config_entries.async_forward_entry_unload(entry, component)
-            for component in PLATFORMS
+            opp.config_entries.async_forward_entry_unload(entry, platform)
+            for platform in PLATFORMS
         )
     )
 
@@ -112,7 +112,7 @@ class WiLightDevice(Entity):
 
     @callback
     def handle_event_callback(self, states):
-        """Propagate changes through op."""
+        """Propagate changes through ha."""
         self._status = states
         self.async_write_op_state()
 

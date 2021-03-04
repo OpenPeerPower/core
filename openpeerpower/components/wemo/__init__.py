@@ -188,7 +188,7 @@ class WemoDiscovery:
 
     def __init__(self, opp: OpenPeerPower, wemo_dispatcher: WemoDispatcher) -> None:
         """Initialize the WemoDiscovery."""
-        self.opp = opp
+        self._opp = opp
         self._wemo_dispatcher = wemo_dispatcher
         self._stop = None
         self._scan_delay = 0
@@ -203,7 +203,7 @@ class WemoDiscovery:
         if entry in self._upnp_entries:
             return
         try:
-            device = await self.opp.async_add_executor_job(
+            device = await self._opp.async_add_executor_job(
                 pywemo.discovery.device_from_uuid_and_location,
                 entry.udn,
                 entry.location,
@@ -211,7 +211,7 @@ class WemoDiscovery:
         except pywemo.PyWeMoException as err:
             _LOGGER.error("Unable to setup WeMo %r (%s)", entry, err)
         else:
-            self._wemo_dispatcher.async_add_unique_device(self.opp, device)
+            self._wemo_dispatcher.async_add_unique_device(self._opp, device)
             self._upnp_entries.add(entry)
 
     async def async_discover_and_schedule(self, *_) -> None:
@@ -219,7 +219,7 @@ class WemoDiscovery:
         _LOGGER.debug("Scanning network for WeMo devices...")
         try:
             # pywemo.ssdp.scan is a light-weight UDP UPnP scan for WeMo devices.
-            entries = await self.opp.async_add_executor_job(pywemo.ssdp.scan)
+            entries = await self._opp.async_add_executor_job(pywemo.ssdp.scan)
 
             # async_add_from_upnp_entry causes multiple HTTP requests to be sent
             # to the WeMo device for the initial setup of the WeMoDevice
@@ -237,7 +237,7 @@ class WemoDiscovery:
                 self.MAX_SECONDS_BETWEEN_SCANS,
             )
             self._stop = async_call_later(
-                self.opp,
+                self._opp,
                 self._scan_delay,
                 self.async_discover_and_schedule,
             )

@@ -6,7 +6,7 @@ import logging
 import voluptuous as vol
 from zigpy.config import CONF_DEVICE, CONF_DEVICE_PATH
 
-from openpeerpower import config_entries, const as op_const
+from openpeerpower import config_entries, const as ha_const
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.device_registry import CONNECTION_ZIGBEE
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
@@ -16,7 +16,6 @@ from . import api
 from .core import ZHAGateway
 from .core.const import (
     BAUD_RATES,
-    COMPONENTS,
     CONF_BAUDRATE,
     CONF_DATABASE,
     CONF_DEVICE_CONFIG,
@@ -25,18 +24,19 @@ from .core.const import (
     CONF_USB_PATH,
     CONF_ZIGPY,
     DATA_ZHA,
-    DATA_ZOP_CONFIG,
-    DATA_ZOP_DISPATCHERS,
-    DATA_ZOP_GATEWAY,
-    DATA_ZOP_PLATFORM_LOADED,
+    DATA_ZHA_CONFIG,
+    DATA_ZHA_DISPATCHERS,
+    DATA_ZHA_GATEWAY,
+    DATA_ZHA_PLATFORM_LOADED,
     DOMAIN,
+    PLATFORMS,
     SIGNAL_ADD_ENTITIES,
     RadioType,
 )
 from .core.discovery import GROUP_PROBE
 
-DEVICE_CONFIG_SCHEMA_ENTRY = vol.Schema({vol.Optional(op_const.CONF_TYPE): cv.string})
-ZOP_CONFIG_SCHEMA = {
+DEVICE_CONFIG_SCHEMA_ENTRY = vol.Schema({vol.Optional(ha_const.CONF_TYPE): cv.string})
+ZHA_CONFIG_SCHEMA = {
     vol.Optional(CONF_BAUDRATE): cv.positive_int,
     vol.Optional(CONF_DATABASE): cv.string,
     vol.Optional(CONF_DEVICE_CONFIG, default={}): vol.Schema(
@@ -54,7 +54,7 @@ CONFIG_SCHEMA = vol.Schema(
                 cv.deprecated(CONF_USB_PATH),
                 cv.deprecated(CONF_BAUDRATE),
                 cv.deprecated(CONF_RADIO_TYPE),
-                ZOP_CONFIG_SCHEMA,
+                ZHA_CONFIG_SCHEMA,
             ),
         ),
     },
@@ -74,7 +74,7 @@ async def async_setup(opp, config):
 
     if DOMAIN in config:
         conf = config[DOMAIN]
-        opp.data[DATA_ZHA][DATA_ZOP_CONFIG] = conf
+        opp.data[DATA_ZHA][DATA_ZHA_CONFIG] = conf
 
     return True
 
@@ -86,24 +86,24 @@ async def async_setup_entry(opp, config_entry):
     """
 
     zha_data = opp.data.setdefault(DATA_ZHA, {})
-    config = zha_data.get(DATA_ZOP_CONFIG, {})
+    config = zha_data.get(DATA_ZHA_CONFIG, {})
 
-    for component in COMPONENTS:
-        zha_data.setdefault(component, [])
+    for platform in PLATFORMS:
+        zha_data.setdefault(platform, [])
 
     if config.get(CONF_ENABLE_QUIRKS, True):
         # needs to be done here so that the ZHA module is finished loading
         # before zhaquirks is imported
-        import zhaquirks  # noqa: F401 pylint: disable=unused-import, import-outside-toplevel, import-error
+        import zhaquirks  # noqa: F401 pylint: disable=unused-import, import-outside-toplevel
 
     zha_gateway = ZHAGateway(opp, config, config_entry)
     await zha_gateway.async_initialize()
 
-    zha_data[DATA_ZOP_DISPATCHERS] = []
-    zha_data[DATA_ZOP_PLATFORM_LOADED] = []
-    for component in COMPONENTS:
-        coro = opp.config_entries.async_forward_entry_setup(config_entry, component)
-        zha_data[DATA_ZOP_PLATFORM_LOADED].append.opp.async_create_task(coro))
+    zha_data[DATA_ZHA_DISPATCHERS] = []
+    zha_data[DATA_ZHA_PLATFORM_LOADED] = []
+    for platform in PLATFORMS:
+        coro = opp.config_entries.async_forward_entry_setup(config_entry, platform)
+        zha_data[DATA_ZHA_PLATFORM_LOADED].append(opp.async_create_task(coro))
 
     device_registry = await opp.helpers.device_registry.async_get_registry()
     device_registry.async_get_or_create(
@@ -119,35 +119,35 @@ async def async_setup_entry(opp, config_entry):
 
     async def async_zha_shutdown(event):
         """Handle shutdown tasks."""
-        await zha_data[DATA_ZOP_GATEWAY].shutdown()
-        await zha_data[DATA_ZOP_GATEWAY].async_update_device_storage()
+        await zha_data[DATA_ZHA_GATEWAY].shutdown()
+        await zha_data[DATA_ZHA_GATEWAY].async_update_device_storage()
 
-    opp.bus.async_listen_once(op_const.EVENT_OPENPEERPOWER_STOP, async_zha_shutdown)
+    opp.bus.async_listen_once(ha_const.EVENT_OPENPEERPOWER_STOP, async_zha_shutdown)
     asyncio.create_task(async_load_entities(opp))
     return True
 
 
 async def async_unload_entry(opp, config_entry):
     """Unload ZHA config entry."""
-    await opp.data[DATA_ZHA][DATA_ZOP_GATEWAY].shutdown()
+    await opp.data[DATA_ZHA][DATA_ZHA_GATEWAY].shutdown()
 
     GROUP_PROBE.cleanup()
     api.async_unload_api(opp)
 
-    dispatchers = opp.data[DATA_ZHA].get(DATA_ZOP_DISPATCHERS, [])
+    dispatchers = opp.data[DATA_ZHA].get(DATA_ZHA_DISPATCHERS, [])
     for unsub_dispatcher in dispatchers:
         unsub_dispatcher()
 
-    for component in COMPONENTS:
-        await opp.config_entries.async_forward_entry_unload(config_entry, component)
+    for platform in PLATFORMS:
+        await opp.config_entries.async_forward_entry_unload(config_entry, platform)
 
     return True
 
 
 async def async_load_entities(opp: OpenPeerPowerType) -> None:
     """Load entities after integration was setup."""
-    await opp.data[DATA_ZHA][DATA_ZOP_GATEWAY].async_initialize_devices_and_entities()
-    to_setup = opp.data[DATA_ZHA][DATA_ZOP_PLATFORM_LOADED]
+    await opp.data[DATA_ZHA][DATA_ZHA_GATEWAY].async_initialize_devices_and_entities()
+    to_setup = opp.data[DATA_ZHA][DATA_ZHA_PLATFORM_LOADED]
     results = await asyncio.gather(*to_setup, return_exceptions=True)
     for res in results:
         if isinstance(res, Exception):
@@ -167,7 +167,7 @@ async def async_migrate_entry(
             CONF_DEVICE: {CONF_DEVICE_PATH: config_entry.data[CONF_USB_PATH]},
         }
 
-        baudrate = opp.data[DATA_ZHA].get(DATA_ZOP_CONFIG, {}).get(CONF_BAUDRATE)
+        baudrate = opp.data[DATA_ZHA].get(DATA_ZHA_CONFIG, {}).get(CONF_BAUDRATE)
         if data[CONF_RADIO_TYPE] != RadioType.deconz and baudrate in BAUD_RATES:
             data[CONF_DEVICE][CONF_BAUDRATE] = baudrate
 

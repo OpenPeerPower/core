@@ -204,7 +204,7 @@ class TraccarScanner:
         self._async_see = async_see
         self._api = api
         self.connected = False
-        self.opp = opp
+        self._opp = opp
         self._max_accuracy = max_accuracy
         self._skip_accuracy_on = skip_accuracy_on
 
@@ -216,7 +216,7 @@ class TraccarScanner:
             return False
 
         await self._async_update()
-        async_track_time_interval(self.opp, self._async_update, self._scan_interval)
+        async_track_time_interval(self._opp, self._async_update, self._scan_interval)
         return True
 
     async def _async_update(self, now=None):
@@ -231,9 +231,9 @@ class TraccarScanner:
                 return
         _LOGGER.debug("Updating device data")
         await self._api.get_device_info(self._custom_attributes)
-        self.opp.async_create_task(self.import_device_data())
+        self._opp.async_create_task(self.import_device_data())
         if self._event_types:
-            self.opp.async_create_task(self.import_events())
+            self._opp.async_create_task(self.import_events())
         self.connected = self._api.connected
 
     async def import_device_data(self):
@@ -313,7 +313,7 @@ class TraccarScanner:
                     ),
                     None,
                 )
-                self.opp.bus.async_fire(
+                self._opp.bus.async_fire(
                     f"traccar_{self._event_types.get(event['type'])}",
                     {
                         "device_traccar_id": event["deviceId"],

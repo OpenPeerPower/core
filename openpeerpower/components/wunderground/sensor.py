@@ -57,7 +57,7 @@ MIN_TIME_BETWEEN_UPDATES = timedelta(minutes=5)
 class WUSensorConfig:
     """WU Sensor Configuration.
 
-    defines basic HA properties of the weather sensor and
+    defines basic OP properties of the weather sensor and
     stores callbacks that can parse sensor values out of
     the json data received by WU API.
     """
@@ -167,7 +167,7 @@ class WUDailySimpleForecastSensorConfig(WUSensorConfig):
         period: int,
         field: str,
         wu_unit: Optional[str] = None,
-        op_unit: Optional[str] = None,
+        ha_unit: Optional[str] = None,
         icon=None,
         device_class=None,
     ):
@@ -178,7 +178,7 @@ class WUDailySimpleForecastSensorConfig(WUSensorConfig):
         :param field: field name to use as value
         :param wu_unit: "fahrenheit", "celsius", "degrees" etc. see the example json at:
                 https://www.wunderground.com/weather/api/d/docs?d=data/forecast&MR=1
-        :param op_unit: corresponding unit in Open Peer Power
+        :param ha_unit: corresponding unit in Open Peer Power
         """
         super().__init__(
             friendly_name=friendly_name,
@@ -194,7 +194,7 @@ class WUDailySimpleForecastSensorConfig(WUSensorConfig):
                     field
                 ]
             ),
-            unit_of_measurement=op_unit,
+            unit_of_measurement=ha_unit,
             entity_picture=lambda wu: wu.data["forecast"]["simpleforecast"][
                 "forecastday"
             ][period]["icon_url"]
@@ -1237,7 +1237,7 @@ class WUndergroundData:
 
     def __init__(self, opp, api_key, pws_id, lang, latitude, longitude):
         """Initialize the data object."""
-        self.opp = opp
+        self._opp = opp
         self._api_key = api_key
         self._pws_id = pws_id
         self._lang = f"lang:{lang}"
@@ -1245,7 +1245,7 @@ class WUndergroundData:
         self._longitude = longitude
         self._features = set()
         self.data = None
-        self._session = async_get_clientsession(self.opp)
+        self._session = async_get_clientsession(self._opp)
 
     def request_feature(self, feature):
         """Register feature to be fetched from WU API."""

@@ -138,7 +138,7 @@ class ValloxStateProxy:
 
     def __init__(self, opp, client):
         """Initialize the proxy."""
-        self.opp = opp
+        self._opp = opp
         self._client = client
         self._metric_cache = {}
         self._profile = None
@@ -178,7 +178,7 @@ class ValloxStateProxy:
             _LOGGER.error("Error during state cache update: %s", err)
             self._valid = False
 
-        async_dispatcher_send(self.opp, SIGNAL_VALLOX_STATE_UPDATE)
+        async_dispatcher_send(self._opp, SIGNAL_VALLOX_STATE_UPDATE)
 
 
 class ValloxServiceHandler:

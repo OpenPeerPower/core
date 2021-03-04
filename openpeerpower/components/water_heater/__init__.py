@@ -307,7 +307,7 @@ async def async_service_away_mode(entity, service):
 
 async def async_service_temperature_set(entity, service):
     """Handle set temperature service."""
-   opp = entity.opp
+    opp = entity.opp
     kwargs = {}
 
     for value, temp in service.data.items():

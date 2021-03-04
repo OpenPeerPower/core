@@ -4,7 +4,7 @@ from datetime import timedelta
 import logging
 
 from tuyaha import TuyaApi
-from tuyaop.tuyaapi import (
+from tuyaha.tuyaapi import (
     TuyaAPIException,
     TuyaAPIRateLimitException,
     TuyaFrequentlyInvokeException,
@@ -176,22 +176,22 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
                 dev_type in TUYA_TYPE_TO_HA
                 and device.object_id() not in opp.data[DOMAIN]["entities"]
             ):
-                op_type = TUYA_TYPE_TO_HA[dev_type]
-                if op_type not in device_type_list:
-                    device_type_list[op_type] = []
-                device_type_list[op_type].append(device.object_id())
+                ha_type = TUYA_TYPE_TO_HA[dev_type]
+                if ha_type not in device_type_list:
+                    device_type_list[ha_type] = []
+                device_type_list[ha_type].append(device.object_id())
                 opp.data[DOMAIN]["entities"][device.object_id()] = None
 
-        for op_type, dev_ids in device_type_list.items():
-            config_entries_key = f"{op_type}.tuya"
+        for ha_type, dev_ids in device_type_list.items():
+            config_entries_key = f"{ha_type}.tuya"
             if config_entries_key not in opp.data[DOMAIN][ENTRY_IS_SETUP]:
-                opp.data[DOMAIN]["pending"][op_type] = dev_ids
+                opp.data[DOMAIN]["pending"][ha_type] = dev_ids
                 opp.async_create_task(
-                    opp.config_entries.async_forward_entry_setup(entry, op_type)
+                    opp.config_entries.async_forward_entry_setup(entry, ha_type)
                 )
                 opp.data[DOMAIN][ENTRY_IS_SETUP].add(config_entries_key)
             else:
-                async_dispatcher_send(opp, TUYA_DISCOVERY_NEW.format(op_type), dev_ids)
+                async_dispatcher_send(opp, TUYA_DISCOVERY_NEW.format(ha_type), dev_ids)
 
     await async_load_devices(tuya.get_all_devices())
 
@@ -212,7 +212,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         newlist_ids = []
         for device in device_list:
             newlist_ids.append(device.object_id())
-        for dev_id in list.opp.data[DOMAIN]["entities"]):
+        for dev_id in list(opp.data[DOMAIN]["entities"]):
             if dev_id not in newlist_ids:
                 async_dispatcher_send(opp, SIGNAL_DELETE_ENTITY, dev_id)
                 opp.data[DOMAIN]["entities"].pop(dev_id)
@@ -240,9 +240,9 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
         await asyncio.gather(
             *[
                 opp.config_entries.async_forward_entry_unload(
-                    entry, component.split(".", 1)[0]
+                    entry, platform.split(".", 1)[0]
                 )
-                for component in opp.data[DOMAIN][ENTRY_IS_SETUP]
+                for platform in opp.data[DOMAIN][ENTRY_IS_SETUP]
             ]
         )
     )

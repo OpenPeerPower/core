@@ -10,7 +10,7 @@ from openpeerpower.const import ATTR_DEVICE_ID
 from openpeerpower.core import callback
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
 
-from . import (  # noqa: F401 # pylint: disable=unused-import
+from . import (  # noqa: F401
     base,
     closures,
     general,
@@ -143,19 +143,19 @@ class Channels:
         if self.zha_device.status == zha_core_device.DeviceStatus.INITIALIZED:
             return
 
-        self.zha_device_opp.data[const.DATA_ZHA][component].append(
+        self.zha_device.opp.data[const.DATA_ZHA][component].append(
             (entity_class, (unique_id, self.zha_device, channels))
         )
 
     @callback
     def async_send_signal(self, signal: str, *args: Any) -> None:
         """Send a signal through opp dispatcher."""
-        async_dispatcher_send(self.zha_device_opp, signal, *args)
+        async_dispatcher_send(self.zha_device.opp, signal, *args)
 
     @callback
     def zha_send_event(self, event_data: Dict[str, Union[str, int]]) -> None:
         """Relay events to opp."""
-        self.zha_device_opp.bus.async_fire(
+        self.zha_device.opp.bus.async_fire(
             "zha_event",
             {
                 const.ATTR_DEVICE_IEEE: str(self.zha_device.ieee),
@@ -226,7 +226,7 @@ class ChannelPool:
     @property
     def opp(self):
         """Return opp."""
-        return self._channels.zha_device_opp
+        return self._channels.zha_device.opp
 
     @property
     def model(self) -> Optional[str]:

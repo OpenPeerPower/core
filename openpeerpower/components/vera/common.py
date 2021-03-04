@@ -52,7 +52,7 @@ class SubscriptionRegistry(pv.AbstractSubscriptionRegistry):
     def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize the object."""
         super().__init__()
-        self.opp = opp
+        self._opp = opp
         self._cancel_poll = None
 
     def start(self) -> None:
@@ -67,7 +67,7 @@ class SubscriptionRegistry(pv.AbstractSubscriptionRegistry):
             self._cancel_poll = None
 
     def _schedule_poll(self, delay: float) -> None:
-        self._cancel_poll = call_later(self.opp, delay, self._run_poll_server)
+        self._cancel_poll = call_later(self._opp, delay, self._run_poll_server)
 
     def _run_poll_server(self, now) -> None:
         delay = 1

@@ -6,8 +6,14 @@ from functools import partial
 import logging
 from math import ceil
 
-from miio import Ceil, DeviceException, PhilipsBulb, PhilipsEyecare, PhilipsMoonlight
-from miio import Device  # pylint: disable=import-error
+from miio import (
+    Ceil,
+    Device,
+    DeviceException,
+    PhilipsBulb,
+    PhilipsEyecare,
+    PhilipsMoonlight,
+)
 from miio.gateway import (
     GATEWAY_MODEL_AC_V1,
     GATEWAY_MODEL_AC_V2,
@@ -185,7 +191,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         )
         devices.append(secondary_device)
         # The ambient light doesn't expose additional services.
-        # A.opp.data[DATA_KEY] entry isn't needed.
+        # A opp.data[DATA_KEY] entry isn't needed.
     elif model in ["philips.light.ceiling", "philips.light.zyceiling"]:
         light = Ceil(host, token)
         device = XiaomiPhilipsCeilingLamp(name, light, model, unique_id)

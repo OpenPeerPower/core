@@ -1,5 +1,4 @@
 """Data storage helper for ZHA."""
-# pylint: disable=unused-import
 from collections import OrderedDict
 import datetime
 import time
@@ -15,7 +14,7 @@ from .typing import ZhaDeviceType
 
 DATA_REGISTRY = "zha_storage"
 
-STORAGE_KEY = "zop.storage"
+STORAGE_KEY = "zha.storage"
 STORAGE_VERSION = 1
 SAVE_DELAY = 10
 TOMBSTONE_LIFETIME = datetime.timedelta(days=60).total_seconds()

@@ -75,7 +75,7 @@ class WolSwitch(SwitchEntity):
         broadcast_port,
     ):
         """Initialize the WOL switch."""
-        self.opp = opp
+        self._opp = opp
         self._name = name
         self._host = host
         self._mac_address = mac_address

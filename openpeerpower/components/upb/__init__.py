@@ -17,7 +17,7 @@ from .const import (
     EVENT_UPB_SCENE_CHANGED,
 )
 
-UPB_PLATFORMS = ["light", "scene"]
+PLATFORMS = ["light", "scene"]
 
 
 async def async_setup(opp: OpenPeerPower, opp_config: ConfigType) -> bool:
@@ -36,9 +36,9 @@ async def async_setup_entry(opp, config_entry):
     opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][config_entry.entry_id] = {"upb": upb}
 
-    for component in UPB_PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, component)
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
     def _element_changed(element, changeset):
@@ -71,8 +71,8 @@ async def async_unload_entry(opp, config_entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(config_entry, component)
-                for component in UPB_PLATFORMS
+                opp.config_entries.async_forward_entry_unload(config_entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

@@ -100,7 +100,7 @@ def async_active_zone(
     # Sort entity IDs so that we are deterministic if equal distance to 2 zones
     zones = (
         cast(State, opp.states.get(entity_id))
-        for entity_id in sorted.opp.states.async_entity_ids(DOMAIN))
+        for entity_id in sorted(opp.states.async_entity_ids(DOMAIN))
     )
 
     min_dist = None
@@ -189,7 +189,7 @@ async def async_setup(opp: OpenPeerPower, config: Dict) -> bool:
     )
 
     storage_collection = ZoneStorageCollection(
-        storage. Store(opp, STORAGE_VERSION, STORAGE_KEY),
+        storage.Store(opp, STORAGE_VERSION, STORAGE_KEY),
         logging.getLogger(f"{__name__}.storage_collection"),
         id_manager,
     )
@@ -243,9 +243,9 @@ async def async_setup(opp: OpenPeerPower, config: Dict) -> bool:
 def _home_conf(opp: OpenPeerPower) -> Dict:
     """Return the home zone config."""
     return {
-        CONF_NAME:.opp.config.location_name,
-        CONF_LATITUDE:.opp.config.latitude,
-        CONF_LONGITUDE:.opp.config.longitude,
+        CONF_NAME: opp.config.location_name,
+        CONF_LATITUDE: opp.config.latitude,
+        CONF_LONGITUDE: opp.config.longitude,
         CONF_RADIUS: DEFAULT_RADIUS,
         CONF_ICON: ICON_HOME,
         CONF_PASSIVE: False,

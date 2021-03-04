@@ -217,7 +217,7 @@ def _request_app_setup(opp, config):
         """Handle configuration updates."""
         _config_path = opp.config.path(WINK_CONFIG_FILE)
         if not os.path.isfile(_config_path):
-            setup_opp, config)
+            setup(opp, config)
             return
 
         client_id = callback_data.get(CONF_CLIENT_ID).strip()
@@ -227,7 +227,7 @@ def _request_app_setup(opp, config):
                 _config_path,
                 {CONF_CLIENT_ID: client_id, CONF_CLIENT_SECRET: client_secret},
             )
-            setup_opp, config)
+            setup(opp, config)
             return
         error_msg = "Your input was invalid. Please try again."
         _configurator = opp.data[DOMAIN]["configuring"][DOMAIN]
@@ -269,7 +269,7 @@ def _request_oauth_completion(opp, config):
 
     def wink_configuration_callback(callback_data):
         """Call setup again."""
-        setup_opp, config)
+        setup(opp, config)
 
     start_url = f"{get_url(opp)}{WINK_AUTH_START}"
 
@@ -418,7 +418,7 @@ def setup(opp, config):
     opp.bus.listen(EVENT_OPENPEERPOWER_STOP, save_credentials)
 
     # Save the users potentially updated oauth credentials at a regular
-    # interval to prevent them from being expired after a HA reboot.
+    # interval to prevent them from being expired after a OP reboot.
     track_time_interval(opp, save_credentials, timedelta(minutes=60))
 
     def force_update(call):
@@ -688,7 +688,7 @@ class WinkAuthCallbackView(OpenPeerPowerView):
     @callback
     def get(self, request):
         """Finish OAuth callback request."""
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         data = request.query
 
         response_message = """Wink has been successfully authorized!

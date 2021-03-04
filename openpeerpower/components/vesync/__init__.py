@@ -18,11 +18,12 @@ from .const import (
     VS_DISCOVERY,
     VS_DISPATCHERS,
     VS_FANS,
+    VS_LIGHTS,
     VS_MANAGER,
     VS_SWITCHES,
 )
 
-PLATFORMS = ["switch", "fan"]
+PLATFORMS = ["switch", "fan", "light"]
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -85,6 +86,7 @@ async def async_setup_entry(opp, config_entry):
 
     switches = opp.data[DOMAIN][VS_SWITCHES] = []
     fans = opp.data[DOMAIN][VS_FANS] = []
+    lights = opp.data[DOMAIN][VS_LIGHTS] = []
 
     opp.data[DOMAIN][VS_DISPATCHERS] = []
 
@@ -96,15 +98,21 @@ async def async_setup_entry(opp, config_entry):
         fans.extend(device_dict[VS_FANS])
         opp.async_create_task(forward_setup(config_entry, "fan"))
 
+    if device_dict[VS_LIGHTS]:
+        lights.extend(device_dict[VS_LIGHTS])
+        opp.async_create_task(forward_setup(config_entry, "light"))
+
     async def async_new_device_discovery(service):
         """Discover if new devices should be added."""
         manager = opp.data[DOMAIN][VS_MANAGER]
         switches = opp.data[DOMAIN][VS_SWITCHES]
         fans = opp.data[DOMAIN][VS_FANS]
+        lights = opp.data[DOMAIN][VS_LIGHTS]
 
         dev_dict = await async_process_devices(opp, manager)
         switch_devs = dev_dict.get(VS_SWITCHES, [])
         fan_devs = dev_dict.get(VS_FANS, [])
+        light_devs = dev_dict.get(VS_LIGHTS, [])
 
         switch_set = set(switch_devs)
         new_switches = list(switch_set.difference(switches))
@@ -126,6 +134,16 @@ async def async_setup_entry(opp, config_entry):
             fans.extend(new_fans)
             opp.async_create_task(forward_setup(config_entry, "fan"))
 
+        light_set = set(light_devs)
+        new_lights = list(light_set.difference(lights))
+        if new_lights and lights:
+            lights.extend(new_lights)
+            async_dispatcher_send(opp, VS_DISCOVERY.format(VS_LIGHTS), new_lights)
+            return
+        if new_lights and not lights:
+            lights.extend(new_lights)
+            opp.async_create_task(forward_setup(config_entry, "light"))
+
     opp.services.async_register(
         DOMAIN, SERVICE_UPDATE_DEVS, async_new_device_discovery
     )
@@ -138,8 +156,8 @@ async def async_unload_entry(opp, entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

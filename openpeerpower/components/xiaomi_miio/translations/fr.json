@@ -14,10 +14,11 @@
             "device": {
                 "data": {
                     "host": "Adresse IP",
+                    "model": "Mod\u00e8le d'appareil (facultatif)",
                     "name": "Nom de l'appareil",
                     "token": "Jeton d'API"
                 },
-                "description": "Vous aurez besoin des 32 caract\u00e8res Jeton d'API , voir https://www.open-peer-power.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token pour les instructions. Veuillez noter que cette Jeton d'API est diff\u00e9rente de la cl\u00e9 utilis\u00e9e par l'int\u00e9gration Xiaomi Aqara.",
+                "description": "Vous aurez besoin des 32 caract\u00e8res Jeton d'API , voir https://www.openpeerpower.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token pour les instructions. Veuillez noter que cette Jeton d'API est diff\u00e9rente de la cl\u00e9 utilis\u00e9e par l'int\u00e9gration Xiaomi Aqara.",
                 "title": "Connectez-vous \u00e0 un appareil Xiaomi Miio ou \u00e0 une passerelle Xiaomi"
             },
             "gateway": {
@@ -26,7 +27,7 @@
                     "name": "Nom de la passerelle",
                     "token": "Jeton d'API"
                 },
-                "description": "Vous aurez besoin du jeton API, voir https://www.open-peer-power.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token pour les instructions.",
+                "description": "Vous aurez besoin du jeton API, voir https://www.openpeerpower.io/integrations/vacuum.xiaomi_miio/#retrieving-the-access-token pour les instructions.",
                 "title": "Se connecter \u00e0 la passerelle Xiaomi"
             },
             "user": {

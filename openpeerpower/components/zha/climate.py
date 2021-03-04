@@ -2,7 +2,7 @@
 Climate on Zigbee Home Automation networks.
 
 For more details on this platform, please refer to the documentation
-at https://open-peer-power.io/components/zop.climate/
+at https://openpeerpower.io/components/zha.climate/
 """
 from datetime import datetime, timedelta
 import enum
@@ -47,11 +47,11 @@ from .core.const import (
     CHANNEL_FAN,
     CHANNEL_THERMOSTAT,
     DATA_ZHA,
-    DATA_ZOP_DISPATCHERS,
+    DATA_ZHA_DISPATCHERS,
     SIGNAL_ADD_ENTITIES,
     SIGNAL_ATTR_UPDATED,
 )
-from .core.registries import ZOP_ENTITIES
+from .core.registries import ZHA_ENTITIES
 from .entity import ZhaEntity
 
 DEPENDENCIES = ["zha"]
@@ -69,7 +69,7 @@ ATTR_UNOCCP_HEAT_SETPT = "unoccupied_heating_setpoint"
 ATTR_UNOCCP_COOL_SETPT = "unoccupied_cooling_setpoint"
 
 
-STRICT_MATCH = functools.partial(ZOP_ENTITIES.strict_match, DOMAIN)
+STRICT_MATCH = functools.partial(ZHA_ENTITIES.strict_match, DOMAIN)
 RUNNING_MODE = {0x00: HVAC_MODE_OFF, 0x03: HVAC_MODE_COOL, 0x04: HVAC_MODE_HEAT}
 
 
@@ -155,7 +155,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
             discovery.async_add_entities, async_add_entities, entities_to_create
         ),
     )
-    opp.data[DATA_ZHA][DATA_ZOP_DISPATCHERS].append(unsub)
+    opp.data[DATA_ZHA][DATA_ZHA_DISPATCHERS].append(unsub)
 
 
 @STRICT_MATCH(channel_names=CHANNEL_THERMOSTAT, aux_channels=CHANNEL_FAN)

@@ -13,11 +13,7 @@ from openpeerpower.const import CONF_EXCLUDE, CONF_LIGHTS, CONF_SOURCE
 from openpeerpower.core import callback
 from openpeerpower.helpers.entity_registry import EntityRegistry
 
-from .const import (  # pylint: disable=unused-import
-    CONF_CONTROLLER,
-    CONF_LEGACY_UNIQUE_ID,
-    DOMAIN,
-)
+from .const import CONF_CONTROLLER, CONF_LEGACY_UNIQUE_ID, DOMAIN
 
 LIST_REGEX = re.compile("[^0-9]+")
 _LOGGER = logging.getLogger(__name__)

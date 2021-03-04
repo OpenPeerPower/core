@@ -41,8 +41,8 @@ from .const import (
     CONF_RADIO_TYPE,
     CONF_ZIGPY,
     DATA_ZHA,
-    DATA_ZOP_BRIDGE_ID,
-    DATA_ZOP_GATEWAY,
+    DATA_ZHA_BRIDGE_ID,
+    DATA_ZHA_GATEWAY,
     DEBUG_COMP_BELLOWS,
     DEBUG_COMP_ZHA,
     DEBUG_COMP_ZIGPY,
@@ -62,19 +62,19 @@ from .const import (
     SIGNAL_REMOVE,
     UNKNOWN_MANUFACTURER,
     UNKNOWN_MODEL,
-    ZOP_GW_MSG,
-    ZOP_GW_MSG_DEVICE_FULL_INIT,
-    ZOP_GW_MSG_DEVICE_INFO,
-    ZOP_GW_MSG_DEVICE_JOINED,
-    ZOP_GW_MSG_DEVICE_REMOVED,
-    ZOP_GW_MSG_GROUP_ADDED,
-    ZOP_GW_MSG_GROUP_INFO,
-    ZOP_GW_MSG_GROUP_MEMBER_ADDED,
-    ZOP_GW_MSG_GROUP_MEMBER_REMOVED,
-    ZOP_GW_MSG_GROUP_REMOVED,
-    ZOP_GW_MSG_LOG_ENTRY,
-    ZOP_GW_MSG_LOG_OUTPUT,
-    ZOP_GW_MSG_RAW_INIT,
+    ZHA_GW_MSG,
+    ZHA_GW_MSG_DEVICE_FULL_INIT,
+    ZHA_GW_MSG_DEVICE_INFO,
+    ZHA_GW_MSG_DEVICE_JOINED,
+    ZHA_GW_MSG_DEVICE_REMOVED,
+    ZHA_GW_MSG_GROUP_ADDED,
+    ZHA_GW_MSG_GROUP_INFO,
+    ZHA_GW_MSG_GROUP_MEMBER_ADDED,
+    ZHA_GW_MSG_GROUP_MEMBER_REMOVED,
+    ZHA_GW_MSG_GROUP_REMOVED,
+    ZHA_GW_MSG_LOG_ENTRY,
+    ZHA_GW_MSG_LOG_OUTPUT,
+    ZHA_GW_MSG_RAW_INIT,
     RadioType,
 )
 from .device import (
@@ -110,7 +110,7 @@ class ZHAGateway:
 
     def __init__(self, opp, config, config_entry):
         """Initialize the gateway."""
-        self.opp = opp
+        self._opp = opp
         self._config = config
         self._devices = {}
         self._groups = {}
@@ -132,12 +132,12 @@ class ZHAGateway:
 
     async def async_initialize(self):
         """Initialize controller and connect radio."""
-        discovery.PROBE.initialize(self.opp)
-        discovery.GROUP_PROBE.initialize(self.opp)
+        discovery.PROBE.initialize(self._opp)
+        discovery.GROUP_PROBE.initialize(self._opp)
 
-        self.zha_storage = await async_get_registry(self.opp)
-        self.ha_device_registry = await get_dev_reg(self.opp)
-        self.ha_entity_registry = await get_ent_reg(self.opp)
+        self.zha_storage = await async_get_registry(self._opp)
+        self.ha_device_registry = await get_dev_reg(self._opp)
+        self.ha_entity_registry = await get_ent_reg(self._opp)
 
         radio_type = self._config_entry.data[CONF_RADIO_TYPE]
 
@@ -147,7 +147,7 @@ class ZHAGateway:
         app_config = self._config.get(CONF_ZIGPY, {})
         database = self._config.get(
             CONF_DATABASE,
-            os.path.join(self.opp.config.config_dir, DEFAULT_DATABASE_NAME),
+            os.path.join(self._opp.config.config_dir, DEFAULT_DATABASE_NAME),
         )
         app_config[CONF_DATABASE] = database
         app_config[CONF_DEVICE] = self._config_entry.data[CONF_DEVICE]
@@ -167,8 +167,8 @@ class ZHAGateway:
 
         self.application_controller.add_listener(self)
         self.application_controller.groups.add_listener(self)
-        self.opp.data[DATA_ZHA][DATA_ZOP_GATEWAY] = self
-        self.opp.data[DATA_ZHA][DATA_ZOP_BRIDGE_ID] = str(
+        self._opp.data[DATA_ZHA][DATA_ZHA_GATEWAY] = self
+        self._opp.data[DATA_ZHA][DATA_ZHA_BRIDGE_ID] = str(
             self.application_controller.ieee
         )
         self.async_load_devices()
@@ -201,7 +201,7 @@ class ZHAGateway:
         # writes and shutdown issues where storage isn't updated
         self._unsubs.append(
             async_track_time_interval(
-                self.opp, self.async_update_device_storage, timedelta(minutes=10)
+                self._opp, self.async_update_device_storage, timedelta(minutes=10)
             )
         )
 
@@ -247,11 +247,11 @@ class ZHAGateway:
         address
         """
         async_dispatcher_send(
-            self.opp,
-            ZOP_GW_MSG,
+            self._opp,
+            ZHA_GW_MSG,
             {
-                ATTR_TYPE: ZOP_GW_MSG_DEVICE_JOINED,
-                ZOP_GW_MSG_DEVICE_INFO: {
+                ATTR_TYPE: ZHA_GW_MSG_DEVICE_JOINED,
+                ZHA_GW_MSG_DEVICE_INFO: {
                     ATTR_NWK: device.nwk,
                     ATTR_IEEE: str(device.ieee),
                     DEVICE_PAIRING_STATUS: DevicePairingStatus.PAIRED.name,
@@ -263,11 +263,11 @@ class ZHAGateway:
         """Handle a device initialization without quirks loaded."""
         manuf = device.manufacturer
         async_dispatcher_send(
-            self.opp,
-            ZOP_GW_MSG,
+            self._opp,
+            ZHA_GW_MSG,
             {
-                ATTR_TYPE: ZOP_GW_MSG_RAW_INIT,
-                ZOP_GW_MSG_DEVICE_INFO: {
+                ATTR_TYPE: ZHA_GW_MSG_RAW_INIT,
+                ZHA_GW_MSG_DEVICE_INFO: {
                     ATTR_NWK: device.nwk,
                     ATTR_IEEE: str(device.ieee),
                     DEVICE_PAIRING_STATUS: DevicePairingStatus.INTERVIEW_COMPLETE.name,
@@ -280,7 +280,7 @@ class ZHAGateway:
 
     def device_initialized(self, device):
         """Handle device joined and basic information discovered."""
-        self.opp.async_create_task(self.async_device_initialized(device))
+        self._opp.async_create_task(self.async_device_initialized(device))
 
     def device_left(self, device: zigpy_dev.Device):
         """Handle device leaving the network."""
@@ -293,9 +293,9 @@ class ZHAGateway:
         # need to handle endpoint correctly on groups
         zha_group = self._async_get_or_create_group(zigpy_group)
         zha_group.info("group_member_removed - endpoint: %s", endpoint)
-        self._send_group_gateway_message(zigpy_group, ZOP_GW_MSG_GROUP_MEMBER_REMOVED)
+        self._send_group_gateway_message(zigpy_group, ZHA_GW_MSG_GROUP_MEMBER_REMOVED)
         async_dispatcher_send(
-            self.opp, f"{SIGNAL_GROUP_MEMBERSHIP_CHANGE}_0x{zigpy_group.group_id:04x}"
+            self._opp, f"{SIGNAL_GROUP_MEMBERSHIP_CHANGE}_0x{zigpy_group.group_id:04x}"
         )
 
     def group_member_added(
@@ -305,9 +305,9 @@ class ZHAGateway:
         # need to handle endpoint correctly on groups
         zha_group = self._async_get_or_create_group(zigpy_group)
         zha_group.info("group_member_added - endpoint: %s", endpoint)
-        self._send_group_gateway_message(zigpy_group, ZOP_GW_MSG_GROUP_MEMBER_ADDED)
+        self._send_group_gateway_message(zigpy_group, ZHA_GW_MSG_GROUP_MEMBER_ADDED)
         async_dispatcher_send(
-            self.opp, f"{SIGNAL_GROUP_MEMBERSHIP_CHANGE}_0x{zigpy_group.group_id:04x}"
+            self._opp, f"{SIGNAL_GROUP_MEMBERSHIP_CHANGE}_0x{zigpy_group.group_id:04x}"
         )
         if len(zha_group.members) == 2:
             # we need to do this because there wasn't already a group entity to remove and re-add
@@ -318,11 +318,11 @@ class ZHAGateway:
         zha_group = self._async_get_or_create_group(zigpy_group)
         zha_group.info("group_added")
         # need to dispatch for entity creation here
-        self._send_group_gateway_message(zigpy_group, ZOP_GW_MSG_GROUP_ADDED)
+        self._send_group_gateway_message(zigpy_group, ZHA_GW_MSG_GROUP_ADDED)
 
     def group_removed(self, zigpy_group: ZigpyGroupType) -> None:
         """Handle zigpy group removed event."""
-        self._send_group_gateway_message(zigpy_group, ZOP_GW_MSG_GROUP_REMOVED)
+        self._send_group_gateway_message(zigpy_group, ZHA_GW_MSG_GROUP_REMOVED)
         zha_group = self._groups.pop(zigpy_group.group_id, None)
         zha_group.info("group_removed")
         self._cleanup_group_entity_registry_entries(zigpy_group)
@@ -334,11 +334,11 @@ class ZHAGateway:
         zha_group = self._groups.get(zigpy_group.group_id)
         if zha_group is not None:
             async_dispatcher_send(
-                self.opp,
-                ZOP_GW_MSG,
+                self._opp,
+                ZHA_GW_MSG,
                 {
                     ATTR_TYPE: gateway_message_type,
-                    ZOP_GW_MSG_GROUP_INFO: zha_group.group_info,
+                    ZHA_GW_MSG_GROUP_INFO: zha_group.group_info,
                 },
             )
 
@@ -360,16 +360,16 @@ class ZHAGateway:
             device_info = zha_device.zha_device_info
             zha_device.async_cleanup_handles()
             async_dispatcher_send(
-                self.opp, "{}_{}".format(SIGNAL_REMOVE, str(zha_device.ieee))
+                self._opp, "{}_{}".format(SIGNAL_REMOVE, str(zha_device.ieee))
             )
             asyncio.ensure_future(self._async_remove_device(zha_device, entity_refs))
             if device_info is not None:
                 async_dispatcher_send(
-                    self.opp,
-                    ZOP_GW_MSG,
+                    self._opp,
+                    ZHA_GW_MSG,
                     {
-                        ATTR_TYPE: ZOP_GW_MSG_DEVICE_REMOVED,
-                        ZOP_GW_MSG_DEVICE_INFO: device_info,
+                        ATTR_TYPE: ZHA_GW_MSG_DEVICE_REMOVED,
+                        ZHA_GW_MSG_DEVICE_INFO: device_info,
                     },
                 )
 
@@ -499,7 +499,7 @@ class ZHAGateway:
         """Get or create a ZHA device."""
         zha_device = self._devices.get(zigpy_device.ieee)
         if zha_device is None:
-            zha_device = ZHADevice.new(self.opp, zigpy_device, self, restored)
+            zha_device = ZHADevice.new(self._opp, zigpy_device, self, restored)
             self._devices[zigpy_device.ieee] = zha_device
             device_registry_device = self.ha_device_registry.async_get_or_create(
                 config_entry_id=self._config_entry.entry_id,
@@ -519,7 +519,7 @@ class ZHAGateway:
         """Get or create a ZHA group."""
         zha_group = self._groups.get(zigpy_group.group_id)
         if zha_group is None:
-            zha_group = ZHAGroup(self.opp, self, zigpy_group)
+            zha_group = ZHAGroup(self._opp, self, zigpy_group)
             self._groups[zigpy_group.group_id] = zha_group
         return zha_group
 
@@ -572,11 +572,11 @@ class ZHAGateway:
         device_info = zha_device.zha_device_info
         device_info[DEVICE_PAIRING_STATUS] = DevicePairingStatus.INITIALIZED.name
         async_dispatcher_send(
-            self.opp,
-            ZOP_GW_MSG,
+            self._opp,
+            ZHA_GW_MSG,
             {
-                ATTR_TYPE: ZOP_GW_MSG_DEVICE_FULL_INIT,
-                ZOP_GW_MSG_DEVICE_INFO: device_info,
+                ATTR_TYPE: ZHA_GW_MSG_DEVICE_FULL_INIT,
+                ZHA_GW_MSG_DEVICE_INFO: device_info,
             },
         )
 
@@ -586,15 +586,15 @@ class ZHAGateway:
         await zha_device.async_configure()
         device_info[DEVICE_PAIRING_STATUS] = DevicePairingStatus.CONFIGURED.name
         async_dispatcher_send(
-            self.opp,
-            ZOP_GW_MSG,
+            self._opp,
+            ZHA_GW_MSG,
             {
-                ATTR_TYPE: ZOP_GW_MSG_DEVICE_FULL_INIT,
-                ZOP_GW_MSG_DEVICE_INFO: device_info,
+                ATTR_TYPE: ZHA_GW_MSG_DEVICE_FULL_INIT,
+                ZHA_GW_MSG_DEVICE_INFO: device_info,
             },
         )
         await zha_device.async_initialize(from_cache=False)
-        async_dispatcher_send(self.opp, SIGNAL_ADD_ENTITIES)
+        async_dispatcher_send(self._opp, SIGNAL_ADD_ENTITIES)
 
     async def _async_device_rejoined(self, zha_device):
         _LOGGER.debug(
@@ -607,11 +607,11 @@ class ZHAGateway:
         device_info = zha_device.device_info
         device_info[DEVICE_PAIRING_STATUS] = DevicePairingStatus.CONFIGURED.name
         async_dispatcher_send(
-            self.opp,
-            ZOP_GW_MSG,
+            self._opp,
+            ZHA_GW_MSG,
             {
-                ATTR_TYPE: ZOP_GW_MSG_DEVICE_FULL_INIT,
-                ZOP_GW_MSG_DEVICE_INFO: device_info,
+                ATTR_TYPE: ZHA_GW_MSG_DEVICE_FULL_INIT,
+                ZHA_GW_MSG_DEVICE_INFO: device_info,
             },
         )
         # force async_initialize() to fire so don't explicitly call it
@@ -734,6 +734,6 @@ class LogRelayHandler(logging.Handler):
         entry = LogEntry(record, stack, _figure_out_source(record, stack, self.opp))
         async_dispatcher_send(
             self.opp,
-            ZOP_GW_MSG,
-            {ATTR_TYPE: ZOP_GW_MSG_LOG_OUTPUT, ZOP_GW_MSG_LOG_ENTRY: entry.to_dict()},
+            ZHA_GW_MSG,
+            {ATTR_TYPE: ZHA_GW_MSG_LOG_OUTPUT, ZHA_GW_MSG_LOG_ENTRY: entry.to_dict()},
         )

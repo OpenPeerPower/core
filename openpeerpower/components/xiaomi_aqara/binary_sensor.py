@@ -202,7 +202,7 @@ class XiaomiMotionSensor(XiaomiBinarySensor):
 
     def __init__(self, device, opp, xiaomi_hub, config_entry):
         """Initialize the XiaomiMotionSensor."""
-        self.opp = opp
+        self._opp = opp
         self._no_motion_since = 0
         self._unsub_set_no_motion = None
         if "proto" not in device or int(device["proto"][0:1]) == 1:
@@ -254,7 +254,7 @@ class XiaomiMotionSensor(XiaomiBinarySensor):
             _LOGGER.debug(
                 "Skipping heartbeat of the motion sensor. "
                 "It can introduce an incorrect state because of a firmware "
-                "bug (https://github.com/open-peer-power/core/pull/"
+                "bug (https://github.com/openpeerpower/core/pull/"
                 "11631#issuecomment-357507744)"
             )
             return
@@ -273,11 +273,11 @@ class XiaomiMotionSensor(XiaomiBinarySensor):
                 if self._unsub_set_no_motion:
                     self._unsub_set_no_motion()
                 self._unsub_set_no_motion = async_call_later(
-                    self.opp, 120, self._async_set_no_motion
+                    self._opp, 120, self._async_set_no_motion
                 )
 
             if self.entity_id is not None:
-                self.opp.bus.fire(
+                self._opp.bus.fire(
                     "xiaomi_aqara.motion", {"entity_id": self.entity_id}
                 )
 
@@ -454,7 +454,7 @@ class XiaomiButton(XiaomiBinarySensor):
 
     def __init__(self, device, name, data_key, opp, xiaomi_hub, config_entry):
         """Initialize the XiaomiButton."""
-        self.opp = opp
+        self._opp = opp
         self._last_action = None
         super().__init__(device, name, xiaomi_hub, data_key, None, config_entry)
 
@@ -495,7 +495,7 @@ class XiaomiButton(XiaomiBinarySensor):
             _LOGGER.warning("Unsupported click_type detected: %s", value)
             return False
 
-        self.opp.bus.fire(
+        self._opp.bus.fire(
             "xiaomi_aqara.click",
             {"entity_id": self.entity_id, "click_type": click_type},
         )
@@ -509,7 +509,7 @@ class XiaomiCube(XiaomiBinarySensor):
 
     def __init__(self, device, opp, xiaomi_hub, config_entry):
         """Initialize the Xiaomi Cube."""
-        self.opp = opp
+        self._opp = opp
         self._last_action = None
         self._state = False
         if "proto" not in device or int(device["proto"][0:1]) == 1:
@@ -528,7 +528,7 @@ class XiaomiCube(XiaomiBinarySensor):
     def parse_data(self, data, raw_data):
         """Parse data sent by gateway."""
         if self._data_key in data:
-            self.opp.bus.fire(
+            self._opp.bus.fire(
                 "xiaomi_aqara.cube_action",
                 {"entity_id": self.entity_id, "action_type": data[self._data_key]},
             )
@@ -540,7 +540,7 @@ class XiaomiCube(XiaomiBinarySensor):
                 if isinstance(data["rotate"], int)
                 else data["rotate"].replace(",", ".")
             )
-            self.opp.bus.fire(
+            self._opp.bus.fire(
                 "xiaomi_aqara.cube_action",
                 {
                     "entity_id": self.entity_id,
@@ -556,7 +556,7 @@ class XiaomiCube(XiaomiBinarySensor):
                 if isinstance(data["rotate_degree"], int)
                 else data["rotate_degree"].replace(",", ".")
             )
-            self.opp.bus.fire(
+            self._opp.bus.fire(
                 "xiaomi_aqara.cube_action",
                 {
                     "entity_id": self.entity_id,

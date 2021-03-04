@@ -7,7 +7,7 @@ import logging
 import mimetypes
 import os
 import re
-from typing import Dict, Optional
+from typing import Dict, Optional, cast
 
 from aiohttp import web
 import mutagen
@@ -24,6 +24,7 @@ from openpeerpower.components.media_player.const import (
 )
 from openpeerpower.const import (
     ATTR_ENTITY_ID,
+    CONF_NAME,
     CONF_PLATFORM,
     HTTP_BAD_REQUEST,
     HTTP_NOT_FOUND,
@@ -33,8 +34,11 @@ from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers import config_per_platform, discovery
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.network import get_url
+from openpeerpower.helpers.service import async_set_service_schema
 from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.loader import async_get_integration
 from openpeerpower.setup import async_prepare_setup_platform
+from openpeerpower.util.yaml import load_yaml
 
 # mypy: allow-untyped-defs, no-check-untyped-defs
 
@@ -54,6 +58,9 @@ CONF_CACHE_DIR = "cache_dir"
 CONF_LANG = "language"
 CONF_SERVICE_NAME = "service_name"
 CONF_TIME_MEMORY = "time_memory"
+
+CONF_DESCRIPTION = "description"
+CONF_FIELDS = "fields"
 
 DEFAULT_CACHE = True
 DEFAULT_CACHE_DIR = "tts"
@@ -127,6 +134,13 @@ async def async_setup(opp, config):
     opp.http.register_view(TextToSpeechView(tts))
     opp.http.register_view(TextToSpeechUrlView(tts))
 
+    # Load service descriptions from tts/services.yaml
+    integration = await async_get_integration(opp, DOMAIN)
+    services_yaml = integration.file_path / "services.yaml"
+    services_dict = cast(
+        dict, await opp.async_add_executor_job(load_yaml, str(services_yaml))
+    )
+
     async def async_setup_platform(p_type, p_config=None, discovery_info=None):
         """Set up a TTS platform."""
         if p_config is None:
@@ -192,6 +206,14 @@ async def async_setup(opp, config):
         opp.services.async_register(
             DOMAIN, service_name, async_say_handle, schema=SCHEMA_SERVICE_SAY
         )
+
+        # Register the service description
+        service_desc = {
+            CONF_NAME: f"Say an TTS message with {p_type}",
+            CONF_DESCRIPTION: f"Say something using text-to-speech on a media player with {p_type}.",
+            CONF_FIELDS: services_dict[SERVICE_SAY][CONF_FIELDS],
+        }
+        async_set_service_schema(opp, DOMAIN, service_name, service_desc)
 
     setup_tasks = [
         asyncio.create_task(async_setup_platform(p_type, p_config))
@@ -287,7 +309,7 @@ class SpeechManager:
     @callback
     def async_register_engine(self, engine, provider, config):
         """Register a TTS provider."""
-        provider opp =self.opp
+        provider.opp = self.opp
         if provider.name is None:
             provider.name = engine
         self.providers[engine] = provider
@@ -490,7 +512,7 @@ class SpeechManager:
 class Provider:
     """Represent a single TTS provider."""
 
-    opp, Optional[OpenPeerPowerType] = None
+    opp: Optional[OpenPeerPowerType] = None
     name: Optional[str] = None
 
     @property
@@ -588,7 +610,7 @@ class TextToSpeechUrlView(OpenPeerPowerView):
             _LOGGER.error("Error on init tts: %s", err)
             return self.json({"error": err}, HTTP_BAD_REQUEST)
 
-        base = self.tts.base_url or get_url(self.tts(opp)
+        base = self.tts.base_url or get_url(self.tts.opp)
         url = base + path
 
         return self.json({"url": url, "path": path})

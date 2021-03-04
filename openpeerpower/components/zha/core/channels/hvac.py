@@ -2,7 +2,7 @@
 HVAC channels module for Zigbee Home Automation.
 
 For more details about this component, please refer to the documentation at
-https://open-peer-power.io/integrations/zha/
+https://openpeerpower.io/integrations/zha/
 """
 import asyncio
 from collections import namedtuple
@@ -434,7 +434,7 @@ class ThermostatChannel(ZigbeeChannel):
         if not isinstance(res, list):
             return False
 
-        return all([record.status == Status.SUCCESS for record in res[0]])
+        return all(record.status == Status.SUCCESS for record in res[0])
 
 
 @registries.ZIGBEE_CHANNEL_REGISTRY.register(hvac.UserInterface.cluster_id)

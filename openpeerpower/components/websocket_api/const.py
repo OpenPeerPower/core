@@ -9,7 +9,7 @@ from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers.json import JSONEncoder
 
 if TYPE_CHECKING:
-    from .connection import ActiveConnection  # noqa
+    from .connection import ActiveConnection
 
 
 WebSocketCommandHandler = Callable[[OpenPeerPower, "ActiveConnection", dict], None]
@@ -24,7 +24,7 @@ ERR_ID_REUSE = "id_reuse"
 ERR_INVALID_FORMAT = "invalid_format"
 ERR_NOT_FOUND = "not_found"
 ERR_NOT_SUPPORTED = "not_supported"
-ERR_OPEN_PEER_POWER_ERROR = "open_peer_power_error"
+ERR_HOME_ASSISTANT_ERROR = "open_peer_power_error"
 ERR_UNKNOWN_COMMAND = "unknown_command"
 ERR_UNKNOWN_ERROR = "unknown_error"
 ERR_UNAUTHORIZED = "unauthorized"

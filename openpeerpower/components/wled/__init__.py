@@ -30,7 +30,7 @@ from .const import (
 )
 
 SCAN_INTERVAL = timedelta(seconds=5)
-WLED_COMPONENTS = (LIGHT_DOMAIN, SENSOR_DOMAIN, SWITCH_DOMAIN)
+PLATFORMS = (LIGHT_DOMAIN, SENSOR_DOMAIN, SWITCH_DOMAIN)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -60,9 +60,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         )
 
     # Set up all platforms for this device/entry.
-    for component in WLED_COMPONENTS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -75,8 +75,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     unload_ok = all(
         await asyncio.gather(
             *(
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in WLED_COMPONENTS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             )
         )
     )

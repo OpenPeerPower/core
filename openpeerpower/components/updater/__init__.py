@@ -5,7 +5,7 @@ import logging
 
 import async_timeout
 from awesomeversion import AwesomeVersion
-from distro import linux_distribution  # pylint: disable=import-error
+from distro import linux_distribution
 import voluptuous as vol
 
 from openpeerpower.const import __version__ as current_version
@@ -23,7 +23,7 @@ CONF_COMPONENT_REPORTING = "include_used_components"
 
 DOMAIN = "updater"
 
-UPDATER_URL = "https://updater.open-peer-power.io/"
+UPDATER_URL = "https://updater.openpeerpower.io/"
 
 CONFIG_SCHEMA = vol.Schema(
     {
@@ -77,7 +77,7 @@ async def async_setup(opp, config):
             return Updater(False, "", "")
 
         # Load data from Supervisor
-        if opp.components.oppio.is oppio():
+        if opp.components.oppio.is_oppio():
             core_info = opp.components.oppio.get_core_info()
             newest = core_info["version_latest"]
 
@@ -127,7 +127,7 @@ async def get_newest_version(opp, huuid, include_components):
         info_object = await opp.helpers.system_info.async_get_system_info()
 
         if include_components:
-            info_object["components"] = list.opp.config.components)
+            info_object["components"] = list(opp.config.components)
 
         linux_dist = await opp.async_add_executor_job(linux_distribution, False)
         info_object["distribution"] = linux_dist[0]

@@ -25,7 +25,6 @@ from openpeerpower.const import (
     STATE_ON,
 )
 from openpeerpower.core import callback
-from openpeerpower.exceptions import PlatformNotReady
 from openpeerpower.helpers import entity_platform
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 from openpeerpower.helpers.dispatcher import (
@@ -115,10 +114,6 @@ async def async_setup_entry(
         timeout=DEFAULT_TIMEOUT,
     )
 
-    if not await device.can_connect_with_auth_check():
-        _LOGGER.warning("Failed to connect to %s", host)
-        raise PlatformNotReady
-
     apps_coordinator = opp.data[DOMAIN].get(CONF_APPS)
 
     entity = VizioDevice(config_entry, device, name, device_class, apps_coordinator)
@@ -183,12 +178,6 @@ class VizioDevice(MediaPlayerEntity):
 
     async def async_update(self) -> None:
         """Retrieve latest state of the device."""
-        if not self._model:
-            self._model = await self._device.get_model_name(log_api_exception=False)
-
-        if not self._sw_version:
-            self._sw_version = await self._device.get_version(log_api_exception=False)
-
         is_on = await self._device.get_power_state(log_api_exception=False)
 
         if is_on is None:
@@ -204,6 +193,12 @@ class VizioDevice(MediaPlayerEntity):
                 "Restored connection to %s", self._config_entry.data[CONF_HOST]
             )
             self._available = True
+
+        if not self._model:
+            self._model = await self._device.get_model_name(log_api_exception=False)
+
+        if not self._sw_version:
+            self._sw_version = await self._device.get_version(log_api_exception=False)
 
         if not is_on:
             self._state = STATE_OFF
@@ -291,7 +286,7 @@ class VizioDevice(MediaPlayerEntity):
     ) -> None:
         """Send update event when Vizio config entry is updated."""
         # Move this method to component level if another entity ever gets added for a single config entry.
-        # See here: https://github.com/open-peer-power/core/pull/30653#discussion_r366426121
+        # See here: https://github.com/openpeerpower/core/pull/30653#discussion_r366426121
         async_dispatcher_send(opp, config_entry.entry_id, config_entry)
 
     async def _async_update_options(self, config_entry: ConfigEntry) -> None:

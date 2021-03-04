@@ -54,7 +54,7 @@ ZW_HVAC_MODE_MAP: Dict[int, str] = {
     ThermostatMode.OFF: HVAC_MODE_OFF,
     ThermostatMode.HEAT: HVAC_MODE_HEAT,
     ThermostatMode.COOL: HVAC_MODE_COOL,
-    # Z-Wave auto mode is actually heat/cool in the.opp world
+    # Z-Wave auto mode is actually heat/cool in the opp world
     ThermostatMode.AUTO: HVAC_MODE_HEAT_COOL,
     ThermostatMode.AUXILIARY: HVAC_MODE_HEAT,
     ThermostatMode.FAN: HVAC_MODE_FAN_ONLY,
@@ -261,7 +261,10 @@ class ZWaveClimate(ZWaveBaseEntity, ClimateEntity):
         if self._current_mode and self._current_mode.value is None:
             # guard missing value
             return None
-        temp = self._setpoint_value(self._current_mode_setpoint_enums[0])
+        try:
+            temp = self._setpoint_value(self._current_mode_setpoint_enums[0])
+        except ValueError:
+            return None
         return temp.value if temp else None
 
     @property
@@ -270,7 +273,10 @@ class ZWaveClimate(ZWaveBaseEntity, ClimateEntity):
         if self._current_mode and self._current_mode.value is None:
             # guard missing value
             return None
-        temp = self._setpoint_value(self._current_mode_setpoint_enums[1])
+        try:
+            temp = self._setpoint_value(self._current_mode_setpoint_enums[1])
+        except ValueError:
+            return None
         return temp.value if temp else None
 
     @property

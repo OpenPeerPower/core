@@ -10,7 +10,7 @@ import openpeerpower.helpers.config_validation as cv
 
 DOMAIN = "velux"
 DATA_VELUX = "data_velux"
-SUPPORTED_DOMAINS = ["cover", "scene"]
+PLATFORMS = ["cover", "scene"]
 _LOGGER = logging.getLogger(__name__)
 
 CONFIG_SCHEMA = vol.Schema(
@@ -34,9 +34,9 @@ async def async_setup(opp, config):
         _LOGGER.exception("Can't connect to velux interface: %s", ex)
         return False
 
-    for component in SUPPORTED_DOMAINS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            discovery.async_load_platform(opp, component, DOMAIN, {}, config)
+            discovery.async_load_platform(opp, platform, DOMAIN, {}, config)
         )
     return True
 
@@ -47,13 +47,13 @@ class VeluxModule:
     def __init__(self, opp, domain_config):
         """Initialize for velux component."""
         self.pyvlx = None
-        self.opp = opp
+        self._opp = opp
         self._domain_config = domain_config
 
     def setup(self):
         """Velux component setup."""
 
-        async def on.opp_stop(event):
+        async def on_opp_stop(event):
             """Close connection when opp stops."""
             _LOGGER.debug("Velux interface terminated")
             await self.pyvlx.disconnect()
@@ -61,12 +61,12 @@ class VeluxModule:
         async def async_reboot_gateway(service_call):
             await self.pyvlx.reboot_gateway()
 
-        self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on.opp_stop)
+        self._opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on_opp_stop)
         host = self._domain_config.get(CONF_HOST)
         password = self._domain_config.get(CONF_PASSWORD)
         self.pyvlx = PyVLX(host=host, password=password)
 
-        self.opp.services.async_register(
+        self._opp.services.async_register(
             DOMAIN, "reboot_gateway", async_reboot_gateway
         )
 

@@ -123,7 +123,10 @@ async def async_setup_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry) -
         )
 
     # Ensure entry has a hostname, for older entries.
-    if CONFIG_ENTRY_HOSTNAME not in config_entry.data:
+    if (
+        CONFIG_ENTRY_HOSTNAME not in config_entry.data
+        or config_entry.data[CONFIG_ENTRY_HOSTNAME] != device.hostname
+    ):
         opp.config_entries.async_update_entry(
             entry=config_entry,
             data={CONFIG_ENTRY_HOSTNAME: device.hostname, **config_entry.data},

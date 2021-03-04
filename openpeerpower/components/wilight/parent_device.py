@@ -18,7 +18,7 @@ class WiLightParent:
     def __init__(self, opp, config_entry):
         """Initialize the system."""
         self._host = config_entry.data[CONF_HOST]
-        self.opp = opp
+        self._opp = opp
         self._api = None
 
     @property
@@ -34,7 +34,7 @@ class WiLightParent:
     async def async_setup(self):
         """Set up a WiLight Parent Device based on host parameter."""
         host = self._host
-       opp = self.opp
+        opp = self._opp
 
         api_device = await opp.async_add_executor_job(create_api_device, host)
 
@@ -58,7 +58,7 @@ class WiLightParent:
             )
 
         async def connect(api_device):
-            # Set up connection and hook it into HA for reconnect/shutdown.
+            # Set up connection and hook it into OP for reconnect/shutdown.
             _LOGGER.debug("Initiating connection to %s", api_device.device_id)
 
             client = await api_device.config_client(

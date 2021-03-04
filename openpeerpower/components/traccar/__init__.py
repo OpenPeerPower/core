@@ -3,7 +3,12 @@ from aiohttp import web
 import voluptuous as vol
 
 from openpeerpower.components.device_tracker import DOMAIN as DEVICE_TRACKER
-from openpeerpower.const import CONF_WEBHOOK_ID, HTTP_OK, HTTP_UNPROCESSABLE_ENTITY
+from openpeerpower.const import (
+    ATTR_ID,
+    CONF_WEBHOOK_ID,
+    HTTP_OK,
+    HTTP_UNPROCESSABLE_ENTITY,
+)
 from openpeerpower.helpers import config_entry_flow
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
@@ -13,7 +18,6 @@ from .const import (
     ATTR_ALTITUDE,
     ATTR_BATTERY,
     ATTR_BEARING,
-    ATTR_ID,
     ATTR_LATITUDE,
     ATTR_LONGITUDE,
     ATTR_SPEED,
