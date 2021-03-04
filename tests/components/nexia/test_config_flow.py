@@ -80,7 +80,7 @@ async def test_form_cannot_connect(opp):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_invalid_auth_http_401.opp):
+async def test_form_invalid_auth_http_401(opp):
     """Test we handle invalid auth error from http 401."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}

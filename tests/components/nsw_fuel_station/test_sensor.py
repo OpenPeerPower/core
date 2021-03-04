@@ -75,7 +75,7 @@ class FuelCheckClientMock:
     "openpeerpower.components.nsw_fuel_station.sensor.FuelCheckClient",
     new=FuelCheckClientMock,
 )
-async def test_setup_opp):
+async def test_setup(opp):
     """Test the setup with custom settings."""
     with assert_setup_component(1, sensor.DOMAIN):
         assert await async_setup_component(

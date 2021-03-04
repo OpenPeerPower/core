@@ -9,7 +9,7 @@ from openpeerpower.setup import async_setup_component
 from tests.common import patch_yaml_files
 
 
-async def test_setup_opp):
+async def test_setup(opp):
     """Test we can discover scripts."""
     scripts = [
         "/some/config/dir/python_scripts/hello.py",
@@ -154,7 +154,7 @@ async def test_accessing_forbidden_methods(opp, caplog):
     caplog.set_level(logging.ERROR)
 
     for source, name in {
-         opp.stop()": "OpenPeerPower.stop",
+        "opp.stop()": "OpenPeerPower.stop",
         "dt_util.set_default_time_zone()": "module.set_default_time_zone",
         "datetime.non_existing": "module.non_existing",
         "time.tzset()": "TimeWrapper.tzset",

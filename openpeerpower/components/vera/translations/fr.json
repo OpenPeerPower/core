@@ -22,7 +22,7 @@
                     "exclude": "Identifiants d'appareils Vera \u00e0 exclure de Open Peer Power.",
                     "lights": "Identifiants des interrupteurs vera \u00e0 traiter comme des lumi\u00e8res dans Open Peer Power"
                 },
-                "description": "Consultez la documentation de vera pour plus de d\u00e9tails sur les param\u00e8tres facultatifs: https://www.open-peer-power.io/integrations/vera/. Remarque: toute modification ici n\u00e9cessitera un red\u00e9marrage du serveur Open Peer Power. Pour effacer les valeurs, entrez un espace.",
+                "description": "Consultez la documentation de vera pour plus de d\u00e9tails sur les param\u00e8tres facultatifs: https://www.openpeerpower.io/integrations/vera/. Remarque: toute modification ici n\u00e9cessitera un red\u00e9marrage du serveur Open Peer Power. Pour effacer les valeurs, entrez un espace.",
                 "title": "Options du contr\u00f4leur Vera"
             }
         }

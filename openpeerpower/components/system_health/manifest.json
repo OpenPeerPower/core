@@ -1,7 +1,7 @@
 {
   "domain": "system_health",
   "name": "System Health",
-  "documentation": "https://www.open-peer-power.io/integrations/system_health",
+  "documentation": "https://www.openpeerpower.io/integrations/system_health",
   "dependencies": ["http"],
   "codeowners": [],
   "quality_scale": "internal"

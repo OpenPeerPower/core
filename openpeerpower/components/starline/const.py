@@ -9,7 +9,7 @@ PLATFORMS = ["device_tracker", "binary_sensor", "sensor", "lock", "switch"]
 CONF_APP_ID = "app_id"
 CONF_APP_SECRET = "app_secret"
 CONF_MFA_CODE = "mfa_code"
-CONF_CAPTCOP_CODE = "captcha_code"
+CONF_CAPTCHA_CODE = "captcha_code"
 
 DEFAULT_SCAN_INTERVAL = 180  # in seconds
 CONF_SCAN_OBD_INTERVAL = "scan_obd_interval"

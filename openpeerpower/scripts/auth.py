@@ -44,13 +44,13 @@ def run(args):
     parser_change_pw.add_argument("new_password", type=str)
     parser_change_pw.set_defaults(func=change_password)
 
-    asyncio.set_event_loop_policy(runner. OppEventLoopPolicy(False))
+    asyncio.set_event_loop_policy(runner.OppEventLoopPolicy(False))
     asyncio.run(run_command(parser.parse_args(args)))
 
 
 async def run_command(args):
     """Run the command."""
-   opp = OpenPeerPower()
+    opp = OpenPeerPower()
     opp.config.config_dir = os.path.join(os.getcwd(), args.config)
     opp.auth = await auth_manager_from_config(opp, [{"type": "openpeerpower"}], [])
     provider = opp.auth.auth_providers[0]
@@ -78,7 +78,7 @@ async def add_user(opp, provider, args):
     """Create a user."""
     try:
         provider.data.add_auth(args.username, args.password)
-    except.opp_auth.InvalidUser:
+    except opp_auth.InvalidUser:
         print("Username already exists!")
         return
 
@@ -92,7 +92,7 @@ async def validate_login(opp, provider, args):
     try:
         provider.data.validate_login(args.username, args.password)
         print("Auth valid")
-    except.opp_auth.InvalidAuth:
+    except opp_auth.InvalidAuth:
         print("Auth invalid")
 
 
@@ -102,5 +102,5 @@ async def change_password(opp, provider, args):
         provider.data.change_password(args.username, args.new_password)
         await provider.data.async_save()
         print("Password changed")
-    except.opp_auth.InvalidUser:
+    except opp_auth.InvalidUser:
         print("User not found")

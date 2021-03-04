@@ -58,7 +58,7 @@ def fake_log(log_key):
 
 
 @patch("os.path.isfile", Mock(return_value=True))
-async def test_setup_opp):
+async def test_setup(opp):
     """Test that sensor can be setup."""
     config = {"sensor": {"platform": "fail2ban", "jails": ["jail_one"]}}
     mock_fh = mock_open()

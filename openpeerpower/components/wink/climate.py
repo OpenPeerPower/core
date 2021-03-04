@@ -44,7 +44,7 @@ ATTR_SCHEDULE_ENABLED = "schedule_enabled"
 ATTR_SMART_TEMPERATURE = "smart_temperature"
 ATTR_TOTAL_CONSUMPTION = "total_consumption"
 
-OP_HVAC_TO_WINK = {
+HA_HVAC_TO_WINK = {
     HVAC_MODE_AUTO: "auto",
     HVAC_MODE_COOL: "cool_only",
     HVAC_MODE_FAN_ONLY: "fan_only",
@@ -52,7 +52,7 @@ OP_HVAC_TO_WINK = {
     HVAC_MODE_OFF: "off",
 }
 
-WINK_HVAC_TO_HA = {value: key for key, value in OP_HVAC_TO_WINK.items()}
+WINK_HVAC_TO_HA = {value: key for key, value in HA_HVAC_TO_WINK.items()}
 
 SUPPORT_FLAGS_THERMOSTAT = (
     SUPPORT_TARGET_TEMPERATURE
@@ -249,8 +249,8 @@ class WinkThermostat(WinkDevice, ClimateEntity):
             if mode in ("eco", "aux"):
                 continue
             try:
-                op_mode = WINK_HVAC_TO_HA[mode]
-                hvac_list.append(op_mode)
+                ha_mode = WINK_HVAC_TO_HA[mode]
+                hvac_list.append(ha_mode)
             except KeyError:
                 _LOGGER.error(
                     "Invalid operation mode mapping. %s doesn't map. "
@@ -287,7 +287,7 @@ class WinkThermostat(WinkDevice, ClimateEntity):
 
     def set_hvac_mode(self, hvac_mode):
         """Set new target hvac mode."""
-        hvac_mode_to_set = OP_HVAC_TO_WINK.get(hvac_mode)
+        hvac_mode_to_set = HA_HVAC_TO_WINK.get(hvac_mode)
         self.wink.set_operation_mode(hvac_mode_to_set)
 
     def set_preset_mode(self, preset_mode):
@@ -452,8 +452,8 @@ class WinkAC(WinkDevice, ClimateEntity):
             if mode == "auto_eco":
                 continue
             try:
-                op_mode = WINK_HVAC_TO_HA[mode]
-                hvac_list.append(op_mode)
+                ha_mode = WINK_HVAC_TO_HA[mode]
+                hvac_list.append(ha_mode)
             except KeyError:
                 _LOGGER.error(
                     "Invalid operation mode mapping. %s doesn't map. "
@@ -469,7 +469,7 @@ class WinkAC(WinkDevice, ClimateEntity):
 
     def set_hvac_mode(self, hvac_mode):
         """Set new target hvac mode."""
-        hvac_mode_to_set = OP_HVAC_TO_WINK.get(hvac_mode)
+        hvac_mode_to_set = HA_HVAC_TO_WINK.get(hvac_mode)
         self.wink.set_operation_mode(hvac_mode_to_set)
 
     def set_preset_mode(self, preset_mode):

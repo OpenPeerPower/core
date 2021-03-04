@@ -424,13 +424,13 @@ def async_update_segments(
 
     # Process deleted segments, remove them from Open Peer Power
     for segment_id in current_ids - segment_ids:
-        coordinator(opp.async_create_task(
+        coordinator.opp.async_create_task(
             async_remove_entity(segment_id, coordinator, current)
         )
 
     # Remove master if there is only 1 segment left
     if len(current_ids) > 1 and len(segment_ids) < 2:
-        coordinator(opp.async_create_task(
+        coordinator.opp.async_create_task(
             async_remove_entity(-1, coordinator, current)
         )
 
@@ -443,7 +443,7 @@ async def async_remove_entity(
     """Remove WLED segment light from Open Peer Power."""
     entity = current[index]
     await entity.async_remove(force_remove=True)
-    registry = await async_get_entity_registry(coordinator(opp)
+    registry = await async_get_entity_registry(coordinator.opp)
     if entity.entity_id in registry.entities:
         registry.async_remove(entity.entity_id)
     del current[index]

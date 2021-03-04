@@ -89,11 +89,11 @@ def get_url(
     ):
         scheme = "https" if opp.config.api.use_ssl else "http"
         current_url = yarl.URL.build(
-            scheme=scheme, host=request_host, port.opp.config.api.port
+            scheme=scheme, host=request_host, port=opp.config.api.port
         )
 
         known_hostnames = ["localhost"]
-        if opp.components.oppio.is oppio():
+        if opp.components.oppio.is_oppio():
             host_info = opp.components.oppio.get_host_info()
             known_hostnames.extend(
                 [host_info["hostname"], f"{host_info['hostname']}.local"]
@@ -136,7 +136,7 @@ def _get_internal_url(
 ) -> str:
     """Get internal URL of this instance."""
     if opp.config.internal_url:
-        internal_url = yarl.URL.opp.config.internal_url)
+        internal_url = yarl.URL(opp.config.internal_url)
         if (
             (not require_current_request or internal_url.host == _get_request_host())
             and (not require_ssl or internal_url.scheme == "https")
@@ -150,7 +150,7 @@ def _get_internal_url(
         require_ssl or opp.config.api is None or opp.config.api.use_ssl
     ):
         ip_url = yarl.URL.build(
-            scheme="http", host.opp.config.api.local_ip, port.opp.config.api.port
+            scheme="http", host=opp.config.api.local_ip, port=opp.config.api.port
         )
         if (
             not is_loopback(ip_address(ip_url.host))
@@ -181,7 +181,7 @@ def _get_external_url(
             pass
 
     if opp.config.external_url:
-        external_url = yarl.URL.opp.config.external_url)
+        external_url = yarl.URL(opp.config.external_url)
         if (
             (allow_ip or not is_ip_address(str(external_url.host)))
             and (
@@ -213,7 +213,7 @@ def _get_cloud_url(opp: OpenPeerPower, require_current_request: bool = False) ->
     if "cloud" in opp.config.components:
         try:
             cloud_url = yarl.URL(cast(str, opp.components.cloud.async_remote_ui_url()))
-        except.opp.components.cloud.CloudNotAvailable as err:
+        except opp.components.cloud.CloudNotAvailable as err:
             raise NoURLAvailableError from err
 
         if not require_current_request or cloud_url.host == _get_request_host():

@@ -117,7 +117,7 @@ async def test_time_event_does_not_send_message(opp, mqtt_mock):
     assert not mqtt_mock.async_publish.called
 
 
-async def test_receiving_remote_event_fires.opp_event(opp, mqtt_mock):
+async def test_receiving_remote_event_fires_opp_event(opp, mqtt_mock):
     """Test the receiving of the remotely fired event."""
     sub_topic = "foo"
     assert await add_eventstream(opp, sub_topic=sub_topic)

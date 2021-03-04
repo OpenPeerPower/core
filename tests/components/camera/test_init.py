@@ -117,7 +117,7 @@ async def test_snapshot_service(opp, mock_camera):
     with patch("openpeerpower.components.camera.open", mopen, create=True), patch(
         "openpeerpower.components.camera.os.path.exists",
         Mock(spec="os.path.exists", return_value=True),
-    ), patch.object.opp.config, "is_allowed_path", return_value=True):
+    ), patch.object(opp.config, "is_allowed_path", return_value=True):
         await opp.services.async_call(
             camera.DOMAIN,
             camera.SERVICE_SNAPSHOT,

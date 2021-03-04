@@ -18,7 +18,7 @@ from openpeerpower.setup import async_setup_component
 from tests.components.huisbaasje.test_data import MOCK_CURRENT_MEASUREMENTS
 
 
-async def test_setup_opp: OpenPeerPower):
+async def test_setup(opp: OpenPeerPower):
     """Test for successfully setting up the platform."""
     assert await async_setup_component(opp, huisbaasje.DOMAIN, {})
     await opp.async_block_till_done()

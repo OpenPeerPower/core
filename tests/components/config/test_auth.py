@@ -61,7 +61,7 @@ async def test_list(opp, opp_ws_client, opp_admin_user):
     data = result["result"]
     assert len(data) == 4
     assert data[0] == {
-        "id":.opp_admin_user.id,
+        "id": opp_admin_user.id,
         "username": "admin",
         "name": "Mock User",
         "is_owner": False,
@@ -118,7 +118,7 @@ async def test_delete_requires_admin(opp, opp_ws_client, opp_read_only_access_to
 async def test_delete_unable_self_account(opp, opp_ws_client, opp_access_token):
     """Test we cannot delete our own account."""
     client = await opp_ws_client(opp, opp_access_token)
-    refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
+    refresh_token = await opp.auth.async_validate_access_token(opp_access_token)
 
     await client.send_json(
         {"id": 5, "type": auth_config.WS_TYPE_DELETE, "user_id": refresh_token.user.id}

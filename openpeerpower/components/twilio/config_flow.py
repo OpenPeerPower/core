@@ -8,6 +8,6 @@ config_entry_flow.register_webhook_flow(
     "Twilio Webhook",
     {
         "twilio_url": "https://www.twilio.com/docs/glossary/what-is-a-webhook",
-        "docs_url": "https://www.open-peer-power.io/integrations/twilio/",
+        "docs_url": "https://www.openpeerpower.io/integrations/twilio/",
     },
 )

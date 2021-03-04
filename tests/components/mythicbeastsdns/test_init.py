@@ -29,7 +29,7 @@ async def test_update(opp):
             mythicbeastsdns.DOMAIN: {
                 "domain": "example.org",
                 "password": "correct",
-                "host":  opp.,
+                "host": "opp",
             }
         },
     )
@@ -46,7 +46,7 @@ async def test_update_fails_if_wrong_token(opp):
             mythicbeastsdns.DOMAIN: {
                 "domain": "example.org",
                 "password": "incorrect",
-                "host":  opp.,
+                "host": "opp",
             }
         },
     )
@@ -63,7 +63,7 @@ async def test_update_fails_if_invalid_host(opp):
             mythicbeastsdns.DOMAIN: {
                 "domain": "example.org",
                 "password": "correct",
-                "host": ".opp",
+                "host": "$opp",
             }
         },
     )

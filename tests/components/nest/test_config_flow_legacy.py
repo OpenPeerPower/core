@@ -24,7 +24,7 @@ async def test_abort_if_single_instance_allowed(opp):
     flow = config_flow.NestFlowHandler()
     flow.opp = opp
 
-    with patch.object.opp.config_entries, "async_entries", return_value=[{}]):
+    with patch.object(opp.config_entries, "async_entries", return_value=[{}]):
         result = await flow.async_step_init()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT

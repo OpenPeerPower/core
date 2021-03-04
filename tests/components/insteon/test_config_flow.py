@@ -136,7 +136,7 @@ async def test_form_select_plm(opp: OpenPeerPowerType):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_select_hub_v1.opp: OpenPeerPowerType):
+async def test_form_select_hub_v1(opp: OpenPeerPowerType):
     """Test we set up the Hub v1 correctly."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await _init_form(opp, HUB1)
@@ -154,7 +154,7 @@ async def test_form_select_hub_v1.opp: OpenPeerPowerType):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_select_hub_v2.opp: OpenPeerPowerType):
+async def test_form_select_hub_v2(opp: OpenPeerPowerType):
     """Test we set up the Hub v2 correctly."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await _init_form(opp, HUB2)
@@ -233,7 +233,7 @@ async def _options_init_form(opp, entry_id, step):
     return result2
 
 
-async def test_import_min_hub_v2.opp: OpenPeerPowerType):
+async def test_import_min_hub_v2(opp: OpenPeerPowerType):
     """Test importing a minimum Hub v2 config from yaml."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -251,7 +251,7 @@ async def test_import_min_hub_v2.opp: OpenPeerPowerType):
         assert entry.data[CONF_HUB_VERSION] == 2
 
 
-async def test_import_min_hub_v1.opp: OpenPeerPowerType):
+async def test_import_min_hub_v1(opp: OpenPeerPowerType):
     """Test importing a minimum Hub v1 config from yaml."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -404,7 +404,7 @@ async def test_options_remove_device_override(opp: OpenPeerPowerType):
     assert len(config_entry.options[CONF_OVERRIDE]) == 1
 
 
-async def test_options_remove_device_override_with_x10.opp: OpenPeerPowerType):
+async def test_options_remove_device_override_with_x10(opp: OpenPeerPowerType):
     """Test removing a device override when an X10 device is configured."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,

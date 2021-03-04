@@ -22,7 +22,7 @@
                     "exclude": "ID-ji naprav Vera, ki jih \u017eelite izklju\u010diti iz programa Open Peer Power.",
                     "lights": "ID-ji stikal Vera, ki naj jih Open Peer Power tretira kot lu\u010di."
                 },
-                "description": "Podrobnosti o izbirnih parametrih najdete v vera dokumentaciji: https://www.open-peer-power.io/integrations/vera/. Opomba: Za vse spremembe tukaj bo potreben ponovni zagon stre\u017enika Open Peer Power. \u010ce \u017eelite po\u010distiti vrednosti, vnesite presledek.",
+                "description": "Podrobnosti o izbirnih parametrih najdete v vera dokumentaciji: https://www.openpeerpower.io/integrations/vera/. Opomba: Za vse spremembe tukaj bo potreben ponovni zagon stre\u017enika Open Peer Power. \u010ce \u017eelite po\u010distiti vrednosti, vnesite presledek.",
                 "title": "Mo\u017enosti krmilnika vera"
             }
         }

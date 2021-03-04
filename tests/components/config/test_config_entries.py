@@ -32,7 +32,7 @@ def client(opp, opp_client):
     """Fixture that can interact with the config manager API."""
     opp.loop.run_until_complete(async_setup_component(opp, "http", {}))
     opp.loop.run_until_complete(config_entries.async_setup(opp))
-    yield.opp.loop.run_until_complete.opp_client())
+    yield opp.loop.run_until_complete(opp_client())
 
 
 async def test_get_entries(opp, client):
@@ -146,7 +146,7 @@ async def test_reload_invalid_entry(opp, client):
 
 async def test_remove_entry_unauth(opp, client, opp_admin_user):
     """Test removing an entry via the API."""
-    opp.admin_user.groups = []
+    opp_admin_user.groups = []
     entry = MockConfigEntry(domain="demo", state=core_ce.ENTRY_STATE_LOADED)
     entry.add_to_opp(opp)
     resp = await client.delete(f"/api/config/config_entries/entry/{entry.entry_id}")
@@ -156,7 +156,7 @@ async def test_remove_entry_unauth(opp, client, opp_admin_user):
 
 async def test_reload_entry_unauth(opp, client, opp_admin_user):
     """Test reloading an entry via the API."""
-    opp.admin_user.groups = []
+    opp_admin_user.groups = []
     entry = MockConfigEntry(domain="demo", state=core_ce.ENTRY_STATE_LOADED)
     entry.add_to_opp(opp)
     resp = await client.post(
@@ -240,7 +240,7 @@ async def test_initialize_flow(opp, client):
 
 async def test_initialize_flow_unauth(opp, client, opp_admin_user):
     """Test we can initialize a flow."""
-    opp.admin_user.groups = []
+    opp_admin_user.groups = []
 
     class TestFlow(core_ce.ConfigFlow):
         async def async_step_user(self, user_input=None):
@@ -421,7 +421,7 @@ async def test_continue_flow_unauth(opp, client, opp_admin_user):
             "errors": None,
         }
 
-    opp.admin_user.groups = []
+    opp_admin_user.groups = []
 
     resp = await client.post(
         f"/api/config/config_entries/flow/{flow_id}",
@@ -439,7 +439,7 @@ async def test_get_progress_index(opp, opp_ws_client):
     class TestFlow(core_ce.ConfigFlow):
         VERSION = 5
 
-        async def async_step.oppio(self, info):
+        async def async_step_oppio(self, info):
             return await self.async_step_account()
 
         async def async_step_account(self, user_input=None):
@@ -447,7 +447,7 @@ async def test_get_progress_index(opp, opp_ws_client):
 
     with patch.dict(HANDLERS, {"test": TestFlow}):
         form = await opp.config_entries.flow.async_init(
-            "test", context={"source":  opp.o"}
+            "test", context={"source": "oppio"}
         )
 
     await ws_client.send_json({"id": 5, "type": "config_entries/flow/progress"})
@@ -459,7 +459,7 @@ async def test_get_progress_index(opp, opp_ws_client):
             "flow_id": form["flow_id"],
             "handler": "test",
             "step_id": "account",
-            "context": {"source":  opp.o"},
+            "context": {"source": "oppio"},
         }
     ]
 
@@ -467,7 +467,7 @@ async def test_get_progress_index(opp, opp_ws_client):
 async def test_get_progress_index_unauth(opp, opp_ws_client, opp_admin_user):
     """Test we can't get flows that are in progress."""
     assert await async_setup_component(opp, "config", {})
-    opp.admin_user.groups = []
+    opp_admin_user.groups = []
     ws_client = await opp_ws_client(opp)
 
     await ws_client.send_json({"id": 5, "type": "config_entries/flow/progress"})
@@ -535,7 +535,7 @@ async def test_get_progress_flow_unauth(opp, client, opp_admin_user):
     assert resp.status == 200
     data = await resp.json()
 
-    opp.admin_user.groups = []
+    opp_admin_user.groups = []
 
     resp2 = await client.get(
         "/api/config/config_entries/flow/{}".format(data["flow_id"])

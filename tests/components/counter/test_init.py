@@ -40,7 +40,7 @@ def storage_setup(opp, opp_storage):
 
     async def _storage(items=None, config=None):
         if items is None:
-            opp.storage[DOMAIN] = {
+            opp_storage[DOMAIN] = {
                 "key": DOMAIN,
                 "version": 1,
                 "data": {
@@ -58,7 +58,7 @@ def storage_setup(opp, opp_storage):
                 },
             }
         else:
-            opp.storage[DOMAIN] = {
+            opp_storage[DOMAIN] = {
                 "key": DOMAIN,
                 "version": 1,
                 "data": {"items": items},
@@ -282,7 +282,7 @@ async def test_counter_context(opp, opp_admin_user):
         "increment",
         {"entity_id": state.entity_id},
         True,
-        Context(user_id(opp_admin_user.id),
+        Context(user_id=opp_admin_user.id),
     )
 
     state2 = opp.states.get("counter.test")
@@ -306,7 +306,7 @@ async def test_counter_min(opp, opp_admin_user):
         "decrement",
         {"entity_id": state.entity_id},
         True,
-        Context(user_id(opp_admin_user.id),
+        Context(user_id=opp_admin_user.id),
     )
 
     state2 = opp.states.get("counter.test")
@@ -318,7 +318,7 @@ async def test_counter_min(opp, opp_admin_user):
         "increment",
         {"entity_id": state.entity_id},
         True,
-        Context(user_id(opp_admin_user.id),
+        Context(user_id=opp_admin_user.id),
     )
 
     state2 = opp.states.get("counter.test")
@@ -341,7 +341,7 @@ async def test_counter_max(opp, opp_admin_user):
         "increment",
         {"entity_id": state.entity_id},
         True,
-        Context(user_id(opp_admin_user.id),
+        Context(user_id=opp_admin_user.id),
     )
 
     state2 = opp.states.get("counter.test")
@@ -353,7 +353,7 @@ async def test_counter_max(opp, opp_admin_user):
         "decrement",
         {"entity_id": state.entity_id},
         True,
-        Context(user_id(opp_admin_user.id),
+        Context(user_id=opp_admin_user.id),
     )
 
     state2 = opp.states.get("counter.test")
@@ -378,7 +378,7 @@ async def test_configure(opp, opp_admin_user):
         "configure",
         {"entity_id": state.entity_id, "maximum": 0},
         True,
-        Context(user_id(opp_admin_user.id),
+        Context(user_id=opp_admin_user.id),
     )
 
     state = opp.states.get("counter.test")
@@ -392,7 +392,7 @@ async def test_configure(opp, opp_admin_user):
         "configure",
         {"entity_id": state.entity_id, "maximum": None},
         True,
-        Context(user_id(opp_admin_user.id),
+        Context(user_id=opp_admin_user.id),
     )
 
     state = opp.states.get("counter.test")
@@ -407,7 +407,7 @@ async def test_configure(opp, opp_admin_user):
         "configure",
         {"entity_id": state.entity_id, "minimum": 5},
         True,
-        Context(user_id(opp_admin_user.id),
+        Context(user_id=opp_admin_user.id),
     )
 
     state = opp.states.get("counter.test")
@@ -421,7 +421,7 @@ async def test_configure(opp, opp_admin_user):
         "configure",
         {"entity_id": state.entity_id, "minimum": None},
         True,
-        Context(user_id(opp_admin_user.id),
+        Context(user_id=opp_admin_user.id),
     )
 
     state = opp.states.get("counter.test")
@@ -436,7 +436,7 @@ async def test_configure(opp, opp_admin_user):
         "configure",
         {"entity_id": state.entity_id, "step": 3},
         True,
-        Context(user_id(opp_admin_user.id),
+        Context(user_id=opp_admin_user.id),
     )
 
     state = opp.states.get("counter.test")
@@ -450,7 +450,7 @@ async def test_configure(opp, opp_admin_user):
         "configure",
         {"entity_id": state.entity_id, "value": 6},
         True,
-        Context(user_id(opp_admin_user.id),
+        Context(user_id=opp_admin_user.id),
     )
 
     state = opp.states.get("counter.test")
@@ -463,7 +463,7 @@ async def test_configure(opp, opp_admin_user):
         "configure",
         {"entity_id": state.entity_id, "initial": 5},
         True,
-        Context(user_id(opp_admin_user.id),
+        Context(user_id=opp_admin_user.id),
     )
 
     state = opp.states.get("counter.test")
@@ -484,7 +484,7 @@ async def test_configure(opp, opp_admin_user):
             "initial": 6,
         },
         True,
-        Context(user_id(opp_admin_user.id),
+        Context(user_id=opp_admin_user.id),
     )
 
     state = opp.states.get("counter.test")

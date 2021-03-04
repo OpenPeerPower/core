@@ -58,7 +58,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 
 class WirelessTagPlatform:
-    """Principal object to manage all registered in HA tags."""
+    """Principal object to manage all registered in OP tags."""
 
     def __init__(self, opp, api):
         """Designated initializer for wirelesstags platform."""
@@ -199,7 +199,7 @@ def setup(opp, config):
     except (ConnectTimeout, HTTPError, WirelessTagsException) as ex:
         _LOGGER.error("Unable to connect to wirelesstag.net service: %s", str(ex))
         opp.components.persistent_notification.create(
-            f"Error: {ex}<br />Please restart.opp after fixing this.",
+            f"Error: {ex}<br />Please restart opp after fixing this.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
@@ -215,7 +215,7 @@ def setup(opp, config):
 
 
 class WirelessTagBaseSensor(Entity):
-    """Base class for HA implementation for Wireless Sensor Tag."""
+    """Base class for OP implementation for Wireless Sensor Tag."""
 
     def __init__(self, api, tag):
         """Initialize a base sensor for Wireless Sensor Tag platform."""

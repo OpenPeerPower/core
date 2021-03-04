@@ -221,7 +221,7 @@ async def test_gateway_trigger_reauth_flow(opp):
     with patch(
         "openpeerpower.components.deconz.gateway.get_gateway",
         side_effect=AuthenticationRequired,
-    ), patch.object.opp.config_entries.flow, "async_init") as mock_flow_init:
+    ), patch.object(opp.config_entries.flow, "async_init") as mock_flow_init:
         await setup_deconz_integration(opp)
         mock_flow_init.assert_called_once()
 

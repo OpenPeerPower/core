@@ -1,7 +1,7 @@
 {
   "domain": "trafikverket_train",
   "name": "Trafikverket Train",
-  "documentation": "https://www.open-peer-power.io/integrations/trafikverket_train",
+  "documentation": "https://www.openpeerpower.io/integrations/trafikverket_train",
   "requirements": ["pytrafikverket==0.1.6.2"],
   "codeowners": ["@endor-force"]
 }

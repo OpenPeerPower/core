@@ -1,7 +1,7 @@
 {
   "domain": "touchline",
   "name": "Roth Touchline",
-  "documentation": "https://www.open-peer-power.io/integrations/touchline",
+  "documentation": "https://www.openpeerpower.io/integrations/touchline",
   "requirements": ["pytouchline==0.7"],
   "codeowners": []
 }

@@ -56,11 +56,11 @@ async def test_hmip_alarm_control_panel(opp, default_mock_hap_factory):
         test_groups=["EXTERNAL", "INTERNAL"]
     )
 
-    op_state, hmip_device = get_and_check_entity_basics(
+    ha_state, hmip_device = get_and_check_entity_basics(
         opp, mock_hap, entity_id, entity_name, device_model
     )
 
-    assert op_state.state == "disarmed"
+    assert ha_state.state == "disarmed"
     assert not hmip_device
 
     home = mock_hap.home

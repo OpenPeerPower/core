@@ -433,7 +433,7 @@ async def test_reloading_groups(opp):
 
     await opp.async_block_till_done()
 
-    assert sorted.opp.states.async_entity_ids()) == [
+    assert sorted(opp.states.async_entity_ids()) == [
         "group.all_tests",
         "group.empty_group",
         "group.second_group",
@@ -454,7 +454,7 @@ async def test_reloading_groups(opp):
         await opp.services.async_call(group.DOMAIN, SERVICE_RELOAD)
         await opp.async_block_till_done()
 
-    assert sorted.opp.states.async_entity_ids()) == [
+    assert sorted(opp.states.async_entity_ids()) == [
         "group.all_tests",
         "group.hello",
     ]
@@ -490,7 +490,7 @@ async def test_modify_group(opp):
     assert group_state.attributes.get(ATTR_FRIENDLY_NAME) == "friendly_name"
 
 
-async def test_setup_opp):
+async def test_setup(opp):
     """Test setup method."""
     opp.states.async_set("light.Bowl", STATE_ON)
     opp.states.async_set("light.Ceiling", STATE_OFF)

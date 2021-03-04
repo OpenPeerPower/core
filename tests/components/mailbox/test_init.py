@@ -13,7 +13,7 @@ def mock_http_client(opp, opp_client):
     """Start the Open Peer Power HTTP component."""
     config = {mailbox.DOMAIN: {"platform": "demo"}}
     opp.loop.run_until_complete(async_setup_component(opp, mailbox.DOMAIN, config))
-    return opp.loop.run_until_complete.opp_client())
+    return opp.loop.run_until_complete(opp_client())
 
 
 async def test_get_platforms_from_mailbox(mock_http_client):

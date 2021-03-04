@@ -8,7 +8,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     """Set up a Volvo switch."""
     if discovery_info is None:
         return
-    async_add_entities([VolvoSwitch.opp.data[DATA_KEY], *discovery_info)])
+    async_add_entities([VolvoSwitch(opp.data[DATA_KEY], *discovery_info)])
 
 
 class VolvoSwitch(VolvoEntity, ToggleEntity):

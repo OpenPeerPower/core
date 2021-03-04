@@ -27,7 +27,7 @@ def _to_skybell_level(level):
     return int((level * 100) / 255)
 
 
-def _to(opp_level(level):
+def _to_opp_level(level):
     """Convert the given Skybell (0-100) light level to Open Peer Power (0-255)."""
     return int((level * 255) / 100)
 
@@ -67,7 +67,7 @@ class SkybellLight(SkybellDevice, LightEntity):
     @property
     def brightness(self):
         """Return the brightness of the light."""
-        return _to(opp_level(self._device.led_intensity)
+        return _to_opp_level(self._device.led_intensity)
 
     @property
     def hs_color(self):

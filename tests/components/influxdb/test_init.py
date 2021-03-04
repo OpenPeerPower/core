@@ -366,7 +366,7 @@ async def test_event_listener(
     """Test the event listener."""
     handler_method = await _setup(opp, mock_client, config_ext, get_write_api)
 
-    # map of HA State to valid influxdb [state, value] fields
+    # map of OP State to valid influxdb [state, value] fields
     valid = {
         "1": [None, 1],
         "1.0": [None, 1.0],
@@ -933,7 +933,7 @@ async def test_event_listener_invalid_type(
     """Test the event listener when an attribute has an invalid type."""
     handler_method = await _setup(opp, mock_client, config_ext, get_write_api)
 
-    # map of HA State to valid influxdb [state, value] fields
+    # map of OP State to valid influxdb [state, value] fields
     valid = {
         "1": [None, 1],
         "1.0": [None, 1.0],

@@ -29,7 +29,7 @@ async def test_update_scene(opp, opp_client):
 
     with patch("openpeerpower.components.config._read", mock_read), patch(
         "openpeerpower.components.config._write", mock_write
-    ), patch("openpeerpower.config.async.opp_config_yaml", return_value={}):
+    ), patch("openpeerpower.config.async_opp_config_yaml", return_value={}):
         resp = await client.post(
             "/api/config/scene/config/light_off",
             data=json.dumps(
@@ -86,7 +86,7 @@ async def test_bad_formatted_scene(opp, opp_client):
 
     with patch("openpeerpower.components.config._read", mock_read), patch(
         "openpeerpower.components.config._write", mock_write
-    ), patch("openpeerpower.config.async.opp_config_yaml", return_value={}):
+    ), patch("openpeerpower.config.async_opp_config_yaml", return_value={}):
         resp = await client.post(
             "/api/config/scene/config/light_off",
             data=json.dumps(
@@ -148,7 +148,7 @@ async def test_delete_scene(opp, opp_client):
 
     with patch("openpeerpower.components.config._read", mock_read), patch(
         "openpeerpower.components.config._write", mock_write
-    ), patch("openpeerpower.config.async.opp_config_yaml", return_value={}):
+    ), patch("openpeerpower.config.async_opp_config_yaml", return_value={}):
         resp = await client.delete("/api/config/scene/config/light_on")
         await opp.async_block_till_done()
 

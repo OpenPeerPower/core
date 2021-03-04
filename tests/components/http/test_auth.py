@@ -13,7 +13,7 @@ from openpeerpower.components.http.const import KEY_AUTHENTICATED
 from openpeerpower.components.http.forwarded import async_setup_forwarded
 from openpeerpower.setup import async_setup_component
 
-from . import HTTP_HEADER_OP_AUTH, mock_real_ip
+from . import HTTP_HEADER_HA_AUTH, mock_real_ip
 
 API_PASSWORD = "test-password"
 
@@ -33,7 +33,7 @@ async def mock_handler(request):
     if not request[KEY_AUTHENTICATED]:
         raise HTTPUnauthorized
 
-    user = request.get(.opp_user")
+    user = request.get("opp_user")
     user_id = user.id if user else None
 
     return web.json_response(status=200, data={"user_id": user_id})
@@ -48,7 +48,7 @@ async def get_legacy_user(auth):
 
 
 @pytest.fixture
-def app.opp):
+def app(opp):
     """Fixture to set up a web.Application."""
     app = web.Application()
     app["opp"] = opp
@@ -93,10 +93,10 @@ async def test_cant_access_with_password_in_header(
     setup_auth(opp, app)
     client = await aiohttp_client(app)
 
-    req = await client.get("/", headers={HTTP_HEADER_OP_AUTH: API_PASSWORD})
+    req = await client.get("/", headers={HTTP_HEADER_HA_AUTH: API_PASSWORD})
     assert req.status == 401
 
-    req = await client.get("/", headers={HTTP_HEADER_OP_AUTH: "wrong-pass"})
+    req = await client.get("/", headers={HTTP_HEADER_HA_AUTH: "wrong-pass"})
     assert req.status == 401
 
 
@@ -215,7 +215,7 @@ async def test_auth_legacy_support_api_password_cannot_access(
     setup_auth(opp, app)
     client = await aiohttp_client(app)
 
-    req = await client.get("/", headers={HTTP_HEADER_OP_AUTH: API_PASSWORD})
+    req = await client.get("/", headers={HTTP_HEADER_HA_AUTH: API_PASSWORD})
     assert req.status == 401
 
     resp = await client.get("/", params={"api_password": API_PASSWORD})

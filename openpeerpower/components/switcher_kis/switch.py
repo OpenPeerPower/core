@@ -30,7 +30,7 @@ from . import (
 CONF_AUTO_OFF = "auto_off"
 CONF_TIMER_MINUTES = "timer_minutes"
 
-DEVICE_PROPERTIES_TO_OP_ATTRIBUTES = {
+DEVICE_PROPERTIES_TO_HA_ATTRIBUTES = {
     "power_consumption": ATTR_CURRENT_POWER_W,
     "electric_current": ATTR_ELECTRIC_CURRENT,
     "remaining_time": ATTR_REMAINING_TIME,
@@ -143,7 +143,7 @@ class SwitcherControl(SwitchEntity):
         """Return the optional state attributes."""
         attribs = {}
 
-        for prop, attr in DEVICE_PROPERTIES_TO_OP_ATTRIBUTES.items():
+        for prop, attr in DEVICE_PROPERTIES_TO_HA_ATTRIBUTES.items():
             value = getattr(self._device_data, prop)
             if value and value is not WAITING_TEXT:
                 attribs[attr] = value

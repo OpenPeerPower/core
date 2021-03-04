@@ -9,7 +9,7 @@ from openpeerpower.setup import async_setup_component
 
 
 @pytest.fixture(name="google_setup")
-def mock_google_setup_opp):
+def mock_google_setup(opp):
     """Mock the google set up functions."""
     p_auth = patch(
         "openpeerpower.components.google.do_authentication", side_effect=google.do_setup

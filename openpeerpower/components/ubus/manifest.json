@@ -1,7 +1,7 @@
 {
   "domain": "ubus",
   "name": "OpenWrt (ubus)",
-  "documentation": "https://www.open-peer-power.io/integrations/ubus",
+  "documentation": "https://www.openpeerpower.io/integrations/ubus",
   "requirements": ["openwrt-ubus-rpc==0.0.2"],
   "codeowners": ["@noltari"]
 }

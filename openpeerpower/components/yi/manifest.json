@@ -1,7 +1,7 @@
 {
   "domain": "yi",
   "name": "Yi Home Cameras",
-  "documentation": "https://www.open-peer-power.io/integrations/yi",
+  "documentation": "https://www.openpeerpower.io/integrations/yi",
   "requirements": ["aioftp==0.12.0"],
   "dependencies": ["ffmpeg"],
   "codeowners": ["@bachya"]

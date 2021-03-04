@@ -17,7 +17,7 @@ from . import (
 
 from tests.common import async_fire_time_changed
 
-MELACOP_PARAMS = [
+MELACHA_PARAMS = [
     make_nyc_test_params(dt(2018, 9, 1, 16, 0), STATE_ON),
     make_nyc_test_params(dt(2018, 9, 1, 20, 21), STATE_OFF),
     make_nyc_test_params(dt(2018, 9, 7, 13, 1), STATE_OFF),
@@ -33,7 +33,7 @@ MELACOP_PARAMS = [
     make_jerusalem_test_params(dt(2018, 10, 1, 21, 25), STATE_OFF),
 ]
 
-MELACOP_TEST_IDS = [
+MELACHA_TEST_IDS = [
     "currently_first_shabbat",
     "after_first_shabbat",
     "friday_upcoming_shabbat",
@@ -61,8 +61,8 @@ MELACOP_TEST_IDS = [
         "longitude",
         "result",
     ],
-    MELACOP_PARAMS,
-    ids=MELACOP_TEST_IDS,
+    MELACHA_PARAMS,
+    ids=MELACHA_TEST_IDS,
 )
 async def test_issur_melacha_sensor(
     opp,

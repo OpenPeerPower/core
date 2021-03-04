@@ -79,7 +79,7 @@ async def setup_tests(opp, config, times, values, expected_state):
     return state
 
 
-async def test_dataSet1.opp):
+async def test_dataSet1(opp):
     """Test derivative sensor state."""
     await setup_tests(
         opp,
@@ -101,7 +101,7 @@ async def test_dataSet2(opp):
     )
 
 
-async def test_dataSet3.opp):
+async def test_dataSet3(opp):
     """Test derivative sensor state."""
     state = await setup_tests(
         opp,
@@ -114,7 +114,7 @@ async def test_dataSet3.opp):
     assert state.attributes.get("unit_of_measurement") == f"/{TIME_SECONDS}"
 
 
-async def test_dataSet4.opp):
+async def test_dataSet4(opp):
     """Test derivative sensor state."""
     await setup_tests(
         opp,
@@ -125,7 +125,7 @@ async def test_dataSet4.opp):
     )
 
 
-async def test_dataSet5.opp):
+async def test_dataSet5(opp):
     """Test derivative sensor state."""
     await setup_tests(
         opp,
@@ -136,7 +136,7 @@ async def test_dataSet5.opp):
     )
 
 
-async def test_dataSet6.opp):
+async def test_dataSet6(opp):
     """Test derivative sensor state."""
     await setup_tests(opp, {}, times=[0, 60], values=[0, 1 / 60], expected_state=1)
 

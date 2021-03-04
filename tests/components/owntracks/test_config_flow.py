@@ -89,7 +89,7 @@ async def test_import(opp, webhook_id, secret):
     assert result["description_placeholders"] is None
 
 
-async def test_import_setup_opp):
+async def test_import_setup(opp):
     """Test that we automatically create a config flow."""
     await async_process_op_core_config(
         opp,
@@ -102,7 +102,7 @@ async def test_import_setup_opp):
     assert opp.config_entries.async_entries(DOMAIN)
 
 
-async def test_abort_if_already_setup_opp):
+async def test_abort_if_already_setup(opp):
     """Test that we can't add more than one instance."""
     flow = await init_config_flow(opp)
 

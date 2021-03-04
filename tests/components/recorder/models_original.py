@@ -54,7 +54,7 @@ class Events(Base):  # type: ignore
         )
 
     def to_native(self):
-        """Convert to a natve HA Event."""
+        """Convert to a natve OP Event."""
         try:
             return Event(
                 self.event_type,
@@ -112,7 +112,7 @@ class States(Base):  # type: ignore
         return dbstate
 
     def to_native(self):
-        """Convert to an HA state object."""
+        """Convert to an OP state object."""
         try:
             return State(
                 self.entity_id,

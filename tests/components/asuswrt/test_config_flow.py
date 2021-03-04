@@ -195,7 +195,7 @@ async def test_error_invalid_host(opp):
         assert result["errors"] == {"base": "invalid_host"}
 
 
-async def test_abort_if_already_setup_opp):
+async def test_abort_if_already_setup(opp):
     """Test we abort if component is already setup."""
     MockConfigEntry(
         domain=DOMAIN,

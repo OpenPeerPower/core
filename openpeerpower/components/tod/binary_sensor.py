@@ -145,7 +145,7 @@ class TodSensor(BinarySensorEntity):
             # Convert local time provided to UTC today
             # datetime.combine(date, time, tzinfo) is not supported
             # in python 3.5. The self._after is provided
-            # with.opp configured TZ not system wide
+            # with opp configured TZ not system wide
             after_event_date = self._naive_time_to_utc_datetime(self._after)
 
         self._time_after = after_event_date

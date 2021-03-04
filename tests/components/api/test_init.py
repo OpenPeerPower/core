@@ -9,7 +9,7 @@ import voluptuous as vol
 
 from openpeerpower import const
 from openpeerpower.bootstrap import DATA_LOGGING
-import openpeerpower.core as op
+import openpeerpower.core as ha
 from openpeerpower.setup import async_setup_component
 
 from tests.common import async_mock_service
@@ -19,7 +19,7 @@ from tests.common import async_mock_service
 def mock_api_client(opp, opp_client):
     """Start the Open Peer Power HTTP component and return admin API client."""
     opp.loop.run_until_complete(async_setup_component(opp, "api", {}))
-    return opp.loop.run_until_complete.opp_client())
+    return opp.loop.run_until_complete(opp_client())
 
 
 async def test_api_list_state_entities(opp, mock_api_client):
@@ -29,7 +29,7 @@ async def test_api_list_state_entities(opp, mock_api_client):
     assert resp.status == 200
     json = await resp.json()
 
-    remote_data = [op.State.from_dict(item) for item in json]
+    remote_data = [ha.State.from_dict(item) for item in json]
     assert remote_data == opp.states.async_all()
 
 
@@ -40,7 +40,7 @@ async def test_api_get_state(opp, mock_api_client):
     assert resp.status == 200
     json = await resp.json()
 
-    data = op.State.from_dict(json)
+    data = ha.State.from_dict(json)
 
     state = opp.states.get("hello.world")
 
@@ -113,7 +113,7 @@ async def test_api_state_change_push(opp, mock_api_client):
 
     events = []
 
-    @op.callback
+    @ha.callback
     def event_listener(event):
         """Track events."""
         events.append(event)
@@ -136,7 +136,7 @@ async def test_api_fire_event_with_no_data(opp, mock_api_client):
     """Test if the API allows us to fire an event."""
     test_value = []
 
-    @op.callback
+    @ha.callback
     def listener(event):
         """Record that our event got called."""
         test_value.append(1)
@@ -154,7 +154,7 @@ async def test_api_fire_event_with_data(opp, mock_api_client):
     """Test if the API allows us to fire an event."""
     test_value = []
 
-    @op.callback
+    @ha.callback
     def listener(event):
         """Record that our event got called.
 
@@ -177,7 +177,7 @@ async def test_api_fire_event_with_invalid_json(opp, mock_api_client):
     """Test if the API allows us to fire an event."""
     test_value = []
 
-    @op.callback
+    @ha.callback
     def listener(event):
         """Record that our event got called."""
         test_value.append(1)
@@ -256,7 +256,7 @@ async def test_api_call_service_no_data(opp, mock_api_client):
     """Test if the API allows us to call a service."""
     test_value = []
 
-    @op.callback
+    @ha.callback
     def listener(service_call):
         """Record that our service got called."""
         test_value.append(1)
@@ -272,7 +272,7 @@ async def test_api_call_service_with_data(opp, mock_api_client):
     """Test if the API allows us to call a service."""
     test_value = []
 
-    @op.callback
+    @ha.callback
     def listener(service_call):
         """Record that our service got called.
 
@@ -373,7 +373,7 @@ async def _stream_next_event(stream):
 
 def _listen_count(opp):
     """Return number of event listeners."""
-    return sum.opp.bus.async_listeners().values())
+    return sum(opp.bus.async_listeners().values())
 
 
 async def test_api_error_log(opp, aiohttp_client, opp_access_token, opp_admin_user):
@@ -391,7 +391,7 @@ async def test_api_error_log(opp, aiohttp_client, opp_access_token, opp_admin_us
     ) as mock_file:
         resp = await client.get(
             const.URL_API_ERROR_LOG,
-            headers={"Authorization": f"Bearer  opp.access_token}"},
+            headers={"Authorization": f"Bearer {opp_access_token}"},
         )
 
     assert len(mock_file.mock_calls) == 1
@@ -400,10 +400,10 @@ async def test_api_error_log(opp, aiohttp_client, opp_access_token, opp_admin_us
     assert await resp.text() == "Hello"
 
     # Verify we require admin user
-    opp.admin_user.groups = []
+    opp_admin_user.groups = []
     resp = await client.get(
         const.URL_API_ERROR_LOG,
-        headers={"Authorization": f"Bearer  opp.access_token}"},
+        headers={"Authorization": f"Bearer {opp_access_token}"},
     )
     assert resp.status == 401
 
@@ -412,7 +412,7 @@ async def test_api_fire_event_context(opp, mock_api_client, opp_access_token):
     """Test if the API sets right context if we fire an event."""
     test_value = []
 
-    @op.callback
+    @ha.callback
     def listener(event):
         """Record that our event got called."""
         test_value.append(event)
@@ -421,11 +421,11 @@ async def test_api_fire_event_context(opp, mock_api_client, opp_access_token):
 
     await mock_api_client.post(
         "/api/events/test.event",
-        headers={"authorization": f"Bearer  opp.access_token}"},
+        headers={"authorization": f"Bearer {opp_access_token}"},
     )
     await opp.async_block_till_done()
 
-    refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
+    refresh_token = await opp.auth.async_validate_access_token(opp_access_token)
 
     assert len(test_value) == 1
     assert test_value[0].context.user_id == refresh_token.user.id
@@ -437,11 +437,11 @@ async def test_api_call_service_context(opp, mock_api_client, opp_access_token):
 
     await mock_api_client.post(
         "/api/services/test_domain/test_service",
-        headers={"authorization": f"Bearer  opp.access_token}"},
+        headers={"authorization": f"Bearer {opp_access_token}"},
     )
     await opp.async_block_till_done()
 
-    refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
+    refresh_token = await opp.auth.async_validate_access_token(opp_access_token)
 
     assert len(calls) == 1
     assert calls[0].context.user_id == refresh_token.user.id
@@ -452,10 +452,10 @@ async def test_api_set_state_context(opp, mock_api_client, opp_access_token):
     await mock_api_client.post(
         "/api/states/light.kitchen",
         json={"state": "on"},
-        headers={"authorization": f"Bearer  opp.access_token}"},
+        headers={"authorization": f"Bearer {opp_access_token}"},
     )
 
-    refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
+    refresh_token = await opp.auth.async_validate_access_token(opp_access_token)
 
     state = opp.states.get("light.kitchen")
     assert state.context.user_id == refresh_token.user.id
@@ -463,14 +463,14 @@ async def test_api_set_state_context(opp, mock_api_client, opp_access_token):
 
 async def test_event_stream_requires_admin(opp, mock_api_client, opp_admin_user):
     """Test user needs to be admin to access event stream."""
-    opp.admin_user.groups = []
+    opp_admin_user.groups = []
     resp = await mock_api_client.get("/api/stream")
     assert resp.status == 401
 
 
 async def test_states_view_filters(opp, mock_api_client, opp_admin_user):
     """Test filtering only visible states."""
-    opp.admin_user.mock_policy({"entities": {"entity_ids": {"test.entity": True}}})
+    opp_admin_user.mock_policy({"entities": {"entity_ids": {"test.entity": True}}})
     opp.states.async_set("test.entity", "hello")
     opp.states.async_set("test.not_visible_entity", "invisible")
     resp = await mock_api_client.get(const.URL_API_STATES)
@@ -482,35 +482,35 @@ async def test_states_view_filters(opp, mock_api_client, opp_admin_user):
 
 async def test_get_entity_state_read_perm(opp, mock_api_client, opp_admin_user):
     """Test getting a state requires read permission."""
-    opp.admin_user.mock_policy({})
+    opp_admin_user.mock_policy({})
     resp = await mock_api_client.get("/api/states/light.test")
     assert resp.status == 401
 
 
 async def test_post_entity_state_admin(opp, mock_api_client, opp_admin_user):
     """Test updating state requires admin."""
-    opp.admin_user.groups = []
+    opp_admin_user.groups = []
     resp = await mock_api_client.post("/api/states/light.test")
     assert resp.status == 401
 
 
 async def test_delete_entity_state_admin(opp, mock_api_client, opp_admin_user):
     """Test deleting entity requires admin."""
-    opp.admin_user.groups = []
+    opp_admin_user.groups = []
     resp = await mock_api_client.delete("/api/states/light.test")
     assert resp.status == 401
 
 
 async def test_post_event_admin(opp, mock_api_client, opp_admin_user):
     """Test sending event requires admin."""
-    opp.admin_user.groups = []
+    opp_admin_user.groups = []
     resp = await mock_api_client.post("/api/events/state_changed")
     assert resp.status == 401
 
 
 async def test_rendering_template_admin(opp, mock_api_client, opp_admin_user):
     """Test rendering a template requires admin."""
-    opp.admin_user.groups = []
+    opp_admin_user.groups = []
     resp = await mock_api_client.post(const.URL_API_TEMPLATE)
     assert resp.status == 401
 
@@ -538,7 +538,7 @@ async def test_api_call_service_bad_data(opp, mock_api_client):
     """Test if the API fails 400 if unknown service."""
     test_value = []
 
-    @op.callback
+    @ha.callback
     def listener(service_call):
         """Record that our service got called."""
         test_value.append(1)

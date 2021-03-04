@@ -1,4 +1,4 @@
-"""Script to install/uninstall HA into OS X."""
+"""Script to install/uninstall OP into OS X."""
 import os
 import time
 
@@ -7,8 +7,8 @@ import time
 
 def install_osx():
     """Set up to run via launchd on OS X."""
-    with os.popen("which.opp") as inp:
-        opp.path = inp.read().strip()
+    with os.popen("which opp") as inp:
+        opp_path = inp.read().strip()
 
     with os.popen("whoami") as inp:
         user = inp.read().strip()

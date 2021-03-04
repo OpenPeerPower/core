@@ -14,7 +14,7 @@ from .core.helpers import async_get_zha_device
 CONF_SUBTYPE = "subtype"
 DEVICE = "device"
 DEVICE_IEEE = "device_ieee"
-ZOP_EVENT = "zha_event"
+ZHA_EVENT = "zha_event"
 
 TRIGGER_SCHEMA = TRIGGER_BASE_SCHEMA.extend(
     {vol.Required(CONF_TYPE): str, vol.Required(CONF_SUBTYPE): str}
@@ -55,7 +55,7 @@ async def async_attach_trigger(opp, config, action, automation_info):
 
     event_config = {
         event_trigger.CONF_PLATFORM: "event",
-        event_trigger.CONF_EVENT_TYPE: ZOP_EVENT,
+        event_trigger.CONF_EVENT_TYPE: ZHA_EVENT,
         event_trigger.CONF_EVENT_DATA: {DEVICE_IEEE: str(zha_device.ieee), **trigger},
     }
 

@@ -95,9 +95,9 @@ def _async_loop_exception_handler(_: Any, context: Dict[str, Any]) -> None:
     )
 
 
-async def setup_and_run(opp(runtime_config: RuntimeConfig) -> int:
+async def setup_and_run_opp(runtime_config: RuntimeConfig) -> int:
     """Set up Open Peer Power and run."""
-   opp = await bootstrap.async_setup_opp(runtime_config)
+    opp = await bootstrap.async_setup_opp(runtime_config)
 
     if opp is None:
         return 1
@@ -107,5 +107,5 @@ async def setup_and_run(opp(runtime_config: RuntimeConfig) -> int:
 
 def run(runtime_config: RuntimeConfig) -> int:
     """Run Open Peer Power."""
-    asyncio.set_event_loop_policy( OppEventLoopPolicy(runtime_config.debug))
-    return asyncio.run(setup_and_run(opp(runtime_config))
+    asyncio.set_event_loop_policy(OppEventLoopPolicy(runtime_config.debug))
+    return asyncio.run(setup_and_run_opp(runtime_config))

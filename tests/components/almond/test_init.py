@@ -15,13 +15,13 @@ from tests.common import MockConfigEntry, async_fire_time_changed
 
 
 @pytest.fixture(autouse=True)
-def patch.opp_state(opp):
+def patch_opp_state(opp):
     """Mock the opp.state to be not_running."""
     opp.state = core.CoreState.not_running
 
 
 async def test_set_up_oauth_remote_url(opp, aioclient_mock):
-    """Test we set up Almond to connect to HA if we have external url."""
+    """Test we set up Almond to connect to OP if we have external url."""
     entry = MockConfigEntry(
         domain="almond",
         data={
@@ -54,7 +54,7 @@ async def test_set_up_oauth_remote_url(opp, aioclient_mock):
 
 
 async def test_set_up_oauth_no_external_url(opp, aioclient_mock):
-    """Test we do not set up Almond to connect to HA if we have no external url."""
+    """Test we do not set up Almond to connect to OP if we have no external url."""
     entry = MockConfigEntry(
         domain="almond",
         data={
@@ -75,12 +75,12 @@ async def test_set_up_oauth_no_external_url(opp, aioclient_mock):
     assert len(mock_create_device.mock_calls) == 0
 
 
-async def test_set_up.oppio(opp, aioclient_mock):
-    """Test we do not set up Almond to connect to HA if we use Opp.io."""
+async def test_set_up_oppio(opp, aioclient_mock):
+    """Test we do not set up Almond to connect to OP if we use Opp.io."""
     entry = MockConfigEntry(
         domain="almond",
         data={
-            "is oppio": True,
+            "is_oppio": True,
             "type": const.TYPE_LOCAL,
             "host": "http://localhost:9999",
         },
@@ -95,7 +95,7 @@ async def test_set_up.oppio(opp, aioclient_mock):
 
 
 async def test_set_up_local(opp, aioclient_mock):
-    """Test we do not set up Almond to connect to HA if we use local."""
+    """Test we do not set up Almond to connect to OP if we use local."""
 
     # Set up an internal URL, as Almond won't be set up if there is no URL available
     await async_process_op_core_config(

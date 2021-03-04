@@ -54,7 +54,7 @@ async def test_update_device_config(opp, opp_client):
 
     with patch("openpeerpower.components.config._read", mock_read), patch(
         "openpeerpower.components.config._write", mock_write
-    ), patch.object.opp.services, "async_call", mock_call):
+    ), patch.object(opp.services, "async_call", mock_call):
         resp = await client.post(
             "/api/config/group/config/hello_beer",
             data=json.dumps(

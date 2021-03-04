@@ -17,7 +17,7 @@ async def test_load_from_storage(opp, opp_storage):
     """Test that entity map can be correctly loaded from cache."""
     hkid = "00:00:00:00:00:00"
 
-    opp.storage["homekit_controller-entity-map"] = {
+    opp_storage["homekit_controller-entity-map"] = {
         "version": 1,
         "data": {"pairings": {hkid: {"c#": 1, "accessories": []}}},
     }

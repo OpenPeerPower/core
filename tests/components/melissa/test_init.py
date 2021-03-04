@@ -6,7 +6,7 @@ from openpeerpower.components import melissa
 VALID_CONFIG = {"melissa": {"username": "********", "password": "********"}}
 
 
-async def test_setup_opp):
+async def test_setup(opp):
     """Test setting up the Melissa component."""
     with patch("melissa.AsyncMelissa") as mocked_melissa, patch.object(
         melissa, "async_load_platform"

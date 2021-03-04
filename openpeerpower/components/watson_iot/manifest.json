@@ -1,7 +1,7 @@
 {
   "domain": "watson_iot",
   "name": "IBM Watson IoT Platform",
-  "documentation": "https://www.open-peer-power.io/integrations/watson_iot",
+  "documentation": "https://www.openpeerpower.io/integrations/watson_iot",
   "requirements": ["ibmiotf==0.3.4"],
   "codeowners": []
 }

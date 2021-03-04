@@ -527,7 +527,7 @@ async def test_current_cover_position(opp, mqtt_mock):
     state_attributes_dict = opp.states.get("cover.test").attributes
     assert not (ATTR_CURRENT_POSITION in state_attributes_dict)
     assert not (ATTR_CURRENT_TILT_POSITION in state_attributes_dict)
-    assert not (4 &.opp.states.get("cover.test").attributes["supported_features"] == 4)
+    assert not (4 & opp.states.get("cover.test").attributes["supported_features"] == 4)
 
     async_fire_mqtt_message(opp, "get-position-topic", "0")
     current_cover_position = opp.states.get("cover.test").attributes[
@@ -578,7 +578,7 @@ async def test_current_cover_position_inverted(opp, mqtt_mock):
     state_attributes_dict = opp.states.get("cover.test").attributes
     assert not (ATTR_CURRENT_POSITION in state_attributes_dict)
     assert not (ATTR_CURRENT_TILT_POSITION in state_attributes_dict)
-    assert not (4 &.opp.states.get("cover.test").attributes["supported_features"] == 4)
+    assert not (4 & opp.states.get("cover.test").attributes["supported_features"] == 4)
 
     async_fire_mqtt_message(opp, "get-position-topic", "100")
     current_percentage_cover_position = opp.states.get("cover.test").attributes[
@@ -661,7 +661,7 @@ async def test_position_update(opp, mqtt_mock):
     state_attributes_dict = opp.states.get("cover.test").attributes
     assert not (ATTR_CURRENT_POSITION in state_attributes_dict)
     assert not (ATTR_CURRENT_TILT_POSITION in state_attributes_dict)
-    assert 4 &.opp.states.get("cover.test").attributes["supported_features"] == 4
+    assert 4 & opp.states.get("cover.test").attributes["supported_features"] == 4
 
     async_fire_mqtt_message(opp, "get-position-topic", "22")
     state_attributes_dict = opp.states.get("cover.test").attributes
@@ -1912,7 +1912,7 @@ async def test_update_with_json_attrs_not_dict(opp, mqtt_mock, caplog):
     )
 
 
-async def test_update_with_json_attrs_bad_JSON.opp, mqtt_mock, caplog):
+async def test_update_with_json_attrs_bad_JSON(opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_bad_JSON(
         opp, mqtt_mock, caplog, cover.DOMAIN, DEFAULT_CONFIG

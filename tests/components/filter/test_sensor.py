@@ -17,7 +17,7 @@ from openpeerpower.components.filter.sensor import (
 )
 from openpeerpower.components.sensor import DEVICE_CLASS_TEMPERATURE
 from openpeerpower.const import SERVICE_RELOAD, STATE_UNAVAILABLE, STATE_UNKNOWN
-import openpeerpower.core as op
+import openpeerpower.core as ha
 from openpeerpower.setup import async_setup_component
 import openpeerpower.util.dt as dt_util
 
@@ -31,7 +31,7 @@ def values():
     raw_values = [20, 19, 18, 21, 22, 0]
     timestamp = dt_util.utcnow()
     for val in raw_values:
-        values.append(op.State("sensor.test_monitored", val, last_updated=timestamp))
+        values.append(ha.State("sensor.test_monitored", val, last_updated=timestamp))
         timestamp += timedelta(minutes=1)
     return values
 
@@ -106,10 +106,10 @@ async def test_chain_history(opp, values, missing=False):
     else:
         fake_states = {
             "sensor.test_monitored": [
-                op.State("sensor.test_monitored", 18.0, last_changed=t_0),
-                op.State("sensor.test_monitored", "unknown", last_changed=t_1),
-                op.State("sensor.test_monitored", 19.0, last_changed=t_2),
-                op.State("sensor.test_monitored", 18.2, last_changed=t_3),
+                ha.State("sensor.test_monitored", 18.0, last_changed=t_0),
+                ha.State("sensor.test_monitored", "unknown", last_changed=t_1),
+                ha.State("sensor.test_monitored", 19.0, last_changed=t_2),
+                ha.State("sensor.test_monitored", 18.2, last_changed=t_3),
             ]
         }
 
@@ -183,7 +183,7 @@ async def test_source_state_none(opp, values):
         "fixtures",
         "template/sensor_configuration.yaml",
     )
-    with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
+    with patch.object(opp_config, "YAML_CONFIG_FILE", yaml_path):
         await opp.services.async_call(
             "template",
             SERVICE_RELOAD,
@@ -226,9 +226,9 @@ async def test_history_time(opp):
 
     fake_states = {
         "sensor.test_monitored": [
-            op.State("sensor.test_monitored", 18.0, last_changed=t_0),
-            op.State("sensor.test_monitored", 19.0, last_changed=t_1),
-            op.State("sensor.test_monitored", 18.2, last_changed=t_2),
+            ha.State("sensor.test_monitored", 18.0, last_changed=t_0),
+            ha.State("sensor.test_monitored", 19.0, last_changed=t_1),
+            ha.State("sensor.test_monitored", 18.2, last_changed=t_2),
         ]
     }
     with patch(
@@ -248,7 +248,7 @@ async def test_history_time(opp):
             assert "18.0" == state.state
 
 
-async def test_setup_opp):
+async def test_setup(opp):
     """Test if filter attributes are inherited."""
     config = {
         "sensor": {
@@ -337,7 +337,7 @@ def test_outlier_step(values):
 def test_initial_outlier(values):
     """Test issue #13363."""
     filt = OutlierFilter(window_size=3, precision=2, entity=None, radius=4.0)
-    out = op.State("sensor.test_monitored", 4000)
+    out = ha.State("sensor.test_monitored", 4000)
     for state in [out] + values:
         filtered = filt.filter_state(state)
     assert 21 == filtered.state
@@ -346,7 +346,7 @@ def test_initial_outlier(values):
 def test_unknown_state_outlier(values):
     """Test issue #32395."""
     filt = OutlierFilter(window_size=3, precision=2, entity=None, radius=4.0)
-    out = op.State("sensor.test_monitored", "unknown")
+    out = ha.State("sensor.test_monitored", "unknown")
     for state in [out] + values + [out]:
         try:
             filtered = filt.filter_state(state)
@@ -366,7 +366,7 @@ def test_precision_zero(values):
 def test_lowpass(values):
     """Test if lowpass filter works."""
     filt = LowPassFilter(window_size=10, precision=2, entity=None, time_constant=10)
-    out = op.State("sensor.test_monitored", "unknown")
+    out = ha.State("sensor.test_monitored", "unknown")
     for state in [out] + values + [out]:
         try:
             filtered = filt.filter_state(state)
@@ -475,7 +475,7 @@ async def test_reload(opp):
         "fixtures",
         "filter/configuration.yaml",
     )
-    with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
+    with patch.object(opp_config, "YAML_CONFIG_FILE", yaml_path):
         await opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,

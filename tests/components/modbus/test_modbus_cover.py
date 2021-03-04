@@ -114,7 +114,7 @@ async def test_coil_cover(opp, regs, expected):
         ),
     ],
 )
-async def test_register_COVER.opp, regs, expected):
+async def test_register_COVER(opp, regs, expected):
     """Run test for given config."""
     cover_name = "modbus_test_cover"
     state = await base_test(

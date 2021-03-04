@@ -280,7 +280,7 @@ async def test_intent_request_with_parameters_but_empty_v2(fixture):
     assert text == "You told us your sign is ."
 
 
-async def test_intent_request_without_slots_v1.opp, fixture):
+async def test_intent_request_without_slots_v1(opp, fixture):
     """Test a request without slots."""
     mock_client, webhook_id = fixture
     data = Data.v1
@@ -310,7 +310,7 @@ async def test_intent_request_without_slots_v1.opp, fixture):
     assert text == "You are both home, you silly"
 
 
-async def test_intent_request_without_slots_v2.opp, fixture):
+async def test_intent_request_without_slots_v2(opp, fixture):
     """Test a request without slots."""
     mock_client, webhook_id = fixture
     data = Data.v2

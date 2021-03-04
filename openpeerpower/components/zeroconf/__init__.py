@@ -97,7 +97,7 @@ async def _async_get_instance(opp, **zcargs):
 
     def _stop_zeroconf(_):
         """Stop Zeroconf."""
-        zeroconf.op_close()
+        zeroconf.ha_close()
 
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _stop_zeroconf)
 
@@ -131,7 +131,7 @@ class HaZeroconf(Zeroconf):
     def close(self):
         """Fake method to avoid integrations closing it."""
 
-    op_close = Zeroconf.close
+    ha_close = Zeroconf.close
 
 
 async def async_setup(opp, config):
@@ -145,30 +145,30 @@ async def async_setup(opp, config):
 
     zeroconf = opp.data[DOMAIN] = await _async_get_instance(opp, **zc_args)
 
-    async def _async_zeroconf(opp_start(_event):
+    async def _async_zeroconf_opp_start(_event):
         """Expose Open Peer Power on zeroconf when it starts.
 
         Wait till started or otherwise HTTP is not up and running.
         """
         uuid = await opp.helpers.instance_id.async_get()
         await opp.async_add_executor_job(
-            _register(opp_zc_service, opp, zeroconf, uuid
+            _register_opp_zc_service, opp, zeroconf, uuid
         )
 
-    async def _async_zeroconf(opp_started(_event):
+    async def _async_zeroconf_opp_started(_event):
         """Start the service browser."""
 
         await _async_start_zeroconf_browser(opp, zeroconf)
 
-    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _async_zeroconf(opp_start)
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _async_zeroconf_opp_start)
     opp.bus.async_listen_once(
-        EVENT_OPENPEERPOWER_STARTED, _async_zeroconf(opp_started
+        EVENT_OPENPEERPOWER_STARTED, _async_zeroconf_opp_started
     )
 
     return True
 
 
-def _register(opp_zc_service(opp, zeroconf, uuid):
+def _register_opp_zc_service(opp, zeroconf, uuid):
     # Get instance UUID
     valid_location_name = _truncate_location_name_to_valid(opp.config.location_name)
 
@@ -212,7 +212,7 @@ def _register(opp_zc_service(opp, zeroconf, uuid):
         name=f"{valid_location_name}.{ZEROCONF_TYPE}",
         server=f"{uuid}.local.",
         addresses=[host_ip_pton],
-        port.opp.http.server_port,
+        port=opp.http.server_port,
         properties=params,
     )
 

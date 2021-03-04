@@ -20,7 +20,7 @@ from tests.common import (
 def client(opp, opp_ws_client):
     """Fixture that can interact with the config manager API."""
     opp.loop.run_until_complete(entity_registry.async_setup(opp))
-    yield.opp.loop.run_until_complete.opp_ws_client(opp))
+    yield opp.loop.run_until_complete(opp_ws_client(opp))
 
 
 @pytest.fixture

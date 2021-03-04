@@ -97,11 +97,11 @@ DEFAULT_TRANSITION_MESSAGE = {
     "tst": 2,
 }
 
-# iBeacons that are named the same as an HA zone
+# iBeacons that are named the same as an OP zone
 # are used to trigger enter and leave updates
 # for that zone. In this case the "inner" zone.
 #
-# iBeacons that do not share an HA zone name
+# iBeacons that do not share an OP zone name
 # are treated as mobile tracking devices for
 # objects which can't track themselves e.g. keys.
 #
@@ -830,7 +830,7 @@ async def test_event_region_entry_exit_wrong_order(opp, context):
 
 async def test_event_beacon_unknown_zone_no_location(opp, context):
     """Test the event for unknown zone."""
-    # A beacon which does not match a HA zone is the
+    # A beacon which does not match a OP zone is the
     # definition of a mobile beacon. In this case, "unknown"
     # will be turned into device_tracker.beacon_unknown and
     # that will be tracked at my current location. Except
@@ -855,7 +855,7 @@ async def test_event_beacon_unknown_zone_no_location(opp, context):
 
 async def test_event_beacon_unknown_zone(opp, context):
     """Test the event for unknown zone."""
-    # A beacon which does not match a HA zone is the
+    # A beacon which does not match a OP zone is the
     # definition of a mobile beacon. In this case, "unknown"
     # will be turned into device_tracker.beacon_unknown and
     # that will be tracked at my current location. First I

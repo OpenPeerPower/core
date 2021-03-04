@@ -33,7 +33,7 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     TEMP_FAHRENHEIT,
 )
-import openpeerpower.core as op
+import openpeerpower.core as ha
 from openpeerpower.core import DOMAIN as OPP_DOMAIN, CoreState, State, callback
 from openpeerpower.setup import async_setup_component
 from openpeerpower.util.unit_system import METRIC_SYSTEM
@@ -86,7 +86,7 @@ async def test_valid_conf(opp):
 
 
 @pytest.fixture
-async def setup_comp_1.opp):
+async def setup_comp_1(opp):
     """Initialize components."""
     opp.config.units = METRIC_SYSTEM
     assert await async_setup_component(opp, "openpeerpower", {})
@@ -495,14 +495,14 @@ def _setup_switch(opp, is_on):
         """Log service calls."""
         calls.append(call)
 
-    opp.services.async_register(op.DOMAIN, SERVICE_TURN_ON, log_call)
-    opp.services.async_register(op.DOMAIN, SERVICE_TURN_OFF, log_call)
+    opp.services.async_register(ha.DOMAIN, SERVICE_TURN_ON, log_call)
+    opp.services.async_register(ha.DOMAIN, SERVICE_TURN_OFF, log_call)
 
     return calls
 
 
 @pytest.fixture
-async def setup_comp_3.opp):
+async def setup_comp_3(opp):
     """Initialize components."""
     opp.config.temperature_unit = TEMP_CELSIUS
     assert await async_setup_component(
@@ -624,7 +624,7 @@ async def test_temp_change_ac_on_outside_tolerance(opp, setup_comp_3):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_running_when_operating_mode_is_off_2.opp, setup_comp_3):
+async def test_running_when_operating_mode_is_off_2(opp, setup_comp_3):
     """Test that the switch turns off when enabled is set False."""
     calls = _setup_switch(opp, True)
     await common.async_set_temperature(opp, 30)
@@ -636,7 +636,7 @@ async def test_running_when_operating_mode_is_off_2.opp, setup_comp_3):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_no_state_change_when_operation_mode_off_2.opp, setup_comp_3):
+async def test_no_state_change_when_operation_mode_off_2(opp, setup_comp_3):
     """Test that the switch doesn't turn on when enabled is False."""
     calls = _setup_switch(opp, False)
     await common.async_set_temperature(opp, 30)
@@ -647,7 +647,7 @@ async def test_no_state_change_when_operation_mode_off_2.opp, setup_comp_3):
 
 
 @pytest.fixture
-async def setup_comp_4.opp):
+async def setup_comp_4(opp):
     """Initialize components."""
     opp.config.temperature_unit = TEMP_CELSIUS
     assert await async_setup_component(
@@ -757,7 +757,7 @@ async def test_mode_change_ac_trigger_on_not_long_enough(opp, setup_comp_4):
 
 
 @pytest.fixture
-async def setup_comp_5.opp):
+async def setup_comp_5(opp):
     """Initialize components."""
     opp.config.temperature_unit = TEMP_CELSIUS
     assert await async_setup_component(
@@ -780,7 +780,7 @@ async def setup_comp_5.opp):
     await opp.async_block_till_done()
 
 
-async def test_temp_change_ac_trigger_on_not_long_enough_2.opp, setup_comp_5):
+async def test_temp_change_ac_trigger_on_not_long_enough_2(opp, setup_comp_5):
     """Test if temperature change turn ac on."""
     calls = _setup_switch(opp, False)
     await common.async_set_temperature(opp, 25)
@@ -789,7 +789,7 @@ async def test_temp_change_ac_trigger_on_not_long_enough_2.opp, setup_comp_5):
     assert 0 == len(calls)
 
 
-async def test_temp_change_ac_trigger_on_long_enough_2.opp, setup_comp_5):
+async def test_temp_change_ac_trigger_on_long_enough_2(opp, setup_comp_5):
     """Test if temperature change turn ac on."""
     fake_changed = datetime.datetime(
         1918, 11, 11, 11, 11, 11, tzinfo=datetime.timezone.utc
@@ -808,7 +808,7 @@ async def test_temp_change_ac_trigger_on_long_enough_2.opp, setup_comp_5):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_temp_change_ac_trigger_off_not_long_enough_2.opp, setup_comp_5):
+async def test_temp_change_ac_trigger_off_not_long_enough_2(opp, setup_comp_5):
     """Test if temperature change turn ac on."""
     calls = _setup_switch(opp, True)
     await common.async_set_temperature(opp, 30)
@@ -817,7 +817,7 @@ async def test_temp_change_ac_trigger_off_not_long_enough_2.opp, setup_comp_5):
     assert 0 == len(calls)
 
 
-async def test_temp_change_ac_trigger_off_long_enough_2.opp, setup_comp_5):
+async def test_temp_change_ac_trigger_off_long_enough_2(opp, setup_comp_5):
     """Test if temperature change turn ac on."""
     fake_changed = datetime.datetime(
         1918, 11, 11, 11, 11, 11, tzinfo=datetime.timezone.utc
@@ -836,7 +836,7 @@ async def test_temp_change_ac_trigger_off_long_enough_2.opp, setup_comp_5):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_mode_change_ac_trigger_off_not_long_enough_2.opp, setup_comp_5):
+async def test_mode_change_ac_trigger_off_not_long_enough_2(opp, setup_comp_5):
     """Test if mode change turns ac off despite minimum cycle."""
     calls = _setup_switch(opp, True)
     await common.async_set_temperature(opp, 30)
@@ -851,7 +851,7 @@ async def test_mode_change_ac_trigger_off_not_long_enough_2.opp, setup_comp_5):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_mode_change_ac_trigger_on_not_long_enough_2.opp, setup_comp_5):
+async def test_mode_change_ac_trigger_on_not_long_enough_2(opp, setup_comp_5):
     """Test if mode change turns ac on despite minimum cycle."""
     calls = _setup_switch(opp, False)
     await common.async_set_temperature(opp, 25)
@@ -867,7 +867,7 @@ async def test_mode_change_ac_trigger_on_not_long_enough_2.opp, setup_comp_5):
 
 
 @pytest.fixture
-async def setup_comp_6.opp):
+async def setup_comp_6(opp):
     """Initialize components."""
     opp.config.temperature_unit = TEMP_CELSIUS
     assert await async_setup_component(
@@ -976,7 +976,7 @@ async def test_mode_change_heater_trigger_on_not_long_enough(opp, setup_comp_6):
 
 
 @pytest.fixture
-async def setup_comp_7.opp):
+async def setup_comp_7(opp):
     """Initialize components."""
     opp.config.temperature_unit = TEMP_CELSIUS
     assert await async_setup_component(
@@ -1002,7 +1002,7 @@ async def setup_comp_7.opp):
     await opp.async_block_till_done()
 
 
-async def test_temp_change_ac_trigger_on_long_enough_3.opp, setup_comp_7):
+async def test_temp_change_ac_trigger_on_long_enough_3(opp, setup_comp_7):
     """Test if turn on signal is sent at keep-alive intervals."""
     calls = _setup_switch(opp, True)
     await opp.async_block_till_done()
@@ -1025,7 +1025,7 @@ async def test_temp_change_ac_trigger_on_long_enough_3.opp, setup_comp_7):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_temp_change_ac_trigger_off_long_enough_3.opp, setup_comp_7):
+async def test_temp_change_ac_trigger_off_long_enough_3(opp, setup_comp_7):
     """Test if turn on signal is sent at keep-alive intervals."""
     calls = _setup_switch(opp, False)
     await opp.async_block_till_done()
@@ -1049,7 +1049,7 @@ async def test_temp_change_ac_trigger_off_long_enough_3.opp, setup_comp_7):
 
 
 @pytest.fixture
-async def setup_comp_8.opp):
+async def setup_comp_8(opp):
     """Initialize components."""
     opp.config.temperature_unit = TEMP_CELSIUS
     assert await async_setup_component(
@@ -1073,7 +1073,7 @@ async def setup_comp_8.opp):
     await opp.async_block_till_done()
 
 
-async def test_temp_change_heater_trigger_on_long_enough_2.opp, setup_comp_8):
+async def test_temp_change_heater_trigger_on_long_enough_2(opp, setup_comp_8):
     """Test if turn on signal is sent at keep-alive intervals."""
     calls = _setup_switch(opp, True)
     await opp.async_block_till_done()
@@ -1096,7 +1096,7 @@ async def test_temp_change_heater_trigger_on_long_enough_2.opp, setup_comp_8):
     assert ENT_SWITCH == call.data["entity_id"]
 
 
-async def test_temp_change_heater_trigger_off_long_enough_2.opp, setup_comp_8):
+async def test_temp_change_heater_trigger_off_long_enough_2(opp, setup_comp_8):
     """Test if turn on signal is sent at keep-alive intervals."""
     calls = _setup_switch(opp, False)
     await opp.async_block_till_done()
@@ -1120,7 +1120,7 @@ async def test_temp_change_heater_trigger_off_long_enough_2.opp, setup_comp_8):
 
 
 @pytest.fixture
-async def setup_comp_9.opp):
+async def setup_comp_9(opp):
     """Initialize components."""
     opp.config.temperature_unit = TEMP_FAHRENHEIT
     assert await async_setup_component(
@@ -1253,7 +1253,7 @@ async def test_restore_state_uncoherence_case(opp):
     Test restore from a strange state.
 
     - Turn the generic thermostat off
-    - Restart HA and restore state from DB
+    - Restart OP and restore state from DB
     """
     _mock_restore_cache(opp, temperature=20)
 
@@ -1330,7 +1330,7 @@ async def test_reload(opp):
         "fixtures",
         "generic_thermostat/configuration.yaml",
     )
-    with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
+    with patch.object(opp_config, "YAML_CONFIG_FILE", yaml_path):
         await opp.services.async_call(
             GENERIC_THERMOSTAT_DOMAIN,
             SERVICE_RELOAD,

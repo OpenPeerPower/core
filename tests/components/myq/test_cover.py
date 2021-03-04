@@ -18,7 +18,7 @@ async def test_create_covers(opp):
         "supported_features": 3,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -31,7 +31,7 @@ async def test_create_covers(opp):
         "supported_features": 3,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -44,7 +44,7 @@ async def test_create_covers(opp):
         "supported_features": 3,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )

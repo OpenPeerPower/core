@@ -20,7 +20,7 @@ def explore_module(package):
 def main():
     """Run the script."""
     if not os.path.isfile("requirements_all.txt"):
-        print("Run this from HA root dir")
+        print("Run this from OP root dir")
         return
 
     msg = {}

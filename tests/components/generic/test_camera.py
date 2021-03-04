@@ -384,7 +384,7 @@ async def test_reloading(opp, opp_client):
         "fixtures",
         "generic/configuration.yaml",
     )
-    with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path):
+    with patch.object(opp_config, "YAML_CONFIG_FILE", yaml_path):
         await opp.services.async_call(
             DOMAIN,
             SERVICE_RELOAD,

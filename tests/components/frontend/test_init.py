@@ -166,7 +166,7 @@ async def test_themes_api(opp, themes_ws_client):
 
 async def test_themes_persist(opp, opp_storage, opp_ws_client, ignore_frontend_deps):
     """Test that theme settings are restores after restart."""
-    opp.storage[THEMES_STORAGE_KEY] = {
+    opp_storage[THEMES_STORAGE_KEY] = {
         "key": THEMES_STORAGE_KEY,
         "version": 1,
         "data": {
@@ -301,7 +301,7 @@ async def test_themes_reload_themes(opp, frontend, themes_ws_client):
     """Test frontend.reload_themes service."""
 
     with patch(
-        "openpeerpower.components.frontend.async.opp_config_yaml",
+        "openpeerpower.components.frontend.async_opp_config_yaml",
         return_value={DOMAIN: {CONF_THEMES: {"sad": {"primary-color": "blue"}}}},
     ):
         await opp.services.async_call(
@@ -370,7 +370,7 @@ async def test_get_panels(opp, opp_ws_client, mock_http_client):
 
 async def test_get_panels_non_admin(opp, ws_client, opp_admin_user):
     """Test get_panels command."""
-    opp.admin_user.groups = []
+    opp_admin_user.groups = []
 
     opp.components.frontend.async_register_built_in_panel(
         "map", "Map", "mdi:tooltip-account", require_admin=True
@@ -394,7 +394,7 @@ async def test_get_translations(opp, ws_client):
     """Test get_translations command."""
     with patch(
         "openpeerpower.components.frontend.async_get_translations",
-        side_effect=lambda(opp, lang, category, integration, config_flow: {
+        side_effect=lambda opp, lang, category, integration, config_flow: {
             "lang": lang
         },
     ):

@@ -1,7 +1,7 @@
 {
   "domain": "zoneminder",
   "name": "ZoneMinder",
-  "documentation": "https://www.open-peer-power.io/integrations/zoneminder",
+  "documentation": "https://www.openpeerpower.io/integrations/zoneminder",
   "requirements": ["zm-py==0.5.2"],
   "codeowners": ["@rohankapoorcom"]
 }

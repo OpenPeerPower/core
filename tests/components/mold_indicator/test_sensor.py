@@ -29,7 +29,7 @@ def init_sensors_fixture(opp):
     )
 
 
-async def test_setup_opp):
+async def test_setup(opp):
     """Test the mold indicator sensor setup."""
     assert await async_setup_component(
         opp,

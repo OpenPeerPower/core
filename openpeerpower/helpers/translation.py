@@ -10,7 +10,7 @@ from openpeerpower.loader import (
     Integration,
     async_get_config_flows,
     async_get_integration,
-    bind.opp,
+    bind_opp,
 )
 from openpeerpower.util.async_ import gather_with_concurrency
 from openpeerpower.util.json import load_json
@@ -297,9 +297,9 @@ async def async_get_translations(
     if integration is not None:
         components = {integration}
     elif config_flow:
-        components = (await async_get_config_flows(opp)) -.opp.config.components
+        components = (await async_get_config_flows(opp)) - opp.config.components
     elif category == "state":
-        components = set.opp.config.components)
+        components = set(opp.config.components)
     else:
         # Only 'state' supports merging, so remove platforms from selection
         components = {

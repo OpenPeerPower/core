@@ -83,7 +83,7 @@ def platform_setup():
 
 
 @pytest.fixture()
-def sensor_with(opp_data(default_sensor, opp):
+def sensor_with_opp_data(default_sensor, opp):
     """Create a sensor with async_dispatcher_connected mocked."""
     opp.data = {}
     default_sensor.opp = opp
@@ -139,14 +139,14 @@ def test_sensor_name(default_sensor):
     assert default_sensor.name == "Last"
 
 
-async def test_async_added_to_opp(sensor_with(opp_data, mock_dispatch):
+async def test_async_added_to_opp(sensor_with_opp_data, mock_dispatch):
     """Test dispatcher called when added."""
-    await sensor_with(opp_data.async_added_to_opp()
+    await sensor_with_opp_data.async_added_to_opp()
     assert len(mock_dispatch.mock_calls) == 1
     kall = mock_dispatch.call_args
     args, kwargs = kall
     assert len(args) == 3
-    assert args[0] == sensor_with(opp_data(opp
+    assert args[0] == sensor_with_opp_data.opp
     assert args[1] == "arlo_update"
     assert not kwargs
 

@@ -88,7 +88,7 @@ def setup(opp, config):
         _LOGGER.error("HTTPError when connecting to Zabbix API: %s", http_error)
         zapi = None
         _LOGGER.error(RETRY_MESSAGE, http_error)
-        event_helper.call_later(opp, RETRY_INTERVAL, lambda _: setup_opp, config))
+        event_helper.call_later(opp, RETRY_INTERVAL, lambda _: setup(opp, config))
         return True
 
     opp.data[DOMAIN] = zapi
@@ -154,7 +154,7 @@ def setup(opp, config):
     if publish_states_host:
         zabbix_sender = ZabbixSender(zabbix_server=conf[CONF_HOST])
         instance = ZabbixThread(opp, zabbix_sender, event_to_metrics)
-        instance.setup_opp)
+        instance.setup(opp)
 
     return True
 

@@ -530,7 +530,7 @@ async def test_turn_off_fireplace(opp: core.OpenPeerPower):
 
 
 async def test_flame_converted_to_brightness(opp: core.OpenPeerPower):
-    """Tests that reported flame level (0..100) converted to HA brightness (0...255)."""
+    """Tests that reported flame level (0..100) converted to OP brightness (0...255)."""
     await setup_platform(opp, LIGHT_DOMAIN, fireplace("name-1"))
 
     with patch_bond_device_state(return_value={"power": 1, "flame": 50}):
@@ -548,7 +548,7 @@ async def test_light_available(opp: core.OpenPeerPower):
 
 
 async def test_parse_brightness(opp: core.OpenPeerPower):
-    """Tests that reported brightness level (0..100) converted to HA brightness (0...255)."""
+    """Tests that reported brightness level (0..100) converted to OP brightness (0...255)."""
     await setup_platform(opp, LIGHT_DOMAIN, dimmable_ceiling_fan("name-1"))
 
     with patch_bond_device_state(return_value={"light": 1, "brightness": 50}):

@@ -110,7 +110,7 @@ class ZerprocLight(LightEntity):
         """Run when entity about to be added to opp."""
         self.async_on_remove(
             self.opp.bus.async_listen_once(
-                EVENT_OPENPEERPOWER_STOP, self.async_will_remove_from(opp
+                EVENT_OPENPEERPOWER_STOP, self.async_will_remove_from_opp
             )
         )
 

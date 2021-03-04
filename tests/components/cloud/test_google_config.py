@@ -52,7 +52,7 @@ async def test_sync_entities(aioclient_mock, opp, cloud_prefs):
     )
 
     with patch(
-         opp.nabucasa.cloud_api.async_google_actions_request_sync",
+        "opp_nabucasa.cloud_api.async_google_actions_request_sync",
         return_value=Mock(status=HTTP_NOT_FOUND),
     ) as mock_request_sync:
         assert await config.async_sync_entities("user") == HTTP_NOT_FOUND
@@ -155,7 +155,7 @@ async def test_google_entity_registry_sync(opp, mock_cloud_login, cloud_prefs):
 
         assert len(mock_sync.mock_calls) == 3
 
-        # When.opp is not started yet we wait till started
+        # When opp is not started yet we wait till started
         opp.state = CoreState.starting
         opp.bus.async_fire(
             EVENT_ENTITY_REGISTRY_UPDATED,

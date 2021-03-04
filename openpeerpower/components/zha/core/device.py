@@ -120,11 +120,11 @@ class ZHADevice(LogMixin):
 
     @property
     def device_id(self):
-        """Return the HA device registry device id."""
+        """Return the OP device registry device id."""
         return self._op_device_id
 
     def set_device_id(self, device_id):
-        """Set the HA device registry device id."""
+        """Set the OP device registry device id."""
         self._op_device_id = device_id
 
     @property

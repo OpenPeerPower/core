@@ -29,7 +29,7 @@ SUPPORT_FLAGS_HEATER = (
 ATTR_RHEEM_TYPE = "rheem_type"
 ATTR_VACATION_MODE = "vacation_mode"
 
-OP_STATE_TO_WINK = {
+HA_STATE_TO_WINK = {
     STATE_ECO: "eco",
     STATE_ELECTRIC: "electric_only",
     STATE_GAS: "gas",
@@ -39,7 +39,7 @@ OP_STATE_TO_WINK = {
     STATE_PERFORMANCE: "performance",
 }
 
-WINK_STATE_TO_HA = {value: key for key, value in OP_STATE_TO_WINK.items()}
+WINK_STATE_TO_HA = {value: key for key, value in HA_STATE_TO_WINK.items()}
 
 
 def setup_platform(opp, config, add_entities, discovery_info=None):
@@ -98,9 +98,9 @@ class WinkWaterHeater(WinkDevice, WaterHeaterEntity):
         for mode in modes:
             if mode == "aux":
                 continue
-            op_mode = WINK_STATE_TO_HA.get(mode)
-            if op_mode is not None:
-                op_list.append(op_mode)
+            ha_mode = WINK_STATE_TO_HA.get(mode)
+            if ha_mode is not None:
+                op_list.append(ha_mode)
             else:
                 error = (
                     "Invalid operation mode mapping. "
@@ -116,7 +116,7 @@ class WinkWaterHeater(WinkDevice, WaterHeaterEntity):
 
     def set_operation_mode(self, operation_mode):
         """Set operation mode."""
-        op_mode_to_set = OP_STATE_TO_WINK.get(operation_mode)
+        op_mode_to_set = HA_STATE_TO_WINK.get(operation_mode)
         self.wink.set_operation_mode(op_mode_to_set)
 
     @property

@@ -728,7 +728,7 @@ async def test_unload_entry(opp: OpenPeerPowerType) -> None:
 async def test_version_log_warning(caplog, opp: OpenPeerPowerType) -> None:  # type: ignore[no-untyped-def]
     """Test warning on old version."""
     client = create_mock_client()
-    client.async_sysinfo_version = AsyncMock(return_value="2.0.0-alpop.7")
+    client.async_sysinfo_version = AsyncMock(return_value="2.0.0-alpha.7")
     await setup_test_config_entry(opp, hyperion_client=client)
     assert opp.states.get(TEST_ENTITY_ID_1) is not None
     assert "Please consider upgrading" in caplog.text
@@ -737,7 +737,7 @@ async def test_version_log_warning(caplog, opp: OpenPeerPowerType) -> None:  # t
 async def test_version_no_log_warning(caplog, opp: OpenPeerPowerType) -> None:  # type: ignore[no-untyped-def]
     """Test no warning on acceptable version."""
     client = create_mock_client()
-    client.async_sysinfo_version = AsyncMock(return_value="2.0.0-alpop.9")
+    client.async_sysinfo_version = AsyncMock(return_value="2.0.0-alpha.9")
     await setup_test_config_entry(opp, hyperion_client=client)
     assert opp.states.get(TEST_ENTITY_ID_1) is not None
     assert "Please consider upgrading" not in caplog.text
@@ -751,7 +751,7 @@ async def test_setup_entry_no_token_reauth(opp: OpenPeerPowerType) -> None:
 
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
-    ), patch.object.opp.config_entries.flow, "async_init") as mock_flow_init:
+    ), patch.object(opp.config_entries.flow, "async_init") as mock_flow_init:
         assert not await opp.config_entries.async_setup(config_entry.entry_id)
         assert client.async_client_disconnect.called
         mock_flow_init.assert_called_once_with(
@@ -775,7 +775,7 @@ async def test_setup_entry_bad_token_reauth(opp: OpenPeerPowerType) -> None:
     client.async_client_login = AsyncMock(return_value=False)
     with patch(
         "openpeerpower.components.hyperion.client.HyperionClient", return_value=client
-    ), patch.object.opp.config_entries.flow, "async_init") as mock_flow_init:
+    ), patch.object(opp.config_entries.flow, "async_init") as mock_flow_init:
         assert not await opp.config_entries.async_setup(config_entry.entry_id)
         assert client.async_client_disconnect.called
         mock_flow_init.assert_called_once_with(
@@ -807,7 +807,7 @@ async def test_priority_light_async_updates(
         enabled_by_default_mock.return_value = True
         await setup_test_config_entry(opp, hyperion_client=client)
 
-    # == Scenario: Color at HA priority will show light as on.
+    # == Scenario: Color at OP priority will show light as on.
     entity_state = opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "on"
@@ -827,8 +827,8 @@ async def test_priority_light_async_updates(
     assert entity_state
     assert entity_state.state == "off"
 
-    # == Scenario: Lower priority than HA priority should have no impact on what HA
-    # shows when the HA priority is present.
+    # == Scenario: Lower priority than OP priority should have no impact on what HA
+    # shows when the OP priority is present.
     client.priorities = [
         {**priority_template, const.KEY_PRIORITY: TEST_PRIORITY - 1},
         {
@@ -843,7 +843,7 @@ async def test_priority_light_async_updates(
     assert entity_state
     assert entity_state.state == "off"
 
-    # == Scenario: Fresh color at HA priority should turn HA entity on (even though
+    # == Scenario: Fresh color at OP priority should turn OP entity on (even though
     # there's a lower priority enabled/visible in Hyperion).
     client.priorities = [
         {**priority_template, const.KEY_PRIORITY: TEST_PRIORITY - 1},
@@ -861,10 +861,10 @@ async def test_priority_light_async_updates(
     assert entity_state.state == "on"
     assert entity_state.attributes["hs_color"] == (240.0, 33.333)
 
-    # == Scenario: V4L at a higher priority, with no other HA priority at all, should
+    # == Scenario: V4L at a higher priority, with no other OP priority at all, should
     # have no effect.
 
-    # Emulate HA turning the light off with black at the HA priority.
+    # Emulate OP turning the light off with black at the OP priority.
     client.priorities = []
     client.visible_priority = None
 

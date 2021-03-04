@@ -624,7 +624,7 @@ async def test_cleanup_device_with_entity_and_trigger_1(
     assert device_entry is None
 
 
-async def test_cleanup_device_with_entity2.opp, device_reg, entity_reg, mqtt_mock):
+async def test_cleanup_device_with_entity2(opp, device_reg, entity_reg, mqtt_mock):
     """Test removal from device registry for device with tag, entity and trigger.
 
     Trigger and entity removed first, then tag.

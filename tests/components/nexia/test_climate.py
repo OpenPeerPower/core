@@ -39,7 +39,7 @@ async def test_climate_zones(opp):
         "zone_status": "Relieving Air",
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -75,7 +75,7 @@ async def test_climate_zones(opp):
     }
 
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )

@@ -589,7 +589,7 @@ async def test_reconnect(opp, dsmr_connection_fixture):
 
     # mock waiting coroutine while connection lasts
     closed = asyncio.Event()
-    # Handshake so that  opp.async_block_till_done()` doesn't cycle forever
+    # Handshake so that `opp.async_block_till_done()` doesn't cycle forever
     closed2 = asyncio.Event()
 
     async def wait_closed():

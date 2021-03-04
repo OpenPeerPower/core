@@ -22,7 +22,7 @@
                     "exclude": "Vera-apparaat-ID's om uit te sluiten van Open Peer Power.",
                     "lights": "Vera-schakelapparaat id's behandelen als lichten in Open Peer Power."
                 },
-                "description": "Zie de vera-documentatie voor details over optionele parameters: https://www.open-peer-power.io/integrations/vera/. Opmerking: alle wijzigingen hier moeten opnieuw worden opgestart naar de Open Peer Power-server. Druk op spatie om de waarden te wissen.",
+                "description": "Zie de vera-documentatie voor details over optionele parameters: https://www.openpeerpower.io/integrations/vera/. Opmerking: alle wijzigingen hier moeten opnieuw worden opgestart naar de Open Peer Power-server. Druk op spatie om de waarden te wissen.",
                 "title": "Vera controller opties"
             }
         }

@@ -38,7 +38,7 @@ async def test_schema_update_calls(opp):
 
     update.assert_has_calls(
         [
-            call.opp.data[const.DATA_INSTANCE].engine, version + 1, 0)
+            call(opp.data[const.DATA_INSTANCE].engine, version + 1, 0)
             for version in range(0, models.SCHEMA_VERSION)
         ]
     )

@@ -12,7 +12,7 @@ from . import mock_cloud, mock_cloud_prefs
 @pytest.fixture(autouse=True)
 def mock_user_data():
     """Mock os module."""
-    with patch(.opp_nabucasa.Cloud.write_user_info") as writer:
+    with patch("opp_nabucasa.Cloud.write_user_info") as writer:
         yield writer
 
 
@@ -32,7 +32,7 @@ async def cloud_prefs(opp):
 
 
 @pytest.fixture
-async def mock_cloud_setup_opp):
+async def mock_cloud_setup(opp):
     """Set up the cloud."""
     await mock_cloud(opp)
 
@@ -42,7 +42,7 @@ def mock_cloud_login(opp, mock_cloud_setup):
     """Mock cloud is logged in."""
     opp.data[const.DOMAIN].id_token = jwt.encode(
         {
-            "email": "hello@open-peer-power.io",
+            "email": "hello@openpeerpower.io",
             "custom:sub-exp": "2300-01-03",
             "cognito:username": "abcdefghjkl",
         },
@@ -55,7 +55,7 @@ def mock_expired_cloud_login(opp, mock_cloud_setup):
     """Mock cloud is logged in."""
     opp.data[const.DOMAIN].id_token = jwt.encode(
         {
-            "email": "hello@open-peer-power.io",
+            "email": "hello@openpeerpower.io",
             "custom:sub-exp": "2018-01-01",
             "cognito:username": "abcdefghjkl",
         },

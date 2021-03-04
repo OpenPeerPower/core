@@ -24,14 +24,14 @@ class MockConfig(helpers.AbstractConfig):
         should_expose=None,
         should_2fa=None,
         entity_config=None,
-        opp.None,
+        opp=None,
         local_sdk_webhook_id=None,
         local_sdk_user_id=None,
         enabled=True,
         agent_user_ids=None,
     ):
         """Initialize config."""
-        super().__init__.opp)
+        super().__init__(opp)
         self._should_expose = should_expose
         self._should_2fa = should_2fa
         self._secure_devices_pin = secure_devices_pin

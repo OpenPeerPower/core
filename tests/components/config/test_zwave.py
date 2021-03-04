@@ -20,7 +20,7 @@ def client(loop, opp, opp_client):
     with patch.object(config, "SECTIONS", ["zwave"]):
         loop.run_until_complete(async_setup_component(opp, "config", {}))
 
-    return loop.run_until_complete.opp_client())
+    return loop.run_until_complete(opp_client())
 
 
 async def test_get_device_config(client):

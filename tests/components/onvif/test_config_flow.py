@@ -480,7 +480,7 @@ async def test_flow_import_no_mac_or_serial(opp):
         assert result["reason"] == "no_mac"
 
 
-async def test_flow_import_no_h264.opp):
+async def test_flow_import_no_h264(opp):
     """Test that config flow fails when no MAC available."""
     with patch(
         "openpeerpower.components.onvif.config_flow.get_device"

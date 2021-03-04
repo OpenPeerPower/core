@@ -74,7 +74,7 @@ async def test_get_services_cached(opp):
     services = 1
 
     with patch.object(account_link, "CACHE_TIMEOUT", 0), patch(
-         opp.nabucasa.account_link.async_fetch_available_services",
+        "opp_nabucasa.account_link.async_fetch_available_services",
         side_effect=lambda _: services,
     ) as mock_fetch:
         assert await account_link._get_services(opp) == 1
@@ -101,7 +101,7 @@ async def test_get_services_error(opp):
     opp.data["cloud"] = None
 
     with patch.object(account_link, "CACHE_TIMEOUT", 0), patch(
-         opp.nabucasa.account_link.async_fetch_available_services",
+        "opp_nabucasa.account_link.async_fetch_available_services",
         side_effect=asyncio.TimeoutError,
     ):
         assert await account_link._get_services(opp) == []
@@ -126,7 +126,7 @@ async def test_implementation(opp, flow_handler):
     )
 
     with patch(
-         opp.nabucasa.account_link.AuthorizeAccountHelper", return_value=helper
+        "opp_nabucasa.account_link.AuthorizeAccountHelper", return_value=helper
     ):
         result = await opp.config_entries.flow.async_init(
             TEST_DOMAIN, context={"source": config_entries.SOURCE_USER}

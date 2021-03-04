@@ -41,7 +41,7 @@ def ceiling_fan(name: str):
 
 
 async def turn_fan_on(
-    opp, core.OpenPeerPower,
+    opp: core.OpenPeerPower,
     fan_id: str,
     speed: Optional[str] = None,
     percentage: Optional[int] = None,
@@ -115,7 +115,7 @@ async def test_non_standard_speed_list(opp: core.OpenPeerPower):
 
 
 async def test_fan_speed_with_no_max_seed(opp: core.OpenPeerPower):
-    """Tests that fans without max speed (increase/decrease controls) map speed to HA standard."""
+    """Tests that fans without max speed (increase/decrease controls) map speed to OP standard."""
     await setup_platform(
         opp,
         FAN_DOMAIN,

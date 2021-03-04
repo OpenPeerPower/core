@@ -1,6 +1,6 @@
 {
   "domain": "thomson",
   "name": "Thomson",
-  "documentation": "https://www.open-peer-power.io/integrations/thomson",
+  "documentation": "https://www.openpeerpower.io/integrations/thomson",
   "codeowners": []
 }

@@ -37,7 +37,7 @@ async def test_setup_callbacks(opp, numato_fixture, monkeypatch):
     assert await async_setup_component(opp, "numato", NUMATO_CFG)
 
 
-async def test.opp_binary_sensor_notification(opp, numato_fixture):
+async def test_opp_binary_sensor_notification(opp, numato_fixture):
     """Test regular operations from within Open Peer Power."""
     assert await async_setup_component(opp, "numato", NUMATO_CFG)
     await opp.async_block_till_done()  # wait until services are registered

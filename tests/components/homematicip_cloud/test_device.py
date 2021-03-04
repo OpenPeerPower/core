@@ -34,11 +34,11 @@ async def test_hmip_remove_device(opp, default_mock_hap_factory):
         test_devices=["Treppe"]
     )
 
-    op_state, hmip_device = get_and_check_entity_basics(
+    ha_state, hmip_device = get_and_check_entity_basics(
         opp, mock_hap, entity_id, entity_name, device_model
     )
 
-    assert op_state.state == STATE_ON
+    assert ha_state.state == STATE_ON
     assert hmip_device
 
     device_registry = await dr.async_get_registry(opp)
@@ -66,11 +66,11 @@ async def test_hmip_add_device(opp, default_mock_hap_factory, hmip_config_entry)
         test_devices=["Treppe"]
     )
 
-    op_state, hmip_device = get_and_check_entity_basics(
+    ha_state, hmip_device = get_and_check_entity_basics(
         opp, mock_hap, entity_id, entity_name, device_model
     )
 
-    assert op_state.state == STATE_ON
+    assert ha_state.state == STATE_ON
     assert hmip_device
 
     device_registry = await dr.async_get_registry(opp)
@@ -87,7 +87,7 @@ async def test_hmip_add_device(opp, default_mock_hap_factory, hmip_config_entry)
     assert len(entity_registry.entities) == pre_entity_count - 3
     assert len(mock_hap.hmip_device_by_entity_id) == pre_mapping_count - 3
 
-    reloaded_hap = HomematicipHAP.opp, hmip_config_entry)
+    reloaded_hap = HomematicipHAP(opp, hmip_config_entry)
     with patch(
         "openpeerpower.components.homematicip_cloud.HomematicipHAP",
         return_value=reloaded_hap,
@@ -112,11 +112,11 @@ async def test_hmip_remove_group(opp, default_mock_hap_factory):
     device_model = None
     mock_hap = await default_mock_hap_factory.async_get_mock_hap(test_groups=["Strom"])
 
-    op_state, hmip_device = get_and_check_entity_basics(
+    ha_state, hmip_device = get_and_check_entity_basics(
         opp, mock_hap, entity_id, entity_name, device_model
     )
 
-    assert op_state.state == STATE_ON
+    assert ha_state.state == STATE_ON
     assert hmip_device
 
     device_registry = await dr.async_get_registry(opp)
@@ -145,19 +145,19 @@ async def test_all_devices_unavailable_when_hap_not_connected(
         test_devices=["Treppe"]
     )
 
-    op_state, hmip_device = get_and_check_entity_basics(
+    ha_state, hmip_device = get_and_check_entity_basics(
         opp, mock_hap, entity_id, entity_name, device_model
     )
 
-    assert op_state.state == STATE_ON
+    assert ha_state.state == STATE_ON
     assert hmip_device
 
     assert mock_hap.home.connected
 
     await async_manipulate_test_data(opp, mock_hap.home, "connected", False)
 
-    op_state = opp.states.get(entity_id)
-    assert op_state.state == STATE_UNAVAILABLE
+    ha_state = opp.states.get(entity_id)
+    assert ha_state.state == STATE_UNAVAILABLE
 
 
 async def test_hap_reconnected(opp, default_mock_hap_factory):
@@ -169,25 +169,25 @@ async def test_hap_reconnected(opp, default_mock_hap_factory):
         test_devices=["Treppe"]
     )
 
-    op_state, hmip_device = get_and_check_entity_basics(
+    ha_state, hmip_device = get_and_check_entity_basics(
         opp, mock_hap, entity_id, entity_name, device_model
     )
 
-    assert op_state.state == STATE_ON
+    assert ha_state.state == STATE_ON
     assert hmip_device
 
     assert mock_hap.home.connected
 
     await async_manipulate_test_data(opp, mock_hap.home, "connected", False)
 
-    op_state = opp.states.get(entity_id)
-    assert op_state.state == STATE_UNAVAILABLE
+    ha_state = opp.states.get(entity_id)
+    assert ha_state.state == STATE_UNAVAILABLE
 
     mock_hap._accesspoint_connected = False  # pylint: disable=protected-access
     await async_manipulate_test_data(opp, mock_hap.home, "connected", True)
     await opp.async_block_till_done()
-    op_state = opp.states.get(entity_id)
-    assert op_state.state == STATE_ON
+    ha_state = opp.states.get(entity_id)
+    assert ha_state.state == STATE_ON
 
 
 async def test_hap_with_name(opp, mock_connection, hmip_config_entry):
@@ -203,13 +203,13 @@ async def test_hap_with_name(opp, mock_connection, hmip_config_entry):
     ).async_get_mock_hap(test_devices=["Treppe"])
     assert mock_hap
 
-    op_state, hmip_device = get_and_check_entity_basics(
+    ha_state, hmip_device = get_and_check_entity_basics(
         opp, mock_hap, entity_id, entity_name, device_model
     )
 
     assert hmip_device
-    assert op_state.state == STATE_ON
-    assert op_state.attributes["friendly_name"] == entity_name
+    assert ha_state.state == STATE_ON
+    assert ha_state.attributes["friendly_name"] == entity_name
 
 
 async def test_hmip_reset_energy_counter_services(opp, default_mock_hap_factory):
@@ -221,10 +221,10 @@ async def test_hmip_reset_energy_counter_services(opp, default_mock_hap_factory)
         test_devices=[entity_name]
     )
 
-    op_state, hmip_device = get_and_check_entity_basics(
+    ha_state, hmip_device = get_and_check_entity_basics(
         opp, mock_hap, entity_id, entity_name, device_model
     )
-    assert op_state
+    assert ha_state
 
     await opp.services.async_call(
         "homematicip_cloud",
@@ -251,14 +251,14 @@ async def test_hmip_multi_area_device(opp, default_mock_hap_factory):
         test_devices=["Wired Eingangsmodul – 32-fach"]
     )
 
-    op_state, hmip_device = get_and_check_entity_basics(
+    ha_state, hmip_device = get_and_check_entity_basics(
         opp, mock_hap, entity_id, entity_name, device_model
     )
-    assert op_state
+    assert ha_state
 
     # get the entity
     entity_registry = await er.async_get_registry(opp)
-    entity = entity_registry.async_get(op_state.entity_id)
+    entity = entity_registry.async_get(ha_state.entity_id)
     assert entity
 
     # get the device

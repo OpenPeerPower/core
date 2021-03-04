@@ -14,15 +14,15 @@ from .core import discovery
 from .core.const import (
     CHANNEL_ON_OFF,
     DATA_ZHA,
-    DATA_ZOP_DISPATCHERS,
+    DATA_ZHA_DISPATCHERS,
     SIGNAL_ADD_ENTITIES,
     SIGNAL_ATTR_UPDATED,
 )
-from .core.registries import ZOP_ENTITIES
+from .core.registries import ZHA_ENTITIES
 from .entity import ZhaEntity, ZhaGroupEntity
 
-STRICT_MATCH = functools.partial(ZOP_ENTITIES.strict_match, DOMAIN)
-GROUP_MATCH = functools.partial(ZOP_ENTITIES.group_match, DOMAIN)
+STRICT_MATCH = functools.partial(ZHA_ENTITIES.strict_match, DOMAIN)
+GROUP_MATCH = functools.partial(ZHA_ENTITIES.group_match, DOMAIN)
 
 
 async def async_setup_entry(opp, config_entry, async_add_entities):
@@ -36,7 +36,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
             discovery.async_add_entities, async_add_entities, entities_to_create
         ),
     )
-    opp.data[DATA_ZHA][DATA_ZOP_DISPATCHERS].append(unsub)
+    opp.data[DATA_ZHA][DATA_ZHA_DISPATCHERS].append(unsub)
 
 
 class BaseSwitch(SwitchEntity):

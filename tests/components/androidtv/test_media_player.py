@@ -128,7 +128,7 @@ async def _test_reconnect(opp, caplog, config):
     "Handles device/service unavailable. Log a warning once when
     unavailable, log once when reconnected."
 
-    https://developers.open-peer-power.io/docs/en/integration_quality_scale_index.html
+    https://developers.openpeerpower.io/docs/en/integration_quality_scale_index.html
     """
     patch_key, entity_id = _setup(config)
 
@@ -976,7 +976,7 @@ async def test_download(opp):
     # Successful download
     with patch(
         "androidtv.basetv.basetv_async.BaseTVAsync.adb_pull"
-    ) as patch_pull, patch.object.opp.config, "is_allowed_path", return_value=True):
+    ) as patch_pull, patch.object(opp.config, "is_allowed_path", return_value=True):
         await opp.services.async_call(
             ANDROIDTV_DOMAIN,
             SERVICE_DOWNLOAD,
@@ -1019,7 +1019,7 @@ async def test_upload(opp):
     # Successful upload
     with patch(
         "androidtv.basetv.basetv_async.BaseTVAsync.adb_push"
-    ) as patch_push, patch.object.opp.config, "is_allowed_path", return_value=True):
+    ) as patch_push, patch.object(opp.config, "is_allowed_path", return_value=True):
         await opp.services.async_call(
             ANDROIDTV_DOMAIN,
             SERVICE_UPLOAD,
@@ -1108,7 +1108,7 @@ async def test_get_image(opp, opp_ws_client):
 async def _test_service(
     opp,
     entity_id,
-    op_service_name,
+    ha_service_name,
     androidtv_method,
     additional_service_data=None,
     return_value=None,
@@ -1128,7 +1128,7 @@ async def _test_service(
     ) as service_call:
         await opp.services.async_call(
             DOMAIN,
-            op_service_name,
+            ha_service_name,
             service_data=service_data,
             blocking=True,
         )
@@ -1203,7 +1203,7 @@ async def test_services_firetv(opp):
 
 
 async def test_connection_closed_on_op_stop(opp):
-    """Test that the ADB socket connection is closed when HA stops."""
+    """Test that the ADB socket connection is closed when OP stops."""
     patch_key, entity_id = _setup(CONFIG_ANDROIDTV_ADB_SERVER)
 
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[patch_key]:
@@ -1224,7 +1224,7 @@ async def test_connection_closed_on_op_stop(opp):
 async def test_exception(opp):
     """Test that the ADB connection gets closed when there is an unforeseen exception.
 
-    HA will attempt to reconnect on the next update.
+    OP will attempt to reconnect on the next update.
     """
     patch_key, entity_id = _setup(CONFIG_ANDROIDTV_PYTHON_ADB)
 
@@ -1248,7 +1248,7 @@ async def test_exception(opp):
             assert state is not None
             assert state.state == STATE_UNAVAILABLE
 
-        # On the next update, HA will reconnect to the device
+        # On the next update, OP will reconnect to the device
         await opp.helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
         assert state is not None

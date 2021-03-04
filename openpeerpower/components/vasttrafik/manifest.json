@@ -1,7 +1,7 @@
 {
   "domain": "vasttrafik",
   "name": "Västtrafik",
-  "documentation": "https://www.open-peer-power.io/integrations/vasttrafik",
+  "documentation": "https://www.openpeerpower.io/integrations/vasttrafik",
   "requirements": ["vtjp==0.1.14"],
   "codeowners": []
 }

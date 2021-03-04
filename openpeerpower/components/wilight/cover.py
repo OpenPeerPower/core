@@ -39,7 +39,7 @@ async def async_setup_entry(
     async_add_entities(entities)
 
 
-def wilight_to(opp_position(value):
+def wilight_to_opp_position(value):
     """Convert wilight position 1..255 to opp format 0..100."""
     return min(100, round((value * 100) / 255))
 
@@ -59,7 +59,7 @@ class WiLightCover(WiLightDevice, CoverEntity):
         None is unknown, 0 is closed, 100 is fully open.
         """
         if "position_current" in self._status:
-            return wilight_to(opp_position(self._status["position_current"])
+            return wilight_to_opp_position(self._status["position_current"])
         return None
 
     @property
@@ -83,7 +83,7 @@ class WiLightCover(WiLightDevice, CoverEntity):
             return None
         return (
             self._status["motor_state"] == WL_STOPPED
-            and wilight_to(opp_position(self._status["position_current"]) == 0
+            and wilight_to_opp_position(self._status["position_current"]) == 0
         )
 
     async def async_open_cover(self, **kwargs):

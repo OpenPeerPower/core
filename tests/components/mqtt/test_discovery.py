@@ -13,7 +13,7 @@ from openpeerpower.components.mqtt.abbreviations import (
 )
 from openpeerpower.components.mqtt.discovery import ALREADY_DISCOVERED, async_start
 from openpeerpower.const import EVENT_STATE_CHANGED, STATE_OFF, STATE_ON
-import openpeerpower.core as op
+import openpeerpower.core as ha
 
 from tests.common import (
     async_fire_mqtt_message,
@@ -261,7 +261,7 @@ async def test_rapid_rediscover(opp, mqtt_mock, caplog):
 
     events = []
 
-    @op.callback
+    @ha.callback
     def callback(event):
         """Verify event got called."""
         events.append(event)
@@ -317,7 +317,7 @@ async def test_rapid_rediscover_unique(opp, mqtt_mock, caplog):
 
     events = []
 
-    @op.callback
+    @ha.callback
     def callback(event):
         """Verify event got called."""
         events.append(event)

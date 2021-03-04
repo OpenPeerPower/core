@@ -48,7 +48,7 @@ async def test_sensors(opp):
         "is_active": False,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     for key, value in expected_attributes.items():
         assert state.attributes[key] == value
 
@@ -65,7 +65,7 @@ async def test_sensors(opp):
         "is_active": True,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     for key, value in expected_attributes.items():
         assert state.attributes[key] == value
 
@@ -82,7 +82,7 @@ async def test_sensors(opp):
         "is_active": True,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     for key, value in expected_attributes.items():
         assert state.attributes[key] == value
 
@@ -99,7 +99,7 @@ async def test_sensors(opp):
         "is_active": True,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     for key, value in expected_attributes.items():
         assert state.attributes[key] == value
 
@@ -111,6 +111,6 @@ async def test_sensors(opp):
         "device_class": "battery",
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     for key, value in expected_attributes.items():
         assert state.attributes[key] == value

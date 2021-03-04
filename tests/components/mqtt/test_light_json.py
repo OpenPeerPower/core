@@ -99,7 +99,7 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-import openpeerpower.core as op
+import openpeerpower.core as ha
 from openpeerpower.setup import async_setup_component
 
 from .test_common import (
@@ -325,7 +325,7 @@ async def test_controlling_state_via_topic(opp, mqtt_mock):
 
 async def test_sending_mqtt_commands_and_optimistic(opp, mqtt_mock):
     """Test the sending of command in optimistic mode."""
-    fake_state = op.State(
+    fake_state = ha.State(
         "light.test",
         "on",
         {
@@ -1142,7 +1142,7 @@ async def test_update_with_json_attrs_not_dict(opp, mqtt_mock, caplog):
     )
 
 
-async def test_update_with_json_attrs_bad_JSON.opp, mqtt_mock, caplog):
+async def test_update_with_json_attrs_bad_JSON(opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_bad_JSON(
         opp, mqtt_mock, caplog, light.DOMAIN, DEFAULT_CONFIG

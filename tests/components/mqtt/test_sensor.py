@@ -8,7 +8,7 @@ import pytest
 
 import openpeerpower.components.sensor as sensor
 from openpeerpower.const import EVENT_STATE_CHANGED, STATE_UNAVAILABLE
-import openpeerpower.core as op
+import openpeerpower.core as ha
 from openpeerpower.setup import async_setup_component
 import openpeerpower.util.dt as dt_util
 
@@ -222,7 +222,7 @@ async def test_force_update_disabled(opp, mqtt_mock):
 
     events = []
 
-    @op.callback
+    @ha.callback
     def callback(event):
         events.append(event)
 
@@ -256,7 +256,7 @@ async def test_force_update_enabled(opp, mqtt_mock):
 
     events = []
 
-    @op.callback
+    @ha.callback
     def callback(event):
         events.append(event)
 
@@ -400,7 +400,7 @@ async def test_update_with_json_attrs_not_dict(opp, mqtt_mock, caplog):
     )
 
 
-async def test_update_with_json_attrs_bad_JSON.opp, mqtt_mock, caplog):
+async def test_update_with_json_attrs_bad_JSON(opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_bad_JSON(
         opp, mqtt_mock, caplog, sensor.DOMAIN, DEFAULT_CONFIG

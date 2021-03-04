@@ -1,6 +1,6 @@
 {
   "domain": "worldtidesinfo",
   "name": "World Tides",
-  "documentation": "https://www.open-peer-power.io/integrations/worldtidesinfo",
+  "documentation": "https://www.openpeerpower.io/integrations/worldtidesinfo",
   "codeowners": []
 }

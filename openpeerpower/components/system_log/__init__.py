@@ -89,7 +89,7 @@ def _figure_out_source(record, call_stack, opp):
 
 
 class LogEntry:
-    """Store HA log entries."""
+    """Store OP log entries."""
 
     def __init__(self, record, stack, source):
         """Initialize a log entry."""

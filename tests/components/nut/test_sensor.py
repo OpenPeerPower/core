@@ -24,7 +24,7 @@ async def test_pr3000rt2u(opp):
         "unit_of_measurement": PERCENTAGE,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -50,7 +50,7 @@ async def test_cp1350c(opp):
         "unit_of_measurement": PERCENTAGE,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -75,7 +75,7 @@ async def test_5e850i(opp):
         "unit_of_measurement": PERCENTAGE,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -100,13 +100,13 @@ async def test_5e650i(opp):
         "unit_of_measurement": PERCENTAGE,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
 
 
-async def test_backupsses600m1.opp):
+async def test_backupsses600m1(opp):
     """Test creation of BACKUPSES600M1 sensors."""
 
     await async_init_integration(opp, "BACKUPSES600M1", ["battery.charge"])
@@ -128,7 +128,7 @@ async def test_backupsses600m1.opp):
         "unit_of_measurement": PERCENTAGE,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -155,7 +155,7 @@ async def test_cp1500pfclcd(opp):
         "unit_of_measurement": PERCENTAGE,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -180,7 +180,7 @@ async def test_dl650elcd(opp):
         "unit_of_measurement": PERCENTAGE,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -205,7 +205,7 @@ async def test_blazer_usb(opp):
         "unit_of_measurement": PERCENTAGE,
     }
     # Only test for a subset of attributes in case
-    # HA changes the implementation and a new one appears
+    # OP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )

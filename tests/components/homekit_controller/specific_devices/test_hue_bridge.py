@@ -8,8 +8,8 @@ from tests.components.homekit_controller.common import (
 )
 
 
-async def test_hue_bridge_setup_opp):
-    """Test that a Hue hub can be correctly setup in HA via HomeKit."""
+async def test_hue_bridge_setup(opp):
+    """Test that a Hue hub can be correctly setup in OP via HomeKit."""
     accessories = await setup_accessories_from_file(opp, "hue_bridge.json")
     config_entry, pairing = await setup_test_accessories(opp, accessories)
 

@@ -6,7 +6,7 @@
         "error": {
             "cannot_connect": "Det gick inte att ansluta, f\u00f6rs\u00f6k igen",
             "invalid_auth": "Ogiltig autentisering",
-            "no_homes": "Det finns inga hem  opp.ade till detta tado-konto.",
+            "no_homes": "Det finns inga hem kopplade till detta tado-konto.",
             "unknown": "Ov\u00e4ntat fel"
         },
         "step": {

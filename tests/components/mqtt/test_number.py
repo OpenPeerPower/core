@@ -11,7 +11,7 @@ from openpeerpower.components.number import (
     SERVICE_SET_VALUE,
 )
 from openpeerpower.const import ATTR_ASSUMED_STATE, ATTR_ENTITY_ID
-import openpeerpower.core as op
+import openpeerpower.core as ha
 from openpeerpower.setup import async_setup_component
 
 from .test_common import (
@@ -81,7 +81,7 @@ async def test_run_number_service_optimistic(opp, mqtt_mock):
     """Test that set_value service works in optimistic mode."""
     topic = "test/number"
 
-    fake_state = op.State("switch.test", "3")
+    fake_state = ha.State("switch.test", "3")
 
     with patch(
         "openpeerpower.helpers.restore_state.RestoreEntity.async_get_last_state",
@@ -227,7 +227,7 @@ async def test_update_with_json_attrs_not_dict(opp, mqtt_mock, caplog):
     )
 
 
-async def test_update_with_json_attrs_bad_JSON.opp, mqtt_mock, caplog):
+async def test_update_with_json_attrs_bad_JSON(opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_bad_JSON(
         opp, mqtt_mock, caplog, number.DOMAIN, DEFAULT_CONFIG

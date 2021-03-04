@@ -44,7 +44,7 @@ from tests.common import async_mock_service
 
 
 async def test_humidifier(opp, hk_driver, events):
-    """Test if humidifier accessory and HA are updated accordingly."""
+    """Test if humidifier accessory and OP are updated accordingly."""
     entity_id = "humidifier.test"
 
     opp.states.async_set(entity_id, STATE_OFF)
@@ -123,7 +123,7 @@ async def test_humidifier(opp, hk_driver, events):
 
 
 async def test_dehumidifier(opp, hk_driver, events):
-    """Test if dehumidifier accessory and HA are updated accordingly."""
+    """Test if dehumidifier accessory and OP are updated accordingly."""
     entity_id = "humidifier.test"
 
     opp.states.async_set(
@@ -206,7 +206,7 @@ async def test_dehumidifier(opp, hk_driver, events):
 
 
 async def test_hygrostat_power_state(opp, hk_driver, events):
-    """Test if accessory and HA are updated accordingly."""
+    """Test if accessory and OP are updated accordingly."""
     entity_id = "humidifier.test"
 
     opp.states.async_set(

@@ -9,7 +9,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     if discovery_info is None:
         return
 
-    async_add_entities([VolvoLock.opp.data[DATA_KEY], *discovery_info)])
+    async_add_entities([VolvoLock(opp.data[DATA_KEY], *discovery_info)])
 
 
 class VolvoLock(VolvoEntity, LockEntity):

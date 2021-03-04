@@ -124,7 +124,7 @@ async def test_ws_current_user(opp, opp_ws_client, opp_access_token):
     """Test the current user command with Open Peer Power creds."""
     assert await async_setup_component(opp, "auth", {})
 
-    refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
+    refresh_token = await opp.auth.async_validate_access_token(opp_access_token)
     user = refresh_token.user
     client = await opp_ws_client(opp, opp_access_token)
 
@@ -140,7 +140,7 @@ async def test_ws_current_user(opp, opp_ws_client, opp_access_token):
     assert user_dict["is_owner"] == user.is_owner
     assert len(user_dict["credentials"]) == 1
 
-    opp.cred = user_dict["credentials"][0]
+    opp_cred = user_dict["credentials"][0]
     assert opp_cred["auth_provider_type"] == "openpeerpower"
     assert opp_cred["auth_provider_id"] is None
     assert "data" not in opp_cred
@@ -351,7 +351,7 @@ async def test_ws_refresh_tokens(opp, opp_ws_client, opp_access_token):
     assert result["success"], result
     assert len(result["result"]) == 1
     token = result["result"][0]
-    refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
+    refresh_token = await opp.auth.async_validate_access_token(opp_access_token)
     assert token["id"] == refresh_token.id
     assert token["type"] == refresh_token.token_type
     assert token["client_id"] == refresh_token.client_id
@@ -367,7 +367,7 @@ async def test_ws_delete_refresh_token(opp, opp_ws_client, opp_access_token):
     """Test deleting a refresh token."""
     assert await async_setup_component(opp, "auth", {"http": {}})
 
-    refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
+    refresh_token = await opp.auth.async_validate_access_token(opp_access_token)
 
     ws_client = await opp_ws_client(opp, opp_access_token)
 
@@ -382,7 +382,7 @@ async def test_ws_delete_refresh_token(opp, opp_ws_client, opp_access_token):
 
     result = await ws_client.receive_json()
     assert result["success"], result
-    refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
+    refresh_token = await opp.auth.async_validate_access_token(opp_access_token)
     assert refresh_token is None
 
 
@@ -391,7 +391,7 @@ async def test_ws_sign_path(opp, opp_ws_client, opp_access_token):
     assert await async_setup_component(opp, "auth", {"http": {}})
     ws_client = await opp_ws_client(opp, opp_access_token)
 
-    refresh_token = await opp.auth.async_validate_access_token.opp_access_token)
+    refresh_token = await opp.auth.async_validate_access_token(opp_access_token)
 
     with patch(
         "openpeerpower.components.auth.async_sign_path", return_value="hello_world"

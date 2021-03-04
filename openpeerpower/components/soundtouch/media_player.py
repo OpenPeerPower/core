@@ -107,14 +107,14 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         if host in [device.config["host"] for device in opp.data[DATA_SOUNDTOUCH]]:
             return
 
-        remote_config = {"id": "op.component.soundtouch", "host": host, "port": port}
+        remote_config = {"id": "ha.component.soundtouch", "host": host, "port": port}
         bose_soundtouch_entity = SoundTouchDevice(None, remote_config)
         opp.data[DATA_SOUNDTOUCH].append(bose_soundtouch_entity)
         add_entities([bose_soundtouch_entity], True)
     else:
         name = config.get(CONF_NAME)
         remote_config = {
-            "id": "op.component.soundtouch",
+            "id": "ha.component.soundtouch",
             "port": config.get(CONF_PORT),
             "host": config.get(CONF_HOST),
         }

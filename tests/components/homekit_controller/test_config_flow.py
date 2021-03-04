@@ -474,7 +474,7 @@ async def test_pair_abort_errors_on_finish(opp, controller, exception, expected)
     }
 
     # User initiates pairing - this triggers the device to show a pairing code
-    # and then HA to show a pairing form
+    # and then OP to show a pairing form
     finish_pairing = unittest.mock.AsyncMock(side_effect=exception("error"))
     with patch.object(device, "start_pairing", return_value=finish_pairing):
         result = await opp.config_entries.flow.async_configure(result["flow_id"])
@@ -514,7 +514,7 @@ async def test_pair_form_errors_on_finish(opp, controller, exception, expected):
     }
 
     # User initiates pairing - this triggers the device to show a pairing code
-    # and then HA to show a pairing form
+    # and then OP to show a pairing form
     finish_pairing = unittest.mock.AsyncMock(side_effect=exception("error"))
     with patch.object(device, "start_pairing", return_value=finish_pairing):
         result = await opp.config_entries.flow.async_configure(result["flow_id"])

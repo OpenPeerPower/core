@@ -85,7 +85,7 @@ async def test_mqtt_connects_on_open_peer_power_mqtt_setup(
 
 
 async def test_mqtt_disconnects_on_open_peer_power_stop(opp, mqtt_mock):
-    """Test if client stops on HA stop."""
+    """Test if client stops on OP stop."""
     opp.bus.fire(EVENT_OPENPEERPOWER_STOP)
     await opp.async_block_till_done()
     await opp.async_block_till_done()
@@ -726,7 +726,7 @@ async def test_setup_uses_certificate_on_certificate_set_to_auto(opp):
         assert calls[0][0] == expectedCertificate
 
 
-async def test_setup_without_tls_config_uses_tlsv1_under_python36.opp):
+async def test_setup_without_tls_config_uses_tlsv1_under_python36(opp):
     """Test setup defaults to TLSv1 under python3.6."""
     calls = []
 

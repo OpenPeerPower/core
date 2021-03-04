@@ -42,7 +42,7 @@ def setup_component(opp: core.OpenPeerPower, domain: str, config: ConfigType) ->
 
 
 async def async_setup_component(
-    opp, core.OpenPeerPower, domain: str, config: ConfigType
+    opp: core.OpenPeerPower, domain: str, config: ConfigType
 ) -> bool:
     """Set up a component and all its dependencies.
 
@@ -68,11 +68,11 @@ async def async_setup_component(
 
 
 async def _async_process_dependencies(
-    opp, core.OpenPeerPower, config: ConfigType, integration: loader.Integration
+    opp: core.OpenPeerPower, config: ConfigType, integration: loader.Integration
 ) -> bool:
     """Ensure all dependencies are set up."""
     dependencies_tasks = {
-        dep:.opp.loop.create_task(async_setup_component(opp, dep, config))
+        dep: opp.loop.create_task(async_setup_component(opp, dep, config))
         for dep in integration.dependencies
         if dep not in opp.config.components
     }
@@ -105,7 +105,7 @@ async def _async_process_dependencies(
             list(after_dependencies_tasks),
         )
 
-    async with.opp.timeout.async_freeze(integration.domain):
+    async with opp.timeout.async_freeze(integration.domain):
         results = await asyncio.gather(
             *dependencies_tasks.values(), *after_dependencies_tasks.values()
         )
@@ -126,7 +126,7 @@ async def _async_process_dependencies(
 
 
 async def _async_setup_component(
-    opp, core.OpenPeerPower, domain: str, config: ConfigType
+    opp: core.OpenPeerPower, domain: str, config: ConfigType
 ) -> bool:
     """Set up a component for Open Peer Power.
 
@@ -199,7 +199,7 @@ async def _async_setup_component(
         if hasattr(component, "async_setup"):
             task = component.async_setup(opp, processed_config)  # type: ignore
         elif hasattr(component, "setup"):
-            # This should not be replaced with.opp.async_add_executor_job because
+            # This should not be replaced with opp.async_add_executor_job because
             # we don't want to track this task in case it blocks startup.
             task = opp.loop.run_in_executor(
                 None, component.setup, opp, processed_config  # type: ignore
@@ -209,7 +209,7 @@ async def _async_setup_component(
             opp.data[DATA_SETUP_STARTED].pop(domain)
             return False
 
-        async with.opp.timeout.async_timeout(SLOW_SETUP_MAX_WAIT, domain):
+        async with opp.timeout.async_timeout(SLOW_SETUP_MAX_WAIT, domain):
             result = await task
     except asyncio.TimeoutError:
         _LOGGER.error(
@@ -267,7 +267,7 @@ async def _async_setup_component(
 
 
 async def async_prepare_setup_platform(
-    opp, core.OpenPeerPower, opp_config: ConfigType, domain: str, platform_name: str
+    opp: core.OpenPeerPower, opp_config: ConfigType, domain: str, platform_name: str
 ) -> Optional[ModuleType]:
     """Load a platform and makes sure dependencies are setup.
 
@@ -322,7 +322,7 @@ async def async_prepare_setup_platform(
 
 
 async def async_process_deps_reqs(
-    opp, core.OpenPeerPower, config: ConfigType, integration: loader.Integration
+    opp: core.OpenPeerPower, config: ConfigType, integration: loader.Integration
 ) -> None:
     """Process all dependencies and requirements for a module.
 
@@ -339,7 +339,7 @@ async def async_process_deps_reqs(
         raise OpenPeerPowerError("Could not set up all dependencies.")
 
     if not opp.config.skip_pip and integration.requirements:
-        async with.opp.timeout.async_freeze(integration.domain):
+        async with opp.timeout.async_freeze(integration.domain):
             await requirements.async_get_integration_with_requirements(
                 opp, integration.domain
             )
@@ -349,7 +349,7 @@ async def async_process_deps_reqs(
 
 @core.callback
 def async_when_setup(
-    opp, core.OpenPeerPower,
+    opp: core.OpenPeerPower,
     component: str,
     when_setup_cb: Callable[[core.OpenPeerPower, str], Awaitable[None]],
 ) -> None:

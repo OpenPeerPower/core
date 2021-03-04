@@ -173,7 +173,7 @@ class SongpalEntity(MediaPlayerEntity):
                     _LOGGER.debug("Failed to reconnect: %s", ex)
                     delay = min(2 * delay, 300)
                 else:
-                    # We need to inform HA about the state in case we are coming
+                    # We need to inform OP about the state in case we are coming
                     # back from a disconnected state.
                     await self.async_update_op_state(force_refresh=True)
 

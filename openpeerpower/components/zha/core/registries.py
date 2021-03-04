@@ -31,18 +31,18 @@ SMARTTHINGS_ARRIVAL_SENSOR_DEVICE_TYPE = 0x8000
 SMARTTHINGS_HUMIDITY_CLUSTER = 0xFC45
 
 REMOTE_DEVICE_TYPES = {
-    zigpy.profiles.zop.PROFILE_ID: [
-        zigpy.profiles.zop.DeviceType.COLOR_CONTROLLER,
-        zigpy.profiles.zop.DeviceType.COLOR_DIMMER_SWITCH,
-        zigpy.profiles.zop.DeviceType.COLOR_SCENE_CONTROLLER,
-        zigpy.profiles.zop.DeviceType.DIMMER_SWITCH,
-        zigpy.profiles.zop.DeviceType.LEVEL_CONTROL_SWITCH,
-        zigpy.profiles.zop.DeviceType.NON_COLOR_CONTROLLER,
-        zigpy.profiles.zop.DeviceType.NON_COLOR_SCENE_CONTROLLER,
-        zigpy.profiles.zop.DeviceType.ON_OFF_SWITCH,
-        zigpy.profiles.zop.DeviceType.ON_OFF_LIGHT_SWITCH,
-        zigpy.profiles.zop.DeviceType.REMOTE_CONTROL,
-        zigpy.profiles.zop.DeviceType.SCENE_SELECTOR,
+    zigpy.profiles.zha.PROFILE_ID: [
+        zigpy.profiles.zha.DeviceType.COLOR_CONTROLLER,
+        zigpy.profiles.zha.DeviceType.COLOR_DIMMER_SWITCH,
+        zigpy.profiles.zha.DeviceType.COLOR_SCENE_CONTROLLER,
+        zigpy.profiles.zha.DeviceType.DIMMER_SWITCH,
+        zigpy.profiles.zha.DeviceType.LEVEL_CONTROL_SWITCH,
+        zigpy.profiles.zha.DeviceType.NON_COLOR_CONTROLLER,
+        zigpy.profiles.zha.DeviceType.NON_COLOR_SCENE_CONTROLLER,
+        zigpy.profiles.zha.DeviceType.ON_OFF_SWITCH,
+        zigpy.profiles.zha.DeviceType.ON_OFF_LIGHT_SWITCH,
+        zigpy.profiles.zha.DeviceType.REMOTE_CONTROL,
+        zigpy.profiles.zha.DeviceType.SCENE_SELECTOR,
     ],
     zigpy.profiles.zll.PROFILE_ID: [
         zigpy.profiles.zll.DeviceType.COLOR_CONTROLLER,
@@ -85,21 +85,21 @@ BINDABLE_CLUSTERS = SetRegistry()
 CHANNEL_ONLY_CLUSTERS = SetRegistry()
 
 DEVICE_CLASS = {
-    zigpy.profiles.zop.PROFILE_ID: {
+    zigpy.profiles.zha.PROFILE_ID: {
         SMARTTHINGS_ARRIVAL_SENSOR_DEVICE_TYPE: DEVICE_TRACKER,
-        zigpy.profiles.zop.DeviceType.THERMOSTAT: CLIMATE,
-        zigpy.profiles.zop.DeviceType.COLOR_DIMMABLE_LIGHT: LIGHT,
-        zigpy.profiles.zop.DeviceType.COLOR_TEMPERATURE_LIGHT: LIGHT,
-        zigpy.profiles.zop.DeviceType.DIMMABLE_BALLAST: LIGHT,
-        zigpy.profiles.zop.DeviceType.DIMMABLE_LIGHT: LIGHT,
-        zigpy.profiles.zop.DeviceType.DIMMABLE_PLUG_IN_UNIT: LIGHT,
-        zigpy.profiles.zop.DeviceType.EXTENDED_COLOR_LIGHT: LIGHT,
-        zigpy.profiles.zop.DeviceType.LEVEL_CONTROLLABLE_OUTPUT: COVER,
-        zigpy.profiles.zop.DeviceType.ON_OFF_BALLAST: SWITCH,
-        zigpy.profiles.zop.DeviceType.ON_OFF_LIGHT: LIGHT,
-        zigpy.profiles.zop.DeviceType.ON_OFF_PLUG_IN_UNIT: SWITCH,
-        zigpy.profiles.zop.DeviceType.SHADE: COVER,
-        zigpy.profiles.zop.DeviceType.SMART_PLUG: SWITCH,
+        zigpy.profiles.zha.DeviceType.THERMOSTAT: CLIMATE,
+        zigpy.profiles.zha.DeviceType.COLOR_DIMMABLE_LIGHT: LIGHT,
+        zigpy.profiles.zha.DeviceType.COLOR_TEMPERATURE_LIGHT: LIGHT,
+        zigpy.profiles.zha.DeviceType.DIMMABLE_BALLAST: LIGHT,
+        zigpy.profiles.zha.DeviceType.DIMMABLE_LIGHT: LIGHT,
+        zigpy.profiles.zha.DeviceType.DIMMABLE_PLUG_IN_UNIT: LIGHT,
+        zigpy.profiles.zha.DeviceType.EXTENDED_COLOR_LIGHT: LIGHT,
+        zigpy.profiles.zha.DeviceType.LEVEL_CONTROLLABLE_OUTPUT: COVER,
+        zigpy.profiles.zha.DeviceType.ON_OFF_BALLAST: SWITCH,
+        zigpy.profiles.zha.DeviceType.ON_OFF_LIGHT: LIGHT,
+        zigpy.profiles.zha.DeviceType.ON_OFF_PLUG_IN_UNIT: SWITCH,
+        zigpy.profiles.zha.DeviceType.SHADE: COVER,
+        zigpy.profiles.zha.DeviceType.SMART_PLUG: SWITCH,
     },
     zigpy.profiles.zll.PROFILE_ID: {
         zigpy.profiles.zll.DeviceType.COLOR_LIGHT: LIGHT,
@@ -320,4 +320,4 @@ class ZHAEntityRegistry:
         return decorator
 
 
-ZOP_ENTITIES = ZHAEntityRegistry()
+ZHA_ENTITIES = ZHAEntityRegistry()

@@ -31,7 +31,7 @@ async def test_ws_setup_depose_mfa(opp, opp_ws_client):
             }
         ],
     )
-    ensure_auth_manager_loaded.opp.auth)
+    ensure_auth_manager_loaded(opp.auth)
     await async_setup_component(opp, "auth", {"http": {}})
 
     user = MockUser(id="mock-user").add_to_opp(opp)

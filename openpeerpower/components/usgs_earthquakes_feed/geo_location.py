@@ -11,6 +11,7 @@ import voluptuous as vol
 from openpeerpower.components.geo_location import PLATFORM_SCHEMA, GeolocationEvent
 from openpeerpower.const import (
     ATTR_ATTRIBUTION,
+    ATTR_TIME,
     CONF_LATITUDE,
     CONF_LONGITUDE,
     CONF_RADIUS,
@@ -30,7 +31,6 @@ ATTR_EXTERNAL_ID = "external_id"
 ATTR_MAGNITUDE = "magnitude"
 ATTR_PLACE = "place"
 ATTR_STATUS = "status"
-ATTR_TIME = "time"
 ATTR_TYPE = "type"
 ATTR_UPDATED = "updated"
 
@@ -127,7 +127,7 @@ class UsgsEarthquakesFeedEntityManager:
     ):
         """Initialize the Feed Entity Manager."""
 
-        self.opp = opp
+        self._opp = opp
         self._feed_manager = UsgsEarthquakeHazardsProgramFeedManager(
             self._generate_entity,
             self._update_entity,
@@ -148,7 +148,7 @@ class UsgsEarthquakesFeedEntityManager:
     def _init_regular_updates(self):
         """Schedule regular updates at the specified interval."""
         track_time_interval(
-            self.opp, lambda now: self._feed_manager.update(), self._scan_interval
+            self._opp, lambda now: self._feed_manager.update(), self._scan_interval
         )
 
     def get_entry(self, external_id):
@@ -163,11 +163,11 @@ class UsgsEarthquakesFeedEntityManager:
 
     def _update_entity(self, external_id):
         """Update entity."""
-        dispatcher_send(self.opp, SIGNAL_UPDATE_ENTITY.format(external_id))
+        dispatcher_send(self._opp, SIGNAL_UPDATE_ENTITY.format(external_id))
 
     def _remove_entity(self, external_id):
         """Remove entity."""
-        dispatcher_send(self.opp, SIGNAL_DELETE_ENTITY.format(external_id))
+        dispatcher_send(self._opp, SIGNAL_DELETE_ENTITY.format(external_id))
 
 
 class UsgsEarthquakesEvent(GeolocationEvent):

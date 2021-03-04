@@ -17,7 +17,7 @@ class ConfigEntryAuth(my_pypi_package.AbstractAuth):
 
     def __init__(
         self,
-        opp, core.OpenPeerPower,
+        opp: core.OpenPeerPower,
         oauth_session: config_entry_oauth2_flow.OAuth2Session,
     ):
         """Initialize NEW_NAME Auth."""

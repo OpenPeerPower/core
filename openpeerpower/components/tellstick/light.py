@@ -27,7 +27,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 
     add_entities(
         [
-            TellstickLight.opp.data[DATA_TELLSTICK][tellcore_id], signal_repetitions)
+            TellstickLight(opp.data[DATA_TELLSTICK][tellcore_id], signal_repetitions)
             for tellcore_id in discovery_info[ATTR_DISCOVER_DEVICES]
         ],
         True,
@@ -54,7 +54,7 @@ class TellstickLight(TellstickDevice, LightEntity):
         return SUPPORT_TELLSTICK
 
     def _parse_op_data(self, kwargs):
-        """Turn the value from HA into something useful."""
+        """Turn the value from OP into something useful."""
         return kwargs.get(ATTR_BRIGHTNESS)
 
     def _parse_tellcore_data(self, tellcore_data):

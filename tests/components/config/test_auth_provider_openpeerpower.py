@@ -10,7 +10,7 @@ from tests.common import CLIENT_ID, MockUser
 @pytest.fixture(autouse=True)
 async def setup_config(opp, local_auth):
     """Fixture that sets up the auth provider ."""
-    await auth_op.async_setup(opp)
+    await auth_ha.async_setup(opp)
 
 
 @pytest.fixture
@@ -23,7 +23,7 @@ async def auth_provider(local_auth):
 async def owner_access_token(opp, opp_owner_user):
     """Access token for owner user."""
     refresh_token = await opp.auth.async_create_refresh_token(
-        opp.owner_user, CLIENT_ID
+        opp_owner_user, CLIENT_ID
     )
     return opp.auth.async_create_access_token(refresh_token)
 
@@ -131,8 +131,8 @@ async def test_create_auth(opp, opp_ws_client, opp_storage):
     assert creds.auth_provider_type == "openpeerpower"
     assert creds.auth_provider_id is None
     assert creds.data == {"username": "test-user2"}
-    assert prov_op.STORAGE_KEY in opp_storage
-    entry = opp_storage[prov_op.STORAGE_KEY]["data"]["users"][1]
+    assert prov_ha.STORAGE_KEY in opp_storage
+    entry = opp_storage[prov_ha.STORAGE_KEY]["data"]["users"][1]
     assert entry["username"] == "test-user2"
 
 
@@ -141,7 +141,7 @@ async def test_create_auth_duplicate_username(opp, opp_ws_client, opp_storage):
     client = await opp_ws_client(opp)
     user = MockUser().add_to_opp(opp)
 
-    opp.storage[prov_op.STORAGE_KEY] = {
+    opp_storage[prov_ha.STORAGE_KEY] = {
         "version": 1,
         "data": {"users": [{"username": "test-user"}]},
     }
@@ -165,7 +165,7 @@ async def test_delete_removes_just_auth(opp_ws_client, opp, opp_storage):
     """Test deleting an auth without being connected to a user."""
     client = await opp_ws_client(opp)
 
-    opp.storage[prov_op.STORAGE_KEY] = {
+    opp_storage[prov_ha.STORAGE_KEY] = {
         "version": 1,
         "data": {"users": [{"username": "test-user"}]},
     }
@@ -180,7 +180,7 @@ async def test_delete_removes_just_auth(opp_ws_client, opp, opp_storage):
 
     result = await client.receive_json()
     assert result["success"], result
-    assert len.opp_storage[prov_op.STORAGE_KEY]["data"]["users"]) == 0
+    assert len(opp_storage[prov_ha.STORAGE_KEY]["data"]["users"]) == 0
 
 
 async def test_delete_removes_credential(opp, opp_ws_client, opp_storage):
@@ -188,7 +188,7 @@ async def test_delete_removes_credential(opp, opp_ws_client, opp_storage):
     client = await opp_ws_client(opp)
 
     user = MockUser().add_to_opp(opp)
-    opp.storage[prov_op.STORAGE_KEY] = {
+    opp_storage[prov_ha.STORAGE_KEY] = {
         "version": 1,
         "data": {"users": [{"username": "test-user"}]},
     }
@@ -209,7 +209,7 @@ async def test_delete_removes_credential(opp, opp_ws_client, opp_storage):
 
     result = await client.receive_json()
     assert result["success"], result
-    assert len.opp_storage[prov_op.STORAGE_KEY]["data"]["users"]) == 0
+    assert len(opp_storage[prov_ha.STORAGE_KEY]["data"]["users"]) == 0
 
 
 async def test_delete_requires_admin(opp, opp_ws_client, opp_read_only_access_token):
@@ -281,13 +281,13 @@ async def test_change_password_wrong_pw(
     result = await client.receive_json()
     assert not result["success"], result
     assert result["error"]["code"] == "invalid_current_password"
-    with pytest.raises(prov_op.InvalidAuth):
+    with pytest.raises(prov_ha.InvalidAuth):
         await auth_provider.async_validate_login("test-user", "new-pass")
 
 
 async def test_change_password_no_creds(opp, opp_ws_client, opp_admin_user):
     """Test that change password fails with no credentials."""
-    opp.admin_user.credentials.clear()
+    opp_admin_user.credentials.clear()
     client = await opp_ws_client(opp)
 
     await client.send_json(
@@ -348,14 +348,14 @@ async def test_admin_change_password_no_cred(
 ):
     """Test that change password fails with unknown credential."""
 
-    opp.admin_user.credentials.clear()
+    opp_admin_user.credentials.clear()
     client = await opp_ws_client(opp, owner_access_token)
 
     await client.send_json(
         {
             "id": 6,
             "type": "config/auth_provider/openpeerpower/admin_change_password",
-            "user_id":.opp_admin_user.id,
+            "user_id": opp_admin_user.id,
             "password": "new-pass",
         }
     )
@@ -379,7 +379,7 @@ async def test_admin_change_password(
         {
             "id": 6,
             "type": "config/auth_provider/openpeerpower/admin_change_password",
-            "user_id":.opp_admin_user.id,
+            "user_id": opp_admin_user.id,
             "password": "new-pass",
         }
     )

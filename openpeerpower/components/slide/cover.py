@@ -83,7 +83,7 @@ class SlideCover(CoverEntity):
 
     @property
     def assumed_state(self):
-        """Let HA know the integration is assumed state."""
+        """Let OP know the integration is assumed state."""
         return True
 
     @property

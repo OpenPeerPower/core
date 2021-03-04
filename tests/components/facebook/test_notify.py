@@ -99,7 +99,7 @@ async def test_send_message_attachment(opp, facebook):
             facebook.send_message(message="going nowhere")
             assert not mock.called
 
-    async def test_send_message_with_400.opp, facebook):
+    async def test_send_message_with_400(opp, facebook):
         """Test sending a message with a 400 from Facebook."""
         with requests_mock.Mocker() as mock:
             mock.register_uri(

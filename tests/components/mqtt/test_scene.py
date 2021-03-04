@@ -7,7 +7,7 @@ import pytest
 
 from openpeerpower.components import scene
 from openpeerpower.const import ATTR_ENTITY_ID, SERVICE_TURN_ON
-import openpeerpower.core as op
+import openpeerpower.core as ha
 from openpeerpower.setup import async_setup_component
 
 from .test_common import (
@@ -34,7 +34,7 @@ DEFAULT_CONFIG = {
 
 async def test_sending_mqtt_commands(opp, mqtt_mock):
     """Test the sending MQTT commands."""
-    fake_state = op.State("scene.test", scene.STATE)
+    fake_state = ha.State("scene.test", scene.STATE)
 
     with patch(
         "openpeerpower.helpers.restore_state.RestoreEntity.async_get_last_state",

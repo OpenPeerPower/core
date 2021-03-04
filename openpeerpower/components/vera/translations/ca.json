@@ -22,7 +22,7 @@
                     "exclude": "Identificadors de dispositiu Vera a excloure de Open Peer Power.",
                     "lights": "Identificadors de dispositiu dels commutadors Vera a tractar com a llums a Open Peer Power."
                 },
-                "description": "Consulta la documentaci\u00f3 de Vera per veure els detalls sobre els par\u00e0metres opcionals a: https://www.open-peer-power.io/integrations/vera/. Nota: tots els canvis fets aqu\u00ed necessitaran un reinici de Open Peer Power. Per esborrar valors, posa-hi un espai.",
+                "description": "Consulta la documentaci\u00f3 de Vera per veure els detalls sobre els par\u00e0metres opcionals a: https://www.openpeerpower.io/integrations/vera/. Nota: tots els canvis fets aqu\u00ed necessitaran un reinici de Open Peer Power. Per esborrar valors, posa-hi un espai.",
                 "title": "Opcions del controlador Vera"
             }
         }

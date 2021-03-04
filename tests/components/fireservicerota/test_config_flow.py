@@ -46,7 +46,7 @@ async def test_show_form(opp):
     assert result["step_id"] == "user"
 
 
-async def test_abort_if_already_setup_opp):
+async def test_abort_if_already_setup(opp):
     """Test abort if already setup."""
     entry = MockConfigEntry(
         domain=DOMAIN, data=MOCK_CONF, unique_id=MOCK_CONF[CONF_USERNAME]

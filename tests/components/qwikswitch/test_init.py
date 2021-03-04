@@ -137,7 +137,7 @@ async def test_switch_device(opp, aioclient_mock, qs_devices):
     state_obj = opp.states.get("switch.switch_1")
     assert state_obj.state == "off"
 
-    # ask.opp to turn on and verify command is sent to device
+    # ask opp to turn on and verify command is sent to device
     aioclient_mock.mock_calls.clear()
     aioclient_mock.get("http://127.0.0.1:2020/@a00001=100", json={"data": "OK"})
     await opp.services.async_call(
@@ -154,7 +154,7 @@ async def test_switch_device(opp, aioclient_mock, qs_devices):
     state_obj = opp.states.get("switch.switch_1")
     assert state_obj.state == "on"
 
-    # ask.opp to turn off and verify command is sent to device
+    # ask opp to turn off and verify command is sent to device
     aioclient_mock.mock_calls.clear()
     aioclient_mock.get("http://127.0.0.1:2020/@a00001=0", json={"data": "OK"})
     await opp.services.async_call(
@@ -199,7 +199,7 @@ async def test_light_device(opp, aioclient_mock, qs_devices):
     assert state_obj.state == "on"
     assert state_obj.attributes["brightness"] == 255
 
-    # ask.opp to turn off and verify command is sent to device
+    # ask opp to turn off and verify command is sent to device
     aioclient_mock.mock_calls.clear()
     aioclient_mock.get("http://127.0.0.1:2020/@a00003=0", json={"data": "OK"})
     await opp.services.async_call(
@@ -215,7 +215,7 @@ async def test_light_device(opp, aioclient_mock, qs_devices):
     state_obj = opp.states.get("light.dim_3")
     assert state_obj.state == "off"
 
-    # change brightness in network and check that.opp updates
+    # change brightness in network and check that opp updates
     qs_devices[2]["val"] = "280c55"  # half dimmed
     listen_mock.queue_response(json=EMPTY_PACKET)
     await asyncio.sleep(0.01)
@@ -232,7 +232,7 @@ async def test_light_device(opp, aioclient_mock, qs_devices):
     state_obj = opp.states.get("light.dim_3")
     assert state_obj.state == "off"
 
-    # ask.opp to turn on and verify command is sent to device
+    # ask opp to turn on and verify command is sent to device
     aioclient_mock.mock_calls.clear()
     aioclient_mock.get("http://127.0.0.1:2020/@a00003=100", json={"data": "OK"})
     await opp.services.async_call(

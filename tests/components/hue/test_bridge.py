@@ -13,7 +13,7 @@ from openpeerpower.components.hue.const import (
 from openpeerpower.exceptions import ConfigEntryNotReady
 
 
-async def test_bridge_setup_opp):
+async def test_bridge_setup(opp):
     """Test a successful setup."""
     entry = Mock()
     api = Mock(initialize=AsyncMock())
@@ -41,7 +41,7 @@ async def test_bridge_setup_invalid_username(opp):
 
     with patch.object(
         bridge, "authenticate_bridge", side_effect=errors.AuthenticationRequired
-    ), patch.object.opp.config_entries.flow, "async_init") as mock_init:
+    ), patch.object(opp.config_entries.flow, "async_init") as mock_init:
         assert await hue_bridge.async_setup() is False
 
     assert len(mock_init.mock_calls) == 1
@@ -78,7 +78,7 @@ async def test_reset_if_entry_had_wrong_auth(opp):
     assert await hue_bridge.async_reset()
 
 
-async def test_reset_unloads_entry_if_setup_opp):
+async def test_reset_unloads_entry_if_setup(opp):
     """Test calling reset while the entry has been setup."""
     entry = Mock()
     entry.data = {"host": "1.2.3.4", "username": "mock-username"}
@@ -87,7 +87,7 @@ async def test_reset_unloads_entry_if_setup_opp):
 
     with patch.object(bridge, "authenticate_bridge", return_value=Mock()), patch(
         "aiohue.Bridge", return_value=Mock()
-    ), patch.object.opp.config_entries, "async_forward_entry_setup") as mock_forward:
+    ), patch.object(opp.config_entries, "async_forward_entry_setup") as mock_forward:
         assert await hue_bridge.async_setup() is True
 
     assert len(opp.services.async_services()) == 0

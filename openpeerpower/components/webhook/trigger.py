@@ -28,7 +28,7 @@ async def _handle_webhook(job, opp, webhook_id, request):
 
     result["query"] = request.query
     result["description"] = "webhook"
-    opp.async_run(opp_job(job, {"trigger": result})
+    opp.async_run_opp_job(job, {"trigger": result})
 
 
 async def async_attach_trigger(opp, config, action, automation_info):

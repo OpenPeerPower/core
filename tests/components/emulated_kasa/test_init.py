@@ -144,7 +144,7 @@ def nested_value(ndict, *keys):
     return nested_value(ndict[key], *keys[1:])
 
 
-async def test_setup_opp):
+async def test_setup(opp):
     """Test that devices are reported correctly."""
     with patch(
         "sense_energy.SenseLink",

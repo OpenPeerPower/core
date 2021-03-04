@@ -61,7 +61,7 @@ def alexa_client(loop, opp, opp_client):
             },
         )
     )
-    return loop.run_until_complete.opp_client())
+    return loop.run_until_complete(opp_client())
 
 
 def _flash_briefing_req(client, briefing_id, password="pass%2Fabc"):

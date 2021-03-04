@@ -26,7 +26,7 @@ async def test_file_value(opp, entity_reg):
     m_open = mock_open(read_data="43\n45\n21")
     with patch(
         "openpeerpower.components.file.sensor.open", m_open, create=True
-    ), patch.object.opp.config, "is_allowed_path", return_value=True):
+    ), patch.object(opp.config, "is_allowed_path", return_value=True):
         assert await async_setup_component(opp, "sensor", config)
         await opp.async_block_till_done()
 
@@ -52,7 +52,7 @@ async def test_file_value_template(opp, entity_reg):
     m_open = mock_open(read_data=data)
     with patch(
         "openpeerpower.components.file.sensor.open", m_open, create=True
-    ), patch.object.opp.config, "is_allowed_path", return_value=True):
+    ), patch.object(opp.config, "is_allowed_path", return_value=True):
         assert await async_setup_component(opp, "sensor", config)
         await opp.async_block_till_done()
 
@@ -69,7 +69,7 @@ async def test_file_empty(opp, entity_reg):
     m_open = mock_open(read_data="")
     with patch(
         "openpeerpower.components.file.sensor.open", m_open, create=True
-    ), patch.object.opp.config, "is_allowed_path", return_value=True):
+    ), patch.object(opp.config, "is_allowed_path", return_value=True):
         assert await async_setup_component(opp, "sensor", config)
         await opp.async_block_till_done()
 

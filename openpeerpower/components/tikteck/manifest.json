@@ -1,7 +1,7 @@
 {
   "domain": "tikteck",
   "name": "Tikteck",
-  "documentation": "https://www.open-peer-power.io/integrations/tikteck",
+  "documentation": "https://www.openpeerpower.io/integrations/tikteck",
   "requirements": ["tikteck==0.4"],
   "codeowners": []
 }

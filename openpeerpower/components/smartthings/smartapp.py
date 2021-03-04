@@ -122,7 +122,7 @@ def _get_app_template(opp: OpenPeerPowerType):
     cloudhook_url = opp.data[DOMAIN][CONF_CLOUDHOOK_URL]
     if cloudhook_url is not None:
         endpoint = "via Nabu Casa"
-    description = f".opp.config.location_name} {endpoint}"
+    description = f"{opp.config.location_name} {endpoint}"
 
     return {
         "app_name": APP_NAME_PREFIX + str(uuid4()),
@@ -145,7 +145,7 @@ async def create_app(opp: OpenPeerPowerType, api):
     app, client = await api.create_app(app)
     _LOGGER.debug("Created SmartApp '%s' (%s)", app.app_name, app.app_id)
 
-    # Set unique.opp id in settings
+    # Set unique opp id in settings
     settings = AppSettings(app.app_id)
     settings.settings[SETTINGS_APP_ID] = app.app_id
     settings.settings[SETTINGS_INSTANCE_ID] = opp.data[DOMAIN][CONF_INSTANCE_ID]
@@ -181,11 +181,11 @@ async def update_app(opp: OpenPeerPowerType, app):
 
 def setup_smartapp(opp, app):
     """
-    Configure an individual SmartApp in opp,
+    Configure an individual SmartApp in opp.
 
-    Register the SmartApp with the SmartAppManager so that.opp will service
+    Register the SmartApp with the SmartAppManager so that opp will service
     lifecycle events (install, event, etc...).  A unique SmartApp is created
-    for each SmartThings account that is configured in opp,
+    for each SmartThings account that is configured in opp.
     """
     manager = opp.data[DOMAIN][DATA_MANAGER]
     smartapp = manager.smartapps.get(app.app_id)
@@ -201,7 +201,7 @@ def setup_smartapp(opp, app):
 
 async def setup_smartapp_endpoint(opp: OpenPeerPowerType):
     """
-    Configure the SmartApp webhook in opp,
+    Configure the SmartApp webhook in opp.
 
     SmartApps are an extension point within the SmartThings ecosystem and
     is used to receive push updates (i.e. device updates) from the cloud.
@@ -243,7 +243,7 @@ async def setup_smartapp_endpoint(opp: OpenPeerPowerType):
         _LOGGER.debug("Created cloudhook '%s'", cloudhook_url)
 
     # SmartAppManager uses a dispatcher to invoke callbacks when push events
-    # occur. Use.opp' implementation instead of the built-in one.
+    # occur. Use opp' implementation instead of the built-in one.
     dispatcher = Dispatcher(
         signal_prefix=SIGNAL_SMARTAPP_PREFIX,
         connect=functools.partial(async_dispatcher_connect, opp),
@@ -290,8 +290,8 @@ async def unload_smartapp_endpoint(opp: OpenPeerPowerType):
         store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
         await store.async_save(
             {
-                CONF_INSTANCE_ID:.opp.data[DOMAIN][CONF_INSTANCE_ID],
-                CONF_WEBHOOK_ID:.opp.data[DOMAIN][CONF_WEBHOOK_ID],
+                CONF_INSTANCE_ID: opp.data[DOMAIN][CONF_INSTANCE_ID],
+                CONF_WEBHOOK_ID: opp.data[DOMAIN][CONF_WEBHOOK_ID],
                 CONF_CLOUDHOOK_URL: None,
             }
         )

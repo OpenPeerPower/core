@@ -21,7 +21,7 @@ class MockRequest:
 
     def __init__(self, opp, query):
         """Init request object."""
-        self.app = {.opp":.opp}
+        self.app = {"opp": opp}
         self.query = query
 
 
@@ -118,26 +118,26 @@ async def test_abort_if_no_implementation_registered(opp):
     assert result["reason"] == "missing_configuration"
 
 
-async def test_abort_if_already_setup_opp):
+async def test_abort_if_already_setup(opp):
     """Test we abort if Logi Circle is already setup."""
     flow = init_config_flow(opp)
 
-    with patch.object.opp.config_entries, "async_entries", return_value=[{}]):
+    with patch.object(opp.config_entries, "async_entries", return_value=[{}]):
         result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
 
-    with patch.object.opp.config_entries, "async_entries", return_value=[{}]):
+    with patch.object(opp.config_entries, "async_entries", return_value=[{}]):
         result = await flow.async_step_import()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
 
-    with patch.object.opp.config_entries, "async_entries", return_value=[{}]):
+    with patch.object(opp.config_entries, "async_entries", return_value=[{}]):
         result = await flow.async_step_code()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
 
-    with patch.object.opp.config_entries, "async_entries", return_value=[{}]):
+    with patch.object(opp.config_entries, "async_entries", return_value=[{}]):
         result = await flow.async_step_auth()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "external_setup"

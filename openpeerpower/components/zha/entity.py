@@ -20,7 +20,7 @@ from .core.const import (
     ATTR_MODEL,
     ATTR_NAME,
     DATA_ZHA,
-    DATA_ZOP_BRIDGE_ID,
+    DATA_ZHA_BRIDGE_ID,
     DOMAIN,
     SIGNAL_GROUP_ENTITY_REMOVED,
     SIGNAL_GROUP_MEMBERSHIP_CHANGE,
@@ -90,7 +90,7 @@ class BaseZhaEntity(LogMixin, entity.Entity):
             ATTR_MANUFACTURER: zha_device_info[ATTR_MANUFACTURER],
             ATTR_MODEL: zha_device_info[ATTR_MODEL],
             ATTR_NAME: zha_device_info[ATTR_NAME],
-            "via_device": (DOMAIN, self.opp.data[DATA_ZHA][DATA_ZOP_BRIDGE_ID]),
+            "via_device": (DOMAIN, self.opp.data[DATA_ZHA][DATA_ZHA_BRIDGE_ID]),
         }
 
     @callback

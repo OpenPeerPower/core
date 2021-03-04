@@ -1,7 +1,7 @@
 {
   "domain": "trafikverket_weatherstation",
   "name": "Trafikverket Weather Station",
-  "documentation": "https://www.open-peer-power.io/integrations/trafikverket_weatherstation",
+  "documentation": "https://www.openpeerpower.io/integrations/trafikverket_weatherstation",
   "requirements": ["pytrafikverket==0.1.6.2"],
   "codeowners": ["@endor-force"]
 }

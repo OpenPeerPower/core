@@ -11,7 +11,7 @@ from .const import (  # pylint: disable=unused-import
     _LOGGER,
     CONF_APP_ID,
     CONF_APP_SECRET,
-    CONF_CAPTCOP_CODE,
+    CONF_CAPTCHA_CODE,
     CONF_MFA_CODE,
     DATA_EXPIRES,
     DATA_SLID_TOKEN,
@@ -81,7 +81,7 @@ class StarlineFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_auth_captcha(self, user_input=None, error=None):
         """Captcha verification step."""
         if user_input is not None:
-            self._captcha_code = user_input[CONF_CAPTCOP_CODE]
+            self._captcha_code = user_input[CONF_CAPTCHA_CODE]
             return await self._async_authenticate_user(error)
         return self._async_form_auth_captcha(error)
 
@@ -161,7 +161,7 @@ class StarlineFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
             data_schema=vol.Schema(
                 {
                     vol.Required(
-                        CONF_CAPTCOP_CODE, default=self._captcha_code or vol.UNDEFINED
+                        CONF_CAPTCHA_CODE, default=self._captcha_code or vol.UNDEFINED
                     ): str
                 }
             ),

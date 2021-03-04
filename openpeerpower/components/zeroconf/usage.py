@@ -20,7 +20,7 @@ def install_multiple_zeroconf_catcher(opp_zc) -> None:
         _report(
             "attempted to create another Zeroconf instance. Please use the shared Zeroconf via await openpeerpower.components.zeroconf.async_get_instance(opp)",
         )
-        return.opp_zc
+        return opp_zc
 
     def new_zeroconf_init(self, *k, **kw):
         return

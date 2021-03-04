@@ -72,7 +72,7 @@ async def test_async_setup_entry_loads_platforms(
 ):
     """Test load connects to heos, retrieves players, and loads platforms."""
     config_entry.add_to_opp(opp)
-    with patch.object.opp.config_entries, "async_forward_entry_setup") as forward_mock:
+    with patch.object(opp.config_entries, "async_forward_entry_setup") as forward_mock:
         assert await async_setup_entry(opp, config_entry)
         # Assert platforms loaded
         await opp.async_block_till_done()
@@ -95,7 +95,7 @@ async def test_async_setup_entry_not_signed_in_loads_platforms(
     config_entry.add_to_opp(opp)
     controller.is_signed_in = False
     controller.signed_in_username = None
-    with patch.object.opp.config_entries, "async_forward_entry_setup") as forward_mock:
+    with patch.object(opp.config_entries, "async_forward_entry_setup") as forward_mock:
         assert await async_setup_entry(opp, config_entry)
         # Assert platforms loaded
         await opp.async_block_till_done()

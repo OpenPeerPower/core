@@ -18,7 +18,7 @@ async def test_system_health_info_autogen(opp):
 async def test_system_health_info_storage(opp, opp_storage):
     """Test system health info endpoint."""
     assert await async_setup_component(opp, "system_health", {})
-    opp.storage[dashboard.CONFIG_STORAGE_KEY_DEFAULT] = {
+    opp_storage[dashboard.CONFIG_STORAGE_KEY_DEFAULT] = {
         "key": "lovelace",
         "version": 1,
         "data": {"config": {"resources": [], "views": []}},
@@ -48,6 +48,6 @@ async def test_system_health_info_yaml_not_found(opp):
     assert info == {
         "dashboards": 1,
         "mode": "yaml",
-        "error": "{} not found".format.opp.config.path("ui-lovelace.yaml")),
+        "error": "{} not found".format(opp.config.path("ui-lovelace.yaml")),
         "resources": 0,
     }

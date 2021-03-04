@@ -120,7 +120,7 @@ async def test_form_import(opp):
         "events": ["event1", "event2", "event3"],
         "token": "imported_token",
         # This will go away once we convert to cloud hooks
-         opp_url_override": "http://legacy.custom.url/should/only/come/in/from/yaml",
+        "opp_url_override": "http://legacy.custom.url/should/only/come/in/from/yaml",
     }
     # It is not possible to import options at this time
     # so they end up in the config entry data and are
@@ -188,7 +188,7 @@ async def test_form_import_with_zeroconf_already_discovered(opp):
         "events": ["event1", "event2", "event3"],
         "token": "imported_token",
         # This will go away once we convert to cloud hooks
-         opp_url_override": "http://legacy.custom.url/should/only/come/in/from/yaml",
+        "opp_url_override": "http://legacy.custom.url/should/only/come/in/from/yaml",
     }
     # It is not possible to import options at this time
     # so they end up in the config entry data and are

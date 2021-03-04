@@ -23,7 +23,7 @@ def singleton(data_key: str) -> Callable[[FUNC], FUNC]:
 
             @bind_opp
             @functools.wraps(func)
-            def wrapped.opp: OpenPeerPower) -> T:
+            def wrapped(opp: OpenPeerPower) -> T:
                 obj: Optional[T] = opp.data.get(data_key)
                 if obj is None:
                     obj = opp.data[data_key] = func(opp)

@@ -1,7 +1,7 @@
 {
   "domain": "vlc_telnet",
   "name": "VLC media player Telnet",
-  "documentation": "https://www.open-peer-power.io/integrations/vlc-telnet",
+  "documentation": "https://www.openpeerpower.io/integrations/vlc-telnet",
   "requirements": ["python-telnet-vlc==2.0.1"],
   "codeowners": ["@rodripf", "@dmcc"]
 }

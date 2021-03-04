@@ -163,7 +163,7 @@ async def test_co(opp, hk_driver):
     assert acc.char_detected.value == 0
 
 
-async def test_co2.opp, hk_driver):
+async def test_co2(opp, hk_driver):
     """Test if accessory is updated after state change."""
     entity_id = "sensor.co2"
 

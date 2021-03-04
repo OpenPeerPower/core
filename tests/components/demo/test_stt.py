@@ -12,7 +12,7 @@ async def setup_comp(opp):
     await opp.async_block_till_done()
 
 
-async def test_demo_settings.opp_client):
+async def test_demo_settings(opp_client):
     """Test retrieve settings from demo provider."""
     client = await opp_client()
 
@@ -30,7 +30,7 @@ async def test_demo_settings.opp_client):
     }
 
 
-async def test_demo_speech_no_metadata.opp_client):
+async def test_demo_speech_no_metadata(opp_client):
     """Test retrieve settings from demo provider."""
     client = await opp_client()
 
@@ -38,7 +38,7 @@ async def test_demo_speech_no_metadata.opp_client):
     assert response.status == 400
 
 
-async def test_demo_speech_wrong_metadata.opp_client):
+async def test_demo_speech_wrong_metadata(opp_client):
     """Test retrieve settings from demo provider."""
     client = await opp_client()
 
@@ -52,7 +52,7 @@ async def test_demo_speech_wrong_metadata.opp_client):
     assert response.status == 415
 
 
-async def test_demo_speech.opp_client):
+async def test_demo_speech(opp_client):
     """Test retrieve settings from demo provider."""
     client = await opp_client()
 

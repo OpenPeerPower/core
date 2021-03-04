@@ -102,7 +102,7 @@ async def test_import_plm(opp: OpenPeerPowerType):
     assert CONF_PORT not in data
 
 
-async def test_import_hub1.opp: OpenPeerPowerType):
+async def test_import_hub1(opp: OpenPeerPowerType):
     """Test setting up the entry from YAML to a hub v1."""
     config = {}
     config[DOMAIN] = MOCK_IMPORT_MINIMUM_HUB_V1
@@ -129,7 +129,7 @@ async def test_import_hub1.opp: OpenPeerPowerType):
     assert CONF_PASSWORD not in data
 
 
-async def test_import_hub2.opp: OpenPeerPowerType):
+async def test_import_hub2(opp: OpenPeerPowerType):
     """Test setting up the entry from YAML to a hub v2."""
     config = {}
     config[DOMAIN] = MOCK_IMPORT_MINIMUM_HUB_V2

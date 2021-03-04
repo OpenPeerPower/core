@@ -179,7 +179,7 @@ class RestoreStateData:
         # Dump states periodically
         async_track_time_interval(self.opp, _async_dump_states, STATE_DUMP_INTERVAL)
 
-        # Dump states when stopping.opp
+        # Dump states when stopping opp
         self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _async_dump_states)
 
     @callback
@@ -190,9 +190,9 @@ class RestoreStateData:
     @callback
     def async_restore_entity_removed(self, entity_id: str) -> None:
         """Unregister this entity from saving state."""
-        # When an entity is being removed from(opp, store its last state. This
+        # When an entity is being removed from opp, store its last state. This
         # allows us to support state restoration if the entity is removed, then
-        # re-added while.opp is still running.
+        # re-added while opp is still running.
         state = self.opp.states.get(entity_id)
         # To fully mimic all the attribute data types when loaded from storage,
         # we're going to serialize it to JSON and then re-load it.
@@ -254,8 +254,8 @@ class RestoreEntity(Entity):
     async def async_get_last_state(self) -> Optional[State]:
         """Get the entity state from the previous run."""
         if self.opp is None or self.entity_id is None:
-            # Return None if this entity isn't added to.opp yet
-            _LOGGER.warning("Cannot get last state. Entity not added to.opp")
+            # Return None if this entity isn't added to opp yet
+            _LOGGER.warning("Cannot get last state. Entity not added to opp")
             return None
         data = await RestoreStateData.async_get_instance(self.opp)
         if self.entity_id not in data.last_states:

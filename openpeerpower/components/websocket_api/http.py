@@ -143,12 +143,12 @@ class WebSocketHandler:
         self._handle_task = asyncio.current_task()
 
         @callback
-        def handle.opp_stop(event):
+        def handle_opp_stop(event):
             """Cancel this connection."""
             self._cancel()
 
         unsub_stop = self.opp.bus.async_listen(
-            EVENT_OPENPEERPOWER_STOP, handle.opp_stop
+            EVENT_OPENPEERPOWER_STOP, handle_opp_stop
         )
 
         # As the webserver is now started before the start

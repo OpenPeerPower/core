@@ -13,7 +13,7 @@
                 "data": {
                     "pin": "PIN-Code"
                 },
-                "description": "Ihr Fernseher sollte einen Code anzeigen. Geben Sie diesen Code in das Formular ein und fahren Sie mit dem n\u00e4chsten Schritt fort, um die  opp.ung abzuschlie\u00dfen.",
+                "description": "Ihr Fernseher sollte einen Code anzeigen. Geben Sie diesen Code in das Formular ein und fahren Sie mit dem n\u00e4chsten Schritt fort, um die Kopplung abzuschlie\u00dfen.",
                 "title": "Schlie\u00dfen Sie den Pairing-Prozess ab"
             },
             "pairing_complete": {

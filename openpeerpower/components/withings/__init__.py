@@ -103,7 +103,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         config_updates["data"] = {
             **entry.data,
             **{
-                const.CONF_USE_WEBHOOK:.opp.data[DOMAIN][const.CONFIG][
+                const.CONF_USE_WEBHOOK: opp.data[DOMAIN][const.CONFIG][
                     const.CONF_USE_WEBHOOK
                 ],
                 CONF_WEBHOOK_ID: webhook_id,

@@ -1,7 +1,7 @@
 {
   "domain": "time_date",
   "name": "Time & Date",
-  "documentation": "https://www.open-peer-power.io/integrations/time_date",
+  "documentation": "https://www.openpeerpower.io/integrations/time_date",
   "codeowners": ["@fabaff"],
   "quality_scale": "internal"
 }

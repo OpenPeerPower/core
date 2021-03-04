@@ -53,7 +53,7 @@ async def test_reload(opp, tmpdir):
     """Verify we can reload filesize sensors."""
     testfile = f"{tmpdir}/file"
     await opp.async_add_executor_job(create_file, testfile)
-    with patch.object.opp.config, "is_allowed_path", return_value=True):
+    with patch.object(opp.config, "is_allowed_path", return_value=True):
         await async_setup_component(
             opp,
             "sensor",
@@ -75,7 +75,7 @@ async def test_reload(opp, tmpdir):
         "fixtures",
         "filesize/configuration.yaml",
     )
-    with patch.object.opp_config, "YAML_CONFIG_FILE", yaml_path), patch.object(
+    with patch.object(opp_config, "YAML_CONFIG_FILE", yaml_path), patch.object(
         opp.config, "is_allowed_path", return_value=True
     ):
         await opp.services.async_call(

@@ -32,7 +32,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup_entry(opp, entry, async_add_entities):
     """Add an solarEdge entry."""
-    # Add the needed sensors to.opp
+    # Add the needed sensors to opp
     api = solaredge.Solaredge(entry.data[CONF_API_KEY])
 
     # Check if api can be reached and site is active

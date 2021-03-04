@@ -1,7 +1,7 @@
 {
   "domain": "uptimerobot",
   "name": "Uptime Robot",
-  "documentation": "https://www.open-peer-power.io/integrations/uptimerobot",
+  "documentation": "https://www.openpeerpower.io/integrations/uptimerobot",
   "requirements": ["pyuptimerobot==0.0.5"],
   "codeowners": ["@ludeeus"]
 }

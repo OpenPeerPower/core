@@ -105,7 +105,7 @@ async def test_oppio_single_instance(opp):
     MockConfigEntry(domain="mqtt").add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
-        "mqtt", context={"source": "opp.o"}
+        "mqtt", context={"source": "oppio"}
     )
     assert result["type"] == "abort"
     assert result["reason"] == "single_instance_allowed"
@@ -125,7 +125,7 @@ async def test_oppio_confirm(opp, mock_try_connection, mock_finish_setup):
             "password": "mock-pass",
             "protocol": "3.1.1",
         },
-        context={"source": "opp.o"},
+        context={"source": "oppio"},
     )
     assert result["type"] == "form"
     assert result["step_id"] == "oppio_confirm"
@@ -185,12 +185,12 @@ async def test_option_flow(opp, mqtt_mock, mock_try_connection):
         user_input={
             mqtt.CONF_DISCOVERY: True,
             "birth_enable": True,
-            "birth_topic": "op_state/online",
+            "birth_topic": "ha_state/online",
             "birth_payload": "online",
             "birth_qos": 1,
             "birth_retain": True,
             "will_enable": True,
-            "will_topic": "op_state/offline",
+            "will_topic": "ha_state/offline",
             "will_payload": "offline",
             "will_qos": 2,
             "will_retain": True,
@@ -205,13 +205,13 @@ async def test_option_flow(opp, mqtt_mock, mock_try_connection):
         mqtt.CONF_PASSWORD: "pass",
         mqtt.CONF_DISCOVERY: True,
         mqtt.CONF_BIRTH_MESSAGE: {
-            mqtt.ATTR_TOPIC: "op_state/online",
+            mqtt.ATTR_TOPIC: "ha_state/online",
             mqtt.ATTR_PAYLOAD: "online",
             mqtt.ATTR_QOS: 1,
             mqtt.ATTR_RETAIN: True,
         },
         mqtt.CONF_WILL_MESSAGE: {
-            mqtt.ATTR_TOPIC: "op_state/offline",
+            mqtt.ATTR_TOPIC: "ha_state/offline",
             mqtt.ATTR_PAYLOAD: "offline",
             mqtt.ATTR_QOS: 2,
             mqtt.ATTR_RETAIN: True,
@@ -257,12 +257,12 @@ async def test_disable_birth_will(opp, mqtt_mock, mock_try_connection):
         user_input={
             mqtt.CONF_DISCOVERY: True,
             "birth_enable": False,
-            "birth_topic": "op_state/online",
+            "birth_topic": "ha_state/online",
             "birth_payload": "online",
             "birth_qos": 1,
             "birth_retain": True,
             "will_enable": False,
-            "will_topic": "op_state/offline",
+            "will_topic": "ha_state/offline",
             "will_payload": "offline",
             "will_qos": 2,
             "will_retain": True,
@@ -315,13 +315,13 @@ async def test_option_flow_default_suggested_values(
         mqtt.CONF_PASSWORD: "pass",
         mqtt.CONF_DISCOVERY: True,
         mqtt.CONF_BIRTH_MESSAGE: {
-            mqtt.ATTR_TOPIC: "op_state/online",
+            mqtt.ATTR_TOPIC: "ha_state/online",
             mqtt.ATTR_PAYLOAD: "online",
             mqtt.ATTR_QOS: 1,
             mqtt.ATTR_RETAIN: True,
         },
         mqtt.CONF_WILL_MESSAGE: {
-            mqtt.ATTR_TOPIC: "op_state/offline",
+            mqtt.ATTR_TOPIC: "ha_state/offline",
             mqtt.ATTR_PAYLOAD: "offline",
             mqtt.ATTR_QOS: 2,
             mqtt.ATTR_RETAIN: False,
@@ -364,9 +364,9 @@ async def test_option_flow_default_suggested_values(
         "will_retain": False,
     }
     suggested = {
-        "birth_topic": "op_state/online",
+        "birth_topic": "ha_state/online",
         "birth_payload": "online",
-        "will_topic": "op_state/offline",
+        "will_topic": "ha_state/offline",
         "will_payload": "offline",
     }
     for k, v in defaults.items():
@@ -378,11 +378,11 @@ async def test_option_flow_default_suggested_values(
         result["flow_id"],
         user_input={
             mqtt.CONF_DISCOVERY: False,
-            "birth_topic": "op_state/onl1ne",
+            "birth_topic": "ha_state/onl1ne",
             "birth_payload": "onl1ne",
             "birth_qos": 2,
             "birth_retain": False,
-            "will_topic": "op_state/offl1ne",
+            "will_topic": "ha_state/offl1ne",
             "will_payload": "offl1ne",
             "will_qos": 1,
             "will_retain": True,
@@ -421,9 +421,9 @@ async def test_option_flow_default_suggested_values(
         "will_retain": True,
     }
     suggested = {
-        "birth_topic": "op_state/onl1ne",
+        "birth_topic": "ha_state/onl1ne",
         "birth_payload": "onl1ne",
-        "will_topic": "op_state/offl1ne",
+        "will_topic": "ha_state/offl1ne",
         "will_payload": "offl1ne",
     }
     for k, v in defaults.items():
@@ -435,11 +435,11 @@ async def test_option_flow_default_suggested_values(
         result["flow_id"],
         user_input={
             mqtt.CONF_DISCOVERY: True,
-            "birth_topic": "op_state/onl1ne",
+            "birth_topic": "ha_state/onl1ne",
             "birth_payload": "onl1ne",
             "birth_qos": 2,
             "birth_retain": False,
-            "will_topic": "op_state/offl1ne",
+            "will_topic": "ha_state/offl1ne",
             "will_payload": "offl1ne",
             "will_qos": 1,
             "will_retain": True,
@@ -503,7 +503,7 @@ async def test_options_bad_birth_message_fails(opp, mock_try_connection):
 
     result = await opp.config_entries.options.async_configure(
         result["flow_id"],
-        user_input={"birth_topic": "op_state/online/#"},
+        user_input={"birth_topic": "ha_state/online/#"},
     )
     assert result["type"] == "form"
     assert result["errors"]["base"] == "bad_birth"
@@ -539,7 +539,7 @@ async def test_options_bad_will_message_fails(opp, mock_try_connection):
 
     result = await opp.config_entries.options.async_configure(
         result["flow_id"],
-        user_input={"will_topic": "op_state/offline/#"},
+        user_input={"will_topic": "ha_state/offline/#"},
     )
     assert result["type"] == "form"
     assert result["errors"]["base"] == "bad_will"

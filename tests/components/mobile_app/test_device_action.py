@@ -39,7 +39,7 @@ async def test_action(opp, push_registration):
                         {"variables": {"name": "Paulus"}},
                         {
                             "domain": DOMAIN,
-                            "device_id":.opp.data[DOMAIN]["devices"][webhook_id].id,
+                            "device_id": opp.data[DOMAIN]["devices"][webhook_id].id,
                             "type": "notify",
                             "message": "Hello {{ name }}",
                         },

@@ -33,7 +33,7 @@ async def test_proximities(opp):
         assert state.state == "0"
 
 
-async def test_proximities_setup_opp):
+async def test_proximities_setup(opp):
     """Test a list of proximities with missing devices."""
     config = {
         "proximity": {
@@ -282,7 +282,7 @@ async def test_device_tracker_test1_no_coordinates(opp):
     assert state.attributes.get("dir_of_travel") == "not set"
 
 
-async def test_device_tracker_test1_awayfurther_than_test2_first_test1.opp):
+async def test_device_tracker_test1_awayfurther_than_test2_first_test1(opp):
     """Test for tracker ordering."""
     config_zones(opp)
     await opp.async_block_till_done()

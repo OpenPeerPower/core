@@ -36,16 +36,16 @@ async def test_abort_if_no_implementation_registered(opp):
     assert result["reason"] == "missing_configuration"
 
 
-async def test_abort_if_already_setup_opp):
+async def test_abort_if_already_setup(opp):
     """Test we abort if Ambiclimate is already setup."""
     flow = await init_config_flow(opp)
 
-    with patch.object.opp.config_entries, "async_entries", return_value=[{}]):
+    with patch.object(opp.config_entries, "async_entries", return_value=[{}]):
         result = await flow.async_step_user()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
 
-    with patch.object.opp.config_entries, "async_entries", return_value=[{}]):
+    with patch.object(opp.config_entries, "async_entries", return_value=[{}]):
         result = await flow.async_step_code()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
@@ -101,12 +101,12 @@ async def test_abort_invalid_code(opp):
     assert result["reason"] == "access_token"
 
 
-async def test_already_setup_opp):
+async def test_already_setup(opp):
     """Test when already setup."""
     config_flow.register_flow_implementation(opp, None, None)
     flow = await init_config_flow(opp)
 
-    with patch.object.opp.config_entries, "async_entries", return_value=True):
+    with patch.object(opp.config_entries, "async_entries", return_value=True):
         result = await flow.async_step_user()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -120,11 +120,11 @@ async def test_view(opp):
     request = aiohttp.MockRequest(
         b"", query_string="code=test_code", mock_source="test"
     )
-    request.app = {.opp":.opp}
+    request.app = {"opp": opp}
     view = config_flow.AmbiclimateAuthCallbackView()
     assert await view.get(request) == "OK!"
 
     request = aiohttp.MockRequest(b"", query_string="", mock_source="test")
-    request.app = {.opp":.opp}
+    request.app = {"opp": opp}
     view = config_flow.AmbiclimateAuthCallbackView()
     assert await view.get(request) == "No code"

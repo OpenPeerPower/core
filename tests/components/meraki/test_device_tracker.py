@@ -30,7 +30,7 @@ def meraki_client(loop, opp, opp_client):
         )
     )
 
-    yield loop.run_until_complete.opp_client())
+    yield loop.run_until_complete(opp_client())
 
 
 async def test_invalid_or_missing_data(mock_device_tracker_conf, meraki_client):

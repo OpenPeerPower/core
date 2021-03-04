@@ -1,7 +1,7 @@
 {
   "domain": "twitter",
   "name": "Twitter",
-  "documentation": "https://www.open-peer-power.io/integrations/twitter",
-  "requirements": ["TwitterAPI==2.6.6"],
+  "documentation": "https://www.openpeerpower.io/integrations/twitter",
+  "requirements": ["TwitterAPI==2.6.8"],
   "codeowners": []
 }

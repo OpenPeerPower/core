@@ -84,7 +84,7 @@ def create_thermostat_service_min_max(accessory):
     char.maxValue = 1
 
 
-async def test_climate_respect_supported_op_modes_1.opp, utcnow):
+async def test_climate_respect_supported_op_modes_1(opp, utcnow):
     """Test that climate respects minValue/maxValue hints."""
     helper = await setup_test_component(opp, create_thermostat_service_min_max)
     state = await helper.poll_and_get_state()
@@ -99,7 +99,7 @@ def create_thermostat_service_valid_vals(accessory):
     char.valid_values = [0, 1, 2]
 
 
-async def test_climate_respect_supported_op_modes_2.opp, utcnow):
+async def test_climate_respect_supported_op_modes_2(opp, utcnow):
     """Test that climate respects validValue hints."""
     helper = await setup_test_component(opp, create_thermostat_service_valid_vals)
     state = await helper.poll_and_get_state()
@@ -522,7 +522,7 @@ def create_heater_cooler_service_min_max(accessory):
     char.maxValue = 2
 
 
-async def test_heater_cooler_respect_supported_op_modes_1.opp, utcnow):
+async def test_heater_cooler_respect_supported_op_modes_1(opp, utcnow):
     """Test that climate respects minValue/maxValue hints."""
     helper = await setup_test_component(opp, create_heater_cooler_service_min_max)
     state = await helper.poll_and_get_state()
@@ -537,7 +537,7 @@ def create_theater_cooler_service_valid_vals(accessory):
     char.valid_values = [1, 2]
 
 
-async def test_heater_cooler_respect_supported_op_modes_2.opp, utcnow):
+async def test_heater_cooler_respect_supported_op_modes_2(opp, utcnow):
     """Test that climate respects validValue hints."""
     helper = await setup_test_component(opp, create_theater_cooler_service_valid_vals)
     state = await helper.poll_and_get_state()

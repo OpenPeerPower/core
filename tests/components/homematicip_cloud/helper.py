@@ -33,20 +33,20 @@ FIXTURE_DATA = load_fixture(HOME_JSON)
 
 def get_and_check_entity_basics(opp, mock_hap, entity_id, entity_name, device_model):
     """Get and test basic device."""
-    op_state = opp.states.get(entity_id)
-    assert op_state is not None
+    ha_state = opp.states.get(entity_id)
+    assert ha_state is not None
     if device_model:
-        assert op_state.attributes[ATTR_MODEL_TYPE] == device_model
-    assert op_state.name == entity_name
+        assert ha_state.attributes[ATTR_MODEL_TYPE] == device_model
+    assert ha_state.name == entity_name
 
     hmip_device = mock_hap.hmip_device_by_entity_id.get(entity_id)
 
     if hmip_device:
         if isinstance(hmip_device, AsyncDevice):
-            assert op_state.attributes[ATTR_IS_GROUP] is False
+            assert ha_state.attributes[ATTR_IS_GROUP] is False
         elif isinstance(hmip_device, AsyncGroup):
-            assert op_state.attributes[ATTR_IS_GROUP]
-    return op_state, hmip_device
+            assert ha_state.attributes[ATTR_IS_GROUP]
+    return ha_state, hmip_device
 
 
 async def async_manipulate_test_data(

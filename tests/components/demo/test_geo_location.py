@@ -51,8 +51,8 @@ async def test_setup_platform(opp):
             if state.domain != geo_location.DOMAIN:
                 # ignore home zone state
                 continue
-            assert abs(state.attributes[ATTR_LATITUDE] -.opp.config.latitude) < 1.0
-            assert abs(state.attributes[ATTR_LONGITUDE] -.opp.config.longitude) < 1.0
+            assert abs(state.attributes[ATTR_LATITUDE] - opp.config.latitude) < 1.0
+            assert abs(state.attributes[ATTR_LONGITUDE] - opp.config.longitude) < 1.0
             assert state.attributes[ATTR_UNIT_OF_MEASUREMENT] == LENGTH_KILOMETERS
 
         # Update (replaces 1 device).

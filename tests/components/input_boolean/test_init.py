@@ -34,13 +34,13 @@ def storage_setup(opp, opp_storage):
 
     async def _storage(items=None, config=None):
         if items is None:
-            opp.storage[DOMAIN] = {
+            opp_storage[DOMAIN] = {
                 "key": DOMAIN,
                 "version": 1,
                 "data": {"items": [{"id": "from_storage", "name": "from storage"}]},
             }
         else:
-            opp.storage[DOMAIN] = items
+            opp_storage[DOMAIN] = items
         if config is None:
             config = {DOMAIN: {}}
         return await async_setup_component(opp, DOMAIN, config)
@@ -180,7 +180,7 @@ async def test_input_boolean_context(opp, opp_admin_user):
         "turn_off",
         {"entity_id": state.entity_id},
         True,
-        Context(user_id.opp_admin_user.id),
+        Context(user_id=opp_admin_user.id),
     )
 
     state2 = opp.states.get("input_boolean.ac")
@@ -242,7 +242,7 @@ async def test_reload(opp, opp_admin_user):
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
-            context=Context(user_id.opp_admin_user.id),
+            context=Context(user_id=opp_admin_user.id),
         )
 
     assert count_start + 2 == len(opp.states.async_entity_ids())
@@ -344,7 +344,7 @@ async def test_setup_no_config(opp, opp_admin_user):
             DOMAIN,
             SERVICE_RELOAD,
             blocking=True,
-            context=Context(user_id.opp_admin_user.id),
+            context=Context(user_id=opp_admin_user.id),
         )
 
     assert count_start == len(opp.states.async_entity_ids())

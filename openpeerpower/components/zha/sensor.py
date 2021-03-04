@@ -35,11 +35,11 @@ from .core.const import (
     CHANNEL_SMARTENERGY_METERING,
     CHANNEL_TEMPERATURE,
     DATA_ZHA,
-    DATA_ZOP_DISPATCHERS,
+    DATA_ZHA_DISPATCHERS,
     SIGNAL_ADD_ENTITIES,
     SIGNAL_ATTR_UPDATED,
 )
-from .core.registries import SMARTTHINGS_HUMIDITY_CLUSTER, ZOP_ENTITIES
+from .core.registries import SMARTTHINGS_HUMIDITY_CLUSTER, ZHA_ENTITIES
 from .core.typing import ChannelType, ZhaDeviceType
 from .entity import ZhaEntity
 
@@ -62,7 +62,7 @@ BATTERY_SIZES = {
 }
 
 CHANNEL_ST_HUMIDITY_CLUSTER = f"channel_0x{SMARTTHINGS_HUMIDITY_CLUSTER:04x}"
-STRICT_MATCH = functools.partial(ZOP_ENTITIES.strict_match, DOMAIN)
+STRICT_MATCH = functools.partial(ZHA_ENTITIES.strict_match, DOMAIN)
 
 
 async def async_setup_entry(
@@ -81,7 +81,7 @@ async def async_setup_entry(
             update_before_add=False,
         ),
     )
-    opp.data[DATA_ZHA][DATA_ZOP_DISPATCHERS].append(unsub)
+    opp.data[DATA_ZHA][DATA_ZHA_DISPATCHERS].append(unsub)
 
 
 class Sensor(ZhaEntity):
@@ -200,7 +200,7 @@ class ElectricalMeasurement(Sensor):
 
     @property
     def should_poll(self) -> bool:
-        """Return True if HA needs to poll for state changes."""
+        """Return True if OP needs to poll for state changes."""
         return True
 
     def formatter(self, value: int) -> Union[int, float]:

@@ -24,7 +24,7 @@ CONF_SERVERS = "servers"
 
 SCAN_INTERVAL = timedelta(seconds=10)
 
-SUPLA_FUNCTION_OP_CMP_MAP = {
+SUPLA_FUNCTION_HA_CMP_MAP = {
     "CONTROLLINGTHEROLLERSHUTTER": "cover",
     "CONTROLLINGTHEGATE": "cover",
     "LIGHTSWITCH": "switch",
@@ -132,7 +132,7 @@ async def discover_devices(opp, opp_config):
                 )
                 continue
 
-            component_name = SUPLA_FUNCTION_OP_CMP_MAP.get(channel_function)
+            component_name = SUPLA_FUNCTION_HA_CMP_MAP.get(channel_function)
 
             if component_name is None:
                 _LOGGER.warning(

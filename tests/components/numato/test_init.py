@@ -29,7 +29,7 @@ async def test_fail_setup_raising_discovery(opp, numato_fixture, caplog, monkeyp
     await opp.async_block_till_done()
 
 
-async def test.opp_numato_api_wrong_port_directions(opp, numato_fixture):
+async def test_opp_numato_api_wrong_port_directions(opp, numato_fixture):
     """Test handling of wrong port directions.
 
     This won't happen in the current platform implementation but would raise
@@ -46,7 +46,7 @@ async def test.opp_numato_api_wrong_port_directions(opp, numato_fixture):
         api.write_output(0, 2, 1)  # write to input
 
 
-async def test.opp_numato_api_errors(opp, numato_fixture, monkeypatch):
+async def test_opp_numato_api_errors(opp, numato_fixture, monkeypatch):
     """Test whether Open Peer Power numato API (re-)raises errors."""
     numato_fixture.discover()
     monkeypatch.setattr(numato_fixture.devices[0], "setup", mockup_raise)

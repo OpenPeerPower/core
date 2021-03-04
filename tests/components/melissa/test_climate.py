@@ -303,34 +303,34 @@ async def test_update(opp):
             )
 
 
-async def test_melissa_op_to.opp=opp):
+async def test_melissa_op_to_opp(opp):
     """Test for translate melissa operations to opp."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
         device = (await api.async_fetch_devices())[_SERIAL]
         thermostat = MelissaClimate(api, _SERIAL, device)
-        assert HVAC_MODE_FAN_ONLY == thermostat.melissa_op_to.opp(1)
-        assert HVAC_MODE_HEAT == thermostat.melissa_op_to.opp(2)
-        assert HVAC_MODE_COOL == thermostat.melissa_op_to.opp(3)
-        assert HVAC_MODE_DRY == thermostat.melissa_op_to.opp(4)
-        assert thermostat.melissa_op_to.opp(5) is None
+        assert HVAC_MODE_FAN_ONLY == thermostat.melissa_op_to_opp(1)
+        assert HVAC_MODE_HEAT == thermostat.melissa_op_to_opp(2)
+        assert HVAC_MODE_COOL == thermostat.melissa_op_to_opp(3)
+        assert HVAC_MODE_DRY == thermostat.melissa_op_to_opp(4)
+        assert thermostat.melissa_op_to_opp(5) is None
 
 
-async def test_melissa_fan_to.opp=opp):
+async def test_melissa_fan_to_opp(opp):
     """Test for translate melissa fan state to opp."""
     with patch("openpeerpower.components.melissa"):
         api = melissa_mock()
         device = (await api.async_fetch_devices())[_SERIAL]
         thermostat = MelissaClimate(api, _SERIAL, device)
-        assert "auto" == thermostat.melissa_fan_to.opp(0)
-        assert SPEED_LOW == thermostat.melissa_fan_to.opp(1)
-        assert SPEED_MEDIUM == thermostat.melissa_fan_to.opp(2)
-        assert SPEED_HIGH == thermostat.melissa_fan_to.opp(3)
-        assert thermostat.melissa_fan_to.opp(4) is None
+        assert "auto" == thermostat.melissa_fan_to_opp(0)
+        assert SPEED_LOW == thermostat.melissa_fan_to_opp(1)
+        assert SPEED_MEDIUM == thermostat.melissa_fan_to_opp(2)
+        assert SPEED_HIGH == thermostat.melissa_fan_to_opp(3)
+        assert thermostat.melissa_fan_to_opp(4) is None
 
 
-async def test.opp_mode_to_melissa(opp):
-    """Test for(opp operations to melssa."""
+async def test_opp_mode_to_melissa(opp):
+    """Test for opp operations to melssa."""
     with patch(
         "openpeerpower.components.melissa.climate._LOGGER.warning"
     ) as mocked_warning:
@@ -348,7 +348,7 @@ async def test.opp_mode_to_melissa(opp):
             )
 
 
-async def test.opp_fan_to_melissa(opp):
+async def test_opp_fan_to_melissa(opp):
     """Test for translate melissa states to opp."""
     with patch(
         "openpeerpower.components.melissa.climate._LOGGER.warning"

@@ -937,7 +937,7 @@ async def test_update_with_json_attrs_not_dict(opp, mqtt_mock, caplog):
     )
 
 
-async def test_update_with_json_attrs_bad_JSON.opp, mqtt_mock, caplog):
+async def test_update_with_json_attrs_bad_JSON(opp, mqtt_mock, caplog):
     """Test attributes get extracted from a JSON result."""
     await help_test_update_with_json_attrs_bad_JSON(
         opp, mqtt_mock, caplog, CLIMATE_DOMAIN, DEFAULT_CONFIG

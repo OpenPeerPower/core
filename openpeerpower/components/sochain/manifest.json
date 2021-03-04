@@ -1,7 +1,7 @@
 {
   "domain": "sochain",
   "name": "SoChain",
-  "documentation": "https://www.open-peer-power.io/integrations/sochain",
+  "documentation": "https://www.openpeerpower.io/integrations/sochain",
   "requirements": ["python-sochain-api==0.0.2"],
   "codeowners": []
 }

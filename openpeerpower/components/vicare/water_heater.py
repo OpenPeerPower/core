@@ -33,7 +33,7 @@ OPERATION_MODE_OFF = "off"
 
 SUPPORT_FLAGS_HEATER = SUPPORT_TARGET_TEMPERATURE
 
-VICARE_TO_OP_HVAC_DHW = {
+VICARE_TO_HA_HVAC_DHW = {
     VICARE_MODE_DHW: OPERATION_MODE_ON,
     VICARE_MODE_DHWANDHEATING: OPERATION_MODE_ON,
     VICARE_MODE_FORCEDREDUCED: OPERATION_MODE_OFF,
@@ -41,7 +41,7 @@ VICARE_TO_OP_HVAC_DHW = {
     VICARE_MODE_OFF: OPERATION_MODE_OFF,
 }
 
-OP_TO_VICARE_HVAC_DHW = {
+HA_TO_VICARE_HVAC_DHW = {
     OPERATION_MODE_OFF: VICARE_MODE_OFF,
     OPERATION_MODE_ON: VICARE_MODE_DHW,
 }
@@ -56,7 +56,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(
         [
             ViCareWater(
-                f".opp.data[VICARE_DOMAIN][VICARE_NAME]} Water",
+                f"{opp.data[VICARE_DOMAIN][VICARE_NAME]} Water",
                 vicare_api,
                 heating_type,
             )
@@ -79,7 +79,7 @@ class ViCareWater(WaterHeaterEntity):
         self._heating_type = heating_type
 
     def update(self):
-        """Let HA know there has been an update from the ViCare API."""
+        """Let OP know there has been an update from the ViCare API."""
         try:
             current_temperature = self._api.getDomesticHotWaterStorageTemperature()
             if current_temperature != PYVICARE_ERROR:
@@ -147,9 +147,9 @@ class ViCareWater(WaterHeaterEntity):
     @property
     def current_operation(self):
         """Return current operation ie. heat, cool, idle."""
-        return VICARE_TO_OP_HVAC_DHW.get(self._current_mode)
+        return VICARE_TO_HA_HVAC_DHW.get(self._current_mode)
 
     @property
     def operation_list(self):
         """Return the list of available operation modes."""
-        return list(OP_TO_VICARE_HVAC_DHW)
+        return list(HA_TO_VICARE_HVAC_DHW)

@@ -116,7 +116,7 @@ async def setup_bridge(opp, mock_bridge, config_entry):
 
 
 @pytest.fixture
-def mock_config_entry1.opp):
+def mock_config_entry1(opp):
     """Mock a config entry."""
     return create_config_entry()
 
@@ -141,7 +141,7 @@ def create_config_entry():
 
 
 @pytest.fixture
-def mock_bridge1.opp):
+def mock_bridge1(opp):
     """Mock a Hue bridge."""
     return create_mock_bridge(opp)
 

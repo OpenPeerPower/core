@@ -67,7 +67,7 @@ TEST_SSDP_SERVICE_INFO = {
     "manufacturerURL": "https://www.hyperion-project.org",
     "modelDescription": "Hyperion Open Source Ambient Light",
     "modelName": "Hyperion",
-    "modelNumber": "2.0.0-alpop.8",
+    "modelNumber": "2.0.0-alpha.8",
     "modelURL": "https://www.hyperion-project.org",
     "serialNumber": f"{TEST_SYSINFO_ID}",
     "UDN": f"uuid:{TEST_SYSINFO_ID}",
@@ -89,7 +89,7 @@ TEST_SSDP_SERVICE_INFO = {
     },
     "ssdp_usn": f"uuid:{TEST_SYSINFO_ID}",
     "ssdp_ext": "",
-    "ssdp_server": "Raspbian GNU/Linux 10 (buster)/10 UPnP/1.0 Hyperion/2.0.0-alpop.8",
+    "ssdp_server": "Raspbian GNU/Linux 10 (buster)/10 UPnP/1.0 Hyperion/2.0.0-alpha.8",
 }
 
 

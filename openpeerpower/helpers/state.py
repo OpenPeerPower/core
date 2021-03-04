@@ -19,7 +19,7 @@ from openpeerpower.const import (
     STATE_UNLOCKED,
 )
 from openpeerpower.core import Context, State
-from openpeerpower.loader import IntegrationNotFound, async_get_integration, bind.opp
+from openpeerpower.loader import IntegrationNotFound, async_get_integration, bind_opp
 import openpeerpower.util.dt as dt_util
 
 from .typing import OpenPeerPowerType

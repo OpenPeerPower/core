@@ -221,7 +221,7 @@ async def test_lights_turn_on_when_coming_home_after_sun_set_person(opp, scanner
 
 
 async def test_initialize_start(opp):
-    """Test we initialize when HA starts."""
+    """Test we initialize when OP starts."""
     opp.state = CoreState.not_running
     assert await async_setup_component(
         opp,

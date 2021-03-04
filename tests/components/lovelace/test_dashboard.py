@@ -429,7 +429,7 @@ async def test_storage_dashboards(opp, opp_ws_client, opp_storage):
 
 async def test_storage_dashboard_migrate(opp, opp_ws_client, opp_storage):
     """Test changing url path from storage config."""
-    opp.storage[dashboard.DASHBOARDS_STORAGE_KEY] = {
+    opp_storage[dashboard.DASHBOARDS_STORAGE_KEY] = {
         "key": "lovelace_dashboards",
         "version": 1,
         "data": {

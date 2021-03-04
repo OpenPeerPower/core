@@ -18,7 +18,7 @@ from . import get_device
 from tests.common import mock_device_registry, mock_registry
 
 
-async def test_device_setup_opp):
+async def test_device_setup(opp):
     """Test a successful setup."""
     device = get_device("Office")
 
@@ -215,7 +215,7 @@ async def test_device_setup_get_fwversion_broadlink_exception(opp):
     mock_api = device.get_mock_api()
     mock_api.get_fwversion.side_effect = blke.BroadlinkException()
 
-    with patch.object.opp.config_entries, "async_forward_entry_setup") as mock_forward:
+    with patch.object(opp.config_entries, "async_forward_entry_setup") as mock_forward:
         mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state == ENTRY_STATE_LOADED
@@ -231,7 +231,7 @@ async def test_device_setup_get_fwversion_os_error(opp):
     mock_api = device.get_mock_api()
     mock_api.get_fwversion.side_effect = OSError()
 
-    with patch.object.opp.config_entries, "async_forward_entry_setup") as mock_forward:
+    with patch.object(opp.config_entries, "async_forward_entry_setup") as mock_forward:
         _, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state == ENTRY_STATE_LOADED
@@ -268,7 +268,7 @@ async def test_device_unload_works(opp):
     """Test we unload the device."""
     device = get_device("Office")
 
-    with patch.object.opp.config_entries, "async_forward_entry_setup"):
+    with patch.object(opp.config_entries, "async_forward_entry_setup"):
         mock_api, mock_entry = await device.setup_entry(opp)
 
     with patch.object(
@@ -289,7 +289,7 @@ async def test_device_unload_authentication_error(opp):
     mock_api = device.get_mock_api()
     mock_api.auth.side_effect = blke.AuthenticationError()
 
-    with patch.object.opp.config_entries, "async_forward_entry_setup"), patch.object(
+    with patch.object(opp.config_entries, "async_forward_entry_setup"), patch.object(
         opp.config_entries.flow, "async_init"
     ):
         _, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
@@ -309,7 +309,7 @@ async def test_device_unload_update_failed(opp):
     mock_api = device.get_mock_api()
     mock_api.check_sensors.side_effect = blke.NetworkTimeoutError()
 
-    with patch.object.opp.config_entries, "async_forward_entry_setup"):
+    with patch.object(opp.config_entries, "async_forward_entry_setup"):
         _, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     with patch.object(

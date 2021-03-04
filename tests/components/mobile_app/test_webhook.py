@@ -186,17 +186,17 @@ async def test_webhook_handle_get_config(opp, create_registrations, webhook_clie
     if "allowlist_external_dirs" in json:
         json["allowlist_external_dirs"] = set(json["allowlist_external_dirs"])
 
-    opp.config = opp.config.as_dict()
+    opp_config = opp.config.as_dict()
 
     expected_dict = {
-        "latitude":.opp_config["latitude"],
-        "longitude":.opp_config["longitude"],
-        "elevation":.opp_config["elevation"],
-        "unit_system":.opp_config["unit_system"],
-        "location_name":.opp_config["location_name"],
-        "time_zone":.opp_config["time_zone"],
-        "components":.opp_config["components"],
-        "version":.opp_config["version"],
+        "latitude": opp_config["latitude"],
+        "longitude": opp_config["longitude"],
+        "elevation": opp_config["elevation"],
+        "unit_system": opp_config["unit_system"],
+        "location_name": opp_config["location_name"],
+        "time_zone": opp_config["time_zone"],
+        "components": opp_config["components"],
+        "version": opp_config["version"],
         "theme_color": "#03A9F4",  # Default frontend theme color
     }
 

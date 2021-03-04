@@ -166,7 +166,7 @@ async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> b
         opp.config_entries.async_forward_entry_unload(config_entry, platform)
         for platform in get_configured_platforms(controller_data)
     ]
-    tasks.append.opp.async_add_executor_job(controller_data.controller.stop))
+    tasks.append(opp.async_add_executor_job(controller_data.controller.stop))
     await asyncio.gather(*tasks)
 
     return True

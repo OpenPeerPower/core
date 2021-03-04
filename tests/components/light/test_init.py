@@ -672,7 +672,7 @@ async def test_light_context(opp, opp_admin_user):
         "toggle",
         {"entity_id": state.entity_id},
         blocking=True,
-        context=core.Context(user_id.opp_admin_user.id),
+        context=core.Context(user_id=opp_admin_user.id),
     )
 
     state2 = opp.states.get("light.ceiling")
@@ -691,7 +691,7 @@ async def test_light_turn_on_auth(opp, opp_admin_user):
     state = opp.states.get("light.ceiling")
     assert state is not None
 
-    opp.admin_user.mock_policy({})
+    opp_admin_user.mock_policy({})
 
     with pytest.raises(Unauthorized):
         await opp.services.async_call(
@@ -699,7 +699,7 @@ async def test_light_turn_on_auth(opp, opp_admin_user):
             "turn_on",
             {"entity_id": state.entity_id},
             blocking=True,
-            context=core.Context(user_id.opp_admin_user.id),
+            context=core.Context(user_id=opp_admin_user.id),
         )
 
 

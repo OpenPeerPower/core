@@ -36,9 +36,9 @@ async def test_successful_config_entry(opp):
         assert await mikrotik.async_setup_entry(opp, entry) is True
 
     assert len(mock_hub.mock_calls) == 2
-    p(opp, p_entry = mock_hub.mock_calls[0][1]
+    p_opp, p_entry = mock_hub.mock_calls[0][1]
 
-    assert p.opp is opp
+    assert p_opp is opp
     assert p_entry is entry
 
     assert len(mock_registry.mock_calls) == 1
@@ -52,7 +52,7 @@ async def test_successful_config_entry(opp):
     }
 
 
-async def test_hub_fail_setup_opp):
+async def test_hub_fail_setup(opp):
     """Test that a failed setup will not store the hub."""
     entry = MockConfigEntry(
         domain=mikrotik.DOMAIN,

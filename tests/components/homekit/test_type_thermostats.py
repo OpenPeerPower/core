@@ -67,7 +67,7 @@ from tests.common import async_mock_service
 
 
 async def test_thermostat(opp, hk_driver, events):
-    """Test if accessory and HA are updated accordingly."""
+    """Test if accessory and OP are updated accordingly."""
     entity_id = "climate.test"
 
     opp.states.async_set(
@@ -407,7 +407,7 @@ async def test_thermostat(opp, hk_driver, events):
 
 
 async def test_thermostat_auto(opp, hk_driver, events):
-    """Test if accessory and HA are updated accordingly."""
+    """Test if accessory and OP are updated accordingly."""
     entity_id = "climate.test"
 
     # support_auto = True
@@ -561,7 +561,7 @@ async def test_thermostat_auto(opp, hk_driver, events):
 
 
 async def test_thermostat_humidity(opp, hk_driver, events):
-    """Test if accessory and HA are updated accordingly with humidity."""
+    """Test if accessory and OP are updated accordingly with humidity."""
     entity_id = "climate.test"
 
     # support_auto = True
@@ -620,7 +620,7 @@ async def test_thermostat_humidity(opp, hk_driver, events):
 
 
 async def test_thermostat_power_state(opp, hk_driver, events):
-    """Test if accessory and HA are updated accordingly."""
+    """Test if accessory and OP are updated accordingly."""
     entity_id = "climate.test"
 
     # SUPPORT_ON_OFF = True
@@ -740,7 +740,7 @@ async def test_thermostat_power_state(opp, hk_driver, events):
 
 
 async def test_thermostat_fahrenheit(opp, hk_driver, events):
-    """Test if accessory and HA are updated accordingly."""
+    """Test if accessory and OP are updated accordingly."""
     entity_id = "climate.test"
 
     # support_ = True
@@ -753,7 +753,7 @@ async def test_thermostat_fahrenheit(opp, hk_driver, events):
         },
     )
     await opp.async_block_till_done()
-    with patch.object.opp.config.units, CONF_TEMPERATURE_UNIT, new=TEMP_FAHRENHEIT):
+    with patch.object(opp.config.units, CONF_TEMPERATURE_UNIT, new=TEMP_FAHRENHEIT):
         acc = Thermostat(opp, hk_driver, "Climate", entity_id, 1, None)
     hk_driver.add_accessory(acc)
     await acc.run()
@@ -1570,7 +1570,7 @@ async def test_thermostat_without_target_temp_only_range(opp, hk_driver, events)
 
 
 async def test_water_heater(opp, hk_driver, events):
-    """Test if accessory and HA are updated accordingly."""
+    """Test if accessory and OP are updated accordingly."""
     entity_id = "water_heater.test"
 
     opp.states.async_set(entity_id, HVAC_MODE_HEAT)
@@ -1648,12 +1648,12 @@ async def test_water_heater(opp, hk_driver, events):
 
 
 async def test_water_heater_fahrenheit(opp, hk_driver, events):
-    """Test if accessory and HA are update accordingly."""
+    """Test if accessory and OP are update accordingly."""
     entity_id = "water_heater.test"
 
     opp.states.async_set(entity_id, HVAC_MODE_HEAT)
     await opp.async_block_till_done()
-    with patch.object.opp.config.units, CONF_TEMPERATURE_UNIT, new=TEMP_FAHRENHEIT):
+    with patch.object(opp.config.units, CONF_TEMPERATURE_UNIT, new=TEMP_FAHRENHEIT):
         acc = WaterHeater(opp, hk_driver, "WaterHeater", entity_id, 2, None)
     await acc.run()
     await opp.async_block_till_done()

@@ -56,16 +56,16 @@ async def test_kira_empty_config(opp):
     assert len(opp.data[kira.DOMAIN]["sensor"]) == 1
 
 
-async def test_kira_setup_opp):
+async def test_kira_setup(opp):
     """Ensure platforms are loaded correctly."""
     await async_setup_component(opp, kira.DOMAIN, TEST_CONFIG)
     assert len(opp.data[kira.DOMAIN]["sensor"]) == 2
-    assert sorted.opp.data[kira.DOMAIN]["sensor"].keys()) == [
+    assert sorted(opp.data[kira.DOMAIN]["sensor"].keys()) == [
         "kira",
         "kira_1",
     ]
     assert len(opp.data[kira.DOMAIN]["remote"]) == 2
-    assert sorted.opp.data[kira.DOMAIN]["remote"].keys()) == [
+    assert sorted(opp.data[kira.DOMAIN]["remote"].keys()) == [
         "kira",
         "kira_1",
     ]

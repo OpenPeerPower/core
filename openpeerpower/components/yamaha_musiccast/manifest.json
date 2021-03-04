@@ -1,7 +1,7 @@
 {
   "domain": "yamaha_musiccast",
   "name": "Yamaha MusicCast",
-  "documentation": "https://www.open-peer-power.io/integrations/yamaha_musiccast",
+  "documentation": "https://www.openpeerpower.io/integrations/yamaha_musiccast",
   "requirements": ["pymusiccast==0.1.6"],
   "codeowners": ["@jalmeroth"]
 }

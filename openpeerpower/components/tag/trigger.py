@@ -30,7 +30,7 @@ async def async_attach_trigger(opp, config, action, automation_info):
         ):
             return
 
-        task = opp.async_run(opp_job(
+        task = opp.async_run_opp_job(
             job,
             {
                 "trigger": {

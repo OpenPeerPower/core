@@ -69,7 +69,7 @@ def async_turn_on(opp, entity_id):
     This is a legacy helper method. Do not use it for new tests.
     """
     data = {ATTR_ENTITY_ID: entity_id}
-    opp.async_create_task.opp.services.async_call(DOMAIN, SERVICE_TURN_ON, data))
+    opp.async_create_task(opp.services.async_call(DOMAIN, SERVICE_TURN_ON, data))
 
 
 @callback
@@ -79,7 +79,7 @@ def async_turn_off(opp, entity_id):
     This is a legacy helper method. Do not use it for new tests.
     """
     data = {ATTR_ENTITY_ID: entity_id}
-    opp.async_create_task.opp.services.async_call(DOMAIN, SERVICE_TURN_OFF, data))
+    opp.async_create_task(opp.services.async_call(DOMAIN, SERVICE_TURN_OFF, data))
 
 
 @callback
@@ -89,7 +89,7 @@ def async_toggle(opp, entity_id):
     This is a legacy helper method. Do not use it for new tests.
     """
     data = {ATTR_ENTITY_ID: entity_id}
-    opp.async_create_task.opp.services.async_call(DOMAIN, SERVICE_TOGGLE, data))
+    opp.async_create_task(opp.services.async_call(DOMAIN, SERVICE_TOGGLE, data))
 
 
 @pytest.fixture
@@ -117,7 +117,7 @@ async def test_is_on(opp):
     assert not alert.is_on(opp, ENTITY_ID)
 
 
-async def test_setup_opp):
+async def test_setup(opp):
     """Test setup method."""
     assert await async_setup_component(opp, alert.DOMAIN, TEST_CONFIG)
     assert STATE_IDLE == opp.states.get(ENTITY_ID).state

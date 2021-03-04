@@ -7,7 +7,7 @@ from tests.components.homekit_controller.common import (
 )
 
 
-async def test_eufycam_setup_opp):
+async def test_eufycam_setup(opp):
     """Test that a eufycam can be correctly setup in HA."""
     accessories = await setup_accessories_from_file(opp, "anker_eufycam.json")
     config_entry, pairing = await setup_test_accessories(opp, accessories)

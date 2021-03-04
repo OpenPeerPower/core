@@ -34,11 +34,11 @@ async def test_hmip_light(opp, default_mock_hap_factory):
         test_devices=["Treppe"]
     )
 
-    op_state, hmip_device = get_and_check_entity_basics(
+    ha_state, hmip_device = get_and_check_entity_basics(
         opp, mock_hap, entity_id, entity_name, device_model
     )
 
-    assert op_state.state == STATE_ON
+    assert ha_state.state == STATE_ON
 
     service_call_counter = len(hmip_device.mock_calls)
     await opp.services.async_call(
@@ -49,8 +49,8 @@ async def test_hmip_light(opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][1] == ()
 
     await async_manipulate_test_data(opp, hmip_device, "on", False)
-    op_state = opp.states.get(entity_id)
-    assert op_state.state == STATE_OFF
+    ha_state = opp.states.get(entity_id)
+    assert ha_state.state == STATE_OFF
 
     await opp.services.async_call(
         "light", "turn_on", {"entity_id": entity_id}, blocking=True
@@ -60,8 +60,8 @@ async def test_hmip_light(opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][1] == ()
 
     await async_manipulate_test_data(opp, hmip_device, "on", True)
-    op_state = opp.states.get(entity_id)
-    assert op_state.state == STATE_ON
+    ha_state = opp.states.get(entity_id)
+    assert ha_state.state == STATE_ON
 
 
 async def test_hmip_notification_light(opp, default_mock_hap_factory):
@@ -73,11 +73,11 @@ async def test_hmip_notification_light(opp, default_mock_hap_factory):
         test_devices=["Treppe"]
     )
 
-    op_state, hmip_device = get_and_check_entity_basics(
+    ha_state, hmip_device = get_and_check_entity_basics(
         opp, mock_hap, entity_id, entity_name, device_model
     )
 
-    assert op_state.state == STATE_OFF
+    assert ha_state.state == STATE_OFF
     service_call_counter = len(hmip_device.mock_calls)
 
     # Send all color via service call.
@@ -128,10 +128,10 @@ async def test_hmip_notification_light(opp, default_mock_hap_factory):
     await async_manipulate_test_data(
         opp, hmip_device, "simpleRGBColorState", RGBColorState.PURPLE, 2
     )
-    op_state = opp.states.get(entity_id)
-    assert op_state.state == STATE_ON
-    assert op_state.attributes[ATTR_COLOR_NAME] == RGBColorState.PURPLE
-    assert op_state.attributes[ATTR_BRIGHTNESS] == 255
+    ha_state = opp.states.get(entity_id)
+    assert ha_state.state == STATE_ON
+    assert ha_state.attributes[ATTR_COLOR_NAME] == RGBColorState.PURPLE
+    assert ha_state.attributes[ATTR_BRIGHTNESS] == 255
 
     await opp.services.async_call(
         "light", "turn_off", {"entity_id": entity_id, "transition": 100}, blocking=True
@@ -146,13 +146,13 @@ async def test_hmip_notification_light(opp, default_mock_hap_factory):
         "rgb": "PURPLE",
     }
     await async_manipulate_test_data(opp, hmip_device, "dimLevel", 0, 2)
-    op_state = opp.states.get(entity_id)
-    assert op_state.state == STATE_OFF
+    ha_state = opp.states.get(entity_id)
+    assert ha_state.state == STATE_OFF
 
     await async_manipulate_test_data(opp, hmip_device, "dimLevel", None, 2)
-    op_state = opp.states.get(entity_id)
-    assert op_state.state == STATE_OFF
-    assert not op_state.attributes.get(ATTR_BRIGHTNESS)
+    ha_state = opp.states.get(entity_id)
+    assert ha_state.state == STATE_OFF
+    assert not ha_state.attributes.get(ATTR_BRIGHTNESS)
 
 
 async def test_hmip_dimmer(opp, default_mock_hap_factory):
@@ -164,11 +164,11 @@ async def test_hmip_dimmer(opp, default_mock_hap_factory):
         test_devices=[entity_name]
     )
 
-    op_state, hmip_device = get_and_check_entity_basics(
+    ha_state, hmip_device = get_and_check_entity_basics(
         opp, mock_hap, entity_id, entity_name, device_model
     )
 
-    assert op_state.state == STATE_OFF
+    assert ha_state.state == STATE_OFF
     service_call_counter = len(hmip_device.mock_calls)
 
     await opp.services.async_call(
@@ -187,9 +187,9 @@ async def test_hmip_dimmer(opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_dim_level"
     assert hmip_device.mock_calls[-1][1] == (1.0, 1)
     await async_manipulate_test_data(opp, hmip_device, "dimLevel", 1)
-    op_state = opp.states.get(entity_id)
-    assert op_state.state == STATE_ON
-    assert op_state.attributes[ATTR_BRIGHTNESS] == 255
+    ha_state = opp.states.get(entity_id)
+    assert ha_state.state == STATE_ON
+    assert ha_state.attributes[ATTR_BRIGHTNESS] == 255
 
     await opp.services.async_call(
         "light", "turn_off", {"entity_id": entity_id}, blocking=True
@@ -198,13 +198,13 @@ async def test_hmip_dimmer(opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_dim_level"
     assert hmip_device.mock_calls[-1][1] == (0, 1)
     await async_manipulate_test_data(opp, hmip_device, "dimLevel", 0)
-    op_state = opp.states.get(entity_id)
-    assert op_state.state == STATE_OFF
+    ha_state = opp.states.get(entity_id)
+    assert ha_state.state == STATE_OFF
 
     await async_manipulate_test_data(opp, hmip_device, "dimLevel", None)
-    op_state = opp.states.get(entity_id)
-    assert op_state.state == STATE_OFF
-    assert not op_state.attributes.get(ATTR_BRIGHTNESS)
+    ha_state = opp.states.get(entity_id)
+    assert ha_state.state == STATE_OFF
+    assert not ha_state.attributes.get(ATTR_BRIGHTNESS)
 
 
 async def test_hmip_light_measuring(opp, default_mock_hap_factory):
@@ -216,11 +216,11 @@ async def test_hmip_light_measuring(opp, default_mock_hap_factory):
         test_devices=[entity_name]
     )
 
-    op_state, hmip_device = get_and_check_entity_basics(
+    ha_state, hmip_device = get_and_check_entity_basics(
         opp, mock_hap, entity_id, entity_name, device_model
     )
 
-    assert op_state.state == STATE_OFF
+    assert ha_state.state == STATE_OFF
     service_call_counter = len(hmip_device.mock_calls)
 
     await opp.services.async_call(
@@ -231,10 +231,10 @@ async def test_hmip_light_measuring(opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][1] == ()
     await async_manipulate_test_data(opp, hmip_device, "on", True)
     await async_manipulate_test_data(opp, hmip_device, "currentPowerConsumption", 50)
-    op_state = opp.states.get(entity_id)
-    assert op_state.state == STATE_ON
-    assert op_state.attributes[ATTR_CURRENT_POWER_W] == 50
-    assert op_state.attributes[ATTR_TODAY_ENERGY_KWH] == 6.33
+    ha_state = opp.states.get(entity_id)
+    assert ha_state.state == STATE_ON
+    assert ha_state.attributes[ATTR_CURRENT_POWER_W] == 50
+    assert ha_state.attributes[ATTR_TODAY_ENERGY_KWH] == 6.33
 
     await opp.services.async_call(
         "light", "turn_off", {"entity_id": entity_id}, blocking=True
@@ -243,8 +243,8 @@ async def test_hmip_light_measuring(opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "turn_off"
     assert hmip_device.mock_calls[-1][1] == ()
     await async_manipulate_test_data(opp, hmip_device, "on", False)
-    op_state = opp.states.get(entity_id)
-    assert op_state.state == STATE_OFF
+    ha_state = opp.states.get(entity_id)
+    assert ha_state.state == STATE_OFF
 
 
 async def test_hmip_wired_multi_dimmer(opp, default_mock_hap_factory):
@@ -256,11 +256,11 @@ async def test_hmip_wired_multi_dimmer(opp, default_mock_hap_factory):
         test_devices=["Wired Dimmaktor – 3-fach (Küche)"]
     )
 
-    op_state, hmip_device = get_and_check_entity_basics(
+    ha_state, hmip_device = get_and_check_entity_basics(
         opp, mock_hap, entity_id, entity_name, device_model
     )
 
-    assert op_state.state == STATE_OFF
+    assert ha_state.state == STATE_OFF
     service_call_counter = len(hmip_device.mock_calls)
 
     await opp.services.async_call(
@@ -279,9 +279,9 @@ async def test_hmip_wired_multi_dimmer(opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_dim_level"
     assert hmip_device.mock_calls[-1][1] == (0.39215686274509803, 1)
     await async_manipulate_test_data(opp, hmip_device, "dimLevel", 1, channel=1)
-    op_state = opp.states.get(entity_id)
-    assert op_state.state == STATE_ON
-    assert op_state.attributes[ATTR_BRIGHTNESS] == 255
+    ha_state = opp.states.get(entity_id)
+    assert ha_state.state == STATE_ON
+    assert ha_state.attributes[ATTR_BRIGHTNESS] == 255
 
     await opp.services.async_call(
         "light", "turn_off", {"entity_id": entity_id}, blocking=True
@@ -290,10 +290,10 @@ async def test_hmip_wired_multi_dimmer(opp, default_mock_hap_factory):
     assert hmip_device.mock_calls[-1][0] == "set_dim_level"
     assert hmip_device.mock_calls[-1][1] == (0, 1)
     await async_manipulate_test_data(opp, hmip_device, "dimLevel", 0, channel=1)
-    op_state = opp.states.get(entity_id)
-    assert op_state.state == STATE_OFF
+    ha_state = opp.states.get(entity_id)
+    assert ha_state.state == STATE_OFF
 
     await async_manipulate_test_data(opp, hmip_device, "dimLevel", None, channel=1)
-    op_state = opp.states.get(entity_id)
-    assert op_state.state == STATE_OFF
-    assert not op_state.attributes.get(ATTR_BRIGHTNESS)
+    ha_state = opp.states.get(entity_id)
+    assert ha_state.state == STATE_OFF
+    assert not ha_state.attributes.get(ATTR_BRIGHTNESS)

@@ -1,7 +1,7 @@
 {
   "domain": "spotcrime",
   "name": "Spot Crime",
-  "documentation": "https://www.open-peer-power.io/integrations/spotcrime",
+  "documentation": "https://www.openpeerpower.io/integrations/spotcrime",
   "requirements": ["spotcrime==1.0.4"],
   "codeowners": []
 }

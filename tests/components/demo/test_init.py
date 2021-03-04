@@ -21,7 +21,7 @@ def demo_cleanup(opp):
     """Clean up device tracker demo file."""
     yield
     try:
-        os.remove.opp.config.path(YAML_DEVICES))
+        os.remove(opp.config.path(YAML_DEVICES))
     except FileNotFoundError:
         pass
 
@@ -35,7 +35,7 @@ async def test_setting_up_demo(opp):
     # This is done to make sure entity components don't accidentally store
     # non-JSON-serializable data in the state machine.
     try:
-        json.dumps.opp.states.async_all(), cls=JSONEncoder)
+        json.dumps(opp.states.async_all(), cls=JSONEncoder)
     except Exception:  # pylint: disable=broad-except
         pytest.fail(
             "Unable to convert all demo entities to JSON. "
