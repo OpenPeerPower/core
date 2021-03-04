@@ -1,8 +1,8 @@
 {
   "domain": "isy994",
   "name": "Universal Devices ISY994",
-  "documentation": "https://www.open-peer-power.io/integrations/isy994",
-  "requirements": ["pyisy==2.1.0"],
+  "documentation": "https://www.openpeerpower.io/integrations/isy994",
+  "requirements": ["pyisy==2.1.1"],
   "codeowners": ["@bdraco", "@shbatm"],
   "config_flow": true,
   "ssdp": [

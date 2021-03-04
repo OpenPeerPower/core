@@ -1,9 +1,9 @@
 {
   "domain": "frontend",
   "name": "Open Peer Power Frontend",
-  "documentation": "https://www.open-peer-power.io/integrations/frontend",
+  "documentation": "https://www.openpeerpower.io/integrations/frontend",
   "requirements": [
-    "open-peer-power-frontend==20210208.0"
+    "open-peer-power-frontend==20210302.3"
   ],
   "dependencies": [
     "api",

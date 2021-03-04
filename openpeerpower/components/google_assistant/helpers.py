@@ -305,7 +305,7 @@ class GoogleConfigStore:
 
     def __init__(self, opp):
         """Initialize a configuration store."""
-        self.opp = opp
+        self._opp = opp
         self._store = Store(opp, self._STORAGE_VERSION, self._STORAGE_KEY)
         self._data = {STORE_AGENT_USER_IDS: {}}
 

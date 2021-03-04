@@ -2,8 +2,8 @@
   "domain": "freebox",
   "name": "Freebox",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/freebox",
+  "documentation": "https://www.openpeerpower.io/integrations/freebox",
   "requirements": ["freebox-api==0.0.9"],
-  "after_dependencies": ["discovery"],
+  "zeroconf": ["_fbx-api._tcp.local."],
   "codeowners": ["@hacf-fr", "@Quentame"]
 }

@@ -13,20 +13,20 @@ from yarl import URL
 
 from openpeerpower.components import websocket_api
 from openpeerpower.components.http.view import OpenPeerPowerView
-from openpeerpower.config import async.opp_config_yaml
+from openpeerpower.config import async_opp_config_yaml
 from openpeerpower.const import CONF_MODE, CONF_NAME, EVENT_THEMES_UPDATED
 from openpeerpower.core import callback
 from openpeerpower.helpers import service
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.translation import async_get_translations
-from openpeerpower.loader import async_get_integration, bind.opp
+from openpeerpower.loader import async_get_integration, bind_opp
 
 from .storage import async_setup_frontend_storage
 
 # mypy: allow-untyped-defs, no-check-untyped-defs
 
 # Fix mimetypes for borked Windows machines
-# https://github.com/open-peer-power/frontend/issues/3336
+# https://github.com/openpeerpower/frontend/issues/3336
 mimetypes.add_type("text/css", ".css")
 mimetypes.add_type("application/javascript", ".js")
 
@@ -228,12 +228,12 @@ def add_manifest_json_key(key, val):
 def _frontend_root(dev_repo_path):
     """Return root path to the frontend files."""
     if dev_repo_path is not None:
-        return pathlib.Path(dev_repo_path) /  opp.frontend"
+        return pathlib.Path(dev_repo_path) / "opp_frontend"
     # Keep import here so that we can import frontend without installing reqs
     # pylint: disable=import-outside-toplevel
-    import.opp_frontend
+    import opp_frontend
 
-    return.opp_frontend.where()
+    return opp_frontend.where()
 
 
 async def async_setup(opp, config):
@@ -299,7 +299,7 @@ async def async_setup(opp, config):
         "developer-tools",
         require_admin=True,
         sidebar_title="developer_tools",
-        sidebar_icon= opp:hammer",
+        sidebar_icon="opp:hammer",
     )
 
     if DATA_EXTRA_MODULE_URL not in opp.data:
@@ -378,8 +378,8 @@ async def _async_setup_themes(opp, themes):
         opp.data[theme_key] = to_set
         store.async_delay_save(
             lambda: {
-                DATA_DEFAULT_THEME:.opp.data[DATA_DEFAULT_THEME],
-                DATA_DEFAULT_DARK_THEME:.opp.data.get(DATA_DEFAULT_DARK_THEME),
+                DATA_DEFAULT_THEME: opp.data[DATA_DEFAULT_THEME],
+                DATA_DEFAULT_DARK_THEME: opp.data.get(DATA_DEFAULT_DARK_THEME),
             },
             THEMES_SAVE_DELAY,
         )
@@ -387,7 +387,7 @@ async def _async_setup_themes(opp, themes):
 
     async def reload_themes(_):
         """Reload themes."""
-        config = await async.opp_config_yaml(opp)
+        config = await async_opp_config_yaml(opp)
         new_themes = config[DOMAIN].get(CONF_THEMES, {})
         opp.data[DATA_THEMES] = new_themes
         if opp.data[DATA_DEFAULT_THEME] not in new_themes:
@@ -490,7 +490,7 @@ class IndexView(web_urldispatcher.AbstractResource):
 
     async def get(self, request: web.Request) -> web.Response:
         """Serve the index page for panel pages."""
-       opp = request.app["opp"]
+        opp = request.app["opp"]
 
         if not opp.components.onboarding.async_is_onboarded():
             return web.Response(status=302, headers={"location": "/onboarding.html"})
@@ -503,8 +503,8 @@ class IndexView(web_urldispatcher.AbstractResource):
         return web.Response(
             text=template.render(
                 theme_color=MANIFEST_JSON["theme_color"],
-                extra_modules(opp.data[DATA_EXTRA_MODULE_URL],
-                extra_js_es5.opp.data[DATA_EXTRA_JS_URL_ES5],
+                extra_modules=opp.data[DATA_EXTRA_MODULE_URL],
+                extra_js_es5=opp.data[DATA_EXTRA_JS_URL_ES5],
             ),
             content_type="text/html",
         )
@@ -571,9 +571,9 @@ def websocket_get_themes(opp, connection, msg):
         websocket_api.result_message(
             msg["id"],
             {
-                "themes":.opp.data[DATA_THEMES],
-                "default_theme":.opp.data[DATA_DEFAULT_THEME],
-                "default_dark_theme":.opp.data.get(DATA_DEFAULT_DARK_THEME),
+                "themes": opp.data[DATA_THEMES],
+                "default_theme": opp.data[DATA_DEFAULT_THEME],
+                "default_dark_theme": opp.data.get(DATA_DEFAULT_DARK_THEME),
             },
         )
     )

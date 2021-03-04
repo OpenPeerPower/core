@@ -86,7 +86,7 @@ class IgnSismologiaFeedEntityManager:
     ):
         """Initialize the Feed Entity Manager."""
 
-        self.opp = opp
+        self._opp = opp
         self._feed_manager = IgnSismologiaFeedManager(
             self._generate_entity,
             self._update_entity,
@@ -106,7 +106,7 @@ class IgnSismologiaFeedEntityManager:
     def _init_regular_updates(self):
         """Schedule regular updates at the specified interval."""
         track_time_interval(
-            self.opp, lambda now: self._feed_manager.update(), self._scan_interval
+            self._opp, lambda now: self._feed_manager.update(), self._scan_interval
         )
 
     def get_entry(self, external_id):
@@ -121,11 +121,11 @@ class IgnSismologiaFeedEntityManager:
 
     def _update_entity(self, external_id):
         """Update entity."""
-        dispatcher_send(self.opp, f"ign_sismologia_update_{external_id}")
+        dispatcher_send(self._opp, f"ign_sismologia_update_{external_id}")
 
     def _remove_entity(self, external_id):
         """Remove entity."""
-        dispatcher_send(self.opp, f"ign_sismologia_delete_{external_id}")
+        dispatcher_send(self._opp, f"ign_sismologia_delete_{external_id}")
 
 
 class IgnSismologiaLocationEvent(GeolocationEvent):

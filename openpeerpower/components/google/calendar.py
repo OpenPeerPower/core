@@ -3,7 +3,7 @@ import copy
 from datetime import timedelta
 import logging
 
-from httplib2 import ServerNotFoundError  # pylint: disable=import-error
+from httplib2 import ServerNotFoundError
 
 from openpeerpower.components.calendar import (
     ENTITY_ID_FORMAT,
@@ -45,7 +45,7 @@ def setup_platform(opp, config, add_entities, disc_info=None):
     if not any(data[CONF_TRACK] for data in disc_info[CONF_ENTITIES]):
         return
 
-    calendar_service = GoogleCalendarService.opp.config.path(TOKEN_FILE))
+    calendar_service = GoogleCalendarService(opp.config.path(TOKEN_FILE))
     entities = []
     for data in disc_info[CONF_ENTITIES]:
         if not data[CONF_TRACK]:

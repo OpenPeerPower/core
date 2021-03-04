@@ -31,7 +31,7 @@ from .const import (
     ISY994_PROGRAMS,
     ISY994_VARIABLES,
     MANUFACTURER,
-    SUPPORTED_PLATFORMS,
+    PLATFORMS,
     SUPPORTED_PROGRAM_PLATFORMS,
     UNDO_UPDATE_LISTENER,
 )
@@ -108,17 +108,17 @@ async def async_setup_entry(
     _async_import_options_from_data_if_missing(opp, entry)
 
     opp.data[DOMAIN][entry.entry_id] = {}
-    opp.isy_data = opp.data[DOMAIN][entry.entry_id]
+    opp_isy_data = opp.data[DOMAIN][entry.entry_id]
 
-    opp.isy_data[ISY994_NODES] = {}
-    for platform in SUPPORTED_PLATFORMS:
-        opp.isy_data[ISY994_NODES][platform] = []
+    opp_isy_data[ISY994_NODES] = {}
+    for platform in PLATFORMS:
+        opp_isy_data[ISY994_NODES][platform] = []
 
-    opp.isy_data[ISY994_PROGRAMS] = {}
+    opp_isy_data[ISY994_PROGRAMS] = {}
     for platform in SUPPORTED_PROGRAM_PLATFORMS:
-        opp.isy_data[ISY994_PROGRAMS][platform] = []
+        opp_isy_data[ISY994_PROGRAMS][platform] = []
 
-    opp.isy_data[ISY994_VARIABLES] = []
+    opp_isy_data[ISY994_VARIABLES] = []
 
     isy_config = entry.data
     isy_options = entry.options
@@ -169,14 +169,14 @@ async def async_setup_entry(
     _categorize_programs(opp_isy_data, isy.programs)
     _categorize_variables(opp_isy_data, isy.variables, variable_identifier)
 
-    # Dump ISY Clock Information. Future: Add ISY as sensor to OPP with attrs
+    # Dump ISY Clock Information. Future: Add ISY as sensor to Opp with attrs
     _LOGGER.info(repr(isy.clock))
 
-    opp.isy_data[ISY994_ISY] = isy
+    opp_isy_data[ISY994_ISY] = isy
     await _async_get_or_create_isy_device_in_registry(opp, entry, isy)
 
     # Load platforms for the devices in the ISY controller that we support.
-    for platform in SUPPORTED_PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
             opp.config_entries.async_forward_entry_setup(entry, platform)
         )
@@ -190,7 +190,7 @@ async def async_setup_entry(
 
     undo_listener = entry.add_update_listener(_async_update_listener)
 
-    opp.isy_data[UNDO_UPDATE_LISTENER] = undo_listener
+    opp_isy_data[UNDO_UPDATE_LISTENER] = undo_listener
 
     # Register Integration-wide Services:
     async_setup_services(opp)
@@ -248,12 +248,12 @@ async def async_unload_entry(
         await asyncio.gather(
             *[
                 opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in SUPPORTED_PLATFORMS
+                for platform in PLATFORMS
             ]
         )
     )
 
-    opp.isy_data = opp.data[DOMAIN][entry.entry_id]
+    opp_isy_data = opp.data[DOMAIN][entry.entry_id]
 
     isy = opp_isy_data[ISY994_ISY]
 
@@ -264,7 +264,7 @@ async def async_unload_entry(
 
     await opp.async_add_executor_job(_stop_auto_update)
 
-    opp.isy_data[UNDO_UPDATE_LISTENER]()
+    opp_isy_data[UNDO_UPDATE_LISTENER]()
 
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)

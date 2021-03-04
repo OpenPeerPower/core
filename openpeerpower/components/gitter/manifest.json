@@ -1,7 +1,7 @@
 {
   "domain": "gitter",
   "name": "Gitter",
-  "documentation": "https://www.open-peer-power.io/integrations/gitter",
+  "documentation": "https://www.openpeerpower.io/integrations/gitter",
   "requirements": ["gitterpy==0.1.7"],
   "codeowners": ["@fabaff"]
 }

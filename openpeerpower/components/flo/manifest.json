@@ -2,7 +2,7 @@
   "domain": "flo",
   "name": "Flo",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/flo",
+  "documentation": "https://www.openpeerpower.io/integrations/flo",
   "requirements": ["aioflo==0.4.1"],
   "codeowners": ["@dmulcahey"]
 }

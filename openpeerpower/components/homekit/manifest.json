@@ -1,9 +1,9 @@
 {
   "domain": "homekit",
   "name": "HomeKit",
-  "documentation": "https://www.open-peer-power.io/integrations/homekit",
+  "documentation": "https://www.openpeerpower.io/integrations/homekit",
   "requirements": [
-    "HAP-python==3.3.0",
+    "HAP-python==3.3.2",
     "fnvhash==0.1.0",
     "PyQRCode==1.2.1",
     "base36==0.1.1",

@@ -13,7 +13,7 @@ from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 from openpeerpower.helpers.typing import OpenPeerPowerType
 
-from .const import COMPONENTS, HMIPC_AUTHTOKEN, HMIPC_HAPID, HMIPC_NAME, HMIPC_PIN
+from .const import HMIPC_AUTHTOKEN, HMIPC_HAPID, HMIPC_NAME, HMIPC_PIN, PLATFORMS
 from .errors import HmipcConnectionError
 
 _LOGGER = logging.getLogger(__name__)
@@ -102,10 +102,10 @@ class HomematicipHAP:
             "Connected to HomematicIP with HAP %s", self.config_entry.unique_id
         )
 
-        for component in COMPONENTS:
+        for platform in PLATFORMS:
             self.opp.async_create_task(
                 self.opp.config_entries.async_forward_entry_setup(
-                    self.config_entry, component
+                    self.config_entry, platform
                 )
             )
         return True
@@ -118,7 +118,7 @@ class HomematicipHAP:
         There are several occasions for this event to happen.
         1. We are interested to check whether the access point
         is still connected. If not, entity state changes cannot
-        be forwarded to(opp, So if access point is disconnected all devices
+        be forwarded to opp. So if access point is disconnected all devices
         are set to unavailable.
         2. We need to update home including devices and groups after a reconnect.
         3. We need to update home without devices and groups in all other cases.
@@ -215,9 +215,9 @@ class HomematicipHAP:
             self._retry_task.cancel()
         await self.home.disable_events()
         _LOGGER.info("Closed connection to HomematicIP cloud server")
-        for component in COMPONENTS:
+        for platform in PLATFORMS:
             await self.opp.config_entries.async_forward_entry_unload(
-                self.config_entry, component
+                self.config_entry, platform
             )
         self.hmip_device_by_entity_id = {}
         return True

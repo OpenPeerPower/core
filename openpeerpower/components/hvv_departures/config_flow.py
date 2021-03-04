@@ -11,12 +11,7 @@ from openpeerpower.core import callback
 from openpeerpower.helpers import aiohttp_client
 import openpeerpower.helpers.config_validation as cv
 
-from .const import (  # pylint:disable=unused-import
-    CONF_FILTER,
-    CONF_REAL_TIME,
-    CONF_STATION,
-    DOMAIN,
-)
+from .const import CONF_FILTER, CONF_REAL_TIME, CONF_STATION, DOMAIN
 from .hub import GTIHub
 
 _LOGGER = logging.getLogger(__name__)

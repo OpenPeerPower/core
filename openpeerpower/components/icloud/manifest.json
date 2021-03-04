@@ -2,7 +2,7 @@
   "domain": "icloud",
   "name": "Apple iCloud",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/icloud",
+  "documentation": "https://www.openpeerpower.io/integrations/icloud",
   "requirements": ["pyicloud==0.10.2"],
   "codeowners": ["@Quentame", "@nzapponi"]
 }

@@ -1,7 +1,7 @@
 {
   "domain": "kaiterra",
   "name": "Kaiterra",
-  "documentation": "https://www.open-peer-power.io/integrations/kaiterra",
+  "documentation": "https://www.openpeerpower.io/integrations/kaiterra",
   "requirements": ["kaiterra-async-client==0.0.2"],
   "codeowners": ["@Michsior14"]
 }

@@ -278,9 +278,9 @@ async def async_setup_entry(opp, entry):
         opp.config_entries.async_forward_entry_setup(entry, "sensor")
     )
 
-    opp.http.register_view(iOSIdentifyDeviceView.opp.config.path(CONFIGURATION_FILE)))
-    opp.http.register_view(iOSPushConfigView.opp.data[DOMAIN][CONF_USER][CONF_PUSH]))
-    opp.http.register_view(iOSConfigView.opp.data[DOMAIN][CONF_USER]))
+    opp.http.register_view(iOSIdentifyDeviceView(opp.config.path(CONFIGURATION_FILE)))
+    opp.http.register_view(iOSPushConfigView(opp.data[DOMAIN][CONF_USER][CONF_PUSH]))
+    opp.http.register_view(iOSConfigView(opp.data[DOMAIN][CONF_USER]))
 
     return True
 
@@ -335,7 +335,7 @@ class iOSIdentifyDeviceView(OpenPeerPowerView):
         except ValueError:
             return self.json_message("Invalid JSON", HTTP_BAD_REQUEST)
 
-       opp = request.app["opp"]
+        opp = request.app["opp"]
 
         # Commented for now while iOS app is getting frequent updates
         # try:

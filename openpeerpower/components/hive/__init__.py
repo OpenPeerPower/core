@@ -23,7 +23,6 @@ from openpeerpower.helpers.entity import Entity
 _LOGGER = logging.getLogger(__name__)
 
 ATTR_AVAILABLE = "available"
-ATTR_MODE = "mode"
 DOMAIN = "hive"
 DATA_HIVE = "data_hive"
 SERVICES = ["Heating", "HotWater", "TRV"]
@@ -124,20 +123,20 @@ async def async_setup(opp, config):
     opp.data[DOMAIN][DATA_HIVE] = hive
     opp.data[DOMAIN]["entity_lookup"] = {}
 
-    for op_type in DEVICETYPES:
-        devicelist = devices.get(DEVICETYPES[op_type])
+    for ha_type in DEVICETYPES:
+        devicelist = devices.get(DEVICETYPES[ha_type])
         if devicelist:
             opp.async_create_task(
-                async_load_platform(opp, op_type, DOMAIN, devicelist, config)
+                async_load_platform(opp, ha_type, DOMAIN, devicelist, config)
             )
-            if op_type == "climate":
+            if ha_type == "climate":
                 opp.services.async_register(
                     DOMAIN,
                     SERVICE_BOOST_HEATING,
                     heating_boost,
                     schema=BOOST_HEATING_SCHEMA,
                 )
-            if op_type == "water_heater":
+            if ha_type == "water_heater":
                 opp.services.async_register(
                     DOMAIN,
                     SERVICE_BOOST_HOT_WATER,

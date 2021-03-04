@@ -122,17 +122,17 @@ class HomeworksKeypadEvent:
     """When you want signals instead of entities.
 
     Stateless sensors such as keypads are expected to generate an event
-    instead of a sensor entity in opp,
+    instead of a sensor entity in opp.
     """
 
     def __init__(self, opp, addr, name):
         """Register callback that will be used for signals."""
-        self.opp = opp
+        self._opp = opp
         self._addr = addr
         self._name = name
         self._id = slugify(self._name)
         signal = f"homeworks_entity_{self._addr}"
-        async_dispatcher_connect(self.opp, signal, self._update_callback)
+        async_dispatcher_connect(self._opp, signal, self._update_callback)
 
     @callback
     def _update_callback(self, msg_type, values):
@@ -145,4 +145,4 @@ class HomeworksKeypadEvent:
         else:
             return
         data = {CONF_ID: self._id, CONF_NAME: self._name, "button": values[1]}
-        self.opp.bus.async_fire(event, data)
+        self._opp.bus.async_fire(event, data)

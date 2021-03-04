@@ -1,6 +1,6 @@
 {
   "domain": "facebox",
   "name": "Facebox",
-  "documentation": "https://www.open-peer-power.io/integrations/facebox",
+  "documentation": "https://www.openpeerpower.io/integrations/facebox",
   "codeowners": []
 }

@@ -1,7 +1,7 @@
 {
   "domain": "hive",
   "name": "Hive",
-  "documentation": "https://www.open-peer-power.io/integrations/hive",
+  "documentation": "https://www.openpeerpower.io/integrations/hive",
   "requirements": [
     "pyhiveapi==0.3.4.4"
   ],

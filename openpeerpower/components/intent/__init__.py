@@ -4,7 +4,7 @@ import voluptuous as vol
 from openpeerpower.components import http
 from openpeerpower.components.http.data_validator import RequestDataValidator
 from openpeerpower.const import SERVICE_TOGGLE, SERVICE_TURN_OFF, SERVICE_TURN_ON
-from openpeerpower.core import DOMAIN as OP_DOMAIN, OpenPeerPower
+from openpeerpower.core import DOMAIN as HA_DOMAIN, OpenPeerPower
 from openpeerpower.helpers import config_validation as cv, integration_platform, intent
 
 from .const import DOMAIN
@@ -20,17 +20,17 @@ async def async_setup(opp: OpenPeerPower, config: dict):
 
     opp.helpers.intent.async_register(
         intent.ServiceIntentHandler(
-            intent.INTENT_TURN_ON, OP_DOMAIN, SERVICE_TURN_ON, "Turned {} on"
+            intent.INTENT_TURN_ON, HA_DOMAIN, SERVICE_TURN_ON, "Turned {} on"
         )
     )
     opp.helpers.intent.async_register(
         intent.ServiceIntentHandler(
-            intent.INTENT_TURN_OFF, OP_DOMAIN, SERVICE_TURN_OFF, "Turned {} off"
+            intent.INTENT_TURN_OFF, HA_DOMAIN, SERVICE_TURN_OFF, "Turned {} off"
         )
     )
     opp.helpers.intent.async_register(
         intent.ServiceIntentHandler(
-            intent.INTENT_TOGGLE, OP_DOMAIN, SERVICE_TOGGLE, "Toggled {}"
+            intent.INTENT_TOGGLE, HA_DOMAIN, SERVICE_TOGGLE, "Toggled {}"
         )
     )
 
@@ -58,7 +58,7 @@ class IntentHandleView(http.OpenPeerPowerView):
     )
     async def post(self, request, data):
         """Handle intent with name/data."""
-       opp = request.app["opp"]
+        opp = request.app["opp"]
 
         try:
             intent_name = data["name"]

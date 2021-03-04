@@ -129,12 +129,12 @@ class FlicButton(BinarySensorEntity):
     def __init__(self, opp, client, address, timeout, ignored_click_types):
         """Initialize the flic button."""
 
-        self.opp = opp
+        self._opp = opp
         self._address = address
         self._timeout = timeout
         self._is_down = False
         self._ignored_click_types = ignored_click_types or []
-        self.opp_click_types = {
+        self._opp_click_types = {
             ClickType.ButtonClick: CLICK_TYPE_SINGLE,
             ClickType.ButtonSingleClick: CLICK_TYPE_SINGLE,
             ClickType.ButtonDoubleClick: CLICK_TYPE_DOUBLE,
@@ -225,7 +225,7 @@ class FlicButton(BinarySensorEntity):
             return
 
         # Return if click event is in ignored click types
-        opp_click_type = self.opp_click_types[click_type]
+        opp_click_type = self._opp_click_types[click_type]
         if opp_click_type in self._ignored_click_types:
             return
 

@@ -23,7 +23,7 @@ HOMEKIT_BRIDGE_MODEL = "Open Peer Power HomeKit Bridge"
 
 HOMEKIT_IGNORE = [
     # eufy Indoor Cam 2K and 2K Pan & Tilt
-    # https://github.com/open-peer-power/core/issues/42307
+    # https://github.com/openpeerpower/core/issues/42307
     "T8400",
     "T8410",
     # Hive Hub - vendor does not give user a pairing code
@@ -266,7 +266,7 @@ class HomekitControllerFlowHandler(config_entries.ConfigFlow):
         if model in HOMEKIT_IGNORE:
             return self.async_abort(reason="ignored_model")
 
-        # If this is a HomeKit bridge exported by *this* HA instance ignore it.
+        # If this is a HomeKit bridge exported by *this* OP instance ignore it.
         if await self._hkid_is_homekit_bridge(hkid):
             return self.async_abort(reason="ignored_model")
 

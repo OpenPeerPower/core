@@ -122,7 +122,7 @@ class GeonetnzQuakesFeedEntityManager:
 
     def __init__(self, opp, config_entry, radius_in_km):
         """Initialize the Feed Entity Manager."""
-        self.opp = opp
+        self._opp = opp
         self._config_entry = config_entry
         coordinates = (
             config_entry.data[CONF_LATITUDE],
@@ -151,8 +151,8 @@ class GeonetnzQuakesFeedEntityManager:
         """Schedule initial and regular updates based on configured time interval."""
 
         for domain in PLATFORMS:
-            self.opp.async_create_task(
-                self.opp.config_entries.async_forward_entry_setup(
+            self._opp.async_create_task(
+                self._opp.config_entries.async_forward_entry_setup(
                     self._config_entry, domain
                 )
             )
@@ -163,7 +163,7 @@ class GeonetnzQuakesFeedEntityManager:
 
         # Trigger updates at regular intervals.
         self._track_time_remove_callback = async_track_time_interval(
-            self.opp, update, self._scan_interval
+            self._opp, update, self._scan_interval
         )
 
         _LOGGER.debug("Feed entity manager initialized")
@@ -198,7 +198,7 @@ class GeonetnzQuakesFeedEntityManager:
     async def _generate_entity(self, external_id):
         """Generate new entity."""
         async_dispatcher_send(
-            self.opp,
+            self._opp,
             self.async_event_new_entity(),
             self,
             self._config_entry.unique_id,
@@ -207,16 +207,16 @@ class GeonetnzQuakesFeedEntityManager:
 
     async def _update_entity(self, external_id):
         """Update entity."""
-        async_dispatcher_send(self.opp, f"geonetnz_quakes_update_{external_id}")
+        async_dispatcher_send(self._opp, f"geonetnz_quakes_update_{external_id}")
 
     async def _remove_entity(self, external_id):
         """Remove entity."""
-        async_dispatcher_send(self.opp, f"geonetnz_quakes_delete_{external_id}")
+        async_dispatcher_send(self._opp, f"geonetnz_quakes_delete_{external_id}")
 
     async def _status_update(self, status_info):
         """Propagate status update."""
         _LOGGER.debug("Status update received: %s", status_info)
         self._status_info = status_info
         async_dispatcher_send(
-            self.opp, f"geonetnz_quakes_status_{self._config_entry_id}"
+            self._opp, f"geonetnz_quakes_status_{self._config_entry_id}"
         )

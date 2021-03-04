@@ -59,7 +59,7 @@ _LOGGER = logging.getLogger(__name__)
 DEFAULT_DEVELOPMENT = "0"
 # Cast to be able to load custom cards.
 # My to be able to check url and version info.
-DEFAULT_CORS = ["https://cast.open-peer-power.io", "https://my.open-peer-power.io"]
+DEFAULT_CORS = ["https://cast.openpeerpower.io"]
 NO_LOGIN_ATTEMPT_THRESHOLD = -1
 
 MAX_CLIENT_SIZE: int = 1024 ** 2 * 16
@@ -104,7 +104,7 @@ CONFIG_SCHEMA = vol.Schema({DOMAIN: HTTP_SCHEMA}, extra=vol.ALLOW_EXTRA)
 @bind_opp
 async def async_get_last_config(opp: OpenPeerPower) -> Optional[dict]:
     """Return the last known working config."""
-    store = storage. Store(opp, STORAGE_VERSION, STORAGE_KEY)
+    store = storage.Store(opp, STORAGE_VERSION, STORAGE_KEY)
     return cast(Optional[dict], await store.async_load())
 
 
@@ -385,7 +385,7 @@ async def start_http_server_and_save_config(
     await server.start()  # type: ignore
 
     # If we are set up successful, we store the HTTP settings for safe mode.
-    store = storage. Store(opp, STORAGE_VERSION, STORAGE_KEY)
+    store = storage.Store(opp, STORAGE_VERSION, STORAGE_KEY)
 
     if CONF_TRUSTED_PROXIES in conf:
         conf[CONF_TRUSTED_PROXIES] = [

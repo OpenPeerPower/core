@@ -9,7 +9,7 @@ from homematicip.aio.home import AsyncHome
 from homematicip.base.helpers import handle_config
 import voluptuous as vol
 
-from openpeerpower.const import ATTR_ENTITY_ID
+from openpeerpower.const import ATTR_ENTITY_ID, ATTR_TEMPERATURE
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.config_validation import comp_entity_ids
 from openpeerpower.helpers.service import (
@@ -29,7 +29,6 @@ ATTR_CONFIG_OUTPUT_FILE_PREFIX = "config_output_file_prefix"
 ATTR_CONFIG_OUTPUT_PATH = "config_output_path"
 ATTR_DURATION = "duration"
 ATTR_ENDTIME = "endtime"
-ATTR_TEMPERATURE = "temperature"
 
 DEFAULT_CONFIG_FILE_PREFIX = "hmip-config"
 
@@ -305,7 +304,7 @@ async def _async_dump_hap_config(
     opp: OpenPeerPowerType, service: ServiceCallType
 ) -> None:
     """Service to dump the configuration of a Homematic IP Access Point."""
-    config_path = service.data.get(ATTR_CONFIG_OUTPUT_PATH) or(opp.config.config_dir
+    config_path = service.data.get(ATTR_CONFIG_OUTPUT_PATH) or opp.config.config_dir
     config_file_prefix = service.data[ATTR_CONFIG_OUTPUT_FILE_PREFIX]
     anonymize = service.data[ATTR_ANONYMIZE]
 

@@ -27,6 +27,7 @@ from openpeerpower.const import (
     ATTR_CODE,
     ATTR_DEVICE_CLASS,
     ATTR_ENTITY_ID,
+    ATTR_MODE,
     ATTR_SUPPORTED_FEATURES,
     ATTR_TEMPERATURE,
     CAST_APP_ID_OPENPEERPOWER,
@@ -57,7 +58,7 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     TEMP_FAHRENHEIT,
 )
-from openpeerpower.core import DOMAIN as OP_DOMAIN
+from openpeerpower.core import DOMAIN as HA_DOMAIN
 from openpeerpower.helpers.network import get_url
 from openpeerpower.util import color as color_util, dt, temperature as temp_util
 
@@ -333,7 +334,7 @@ class OnOffTrait(_Trait):
         domain = self.state.domain
 
         if domain == group.DOMAIN:
-            service_domain = OP_DOMAIN
+            service_domain = HA_DOMAIN
             service = SERVICE_TURN_ON if params["on"] else SERVICE_TURN_OFF
 
         else:
@@ -1424,8 +1425,8 @@ class ModesTrait(_Trait):
         elif self.state.domain == input_select.DOMAIN:
             mode_settings["option"] = self.state.state
         elif self.state.domain == humidifier.DOMAIN:
-            if humidifier.ATTR_MODE in attrs:
-                mode_settings["mode"] = attrs.get(humidifier.ATTR_MODE)
+            if ATTR_MODE in attrs:
+                mode_settings["mode"] = attrs.get(ATTR_MODE)
         elif self.state.domain == light.DOMAIN:
             if light.ATTR_EFFECT in attrs:
                 mode_settings["effect"] = attrs.get(light.ATTR_EFFECT)
@@ -1460,7 +1461,7 @@ class ModesTrait(_Trait):
                 humidifier.DOMAIN,
                 humidifier.SERVICE_SET_MODE,
                 {
-                    humidifier.ATTR_MODE: requested_mode,
+                    ATTR_MODE: requested_mode,
                     ATTR_ENTITY_ID: self.state.entity_id,
                 },
                 blocking=True,

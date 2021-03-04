@@ -17,7 +17,7 @@ ATTR_ROOM = "room"
 ATTR_USERNAME = "username"
 
 DEFAULT_NAME = "Gitter messages"
-DEFAULT_ROOM = "open-peer-power/open-peer-power"
+DEFAULT_ROOM = "open-peer-power/openpeerpower"
 
 ICON = "mdi:message-cog"
 

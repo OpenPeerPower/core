@@ -2,7 +2,7 @@
   "domain": "gogogate2",
   "name": "Gogogate2 and iSmartGate",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/gogogate2",
+  "documentation": "https://www.openpeerpower.io/integrations/gogogate2",
   "requirements": ["gogogate2-api==3.0.0"],
   "codeowners": ["@vangorra"],
   "homekit": {

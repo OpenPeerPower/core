@@ -5,6 +5,7 @@ from typing import Any, Dict, Optional
 from homematicip.aio.device import AsyncDevice
 from homematicip.aio.group import AsyncGroup
 
+from openpeerpower.const import ATTR_ID
 from openpeerpower.core import callback
 from openpeerpower.helpers import device_registry as dr, entity_registry as er
 from openpeerpower.helpers.entity import Entity
@@ -19,7 +20,6 @@ ATTR_LOW_BATTERY = "low_battery"
 ATTR_CONFIG_PENDING = "config_pending"
 ATTR_CONNECTION_TYPE = "connection_type"
 ATTR_DUTY_CYCLE_REACHED = "duty_cycle_reached"
-ATTR_ID = "id"
 ATTR_IS_GROUP = "is_group"
 # RSSI HAP -> Device
 ATTR_RSSI_DEVICE = "rssi_device"
@@ -92,7 +92,7 @@ class HomematicipGenericEntity(Entity):
     @property
     def device_info(self) -> Dict[str, Any]:
         """Return device specific attributes."""
-        # Only physical devices should be HA devices.
+        # Only physical devices should be OP devices.
         if isinstance(self._device, AsyncDevice):
             return {
                 "identifiers": {

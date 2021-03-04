@@ -1,7 +1,7 @@
 {
   "codeowners": ["@dermotduffy"],
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/hyperion",
+  "documentation": "https://www.openpeerpower.io/integrations/hyperion",
   "domain": "hyperion",
   "name": "Hyperion",
   "quality_scale": "platinum",

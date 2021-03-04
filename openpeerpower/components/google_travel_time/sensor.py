@@ -185,7 +185,7 @@ class GoogleTravelTimeSensor(Entity):
 
     def __init__(self, opp, name, api_key, origin, destination, options):
         """Initialize the sensor."""
-        self.opp = opp
+        self._opp = opp
         self._name = name
         self._options = options
         self._unit_of_measurement = TIME_MINUTES
@@ -291,7 +291,7 @@ class GoogleTravelTimeSensor(Entity):
 
     def _get_location_from_entity(self, entity_id):
         """Get the location from the entity state or attributes."""
-        entity = self.opp.states.get(entity_id)
+        entity = self._opp.states.get(entity_id)
 
         if entity is None:
             _LOGGER.error("Unable to find entity %s", entity_id)
@@ -303,7 +303,7 @@ class GoogleTravelTimeSensor(Entity):
             return self._get_location_from_attributes(entity)
 
         # Check if device is in a zone
-        zone_entity = self.opp.states.get("zone.%s" % entity.state)
+        zone_entity = self._opp.states.get("zone.%s" % entity.state)
         if location.has_location(zone_entity):
             _LOGGER.debug(
                 "%s is in %s, getting zone location", entity_id, zone_entity.entity_id
@@ -324,7 +324,7 @@ class GoogleTravelTimeSensor(Entity):
         return f"{attr.get(ATTR_LATITUDE)},{attr.get(ATTR_LONGITUDE)}"
 
     def _resolve_zone(self, friendly_name):
-        entities = self.opp.states.all()
+        entities = self._opp.states.all()
         for entity in entities:
             if entity.domain == "zone" and entity.name == friendly_name:
                 return self._get_location_from_attributes(entity)

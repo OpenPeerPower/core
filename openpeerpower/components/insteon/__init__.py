@@ -17,7 +17,7 @@ from .const import (
     CONF_UNITCODE,
     CONF_X10,
     DOMAIN,
-    INSTEON_COMPONENTS,
+    INSTEON_PLATFORMS,
     ON_OFF_EVENTS,
 )
 from .schemas import convert_yaml_to_config_flow
@@ -60,7 +60,7 @@ async def async_get_device_config(opp, config_entry):
         if not device.aldb.is_loaded or not flags:
             await device.async_read_config()
 
-    await devices.async_save(workdir(opp.config.config_dir)
+    await devices.async_save(workdir=opp.config.config_dir)
 
 
 async def close_insteon_connection(*args):
@@ -100,7 +100,7 @@ async def async_setup_entry(opp, entry):
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, close_insteon_connection)
 
     await devices.async_load(
-        workdir(opp.config.config_dir, id_devices=0, load_modem_aldb=0
+        workdir=opp.config.config_dir, id_devices=0, load_modem_aldb=0
     )
 
     # If options existed in YAML and have not already been saved to the config entry
@@ -113,7 +113,7 @@ async def async_setup_entry(opp, entry):
     ):
         opp.config_entries.async_update_entry(
             entry=entry,
-            options.opp.data[DOMAIN][OPTIONS],
+            options=opp.data[DOMAIN][OPTIONS],
         )
 
     for device_override in entry.options.get(CONF_OVERRIDE, []):
@@ -138,9 +138,9 @@ async def async_setup_entry(opp, entry):
         )
         device = devices.add_x10_device(housecode, unitcode, x10_type, steps)
 
-    for component in INSTEON_COMPONENTS:
+    for platform in INSTEON_PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     for address in devices:

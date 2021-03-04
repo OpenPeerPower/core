@@ -1,7 +1,7 @@
 """Intents for the humidifier integration."""
 import voluptuous as vol
 
-from openpeerpower.const import ATTR_ENTITY_ID, STATE_OFF
+from openpeerpower.const import ATTR_ENTITY_ID, ATTR_MODE, STATE_OFF
 from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers import intent
 import openpeerpower.helpers.config_validation as cv
@@ -9,7 +9,6 @@ import openpeerpower.helpers.config_validation as cv
 from . import (
     ATTR_AVAILABLE_MODES,
     ATTR_HUMIDITY,
-    ATTR_MODE,
     DOMAIN,
     SERVICE_SET_HUMIDITY,
     SERVICE_SET_MODE,
@@ -17,8 +16,8 @@ from . import (
     SUPPORT_MODES,
 )
 
-INTENT_HUMIDITY = " OppHumidifierSetpoint"
-INTENT_MODE = " OppHumidifierMode"
+INTENT_HUMIDITY = "OppHumidifierSetpoint"
+INTENT_MODE = "OppHumidifierMode"
 
 
 async def async_setup_intents(opp: OpenPeerPower) -> None:
@@ -38,7 +37,7 @@ class HumidityHandler(intent.IntentHandler):
 
     async def async_handle(self, intent_obj: intent.Intent) -> intent.IntentResponse:
         """Handle the opp intent."""
-       opp = intent_obj(opp
+        opp = intent_obj.opp
         slots = self.async_validate_slots(intent_obj.slots)
         state = opp.helpers.intent.async_match_state(
             slots["name"]["value"], opp.states.async_all(DOMAIN)
@@ -82,7 +81,7 @@ class SetModeHandler(intent.IntentHandler):
 
     async def async_handle(self, intent_obj: intent.Intent) -> intent.IntentResponse:
         """Handle the opp intent."""
-       opp = intent_obj(opp
+        opp = intent_obj.opp
         slots = self.async_validate_slots(intent_obj.slots)
         state = opp.helpers.intent.async_match_state(
             slots["name"]["value"],

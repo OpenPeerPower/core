@@ -1,7 +1,7 @@
 {
   "domain": "input_number",
   "name": "Input Number",
-  "documentation": "https://www.open-peer-power.io/integrations/input_number",
+  "documentation": "https://www.openpeerpower.io/integrations/input_number",
   "codeowners": ["@open-peer-power/core"],
   "quality_scale": "internal"
 }

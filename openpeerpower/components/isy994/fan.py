@@ -1,6 +1,6 @@
 """Support for ISY994 fans."""
 import math
-from typing import Callable
+from typing import Callable, Optional
 
 from pyisy.constants import ISY_VALUE_UNKNOWN, PROTO_INSTEON
 
@@ -26,7 +26,7 @@ async def async_setup_entry(
     async_add_entities: Callable[[list], None],
 ) -> bool:
     """Set up the ISY994 fan platform."""
-    opp.isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
+    opp_isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
     devices = []
 
     for node in opp_isy_data[ISY994_NODES][FAN]:
@@ -43,7 +43,7 @@ class ISYFanEntity(ISYNodeEntity, FanEntity):
     """Representation of an ISY994 fan device."""
 
     @property
-    def percentage(self) -> str:
+    def percentage(self) -> Optional[int]:
         """Return the current speed percentage."""
         if self._node.status == ISY_VALUE_UNKNOWN:
             return None
@@ -97,7 +97,7 @@ class ISYFanProgramEntity(ISYProgramEntity, FanEntity):
     """Representation of an ISY994 fan program."""
 
     @property
-    def percentage(self) -> str:
+    def percentage(self) -> Optional[int]:
         """Return the current speed percentage."""
         if self._node.status == ISY_VALUE_UNKNOWN:
             return None

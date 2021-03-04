@@ -21,9 +21,9 @@ from openpeerpower.util import dt as dt_util, yaml
 
 _LOGGER = logging.getLogger(__name__)
 
-KEY_BANNED_IPS = "op_banned_ips"
-KEY_FAILED_LOGIN_ATTEMPTS = "op_failed_login_attempts"
-KEY_LOGIN_THRESHOLD = "op_login_threshold"
+KEY_BANNED_IPS = "ha_banned_ips"
+KEY_FAILED_LOGIN_ATTEMPTS = "ha_failed_login_attempts"
+KEY_LOGIN_THRESHOLD = "ha_login_threshold"
 
 NOTIFICATION_ID_BAN = "ip-ban"
 NOTIFICATION_ID_LOGIN = "http-login"
@@ -94,7 +94,7 @@ async def process_wrong_login(request):
     Increase failed login attempts counter for remote IP address.
     Add ip ban entry if failed login attempts exceeds threshold.
     """
-   opp = request.app["opp"]
+    opp = request.app["opp"]
 
     remote_addr = ip_address(request.remote)
     remote_host = request.remote
@@ -127,7 +127,7 @@ async def process_wrong_login(request):
 
     # Supervisor IP should never be banned
     if (
-         opp.o" in opp.config.components
+        "oppio" in opp.config.components
         and opp.components.oppio.get_supervisor_ip() == str(remote_addr)
     ):
         return

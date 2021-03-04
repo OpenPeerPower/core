@@ -4,13 +4,15 @@ import socket
 from openpeerpower.const import (
     DATA_RATE_KILOBYTES_PER_SECOND,
     DEVICE_CLASS_TEMPERATURE,
+    PERCENTAGE,
     TEMP_CELSIUS,
 )
 
 DOMAIN = "freebox"
+SERVICE_REBOOT = "reboot"
 
 APP_DESC = {
-    "app_id":  opp.,
+    "app_id": "opp",
     "app_name": "Open Peer Power",
     "app_version": "0.106",
     "device_name": socket.gethostname(),
@@ -51,6 +53,15 @@ CALL_SENSORS = {
         SENSOR_NAME: "Freebox missed calls",
         SENSOR_UNIT: None,
         SENSOR_ICON: "mdi:phone-missed",
+        SENSOR_DEVICE_CLASS: None,
+    },
+}
+
+DISK_PARTITION_SENSORS = {
+    "partition_free_space": {
+        SENSOR_NAME: "free space",
+        SENSOR_UNIT: PERCENTAGE,
+        SENSOR_ICON: "mdi:harddisk",
         SENSOR_DEVICE_CLASS: None,
     },
 }

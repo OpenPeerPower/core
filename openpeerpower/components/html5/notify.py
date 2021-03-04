@@ -26,6 +26,7 @@ from openpeerpower.components.notify import (
     BaseNotificationService,
 )
 from openpeerpower.const import (
+    ATTR_NAME,
     HTTP_BAD_REQUEST,
     HTTP_INTERNAL_SERVER_ERROR,
     HTTP_UNAUTHORIZED,
@@ -56,7 +57,7 @@ def gcm_api_deprecated(value):
             "Configuring html5_push_notifications via the GCM api"
             " has been deprecated and will stop working after April 11,"
             " 2019. Use the VAPID configuration instead. For instructions,"
-            " see https://www.open-peer-power.io/integrations/html5/"
+            " see https://www.openpeerpower.io/integrations/html5/"
         )
     return value
 
@@ -73,7 +74,6 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 ATTR_SUBSCRIPTION = "subscription"
 ATTR_BROWSER = "browser"
-ATTR_NAME = "name"
 
 ATTR_ENDPOINT = "endpoint"
 ATTR_KEYS = "keys"
@@ -240,7 +240,7 @@ class HTML5PushRegistrationView(OpenPeerPowerView):
         self.registrations[name] = data
 
         try:
-           opp = request.app["opp"]
+            opp = request.app["opp"]
 
             await opp.async_add_executor_job(
                 save_json, self.json_path, self.registrations
@@ -288,7 +288,7 @@ class HTML5PushRegistrationView(OpenPeerPowerView):
         reg = self.registrations.pop(found)
 
         try:
-           opp = request.app["opp"]
+            opp = request.app["opp"]
 
             await opp.async_add_executor_job(
                 save_json, self.json_path, self.registrations

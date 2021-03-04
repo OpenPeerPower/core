@@ -67,7 +67,7 @@ async def async_setup_entry(
     devices_by_address = {}
     child_nodes = []
 
-    opp.isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
+    opp_isy_data = opp.data[ISY994_DOMAIN][entry.entry_id]
     for node in opp_isy_data[ISY994_NODES][BINARY_SENSOR]:
         device_class, device_type = _detect_device_type_and_class(node)
         if node.protocol == PROTO_INSTEON:
@@ -127,7 +127,7 @@ async def async_setup_entry(
         if (
             device_class == DEVICE_CLASS_MOTION
             and device_type is not None
-            and any([device_type.startswith(t) for t in TYPE_INSTEON_MOTION])
+            and any(device_type.startswith(t) for t in TYPE_INSTEON_MOTION)
         ):
             # Special cases for Insteon Motion Sensors I & II:
             # Some subnodes never report status until activated, so
@@ -194,10 +194,8 @@ def _detect_device_type_and_class(node: Union[Group, Node]) -> (str, str):
     # Other devices (incl Insteon.)
     for device_class in [*BINARY_SENSOR_DEVICE_TYPES_ISY]:
         if any(
-            [
-                device_type.startswith(t)
-                for t in set(BINARY_SENSOR_DEVICE_TYPES_ISY[device_class])
-            ]
+            device_type.startswith(t)
+            for t in set(BINARY_SENSOR_DEVICE_TYPES_ISY[device_class])
         ):
             return device_class, device_type
     return (None, device_type)
@@ -369,7 +367,7 @@ class ISYBinarySensorHeartbeat(ISYNodeEntity, BinarySensorEntity):
         Computed state is set to UNKNOWN unless the ISY provided a valid
         state. See notes above regarding ISY Sensor status on ISY restart.
         If a valid state is provided (either on or off), the computed state in
-        HA is set to OFF (Normal). If the heartbeat is not received in 25 hours
+        OP is set to OFF (Normal). If the heartbeat is not received in 25 hours
         then the computed state is set to ON (Low Battery).
         """
         super().__init__(node)

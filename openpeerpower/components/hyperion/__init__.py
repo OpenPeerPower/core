@@ -54,10 +54,10 @@ _LOGGER = logging.getLogger(__name__)
 # The get_hyperion_unique_id method will create a per-entity unique id when given the
 # server id, an instance number and a name.
 
-#.opp.data format
+# opp.data format
 # ================
 #
-#.opp.data[DOMAIN] = {
+# opp.data[DOMAIN] = {
 #     <config_entry.entry_id>: {
 #         "ROOT_CLIENT": <Hyperion Client>,
 #         "ON_UNLOAD": [<callable>, ...],
@@ -281,12 +281,13 @@ async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
     async def setup_then_listen() -> None:
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_setup(config_entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_setup(config_entry, platform)
+                for platform in PLATFORMS
             ]
         )
         assert hyperion_client
-        await async_instances_to_clients_raw(hyperion_client.instances)
+        if hyperion_client.instances is not None:
+            await async_instances_to_clients_raw(hyperion_client.instances)
         opp.data[DOMAIN][config_entry.entry_id][CONF_ON_UNLOAD].append(
             config_entry.add_update_listener(_async_entry_updated)
         )
@@ -309,8 +310,8 @@ async def async_unload_entry(
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(config_entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_unload(config_entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

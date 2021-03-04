@@ -7,14 +7,19 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.const import CONF_API_KEY, CONF_NAME, CONF_SENSORS, CONF_URL
+from openpeerpower.const import (
+    ATTR_NAME,
+    CONF_API_KEY,
+    CONF_NAME,
+    CONF_SENSORS,
+    CONF_URL,
+)
 from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 
 from .const import (
     ATTR_ARGS,
-    ATTR_NAME,
     ATTR_PATH,
     CONF_API_USER,
     DEFAULT_URL,
@@ -41,7 +46,7 @@ INSTANCE_SCHEMA = vol.All(
     ),
 )
 
-has_unique_values = vol.Schema(vol.Unique())  # pylint: disable=invalid-name
+has_unique_values = vol.Schema(vol.Unique())
 # because we want a handy alias
 
 
@@ -143,9 +148,9 @@ async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
         )
     data[config_entry.entry_id] = api
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, component)
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
     if not opp.services.has_service(DOMAIN, SERVICE_API_CALL):
@@ -161,8 +166,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

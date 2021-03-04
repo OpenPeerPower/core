@@ -1,5 +1,8 @@
 """The gogogate2 component."""
-from openpeerpower.components.cover import DOMAIN as COVER_DOMAIN
+import asyncio
+
+from openpeerpower.components.cover import DOMAIN as COVER
+from openpeerpower.components.sensor import DOMAIN as SENSOR
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_DEVICE
 from openpeerpower.core import OpenPeerPower
@@ -7,6 +10,8 @@ from openpeerpower.exceptions import ConfigEntryNotReady
 
 from .common import get_data_update_coordinator
 from .const import DEVICE_TYPE_GOGOGATE2
+
+PLATFORMS = [COVER, SENSOR]
 
 
 async def async_setup(opp: OpenPeerPower, base_config: dict) -> bool:
@@ -34,17 +39,23 @@ async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
     if not data_update_coordinator.last_update_success:
         raise ConfigEntryNotReady()
 
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_setup(config_entry, COVER_DOMAIN)
-    )
+    for platform in PLATFORMS:
+        opp.async_create_task(
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
+        )
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Unload Gogogate2 config entry."""
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_unload(config_entry, COVER_DOMAIN)
+    unload_ok = all(
+        await asyncio.gather(
+            *[
+                opp.config_entries.async_forward_entry_unload(config_entry, platform)
+                for platform in PLATFORMS
+            ]
+        )
     )
 
-    return True
+    return unload_ok

@@ -38,12 +38,12 @@ from .const import (
     KEY_ACTIONS,
     KEY_STATUS,
     NODE_FILTERS,
+    PLATFORMS,
     SUBNODE_CLIMATE_COOL,
     SUBNODE_CLIMATE_HEAT,
     SUBNODE_EZIO2X4_SENSORS,
     SUBNODE_FANLINC_LIGHT,
     SUBNODE_IOLINC_RELAY,
-    SUPPORTED_PLATFORMS,
     SUPPORTED_PROGRAM_PLATFORMS,
     TYPE_CATEGORY_SENSOR_ACTUATORS,
     TYPE_EZIO2X4,
@@ -56,7 +56,7 @@ BINARY_SENSOR_ISY_STATES = ["on", "off"]
 
 
 def _check_for_node_def(
-    opp.isy_data: dict, node: Union[Group, Node], single_platform: str = None
+    opp_isy_data: dict, node: Union[Group, Node], single_platform: str = None
 ) -> bool:
     """Check if the node matches the node_def_id for any platforms.
 
@@ -69,17 +69,17 @@ def _check_for_node_def(
 
     node_def_id = node.node_def_id
 
-    platforms = SUPPORTED_PLATFORMS if not single_platform else [single_platform]
+    platforms = PLATFORMS if not single_platform else [single_platform]
     for platform in platforms:
         if node_def_id in NODE_FILTERS[platform][FILTER_NODE_DEF_ID]:
-            opp.isy_data[ISY994_NODES][platform].append(node)
+            opp_isy_data[ISY994_NODES][platform].append(node)
             return True
 
     return False
 
 
 def _check_for_insteon_type(
-    opp.isy_data: dict, node: Union[Group, Node], single_platform: str = None
+    opp_isy_data: dict, node: Union[Group, Node], single_platform: str = None
 ) -> bool:
     """Check if the node matches the Insteon type for any platforms.
 
@@ -94,13 +94,11 @@ def _check_for_insteon_type(
         return False
 
     device_type = node.type
-    platforms = SUPPORTED_PLATFORMS if not single_platform else [single_platform]
+    platforms = PLATFORMS if not single_platform else [single_platform]
     for platform in platforms:
         if any(
-            [
-                device_type.startswith(t)
-                for t in set(NODE_FILTERS[platform][FILTER_INSTEON_TYPE])
-            ]
+            device_type.startswith(t)
+            for t in set(NODE_FILTERS[platform][FILTER_INSTEON_TYPE])
         ):
 
             # Hacky special-cases for certain devices with different platforms
@@ -110,7 +108,7 @@ def _check_for_insteon_type(
 
             # FanLinc, which has a light module as one of its nodes.
             if platform == FAN and subnode_id == SUBNODE_FANLINC_LIGHT:
-                opp.isy_data[ISY994_NODES][LIGHT].append(node)
+                opp_isy_data[ISY994_NODES][LIGHT].append(node)
                 return True
 
             # Thermostats, which has a "Heat" and "Cool" sub-node on address 2 and 3
@@ -118,7 +116,7 @@ def _check_for_insteon_type(
                 SUBNODE_CLIMATE_COOL,
                 SUBNODE_CLIMATE_HEAT,
             ]:
-                opp.isy_data[ISY994_NODES][BINARY_SENSOR].append(node)
+                opp_isy_data[ISY994_NODES][BINARY_SENSOR].append(node)
                 return True
 
             # IOLincs which have a sensor and relay on 2 different nodes
@@ -127,7 +125,7 @@ def _check_for_insteon_type(
                 and device_type.startswith(TYPE_CATEGORY_SENSOR_ACTUATORS)
                 and subnode_id == SUBNODE_IOLINC_RELAY
             ):
-                opp.isy_data[ISY994_NODES][SWITCH].append(node)
+                opp_isy_data[ISY994_NODES][SWITCH].append(node)
                 return True
 
             # Smartenit EZIO2X4
@@ -136,17 +134,17 @@ def _check_for_insteon_type(
                 and device_type.startswith(TYPE_EZIO2X4)
                 and subnode_id in SUBNODE_EZIO2X4_SENSORS
             ):
-                opp.isy_data[ISY994_NODES][BINARY_SENSOR].append(node)
+                opp_isy_data[ISY994_NODES][BINARY_SENSOR].append(node)
                 return True
 
-            opp.isy_data[ISY994_NODES][platform].append(node)
+            opp_isy_data[ISY994_NODES][platform].append(node)
             return True
 
     return False
 
 
 def _check_for_zwave_cat(
-    opp.isy_data: dict, node: Union[Group, Node], single_platform: str = None
+    opp_isy_data: dict, node: Union[Group, Node], single_platform: str = None
 ) -> bool:
     """Check if the node matches the ISY Z-Wave Category for any platforms.
 
@@ -161,23 +159,21 @@ def _check_for_zwave_cat(
         return False
 
     device_type = node.zwave_props.category
-    platforms = SUPPORTED_PLATFORMS if not single_platform else [single_platform]
+    platforms = PLATFORMS if not single_platform else [single_platform]
     for platform in platforms:
         if any(
-            [
-                device_type.startswith(t)
-                for t in set(NODE_FILTERS[platform][FILTER_ZWAVE_CAT])
-            ]
+            device_type.startswith(t)
+            for t in set(NODE_FILTERS[platform][FILTER_ZWAVE_CAT])
         ):
 
-            opp.isy_data[ISY994_NODES][platform].append(node)
+            opp_isy_data[ISY994_NODES][platform].append(node)
             return True
 
     return False
 
 
 def _check_for_uom_id(
-    opp.isy_data: dict,
+    opp_isy_data: dict,
     node: Union[Group, Node],
     single_platform: str = None,
     uom_list: list = None,
@@ -198,21 +194,21 @@ def _check_for_uom_id(
 
     if uom_list:
         if node_uom in uom_list:
-            opp.isy_data[ISY994_NODES][single_platform].append(node)
+            opp_isy_data[ISY994_NODES][single_platform].append(node)
             return True
         return False
 
-    platforms = SUPPORTED_PLATFORMS if not single_platform else [single_platform]
+    platforms = PLATFORMS if not single_platform else [single_platform]
     for platform in platforms:
         if node_uom in NODE_FILTERS[platform][FILTER_UOM]:
-            opp.isy_data[ISY994_NODES][platform].append(node)
+            opp_isy_data[ISY994_NODES][platform].append(node)
             return True
 
     return False
 
 
 def _check_for_states_in_uom(
-    opp.isy_data: dict,
+    opp_isy_data: dict,
     node: Union[Group, Node],
     single_platform: str = None,
     states_list: list = None,
@@ -235,14 +231,14 @@ def _check_for_states_in_uom(
 
     if states_list:
         if node_uom == set(states_list):
-            opp.isy_data[ISY994_NODES][single_platform].append(node)
+            opp_isy_data[ISY994_NODES][single_platform].append(node)
             return True
         return False
 
-    platforms = SUPPORTED_PLATFORMS if not single_platform else [single_platform]
+    platforms = PLATFORMS if not single_platform else [single_platform]
     for platform in platforms:
         if node_uom == set(NODE_FILTERS[platform][FILTER_STATES]):
-            opp.isy_data[ISY994_NODES][platform].append(node)
+            opp_isy_data[ISY994_NODES][platform].append(node)
             return True
 
     return False
@@ -260,11 +256,11 @@ def _is_sensor_a_binary_sensor(opp_isy_data: dict, node: Union[Group, Node]) -> 
     # checks in the context of already knowing that this is definitely a
     # sensor device.
     if _check_for_uom_id(
-        opp.isy_data, node, single_platform=BINARY_SENSOR, uom_list=BINARY_SENSOR_UOMS
+        opp_isy_data, node, single_platform=BINARY_SENSOR, uom_list=BINARY_SENSOR_UOMS
     ):
         return True
     if _check_for_states_in_uom(
-        opp.isy_data,
+        opp_isy_data,
         node,
         single_platform=BINARY_SENSOR,
         states_list=BINARY_SENSOR_ISY_STATES,
@@ -275,7 +271,7 @@ def _is_sensor_a_binary_sensor(opp_isy_data: dict, node: Union[Group, Node]) -> 
 
 
 def _categorize_nodes(
-    opp.isy_data: dict, nodes: Nodes, ignore_identifier: str, sensor_identifier: str
+    opp_isy_data: dict, nodes: Nodes, ignore_identifier: str, sensor_identifier: str
 ) -> None:
     """Sort the nodes to their proper platforms."""
     for (path, node) in nodes:
@@ -285,7 +281,7 @@ def _categorize_nodes(
             continue
 
         if hasattr(node, "protocol") and node.protocol == PROTO_GROUP:
-            opp.isy_data[ISY994_NODES][ISY_GROUP_PLATFORM].append(node)
+            opp_isy_data[ISY994_NODES][ISY_GROUP_PLATFORM].append(node)
             continue
 
         if sensor_identifier in path or sensor_identifier in node.name:
@@ -293,7 +289,7 @@ def _categorize_nodes(
             # determine if it should be a binary_sensor.
             if _is_sensor_a_binary_sensor(opp_isy_data, node):
                 continue
-            opp.isy_data[ISY994_NODES][SENSOR].append(node)
+            opp_isy_data[ISY994_NODES][SENSOR].append(node)
             continue
 
         # We have a bunch of different methods for determining the device type,
@@ -311,7 +307,7 @@ def _categorize_nodes(
             continue
 
         # Fallback as as sensor, e.g. for un-sortable items like NodeServer nodes.
-        opp.isy_data[ISY994_NODES][SENSOR].append(node)
+        opp_isy_data[ISY994_NODES][SENSOR].append(node)
 
 
 def _categorize_programs(opp_isy_data: dict, programs: Programs) -> None:
@@ -347,11 +343,11 @@ def _categorize_programs(opp_isy_data: dict, programs: Programs) -> None:
                     continue
 
             entity = (entity_folder.name, status, actions)
-            opp.isy_data[ISY994_PROGRAMS][platform].append(entity)
+            opp_isy_data[ISY994_PROGRAMS][platform].append(entity)
 
 
 def _categorize_variables(
-    opp.isy_data: dict, variables: Variables, identifier: str
+    opp_isy_data: dict, variables: Variables, identifier: str
 ) -> None:
     """Gather the ISY994 Variables to be added as sensors."""
     try:
@@ -364,7 +360,7 @@ def _categorize_variables(
         _LOGGER.error("Error adding ISY Variables: %s", err)
         return
     for vtype, vname, vid in var_to_add:
-        opp.isy_data[ISY994_VARIABLES].append((vname, variables[vtype][vid]))
+        opp_isy_data[ISY994_VARIABLES].append((vname, variables[vtype][vid]))
 
 
 async def migrate_old_unique_ids(

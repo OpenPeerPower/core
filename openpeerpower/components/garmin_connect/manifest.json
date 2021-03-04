@@ -1,8 +1,8 @@
 {
   "domain": "garmin_connect",
   "name": "Garmin Connect",
-  "documentation": "https://www.open-peer-power.io/integrations/garmin_connect",
-  "requirements": ["garminconnect==0.1.16"],
+  "documentation": "https://www.openpeerpower.io/integrations/garmin_connect",
+  "requirements": ["garminconnect==0.1.19"],
   "codeowners": ["@cyberjunky"],
   "config_flow": true
 }

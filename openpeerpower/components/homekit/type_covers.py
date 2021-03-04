@@ -302,7 +302,7 @@ class OpeningDevice(OpeningDeviceBase, HomeAccessory):
             if self.char_target_position.value != current_position:
                 self.char_target_position.set_value(current_position)
 
-        position_state = opp_state_to_position_start(new_state.state)
+        position_state = _opp_state_to_position_start(new_state.state)
         if self.char_position_state.value != position_state:
             self.char_position_state.set_value(position_state)
 
@@ -394,14 +394,14 @@ class WindowCoveringBasic(OpeningDeviceBase, HomeAccessory):
                 self.char_current_position.set_value(hk_position)
             if self.char_target_position.value != hk_position:
                 self.char_target_position.set_value(hk_position)
-        position_state = opp_state_to_position_start(new_state.state)
+        position_state = _opp_state_to_position_start(new_state.state)
         if self.char_position_state.value != position_state:
             self.char_position_state.set_value(position_state)
 
         super().async_update_state(new_state)
 
 
-def  opp_state_to_position_start(state):
+def _opp_state_to_position_start(state):
     """Convert opp state to homekit position state."""
     if state == STATE_OPENING:
         return HK_POSITION_GOING_TO_MAX

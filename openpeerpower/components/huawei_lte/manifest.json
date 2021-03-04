@@ -2,7 +2,7 @@
   "domain": "huawei_lte",
   "name": "Huawei LTE",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/huawei_lte",
+  "documentation": "https://www.openpeerpower.io/integrations/huawei_lte",
   "requirements": [
     "getmac==0.8.2",
     "huawei-lte-api==1.4.17",

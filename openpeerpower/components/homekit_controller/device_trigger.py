@@ -39,7 +39,7 @@ TRIGGER_SCHEMA = TRIGGER_BASE_SCHEMA.extend(
     }
 )
 
-HK_TO_OP_INPUT_EVENT_VALUES = {
+HK_TO_HA_INPUT_EVENT_VALUES = {
     InputEventValues.SINGLE_PRESS: "single_press",
     InputEventValues.DOUBLE_PRESS: "double_press",
     InputEventValues.LONG_PRESS: "long_press",
@@ -51,7 +51,7 @@ class TriggerSource:
 
     def __init__(self, connection, aid, triggers):
         """Initialize a set of triggers for a device."""
-        self. opp =connection.opp
+        self._opp = connection.opp
         self._connection = connection
         self._aid = aid
         self._triggers = {}
@@ -77,9 +77,9 @@ class TriggerSource:
         """Attach a trigger."""
 
         def event_handler(char):
-            if config[CONF_SUBTYPE] != HK_TO_OP_INPUT_EVENT_VALUES[char["value"]]:
+            if config[CONF_SUBTYPE] != HK_TO_HA_INPUT_EVENT_VALUES[char["value"]]:
                 return
-            self.opp.async_create_task(action({"trigger": config}))
+            self._opp.async_create_task(action({"trigger": config}))
 
         trigger = self._triggers[config[CONF_TYPE], config[CONF_SUBTYPE]]
         iid = trigger["characteristic"]
@@ -116,7 +116,7 @@ def enumerate_stateless_switch(service):
                 "characteristic": char.iid,
                 "value": event_type,
                 "type": "button1",
-                "subtype": HK_TO_OP_INPUT_EVENT_VALUES[event_type],
+                "subtype": HK_TO_HA_INPUT_EVENT_VALUES[event_type],
             }
         )
     return results
@@ -146,7 +146,7 @@ def enumerate_stateless_switch_group(service):
                     "characteristic": char.iid,
                     "value": event_type,
                     "type": f"button{idx + 1}",
-                    "subtype": HK_TO_OP_INPUT_EVENT_VALUES[event_type],
+                    "subtype": HK_TO_HA_INPUT_EVENT_VALUES[event_type],
                 }
             )
     return results
@@ -167,7 +167,7 @@ def enumerate_doorbell(service):
                 "characteristic": input_event.iid,
                 "value": event_type,
                 "type": "doorbell",
-                "subtype": HK_TO_OP_INPUT_EVENT_VALUES[event_type],
+                "subtype": HK_TO_HA_INPUT_EVENT_VALUES[event_type],
             }
         )
     return results

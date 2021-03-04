@@ -44,9 +44,9 @@ async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
         UNDO_UPDATE_LISTENER: undo_listener,
     }
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, component)
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
     return True
@@ -56,8 +56,8 @@ async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> b
     """Unload a config entry."""
     opp.data[DOMAIN][config_entry.entry_id][UNDO_UPDATE_LISTENER]()
 
-    for component in PLATFORMS:
-        await opp.config_entries.async_forward_entry_unload(config_entry, component)
+    for platform in PLATFORMS:
+        await opp.config_entries.async_forward_entry_unload(config_entry, platform)
 
     router: KeeneticRouter = opp.data[DOMAIN][config_entry.entry_id][ROUTER]
 

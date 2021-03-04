@@ -3,7 +3,7 @@ from datetime import timedelta
 from typing import Any, Callable, Dict, List, Optional
 
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.const import DEVICE_CLASS_TIMESTAMP, PERCENTAGE
+from openpeerpower.const import ATTR_LOCATION, DEVICE_CLASS_TIMESTAMP, PERCENTAGE
 from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.typing import OpenPeerPowerType
 from openpeerpower.util.dt import utcnow
@@ -12,7 +12,6 @@ from . import IPPDataUpdateCoordinator, IPPEntity
 from .const import (
     ATTR_COMMAND_SET,
     ATTR_INFO,
-    ATTR_LOCATION,
     ATTR_MARKER_HIGH_LEVEL,
     ATTR_MARKER_LOW_LEVEL,
     ATTR_MARKER_TYPE,

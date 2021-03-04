@@ -93,9 +93,9 @@ async def async_setup_entry(opp, entry):
     opp.data.setdefault(DOMAIN, {CONF_CONNECTIONS: {}, CONF_DEVICES: set()})
     opp.data[DOMAIN][CONF_CONNECTIONS][entry.entry_id] = fritz
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     def logout_fritzbox(event):
@@ -115,8 +115,8 @@ async def async_unload_entry(opp, entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

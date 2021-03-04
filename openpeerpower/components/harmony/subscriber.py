@@ -1,5 +1,6 @@
 """Mixin class for handling harmony callback subscriptions."""
 
+import asyncio
 import logging
 from typing import Any, Callable, NamedTuple, Optional
 
@@ -27,8 +28,19 @@ class HarmonySubscriberMixin:
     def __init__(self, opp):
         """Initialize an subscriber."""
         super().__init__()
-        self.opp = opp
+        self._opp = opp
         self._subscriptions = []
+        self._activity_lock = asyncio.Lock()
+
+    async def async_lock_start_activity(self):
+        """Acquire the lock."""
+        await self._activity_lock.acquire()
+
+    @callback
+    def async_unlock_start_activity(self):
+        """Release the lock."""
+        if self._activity_lock.locked():
+            self._activity_lock.release()
 
     @callback
     def async_subscribe(self, update_callbacks: HarmonyCallback) -> Callable:
@@ -51,11 +63,13 @@ class HarmonySubscriberMixin:
 
     def _connected(self, _=None) -> None:
         _LOGGER.debug("connected")
+        self.async_unlock_start_activity()
         self._available = True
         self._call_callbacks("connected")
 
     def _disconnected(self, _=None) -> None:
         _LOGGER.debug("disconnected")
+        self.async_unlock_start_activity()
         self._available = False
         self._call_callbacks("disconnected")
 
@@ -65,6 +79,7 @@ class HarmonySubscriberMixin:
 
     def _activity_started(self, activity_info: tuple) -> None:
         _LOGGER.debug("activity %s started", activity_info)
+        self.async_unlock_start_activity()
         self._call_callbacks("activity_started", activity_info)
 
     def _call_callbacks(self, callback_func_name: str, argument: tuple = None):
@@ -72,6 +87,6 @@ class HarmonySubscriberMixin:
             current_callback = getattr(subscription, callback_func_name)
             if current_callback:
                 if argument:
-                    self.opp.async_run_job(current_callback, argument)
+                    self._opp.async_run_job(current_callback, argument)
                 else:
-                    self.opp.async_run_job(current_callback)
+                    self._opp.async_run_job(current_callback)

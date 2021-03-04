@@ -24,7 +24,7 @@ async def async_setup_entry(
     """Set up discovered lights."""
     devs = []
     for dev in opp.data[AQUALINK_DOMAIN][DOMAIN]:
-        devs.append( OppAqualinkLight(dev))
+        devs.append(OppAqualinkLight(dev))
     async_add_entities(devs, True)
 
 

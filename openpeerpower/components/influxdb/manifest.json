@@ -1,7 +1,7 @@
 {
   "domain": "influxdb",
   "name": "InfluxDB",
-  "documentation": "https://www.open-peer-power.io/integrations/influxdb",
+  "documentation": "https://www.openpeerpower.io/integrations/influxdb",
   "requirements": ["influxdb==5.2.3", "influxdb-client==1.14.0"],
   "codeowners": ["@fabaff", "@mdegat01"]
 }

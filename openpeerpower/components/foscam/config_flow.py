@@ -17,8 +17,7 @@ from openpeerpower.const import (
 )
 from openpeerpower.data_entry_flow import AbortFlow
 
-from .const import CONF_RTSP_PORT, CONF_STREAM, LOGGER
-from .const import DOMAIN  # pylint:disable=unused-import
+from .const import CONF_RTSP_PORT, CONF_STREAM, DOMAIN, LOGGER
 
 STREAMS = ["Main", "Sub"]
 

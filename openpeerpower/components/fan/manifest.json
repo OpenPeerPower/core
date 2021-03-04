@@ -1,7 +1,7 @@
 {
   "domain": "fan",
   "name": "Fan",
-  "documentation": "https://www.open-peer-power.io/integrations/fan",
+  "documentation": "https://www.openpeerpower.io/integrations/fan",
   "codeowners": [],
   "quality_scale": "internal"
 }

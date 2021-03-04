@@ -114,7 +114,7 @@ class Iperf3Data:
 
     def __init__(self, opp, host):
         """Initialize the data object."""
-        self.opp = opp
+        self._opp = opp
         self._host = host
         self.data = {ATTR_DOWNLOAD: None, ATTR_UPLOAD: None, ATTR_VERSION: None}
 
@@ -161,7 +161,7 @@ class Iperf3Data:
                 self._run_test(ATTR_UPLOAD), "sent_Mbps", None
             )
 
-        dispatcher_send(self.opp, DATA_UPDATED, self.host)
+        dispatcher_send(self._opp, DATA_UPDATED, self.host)
 
     def _run_test(self, test_type):
         """Run and return the iperf3 data."""

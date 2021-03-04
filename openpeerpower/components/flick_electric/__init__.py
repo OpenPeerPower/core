@@ -30,7 +30,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
 
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Flick Electric from a config entry."""
-    auth = OppFlickAutf(opp, entry)
+    auth = OppFlickAuth(opp, entry)
 
     opp.data[DOMAIN][entry.entry_id] = FlickAPI(auth)
 
@@ -57,7 +57,7 @@ class OppFlickAuth(AbstractFlickAuth):
         """Flick authention based on a Open Peer Power entity config."""
         super().__init__(aiohttp_client.async_get_clientsession(opp))
         self._entry = entry
-        self.opp = opp
+        self._opp = opp
 
     async def _get_entry_token(self):
         # No token saved, generate one
@@ -86,7 +86,7 @@ class OppFlickAuth(AbstractFlickAuth):
         # Reduce expiry by an hour to avoid API being called after expiry
         expiry = dt.now().timestamp() + int(token[CONF_TOKEN_EXPIRES_IN] - 3600)
 
-        self.opp.config_entries.async_update_entry(
+        self._opp.config_entries.async_update_entry(
             self._entry,
             data={
                 **self._entry.data,

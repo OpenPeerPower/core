@@ -1,7 +1,7 @@
 {
   "domain": "humidifier",
   "name": "Humidifier",
-  "documentation": "https://www.open-peer-power.io/integrations/humidifier",
+  "documentation": "https://www.openpeerpower.io/integrations/humidifier",
   "codeowners": ["@open-peer-power/core", "@Shulyaka"],
   "quality_scale": "internal"
 }

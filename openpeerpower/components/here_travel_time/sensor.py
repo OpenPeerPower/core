@@ -457,11 +457,9 @@ class HERETravelTimeData:
 
             _LOGGER.debug("Raw response is: %s", response.response)
 
-            # pylint: disable=no-member
             source_attribution = response.response.get("sourceAttribution")
             if source_attribution is not None:
-                self.attribution = self._build(opp_attribution(source_attribution)
-            # pylint: disable=no-member
+                self.attribution = self._build_opp_attribution(source_attribution)
             route = response.response["route"]
             summary = route[0]["summary"]
             waypoint = route[0]["waypoint"]
@@ -477,13 +475,12 @@ class HERETravelTimeData:
             else:
                 # Convert to kilometers
                 self.distance = distance / 1000
-            # pylint: disable=no-member
             self.route = response.route_short
             self.origin_name = waypoint[0]["mappedRoadName"]
             self.destination_name = waypoint[1]["mappedRoadName"]
 
     @staticmethod
-    def _build(opp_attribution(source_attribution: Dict) -> Optional[str]:
+    def _build_opp_attribution(source_attribution: Dict) -> Optional[str]:
         """Build a opp frontend ready string out of the sourceAttribution."""
         suppliers = source_attribution.get("supplier")
         if suppliers is not None:

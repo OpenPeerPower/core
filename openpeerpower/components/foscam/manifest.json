@@ -2,7 +2,7 @@
   "domain": "foscam",
   "name": "Foscam",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/foscam",
+  "documentation": "https://www.openpeerpower.io/integrations/foscam",
   "requirements": ["libpyfoscam==1.0"],
   "codeowners": ["@skgsergio"]
 }

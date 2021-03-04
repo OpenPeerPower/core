@@ -33,7 +33,7 @@ from openpeerpower.const import (
     TEMP_FAHRENHEIT,
     __version__,
 )
-from openpeerpower.core import Context, callback as op_callback, split_entity_id
+from openpeerpower.core import Context, callback as ha_callback, split_entity_id
 from openpeerpower.helpers.event import async_track_state_change_event
 from openpeerpower.util.decorator import Registry
 
@@ -71,6 +71,7 @@ from .const import (
     TYPE_VALVE,
 )
 from .util import (
+    accessory_friendly_name,
     convert_to_float,
     dismiss_setup_message,
     format_sw_version,
@@ -344,12 +345,12 @@ class HomeAccessory(Accessory):
         if battery_state is not None or battery_charging_state is not None:
             self.async_update_battery(battery_state, battery_charging_state)
 
-    @op_callback
+    @ha_callback
     def async_update_event_state_callback(self, event):
         """Handle state change event listener callback."""
         self.async_update_state_callback(event.data.get("new_state"))
 
-    @op_callback
+    @ha_callback
     def async_update_state_callback(self, new_state):
         """Handle state change listener callback."""
         _LOGGER.debug("New_state: %s", new_state)
@@ -371,7 +372,7 @@ class HomeAccessory(Accessory):
             self.async_update_battery(battery_state, battery_charging_state)
         self.async_update_state(new_state)
 
-    @op_callback
+    @ha_callback
     def async_update_linked_battery_callback(self, event):
         """Handle linked battery sensor state change listener callback."""
         new_state = event.data.get("new_state")
@@ -383,7 +384,7 @@ class HomeAccessory(Accessory):
             battery_charging_state = new_state.attributes.get(ATTR_BATTERY_CHARGING)
         self.async_update_battery(new_state.state, battery_charging_state)
 
-    @op_callback
+    @ha_callback
     def async_update_linked_battery_charging_callback(self, event):
         """Handle linked battery charging sensor state change listener callback."""
         new_state = event.data.get("new_state")
@@ -391,7 +392,7 @@ class HomeAccessory(Accessory):
             return
         self.async_update_battery(None, new_state.state == STATE_ON)
 
-    @op_callback
+    @ha_callback
     def async_update_battery(self, battery_level, battery_charging):
         """Update battery service if available.
 
@@ -423,7 +424,7 @@ class HomeAccessory(Accessory):
                 "%s: Updated battery charging to %d", self.entity_id, hk_charging
             )
 
-    @op_callback
+    @ha_callback
     def async_update_state(self, new_state):
         """Handle state change to update HomeKit value.
 
@@ -431,7 +432,7 @@ class HomeAccessory(Accessory):
         """
         raise NotImplementedError()
 
-    @op_callback
+    @ha_callback
     def async_call_service(self, domain, service, service_data, value=None):
         """Fire event and call service for changes from HomeKit."""
         event_data = {
@@ -449,7 +450,7 @@ class HomeAccessory(Accessory):
             )
         )
 
-    @op_callback
+    @ha_callback
     def async_stop(self):
         """Cancel any subscriptions when the bridge is stopped."""
         while self._subscriptions:
@@ -489,12 +490,13 @@ class HomeBridge(Bridge):
 class HomeDriver(AccessoryDriver):
     """Adapter class for AccessoryDriver."""
 
-    def __init__(self, opp, entry_id, bridge_name, **kwargs):
+    def __init__(self, opp, entry_id, bridge_name, entry_title, **kwargs):
         """Initialize a AccessoryDriver object."""
         super().__init__(**kwargs)
         self.opp = opp
         self._entry_id = entry_id
         self._bridge_name = bridge_name
+        self._entry_title = entry_title
 
     def pair(self, client_uuid, client_public):
         """Override super function to dismiss setup message if paired."""
@@ -506,10 +508,14 @@ class HomeDriver(AccessoryDriver):
     def unpair(self, client_uuid):
         """Override super function to show setup message if unpaired."""
         super().unpair(client_uuid)
+
+        if self.state.paired:
+            return
+
         show_setup_message(
             self.opp,
             self._entry_id,
-            self._bridge_name,
+            accessory_friendly_name(self._entry_title, self.accessory),
             self.state.pincode,
             self.accessory.xhm_uri(),
         )
