@@ -29,7 +29,7 @@
                 "data": {
                     "events": "Seznam dogodkov, lo\u010denih z vejico."
                 },
-                "description": "Za vsak dogodek, ki ga \u017eelite spremljati, dodajte ime, lo\u010deno z vejico. Ko jih tukaj vnesete, uporabite aplikacijo DoorBird, da jih dodelite dolo\u010denemu dogodku. Glej dokumentacijo na strani https://www.open-peer-power.io/integrations/doorbird/#events. Primer: nekdo_pritisnil_gumb, gibanje"
+                "description": "Za vsak dogodek, ki ga \u017eelite spremljati, dodajte ime, lo\u010deno z vejico. Ko jih tukaj vnesete, uporabite aplikacijo DoorBird, da jih dodelite dolo\u010denemu dogodku. Glej dokumentacijo na strani https://www.openpeerpower.io/integrations/doorbird/#events. Primer: nekdo_pritisnil_gumb, gibanje"
             }
         }
     }

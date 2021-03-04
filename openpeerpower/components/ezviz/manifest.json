@@ -2,7 +2,7 @@
   "disabled": "Dependency contains code that breaks Open Peer Power.",
   "domain": "ezviz",
   "name": "Ezviz",
-  "documentation": "https://www.open-peer-power.io/integrations/ezviz",
+  "documentation": "https://www.openpeerpower.io/integrations/ezviz",
   "codeowners": ["@baqs"],
   "requirements": ["pyezviz==0.1.5"]
 }

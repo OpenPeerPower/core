@@ -10,13 +10,7 @@ from openpeerpower.const import CONF_API_KEY
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.util import Throttle
 
-from .const import (
-    _LOGGER,
-    CONF_REFRESH_TOKEN,
-    DATA_ECOBEE_CONFIG,
-    DOMAIN,
-    ECOBEE_PLATFORMS,
-)
+from .const import _LOGGER, CONF_REFRESH_TOKEN, DATA_ECOBEE_CONFIG, DOMAIN, PLATFORMS
 
 MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=180)
 
@@ -32,7 +26,7 @@ async def async_setup(opp, config):
     But, an "ecobee:" entry in configuration.yaml will trigger an import flow
     if a config entry doesn't already exist. If ecobee.conf exists, the import
     flow will attempt to import it and create a config entry, to assist users
-    migrating from the old ecobee component. Otherwise, the user will have to
+    migrating from the old ecobee integration. Otherwise, the user will have to
     continue setting up the integration via the config flow.
     """
     opp.data[DATA_ECOBEE_CONFIG] = config.get(DOMAIN, {})
@@ -66,9 +60,9 @@ async def async_setup_entry(opp, entry):
 
     opp.data[DOMAIN] = data
 
-    for component in ECOBEE_PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -83,7 +77,7 @@ class EcobeeData:
 
     def __init__(self, opp, entry, api_key, refresh_token):
         """Initialize the Ecobee data object."""
-        self.opp = opp
+        self._opp = opp
         self._entry = entry
         self.ecobee = Ecobee(
             config={ECOBEE_API_KEY: api_key, ECOBEE_REFRESH_TOKEN: refresh_token}
@@ -93,7 +87,7 @@ class EcobeeData:
     async def update(self):
         """Get the latest data from ecobee.com."""
         try:
-            await self.opp.async_add_executor_job(self.ecobee.update)
+            await self._opp.async_add_executor_job(self.ecobee.update)
             _LOGGER.debug("Updating ecobee")
         except ExpiredTokenError:
             _LOGGER.debug("Refreshing expired ecobee tokens")
@@ -102,8 +96,8 @@ class EcobeeData:
     async def refresh(self) -> bool:
         """Refresh ecobee tokens and update config entry."""
         _LOGGER.debug("Refreshing ecobee tokens and updating config entry")
-        if await self.opp.async_add_executor_job(self.ecobee.refresh_tokens):
-            self.opp.config_entries.async_update_entry(
+        if await self._opp.async_add_executor_job(self.ecobee.refresh_tokens):
+            self._opp.config_entries.async_update_entry(
                 self._entry,
                 data={
                     CONF_API_KEY: self.ecobee.config[ECOBEE_API_KEY],
@@ -120,7 +114,7 @@ async def async_unload_entry(opp, config_entry):
     opp.data.pop(DOMAIN)
 
     tasks = []
-    for platform in ECOBEE_PLATFORMS:
+    for platform in PLATFORMS:
         tasks.append(
             opp.config_entries.async_forward_entry_unload(config_entry, platform)
         )

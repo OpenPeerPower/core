@@ -122,7 +122,7 @@ class DysonClimateEntity(DysonEntity, ClimateEntity):
     def current_humidity(self):
         """Return the current humidity."""
         # Humidity equaling to 0 means invalid value so we don't check for None here
-        # https://github.com/open-peer-power/core/pull/45172#discussion_r559069756
+        # https://github.com/openpeerpower/core/pull/45172#discussion_r559069756
         if (
             self._device.environmental_state
             and self._device.environmental_state.humidity

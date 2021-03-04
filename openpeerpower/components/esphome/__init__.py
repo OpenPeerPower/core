@@ -11,7 +11,7 @@ from aioesphomeapi import (
     DeviceInfo,
     EntityInfo,
     EntityState,
-     OpenPeerPowerServiceCall,
+    HomeassistantServiceCall,
     UserService,
     UserServiceArgType,
 )
@@ -52,10 +52,7 @@ CONFIG_SCHEMA = vol.Schema({}, extra=vol.ALLOW_EXTRA)
 
 
 async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
-    """Stub to allow setting up this component.
-
-    Configuration through YAML is not supported at this time.
-    """
+    """Stub to allow setting up this component."""
     return True
 
 
@@ -88,7 +85,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     )
 
     async def on_stop(event: Event) -> None:
-        """Cleanup the socket client on HA stop."""
+        """Cleanup the socket client on OP stop."""
         await _cleanup_instance(opp, entry)
 
     # Use async_listen instead of async_listen_once so that we don't deregister
@@ -104,7 +101,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         entry_data.async_update_state(opp, state)
 
     @callback
-    def async_on_service_call(service:  OpenPeerPowerServiceCall) -> None:
+    def async_on_service_call(service: HomeassistantServiceCall) -> None:
         """Call service when user automation in ESPHome config is triggered."""
         domain, service_name = service.service.split(".", 1)
         service_data = service.data
@@ -251,11 +248,11 @@ async def _setup_auto_reconnect_logic(
             # If not first re-try, wait and print message
             # Cap wait time at 1 minute. This is because while working on the
             # device (e.g. soldering stuff), users don't want to have to wait
-            # a long time for their device to show up in HA again (this was
+            # a long time for their device to show up in OP again (this was
             # mentioned a lot in early feedback)
             #
             # In the future another API will be set up so that the ESP can
-            # notify HA of connectivity directly, but for new we'll use a
+            # notify OP of connectivity directly, but for new we'll use a
             # really short reconnect interval.
             tries = min(tries, 10)  # prevent OverflowError
             wait_time = int(round(min(1.8 ** tries, 60.0)))
@@ -484,11 +481,11 @@ class EsphomeEnumMapper:
         self._func = func
 
     def from_esphome(self, value: int) -> str:
-        """Convert from an esphome int representation to an opp string."""
+        """Convert from an esphome int representation to a opp string."""
         return self._func()[value]
 
     def from_opp(self, value: str) -> int:
-        """Convert from an opp string to a esphome int representation."""
+        """Convert from a opp string to a esphome int representation."""
         inverse = {v: k for k, v in self._func().items()}
         return inverse[value]
 
@@ -536,8 +533,8 @@ class EsphomeBaseEntity(Entity):
     def _on_device_update(self) -> None:
         """Update the entity state when device info has changed."""
         if self._entry_data.available:
-            # Don't update the HA state yet when the device comes online.
-            # Only update the HA state when the full state arrives
+            # Don't update the OP state yet when the device comes online.
+            # Only update the OP state when the full state arrives
             # through the next entity state packet.
             return
         self.async_write_op_state()

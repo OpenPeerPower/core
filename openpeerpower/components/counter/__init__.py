@@ -115,7 +115,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     )
 
     storage_collection = CounterStorageCollection(
-         Store(opp, STORAGE_VERSION, STORAGE_KEY),
+        Store(opp, STORAGE_VERSION, STORAGE_KEY),
         logging.getLogger(f"{__name__}.storage_collection"),
         id_manager,
     )
@@ -130,7 +130,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
 
     collection.StorageCollectionWebsocket(
         storage_collection, DOMAIN, DOMAIN, CREATE_FIELDS, UPDATE_FIELDS
-    ).async_setup_opp)
+    ).async_setup(opp)
 
     component.async_register_entity_service(SERVICE_INCREMENT, {}, "async_increment")
     component.async_register_entity_service(SERVICE_DECREMENT, {}, "async_decrement")

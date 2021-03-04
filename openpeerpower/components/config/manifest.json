@@ -1,7 +1,7 @@
 {
   "domain": "config",
   "name": "Configuration",
-  "documentation": "https://www.open-peer-power.io/integrations/config",
+  "documentation": "https://www.openpeerpower.io/integrations/config",
   "dependencies": ["http"],
   "codeowners": ["@open-peer-power/core"],
   "quality_scale": "internal"

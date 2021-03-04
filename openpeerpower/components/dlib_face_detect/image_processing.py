@@ -9,14 +9,13 @@ from openpeerpower.components.image_processing import (
     CONF_SOURCE,
     ImageProcessingFaceEntity,
 )
+from openpeerpower.const import ATTR_LOCATION
 from openpeerpower.core import split_entity_id
 
 # pylint: disable=unused-import
 from openpeerpower.components.image_processing import (  # noqa: F401, isort:skip
     PLATFORM_SCHEMA,
 )
-
-ATTR_LOCATION = "location"
 
 
 def setup_platform(opp, config, add_entities, discovery_info=None):

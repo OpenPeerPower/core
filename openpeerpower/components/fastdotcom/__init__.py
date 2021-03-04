@@ -60,11 +60,11 @@ class SpeedtestData:
     def __init__(self, opp):
         """Initialize the data object."""
         self.data = None
-        self.opp = opp
+        self._opp = opp
 
     def update(self, now=None):
         """Get the latest data from fast.com."""
 
         _LOGGER.debug("Executing fast.com speedtest")
         self.data = {"download": fast_com()}
-        dispatcher_send(self.opp, DATA_UPDATED)
+        dispatcher_send(self._opp, DATA_UPDATED)

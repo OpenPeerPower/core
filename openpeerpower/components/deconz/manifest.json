@@ -2,7 +2,7 @@
   "domain": "deconz",
   "name": "deCONZ",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/deconz",
+  "documentation": "https://www.openpeerpower.io/integrations/deconz",
   "requirements": ["pydeconz==77"],
   "ssdp": [
     {

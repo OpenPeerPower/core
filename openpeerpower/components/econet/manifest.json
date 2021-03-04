@@ -3,7 +3,7 @@
   "domain": "econet",
   "name": "Rheem EcoNet Products",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/econet",
+  "documentation": "https://www.openpeerpower.io/integrations/econet",
   "requirements": ["pyeconet==0.1.12"],
   "codeowners": ["@vangorra", "@w1ll1am23"]
 }

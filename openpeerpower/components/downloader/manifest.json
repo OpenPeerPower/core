@@ -1,7 +1,7 @@
 {
   "domain": "downloader",
   "name": "Downloader",
-  "documentation": "https://www.open-peer-power.io/integrations/downloader",
+  "documentation": "https://www.openpeerpower.io/integrations/downloader",
   "codeowners": [],
   "quality_scale": "internal"
 }

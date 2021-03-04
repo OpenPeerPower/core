@@ -14,12 +14,12 @@ from openpeerpower.components.image_processing import (
     PLATFORM_SCHEMA,
     ImageProcessingFaceEntity,
 )
+from openpeerpower.const import ATTR_NAME
 from openpeerpower.core import split_entity_id
 import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
-ATTR_NAME = "name"
 CONF_FACES = "faces"
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(

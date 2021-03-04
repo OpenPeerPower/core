@@ -6,7 +6,7 @@ from openpeerpower.const import CONF_ROOM
 LOGGER = logging.getLogger(__package__)
 DOMAIN = "dynalite"
 
-ENTITY_PLATFORMS = ["light", "switch", "cover"]
+PLATFORMS = ["light", "switch", "cover"]
 
 
 CONF_ACTIVE = "active"

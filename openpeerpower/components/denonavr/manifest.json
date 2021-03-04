@@ -2,7 +2,7 @@
   "domain": "denonavr",
   "name": "Denon AVR Network Receivers",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/denonavr",
+  "documentation": "https://www.openpeerpower.io/integrations/denonavr",
   "requirements": ["denonavr==0.9.10", "getmac==0.8.2"],
   "codeowners": ["@scarface-4711", "@starkillerOG"],
   "ssdp": [

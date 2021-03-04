@@ -90,7 +90,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 
         camera["ezviz_camera"] = EzvizCamera(ezviz_client, camera_serial)
 
-        camera_entities.append( OppEzvizCamera(**camera))
+        camera_entities.append(OppEzvizCamera(**camera))
 
     add_entities(camera_entities)
 

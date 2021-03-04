@@ -3,7 +3,7 @@ import asyncio
 
 from openpeerpower import bootstrap, config_entries
 from openpeerpower.const import ATTR_ENTITY_ID, EVENT_OPENPEERPOWER_START
-import openpeerpower.core as op
+import openpeerpower.core as ha
 
 DOMAIN = "demo"
 
@@ -50,12 +50,12 @@ async def async_setup(opp, config):
         )
 
     # Set up demo platforms
-    for component in COMPONENTS_WITH_DEMO_PLATFORM:
+    for platform in COMPONENTS_WITH_DEMO_PLATFORM:
         opp.async_create_task(
-            opp.helpers.discovery.async_load_platform(component, DOMAIN, {}, config)
+            opp.helpers.discovery.async_load_platform(platform, DOMAIN, {}, config)
         )
 
-    config.setdefault(op.DOMAIN, {})
+    config.setdefault(ha.DOMAIN, {})
     config.setdefault(DOMAIN, {})
 
     # Set up sun
@@ -146,9 +146,9 @@ async def async_setup(opp, config):
 async def async_setup_entry(opp, config_entry):
     """Set the config entry up."""
     # Set up demo platforms with config entry
-    for component in COMPONENTS_WITH_CONFIG_ENTRY_DEMO_PLATFORM:
+    for platform in COMPONENTS_WITH_CONFIG_ENTRY_DEMO_PLATFORM:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, component)
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
     return True
 

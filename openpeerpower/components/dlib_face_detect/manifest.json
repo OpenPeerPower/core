@@ -1,7 +1,7 @@
 {
   "domain": "dlib_face_detect",
   "name": "Dlib Face Detect",
-  "documentation": "https://www.open-peer-power.io/integrations/dlib_face_detect",
+  "documentation": "https://www.openpeerpower.io/integrations/dlib_face_detect",
   "requirements": ["face_recognition==1.2.3"],
   "codeowners": []
 }

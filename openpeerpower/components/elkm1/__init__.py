@@ -52,7 +52,7 @@ SYNC_TIMEOUT = 120
 
 _LOGGER = logging.getLogger(__name__)
 
-SUPPORTED_DOMAINS = [
+PLATFORMS = [
     "alarm_control_panel",
     "climate",
     "light",
@@ -160,7 +160,7 @@ async def async_setup(opp: OpenPeerPower, opp_config: ConfigType) -> bool:
     if DOMAIN not in opp_config:
         return True
 
-    for index, conf in enumerate.opp_config[DOMAIN]):
+    for index, conf in enumerate(opp_config[DOMAIN]):
         _LOGGER.debug("Importing elkm1 #%d - %s", index, conf[CONF_HOST])
 
         # The update of the config entry is done in async_setup
@@ -262,9 +262,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         "keypads": {},
     }
 
-    for component in SUPPORTED_DOMAINS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -289,8 +289,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in SUPPORTED_DOMAINS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

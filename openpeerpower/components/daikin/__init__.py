@@ -25,7 +25,7 @@ DOMAIN = "daikin"
 PARALLEL_UPDATES = 0
 MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=60)
 
-COMPONENT_TYPES = ["climate", "sensor", "switch"]
+PLATFORMS = ["climate", "sensor", "switch"]
 
 CONFIG_SCHEMA = vol.Schema(
     vol.All(
@@ -83,9 +83,9 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     if not daikin_api:
         return False
     opp.data.setdefault(DOMAIN, {}).update({entry.entry_id: daikin_api})
-    for component in COMPONENT_TYPES:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
     return True
 
@@ -94,8 +94,8 @@ async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
     await asyncio.wait(
         [
-            opp.config_entries.async_forward_entry_unload(config_entry, component)
-            for component in COMPONENT_TYPES
+            opp.config_entries.async_forward_entry_unload(config_entry, platform)
+            for platform in PLATFORMS
         ]
     )
     opp.data[DOMAIN].pop(config_entry.entry_id)

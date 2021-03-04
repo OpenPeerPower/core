@@ -38,7 +38,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the EDL21 sensor."""
-    opp.data[DOMAIN] = EDL21.opp, config, async_add_entities)
+    opp.data[DOMAIN] = EDL21(opp, config, async_add_entities)
     await opp.data[DOMAIN].connect()
 
 
@@ -115,7 +115,7 @@ class EDL21:
     def __init__(self, opp, config, async_add_entities) -> None:
         """Initialize an EDL21 object."""
         self._registered_obis = set()
-        self.opp = opp
+        self._opp = opp
         self._async_add_entities = async_add_entities
         self._name = config[CONF_NAME]
         self._proto = SmlProtocol(config[CONF_SERIAL_PORT])
@@ -123,7 +123,7 @@ class EDL21:
 
     async def connect(self):
         """Connect to an EDL21 reader."""
-        await self._proto.connect(self.opp.loop)
+        await self._proto.connect(self._opp.loop)
 
     def event(self, message_body) -> None:
         """Handle events from pysml."""
@@ -147,7 +147,7 @@ class EDL21:
 
             if (electricity_id, obis) in self._registered_obis:
                 async_dispatcher_send(
-                    self.opp, SIGNAL_EDL21_TELEGRAM, electricity_id, telegram
+                    self._opp, SIGNAL_EDL21_TELEGRAM, electricity_id, telegram
                 )
             else:
                 name = self._OBIS_NAMES.get(obis)
@@ -161,17 +161,17 @@ class EDL21:
                 elif obis not in self._OBIS_BLACKLIST:
                     _LOGGER.warning(
                         "Unhandled sensor %s detected. Please report at "
-                        'https://github.com/open-peer-power/core/issues?q=is%%3Aissue+label%%3A"integration%%3A+edl21"+',
+                        'https://github.com/openpeerpower/core/issues?q=is%%3Aissue+label%%3A"integration%%3A+edl21"+',
                         obis,
                     )
                     self._OBIS_BLACKLIST.add(obis)
 
         if new_entities:
-            self.opp.loop.create_task(self.add_entities(new_entities))
+            self._opp.loop.create_task(self.add_entities(new_entities))
 
     async def add_entities(self, new_entities) -> None:
         """Migrate old unique IDs, then add entities to opp."""
-        registry = await async_get_registry(self.opp)
+        registry = await async_get_registry(self._opp)
 
         for entity in new_entities:
             old_entity_id = registry.async_get_entity_id(

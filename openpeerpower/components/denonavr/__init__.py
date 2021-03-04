@@ -4,7 +4,7 @@ import logging
 import voluptuous as vol
 
 from openpeerpower import config_entries, core
-from openpeerpower.const import ATTR_ENTITY_ID, CONF_HOST
+from openpeerpower.const import ATTR_COMMAND, ATTR_ENTITY_ID, CONF_HOST
 from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers import config_validation as cv, entity_registry as er
 from openpeerpower.helpers.dispatcher import dispatcher_send
@@ -24,7 +24,6 @@ from .receiver import ConnectDenonAVR
 CONF_RECEIVER = "receiver"
 UNDO_UPDATE_LISTENER = "undo_update_listener"
 SERVICE_GET_COMMAND = "get_command"
-ATTR_COMMAND = "command"
 
 _LOGGER = logging.getLogger(__name__)
 

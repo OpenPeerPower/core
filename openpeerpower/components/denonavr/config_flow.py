@@ -9,7 +9,7 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.components import ssdp
-from openpeerpower.const import CONF_HOST, CONF_MAC
+from openpeerpower.const import CONF_HOST, CONF_MAC, CONF_TYPE
 from openpeerpower.core import callback
 from openpeerpower.helpers.device_registry import format_mac
 
@@ -25,7 +25,6 @@ IGNORED_MODELS = ["HEOS 1", "HEOS 3", "HEOS 5", "HEOS 7"]
 CONF_SHOW_ALL_SOURCES = "show_all_sources"
 CONF_ZONE2 = "zone2"
 CONF_ZONE3 = "zone3"
-CONF_TYPE = "type"
 CONF_MODEL = "model"
 CONF_MANUFACTURER = "manufacturer"
 CONF_SERIAL_NUMBER = "serial_number"

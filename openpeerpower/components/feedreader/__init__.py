@@ -62,7 +62,7 @@ class FeedManager:
         self._scan_interval = scan_interval
         self._max_entries = max_entries
         self._feed = None
-        self.opp = opp
+        self._opp = opp
         self._firstrun = True
         self._storage = storage
         self._last_entry_timestamp = None
@@ -153,7 +153,7 @@ class FeedManager:
             self._has_published_parsed = False
             _LOGGER.debug("No published_parsed info available for entry %s", entry)
         entry.update({"feed_url": self._url})
-        self.opp.bus.fire(self._event_type, entry)
+        self._opp.bus.fire(self._event_type, entry)
 
     def _publish_new_entries(self):
         """Publish new entries to the event bus."""

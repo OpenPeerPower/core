@@ -1,7 +1,7 @@
 {
   "domain": "device_tracker",
   "name": "Device Tracker",
-  "documentation": "https://www.open-peer-power.io/integrations/device_tracker",
+  "documentation": "https://www.openpeerpower.io/integrations/device_tracker",
   "dependencies": ["zone"],
   "after_dependencies": [],
   "codeowners": [],

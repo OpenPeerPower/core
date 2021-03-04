@@ -1,7 +1,7 @@
 {
   "domain": "devolo_home_control",
   "name": "devolo Home Control",
-  "documentation": "https://www.open-peer-power.io/integrations/devolo_home_control",
+  "documentation": "https://www.openpeerpower.io/integrations/devolo_home_control",
   "requirements": ["devolo-home-control-api==0.16.0"],
   "after_dependencies": ["zeroconf"],
   "config_flow": true,

@@ -1,7 +1,7 @@
 {
   "domain": "danfoss_air",
   "name": "Danfoss Air",
-  "documentation": "https://www.open-peer-power.io/integrations/danfoss_air",
+  "documentation": "https://www.openpeerpower.io/integrations/danfoss_air",
   "requirements": ["pydanfossair==0.1.0"],
   "codeowners": []
 }

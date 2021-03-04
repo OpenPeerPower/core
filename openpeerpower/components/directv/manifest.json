@@ -1,7 +1,7 @@
 {
   "domain": "directv",
   "name": "DirecTV",
-  "documentation": "https://www.open-peer-power.io/integrations/directv",
+  "documentation": "https://www.openpeerpower.io/integrations/directv",
   "requirements": ["directv==0.4.0"],
   "codeowners": ["@ctalkington"],
   "quality_scale": "gold",

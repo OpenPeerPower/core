@@ -20,7 +20,7 @@ SUPPORTED_ON_SPEEDS = {1: SPEED_LOW, 2: SPEED_MEDIUM, 4: SPEED_HIGH}
 
 
 def convert_speed(speed: int) -> str:
-    """Convert speed from deCONZ to opp,
+    """Convert speed from deCONZ to OPP.
 
     Fallback to medium speed if unsupported by OPP fan platform.
     """
@@ -112,7 +112,7 @@ class DeconzFan(DeconzDevice, FanEntity):
     # instead of speeds.
     #
     # Please review
-    # https://developers.open-peer-power.io/docs/core/entity/fan/
+    # https://developers.openpeerpower.io/docs/core/entity/fan/
     #
     async def async_turn_on(
         self,

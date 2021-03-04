@@ -60,9 +60,9 @@ async def async_setup_entry(opp, config_entry):
     opp.data[DOMAIN][API_CLIENT][config_entry.entry_id] = api
     opp.data[DOMAIN][EQUIPMENT][config_entry.entry_id] = equipment
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, component)
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
     api.subscribe()
@@ -92,8 +92,8 @@ async def async_setup_entry(opp, config_entry):
 async def async_unload_entry(opp, entry):
     """Unload a EcoNet config entry."""
     tasks = [
-        opp.config_entries.async_forward_entry_unload(entry, component)
-        for component in PLATFORMS
+        opp.config_entries.async_forward_entry_unload(entry, platform)
+        for platform in PLATFORMS
     ]
 
     await asyncio.gather(*tasks)

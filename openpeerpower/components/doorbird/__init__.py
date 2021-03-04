@@ -34,6 +34,7 @@ from .const import (
     DOOR_STATION_EVENT_ENTITY_IDS,
     DOOR_STATION_INFO,
     PLATFORMS,
+    UNDO_UPDATE_LISTENER,
 )
 from .util import get_doorstation_by_token
 
@@ -41,7 +42,7 @@ _LOGGER = logging.getLogger(__name__)
 
 API_URL = f"/api/{DOMAIN}"
 
-CONF_CUSTOM_URL = opp_url_override"
+CONF_CUSTOM_URL = "opp_url_override"
 
 RESET_DEVICE_FAVORITES = "doorbird_reset_favorites"
 
@@ -128,8 +129,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
     device = DoorBird(device_ip, username, password)
     try:
-        status = await opp.async_add_executor_job(device.ready)
-        info = await opp.async_add_executor_job(device.info)
+        status, info = await opp.async_add_executor_job(_init_doorbird_device, device)
     except urllib.error.HTTPError as err:
         if err.code == HTTP_UNAUTHORIZED:
             _LOGGER.error(
@@ -154,34 +154,42 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     custom_url = doorstation_config.get(CONF_CUSTOM_URL)
     name = doorstation_config.get(CONF_NAME)
     events = doorstation_options.get(CONF_EVENTS, [])
-    doorstation = ConfiguredDoorBird(device, name, events, custom_url, token)
+    doorstation = ConfiguredDoorBird(device, name, custom_url, token)
+    doorstation.update_events(events)
     # Subscribe to doorbell or motion events
     if not await _async_register_events(opp, doorstation):
         raise ConfigEntryNotReady
 
+    undo_listener = entry.add_update_listener(_update_listener)
+
     opp.data[DOMAIN][config_entry_id] = {
         DOOR_STATION: doorstation,
         DOOR_STATION_INFO: info,
+        UNDO_UPDATE_LISTENER: undo_listener,
     }
 
-    entry.add_update_listener(_update_listener)
-
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
 
 
+def _init_doorbird_device(device):
+    return device.ready(), device.info()
+
+
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
+
+    opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
 
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )
@@ -195,7 +203,7 @@ async def _async_register_events(opp, doorstation):
     try:
         await opp.async_add_executor_job(doorstation.register_events, opp)
     except HTTPError:
-        opp.components.persistent_notification.create(
+        opp.components.persistent_notification.async_create(
             "Doorbird configuration failed.  Please verify that API "
             "Operator permission is enabled for the Doorbird user. "
             "A restart will be required once permissions have been "
@@ -212,8 +220,7 @@ async def _update_listener(opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
     config_entry_id = entry.entry_id
     doorstation = opp.data[DOMAIN][config_entry_id][DOOR_STATION]
-
-    doorstation.events = entry.options[CONF_EVENTS]
+    doorstation.update_events(entry.options[CONF_EVENTS])
     # Subscribe to doorbell or motion events
     await _async_register_events(opp, doorstation)
 
@@ -234,14 +241,19 @@ def _async_import_options_from_data_if_missing(opp: OpenPeerPower, entry: Config
 class ConfiguredDoorBird:
     """Attach additional information to pass along with configured device."""
 
-    def __init__(self, device, name, events, custom_url, token):
+    def __init__(self, device, name, custom_url, token):
         """Initialize configured device."""
         self._name = name
         self._device = device
         self._custom_url = custom_url
+        self.events = None
+        self.doorstation_events = None
+        self._token = token
+
+    def update_events(self, events):
+        """Update the doorbird events."""
         self.events = events
         self.doorstation_events = [self._get_event_name(event) for event in self.events]
-        self._token = token
 
     @property
     def name(self):
@@ -287,9 +299,9 @@ class ConfiguredDoorBird:
 
     def _register_event(self, opp_url, event):
         """Add a schedule entry in the device for a sensor."""
-        url = f".opp_url}{API_URL}/{event}?token={self._token}"
+        url = f"{opp_url}{API_URL}/{event}?token={self._token}"
 
-        # Register HA URL as webhook if not already, then get the ID
+        # Register OP URL as webhook if not already, then get the ID
         if not self.webhook_is_registered(url):
             self.device.change_favorite("http", f"Open Peer Power ({event})", url)
 
@@ -305,16 +317,7 @@ class ConfiguredDoorBird:
 
     def webhook_is_registered(self, url, favs=None) -> bool:
         """Return whether the given URL is registered as a device favorite."""
-        favs = favs if favs else self.device.favorites()
-
-        if "http" not in favs:
-            return False
-
-        for fav in favs["http"].values():
-            if fav["value"] == url:
-                return True
-
-        return False
+        return self.get_webhook_id(url, favs) is not None
 
     def get_webhook_id(self, url, favs=None) -> str or None:
         """
@@ -334,7 +337,7 @@ class ConfiguredDoorBird:
         return None
 
     def get_event_data(self):
-        """Get data to pass along with HA event."""
+        """Get data to pass along with OP event."""
         return {
             "timestamp": dt_util.utcnow().isoformat(),
             "live_video_url": self._device.live_video_url,
@@ -354,7 +357,7 @@ class DoorBirdRequestView(OpenPeerPowerView):
 
     async def get(self, request, event):
         """Respond to requests from the device."""
-       opp = request.app["opp"]
+        opp = request.app["opp"]
 
         token = request.query.get("token")
 

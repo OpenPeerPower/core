@@ -2,7 +2,7 @@
   "domain": "daikin",
   "name": "Daikin AC",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/daikin",
+  "documentation": "https://www.openpeerpower.io/integrations/daikin",
   "requirements": ["pydaikin==2.4.1"],
   "codeowners": ["@fredrike"],
   "zeroconf": ["_dkapi._tcp.local."],

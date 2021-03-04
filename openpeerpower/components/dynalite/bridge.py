@@ -16,14 +16,7 @@ from openpeerpower.const import CONF_HOST
 from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
 
-from .const import (
-    ATTR_AREA,
-    ATTR_HOST,
-    ATTR_PACKET,
-    ATTR_PRESET,
-    ENTITY_PLATFORMS,
-    LOGGER,
-)
+from .const import ATTR_AREA, ATTR_HOST, ATTR_PACKET, ATTR_PRESET, LOGGER, PLATFORMS
 from .convert_config import convert_config
 
 
@@ -106,8 +99,8 @@ class DynaliteBridge:
             self.async_add_devices[platform](self.waiting_devices[platform])
 
     def add_devices_when_registered(self, devices: List[DynaliteBaseDevice]) -> None:
-        """Add the devices to HA if the add devices callback was registered, otherwise queue until it is."""
-        for platform in ENTITY_PLATFORMS:
+        """Add the devices to OP if the add devices callback was registered, otherwise queue until it is."""
+        for platform in PLATFORMS:
             platform_devices = [
                 device for device in devices if device.category == platform
             ]

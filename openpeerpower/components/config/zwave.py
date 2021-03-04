@@ -7,7 +7,7 @@ from aiohttp.web import Response
 from openpeerpower.components.http import OpenPeerPowerView
 from openpeerpower.components.zwave import DEVICE_CONFIG_SCHEMA_ENTRY, const
 from openpeerpower.const import HTTP_ACCEPTED, HTTP_BAD_REQUEST, HTTP_NOT_FOUND, HTTP_OK
-import openpeerpower.core as op
+import openpeerpower.core as ha
 import openpeerpower.helpers.config_validation as cv
 
 from . import EditKeyBasedConfigView
@@ -53,7 +53,7 @@ class ZWaveLogView(OpenPeerPowerView):
         except ValueError:
             return Response(text="Invalid datetime", status=HTTP_BAD_REQUEST)
 
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         response = await opp.async_add_executor_job(self._get_log, opp, lines)
 
         return Response(text="\n".join(response))
@@ -76,10 +76,10 @@ class ZWaveConfigWriteView(OpenPeerPowerView):
     url = "/api/zwave/saveconfig"
     name = "api:zwave:saveconfig"
 
-    @op.callback
+    @ha.callback
     def post(self, request):
         """Save cache configuration to zwcfg_xxxxx.xml."""
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         network = opp.data.get(const.DATA_NETWORK)
         if network is None:
             return self.json_message("No Z-Wave network data found", HTTP_NOT_FOUND)
@@ -94,11 +94,11 @@ class ZWaveNodeValueView(OpenPeerPowerView):
     url = r"/api/zwave/values/{node_id:\d+}"
     name = "api:zwave:values"
 
-    @op.callback
+    @ha.callback
     def get(self, request, node_id):
         """Retrieve groups of node."""
         nodeid = int(node_id)
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         values_list = opp.data[const.DATA_ENTITY_VALUES]
 
         values_data = {}
@@ -123,11 +123,11 @@ class ZWaveNodeGroupView(OpenPeerPowerView):
     url = r"/api/zwave/groups/{node_id:\d+}"
     name = "api:zwave:groups"
 
-    @op.callback
+    @ha.callback
     def get(self, request, node_id):
         """Retrieve groups of node."""
         nodeid = int(node_id)
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         network = opp.data.get(const.DATA_NETWORK)
         node = network.nodes.get(nodeid)
         if node is None:
@@ -150,11 +150,11 @@ class ZWaveNodeConfigView(OpenPeerPowerView):
     url = r"/api/zwave/config/{node_id:\d+}"
     name = "api:zwave:config"
 
-    @op.callback
+    @ha.callback
     def get(self, request, node_id):
         """Retrieve configurations of node."""
         nodeid = int(node_id)
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         network = opp.data.get(const.DATA_NETWORK)
         node = network.nodes.get(nodeid)
         if node is None:
@@ -181,11 +181,11 @@ class ZWaveUserCodeView(OpenPeerPowerView):
     url = r"/api/zwave/usercodes/{node_id:\d+}"
     name = "api:zwave:usercodes"
 
-    @op.callback
+    @ha.callback
     def get(self, request, node_id):
         """Retrieve usercodes of node."""
         nodeid = int(node_id)
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         network = opp.data.get(const.DATA_NETWORK)
         node = network.nodes.get(nodeid)
         if node is None:
@@ -213,7 +213,7 @@ class ZWaveProtectionView(OpenPeerPowerView):
     async def get(self, request, node_id):
         """Retrieve the protection commandclass options of node."""
         nodeid = int(node_id)
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         network = opp.data.get(const.DATA_NETWORK)
 
         def _fetch_protection():
@@ -237,7 +237,7 @@ class ZWaveProtectionView(OpenPeerPowerView):
     async def post(self, request, node_id):
         """Change the selected option in protection commandclass."""
         nodeid = int(node_id)
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         network = opp.data.get(const.DATA_NETWORK)
         protection_data = await request.json()
 

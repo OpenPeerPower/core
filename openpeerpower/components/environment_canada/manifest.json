@@ -1,7 +1,7 @@
 {
   "domain": "environment_canada",
   "name": "Environment Canada",
-  "documentation": "https://www.open-peer-power.io/integrations/environment_canada",
+  "documentation": "https://www.openpeerpower.io/integrations/environment_canada",
   "requirements": ["env_canada==0.2.5"],
   "codeowners": ["@michaeldavie"]
 }

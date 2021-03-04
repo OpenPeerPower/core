@@ -1,7 +1,7 @@
 {
   "domain": "dht",
   "name": "DHT Sensor",
-  "documentation": "https://www.open-peer-power.io/integrations/dht",
+  "documentation": "https://www.openpeerpower.io/integrations/dht",
   "requirements": ["Adafruit-DHT==1.4.0"],
   "codeowners": []
 }

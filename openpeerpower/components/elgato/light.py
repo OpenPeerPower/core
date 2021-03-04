@@ -15,7 +15,7 @@ from openpeerpower.components.light import (
     LightEntity,
 )
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.const import ATTR_NAME
+from openpeerpower.const import ATTR_NAME, ATTR_TEMPERATURE
 from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.typing import OpenPeerPowerType
 
@@ -25,7 +25,6 @@ from .const import (
     ATTR_MODEL,
     ATTR_ON,
     ATTR_SOFTWARE_VERSION,
-    ATTR_TEMPERATURE,
     DATA_ELGATO_CLIENT,
     DOMAIN,
 )
