@@ -2,6 +2,7 @@
 from abc import ABC, abstractmethod
 import logging
 import os
+from pathlib import Path
 import time
 from typing import Optional, cast
 
@@ -12,7 +13,7 @@ from openpeerpower.const import CONF_FILENAME
 from openpeerpower.core import callback
 from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers import collection, storage
-from openpeerpower.util.yaml import load_yaml
+from openpeerpower.util.yaml import Secrets, load_yaml
 
 from .const import (
     CONF_ICON,
@@ -201,7 +202,7 @@ class LovelaceYAML(LovelaceConfig):
         is_updated = self._cache is not None
 
         try:
-            config = load_yaml(self.path)
+            config = load_yaml(self.path, Secrets(Path(self.opp.config.config_dir)))
         except FileNotFoundError:
             raise ConfigNotFound from None
 

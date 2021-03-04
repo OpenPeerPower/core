@@ -109,7 +109,7 @@ class SignalUpdateCallback:
 
     def __init__(self, opp: OpenPeerPower):
         """Initialize EventCallback."""
-        self.opp = opp
+        self._opp = opp
 
     async def async_handle_event(self, event_message: EventMessage):
         """Process an incoming EventMessage."""
@@ -120,7 +120,7 @@ class SignalUpdateCallback:
         if not events:
             return
         _LOGGER.debug("Event Update %s", events.keys())
-        device_registry = await self.opp.helpers.device_registry.async_get_registry()
+        device_registry = await self._opp.helpers.device_registry.async_get_registry()
         device_entry = device_registry.async_get_device({(DOMAIN, device_id)})
         if not device_entry:
             return
@@ -133,7 +133,7 @@ class SignalUpdateCallback:
                 "type": event_type,
                 "timestamp": event_message.timestamp,
             }
-            self.opp.bus.async_fire(NEST_EVENT, message)
+            self._opp.bus.async_fire(NEST_EVENT, message)
 
 
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
@@ -198,9 +198,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     opp.data[DOMAIN].pop(DATA_NEST_UNAVAILABLE, None)
     opp.data[DOMAIN][DATA_SUBSCRIBER] = subscriber
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -217,8 +217,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

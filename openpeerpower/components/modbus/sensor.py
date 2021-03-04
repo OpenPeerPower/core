@@ -255,7 +255,7 @@ class ModbusRegisterSensor(RestoreEntity):
         else:
             val = struct.unpack(self._structure, byte_string)
 
-            # Issue: https://github.com/open-peer-power/core/issues/41944
+            # Issue: https://github.com/openpeerpower/core/issues/41944
             # If unpack() returns a tuple greater than 1, don't try to process the value.
             # Instead, return the values of unpack(...) separated by commas.
             if len(val) > 1:

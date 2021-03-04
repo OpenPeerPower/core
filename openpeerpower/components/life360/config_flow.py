@@ -13,7 +13,7 @@ from .helpers import get_api
 
 _LOGGER = logging.getLogger(__name__)
 
-DOCS_URL = "https://www.open-peer-power.io/integrations/life360"
+DOCS_URL = "https://www.openpeerpower.io/integrations/life360"
 
 
 @config_entries.HANDLERS.register(DOMAIN)

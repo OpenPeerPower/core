@@ -103,9 +103,9 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
     opp.data[NEATO_LOGIN] = hub
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -130,16 +130,16 @@ class NeatoHub:
 
     def __init__(self, opp: OpenPeerPowerType, neato: Account):
         """Initialize the Neato hub."""
-        self.opp: OpenPeerPowerType = opp
+        self._opp: OpenPeerPowerType = opp
         self.my_neato: Account = neato
 
     @Throttle(timedelta(minutes=1))
     def update_robots(self):
         """Update the robot states."""
-        _LOGGER.debug("Running HUB.update_robots %s", self.opp.data.get(NEATO_ROBOTS))
-        self.opp.data[NEATO_ROBOTS] = self.my_neato.robots
-        self.opp.data[NEATO_PERSISTENT_MAPS] = self.my_neato.persistent_maps
-        self.opp.data[NEATO_MAP_DATA] = self.my_neato.maps
+        _LOGGER.debug("Running HUB.update_robots %s", self._opp.data.get(NEATO_ROBOTS))
+        self._opp.data[NEATO_ROBOTS] = self.my_neato.robots
+        self._opp.data[NEATO_PERSISTENT_MAPS] = self.my_neato.persistent_maps
+        self._opp.data[NEATO_MAP_DATA] = self.my_neato.maps
 
     def download_map(self, url):
         """Download a new map image."""

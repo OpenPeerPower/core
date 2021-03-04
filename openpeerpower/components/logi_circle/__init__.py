@@ -47,6 +47,8 @@ SERVICE_LIVESTREAM_RECORD = "livestream_record"
 ATTR_VALUE = "value"
 ATTR_DURATION = "duration"
 
+PLATFORMS = ["camera", "sensor"]
+
 SENSOR_SCHEMA = vol.Schema(
     {
         vol.Optional(CONF_MONITORED_CONDITIONS, default=list(LOGI_SENSORS)): vol.All(
@@ -122,7 +124,7 @@ async def async_setup_entry(opp, entry):
         client_secret=entry.data[CONF_CLIENT_SECRET],
         api_key=entry.data[CONF_API_KEY],
         redirect_uri=entry.data[CONF_REDIRECT_URI],
-        cache_file(opp.config.path(DEFAULT_CACHEDB),
+        cache_file=opp.config.path(DEFAULT_CACHEDB),
     )
 
     if not logi_circle.authorized:
@@ -156,14 +158,14 @@ async def async_setup_entry(opp, entry):
         # string, so we'll handle it separately.
         err = f"{_TIMEOUT}s timeout exceeded when connecting to Logi Circle API"
         opp.components.persistent_notification.create(
-            f"Error: {err}<br />You will need to restart.opp after fixing.",
+            f"Error: {err}<br />You will need to restart opp after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
         return False
     except ClientResponseError as ex:
         opp.components.persistent_notification.create(
-            f"Error: {ex}<br />You will need to restart.opp after fixing.",
+            f"Error: {ex}<br />You will need to restart opp after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
@@ -171,9 +173,9 @@ async def async_setup_entry(opp, entry):
 
     opp.data[DATA_LOGI] = logi_circle
 
-    for component in "camera", "sensor":
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     async def service_handler(service):
@@ -219,8 +221,8 @@ async def async_setup_entry(opp, entry):
 
 async def async_unload_entry(opp, entry):
     """Unload a config entry."""
-    for component in "camera", "sensor":
-        await opp.config_entries.async_forward_entry_unload(entry, component)
+    for platform in PLATFORMS:
+        await opp.config_entries.async_forward_entry_unload(entry, platform)
 
     logi_circle = opp.data.pop(DATA_LOGI)
 

@@ -1,4 +1,6 @@
 """Trigger an automation when a LiteJet switch is released."""
+from typing import Callable
+
 import voluptuous as vol
 
 from openpeerpower.const import CONF_PLATFORM
@@ -7,7 +9,7 @@ import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.event import track_point_in_utc_time
 import openpeerpower.util.dt as dt_util
 
-# mypy: allow-untyped-defs, no-check-untyped-defs
+from .const import DOMAIN
 
 CONF_NUMBER = "number"
 CONF_HELD_MORE_THAN = "held_more_than"
@@ -33,13 +35,13 @@ async def async_attach_trigger(opp, config, action, automation_info):
     held_more_than = config.get(CONF_HELD_MORE_THAN)
     held_less_than = config.get(CONF_HELD_LESS_THAN)
     pressed_time = None
-    cancel_pressed_more_than = None
+    cancel_pressed_more_than: Callable = None
     job = OppJob(action)
 
     @callback
     def call_action():
         """Call action with right context."""
-        opp.async_run(opp_job(
+        opp.async_run_opp_job(
             job,
             {
                 "trigger": {
@@ -91,12 +93,15 @@ async def async_attach_trigger(opp, config, action, automation_info):
         ):
             opp.add_job(call_action)
 
-    opp.data["litejet_system"].on_switch_pressed(number, pressed)
-    opp.data["litejet_system"].on_switch_released(number, released)
+    system = opp.data[DOMAIN]
+
+    system.on_switch_pressed(number, pressed)
+    system.on_switch_released(number, released)
 
     @callback
     def async_remove():
         """Remove all subscriptions used for this trigger."""
-        return
+        system.unsubscribe(pressed)
+        system.unsubscribe(released)
 
     return async_remove

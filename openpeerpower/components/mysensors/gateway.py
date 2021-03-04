@@ -96,7 +96,7 @@ async def try_connect(opp: OpenPeerPowerType, user_input: Dict[str, str]) -> boo
         connect_task = None
         try:
             connect_task = asyncio.create_task(gateway.start())
-            with async_timeout.timeout(5):
+            with async_timeout.timeout(20):
                 await gateway_ready
                 return True
         except asyncio.TimeoutError:
@@ -280,7 +280,7 @@ async def _gw_start(
     opp: OpenPeerPowerType, entry: ConfigEntry, gateway: BaseAsyncGateway
 ):
     """Start the gateway."""
-    # Don't use.opp.async_create_task to avoid holding up setup indefinitely.
+    # Don't use opp.async_create_task to avoid holding up setup indefinitely.
     opp.data[DOMAIN][
         MYSENSORS_GATEWAY_START_TASK.format(entry.entry_id)
     ] = asyncio.create_task(

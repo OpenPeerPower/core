@@ -42,7 +42,7 @@ class LannouncerNotificationService(BaseNotificationService):
 
     def __init__(self, opp, host, port):
         """Initialize the service."""
-        self.opp = opp
+        self._opp = opp
         self._host = host
         self._port = port
 

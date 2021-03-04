@@ -14,7 +14,7 @@
                 "data": {
                     "api_key": "Chiave API"
                 },
-                "description": "Avrai bisogno della chiave API di 16 caratteri, consulta https://www.open-peer-power.io/integrations/motion_blinds/#retrieving-the-key per le istruzioni",
+                "description": "Avrai bisogno della chiave API di 16 caratteri, consulta https://www.openpeerpower.io/integrations/motion_blinds/#retrieving-the-key per le istruzioni",
                 "title": "Motion Blinds"
             },
             "select": {

@@ -43,7 +43,7 @@ from .const import (
     OAUTH2_TOKEN,
 )
 from .data_handler import NetatmoDataHandler
-from .webhook import handle_webhook
+from .webhook import async_handle_webhook
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -104,16 +104,16 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         opp.config_entries.async_update_entry(entry, unique_id=DOMAIN)
 
     opp.data[DOMAIN][entry.entry_id] = {
-        AUTH: api.ConfigEntryNetatmoAutf(opp, entry, implementation)
+        AUTH: api.ConfigEntryNetatmoAuth(opp, entry, implementation)
     }
 
     data_handler = NetatmoDataHandler(opp, entry)
     await data_handler.async_setup()
     opp.data[DOMAIN][entry.entry_id][DATA_HANDLER] = data_handler
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     async def unregister_webhook(_):
@@ -157,18 +157,20 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
         try:
             webhook_register(
-                opp, DOMAIN, "Netatmo", entry.data[CONF_WEBHOOK_ID], handle_webhook
+                opp,
+                DOMAIN,
+                "Netatmo",
+                entry.data[CONF_WEBHOOK_ID],
+                async_handle_webhook,
             )
 
             async def handle_event(event):
                 """Handle webhook events."""
                 if event["data"]["push_type"] == "webhook_activation":
                     if activation_listener is not None:
-                        _LOGGER.debug("sub called")
                         activation_listener()
 
                     if activation_timeout is not None:
-                        _LOGGER.debug("Unsub called")
                         activation_timeout()
 
             activation_listener = async_dispatcher_connect(
@@ -212,8 +214,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

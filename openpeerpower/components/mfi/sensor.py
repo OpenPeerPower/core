@@ -80,7 +80,7 @@ class MfiSensor(Entity):
     def __init__(self, port, opp):
         """Initialize the sensor."""
         self._port = port
-        self.opp = opp
+        self._opp = opp
 
     @property
     def name(self):

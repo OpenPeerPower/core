@@ -14,7 +14,7 @@
                 "data": {
                     "api_key": "Cl\u00e9 API"
                 },
-                "description": "Vous aurez besoin de la cl\u00e9 API de 16 caract\u00e8res, voir https://www.open-peer-power.io/integrations/motion_blinds/#retrieving-the-key pour les instructions",
+                "description": "Vous aurez besoin de la cl\u00e9 API de 16 caract\u00e8res, voir https://www.openpeerpower.io/integrations/motion_blinds/#retrieving-the-key pour les instructions",
                 "title": "Stores de mouvement"
             },
             "select": {

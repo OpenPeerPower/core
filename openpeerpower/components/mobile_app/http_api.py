@@ -9,7 +9,7 @@ import voluptuous as vol
 
 from openpeerpower.components.http import OpenPeerPowerView
 from openpeerpower.components.http.data_validator import RequestDataValidator
-from openpeerpower.const import CONF_WEBHOOK_ID, HTTP_CREATED
+from openpeerpower.const import ATTR_DEVICE_ID, CONF_WEBHOOK_ID, HTTP_CREATED
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.util import slugify
 
@@ -18,7 +18,6 @@ from .const import (
     ATTR_APP_ID,
     ATTR_APP_NAME,
     ATTR_APP_VERSION,
-    ATTR_DEVICE_ID,
     ATTR_DEVICE_NAME,
     ATTR_MANUFACTURER,
     ATTR_MODEL,
@@ -61,7 +60,7 @@ class RegistrationsView(OpenPeerPowerView):
     )
     async def post(self, request: Request, data: Dict) -> Response:
         """Handle the POST request for registration."""
-       opp = request.app["opp"]
+        opp = request.app["opp"]
 
         webhook_id = secrets.token_hex()
 
@@ -75,7 +74,7 @@ class RegistrationsView(OpenPeerPowerView):
         if data[ATTR_SUPPORTS_ENCRYPTION] and supports_encryption():
             data[CONF_SECRET] = secrets.token_hex(SecretBox.KEY_SIZE)
 
-        data[CONF_USER_ID] = request[.opp_user"].id
+        data[CONF_USER_ID] = request["opp_user"].id
 
         if slugify(data[ATTR_DEVICE_NAME], separator=""):
             # if slug is not empty and would not only be underscores
@@ -100,7 +99,7 @@ class RegistrationsView(OpenPeerPowerView):
         remote_ui_url = None
         try:
             remote_ui_url = opp.components.cloud.async_remote_ui_url()
-        except.opp.components.cloud.CloudNotAvailable:
+        except opp.components.cloud.CloudNotAvailable:
             pass
 
         return self.json(

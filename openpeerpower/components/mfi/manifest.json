@@ -1,7 +1,7 @@
 {
   "domain": "mfi",
   "name": "Ubiquiti mFi mPort",
-  "documentation": "https://www.open-peer-power.io/integrations/mfi",
+  "documentation": "https://www.openpeerpower.io/integrations/mfi",
   "requirements": ["mficlient==0.3.0"],
   "codeowners": []
 }

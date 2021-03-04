@@ -2,7 +2,7 @@
   "domain": "mazda",
   "name": "Mazda Connected Services",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/mazda",
+  "documentation": "https://www.openpeerpower.io/integrations/mazda",
   "requirements": ["pymazda==0.0.8"],
   "codeowners": ["@bdr99"],
   "quality_scale": "platinum"

@@ -207,7 +207,7 @@ class MqttFan(MqttEntity, FanEntity):
             if tpl is None:
                 self._templates[key] = lambda value: value
             else:
-                tpl.opp =self.opp
+                tpl.opp = self.opp
                 self._templates[key] = tpl.async_render_with_possible_json_value
 
     async def _subscribe_topics(self):
@@ -318,7 +318,7 @@ class MqttFan(MqttEntity, FanEntity):
     # instead of speeds.
     #
     # Please review
-    # https://developers.open-peer-power.io/docs/core/entity/fan/
+    # https://developers.openpeerpower.io/docs/core/entity/fan/
     #
     async def async_turn_on(
         self,

@@ -1,6 +1,6 @@
 {
   "domain": "lovelace",
   "name": "Lovelace",
-  "documentation": "https://www.open-peer-power.io/integrations/lovelace",
+  "documentation": "https://www.openpeerpower.io/integrations/lovelace",
   "codeowners": ["@open-peer-power/frontend"]
 }

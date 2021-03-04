@@ -1,8 +1,8 @@
 {
   "domain": "myq",
   "name": "MyQ",
-  "documentation": "https://www.open-peer-power.io/integrations/myq",
-  "requirements": ["pymyq==3.0.1"],
+  "documentation": "https://www.openpeerpower.io/integrations/myq",
+  "requirements": ["pymyq==3.0.4"],
   "codeowners": ["@bdraco"],
   "config_flow": true,
   "homekit": {

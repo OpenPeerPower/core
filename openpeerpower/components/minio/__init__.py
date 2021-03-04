@@ -175,7 +175,7 @@ class QueueListener(threading.Thread):
     def __init__(self, opp):
         """Create queue."""
         super().__init__()
-        self.opp = opp
+        self._opp = opp
         self._queue = Queue()
 
     def run(self):
@@ -194,7 +194,7 @@ class QueueListener(threading.Thread):
                 event[ATTR_BUCKET],
                 event[ATTR_KEY],
             )
-            self.opp.bus.fire(DOMAIN, {"file_name": file_name, **event})
+            self._opp.bus.fire(DOMAIN, {"file_name": file_name, **event})
 
     @property
     def queue(self):

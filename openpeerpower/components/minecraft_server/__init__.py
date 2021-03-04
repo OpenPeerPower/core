@@ -88,7 +88,7 @@ class MinecraftServer:
         self, opp: OpenPeerPowerType, unique_id: str, config_data: ConfigType
     ) -> None:
         """Initialize server instance."""
-        self.opp = opp
+        self._opp = opp
 
         # Server data
         self.unique_id = unique_id
@@ -119,7 +119,7 @@ class MinecraftServer:
     def start_periodic_update(self) -> None:
         """Start periodic execution of update method."""
         self._stop_periodic_update = async_track_time_interval(
-            self.opp, self.async_update, timedelta(seconds=SCAN_INTERVAL)
+            self._opp, self.async_update, timedelta(seconds=SCAN_INTERVAL)
         )
 
     def stop_periodic_update(self) -> None:
@@ -131,7 +131,7 @@ class MinecraftServer:
         # Check if host is a valid SRV record, if not already done.
         if not self.srv_record_checked:
             self.srv_record_checked = True
-            srv_record = await helpers.async_check_srv_record(self.opp, self.host)
+            srv_record = await helpers.async_check_srv_record(self._opp, self.host)
             if srv_record is not None:
                 _LOGGER.debug(
                     "'%s' is a valid Minecraft SRV record ('%s:%s')",
@@ -147,7 +147,7 @@ class MinecraftServer:
 
         # Ping the server with a status request.
         try:
-            await self.opp.async_add_executor_job(
+            await self._opp.async_add_executor_job(
                 self._mc_status.status, self._MAX_RETRIES_STATUS
             )
             self.online = True
@@ -178,12 +178,12 @@ class MinecraftServer:
             await self._async_status_request()
 
         # Notify sensors about new data.
-        async_dispatcher_send(self.opp, self.signal_name)
+        async_dispatcher_send(self._opp, self.signal_name)
 
     async def _async_status_request(self) -> None:
         """Request server status and update properties."""
         try:
-            status_response = await self.opp.async_add_executor_job(
+            status_response = await self._opp.async_add_executor_job(
                 self._mc_status.status, self._MAX_RETRIES_STATUS
             )
 

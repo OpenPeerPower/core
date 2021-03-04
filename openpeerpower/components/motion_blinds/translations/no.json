@@ -14,7 +14,7 @@
                 "data": {
                     "api_key": "API-n\u00f8kkel"
                 },
-                "description": "Du trenger API-n\u00f8kkelen med 16 tegn, se https://www.open-peer-power.io/integrations/motion_blinds/#retrieving-the-key for instruksjoner",
+                "description": "Du trenger API-n\u00f8kkelen med 16 tegn, se https://www.openpeerpower.io/integrations/motion_blinds/#retrieving-the-key for instruksjoner",
                 "title": ""
             },
             "select": {

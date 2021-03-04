@@ -13,7 +13,7 @@
                 "data": {
                     "api_key": "API Schl\u00ebssel"
                 },
-                "description": "Du brauchs de 16 stellegen API Schl\u00ebssel, kuck https://www.open-peer-power.io/integrations/motion_blinds/#retrieving-the-key fir w\u00e9ider Instruktiounen"
+                "description": "Du brauchs de 16 stellegen API Schl\u00ebssel, kuck https://www.openpeerpower.io/integrations/motion_blinds/#retrieving-the-key fir w\u00e9ider Instruktiounen"
             },
             "select": {
                 "data": {

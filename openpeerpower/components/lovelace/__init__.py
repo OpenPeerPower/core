@@ -4,7 +4,7 @@ import logging
 import voluptuous as vol
 
 from openpeerpower.components import frontend
-from openpeerpower.config import async.opp_config_yaml, async_process_component_config
+from openpeerpower.config import async_opp_config_yaml, async_process_component_config
 from openpeerpower.const import CONF_FILENAME, CONF_MODE, CONF_RESOURCES
 from openpeerpower.core import callback
 from openpeerpower.exceptions import OpenPeerPowerError
@@ -34,7 +34,7 @@ from .const import (
     STORAGE_DASHBOARD_UPDATE_FIELDS,
     url_slug,
 )
-from .system_health import system_health_info  # NOQA
+from .system_health import system_health_info  # noqa: F401
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -77,7 +77,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
     async def reload_resources_service_handler(service_call: ServiceCallType) -> None:
         """Reload yaml resources."""
         try:
-            conf = await async.opp_config_yaml(opp)
+            conf = await async_opp_config_yaml(opp)
         except OpenPeerPowerError as err:
             _LOGGER.error(err)
             return
@@ -92,7 +92,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
         opp.data[DOMAIN]["resources"] = resource_collection
 
     if mode == MODE_YAML:
-        default_config = dashboard.LovelaceYAML.opp, None, None)
+        default_config = dashboard.LovelaceYAML(opp, None, None)
         resource_collection = await create_yaml_resource_col(opp, yaml_resources)
 
         async_register_admin_service(
@@ -186,7 +186,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
     # Process YAML dashboards
     for url_path, dashboard_conf in opp.data[DOMAIN]["yaml_dashboards"].items():
         # For now always mode=yaml
-        config = dashboard.LovelaceYAML.opp, url_path, dashboard_conf)
+        config = dashboard.LovelaceYAML(opp, url_path, dashboard_conf)
         opp.data[DOMAIN]["dashboards"][url_path] = config
 
         try:
@@ -214,7 +214,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
 async def create_yaml_resource_col(opp, yaml_resources):
     """Create yaml resources collection."""
     if yaml_resources is None:
-        default_config = dashboard.LovelaceYAML.opp, None, None)
+        default_config = dashboard.LovelaceYAML(opp, None, None)
         try:
             ll_conf = await default_config.async_load(False)
         except OpenPeerPowerError:

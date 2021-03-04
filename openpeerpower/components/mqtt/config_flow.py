@@ -99,7 +99,7 @@ class FlowHandler(config_entries.ConfigFlow):
         if self._async_current_entries():
             return self.async_abort(reason="single_instance_allowed")
 
-        self.oppio_discovery = discovery_info
+        self._oppio_discovery = discovery_info
 
         return await self.async_step_oppio_confirm()
 
@@ -108,7 +108,7 @@ class FlowHandler(config_entries.ConfigFlow):
         errors = {}
 
         if user_input is not None:
-            data = self.oppio_discovery
+            data = self._oppio_discovery
             can_connect = await self.opp.async_add_executor_job(
                 try_connection,
                 data[CONF_HOST],
@@ -135,7 +135,7 @@ class FlowHandler(config_entries.ConfigFlow):
 
         return self.async_show_form(
             step_id="oppio_confirm",
-            description_placeholders={"addon": self.oppio_discovery["addon"]},
+            description_placeholders={"addon": self._oppio_discovery["addon"]},
             data_schema=vol.Schema(
                 {vol.Optional(CONF_DISCOVERY, default=DEFAULT_DISCOVERY): bool}
             ),

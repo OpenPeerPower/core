@@ -1,6 +1,6 @@
 {
   "domain": "mjpeg",
   "name": "MJPEG IP Camera",
-  "documentation": "https://www.open-peer-power.io/integrations/mjpeg",
+  "documentation": "https://www.openpeerpower.io/integrations/mjpeg",
   "codeowners": []
 }

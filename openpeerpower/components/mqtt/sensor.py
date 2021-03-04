@@ -108,7 +108,7 @@ class MqttSensor(MqttEntity, Entity):
         self._config = config
         template = self._config.get(CONF_VALUE_TEMPLATE)
         if template is not None:
-            template.opp =self.opp
+            template.opp = self.opp
 
     async def _subscribe_topics(self):
         """(Re)Subscribe to topics."""
@@ -197,7 +197,6 @@ class MqttSensor(MqttEntity, Entity):
     def available(self) -> bool:
         """Return true if the device is available and value has not expired."""
         expire_after = self._config.get(CONF_EXPIRE_AFTER)
-        # pylint: disable=no-member
         return MqttAvailability.available.fget(self) and (
             expire_after is None or not self._expired
         )

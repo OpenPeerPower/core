@@ -4,7 +4,6 @@ from datetime import timedelta
 from functools import partial
 import logging
 import math
-import sys
 
 import aiolifx as aiolifx_module
 import aiolifx_effects as aiolifx_effects_module
@@ -166,12 +165,6 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 
 async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up LIFX from a config entry."""
-    if sys.platform == "win32":
-        _LOGGER.warning(
-            "The lifx platform is known to not work on Windows. "
-            "Consider using the lifx_legacy platform instead"
-        )
-
     # Priority 1: manual config
     interfaces = opp.data[LIFX_DOMAIN].get(DOMAIN)
     if not interfaces:
@@ -363,7 +356,7 @@ class LIFXManager:
             entity = self.entities[bulb.mac_addr]
             entity.registered = True
             _LOGGER.debug("%s register AGAIN", entity.who)
-            await entity.update.opp()
+            await entity.update_opp()
         else:
             _LOGGER.debug("%s register NEW", bulb.ip_addr)
 
@@ -557,13 +550,13 @@ class LIFXLight(LightEntity):
             self.postponed_update()
 
         # Transition has started
-        await self.update.opp()
+        await self.update_opp()
 
         # Transition has ended
         if when > 0:
             self.postponed_update = async_track_point_in_utc_time(
                 self.opp,
-                self.update.opp,
+                self.update_opp,
                 util.dt.utcnow() + timedelta(milliseconds=when),
             )
 

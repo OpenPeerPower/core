@@ -1,7 +1,7 @@
 {
   "domain": "lirc",
   "name": "LIRC",
-  "documentation": "https://www.open-peer-power.io/integrations/lirc",
+  "documentation": "https://www.openpeerpower.io/integrations/lirc",
   "requirements": ["python-lirc==1.2.3"],
   "codeowners": []
 }

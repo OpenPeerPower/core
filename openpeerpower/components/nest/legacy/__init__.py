@@ -28,6 +28,8 @@ from .const import DATA_NEST, DATA_NEST_CONFIG, DOMAIN, SIGNAL_NEST_UPDATE
 _CONFIGURING = {}
 _LOGGER = logging.getLogger(__name__)
 
+PLATFORMS = ["climate", "camera", "sensor", "binary_sensor"]
+
 # Configuration for the legacy nest API
 SERVICE_CANCEL_ETA = "cancel_eta"
 SERVICE_SET_ETA = "set_eta"
@@ -81,7 +83,7 @@ def nest_update_event_broker(opp, nest):
     """
     _LOGGER.debug("Listening for nest.update_event")
 
-    while.opp.is_running:
+    while opp.is_running:
         nest.update_event.wait()
 
         if not opp.is_running:
@@ -131,9 +133,9 @@ async def async_setup_legacy_entry(opp, entry):
     if not await opp.async_add_executor_job(opp.data[DATA_NEST].initialize):
         return False
 
-    for component in "climate", "camera", "sensor", "binary_sensor":
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     def validate_structures(target_structures):
@@ -237,7 +239,7 @@ async def async_setup_legacy_entry(opp, entry):
         threading.Thread(
             name="Nest update listener",
             target=nest_update_event_broker,
-            args= opp, nest),
+            args=(opp, nest),
         ).start()
 
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, start_up)
@@ -255,7 +257,7 @@ async def async_setup_legacy_entry(opp, entry):
 
 
 class NestLegacyDevice:
-    """Structure Nest functions for(opp for legacy API."""
+    """Structure Nest functions for opp for legacy API."""
 
     def __init__(self, opp, conf, nest):
         """Init Nest Devices."""

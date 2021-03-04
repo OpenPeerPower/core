@@ -55,7 +55,7 @@ GatewayId = str
 # Gateway may be fetched by giving the gateway id to get_mysensors_gateway()
 
 DevId = Tuple[GatewayId, int, int, int]
-# describes the backend of a.opp entity. Contents are: GatewayId, node_id, child_id, v_type as int
+# describes the backend of a opp entity. Contents are: GatewayId, node_id, child_id, v_type as int
 #
 # The string version of v_type can be looked up in the enum gateway.const.SetReq of the appropriate BaseAsyncGateway
 # Open Peer Power Entities are quite limited and only ever do one thing.
@@ -158,7 +158,7 @@ for platform, platform_types in PLATFORM_TYPES.items():
     for s_type_name in platform_types:
         TYPE_TO_PLATFORMS[s_type_name].append(platform)
 
-SUPPORTED_PLATFORMS_WITH_ENTRY_SUPPORT = set(PLATFORM_TYPES.keys()) - {
+PLATFORMS_WITH_ENTRY_SUPPORT = set(PLATFORM_TYPES.keys()) - {
     "notify",
     "device_tracker",
 }

@@ -3,9 +3,10 @@ import uuid
 
 from openpeerpower import config_entries
 from openpeerpower.components import person
+from openpeerpower.const import ATTR_DEVICE_ID
 from openpeerpower.helpers import entity_registry as er
 
-from .const import ATTR_APP_ID, ATTR_DEVICE_ID, ATTR_DEVICE_NAME, CONF_USER_ID, DOMAIN
+from .const import ATTR_APP_ID, ATTR_DEVICE_NAME, CONF_USER_ID, DOMAIN
 
 
 @config_entries.HANDLERS.register(DOMAIN)
@@ -18,7 +19,7 @@ class MobileAppFlowHandler(config_entries.ConfigFlow):
     async def async_step_user(self, user_input=None):
         """Handle a flow initialized by the user."""
         placeholders = {
-            "apps_url": "https://www.open-peer-power.io/integrations/mobile_app/#apps"
+            "apps_url": "https://www.openpeerpower.io/integrations/mobile_app/#apps"
         }
 
         return self.async_abort(

@@ -242,7 +242,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
 
     for device in cfg.get(CONF_DEVICES, []):
         # Attempt to importing the cfg. Use
-        #.opp.async_add_job to avoid a deadlock.
+        # opp.async_add_job to avoid a deadlock.
         opp.async_create_task(
             opp.config_entries.flow.async_init(
                 DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=device
@@ -261,9 +261,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     # async_connect will handle retries until it establishes a connection
     await client.async_connect()
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     # config entry specific data to enable unload
@@ -278,8 +278,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )
@@ -317,13 +317,13 @@ class KonnectedView(OpenPeerPowerView):
 
     async def update_sensor(self, request: Request, device_id) -> Response:
         """Process a put or post."""
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         data = opp.data[DOMAIN]
 
         auth = request.headers.get(AUTHORIZATION)
         tokens = []
         if opp.data[DOMAIN].get(CONF_ACCESS_TOKEN):
-            tokens.extend(.opp.data[DOMAIN][CONF_ACCESS_TOKEN]])
+            tokens.extend([opp.data[DOMAIN][CONF_ACCESS_TOKEN]])
         tokens.extend(
             [
                 entry.data[CONF_ACCESS_TOKEN]
@@ -383,7 +383,7 @@ class KonnectedView(OpenPeerPowerView):
 
     async def get(self, request: Request, device_id) -> Response:
         """Return the current binary state of a switch."""
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         data = opp.data[DOMAIN]
 
         device = data[CONF_DEVICES].get(device_id)

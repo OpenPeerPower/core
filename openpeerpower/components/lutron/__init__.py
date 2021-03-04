@@ -12,6 +12,8 @@ from openpeerpower.util import slugify
 
 DOMAIN = "lutron"
 
+PLATFORMS = ["light", "cover", "switch", "scene", "binary_sensor"]
+
 _LOGGER = logging.getLogger(__name__)
 
 LUTRON_BUTTONS = "lutron_buttons"
@@ -37,7 +39,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 
 def setup(opp, base_config):
-    """Set up the Lutron component."""
+    """Set up the Lutron integration."""
     opp.data[LUTRON_BUTTONS] = []
     opp.data[LUTRON_CONTROLLER] = None
     opp.data[LUTRON_DEVICES] = {
@@ -92,8 +94,8 @@ def setup(opp, base_config):
                 (area.name, area.occupancy_group)
             )
 
-    for component in ("light", "cover", "switch", "scene", "binary_sensor"):
-        discovery.load_platform(opp, component, DOMAIN, {}, base_config)
+    for platform in PLATFORMS:
+        discovery.load_platform(opp, platform, DOMAIN, {}, base_config)
     return True
 
 
@@ -138,7 +140,7 @@ class LutronButton:
     def __init__(self, opp, area_name, keypad, button):
         """Register callback for activity on the button."""
         name = f"{keypad.name}: {button.name}"
-        self.opp = opp
+        self._opp = opp
         self._has_release_event = (
             button.button_type is not None and "RaiseLower" in button.button_type
         )
@@ -168,4 +170,4 @@ class LutronButton:
 
         if action:
             data = {ATTR_ID: self._id, ATTR_ACTION: action, ATTR_FULL_ID: self._full_id}
-            self.opp.bus.fire(self._event, data)
+            self._opp.bus.fire(self._event, data)

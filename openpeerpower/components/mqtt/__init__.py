@@ -142,7 +142,7 @@ def embedded_broker_deprecated(value):
     _LOGGER.warning(
         "The embedded MQTT broker has been deprecated and will stop working"
         "after June 5th, 2019. Use an external broker instead. For"
-        "instructions, see https://www.open-peer-power.io/docs/mqtt/broker"
+        "instructions, see https://www.openpeerpower.io/docs/mqtt/broker"
     )
     return value
 
@@ -243,7 +243,7 @@ def _build_publish_data(topic: Any, qos: int, retain: bool) -> ServiceDataType:
 
 
 @bind_opp
-def publish.opp: OpenPeerPowerType, topic, payload, qos=None, retain=None) -> None:
+def publish(opp: OpenPeerPowerType, topic, payload, qos=None, retain=None) -> None:
     """Publish message to an MQTT topic."""
     opp.add_job(async_publish, opp, topic, payload, qos, retain)
 
@@ -394,7 +394,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     if conf is None:
         # If we have a config entry, setup is done by that config entry.
         # If there is no config entry, this should fail.
-        return bool.opp.config_entries.async_entries(DOMAIN))
+        return bool(opp.config_entries.async_entries(DOMAIN))
 
     conf = dict(conf)
 
@@ -495,7 +495,7 @@ async def async_setup_entry(opp, entry):
         unsub = await async_subscribe(opp, call.data["topic"], collect_msg)
 
         def write_dump():
-            with open.opp.config.path("mqtt_dump.txt"), "wt") as fp:
+            with open(opp.config.path("mqtt_dump.txt"), "wt") as fp:
                 for msg in messages:
                     fp.write(",".join(msg) + "\n")
 
@@ -566,10 +566,10 @@ class MQTT:
         else:
 
             @callback
-            def op_started(_):
+            def ha_started(_):
                 self._op_started.set()
 
-            self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, op_started)
+            self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, ha_started)
 
         self.init_client()
         self.config_entry.add_update_listener(self.async_config_entry_updated)
@@ -668,7 +668,7 @@ class MQTT:
             will_message = None
 
         if will_message is not None:
-            self._mqttc.will_set(  # pylint: disable=no-value-for-parameter
+            self._mqttc.will_set(
                 topic=will_message.topic,
                 payload=will_message.payload,
                 qos=will_message.qos,
@@ -833,7 +833,7 @@ class MQTT:
             async def publish_birth_message(birth_message):
                 await self._op_started.wait()  # Wait for Open Peer Power to start
                 await self._discovery_cooldown()  # Wait for MQTT discovery to cool down
-                await self.async_publish(  # pylint: disable=no-value-for-parameter
+                await self.async_publish(
                     topic=birth_message.topic,
                     payload=birth_message.payload,
                     qos=birth_message.qos,
@@ -885,7 +885,7 @@ class MQTT:
                     )
                     continue
 
-            self.opp.async_run(opp_job(
+            self.opp.async_run_opp_job(
                 subscription.job,
                 Message(
                     msg.topic,
@@ -1057,12 +1057,12 @@ def async_subscribe_connection_status(opp, connection_status_callback):
     connection_status_callback_job = OppJob(connection_status_callback)
 
     async def connected():
-        task = opp.async_run(opp_job(connection_status_callback_job, True)
+        task = opp.async_run_opp_job(connection_status_callback_job, True)
         if task:
             await task
 
     async def disconnected():
-        task = opp.async_run(opp_job(connection_status_callback_job, False)
+        task = opp.async_run_opp_job(connection_status_callback_job, False)
         if task:
             await task
 

@@ -17,35 +17,40 @@ from openpeerpower.components.climate.const import (
 
 DOMAIN = "knx"
 
+# Address is used for configuration and services by the same functions so the key has to match
+KNX_ADDRESS = "address"
+
 CONF_INVERT = "invert"
 CONF_STATE_ADDRESS = "state_address"
 CONF_SYNC_STATE = "sync_state"
 CONF_RESET_AFTER = "reset_after"
 
+ATTR_COUNTER = "counter"
+
 
 class ColorTempModes(Enum):
     """Color temperature modes for config validation."""
 
-    absolute = "DPT-7.600"
-    relative = "DPT-5.001"
+    ABSOLUTE = "DPT-7.600"
+    RELATIVE = "DPT-5.001"
 
 
 class SupportedPlatforms(Enum):
     """Supported platforms."""
 
-    binary_sensor = "binary_sensor"
-    climate = "climate"
-    cover = "cover"
-    fan = "fan"
-    light = "light"
-    notify = "notify"
-    scene = "scene"
-    sensor = "sensor"
-    switch = "switch"
-    weather = "weather"
+    BINARY_SENSOR = "binary_sensor"
+    CLIMATE = "climate"
+    COVER = "cover"
+    FAN = "fan"
+    LIGHT = "light"
+    NOTIFY = "notify"
+    SCENE = "scene"
+    SENSOR = "sensor"
+    SWITCH = "switch"
+    WEATHER = "weather"
 
 
-# Map KNX controller modes to HA modes. This list might not be complete.
+# Map KNX controller modes to OP modes. This list might not be complete.
 CONTROLLER_MODES = {
     # Map DPT 20.105 HVAC control modes
     "Auto": HVAC_MODE_AUTO,
@@ -57,12 +62,10 @@ CONTROLLER_MODES = {
 }
 
 PRESET_MODES = {
-    # Map DPT 20.102 HVAC operating modes to HA presets
+    # Map DPT 20.102 HVAC operating modes to OP presets
     "Auto": PRESET_NONE,
     "Frost Protection": PRESET_ECO,
     "Night": PRESET_SLEEP,
     "Standby": PRESET_AWAY,
     "Comfort": PRESET_COMFORT,
 }
-
-ATTR_COUNTER = "counter"

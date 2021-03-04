@@ -122,7 +122,7 @@ class MqttSwitch(MqttEntity, SwitchEntity, RestoreEntity):
 
         template = self._config.get(CONF_VALUE_TEMPLATE)
         if template is not None:
-            template.opp =self.opp
+            template.opp = self.opp
 
     async def _subscribe_topics(self):
         """(Re)Subscribe to topics."""

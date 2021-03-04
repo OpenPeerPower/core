@@ -8,7 +8,6 @@ from openpeerpower import config_entries
 from openpeerpower.const import CONF_TOKEN
 from openpeerpower.helpers import config_entry_oauth2_flow
 
-# pylint: disable=unused-import
 from .const import NEATO_DOMAIN
 
 

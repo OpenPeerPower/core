@@ -33,7 +33,7 @@ from openpeerpower.const import (
     EVENT_STATE_CHANGED,
     HTTP_BAD_REQUEST,
 )
-from openpeerpower.core import DOMAIN as OP_DOMAIN, callback, split_entity_id
+from openpeerpower.core import DOMAIN as HA_DOMAIN, callback, split_entity_id
 from openpeerpower.exceptions import InvalidEntityFormatError
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.entityfilter import (
@@ -63,7 +63,7 @@ GROUP_BY_MINUTES = 15
 EMPTY_JSON_OBJECT = "{}"
 UNIT_OF_MEASUREMENT_JSON = '"unit_of_measurement":'
 
-OP_DOMAIN_ENTITY_ID = f"{OP_DOMAIN}."
+HA_DOMAIN_ENTITY_ID = f"{HA_DOMAIN}."
 
 CONFIG_SCHEMA = vol.Schema(
     {DOMAIN: INCLUDE_EXCLUDE_BASE_FILTER_SCHEMA}, extra=vol.ALLOW_EXTRA
@@ -147,7 +147,7 @@ async def async_setup(opp, config):
         async_log_entry(opp, name, message, domain, entity_id)
 
     opp.components.frontend.async_register_built_in_panel(
-        "logbook", "logbook", "opp.format-list-bulleted-type"
+        "logbook", "logbook", "opp:format-list-bulleted-type"
     )
 
     conf = config.get(DOMAIN, {})
@@ -268,7 +268,7 @@ def humanify(opp, events, entity_attr_cache, context_lookup):
         # Keep track of last sensor states
         last_sensor_event = {}
 
-        # Group HA start/stop events
+        # Group OP start/stop events
         # Maps minute of event to 1: stop, 2: stop + start
         start_stop_events = {}
 
@@ -356,7 +356,7 @@ def humanify(opp, events, entity_attr_cache, context_lookup):
                     "when": event.time_fired_isoformat,
                     "name": "Open Peer Power",
                     "message": "started",
-                    "domain": OP_DOMAIN,
+                    "domain": HA_DOMAIN,
                 }
 
             elif event.event_type == EVENT_OPENPEERPOWER_STOP:
@@ -369,7 +369,7 @@ def humanify(opp, events, entity_attr_cache, context_lookup):
                     "when": event.time_fired_isoformat,
                     "name": "Open Peer Power",
                     "message": action,
-                    "domain": OP_DOMAIN,
+                    "domain": HA_DOMAIN,
                 }
 
             elif event.event_type == EVENT_LOGBOOK_ENTRY:
@@ -570,7 +570,7 @@ def _apply_event_entity_id_matchers(events_query, entity_ids):
 
 def _keep_event(opp, event, entities_filter):
     if event.event_type in OPENPEERPOWER_EVENTS:
-        return entities_filter is None or entities_filter(OP_DOMAIN_ENTITY_ID)
+        return entities_filter is None or entities_filter(HA_DOMAIN_ENTITY_ID)
 
     entity_id = event.data_entity_id
     if entity_id:
@@ -765,7 +765,7 @@ class EntityAttributeCache:
 
     def __init__(self, opp):
         """Init the cache."""
-        self.opp = opp
+        self._opp = opp
         self._cache = {}
 
     def get(self, entity_id, attribute, event):
@@ -776,7 +776,7 @@ class EntityAttributeCache:
         else:
             self._cache[entity_id] = {}
 
-        current_state = self.opp.states.get(entity_id)
+        current_state = self._opp.states.get(entity_id)
         if current_state:
             # Try the current state as its faster than decoding the
             # attributes

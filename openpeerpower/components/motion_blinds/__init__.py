@@ -18,7 +18,7 @@ from .const import (
     KEY_GATEWAY,
     KEY_MULTICAST_LISTENER,
     MANUFACTURER,
-    MOTION_PLATFORMS,
+    PLATFORMS,
 )
 from .gateway import ConnectMotionGateway
 
@@ -31,7 +31,7 @@ def setup(opp: core.OpenPeerPower, config: dict):
 
 
 async def async_setup_entry(
-    opp, core.OpenPeerPower, entry: config_entries.ConfigEntry
+    opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
 ):
     """Set up the motion_blinds components from a config entry."""
     opp.data.setdefault(DOMAIN, {})
@@ -107,23 +107,23 @@ async def async_setup_entry(
         sw_version=motion_gateway.protocol,
     )
 
-    for component in MOTION_PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
 
 
 async def async_unload_entry(
-    opp, core.OpenPeerPower, config_entry: config_entries.ConfigEntry
+    opp: core.OpenPeerPower, config_entry: config_entries.ConfigEntry
 ):
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(config_entry, component)
-                for component in MOTION_PLATFORMS
+                opp.config_entries.async_forward_entry_unload(config_entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

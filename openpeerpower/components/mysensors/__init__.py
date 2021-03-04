@@ -30,7 +30,7 @@ from .const import (
     DOMAIN,
     MYSENSORS_GATEWAYS,
     MYSENSORS_ON_UNLOAD,
-    SUPPORTED_PLATFORMS_WITH_ENTRY_SUPPORT,
+    PLATFORMS_WITH_ENTRY_SUPPORT,
     DevId,
     GatewayId,
     SensorType,
@@ -134,7 +134,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up the MySensors component."""
-    if DOMAIN not in config or bool.opp.config_entries.async_entries(DOMAIN)):
+    if DOMAIN not in config or bool(opp.config_entries.async_entries(DOMAIN)):
         return True
 
     config = config[DOMAIN]
@@ -192,7 +192,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         await asyncio.gather(
             *[
                 opp.config_entries.async_forward_entry_setup(entry, platform)
-                for platform in SUPPORTED_PLATFORMS_WITH_ENTRY_SUPPORT
+                for platform in PLATFORMS_WITH_ENTRY_SUPPORT
             ]
         )
         await finish_setup(opp, entry, gateway)
@@ -211,7 +211,7 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
         await asyncio.gather(
             *[
                 opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in SUPPORTED_PLATFORMS_WITH_ENTRY_SUPPORT
+                for platform in PLATFORMS_WITH_ENTRY_SUPPORT
             ]
         )
     )
@@ -249,7 +249,7 @@ async def on_unload(
 @callback
 def setup_mysensors_platform(
     opp,
-    domain: str,  #.opp platform name
+    domain: str,  # opp platform name
     discovery_info: Optional[Dict[str, List[DevId]]],
     device_class: Union[Type[MySensorsDevice], Dict[SensorType, Type[MySensorsEntity]]],
     device_args: Optional[

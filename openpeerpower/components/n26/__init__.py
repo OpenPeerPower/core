@@ -36,7 +36,7 @@ CONFIG_SCHEMA = vol.Schema(
     extra=vol.ALLOW_EXTRA,
 )
 
-N26_COMPONENTS = ["sensor", "switch"]
+PLATFORMS = ["sensor", "switch"]
 
 
 def setup(opp, config):
@@ -65,9 +65,9 @@ def setup(opp, config):
     opp.data[DOMAIN] = {}
     opp.data[DOMAIN][DATA] = api_data_list
 
-    # Load components for supported devices
-    for component in N26_COMPONENTS:
-        load_platform(opp, component, DOMAIN, {}, config)
+    # Load platforms for supported devices
+    for platform in PLATFORMS:
+        load_platform(opp, platform, DOMAIN, {}, config)
 
     return True
 

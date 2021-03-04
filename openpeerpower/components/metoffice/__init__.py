@@ -49,8 +49,8 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         update_interval=DEFAULT_SCAN_INTERVAL,
     )
 
-    metoffice.opp_data = opp.data.setdefault(DOMAIN, {})
-    metoffice.opp_data[entry.entry_id] = {
+    metoffice_opp_data = opp.data.setdefault(DOMAIN, {})
+    metoffice_opp_data[entry.entry_id] = {
         METOFFICE_DATA: metoffice_data,
         METOFFICE_COORDINATOR: metoffice_coordinator,
         METOFFICE_NAME: site_name,
@@ -61,9 +61,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     if metoffice_data.now is None:
         raise ConfigEntryNotReady()
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -74,8 +74,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

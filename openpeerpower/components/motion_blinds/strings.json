@@ -11,7 +11,7 @@
       },
       "connect": {
         "title": "Motion Blinds",
-        "description": "You will need the 16 character API Key, see https://www.open-peer-power.io/integrations/motion_blinds/#retrieving-the-key for instructions",
+        "description": "You will need the 16 character API Key, see https://www.openpeerpower.io/integrations/motion_blinds/#retrieving-the-key for instructions",
         "data": {
           "api_key": "[%key:common::config_flow::data::api_key%]"
         }

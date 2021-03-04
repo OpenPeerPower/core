@@ -1,7 +1,8 @@
 {
   "domain": "litejet",
   "name": "LiteJet",
-  "documentation": "https://www.open-peer-power.io/integrations/litejet",
-  "requirements": ["pylitejet==0.1"],
-  "codeowners": []
+  "documentation": "https://www.openpeerpower.io/integrations/litejet",
+  "requirements": ["pylitejet==0.3.0"],
+  "codeowners": ["@joncar"],
+  "config_flow": true
 }

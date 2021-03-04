@@ -7,14 +7,18 @@ from openpeerpower.components.device_tracker import (
 )
 from openpeerpower.components.device_tracker.config_entry import TrackerEntity
 from openpeerpower.components.device_tracker.const import SOURCE_TYPE_GPS
-from openpeerpower.const import ATTR_BATTERY_LEVEL, ATTR_LATITUDE, ATTR_LONGITUDE
+from openpeerpower.const import (
+    ATTR_BATTERY_LEVEL,
+    ATTR_DEVICE_ID,
+    ATTR_LATITUDE,
+    ATTR_LONGITUDE,
+)
 from openpeerpower.core import callback
 from openpeerpower.helpers.restore_state import RestoreEntity
 
 from .const import (
     ATTR_ALTITUDE,
     ATTR_COURSE,
-    ATTR_DEVICE_ID,
     ATTR_DEVICE_NAME,
     ATTR_SPEED,
     ATTR_VERTICAL_ACCURACY,

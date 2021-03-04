@@ -2,7 +2,7 @@
   "domain": "motion_blinds",
   "name": "Motion Blinds",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/motion_blinds",
+  "documentation": "https://www.openpeerpower.io/integrations/motion_blinds",
   "requirements": ["motionblinds==0.4.8"],
   "codeowners": ["@starkillerOG"]
 }

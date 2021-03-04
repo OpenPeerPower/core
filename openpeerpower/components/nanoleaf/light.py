@@ -232,7 +232,7 @@ class NanoleafLight(LightEntity):
             self._brightness = self._light.brightness
             self._effects_list = self._light.effects
             # Nanoleaf api returns non-existent effect named "*Solid*" when light set to solid color.
-            # This causes various issues with scening (see https://github.com/open-peer-power/core/issues/36359).
+            # This causes various issues with scening (see https://github.com/openpeerpower/core/issues/36359).
             # Until fixed at the library level, we should ensure the effect exists before saving to light properties
             self._effect = (
                 self._light.effect if self._light.effect in self._effects_list else None

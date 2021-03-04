@@ -58,7 +58,7 @@ async def async_get_service(opp, config, discovery_info=None):
         _LOGGER.warning(
             "Kodi host name should no longer contain http:// See updated "
             "definitions here: "
-            "https://www.open-peer-power.io/integrations/media_player.kodi/"
+            "https://www.openpeerpower.io/integrations/media_player.kodi/"
         )
 
     http_protocol = "https" if encryption else "http"

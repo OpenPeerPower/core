@@ -17,11 +17,11 @@
                 },
                 "description": "MQTT"
             },
-             opp.o_confirm": {
+            "oppio_confirm": {
                 "data": {
                     "discovery": "Detectie inschakelen"
                 },
-                "description": "Wilt u Open Peer Power configureren om verbinding te maken met de MQTT-broker die wordt aangeboden door de.opp.io add-on {addon} ?",
+                "description": "Wilt u Open Peer Power configureren om verbinding te maken met de MQTT-broker die wordt aangeboden door de opp.io add-on {addon} ?",
                 "title": "MQTTT Broker via Opp.io add-on"
             }
         }
@@ -63,6 +63,7 @@
             },
             "options": {
                 "data": {
+                    "birth_enable": "Geboortebericht inschakelen",
                     "birth_payload": "Birth message payload",
                     "birth_topic": "Birth message onderwerp"
                 }

@@ -210,7 +210,7 @@ class MelissaClimate(ClimateEntity):
             return FAN_MEDIUM
         if fan == self._api.FAN_HIGH:
             return FAN_HIGH
-        _LOGGER.warning("Fan mode %s could not be mapped t opp", fan)
+        _LOGGER.warning("Fan mode %s could not be mapped to opp", fan)
         return None
 
     def opp_mode_to_melissa(self, mode):

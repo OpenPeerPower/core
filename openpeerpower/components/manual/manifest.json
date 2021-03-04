@@ -1,7 +1,7 @@
 {
   "domain": "manual",
   "name": "Manual",
-  "documentation": "https://www.open-peer-power.io/integrations/manual",
+  "documentation": "https://www.openpeerpower.io/integrations/manual",
   "codeowners": [],
   "quality_scale": "internal"
 }

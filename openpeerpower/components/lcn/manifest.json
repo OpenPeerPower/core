@@ -1,7 +1,7 @@
 {
   "domain": "lcn",
   "name": "LCN",
-  "documentation": "https://www.open-peer-power.io/integrations/lcn",
+  "documentation": "https://www.openpeerpower.io/integrations/lcn",
   "requirements": [
     "pypck==0.7.9"
   ],

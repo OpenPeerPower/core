@@ -7,7 +7,12 @@ from aiohttp.web import Response, json_response
 from nacl.encoding import Base64Encoder
 from nacl.secret import SecretBox
 
-from openpeerpower.const import CONTENT_TYPE_JSON, HTTP_BAD_REQUEST, HTTP_OK
+from openpeerpower.const import (
+    ATTR_DEVICE_ID,
+    CONTENT_TYPE_JSON,
+    HTTP_BAD_REQUEST,
+    HTTP_OK,
+)
 from openpeerpower.core import Context
 from openpeerpower.helpers.json import JSONEncoder
 from openpeerpower.helpers.typing import OpenPeerPowerType
@@ -17,7 +22,6 @@ from .const import (
     ATTR_APP_ID,
     ATTR_APP_NAME,
     ATTR_APP_VERSION,
-    ATTR_DEVICE_ID,
     ATTR_DEVICE_NAME,
     ATTR_MANUFACTURER,
     ATTR_MODEL,
@@ -136,7 +140,7 @@ def safe_registration(registration: Dict) -> Dict:
 def savable_state(opp: OpenPeerPowerType) -> Dict:
     """Return a clean object containing things that should be saved."""
     return {
-        DATA_DELETED_IDS:.opp.data[DOMAIN][DATA_DELETED_IDS],
+        DATA_DELETED_IDS: opp.data[DOMAIN][DATA_DELETED_IDS],
     }
 
 
