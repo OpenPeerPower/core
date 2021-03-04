@@ -12,7 +12,7 @@ from openpeerpower.const import CONF_HOST, CONF_MAC, CONF_PIN
 from openpeerpower.core import callback
 import openpeerpower.helpers.config_validation as cv
 
-from .const import (  # pylint:disable=unused-import
+from .const import (
     ATTR_CID,
     ATTR_MAC,
     ATTR_MODEL,

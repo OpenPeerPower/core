@@ -74,7 +74,7 @@ _LOGGER = logging.getLogger(__name__)
 
 CONF_IGNORE_CEC = "ignore_cec"
 CONF_UUID = "uuid"
-CAST_SPLASH = "https://www.open-peer-power.io/images/cast/splash.png"
+CAST_SPLASH = "https://www.openpeerpower.io/images/cast/splash.png"
 
 SUPPORT_CAST = (
     SUPPORT_PAUSE
@@ -134,7 +134,9 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     # no pending task
     done, _ = await asyncio.wait(
         [
-            _async_setup_platform(opp, ENTITY_SCHEMA(cfg), async_add_entities)
+            _async_setup_platform(
+                opp, ENTITY_SCHEMA(cfg), async_add_entities, config_entry
+            )
             for cfg in config
         ]
     )
@@ -146,7 +148,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
 
 
 async def _async_setup_platform(
-    opp: OpenPeerPowerType, config: ConfigType, async_add_entities
+    opp: OpenPeerPowerType, config: ConfigType, async_add_entities, config_entry
 ):
     """Set up the cast platform."""
     # Import CEC IGNORE attributes
@@ -154,15 +156,15 @@ async def _async_setup_platform(
     opp.data.setdefault(ADDED_CAST_DEVICES_KEY, set())
     opp.data.setdefault(KNOWN_CHROMECAST_INFO_KEY, {})
 
-    info = None
+    wanted_uuid = None
     if CONF_UUID in config:
-        info = ChromecastInfo(uuid=config[CONF_UUID], services=None)
+        wanted_uuid = config[CONF_UUID]
 
     @callback
     def async_cast_discovered(discover: ChromecastInfo) -> None:
         """Handle discovery of a new chromecast."""
-        # If info is set, we're handling a specific cast device identified by UUID
-        if info is not None and (info.uuid is not None and info.uuid != discover.uuid):
+        # If wanted_uuid is set, we're handling a specific cast device identified by UUID
+        if wanted_uuid is not None and wanted_uuid != discover.uuid:
             # UUID not matching, this is not it.
             return
 
@@ -177,7 +179,7 @@ async def _async_setup_platform(
         async_cast_discovered(chromecast)
 
     ChromeCastZeroconf.set_zeroconf(await zeroconf.async_get_instance(opp))
-    opp.async_add_executor_job(setup_internal_discovery, opp)
+    opp.async_add_executor_job(setup_internal_discovery, opp, config_entry)
 
 
 class CastDevice(MediaPlayerEntity):
@@ -202,7 +204,7 @@ class CastDevice(MediaPlayerEntity):
         self.mz_mgr = None
         self._available = False
         self._status_listener: Optional[CastStatusListener] = None
-        self.opp_cast_controller: Optional[OpenPeerPowerController] = None
+        self._opp_cast_controller: Optional[OpenPeerPowerController] = None
 
         self._add_remove_handler = None
         self._cast_view_remove_handler = None
@@ -251,8 +253,8 @@ class CastDevice(MediaPlayerEntity):
             self.services,
         )
         chromecast = await self.opp.async_add_executor_job(
-            pychromecast.get_chromecast_from_service,
-            (
+            pychromecast.get_chromecast_from_cast_info,
+            pychromecast.discovery.CastInfo(
                 self.services,
                 self._cast_info.uuid,
                 self._cast_info.model_name,
@@ -304,7 +306,7 @@ class CastDevice(MediaPlayerEntity):
         self.mz_media_status = {}
         self.mz_media_status_received = {}
         self.mz_mgr = None
-        self.opp_cast_controller = None
+        self._opp_cast_controller = None
         if self._status_listener is not None:
             self._status_listener.invalidate()
             self._status_listener = None
@@ -511,7 +513,7 @@ class CastDevice(MediaPlayerEntity):
 
             # prepend external URL
             opp_url = get_url(self.opp, prefer_external=True)
-            media_id = f".opp_url}{media_id}"
+            media_id = f"{opp_url}{media_id}"
 
         await self.opp.async_add_executor_job(
             ft.partial(self.play_media, media_type, media_id, **kwargs)
@@ -809,11 +811,11 @@ class CastDevice(MediaPlayerEntity):
         if entity_id != self.entity_id:
             return
 
-        if self.opp_cast_controller is None:
-            self.opp_cast_controller = controller
+        if self._opp_cast_controller is None:
+            self._opp_cast_controller = controller
             self._chromecast.register_handler(controller)
 
-        self.opp_cast_controller.show_lovelace_view(view_path, url_path)
+        self._opp_cast_controller.show_lovelace_view(view_path, url_path)
 
 
 class DynamicCastGroup:
@@ -875,8 +877,8 @@ class DynamicCastGroup:
             self.services,
         )
         chromecast = await self.opp.async_add_executor_job(
-            pychromecast.get_chromecast_from_service,
-            (
+            pychromecast.get_chromecast_from_cast_info,
+            pychromecast.discovery.CastInfo(
                 self.services,
                 self._cast_info.uuid,
                 self._cast_info.model_name,

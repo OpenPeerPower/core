@@ -59,7 +59,7 @@ DEFAULT_OPTIONS = {
     CONF_USE_LOCATION: False,
 }
 
-BMW_PLATFORMS = ["binary_sensor", "device_tracker", "lock", "notify", "sensor"]
+PLATFORMS = ["binary_sensor", "device_tracker", "lock", "notify", "sensor"]
 UPDATE_INTERVAL = 5  # in minutes
 
 SERVICE_UPDATE_STATE = "update_state"
@@ -122,7 +122,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
     def _update_all() -> None:
         """Update all BMW accounts."""
-        for entry in opp.data[DOMAIN][DATA_ENTRIES].values():
+        for entry in opp.data[DOMAIN][DATA_ENTRIES].copy().values():
             entry[CONF_ACCOUNT].update()
 
     # Add update listener for config entry changes (options)
@@ -138,13 +138,13 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
     await _async_update_all()
 
-    for platform in BMW_PLATFORMS:
+    for platform in PLATFORMS:
         if platform != NOTIFY_DOMAIN:
             opp.async_create_task(
                 opp.config_entries.async_forward_entry_setup(entry, platform)
             )
 
-    # set up notify platform, no entry support for notify component yet,
+    # set up notify platform, no entry support for notify platform yet,
     # have to use discovery to load platform.
     opp.async_create_task(
         discovery.async_load_platform(
@@ -164,9 +164,9 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in BMW_PLATFORMS
-                if component != NOTIFY_DOMAIN
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
+                if platform != NOTIFY_DOMAIN
             ]
         )
     )
@@ -208,7 +208,7 @@ def setup_account(entry: ConfigEntry, opp, name: str) -> BMWConnectedDriveAccoun
     _LOGGER.debug("Adding new account %s", name)
 
     pos = (
-         opp.config.latitude, opp.config.longitude) if use_location else (None, None)
+        (opp.config.latitude, opp.config.longitude) if use_location else (None, None)
     )
     cd_account = BMWConnectedDriveAccount(
         username, password, region, name, read_only, *pos
@@ -351,7 +351,7 @@ class BMWConnectedDriveBaseEntity(Entity):
         self.schedule_update_op_state(True)
 
     async def async_added_to_opp(self):
-        """Add callback after being added to opp,
+        """Add callback after being added to opp.
 
         Show latest data after startup.
         """

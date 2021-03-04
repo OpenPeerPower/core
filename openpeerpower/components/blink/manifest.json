@@ -1,7 +1,7 @@
 {
   "domain": "blink",
   "name": "Blink",
-  "documentation": "https://www.open-peer-power.io/integrations/blink",
+  "documentation": "https://www.openpeerpower.io/integrations/blink",
   "requirements": ["blinkpy==0.17.0"],
   "codeowners": ["@fronzbot"],
   "config_flow": true

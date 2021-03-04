@@ -70,7 +70,7 @@ class CommandSensor(Entity):
         self, opp, data, name, unit_of_measurement, value_template, json_attributes
     ):
         """Initialize the sensor."""
-        self.opp = opp
+        self._opp = opp
         self.data = data
         self._attributes = None
         self._json_attributes = json_attributes
@@ -145,19 +145,14 @@ class CommandSensorData:
     def update(self):
         """Get the latest data with a shell command."""
         command = self.command
-        cache = {}
 
-        if command in cache:
-            prog, args, args_compiled = cache[command]
-        elif " " not in command:
+        if " " not in command:
             prog = command
             args = None
             args_compiled = None
-            cache[command] = (prog, args, args_compiled)
         else:
             prog, args = command.split(" ", 1)
             args_compiled = template.Template(args, self.opp)
-            cache[command] = (prog, args, args_compiled)
 
         if args_compiled:
             try:

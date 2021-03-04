@@ -1,8 +1,8 @@
 {
   "domain": "bmw_connected_drive",
   "name": "BMW Connected Drive",
-  "documentation": "https://www.open-peer-power.io/integrations/bmw_connected_drive",
-  "requirements": ["bimmer_connected==0.7.14"],
+  "documentation": "https://www.openpeerpower.io/integrations/bmw_connected_drive",
+  "requirements": ["bimmer_connected==0.7.15"],
   "codeowners": ["@gerard33", "@rikroe"],
   "config_flow": true
 }

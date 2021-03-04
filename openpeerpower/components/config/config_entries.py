@@ -21,12 +21,12 @@ async def async_setup(opp):
     opp.http.register_view(ConfigManagerEntryIndexView)
     opp.http.register_view(ConfigManagerEntryResourceView)
     opp.http.register_view(ConfigManagerEntryResourceReloadView)
-    opp.http.register_view(ConfigManagerFlowIndexView.opp.config_entries.flow))
-    opp.http.register_view(ConfigManagerFlowResourceView.opp.config_entries.flow))
+    opp.http.register_view(ConfigManagerFlowIndexView(opp.config_entries.flow))
+    opp.http.register_view(ConfigManagerFlowResourceView(opp.config_entries.flow))
     opp.http.register_view(ConfigManagerAvailableFlowView)
 
-    opp.http.register_view(OptionManagerFlowIndexView.opp.config_entries.options))
-    opp.http.register_view(OptionManagerFlowResourceView.opp.config_entries.options))
+    opp.http.register_view(OptionManagerFlowIndexView(opp.config_entries.options))
+    opp.http.register_view(OptionManagerFlowResourceView(opp.config_entries.options))
 
     opp.components.websocket_api.async_register_command(config_entry_disable)
     opp.components.websocket_api.async_register_command(config_entry_update)
@@ -46,7 +46,7 @@ class ConfigManagerEntryIndexView(OpenPeerPowerView):
 
     async def get(self, request):
         """List available config entries."""
-       opp = request.app["opp"]
+        opp = request.app["opp"]
 
         return self.json(
             [entry_json(entry) for entry in opp.config_entries.async_entries()]
@@ -61,10 +61,10 @@ class ConfigManagerEntryResourceView(OpenPeerPowerView):
 
     async def delete(self, request, entry_id):
         """Delete a config entry."""
-        if not request[.opp_user"].is_admin:
+        if not request["opp_user"].is_admin:
             raise Unauthorized(config_entry_id=entry_id, permission="remove")
 
-       opp = request.app["opp"]
+        opp = request.app["opp"]
 
         try:
             result = await opp.config_entries.async_remove(entry_id)
@@ -82,10 +82,10 @@ class ConfigManagerEntryResourceReloadView(OpenPeerPowerView):
 
     async def post(self, request, entry_id):
         """Reload a config entry."""
-        if not request[.opp_user"].is_admin:
+        if not request["opp_user"].is_admin:
             raise Unauthorized(config_entry_id=entry_id, permission="remove")
 
-       opp = request.app["opp"]
+        opp = request.app["opp"]
 
         try:
             result = await opp.config_entries.async_reload(entry_id)
@@ -110,7 +110,7 @@ class ConfigManagerFlowIndexView(FlowManagerIndexView):
     # pylint: disable=arguments-differ
     async def post(self, request):
         """Handle a POST request."""
-        if not request[.opp_user"].is_admin:
+        if not request["opp_user"].is_admin:
             raise Unauthorized(perm_category=CAT_CONFIG_ENTRIES, permission="add")
 
         # pylint: disable=no-value-for-parameter
@@ -135,7 +135,7 @@ class ConfigManagerFlowResourceView(FlowManagerResourceView):
 
     async def get(self, request, flow_id):
         """Get the current state of a data_entry_flow."""
-        if not request[.opp_user"].is_admin:
+        if not request["opp_user"].is_admin:
             raise Unauthorized(perm_category=CAT_CONFIG_ENTRIES, permission="add")
 
         return await super().get(request, flow_id)
@@ -143,7 +143,7 @@ class ConfigManagerFlowResourceView(FlowManagerResourceView):
     # pylint: disable=arguments-differ
     async def post(self, request, flow_id):
         """Handle a POST request."""
-        if not request[.opp_user"].is_admin:
+        if not request["opp_user"].is_admin:
             raise Unauthorized(perm_category=CAT_CONFIG_ENTRIES, permission="add")
 
         # pylint: disable=no-value-for-parameter
@@ -168,7 +168,7 @@ class ConfigManagerAvailableFlowView(OpenPeerPowerView):
 
     async def get(self, request):
         """List available flow handlers."""
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         return self.json(await async_get_config_flows(opp))
 
 
@@ -184,7 +184,7 @@ class OptionManagerFlowIndexView(FlowManagerIndexView):
 
         handler in request is entry_id.
         """
-        if not request[.opp_user"].is_admin:
+        if not request["opp_user"].is_admin:
             raise Unauthorized(perm_category=CAT_CONFIG_ENTRIES, permission=POLICY_EDIT)
 
         # pylint: disable=no-value-for-parameter
@@ -199,7 +199,7 @@ class OptionManagerFlowResourceView(FlowManagerResourceView):
 
     async def get(self, request, flow_id):
         """Get the current state of a data_entry_flow."""
-        if not request[.opp_user"].is_admin:
+        if not request["opp_user"].is_admin:
             raise Unauthorized(perm_category=CAT_CONFIG_ENTRIES, permission=POLICY_EDIT)
 
         return await super().get(request, flow_id)
@@ -207,7 +207,7 @@ class OptionManagerFlowResourceView(FlowManagerResourceView):
     # pylint: disable=arguments-differ
     async def post(self, request, flow_id):
         """Handle a POST request."""
-        if not request[.opp_user"].is_admin:
+        if not request["opp_user"].is_admin:
             raise Unauthorized(perm_category=CAT_CONFIG_ENTRIES, permission=POLICY_EDIT)
 
         # pylint: disable=no-value-for-parameter

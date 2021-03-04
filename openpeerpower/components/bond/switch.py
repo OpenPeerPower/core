@@ -23,7 +23,7 @@ async def async_setup_entry(
     hub: BondHub = data[HUB]
     bpup_subs: BPUPSubscriptions = data[BPUP_SUBS]
 
-    switches = [
+    switches: List[Entity] = [
         BondSwitch(hub, device, bpup_subs)
         for device in hub.devices
         if DeviceType.is_generic(device.type)
@@ -36,12 +36,12 @@ class BondSwitch(BondEntity, SwitchEntity):
     """Representation of a Bond generic device."""
 
     def __init__(self, hub: BondHub, device: BondDevice, bpup_subs: BPUPSubscriptions):
-        """Create HA entity representing Bond generic device (switch)."""
+        """Create OP entity representing Bond generic device (switch)."""
         super().__init__(hub, device, bpup_subs)
 
         self._power: Optional[bool] = None
 
-    def _apply_state(self, state: dict):
+    def _apply_state(self, state: dict) -> None:
         self._power = state.get("power")
 
     @property

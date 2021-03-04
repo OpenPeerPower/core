@@ -46,7 +46,7 @@ class CloudPreferences:
 
     def __init__(self, opp):
         """Initialize cloud prefs."""
-        self.opp = opp
+        self._opp = opp
         self._store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
         self._prefs = None
         self._listeners = []
@@ -64,7 +64,7 @@ class CloudPreferences:
             await self._save_prefs(
                 {
                     **self._prefs,
-                    PREF_GOOGLE_LOCAL_WEBHOOK_ID: self.opp.components.webhook.async_generate_id(),
+                    PREF_GOOGLE_LOCAL_WEBHOOK_ID: self._opp.components.webhook.async_generate_id(),
                 }
             )
 
@@ -179,7 +179,7 @@ class CloudPreferences:
             user = await self._load_cloud_user()
 
             if user is not None:
-                await self.opp.auth.async_remove_user(user)
+                await self._opp.auth.async_remove_user(user)
                 await self._save_prefs({**self._prefs, PREF_CLOUD_USER: None})
             return
 
@@ -296,7 +296,7 @@ class CloudPreferences:
         if user:
             return user.id
 
-        user = await self.opp.auth.async_create_system_user(
+        user = await self._opp.auth.async_create_system_user(
             "Open Peer Power Cloud", [GROUP_ID_ADMIN]
         )
         await self.async_update(cloud_user=user.id)
@@ -311,7 +311,7 @@ class CloudPreferences:
 
         # Fetch the user. It can happen that the user no longer exists if
         # an image was restored without restoring the cloud prefs.
-        return await self.opp.auth.async_get_user(user_id)
+        return await self._opp.auth.async_get_user(user_id)
 
     @property
     def _has_local_trusted_network(self) -> bool:
@@ -319,7 +319,7 @@ class CloudPreferences:
         local4 = ip_address("127.0.0.1")
         local6 = ip_address("::1")
 
-        for prv in self.opp.auth.auth_providers:
+        for prv in self._opp.auth.auth_providers:
             if prv.type != "trusted_networks":
                 continue
 
@@ -332,14 +332,14 @@ class CloudPreferences:
     @property
     def _has_local_trusted_proxies(self) -> bool:
         """Return if we allow localhost to be a proxy and use its data."""
-        if not hasattr(self.opp, "http"):
+        if not hasattr(self._opp, "http"):
             return False
 
         local4 = ip_address("127.0.0.1")
         local6 = ip_address("::1")
 
         if any(
-            local4 in nwk or local6 in nwk for nwk in self.opp.http.trusted_proxies
+            local4 in nwk or local6 in nwk for nwk in self._opp.http.trusted_proxies
         ):
             return True
 
@@ -351,7 +351,7 @@ class CloudPreferences:
         await self._store.async_save(self._prefs)
 
         for listener in self._listeners:
-            self.opp.async_create_task(async_create_catching_coro(listener(self)))
+            self._opp.async_create_task(async_create_catching_coro(listener(self)))
 
     @callback
     def _empty_config(self, username):
@@ -366,7 +366,7 @@ class CloudPreferences:
             PREF_ENABLE_REMOTE: False,
             PREF_GOOGLE_DEFAULT_EXPOSE: DEFAULT_EXPOSED_DOMAINS,
             PREF_GOOGLE_ENTITY_CONFIGS: {},
-            PREF_GOOGLE_LOCAL_WEBHOOK_ID: self.opp.components.webhook.async_generate_id(),
+            PREF_GOOGLE_LOCAL_WEBHOOK_ID: self._opp.components.webhook.async_generate_id(),
             PREF_GOOGLE_SECURE_DEVICES_PIN: None,
             PREF_USERNAME: username,
         }

@@ -19,13 +19,13 @@ PLATFORMS = ["cover", "fan", "light", "switch"]
 _API_TIMEOUT = SLOW_UPDATE_WARNING - 1
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
     """Set up the Bond component."""
     opp.data.setdefault(DOMAIN, {})
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Bond from a config entry."""
     host = entry.data[CONF_HOST]
     token = entry.data[CONF_ACCESS_TOKEN]
@@ -50,6 +50,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     if not entry.unique_id:
         opp.config_entries.async_update_entry(entry, unique_id=hub.bond_id)
 
+    assert hub.bond_id is not None
     hub_name = hub.name or hub.bond_id
     device_registry = await dr.async_get_registry(opp)
     device_registry.async_get_or_create(
@@ -64,9 +65,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
     _async_remove_old_device_identifiers(config_entry_id, device_registry, hub)
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -77,8 +78,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )
@@ -96,7 +97,7 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 @callback
 def _async_remove_old_device_identifiers(
     config_entry_id: str, device_registry: dr.DeviceRegistry, hub: BondHub
-):
+) -> None:
     """Remove the non-unique device registry entries."""
     for device in hub.devices:
         dev = device_registry.async_get_device(identifiers={(DOMAIN, device.device_id)})

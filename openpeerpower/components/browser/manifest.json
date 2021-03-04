@@ -1,7 +1,7 @@
 {
   "domain": "browser",
   "name": "Browser",
-  "documentation": "https://www.open-peer-power.io/integrations/browser",
+  "documentation": "https://www.openpeerpower.io/integrations/browser",
   "codeowners": [],
   "quality_scale": "internal"
 }

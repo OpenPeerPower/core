@@ -75,7 +75,7 @@ class CommandBinarySensor(BinarySensorEntity):
         self, opp, data, name, device_class, payload_on, payload_off, value_template
     ):
         """Initialize the Command line binary sensor."""
-        self.opp = opp
+        self._opp = opp
         self.data = data
         self._name = name
         self._device_class = device_class

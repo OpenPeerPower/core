@@ -19,7 +19,7 @@ async def async_setup(opp):
 
 
 class CheckConfigView(OpenPeerPowerView):
-    """ Oppbian packages endpoint."""
+    """Oppbian packages endpoint."""
 
     url = "/api/config/core/check_config"
     name = "api:config:core:check_config"

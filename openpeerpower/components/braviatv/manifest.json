@@ -1,7 +1,7 @@
 {
   "domain": "braviatv",
   "name": "Sony Bravia TV",
-  "documentation": "https://www.open-peer-power.io/integrations/braviatv",
+  "documentation": "https://www.openpeerpower.io/integrations/braviatv",
   "requirements": ["bravia-tv==1.0.8"],
   "codeowners": ["@bieniu"],
   "config_flow": true

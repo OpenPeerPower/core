@@ -1,7 +1,7 @@
 {
   "domain": "blueprint",
   "name": "Blueprint",
-  "documentation": "https://www.open-peer-power.io/integrations/blueprint",
+  "documentation": "https://www.openpeerpower.io/integrations/blueprint",
   "codeowners": [
     "@open-peer-power/core"
   ],

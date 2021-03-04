@@ -1,11 +1,12 @@
 browse_url:
+  name: Browse
   description:
-    Open a URL in the default browser on the host machine of Open Peer Power
+    Open a URL in the default browser on the host machine of Open Peer Power.
   fields:
     url:
       name: URL
       description: The URL to open.
       required: true
-      example: "https://www.open-peer-power.io"
+      example: "https://www.openpeerpower.io"
       selector:
         text:

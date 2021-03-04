@@ -104,7 +104,7 @@ class Concord232ZoneSensor(BinarySensorEntity):
 
     def __init__(self, opp, client, zone, zone_type):
         """Initialize the Concord232 binary sensor."""
-        self.opp = opp
+        self._opp = opp
         self._client = client
         self._zone = zone
         self._number = zone["number"]
