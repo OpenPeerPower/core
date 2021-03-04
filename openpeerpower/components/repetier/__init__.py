@@ -193,7 +193,7 @@ class PrinterAPI:
 
     def __init__(self, opp, client, printers, sensors, conf_name, config):
         """Set up instance."""
-        self.opp = opp
+        self._opp = opp
         self._client = client
         self.printers = printers
         self.sensors = sensors
@@ -227,7 +227,7 @@ class PrinterAPI:
         for printer in self.printers:
             printer.get_data()
         self._load_entities()
-        dispatcher_send(self.opp, UPDATE_SIGNAL)
+        dispatcher_send(self._opp, UPDATE_SIGNAL)
 
     def _load_entities(self):
         sensor_info = []
@@ -259,4 +259,4 @@ class PrinterAPI:
 
         if not sensor_info:
             return
-        load_platform(self.opp, "sensor", DOMAIN, sensor_info, self.config)
+        load_platform(self._opp, "sensor", DOMAIN, sensor_info, self.config)

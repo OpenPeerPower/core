@@ -16,5 +16,5 @@ ROON_APPINFO = {
     "display_version": "1.0.0",
     "publisher": "open_peer_power",
     "email": "open_peer_power@users.noreply.github.com",
-    "website": "https://www.open-peer-power.io/",
+    "website": "https://www.openpeerpower.io/",
 }

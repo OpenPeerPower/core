@@ -187,10 +187,10 @@ async def async_setup(opp: OpenPeerPower, config: dict):
     # Fetch initial data
     await coordinator.async_refresh()
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         await opp.async_create_task(
             opp.helpers.discovery.async_load_platform(
-                component, DOMAIN, {"config": config}, config
+                platform, DOMAIN, {"config": config}, config
             )
         )
 

@@ -21,7 +21,7 @@ from .webhooks import (
 
 _LOGGER = logging.getLogger(__name__)
 
-SUPPORTED_DOMAINS = ["switch", "binary_sensor"]
+PLATFORMS = ["switch", "binary_sensor"]
 
 CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 
@@ -39,8 +39,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in SUPPORTED_DOMAINS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )
@@ -99,13 +99,13 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         webhook_url,
     )
 
-    # Enable component
+    # Enable platform
     opp.data[DOMAIN][entry.entry_id] = person
     async_register_webhook(opp, webhook_id, entry.entry_id)
 
-    for component in SUPPORTED_DOMAINS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True

@@ -38,7 +38,7 @@
                     "host": "Host",
                     "password": "Passwuert"
                 },
-                "description": "De Prozess fir BLID an Passwuert opzeruffen ass fir de Moment manuell. Folleg w.e.g. de Schr\u00ebtt d\u00e9i an der Dokumentatioun op https://www.open-peer-power.io/integrations/roomba/#retrieving-your-credentials beschriwwe sinn.",
+                "description": "De Prozess fir BLID an Passwuert opzeruffen ass fir de Moment manuell. Folleg w.e.g. de Schr\u00ebtt d\u00e9i an der Dokumentatioun op https://www.openpeerpower.io/integrations/roomba/#retrieving-your-credentials beschriwwe sinn.",
                 "title": "Mam Apparat verbannen"
             }
         }

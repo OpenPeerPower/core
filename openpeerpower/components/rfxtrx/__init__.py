@@ -151,7 +151,7 @@ CONFIG_SCHEMA = vol.Schema(
     extra=vol.ALLOW_EXTRA,
 )
 
-DOMAINS = ["switch", "sensor", "light", "binary_sensor", "cover"]
+PLATFORMS = ["switch", "sensor", "light", "binary_sensor", "cover"]
 
 
 async def async_setup(opp, config):
@@ -202,9 +202,9 @@ async def async_setup_entry(opp, entry: config_entries.ConfigEntry):
         )
         return False
 
-    for domain in DOMAINS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, domain)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -215,8 +215,8 @@ async def async_unload_entry(opp, entry: config_entries.ConfigEntry):
     if not all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in DOMAINS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     ):
@@ -316,7 +316,7 @@ async def async_setup_internal(opp, entry: config_entries.ConfigEntry):
         if device_entry:
             event_data[ATTR_DEVICE_ID] = device_entry.id
 
-        # Callback to HA registered components.
+        # Callback to OP registered components.
         opp.helpers.dispatcher.async_dispatcher_send(SIGNAL_EVENT, event, device_id)
 
         # Signal event to any other listeners

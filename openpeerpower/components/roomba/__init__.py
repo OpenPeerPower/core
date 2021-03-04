@@ -8,7 +8,7 @@ from roombapy import Roomba, RoombaConnectionError
 from openpeerpower import exceptions
 from openpeerpower.const import CONF_DELAY, CONF_HOST, CONF_NAME, CONF_PASSWORD
 
-from .const import BLID, COMPONENTS, CONF_BLID, CONF_CONTINUOUS, DOMAIN, ROOMBA_SESSION
+from .const import BLID, CONF_BLID, CONF_CONTINUOUS, DOMAIN, PLATFORMS, ROOMBA_SESSION
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -51,9 +51,9 @@ async def async_setup_entry(opp, config_entry):
         BLID: config_entry.data[CONF_BLID],
     }
 
-    for component in COMPONENTS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, component)
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
     if not config_entry.update_listeners:
@@ -105,8 +105,8 @@ async def async_unload_entry(opp, config_entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(config_entry, component)
-                for component in COMPONENTS
+                opp.config_entries.async_forward_entry_unload(config_entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

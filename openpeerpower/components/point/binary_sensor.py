@@ -1,13 +1,13 @@
 """Support for Minut Point binary sensors."""
 import logging
 
-from  openpeerpower.components.binary_sensor import (
+from openpeerpower.components.binary_sensor import (
     DEVICE_CLASS_CONNECTIVITY,
     DOMAIN,
     BinarySensorEntity,
 )
-from  openpeerpower.core import callback
-from  openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from . import MinutPointEntity
 from .const import DOMAIN as POINT_DOMAIN, POINT_DISCOVERY_NEW, SIGNAL_WEBHOOK
@@ -79,7 +79,7 @@ class MinutPointBinarySensor(MinutPointEntity, BinarySensorEntity):
         self._is_on = None
 
     async def async_added_to_opp(self):
-        """Call when entity is added to Open Peer Power."""
+        """Call when entity is added to HOme Assistant."""
         await super().async_added_to_opp()
         self._async_unsub_hook_dispatcher_connect = async_dispatcher_connect(
             self.opp, SIGNAL_WEBHOOK, self._webhook_event

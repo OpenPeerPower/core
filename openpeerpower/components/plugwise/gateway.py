@@ -139,9 +139,9 @@ async def async_setup_entry_gw(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     if single_master_thermostat is None:
         platforms = SENSOR_PLATFORMS
 
-    for component in platforms:
+    for platform in platforms:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -160,8 +160,8 @@ async def async_unload_entry_gw(opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in PLATFORMS_GATEWAY
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS_GATEWAY
             ]
         )
     )

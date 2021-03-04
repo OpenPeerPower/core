@@ -1,6 +1,6 @@
 {
   "domain": "remote",
   "name": "Remote",
-  "documentation": "https://www.open-peer-power.io/integrations/remote",
+  "documentation": "https://www.openpeerpower.io/integrations/remote",
   "codeowners": []
 }

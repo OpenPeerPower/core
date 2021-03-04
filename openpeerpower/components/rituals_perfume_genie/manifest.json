@@ -2,7 +2,7 @@
   "domain": "rituals_perfume_genie",
   "name": "Rituals Perfume Genie",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/rituals_perfume_genie",
+  "documentation": "https://www.openpeerpower.io/integrations/rituals_perfume_genie",
   "requirements": [
     "pyrituals==0.0.2"
   ],

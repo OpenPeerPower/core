@@ -1,15 +1,15 @@
 """Support for Minut Point."""
 import logging
 
-from  openpeerpower.components.alarm_control_panel import DOMAIN, AlarmControlPanelEntity
-from  openpeerpower.components.alarm_control_panel.const import SUPPORT_ALARM_ARM_AWAY
-from  openpeerpower.const import (
+from openpeerpower.components.alarm_control_panel import DOMAIN, AlarmControlPanelEntity
+from openpeerpower.components.alarm_control_panel.const import SUPPORT_ALARM_ARM_AWAY
+from openpeerpower.const import (
     STATE_ALARM_ARMED_AWAY,
     STATE_ALARM_DISARMED,
     STATE_ALARM_TRIGGERED,
 )
-from  openpeerpower.core import callback
-from  openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 
 from .const import DOMAIN as POINT_DOMAIN, POINT_DISCOVERY_NEW, SIGNAL_WEBHOOK
 
@@ -47,7 +47,7 @@ class MinutPointAlarmControl(AlarmControlPanelEntity):
         self._changed_by = None
 
     async def async_added_to_opp(self):
-        """Call when entity is added to Open Peer Power."""
+        """Call when entity is added to HOme Assistant."""
         await super().async_added_to_opp()
         self._async_unsub_hook_dispatcher_connect = async_dispatcher_connect(
             self.opp, SIGNAL_WEBHOOK, self._webhook_event

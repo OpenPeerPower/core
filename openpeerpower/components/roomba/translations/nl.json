@@ -28,6 +28,12 @@
                 "description": "Het wachtwoord kon niet automatisch van het apparaat worden opgehaald. Volg de stappen zoals beschreven in de documentatie op: {auth_help_url}",
                 "title": "Voer wachtwoord in"
             },
+            "manual": {
+                "data": {
+                    "blid": "BLID",
+                    "host": "Host"
+                }
+            },
             "user": {
                 "data": {
                     "blid": "BLID",
@@ -36,7 +42,7 @@
                     "host": "Hostnaam of IP-adres",
                     "password": "Wachtwoord"
                 },
-                "description": "Het ophalen van de BLID en het wachtwoord is momenteel een handmatig proces. Volg de stappen in de documentatie op: https://www.open-peer-power.io/integrations/roomba/#retrieving-your-credentials",
+                "description": "Het ophalen van de BLID en het wachtwoord is momenteel een handmatig proces. Volg de stappen in de documentatie op: https://www.openpeerpower.io/integrations/roomba/#retrieving-your-credentials",
                 "title": "Verbinding maken met het apparaat"
             }
         }

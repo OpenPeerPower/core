@@ -25,7 +25,7 @@ from openpeerpower.helpers.typing import OpenPeerPowerType
 from openpeerpower.util import location
 from openpeerpower.util.json import load_json, save_json
 
-from .config_flow import PlayStation4FlowHandler  # noqa: pylint: disable=unused-import
+from .config_flow import PlayStation4FlowHandler  # noqa: F401
 from .const import ATTR_MEDIA_IMAGE_URL, COMMANDS, DOMAIN, GAMES_FILE, PS4_DATA
 
 _LOGGER = logging.getLogger(__name__)

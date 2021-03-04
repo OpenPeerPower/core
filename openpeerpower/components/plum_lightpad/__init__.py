@@ -67,9 +67,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = plum
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     def cleanup(event):

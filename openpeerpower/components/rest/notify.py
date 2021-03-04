@@ -127,7 +127,7 @@ class RestNotificationService(BaseNotificationService):
     ):
         """Initialize the service."""
         self._resource = resource
-        self.opp = opp
+        self._opp = opp
         self._method = method.upper()
         self._headers = headers
         self._params = params
@@ -164,7 +164,7 @@ class RestNotificationService(BaseNotificationService):
                     }
                 if not isinstance(value, Template):
                     return value
-                value opp =self.opp
+                value.opp = self._opp
                 return value.async_render(kwargs, parse_result=False)
 
             if self._data:

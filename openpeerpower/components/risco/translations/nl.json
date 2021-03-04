@@ -20,7 +20,7 @@
     },
     "options": {
         "step": {
-            "op_to_risco": {
+            "ha_to_risco": {
                 "data": {
                     "armed_away": "Ingeschakeld weg",
                     "armed_custom_bypass": "Ingeschakeld met overbrugging(en)",
@@ -30,12 +30,12 @@
             },
             "init": {
                 "data": {
-                    "code_arm_required": "Pincode vereist om in te schakelen",
-                    "code_disarm_required": "Pincode vereist om uit te schakelen"
+                    "code_arm_required": "PIN-code vereist om in te schakelen",
+                    "code_disarm_required": "PIN-code vereist om uit te schakelen"
                 },
                 "title": "Configureer opties"
             },
-            "risco_to_op": {
+            "risco_to_ha": {
                 "data": {
                     "A": "Groep A",
                     "B": "Groep B",

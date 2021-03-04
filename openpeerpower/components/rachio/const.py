@@ -4,7 +4,7 @@ DEFAULT_NAME = "Rachio"
 
 DOMAIN = "rachio"
 
-CONF_CUSTOM_URL = opp_url_override"
+CONF_CUSTOM_URL = "opp_url_override"
 # Manual run length
 CONF_MANUAL_RUN_MINS = "manual_run_mins"
 DEFAULT_MANUAL_RUN_MINS = 10

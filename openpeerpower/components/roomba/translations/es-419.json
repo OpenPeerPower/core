@@ -12,7 +12,7 @@
                     "host": "Nombre de host o direcci\u00f3n IP",
                     "password": "Contrase\u00f1a"
                 },
-                "description": "Actualmente recuperar el BLID y la contrase\u00f1a es un proceso manual. Siga los pasos descritos en la documentaci\u00f3n en: https://www.open-peer-power.io/integrations/roomba/#retrieving-your-credentials",
+                "description": "Actualmente recuperar el BLID y la contrase\u00f1a es un proceso manual. Siga los pasos descritos en la documentaci\u00f3n en: https://www.openpeerpower.io/integrations/roomba/#retrieving-your-credentials",
                 "title": "Conectarse al dispositivo"
             }
         }

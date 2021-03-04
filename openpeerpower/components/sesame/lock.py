@@ -7,6 +7,7 @@ import voluptuous as vol
 from openpeerpower.components.lock import PLATFORM_SCHEMA, LockEntity
 from openpeerpower.const import (
     ATTR_BATTERY_LEVEL,
+    ATTR_DEVICE_ID,
     CONF_API_KEY,
     STATE_LOCKED,
     STATE_UNLOCKED,
@@ -14,7 +15,6 @@ from openpeerpower.const import (
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.typing import ConfigType
 
-ATTR_DEVICE_ID = "device_id"
 ATTR_SERIAL_NO = "serial"
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({vol.Required(CONF_API_KEY): cv.string})

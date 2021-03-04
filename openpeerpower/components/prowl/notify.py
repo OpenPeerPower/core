@@ -32,7 +32,7 @@ class ProwlNotificationService(BaseNotificationService):
 
     def __init__(self, opp, api_key):
         """Initialize the service."""
-        self.opp = opp
+        self._opp = opp
         self._api_key = api_key
 
     async def async_send_message(self, message, **kwargs):
@@ -50,7 +50,7 @@ class ProwlNotificationService(BaseNotificationService):
         }
 
         _LOGGER.debug("Attempting call Prowl service at %s", url)
-        session = async_get_clientsession(self.opp)
+        session = async_get_clientsession(self._opp)
 
         try:
             with async_timeout.timeout(10):

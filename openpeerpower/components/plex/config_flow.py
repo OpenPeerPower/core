@@ -27,7 +27,7 @@ from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.network import get_url
 
-from .const import (  # pylint: disable=unused-import
+from .const import (
     AUTH_CALLBACK_NAME,
     AUTH_CALLBACK_PATH,
     AUTOMATIC_SETUP_STRING,
@@ -240,7 +240,7 @@ class PlexFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         _LOGGER.debug("Valid config created for %s", plex_server.friendly_name)
 
-        return self.async_create_entry(title=plex_server.friendly_name, data=data)
+        return self.async_create_entry(title=url, data=data)
 
     async def async_step_select_server(self, user_input=None):
         """Use selected Plex server."""
@@ -287,7 +287,7 @@ class PlexFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         """Begin external auth flow on Plex website."""
         self.opp.http.register_view(PlexAuthorizationCallbackView)
         opp_url = get_url(self.opp)
-        headers = {"Origin":.opp_url}
+        headers = {"Origin": opp_url}
         payload = {
             "X-Plex-Device-Name": X_PLEX_DEVICE_NAME,
             "X-Plex-Version": X_PLEX_VERSION,
@@ -299,7 +299,7 @@ class PlexFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         session = async_get_clientsession(self.opp)
         self.plexauth = PlexAuth(payload, session, headers)
         await self.plexauth.initiate_auth()
-        forward_url = f".opp_url}{AUTH_CALLBACK_PATH}?flow_id={self.flow_id}"
+        forward_url = f"{opp_url}{AUTH_CALLBACK_PATH}?flow_id={self.flow_id}"
         auth_url = self.plexauth.auth_url(forward_url)
         return self.async_external_step(step_id="obtain_token", url=auth_url)
 
@@ -417,7 +417,7 @@ class PlexAuthorizationCallbackView(OpenPeerPowerView):
 
     async def get(self, request):
         """Receive authorization confirmation."""
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         await opp.config_entries.flow.async_configure(
             flow_id=request.query["flow_id"], user_input=None
         )

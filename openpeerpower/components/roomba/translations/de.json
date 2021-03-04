@@ -43,7 +43,7 @@
                     "host": "Host",
                     "password": "Passwort"
                 },
-                "description": "Das Abrufen der BLID und des Kennworts erfolgt manuell. Befolgen Sie die in der Dokumentation beschriebenen Schritte unter: https://www.open-peer-power.io/integrations/roomba/#retrieving-your-credentials",
+                "description": "Das Abrufen der BLID und des Kennworts erfolgt manuell. Befolgen Sie die in der Dokumentation beschriebenen Schritte unter: https://www.openpeerpower.io/integrations/roomba/#retrieving-your-credentials",
                 "title": "Stellen Sie eine Verbindung zum Ger\u00e4t her"
             }
         }

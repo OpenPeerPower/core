@@ -3,8 +3,8 @@
         "abort": {
             "credential_error": "Erro ao buscar credenciais.",
             "no_devices_found": "Nenhum dispositivo PlayStation 4 encontrado na rede.",
-            "port_987_bind_error": "N\u00e3o foi poss\u00edvel conectar na porta 987. Consulte a [documenta\u00e7\u00e3o] (https://www.open-peer-power.io/components/ps4/) para informa\u00e7\u00f5es adicionais.",
-            "port_997_bind_error": "N\u00e3o foi poss\u00edvel conectar na porta 997. Consulte a [documenta\u00e7\u00e3o] (https://www.open-peer-power.io/components/ps4/) para informa\u00e7\u00f5es adicionais."
+            "port_987_bind_error": "N\u00e3o foi poss\u00edvel conectar na porta 987. Consulte a [documenta\u00e7\u00e3o] (https://www.openpeerpower.io/components/ps4/) para informa\u00e7\u00f5es adicionais.",
+            "port_997_bind_error": "N\u00e3o foi poss\u00edvel conectar na porta 997. Consulte a [documenta\u00e7\u00e3o] (https://www.openpeerpower.io/components/ps4/) para informa\u00e7\u00f5es adicionais."
         },
         "error": {
             "credential_timeout": "Servi\u00e7o de credencial expirou. Pressione Submit para reiniciar.",
@@ -23,7 +23,7 @@
                     "name": "Nome",
                     "region": "Regi\u00e3o"
                 },
-                "description": "Digite suas informa\u00e7\u00f5es do PlayStation 4. Para 'PIN', navegue at\u00e9 'Configura\u00e7\u00f5es' no seu console PlayStation 4. Em seguida, navegue at\u00e9 \"Configura\u00e7\u00f5es de conex\u00e3o de aplicativos m\u00f3veis\" e selecione \"Adicionar dispositivo\". Digite o PIN exibido. Consulte a [documenta\u00e7\u00e3o] (https://www.open-peer-power.io/components/ps4/) para informa\u00e7\u00f5es adicionais.",
+                "description": "Digite suas informa\u00e7\u00f5es do PlayStation 4. Para 'PIN', navegue at\u00e9 'Configura\u00e7\u00f5es' no seu console PlayStation 4. Em seguida, navegue at\u00e9 \"Configura\u00e7\u00f5es de conex\u00e3o de aplicativos m\u00f3veis\" e selecione \"Adicionar dispositivo\". Digite o PIN exibido. Consulte a [documenta\u00e7\u00e3o] (https://www.openpeerpower.io/components/ps4/) para informa\u00e7\u00f5es adicionais.",
                 "title": "Playstation 4"
             },
             "mode": {

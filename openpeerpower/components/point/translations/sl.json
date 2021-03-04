@@ -5,7 +5,7 @@
             "authorize_url_fail": "Neznana napaka pri generiranju potrditvenega URL-ja.",
             "authorize_url_timeout": "\u010casovna omejitev za generiranje potrditvenega URL-ja je potekla.",
             "external_setup": "To\u010dka uspe\u0161no konfigurirana iz drugega toka.",
-            "no_flows": "Preden lahko preverite pristnost, morate konfigurirati Point. [Preberite navodila](https://www.open-peer-power.io/components/point/).",
+            "no_flows": "Preden lahko preverite pristnost, morate konfigurirati Point. [Preberite navodila](https://www.openpeerpower.io/components/point/).",
             "unknown_authorize_url_generation": "Neznana napaka pri ustvarjanju overitvenega url."
         },
         "create_entry": {

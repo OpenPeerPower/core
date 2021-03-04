@@ -48,6 +48,8 @@ from .util import (
 _LOGGER = logging.getLogger(__name__)
 
 SERVICE_PURGE = "purge"
+SERVICE_ENABLE = "enable"
+SERVICE_DISABLE = "disable"
 
 ATTR_KEEP_DAYS = "keep_days"
 ATTR_REPACK = "repack"
@@ -58,8 +60,10 @@ SERVICE_PURGE_SCHEMA = vol.Schema(
         vol.Optional(ATTR_REPACK, default=False): cv.boolean,
     }
 )
+SERVICE_ENABLE_SCHEMA = vol.Schema({})
+SERVICE_DISABLE_SCHEMA = vol.Schema({})
 
-DEFAULT_URL = "sqlite:///.opp_config_path}"
+DEFAULT_URL = "sqlite:///{opp_config_path}"
 DEFAULT_DB_FILE = "open-peer-power_v2.db"
 DEFAULT_DB_INTEGRITY_CHECK = True
 DEFAULT_DB_MAX_RETRIES = 10
@@ -173,7 +177,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
 
     db_url = conf.get(CONF_DB_URL)
     if not db_url:
-        db_url = DEFAULT_URL.format.opp_config_path(opp.config.path(DEFAULT_DB_FILE))
+        db_url = DEFAULT_URL.format(opp_config_path=opp.config.path(DEFAULT_DB_FILE))
     exclude = conf[CONF_EXCLUDE]
     exclude_t = exclude.get(CONF_EVENT_TYPES, [])
     instance = opp.data[DATA_INSTANCE] = Recorder(
@@ -197,6 +201,23 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
 
     opp.services.async_register(
         DOMAIN, SERVICE_PURGE, async_handle_purge_service, schema=SERVICE_PURGE_SCHEMA
+    )
+
+    async def async_handle_enable_sevice(service):
+        instance.set_enable(True)
+
+    opp.services.async_register(
+        DOMAIN, SERVICE_ENABLE, async_handle_enable_sevice, schema=SERVICE_ENABLE_SCHEMA
+    )
+
+    async def async_handle_disable_service(service):
+        instance.set_enable(False)
+
+    opp.services.async_register(
+        DOMAIN,
+        SERVICE_DISABLE,
+        async_handle_disable_service,
+        schema=SERVICE_DISABLE_SCHEMA,
     )
 
     return await instance.async_db_ready
@@ -255,6 +276,12 @@ class Recorder(threading.Thread):
         self.get_session = None
         self._completed_database_setup = None
 
+        self.enabled = True
+
+    def set_enable(self, enable):
+        """Enable or disable recording events and states."""
+        self.enabled = enable
+
     @callback
     def async_initialize(self):
         """Initialize the recorder."""
@@ -289,7 +316,7 @@ class Recorder(threading.Thread):
             return
 
         shutdown_task = object()
-        opp.started = concurrent.futures.Future()
+        opp_started = concurrent.futures.Future()
 
         @callback
         def register():
@@ -298,24 +325,24 @@ class Recorder(threading.Thread):
 
             def shutdown(event):
                 """Shut down the Recorder."""
-                if not.opp_started.done():
-                    opp.started.set_result(shutdown_task)
+                if not opp_started.done():
+                    opp_started.set_result(shutdown_task)
                 self.queue.put(None)
                 self.join()
 
             self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, shutdown)
 
             if self.opp.state == CoreState.running:
-                opp.started.set_result(None)
+                opp_started.set_result(None)
             else:
 
                 @callback
-                def notify.opp_started(event):
+                def notify_opp_started(event):
                     """Notify that opp has started."""
-                    opp.started.set_result(None)
+                    opp_started.set_result(None)
 
                 self.opp.bus.async_listen_once(
-                    EVENT_OPENPEERPOWER_START, notify.opp_started
+                    EVENT_OPENPEERPOWER_START, notify_opp_started
                 )
 
         self.opp.add_job(register)
@@ -411,6 +438,9 @@ class Recorder(threading.Thread):
                 if self._timechanges_seen >= self.commit_interval:
                     self._timechanges_seen = 0
                     self._commit_event_session_or_recover()
+            return
+
+        if not self.enabled:
             return
 
         try:

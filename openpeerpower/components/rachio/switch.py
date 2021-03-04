@@ -6,7 +6,7 @@ import logging
 import voluptuous as vol
 
 from openpeerpower.components.switch import SwitchEntity
-from openpeerpower.const import ATTR_ENTITY_ID
+from openpeerpower.const import ATTR_ENTITY_ID, ATTR_ID
 from openpeerpower.core import callback
 from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers import config_validation as cv, entity_platform
@@ -67,7 +67,6 @@ from .webhooks import (
 _LOGGER = logging.getLogger(__name__)
 
 ATTR_DURATION = "duration"
-ATTR_ID = "id"
 ATTR_PERCENT = "percent"
 ATTR_SCHEDULE_SUMMARY = "Summary"
 ATTR_SCHEDULE_ENABLED = "Enabled"

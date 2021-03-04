@@ -4,8 +4,8 @@
             "already_configured": "El dispositivo ya est\u00e1 configurado",
             "credential_error": "Error al obtener las credenciales.",
             "no_devices_found": "No se encuentran dispositivos PlayStation 4 en la red.",
-            "port_987_bind_error": "No se ha podido unir al puerto 987. Consulta la [documentaci\u00f3n](https://www.open-peer-power.io/components/ps4/) para m\u00e1s informaci\u00f3n.",
-            "port_997_bind_error": "No se ha podido unir al puerto 997. Consulta la [documentaci\u00f3n](https://www.open-peer-power.io/components/ps4/) para m\u00e1s informaci\u00f3n."
+            "port_987_bind_error": "No se ha podido unir al puerto 987. Consulta la [documentaci\u00f3n](https://www.openpeerpower.io/components/ps4/) para m\u00e1s informaci\u00f3n.",
+            "port_997_bind_error": "No se ha podido unir al puerto 997. Consulta la [documentaci\u00f3n](https://www.openpeerpower.io/components/ps4/) para m\u00e1s informaci\u00f3n."
         },
         "error": {
             "cannot_connect": "No se pudo conectar",
@@ -25,7 +25,7 @@
                     "name": "Nombre",
                     "region": "Regi\u00f3n"
                 },
-                "description": "Introduce la informaci\u00f3n de tu PlayStation 4. Para el 'PIN', ve a los 'Ajustes' en tu PlayStation 4. Despu\u00e9s dir\u00edgete hasta 'Ajustes de conexi\u00f3n de la aplicaci\u00f3n para m\u00f3viles' y selecciona 'A\u00f1adir dispositivo'. Introduce el PIN mostrado. Consulta la [documentaci\u00f3n](https://www.open-peer-power.io/components/ps4/) para m\u00e1s informaci\u00f3n.",
+                "description": "Introduce la informaci\u00f3n de tu PlayStation 4. Para el 'PIN', ve a los 'Ajustes' en tu PlayStation 4. Despu\u00e9s dir\u00edgete hasta 'Ajustes de conexi\u00f3n de la aplicaci\u00f3n para m\u00f3viles' y selecciona 'A\u00f1adir dispositivo'. Introduce el PIN mostrado. Consulta la [documentaci\u00f3n](https://www.openpeerpower.io/components/ps4/) para m\u00e1s informaci\u00f3n.",
                 "title": "PlayStation 4"
             },
             "mode": {

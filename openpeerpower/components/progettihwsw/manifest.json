@@ -1,7 +1,7 @@
 {
   "domain": "progettihwsw",
   "name": "ProgettiHWSW Automation",
-  "documentation": "https://www.open-peer-power.io/integrations/progettihwsw",
+  "documentation": "https://www.openpeerpower.io/integrations/progettihwsw",
   "codeowners": [
     "@ardaseremet"
   ],

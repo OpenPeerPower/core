@@ -39,6 +39,8 @@ _LOGGER = logging.getLogger(__name__)
 DATA_CONFIG_ENTRY_LOCK = "point_config_entry_lock"
 CONFIG_ENTRY_IS_SETUP = "point_config_entry_is_setup"
 
+PLATFORMS = ["binary_sensor", "sensor"]
+
 CONFIG_SCHEMA = vol.Schema(
     {
         DOMAIN: vol.Schema(
@@ -137,8 +139,8 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     session = opp.data[DOMAIN].pop(entry.entry_id)
     await session.remove_webhook()
 
-    for component in ("binary_sensor", "sensor"):
-        await opp.config_entries.async_forward_entry_unload(entry, component)
+    for platform in PLATFORMS:
+        await opp.config_entries.async_forward_entry_unload(entry, platform)
 
     if not opp.data[DOMAIN]:
         opp.data.pop(DOMAIN)
@@ -167,12 +169,12 @@ class MinutPointClient:
         """Initialize the Minut data object."""
         self._known_devices = set()
         self._known_homes = set()
-        self.opp = opp
+        self._opp = opp
         self._config_entry = config_entry
         self._is_available = True
         self._client = session
 
-        async_track_time_interval(self.opp, self.update, SCAN_INTERVAL)
+        async_track_time_interval(self._opp, self.update, SCAN_INTERVAL)
 
     async def update(self, *args):
         """Periodically poll the cloud for current state."""
@@ -183,21 +185,21 @@ class MinutPointClient:
         if not await self._client.update() and self._is_available:
             self._is_available = False
             _LOGGER.warning("Device is unavailable")
-            async_dispatcher_send(self.opp, SIGNAL_UPDATE_ENTITY)
+            async_dispatcher_send(self._opp, SIGNAL_UPDATE_ENTITY)
             return
 
-        async def new_device(device_id, component):
+        async def new_device(device_id, platform):
             """Load new device."""
-            config_entries_key = f"{component}.{DOMAIN}"
-            async with self.opp.data[DATA_CONFIG_ENTRY_LOCK]:
-                if config_entries_key not in self.opp.data[CONFIG_ENTRY_IS_SETUP]:
-                    await self.opp.config_entries.async_forward_entry_setup(
-                        self._config_entry, component
+            config_entries_key = f"{platform}.{DOMAIN}"
+            async with self._opp.data[DATA_CONFIG_ENTRY_LOCK]:
+                if config_entries_key not in self._opp.data[CONFIG_ENTRY_IS_SETUP]:
+                    await self._opp.config_entries.async_forward_entry_setup(
+                        self._config_entry, platform
                     )
-                    self.opp.data[CONFIG_ENTRY_IS_SETUP].add(config_entries_key)
+                    self._opp.data[CONFIG_ENTRY_IS_SETUP].add(config_entries_key)
 
             async_dispatcher_send(
-                self.opp, POINT_DISCOVERY_NEW.format(component, DOMAIN), device_id
+                self._opp, POINT_DISCOVERY_NEW.format(platform, DOMAIN), device_id
             )
 
         self._is_available = True
@@ -207,10 +209,10 @@ class MinutPointClient:
                 self._known_homes.add(home_id)
         for device in self._client.devices:
             if device.device_id not in self._known_devices:
-                for component in ("sensor", "binary_sensor"):
-                    await new_device(device.device_id, component)
+                for platform in PLATFORMS:
+                    await new_device(device.device_id, platform)
                 self._known_devices.add(device.device_id)
-        async_dispatcher_send(self.opp, SIGNAL_UPDATE_ENTITY)
+        async_dispatcher_send(self._opp, SIGNAL_UPDATE_ENTITY)
 
     def device(self, device_id):
         """Return device representation."""

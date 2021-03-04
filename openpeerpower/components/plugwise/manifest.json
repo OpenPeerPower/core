@@ -1,7 +1,7 @@
 {
   "domain": "plugwise",
   "name": "Plugwise",
-  "documentation": "https://www.open-peer-power.io/integrations/plugwise",
+  "documentation": "https://www.openpeerpower.io/integrations/plugwise",
   "requirements": ["plugwise==0.8.5"],
   "codeowners": ["@CoMPaTech", "@bouwew", "@brefra"],
   "zeroconf": ["_plugwise._tcp.local."],

@@ -28,7 +28,7 @@ class RoonHub:
 
     def __init__(self, opp):
         """Initialise the RoonHub."""
-        self.opp = opp
+        self._opp = opp
 
     async def discover(self):
         """Try and discover roon servers."""
@@ -39,7 +39,7 @@ class RoonHub:
             return servers
 
         discovery = RoonDiscovery(None)
-        servers = await self.opp.async_add_executor_job(
+        servers = await self._opp.async_add_executor_job(
             get_discovered_servers, discovery
         )
         _LOGGER.debug("Servers = %s", servers)
@@ -76,7 +76,7 @@ class RoonHub:
 
             await asyncio.sleep(AUTHENTICATE_TIMEOUT)
 
-        await self.opp.async_add_executor_job(stop_apis, apis)
+        await self._opp.async_add_executor_job(stop_apis, apis)
 
         return (token, core_id)
 

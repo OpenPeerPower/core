@@ -30,7 +30,7 @@ MAX_NUM_DEVICES_TO_DISCOVER = 25
 
 AUTH_HELP_URL_KEY = "auth_help_url"
 AUTH_HELP_URL_VALUE = (
-    "https://www.open-peer-power.io/integrations/roomba/#retrieving-your-credentials"
+    "https://www.openpeerpower.io/integrations/roomba/#retrieving-your-credentials"
 )
 
 
