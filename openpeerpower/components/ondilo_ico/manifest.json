@@ -2,7 +2,7 @@
   "domain": "ondilo_ico",
   "name": "Ondilo ICO",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/ondilo_ico",
+  "documentation": "https://www.openpeerpower.io/integrations/ondilo_ico",
   "requirements": [
     "ondilo==0.2.0"
   ],

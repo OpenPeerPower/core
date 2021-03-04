@@ -1,7 +1,7 @@
 {
   "domain": "onvif",
   "name": "ONVIF",
-  "documentation": "https://www.open-peer-power.io/integrations/onvif",
+  "documentation": "https://www.openpeerpower.io/integrations/onvif",
   "requirements": [
     "onvif-zeep-async==1.0.0",
     "WSDiscovery==2.0.0",

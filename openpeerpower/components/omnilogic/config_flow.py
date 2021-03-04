@@ -9,7 +9,7 @@ from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
 from openpeerpower.core import callback
 from openpeerpower.helpers import aiohttp_client
 
-from .const import CONF_SCAN_INTERVAL, DOMAIN  # pylint:disable=unused-import
+from .const import CONF_SCAN_INTERVAL, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 

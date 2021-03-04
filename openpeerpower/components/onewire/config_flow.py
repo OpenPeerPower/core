@@ -5,7 +5,7 @@ from openpeerpower.config_entries import CONN_CLASS_LOCAL_POLL, ConfigFlow
 from openpeerpower.const import CONF_HOST, CONF_PORT, CONF_TYPE
 from openpeerpower.helpers.typing import OpenPeerPowerType
 
-from .const import (  # pylint: disable=unused-import
+from .const import (
     CONF_MOUNT_DIR,
     CONF_TYPE_OWFS,
     CONF_TYPE_OWSERVER,
@@ -170,7 +170,7 @@ class OneWireFlowHandler(ConfigFlow, domain=DOMAIN):
         # OWFS
         if platform_config[CONF_TYPE] == CONF_TYPE_OWFS:  # pragma: no cover
             # This part of the implementation does not conform to policy regarding 3rd-party libraries, and will not longer be updated.
-            # https://developers.open-peer-power.io/docs/creating_platform_code_review/#5-communication-with-devicesservices
+            # https://developers.openpeerpower.io/docs/creating_platform_code_review/#5-communication-with-devicesservices
             await self.async_set_unique_id(
                 f"{CONF_TYPE_OWFS}:{platform_config[CONF_MOUNT_DIR]}"
             )

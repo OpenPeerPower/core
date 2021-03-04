@@ -1,7 +1,7 @@
 {
   "domain": "number",
   "name": "Number",
-  "documentation": "https://www.open-peer-power.io/integrations/number",
+  "documentation": "https://www.openpeerpower.io/integrations/number",
   "codeowners": ["@open-peer-power/core", "@Shulyaka"],
   "quality_scale": "internal"
 }

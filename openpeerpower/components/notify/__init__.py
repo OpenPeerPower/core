@@ -2,7 +2,7 @@
 import asyncio
 from functools import partial
 import logging
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, cast
 
 import voluptuous as vol
 
@@ -12,10 +12,12 @@ from openpeerpower.core import ServiceCall
 from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers import config_per_platform, discovery
 import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.service import async_set_service_schema
 from openpeerpower.helpers.typing import OpenPeerPowerType
-from openpeerpower.loader import bind_opp
+from openpeerpower.loader import async_get_integration, bind_opp
 from openpeerpower.setup import async_prepare_setup_platform
 from openpeerpower.util import slugify
+from openpeerpower.util.yaml import load_yaml
 
 # mypy: allow-untyped-defs, no-check-untyped-defs
 
@@ -40,6 +42,9 @@ SERVICE_NOTIFY = "notify"
 SERVICE_PERSISTENT_NOTIFICATION = "persistent_notification"
 
 NOTIFY_SERVICES = "notify_services"
+
+CONF_DESCRIPTION = "description"
+CONF_FIELDS = "fields"
 
 PLATFORM_SCHEMA = vol.Schema(
     {vol.Required(CONF_PLATFORM): cv.string, vol.Optional(CONF_NAME): cv.string},
@@ -109,7 +114,7 @@ def _async_integration_has_notify_services(
 class BaseNotificationService:
     """An abstract class for notification services."""
 
-    opp, Optional[OpenPeerPowerType] = None
+    opp: Optional[OpenPeerPowerType] = None
     # Name => target
     registered_targets: Dict[str, str]
 
@@ -161,6 +166,13 @@ class BaseNotificationService:
         self._target_service_name_prefix = target_service_name_prefix
         self.registered_targets = {}
 
+        # Load service descriptions from notify/services.yaml
+        integration = await async_get_integration(opp, DOMAIN)
+        services_yaml = integration.file_path / "services.yaml"
+        self.services_dict = cast(
+            dict, await opp.async_add_executor_job(load_yaml, str(services_yaml))
+        )
+
     async def async_register_services(self) -> None:
         """Create or update the notify services."""
         assert self.opp
@@ -185,6 +197,13 @@ class BaseNotificationService:
                     self._async_notify_message_service,
                     schema=NOTIFY_SERVICE_SCHEMA,
                 )
+                # Register the service description
+                service_desc = {
+                    CONF_NAME: f"Send a notification via {target_name}",
+                    CONF_DESCRIPTION: f"Sends a notification message using the {target_name} integration.",
+                    CONF_FIELDS: self.services_dict[SERVICE_NOTIFY][CONF_FIELDS],
+                }
+                async_set_service_schema(self.opp, DOMAIN, target_name, service_desc)
 
             for stale_target_name in stale_targets:
                 del self.registered_targets[stale_target_name]
@@ -202,6 +221,14 @@ class BaseNotificationService:
             self._async_notify_message_service,
             schema=NOTIFY_SERVICE_SCHEMA,
         )
+
+        # Register the service description
+        service_desc = {
+            CONF_NAME: f"Send a notification with {self._service_name}",
+            CONF_DESCRIPTION: f"Sends a notification message using the {self._service_name} service.",
+            CONF_FIELDS: self.services_dict[SERVICE_NOTIFY][CONF_FIELDS],
+        }
+        async_set_service_schema(self.opp, DOMAIN, self._service_name, service_desc)
 
     async def async_unregister_services(self) -> None:
         """Unregister the notify services."""

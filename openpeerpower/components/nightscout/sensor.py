@@ -8,10 +8,11 @@ from aiohttp import ClientError
 from py_nightscout import Api as NightscoutAPI
 
 from openpeerpower.config_entries import ConfigEntry
+from openpeerpower.const import ATTR_DATE
 from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers.entity import Entity
 
-from .const import ATTR_DATE, ATTR_DELTA, ATTR_DEVICE, ATTR_DIRECTION, DOMAIN
+from .const import ATTR_DELTA, ATTR_DEVICE, ATTR_DIRECTION, DOMAIN
 
 SCAN_INTERVAL = timedelta(minutes=1)
 

@@ -1,8 +1,8 @@
 {
   "domain": "ping",
   "name": "Ping (ICMP)",
-  "documentation": "https://www.open-peer-power.io/integrations/ping",
+  "documentation": "https://www.openpeerpower.io/integrations/ping",
   "codeowners": [],
-  "requirements": ["icmplib==2.0"],
+  "requirements": ["icmplib==2.0.2"],
   "quality_scale": "internal"
 }

@@ -1,6 +1,6 @@
 {
   "domain": "openhardwaremonitor",
   "name": "Open Hardware Monitor",
-  "documentation": "https://www.open-peer-power.io/integrations/openhardwaremonitor",
+  "documentation": "https://www.openpeerpower.io/integrations/openhardwaremonitor",
   "codeowners": []
 }

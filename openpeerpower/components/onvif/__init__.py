@@ -88,9 +88,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     if device.capabilities.events:
         platforms += ["binary_sensor", "sensor"]
 
-    for component in platforms:
+    for platform in platforms:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, device.async_stop)
@@ -111,8 +111,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     return all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in platforms
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in platforms
             ]
         )
     )

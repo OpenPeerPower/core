@@ -34,7 +34,7 @@ class ONVIFBaseEntity(Entity):
                 # we can not guarantee serial number either.  Due to this, we have
                 # adopted an either/or approach in the config entry setup, and can
                 # guarantee that one or the other will be populated.
-                # See: https://github.com/open-peer-power/core/issues/35883
+                # See: https://github.com/openpeerpower/core/issues/35883
                 (DOMAIN, self.device.info.mac or self.device.info.serial_number)
             },
         }

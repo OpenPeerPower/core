@@ -4,7 +4,7 @@ import secrets
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_WEBHOOK_ID
 
-from .const import DOMAIN  # noqa pylint: disable=unused-import
+from .const import DOMAIN  # pylint: disable=unused-import
 from .helper import supports_encryption
 
 CONF_SECRET = "secret"
@@ -45,7 +45,7 @@ class OwnTracksFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 "webhook_url": webhook_url,
                 "android_url": "https://play.google.com/store/apps/details?id=org.owntracks.android",
                 "ios_url": "https://itunes.apple.com/us/app/owntracks/id692424691?mt=8",
-                "docs_url": "https://www.open-peer-power.io/integrations/owntracks/",
+                "docs_url": "https://www.openpeerpower.io/integrations/owntracks/",
             },
         )
 

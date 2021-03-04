@@ -94,13 +94,13 @@ class UserOnboardingView(_BaseOnboardingView):
     )
     async def post(self, request, data):
         """Handle user creation, area creation."""
-       opp = request.app["opp"]
+        opp = request.app["opp"]
 
         async with self._lock:
             if self._async_is_done():
                 return self.json_message("User step already done", HTTP_FORBIDDEN)
 
-            provider = _async_get(opp_provider(opp)
+            provider = _async_get_opp_provider(opp)
             await provider.async_initialize()
 
             user = await opp.auth.async_create_user(data["name"], [GROUP_ID_ADMIN])
@@ -148,7 +148,7 @@ class CoreConfigOnboardingView(_BaseOnboardingView):
 
     async def post(self, request):
         """Handle finishing core config step."""
-       opp = request.app["opp"]
+        opp = request.app["opp"]
 
         async with self._lock:
             if self._async_is_done():
@@ -163,7 +163,7 @@ class CoreConfigOnboardingView(_BaseOnboardingView):
             )
 
             if (
-                opp.components.oppio.is oppio()
+                opp.components.oppio.is_oppio()
                 and "raspberrypi" in opp.components.oppio.get_core_info()["machine"]
             ):
                 await opp.config_entries.flow.async_init(
@@ -185,7 +185,7 @@ class IntegrationOnboardingView(_BaseOnboardingView):
     )
     async def post(self, request, data):
         """Handle token creation."""
-       opp = request.app["opp"]
+        opp = request.app["opp"]
         refresh_token_id = request[KEY_OPP_REFRESH_TOKEN_ID]
 
         async with self._lock:
@@ -218,7 +218,7 @@ class IntegrationOnboardingView(_BaseOnboardingView):
 
 
 @callback
-def _async_get(opp_provider(opp):
+def _async_get_opp_provider(opp):
     """Get the Open Peer Power auth provider."""
     for prv in opp.auth.auth_providers:
         if prv.type == "openpeerpower":

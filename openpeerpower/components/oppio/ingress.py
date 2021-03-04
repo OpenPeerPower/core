@@ -20,19 +20,19 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @callback
-def async_setup_ingress_view(opp.OpenPeerPowerType, host: str):
+def async_setup_ingress_view(opp: OpenPeerPowerType, host: str):
     """Auth setup."""
-    websession = opp.elpers.aiohttp_client.async_get_clientsession()
+    websession = opp.helpers.aiohttp_client.async_get_clientsession()
 
-    opp._ingress = OppIOIngress(host, websession)
-    opp.ttp.register_view(opp._ingress)
+    oppio_ingress = OppIOIngress(host, websession)
+    opp.http.register_view(oppio_ingress)
 
 
 class OppIOIngress(OpenPeerPowerView):
     """Opp.io view to handle base part."""
 
-    name = "api:opp.:ingress"
-    url = "/api/opp._ingress/{token}/{path:.*}"
+    name = "api:oppio:ingress"
+    url = "/api/oppio_ingress/{token}/{path:.*}"
     requires_auth = False
 
     def __init__(self, host: str, websession: aiohttp.ClientSession):
@@ -44,31 +44,31 @@ class OppIOIngress(OpenPeerPowerView):
         """Create URL to service."""
         return f"http://{self._host}/ingress/{token}/{path}"
 
-    async def _op.dle(
+    async def _handle(
         self, request: web.Request, token: str, path: str
     ) -> Union[web.Response, web.StreamResponse, web.WebSocketResponse]:
         """Route data to Opp.io ingress service."""
         try:
             # Websocket
             if _is_websocket(request):
-                return await self._op.dle_websocket(request, token, path)
+                return await self._handle_websocket(request, token, path)
 
             # Request
-            return await self._op.dle_request(request, token, path)
+            return await self._handle_request(request, token, path)
 
         except aiohttp.ClientError as err:
             _LOGGER.debug("Ingress error with %s / %s: %s", token, path, err)
 
         raise HTTPBadGateway() from None
 
-    get = _op.dle
-    post = _op.dle
-    put = _op.dle
-    delete = _op.dle
-    patch = _op.dle
-    options = _op.dle
+    get = _handle
+    post = _handle
+    put = _handle
+    delete = _handle
+    patch = _handle
+    options = _handle
 
-    async def _op.dle_websocket(
+    async def _handle_websocket(
         self, request: web.Request, token: str, path: str
     ) -> web.WebSocketResponse:
         """Ingress route for websocket."""
@@ -112,7 +112,7 @@ class OppIOIngress(OpenPeerPowerView):
 
         return ws_server
 
-    async def _op.dle_request(
+    async def _handle_request(
         self, request: web.Request, token: str, path: str
     ) -> Union[web.Response, web.StreamResponse]:
         """Ingress route for request."""
@@ -182,7 +182,7 @@ def _init_header(
     headers[X_OPPIO] = os.environ.get("OPPIO_TOKEN", "")
 
     # Ingress information
-    headers[X_INGRESS_PATH] = f"/api/opp._ingress/{token}"
+    headers[X_INGRESS_PATH] = f"/api/oppio_ingress/{token}"
 
     # Set X-Forwarded-For
     forward_for = request.headers.get(hdrs.X_FORWARDED_FOR)

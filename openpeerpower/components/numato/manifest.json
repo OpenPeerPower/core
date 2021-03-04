@@ -1,7 +1,7 @@
 {
   "domain": "numato",
   "name": "Numato USB GPIO Expander",
-  "documentation": "https://www.open-peer-power.io/integrations/numato",
+  "documentation": "https://www.openpeerpower.io/integrations/numato",
   "requirements": ["numato-gpio==0.8.0"],
   "codeowners": ["@clssn"]
 }

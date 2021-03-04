@@ -8,15 +8,20 @@ from haphilipsjs import ConnectionFailure, PhilipsTV
 
 from openpeerpower.components.automation import AutomationActionType
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.const import CONF_API_VERSION, CONF_HOST
-from openpeerpower.core import Context, OppJob, OpenPeerPower, callback
+from openpeerpower.const import (
+    CONF_API_VERSION,
+    CONF_HOST,
+    CONF_PASSWORD,
+    CONF_USERNAME,
+)
+from openpeerpower.core import CALLBACK_TYPE, Context, OppJob, OpenPeerPower, callback
 from openpeerpower.helpers.debounce import Debouncer
 from openpeerpower.helpers.typing import OpenPeerPowerType
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import DOMAIN
 
-PLATFORMS = ["media_player"]
+PLATFORMS = ["media_player", "remote"]
 
 LOGGER = logging.getLogger(__name__)
 
@@ -30,16 +35,21 @@ async def async_setup(opp: OpenPeerPower, config: dict):
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Philips TV from a config entry."""
 
-    tvapi = PhilipsTV(entry.data[CONF_HOST], entry.data[CONF_API_VERSION])
+    tvapi = PhilipsTV(
+        entry.data[CONF_HOST],
+        entry.data[CONF_API_VERSION],
+        username=entry.data.get(CONF_USERNAME),
+        password=entry.data.get(CONF_PASSWORD),
+    )
 
     coordinator = PhilipsTVDataUpdateCoordinator(opp, tvapi)
 
     await coordinator.async_refresh()
     opp.data[DOMAIN][entry.entry_id] = coordinator
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
 
     return True
@@ -50,8 +60,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )
@@ -94,7 +104,7 @@ class PluggableAction:
     ):
         """Run all turn on triggers."""
         for job, variables in self._actions.values():
-            opp.async_run(opp_job(job, variables, context)
+            opp.async_run_opp_job(job, variables, context)
 
 
 class PhilipsTVDataUpdateCoordinator(DataUpdateCoordinator[None]):
@@ -103,7 +113,9 @@ class PhilipsTVDataUpdateCoordinator(DataUpdateCoordinator[None]):
     def __init__(self, opp, api: PhilipsTV) -> None:
         """Set up the coordinator."""
         self.api = api
+        self._notify_future: Optional[asyncio.Task] = None
 
+        @callback
         def _update_listeners():
             for update_callback in self._listeners:
                 update_callback()
@@ -120,9 +132,43 @@ class PhilipsTVDataUpdateCoordinator(DataUpdateCoordinator[None]):
             ),
         )
 
+    async def _notify_task(self):
+        while self.api.on and self.api.notify_change_supported:
+            if await self.api.notifyChange(130):
+                self.async_set_updated_data(None)
+
+    @callback
+    def _async_notify_stop(self):
+        if self._notify_future:
+            self._notify_future.cancel()
+            self._notify_future = None
+
+    @callback
+    def _async_notify_schedule(self):
+        if (
+            (self._notify_future is None or self._notify_future.done())
+            and self.api.on
+            and self.api.notify_change_supported
+        ):
+            self._notify_future = asyncio.create_task(self._notify_task())
+
+    @callback
+    def async_remove_listener(self, update_callback: CALLBACK_TYPE) -> None:
+        """Remove data update."""
+        super().async_remove_listener(update_callback)
+        if not self._listeners:
+            self._async_notify_stop()
+
+    @callback
+    def _async_stop_refresh(self, event: asyncio.Event) -> None:
+        super()._async_stop_refresh(event)
+        self._async_notify_stop()
+
+    @callback
     async def _async_update_data(self):
         """Fetch the latest data from the source."""
         try:
-            await self.opp.async_add_executor_job(self.api.update)
+            await self.api.update()
+            self._async_notify_schedule()
         except ConnectionFailure:
             pass

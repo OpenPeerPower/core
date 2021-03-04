@@ -300,7 +300,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
         logging.getLogger(f"{__name__}.yaml_collection"), id_manager
     )
     storage_collection = PersonStorageCollection(
-        Person Store(opp, STORAGE_VERSION, STORAGE_KEY),
+        PersonStore(opp, STORAGE_VERSION, STORAGE_KEY),
         logging.getLogger(f"{__name__}.storage_collection"),
         id_manager,
         yaml_collection,
@@ -430,13 +430,13 @@ class Person(RestoreEntity):
             # Update person now if opp is already running.
             await self.async_update_config(self._config)
         else:
-            # Wait for(opp start to not have race between person
+            # Wait for opp start to not have race between person
             # and device trackers finishing setup.
-            async def person_start(opp(now):
+            async def person_start_opp(now):
                 await self.async_update_config(self._config)
 
             self.opp.bus.async_listen_once(
-                EVENT_OPENPEERPOWER_START, person_start(opp
+                EVENT_OPENPEERPOWER_START, person_start_opp
             )
 
     async def async_update_config(self, config):

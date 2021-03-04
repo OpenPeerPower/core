@@ -124,7 +124,7 @@ class OppIO:
 
     @_api_bool
     def restart_openpeerpower(self):
-        """Restart Open -Peer-Power container.
+        """Restart Open-Peer-Power container.
 
         This method return a coroutine.
         """
@@ -132,7 +132,7 @@ class OppIO:
 
     @_api_bool
     def stop_openpeerpower(self):
-        """Stop Open -Peer-Power container.
+        """Stop Open-Peer-Power container.
 
         This method return a coroutine.
         """
@@ -155,7 +155,7 @@ class OppIO:
         return self.send_command(f"/discovery/{uuid}", method="get")
 
     @_api_bool
-    async def update_opp.pi(self, http_config, refresh_token):
+    async def update_opp_api(self, http_config, refresh_token):
         """Update Open Peer Power API data on Opp.io."""
         port = http_config.get(CONF_SERVER_PORT) or SERVER_PORT
         options = {
@@ -174,8 +174,8 @@ class OppIO:
         return await self.send_command("/openpeerpower/options", payload=options)
 
     @_api_bool
-    def update_opp.imezone(self, timezone):
-        """Update Open -Peer-Power timezone data on Opp.io.
+    def update_opp_timezone(self, timezone):
+        """Update Open-Peer-Power timezone data on Opp.io.
 
         This method return a coroutine.
         """

@@ -2,7 +2,7 @@
   "domain": "ozw",
   "name": "OpenZWave (beta)",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/ozw",
+  "documentation": "https://www.openpeerpower.io/integrations/ozw",
   "requirements": [
     "python-openzwave-mqtt[mqtt-client]==1.4.0"
   ],

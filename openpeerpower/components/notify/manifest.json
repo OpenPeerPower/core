@@ -1,7 +1,7 @@
 {
   "domain": "notify",
   "name": "Notifications",
-  "documentation": "https://www.open-peer-power.io/integrations/notify",
+  "documentation": "https://www.openpeerpower.io/integrations/notify",
   "codeowners": ["@open-peer-power/core"],
   "quality_scale": "internal"
 }

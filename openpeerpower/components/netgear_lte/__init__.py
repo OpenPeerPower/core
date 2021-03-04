@@ -131,7 +131,7 @@ DISCONNECT_LTE_SCHEMA = vol.Schema({vol.Optional(ATTR_HOST): cv.string})
 class ModemData:
     """Class for modem state."""
 
-   opp = attr.ib()
+    opp = attr.ib()
     host = attr.ib()
     modem = attr.ib()
 

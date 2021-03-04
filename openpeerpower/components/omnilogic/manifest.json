@@ -2,7 +2,7 @@
   "domain": "omnilogic",
   "name": "Hayward Omnilogic",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/omnilogic",
+  "documentation": "https://www.openpeerpower.io/integrations/omnilogic",
   "requirements": ["omnilogic==0.4.2"],
   "codeowners": ["@oliver84","@djtimca","@gentoosu"]
 }

@@ -8,6 +8,7 @@ from panasonic_viera import EncryptionRequired, Keys, RemoteControl, SOAPError
 import voluptuous as vol
 
 from openpeerpower.components.media_player.const import DOMAIN as MEDIA_PLAYER_DOMAIN
+from openpeerpower.components.remote import DOMAIN as REMOTE_DOMAIN
 from openpeerpower.config_entries import SOURCE_IMPORT
 from openpeerpower.const import CONF_HOST, CONF_NAME, CONF_PORT, STATE_OFF, STATE_ON
 import openpeerpower.helpers.config_validation as cv
@@ -46,7 +47,7 @@ CONFIG_SCHEMA = vol.Schema(
     extra=vol.ALLOW_EXTRA,
 )
 
-PLATFORMS = [MEDIA_PLAYER_DOMAIN]
+PLATFORMS = [MEDIA_PLAYER_DOMAIN, REMOTE_DOMAIN]
 
 
 async def async_setup(opp, config):
@@ -103,9 +104,9 @@ async def async_setup_entry(opp, config_entry):
             data={**config, ATTR_DEVICE_INFO: device_info},
         )
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, component)
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
     return True
@@ -116,8 +117,8 @@ async def async_unload_entry(opp, config_entry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(config_entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_unload(config_entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )
@@ -141,7 +142,7 @@ class Remote:
         encryption_key=None,
     ):
         """Initialize the Remote class."""
-        self.opp = opp
+        self._opp = opp
 
         self._host = host
         self._port = port
@@ -167,7 +168,7 @@ class Remote:
                 params["app_id"] = self._app_id
                 params["encryption_key"] = self._encryption_key
 
-            self._control = await self.opp.async_add_executor_job(
+            self._control = await self._opp.async_add_executor_job(
                 partial(RemoteControl, self._host, self._port, **params)
             )
 
@@ -219,6 +220,7 @@ class Remote:
         """Turn off the TV."""
         if self.state != STATE_OFF:
             await self.async_send_key(Keys.power)
+            self.state = STATE_OFF
             await self.async_update()
 
     async def async_set_mute(self, enable):
@@ -246,7 +248,7 @@ class Remote:
     async def _handle_errors(self, func, *args):
         """Handle errors from func, set available and reconnect if needed."""
         try:
-            result = await self.opp.async_add_executor_job(func, *args)
+            result = await self._opp.async_add_executor_job(func, *args)
             self.state = STATE_ON
             self.available = True
             return result

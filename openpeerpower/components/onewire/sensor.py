@@ -241,7 +241,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         config[CONF_TYPE] = CONF_TYPE_SYSBUS
     else:  # pragma: no cover
         # This part of the implementation does not conform to policy regarding 3rd-party libraries, and will not longer be updated.
-        # https://developers.open-peer-power.io/docs/creating_platform_code_review/#5-communication-with-devicesservices
+        # https://developers.openpeerpower.io/docs/creating_platform_code_review/#5-communication-with-devicesservices
         config[CONF_TYPE] = CONF_TYPE_OWFS
 
     opp.async_create_task(
@@ -362,14 +362,14 @@ def get_entities(onewirehub: OneWireHub, config):
     # We have an owfs mounted
     else:  # pragma: no cover
         # This part of the implementation does not conform to policy regarding 3rd-party libraries, and will not longer be updated.
-        # https://developers.open-peer-power.io/docs/creating_platform_code_review/#5-communication-with-devicesservices
+        # https://developers.openpeerpower.io/docs/creating_platform_code_review/#5-communication-with-devicesservices
         base_dir = config[CONF_MOUNT_DIR]
         _LOGGER.debug("Initializing using OWFS %s", base_dir)
         _LOGGER.warning(
             "The OWFS implementation of 1-Wire sensors is deprecated, "
             "and should be migrated to OWServer (on localhost:4304). "
             "If migration to OWServer is not feasible on your installation, "
-            "please raise an issue at https://github.com/open-peer-power/core/issues/new"
+            "please raise an issue at https://github.com/openpeerpower/core/issues/new"
             "?title=Unable%20to%20migrate%20onewire%20from%20OWFS%20to%20OWServer",
         )
         for family_file_path in glob(os.path.join(base_dir, "*", "family")):
@@ -435,7 +435,7 @@ class OneWireOWFSSensor(OneWireBaseEntity):  # pragma: no cover
     """Implementation of a 1-Wire sensor through owfs.
 
     This part of the implementation does not conform to policy regarding 3rd-party libraries, and will not longer be updated.
-    https://developers.open-peer-power.io/docs/creating_platform_code_review/#5-communication-with-devicesservices
+    https://developers.openpeerpower.io/docs/creating_platform_code_review/#5-communication-with-devicesservices
     """
 
     @property

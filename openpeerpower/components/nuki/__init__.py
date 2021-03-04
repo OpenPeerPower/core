@@ -11,7 +11,7 @@ import openpeerpower.helpers.config_validation as cv
 
 from .const import DEFAULT_PORT, DOMAIN
 
-NUKI_PLATFORMS = ["lock"]
+PLATFORMS = ["lock"]
 UPDATE_INTERVAL = timedelta(seconds=30)
 
 NUKI_SCHEMA = vol.Schema(
@@ -29,7 +29,7 @@ async def async_setup(opp, config):
     """Set up the Nuki component."""
     opp.data.setdefault(DOMAIN, {})
 
-    for platform in NUKI_PLATFORMS:
+    for platform in PLATFORMS:
         confs = config.get(platform)
         if confs is None:
             continue

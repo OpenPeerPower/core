@@ -120,7 +120,7 @@ class OpenHardwareMonitorData:
         """Initialize the Open Hardware Monitor data-handler."""
         self.data = None
         self._config = config
-        self.opp = opp
+        self._opp = opp
         self.devices = []
         self.initialize(utcnow())
 

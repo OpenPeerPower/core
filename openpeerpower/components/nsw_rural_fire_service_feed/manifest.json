@@ -1,7 +1,7 @@
 {
   "domain": "nsw_rural_fire_service_feed",
   "name": "NSW Rural Fire Service Incidents",
-  "documentation": "https://www.open-peer-power.io/integrations/nsw_rural_fire_service_feed",
+  "documentation": "https://www.openpeerpower.io/integrations/nsw_rural_fire_service_feed",
   "requirements": ["aio_geojson_nsw_rfs_incidents==0.3"],
   "codeowners": ["@exxamalte"]
 }

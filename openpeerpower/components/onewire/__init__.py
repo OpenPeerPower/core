@@ -5,7 +5,7 @@ from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers.typing import OpenPeerPowerType
 
-from .const import DOMAIN, SUPPORTED_PLATFORMS
+from .const import DOMAIN, PLATFORMS
 from .onewirehub import CannotConnect, OneWireHub
 
 
@@ -26,9 +26,9 @@ async def async_setup_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry):
 
     opp.data[DOMAIN][config_entry.unique_id] = onewirehub
 
-    for component in SUPPORTED_PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, component)
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
     return True
 
@@ -38,8 +38,8 @@ async def async_unload_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(config_entry, component)
-                for component in SUPPORTED_PLATFORMS
+                opp.config_entries.async_forward_entry_unload(config_entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

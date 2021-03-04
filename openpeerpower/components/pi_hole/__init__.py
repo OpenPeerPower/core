@@ -112,7 +112,7 @@ async def async_setup_entry(opp, entry):
         try:
             await api.get_data()
         except HoleError as err:
-            raise UpdateFailed(f"Failed to communicating with API: {err}") from err
+            raise UpdateFailed(f"Failed to communicate with API: {err}") from err
 
     coordinator = DataUpdateCoordinator(
         opp,

@@ -1,9 +1,9 @@
 {
   "domain": "onboarding",
   "name": "Open Peer Power Onboarding",
-  "documentation": "https://www.open-peer-power.io/integrations/onboarding",
+  "documentation": "https://www.openpeerpower.io/integrations/onboarding",
   "after_dependencies": [
-     opp.o"
+    "oppio"
   ],
   "dependencies": [
     "auth",

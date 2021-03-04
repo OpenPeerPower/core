@@ -144,8 +144,8 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
             opp, _LOGGER, cooldown=DEBOUNCE_TIME, immediate=True
         ),
     )
-    nws.opp_data = opp.data.setdefault(DOMAIN, {})
-    nws.opp_data[entry.entry_id] = {
+    nws_opp_data = opp.data.setdefault(DOMAIN, {})
+    nws_opp_data[entry.entry_id] = {
         NWS_DATA: nws_data,
         COORDINATOR_OBSERVATION: coordinator_observation,
         COORDINATOR_FORECAST: coordinator_forecast,
@@ -157,9 +157,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     await coordinator_forecast.async_refresh()
     await coordinator_forecast_hourly.async_refresh()
 
-    for component in PLATFORMS:
+    for platform in PLATFORMS:
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, component)
+            opp.config_entries.async_forward_entry_setup(entry, platform)
         )
     return True
 
@@ -169,8 +169,8 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     unload_ok = all(
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_unload(entry, component)
-                for component in PLATFORMS
+                opp.config_entries.async_forward_entry_unload(entry, platform)
+                for platform in PLATFORMS
             ]
         )
     )

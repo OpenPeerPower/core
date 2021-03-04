@@ -6,7 +6,6 @@ from aiohttp.hdrs import CONTENT_TYPE
 import requests
 import voluptuous as vol
 
-from openpeerpower.components.discovery import SERVICE_OCTOPRINT
 from openpeerpower.const import (
     CONF_API_KEY,
     CONF_BINARY_SENSORS,
@@ -22,7 +21,6 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     TIME_SECONDS,
 )
-from openpeerpower.helpers import discovery
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.discovery import load_platform
 from openpeerpower.util import slugify as util_slugify
@@ -131,12 +129,6 @@ def setup(opp, config):
     """Set up the OctoPrint component."""
     printers = opp.data[DOMAIN] = {}
     success = False
-
-    def device_discovered(service, info):
-        """Get called when an Octoprint server has been discovered."""
-        _LOGGER.debug("Found an Octoprint server: %s", info)
-
-    discovery.listen(opp, SERVICE_OCTOPRINT, device_discovered)
 
     if DOMAIN not in config:
         # Skip the setup if there is no configuration present

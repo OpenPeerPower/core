@@ -33,7 +33,7 @@ class ZWaveDeviceEntityValues:
 
     def __init__(self, opp, options, schema, primary_value):
         """Initialize the values object with the passed entity schema."""
-        self.opp = opp
+        self._opp = opp
         self._entity_created = False
         self._schema = copy.deepcopy(schema)
         self._values = {}
@@ -97,7 +97,7 @@ class ZWaveDeviceEntityValues:
             # If the entity has already been created, notify it of the new value.
             if self._entity_created:
                 async_dispatcher_send(
-                    self.opp, f"{DOMAIN}_{self.values_id}_value_added"
+                    self._opp, f"{DOMAIN}_{self.values_id}_value_added"
                 )
 
             # Check if entity has all required values and create the entity if needed.
@@ -137,7 +137,7 @@ class ZWaveDeviceEntityValues:
         self._entity_created = True
 
         if component in PLATFORMS:
-            async_dispatcher_send(self.opp, f"{DOMAIN}_new_{component}", self)
+            async_dispatcher_send(self._opp, f"{DOMAIN}_new_{component}", self)
 
     @property
     def values_id(self):

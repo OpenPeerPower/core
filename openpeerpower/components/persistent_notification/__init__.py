@@ -11,6 +11,7 @@ from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.exceptions import TemplateError
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.helpers.entity import async_generate_entity_id
+from openpeerpower.helpers.template import Template
 from openpeerpower.loader import bind_opp
 from openpeerpower.util import slugify
 import openpeerpower.util.dt as dt_util
@@ -35,8 +36,8 @@ SERVICE_MARK_READ = "mark_read"
 
 SCHEMA_SERVICE_CREATE = vol.Schema(
     {
-        vol.Required(ATTR_MESSAGE): cv.template,
-        vol.Optional(ATTR_TITLE): cv.template,
+        vol.Required(ATTR_MESSAGE): vol.Any(cv.dynamic_template, cv.string),
+        vol.Optional(ATTR_TITLE): vol.Any(cv.dynamic_template, cv.string),
         vol.Optional(ATTR_NOTIFICATION_ID): cv.string,
     }
 )
@@ -118,22 +119,24 @@ async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
 
         attr = {}
         if title is not None:
-            try:
-                title.opp = opp
-                title = title.async_render(parse_result=False)
-            except TemplateError as ex:
-                _LOGGER.error("Error rendering title %s: %s", title, ex)
-                title = title.template
+            if isinstance(title, Template):
+                try:
+                    title.opp = opp
+                    title = title.async_render(parse_result=False)
+                except TemplateError as ex:
+                    _LOGGER.error("Error rendering title %s: %s", title, ex)
+                    title = title.template
 
             attr[ATTR_TITLE] = title
             attr[ATTR_FRIENDLY_NAME] = title
 
-        try:
-            message.opp = opp
-            message = message.async_render(parse_result=False)
-        except TemplateError as ex:
-            _LOGGER.error("Error rendering message %s: %s", message, ex)
-            message = message.template
+        if isinstance(message, Template):
+            try:
+                message.opp = opp
+                message = message.async_render(parse_result=False)
+            except TemplateError as ex:
+                _LOGGER.error("Error rendering message %s: %s", message, ex)
+                message = message.template
 
         attr[ATTR_MESSAGE] = message
 

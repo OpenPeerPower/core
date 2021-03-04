@@ -2,7 +2,7 @@
   "domain": "openuv",
   "name": "OpenUV",
   "config_flow": true,
-  "documentation": "https://www.open-peer-power.io/integrations/openuv",
+  "documentation": "https://www.openpeerpower.io/integrations/openuv",
   "requirements": ["pyopenuv==1.0.9"],
   "codeowners": ["@bachya"]
 }

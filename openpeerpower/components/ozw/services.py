@@ -18,13 +18,13 @@ class ZWaveServices:
 
     def __init__(self, opp, manager):
         """Initialize with both opp and ozwmanager objects."""
-        self.opp = opp
+        self._opp = opp
         self._manager = manager
 
     @callback
     def async_register(self):
         """Register all our services."""
-        self.opp.services.async_register(
+        self._opp.services.async_register(
             const.DOMAIN,
             const.SERVICE_ADD_NODE,
             self.async_add_node,
@@ -35,7 +35,7 @@ class ZWaveServices:
                 }
             ),
         )
-        self.opp.services.async_register(
+        self._opp.services.async_register(
             const.DOMAIN,
             const.SERVICE_REMOVE_NODE,
             self.async_remove_node,
@@ -43,7 +43,7 @@ class ZWaveServices:
                 {vol.Optional(const.ATTR_INSTANCE_ID, default=1): vol.Coerce(int)}
             ),
         )
-        self.opp.services.async_register(
+        self._opp.services.async_register(
             const.DOMAIN,
             const.SERVICE_CANCEL_COMMAND,
             self.async_cancel_command,
@@ -52,7 +52,7 @@ class ZWaveServices:
             ),
         )
 
-        self.opp.services.async_register(
+        self._opp.services.async_register(
             const.DOMAIN,
             const.SERVICE_SET_CONFIG_PARAMETER,
             self.async_set_config_parameter,
