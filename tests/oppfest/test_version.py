@@ -2,10 +2,7 @@
 import pytest
 import voluptuous as vol
 
-from script.oppfest.manifest import (
-    CUSTOM_INTEGRATION_MANIFEST_SCHEMA,
-    validate_version,
-)
+from script.oppfest.manifest import CUSTOM_INTEGRATION_MANIFEST_SCHEMA, validate_version
 from script.oppfest.model import Integration
 
 

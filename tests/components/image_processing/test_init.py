@@ -10,8 +10,8 @@ from openpeerpower.setup import setup_component
 
 from tests.common import (
     assert_setup_component,
-    get_test_open_peer_power,
     get_test_instance_port,
+    get_test_open_peer_power,
 )
 from tests.components.image_processing import common
 

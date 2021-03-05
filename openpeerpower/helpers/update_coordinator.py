@@ -10,7 +10,7 @@ import aiohttp
 import requests
 
 from openpeerpower.const import EVENT_OPENPEERPOWER_STOP
-from openpeerpower.core import CALLBACK_TYPE, Event, OppJob, OpenPeerPower, callback
+from openpeerpower.core import CALLBACK_TYPE, Event, OpenPeerPower, OppJob, callback
 from openpeerpower.helpers import entity, event
 from openpeerpower.util.dt import utcnow
 

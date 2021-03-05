@@ -8,15 +8,15 @@ from pyHS100 import SmartDeviceException
 import pytest
 
 from openpeerpower.components import tplink
-from openpeerpower.components.openpeerpower import (
-    DOMAIN as HA_DOMAIN,
-    SERVICE_UPDATE_ENTITY,
-)
 from openpeerpower.components.light import (
     ATTR_BRIGHTNESS,
     ATTR_COLOR_TEMP,
     ATTR_HS_COLOR,
     DOMAIN as LIGHT_DOMAIN,
+)
+from openpeerpower.components.openpeerpower import (
+    DOMAIN as HA_DOMAIN,
+    SERVICE_UPDATE_ENTITY,
 )
 from openpeerpower.components.tplink.common import (
     CONF_DIMMER,

@@ -58,8 +58,8 @@ from openpeerpower.const import (
 from openpeerpower.core import (
     SERVICE_CALL_LIMIT,
     Context,
-    OppJob,
     OpenPeerPower,
+    OppJob,
     callback,
 )
 from openpeerpower.helpers import condition, config_validation as cv, service, template

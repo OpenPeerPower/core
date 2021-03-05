@@ -4,8 +4,8 @@ from datetime import timedelta
 from pyhaversion import (
     DockerVersion,
     HaIoVersion,
-    OppioVersion,
     LocalVersion,
+    OppioVersion,
     PyPiVersion,
 )
 import voluptuous as vol

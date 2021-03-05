@@ -7,8 +7,8 @@ import logging
 from typing import Optional
 
 import pychromecast
-from pychromecast.controllers.openpeerpower import OpenPeerPowerController
 from pychromecast.controllers.multizone import MultizoneManager
+from pychromecast.controllers.openpeerpower import OpenPeerPowerController
 from pychromecast.controllers.plex import PlexController
 from pychromecast.controllers.receiver import VOLUME_CONTROL_TYPE_FIXED
 from pychromecast.quick_play import quick_play

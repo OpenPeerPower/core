@@ -4,10 +4,10 @@ from ipaddress import ip_network
 from unittest.mock import AsyncMock, MagicMock, Mock, patch
 
 import aiohttp
+from jose import jwt
 from opp_nabucasa import thingtalk, voice
 from opp_nabucasa.auth import Unauthenticated, UnknownError
 from opp_nabucasa.const import STATE_CONNECTED
-from jose import jwt
 import pytest
 
 from openpeerpower.auth.providers import trusted_networks as tn_auth

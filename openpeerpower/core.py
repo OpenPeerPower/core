@@ -64,9 +64,9 @@ from openpeerpower.const import (
     __version__,
 )
 from openpeerpower.exceptions import (
-    OpenPeerPowerError,
     InvalidEntityFormatError,
     InvalidStateError,
+    OpenPeerPowerError,
     ServiceNotFound,
     Unauthorized,
 )

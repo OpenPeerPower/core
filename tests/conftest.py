@@ -15,7 +15,7 @@ import requests_mock as _requests_mock
 from openpeerpower import core as ha, loader, runner, util
 from openpeerpower.auth.const import GROUP_ID_ADMIN, GROUP_ID_READ_ONLY
 from openpeerpower.auth.models import Credentials
-from openpeerpower.auth.providers import openpeerpower, legacy_api_password
+from openpeerpower.auth.providers import legacy_api_password, openpeerpower
 from openpeerpower.components import mqtt
 from openpeerpower.components.websocket_api.auth import (
     TYPE_AUTH,

@@ -14,7 +14,7 @@ PROJECT_COPYRIGHT = f" 2013-{dt.now().year}, {PROJECT_AUTHOR}"
 PROJECT_URL = "https://www.openpeerpower.io/"
 PROJECT_EMAIL = "hello@openpeerpower.io"
 
-PROJECT_GITHUB_USERNAME = "open-peer-power"
+PROJECT_GITHUB_USERNAME = "openpeerpower"
 PROJECT_GITHUB_REPOSITORY = "core"
 
 PYPI_URL = f"https://pypi.python.org/pypi/{PROJECT_PACKAGE_NAME}"

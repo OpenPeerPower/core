@@ -3,7 +3,7 @@ import asyncio
 from logging import Logger
 from typing import Any, Awaitable, Callable, Optional
 
-from openpeerpower.core import OppJob, OpenPeerPower, callback
+from openpeerpower.core import OpenPeerPower, OppJob, callback
 
 
 class Debouncer:

@@ -34,8 +34,8 @@ from openpeerpower.const import (
 from openpeerpower.core import (
     CALLBACK_TYPE,
     Event,
-    OppJob,
     OpenPeerPower,
+    OppJob,
     State,
     callback,
     split_entity_id,

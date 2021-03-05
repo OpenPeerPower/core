@@ -7,7 +7,7 @@ import voluptuous as vol
 
 from openpeerpower import exceptions
 from openpeerpower.const import CONF_ATTRIBUTE, CONF_FOR, CONF_PLATFORM, MATCH_ALL
-from openpeerpower.core import CALLBACK_TYPE, OppJob, OpenPeerPower, State, callback
+from openpeerpower.core import CALLBACK_TYPE, OpenPeerPower, OppJob, State, callback
 from openpeerpower.helpers import config_validation as cv, template
 from openpeerpower.helpers.event import (
     Event,

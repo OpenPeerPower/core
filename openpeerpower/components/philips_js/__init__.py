@@ -14,7 +14,7 @@ from openpeerpower.const import (
     CONF_PASSWORD,
     CONF_USERNAME,
 )
-from openpeerpower.core import CALLBACK_TYPE, Context, OppJob, OpenPeerPower, callback
+from openpeerpower.core import CALLBACK_TYPE, Context, OpenPeerPower, OppJob, callback
 from openpeerpower.helpers.debounce import Debouncer
 from openpeerpower.helpers.typing import OpenPeerPowerType
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator

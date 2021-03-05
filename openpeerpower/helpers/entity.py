@@ -25,7 +25,7 @@ from openpeerpower.const import (
     TEMP_FAHRENHEIT,
 )
 from openpeerpower.core import CALLBACK_TYPE, Context, OpenPeerPower, callback
-from openpeerpower.exceptions import OpenPeerPowerError, NoEntitySpecifiedError
+from openpeerpower.exceptions import NoEntitySpecifiedError, OpenPeerPowerError
 from openpeerpower.helpers.entity_platform import EntityPlatform
 from openpeerpower.helpers.entity_registry import RegistryEntry
 from openpeerpower.helpers.event import Event, async_track_entity_registry_updated_event

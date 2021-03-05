@@ -2,10 +2,7 @@
 
 from json import loads
 
-from openpeerpower.components.advantage_air.climate import (
-    OPP_FAN_MODES,
-    OPP_HVAC_MODES,
-)
+from openpeerpower.components.advantage_air.climate import OPP_FAN_MODES, OPP_HVAC_MODES
 from openpeerpower.components.advantage_air.const import (
     ADVANTAGE_AIR_STATE_OFF,
     ADVANTAGE_AIR_STATE_ON,

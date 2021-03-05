@@ -37,7 +37,11 @@ from openpeerpower.helpers.json import JSONEncoder
 from openpeerpower.setup import async_setup_component, setup_component
 import openpeerpower.util.dt as dt_util
 
-from tests.common import get_test_open_peer_power, init_recorder_component, mock_platform
+from tests.common import (
+    get_test_open_peer_power,
+    init_recorder_component,
+    mock_platform,
+)
 from tests.components.recorder.common import trigger_db_commit
 
 EMPTY_CONFIG = logbook.CONFIG_SCHEMA({logbook.DOMAIN: {}})
