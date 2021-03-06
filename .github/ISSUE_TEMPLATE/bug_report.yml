@@ -59,7 +59,7 @@ body:
   - type: input
     attributes:
       label: Link to integration documentation on our website
-      placeholder: "https://www.open-peer-power.io/integrations/..."
+      placeholder: "https://www.openpeerpower.io/integrations/..."
       description: |
         Providing a link [to the documentation][docs] help us categorizing the
         issue, while providing a useful reference at the same time.
