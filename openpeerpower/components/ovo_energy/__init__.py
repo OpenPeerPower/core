@@ -87,9 +87,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     await coordinator.async_refresh()
 
     # Setup components
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_setup(entry, "sensor")
-    )
+    opp.async_create_task(opp.config_entries.async_forward_entry_setup(entry, "sensor"))
 
     return True
 

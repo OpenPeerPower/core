@@ -36,9 +36,7 @@ async def test_import_usb(opp, dsmr_connection_send_validate_fixture):
     assert result["data"] == {**entry_data, **SERIAL_DATA}
 
 
-async def test_import_usb_failed_connection(
-    opp, dsmr_connection_send_validate_fixture
-):
+async def test_import_usb_failed_connection(opp, dsmr_connection_send_validate_fixture):
     """Test we can import."""
     (connection_factory, transport, protocol) = dsmr_connection_send_validate_fixture
 

@@ -211,8 +211,7 @@ def test_float(opp):
     )
 
     assert (
-        template.Template("{{ float('forgiving') }}", opp).async_render()
-        == "forgiving"
+        template.Template("{{ float('forgiving') }}", opp).async_render() == "forgiving"
     )
 
 
@@ -640,8 +639,7 @@ def test_as_timestamp(opp):
     )
     opp.mock = None
     assert (
-        template.Template("{{ as_timestamp(states.mock) }}", opp).async_render()
-        is None
+        template.Template("{{ as_timestamp(states.mock) }}", opp).async_render() is None
     )
 
     tpl = (
@@ -1219,9 +1217,7 @@ def test_distance_function_return_none_if_invalid_state(opp):
 
 def test_distance_function_return_none_if_invalid_coord(opp):
     """Test distance function return None if invalid coord."""
-    assert (
-        template.Template('{{ distance("123", "abc") }}', opp).async_render() is None
-    )
+    assert template.Template('{{ distance("123", "abc") }}', opp).async_render() is None
 
     assert template.Template('{{ distance("123") }}', opp).async_render() is None
 

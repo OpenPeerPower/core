@@ -357,9 +357,7 @@ class BayesianBinarySensor(BinarySensorEntity):
         entity = entity_observation["entity_id"]
 
         try:
-            return condition.state(
-                self.opp, entity, entity_observation.get("to_state")
-            )
+            return condition.state(self.opp, entity, entity_observation.get("to_state"))
         except ConditionError:
             return False
 

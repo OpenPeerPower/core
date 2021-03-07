@@ -65,9 +65,7 @@ class TestSetup:
     def test_validate_component_config(self):
         """Test validating component configuration."""
         config_schema = vol.Schema({"comp_conf": {"hello": str}}, required=True)
-        mock_integration(
-            self.opp, MockModule("comp_conf", config_schema=config_schema)
-        )
+        mock_integration(self.opp, MockModule("comp_conf", config_schema=config_schema))
 
         with assert_setup_component(0):
             assert not setup.setup_component(self.opp, "comp_conf", {})
@@ -75,9 +73,7 @@ class TestSetup:
         self.opp.data.pop(setup.DATA_SETUP)
 
         with assert_setup_component(0):
-            assert not setup.setup_component(
-                self.opp, "comp_conf", {"comp_conf": None}
-            )
+            assert not setup.setup_component(self.opp, "comp_conf", {"comp_conf": None})
 
         self.opp.data.pop(setup.DATA_SETUP)
 
@@ -312,9 +308,7 @@ class TestSetup:
 
     def test_component_failing_setup(self):
         """Test component that fails setup."""
-        mock_integration(
-            self.opp, MockModule("comp", setup=lambda opp, config: False)
-        )
+        mock_integration(self.opp, MockModule("comp", setup=lambda opp, config: False))
 
         assert not setup.setup_component(self.opp, "comp", {})
         assert "comp" not in self.opp.config.components

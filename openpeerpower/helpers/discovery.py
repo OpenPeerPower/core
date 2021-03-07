@@ -66,9 +66,7 @@ def discover(
 ) -> None:
     """Fire discovery event. Can ensure a component is loaded."""
     opp.add_job(
-        async_discover(  # type: ignore
-            opp, service, discovered, component, opp_config
-        )
+        async_discover(opp, service, discovered, component, opp_config)  # type: ignore
     )
 
 

@@ -528,9 +528,7 @@ async def test_norwegian_case_winter(opp):
     opp.config.latitude = 69.6
     opp.config.longitude = 18.8
 
-    test_time = opp.config.time_zone.localize(datetime(2010, 1, 1)).astimezone(
-        pytz.UTC
-    )
+    test_time = opp.config.time_zone.localize(datetime(2010, 1, 1)).astimezone(pytz.UTC)
     sunrise = dt_util.as_local(
         get_astral_event_next(opp, "sunrise", dt_util.as_utc(test_time))
     )
@@ -644,9 +642,7 @@ async def test_norwegian_case_summer(opp):
     opp.config.latitude = 69.6
     opp.config.longitude = 18.8
 
-    test_time = opp.config.time_zone.localize(datetime(2010, 6, 1)).astimezone(
-        pytz.UTC
-    )
+    test_time = opp.config.time_zone.localize(datetime(2010, 6, 1)).astimezone(pytz.UTC)
 
     sunrise = dt_util.as_local(
         get_astral_event_next(opp, "sunrise", dt_util.as_utc(test_time))

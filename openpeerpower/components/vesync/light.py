@@ -27,9 +27,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
         """Add new devices to platform."""
         _async_setup_entities(devices, async_add_entities)
 
-    disp = async_dispatcher_connect(
-        opp, VS_DISCOVERY.format(VS_LIGHTS), async_discover
-    )
+    disp = async_dispatcher_connect(opp, VS_DISCOVERY.format(VS_LIGHTS), async_discover)
     opp.data[DOMAIN][VS_DISPATCHERS].append(disp)
 
     _async_setup_entities(opp.data[DOMAIN][VS_LIGHTS], async_add_entities)

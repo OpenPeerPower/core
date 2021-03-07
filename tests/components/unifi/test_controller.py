@@ -290,9 +290,7 @@ async def test_reset_after_successful_setup(opp, aioclient_mock):
     assert len(controller.listeners) == 0
 
 
-async def test_wireless_client_event_calls_update_wireless_devices(
-    opp, aioclient_mock
-):
+async def test_wireless_client_event_calls_update_wireless_devices(opp, aioclient_mock):
     """Call update_wireless_devices method when receiving wireless client event."""
     config_entry = await setup_unifi_integration(opp, aioclient_mock)
     controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]

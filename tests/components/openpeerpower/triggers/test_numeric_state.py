@@ -1706,9 +1706,7 @@ def test_schema_input_number():
 
 
 @pytest.mark.parametrize("above", (3, "input_number.value_3"))
-async def test_attribute_if_fires_on_entity_change_with_both_filters(
-    opp, calls, above
-):
+async def test_attribute_if_fires_on_entity_change_with_both_filters(opp, calls, above):
     """Test for firing if both filters are match attribute."""
     opp.states.async_set("test.entity", "bla", {"test-measurement": 1})
 

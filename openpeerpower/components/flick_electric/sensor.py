@@ -24,9 +24,7 @@ FRIENDLY_NAME = "Flick Power Price"
 UNIT_NAME = "cents"
 
 
-async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
-):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry, async_add_entities):
     """Flick Sensor Setup."""
     api: FlickAPI = opp.data[DOMAIN][entry.entry_id]
 

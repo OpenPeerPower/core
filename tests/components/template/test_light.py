@@ -545,9 +545,7 @@ class TestTemplateLight:
         state = self.opp.states.get("light.test_template_light")
         assert state.attributes.get("white_value") is None
 
-        common.turn_on(
-            self.opp, "light.test_template_light", **{ATTR_WHITE_VALUE: 124}
-        )
+        common.turn_on(self.opp, "light.test_template_light", **{ATTR_WHITE_VALUE: 124})
         self.opp.block_till_done()
         assert len(self.calls) == 1
         assert self.calls[0].data["white_value"] == 124

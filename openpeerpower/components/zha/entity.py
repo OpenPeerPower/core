@@ -258,9 +258,7 @@ class ZhaGroupEntity(BaseZhaEntity):
         )
 
         def send_removed_signal():
-            async_dispatcher_send(
-                self.opp, SIGNAL_GROUP_ENTITY_REMOVED, self._group_id
-            )
+            async_dispatcher_send(self.opp, SIGNAL_GROUP_ENTITY_REMOVED, self._group_id)
 
         self.async_on_remove(send_removed_signal)
 

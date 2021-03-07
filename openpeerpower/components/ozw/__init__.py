@@ -323,9 +323,7 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
         unsubscribe_listener()
 
     if entry.data.get(CONF_USE_ADDON):
-        async_stop_mqtt_client = opp.data[DOMAIN][entry.entry_id][
-            DATA_STOP_MQTT_CLIENT
-        ]
+        async_stop_mqtt_client = opp.data[DOMAIN][entry.entry_id][DATA_STOP_MQTT_CLIENT]
         await async_stop_mqtt_client()
 
     opp.data[DOMAIN].pop(entry.entry_id)

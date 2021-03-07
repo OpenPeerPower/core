@@ -141,9 +141,7 @@ async def async_call_from_config(
 ) -> None:
     """Call a service based on a config hash."""
     try:
-        params = async_prepare_call_from_config(
-            opp, config, variables, validate_config
-        )
+        params = async_prepare_call_from_config(opp, config, variables, validate_config)
     except OpenPeerPowerError as ex:
         if blocking:
             raise

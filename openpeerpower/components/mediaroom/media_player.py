@@ -187,9 +187,7 @@ class MediaroomDevice(MediaPlayerEntity):
             self.async_write_op_state()
 
         self.async_on_remove(
-            async_dispatcher_connect(
-                self.opp, SIGNAL_STB_NOTIFY, async_notify_received
-            )
+            async_dispatcher_connect(self.opp, SIGNAL_STB_NOTIFY, async_notify_received)
         )
 
     async def async_play_media(self, media_type, media_id, **kwargs):

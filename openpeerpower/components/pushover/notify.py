@@ -37,9 +37,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 def get_service(opp, config, discovery_info=None):
     """Get the Pushover notification service."""
-    return PushoverNotificationService(
-        opp, config[CONF_USER_KEY], config[CONF_API_KEY]
-    )
+    return PushoverNotificationService(opp, config[CONF_USER_KEY], config[CONF_API_KEY])
 
 
 class PushoverNotificationService(BaseNotificationService):

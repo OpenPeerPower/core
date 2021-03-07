@@ -74,9 +74,7 @@ async def async_setup_op_cast(
     )
 
 
-async def async_remove_user(
-    opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
-):
+async def async_remove_user(opp: core.OpenPeerPower, entry: config_entries.ConfigEntry):
     """Remove Open Peer Power Cast user."""
     user_id: Optional[str] = entry.data.get("user_id")
 

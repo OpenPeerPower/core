@@ -148,9 +148,7 @@ async def test_track_state_change_from_to_state_match(opp):
     def no_to_from_specified_callback(entity_id, old_state, new_state):
         no_to_from_specified_runs.append(1)
 
-    async_track_state_change(
-        opp, "light.Bowl", from_and_to_state_callback, "on", "off"
-    )
+    async_track_state_change(opp, "light.Bowl", from_and_to_state_callback, "on", "off")
     async_track_state_change(opp, "light.Bowl", only_from_state_callback, "on", None)
     async_track_state_change(
         opp, "light.Bowl", only_to_state_callback, None, ["off", "standby"]
@@ -942,9 +940,7 @@ async def test_track_template_result(opp):
     wildercard_runs = []
 
     template_condition = Template("{{states.sensor.test.state}}", opp)
-    template_condition_var = Template(
-        "{{(states.sensor.test.state|int) + test }}", opp
-    )
+    template_condition_var = Template("{{(states.sensor.test.state|int) + test }}", opp)
 
     def specific_run_callback(event, updates):
         track_result = updates.pop()

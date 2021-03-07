@@ -253,9 +253,7 @@ def test_saving_state_exclude_domains(opp_recorder):
 
 def test_saving_state_exclude_domains_globs(opp_recorder):
     """Test saving and restoring a state."""
-    opp = opp_recorder(
-        {"exclude": {"domains": "test", "entity_globs": "*.excluded_*"}}
-    )
+    opp = opp_recorder({"exclude": {"domains": "test", "entity_globs": "*.excluded_*"}})
     states = _add_entities(
         opp, ["test.recorder", "test2.recorder", "test2.excluded_entity"]
     )

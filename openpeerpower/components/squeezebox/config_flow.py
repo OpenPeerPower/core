@@ -86,9 +86,7 @@ class SqueezeboxConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 _LOGGER.debug("Discovered server: %s", self.discovery_info)
                 discovery_event.set()
 
-        discovery_task = self.opp.async_create_task(
-            async_discover(_discovery_callback)
-        )
+        discovery_task = self.opp.async_create_task(async_discover(_discovery_callback))
 
         await discovery_event.wait()
         discovery_task.cancel()  # stop searching as soon as we find server

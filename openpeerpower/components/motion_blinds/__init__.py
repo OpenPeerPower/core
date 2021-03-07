@@ -30,9 +30,7 @@ def setup(opp: core.OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry(
-    opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
-):
+async def async_setup_entry(opp: core.OpenPeerPower, entry: config_entries.ConfigEntry):
     """Set up the motion_blinds components from a config entry."""
     opp.data.setdefault(DOMAIN, {})
     host = entry.data[CONF_HOST]

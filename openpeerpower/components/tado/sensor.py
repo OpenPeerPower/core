@@ -41,9 +41,7 @@ ZONE_SENSORS = {
 }
 
 
-async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
-):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry, async_add_entities):
     """Set up the Tado sensor platform."""
 
     tado = opp.data[DOMAIN][entry.entry_id][DATA]

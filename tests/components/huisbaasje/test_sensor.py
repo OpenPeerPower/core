@@ -50,8 +50,7 @@ async def test_setup_entry(opp: OpenPeerPower):
         )
         assert opp.states.get("sensor.huisbaasje_current_power_out").state == "unknown"
         assert (
-            opp.states.get("sensor.huisbaasje_current_power_out_low").state
-            == "unknown"
+            opp.states.get("sensor.huisbaasje_current_power_out_low").state == "unknown"
         )
         assert opp.states.get("sensor.huisbaasje_current_gas").state == "0.0"
         assert opp.states.get("sensor.huisbaasje_energy_today").state == "3.3"
@@ -107,8 +106,7 @@ async def test_setup_entry_absent_measurement(opp: OpenPeerPower):
         )
         assert opp.states.get("sensor.huisbaasje_current_power_out").state == "unknown"
         assert (
-            opp.states.get("sensor.huisbaasje_current_power_out_low").state
-            == "unknown"
+            opp.states.get("sensor.huisbaasje_current_power_out_low").state == "unknown"
         )
         assert opp.states.get("sensor.huisbaasje_current_gas").state == "unknown"
         assert opp.states.get("sensor.huisbaasje_energy_today").state == "3.3"

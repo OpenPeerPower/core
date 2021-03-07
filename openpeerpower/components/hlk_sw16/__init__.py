@@ -83,9 +83,7 @@ async def async_setup_entry(opp, entry):
     def disconnected():
         """Schedule reconnect after connection has been lost."""
         _LOGGER.warning("HLK-SW16 %s disconnected", address)
-        async_dispatcher_send(
-            opp, f"hlk_sw16_device_available_{entry.entry_id}", False
-        )
+        async_dispatcher_send(opp, f"hlk_sw16_device_available_{entry.entry_id}", False)
 
     @callback
     def reconnected():

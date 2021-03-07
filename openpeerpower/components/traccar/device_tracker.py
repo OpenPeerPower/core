@@ -129,9 +129,9 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry, async_add_entities):
             [TraccarEntity(device, latitude, longitude, battery, accuracy, attrs)]
         )
 
-    opp.data[DOMAIN]["unsub_device_tracker"][
-        entry.entry_id
-    ] = async_dispatcher_connect(opp, TRACKER_UPDATE, _receive_data)
+    opp.data[DOMAIN]["unsub_device_tracker"][entry.entry_id] = async_dispatcher_connect(
+        opp, TRACKER_UPDATE, _receive_data
+    )
 
     # Restore previously loaded devices
     dev_reg = await device_registry.async_get_registry(opp)

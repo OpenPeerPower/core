@@ -42,9 +42,7 @@ async def test_create_doorbell_offline(opp):
 
 async def test_create_doorbell_hardwired(opp):
     """Test creation of a doorbell that is hardwired without a battery."""
-    doorbell_one = await _mock_doorbell_from_fixture(
-        opp, "get_doorbell.nobattery.json"
-    )
+    doorbell_one = await _mock_doorbell_from_fixture(opp, "get_doorbell.nobattery.json")
     await _create_august_with_devices(opp, [doorbell_one])
 
     sensor_tmt100_name_battery = opp.states.get("sensor.tmt100_name_battery")

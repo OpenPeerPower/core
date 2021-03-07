@@ -207,9 +207,7 @@ def setup_account(entry: ConfigEntry, opp, name: str) -> BMWConnectedDriveAccoun
 
     _LOGGER.debug("Adding new account %s", name)
 
-    pos = (
-        (opp.config.latitude, opp.config.longitude) if use_location else (None, None)
-    )
+    pos = (opp.config.latitude, opp.config.longitude) if use_location else (None, None)
     cd_account = BMWConnectedDriveAccount(
         username, password, region, name, read_only, *pos
     )

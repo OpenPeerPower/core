@@ -229,9 +229,7 @@ async def async_start(
             )
         else:
             # Unhandled discovery message
-            async_dispatcher_send(
-                opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None
-            )
+            async_dispatcher_send(opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None)
 
     opp.data[DATA_CONFIG_ENTRY_LOCK] = asyncio.Lock()
     opp.data[DATA_CONFIG_FLOW_LOCK] = asyncio.Lock()

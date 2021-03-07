@@ -546,9 +546,7 @@ async def test_if_fires_on_position(opp, calls):
     opp.states.async_set(
         ent.entity_id, STATE_CLOSED, attributes={"current_position": 95}
     )
-    opp.states.async_set(
-        ent.entity_id, STATE_OPEN, attributes={"current_position": 50}
-    )
+    opp.states.async_set(ent.entity_id, STATE_OPEN, attributes={"current_position": 50})
     await opp.async_block_till_done()
     assert len(calls) == 3
     assert sorted(

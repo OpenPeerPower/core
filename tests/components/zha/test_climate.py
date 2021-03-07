@@ -376,9 +376,7 @@ async def test_hvac_mode(opp, device_climate, sys_mode, hvac_mode):
     state = opp.states.get(entity_id)
     assert state.state == hvac_mode
 
-    await send_attributes_report(
-        opp, thrm_cluster, {0x001C: Thermostat.SystemMode.Off}
-    )
+    await send_attributes_report(opp, thrm_cluster, {0x001C: Thermostat.SystemMode.Off})
     state = opp.states.get(entity_id)
     assert state.state == HVAC_MODE_OFF
 
@@ -1028,9 +1026,7 @@ async def test_occupancy_reset(opp, device_climate_sinope):
     state = opp.states.get(entity_id)
     assert state.attributes[ATTR_PRESET_MODE] == PRESET_AWAY
 
-    await send_attributes_report(
-        opp, thrm_cluster, {"occupied_heating_setpoint": 1950}
-    )
+    await send_attributes_report(opp, thrm_cluster, {"occupied_heating_setpoint": 1950})
     state = opp.states.get(entity_id)
     assert state.attributes[ATTR_PRESET_MODE] == PRESET_NONE
 

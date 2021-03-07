@@ -625,13 +625,10 @@ async def test_value_discovery_existing_entity(opp, mock_openzwave):
         await opp.async_block_till_done()
 
     assert (
-        opp.states.get("climate.mock_node_mock_value").attributes["temperature"]
-        == 22.0
+        opp.states.get("climate.mock_node_mock_value").attributes["temperature"] == 22.0
     )
     assert (
-        opp.states.get("climate.mock_node_mock_value").attributes[
-            "current_temperature"
-        ]
+        opp.states.get("climate.mock_node_mock_value").attributes["current_temperature"]
         is None
     )
 
@@ -650,13 +647,10 @@ async def test_value_discovery_existing_entity(opp, mock_openzwave):
         await opp.async_block_till_done()
 
     assert (
-        opp.states.get("climate.mock_node_mock_value").attributes["temperature"]
-        == 22.0
+        opp.states.get("climate.mock_node_mock_value").attributes["temperature"] == 22.0
     )
     assert (
-        opp.states.get("climate.mock_node_mock_value").attributes[
-            "current_temperature"
-        ]
+        opp.states.get("climate.mock_node_mock_value").attributes["current_temperature"]
         == 23.5
     )
 
@@ -692,8 +686,7 @@ async def test_value_discovery_legacy_thermostat(opp, mock_openzwave):
     await opp.async_block_till_done()
 
     assert (
-        opp.states.get("climate.mock_node_mock_value").attributes["temperature"]
-        == 22.0
+        opp.states.get("climate.mock_node_mock_value").attributes["temperature"] == 22.0
     )
 
 
@@ -1418,9 +1411,7 @@ async def test_set_poll_intensity_enable(opp, mock_openzwave, zwave_setup_ready)
     assert enable_poll.mock_calls[0][1][0] == 4
 
 
-async def test_set_poll_intensity_enable_failed(
-    opp, mock_openzwave, zwave_setup_ready
-):
+async def test_set_poll_intensity_enable_failed(opp, mock_openzwave, zwave_setup_ready):
     """Test zwave set_poll_intensity service, failed set."""
     zwave_network = opp.data[DATA_NETWORK]
 

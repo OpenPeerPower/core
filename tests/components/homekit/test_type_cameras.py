@@ -87,9 +87,7 @@ def run_driver(opp):
     ), patch(
         "pyhap.accessory_driver.AccessoryDriver.persist"
     ):
-        yield AccessoryDriver(
-            pincode=b"123-45-678", address="127.0.0.1", loop=opp.loop
-        )
+        yield AccessoryDriver(pincode=b"123-45-678", address="127.0.0.1", loop=opp.loop)
 
 
 def _get_exits_after_startup_mock_ffmpeg():

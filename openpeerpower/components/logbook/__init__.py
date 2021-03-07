@@ -455,9 +455,7 @@ def _get_events(
         else:
             query = _generate_events_query(session)
             query = _apply_event_time_filter(query, start_day, end_day)
-            query = _apply_events_types_and_states_filter(
-                opp, query, old_state
-            ).filter(
+            query = _apply_events_types_and_states_filter(opp, query, old_state).filter(
                 (States.last_updated == States.last_changed)
                 | (Events.event_type != EVENT_STATE_CHANGED)
             )

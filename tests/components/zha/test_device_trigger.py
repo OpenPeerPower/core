@@ -208,9 +208,7 @@ async def test_if_fires_on_event(opp, mock_devices, calls):
     assert calls[0].data["message"] == "service called"
 
 
-async def test_device_offline_fires(
-    opp, zigpy_device_mock, zha_device_restored, calls
-):
+async def test_device_offline_fires(opp, zigpy_device_mock, zha_device_restored, calls):
     """Test for device offline triggers firing."""
 
     zigpy_device = zigpy_device_mock(

@@ -258,9 +258,7 @@ def opp_owner_user(opp, local_auth):
 @pytest.fixture
 def opp_admin_user(opp, local_auth):
     """Return a Open Peer Power admin user."""
-    admin_group = opp.loop.run_until_complete(
-        opp.auth.async_get_group(GROUP_ID_ADMIN)
-    )
+    admin_group = opp.loop.run_until_complete(opp.auth.async_get_group(GROUP_ID_ADMIN))
     return MockUser(groups=[admin_group]).add_to_opp(opp)
 
 
@@ -308,9 +306,7 @@ def legacy_auth(opp):
 @pytest.fixture
 def local_auth(opp):
     """Load local auth provider."""
-    prv = openpeerpower.OppAuthProvider(
-        opp, opp.auth._store, {"type": "openpeerpower"}
-    )
+    prv = openpeerpower.OppAuthProvider(opp, opp.auth._store, {"type": "openpeerpower"})
     opp.loop.run_until_complete(prv.async_initialize())
     opp.auth._providers[(prv.type, prv.id)] = prv
     return prv

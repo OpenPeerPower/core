@@ -205,9 +205,7 @@ async def test_signal_repetitions(opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    event_callback, _, protocol, _ = await mock_rflink(
-        opp, config, DOMAIN, monkeypatch
-    )
+    event_callback, _, protocol, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
     # test if signal repetition is performed according to configuration
     opp.async_create_task(

@@ -23,8 +23,7 @@ from .const import CONF_SENSOR_ID, DEFAULT_SCAN_INTERVAL, DOMAIN
 def configured_sensors(opp):
     """Return a set of configured Luftdaten sensors."""
     return {
-        entry.data[CONF_SENSOR_ID]
-        for entry in opp.config_entries.async_entries(DOMAIN)
+        entry.data[CONF_SENSOR_ID] for entry in opp.config_entries.async_entries(DOMAIN)
     }
 
 

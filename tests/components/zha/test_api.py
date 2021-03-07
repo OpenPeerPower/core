@@ -386,9 +386,7 @@ async def app_controller(opp, setup_zha):
         ),
     ),
 )
-async def test_permit_ha12(
-    opp, app_controller, opp_admin_user, params, duration, node
-):
+async def test_permit_ha12(opp, app_controller, opp_admin_user, params, duration, node):
     """Test permit service."""
 
     await opp.services.async_call(

@@ -650,9 +650,7 @@ async def test_report_alarm_control_panel_state(opp):
         "alarm_control_panel.armed_custom_bypass", STATE_ALARM_ARMED_CUSTOM_BYPASS, {}
     )
     opp.states.async_set("alarm_control_panel.armed_home", STATE_ALARM_ARMED_HOME, {})
-    opp.states.async_set(
-        "alarm_control_panel.armed_night", STATE_ALARM_ARMED_NIGHT, {}
-    )
+    opp.states.async_set("alarm_control_panel.armed_night", STATE_ALARM_ARMED_NIGHT, {})
     opp.states.async_set("alarm_control_panel.disarmed", STATE_ALARM_DISARMED, {})
 
     properties = await reported_properties(opp, "alarm_control_panel.armed_away")

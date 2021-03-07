@@ -1957,9 +1957,7 @@ async def test_discovery_update_cover(opp, mqtt_mock, caplog):
     """Test update of discovered cover."""
     data1 = '{ "name": "Beer", "command_topic": "test_topic" }'
     data2 = '{ "name": "Milk", "command_topic": "test_topic" }'
-    await help_test_discovery_update(
-        opp, mqtt_mock, caplog, cover.DOMAIN, data1, data2
-    )
+    await help_test_discovery_update(opp, mqtt_mock, caplog, cover.DOMAIN, data1, data2)
 
 
 async def test_discovery_update_unchanged_cover(opp, mqtt_mock, caplog):
@@ -1978,9 +1976,7 @@ async def test_discovery_broken(opp, mqtt_mock, caplog):
     """Test handling of bad discovery message."""
     data1 = '{ "name": "Beer", "command_topic": "test_topic#" }'
     data2 = '{ "name": "Milk", "command_topic": "test_topic" }'
-    await help_test_discovery_broken(
-        opp, mqtt_mock, caplog, cover.DOMAIN, data1, data2
-    )
+    await help_test_discovery_broken(opp, mqtt_mock, caplog, cover.DOMAIN, data1, data2)
 
 
 async def test_entity_device_info_with_connection(opp, mqtt_mock):

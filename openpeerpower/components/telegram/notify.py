@@ -103,6 +103,4 @@ class TelegramNotificationService(BaseNotificationService):
         _LOGGER.debug(
             "TELEGRAM NOTIFIER calling %s.send_message with %s", DOMAIN, service_data
         )
-        return self.opp.services.call(
-            DOMAIN, "send_message", service_data=service_data
-        )
+        return self.opp.services.call(DOMAIN, "send_message", service_data=service_data)

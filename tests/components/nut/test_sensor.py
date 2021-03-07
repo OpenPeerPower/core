@@ -137,9 +137,7 @@ async def test_backupsses600m1(opp):
 async def test_cp1500pfclcd(opp):
     """Test creation of CP1500PFCLCD sensors."""
 
-    config_entry = await async_init_integration(
-        opp, "CP1500PFCLCD", ["battery.charge"]
-    )
+    config_entry = await async_init_integration(opp, "CP1500PFCLCD", ["battery.charge"])
     registry = await opp.helpers.entity_registry.async_get_registry()
     entry = registry.async_get("sensor.ups1_battery_charge")
     assert entry

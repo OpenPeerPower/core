@@ -41,9 +41,9 @@ async def test_flow(opp, first_con, second_con, exp_type, exp_result, exp_reason
 async def test_existing(opp):
     """Test when the entry exists with the same config."""
     host = "1.2.3.4"
-    MockConfigEntry(
-        domain=dynalite.DOMAIN, data={dynalite.CONF_HOST: host}
-    ).add_to_opp(opp)
+    MockConfigEntry(domain=dynalite.DOMAIN, data={dynalite.CONF_HOST: host}).add_to_opp(
+        opp
+    )
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices.async_setup",
         return_value=True,

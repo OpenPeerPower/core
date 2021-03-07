@@ -277,9 +277,7 @@ class XiaomiMotionSensor(XiaomiBinarySensor):
                 )
 
             if self.entity_id is not None:
-                self._opp.bus.fire(
-                    "xiaomi_aqara.motion", {"entity_id": self.entity_id}
-                )
+                self._opp.bus.fire("xiaomi_aqara.motion", {"entity_id": self.entity_id})
 
             self._no_motion_since = 0
             if self._state:

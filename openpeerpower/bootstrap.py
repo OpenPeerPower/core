@@ -175,9 +175,7 @@ def open_opp_ui(opp: core.OpenPeerPower) -> None:
         return
 
     scheme = "https" if opp.config.api.use_ssl else "http"
-    url = str(
-        yarl.URL.build(scheme=scheme, host="127.0.0.1", port=opp.config.api.port)
-    )
+    url = str(yarl.URL.build(scheme=scheme, host="127.0.0.1", port=opp.config.api.port))
 
     if not webbrowser.open(url):
         _LOGGER.warning(

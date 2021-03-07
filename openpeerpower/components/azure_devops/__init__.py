@@ -53,9 +53,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     opp.data.setdefault(instance_key, {})[DATA_AZURE_DEVOPS_CLIENT] = client
 
     # Setup components
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_setup(entry, "sensor")
-    )
+    opp.async_create_task(opp.config_entries.async_forward_entry_setup(entry, "sensor"))
 
     return True
 

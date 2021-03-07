@@ -107,9 +107,7 @@ async def test_read_window_cover_state(opp, utcnow):
 
 async def test_read_window_cover_tilt_horizontal(opp, utcnow):
     """Test that horizontal tilt is handled correctly."""
-    helper = await setup_test_component(
-        opp, create_window_covering_service_with_h_tilt
-    )
+    helper = await setup_test_component(opp, create_window_covering_service_with_h_tilt)
 
     helper.characteristics[H_TILT_CURRENT].value = 75
     state = await helper.poll_and_get_state()
@@ -118,9 +116,7 @@ async def test_read_window_cover_tilt_horizontal(opp, utcnow):
 
 async def test_read_window_cover_tilt_vertical(opp, utcnow):
     """Test that vertical tilt is handled correctly."""
-    helper = await setup_test_component(
-        opp, create_window_covering_service_with_v_tilt
-    )
+    helper = await setup_test_component(opp, create_window_covering_service_with_v_tilt)
 
     helper.characteristics[V_TILT_CURRENT].value = 75
     state = await helper.poll_and_get_state()
@@ -129,9 +125,7 @@ async def test_read_window_cover_tilt_vertical(opp, utcnow):
 
 async def test_write_window_cover_tilt_horizontal(opp, utcnow):
     """Test that horizontal tilt is written correctly."""
-    helper = await setup_test_component(
-        opp, create_window_covering_service_with_h_tilt
-    )
+    helper = await setup_test_component(opp, create_window_covering_service_with_h_tilt)
 
     await opp.services.async_call(
         "cover",
@@ -144,9 +138,7 @@ async def test_write_window_cover_tilt_horizontal(opp, utcnow):
 
 async def test_write_window_cover_tilt_vertical(opp, utcnow):
     """Test that vertical tilt is written correctly."""
-    helper = await setup_test_component(
-        opp, create_window_covering_service_with_v_tilt
-    )
+    helper = await setup_test_component(opp, create_window_covering_service_with_v_tilt)
 
     await opp.services.async_call(
         "cover",
@@ -159,9 +151,7 @@ async def test_write_window_cover_tilt_vertical(opp, utcnow):
 
 async def test_window_cover_stop(opp, utcnow):
     """Test that vertical tilt is written correctly."""
-    helper = await setup_test_component(
-        opp, create_window_covering_service_with_v_tilt
-    )
+    helper = await setup_test_component(opp, create_window_covering_service_with_v_tilt)
 
     await opp.services.async_call(
         "cover", "stop_cover", {"entity_id": helper.entity_id}, blocking=True

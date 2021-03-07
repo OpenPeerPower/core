@@ -1141,9 +1141,7 @@ async def test_services_androidtv(opp):
 
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[patch_key]:
         with patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-            assert await async_setup_component(
-                opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER
-            )
+            assert await async_setup_component(opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
             await opp.async_block_till_done()
 
         with patchers.patch_shell(SHELL_RESPONSE_STANDBY)[patch_key]:
@@ -1208,9 +1206,7 @@ async def test_connection_closed_on_op_stop(opp):
 
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[patch_key]:
         with patchers.patch_shell(SHELL_RESPONSE_OFF)[patch_key]:
-            assert await async_setup_component(
-                opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER
-            )
+            assert await async_setup_component(opp, DOMAIN, CONFIG_ANDROIDTV_ADB_SERVER)
             await opp.async_block_till_done()
 
             with patch(

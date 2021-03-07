@@ -430,9 +430,7 @@ def async_update_segments(
 
     # Remove master if there is only 1 segment left
     if len(current_ids) > 1 and len(segment_ids) < 2:
-        coordinator.opp.async_create_task(
-            async_remove_entity(-1, coordinator, current)
-        )
+        coordinator.opp.async_create_task(async_remove_entity(-1, coordinator, current))
 
 
 async def async_remove_entity(

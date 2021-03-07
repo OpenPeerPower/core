@@ -609,9 +609,7 @@ async def test_setup_component_test_with_cache_call_service_without_cache(
     ).is_file()
 
 
-async def test_setup_component_test_with_cache_dir(
-    opp, empty_cache_dir, demo_provider
-):
+async def test_setup_component_test_with_cache_dir(opp, empty_cache_dir, demo_provider):
     """Set up demo platform with cache and call service without cache."""
     calls = async_mock_service(opp, DOMAIN_MP, SERVICE_PLAY_MEDIA)
 

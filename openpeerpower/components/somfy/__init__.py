@@ -82,9 +82,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
         )
 
     implementation = (
-        await config_entry_oauth2_flow.async_get_config_entry_implementation(
-            opp, entry
-        )
+        await config_entry_oauth2_flow.async_get_config_entry_implementation(opp, entry)
     )
 
     data = opp.data[DOMAIN]

@@ -721,9 +721,7 @@ async def test_serviceregistry_call_with_blocking_done_in_time(opp):
     assert registered_events[0].data["domain"] == "test_domain"
     assert registered_events[0].data["service"] == "register_calls"
 
-    assert await opp.services.async_call(
-        "test_domain", "REGISTER_CALLS", blocking=True
-    )
+    assert await opp.services.async_call("test_domain", "REGISTER_CALLS", blocking=True)
     assert len(calls) == 1
 
 
@@ -743,9 +741,7 @@ async def test_serviceregistry_async_service(opp):
 
     opp.services.async_register("test_domain", "register_calls", service_handler)
 
-    assert await opp.services.async_call(
-        "test_domain", "REGISTER_CALLS", blocking=True
-    )
+    assert await opp.services.async_call("test_domain", "REGISTER_CALLS", blocking=True)
     assert len(calls) == 1
 
 
@@ -762,9 +758,7 @@ async def test_serviceregistry_async_service_partial(opp):
     )
     await opp.async_block_till_done()
 
-    assert await opp.services.async_call(
-        "test_domain", "REGISTER_CALLS", blocking=True
-    )
+    assert await opp.services.async_call("test_domain", "REGISTER_CALLS", blocking=True)
     assert len(calls) == 1
 
 
@@ -779,9 +773,7 @@ async def test_serviceregistry_callback_service(opp):
 
     opp.services.async_register("test_domain", "register_calls", service_handler)
 
-    assert await opp.services.async_call(
-        "test_domain", "REGISTER_CALLS", blocking=True
-    )
+    assert await opp.services.async_call("test_domain", "REGISTER_CALLS", blocking=True)
     assert len(calls) == 1
 
 
@@ -1458,9 +1450,11 @@ async def test_async_all(opp):
         "light.bowl",
         "light.frog",
     }
-    assert {
-        state.entity_id for state in opp.states.async_all(["light", "switch"])
-    } == {"light.bowl", "light.frog", "switch.link"}
+    assert {state.entity_id for state in opp.states.async_all(["light", "switch"])} == {
+        "light.bowl",
+        "light.frog",
+        "switch.link",
+    }
 
 
 async def test_async_entity_ids_count(opp):

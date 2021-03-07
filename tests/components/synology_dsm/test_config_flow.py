@@ -394,9 +394,7 @@ async def test_missing_data_after_login(
     assert result["errors"] == {"base": "missing_data"}
 
 
-async def test_form_ssdp_already_configured(
-    opp: OpenPeerPowerType, service: MagicMock
-):
+async def test_form_ssdp_already_configured(opp: OpenPeerPowerType, service: MagicMock):
     """Test ssdp abort when the serial number is already configured."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 

@@ -618,9 +618,7 @@ async def test_call_no_context_target_specific(
     assert mock_handle_entity_call.mock_calls[0][1][1].entity_id == "light.kitchen"
 
 
-async def test_call_with_match_all(
-    opp, mock_handle_entity_call, mock_entities, caplog
-):
+async def test_call_with_match_all(opp, mock_handle_entity_call, mock_entities, caplog):
     """Check we only target allowed entities if targeting all."""
     await service.entity_service_call(
         opp,

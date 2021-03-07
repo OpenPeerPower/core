@@ -20,9 +20,7 @@ from tests.components.august.mocks import (
 
 async def test_doorsense(opp):
     """Test creation of a lock with doorsense and bridge."""
-    lock_one = await _mock_lock_from_fixture(
-        opp, "get_lock.online_with_doorsense.json"
-    )
+    lock_one = await _mock_lock_from_fixture(opp, "get_lock.online_with_doorsense.json")
     await _create_august_with_devices(opp, [lock_one])
 
     binary_sensor_online_with_doorsense_name = opp.states.get(
@@ -41,9 +39,7 @@ async def test_doorsense(opp):
     )
     assert binary_sensor_online_with_doorsense_name.state == STATE_ON
 
-    assert await opp.services.async_call(
-        LOCK_DOMAIN, SERVICE_LOCK, data, blocking=True
-    )
+    assert await opp.services.async_call(LOCK_DOMAIN, SERVICE_LOCK, data, blocking=True)
     await opp.async_block_till_done()
 
     binary_sensor_online_with_doorsense_name = opp.states.get(

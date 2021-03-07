@@ -120,9 +120,7 @@ class ISYSensorVariableEntity(ISYEntity):
     def device_state_attributes(self) -> Dict:
         """Get the state attributes for the device."""
         return {
-            "init_value": convert_isy_value_to_opp(
-                self._node.init, "", self._node.prec
-            )
+            "init_value": convert_isy_value_to_opp(self._node.init, "", self._node.prec)
         }
 
     @property

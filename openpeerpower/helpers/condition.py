@@ -95,9 +95,7 @@ async def async_from_config(
         check_factory = check_factory.func
 
     if asyncio.iscoroutinefunction(check_factory):
-        return cast(
-            ConditionCheckerType, await factory(opp, config, config_validation)
-        )
+        return cast(ConditionCheckerType, await factory(opp, config, config_validation))
     return cast(ConditionCheckerType, factory(config, config_validation))
 
 
@@ -144,9 +142,7 @@ async def async_or_from_config(
         await async_from_config(opp, entry, False) for entry in config["conditions"]
     ]
 
-    def if_or_condition(
-        opp: OpenPeerPower, variables: TemplateVarsType = None
-    ) -> bool:
+    def if_or_condition(opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Test or condition."""
         errors = []
         for index, check in enumerate(checks):

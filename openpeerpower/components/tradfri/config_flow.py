@@ -50,9 +50,7 @@ class FlowHandler(config_entries.ConfigFlow):
         if user_input is not None:
             host = user_input.get(CONF_HOST, self._host)
             try:
-                auth = await authenticate(
-                    self.opp, host, user_input[KEY_SECURITY_CODE]
-                )
+                auth = await authenticate(self.opp, host, user_input[KEY_SECURITY_CODE])
 
                 # We don't ask for import group anymore as group state
                 # is not reliable, don't want to show that to the user.

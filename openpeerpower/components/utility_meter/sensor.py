@@ -75,9 +75,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         conf_meter_net_consumption = opp.data[DATA_UTILITY][meter][
             CONF_METER_NET_CONSUMPTION
         ]
-        conf_meter_tariff_entity = opp.data[DATA_UTILITY][meter].get(
-            CONF_TARIFF_ENTITY
-        )
+        conf_meter_tariff_entity = opp.data[DATA_UTILITY][meter].get(CONF_TARIFF_ENTITY)
 
         meters.append(
             UtilityMeterSensor(
@@ -299,9 +297,7 @@ class UtilityMeterSensor(RestoreEntity):
                 self.opp, [self._sensor_source_id], self.async_reading
             )
 
-        self.opp.bus.async_listen_once(
-            EVENT_OPENPEERPOWER_START, async_source_tracking
-        )
+        self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, async_source_tracking)
 
     @property
     def name(self):

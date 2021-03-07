@@ -411,9 +411,7 @@ async def test_windowcovering_open_close_stop(opp, hk_driver, events):
     assert events[-1].data[ATTR_VALUE] is None
 
 
-async def test_windowcovering_open_close_with_position_and_stop(
-    opp, hk_driver, events
-):
+async def test_windowcovering_open_close_with_position_and_stop(opp, hk_driver, events):
     """Test if accessory and OP are updated accordingly."""
     entity_id = "cover.stop_window"
 

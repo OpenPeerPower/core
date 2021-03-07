@@ -312,9 +312,7 @@ class Integration:
         return None
 
     @classmethod
-    def resolve_legacy(
-        cls, opp: "OpenPeerPower", domain: str
-    ) -> Optional[Integration]:
+    def resolve_legacy(cls, opp: "OpenPeerPower", domain: str) -> Optional[Integration]:
         """Resolve legacy component.
 
         Will create a stub manifest.

@@ -45,9 +45,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     email = config.get(CONF_EMAIL)
     sensors = {}
 
-    opp.http.register_view(
-        TorqueReceiveDataView(email, vehicle, sensors, add_entities)
-    )
+    opp.http.register_view(TorqueReceiveDataView(email, vehicle, sensors, add_entities))
     return True
 
 

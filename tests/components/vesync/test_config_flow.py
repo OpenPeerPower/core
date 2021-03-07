@@ -12,9 +12,7 @@ async def test_abort_already_setup(opp):
     """Test if we abort because component is already setup."""
     flow = config_flow.VeSyncFlowHandler()
     flow.opp = opp
-    MockConfigEntry(domain=DOMAIN, title="user", data={"user": "pass"}).add_to_opp(
-        opp
-    )
+    MockConfigEntry(domain=DOMAIN, title="user", data={"user": "pass"}).add_to_opp(opp)
     result = await flow.async_step_user()
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT

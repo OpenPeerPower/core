@@ -1028,9 +1028,7 @@ class Script:
             cls = _ScriptRun
         else:
             cls = _QueuedScriptRun
-        run = cls(
-            self._opp, self, cast(dict, variables), context, self._log_exceptions
-        )
+        run = cls(self._opp, self, cast(dict, variables), context, self._log_exceptions)
         self._runs.append(run)
         if started_action:
             self._opp.async_run_job(started_action)

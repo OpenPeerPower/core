@@ -460,9 +460,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry) -
     return True
 
 
-async def async_unload_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry
-) -> bool:
+async def async_unload_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry) -> bool:
     """Unload config entry."""
 
     # Forward config entry unload to platforms

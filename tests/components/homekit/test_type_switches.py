@@ -235,9 +235,7 @@ async def test_vacuum_set_state_with_returnhome_and_start_support(
 
     # Set from HomeKit
     call_start = async_mock_service(opp, VACUUM_DOMAIN, SERVICE_START)
-    call_return_to_base = async_mock_service(
-        opp, VACUUM_DOMAIN, SERVICE_RETURN_TO_BASE
-    )
+    call_return_to_base = async_mock_service(opp, VACUUM_DOMAIN, SERVICE_RETURN_TO_BASE)
 
     await opp.async_add_executor_job(acc.char_on.client_update_value, 1)
     await opp.async_block_till_done()

@@ -144,9 +144,7 @@ async def async_setup_entry(opp, config_entry):
             lights.extend(new_lights)
             opp.async_create_task(forward_setup(config_entry, "light"))
 
-    opp.services.async_register(
-        DOMAIN, SERVICE_UPDATE_DEVS, async_new_device_discovery
-    )
+    opp.services.async_register(DOMAIN, SERVICE_UPDATE_DEVS, async_new_device_discovery)
 
     return True
 

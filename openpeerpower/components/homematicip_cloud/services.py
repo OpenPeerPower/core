@@ -324,9 +324,7 @@ async def _async_dump_hap_config(
         config_file.write_text(json_state, encoding="utf8")
 
 
-async def _async_reset_energy_counter(
-    opp: OpenPeerPowerType, service: ServiceCallType
-):
+async def _async_reset_energy_counter(opp: OpenPeerPowerType, service: ServiceCallType):
     """Service to reset the energy counter."""
     entity_id_list = service.data[ATTR_ENTITY_ID]
 

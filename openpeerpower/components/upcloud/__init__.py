@@ -239,9 +239,9 @@ async def async_unload_entry(opp, config_entry):
     for domain in CONFIG_ENTRY_DOMAINS:
         await opp.config_entries.async_forward_entry_unload(config_entry, domain)
 
-    coordinator: UpCloudDataUpdateCoordinator = opp.data[
-        DATA_UPCLOUD
-    ].coordinators.pop(config_entry.data[CONF_USERNAME])
+    coordinator: UpCloudDataUpdateCoordinator = opp.data[DATA_UPCLOUD].coordinators.pop(
+        config_entry.data[CONF_USERNAME]
+    )
     while coordinator.unsub_handlers:
         coordinator.unsub_handlers.pop()()
 

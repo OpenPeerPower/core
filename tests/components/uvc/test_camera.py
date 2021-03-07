@@ -120,9 +120,7 @@ class TestUVCSetup(unittest.TestCase):
         self.opp.block_till_done()
 
         assert not mock_uvc.called
-        assert setup_component(
-            self.opp, "camera", {"platform": "uvc", "key": "secret"}
-        )
+        assert setup_component(self.opp, "camera", {"platform": "uvc", "key": "secret"})
         self.opp.block_till_done()
 
         assert not mock_uvc.called

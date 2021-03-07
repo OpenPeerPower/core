@@ -113,9 +113,7 @@ def _get_significant_states(
     """
     timer_start = time.perf_counter()
 
-    baked_query = opp.data[HISTORY_BAKERY](
-        lambda session: session.query(*QUERY_STATES)
-    )
+    baked_query = opp.data[HISTORY_BAKERY](lambda session: session.query(*QUERY_STATES))
 
     if significant_changes_only:
         baked_query += lambda q: q.filter(
@@ -318,9 +316,7 @@ def _get_states_with_session(
 def _get_single_entity_states_with_session(opp, session, utc_point_in_time, entity_id):
     # Use an entirely different (and extremely fast) query if we only
     # have a single entity id
-    baked_query = opp.data[HISTORY_BAKERY](
-        lambda session: session.query(*QUERY_STATES)
-    )
+    baked_query = opp.data[HISTORY_BAKERY](lambda session: session.query(*QUERY_STATES))
     baked_query += lambda q: q.filter(
         States.last_updated < bindparam("utc_point_in_time"),
         States.entity_id == bindparam("entity_id"),

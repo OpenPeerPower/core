@@ -430,6 +430,5 @@ async def test_unload_entry(opp, mock_get_station):
 
     # And the entity should be unavailable
     assert (
-        opp.states.get("sensor.my_station_water_level_stage").state
-        == STATE_UNAVAILABLE
+        opp.states.get("sensor.my_station_water_level_stage").state == STATE_UNAVAILABLE
     )

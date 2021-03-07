@@ -336,9 +336,7 @@ async def test_full_flow(
     entry = opp.config_entries.async_entries(TEST_DOMAIN)[0]
 
     assert (
-        await config_entry_oauth2_flow.async_get_config_entry_implementation(
-            opp, entry
-        )
+        await config_entry_oauth2_flow.async_get_config_entry_implementation(opp, entry)
         is local_impl
     )
 
@@ -510,8 +508,7 @@ async def test_oauth_session_no_token_refresh_needed(
 async def test_implementation_provider(opp, local_impl):
     """Test providing an implementation provider."""
     assert (
-        await config_entry_oauth2_flow.async_get_implementations(opp, TEST_DOMAIN)
-        == {}
+        await config_entry_oauth2_flow.async_get_implementations(opp, TEST_DOMAIN) == {}
     )
 
     mock_domain_with_impl = "some_domain"

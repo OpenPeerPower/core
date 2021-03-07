@@ -303,9 +303,7 @@ async def _async_entry_updated(
     await opp.config_entries.async_reload(config_entry.entry_id)
 
 
-async def async_unload_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry
-) -> bool:
+async def async_unload_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

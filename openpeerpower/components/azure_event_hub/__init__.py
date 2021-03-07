@@ -120,9 +120,7 @@ class AzureEventHub:
         logging.getLogger("azure.eventhub").setLevel(logging.WARNING)
 
         self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, self.async_shutdown)
-        self._listener_remover = self.opp.bus.async_listen(
-            MATCH_ALL, self.async_listen
-        )
+        self._listener_remover = self.opp.bus.async_listen(MATCH_ALL, self.async_listen)
         # schedule the first send after 10 seconds to capture startup events, after that each send will schedule the next after the interval.
         self._next_send_remover = async_call_later(self.opp, 10, self.async_send)
 

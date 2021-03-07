@@ -143,9 +143,7 @@ class Life360Scanner:
 
         self._started = dt_util.utcnow()
         self._update_life360()
-        track_time_interval(
-            self._opp, self._update_life360, config[CONF_SCAN_INTERVAL]
-        )
+        track_time_interval(self._opp, self._update_life360, config[CONF_SCAN_INTERVAL])
 
     def _dev_id(self, name):
         return self._prefix + name

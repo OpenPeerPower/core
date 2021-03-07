@@ -143,9 +143,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         return await async_setup_legacy_entry(opp, entry)
 
     implementation = (
-        await config_entry_oauth2_flow.async_get_config_entry_implementation(
-            opp, entry
-        )
+        await config_entry_oauth2_flow.async_get_config_entry_implementation(opp, entry)
     )
 
     config = opp.data[DOMAIN][DATA_NEST_CONFIG]

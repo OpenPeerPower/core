@@ -1201,9 +1201,7 @@ async def test_discovery_update_light(opp, mqtt_mock, caplog):
         '  "state_topic": "test_topic",'
         '  "command_topic": "test_topic" }'
     )
-    await help_test_discovery_update(
-        opp, mqtt_mock, caplog, light.DOMAIN, data1, data2
-    )
+    await help_test_discovery_update(opp, mqtt_mock, caplog, light.DOMAIN, data1, data2)
 
 
 async def test_discovery_update_unchanged_light(opp, mqtt_mock, caplog):
@@ -1232,9 +1230,7 @@ async def test_discovery_broken(opp, mqtt_mock, caplog):
         '  "state_topic": "test_topic",'
         '  "command_topic": "test_topic" }'
     )
-    await help_test_discovery_broken(
-        opp, mqtt_mock, caplog, light.DOMAIN, data1, data2
-    )
+    await help_test_discovery_broken(opp, mqtt_mock, caplog, light.DOMAIN, data1, data2)
 
 
 async def test_entity_device_info_with_connection(opp, mqtt_mock):

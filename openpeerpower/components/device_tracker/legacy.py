@@ -172,9 +172,7 @@ async def async_setup_integration(opp: OpenPeerPowerType, config: ConfigType) ->
     discovery.async_listen_platform(opp, DOMAIN, async_platform_discovered)
 
     # Clean up stale devices
-    async_track_utc_time_change(
-        opp, tracker.async_update_stale, second=range(0, 60, 5)
-    )
+    async_track_utc_time_change(opp, tracker.async_update_stale, second=range(0, 60, 5))
 
     async def async_see_service(call):
         """Service to see a device."""
@@ -538,9 +536,7 @@ class DeviceTracker:
 
         # update known_devices.yaml
         self.opp.async_create_task(
-            self.async_update_config(
-                self.opp.config.path(YAML_DEVICES), dev_id, device
-            )
+            self.async_update_config(self.opp.config.path(YAML_DEVICES), dev_id, device)
         )
 
     async def async_update_config(self, path, dev_id, device):

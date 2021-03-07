@@ -258,9 +258,7 @@ async def test_external_step(opp, manager):
         async def async_step_finish(self, user_input=None):
             return self.async_create_entry(title=self.data["title"], data=self.data)
 
-    events = async_capture_events(
-        opp, data_entry_flow.EVENT_DATA_ENTRY_FLOW_PROGRESSED
-    )
+    events = async_capture_events(opp, data_entry_flow.EVENT_DATA_ENTRY_FLOW_PROGRESSED)
 
     result = await manager.async_init("test")
     assert result["type"] == data_entry_flow.RESULT_TYPE_EXTERNAL_STEP
@@ -313,9 +311,7 @@ async def test_show_progress(opp, manager):
         async def async_step_finish(self, user_input=None):
             return self.async_create_entry(title=self.data["title"], data=self.data)
 
-    events = async_capture_events(
-        opp, data_entry_flow.EVENT_DATA_ENTRY_FLOW_PROGRESSED
-    )
+    events = async_capture_events(opp, data_entry_flow.EVENT_DATA_ENTRY_FLOW_PROGRESSED)
 
     result = await manager.async_init("test")
     assert result["type"] == data_entry_flow.RESULT_TYPE_SHOW_PROGRESS

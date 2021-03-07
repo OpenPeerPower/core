@@ -73,9 +73,7 @@ CLIMATE_TEMP_OFFSET_SCHEMA = {
 }
 
 
-async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
-):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry, async_add_entities):
     """Set up the Tado climate platform."""
 
     tado = opp.data[DOMAIN][entry.entry_id][DATA]

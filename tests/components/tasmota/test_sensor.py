@@ -276,9 +276,7 @@ async def test_status_sensor_state_via_mqtt(opp, mqtt_mock, setup_tasmota):
     assert state.state == "20.0"
 
     # Test force update flag
-    entity = opp.data["entity_components"]["sensor"].get_entity(
-        "sensor.tasmota_status"
-    )
+    entity = opp.data["entity_components"]["sensor"].get_entity("sensor.tasmota_status")
     assert entity.force_update
 
 
@@ -365,9 +363,7 @@ async def test_single_shot_status_sensor_state_via_mqtt(opp, mqtt_mock, setup_ta
 
 @pytest.mark.parametrize("status_sensor_disabled", [False])
 @patch.object(hatasmota.status_sensor, "datetime", Mock(wraps=datetime.datetime))
-async def test_restart_time_status_sensor_state_via_mqtt(
-    opp, mqtt_mock, setup_tasmota
-):
+async def test_restart_time_status_sensor_state_via_mqtt(opp, mqtt_mock, setup_tasmota):
     """Test state update via MQTT."""
     entity_reg = await opp.helpers.entity_registry.async_get_registry()
 
@@ -620,9 +616,7 @@ async def test_availability_discovery_update(opp, mqtt_mock, setup_tasmota):
     )
 
 
-async def test_availability_poll_state(
-    opp, mqtt_client_mock, mqtt_mock, setup_tasmota
-):
+async def test_availability_poll_state(opp, mqtt_client_mock, mqtt_mock, setup_tasmota):
     """Test polling after MQTT connection (re)established."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     sensor_config = copy.deepcopy(DEFAULT_SENSOR_CONFIG)
@@ -658,9 +652,7 @@ async def test_discovery_removal_sensor(opp, mqtt_mock, caplog, setup_tasmota):
     )
 
 
-async def test_discovery_update_unchanged_sensor(
-    opp, mqtt_mock, caplog, setup_tasmota
-):
+async def test_discovery_update_unchanged_sensor(opp, mqtt_mock, caplog, setup_tasmota):
     """Test update of discovered sensor."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     sensor_config = copy.deepcopy(DEFAULT_SENSOR_CONFIG)

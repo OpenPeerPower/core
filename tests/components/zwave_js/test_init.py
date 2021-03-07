@@ -113,9 +113,7 @@ async def test_on_node_added_ready(
     )
 
 
-async def test_unique_id_migration_dupes(
-    opp, multisensor_6_state, client, integration
-):
+async def test_unique_id_migration_dupes(opp, multisensor_6_state, client, integration):
     """Test we remove an entity when ."""
     ent_reg = entity_registry.async_get(opp)
 

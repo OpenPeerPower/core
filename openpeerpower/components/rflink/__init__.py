@@ -192,9 +192,7 @@ async def async_setup(opp, config):
                 opp.data[DATA_ENTITY_LOOKUP][event_type][event_id].append(
                     TMP_ENTITY.format(event_id)
                 )
-                opp.async_create_task(
-                    opp.data[DATA_DEVICE_REGISTER][event_type](event)
-                )
+                opp.async_create_task(opp.data[DATA_DEVICE_REGISTER][event_type](event))
             else:
                 _LOGGER.debug("device_id not known and automatic add disabled")
 
@@ -283,9 +281,7 @@ async def async_setup(opp, config):
         RflinkCommand.set_rflink_protocol(protocol, config[DOMAIN][CONF_WAIT_FOR_ACK])
 
         # handle shutdown of Rflink asyncio transport
-        opp.bus.async_listen_once(
-            EVENT_OPENPEERPOWER_STOP, lambda x: transport.close()
-        )
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, lambda x: transport.close())
 
         _LOGGER.info("Connected to Rflink")
 

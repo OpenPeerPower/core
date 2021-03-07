@@ -178,9 +178,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
         flows = opp.config_entries.flow.async_progress()
         if not [flow for flow in flows if flow["handler"] == DOMAIN]:
             opp.async_create_task(
-                opp.config_entries.flow.async_init(
-                    DOMAIN, context={"source": "import"}
-                )
+                opp.config_entries.flow.async_init(DOMAIN, context={"source": "import"})
             )
         return False
 

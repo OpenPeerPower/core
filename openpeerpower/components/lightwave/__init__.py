@@ -66,9 +66,7 @@ async def async_setup(opp, config):
 
     lights = config[DOMAIN][CONF_LIGHTS]
     if lights:
-        opp.async_create_task(
-            async_load_platform(opp, "light", DOMAIN, lights, config)
-        )
+        opp.async_create_task(async_load_platform(opp, "light", DOMAIN, lights, config))
 
     switches = config[DOMAIN][CONF_SWITCHES]
     if switches:

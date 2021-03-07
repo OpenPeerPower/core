@@ -132,9 +132,7 @@ def set_volume_level(opp, volume, entity_id=ENTITY_MATCH_ALL):
 async def async_media_play_pause(opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for play/pause."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await opp.services.async_call(
-        DOMAIN, SERVICE_MEDIA_PLAY_PAUSE, data, blocking=True
-    )
+    await opp.services.async_call(DOMAIN, SERVICE_MEDIA_PLAY_PAUSE, data, blocking=True)
 
 
 @bind_opp
@@ -182,9 +180,7 @@ def media_stop(opp, entity_id=ENTITY_MATCH_ALL):
 async def async_media_next_track(opp, entity_id=ENTITY_MATCH_ALL):
     """Send the media player the command for next track."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
-    await opp.services.async_call(
-        DOMAIN, SERVICE_MEDIA_NEXT_TRACK, data, blocking=True
-    )
+    await opp.services.async_call(DOMAIN, SERVICE_MEDIA_NEXT_TRACK, data, blocking=True)
 
 
 @bind_opp

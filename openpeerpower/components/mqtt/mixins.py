@@ -154,9 +154,7 @@ async def async_setup_entry_helper(opp, domain, async_setup, schema):
         except Exception:
             discovery_hash = discovery_data[ATTR_DISCOVERY_HASH]
             clear_discovery_hash(opp, discovery_hash)
-            async_dispatcher_send(
-                opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None
-            )
+            async_dispatcher_send(opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None)
             raise
 
     async_dispatcher_connect(

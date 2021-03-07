@@ -207,7 +207,9 @@ def test_open_peer_power_start(opp_):
     )
 
     assert len(entries) == 2
-    assert_entry(entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN)
+    assert_entry(
+        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
+    )
     assert_entry(entries[1], pointA, "bla", entity_id=entity_id)
 
 
@@ -1176,9 +1178,7 @@ async def test_logbook_context_from_template(opp, opp_client):
         id="9c5bd62de45711eaaeb351041eec8dd9",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
-    opp.states.async_set(
-        "switch.test_state", STATE_ON, context=switch_turn_off_context
-    )
+    opp.states.async_set("switch.test_state", STATE_ON, context=switch_turn_off_context)
     await opp.async_block_till_done()
 
     await opp.async_add_executor_job(trigger_db_commit, opp)
@@ -1262,9 +1262,7 @@ async def test_logbook_entity_matches_only(opp, opp_client):
         id="9c5bd62de45711eaaeb351041eec8dd9",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
-    opp.states.async_set(
-        "switch.test_state", STATE_ON, context=switch_turn_off_context
-    )
+    opp.states.async_set("switch.test_state", STATE_ON, context=switch_turn_off_context)
     await opp.async_block_till_done()
 
     await opp.async_add_executor_job(trigger_db_commit, opp)
@@ -1340,9 +1338,7 @@ async def test_logbook_entity_matches_only_multiple(opp, opp_client):
         id="9c5bd62de45711eaaeb351041eec8dd9",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
-    opp.states.async_set(
-        "switch.test_state", STATE_ON, context=switch_turn_off_context
-    )
+    opp.states.async_set("switch.test_state", STATE_ON, context=switch_turn_off_context)
     opp.states.async_set("light.test_state", STATE_ON, context=switch_turn_off_context)
     await opp.async_block_till_done()
 

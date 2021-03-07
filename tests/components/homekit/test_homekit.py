@@ -499,9 +499,7 @@ async def test_homekit_start(opp, hk_driver, device_reg):
 
     await opp.async_block_till_done()
     mock_add_acc.assert_any_call(state)
-    mock_setup_msg.assert_called_with(
-        opp, entry.entry_id, "Mock Title (any)", pin, ANY
-    )
+    mock_setup_msg.assert_called_with(opp, entry.entry_id, "Mock Title (any)", pin, ANY)
     hk_driver_add_acc.assert_called_with(homekit.bridge)
     assert hk_driver_start.called
     assert homekit.status == STATUS_RUNNING
@@ -572,9 +570,7 @@ async def test_homekit_start_with_a_broken_accessory(opp, hk_driver, mock_zeroco
         await homekit.async_start()
 
     await opp.async_block_till_done()
-    mock_setup_msg.assert_called_with(
-        opp, entry.entry_id, "Mock Title (any)", pin, ANY
-    )
+    mock_setup_msg.assert_called_with(opp, entry.entry_id, "Mock Title (any)", pin, ANY)
     hk_driver_add_acc.assert_called_with(homekit.bridge)
     assert hk_driver_start.called
     assert homekit.status == STATUS_RUNNING
@@ -1211,8 +1207,6 @@ async def test_homekit_start_in_accessory_mode(opp, hk_driver, device_reg):
 
     await opp.async_block_till_done()
     mock_add_acc.assert_not_called()
-    mock_setup_msg.assert_called_with(
-        opp, entry.entry_id, "Mock Title (any)", pin, ANY
-    )
+    mock_setup_msg.assert_called_with(opp, entry.entry_id, "Mock Title (any)", pin, ANY)
     assert hk_driver_start.called
     assert homekit.status == STATUS_RUNNING

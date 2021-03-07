@@ -78,9 +78,7 @@ class FuelCheckClientMock:
 async def test_setup(opp):
     """Test the setup with custom settings."""
     with assert_setup_component(1, sensor.DOMAIN):
-        assert await async_setup_component(
-            opp, sensor.DOMAIN, {"sensor": VALID_CONFIG}
-        )
+        assert await async_setup_component(opp, sensor.DOMAIN, {"sensor": VALID_CONFIG})
         await opp.async_block_till_done()
 
     fake_entities = ["my_fake_station_p95", "my_fake_station_e10"]

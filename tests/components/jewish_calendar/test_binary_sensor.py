@@ -107,8 +107,7 @@ async def test_issur_melacha_sensor(
         await opp.async_block_till_done()
 
         assert (
-            opp.states.get("binary_sensor.test_issur_melacha_in_effect").state
-            == result
+            opp.states.get("binary_sensor.test_issur_melacha_in_effect").state == result
         )
         entity = registry.async_get("binary_sensor.test_issur_melacha_in_effect")
         target_uid = "_".join(

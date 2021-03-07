@@ -703,9 +703,7 @@ async def merge_packages_config(
             domain = comp_name.split(" ")[0]
 
             try:
-                integration = await async_get_integration_with_requirements(
-                    opp, domain
-                )
+                integration = await async_get_integration_with_requirements(opp, domain)
                 component = integration.get_component()
             except INTEGRATION_LOAD_EXCEPTIONS as ex:
                 _log_pkg_error(pack_name, comp_name, config, str(ex))

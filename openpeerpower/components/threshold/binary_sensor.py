@@ -66,11 +66,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     device_class = config.get(CONF_DEVICE_CLASS)
 
     async_add_entities(
-        [
-            ThresholdSensor(
-                opp, entity_id, name, lower, upper, hysteresis, device_class
-            )
-        ],
+        [ThresholdSensor(opp, entity_id, name, lower, upper, hysteresis, device_class)],
     )
 
 

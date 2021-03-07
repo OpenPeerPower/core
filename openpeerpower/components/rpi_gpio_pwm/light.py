@@ -162,9 +162,7 @@ class PwmSimpleLed(LightEntity, RestoreEntity):
                 brightness=_from_opp_brightness(self._brightness),
             )
         else:
-            self._led.set(
-                is_on=True, brightness=_from_opp_brightness(self._brightness)
-            )
+            self._led.set(is_on=True, brightness=_from_opp_brightness(self._brightness))
 
         self._is_on = True
         self.schedule_update_op_state()

@@ -44,9 +44,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
 
 async def async_setup_entry(opp: OpenPeerPower, entry: config_entries.ConfigEntry):
     """Set up pvpc hourly pricing from a config entry."""
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_setup(entry, PLATFORM)
-    )
+    opp.async_create_task(opp.config_entries.async_forward_entry_setup(entry, PLATFORM))
 
     return True
 

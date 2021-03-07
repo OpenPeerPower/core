@@ -287,9 +287,7 @@ async def test_setting_device_tracker_value_via_mqtt_message_and_template2(
     assert state.state == STATE_NOT_HOME
 
 
-async def test_setting_device_tracker_location_via_mqtt_message(
-    opp, mqtt_mock, caplog
-):
+async def test_setting_device_tracker_location_via_mqtt_message(opp, mqtt_mock, caplog):
     """Test the setting of the location via MQTT."""
     async_fire_mqtt_message(
         opp,

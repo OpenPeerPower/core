@@ -794,9 +794,7 @@ async def test_flux_after_sunset_after_midnight_stop_next_day(
 
 
 # pylint: disable=invalid-name
-async def test_flux_after_stop_before_sunrise_stop_next_day(
-    opp, legacy_patchable_time
-):
+async def test_flux_after_stop_before_sunrise_stop_next_day(opp, legacy_patchable_time):
     """Test the flux switch after stop and before sunrise.
 
     This test has the stop_time on the next day (after midnight).

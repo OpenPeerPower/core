@@ -34,9 +34,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
     opp.data[DOMAIN][entry.entry_id] = FlickAPI(auth)
 
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_setup(entry, "sensor")
-    )
+    opp.async_create_task(opp.config_entries.async_forward_entry_setup(entry, "sensor"))
 
     return True
 

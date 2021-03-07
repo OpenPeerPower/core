@@ -151,9 +151,7 @@ async def async_setup(opp, config):
         Wait till started or otherwise HTTP is not up and running.
         """
         uuid = await opp.helpers.instance_id.async_get()
-        await opp.async_add_executor_job(
-            _register_opp_zc_service, opp, zeroconf, uuid
-        )
+        await opp.async_add_executor_job(_register_opp_zc_service, opp, zeroconf, uuid)
 
     async def _async_zeroconf_opp_started(_event):
         """Start the service browser."""
@@ -161,9 +159,7 @@ async def async_setup(opp, config):
         await _async_start_zeroconf_browser(opp, zeroconf)
 
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _async_zeroconf_opp_start)
-    opp.bus.async_listen_once(
-        EVENT_OPENPEERPOWER_STARTED, _async_zeroconf_opp_started
-    )
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, _async_zeroconf_opp_started)
 
     return True
 

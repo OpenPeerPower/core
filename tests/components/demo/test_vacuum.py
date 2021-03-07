@@ -175,9 +175,7 @@ async def test_methods(opp):
     state = opp.states.get(ENTITY_VACUUM_STATE)
     assert state.state == STATE_RETURNING
 
-    await common.async_set_fan_speed(
-        opp, FAN_SPEEDS[-1], entity_id=ENTITY_VACUUM_STATE
-    )
+    await common.async_set_fan_speed(opp, FAN_SPEEDS[-1], entity_id=ENTITY_VACUUM_STATE)
     state = opp.states.get(ENTITY_VACUUM_STATE)
     assert state.attributes.get(ATTR_FAN_SPEED) == FAN_SPEEDS[-1]
 

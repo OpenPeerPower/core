@@ -359,9 +359,7 @@ class OpenPeerPower:
         return self.async_add_opp_job(OppJob(target), *args)
 
     @callback
-    def async_add_opp_job(
-        self, oppjob: OppJob, *args: Any
-    ) -> Optional[asyncio.Future]:
+    def async_add_opp_job(self, oppjob: OppJob, *args: Any) -> Optional[asyncio.Future]:
         """Add a OppJob from within the event loop.
 
         This method must be run in the event loop.
@@ -374,9 +372,7 @@ class OpenPeerPower:
             self.loop.call_soon(oppjob.target, *args)
             return None
         else:
-            task = self.loop.run_in_executor(  # type: ignore
-                None, oppjob.target, *args
-            )
+            task = self.loop.run_in_executor(None, oppjob.target, *args)  # type: ignore
 
         # If a task is scheduled
         if self._track_task:
@@ -423,9 +419,7 @@ class OpenPeerPower:
         self._track_task = False
 
     @callback
-    def async_run_opp_job(
-        self, oppjob: OppJob, *args: Any
-    ) -> Optional[asyncio.Future]:
+    def async_run_opp_job(self, oppjob: OppJob, *args: Any) -> Optional[asyncio.Future]:
         """Run a OppJob from within the event loop.
 
         This method must be run in the event loop.

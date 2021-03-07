@@ -471,9 +471,7 @@ class EntityPlatform:
         already_exists = entity.entity_id in self.entities
         restored = False
 
-        if not already_exists and not self.opp.states.async_available(
-            entity.entity_id
-        ):
+        if not already_exists and not self.opp.states.async_available(entity.entity_id):
             existing = self.opp.states.get(entity.entity_id)
             if existing is not None and ATTR_RESTORED in existing.attributes:
                 restored = True

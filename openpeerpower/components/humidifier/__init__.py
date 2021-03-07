@@ -59,9 +59,7 @@ def is_on(opp, entity_id):
 
 async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     """Set up humidifier devices."""
-    component = opp.data[DOMAIN] = EntityComponent(
-        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
-    )
+    component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp, SCAN_INTERVAL)
     await component.async_setup(config)
 
     component.async_register_entity_service(SERVICE_TURN_ON, {}, "async_turn_on")

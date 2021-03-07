@@ -206,9 +206,7 @@ def setup(opp, config):
         return False
 
     # listen to custom events
-    opp.bus.listen(
-        "wirelesstag_update_tags", opp.data[DOMAIN].handle_update_tags_event
-    )
+    opp.bus.listen("wirelesstag_update_tags", opp.data[DOMAIN].handle_update_tags_event)
     opp.bus.listen("wirelesstag_binary_event", opp.data[DOMAIN].handle_binary_event)
 
     return True

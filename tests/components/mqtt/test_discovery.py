@@ -62,9 +62,7 @@ async def test_invalid_topic(opp, mqtt_mock):
     ) as mock_dispatcher_send:
         mock_dispatcher_send = AsyncMock(return_value=None)
 
-        async_fire_mqtt_message(
-            opp, "openpeerpower/binary_sensor/bla/not_config", "{}"
-        )
+        async_fire_mqtt_message(opp, "openpeerpower/binary_sensor/bla/not_config", "{}")
         await opp.async_block_till_done()
         assert not mock_dispatcher_send.called
 

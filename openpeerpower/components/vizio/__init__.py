@@ -74,9 +74,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry) -
     return True
 
 
-async def async_unload_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry
-) -> bool:
+async def async_unload_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     unload_ok = all(
         await asyncio.gather(

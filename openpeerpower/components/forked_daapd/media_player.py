@@ -104,9 +104,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
         opp, forked_daapd_api, config_entry.entry_id
     )
     await forked_daapd_updater.async_init()
-    opp.data[DOMAIN][config_entry.entry_id][
-        OPP_DATA_UPDATER_KEY
-    ] = forked_daapd_updater
+    opp.data[DOMAIN][config_entry.entry_id][OPP_DATA_UPDATER_KEY] = forked_daapd_updater
 
 
 async def update_listener(opp, entry):

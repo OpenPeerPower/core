@@ -79,9 +79,7 @@ async def async_setup_platform(
     )
 
 
-async def async_setup_entry(
-    opp, config_entry: ConfigEntry, async_add_entities
-) -> None:
+async def async_setup_entry(opp, config_entry: ConfigEntry, async_add_entities) -> None:
     """Set up the UPnP/IGD sensors."""
     udn = config_entry.data[CONFIG_ENTRY_UDN]
     device: Device = opp.data[DOMAIN][DOMAIN_DEVICES][udn]

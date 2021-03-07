@@ -91,9 +91,7 @@ def test_load_translations_files(opp):
     file1 = opp.config.path(
         "custom_components", "test", "translations", "switch.en.json"
     )
-    file2 = opp.config.path(
-        "custom_components", "test", "translations", "invalid.json"
-    )
+    file2 = opp.config.path("custom_components", "test", "translations", "invalid.json")
     assert translation.load_translations_files(
         {"switch.test": file1, "invalid": file2}
     ) == {

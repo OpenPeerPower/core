@@ -225,9 +225,7 @@ async def async_setup_legacy_entry(opp, entry):
         DOMAIN, SERVICE_SET_AWAY_MODE, set_away_mode, schema=SET_AWAY_MODE_SCHEMA
     )
 
-    opp.services.async_register(
-        DOMAIN, SERVICE_SET_ETA, set_eta, schema=SET_ETA_SCHEMA
-    )
+    opp.services.async_register(DOMAIN, SERVICE_SET_ETA, set_eta, schema=SET_ETA_SCHEMA)
 
     opp.services.async_register(
         DOMAIN, SERVICE_CANCEL_ETA, cancel_eta, schema=CANCEL_ETA_SCHEMA

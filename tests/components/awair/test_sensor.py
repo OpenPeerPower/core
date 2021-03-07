@@ -55,9 +55,7 @@ async def setup_awair(opp, fixtures):
         await opp.async_block_till_done()
 
 
-def assert_expected_properties(
-    opp, registry, name, unique_id, state_value, attributes
-):
+def assert_expected_properties(opp, registry, name, unique_id, state_value, attributes):
     """Assert expected properties from a dict."""
 
     entry = registry.async_get(name)

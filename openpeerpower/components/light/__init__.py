@@ -182,9 +182,7 @@ def filter_turn_off_params(params):
 
 async def async_setup(opp, config):
     """Expose light control via state machine and services."""
-    component = opp.data[DOMAIN] = EntityComponent(
-        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
-    )
+    component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp, SCAN_INTERVAL)
     await component.async_setup(config)
 
     profiles = opp.data[DATA_PROFILES] = Profiles(opp)

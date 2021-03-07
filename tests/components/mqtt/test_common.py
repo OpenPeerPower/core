@@ -1138,6 +1138,4 @@ async def help_test_entity_debug_info_update_entity_id(opp, mqtt_mock, domain, c
         "subscriptions"
     ]
     assert len(debug_info_data["triggers"]) == 0
-    assert (
-        f"{domain}.test" not in opp.data[debug_info.DATA_MQTT_DEBUG_INFO]["entities"]
-    )
+    assert f"{domain}.test" not in opp.data[debug_info.DATA_MQTT_DEBUG_INFO]["entities"]

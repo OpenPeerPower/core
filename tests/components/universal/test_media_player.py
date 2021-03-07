@@ -749,9 +749,7 @@ class TestMediaPlayer(unittest.TestCase):
         ).result()
         assert 1 == len(self.mock_mp_2.service_calls["set_volume_level"])
 
-        asyncio.run_coroutine_threadsafe(
-            ump.async_media_play(), self.opp.loop
-        ).result()
+        asyncio.run_coroutine_threadsafe(ump.async_media_play(), self.opp.loop).result()
         assert 1 == len(self.mock_mp_2.service_calls["media_play"])
 
         asyncio.run_coroutine_threadsafe(
@@ -759,9 +757,7 @@ class TestMediaPlayer(unittest.TestCase):
         ).result()
         assert 1 == len(self.mock_mp_2.service_calls["media_pause"])
 
-        asyncio.run_coroutine_threadsafe(
-            ump.async_media_stop(), self.opp.loop
-        ).result()
+        asyncio.run_coroutine_threadsafe(ump.async_media_stop(), self.opp.loop).result()
         assert 1 == len(self.mock_mp_2.service_calls["media_stop"])
 
         asyncio.run_coroutine_threadsafe(
@@ -1020,9 +1016,7 @@ async def test_reload(opp):
     assert opp.states.get("media_player.tv") is None
     assert opp.states.get("media_player.master_bed_tv").state == "on"
     assert opp.states.get("media_player.master_bed_tv").attributes["source"] == "act2"
-    assert (
-        "device_class" not in opp.states.get("media_player.master_bed_tv").attributes
-    )
+    assert "device_class" not in opp.states.get("media_player.master_bed_tv").attributes
 
 
 def _get_fixtures_base_path():

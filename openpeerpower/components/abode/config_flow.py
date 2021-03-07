@@ -98,9 +98,7 @@ class AbodeFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         existing_entry = await self.async_set_unique_id(self._username)
 
         if existing_entry:
-            self.opp.config_entries.async_update_entry(
-                existing_entry, data=config_data
-            )
+            self.opp.config_entries.async_update_entry(existing_entry, data=config_data)
             # Reload the Abode config entry otherwise devices will remain unavailable
             self.opp.async_create_task(
                 self.opp.config_entries.async_reload(existing_entry.entry_id)

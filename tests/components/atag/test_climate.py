@@ -27,9 +27,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 CLIMATE_ID = f"{CLIMATE}.{DOMAIN}"
 
 
-async def test_climate(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
-) -> None:
+async def test_climate(opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker) -> None:
     """Test the creation and values of Atag climate device."""
     with patch("pyatag.entities.Climate.status"):
         entry = await init_integration(opp, aioclient_mock)
@@ -39,8 +37,7 @@ async def test_climate(
         entry = registry.async_get(CLIMATE_ID)
         assert entry.unique_id == f"{UID}-{CLIMATE}"
         assert (
-            opp.states.get(CLIMATE_ID).attributes[ATTR_HVAC_ACTION]
-            == CURRENT_HVAC_HEAT
+            opp.states.get(CLIMATE_ID).attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_HEAT
         )
 
 

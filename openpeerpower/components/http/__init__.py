@@ -199,9 +199,7 @@ async def async_setup(opp, config):
         # Assume the first server host name provided as API host
         host = server_host[0]
 
-    opp.config.api = ApiConfig(
-        local_ip, host, server_port, ssl_certificate is not None
-    )
+    opp.config.api = ApiConfig(local_ip, host, server_port, ssl_certificate is not None)
 
     return True
 

@@ -453,9 +453,7 @@ class TestStatisticsSensor(unittest.TestCase):
 
 async def test_reload(opp):
     """Verify we can reload filter sensors."""
-    await opp.async_add_executor_job(
-        init_recorder_component, opp
-    )  # force in memory db
+    await opp.async_add_executor_job(init_recorder_component, opp)  # force in memory db
 
     opp.states.async_set("sensor.test_monitored", 12345)
     await async_setup_component(

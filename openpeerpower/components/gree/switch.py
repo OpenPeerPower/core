@@ -11,10 +11,7 @@ from .const import COORDINATOR, DOMAIN
 async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the Gree HVAC device from a config entry."""
     async_add_entities(
-        [
-            GreeSwitchEntity(coordinator)
-            for coordinator in opp.data[DOMAIN][COORDINATOR]
-        ]
+        [GreeSwitchEntity(coordinator) for coordinator in opp.data[DOMAIN][COORDINATOR]]
     )
 
 

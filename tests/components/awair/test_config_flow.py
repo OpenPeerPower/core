@@ -56,9 +56,7 @@ async def test_duplicate_error(opp):
         "openpeerpower.components.awair.sensor.async_setup_entry",
         return_value=True,
     ):
-        MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG).add_to_opp(
-            opp
-        )
+        MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG).add_to_opp(opp)
 
         result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
@@ -126,9 +124,7 @@ async def test_import_aborts_if_configured(opp):
         "openpeerpower.components.awair.sensor.async_setup_entry",
         return_value=True,
     ):
-        MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG).add_to_opp(
-            opp
-        )
+        MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG).add_to_opp(opp)
 
         result = await opp.config_entries.flow.async_init(
             DOMAIN,

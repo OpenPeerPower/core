@@ -255,9 +255,7 @@ class ProxyCamera(Camera):
     async def handle_async_mjpeg_stream(self, request):
         """Generate an HTTP MJPEG stream from camera images."""
         if not self._stream_opts:
-            return await async_get_mjpeg_stream(
-                self.opp, request, self._proxied_camera
-            )
+            return await async_get_mjpeg_stream(self.opp, request, self._proxied_camera)
 
         return await async_get_still_stream(
             request, self._async_stream_image, self.content_type, self.frame_interval

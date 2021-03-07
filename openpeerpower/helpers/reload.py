@@ -36,9 +36,7 @@ async def async_reload_integration_platforms(
         return
 
     tasks = [
-        _resetup_platform(
-            opp, integration_name, integration_platform, unprocessed_conf
-        )
+        _resetup_platform(opp, integration_name, integration_platform, unprocessed_conf)
         for integration_platform in integration_platforms
     ]
 

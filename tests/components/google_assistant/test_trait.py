@@ -174,9 +174,7 @@ async def test_onoff_input_boolean(opp):
 
     assert trt_on.query_attributes() == {"on": True}
 
-    trt_off = trait.OnOffTrait(
-        opp, State("input_boolean.bla", STATE_OFF), BASIC_CONFIG
-    )
+    trt_off = trait.OnOffTrait(opp, State("input_boolean.bla", STATE_OFF), BASIC_CONFIG)
 
     assert trt_off.query_attributes() == {"on": False}
 
@@ -2270,9 +2268,7 @@ async def test_volume_media_player_relative(opp):
 
     assert trt.query_attributes() == {}
 
-    calls = async_mock_service(
-        opp, media_player.DOMAIN, media_player.SERVICE_VOLUME_UP
-    )
+    calls = async_mock_service(opp, media_player.DOMAIN, media_player.SERVICE_VOLUME_UP)
 
     await trt.execute(
         trait.COMMAND_VOLUME_RELATIVE,

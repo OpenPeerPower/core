@@ -199,9 +199,7 @@ async def async_setup_entry(opp, entry):
     def close_websocket_session(_):
         websocket.close()
 
-    unsub = opp.bus.async_listen_once(
-        EVENT_OPENPEERPOWER_STOP, close_websocket_session
-    )
+    unsub = opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, close_websocket_session)
     opp.data[PLEX_DOMAIN][DISPATCHERS][server_id].append(unsub)
 
     for platform in PLATFORMS:

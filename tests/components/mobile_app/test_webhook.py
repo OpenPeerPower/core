@@ -341,9 +341,7 @@ async def test_webhook_camera_stream_non_existent(
     assert webhook_json["success"] is False
 
 
-async def test_webhook_camera_stream_non_hls(
-    opp, create_registrations, webhook_client
-):
+async def test_webhook_camera_stream_non_hls(opp, create_registrations, webhook_client):
     """Test fetching camera stream URLs for a non-HLS/stream-supporting camera."""
     opp.states.async_set("camera.non_stream_camera", "idle", {"supported_features": 0})
 

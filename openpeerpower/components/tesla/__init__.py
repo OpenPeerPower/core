@@ -263,9 +263,7 @@ class TeslaDataUpdateCoordinator(DataUpdateCoordinator):
         """Fetch data from API endpoint."""
         if self.controller.is_token_refreshed():
             (refresh_token, access_token) = self.controller.get_tokens()
-            _async_save_tokens(
-                self.opp, self.config_entry, access_token, refresh_token
-            )
+            _async_save_tokens(self.opp, self.config_entry, access_token, refresh_token)
             _LOGGER.debug("Saving new tokens in config_entry")
 
         try:

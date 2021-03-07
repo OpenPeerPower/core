@@ -17,9 +17,7 @@ from .const import (
 )
 
 
-async def async_setup_scanner(
-    opp: OpenPeerPowerType, config, see, discovery_info=None
-):
+async def async_setup_scanner(opp: OpenPeerPowerType, config, see, discovery_info=None):
     """Old way of setting up the iCloud tracker."""
 
 

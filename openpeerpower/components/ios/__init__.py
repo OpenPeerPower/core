@@ -274,9 +274,7 @@ async def async_setup(opp, config):
 
 async def async_setup_entry(opp, entry):
     """Set up an iOS entry."""
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_setup(entry, "sensor")
-    )
+    opp.async_create_task(opp.config_entries.async_forward_entry_setup(entry, "sensor"))
 
     opp.http.register_view(iOSIdentifyDeviceView(opp.config.path(CONFIGURATION_FILE)))
     opp.http.register_view(iOSPushConfigView(opp.data[DOMAIN][CONF_USER][CONF_PUSH]))

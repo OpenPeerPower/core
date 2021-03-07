@@ -63,7 +63,9 @@ class TestImageProcessing:
         self.opp.block_till_done()
 
         state = self.opp.states.get("camera.demo_camera")
-        self.url = f"{self.opp.config.internal_url}{state.attributes.get(ATTR_ENTITY_PICTURE)}"
+        self.url = (
+            f"{self.opp.config.internal_url}{state.attributes.get(ATTR_ENTITY_PICTURE)}"
+        )
 
     def teardown_method(self):
         """Stop everything that was started."""
@@ -119,7 +121,9 @@ class TestImageProcessingAlpr:
             self.opp.block_till_done()
 
         state = self.opp.states.get("camera.demo_camera")
-        self.url = f"{self.opp.config.internal_url}{state.attributes.get(ATTR_ENTITY_PICTURE)}"
+        self.url = (
+            f"{self.opp.config.internal_url}{state.attributes.get(ATTR_ENTITY_PICTURE)}"
+        )
 
         self.alpr_events = []
 
@@ -225,7 +229,9 @@ class TestImageProcessingFace:
             self.opp.block_till_done()
 
         state = self.opp.states.get("camera.demo_camera")
-        self.url = f"{self.opp.config.internal_url}{state.attributes.get(ATTR_ENTITY_PICTURE)}"
+        self.url = (
+            f"{self.opp.config.internal_url}{state.attributes.get(ATTR_ENTITY_PICTURE)}"
+        )
 
         self.face_events = []
 

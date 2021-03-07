@@ -638,12 +638,8 @@ async def test_controlling_state_via_topic_with_templates(opp, mqtt_mock):
     async_fire_mqtt_message(opp, "test_light_rgb/rgb/status", '{"hello": [1, 2, 3]}')
     async_fire_mqtt_message(opp, "test_light_rgb/status", '{"hello": "ON"}')
     async_fire_mqtt_message(opp, "test_light_rgb/brightness/status", '{"hello": "50"}')
-    async_fire_mqtt_message(
-        opp, "test_light_rgb/color_temp/status", '{"hello": "300"}'
-    )
-    async_fire_mqtt_message(
-        opp, "test_light_rgb/effect/status", '{"hello": "rainbow"}'
-    )
+    async_fire_mqtt_message(opp, "test_light_rgb/color_temp/status", '{"hello": "300"}')
+    async_fire_mqtt_message(opp, "test_light_rgb/effect/status", '{"hello": "rainbow"}')
 
     state = opp.states.get("light.test")
     assert state.state == STATE_ON
@@ -653,9 +649,7 @@ async def test_controlling_state_via_topic_with_templates(opp, mqtt_mock):
     assert state.attributes.get("effect") == "rainbow"
     assert state.attributes.get("white_value") is None
 
-    async_fire_mqtt_message(
-        opp, "test_light_rgb/white_value/status", '{"hello": "75"}'
-    )
+    async_fire_mqtt_message(opp, "test_light_rgb/white_value/status", '{"hello": "75"}')
 
     state = opp.states.get("light.test")
     assert state.state == STATE_ON
@@ -671,9 +665,7 @@ async def test_controlling_state_via_topic_with_templates(opp, mqtt_mock):
     state = opp.states.get("light.test")
     assert state.attributes.get("hs_color") == (100, 50)
 
-    async_fire_mqtt_message(
-        opp, "test_light_rgb/xy/status", '{"hello": [0.123,0.123]}'
-    )
+    async_fire_mqtt_message(opp, "test_light_rgb/xy/status", '{"hello": [0.123,0.123]}')
 
     state = opp.states.get("light.test")
     assert state.attributes.get("xy_color") == (0.14, 0.131)
@@ -1875,9 +1867,7 @@ async def test_discovery_broken(opp, mqtt_mock, caplog):
         '  "state_topic": "test_topic",'
         '  "command_topic": "test_topic" }'
     )
-    await help_test_discovery_broken(
-        opp, mqtt_mock, caplog, light.DOMAIN, data1, data2
-    )
+    await help_test_discovery_broken(opp, mqtt_mock, caplog, light.DOMAIN, data1, data2)
 
 
 async def test_entity_device_info_with_connection(opp, mqtt_mock):

@@ -420,8 +420,7 @@ def _async_register_events_and_services(opp: OpenPeerPower):
             _async_update_config_entry_if_from_yaml(opp, entries_by_name, conf)
 
         reload_tasks = [
-            opp.config_entries.async_reload(entry.entry_id)
-            for entry in current_entries
+            opp.config_entries.async_reload(entry.entry_id) for entry in current_entries
         ]
 
         await asyncio.gather(*reload_tasks)

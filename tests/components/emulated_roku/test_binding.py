@@ -17,9 +17,7 @@ from openpeerpower.components.emulated_roku.binding import (
 
 async def test_events_fired_properly(opp):
     """Test that events are fired correctly."""
-    binding = EmulatedRoku(
-        opp, "Test Emulated Roku", "1.2.3.4", 8060, None, None, None
-    )
+    binding = EmulatedRoku(opp, "Test Emulated Roku", "1.2.3.4", 8060, None, None, None)
 
     events = []
     roku_event_handler = None

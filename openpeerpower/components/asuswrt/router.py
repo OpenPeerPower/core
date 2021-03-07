@@ -136,10 +136,8 @@ class AsusWrtRouter:
 
         # Load tracked entities from registry
         entity_registry = await self.opp.helpers.entity_registry.async_get_registry()
-        track_entries = (
-            self.opp.helpers.entity_registry.async_entries_for_config_entry(
-                entity_registry, self._entry.entry_id
-            )
+        track_entries = self.opp.helpers.entity_registry.async_entries_for_config_entry(
+            entity_registry, self._entry.entry_id
         )
         for entry in track_entries:
             if entry.domain == TRACKER_DOMAIN:

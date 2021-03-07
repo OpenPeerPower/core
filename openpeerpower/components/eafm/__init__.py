@@ -11,9 +11,7 @@ async def async_setup(opp, config):
 
 async def async_setup_entry(opp, entry):
     """Set up flood monitoring sensors for this config entry."""
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_setup(entry, "sensor")
-    )
+    opp.async_create_task(opp.config_entries.async_forward_entry_setup(entry, "sensor"))
 
     return True
 

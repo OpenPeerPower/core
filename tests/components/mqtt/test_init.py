@@ -1071,9 +1071,7 @@ async def test_mqtt_ws_remove_non_mqtt_device(
     assert response["error"]["code"] == websocket_api.const.ERR_NOT_FOUND
 
 
-async def test_mqtt_ws_get_device_debug_info(
-    opp, device_reg, opp_ws_client, mqtt_mock
-):
+async def test_mqtt_ws_get_device_debug_info(opp, device_reg, opp_ws_client, mqtt_mock):
     """Test MQTT websocket device debug info."""
     config = {
         "device": {"identifiers": ["0AFFD2"]},

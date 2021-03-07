@@ -60,9 +60,7 @@ WATER_HEATER_TIMER_SCHEMA = {
 }
 
 
-async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
-):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry, async_add_entities):
     """Set up the Tado water heater platform."""
 
     tado = opp.data[DOMAIN][entry.entry_id][DATA]
