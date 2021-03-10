@@ -2,7 +2,7 @@
   "domain": "cloud",
   "name": "Open Peer Power Cloud",
   "documentation": "https://www.openpeerpower.io/integrations/cloud",
-  "requirements": ["opp-nabucasa==0.41.0"],
+  "requirements": ["opp-net==0.1.0"],
   "dependencies": ["http", "webhook", "alexa"],
   "after_dependencies": ["google_assistant"],
   "codeowners": ["@open-peer-power/cloud"]

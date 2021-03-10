@@ -6,9 +6,9 @@ import logging
 import aiohttp
 import async_timeout
 import attr
-from opp_nabucasa import Cloud, auth, thingtalk
-from opp_nabucasa.const import STATE_DISCONNECTED
-from opp_nabucasa.voice import MAP_VOICE
+from opp_net import Cloud, auth, thingtalk
+from opp_net.const import STATE_DISCONNECTED
+from opp_net.voice import MAP_VOICE
 import voluptuous as vol
 
 from openpeerpower.components import websocket_api

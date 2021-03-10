@@ -293,7 +293,7 @@ async def test_webhook_create_cloudhook(opp, webhook_flow_conf):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
     with patch(
-        "opp_nabucasa.cloudhooks.Cloudhooks.async_create",
+        "opp_net.cloudhooks.Cloudhooks.async_create",
         return_value={"cloudhook_url": "https://example.com"},
     ) as mock_create, patch(
         "openpeerpower.components.cloud.async_active_subscription", return_value=True
@@ -309,7 +309,7 @@ async def test_webhook_create_cloudhook(opp, webhook_flow_conf):
     assert len(async_setup_entry.mock_calls) == 1
 
     with patch(
-        "opp_nabucasa.cloudhooks.Cloudhooks.async_delete",
+        "opp_net.cloudhooks.Cloudhooks.async_delete",
         return_value={"cloudhook_url": "https://example.com"},
     ) as mock_delete:
 

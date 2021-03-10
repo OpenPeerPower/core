@@ -4,7 +4,7 @@ import logging
 from typing import Any
 
 import aiohttp
-from opp_nabucasa import account_link
+from opp_net import account_link
 
 from openpeerpower.const import MAJOR_VERSION, MINOR_VERSION, PATCH_VERSION
 from openpeerpower.core import OpenPeerPower, callback
