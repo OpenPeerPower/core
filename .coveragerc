@@ -49,7 +49,6 @@ omit =
     openpeerpower/components/amcrest/*
     openpeerpower/components/ampio/*
     openpeerpower/components/android_ip_webcam/*
-    openpeerpower/components/anel_pwrctrl/switch.py
     openpeerpower/components/anthemav/media_player.py
     openpeerpower/components/apcupsd/*
     openpeerpower/components/apple_tv/__init__.py
