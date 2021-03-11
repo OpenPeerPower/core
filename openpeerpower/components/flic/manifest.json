@@ -1,7 +1,0 @@
-{
-  "domain": "flic",
-  "name": "Flic",
-  "documentation": "https://www.openpeerpower.io/integrations/flic",
-  "requirements": ["pyflic-openpeerpower==0.4.dev0"],
-  "codeowners": []
-}
