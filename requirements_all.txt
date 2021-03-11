@@ -1376,9 +1376,6 @@ pyfireservicerota==0.0.40
 # openpeerpower.components.flexit
 pyflexit==0.3
 
-# openpeerpower.components.flic
-pyflic-openpeerpower==0.4.dev0
-
 # openpeerpower.components.flume
 pyflume==0.5.5
 
