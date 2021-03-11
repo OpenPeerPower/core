@@ -1479,9 +1479,6 @@ pylast==4.1.0
 # openpeerpower.components.launch_library
 pylaunches==1.0.0
 
-# openpeerpower.components.lg_netcast
-pylgnetcast-openpeerpower==0.2.0.dev0
-
 # openpeerpower.components.forked_daapd
 pylibrespot-java==0.1.0
 
