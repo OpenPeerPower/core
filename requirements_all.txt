@@ -726,9 +726,6 @@ hangups==0.4.11
 # openpeerpower.components.cloud
 opp-net==0.1.0
 
-# openpeerpower.components.splunk
-opp_splunk==0.1.1
-
 # openpeerpower.components.tasmota
 hatasmota==0.2.9
 
