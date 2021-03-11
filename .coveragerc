@@ -499,7 +499,6 @@ omit =
     openpeerpower/components/launch_library/const.py
     openpeerpower/components/launch_library/sensor.py
     openpeerpower/components/lcn/*
-    openpeerpower/components/lg_netcast/media_player.py
     openpeerpower/components/lg_soundbar/media_player.py
     openpeerpower/components/life360/*
     openpeerpower/components/lifx/*
