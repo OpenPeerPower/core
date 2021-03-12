@@ -444,7 +444,6 @@ openpeerpower/components/sonos/* @cgtobi
 openpeerpower/components/spaceapi/* @fabaff
 openpeerpower/components/speedtestdotnet/* @rohankapoorcom @engrbm87
 openpeerpower/components/spider/* @peternijssen
-openpeerpower/components/splunk/* @Bre77
 openpeerpower/components/spotify/* @frenck
 openpeerpower/components/sql/* @dgomes
 openpeerpower/components/squeezebox/* @rajlaud

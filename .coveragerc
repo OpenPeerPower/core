@@ -892,7 +892,6 @@ omit =
     openpeerpower/components/spc/*
     openpeerpower/components/speedtestdotnet/*
     openpeerpower/components/spider/*
-    openpeerpower/components/splunk/*
     openpeerpower/components/spotcrime/sensor.py
     openpeerpower/components/spotify/__init__.py
     openpeerpower/components/spotify/media_player.py
