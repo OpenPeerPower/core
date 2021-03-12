@@ -553,7 +553,6 @@ openpeerpower/components/zha/* @dmulcahey @adminiuga
 openpeerpower/components/zodiac/* @JulienTant
 openpeerpower/components/zone/* @open-peer-power/core
 openpeerpower/components/zoneminder/* @rohankapoorcom
-openpeerpower/components/zwave/* @open-peer-power/z-wave
 openpeerpower/components/zwave_js/* @open-peer-power/z-wave
 
 # Individual files

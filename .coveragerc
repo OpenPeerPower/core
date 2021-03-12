@@ -1148,7 +1148,6 @@ omit =
     openpeerpower/components/ziggo_mediabox_xl/media_player.py
     openpeerpower/components/zoneminder/*
     openpeerpower/components/supla/*
-    openpeerpower/components/zwave/util.py
     openpeerpower/components/zwave_js/discovery.py
     openpeerpower/components/zwave_js/light.py
     openpeerpower/components/zwave_js/sensor.py

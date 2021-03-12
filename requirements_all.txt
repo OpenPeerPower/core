@@ -754,7 +754,8 @@ hole==0.5.1
 holidays==0.10.5.2
 
 # openpeerpower.components.frontend
-opp-ui==0.1.0
+# openpeerpower.components.zwave
+openpeerpower-pyozw==0.1.10
 
 # openpeerpower.components.home_connect
 homeconnect==0.6.3
