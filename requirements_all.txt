@@ -755,7 +755,7 @@ holidays==0.10.5.2
 
 # openpeerpower.components.frontend
 # openpeerpower.components.zwave
-openpeerpower-pyozw==0.1.10
+homeassistant-pyozw==0.1.10
 
 # openpeerpower.components.home_connect
 homeconnect==0.6.3
