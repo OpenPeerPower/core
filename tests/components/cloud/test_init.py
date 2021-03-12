@@ -86,9 +86,9 @@ async def test_remote_services(opp, mock_cloud_fixture, opp_read_only_user):
 
     assert mock_connect.called is False
 
-    with patch(
-        "opp_net.remote.RemoteUI.disconnect"
-    ) as mock_disconnect, pytest.raises(Unauthorized):
+    with patch("opp_net.remote.RemoteUI.disconnect") as mock_disconnect, pytest.raises(
+        Unauthorized
+    ):
         await opp.services.async_call(
             DOMAIN, "remote_disconnect", blocking=True, context=non_admin_context
         )
