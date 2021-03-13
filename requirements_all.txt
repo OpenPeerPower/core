@@ -28,9 +28,6 @@ OPi.GPIO==0.4.0
 # openpeerpower.components.essent
 PyEssent==0.14
 
-# openpeerpower.components.flick_electric
-PyFlick==0.0.2
-
 # openpeerpower.components.github
 PyGithub==1.43.8
 
@@ -723,9 +720,6 @@ habitipy==0.2.0
 # openpeerpower.components.hangouts
 hangups==0.4.11
 
-# openpeerpower.components.cloud
-opp-net==0.1.0
-
 # openpeerpower.components.tasmota
 hatasmota==0.2.9
 
@@ -753,7 +747,6 @@ hole==0.5.1
 # openpeerpower.components.workday
 holidays==0.10.5.2
 
-# openpeerpower.components.frontend
 # openpeerpower.components.zwave
 homeassistant-pyozw==0.1.10
 
@@ -1058,6 +1051,12 @@ openwrt-luci-rpc==1.1.6
 
 # openpeerpower.components.ubus
 openwrt-ubus-rpc==0.0.2
+
+# openpeerpower.components.cloud
+opp-net==0.1.0
+
+# openpeerpower.components.frontend
+opp-ui==0.1.0
 
 # openpeerpower.components.oru
 oru==0.1.11

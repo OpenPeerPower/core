@@ -9,9 +9,6 @@ AEMET-OpenData==0.1.8
 # openpeerpower.components.homekit
 HAP-python==3.3.2
 
-# openpeerpower.components.flick_electric
-PyFlick==0.0.2
-
 # openpeerpower.components.mobile_app
 # openpeerpower.components.owntracks
 PyNaCl==1.3.0
@@ -387,9 +384,6 @@ habitipy==0.2.0
 # openpeerpower.components.hangouts
 hangups==0.4.11
 
-# openpeerpower.components.cloud
-opp-net==0.1.0
-
 # openpeerpower.components.tasmota
 hatasmota==0.2.9
 
@@ -407,9 +401,6 @@ hole==0.5.1
 
 # openpeerpower.components.workday
 holidays==0.10.5.2
-
-# openpeerpower.components.frontend
-opp-ui==0.1.0
 
 # openpeerpower.components.home_connect
 homeconnect==0.6.3
@@ -539,6 +530,12 @@ onvif-zeep-async==1.0.0
 
 # openpeerpower.components.openerz
 openerz-api==0.1.0
+
+# openpeerpower.components.cloud
+opp-net==0.1.0
+
+# openpeerpower.components.frontend
+opp-ui==0.1.0
 
 # openpeerpower.components.ovo_energy
 ovoenergy==1.1.11
@@ -701,9 +698,6 @@ pydeconz==77
 
 # openpeerpower.components.dexcom
 pydexcom==0.2.0
-
-# openpeerpower.components.zwave
-pydispatcher==2.0.5
 
 # openpeerpower.components.econet
 pyeconet==0.1.12
