@@ -41,8 +41,8 @@ async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
     # This example shows how to iterate over the entities of this device
     # that match this integration. If your triggers instead rely on
     # events fired by devices without entities, do something like:
-    # zha_device = await _async_get_zha_device(opp, device_id)
-    # return zha_device.device_triggers
+    # device = await _async_get_device(opp, device_id)
+    # return _device.device_triggers
 
     # Get all the integrations entities for this device
     for entry in entity_registry.async_entries_for_device(registry, device_id):

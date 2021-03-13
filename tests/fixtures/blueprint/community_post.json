@@ -20,7 +20,7 @@
         "score": 0.6,
         "yours": false,
         "topic_id": 253804,
-        "topic_slug": "zha-ikea-five-button-remote-for-lights",
+        "topic_slug": "-ikea-five-button-remote-for-lights",
         "display_username": "Franck Nijhof",
         "primary_group_name": null,
         "primary_group_flair_url": null,
@@ -551,7 +551,7 @@
   ],
   "tags": [
     "blueprint",
-    "zha"
+    ""
   ],
   "id": 253804,
   "title": "ZHA - IKEA five button remote for lights",
@@ -567,7 +567,7 @@
   "archived": false,
   "has_summary": false,
   "archetype": "regular",
-  "slug": "zha-ikea-five-button-remote-for-lights",
+  "slug": "-ikea-five-button-remote-for-lights",
   "category_id": 53,
   "word_count": 633,
   "deleted_at": null,

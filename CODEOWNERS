@@ -153,7 +153,6 @@ openpeerpower/components/filter/* @dgomes
 openpeerpower/components/fireservicerota/* @cyberjunky
 openpeerpower/components/firmata/* @DaAwesomeP
 openpeerpower/components/fixer/* @fabaff
-openpeerpower/components/flick_electric/* @ZephireNZ
 openpeerpower/components/flo/* @dmulcahey
 openpeerpower/components/flock/* @fabaff
 openpeerpower/components/flume/* @ChrisMandich @bdraco
@@ -185,7 +184,6 @@ openpeerpower/components/growatt_server/* @indykoning
 openpeerpower/components/guardian/* @bachya
 openpeerpower/components/habitica/* @ASMfreaK @leikoilja
 openpeerpower/components/harmony/* @ehendrix23 @bramkragten @bdraco @mkeesey
-openpeerpower/components/oppio/* @open-peer-power/supervisor
 openpeerpower/components/hdmi_cec/* @newAM
 openpeerpower/components/heatmiser/* @andylockran
 openpeerpower/components/heos/* @andrewsayre
@@ -197,7 +195,6 @@ openpeerpower/components/history/* @open-peer-power/core
 openpeerpower/components/hive/* @Rendili @KJonline
 openpeerpower/components/hlk_sw16/* @jameshilliard
 openpeerpower/components/home_connect/* @DavidMStraub
-openpeerpower/components/openpeerpower/* @open-peer-power/core
 openpeerpower/components/homekit/* @bdraco
 openpeerpower/components/homekit_controller/* @Jc2k
 openpeerpower/components/homematic/* @pvizeli @danielperna84
@@ -337,10 +334,12 @@ openpeerpower/components/onvif/* @hunterjm
 openpeerpower/components/openerz/* @misialq
 openpeerpower/components/opengarage/* @danielhiversen
 openpeerpower/components/openhome/* @bazwilliams
+openpeerpower/components/openpeerpower/* @open-peer-power/core
 openpeerpower/components/opentherm_gw/* @mvn23
 openpeerpower/components/openuv/* @bachya
 openpeerpower/components/openweathermap/* @fabaff @freekode @nzapponi
 openpeerpower/components/opnsense/* @mtreinish
+openpeerpower/components/oppio/* @open-peer-power/supervisor
 openpeerpower/components/orangepi_gpio/* @pascallj
 openpeerpower/components/oru/* @bvlaicu
 openpeerpower/components/ovo_energy/* @timmo001
@@ -548,10 +547,10 @@ openpeerpower/components/yeelightsunflower/* @lindsaymarkward
 openpeerpower/components/yi/* @bachya
 openpeerpower/components/zeroconf/* @bdraco
 openpeerpower/components/zerproc/* @emlove
-openpeerpower/components/zha/* @dmulcahey @adminiuga
 openpeerpower/components/zodiac/* @JulienTant
 openpeerpower/components/zone/* @open-peer-power/core
 openpeerpower/components/zoneminder/* @rohankapoorcom
+openpeerpower/components/zwave/* @open-peer-power/z-wave
 openpeerpower/components/zwave_js/* @open-peer-power/z-wave
 
 # Individual files

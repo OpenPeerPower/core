@@ -333,9 +333,6 @@ beautifulsoup4==4.9.3
 # openpeerpower.components.beewi_smartclim
 # beewi_smartclim==0.0.10
 
-# openpeerpower.components.zha
-bellows==0.22.0
-
 # openpeerpower.components.bmw_connected_drive
 bimmer_connected==0.7.15
 
@@ -1658,14 +1655,6 @@ pysdcp==1
 # openpeerpower.components.sensibo
 pysensibo==1.0.3
 
-# openpeerpower.components.serial
-# openpeerpower.components.zha
-pyserial-asyncio==0.5
-
-# openpeerpower.components.acer_projector
-# openpeerpower.components.zha
-pyserial==3.5
-
 # openpeerpower.components.sesame
 pysesame2==1.0.1
 
@@ -2348,32 +2337,11 @@ zengge==0.2
 # openpeerpower.components.zeroconf
 zeroconf==0.28.8
 
-# openpeerpower.components.zha
-zha-quirks==0.0.54
-
 # openpeerpower.components.zhong_hong
 zhong_hong_hvac==1.0.9
 
 # openpeerpower.components.ziggo_mediabox_xl
 ziggo-mediabox-xl==1.1.0
-
-# openpeerpower.components.zha
-zigpy-cc==0.5.2
-
-# openpeerpower.components.zha
-zigpy-deconz==0.11.1
-
-# openpeerpower.components.zha
-zigpy-xbee==0.13.0
-
-# openpeerpower.components.zha
-zigpy-zigate==0.7.3
-
-# openpeerpower.components.zha
-zigpy-znp==0.4.0
-
-# openpeerpower.components.zha
-zigpy==0.32.0
 
 # openpeerpower.components.zoneminder
 zm-py==0.5.2

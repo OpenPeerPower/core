@@ -296,10 +296,6 @@ omit =
     openpeerpower/components/fixer/sensor.py
     openpeerpower/components/fleetgo/device_tracker.py
     openpeerpower/components/flexit/climate.py
-    openpeerpower/components/flic/binary_sensor.py
-    openpeerpower/components/flick_electric/__init__.py
-    openpeerpower/components/flick_electric/const.py
-    openpeerpower/components/flick_electric/sensor.py
     openpeerpower/components/flock/notify.py
     openpeerpower/components/flume/*
     openpeerpower/components/flunearyou/__init__.py
@@ -1131,17 +1127,6 @@ omit =
     openpeerpower/components/zerproc/__init__.py
     openpeerpower/components/zerproc/const.py
     openpeerpower/components/zestimate/sensor.py
-    openpeerpower/components/zha/api.py
-    openpeerpower/components/zha/core/channels/*
-    openpeerpower/components/zha/core/const.py
-    openpeerpower/components/zha/core/device.py
-    openpeerpower/components/zha/core/gateway.py
-    openpeerpower/components/zha/core/helpers.py
-    openpeerpower/components/zha/core/registries.py
-    openpeerpower/components/zha/core/typing.py
-    openpeerpower/components/zha/entity.py
-    openpeerpower/components/zha/light.py
-    openpeerpower/components/zha/sensor.py
     openpeerpower/components/zhong_hong/climate.py
     openpeerpower/components/xbee/*
     openpeerpower/components/ziggo_mediabox_xl/media_player.py

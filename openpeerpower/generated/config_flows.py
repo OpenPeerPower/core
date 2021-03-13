@@ -66,7 +66,6 @@ FLOWS = [
     "esphome",
     "faa_delays",
     "fireservicerota",
-    "flick_electric",
     "flo",
     "flume",
     "flunearyou",
@@ -261,7 +260,6 @@ FLOWS = [
     "xiaomi_miio",
     "yeelight",
     "zerproc",
-    "zha",
     "zwave",
     "zwave_js"
 ]

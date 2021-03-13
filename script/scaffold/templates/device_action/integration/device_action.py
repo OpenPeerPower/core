@@ -38,8 +38,8 @@ async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
     # This example shows how to iterate over the entities of this device
     # that match this integration. If your actions instead rely on
     # calling services, do something like:
-    # zha_device = await _async_get_zha_device(opp, device_id)
-    # return zha_device.device_actions
+    # _device = await _async_get_device(opp, device_id)
+    # return _device.device_actions
 
     # Get all the integrations entities for this device
     for entry in entity_registry.async_entries_for_device(registry, device_id):

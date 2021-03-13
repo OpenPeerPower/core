@@ -189,9 +189,6 @@ azure-eventhub==5.1.0
 # openpeerpower.components.homekit
 base36==0.1.1
 
-# openpeerpower.components.zha
-bellows==0.22.0
-
 # openpeerpower.components.bmw_connected_drive
 bimmer_connected==0.7.15
 
@@ -877,11 +874,9 @@ pyrituals==0.0.2
 pyruckus==0.12
 
 # openpeerpower.components.serial
-# openpeerpower.components.zha
 pyserial-asyncio==0.5
 
 # openpeerpower.components.acer_projector
-# openpeerpower.components.zha
 pyserial==3.5
 
 # openpeerpower.components.signal_messenger
@@ -1199,27 +1194,6 @@ zeep[async]==4.0.0
 
 # openpeerpower.components.zeroconf
 zeroconf==0.28.8
-
-# openpeerpower.components.zha
-zha-quirks==0.0.54
-
-# openpeerpower.components.zha
-zigpy-cc==0.5.2
-
-# openpeerpower.components.zha
-zigpy-deconz==0.11.1
-
-# openpeerpower.components.zha
-zigpy-xbee==0.13.0
-
-# openpeerpower.components.zha
-zigpy-zigate==0.7.3
-
-# openpeerpower.components.zha
-zigpy-znp==0.4.0
-
-# openpeerpower.components.zha
-zigpy==0.32.0
 
 # openpeerpower.components.zwave_js
 zwave-js-server-python==0.20.1
