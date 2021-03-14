@@ -1,7 +1,7 @@
 """Open Peer Power Cast integration for Cast."""
 from typing import Optional
 
-from pychromecast.controllers.homeassistant import OpenPeerPowerController
+from pychromecast.controllers.homeassistant import HomeAssistantController
 import voluptuous as vol
 
 from openpeerpower import auth, config_entries, core
@@ -43,7 +43,7 @@ async def async_setup_op_cast(
         """Handle a Show View service call."""
         opp_url = get_url(opp, require_ssl=True, prefer_external=True)
 
-        controller = OpenPeerPowerController(
+        controller = HomeAssistantController(
             # If you are developing Open Peer Power Cast, uncomment and set to your dev app id.
             # app_id="5FE44367",
             opp_url=opp_url,

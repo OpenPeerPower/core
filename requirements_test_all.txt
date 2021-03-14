@@ -873,12 +873,6 @@ pyrituals==0.0.2
 # openpeerpower.components.ruckus_unleashed
 pyruckus==0.12
 
-# openpeerpower.components.serial
-pyserial-asyncio==0.5
-
-# openpeerpower.components.acer_projector
-pyserial==3.5
-
 # openpeerpower.components.signal_messenger
 pysignalclirestapi==0.3.4
 

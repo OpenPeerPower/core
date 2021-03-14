@@ -7,8 +7,8 @@ import logging
 from typing import Optional
 
 import pychromecast
+from pychromecast.controllers.homeassistant import HomeAssistantController
 from pychromecast.controllers.multizone import MultizoneManager
-from pychromecast.controllers.homeassistant import OpenPeerPowerController
 from pychromecast.controllers.plex import PlexController
 from pychromecast.controllers.receiver import VOLUME_CONTROL_TYPE_FIXED
 from pychromecast.quick_play import quick_play
@@ -204,7 +204,7 @@ class CastDevice(MediaPlayerEntity):
         self.mz_mgr = None
         self._available = False
         self._status_listener: Optional[CastStatusListener] = None
-        self._opp_cast_controller: Optional[OpenPeerPowerController] = None
+        self._opp_cast_controller: Optional[HomeAssistantController] = None
 
         self._add_remove_handler = None
         self._cast_view_remove_handler = None
@@ -802,7 +802,7 @@ class CastDevice(MediaPlayerEntity):
 
     def _handle_signal_show_view(
         self,
-        controller: OpenPeerPowerController,
+        controller: HomeAssistantController,
         entity_id: str,
         view_path: str,
         url_path: Optional[str],

@@ -169,7 +169,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         if new_state is None:
             return
         # Send initial state
-        hass.async_create_task(_send_home_assistant_state(entity_id, new_state))
+        opp.async_create_task(_send_home_assistant_state(entity_id, new_state))
 
     async def on_login() -> None:
         """Subscribe to states and list entities on successful API login."""
@@ -187,7 +187,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             await _setup_services(opp, entry_data, services)
             await cli.subscribe_states(async_on_state)
             await cli.subscribe_service_calls(async_on_service_call)
-            await cli.subscribe_open_peer_power_states(async_on_state_subscription)
+            await cli.subscribe_home_assistant_states(async_on_state_subscription)
 
             opp.async_create_task(entry_data.async_save_to_store())
         except APIConnectionError as err:

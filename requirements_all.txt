@@ -1655,6 +1655,12 @@ pysdcp==1
 # openpeerpower.components.sensibo
 pysensibo==1.0.3
 
+# openpeerpower.components.serial
+pyserial-asyncio==0.5
+
+# openpeerpower.components.acer_projector
+pyserial==3.5
+
 # openpeerpower.components.sesame
 pysesame2==1.0.1
 
