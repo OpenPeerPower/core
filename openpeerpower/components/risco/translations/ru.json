@@ -20,7 +20,7 @@
     },
     "options": {
         "step": {
-            "ha_to_risco": {
+            "op_to_risco": {
                 "data": {
                     "armed_away": "\u041e\u0445\u0440\u0430\u043d\u0430 (\u043d\u0435 \u0434\u043e\u043c\u0430)",
                     "armed_custom_bypass": "\u041e\u0445\u0440\u0430\u043d\u0430 \u0441 \u0438\u0441\u043a\u043b\u044e\u0447\u0435\u043d\u0438\u044f\u043c\u0438",

@@ -40,7 +40,7 @@
           "D": "Group D"
         }
       },
-      "ha_to_risco": {
+      "op_to_risco": {
         "title": "Map Open Peer Power states to Risco states",
         "description": "Select what state to set your Risco alarm to when arming the Open Peer Power alarm",
         "data": {

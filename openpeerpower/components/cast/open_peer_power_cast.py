@@ -1,7 +1,7 @@
 """Open Peer Power Cast integration for Cast."""
 from typing import Optional
 
-from pychromecast.controllers.openpeerpower import OpenPeerPowerController
+from pychromecast.controllers.homeassistant import OpenPeerPowerController
 import voluptuous as vol
 
 from openpeerpower import auth, config_entries, core

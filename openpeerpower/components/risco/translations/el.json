@@ -15,7 +15,7 @@
     },
     "options": {
         "step": {
-            "ha_to_risco": {
+            "op_to_risco": {
                 "data": {
                     "armed_away": "\u039f\u03c0\u03bb\u03b9\u03c3\u03bc\u03cc\u03c2 \u0395\u03ba\u03c4\u03cc\u03c2",
                     "armed_home": "\u039f\u03c0\u03bb\u03b9\u03c3\u03bc\u03cc\u03c2 \u0395\u03bd\u03c4\u03cc\u03c2",

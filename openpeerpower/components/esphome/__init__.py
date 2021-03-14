@@ -150,13 +150,13 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         if new_state is None:
             return
         entity_id = event.data.get("entity_id")
-        await cli.send_open_peer_power_state(entity_id, new_state.state)
+        await cli.send_home_assistant_state(entity_id, new_state.state)
 
-    async def _send_open_peer_power_state(
+    async def _send_home_assistant_state(
         entity_id: str, new_state: Optional[State]
     ) -> None:
         """Forward Open Peer Power states to ESPHome."""
-        await cli.send_open_peer_power_state(entity_id, new_state.state)
+        await cli.send_home_assistant_state(entity_id, new_state.state)
 
     @callback
     def async_on_state_subscription(entity_id: str) -> None:
@@ -169,7 +169,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         if new_state is None:
             return
         # Send initial state
-        opp.async_create_task(_send_open_peer_power_state(entity_id, new_state))
+        hass.async_create_task(_send_home_assistant_state(entity_id, new_state))
 
     async def on_login() -> None:
         """Subscribe to states and list entities on successful API login."""

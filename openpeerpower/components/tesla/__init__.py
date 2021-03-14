@@ -182,7 +182,7 @@ async def async_setup_entry(opp, config_entry):
     if not coordinator.last_update_success:
         raise ConfigEntryNotReady
 
-    all_devices = controller.get_openpeerpower_components()
+    all_devices = controller.get_homeassistant_components()
 
     if not all_devices:
         return False

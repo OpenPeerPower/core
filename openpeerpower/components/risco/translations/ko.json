@@ -20,7 +20,7 @@
     },
     "options": {
         "step": {
-            "ha_to_risco": {
+            "op_to_risco": {
                 "data": {
                     "armed_away": "\uacbd\ube44\uc911(\uc678\ucd9c)",
                     "armed_custom_bypass": "\uacbd\ube44\uc911(\uc0ac\uc6a9\uc790 \uc6b0\ud68c)",

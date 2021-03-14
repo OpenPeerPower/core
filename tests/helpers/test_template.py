@@ -582,7 +582,7 @@ def test_base64_encode(opp):
     """Test the base64_encode filter."""
     assert (
         template.Template('{{ "openpeerpower" | base64_encode }}', opp).async_render()
-        == "aG9tZWFzc2lzdGFudA=="
+        == "b3BlbnBlZXJwb3dlcg=="
     )
 
 
@@ -590,7 +590,7 @@ def test_base64_decode(opp):
     """Test the base64_decode filter."""
     assert (
         template.Template(
-            '{{ "aG9tZWFzc2lzdGFudA==" | base64_decode }}', opp
+            '{{ "b3BlbnBlZXJwb3dlcg==" | base64_decode }}', opp
         ).async_render()
         == "openpeerpower"
     )
@@ -986,7 +986,7 @@ def test_regex_match(opp):
 
     tpl = template.Template(
         """
-{{ 'Open Peer Power test' | regex_match('home', True) }}
+{{ 'Open Peer Power test' | regex_match('open', True) }}
             """,
         opp,
     )
@@ -994,7 +994,7 @@ def test_regex_match(opp):
 
     tpl = template.Template(
         """
-    {{ 'Another Open Peer Power test' | regex_match('Home') }}
+    {{ 'Another Open Peer Power test' | regex_match('Open') }}
                     """,
         opp,
     )
@@ -1002,7 +1002,7 @@ def test_regex_match(opp):
 
     tpl = template.Template(
         """
-{{ ['Open Peer Power test'] | regex_match('.*Assist') }}
+{{ ['Open Peer Power test'] | regex_match('.*Peer') }}
             """,
         opp,
     )
