@@ -41,7 +41,7 @@ async def async_setup_op_cast(
 
     async def handle_show_view(call: core.ServiceCall):
         """Handle a Show View service call."""
-        opp_url = get_url(opp, require_ssl=True, prefer_external=True)
+        hass_url = get_url(opp, require_ssl=True, prefer_external=True)
 
         controller = HomeAssistantController(
             # If you are developing Open Peer Power Cast, uncomment and set to your dev app id.

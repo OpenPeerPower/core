@@ -2,7 +2,7 @@
 import pytest
 
 from openpeerpower.auth.providers import openpeerpower as prov_ha
-from openpeerpower.components.config import auth_provider_openpeerpower as auth_ha
+from openpeerpower.components.config import auth_provider_openpeerpower as auth_op
 
 from tests.common import CLIENT_ID, MockUser
 
@@ -10,7 +10,7 @@ from tests.common import CLIENT_ID, MockUser
 @pytest.fixture(autouse=True)
 async def setup_config(opp, local_auth):
     """Fixture that sets up the auth provider ."""
-    await auth_ha.async_setup(opp)
+    await auth_op.async_setup(opp)
 
 
 @pytest.fixture

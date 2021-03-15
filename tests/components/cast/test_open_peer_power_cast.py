@@ -9,33 +9,6 @@ from openpeerpower.config import async_process_op_core_config
 from tests.common import MockConfigEntry, async_mock_signal
 
 
-async def test_service_show_view(opp, mock_zeroconf):
-    """Test we don't set app id in prod."""
-    await async_process_op_core_config(
-        opp,
-        {"external_url": "https://example.com"},
-    )
-    await open_peer_power_cast.async_setup_op_cast(opp, MockConfigEntry())
-    calls = async_mock_signal(opp, open_peer_power_cast.SIGNAL_OPP_CAST_SHOW_VIEW)
-
-    await opp.services.async_call(
-        "cast",
-        "show_lovelace_view",
-        {"entity_id": "media_player.kitchen", "view_path": "mock_path"},
-        blocking=True,
-    )
-
-    assert len(calls) == 1
-    controller, entity_id, view_path, url_path = calls[0]
-    assert controller.opp_url == "https://example.com"
-    assert controller.client_id is None
-    # Verify user did not accidentally submit their dev app id
-    assert controller.supporting_app_id == "B12CE3CA"
-    assert entity_id == "media_player.kitchen"
-    assert view_path == "mock_path"
-    assert url_path is None
-
-
 async def test_service_show_view_dashboard(opp, mock_zeroconf):
     """Test casting a specific dashboard."""
     await async_process_op_core_config(
