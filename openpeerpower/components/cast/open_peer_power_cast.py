@@ -46,7 +46,7 @@ async def async_setup_op_cast(
         controller = HomeAssistantController(
             # If you are developing Open Peer Power Cast, uncomment and set to your dev app id.
             # app_id="5FE44367",
-            opp_url=opp_url,
+            hass_url=opp_url,
             client_id=None,
             refresh_token=refresh_token.token,
         )

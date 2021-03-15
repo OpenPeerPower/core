@@ -63,33 +63,6 @@ async def test_service_show_view_dashboard(opp, mock_zeroconf):
     assert url_path == "mock-dashboard"
 
 
-async def test_use_cloud_url(opp, mock_zeroconf):
-    """Test that we fall back to cloud url."""
-    await async_process_op_core_config(
-        opp,
-        {"internal_url": "http://example.local:8123"},
-    )
-    opp.config.components.add("cloud")
-
-    await open_peer_power_cast.async_setup_op_cast(opp, MockConfigEntry())
-    calls = async_mock_signal(opp, open_peer_power_cast.SIGNAL_OPP_CAST_SHOW_VIEW)
-
-    with patch(
-        "openpeerpower.components.cloud.async_remote_ui_url",
-        return_value="https://something.nabu.casa",
-    ):
-        await opp.services.async_call(
-            "cast",
-            "show_lovelace_view",
-            {"entity_id": "media_player.kitchen", "view_path": "mock_path"},
-            blocking=True,
-        )
-
-    assert len(calls) == 1
-    controller = calls[0][0]
-    assert controller.opp_url == "https://something.nabu.casa"
-
-
 async def test_remove_entry(opp, mock_zeroconf):
     """Test removing config entry removes user."""
     entry = MockConfigEntry(

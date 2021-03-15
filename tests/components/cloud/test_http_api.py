@@ -158,9 +158,7 @@ async def test_login_view_request_timeout(cloud_client):
 
 async def test_login_view_invalid_credentials(cloud_client):
     """Test logging in with invalid credentials."""
-    with patch(
-        "opp_net.auth.CognitoAuth.async_login", side_effect=Unauthenticated
-    ):
+    with patch("opp_net.auth.CognitoAuth.async_login", side_effect=Unauthenticated):
         req = await cloud_client.post(
             "/api/cloud/login", json={"email": "my_username", "password": "my_password"}
         )

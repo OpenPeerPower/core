@@ -1,6 +1,5 @@
 """Test blueprint importing."""
 import json
-from pathlib import Path
 
 import pytest
 
@@ -78,6 +77,7 @@ COMMUNITY_POST_INPUTS = {
         "selector": {"action": {}},
     },
 }
+
 
 def test_extract_blueprint_from_community_topic(community_post):
     """Test extracting blueprint."""
