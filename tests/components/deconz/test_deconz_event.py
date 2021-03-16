@@ -114,7 +114,7 @@ async def test_deconz_events(opp, aioclient_mock):
 
     assert len(events) == 4
     assert events[3].data == {
-        "id": "remote_1",
+        "id": "zha_remote_1",
         "unique_id": "00:00:00:00:00:00:00:05",
         "event": 6002,
         "angle": 110,
