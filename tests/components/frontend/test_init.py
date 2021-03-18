@@ -105,23 +105,6 @@ def mock_onboarded():
         yield
 
 
-async def test_frontend_and_static(mock_http_client, mock_onboarded):
-    """Test if we can get the frontend."""
-    resp = await mock_http_client.get("")
-    assert resp.status == 200
-    assert "cache-control" not in resp.headers
-
-    text = await resp.text()
-
-    # Test we can retrieve frontend.js
-    frontendjs = re.search(r"(?P<app>\/frontend_es5\/app.[A-Za-z0-9]{8}.js)", text)
-
-    assert frontendjs is not None, text
-    resp = await mock_http_client.get(frontendjs.groups(0)[0])
-    assert resp.status == 200
-    assert "public" in resp.headers.get("cache-control")
-
-
 async def test_dont_cache_service_worker(mock_http_client):
     """Test that we don't cache the service worker."""
     resp = await mock_http_client.get("/service_worker.js")
@@ -439,24 +422,6 @@ async def test_auth_authorize(mock_http_client):
     resp = await mock_http_client.get(authorizejs.groups(0)[0])
     assert resp.status == 200
     assert "public" in resp.headers.get("cache-control")
-
-
-async def test_get_version(opp, ws_client):
-    """Test get_version command."""
-    frontend = await async_get_integration(opp, "frontend")
-    cur_version = next(
-        req.split("==", 1)[1]
-        for req in frontend.requirements
-        if req.startswith("open-peer-power-frontend==")
-    )
-
-    await ws_client.send_json({"id": 5, "type": "frontend/get_version"})
-    msg = await ws_client.receive_json()
-
-    assert msg["id"] == 5
-    assert msg["type"] == TYPE_RESULT
-    assert msg["success"]
-    assert msg["result"] == {"version": cur_version}
 
 
 async def test_static_paths(opp, mock_http_client):

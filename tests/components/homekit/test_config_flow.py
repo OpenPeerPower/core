@@ -757,7 +757,7 @@ async def test_converting_bridge_to_accessory_mode(opp, hk_driver):
         await opp.async_block_till_done()
 
     assert result3["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
-    assert result3["title"][:11] == "OPP Bridge"
+    assert result3["title"][:11] == "OPP Bridge:"
     bridge_name = (result3["title"].split(":"))[0]
     assert result3["data"] == {
         "filter": {

@@ -59,7 +59,7 @@ MANIFEST_JSON = {
     ],
     "lang": "en-US",
     "name": "Open Peer Power",
-    "short_name": "Assistant",
+    "short_name": "OPP",
     "start_url": "/?homescreen=1",
     "theme_color": DEFAULT_THEME_COLOR,
     "prefer_related_applications": True,
