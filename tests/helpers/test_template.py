@@ -1021,7 +1021,7 @@ def test_regex_search(opp):
 
     tpl = template.Template(
         """
-{{ 'Open Peer Power test' | regex_search('home', True) }}
+{{ 'Open Peer Power test' | regex_search('open', True) }}
             """,
         opp,
     )
@@ -1029,7 +1029,7 @@ def test_regex_search(opp):
 
     tpl = template.Template(
         """
-    {{ 'Another Open Peer Power test' | regex_search('Home') }}
+    {{ 'Another Open Peer Power test' | regex_search('Open') }}
                     """,
         opp,
     )
@@ -1037,7 +1037,7 @@ def test_regex_search(opp):
 
     tpl = template.Template(
         """
-{{ ['Open Peer Power test'] | regex_search('Assist') }}
+{{ ['Open Peer Power test'] | regex_search('Power') }}
             """,
         opp,
     )

@@ -1,6 +1,5 @@
 """The tests for Open Peer Power frontend."""
 from datetime import timedelta
-import re
 from unittest.mock import patch
 
 import pytest

@@ -505,7 +505,7 @@ class OpenPeerPower:
         """Stop Open Peer Power and shuts down all threads.
 
         The "force" flag commands async_stop to proceed regardless of
-        Home Assistan't current state. You should not set this flag
+        OPP's current state. You should not set this flag
         unless you're testing.
 
         This method is a coroutine.
