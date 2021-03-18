@@ -401,29 +401,6 @@ async def test_onboarding_load(opp):
     assert "onboarding" in frontend.dependencies
 
 
-async def test_auth_authorize(mock_http_client):
-    """Test the authorize endpoint works."""
-    resp = await mock_http_client.get(
-        "/auth/authorize?response_type=code&client_id=https://localhost/&"
-        "redirect_uri=https://localhost/&state=123%23456"
-    )
-    assert resp.status == 200
-    # No caching of auth page.
-    assert "cache-control" not in resp.headers
-
-    text = await resp.text()
-
-    # Test we can retrieve authorize.js
-    authorizejs = re.search(
-        r"(?P<app>\/frontend_latest\/authorize.[A-Za-z0-9]{8}.js)", text
-    )
-
-    assert authorizejs is not None, text
-    resp = await mock_http_client.get(authorizejs.groups(0)[0])
-    assert resp.status == 200
-    assert "public" in resp.headers.get("cache-control")
-
-
 async def test_static_paths(opp, mock_http_client):
     """Test static paths."""
     resp = await mock_http_client.get(
