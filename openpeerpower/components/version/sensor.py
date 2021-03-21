@@ -1,7 +1,7 @@
 """Sensor that can display the current Open Peer Power versions."""
 from datetime import timedelta
 
-from pyhaversion import (
+from pyoppversion import (
     DockerVersion,
     HaIoVersion,
     HassioVersion,
