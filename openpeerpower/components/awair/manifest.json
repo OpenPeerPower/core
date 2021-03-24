@@ -3,6 +3,6 @@
   "name": "Awair",
   "documentation": "https://www.openpeerpower.io/integrations/awair",
   "requirements": ["python_awair==0.2.1"],
-  "codeowners": ["@ahayworth", "@danielsjf"],
+  "codeowners": []
   "config_flow": true
 }

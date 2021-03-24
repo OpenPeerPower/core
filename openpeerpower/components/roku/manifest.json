@@ -19,7 +19,7 @@
       "deviceType": "urn:roku-com:device:player:1-0"
     }
   ],
-  "codeowners": ["@ctalkington"],
+  "codeowners": []
   "quality_scale": "silver",
   "config_flow": true
 }

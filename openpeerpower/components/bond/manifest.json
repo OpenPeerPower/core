@@ -5,6 +5,6 @@
   "documentation": "https://www.openpeerpower.io/integrations/bond",
   "requirements": ["bond-api==0.1.11"],
   "zeroconf": ["_bond._tcp.local."],
-  "codeowners": ["@prystupa"],
+  "codeowners": []
   "quality_scale": "platinum"
 }

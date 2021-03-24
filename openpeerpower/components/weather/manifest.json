@@ -2,6 +2,6 @@
   "domain": "weather",
   "name": "Weather",
   "documentation": "https://www.openpeerpower.io/integrations/weather",
-  "codeowners": ["@fabaff"],
+  "codeowners": []
   "quality_scale": "internal"
 }

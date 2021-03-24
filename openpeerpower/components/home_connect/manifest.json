@@ -3,7 +3,7 @@
   "name": "Home Connect",
   "documentation": "https://www.openpeerpower.io/integrations/home_connect",
   "dependencies": ["http"],
-  "codeowners": ["@DavidMStraub"],
+  "codeowners": []
   "requirements": ["homeconnect==0.6.3"],
   "config_flow": true
 }

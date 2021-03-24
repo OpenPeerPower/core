@@ -3,6 +3,6 @@
   "name": "Soma Connect",
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/soma",
-  "codeowners": ["@ratsept"],
+  "codeowners": []
   "requirements": ["pysoma==0.0.10"]
 }

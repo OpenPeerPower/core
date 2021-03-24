@@ -4,6 +4,6 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/almond",
   "dependencies": ["http", "conversation"],
-  "codeowners": ["@gcampax", "@balloob"],
+  "codeowners": [],
   "requirements": ["pyalmond==0.0.2"]
 }

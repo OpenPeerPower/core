@@ -3,7 +3,7 @@
   "name": "Universal Devices ISY994",
   "documentation": "https://www.openpeerpower.io/integrations/isy994",
   "requirements": ["pyisy==2.1.1"],
-  "codeowners": ["@bdraco", "@shbatm"],
+  "codeowners": []
   "config_flow": true,
   "ssdp": [
     {

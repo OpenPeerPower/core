@@ -3,6 +3,6 @@
   "name": "Met Office",
   "documentation": "https://www.openpeerpower.io/integrations/metoffice",
   "requirements": ["datapoint==0.9.5"],
-  "codeowners": ["@MrHarcombe"],
+  "codeowners": []
   "config_flow": true
 }

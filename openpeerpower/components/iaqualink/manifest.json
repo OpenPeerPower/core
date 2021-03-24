@@ -3,6 +3,6 @@
   "name": "Jandy iAqualink",
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/iaqualink/",
-  "codeowners": ["@flz"],
+  "codeowners": []
   "requirements": ["iaqualink==0.3.4"]
 }

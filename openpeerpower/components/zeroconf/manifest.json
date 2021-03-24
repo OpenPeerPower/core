@@ -4,6 +4,6 @@
   "documentation": "https://www.openpeerpower.io/integrations/zeroconf",
   "requirements": ["zeroconf==0.28.8"],
   "dependencies": ["api"],
-  "codeowners": ["@bdraco"],
+  "codeowners": []
   "quality_scale": "internal"
 }

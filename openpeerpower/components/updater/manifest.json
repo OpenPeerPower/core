@@ -3,6 +3,6 @@
   "name": "Updater",
   "documentation": "https://www.openpeerpower.io/integrations/updater",
   "requirements": ["distro==1.5.0"],
-  "codeowners": ["@open-peer-power/core"],
+  "codeowners": ["@openpeerpower/core"],
   "quality_scale": "internal"
 }

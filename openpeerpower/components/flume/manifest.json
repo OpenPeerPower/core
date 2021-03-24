@@ -3,7 +3,7 @@
   "name": "Flume",
   "documentation": "https://www.openpeerpower.io/integrations/flume/",
   "requirements": ["pyflume==0.5.5"],
-  "codeowners": ["@ChrisMandich", "@bdraco"],
+  "codeowners": []
   "config_flow": true,
   "dhcp": [
    {"hostname":"flume-gw-*","macaddress":"ECFABC*"},

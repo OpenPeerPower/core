@@ -2,6 +2,6 @@
   "domain": "counter",
   "name": "Counter",
   "documentation": "https://www.openpeerpower.io/integrations/counter",
-  "codeowners": ["@fabaff"],
+  "codeowners": []
   "quality_scale": "internal"
 }

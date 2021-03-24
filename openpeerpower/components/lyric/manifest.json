@@ -5,7 +5,7 @@
   "documentation": "https://www.openpeerpower.io/integrations/lyric",
   "dependencies": ["http"],
   "requirements": ["aiolyric==1.0.5"],
-  "codeowners": ["@timmo001"],
+  "codeowners": []
   "quality_scale": "silver",
   "dhcp": [
     {

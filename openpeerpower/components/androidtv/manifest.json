@@ -7,5 +7,5 @@
     "androidtv[async]==0.0.57",
     "pure-python-adb[async]==0.3.0.dev0"
   ],
-  "codeowners": ["@JeffLIrion"]
+  "codeowners": []
 }

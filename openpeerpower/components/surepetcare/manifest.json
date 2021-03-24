@@ -2,6 +2,6 @@
   "domain": "surepetcare",
   "name": "Sure Petcare",
   "documentation": "https://www.openpeerpower.io/integrations/surepetcare",
-  "codeowners": ["@benleb"],
+  "codeowners": []
   "requirements": ["surepy==0.4.0"]
 }

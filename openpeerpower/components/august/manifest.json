@@ -4,7 +4,7 @@
   "documentation": "https://www.openpeerpower.io/integrations/august",
   "requirements": ["py-august==0.25.2"],
   "dependencies": ["configurator"],
-  "codeowners": ["@bdraco"],
+  "codeowners": []
   "dhcp": [
       {"hostname":"connect","macaddress":"D86162*"},
       {"hostname":"connect","macaddress":"B8B7F1*"}

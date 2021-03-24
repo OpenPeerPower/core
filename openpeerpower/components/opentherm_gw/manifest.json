@@ -3,6 +3,6 @@
   "name": "OpenTherm Gateway",
   "documentation": "https://www.openpeerpower.io/integrations/opentherm_gw",
   "requirements": ["pyotgw==1.0b1"],
-  "codeowners": ["@mvn23"],
+  "codeowners": []
   "config_flow": true
 }

@@ -4,5 +4,5 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/airvisual",
   "requirements": ["pyairvisual==5.0.4"],
-  "codeowners": ["@bachya"]
+  "codeowners": []
 }

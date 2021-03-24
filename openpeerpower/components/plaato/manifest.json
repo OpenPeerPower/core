@@ -5,6 +5,6 @@
   "documentation": "https://www.openpeerpower.io/integrations/plaato",
   "dependencies": ["webhook"],
   "after_dependencies": ["cloud"],
-  "codeowners": ["@JohNan"],
+  "codeowners": []
   "requirements": ["pyplaato==0.0.15"]
 }

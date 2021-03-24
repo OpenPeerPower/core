@@ -3,6 +3,6 @@
   "name": "KNX",
   "documentation": "https://www.openpeerpower.io/integrations/knx",
   "requirements": ["xknx==0.17.1"],
-  "codeowners": ["@Julius2342", "@farmio", "@marvin-w"],
+  "codeowners": []
   "quality_scale": "silver"
 }

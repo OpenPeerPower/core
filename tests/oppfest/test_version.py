@@ -14,7 +14,7 @@ def integration():
         "domain": "test",
         "documentation": "https://example.com",
         "name": "test",
-        "codeowners": ["@awesome"],
+        "codeowners": [],
     }
     return integration
 

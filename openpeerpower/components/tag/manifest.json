@@ -2,6 +2,6 @@
   "domain": "tag",
   "name": "Tags",
   "documentation": "https://www.openpeerpower.io/integrations/tag",
-  "codeowners": ["@balloob", "@dmulcahey"],
+  "codeowners": []
   "quality_scale": "internal"
 }

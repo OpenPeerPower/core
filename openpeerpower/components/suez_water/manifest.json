@@ -2,6 +2,6 @@
     "domain": "suez_water",
     "name": "Suez Water",
     "documentation": "https://www.openpeerpower.io/integrations/suez_water",
-    "codeowners": ["@ooii"],
+    "codeowners": []
     "requirements": ["pysuez==0.1.19"]
 }

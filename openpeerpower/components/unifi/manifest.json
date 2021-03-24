@@ -4,7 +4,7 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/unifi",
   "requirements": ["aiounifi==26"],
-  "codeowners": ["@Kane610"],
+  "codeowners": []
   "quality_scale": "platinum",
   "ssdp": [
     {

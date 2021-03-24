@@ -9,6 +9,6 @@
       "manufacturer": "All Automacao Ltda"
     }
   ],
-  "codeowners": ["@leofig-rj"],
+  "codeowners": []
   "quality_scale": "silver"
 }

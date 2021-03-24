@@ -3,6 +3,6 @@
   "name": "Filter",
   "documentation": "https://www.openpeerpower.io/integrations/filter",
   "dependencies": ["history"],
-  "codeowners": ["@dgomes"],
+  "codeowners": []
   "quality_scale": "internal"
 }

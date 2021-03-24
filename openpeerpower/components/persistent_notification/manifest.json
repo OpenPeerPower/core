@@ -2,6 +2,6 @@
   "domain": "persistent_notification",
   "name": "Persistent Notification",
   "documentation": "https://www.openpeerpower.io/integrations/persistent_notification",
-  "codeowners": ["@open-peer-power/core"],
+  "codeowners": ["@openpeerpower/core"],
   "quality_scale": "internal"
 }

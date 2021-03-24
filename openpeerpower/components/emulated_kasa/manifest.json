@@ -3,6 +3,6 @@
   "name": "Emulated Kasa",
   "documentation": "https://www.openpeerpower.io/integrations/emulated_kasa",
   "requirements": ["sense_energy==0.9.0"],
-  "codeowners": ["@kbickar"],
+  "codeowners": []
   "quality_scale": "internal"
 }

@@ -3,6 +3,6 @@
   "domain": "ezviz",
   "name": "Ezviz",
   "documentation": "https://www.openpeerpower.io/integrations/ezviz",
-  "codeowners": ["@baqs"],
+  "codeowners": []
   "requirements": ["pyezviz==0.1.5"]
 }

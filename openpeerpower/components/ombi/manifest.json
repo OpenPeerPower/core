@@ -2,6 +2,6 @@
   "domain": "ombi",
   "name": "Ombi",
   "documentation": "https://www.openpeerpower.io/integrations/ombi/",
-  "codeowners": ["@larssont"],
+  "codeowners": []
   "requirements": ["pyombi==0.1.10"]
 }

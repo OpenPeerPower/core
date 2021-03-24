@@ -2,6 +2,6 @@
   "domain": "logger",
   "name": "Logger",
   "documentation": "https://www.openpeerpower.io/integrations/logger",
-  "codeowners": ["@open-peer-power/core"],
+  "codeowners": ["@openpeerpower/core"],
   "quality_scale": "internal"
 }

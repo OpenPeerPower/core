@@ -3,6 +3,6 @@
   "name": "AlarmDecoder",
   "documentation": "https://www.openpeerpower.io/integrations/alarmdecoder",
   "requirements": ["adext==0.4.1"],
-  "codeowners": ["@ajschmidt8"],
+  "codeowners": [],
   "config_flow": true
 }

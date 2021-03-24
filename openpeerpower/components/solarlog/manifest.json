@@ -3,6 +3,6 @@
   "name": "Solar-Log",
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/solarlog",
-  "codeowners": ["@Ernst79"],
+  "codeowners": []
   "requirements": ["sunwatcher==0.2.1"]
 }

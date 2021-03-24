@@ -2,6 +2,6 @@
   "domain": "intesishome",
   "name": "IntesisHome",
   "documentation": "https://www.openpeerpower.io/integrations/intesishome",
-  "codeowners": ["@jnimmo"],
+  "codeowners": []
   "requirements": ["pyintesishome==1.7.5"]
 }

@@ -2,6 +2,6 @@
   "domain": "min_max",
   "name": "Min/Max",
   "documentation": "https://www.openpeerpower.io/integrations/min_max",
-  "codeowners": ["@fabaff"],
+  "codeowners": []
   "quality_scale": "internal"
 }

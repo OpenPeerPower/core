@@ -3,7 +3,7 @@
   "name": "MyQ",
   "documentation": "https://www.openpeerpower.io/integrations/myq",
   "requirements": ["pymyq==3.0.4"],
-  "codeowners": ["@bdraco"],
+  "codeowners": []
   "config_flow": true,
   "homekit": {
     "models": ["819LMB"]

@@ -3,7 +3,7 @@
     "name": "Nuki",
     "documentation": "https://www.openpeerpower.io/integrations/nuki",
     "requirements": ["pynuki==1.3.8"],
-    "codeowners": ["@pschmitt", "@pvizeli", "@pree"],
+    "codeowners": []
     "config_flow": true,
     "dhcp": [{ "hostname": "nuki_bridge_*" }]
 }

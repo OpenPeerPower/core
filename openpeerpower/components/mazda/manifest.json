@@ -4,6 +4,6 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/mazda",
   "requirements": ["pymazda==0.0.8"],
-  "codeowners": ["@bdr99"],
+  "codeowners": []
   "quality_scale": "platinum"
 }

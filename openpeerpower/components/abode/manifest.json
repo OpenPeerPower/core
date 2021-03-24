@@ -4,7 +4,7 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/abode",
   "requirements": ["abodepy==1.2.0"],
-  "codeowners": ["@shred86"],
+  "codeowners": [],
   "homekit": {
     "models": ["Abode", "Iota"]
   }

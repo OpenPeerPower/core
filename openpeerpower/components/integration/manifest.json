@@ -2,6 +2,6 @@
   "domain": "integration",
   "name": "Integration - Riemann sum integral",
   "documentation": "https://www.openpeerpower.io/integrations/integration",
-  "codeowners": ["@dgomes"],
+  "codeowners": []
   "quality_scale": "internal"
 }

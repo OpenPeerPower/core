@@ -6,6 +6,6 @@
   "requirements": ["PyNaCl==1.3.0", "emoji==1.2.0"],
   "dependencies": ["http", "webhook", "person", "tag"],
   "after_dependencies": ["cloud", "camera", "notify"],
-  "codeowners": ["@robbiet480"],
+  "codeowners": []
   "quality_scale": "internal"
 }

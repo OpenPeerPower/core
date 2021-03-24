@@ -5,7 +5,7 @@
   "dependencies": ["ffmpeg", "http"],
   "documentation": "https://www.openpeerpower.io/integrations/nest",
   "requirements": ["python-nest==4.1.0", "google-nest-sdm==0.2.12"],
-  "codeowners": ["@allenporter"],
+  "codeowners": []
   "quality_scale": "platinum",
   "dhcp": [{"macaddress":"18B430*"}]
 }

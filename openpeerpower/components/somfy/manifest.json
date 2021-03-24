@@ -4,7 +4,7 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/somfy",
   "dependencies": ["http"],
-  "codeowners": ["@tetienne"],
+  "codeowners": []
   "requirements": ["pymfy==0.9.3"],
   "zeroconf": [
     {"type": "_kizbox._tcp.local.", "name": "gateway*"}

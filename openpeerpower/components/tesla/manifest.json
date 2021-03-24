@@ -4,7 +4,7 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/tesla",
   "requirements": ["teslajsonpy==0.11.5"],
-  "codeowners": ["@zabuldon", "@alandtse"],
+  "codeowners": []
   "dhcp": [
     { "hostname": "tesla_*", "macaddress": "4CFCAA*" },
     { "hostname": "tesla_*", "macaddress": "044EAF*" },

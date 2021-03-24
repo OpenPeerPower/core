@@ -2,6 +2,6 @@
   "domain": "sun",
   "name": "Sun",
   "documentation": "https://www.openpeerpower.io/integrations/sun",
-  "codeowners": ["@Swamp-Ig"],
+  "codeowners": []
   "quality_scale": "internal"
 }

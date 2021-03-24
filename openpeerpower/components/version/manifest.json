@@ -3,6 +3,6 @@
   "name": "Version",
   "documentation": "https://www.openpeerpower.io/integrations/version",
   "requirements": ["pyoppversion==3.4.1"],
-  "codeowners": [""],
+  "codeowners": [],
   "quality_scale": "internal"
 }

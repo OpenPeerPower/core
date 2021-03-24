@@ -2,6 +2,6 @@
   "domain": "input_text",
   "name": "Input Text",
   "documentation": "https://www.openpeerpower.io/integrations/input_text",
-  "codeowners": ["@open-peer-power/core"],
+  "codeowners": ["@openpeerpower/core"],
   "quality_scale": "internal"
 }

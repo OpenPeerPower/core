@@ -3,6 +3,6 @@
   "name": "Zone",
   "config_flow": false,
   "documentation": "https://www.openpeerpower.io/integrations/zone",
-  "codeowners": ["@open-peer-power/core"],
+  "codeowners": ["@openpeerpower/core"],
   "quality_scale": "internal"
 }

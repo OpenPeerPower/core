@@ -2,6 +2,6 @@
   "domain": "delijn",
   "name": "De Lijn",
   "documentation": "https://www.openpeerpower.io/integrations/delijn",
-  "codeowners": ["@bollewolle", "@Emilv2"],
+  "codeowners": []
   "requirements": ["pydelijn==0.6.1"]
 }

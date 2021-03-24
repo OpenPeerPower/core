@@ -1,5 +1,5 @@
 {
-  "codeowners": ["@dermotduffy"],
+  "codeowners": []
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/hyperion",
   "domain": "hyperion",

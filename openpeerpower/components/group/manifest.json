@@ -2,6 +2,6 @@
   "domain": "group",
   "name": "Group",
   "documentation": "https://www.openpeerpower.io/integrations/group",
-  "codeowners": ["@open-peer-power/core"],
+  "codeowners": []
   "quality_scale": "internal"
 }

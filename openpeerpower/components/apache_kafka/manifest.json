@@ -3,5 +3,5 @@
   "name": "Apache Kafka",
   "documentation": "https://www.openpeerpower.io/integrations/apache_kafka",
   "requirements": ["aiokafka==0.6.0"],
-  "codeowners": ["@bachya"]
+  "codeowners": []
 }

@@ -3,6 +3,6 @@
   "name": "Elk-M1 Control",
   "documentation": "https://www.openpeerpower.io/integrations/elkm1",
   "requirements": ["elkm1-lib==0.8.10"],
-  "codeowners": ["@gwww", "@bdraco"],
+  "codeowners": []
   "config_flow": true
 }

@@ -2,8 +2,8 @@
   "domain": "airly",
   "name": "Airly",
   "documentation": "https://www.openpeerpower.io/integrations/airly",
-  "codeowners": ["@bieniu"],
-  "requirements": ["airly==1.1.0"],
+  "codeowners": [],
+  "requirements": [],
   "config_flow": true,
   "quality_scale": "platinum"
 }

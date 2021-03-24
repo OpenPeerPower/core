@@ -2,6 +2,6 @@
   "domain": "utility_meter",
   "name": "Utility Meter",
   "documentation": "https://www.openpeerpower.io/integrations/utility_meter",
-  "codeowners": ["@dgomes"],
+  "codeowners": []
   "quality_scale": "internal"
 }

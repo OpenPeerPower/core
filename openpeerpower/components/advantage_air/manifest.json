@@ -3,7 +3,7 @@
   "name": "Advantage Air",
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/advantage_air",
-  "codeowners": ["@Bre77"],
+  "codeowners": [],
   "requirements": ["advantage_air==0.2.1"],
   "quality_scale": "platinum"
 }

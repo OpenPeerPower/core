@@ -4,7 +4,7 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/upnp",
   "requirements": ["async-upnp-client==0.14.13"],
-  "codeowners": ["@StevenLooman"],
+  "codeowners": []
   "ssdp": [
     {
       "st": "urn:schemas-upnp-org:device:InternetGatewayDevice:1"

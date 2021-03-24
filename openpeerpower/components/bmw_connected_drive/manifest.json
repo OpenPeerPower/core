@@ -3,6 +3,6 @@
   "name": "BMW Connected Drive",
   "documentation": "https://www.openpeerpower.io/integrations/bmw_connected_drive",
   "requirements": ["bimmer_connected==0.7.15"],
-  "codeowners": ["@gerard33", "@rikroe"],
+  "codeowners": []
   "config_flow": true
 }
