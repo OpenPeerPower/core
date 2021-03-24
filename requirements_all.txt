@@ -1576,7 +1576,7 @@ pyopnsense==0.2.0
 pyoppleio==1.0.5
 
 # openpeerpower.components.version
-pyoppversion==1.0.0
+pyoppversion==3.4.1
 
 # openpeerpower.components.iota
 pyota==2.0.5

@@ -2,7 +2,7 @@
   "domain": "version",
   "name": "Version",
   "documentation": "https://www.openpeerpower.io/integrations/version",
-  "requirements": ["pyoppversion==1.0.0"],
-  "codeowners": ["@fabaff", "@ludeeus"],
+  "requirements": ["pyoppversion==3.4.1"],
+  "codeowners": [""],
   "quality_scale": "internal"
 }
