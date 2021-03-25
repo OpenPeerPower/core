@@ -3,5 +3,5 @@
   "name": "Thinking Cleaner",
   "documentation": "https://www.openpeerpower.io/integrations/thinkingcleaner",
   "requirements": ["pythinkingcleaner==0.0.3"],
-  "codeowners": [],
+  "codeowners": []
 }

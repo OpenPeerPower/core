@@ -3,5 +3,5 @@
   "name": "MQTT Statestream",
   "documentation": "https://www.openpeerpower.io/integrations/mqtt_statestream",
   "dependencies": ["mqtt"],
-  "codeowners": [],
+  "codeowners": []
 }

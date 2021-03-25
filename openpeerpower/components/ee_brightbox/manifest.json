@@ -3,5 +3,5 @@
   "name": "EE Bright Box",
   "documentation": "https://www.openpeerpower.io/integrations/ee_brightbox",
   "requirements": ["eebrightbox==0.0.4"],
-  "codeowners": [],
+  "codeowners": []
 }

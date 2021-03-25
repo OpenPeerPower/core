@@ -3,5 +3,5 @@
   "name": "Wireless Sensor Tags",
   "documentation": "https://www.openpeerpower.io/integrations/wirelesstag",
   "requirements": ["wirelesstagpy==0.4.1"],
-  "codeowners": [],
+  "codeowners": []
 }

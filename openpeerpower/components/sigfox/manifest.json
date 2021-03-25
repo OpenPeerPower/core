@@ -2,5 +2,5 @@
   "domain": "sigfox",
   "name": "Sigfox",
   "documentation": "https://www.openpeerpower.io/integrations/sigfox",
-  "codeowners": [],
+  "codeowners": []
 }

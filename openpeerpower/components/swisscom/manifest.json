@@ -2,5 +2,5 @@
   "domain": "swisscom",
   "name": "Swisscom Internet-Box",
   "documentation": "https://www.openpeerpower.io/integrations/swisscom",
-  "codeowners": [],
+  "codeowners": []
 }

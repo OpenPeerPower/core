@@ -3,5 +3,5 @@
   "name": "AWS Route53",
   "documentation": "https://www.openpeerpower.io/integrations/route53",
   "requirements": ["boto3==1.9.252"],
-  "codeowners": [],
+  "codeowners": []
 }

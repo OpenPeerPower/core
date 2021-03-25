@@ -2,5 +2,5 @@
   "domain": "duckdns",
   "name": "Duck DNS",
   "documentation": "https://www.openpeerpower.io/integrations/duckdns",
-  "codeowners": [],
+  "codeowners": []
 }

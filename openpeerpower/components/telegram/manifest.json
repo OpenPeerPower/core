@@ -3,5 +3,5 @@
   "name": "Telegram",
   "documentation": "https://www.openpeerpower.io/integrations/telegram",
   "dependencies": ["telegram_bot"],
-  "codeowners": [],
+  "codeowners": []
 }

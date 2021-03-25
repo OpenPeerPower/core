@@ -3,5 +3,5 @@
   "name": "Frontier Silicon",
   "documentation": "https://www.openpeerpower.io/integrations/frontier_silicon",
   "requirements": ["afsapi==0.0.4"],
-  "codeowners": [],
+  "codeowners": []
 }

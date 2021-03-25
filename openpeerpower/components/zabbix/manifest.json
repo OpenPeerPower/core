@@ -3,5 +3,5 @@
   "name": "Zabbix",
   "documentation": "https://www.openpeerpower.io/integrations/zabbix",
   "requirements": ["py-zabbix==1.1.7"],
-  "codeowners": [],
+  "codeowners": []
 }

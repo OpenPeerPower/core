@@ -3,5 +3,5 @@
   "name": "Calendar",
   "documentation": "https://www.openpeerpower.io/integrations/calendar",
   "dependencies": ["http"],
-  "codeowners": [],
+  "codeowners": []
 }

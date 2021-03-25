@@ -3,5 +3,5 @@
   "name": "Lutron Homeworks",
   "documentation": "https://www.openpeerpower.io/integrations/homeworks",
   "requirements": ["pyhomeworks==0.0.6"],
-  "codeowners": [],
+  "codeowners": []
 }

@@ -3,5 +3,5 @@
   "name": "Lyft",
   "documentation": "https://www.openpeerpower.io/integrations/lyft",
   "requirements": ["lyft_rides==0.2"],
-  "codeowners": [],
+  "codeowners": []
 }

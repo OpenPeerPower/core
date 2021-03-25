@@ -2,5 +2,5 @@
   "domain": "facebook",
   "name": "Facebook Messenger",
   "documentation": "https://www.openpeerpower.io/integrations/facebook",
-  "codeowners": [],
+  "codeowners": []
 }

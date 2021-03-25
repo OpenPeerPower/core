@@ -4,5 +4,5 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/fritzbox_callmonitor",
   "requirements": ["fritzconnection==1.4.0"],
-  "codeowners": [],
+  "codeowners": []
 }

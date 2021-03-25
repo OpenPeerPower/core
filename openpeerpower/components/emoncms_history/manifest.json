@@ -2,5 +2,5 @@
   "domain": "emoncms_history",
   "name": "Emoncms History",
   "documentation": "https://www.openpeerpower.io/integrations/emoncms_history",
-  "codeowners": [],
+  "codeowners": []
 }

@@ -3,5 +3,5 @@
   "name": "Serial Particulate Matter",
   "documentation": "https://www.openpeerpower.io/integrations/serial_pm",
   "requirements": ["pmsensor==0.4"],
-  "codeowners": [],
+  "codeowners": []
 }

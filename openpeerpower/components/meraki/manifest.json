@@ -3,5 +3,5 @@
   "name": "Meraki",
   "documentation": "https://www.openpeerpower.io/integrations/meraki",
   "dependencies": ["http"],
-  "codeowners": [],
+  "codeowners": []
 }

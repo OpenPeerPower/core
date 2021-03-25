@@ -3,5 +3,5 @@
   "name": "Harman Kardon AVR",
   "documentation": "https://www.openpeerpower.io/integrations/harman_kardon_avr",
   "requirements": ["hkavr==0.0.5"],
-  "codeowners": [],
+  "codeowners": []
 }

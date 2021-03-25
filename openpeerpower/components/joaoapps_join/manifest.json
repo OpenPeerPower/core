@@ -3,5 +3,5 @@
   "name": "Joaoapps Join",
   "documentation": "https://www.openpeerpower.io/integrations/joaoapps_join",
   "requirements": ["python-join-api==0.0.6"],
-  "codeowners": [],
+  "codeowners": []
 }

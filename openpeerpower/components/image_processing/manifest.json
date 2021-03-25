@@ -3,5 +3,5 @@
   "name": "Image Processing",
   "documentation": "https://www.openpeerpower.io/integrations/image_processing",
   "dependencies": ["camera"],
-  "codeowners": [],
+  "codeowners": []
 }

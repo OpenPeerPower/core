@@ -2,5 +2,5 @@
   "domain": "wunderground",
   "name": "Weather Underground (WUnderground)",
   "documentation": "https://www.openpeerpower.io/integrations/wunderground",
-  "codeowners": [],
+  "codeowners": []
 }

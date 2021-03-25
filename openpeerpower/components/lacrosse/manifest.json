@@ -3,5 +3,5 @@
   "name": "LaCrosse",
   "documentation": "https://www.openpeerpower.io/integrations/lacrosse",
   "requirements": ["pylacrosse==0.4"],
-  "codeowners": [],
+  "codeowners": []
 }

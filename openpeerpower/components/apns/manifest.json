@@ -4,5 +4,5 @@
   "documentation": "https://www.openpeerpower.io/integrations/apns",
   "requirements": ["apns2==0.3.0"],
   "after_dependencies": ["device_tracker"],
-  "codeowners": [],
+  "codeowners": []
 }

@@ -3,5 +3,5 @@
   "name": "ebusd",
   "documentation": "https://www.openpeerpower.io/integrations/ebusd",
   "requirements": ["ebusdpy==0.0.16"],
-  "codeowners": [],
+  "codeowners": []
 }

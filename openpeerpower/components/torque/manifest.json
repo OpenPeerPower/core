@@ -3,5 +3,5 @@
   "name": "Torque",
   "documentation": "https://www.openpeerpower.io/integrations/torque",
   "dependencies": ["http"],
-  "codeowners": [],
+  "codeowners": []
 }

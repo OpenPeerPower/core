@@ -3,5 +3,5 @@
   "name": "System Monitor",
   "documentation": "https://www.openpeerpower.io/integrations/systemmonitor",
   "requirements": ["psutil==5.8.0"],
-  "codeowners": [],
+  "codeowners": []
 }

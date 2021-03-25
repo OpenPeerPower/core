@@ -3,5 +3,5 @@
   "name": "Magicseaweed",
   "documentation": "https://www.openpeerpower.io/integrations/magicseaweed",
   "requirements": ["magicseaweed==1.0.3"],
-  "codeowners": [],
+  "codeowners": []
 }

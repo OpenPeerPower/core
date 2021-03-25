@@ -3,5 +3,5 @@
   "name": "FFmpeg Noise",
   "documentation": "https://www.openpeerpower.io/integrations/ffmpeg_noise",
   "dependencies": ["ffmpeg"],
-  "codeowners": [],
+  "codeowners": []
 }

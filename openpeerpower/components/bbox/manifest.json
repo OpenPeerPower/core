@@ -3,5 +3,5 @@
   "name": "Bbox",
   "documentation": "https://www.openpeerpower.io/integrations/bbox",
   "requirements": ["pybbox==0.0.5-alpha"],
-  "codeowners": [],
+  "codeowners": []
 }

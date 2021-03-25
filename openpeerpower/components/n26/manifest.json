@@ -3,5 +3,5 @@
   "name": "N26",
   "documentation": "https://www.openpeerpower.io/integrations/n26",
   "requirements": ["n26==0.2.7"],
-  "codeowners": [],
+  "codeowners": []
 }

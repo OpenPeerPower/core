@@ -3,5 +3,5 @@
   "name": "MessageBird",
   "documentation": "https://www.openpeerpower.io/integrations/message_bird",
   "requirements": ["messagebird==1.2.0"],
-  "codeowners": [],
+  "codeowners": []
 }

@@ -2,5 +2,5 @@
   "domain": "air_quality",
   "name": "Air Quality",
   "documentation": "https://www.openpeerpower.io/integrations/air_quality",
-  "codeowners": [],
+  "codeowners": []
 }

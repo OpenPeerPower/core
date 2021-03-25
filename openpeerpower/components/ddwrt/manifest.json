@@ -2,5 +2,5 @@
   "domain": "ddwrt",
   "name": "DD-WRT",
   "documentation": "https://www.openpeerpower.io/integrations/ddwrt",
-  "codeowners": [],
+  "codeowners": []
 }

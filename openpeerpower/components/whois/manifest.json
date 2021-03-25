@@ -3,5 +3,5 @@
   "name": "Whois",
   "documentation": "https://www.openpeerpower.io/integrations/whois",
   "requirements": ["python-whois==0.7.3"],
-  "codeowners": [],
+  "codeowners": []
 }

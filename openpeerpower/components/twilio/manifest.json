@@ -5,5 +5,5 @@
   "documentation": "https://www.openpeerpower.io/integrations/twilio",
   "requirements": ["twilio==6.32.0"],
   "dependencies": ["webhook"],
-  "codeowners": [],
+  "codeowners": []
 }

@@ -3,5 +3,5 @@
   "name": "Datadog",
   "documentation": "https://www.openpeerpower.io/integrations/datadog",
   "requirements": ["datadog==0.15.0"],
-  "codeowners": [],
+  "codeowners": []
 }

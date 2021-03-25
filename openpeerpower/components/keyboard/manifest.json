@@ -3,5 +3,5 @@
   "name": "Keyboard",
   "documentation": "https://www.openpeerpower.io/integrations/keyboard",
   "requirements": ["pyuserinput==0.1.11"],
-  "codeowners": [],
+  "codeowners": []
 }

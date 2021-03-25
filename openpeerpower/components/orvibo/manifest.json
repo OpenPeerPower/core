@@ -3,5 +3,5 @@
   "name": "Orvibo",
   "documentation": "https://www.openpeerpower.io/integrations/orvibo",
   "requirements": ["orvibo==1.1.1"],
-  "codeowners": [],
+  "codeowners": []
 }

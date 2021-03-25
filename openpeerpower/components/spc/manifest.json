@@ -3,5 +3,5 @@
   "name": "Vanderbilt SPC",
   "documentation": "https://www.openpeerpower.io/integrations/spc",
   "requirements": ["pyspcwebgw==0.4.0"],
-  "codeowners": [],
+  "codeowners": []
 }

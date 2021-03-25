@@ -2,5 +2,5 @@
   "domain": "pushsafer",
   "name": "Pushsafer",
   "documentation": "https://www.openpeerpower.io/integrations/pushsafer",
-  "codeowners": [],
+  "codeowners": []
 }

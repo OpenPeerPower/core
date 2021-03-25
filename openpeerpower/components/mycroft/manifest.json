@@ -3,5 +3,5 @@
   "name": "Mycroft",
   "documentation": "https://www.openpeerpower.io/integrations/mycroft",
   "requirements": ["mycroftapi==2.0"],
-  "codeowners": [],
+  "codeowners": []
 }

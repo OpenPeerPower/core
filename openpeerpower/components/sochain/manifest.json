@@ -3,5 +3,5 @@
   "name": "SoChain",
   "documentation": "https://www.openpeerpower.io/integrations/sochain",
   "requirements": ["python-sochain-api==0.0.2"],
-  "codeowners": [],
+  "codeowners": []
 }

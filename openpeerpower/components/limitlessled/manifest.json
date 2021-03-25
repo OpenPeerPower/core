@@ -3,5 +3,5 @@
   "name": "LimitlessLED",
   "documentation": "https://www.openpeerpower.io/integrations/limitlessled",
   "requirements": ["limitlessled==1.1.3"],
-  "codeowners": [],
+  "codeowners": []
 }

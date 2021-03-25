@@ -2,5 +2,5 @@
   "domain": "clickatell",
   "name": "Clickatell",
   "documentation": "https://www.openpeerpower.io/integrations/clickatell",
-  "codeowners": [],
+  "codeowners": []
 }

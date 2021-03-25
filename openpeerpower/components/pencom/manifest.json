@@ -3,5 +3,5 @@
   "name": "Pencom",
   "documentation": "https://www.openpeerpower.io/integrations/pencom",
   "requirements": ["pencompy==0.0.3"],
-  "codeowners": [],
+  "codeowners": []
 }

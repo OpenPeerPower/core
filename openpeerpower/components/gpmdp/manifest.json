@@ -4,5 +4,5 @@
   "documentation": "https://www.openpeerpower.io/integrations/gpmdp",
   "requirements": ["websocket-client==0.54.0"],
   "dependencies": ["configurator"],
-  "codeowners": [],
+  "codeowners": []
 }

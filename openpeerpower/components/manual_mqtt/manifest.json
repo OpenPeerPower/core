@@ -3,5 +3,5 @@
   "name": "Manual MQTT",
   "documentation": "https://www.openpeerpower.io/integrations/manual_mqtt",
   "dependencies": ["mqtt"],
-  "codeowners": [],
+  "codeowners": []
 }

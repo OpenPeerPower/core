@@ -3,5 +3,5 @@
   "name": "Digital Loggers",
   "documentation": "https://www.openpeerpower.io/integrations/digitalloggers",
   "requirements": ["dlipower==0.7.165"],
-  "codeowners": [],
+  "codeowners": []
 }

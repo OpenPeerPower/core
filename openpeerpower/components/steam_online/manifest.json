@@ -3,5 +3,5 @@
   "name": "Steam",
   "documentation": "https://www.openpeerpower.io/integrations/steam_online",
   "requirements": ["steamodd==4.21"],
-  "codeowners": [],
+  "codeowners": []
 }

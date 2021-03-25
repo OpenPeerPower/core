@@ -3,5 +3,5 @@
   "name": "MQTT Room Presence",
   "documentation": "https://www.openpeerpower.io/integrations/mqtt_room",
   "dependencies": ["mqtt"],
-  "codeowners": [],
+  "codeowners": []
 }

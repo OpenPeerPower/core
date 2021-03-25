@@ -3,5 +3,5 @@
   "name": "Panasonic Blu-Ray Player",
   "documentation": "https://www.openpeerpower.io/integrations/panasonic_bluray",
   "requirements": ["panacotta==0.1"],
-  "codeowners": [],
+  "codeowners": []
 }

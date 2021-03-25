@@ -3,5 +3,5 @@
   "name": "Channels",
   "documentation": "https://www.openpeerpower.io/integrations/channels",
   "requirements": ["pychannels==1.0.0"],
-  "codeowners": [],
+  "codeowners": []
 }

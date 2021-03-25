@@ -2,5 +2,5 @@
   "domain": "geo_location",
   "name": "Geolocation",
   "documentation": "https://www.openpeerpower.io/integrations/geo_location",
-  "codeowners": [],
+  "codeowners": []
 }

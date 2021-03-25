@@ -3,5 +3,5 @@
   "name": "Mythic Beasts DNS",
   "documentation": "https://www.openpeerpower.io/integrations/mythicbeastsdns",
   "requirements": ["mbddns==0.1.2"],
-  "codeowners": [],
+  "codeowners": []
 }

@@ -4,5 +4,5 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/ambient_station",
   "requirements": ["aioambient==1.2.1"],
-  "codeowners": [],
+  "codeowners": []
 }

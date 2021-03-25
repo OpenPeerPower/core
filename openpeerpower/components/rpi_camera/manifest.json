@@ -2,5 +2,5 @@
   "domain": "rpi_camera",
   "name": "Raspberry Pi Camera",
   "documentation": "https://www.openpeerpower.io/integrations/rpi_camera",
-  "codeowners": [],
+  "codeowners": []
 }

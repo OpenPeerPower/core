@@ -3,5 +3,5 @@
   "name": "SendGrid",
   "documentation": "https://www.openpeerpower.io/integrations/sendgrid",
   "requirements": ["sendgrid==6.6.0"],
-  "codeowners": [],
+  "codeowners": []
 }

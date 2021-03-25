@@ -3,5 +3,5 @@
   "name": "Samsung Family Hub",
   "documentation": "https://www.openpeerpower.io/integrations/familyhub",
   "requirements": ["python-family-hub-local==0.0.2"],
-  "codeowners": [],
+  "codeowners": []
 }

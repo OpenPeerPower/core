@@ -3,5 +3,5 @@
   "name": "NETGEAR LTE",
   "documentation": "https://www.openpeerpower.io/integrations/netgear_lte",
   "requirements": ["eternalegypt==0.0.12"],
-  "codeowners": [],
+  "codeowners": []
 }

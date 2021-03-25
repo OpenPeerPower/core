@@ -3,5 +3,5 @@
   "name": "AfterShip",
   "documentation": "https://www.openpeerpower.io/integrations/aftership",
   "requirements": ["pyaftership==0.1.2"],
-  "codeowners": [],
+  "codeowners": []
 }

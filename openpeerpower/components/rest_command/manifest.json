@@ -2,5 +2,5 @@
   "domain": "rest_command",
   "name": "RESTful Command",
   "documentation": "https://www.openpeerpower.io/integrations/rest_command",
-  "codeowners": [],
+  "codeowners": []
 }

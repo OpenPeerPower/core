@@ -3,5 +3,5 @@
   "name": "Ubiquiti mFi mPort",
   "documentation": "https://www.openpeerpower.io/integrations/mfi",
   "requirements": ["mficlient==0.3.0"],
-  "codeowners": [],
+  "codeowners": []
 }

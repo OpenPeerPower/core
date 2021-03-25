@@ -3,5 +3,5 @@
   "name": "Deluge",
   "documentation": "https://www.openpeerpower.io/integrations/deluge",
   "requirements": ["deluge-client==1.7.1"],
-  "codeowners": [],
+  "codeowners": []
 }
