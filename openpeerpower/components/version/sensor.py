@@ -3,8 +3,8 @@ from datetime import timedelta
 
 from pyoppversion import (
     DockerVersion,
-    HaIoVersion,
-    HassioVersion,
+    OpIoVersion,
+    OppioVersion,
     LocalVersion,
     PyPiVersion,
 )
@@ -75,15 +75,15 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         branch = "stable"
 
     if source == "pypi":
-        haversion = VersionData(PyPiVersion(opp.loop, session, branch))
+        opversion = VersionData(PyPiVersion(opp.loop, session, branch))
     elif source == "oppio":
-        haversion = VersionData(HassioVersion(opp.loop, session, branch, image))
+        opversion = VersionData(OppioVersion(opp.loop, session, branch, image))
     elif source == "docker":
-        haversion = VersionData(DockerVersion(opp.loop, session, branch, image))
+        opversion = VersionData(DockerVersion(opp.loop, session, branch, image))
     elif source == "haio":
-        haversion = VersionData(HaIoVersion(opp.loop, session))
+        opversion = VersionData(OpIoVersion(opp.loop, session))
     else:
-        haversion = VersionData(LocalVersion(opp.loop, session))
+        opversion = VersionData(LocalVersion(opp.loop, session))
 
     if not name:
         if source == DEFAULT_SOURCE:
@@ -91,21 +91,21 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         else:
             name = DEFAULT_NAME_LATEST
 
-    async_add_entities([VersionSensor(haversion, name)], True)
+    async_add_entities([VersionSensor(opversion, name)], True)
 
 
 class VersionSensor(Entity):
     """Representation of a Open Peer Power version sensor."""
 
-    def __init__(self, haversion, name):
+    def __init__(self, opversion, name):
         """Initialize the Version sensor."""
-        self.haversion = haversion
+        self.opversion = opversion
         self._name = name
         self._state = None
 
     async def async_update(self):
         """Get the latest version information."""
-        await self.haversion.async_update()
+        await self.opversion.async_update()
 
     @property
     def name(self):
@@ -115,12 +115,12 @@ class VersionSensor(Entity):
     @property
     def state(self):
         """Return the state of the sensor."""
-        return self.haversion.api.version
+        return self.opversion.api.version
 
     @property
     def device_state_attributes(self):
         """Return attributes for the sensor."""
-        return self.haversion.api.version_data
+        return self.opversion.api.version_data
 
     @property
     def icon(self):
