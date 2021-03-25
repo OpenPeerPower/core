@@ -3,6 +3,6 @@
   "name": "LiteJet",
   "documentation": "https://www.openpeerpower.io/integrations/litejet",
   "requirements": ["pylitejet==0.3.0"],
-  "codeowners": []
+  "codeowners": [],
   "config_flow": true
 }

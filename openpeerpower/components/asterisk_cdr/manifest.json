@@ -3,5 +3,5 @@
   "name": "Asterisk Call Detail Records",
   "documentation": "https://www.openpeerpower.io/integrations/asterisk_cdr",
   "dependencies": ["asterisk_mbox"],
-  "codeowners": []
+  "codeowners": [],
 }

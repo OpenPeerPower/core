@@ -3,5 +3,5 @@
   "name": "MQTT JSON",
   "documentation": "https://www.openpeerpower.io/integrations/mqtt_json",
   "dependencies": ["mqtt"],
-  "codeowners": []
+  "codeowners": [],
 }

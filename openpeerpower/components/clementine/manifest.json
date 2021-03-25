@@ -3,5 +3,5 @@
   "name": "Clementine Music Player",
   "documentation": "https://www.openpeerpower.io/integrations/clementine",
   "requirements": ["python-clementine-remote==1.0.1"],
-  "codeowners": []
+  "codeowners": [],
 }

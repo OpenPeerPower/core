@@ -2,7 +2,7 @@
   "domain": "gios",
   "name": "GIOŚ",
   "documentation": "https://www.openpeerpower.io/integrations/gios",
-  "codeowners": []
+  "codeowners": [],
   "requirements": ["gios==0.2.0"],
   "config_flow": true,
   "quality_scale": "platinum"

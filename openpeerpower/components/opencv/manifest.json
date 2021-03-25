@@ -3,5 +3,5 @@
   "name": "OpenCV",
   "documentation": "https://www.openpeerpower.io/integrations/opencv",
   "requirements": ["numpy==1.19.2", "opencv-python-headless==4.3.0.36"],
-  "codeowners": []
+  "codeowners": [],
 }

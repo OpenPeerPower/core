@@ -2,5 +2,5 @@
   "domain": "ue_smart_radio",
   "name": "Logitech UE Smart Radio",
   "documentation": "https://www.openpeerpower.io/integrations/ue_smart_radio",
-  "codeowners": []
+  "codeowners": [],
 }

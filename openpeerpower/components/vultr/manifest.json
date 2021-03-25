@@ -3,5 +3,5 @@
   "name": "Vultr",
   "documentation": "https://www.openpeerpower.io/integrations/vultr",
   "requirements": ["vultr==0.1.2"],
-  "codeowners": []
+  "codeowners": [],
 }

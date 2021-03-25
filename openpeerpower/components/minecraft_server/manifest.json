@@ -4,6 +4,6 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/minecraft_server",
   "requirements": ["aiodns==2.0.0", "getmac==0.8.2", "mcstatus==5.1.1"],
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "silver"
 }

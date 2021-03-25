@@ -3,5 +3,5 @@
   "name": "Webhook",
   "documentation": "https://www.openpeerpower.io/integrations/webhook",
   "dependencies": ["http"],
-  "codeowners": []
+  "codeowners": [],
 }

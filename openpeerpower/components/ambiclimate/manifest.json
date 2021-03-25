@@ -5,5 +5,5 @@
   "documentation": "https://www.openpeerpower.io/integrations/ambiclimate",
   "requirements": ["ambiclimate==0.2.1"],
   "dependencies": ["http"],
-  "codeowners": []
+  "codeowners": [],
 }

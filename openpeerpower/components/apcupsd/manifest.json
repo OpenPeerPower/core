@@ -3,5 +3,5 @@
   "name": "apcupsd",
   "documentation": "https://www.openpeerpower.io/integrations/apcupsd",
   "requirements": ["apcaccess==0.0.13"],
-  "codeowners": []
+  "codeowners": [],
 }

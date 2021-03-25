@@ -3,5 +3,5 @@
   "name": "Mochad",
   "documentation": "https://www.openpeerpower.io/integrations/mochad",
   "requirements": ["pymochad==0.2.0"],
-  "codeowners": []
+  "codeowners": [],
 }

@@ -3,7 +3,7 @@
   "name": "NuHeat",
   "documentation": "https://www.openpeerpower.io/integrations/nuheat",
   "requirements": ["nuheat==0.3.0"],
-  "codeowners": []
+  "codeowners": [],
   "config_flow": true,
   "dhcp": [{"hostname":"nuheat","macaddress":"002338*"}]
 }

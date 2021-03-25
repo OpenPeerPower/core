@@ -3,5 +3,5 @@
   "name": "Ambient Radio Weather Network",
   "documentation": "https://www.openpeerpower.io/integrations/arwn",
   "dependencies": ["mqtt"],
-  "codeowners": []
+  "codeowners": [],
 }

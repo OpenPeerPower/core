@@ -3,5 +3,5 @@
   "name": "ThingSpeak",
   "documentation": "https://www.openpeerpower.io/integrations/thingspeak",
   "requirements": ["thingspeak==1.0.0"],
-  "codeowners": []
+  "codeowners": [],
 }

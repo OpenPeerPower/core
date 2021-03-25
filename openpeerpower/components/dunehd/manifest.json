@@ -3,6 +3,6 @@
   "name": "Dune HD",
   "documentation": "https://www.openpeerpower.io/integrations/dunehd",
   "requirements": ["pdunehd==1.3.2"],
-  "codeowners": []
+  "codeowners": [],
   "config_flow": true
 }

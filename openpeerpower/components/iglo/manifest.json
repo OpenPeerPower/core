@@ -3,5 +3,5 @@
   "name": "iGlo",
   "documentation": "https://www.openpeerpower.io/integrations/iglo",
   "requirements": ["iglo==1.2.7"],
-  "codeowners": []
+  "codeowners": [],
 }

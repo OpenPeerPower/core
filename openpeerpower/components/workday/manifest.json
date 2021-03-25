@@ -3,6 +3,6 @@
   "name": "Workday",
   "documentation": "https://www.openpeerpower.io/integrations/workday",
   "requirements": ["holidays==0.10.5.2"],
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "internal"
 }

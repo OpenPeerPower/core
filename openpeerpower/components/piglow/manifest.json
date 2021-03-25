@@ -3,5 +3,5 @@
   "name": "Piglow",
   "documentation": "https://www.openpeerpower.io/integrations/piglow",
   "requirements": ["piglow==1.2.4"],
-  "codeowners": []
+  "codeowners": [],
 }

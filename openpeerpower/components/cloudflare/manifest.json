@@ -3,6 +3,6 @@
   "name": "Cloudflare",
   "documentation": "https://www.openpeerpower.io/integrations/cloudflare",
   "requirements": ["pycfdns==1.2.1"],
-  "codeowners": []
+  "codeowners": [],
   "config_flow": true
 }

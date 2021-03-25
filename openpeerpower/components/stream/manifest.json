@@ -4,6 +4,6 @@
   "documentation": "https://www.openpeerpower.io/integrations/stream",
   "requirements": ["av==8.0.3"],
   "dependencies": ["http"],
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "internal"
 }

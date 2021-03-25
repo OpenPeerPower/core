@@ -4,6 +4,6 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/roomba",
   "requirements": ["roombapy==1.6.2"],
-  "codeowners": []
+  "codeowners": [],
   "dhcp": [{"hostname":"irobot-*","macaddress":"501479*"}]
 }

@@ -3,5 +3,5 @@
   "name": "Nanoleaf",
   "documentation": "https://www.openpeerpower.io/integrations/nanoleaf",
   "requirements": ["pynanoleaf==0.0.5"],
-  "codeowners": []
+  "codeowners": [],
 }

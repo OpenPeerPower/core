@@ -3,5 +3,5 @@
   "name": "OpenEVSE",
   "documentation": "https://www.openpeerpower.io/integrations/openevse",
   "requirements": ["openevsewifi==1.1.0"],
-  "codeowners": []
+  "codeowners": [],
 }

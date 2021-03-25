@@ -3,5 +3,5 @@
   "name": "SCSGate",
   "documentation": "https://www.openpeerpower.io/integrations/scsgate",
   "requirements": ["scsgate==0.1.0"],
-  "codeowners": []
+  "codeowners": [],
 }

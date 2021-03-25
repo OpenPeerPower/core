@@ -3,5 +3,5 @@
   "name": "Opple",
   "documentation": "https://www.openpeerpower.io/integrations/opple",
   "requirements": ["pyoppleio==1.0.5"],
-  "codeowners": []
+  "codeowners": [],
 }

@@ -3,5 +3,5 @@
   "name": "XBee",
   "documentation": "https://www.openpeerpower.io/integrations/xbee",
   "requirements": ["xbee-helper==0.0.7"],
-  "codeowners": []
+  "codeowners": [],
 }

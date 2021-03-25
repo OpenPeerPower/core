@@ -3,5 +3,5 @@
   "name": "DNS IP",
   "documentation": "https://www.openpeerpower.io/integrations/dnsip",
   "requirements": ["aiodns==2.0.0"],
-  "codeowners": []
+  "codeowners": [],
 }

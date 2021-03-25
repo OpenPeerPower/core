@@ -5,6 +5,6 @@
   "documentation": "https://www.openpeerpower.io/integrations/esphome",
   "requirements": ["aioesphomeapi==2.6.5"],
   "zeroconf": ["_esphomelib._tcp.local."],
-  "codeowners": []
+  "codeowners": [],
   "after_dependencies": ["zeroconf", "tag"]
 }

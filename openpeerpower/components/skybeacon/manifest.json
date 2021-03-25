@@ -3,5 +3,5 @@
   "name": "Skybeacon",
   "documentation": "https://www.openpeerpower.io/integrations/skybeacon",
   "requirements": ["pygatt[GATTTOOL]==4.0.5"],
-  "codeowners": []
+  "codeowners": [],
 }

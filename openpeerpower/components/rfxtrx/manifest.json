@@ -3,6 +3,6 @@
   "name": "RFXCOM RFXtrx",
   "documentation": "https://www.openpeerpower.io/integrations/rfxtrx",
   "requirements": ["pyRFXtrx==0.26.1"],
-  "codeowners": []
+  "codeowners": [],
   "config_flow": true
 }

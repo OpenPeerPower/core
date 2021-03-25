@@ -3,5 +3,5 @@
   "name": "Bluesound",
   "documentation": "https://www.openpeerpower.io/integrations/bluesound",
   "requirements": ["xmltodict==0.12.0"],
-  "codeowners": []
+  "codeowners": [],
 }

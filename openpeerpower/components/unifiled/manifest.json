@@ -2,6 +2,6 @@
   "domain": "unifiled",
   "name": "Ubiquiti UniFi LED",
   "documentation": "https://www.openpeerpower.io/integrations/unifiled",
-  "codeowners": []
+  "codeowners": [],
   "requirements": ["unifiled==0.11"]
 }

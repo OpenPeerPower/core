@@ -3,6 +3,6 @@
   "name": "Broadlink",
   "documentation": "https://www.openpeerpower.io/integrations/broadlink",
   "requirements": ["broadlink==0.16.0"],
-  "codeowners": []
+  "codeowners": [],
   "config_flow": true
 }

@@ -3,6 +3,6 @@
   "name": "Environment Agency Flood Gauges",
   "documentation": "https://www.openpeerpower.io/integrations/eafm",
   "config_flow": true,
-  "codeowners": []
+  "codeowners": [],
   "requirements": ["aioeafm==0.1.2"]
 }

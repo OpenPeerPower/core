@@ -3,6 +3,6 @@
   "name": "Remote Python Debugger",
   "documentation": "https://www.openpeerpower.io/integrations/debugpy",
   "requirements": ["debugpy==1.2.1"],
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "internal"
 }

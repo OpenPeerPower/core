@@ -2,7 +2,7 @@
   "domain": "sonarr",
   "name": "Sonarr",
   "documentation": "https://www.openpeerpower.io/integrations/sonarr",
-  "codeowners": []
+  "codeowners": [],
   "requirements": ["sonarr==0.3.0"],
   "config_flow": true,
   "quality_scale": "silver"

@@ -2,5 +2,5 @@
   "domain": "pyload",
   "name": "pyLoad",
   "documentation": "https://www.openpeerpower.io/integrations/pyload",
-  "codeowners": []
+  "codeowners": [],
 }

@@ -2,6 +2,6 @@
   "domain": "threshold",
   "name": "Threshold",
   "documentation": "https://www.openpeerpower.io/integrations/threshold",
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "internal"
 }

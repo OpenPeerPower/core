@@ -5,6 +5,6 @@
   "requirements": ["devolo-home-control-api==0.16.0"],
   "after_dependencies": ["zeroconf"],
   "config_flow": true,
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "silver"
 }

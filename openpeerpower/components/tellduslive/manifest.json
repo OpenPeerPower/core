@@ -4,6 +4,6 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/tellduslive",
   "requirements": ["tellduslive==0.10.11"],
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "gold"
 }

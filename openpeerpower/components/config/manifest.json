@@ -3,6 +3,6 @@
   "name": "Configuration",
   "documentation": "https://www.openpeerpower.io/integrations/config",
   "dependencies": ["http"],
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "internal"
 }

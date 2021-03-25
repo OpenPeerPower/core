@@ -3,5 +3,5 @@
   "name": "Osramlightify",
   "documentation": "https://www.openpeerpower.io/integrations/osramlightify",
   "requirements": ["lightify==1.0.7.3"],
-  "codeowners": []
+  "codeowners": [],
 }

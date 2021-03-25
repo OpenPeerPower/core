@@ -3,5 +3,5 @@
   "name": "Goalfeed",
   "documentation": "https://www.openpeerpower.io/integrations/goalfeed",
   "requirements": ["pysher==1.0.1"],
-  "codeowners": []
+  "codeowners": [],
 }

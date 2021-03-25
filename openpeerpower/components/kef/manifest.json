@@ -2,6 +2,6 @@
   "domain": "kef",
   "name": "KEF",
   "documentation": "https://www.openpeerpower.io/integrations/kef",
-  "codeowners": []
+  "codeowners": [],
   "requirements": ["aiokef==0.2.16", "getmac==0.8.2"]
 }

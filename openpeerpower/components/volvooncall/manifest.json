@@ -3,5 +3,5 @@
   "name": "Volvo On Call",
   "documentation": "https://www.openpeerpower.io/integrations/volvooncall",
   "requirements": ["volvooncall==0.8.12"],
-  "codeowners": []
+  "codeowners": [],
 }

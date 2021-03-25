@@ -2,6 +2,6 @@
   "domain": "versasense",
   "name": "VersaSense",
   "documentation": "https://www.openpeerpower.io/integrations/versasense",
-  "codeowners": []
+  "codeowners": [],
   "requirements": ["pyversasense==0.0.6"]
 }

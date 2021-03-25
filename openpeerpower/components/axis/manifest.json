@@ -20,6 +20,6 @@
     { "type": "_axis-video._tcp.local.", "macaddress": "B8A44F*" }
   ],
   "after_dependencies": ["mqtt"],
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "platinum"
 }

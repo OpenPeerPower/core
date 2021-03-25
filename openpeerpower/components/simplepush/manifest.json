@@ -3,5 +3,5 @@
   "name": "Simplepush",
   "documentation": "https://www.openpeerpower.io/integrations/simplepush",
   "requirements": ["simplepush==1.1.4"],
-  "codeowners": []
+  "codeowners": [],
 }

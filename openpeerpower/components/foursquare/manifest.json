@@ -3,5 +3,5 @@
   "name": "Foursquare",
   "documentation": "https://www.openpeerpower.io/integrations/foursquare",
   "dependencies": ["http"],
-  "codeowners": []
+  "codeowners": [],
 }

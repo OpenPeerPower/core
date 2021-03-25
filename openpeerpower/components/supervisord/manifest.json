@@ -2,5 +2,5 @@
   "domain": "supervisord",
   "name": "Supervisord",
   "documentation": "https://www.openpeerpower.io/integrations/supervisord",
-  "codeowners": []
+  "codeowners": [],
 }

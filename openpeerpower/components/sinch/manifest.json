@@ -2,6 +2,6 @@
   "domain": "sinch",
   "name": "Sinch SMS",
   "documentation": "https://www.openpeerpower.io/integrations/sinch",
-  "codeowners": []
+  "codeowners": [],
   "requirements": ["clx-sdk-xms==1.0.0"]
 }

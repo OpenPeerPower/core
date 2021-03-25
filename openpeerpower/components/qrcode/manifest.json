@@ -3,5 +3,5 @@
   "name": "QR Code",
   "documentation": "https://www.openpeerpower.io/integrations/qrcode",
   "requirements": ["pillow==8.1.1", "pyzbar==0.1.7"],
-  "codeowners": []
+  "codeowners": [],
 }

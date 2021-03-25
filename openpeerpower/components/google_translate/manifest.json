@@ -3,5 +3,5 @@
   "name": "Google Translate Text-to-Speech",
   "documentation": "https://www.openpeerpower.io/integrations/google_translate",
   "requirements": ["gTTS==2.2.2"],
-  "codeowners": []
+  "codeowners": [],
 }

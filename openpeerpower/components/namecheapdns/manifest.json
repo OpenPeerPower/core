@@ -3,5 +3,5 @@
   "name": "Namecheap FreeDNS",
   "documentation": "https://www.openpeerpower.io/integrations/namecheapdns",
   "requirements": ["defusedxml==0.6.0"],
-  "codeowners": []
+  "codeowners": [],
 }

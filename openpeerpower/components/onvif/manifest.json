@@ -8,6 +8,6 @@
     "zeep[async]==4.0.0"
   ],
   "dependencies": ["ffmpeg"],
-  "codeowners": []
+  "codeowners": [],
   "config_flow": true
 }

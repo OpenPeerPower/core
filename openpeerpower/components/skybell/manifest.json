@@ -3,5 +3,5 @@
   "name": "SkyBell",
   "documentation": "https://www.openpeerpower.io/integrations/skybell",
   "requirements": ["skybellpy==0.6.3"],
-  "codeowners": []
+  "codeowners": [],
 }

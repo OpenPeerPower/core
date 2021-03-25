@@ -4,7 +4,7 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/smarttub",
   "dependencies": [],
-  "codeowners": []
+  "codeowners": [],
   "requirements": [
       "python-smarttub==0.0.19"
   ],

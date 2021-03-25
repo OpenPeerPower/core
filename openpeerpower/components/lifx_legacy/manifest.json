@@ -3,5 +3,5 @@
   "name": "LIFX Legacy",
   "documentation": "https://www.openpeerpower.io/integrations/lifx_legacy",
   "requirements": ["liffylights==0.9.4"],
-  "codeowners": []
+  "codeowners": [],
 }

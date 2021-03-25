@@ -3,5 +3,5 @@
   "name": "Xiaomi",
   "documentation": "https://www.openpeerpower.io/integrations/xiaomi",
   "dependencies": ["ffmpeg"],
-  "codeowners": []
+  "codeowners": [],
 }

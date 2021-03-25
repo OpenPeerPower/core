@@ -4,5 +4,5 @@
   "documentation": "https://www.openpeerpower.io/integrations/agent_dvr/",
   "requirements": ["agent-py==0.0.23"],
   "config_flow": true,
-  "codeowners": []
+  "codeowners": [],
 }

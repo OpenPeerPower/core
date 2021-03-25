@@ -3,5 +3,5 @@
   "name": "Snips",
   "documentation": "https://www.openpeerpower.io/integrations/snips",
   "dependencies": ["mqtt"],
-  "codeowners": []
+  "codeowners": [],
 }

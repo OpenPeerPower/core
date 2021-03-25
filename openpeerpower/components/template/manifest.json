@@ -2,7 +2,7 @@
   "domain": "template",
   "name": "Template",
   "documentation": "https://www.openpeerpower.io/integrations/template",
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "internal",
   "after_dependencies": ["group"]
 }

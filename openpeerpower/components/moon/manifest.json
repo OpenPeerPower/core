@@ -2,6 +2,6 @@
   "domain": "moon",
   "name": "Moon",
   "documentation": "https://www.openpeerpower.io/integrations/moon",
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "internal"
 }

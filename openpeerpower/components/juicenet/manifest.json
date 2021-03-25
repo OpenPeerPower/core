@@ -3,6 +3,6 @@
   "name": "JuiceNet",
   "documentation": "https://www.openpeerpower.io/integrations/juicenet",
   "requirements": ["python-juicenet==1.0.1"],
-  "codeowners": []
+  "codeowners": [],
   "config_flow": true
 }

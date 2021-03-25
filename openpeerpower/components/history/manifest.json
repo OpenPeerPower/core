@@ -3,6 +3,6 @@
   "name": "History",
   "documentation": "https://www.openpeerpower.io/integrations/history",
   "dependencies": ["http", "recorder"],
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "internal"
 }

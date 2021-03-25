@@ -3,5 +3,5 @@
   "name": "Coinbase",
   "documentation": "https://www.openpeerpower.io/integrations/coinbase",
   "requirements": ["coinbase==2.1.0"],
-  "codeowners": []
+  "codeowners": [],
 }

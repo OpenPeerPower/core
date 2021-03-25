@@ -3,5 +3,5 @@
   "name": "Acer Projector",
   "documentation": "https://www.openpeerpower.io/integrations/acer_projector",
   "requirements": ["pyserial==3.5"],
-  "codeowners": []
+  "codeowners": [],
 }

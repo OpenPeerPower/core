@@ -3,5 +3,5 @@
   "name": "Snapcast",
   "documentation": "https://www.openpeerpower.io/integrations/snapcast",
   "requirements": ["snapcast==2.1.1"],
-  "codeowners": []
+  "codeowners": [],
 }

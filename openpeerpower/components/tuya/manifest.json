@@ -3,6 +3,6 @@
   "name": "Tuya",
   "documentation": "https://www.openpeerpower.io/integrations/tuya",
   "requirements": ["tuyaha==0.0.10"],
-  "codeowners": []
+  "codeowners": [],
   "config_flow": true
 }

@@ -2,5 +2,5 @@
   "domain": "logentries",
   "name": "Logentries",
   "documentation": "https://www.openpeerpower.io/integrations/logentries",
-  "codeowners": []
+  "codeowners": [],
 }

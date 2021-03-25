@@ -3,6 +3,6 @@
   "name": "Insteon",
   "documentation": "https://www.openpeerpower.io/integrations/insteon",
   "requirements": ["pyinsteon==1.0.9"],
-  "codeowners": []
+  "codeowners": [],
   "config_flow": true
 }

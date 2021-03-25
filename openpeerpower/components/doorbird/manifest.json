@@ -5,6 +5,6 @@
   "requirements": ["doorbirdpy==2.1.0"],
   "dependencies": ["http"],
   "zeroconf": [{"type":"_axis-video._tcp.local.","macaddress":"1CCAE3*"}],
-  "codeowners": []
+  "codeowners": [],
   "config_flow": true
 }

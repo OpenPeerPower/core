@@ -3,6 +3,6 @@
   "name": "Monoprice 6-Zone Amplifier",
   "documentation": "https://www.openpeerpower.io/integrations/monoprice",
   "requirements": ["pymonoprice==0.3"],
-  "codeowners": []
+  "codeowners": [],
   "config_flow": true
 }

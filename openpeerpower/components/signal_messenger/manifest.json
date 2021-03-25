@@ -2,6 +2,6 @@
   "domain": "signal_messenger",
   "name": "Signal Messenger",
   "documentation": "https://www.openpeerpower.io/integrations/signal_messenger",
-  "codeowners": []
+  "codeowners": [],
   "requirements": ["pysignalclirestapi==0.3.4"]
 }

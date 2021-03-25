@@ -2,6 +2,6 @@
   "domain": "time_date",
   "name": "Time & Date",
   "documentation": "https://www.openpeerpower.io/integrations/time_date",
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "internal"
 }

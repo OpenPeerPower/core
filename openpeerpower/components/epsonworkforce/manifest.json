@@ -2,6 +2,6 @@
   "domain": "epsonworkforce",
   "name": "Epson Workforce",
   "documentation": "https://www.openpeerpower.io/integrations/epsonworkforce",
-  "codeowners": []
+  "codeowners": [],
   "requirements": ["epsonprinter==0.0.9"]
 }

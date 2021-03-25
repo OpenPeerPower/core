@@ -2,6 +2,6 @@
   "domain": "notify_events",
   "name": "Notify.Events",
   "documentation": "https://www.openpeerpower.io/integrations/notify_events",
-  "codeowners": []
+  "codeowners": [],
   "requirements": ["notify-events==1.0.4"]
 }

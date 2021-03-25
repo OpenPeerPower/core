@@ -3,5 +3,5 @@
   "name": "Raspberry Pi GPIO",
   "documentation": "https://www.openpeerpower.io/integrations/rpi_gpio",
   "requirements": ["RPi.GPIO==0.7.0"],
-  "codeowners": []
+  "codeowners": [],
 }

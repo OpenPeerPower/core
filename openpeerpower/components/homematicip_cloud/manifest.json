@@ -4,6 +4,6 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/homematicip_cloud",
   "requirements": ["homematicip==0.13.1"],
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "platinum"
 }

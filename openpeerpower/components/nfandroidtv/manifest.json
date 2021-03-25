@@ -2,5 +2,5 @@
   "domain": "nfandroidtv",
   "name": "Notifications for Android TV / FireTV",
   "documentation": "https://www.openpeerpower.io/integrations/nfandroidtv",
-  "codeowners": []
+  "codeowners": [],
 }

@@ -3,5 +3,5 @@
   "name": "Microsoft Face Detect",
   "documentation": "https://www.openpeerpower.io/integrations/microsoft_face_detect",
   "dependencies": ["microsoft_face"],
-  "codeowners": []
+  "codeowners": [],
 }

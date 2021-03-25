@@ -2,6 +2,6 @@
   "domain": "worldclock",
   "name": "Worldclock",
   "documentation": "https://www.openpeerpower.io/integrations/worldclock",
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "internal"
 }

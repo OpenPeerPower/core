@@ -3,5 +3,5 @@
   "name": "Camera Proxy",
   "documentation": "https://www.openpeerpower.io/integrations/proxy",
   "requirements": ["pillow==8.1.1"],
-  "codeowners": []
+  "codeowners": [],
 }

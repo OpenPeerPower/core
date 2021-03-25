@@ -3,5 +3,5 @@
   "name": "OASA Telematics",
   "documentation": "https://www.openpeerpower.io/integrations/oasa_telematics/",
   "requirements": ["oasatelematics==0.3"],
-  "codeowners": []
+  "codeowners": [],
 }

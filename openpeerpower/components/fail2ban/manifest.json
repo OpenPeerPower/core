@@ -2,5 +2,5 @@
   "domain": "fail2ban",
   "name": "Fail2Ban",
   "documentation": "https://www.openpeerpower.io/integrations/fail2ban",
-  "codeowners": []
+  "codeowners": [],
 }

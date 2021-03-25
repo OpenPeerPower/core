@@ -3,5 +3,5 @@
   "name": "ROVA",
   "documentation": "https://www.openpeerpower.io/integrations/rova",
   "requirements": ["rova==0.2.1"],
-  "codeowners": []
+  "codeowners": [],
 }

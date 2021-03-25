@@ -3,6 +3,6 @@
   "name": "Statistics",
   "documentation": "https://www.openpeerpower.io/integrations/statistics",
   "after_dependencies": ["recorder"],
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "internal"
 }

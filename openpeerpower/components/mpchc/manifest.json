@@ -2,5 +2,5 @@
   "domain": "mpchc",
   "name": "Media Player Classic Home Cinema (MPC-HC)",
   "documentation": "https://www.openpeerpower.io/integrations/mpchc",
-  "codeowners": []
+  "codeowners": [],
 }

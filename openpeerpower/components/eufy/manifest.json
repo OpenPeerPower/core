@@ -3,5 +3,5 @@
   "name": "eufy",
   "documentation": "https://www.openpeerpower.io/integrations/eufy",
   "requirements": ["lakeside==0.12"],
-  "codeowners": []
+  "codeowners": [],
 }

@@ -3,5 +3,5 @@
   "name": "Ripple",
   "documentation": "https://www.openpeerpower.io/integrations/ripple",
   "requirements": ["python-ripple-api==0.0.3"],
-  "codeowners": []
+  "codeowners": [],
 }

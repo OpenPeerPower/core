@@ -2,6 +2,6 @@
   "domain": "humidifier",
   "name": "Humidifier",
   "documentation": "https://www.openpeerpower.io/integrations/humidifier",
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "internal"
 }

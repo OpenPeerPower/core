@@ -2,5 +2,5 @@
   "domain": "comed_hourly_pricing",
   "name": "ComEd Hourly Pricing",
   "documentation": "https://www.openpeerpower.io/integrations/comed_hourly_pricing",
-  "codeowners": []
+  "codeowners": [],
 }

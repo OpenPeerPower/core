@@ -3,5 +3,5 @@
   "name": "Social Blade",
   "documentation": "https://www.openpeerpower.io/integrations/socialblade",
   "requirements": ["socialbladeclient==0.5"],
-  "codeowners": []
+  "codeowners": [],
 }

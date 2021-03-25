@@ -3,7 +3,7 @@
   "name": "Tado",
   "documentation": "https://www.openpeerpower.io/integrations/tado",
   "requirements": ["python-tado==0.10.0"],
-  "codeowners": []
+  "codeowners": [],
   "config_flow": true,
   "homekit": {
     "models": ["tado", "AC02"]

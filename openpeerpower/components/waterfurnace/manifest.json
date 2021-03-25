@@ -3,5 +3,5 @@
   "name": "WaterFurnace",
   "documentation": "https://www.openpeerpower.io/integrations/waterfurnace",
   "requirements": ["waterfurnace==1.1.0"],
-  "codeowners": []
+  "codeowners": [],
 }

@@ -2,6 +2,6 @@
   "domain": "random",
   "name": "Random",
   "documentation": "https://www.openpeerpower.io/integrations/random",
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "internal"
 }

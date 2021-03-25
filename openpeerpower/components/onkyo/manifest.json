@@ -3,5 +3,5 @@
   "name": "Onkyo",
   "documentation": "https://www.openpeerpower.io/integrations/onkyo",
   "requirements": ["onkyo-eiscp==1.2.7"],
-  "codeowners": []
+  "codeowners": [],
 }

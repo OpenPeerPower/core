@@ -3,7 +3,7 @@
   "name": "Tibber",
   "documentation": "https://www.openpeerpower.io/integrations/tibber",
   "requirements": ["pyTibber==0.16.1"],
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "silver",
   "config_flow": true
 }

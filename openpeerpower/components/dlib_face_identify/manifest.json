@@ -3,5 +3,5 @@
   "name": "Dlib Face Identify",
   "documentation": "https://www.openpeerpower.io/integrations/dlib_face_identify",
   "requirements": ["face_recognition==1.2.3"],
-  "codeowners": []
+  "codeowners": [],
 }

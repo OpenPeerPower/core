@@ -4,5 +4,5 @@
   "documentation": "https://www.openpeerpower.io/integrations/amcrest",
   "requirements": ["amcrest==1.7.0"],
   "dependencies": ["ffmpeg"],
-  "codeowners": []
+  "codeowners": [],
 }

@@ -3,6 +3,6 @@
   "name": "Mill",
   "documentation": "https://www.openpeerpower.io/integrations/mill",
   "requirements": ["millheater==0.4.0"],
-  "codeowners": []
+  "codeowners": [],
   "config_flow": true
 }

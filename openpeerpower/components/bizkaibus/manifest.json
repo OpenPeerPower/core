@@ -2,6 +2,6 @@
   "domain": "bizkaibus",
   "name": "Bizkaibus",
   "documentation": "https://www.openpeerpower.io/integrations/bizkaibus",
-  "codeowners": []
+  "codeowners": [],
   "requirements": ["bizkaibus==0.1.1"]
 }

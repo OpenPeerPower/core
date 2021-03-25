@@ -3,5 +3,5 @@
   "name": "eQ-3 MAX!",
   "documentation": "https://www.openpeerpower.io/integrations/maxcube",
   "requirements": ["maxcube-api==0.3.0"],
-  "codeowners": []
+  "codeowners": [],
 }

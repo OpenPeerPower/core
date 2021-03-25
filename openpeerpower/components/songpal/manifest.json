@@ -4,7 +4,7 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/songpal",
   "requirements": ["python-songpal==0.12"],
-  "codeowners": []
+  "codeowners": [],
   "ssdp": [
     {
       "st": "urn:schemas-sony-com:service:ScalarWebAPI:1",

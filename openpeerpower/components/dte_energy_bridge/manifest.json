@@ -2,5 +2,5 @@
   "domain": "dte_energy_bridge",
   "name": "DTE Energy Bridge",
   "documentation": "https://www.openpeerpower.io/integrations/dte_energy_bridge",
-  "codeowners": []
+  "codeowners": [],
 }

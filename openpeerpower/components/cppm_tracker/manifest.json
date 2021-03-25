@@ -3,5 +3,5 @@
   "name": "Aruba ClearPass",
   "documentation": "https://www.openpeerpower.io/integrations/cppm_tracker",
   "requirements": ["clearpasspy==1.0.2"],
-  "codeowners": []
+  "codeowners": [],
 }

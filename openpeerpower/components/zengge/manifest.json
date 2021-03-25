@@ -3,5 +3,5 @@
   "name": "Zengge",
   "documentation": "https://www.openpeerpower.io/integrations/zengge",
   "requirements": ["zengge==0.2"],
-  "codeowners": []
+  "codeowners": [],
 }

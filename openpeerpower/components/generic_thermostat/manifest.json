@@ -3,5 +3,5 @@
   "name": "Generic Thermostat",
   "documentation": "https://www.openpeerpower.io/integrations/generic_thermostat",
   "dependencies": ["sensor", "switch"],
-  "codeowners": []
+  "codeowners": [],
 }

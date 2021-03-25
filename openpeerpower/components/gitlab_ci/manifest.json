@@ -3,5 +3,5 @@
   "name": "GitLab-CI",
   "documentation": "https://www.openpeerpower.io/integrations/gitlab_ci",
   "requirements": ["python-gitlab==1.6.0"],
-  "codeowners": []
+  "codeowners": [],
 }

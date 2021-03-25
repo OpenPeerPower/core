@@ -3,5 +3,5 @@
   "name": "Roth Touchline",
   "documentation": "https://www.openpeerpower.io/integrations/touchline",
   "requirements": ["pytouchline==0.7"],
-  "codeowners": []
+  "codeowners": [],
 }

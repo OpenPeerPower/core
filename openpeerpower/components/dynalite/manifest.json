@@ -3,6 +3,6 @@
   "name": "Philips Dynalite",
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/dynalite",
-  "codeowners": []
+  "codeowners": [],
   "requirements": ["dynalite_devices==0.1.46"]
 }

@@ -3,5 +3,5 @@
   "name": "SNMP",
   "documentation": "https://www.openpeerpower.io/integrations/snmp",
   "requirements": ["pysnmp==4.4.12"],
-  "codeowners": []
+  "codeowners": [],
 }

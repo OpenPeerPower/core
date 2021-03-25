@@ -2,5 +2,5 @@
   "domain": "lifx_cloud",
   "name": "LIFX Cloud",
   "documentation": "https://www.openpeerpower.io/integrations/lifx_cloud",
-  "codeowners": []
+  "codeowners": [],
 }

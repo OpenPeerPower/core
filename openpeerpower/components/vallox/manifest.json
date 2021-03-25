@@ -3,5 +3,5 @@
   "name": "Vallox",
   "documentation": "https://www.openpeerpower.io/integrations/vallox",
   "requirements": ["vallox-websocket-api==2.4.0"],
-  "codeowners": []
+  "codeowners": [],
 }

@@ -3,5 +3,5 @@
   "name": "Sense HAT",
   "documentation": "https://www.openpeerpower.io/integrations/sensehat",
   "requirements": ["sense-hat==2.2.0"],
-  "codeowners": []
+  "codeowners": [],
 }

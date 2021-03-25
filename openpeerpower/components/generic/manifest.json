@@ -2,5 +2,5 @@
   "domain": "generic",
   "name": "Generic",
   "documentation": "https://www.openpeerpower.io/integrations/generic",
-  "codeowners": []
+  "codeowners": [],
 }

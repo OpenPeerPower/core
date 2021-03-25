@@ -4,6 +4,6 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/gdacs",
   "requirements": ["aio_georss_gdacs==0.4"],
-  "codeowners": []
+  "codeowners": [],
   "quality_scale": "platinum"
 }

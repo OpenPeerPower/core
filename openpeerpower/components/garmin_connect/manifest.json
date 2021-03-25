@@ -3,6 +3,6 @@
   "name": "Garmin Connect",
   "documentation": "https://www.openpeerpower.io/integrations/garmin_connect",
   "requirements": ["garminconnect==0.1.19"],
-  "codeowners": []
+  "codeowners": [],
   "config_flow": true
 }

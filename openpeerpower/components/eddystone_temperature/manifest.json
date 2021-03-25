@@ -3,5 +3,5 @@
   "name": "Eddystone",
   "documentation": "https://www.openpeerpower.io/integrations/eddystone_temperature",
   "requirements": ["beacontools[scan]==1.2.3", "construct==2.10.56"],
-  "codeowners": []
+  "codeowners": [],
 }

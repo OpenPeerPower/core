@@ -2,6 +2,6 @@
   "domain": "iammeter",
   "name": "IamMeter",
   "documentation": "https://www.openpeerpower.io/integrations/iammeter",
-  "codeowners": []
+  "codeowners": [],
   "requirements": ["iammeter==0.1.7"]
 }

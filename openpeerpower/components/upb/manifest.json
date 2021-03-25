@@ -3,6 +3,6 @@
   "name": "Universal Powerline Bus (UPB)",
   "documentation": "https://www.openpeerpower.io/integrations/upb",
   "requirements": ["upb_lib==0.4.12"],
-  "codeowners": []
+  "codeowners": [],
   "config_flow": true
 }

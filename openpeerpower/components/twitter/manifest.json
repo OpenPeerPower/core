@@ -3,5 +3,5 @@
   "name": "Twitter",
   "documentation": "https://www.openpeerpower.io/integrations/twitter",
   "requirements": ["TwitterAPI==2.6.8"],
-  "codeowners": []
+  "codeowners": [],
 }

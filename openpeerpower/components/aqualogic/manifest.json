@@ -3,5 +3,5 @@
   "name": "AquaLogic",
   "documentation": "https://www.openpeerpower.io/integrations/aqualogic",
   "requirements": ["aqualogic==1.0"],
-  "codeowners": []
+  "codeowners": [],
 }

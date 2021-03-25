@@ -3,7 +3,7 @@
   "name": "iZone",
   "documentation": "https://www.openpeerpower.io/integrations/izone",
   "requirements": ["python-izone==1.1.4"],
-  "codeowners": []
+  "codeowners": [],
   "config_flow": true,
   "homekit": {
     "models": [

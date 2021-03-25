@@ -2,5 +2,5 @@
   "domain": "local_file",
   "name": "Local File",
   "documentation": "https://www.openpeerpower.io/integrations/local_file",
-  "codeowners": []
+  "codeowners": [],
 }
