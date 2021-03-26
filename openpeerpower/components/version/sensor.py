@@ -3,9 +3,9 @@ from datetime import timedelta
 
 from pyoppversion import (
     DockerVersion,
+    LocalVersion,
     OpIoVersion,
     OppioVersion,
-    LocalVersion,
     PyPiVersion,
 )
 import voluptuous as vol
