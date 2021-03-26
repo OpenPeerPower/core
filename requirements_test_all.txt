@@ -830,7 +830,7 @@ pyopenuv==1.0.9
 pyopnsense==0.2.0
 
 # openpeerpower.components.version
-pyoppversion==3.4.1
+pyoppversion==3.4.2
 
 # openpeerpower.components.opentherm_gw
 pyotgw==1.0b1
