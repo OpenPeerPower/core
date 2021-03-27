@@ -669,7 +669,7 @@ def async_track_state_change_filtered(
     Parameters
     ----------
     opp
-        Home assistant object.
+        Open Peer Power object.
     track_states
         A TrackStates data class.
     action
@@ -717,7 +717,7 @@ def async_track_template(
     Parameters
     ----------
     opp
-        Home assistant object.
+        Open Peer Power object.
     template
         The template to calculate.
     action
@@ -1049,7 +1049,7 @@ def async_track_template_result(
     Parameters
     ----------
     opp
-        Home assistant object.
+        Open Peer Power object.
     track_templates
         An iterable of TrackTemplate.
     action

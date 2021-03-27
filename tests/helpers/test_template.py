@@ -1056,7 +1056,7 @@ def test_regex_replace(opp):
 
     tpl = template.Template(
         """
-{{ ['Home hinderant test'] | regex_replace('hinder', 'Assist') }}
+{{ ['Open Peer hinderer test'] | regex_replace('hinder', 'Pow') }}
             """,
         opp,
     )
