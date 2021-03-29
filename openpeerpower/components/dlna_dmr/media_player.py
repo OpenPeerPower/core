@@ -69,7 +69,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     }
 )
 
-HOME_ASSISTANT_UPNP_CLASS_MAPPING = {
+OPEN_PEER_POWER_UPNP_CLASS_MAPPING = {
     MEDIA_TYPE_MUSIC: "object.item.audioItem",
     MEDIA_TYPE_TVSHOW: "object.item.videoItem",
     MEDIA_TYPE_MOVIE: "object.item.videoItem",
@@ -80,7 +80,7 @@ HOME_ASSISTANT_UPNP_CLASS_MAPPING = {
     MEDIA_TYPE_PLAYLIST: "object.item.playlistItem",
 }
 UPNP_CLASS_DEFAULT = "object.item"
-HOME_ASSISTANT_UPNP_MIME_TYPE_MAPPING = {
+OPEN_PEER_POWER_UPNP_MIME_TYPE_MAPPING = {
     MEDIA_TYPE_MUSIC: "audio/*",
     MEDIA_TYPE_TVSHOW: "video/*",
     MEDIA_TYPE_MOVIE: "video/*",
@@ -342,8 +342,8 @@ class DlnaDmrDevice(MediaPlayerEntity):
     async def async_play_media(self, media_type, media_id, **kwargs):
         """Play a piece of media."""
         title = "Open Peer Power"
-        mime_type = HOME_ASSISTANT_UPNP_MIME_TYPE_MAPPING.get(media_type, media_type)
-        upnp_class = HOME_ASSISTANT_UPNP_CLASS_MAPPING.get(
+        mime_type = OPEN_PEER_POWER_UPNP_MIME_TYPE_MAPPING.get(media_type, media_type)
+        upnp_class = OPEN_PEER_POWER_UPNP_CLASS_MAPPING.get(
             media_type, UPNP_CLASS_DEFAULT
         )
 

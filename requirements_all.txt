@@ -48,9 +48,6 @@ PyQRCode==1.2.1
 # openpeerpower.components.rmvtransport
 PyRMVtransport==0.3.1
 
-# openpeerpower.components.telegram_bot
-PySocks==1.7.1
-
 # openpeerpower.components.switchbot
 # PySwitchbot==0.8.0
 
@@ -1807,9 +1804,6 @@ python-songpal==0.12
 
 # openpeerpower.components.tado
 python-tado==0.10.0
-
-# openpeerpower.components.telegram_bot
-python-telegram-bot==13.1
 
 # openpeerpower.components.vlc_telnet
 python-telnet-vlc==2.0.1

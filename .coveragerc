@@ -930,8 +930,6 @@ omit =
     openpeerpower/components/tapsaff/binary_sensor.py
     openpeerpower/components/tautulli/sensor.py
     openpeerpower/components/ted5000/sensor.py
-    openpeerpower/components/telegram/notify.py
-    openpeerpower/components/telegram_bot/*
     openpeerpower/components/tellduslive/__init__.py
     openpeerpower/components/tellduslive/binary_sensor.py
     openpeerpower/components/tellduslive/cover.py

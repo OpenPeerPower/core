@@ -9,7 +9,7 @@ from openpeerpower.loader import bind_opp
 from . import commands, connection, const, decorators, http, messages  # noqa: F401
 from .connection import ActiveConnection  # noqa: F401
 from .const import (  # noqa: F401
-    ERR_HOME_ASSISTANT_ERROR,
+    ERR_OPEN_PEER_POWER_ERROR,
     ERR_INVALID_FORMAT,
     ERR_NOT_FOUND,
     ERR_NOT_SUPPORTED,

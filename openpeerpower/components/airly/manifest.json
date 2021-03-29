@@ -3,7 +3,7 @@
   "name": "Airly",
   "documentation": "https://www.openpeerpower.io/integrations/airly",
   "codeowners": [],
-  "requirements": [],
+  "requirements": ["airly==1.1.0"],
   "config_flow": true,
   "quality_scale": "platinum"
 }
