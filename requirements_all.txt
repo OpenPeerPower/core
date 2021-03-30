@@ -148,7 +148,7 @@ aiodns==2.0.0
 aioeafm==0.1.2
 
 # openpeerpower.components.esphome
-aioesphomeapi==2.6.5
+aioesphomeapi==2.6.6
 
 # openpeerpower.components.flo
 aioflo==0.4.1
@@ -225,6 +225,9 @@ aiounifi==26
 
 # openpeerpower.components.yandex_transport
 aioymaps==1.1.0
+
+# openpeerpower.components.airly
+airly==1.1.0
 
 # openpeerpower.components.aladdin_connect
 aladdin_connect==0.3
