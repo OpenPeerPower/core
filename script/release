@@ -3,7 +3,7 @@
 
 cd "$(dirname "$0")/.."
 
-head -n 5 openpeerpower/const.py | tail -n 1 | grep PATCH_VERSION > /dev/null
+head -n 4 openpeerpower/const.py | tail -n 1 | grep PATCH_VERSION > /dev/null
 
 if [ $? -eq 1 ]
 then
@@ -21,9 +21,9 @@ fi
 
 CURRENT_BRANCH=`git rev-parse --abbrev-ref HEAD`
 
-if [ "$CURRENT_BRANCH" != "master" ] && [ "$CURRENT_BRANCH" != "rc" ]
+if [ "$CURRENT_BRANCH" != "main" ] && [ "$CURRENT_BRANCH" != "rc" ]
 then
-  echo "You have to be on the master or rc branch to release."
+  echo "You have to be on the main or rc branch to release."
   exit 1
 fi
 

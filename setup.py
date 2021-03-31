@@ -25,8 +25,6 @@ DOWNLOAD_URL = f"{GITHUB_URL}/archive/{opp_const.__version__}.zip"
 PROJECT_URLS = {
     "Bug Reports": f"{GITHUB_URL}/issues",
     "Dev Docs": "https://developers.openpeerpower.io/",
-    "Discord": "https://discordapp.com/invite/c5DvZ4e",
-    "Forum": "https://community.openpeerpower.io/",
 }
 
 PACKAGES = find_packages(exclude=["tests", "tests.*"])
