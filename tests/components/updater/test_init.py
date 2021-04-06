@@ -109,7 +109,9 @@ async def test_error_fetching_new_version_invalid_response(opp, aioclient_mock):
         await updater.get_newest_version(opp)
 
 
-async def test_new_version_shows_entity_after_hour_oppio(opp, mock_get_newest_version):
+async def test_new_version_shows_entity_after_hour_oppio(
+    opp, mock_get_newest_version
+):
     """Test if binary sensor gets updated if new version is available / Opp.io."""
     mock_component(opp, "oppio")
     opp.data["oppio_core_info"] = {"version_latest": "999.0"}

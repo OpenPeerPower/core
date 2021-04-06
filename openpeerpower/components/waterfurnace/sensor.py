@@ -1,9 +1,8 @@
 """Support for Waterfurnace."""
 
-from openpeerpower.components.sensor import ENTITY_ID_FORMAT
+from openpeerpower.components.sensor import ENTITY_ID_FORMAT, SensorEntity
 from openpeerpower.const import PERCENTAGE, POWER_WATT, TEMP_FAHRENHEIT
 from openpeerpower.core import callback
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import slugify
 
 from . import DOMAIN as WF_DOMAIN, UPDATE_TOPIC
@@ -61,7 +60,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(sensors)
 
 
-class WaterFurnaceSensor(Entity):
+class WaterFurnaceSensor(SensorEntity):
     """Implementing the Waterfurnace sensor."""
 
     def __init__(self, client, config):
