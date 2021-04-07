@@ -1062,7 +1062,6 @@ omit =
     openpeerpower/components/volvooncall/*
     openpeerpower/components/w800rf32/*
     openpeerpower/components/waqi/sensor.py
-    openpeerpower/components/waterfurnace/*
     openpeerpower/components/watson_iot/*
     openpeerpower/components/watson_tts/tts.py
     openpeerpower/components/waze_travel_time/sensor.py
