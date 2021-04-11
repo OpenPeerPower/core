@@ -22,7 +22,7 @@ CONF_COMPONENT_REPORTING = "include_used_components"
 
 DOMAIN = "updater"
 
-UPDATER_URL = "https://www.openpeerpower.io/version.json"
+UPDATER_URL = "https://openpeerpower.io/version.json"
 
 
 CONFIG_SCHEMA = vol.Schema(
