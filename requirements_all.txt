@@ -1050,7 +1050,7 @@ openwrt-ubus-rpc==0.0.2
 opp-net==0.1.0
 
 # openpeerpower.components.frontend
-opp-ui==0.1.0
+openpeerpower-frontend==20210523.1
 
 # openpeerpower.components.oru
 oru==0.1.11
