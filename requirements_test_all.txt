@@ -529,7 +529,7 @@ openerz-api==0.1.0
 opp-net==0.1.0
 
 # openpeerpower.components.frontend
-opp-ui==0.1.0
+openpeerpower-frontend==20210523.1
 
 # openpeerpower.components.ovo_energy
 ovoenergy==1.1.11
