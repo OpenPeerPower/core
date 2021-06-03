@@ -62,9 +62,6 @@ aio_geojson_geonetnz_quakes==0.12
 # openpeerpower.components.geonetnz_volcano
 aio_geojson_geonetnz_volcano==0.5
 
-# openpeerpower.components.nsw_rural_fire_service_feed
-aio_geojson_nsw_rfs_incidents==0.3
-
 # openpeerpower.components.gdacs
 aio_georss_gdacs==0.4
 
@@ -381,9 +378,6 @@ hangups==0.4.11
 # openpeerpower.components.tasmota
 hatasmota==0.2.9
 
-# openpeerpower.components.jewish_calendar
-hdate==0.9.12
-
 # openpeerpower.components.here_travel_time
 herepy==2.0.0
 
@@ -491,9 +485,6 @@ netdisco==2.8.2
 
 # openpeerpower.components.nexia
 nexia==0.9.5
-
-# openpeerpower.components.nsw_fuel_station
-nsw-fuel-api-client==1.0.10
 
 # openpeerpower.components.nuheat
 nuheat==0.3.0
