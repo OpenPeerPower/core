@@ -1034,6 +1034,9 @@ openevsewifi==1.1.0
 # openpeerpower.components.openhome
 openhomedevice==0.7.2
 
+# openpeerpower.components.frontend
+openpeerpower-frontend==20210523.2
+
 # openpeerpower.components.opensensemap
 opensensemap-api==0.1.5
 
@@ -1048,9 +1051,6 @@ openwrt-ubus-rpc==0.0.2
 
 # openpeerpower.components.cloud
 opp-net==0.1.0
-
-# openpeerpower.components.frontend
-openpeerpower-frontend==20210523.1
 
 # openpeerpower.components.oru
 oru==0.1.11
@@ -1140,9 +1140,6 @@ poolsense==0.0.8
 
 # openpeerpower.components.reddit
 praw==7.1.4
-
-# openpeerpower.components.islamic_prayer_times
-prayer_times_calculator==0.0.3
 
 # openpeerpower.components.progettihwsw
 progettihwsw==0.1.1

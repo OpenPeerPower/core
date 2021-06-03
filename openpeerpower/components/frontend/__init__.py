@@ -612,7 +612,7 @@ async def websocket_get_version(opp, connection, msg):
     frontend = None
 
     for req in integration.requirements:
-        if req.startswith("open-peer-power-frontend=="):
+        if req.startswith("openpeerpower-frontend=="):
             frontend = req.split("==", 1)[1]
 
     if frontend is None:
