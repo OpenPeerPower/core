@@ -4,16 +4,16 @@
 # https://github.com/blog/2392-introducing-code-owners
 
 # Open Peer Power Core
-setup.py @open-peer-power/core
-openpeerpower/*.py @open-peer-power/core
-openpeerpower/helpers/* @open-peer-power/core
-openpeerpower/util/* @open-peer-power/core
+setup.py @openpeerpower/core
+openpeerpower/*.py @openpeerpower/core
+openpeerpower/helpers/* @openpeerpower/core
+openpeerpower/util/* @openpeerpower/core
 
 # Open Peer Power Supervisor
-build.json @open-peer-power/supervisor
-machine/* @open-peer-power/supervisor
-rootfs/* @open-peer-power/supervisor
-Dockerfile @open-peer-power/supervisor
+build.json @openpeerpower/supervisor
+machine/* @openpeerpower/supervisor
+rootfs/* @openpeerpower/supervisor
+Dockerfile @openpeerpower/supervisor
 
 # Other code
 openpeerpower/scripts/check_config.py @kellerza
@@ -31,14 +31,14 @@ openpeerpower/components/asuswrt/* @kennedyshead
 openpeerpower/components/atag/* @MatsNL
 openpeerpower/components/aten_pe/* @mtdcr
 openpeerpower/components/auth/* @openpeerpower/core
-openpeerpower/components/automation/* @open-peer-power/core
+openpeerpower/components/automation/* @openpeerpower/core
 openpeerpower/components/azure_devops/* @timmo001
 openpeerpower/components/azure_event_hub/* @eavanvalkenburg
 openpeerpower/components/azure_service_bus/* @hfurubotten
 openpeerpower/components/beewi_smartclim/* @alemuro
 openpeerpower/components/bitcoin/* @fabaff
 openpeerpower/components/blebox/* @gadgetmobile
-openpeerpower/components/blueprint/* @open-peer-power/core
+openpeerpower/components/blueprint/* @openpeerpower/core
 openpeerpower/components/brunt/* @eavanvalkenburg
 openpeerpower/components/bsblan/* @liudger
 openpeerpower/components/bt_smarthub/* @jxwolstenholme
@@ -49,7 +49,7 @@ openpeerpower/components/cisco_ios/* @fbradyirl
 openpeerpower/components/cisco_mobility_express/* @fbradyirl
 openpeerpower/components/cisco_webex_teams/* @fbradyirl
 openpeerpower/components/climacell/* @raman325
-openpeerpower/components/cloud/* @open-peer-power/cloud
+openpeerpower/components/cloud/* @openpeerpower/cloud
 openpeerpower/components/color_extractor/* @GenericStudent
 openpeerpower/components/comfoconnect/* @michaelarnauts
 openpeerpower/components/configurator/* @openpeerpower/core
@@ -101,14 +101,14 @@ openpeerpower/components/fortios/* @kimfrellsen
 openpeerpower/components/foscam/* @skgsergio
 openpeerpower/components/freebox/* @hacf-fr @Quentame
 openpeerpower/components/fronius/* @nielstron
-openpeerpower/components/frontend/* @open-peer-power/frontend
+openpeerpower/components/frontend/* @openpeerpower/frontend
 openpeerpower/components/geniushub/* @zxdavb
 openpeerpower/components/geo_rss_events/* @exxamalte
 openpeerpower/components/geonetnz_volcano/* @exxamalte
 openpeerpower/components/gitter/* @fabaff
 openpeerpower/components/glances/* @fabaff @engrbm87
 openpeerpower/components/goalzero/* @tkdrob
-openpeerpower/components/google_assistant/* @open-peer-power/cloud
+openpeerpower/components/google_assistant/* @openpeerpower/cloud
 openpeerpower/components/google_cloud/* @lufton
 openpeerpower/components/gpsd/* @fabaff
 openpeerpower/components/gree/* @cmroche
@@ -143,7 +143,7 @@ openpeerpower/components/input_datetime/* @openpeerpower/core
 openpeerpower/components/input_number/* @openpeerpower/core
 openpeerpower/components/input_select/* @openpeerpower/core
 openpeerpower/components/input_text/* @openpeerpower/core
-openpeerpower/components/intent/* @open-peer-power/core
+openpeerpower/components/intent/* @openpeerpower/core
 openpeerpower/components/ios/* @robbiet480
 openpeerpower/components/iperf3/* @rohankapoorcom
 openpeerpower/components/ipma/* @dgomes @abmantis
@@ -167,7 +167,7 @@ openpeerpower/components/local_ip/* @issacg
 openpeerpower/components/logger/* @openpeerpower/core
 openpeerpower/components/logi_circle/* @evanjd
 openpeerpower/components/loopenergy/* @pavoni
-openpeerpower/components/lovelace/* @open-peer-power/frontend
+openpeerpower/components/lovelace/* @openpeerpower/frontend
 openpeerpower/components/luci/* @mzdrale
 openpeerpower/components/lupusec/* @majuss
 openpeerpower/components/lutron/* @JonGilmore
@@ -191,7 +191,7 @@ openpeerpower/components/mpd/* @fabaff
 openpeerpower/components/mqtt/* @emontnemery
 openpeerpower/components/msteams/* @peroyvind
 openpeerpower/components/mullvad/* @meichthys
-openpeerpower/components/my/* @open-peer-power/core
+openpeerpower/components/my/* @openpeerpower/core
 openpeerpower/components/mysensors/* @MartinHjelmare @functionpointer
 openpeerpower/components/mystrom/* @fabaff
 openpeerpower/components/neato/* @dshokouhi @Santobert
@@ -212,11 +212,11 @@ openpeerpower/components/notion/* @bachya
 openpeerpower/components/nsw_fuel_station/* @nickw444
 openpeerpower/components/nsw_rural_fire_service_feed/* @exxamalte
 openpeerpower/components/numato/* @clssn
-openpeerpower/components/number/* @open-peer-power/core @Shulyaka
+openpeerpower/components/number/* @openpeerpower/core @Shulyaka
 openpeerpower/components/obihai/* @dshokouhi
 openpeerpower/components/ohmconnect/* @robbiet480
 openpeerpower/components/omnilogic/* @oliver84 @djtimca @gentoosu
-openpeerpower/components/onboarding/* @open-peer-power/core
+openpeerpower/components/onboarding/* @openpeerpower/core
 openpeerpower/components/ondilo_ico/* @JeromeHXP
 openpeerpower/components/onewire/* @garbled1 @epenet
 openpeerpower/components/opengarage/* @danielhiversen
@@ -224,12 +224,12 @@ openpeerpower/components/openhome/* @bazwilliams
 openpeerpower/components/openuv/* @bachya
 openpeerpower/components/openweathermap/* @fabaff @freekode @nzapponi
 openpeerpower/components/opnsense/* @mtreinish
-openpeerpower/components/oppio/* @open-peer-power/supervisor
+openpeerpower/components/oppio/* @openpeerpower/supervisor
 openpeerpower/components/orangepi_gpio/* @pascallj
 openpeerpower/components/ovo_energy/* @timmo001
 openpeerpower/components/ozw/* @cgarwood @marcelveldt @MartinHjelmare
-openpeerpower/components/panel_custom/* @open-peer-power/frontend
-openpeerpower/components/panel_iframe/* @open-peer-power/frontend
+openpeerpower/components/panel_custom/* @openpeerpower/frontend
+openpeerpower/components/panel_iframe/* @openpeerpower/frontend
 openpeerpower/components/pcal9535a/* @Shulyaka
 openpeerpower/components/persistent_notification/* @openpeerpower/core
 openpeerpower/components/philips_js/* @elupus
@@ -265,14 +265,14 @@ openpeerpower/components/roon/* @pavoni
 openpeerpower/components/rpi_gpio_pwm/* @soldag
 openpeerpower/components/rpi_power/* @shenxn @swetoast
 openpeerpower/components/ruckus_unleashed/* @gabe565
-openpeerpower/components/safe_mode/* @open-peer-power/core
+openpeerpower/components/safe_mode/* @openpeerpower/core
 openpeerpower/components/saj/* @fredericvl
 openpeerpower/components/samsungtv/* @escoand
 openpeerpower/components/scene/* @openpeerpower/core
 openpeerpower/components/schluter/* @prairieapps
 openpeerpower/components/scrape/* @fabaff
-openpeerpower/components/script/* @open-peer-power/core
-openpeerpower/components/search/* @open-peer-power/core
+openpeerpower/components/script/* @openpeerpower/core
+openpeerpower/components/search/* @openpeerpower/core
 openpeerpower/components/sensibo/* @andrey-git
 openpeerpower/components/sentry/* @dcramer @frenck
 openpeerpower/components/serial/* @fabaff
@@ -369,8 +369,8 @@ openpeerpower/components/yi/* @bachya
 openpeerpower/components/zerproc/* @emlove
 openpeerpower/components/zone/* @openpeerpower/core
 openpeerpower/components/zoneminder/* @rohankapoorcom
-openpeerpower/components/zwave/* @open-peer-power/z-wave
-openpeerpower/components/zwave_js/* @open-peer-power/z-wave
+openpeerpower/components/zwave/* @openpeerpower/z-wave
+openpeerpower/components/zwave_js/* @openpeerpower/z-wave
 
 # Individual files
 openpeerpower/components/demo/weather @fabaff
