@@ -308,7 +308,6 @@ omit =
     openpeerpower/components/foscam/__init__.py
     openpeerpower/components/foscam/camera.py
     openpeerpower/components/foursquare/*
-    openpeerpower/components/free_mobile/notify.py
     openpeerpower/components/freebox/device_tracker.py
     openpeerpower/components/freebox/router.py
     openpeerpower/components/freebox/sensor.py
@@ -442,7 +441,6 @@ omit =
     openpeerpower/components/iota/*
     openpeerpower/components/iperf3/*
     openpeerpower/components/iqvia/*
-    openpeerpower/components/irish_rail_transport/sensor.py
     openpeerpower/components/iss/binary_sensor.py
     openpeerpower/components/isy994/__init__.py
     openpeerpower/components/isy994/binary_sensor.py
@@ -649,7 +647,6 @@ omit =
     openpeerpower/components/noaa_tides/sensor.py
     openpeerpower/components/norway_air/air_quality.py
     openpeerpower/components/notify_events/notify.py
-    openpeerpower/components/nsw_fuel_station/sensor.py
     openpeerpower/components/nuki/__init__.py
     openpeerpower/components/nuki/const.py
     openpeerpower/components/nuki/lock.py
