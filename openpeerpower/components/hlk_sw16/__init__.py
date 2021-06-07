@@ -24,6 +24,8 @@ from .const import (
 
 _LOGGER = logging.getLogger(__name__)
 
+PLATFORMS = ["switch"]
+
 DATA_DEVICE_REGISTER = "hlk_sw16_device_register"
 DATA_DEVICE_LISTENER = "hlk_sw16_device_listener"
 
@@ -83,7 +85,9 @@ async def async_setup_entry(opp, entry):
     def disconnected():
         """Schedule reconnect after connection has been lost."""
         _LOGGER.warning("HLK-SW16 %s disconnected", address)
-        async_dispatcher_send(opp, f"hlk_sw16_device_available_{entry.entry_id}", False)
+        async_dispatcher_send(
+            opp, f"hlk_sw16_device_available_{entry.entry_id}", False
+        )
 
     @callback
     def reconnected():
@@ -92,7 +96,7 @@ async def async_setup_entry(opp, entry):
         async_dispatcher_send(opp, f"hlk_sw16_device_available_{entry.entry_id}", True)
 
     async def connect():
-        """Set up connection and hook it into OP for reconnect/shutdown."""
+        """Set up connection and hook it into OPP for reconnect/shutdown."""
         _LOGGER.info("Initiating HLK-SW16 connection to %s", address)
 
         client = await create_hlk_sw16_connection(
@@ -109,9 +113,7 @@ async def async_setup_entry(opp, entry):
         opp.data[DOMAIN][entry.entry_id][DATA_DEVICE_REGISTER] = client
 
         # Load entities
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, "switch")
-        )
+        opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
         _LOGGER.info("Connected to HLK-SW16 device: %s", address)
 
@@ -124,8 +126,7 @@ async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     client = opp.data[DOMAIN][entry.entry_id].pop(DATA_DEVICE_REGISTER)
     client.stop()
-    unload_ok = await opp.config_entries.async_forward_entry_unload(entry, "switch")
-
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         if opp.data[DOMAIN][entry.entry_id]:
             opp.data[DOMAIN].pop(entry.entry_id)

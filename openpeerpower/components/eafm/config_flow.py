@@ -5,7 +5,6 @@ import voluptuous as vol
 from openpeerpower import config_entries
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 
-# pylint: disable=unused-import
 from .const import DOMAIN
 
 
@@ -13,7 +12,6 @@ class UKFloodsFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a UK Environment Agency flood monitoring config flow."""
 
     VERSION = 1
-    CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
 
     def __init__(self):
         """Handle a UK Floods config flow."""
@@ -32,7 +30,7 @@ class UKFloodsFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 data={"station": station},
             )
 
-        session = async_get_clientsession(opp=self.opp)
+        session = async_get_clientsession(opp.self.opp)
         stations = await get_stations(session)
 
         self.stations = {}

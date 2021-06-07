@@ -24,7 +24,7 @@ DEFAULT_USERNAME = "admin"
 DEFAULT_PASSWORD = "admin"
 
 
-# Available pump ids with assigned OP names
+# Available pump ids with assigned OPP names
 # Available as switches
 AVAILABLE_PUMPS = {
     "central_heating_pump": "Central heating pump",
@@ -32,7 +32,7 @@ AVAILABLE_PUMPS = {
     "domestic_hot_water_pump": "Domestic hot water pump",
 }
 
-# Available temp sensor ids with assigned OP names
+# Available temp sensor ids with assigned OPP names
 # Available as sensors
 AVAILABLE_SENSORS = {
     "outdoor_temp": "Outdoor temperature",

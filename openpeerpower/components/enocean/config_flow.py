@@ -3,12 +3,10 @@
 import voluptuous as vol
 
 from openpeerpower import config_entries
-from openpeerpower.config_entries import CONN_CLASS_ASSUMED
 from openpeerpower.const import CONF_DEVICE
 
 from . import dongle
-from .const import DOMAIN  # pylint:disable=unused-import
-from .const import ERROR_INVALID_DONGLE_PATH, LOGGER
+from .const import DOMAIN, ERROR_INVALID_DONGLE_PATH, LOGGER
 
 
 class EnOceanFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
@@ -16,7 +14,6 @@ class EnOceanFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
     VERSION = 1
     MANUAL_PATH_VALUE = "Custom path"
-    CONNECTION_CLASS = CONN_CLASS_ASSUMED
 
     def __init__(self):
         """Initialize the EnOcean config flow."""

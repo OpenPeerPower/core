@@ -1,5 +1,4 @@
 """The FAA Delays integration."""
-import asyncio
 from datetime import timedelta
 import logging
 
@@ -10,7 +9,6 @@ from faadelays import Airport
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_ID
 from openpeerpower.core import OpenPeerPower
-from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers import aiohttp_client
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
@@ -21,45 +19,26 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["binary_sensor"]
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the FAA Delays component."""
-    opp.data[DOMAIN] = {}
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up FAA Delays from a config entry."""
     code = entry.data[CONF_ID]
 
     coordinator = FAADataUpdateCoordinator(opp, code)
-    await coordinator.async_refresh()
+    await coordinator.async_config_entry_first_refresh()
 
-    if not coordinator.last_update_success:
-        raise ConfigEntryNotReady
-
+    opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = coordinator
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
-
     return unload_ok
 
 

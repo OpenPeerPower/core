@@ -1,17 +1,17 @@
 """Support for the GPSLogger device tracking."""
 from openpeerpower.components.device_tracker import SOURCE_TYPE_GPS
 from openpeerpower.components.device_tracker.config_entry import TrackerEntity
+from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import (
     ATTR_BATTERY_LEVEL,
     ATTR_GPS_ACCURACY,
     ATTR_LATITUDE,
     ATTR_LONGITUDE,
 )
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers import device_registry
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 from openpeerpower.helpers.restore_state import RestoreEntity
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from . import DOMAIN as GPL_DOMAIN, TRACKER_UPDATE
 from .const import (
@@ -23,7 +23,9 @@ from .const import (
 )
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry, async_add_entities):
+async def async_setup_entry(
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
+):
     """Configure a dispatcher connection based on a config entry."""
 
     @callback
@@ -79,7 +81,7 @@ class GPSLoggerEntity(TrackerEntity, RestoreEntity):
         return self._battery
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return device specific attributes."""
         return self._attributes
 

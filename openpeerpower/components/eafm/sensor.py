@@ -5,6 +5,7 @@ import logging
 from aioeafm import get_station
 import async_timeout
 
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import ATTR_ATTRIBUTION, LENGTH_METERS
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 from openpeerpower.helpers.update_coordinator import (
@@ -33,7 +34,7 @@ def get_measures(station_data):
 async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up UK Flood Monitoring Sensors."""
     station_key = config_entry.data["station"]
-    session = async_get_clientsession(opp=opp)
+    session = async_get_clientsession(opp.opp)
 
     measurements = set()
 
@@ -77,7 +78,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     await coordinator.async_refresh()
 
 
-class Measurement(CoordinatorEntity):
+class Measurement(CoordinatorEntity, SensorEntity):
     """A gauge at a flood monitoring station."""
 
     attribution = "This uses Environment Agency flood and river level data from the real-time data API"
@@ -156,7 +157,7 @@ class Measurement(CoordinatorEntity):
         return UNIT_MAPPING.get(measure["unit"], measure["unitName"])
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the sensor specific state attributes."""
         return {ATTR_ATTRIBUTION: self.attribution}
 

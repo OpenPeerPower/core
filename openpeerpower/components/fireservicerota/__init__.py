@@ -1,5 +1,4 @@
 """The FireServiceRota integration."""
-import asyncio
 from datetime import timedelta
 import logging
 
@@ -14,9 +13,10 @@ from pyfireservicerota import (
 from openpeerpower.components.binary_sensor import DOMAIN as BINARYSENSOR_DOMAIN
 from openpeerpower.components.sensor import DOMAIN as SENSOR_DOMAIN
 from openpeerpower.components.switch import DOMAIN as SWITCH_DOMAIN
-from openpeerpower.config_entries import SOURCE_REAUTH, ConfigEntry
+from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_TOKEN, CONF_URL, CONF_USERNAME
 from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryAuthFailed
 from openpeerpower.helpers.dispatcher import dispatcher_send
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
@@ -27,12 +27,6 @@ MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=60)
 _LOGGER = logging.getLogger(__name__)
 
 PLATFORMS = [SENSOR_DOMAIN, BINARYSENSOR_DOMAIN, SWITCH_DOMAIN]
-
-
-async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
-    """Set up the FireServiceRota component."""
-
-    return True
 
 
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
@@ -57,17 +51,14 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         update_interval=MIN_TIME_BETWEEN_UPDATES,
     )
 
-    await coordinator.async_refresh()
+    await coordinator.async_config_entry_first_refresh()
 
     opp.data[DOMAIN][entry.entry_id] = {
         DATA_CLIENT: client,
         DATA_COORDINATOR: coordinator,
     }
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
@@ -78,19 +69,9 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     await opp.async_add_executor_job(
         opp.data[DOMAIN][entry.entry_id].websocket.stop_listener
     )
-
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
-
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         del opp.data[DOMAIN][entry.entry_id]
-
     return unload_ok
 
 
@@ -115,19 +96,10 @@ class FireServiceRotaOauth:
                 self._fsr.refresh_tokens
             )
 
-        except (InvalidAuthError, InvalidTokenError):
-            _LOGGER.error("Error refreshing tokens, triggered reauth workflow")
-            self._opp.async_create_task(
-                self._opp.config_entries.flow.async_init(
-                    DOMAIN,
-                    context={"source": SOURCE_REAUTH},
-                    data={
-                        **self._entry.data,
-                    },
-                )
-            )
-
-            return False
+        except (InvalidAuthError, InvalidTokenError) as err:
+            raise ConfigEntryAuthFailed(
+                "Error refreshing tokens, triggered reauth workflow"
+            ) from err
 
         _LOGGER.debug("Saving new tokens in config entry")
         self._opp.config_entries.async_update_entry(

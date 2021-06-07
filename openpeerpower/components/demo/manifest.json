@@ -4,5 +4,6 @@
   "documentation": "https://www.openpeerpower.io/integrations/demo",
   "dependencies": ["conversation", "zone", "group"],
   "codeowners": ["@openpeerpower/core"],
-  "quality_scale": "internal"
+  "quality_scale": "internal",
+  "iot_class": "calculated"
 }

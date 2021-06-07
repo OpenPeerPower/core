@@ -1,6 +1,5 @@
 """Support for BSH Home Connect appliances."""
 
-import asyncio
 from datetime import timedelta
 import logging
 
@@ -60,7 +59,9 @@ async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Home Connect from a config entry."""
     implementation = (
-        await config_entry_oauth2_flow.async_get_config_entry_implementation(opp, entry)
+        await config_entry_oauth2_flow.async_get_config_entry_implementation(
+            opp, entry
+        )
     )
 
     hc_api = api.ConfigEntryAuth(opp, entry, implementation)
@@ -69,24 +70,14 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     await update_all_devices(opp, entry)
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
 

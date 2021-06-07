@@ -1,7 +1,8 @@
 """Support for the Fibaro devices."""
+from __future__ import annotations
+
 from collections import defaultdict
 import logging
-from typing import Optional
 
 from fiblary3.client.v4.client import Client as FibaroClient, StateHandler
 import voluptuous as vol
@@ -223,7 +224,7 @@ class FibaroController:
 
     @staticmethod
     def _map_device_to_type(device):
-        """Map device to OP device type."""
+        """Map device to OPP device type."""
         # Use our lookup table to identify device type
         device_type = None
         if "type" in device:
@@ -496,7 +497,7 @@ class FibaroDevice(Entity):
         return self.fibaro_device.unique_id_str
 
     @property
-    def name(self) -> Optional[str]:
+    def name(self) -> str | None:
         """Return the name of the device."""
         return self._name
 
@@ -506,7 +507,7 @@ class FibaroDevice(Entity):
         return False
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of the device."""
         attr = {"fibaro_id": self.fibaro_device.id}
 

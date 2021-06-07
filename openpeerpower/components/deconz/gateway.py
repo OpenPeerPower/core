@@ -4,10 +4,9 @@ import asyncio
 import async_timeout
 from pydeconz import DeconzSession, errors
 
-from openpeerpower.config_entries import SOURCE_REAUTH
 from openpeerpower.const import CONF_API_KEY, CONF_HOST, CONF_PORT
 from openpeerpower.core import callback
-from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
 from openpeerpower.helpers import aiohttp_client
 from openpeerpower.helpers.device_registry import CONNECTION_NETWORK_MAC
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
@@ -54,7 +53,6 @@ class DeconzGateway:
         self.deconz_ids = {}
         self.entities = {}
         self.events = []
-        self.listeners = []
 
     @property
     def bridgeid(self) -> str:
@@ -174,22 +172,10 @@ class DeconzGateway:
         except CannotConnect as err:
             raise ConfigEntryNotReady from err
 
-        except AuthenticationRequired:
-            self.opp.async_create_task(
-                self.opp.config_entries.flow.async_init(
-                    DECONZ_DOMAIN,
-                    context={"source": SOURCE_REAUTH},
-                    data=self.config_entry.data,
-                )
-            )
-            return False
+        except AuthenticationRequired as err:
+            raise ConfigEntryAuthFailed from err
 
-        for platform in PLATFORMS:
-            self.opp.async_create_task(
-                self.opp.config_entries.async_forward_entry_setup(
-                    self.config_entry, platform
-                )
-            )
+        self.opp.config_entries.async_setup_platforms(self.config_entry, PLATFORMS)
 
         await async_setup_events(self)
 
@@ -259,14 +245,9 @@ class DeconzGateway:
         self.api.async_connection_status_callback = None
         self.api.close()
 
-        for platform in PLATFORMS:
-            await self.opp.config_entries.async_forward_entry_unload(
-                self.config_entry, platform
-            )
-
-        for unsub_dispatcher in self.listeners:
-            unsub_dispatcher()
-        self.listeners = []
+        await self.opp.config_entries.async_unload_platforms(
+            self.config_entry, PLATFORMS
+        )
 
         async_unload_events(self)
 

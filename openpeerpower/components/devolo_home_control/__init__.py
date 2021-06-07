@@ -9,22 +9,23 @@ from devolo_home_control_api.mydevolo import Mydevolo
 from openpeerpower.components import zeroconf
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME, EVENT_OPENPEERPOWER_STOP
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.exceptions import ConfigEntryNotReady
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
-from .const import CONF_MYDEVOLO, DOMAIN, GATEWAY_SERIAL_PATTERN, PLATFORMS
+from .const import (
+    CONF_MYDEVOLO,
+    DEFAULT_MYDEVOLO,
+    DOMAIN,
+    GATEWAY_SERIAL_PATTERN,
+    PLATFORMS,
+)
 
 
-async def async_setup(opp, config):
-    """Get all devices and add them to opp."""
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up the devolo account from a config entry."""
     opp.data.setdefault(DOMAIN, {})
 
-    mydevolo = _mydevolo(entry.data)
+    mydevolo = configure_mydevolo(entry.data)
 
     credentials_valid = await opp.async_add_executor_job(mydevolo.credentials_valid)
 
@@ -54,13 +55,10 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
                     )
                 )
             )
-    except (ConnectionError, GatewayOfflineError) as err:
+    except GatewayOfflineError as err:
         raise ConfigEntryNotReady from err
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     def shutdown(event):
         for gateway in opp.data[DOMAIN][entry.entry_id]["gateways"]:
@@ -76,16 +74,9 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    unload = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     await asyncio.gather(
         *[
             opp.async_add_executor_job(gateway.websocket_disconnect)
@@ -97,10 +88,10 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
     return unload
 
 
-def _mydevolo(conf: dict) -> Mydevolo:
+def configure_mydevolo(conf: dict) -> Mydevolo:
     """Configure mydevolo."""
     mydevolo = Mydevolo()
     mydevolo.user = conf[CONF_USERNAME]
     mydevolo.password = conf[CONF_PASSWORD]
-    mydevolo.url = conf[CONF_MYDEVOLO]
+    mydevolo.url = conf.get(CONF_MYDEVOLO, DEFAULT_MYDEVOLO)
     return mydevolo

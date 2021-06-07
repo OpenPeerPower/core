@@ -1,13 +1,14 @@
 """Support for Fronius devices."""
+from __future__ import annotations
+
 import copy
 from datetime import timedelta
 import logging
-from typing import Dict
 
 from pyfronius import Fronius
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_DEVICE,
     CONF_MONITORED_CONDITIONS,
@@ -17,7 +18,6 @@ from openpeerpower.const import (
 )
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.event import async_track_time_interval
 
 _LOGGER = logging.getLogger(__name__)
@@ -195,7 +195,7 @@ class FroniusAdapter:
         for sensor in self._registered_sensors:
             sensor.async_schedule_update_op_state(True)
 
-    async def _update(self) -> Dict:
+    async def _update(self) -> dict:
         """Return values of interest."""
 
     async def register(self, sensor):
@@ -251,7 +251,7 @@ class FroniusPowerFlow(FroniusAdapter):
         return await self.bridge.current_power_flow()
 
 
-class FroniusTemplateSensor(Entity):
+class FroniusTemplateSensor(SensorEntity):
     """Sensor for the single values (e.g. pv power, ac power)."""
 
     def __init__(self, parent: FroniusAdapter, name):
@@ -290,6 +290,8 @@ class FroniusTemplateSensor(Entity):
         """Update the internal state."""
         state = self.parent.data.get(self._name)
         self._state = state.get("value")
+        if isinstance(self._state, float):
+            self._state = round(self._state, 2)
         self._unit = state.get("unit")
 
     async def async_added_to_opp(self):

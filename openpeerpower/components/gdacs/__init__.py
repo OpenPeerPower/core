@@ -1,5 +1,4 @@
 """The Global Disaster Alert and Coordination System (GDACS) integration."""
-import asyncio
 from datetime import timedelta
 import logging
 
@@ -97,17 +96,11 @@ async def async_setup_entry(opp, config_entry):
     return True
 
 
-async def async_unload_entry(opp, config_entry):
+async def async_unload_entry(opp, entry):
     """Unload an GDACS component config entry."""
-    manager = opp.data[DOMAIN][FEED].pop(config_entry.entry_id)
+    manager = opp.data[DOMAIN][FEED].pop(entry.entry_id)
     await manager.async_stop()
-    await asyncio.wait(
-        [
-            opp.config_entries.async_forward_entry_unload(config_entry, domain)
-            for domain in PLATFORMS
-        ]
-    )
-    return True
+    return await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
 
 class GdacsFeedEntityManager:
@@ -142,12 +135,7 @@ class GdacsFeedEntityManager:
     async def async_init(self):
         """Schedule initial and regular updates based on configured time interval."""
 
-        for domain in PLATFORMS:
-            self._opp.async_create_task(
-                self._opp.config_entries.async_forward_entry_setup(
-                    self._config_entry, domain
-                )
-            )
+        self._opp.config_entries.async_setup_platforms(self._config_entry, PLATFORMS)
 
         async def update(event_time):
             """Update."""

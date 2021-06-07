@@ -4,7 +4,7 @@ import os
 
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_FILE_PATH,
     CONF_NAME,
@@ -12,7 +12,6 @@ from openpeerpower.const import (
     CONF_VALUE_TEMPLATE,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -46,7 +45,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         _LOGGER.error("'%s' is not an allowed directory", file_path)
 
 
-class FileSensor(Entity):
+class FileSensor(SensorEntity):
     """Implementation of a file sensor."""
 
     def __init__(self, name, file_path, unit_of_measurement, value_template):

@@ -1,43 +1,47 @@
 """Support for esphome devices."""
+from __future__ import annotations
+
 import asyncio
 import functools
 import logging
 import math
-from typing import Any, Callable, Dict, List, Optional
+from typing import Callable
 
 from aioesphomeapi import (
     APIClient,
     APIConnectionError,
-    DeviceInfo,
+    DeviceInfo as EsphomeDeviceInfo,
     EntityInfo,
     EntityState,
-    HomeassistantServiceCall,
+    OpenPeerPowerServiceCall,
     UserService,
     UserServiceArgType,
 )
 import voluptuous as vol
+from zeroconf import DNSPointer, DNSRecord, RecordUpdateListener, Zeroconf
 
 from openpeerpower import const
 from openpeerpower.components import zeroconf
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import (
     CONF_HOST,
+    CONF_MODE,
     CONF_PASSWORD,
     CONF_PORT,
     EVENT_OPENPEERPOWER_STOP,
 )
-from openpeerpower.core import Event, State, callback
+from openpeerpower.core import Event, OpenPeerPower, State, callback
 from openpeerpower.exceptions import TemplateError
 from openpeerpower.helpers import template
 import openpeerpower.helpers.config_validation as cv
 import openpeerpower.helpers.device_registry as dr
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity import DeviceInfo, Entity
 from openpeerpower.helpers.event import async_track_state_change_event
 from openpeerpower.helpers.json import JSONEncoder
+from openpeerpower.helpers.service import async_set_service_schema
 from openpeerpower.helpers.storage import Store
 from openpeerpower.helpers.template import Template
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
 
 # Import config flow so that it's added to the registry
 from .entry_data import RuntimeEntryData
@@ -47,16 +51,8 @@ _LOGGER = logging.getLogger(__name__)
 
 STORAGE_VERSION = 1
 
-# No config schema - only configuration entry
-CONFIG_SCHEMA = vol.Schema({}, extra=vol.ALLOW_EXTRA)
 
-
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
-    """Stub to allow setting up this component."""
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up the esphome component."""
     opp.data.setdefault(DOMAIN, {})
 
@@ -85,7 +81,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     )
 
     async def on_stop(event: Event) -> None:
-        """Cleanup the socket client on OP stop."""
+        """Cleanup the socket client on OPP stop."""
         await _cleanup_instance(opp, entry)
 
     # Use async_listen instead of async_listen_once so that we don't deregister
@@ -101,7 +97,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         entry_data.async_update_state(opp, state)
 
     @callback
-    def async_on_service_call(service: HomeassistantServiceCall) -> None:
+    def async_on_service_call(service: OpenPeerPowerServiceCall) -> None:
         """Call service when user automation in ESPHome config is triggered."""
         domain, service_name = service.service.split(".", 1)
         service_data = service.data
@@ -144,32 +140,65 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
                 )
             )
 
-    async def send_open_peer_power_state_event(event: Event) -> None:
-        """Forward Open Peer Power states updates to ESPHome."""
-        new_state = event.data.get("new_state")
-        if new_state is None:
-            return
-        entity_id = event.data.get("entity_id")
-        await cli.send_home_assistant_state(entity_id, new_state.state)
-
-    async def _send_home_assistant_state(
-        entity_id: str, new_state: Optional[State]
+    async def _send_open_peer_power_state(
+        entity_id: str, attribute: str | None, state: State | None
     ) -> None:
         """Forward Open Peer Power states to ESPHome."""
-        await cli.send_home_assistant_state(entity_id, new_state.state)
+        if state is None or (attribute and attribute not in state.attributes):
+            return
+
+        send_state = state.state
+        if attribute:
+            send_state = state.attributes[attribute]
+            # ESPHome only handles "on"/"off" for boolean values
+            if isinstance(send_state, bool):
+                send_state = "on" if send_state else "off"
+
+        await cli.send_open_peer_power_state(entity_id, attribute, str(send_state))
 
     @callback
-    def async_on_state_subscription(entity_id: str) -> None:
+    def async_on_state_subscription(
+        entity_id: str, attribute: str | None = None
+    ) -> None:
         """Subscribe and forward states for requested entities."""
+
+        async def send_open_peer_power_state_event(event: Event) -> None:
+            """Forward Open Peer Power states updates to ESPHome."""
+
+            # Only communicate changes to the state or attribute tracked
+            if (
+                "old_state" in event.data
+                and "new_state" in event.data
+                and (
+                    (
+                        not attribute
+                        and event.data["old_state"].state
+                        == event.data["new_state"].state
+                    )
+                    or (
+                        attribute
+                        and attribute in event.data["old_state"].attributes
+                        and attribute in event.data["new_state"].attributes
+                        and event.data["old_state"].attributes[attribute]
+                        == event.data["new_state"].attributes[attribute]
+                    )
+                )
+            ):
+                return
+
+            await _send_open_peer_power_state(
+                event.data["entity_id"], attribute, event.data.get("new_state")
+            )
+
         unsub = async_track_state_change_event(
             opp, [entity_id], send_open_peer_power_state_event
         )
         entry_data.disconnect_callbacks.append(unsub)
-        new_state = opp.states.get(entity_id)
-        if new_state is None:
-            return
+
         # Send initial state
-        opp.async_create_task(_send_home_assistant_state(entity_id, new_state))
+        opp.async_create_task(
+            _send_open_peer_power_state(entity_id, attribute, opp.states.get(entity_id))
+        )
 
     async def on_login() -> None:
         """Subscribe to states and list entities on successful API login."""
@@ -187,7 +216,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             await _setup_services(opp, entry_data, services)
             await cli.subscribe_states(async_on_state)
             await cli.subscribe_service_calls(async_on_service_call)
-            await cli.subscribe_home_assistant_states(async_on_state_subscription)
+            await cli.subscribe_open_peer_power_states(async_on_state_subscription)
 
             opp.async_create_task(entry_data.async_save_to_store())
         except APIConnectionError as err:
@@ -195,7 +224,9 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             # Re-connection logic will trigger after this
             await cli.disconnect()
 
-    try_connect = await _setup_auto_reconnect_logic(opp, cli, entry, host, on_login)
+    reconnect_logic = ReconnectLogic(
+        opp, cli, entry, host, on_login, zeroconf_instance
+    )
 
     async def complete_setup() -> None:
         """Complete the config entry setup."""
@@ -203,85 +234,254 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         await entry_data.async_update_static_infos(opp, entry, infos)
         await _setup_services(opp, entry_data, services)
 
-        # Create connection attempt outside of HA's tracked task in order
-        # not to delay startup.
-        opp.loop.create_task(try_connect(is_disconnect=False))
+        await reconnect_logic.start()
+        entry_data.cleanup_callbacks.append(reconnect_logic.stop_callback)
 
     opp.async_create_task(complete_setup())
     return True
 
 
-async def _setup_auto_reconnect_logic(
-    opp: OpenPeerPowerType, cli: APIClient, entry: ConfigEntry, host: str, on_login
-):
-    """Set up the re-connect logic for the API client."""
+class ReconnectLogic(RecordUpdateListener):
+    """Reconnectiong logic handler for ESPHome config entries.
 
-    async def try_connect(tries: int = 0, is_disconnect: bool = True) -> None:
-        """Try connecting to the API client. Will retry if not successful."""
-        if entry.entry_id not in opp.data[DOMAIN]:
+    Contains two reconnect strategies:
+     - Connect with increasing time between connection attempts.
+     - Listen to zeroconf mDNS records, if any records are found for this device, try reconnecting immediately.
+    """
+
+    def __init__(
+        self,
+        opp: OpenPeerPower,
+        cli: APIClient,
+        entry: ConfigEntry,
+        host: str,
+        on_login,
+        zc: Zeroconf,
+    ):
+        """Initialize ReconnectingLogic."""
+        self._opp = opp
+        self._cli = cli
+        self._entry = entry
+        self._host = host
+        self._on_login = on_login
+        self._zc = zc
+        # Flag to check if the device is connected
+        self._connected = True
+        self._connected_lock = asyncio.Lock()
+        self._zc_lock = asyncio.Lock()
+        self._zc_listening = False
+        # Event the different strategies use for issuing a reconnect attempt.
+        self._reconnect_event = asyncio.Event()
+        # The task containing the infinite reconnect loop while running
+        self._loop_task: asyncio.Task | None = None
+        # How many reconnect attempts have there been already, used for exponential wait time
+        self._tries = 0
+        self._tries_lock = asyncio.Lock()
+        # Track the wait task to cancel it on OPP shutdown
+        self._wait_task: asyncio.Task | None = None
+        self._wait_task_lock = asyncio.Lock()
+
+    @property
+    def _entry_data(self) -> RuntimeEntryData | None:
+        return self._opp.data[DOMAIN].get(self._entry.entry_id)
+
+    async def _on_disconnect(self):
+        """Log and issue callbacks when disconnecting."""
+        if self._entry_data is None:
+            return
+        # This can happen often depending on WiFi signal strength.
+        # So therefore all these connection warnings are logged
+        # as infos. The "unavailable" logic will still trigger so the
+        # user knows if the device is not connected.
+        _LOGGER.info("Disconnected from ESPHome API for %s", self._host)
+
+        # Run disconnect hooks
+        for disconnect_cb in self._entry_data.disconnect_callbacks:
+            disconnect_cb()
+        self._entry_data.disconnect_callbacks = []
+        self._entry_data.available = False
+        self._entry_data.async_update_device_state(self._opp)
+        await self._start_zc_listen()
+
+        # Reset tries
+        async with self._tries_lock:
+            self._tries = 0
+        # Connected needs to be reset before the reconnect event (opposite order of check)
+        async with self._connected_lock:
+            self._connected = False
+        self._reconnect_event.set()
+
+    async def _wait_and_start_reconnect(self):
+        """Wait for exponentially increasing time to issue next reconnect event."""
+        async with self._tries_lock:
+            tries = self._tries
+        # If not first re-try, wait and print message
+        # Cap wait time at 1 minute. This is because while working on the
+        # device (e.g. soldering stuff), users don't want to have to wait
+        # a long time for their device to show up in OPP again (this was
+        # mentioned a lot in early feedback)
+        tries = min(tries, 10)  # prevent OverflowError
+        wait_time = int(round(min(1.8 ** tries, 60.0)))
+        if tries == 1:
+            _LOGGER.info("Trying to reconnect to %s in the background", self._host)
+        _LOGGER.debug("Retrying %s in %d seconds", self._host, wait_time)
+        await asyncio.sleep(wait_time)
+        async with self._wait_task_lock:
+            self._wait_task = None
+        self._reconnect_event.set()
+
+    async def _try_connect(self):
+        """Try connecting to the API client."""
+        async with self._tries_lock:
+            tries = self._tries
+            self._tries += 1
+
+        try:
+            await self._cli.connect(on_stop=self._on_disconnect, login=True)
+        except APIConnectionError as error:
+            level = logging.WARNING if tries == 0 else logging.DEBUG
+            _LOGGER.log(
+                level,
+                "Can't connect to ESPHome API for %s (%s): %s",
+                self._entry.unique_id,
+                self._host,
+                error,
+            )
+            await self._start_zc_listen()
+            # Schedule re-connect in event loop in order not to delay HA
+            # startup. First connect is scheduled in tracked tasks.
+            async with self._wait_task_lock:
+                # Allow only one wait task at a time
+                # can happen if mDNS record received while waiting, then use existing wait task
+                if self._wait_task is not None:
+                    return
+
+                self._wait_task = self._opp.loop.create_task(
+                    self._wait_and_start_reconnect()
+                )
+        else:
+            _LOGGER.info("Successfully connected to %s", self._host)
+            async with self._tries_lock:
+                self._tries = 0
+            async with self._connected_lock:
+                self._connected = True
+            await self._stop_zc_listen()
+            self._opp.async_create_task(self._on_login())
+
+    async def _reconnect_once(self):
+        # Wait and clear reconnection event
+        await self._reconnect_event.wait()
+        self._reconnect_event.clear()
+
+        # If in connected state, do not try to connect again.
+        async with self._connected_lock:
+            if self._connected:
+                return False
+
+        # Check if the entry got removed or disabled, in which case we shouldn't reconnect
+        if self._entry.entry_id not in self._opp.data[DOMAIN]:
             # When removing/disconnecting manually
             return
 
-        device_registry = await opp.helpers.device_registry.async_get_registry()
-        devices = dr.async_entries_for_config_entry(device_registry, entry.entry_id)
+        device_registry = self._opp.helpers.device_registry.async_get(self._opp)
+        devices = dr.async_entries_for_config_entry(
+            device_registry, self._entry.entry_id
+        )
         for device in devices:
             # There is only one device in ESPHome
             if device.disabled:
                 # Don't attempt to connect if it's disabled
                 return
 
-        data: RuntimeEntryData = opp.data[DOMAIN][entry.entry_id]
-        for disconnect_cb in data.disconnect_callbacks:
-            disconnect_cb()
-        data.disconnect_callbacks = []
-        data.available = False
-        data.async_update_device_state(opp)
+        await self._try_connect()
 
-        if is_disconnect:
-            # This can happen often depending on WiFi signal strength.
-            # So therefore all these connection warnings are logged
-            # as infos. The "unavailable" logic will still trigger so the
-            # user knows if the device is not connected.
-            _LOGGER.info("Disconnected from ESPHome API for %s", host)
+    async def _reconnect_loop(self):
+        while True:
+            try:
+                await self._reconnect_once()
+            except asyncio.CancelledError:  # pylint: disable=try-except-raise
+                raise
+            except Exception:  # pylint: disable=broad-except
+                _LOGGER.error("Caught exception while reconnecting", exc_info=True)
 
-        if tries != 0:
-            # If not first re-try, wait and print message
-            # Cap wait time at 1 minute. This is because while working on the
-            # device (e.g. soldering stuff), users don't want to have to wait
-            # a long time for their device to show up in OP again (this was
-            # mentioned a lot in early feedback)
-            #
-            # In the future another API will be set up so that the ESP can
-            # notify OP of connectivity directly, but for new we'll use a
-            # really short reconnect interval.
-            tries = min(tries, 10)  # prevent OverflowError
-            wait_time = int(round(min(1.8 ** tries, 60.0)))
-            _LOGGER.info("Trying to reconnect to %s in %s seconds", host, wait_time)
-            await asyncio.sleep(wait_time)
+    async def start(self):
+        """Start the reconnecting logic background task."""
+        # Create reconnection loop outside of HA's tracked tasks in order
+        # not to delay startup.
+        self._loop_task = self._opp.loop.create_task(self._reconnect_loop())
 
-        try:
-            await cli.connect(on_stop=try_connect, login=True)
-        except APIConnectionError as error:
-            _LOGGER.info(
-                "Can't connect to ESPHome API for %s (%s): %s",
-                entry.unique_id,
-                host,
-                error,
-            )
-            # Schedule re-connect in event loop in order not to delay HA
-            # startup. First connect is scheduled in tracked tasks.
-            data.reconnect_task = opp.loop.create_task(
-                try_connect(tries + 1, is_disconnect=False)
-            )
-        else:
-            _LOGGER.info("Successfully connected to %s", host)
-            opp.async_create_task(on_login())
+        async with self._connected_lock:
+            self._connected = False
+        self._reconnect_event.set()
 
-    return try_connect
+    async def stop(self):
+        """Stop the reconnecting logic background task. Does not disconnect the client."""
+        if self._loop_task is not None:
+            self._loop_task.cancel()
+            self._loop_task = None
+        async with self._wait_task_lock:
+            if self._wait_task is not None:
+                self._wait_task.cancel()
+            self._wait_task = None
+        await self._stop_zc_listen()
+
+    async def _start_zc_listen(self):
+        """Listen for mDNS records.
+
+        This listener allows us to schedule a reconnect as soon as a
+        received mDNS record indicates the node is up again.
+        """
+        async with self._zc_lock:
+            if not self._zc_listening:
+                await self._opp.async_add_executor_job(
+                    self._zc.add_listener, self, None
+                )
+                self._zc_listening = True
+
+    async def _stop_zc_listen(self):
+        """Stop listening for zeroconf updates."""
+        async with self._zc_lock:
+            if self._zc_listening:
+                await self._opp.async_add_executor_job(self._zc.remove_listener, self)
+                self._zc_listening = False
+
+    @callback
+    def stop_callback(self):
+        """Stop as an async callback function."""
+        self._opp.async_create_task(self.stop())
+
+    @callback
+    def _set_reconnect(self):
+        self._reconnect_event.set()
+
+    def update_record(self, zc: Zeroconf, now: float, record: DNSRecord) -> None:
+        """Listen to zeroconf updated mDNS records."""
+        if not isinstance(record, DNSPointer):
+            # We only consider PTR records and match using the alias name
+            return
+        if self._entry_data is None or self._entry_data.device_info is None:
+            # Either the entry was already teared down or we haven't received device info yet
+            return
+        filter_alias = f"{self._entry_data.device_info.name}._esphomelib._tcp.local."
+        if record.alias != filter_alias:
+            return
+
+        # This is a mDNS record from the device and could mean it just woke up
+        # Check if already connected, no lock needed for this access
+        if self._connected:
+            return
+
+        # Tell reconnection logic to retry connection attempt now (even before reconnect timer finishes)
+        _LOGGER.debug(
+            "%s: Triggering reconnect because of received mDNS record %s",
+            self._host,
+            record,
+        )
+        self._opp.add_job(self._set_reconnect)
 
 
 async def _async_setup_device_registry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, device_info: DeviceInfo
+    opp: OpenPeerPower, entry: ConfigEntry, device_info: EsphomeDeviceInfo
 ):
     """Set up device registry feature for a particular config entry."""
     sw_version = device_info.esphome_version
@@ -300,21 +500,67 @@ async def _async_setup_device_registry(
 
 
 async def _register_service(
-    opp: OpenPeerPowerType, entry_data: RuntimeEntryData, service: UserService
+    opp: OpenPeerPower, entry_data: RuntimeEntryData, service: UserService
 ):
-    service_name = f"{entry_data.device_info.name}_{service.name}"
+    service_name = f"{entry_data.device_info.name.replace('-', '_')}_{service.name}"
     schema = {}
+    fields = {}
+
     for arg in service.args:
-        schema[vol.Required(arg.name)] = {
-            UserServiceArgType.BOOL: cv.boolean,
-            UserServiceArgType.INT: vol.Coerce(int),
-            UserServiceArgType.FLOAT: vol.Coerce(float),
-            UserServiceArgType.STRING: cv.string,
-            UserServiceArgType.BOOL_ARRAY: [cv.boolean],
-            UserServiceArgType.INT_ARRAY: [vol.Coerce(int)],
-            UserServiceArgType.FLOAT_ARRAY: [vol.Coerce(float)],
-            UserServiceArgType.STRING_ARRAY: [cv.string],
+        metadata = {
+            UserServiceArgType.BOOL: {
+                "validator": cv.boolean,
+                "example": "False",
+                "selector": {"boolean": None},
+            },
+            UserServiceArgType.INT: {
+                "validator": vol.Coerce(int),
+                "example": "42",
+                "selector": {"number": {CONF_MODE: "box"}},
+            },
+            UserServiceArgType.FLOAT: {
+                "validator": vol.Coerce(float),
+                "example": "12.3",
+                "selector": {"number": {CONF_MODE: "box", "step": 1e-3}},
+            },
+            UserServiceArgType.STRING: {
+                "validator": cv.string,
+                "example": "Example text",
+                "selector": {"text": None},
+            },
+            UserServiceArgType.BOOL_ARRAY: {
+                "validator": [cv.boolean],
+                "description": "A list of boolean values.",
+                "example": "[True, False]",
+                "selector": {"object": {}},
+            },
+            UserServiceArgType.INT_ARRAY: {
+                "validator": [vol.Coerce(int)],
+                "description": "A list of integer values.",
+                "example": "[42, 34]",
+                "selector": {"object": {}},
+            },
+            UserServiceArgType.FLOAT_ARRAY: {
+                "validator": [vol.Coerce(float)],
+                "description": "A list of floating point numbers.",
+                "example": "[ 12.3, 34.5 ]",
+                "selector": {"object": {}},
+            },
+            UserServiceArgType.STRING_ARRAY: {
+                "validator": [cv.string],
+                "description": "A list of strings.",
+                "example": "['Example text', 'Another example']",
+                "selector": {"object": {}},
+            },
         }[arg.type_]
+        schema[vol.Required(arg.name)] = metadata["validator"]
+        fields[arg.name] = {
+            "name": arg.name,
+            "required": True,
+            "description": metadata.get("description"),
+            "example": metadata["example"],
+            "selector": metadata["selector"],
+        }
 
     async def execute_service(call):
         await entry_data.client.execute_service(service, call.data)
@@ -323,9 +569,16 @@ async def _register_service(
         DOMAIN, service_name, execute_service, vol.Schema(schema)
     )
 
+    service_desc = {
+        "description": f"Calls the service {service.name} of the node {entry_data.device_info.name}",
+        "fields": fields,
+    }
+
+    async_set_service_schema(opp, DOMAIN, service_name, service_desc)
+
 
 async def _setup_services(
-    opp: OpenPeerPowerType, entry_data: RuntimeEntryData, services: List[UserService]
+    opp: OpenPeerPower, entry_data: RuntimeEntryData, services: list[UserService]
 ):
     old_services = entry_data.services.copy()
     to_unregister = []
@@ -356,12 +609,10 @@ async def _setup_services(
 
 
 async def _cleanup_instance(
-    opp: OpenPeerPowerType, entry: ConfigEntry
+    opp: OpenPeerPower, entry: ConfigEntry
 ) -> RuntimeEntryData:
     """Cleanup the esphome client if it exists."""
     data: RuntimeEntryData = opp.data[DOMAIN].pop(entry.entry_id)
-    if data.reconnect_task is not None:
-        data.reconnect_task.cancel()
     for disconnect_cb in data.disconnect_callbacks:
         disconnect_cb()
     for cleanup_callback in data.cleanup_callbacks:
@@ -370,19 +621,16 @@ async def _cleanup_instance(
     return data
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload an esphome config entry."""
     entry_data = await _cleanup_instance(opp, entry)
-    tasks = []
-    for platform in entry_data.loaded_platforms:
-        tasks.append(opp.config_entries.async_forward_entry_unload(entry, platform))
-    if tasks:
-        await asyncio.wait(tasks)
-    return True
+    return await opp.config_entries.async_unload_platforms(
+        entry, entry_data.loaded_platforms
+    )
 
 
 async def platform_async_setup_entry(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     entry: ConfigEntry,
     async_add_entities,
     *,
@@ -402,7 +650,7 @@ async def platform_async_setup_entry(
     entry_data.state[component_key] = {}
 
     @callback
-    def async_list_entities(infos: List[EntityInfo]):
+    def async_list_entities(infos: list[EntityInfo]):
         """Update entities of this platform when entities are listed."""
         old_infos = entry_data.info[component_key]
         new_infos = {}
@@ -474,24 +722,24 @@ def esphome_state_property(func):
 
 
 class EsphomeEnumMapper:
-    """Helper class to convert between opp and esphome enum values."""
+    """Helper class to convert between opp.and esphome enum values."""
 
-    def __init__(self, func: Callable[[], Dict[int, str]]):
+    def __init__(self, func: Callable[[], dict[int, str]]) -> None:
         """Construct a EsphomeEnumMapper."""
         self._func = func
 
     def from_esphome(self, value: int) -> str:
-        """Convert from an esphome int representation to a opp string."""
+        """Convert from an esphome int representation to a opp.string."""
         return self._func()[value]
 
     def from_opp(self, value: str) -> int:
-        """Convert from a opp string to a esphome int representation."""
+        """Convert from a opp.string to a esphome int representation."""
         inverse = {v: k for k, v in self._func().items()}
         return inverse[value]
 
 
-def esphome_map_enum(func: Callable[[], Dict[int, str]]):
-    """Map esphome int enum values to opp string constants.
+def esphome_map_enum(func: Callable[[], dict[int, str]]):
+    """Map esphome int enum values to opp.string constants.
 
     This class has to be used as a decorator. This ensures the aioesphomeapi
     import is only happening at runtime.
@@ -502,7 +750,7 @@ def esphome_map_enum(func: Callable[[], Dict[int, str]]):
 class EsphomeBaseEntity(Entity):
     """Define a base esphome entity."""
 
-    def __init__(self, entry_id: str, component_key: str, key: int):
+    def __init__(self, entry_id: str, component_key: str, key: int) -> None:
         """Initialize."""
         self._entry_id = entry_id
         self._component_key = component_key
@@ -533,8 +781,8 @@ class EsphomeBaseEntity(Entity):
     def _on_device_update(self) -> None:
         """Update the entity state when device info has changed."""
         if self._entry_data.available:
-            # Don't update the OP state yet when the device comes online.
-            # Only update the OP state when the full state arrives
+            # Don't update the OPP state yet when the device comes online.
+            # Only update the OPP state when the full state arrives
             # through the next entity state packet.
             return
         self.async_write_op_state()
@@ -554,7 +802,7 @@ class EsphomeBaseEntity(Entity):
         return self._entry_data.old_info[self._component_key].get(self._key)
 
     @property
-    def _device_info(self) -> DeviceInfo:
+    def _device_info(self) -> EsphomeDeviceInfo:
         return self._entry_data.device_info
 
     @property
@@ -562,7 +810,7 @@ class EsphomeBaseEntity(Entity):
         return self._entry_data.client
 
     @property
-    def _state(self) -> Optional[EntityState]:
+    def _state(self) -> EntityState | None:
         try:
             return self._entry_data.state[self._component_key][self._key]
         except KeyError:
@@ -581,14 +829,14 @@ class EsphomeBaseEntity(Entity):
         return self._entry_data.available
 
     @property
-    def unique_id(self) -> Optional[str]:
+    def unique_id(self) -> str | None:
         """Return a unique id identifying the entity."""
         if not self._static_info.unique_id:
             return None
         return self._static_info.unique_id
 
     @property
-    def device_info(self) -> Dict[str, Any]:
+    def device_info(self) -> DeviceInfo:
         """Return device registry information for this entity."""
         return {
             "connections": {(dr.CONNECTION_NETWORK_MAC, self._device_info.mac_address)}

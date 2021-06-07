@@ -45,9 +45,6 @@ from openpeerpower.components.light import (
     ATTR_HS_COLOR,
     ATTR_TRANSITION,
     ATTR_XY_COLOR,
-    SUPPORT_BRIGHTNESS,
-    SUPPORT_COLOR,
-    SUPPORT_COLOR_TEMP,
     SUPPORT_TRANSITION,
 )
 from openpeerpower.components.media_player.const import (
@@ -289,7 +286,7 @@ class HueOneLightStateView(OpenPeerPowerView):
         if not is_local(ip_address(request.remote)):
             return self.json_message("Only local IPs allowed", HTTP_UNAUTHORIZED)
 
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         opp_entity_id = self.config.number_to_entity_id(entity_id)
 
         if opp_entity_id is None:
@@ -325,13 +322,13 @@ class HueOneLightChangeView(OpenPeerPowerView):
         """Initialize the instance of the view."""
         self.config = config
 
-    async def put(self, request, username, entity_number):
+    async def put(self, request, username, entity_number):  # noqa: C901
         """Process a request to set the state of an individual light."""
         if not is_local(ip_address(request.remote)):
             return self.json_message("Only local IPs allowed", HTTP_UNAUTHORIZED)
 
         config = self.config
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         entity_id = config.number_to_entity_id(entity_number)
 
         if entity_id is None:
@@ -356,6 +353,8 @@ class HueOneLightChangeView(OpenPeerPowerView):
 
         # Get the entity's supported features
         entity_features = entity.attributes.get(ATTR_SUPPORTED_FEATURES, 0)
+        if entity.domain == light.DOMAIN:
+            color_modes = entity.attributes.get(light.ATTR_SUPPORTED_COLOR_MODES, [])
 
         # Parse the request
         parsed = {
@@ -391,11 +390,9 @@ class HueOneLightChangeView(OpenPeerPowerView):
                     return self.json_message("Bad request", HTTP_BAD_REQUEST)
         if HUE_API_STATE_XY in request_json:
             try:
-                parsed[STATE_XY] = tuple(
-                    (
-                        float(request_json[HUE_API_STATE_XY][0]),
-                        float(request_json[HUE_API_STATE_XY][1]),
-                    )
+                parsed[STATE_XY] = (
+                    float(request_json[HUE_API_STATE_XY][0]),
+                    float(request_json[HUE_API_STATE_XY][1]),
                 )
             except ValueError:
                 _LOGGER.error("Unable to parse data (2): %s", request_json)
@@ -403,7 +400,7 @@ class HueOneLightChangeView(OpenPeerPowerView):
 
         if HUE_API_STATE_BRI in request_json:
             if entity.domain == light.DOMAIN:
-                if entity_features & SUPPORT_BRIGHTNESS:
+                if light.brightness_supported(color_modes):
                     parsed[STATE_ON] = parsed[STATE_BRIGHTNESS] > 0
                 else:
                     parsed[STATE_BRIGHTNESS] = None
@@ -425,7 +422,7 @@ class HueOneLightChangeView(OpenPeerPowerView):
                 parsed[STATE_BRIGHTNESS] = round(level)
                 parsed[STATE_ON] = True
 
-        # Choose general OP domain
+        # Choose general OPP domain
         domain = core.DOMAIN
 
         # Entity needs separate call to turn on
@@ -441,13 +438,15 @@ class HueOneLightChangeView(OpenPeerPowerView):
         # saturation and color temp
         if entity.domain == light.DOMAIN:
             if parsed[STATE_ON]:
-                if entity_features & SUPPORT_BRIGHTNESS:
-                    if parsed[STATE_BRIGHTNESS] is not None:
-                        data[ATTR_BRIGHTNESS] = hue_brightness_to_opp(
-                            parsed[STATE_BRIGHTNESS]
-                        )
+                if (
+                    light.brightness_supported(color_modes)
+                    and parsed[STATE_BRIGHTNESS] is not None
+                ):
+                    data[ATTR_BRIGHTNESS] = hue_brightness_to_opp(
+                        parsed[STATE_BRIGHTNESS]
+                    )
 
-                if entity_features & SUPPORT_COLOR:
+                if light.color_supported(color_modes):
                     if any((parsed[STATE_HUE], parsed[STATE_SATURATION])):
                         if parsed[STATE_HUE] is not None:
                             hue = parsed[STATE_HUE]
@@ -459,7 +458,7 @@ class HueOneLightChangeView(OpenPeerPowerView):
                         else:
                             sat = 0
 
-                        # Convert hs values to opp hs values
+                        # Convert hs values to opp.hs values
                         hue = int((hue / HUE_API_STATE_HUE_MAX) * 360)
                         sat = int((sat / HUE_API_STATE_SAT_MAX) * 100)
 
@@ -468,13 +467,17 @@ class HueOneLightChangeView(OpenPeerPowerView):
                     if parsed[STATE_XY] is not None:
                         data[ATTR_XY_COLOR] = parsed[STATE_XY]
 
-                if entity_features & SUPPORT_COLOR_TEMP:
-                    if parsed[STATE_COLOR_TEMP] is not None:
-                        data[ATTR_COLOR_TEMP] = parsed[STATE_COLOR_TEMP]
+                if (
+                    light.color_temp_supported(color_modes)
+                    and parsed[STATE_COLOR_TEMP] is not None
+                ):
+                    data[ATTR_COLOR_TEMP] = parsed[STATE_COLOR_TEMP]
 
-                if entity_features & SUPPORT_TRANSITION:
-                    if parsed[STATE_TRANSITON] is not None:
-                        data[ATTR_TRANSITION] = parsed[STATE_TRANSITON] / 10
+                if (
+                    entity_features & SUPPORT_TRANSITION
+                    and parsed[STATE_TRANSITON] is not None
+                ):
+                    data[ATTR_TRANSITION] = parsed[STATE_TRANSITON] / 10
 
         # If the requested entity is a script, add some variables
         elif entity.domain == script.DOMAIN:
@@ -491,11 +494,13 @@ class HueOneLightChangeView(OpenPeerPowerView):
             # only setting the temperature
             service = None
 
-            if entity_features & SUPPORT_TARGET_TEMPERATURE:
-                if parsed[STATE_BRIGHTNESS] is not None:
-                    domain = entity.domain
-                    service = SERVICE_SET_TEMPERATURE
-                    data[ATTR_TEMPERATURE] = parsed[STATE_BRIGHTNESS]
+            if (
+                entity_features & SUPPORT_TARGET_TEMPERATURE
+                and parsed[STATE_BRIGHTNESS] is not None
+            ):
+                domain = entity.domain
+                service = SERVICE_SET_TEMPERATURE
+                data[ATTR_TEMPERATURE] = parsed[STATE_BRIGHTNESS]
 
         # If the requested entity is a humidifier, set the humidity
         elif entity.domain == humidifier.DOMAIN:
@@ -507,13 +512,15 @@ class HueOneLightChangeView(OpenPeerPowerView):
 
         # If the requested entity is a media player, convert to volume
         elif entity.domain == media_player.DOMAIN:
-            if entity_features & SUPPORT_VOLUME_SET:
-                if parsed[STATE_BRIGHTNESS] is not None:
-                    turn_on_needed = True
-                    domain = entity.domain
-                    service = SERVICE_VOLUME_SET
-                    # Convert 0-100 to 0.0-1.0
-                    data[ATTR_MEDIA_VOLUME_LEVEL] = parsed[STATE_BRIGHTNESS] / 100.0
+            if (
+                entity_features & SUPPORT_VOLUME_SET
+                and parsed[STATE_BRIGHTNESS] is not None
+            ):
+                turn_on_needed = True
+                domain = entity.domain
+                service = SERVICE_VOLUME_SET
+                # Convert 0-100 to 0.0-1.0
+                data[ATTR_MEDIA_VOLUME_LEVEL] = parsed[STATE_BRIGHTNESS] / 100.0
 
         # If the requested entity is a cover, convert to open_cover/close_cover
         elif entity.domain == cover.DOMAIN:
@@ -523,27 +530,31 @@ class HueOneLightChangeView(OpenPeerPowerView):
             else:
                 service = SERVICE_CLOSE_COVER
 
-            if entity_features & SUPPORT_SET_POSITION:
-                if parsed[STATE_BRIGHTNESS] is not None:
-                    domain = entity.domain
-                    service = SERVICE_SET_COVER_POSITION
-                    data[ATTR_POSITION] = parsed[STATE_BRIGHTNESS]
+            if (
+                entity_features & SUPPORT_SET_POSITION
+                and parsed[STATE_BRIGHTNESS] is not None
+            ):
+                domain = entity.domain
+                service = SERVICE_SET_COVER_POSITION
+                data[ATTR_POSITION] = parsed[STATE_BRIGHTNESS]
 
         # If the requested entity is a fan, convert to speed
-        elif entity.domain == fan.DOMAIN:
-            if entity_features & SUPPORT_SET_SPEED:
-                if parsed[STATE_BRIGHTNESS] is not None:
-                    domain = entity.domain
-                    # Convert 0-100 to a fan speed
-                    brightness = parsed[STATE_BRIGHTNESS]
-                    if brightness == 0:
-                        data[ATTR_SPEED] = SPEED_OFF
-                    elif 0 < brightness <= 33.3:
-                        data[ATTR_SPEED] = SPEED_LOW
-                    elif 33.3 < brightness <= 66.6:
-                        data[ATTR_SPEED] = SPEED_MEDIUM
-                    elif 66.6 < brightness <= 100:
-                        data[ATTR_SPEED] = SPEED_HIGH
+        elif (
+            entity.domain == fan.DOMAIN
+            and entity_features & SUPPORT_SET_SPEED
+            and parsed[STATE_BRIGHTNESS] is not None
+        ):
+            domain = entity.domain
+            # Convert 0-100 to a fan speed
+            brightness = parsed[STATE_BRIGHTNESS]
+            if brightness == 0:
+                data[ATTR_SPEED] = SPEED_OFF
+            elif 0 < brightness <= 33.3:
+                data[ATTR_SPEED] = SPEED_LOW
+            elif 33.3 < brightness <= 66.6:
+                data[ATTR_SPEED] = SPEED_MEDIUM
+            elif 66.6 < brightness <= 100:
+                data[ATTR_SPEED] = SPEED_HIGH
 
         # Map the off command to on
         if entity.domain in config.off_maps_to_on_domains:
@@ -646,7 +657,7 @@ def get_entity_state(config, entity):
             if hue_sat is not None:
                 hue = hue_sat[0]
                 sat = hue_sat[1]
-                # Convert opp hs values back to hue hs values
+                # Convert opp.hs values back to hue hs values
                 data[STATE_HUE] = int((hue / 360.0) * HUE_API_STATE_HUE_MAX)
                 data[STATE_SATURATION] = int((sat / 100.0) * HUE_API_STATE_SAT_MAX)
             else:
@@ -660,13 +671,7 @@ def get_entity_state(config, entity):
             data[STATE_SATURATION] = 0
             data[STATE_COLOR_TEMP] = 0
 
-        # Get the entity's supported features
-        entity_features = entity.attributes.get(ATTR_SUPPORTED_FEATURES, 0)
-
-        if entity.domain == light.DOMAIN:
-            if entity_features & SUPPORT_BRIGHTNESS:
-                pass
-        elif entity.domain == climate.DOMAIN:
+        if entity.domain == climate.DOMAIN:
             temperature = entity.attributes.get(ATTR_TEMPERATURE, 0)
             # Convert 0-100 to 0-254
             data[STATE_BRIGHTNESS] = round(temperature * HUE_API_STATE_BRI_MAX / 100)
@@ -725,6 +730,7 @@ def get_entity_state(config, entity):
 def entity_to_json(config, entity):
     """Convert an entity to its Hue bridge JSON representation."""
     entity_features = entity.attributes.get(ATTR_SUPPORTED_FEATURES, 0)
+    color_modes = entity.attributes.get(light.ATTR_SUPPORTED_COLOR_MODES, [])
     unique_id = hashlib.md5(entity.entity_id.encode()).hexdigest()
     unique_id = f"00:{unique_id[0:2]}:{unique_id[2:4]}:{unique_id[4:6]}:{unique_id[6:8]}:{unique_id[8:10]}:{unique_id[10:12]}:{unique_id[12:14]}-{unique_id[14:16]}"
 
@@ -742,15 +748,11 @@ def entity_to_json(config, entity):
         "swversion": "123",
     }
 
-    if (
-        (entity_features & SUPPORT_BRIGHTNESS)
-        and (entity_features & SUPPORT_COLOR)
-        and (entity_features & SUPPORT_COLOR_TEMP)
-    ):
+    if light.color_supported(color_modes) and light.color_temp_supported(color_modes):
         # Extended Color light (Zigbee Device ID: 0x0210)
         # Same as Color light, but which supports additional setting of color temperature
         retval["type"] = "Extended color light"
-        retval["modelid"] = "OPP231"
+        retval["modelid"] = "HASS231"
         retval["state"].update(
             {
                 HUE_API_STATE_BRI: state[STATE_BRIGHTNESS],
@@ -764,11 +766,11 @@ def entity_to_json(config, entity):
             retval["state"][HUE_API_STATE_COLORMODE] = "hs"
         else:
             retval["state"][HUE_API_STATE_COLORMODE] = "ct"
-    elif (entity_features & SUPPORT_BRIGHTNESS) and (entity_features & SUPPORT_COLOR):
+    elif light.color_supported(color_modes):
         # Color light (Zigbee Device ID: 0x0200)
         # Supports on/off, dimming and color control (hue/saturation, enhanced hue, color loop and XY)
         retval["type"] = "Color light"
-        retval["modelid"] = "OPP213"
+        retval["modelid"] = "HASS213"
         retval["state"].update(
             {
                 HUE_API_STATE_BRI: state[STATE_BRIGHTNESS],
@@ -778,13 +780,11 @@ def entity_to_json(config, entity):
                 HUE_API_STATE_EFFECT: "none",
             }
         )
-    elif (entity_features & SUPPORT_BRIGHTNESS) and (
-        entity_features & SUPPORT_COLOR_TEMP
-    ):
+    elif light.color_temp_supported(color_modes):
         # Color temperature light (Zigbee Device ID: 0x0220)
         # Supports groups, scenes, on/off, dimming, and setting of a color temperature
         retval["type"] = "Color temperature light"
-        retval["modelid"] = "OPP312"
+        retval["modelid"] = "HASS312"
         retval["state"].update(
             {
                 HUE_API_STATE_COLORMODE: "ct",
@@ -793,29 +793,28 @@ def entity_to_json(config, entity):
             }
         )
     elif entity_features & (
-        SUPPORT_BRIGHTNESS
-        | SUPPORT_SET_POSITION
+        SUPPORT_SET_POSITION
         | SUPPORT_SET_SPEED
         | SUPPORT_VOLUME_SET
         | SUPPORT_TARGET_TEMPERATURE
-    ):
+    ) or light.brightness_supported(color_modes):
         # Dimmable light (Zigbee Device ID: 0x0100)
         # Supports groups, scenes, on/off and dimming
         retval["type"] = "Dimmable light"
-        retval["modelid"] = "OPP123"
+        retval["modelid"] = "HASS123"
         retval["state"].update({HUE_API_STATE_BRI: state[STATE_BRIGHTNESS]})
     elif not config.lights_all_dimmable:
         # On/Off light (ZigBee Device ID: 0x0000)
         # Supports groups, scenes and on/off control
         retval["type"] = "On/Off light"
         retval["productname"] = "On/Off light"
-        retval["modelid"] = "OPP321"
+        retval["modelid"] = "HASS321"
     else:
         # Dimmable light (Zigbee Device ID: 0x0100)
         # Supports groups, scenes, on/off and dimming
         # Reports fixed brightness for compatibility with Alexa.
         retval["type"] = "Dimmable light"
-        retval["modelid"] = "OPP123"
+        retval["modelid"] = "HASS123"
         retval["state"].update({HUE_API_STATE_BRI: HUE_API_STATE_BRI_MAX})
 
     return retval
@@ -833,7 +832,7 @@ def create_config_model(config, request):
         "mac": "00:00:00:00:00:00",
         "swversion": "01003542",
         "apiversion": "1.17.0",
-        "whitelist": {HUE_API_USERNAME: {"name": "OPP BRIDGE"}},
+        "whitelist": {HUE_API_USERNAME: {"name": "HASS BRIDGE"}},
         "ipaddress": f"{config.advertise_ip}:{config.advertise_port}",
         "linkbutton": True,
     }
@@ -841,7 +840,7 @@ def create_config_model(config, request):
 
 def create_list_of_entities(config, request):
     """Create a list of all entities."""
-    opp = request.app["opp"]
+    opp = request.app["opp.]
     json_response = {}
 
     for entity in config.filter_exposed_entities(opp.states.async_all()):
@@ -852,12 +851,12 @@ def create_list_of_entities(config, request):
 
 
 def hue_brightness_to_opp(value):
-    """Convert hue brightness 1..254 to opp format 0..255."""
+    """Convert hue brightness 1..254 to opp.format 0..255."""
     return min(255, round((value / HUE_API_STATE_BRI_MAX) * 255))
 
 
 def opp_to_hue_brightness(value):
-    """Convert opp brightness 0..255 to hue 1..254 scale."""
+    """Convert opp.brightness 0..255 to hue 1..254 scale."""
     return max(1, round((value / 255) * HUE_API_STATE_BRI_MAX))
 
 

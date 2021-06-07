@@ -6,10 +6,9 @@ import os
 
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import DATA_MEGABYTES
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -45,13 +44,13 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     path = config.get(CONF_FOLDER_PATHS)
 
     if not opp.config.is_allowed_path(path):
-        _LOGGER.error("folder %s is not valid or allowed", path)
+        _LOGGER.error("Folder %s is not valid or allowed", path)
     else:
         folder = Folder(path, config.get(CONF_FILTER))
         add_entities([folder], True)
 
 
-class Folder(Entity):
+class Folder(SensorEntity):
     """Representation of a folder."""
 
     ICON = "mdi:folder"
@@ -92,7 +91,7 @@ class Folder(Entity):
         return self.ICON
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return other details about the sensor state."""
         return {
             "path": self._folder_path,

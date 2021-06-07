@@ -2,6 +2,7 @@
   "domain": "elv",
   "name": "ELV PCA",
   "documentation": "https://www.openpeerpower.io/integrations/pca",
-  "codeowners": [],
-  "requirements": ["pypca==0.0.7"]
+  "codeowners": ["@majuss"],
+  "requirements": ["pypca==0.0.7"],
+  "iot_class": "local_polling"
 }

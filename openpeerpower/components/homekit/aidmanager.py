@@ -5,9 +5,9 @@ HomeKit needs to allocate unique numbers to each accessory. These need to
 be stable between reboots and upgrades.
 
 Using a hash function to generate them means collisions. It also means you
-can't change the hash without causing breakages for OP users.
+can't change the hash without causing breakages for OPP users.
 
-This module generates and stores them in a OP storage.
+This module generates and stores them in a OPP storage.
 """
 import random
 
@@ -65,7 +65,7 @@ class AccessoryAidStorage:
     persist over reboots.
     """
 
-    def __init__(self, opp: OpenPeerPower, entry: ConfigEntry):
+    def __init__(self, opp: OpenPeerPower, entry: ConfigEntry) -> None:
         """Create a new entity map store."""
         self.opp = opp
         self.allocations = {}

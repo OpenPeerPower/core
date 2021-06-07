@@ -1,12 +1,13 @@
 """Support for HERE travel time sensors."""
+from __future__ import annotations
+
 from datetime import datetime, timedelta
 import logging
-from typing import Callable, Dict, Optional, Union
 
 import herepy
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_ATTRIBUTION,
     ATTR_LATITUDE,
@@ -24,7 +25,7 @@ from openpeerpower.const import (
 from openpeerpower.core import OpenPeerPower, State, callback
 from openpeerpower.helpers import location
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 from openpeerpower.helpers.typing import DiscoveryInfoType
 import openpeerpower.util.dt as dt
 
@@ -143,15 +144,17 @@ PLATFORM_SCHEMA = vol.All(
 
 async def async_setup_platform(
     opp: OpenPeerPower,
-    config: Dict[str, Union[str, bool]],
-    async_add_entities: Callable,
-    discovery_info: Optional[DiscoveryInfoType] = None,
+    config: dict[str, str | bool],
+    async_add_entities: AddEntitiesCallback,
+    discovery_info: DiscoveryInfoType | None = None,
 ) -> None:
     """Set up the HERE travel time platform."""
     api_key = config[CONF_API_KEY]
     here_client = herepy.RoutingApi(api_key)
 
-    if not await opp.async_add_executor_job(_are_valid_client_credentials, here_client):
+    if not await opp.async_add_executor_job(
+        _are_valid_client_credentials, here_client
+    ):
         _LOGGER.error(
             "Invalid credentials. This error is returned if the specified token was invalid or no contract could be found for this token"
         )
@@ -211,7 +214,7 @@ def _are_valid_client_credentials(here_client: herepy.RoutingApi) -> bool:
     return True
 
 
-class HERETravelTimeSensor(Entity):
+class HERETravelTimeSensor(SensorEntity):
     """Representation of a HERE travel time sensor."""
 
     def __init__(
@@ -221,7 +224,7 @@ class HERETravelTimeSensor(Entity):
         destination: str,
         origin_entity_id: str,
         destination_entity_id: str,
-        here_data: "HERETravelTimeData",
+        here_data: HERETravelTimeData,
     ) -> None:
         """Initialize the sensor."""
         self._name = name
@@ -248,14 +251,15 @@ class HERETravelTimeSensor(Entity):
             """Update sensor after Open Peer Power started."""
             self.async_schedule_update_op_state(True)
 
-        self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, delayed_sensor_update)
+        self.opp.bus.async_listen_once(
+            EVENT_OPENPEERPOWER_START, delayed_sensor_update
+        )
 
     @property
-    def state(self) -> Optional[str]:
+    def state(self) -> str | None:
         """Return the state of the sensor."""
-        if self._here_data.traffic_mode:
-            if self._here_data.traffic_time is not None:
-                return str(round(self._here_data.traffic_time / 60))
+        if self._here_data.traffic_mode and self._here_data.traffic_time is not None:
+            return str(round(self._here_data.traffic_time / 60))
         if self._here_data.base_time is not None:
             return str(round(self._here_data.base_time / 60))
 
@@ -267,9 +271,9 @@ class HERETravelTimeSensor(Entity):
         return self._name
 
     @property
-    def device_state_attributes(
+    def extra_state_attributes(
         self,
-    ) -> Optional[Dict[str, Union[None, float, str, bool]]]:
+    ) -> dict[str, None | float | str | bool] | None:
         """Return the state attributes."""
         if self._here_data.base_time is None:
             return None
@@ -320,7 +324,7 @@ class HERETravelTimeSensor(Entity):
 
         await self.opp.async_add_executor_job(self._here_data.update)
 
-    async def _get_location_from_entity(self, entity_id: str) -> Optional[str]:
+    async def _get_location_from_entity(self, entity_id: str) -> str | None:
         """Get the location from the entity state or attributes."""
         entity = self.opp.states.get(entity_id)
 
@@ -476,8 +480,8 @@ class HERETravelTimeData:
             self.destination_name = waypoint[1]["mappedRoadName"]
 
     @staticmethod
-    def _build_opp_attribution(source_attribution: Dict) -> Optional[str]:
-        """Build a opp frontend ready string out of the sourceAttribution."""
+    def _build_opp_attribution(source_attribution: dict) -> str | None:
+        """Build a opp.frontend ready string out of the sourceAttribution."""
         suppliers = source_attribution.get("supplier")
         if suppliers is not None:
             supplier_titles = []

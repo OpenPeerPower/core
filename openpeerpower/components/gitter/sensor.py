@@ -5,10 +5,9 @@ from gitterpy.client import GitterClient
 from gitterpy.errors import GitterRoomError, GitterTokenError
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_API_KEY, CONF_NAME, CONF_ROOM
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -17,7 +16,7 @@ ATTR_ROOM = "room"
 ATTR_USERNAME = "username"
 
 DEFAULT_NAME = "Gitter messages"
-DEFAULT_ROOM = "open-peer-power/openpeerpower"
+DEFAULT_ROOM = "openpeerpower/openpeerpower"
 
 ICON = "mdi:message-cog"
 
@@ -47,7 +46,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities([GitterSensor(gitter, room, name, username)], True)
 
 
-class GitterSensor(Entity):
+class GitterSensor(SensorEntity):
     """Representation of a Gitter sensor."""
 
     def __init__(self, data, room, name, username):
@@ -76,7 +75,7 @@ class GitterSensor(Entity):
         return self._unit_of_measurement
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return {
             ATTR_USERNAME: self._username,

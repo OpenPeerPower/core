@@ -1,11 +1,15 @@
 """Support for the Philips Hue sensors as a platform."""
+from __future__ import annotations
+
 from datetime import timedelta
 import logging
+from typing import Any
 
 from aiohue import AiohueException, Unauthorized
 from aiohue.sensors import TYPE_ZLL_PRESENCE
 import async_timeout
 
+from openpeerpower.components.sensor import STATE_CLASS_MEASUREMENT
 from openpeerpower.core import callback
 from openpeerpower.helpers import debounce, entity
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
@@ -15,7 +19,7 @@ from .helpers import remove_devices
 from .hue_event import EVENT_CONFIG_MAP
 from .sensor_device import GenericHueDevice
 
-SENSOR_CONFIG_MAP = {}
+SENSOR_CONFIG_MAP: dict[str, Any] = {}
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -165,9 +169,6 @@ class GenericHueSensor(GenericHueDevice, entity.Entity):
 
     should_poll = False
 
-    async def _async_update_op_state(self, *args, **kwargs):
-        raise NotImplementedError
-
     @property
     def available(self):
         """Return if sensor is available."""
@@ -177,8 +178,14 @@ class GenericHueSensor(GenericHueDevice, entity.Entity):
             or self.sensor.config.get("reachable", True)
         )
 
+    @property
+    def state_class(self):
+        """Return the state class of this entity, from STATE_CLASSES, if any."""
+        return STATE_CLASS_MEASUREMENT
+
     async def async_added_to_opp(self):
         """When entity is added to opp."""
+        await super().async_added_to_opp()
         self.async_on_remove(
             self.bridge.sensor_manager.coordinator.async_add_listener(
                 self.async_write_op_state
@@ -197,6 +204,6 @@ class GenericZLLSensor(GenericHueSensor):
     """Representation of a Hue-brand, physical sensor."""
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the device state attributes."""
         return {"battery_level": self.sensor.battery}

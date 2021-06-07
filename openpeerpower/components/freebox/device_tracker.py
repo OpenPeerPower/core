@@ -1,21 +1,23 @@
 """Support for Freebox devices (Freebox v6 and Freebox mini 4K)."""
+from __future__ import annotations
+
 from datetime import datetime
-from typing import Dict
+from typing import Any
 
 from openpeerpower.components.device_tracker import SOURCE_TYPE_ROUTER
 from openpeerpower.components.device_tracker.config_entry import ScannerEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers.device_registry import CONNECTION_NETWORK_MAC
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.entity import DeviceInfo
 
 from .const import DEFAULT_DEVICE_NAME, DEVICE_ICONS, DOMAIN
 from .router import FreeboxRouter
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up device tracker for Freebox component."""
     router = opp.data[DOMAIN][entry.unique_id]
@@ -52,7 +54,7 @@ def add_entities(router, async_add_entities, tracked):
 class FreeboxDevice(ScannerEntity):
     """Representation of a Freebox device."""
 
-    def __init__(self, router: FreeboxRouter, device: Dict[str, any]) -> None:
+    def __init__(self, router: FreeboxRouter, device: dict[str, Any]) -> None:
         """Initialize a Freebox device."""
         self._router = router
         self._name = device["primary_name"].strip() or DEFAULT_DEVICE_NAME
@@ -105,12 +107,12 @@ class FreeboxDevice(ScannerEntity):
         return self._icon
 
     @property
-    def device_state_attributes(self) -> Dict[str, any]:
+    def extra_state_attributes(self) -> dict[str, Any]:
         """Return the attributes."""
         return self._attrs
 
     @property
-    def device_info(self) -> Dict[str, any]:
+    def device_info(self) -> DeviceInfo:
         """Return the device information."""
         return {
             "connections": {(CONNECTION_NETWORK_MAC, self._mac)},

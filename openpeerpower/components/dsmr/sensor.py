@@ -1,17 +1,19 @@
 """Support for Dutch Smart Meter (also known as Smartmeter or P1 port)."""
+from __future__ import annotations
+
 import asyncio
 from asyncio import CancelledError
+from contextlib import suppress
 from datetime import timedelta
 from functools import partial
 import logging
-from typing import Dict
 
 from dsmr_parser import obis_references as obis_ref
 from dsmr_parser.clients.protocol import create_dsmr_reader, create_tcp_dsmr_reader
 import serial
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry
 from openpeerpower.const import (
     CONF_HOST,
@@ -19,10 +21,9 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_STOP,
     TIME_HOURS,
 )
-from openpeerpower.core import CoreState, callback
+from openpeerpower.core import CoreState, OpenPeerPower, callback
 from openpeerpower.helpers import config_validation as cv
-from openpeerpower.helpers.entity import Entity
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.entity import DeviceInfo
 from openpeerpower.util import Throttle
 
 from .const import (
@@ -72,7 +73,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the DSMR sensor."""
     config = entry.data
@@ -238,7 +239,7 @@ async def async_setup_entry(
                 transport, protocol = await opp.loop.create_task(reader_factory())
 
                 if transport:
-                    # Register listener to close transport on OP shutdown
+                    # Register listener to close transport on OPP shutdown
                     stop_listener = opp.bus.async_listen_once(
                         EVENT_OPENPEERPOWER_STOP, transport.close
                     )
@@ -247,7 +248,7 @@ async def async_setup_entry(
                     await protocol.wait_closed()
 
                     # Unexpected disconnect
-                    if not opp.is_stopping:
+                    if not opp is_stopping:
                         stop_listener()
 
                 transport = None
@@ -285,7 +286,7 @@ async def async_setup_entry(
     opp.data[DOMAIN][entry.entry_id][DATA_TASK] = task
 
 
-class DSMREntity(Entity):
+class DSMREntity(SensorEntity):
     """Entity reading values from DSMR telegram."""
 
     def __init__(self, name, device_name, device_serial, obis, config, force_update):
@@ -304,7 +305,7 @@ class DSMREntity(Entity):
     def update_data(self, telegram):
         """Update data."""
         self.telegram = telegram
-        if self.opp and self._obis in self.telegram:
+        if self.opp.and self._obis in self.telegram:
             self.async_write_op_state()
 
     def get_dsmr_object_attr(self, attribute):
@@ -342,10 +343,8 @@ class DSMREntity(Entity):
         if self._obis == obis_ref.ELECTRICITY_ACTIVE_TARIFF:
             return self.translate_tariff(value, self._config[CONF_DSMR_VERSION])
 
-        try:
+        with suppress(TypeError):
             value = round(float(value), self._config[CONF_PRECISION])
-        except TypeError:
-            pass
 
         if value is not None:
             return value
@@ -363,7 +362,7 @@ class DSMREntity(Entity):
         return self._unique_id
 
     @property
-    def device_info(self) -> Dict[str, any]:
+    def device_info(self) -> DeviceInfo:
         """Return the device information."""
         return {
             "identifiers": {(DOMAIN, self._device_serial)},

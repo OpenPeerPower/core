@@ -6,7 +6,7 @@ import random
 import discogs_client
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_ATTRIBUTION,
     CONF_MONITORED_CONDITIONS,
@@ -15,7 +15,6 @@ from openpeerpower.const import (
 )
 from openpeerpower.helpers.aiohttp_client import SERVER_SOFTWARE
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -89,7 +88,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(sensors, True)
 
 
-class DiscogsSensor(Entity):
+class DiscogsSensor(SensorEntity):
     """Create a new Discogs sensor for a specific type."""
 
     def __init__(self, discogs_data, name, sensor_type):
@@ -121,7 +120,7 @@ class DiscogsSensor(Entity):
         return SENSORS[self._type]["unit_of_measurement"]
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the device state attributes of the sensor."""
         if self._state is None or self._attrs is None:
             return None

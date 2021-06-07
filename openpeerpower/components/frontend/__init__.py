@@ -1,10 +1,13 @@
 """Handle the frontend for Open Peer Power."""
+from __future__ import annotations
+
+from functools import lru_cache
 import json
 import logging
 import mimetypes
 import os
 import pathlib
-from typing import Any, Dict, Optional, Set, Tuple
+from typing import Any
 
 from aiohttp import hdrs, web, web_urldispatcher
 import jinja2
@@ -33,6 +36,9 @@ mimetypes.add_type("application/javascript", ".js")
 
 DOMAIN = "frontend"
 CONF_THEMES = "themes"
+CONF_THEMES_MODES = "modes"
+CONF_THEMES_LIGHT = "light"
+CONF_THEMES_DARK = "dark"
 CONF_EXTRA_HTML_URL = "extra_html_url"
 CONF_EXTRA_HTML_URL_ES5 = "extra_html_url_es5"
 CONF_EXTRA_MODULE_URL = "extra_module_url"
@@ -43,30 +49,6 @@ EVENT_PANELS_UPDATED = "panels_updated"
 
 DEFAULT_THEME_COLOR = "#03A9F4"
 
-MANIFEST_JSON = {
-    "background_color": "#FFFFFF",
-    "description": "Home automation platform that puts local control and privacy first.",
-    "dir": "ltr",
-    "display": "standalone",
-    "icons": [
-        {
-            "src": f"/static/icons/favicon-{size}x{size}.png",
-            "sizes": f"{size}x{size}",
-            "type": "image/png",
-            "purpose": "maskable any",
-        }
-        for size in (192, 384, 512, 1024)
-    ],
-    "lang": "en-US",
-    "name": "Open Peer Power",
-    "short_name": "OPP",
-    "start_url": "/?homescreen=1",
-    "theme_color": DEFAULT_THEME_COLOR,
-    "prefer_related_applications": True,
-    "related_applications": [
-        {"platform": "play", "id": "io.openpeerpower.companion.android"}
-    ],
-}
 
 DATA_PANELS = "frontend_panels"
 DATA_JS_VERSION = "frontend_js_version"
@@ -87,14 +69,39 @@ PRIMARY_COLOR = "primary-color"
 
 _LOGGER = logging.getLogger(__name__)
 
+EXTENDED_THEME_SCHEMA = vol.Schema(
+    {
+        # Theme variables that apply to all modes
+        cv.string: cv.string,
+        # Mode specific theme variables
+        vol.Optional(CONF_THEMES_MODES): vol.Schema(
+            {
+                vol.Optional(CONF_THEMES_LIGHT): vol.Schema({cv.string: cv.string}),
+                vol.Optional(CONF_THEMES_DARK): vol.Schema({cv.string: cv.string}),
+            }
+        ),
+    }
+)
+
+THEME_SCHEMA = vol.Schema(
+    {
+        cv.string: (
+            vol.Any(
+                # Legacy theme scheme
+                {cv.string: cv.string},
+                # New extended schema with mode support
+                EXTENDED_THEME_SCHEMA,
+            )
+        )
+    }
+)
+
 CONFIG_SCHEMA = vol.Schema(
     {
         DOMAIN: vol.Schema(
             {
                 vol.Optional(CONF_FRONTEND_REPO): cv.isdir,
-                vol.Optional(CONF_THEMES): vol.Schema(
-                    {cv.string: {cv.string: cv.string}}
-                ),
+                vol.Optional(CONF_THEMES): THEME_SCHEMA,
                 vol.Optional(CONF_EXTRA_MODULE_URL): vol.All(
                     cv.ensure_list, [cv.string]
                 ),
@@ -115,23 +122,105 @@ SERVICE_SET_THEME = "set_theme"
 SERVICE_RELOAD_THEMES = "reload_themes"
 
 
+class Manifest:
+    """Manage the manifest.json contents."""
+
+    def __init__(self, data: dict) -> None:
+        """Init the manifest manager."""
+        self.manifest = data
+        self._serialize()
+
+    def __getitem__(self, key: str) -> Any:
+        """Return an item in the manifest."""
+        return self.manifest[key]
+
+    @property
+    def json(self) -> str:
+        """Return the serialized manifest."""
+        return self._serialized
+
+    def _serialize(self) -> None:
+        self._serialized = json.dumps(self.manifest, sort_keys=True)
+
+    def update_key(self, key: str, val: str) -> None:
+        """Add a keyval to the manifest.json."""
+        self.manifest[key] = val
+        self._serialize()
+
+
+MANIFEST_JSON = Manifest(
+    {
+        "background_color": "#FFFFFF",
+        "description": "Home automation platform that puts local control and privacy first.",
+        "dir": "ltr",
+        "display": "standalone",
+        "icons": [
+            {
+                "src": f"/static/icons/favicon-{size}x{size}.png",
+                "sizes": f"{size}x{size}",
+                "type": "image/png",
+                "purpose": "maskable any",
+            }
+            for size in (192, 384, 512, 1024)
+        ],
+        "screenshots": [
+            {
+                "src": "/static/images/screenshots/screenshot-1.png",
+                "sizes": "413x792",
+                "type": "image/png",
+            }
+        ],
+        "lang": "en-US",
+        "name": "Open Peer Power",
+        "short_name": "Assistant",
+        "start_url": "/?homescreen=1",
+        "theme_color": DEFAULT_THEME_COLOR,
+        "prefer_related_applications": True,
+        "related_applications": [
+            {"platform": "play", "id": "io.openpeerpower.companion.android"}
+        ],
+    }
+)
+
+
+class UrlManager:
+    """Manage urls to be used on the frontend.
+
+    This is abstracted into a class because
+    some integrations add a remove these directly
+    on opp.data
+    """
+
+    def __init__(self, urls):
+        """Init the url manager."""
+        self.urls = frozenset(urls)
+
+    def add(self, url):
+        """Add a url to the set."""
+        self.urls = frozenset([*self.urls, url])
+
+    def remove(self, url):
+        """Remove a url from the set."""
+        self.urls = self.urls - {url}
+
+
 class Panel:
     """Abstract class for panels."""
 
     # Name of the webcomponent
-    component_name: Optional[str] = None
+    component_name: str | None = None
 
     # Icon to show in the sidebar
-    sidebar_icon: Optional[str] = None
+    sidebar_icon: str | None = None
 
     # Title to show in the sidebar
-    sidebar_title: Optional[str] = None
+    sidebar_title: str | None = None
 
     # Url to show the panel in the frontend
-    frontend_url_path: Optional[str] = None
+    frontend_url_path: str | None = None
 
     # Config to pass to the webcomponent
-    config: Optional[Dict[str, Any]] = None
+    config: dict[str, Any] | None = None
 
     # If the panel should only be visible to admins
     require_admin = False
@@ -214,15 +303,12 @@ def async_remove_panel(opp, frontend_url_path):
 def add_extra_js_url(opp, url, es5=False):
     """Register extra js or module url to load."""
     key = DATA_EXTRA_JS_URL_ES5 if es5 else DATA_EXTRA_MODULE_URL
-    url_set = opp.data.get(key)
-    if url_set is None:
-        url_set = opp.data[key] = set()
-    url_set.add(url)
+    opp.data[key].add(url)
 
 
 def add_manifest_json_key(key, val):
     """Add a keyval to the manifest.json."""
-    MANIFEST_JSON[key] = val
+    MANIFEST_JSON.update_key(key, val)
 
 
 def _frontend_root(dev_repo_path):
@@ -299,20 +385,11 @@ async def async_setup(opp, config):
         "developer-tools",
         require_admin=True,
         sidebar_title="developer_tools",
-        sidebar_icon="opp:hammer",
+        sidebar_icon="opp.hammer",
     )
 
-    if DATA_EXTRA_MODULE_URL not in opp.data:
-        opp.data[DATA_EXTRA_MODULE_URL] = set()
-
-    for url in conf.get(CONF_EXTRA_MODULE_URL, []):
-        add_extra_js_url(opp, url)
-
-    if DATA_EXTRA_JS_URL_ES5 not in opp.data:
-        opp.data[DATA_EXTRA_JS_URL_ES5] = set()
-
-    for url in conf.get(CONF_EXTRA_JS_URL_ES5, []):
-        add_extra_js_url(opp, url, True)
+    opp.data[DATA_EXTRA_MODULE_URL] = UrlManager(conf.get(CONF_EXTRA_MODULE_URL, []))
+    opp.data[DATA_EXTRA_JS_URL_ES5] = UrlManager(conf.get(CONF_EXTRA_JS_URL_ES5, []))
 
     await _async_setup_themes(opp, conf.get(CONF_THEMES))
 
@@ -344,12 +421,16 @@ async def _async_setup_themes(opp, themes):
         """Update theme_color in manifest."""
         name = opp.data[DATA_DEFAULT_THEME]
         themes = opp.data[DATA_THEMES]
-        MANIFEST_JSON["theme_color"] = DEFAULT_THEME_COLOR
         if name != DEFAULT_THEME:
-            MANIFEST_JSON["theme_color"] = themes[name].get(
-                "app-header-background-color",
-                themes[name].get(PRIMARY_COLOR, DEFAULT_THEME_COLOR),
+            MANIFEST_JSON.update_key(
+                "theme_color",
+                themes[name].get(
+                    "app-header-background-color",
+                    themes[name].get(PRIMARY_COLOR, DEFAULT_THEME_COLOR),
+                ),
             )
+        else:
+            MANIFEST_JSON.update_key("theme_color", DEFAULT_THEME_COLOR)
         opp.bus.async_fire(EVENT_THEMES_UPDATED)
 
     @callback
@@ -417,6 +498,12 @@ async def _async_setup_themes(opp, themes):
     )
 
 
+@callback
+@lru_cache(maxsize=1)
+def _async_render_index_cached(template, **kwargs):
+    return template.render(**kwargs)
+
+
 class IndexView(web_urldispatcher.AbstractResource):
     """Serve the frontend."""
 
@@ -443,7 +530,7 @@ class IndexView(web_urldispatcher.AbstractResource):
 
     async def resolve(
         self, request: web.Request
-    ) -> Tuple[Optional[web_urldispatcher.UrlMappingMatchInfo], Set[str]]:
+    ) -> tuple[web_urldispatcher.UrlMappingMatchInfo | None, set[str]]:
         """Resolve resource.
 
         Return (UrlMappingMatchInfo, allowed_methods) pair.
@@ -490,21 +577,21 @@ class IndexView(web_urldispatcher.AbstractResource):
 
     async def get(self, request: web.Request) -> web.Response:
         """Serve the index page for panel pages."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
 
         if not opp.components.onboarding.async_is_onboarded():
             return web.Response(status=302, headers={"location": "/onboarding.html"})
 
-        template = self._template_cache
-
-        if template is None:
-            template = await opp.async_add_executor_job(self.get_template)
+        template = self._template_cache or await opp.async_add_executor_job(
+            self.get_template
+        )
 
         return web.Response(
-            text=template.render(
+            text=_async_render_index_cached(
+                template,
                 theme_color=MANIFEST_JSON["theme_color"],
-                extra_modules=opp.data[DATA_EXTRA_MODULE_URL],
-                extra_js_es5=opp.data[DATA_EXTRA_JS_URL_ES5],
+                extra_modules=opp.data[DATA_EXTRA_MODULE_URL].urls,
+                extra_js_es5=opp.data[DATA_EXTRA_JS_URL_ES5].urls,
             ),
             content_type="text/html",
         )
@@ -528,8 +615,9 @@ class ManifestJSONView(OpenPeerPowerView):
     @callback
     def get(self, request):  # pylint: disable=no-self-use
         """Return the manifest.json."""
-        msg = json.dumps(MANIFEST_JSON, sort_keys=True)
-        return web.Response(text=msg, content_type="application/manifest+json")
+        return web.Response(
+            text=MANIFEST_JSON.json, content_type="application/manifest+json"
+        )
 
 
 @callback
@@ -612,7 +700,7 @@ async def websocket_get_version(opp, connection, msg):
     frontend = None
 
     for req in integration.requirements:
-        if req.startswith("openpeerpower-frontend=="):
+        if req.startswith("open-peer-power-frontend=="):
             frontend = req.split("==", 1)[1]
 
     if frontend is None:

@@ -1,11 +1,11 @@
 """Sensor platform for FireServiceRota integration."""
 import logging
 
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 from openpeerpower.helpers.restore_state import RestoreEntity
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import DATA_CLIENT, DOMAIN as FIRESERVICEROTA_DOMAIN
 
@@ -13,7 +13,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up FireServiceRota sensor based on a config entry."""
     client = opp.data[FIRESERVICEROTA_DOMAIN][entry.entry_id][DATA_CLIENT]
@@ -21,7 +21,7 @@ async def async_setup_entry(
     async_add_entities([IncidentsSensor(client)])
 
 
-class IncidentsSensor(RestoreEntity):
+class IncidentsSensor(RestoreEntity, SensorEntity):
     """Representation of FireServiceRota incidents sensor."""
 
     def __init__(self, client):
@@ -64,7 +64,7 @@ class IncidentsSensor(RestoreEntity):
         return False
 
     @property
-    def device_state_attributes(self) -> object:
+    def extra_state_attributes(self) -> object:
         """Return available attributes for sensor."""
         attr = {}
         data = self._state_attributes

@@ -2,7 +2,7 @@
 import datetime
 import logging
 
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.util import Throttle
 import openpeerpower.util.dt as dt_util
 
@@ -34,7 +34,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(dev, True)
 
 
-class EbusdSensor(Entity):
+class EbusdSensor(SensorEntity):
     """Ebusd component sensor methods definition."""
 
     def __init__(self, data, sensor, name):
@@ -55,7 +55,7 @@ class EbusdSensor(Entity):
         return self._state
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the device state attributes."""
         if self._type == 1 and self._state is not None:
             schedule = {

@@ -50,7 +50,9 @@ def setup_platform(opp, config, add_entities, disc_info=None):
     for data in disc_info[CONF_ENTITIES]:
         if not data[CONF_TRACK]:
             continue
-        entity_id = generate_entity_id(ENTITY_ID_FORMAT, data[CONF_DEVICE_ID], opp=opp)
+        entity_id = generate_entity_id(
+            ENTITY_ID_FORMAT, data[CONF_DEVICE_ID], opp.opp
+        )
         entity = GoogleCalendarEventDevice(
             calendar_service, disc_info[CONF_CAL_ID], data, entity_id
         )
@@ -78,7 +80,7 @@ class GoogleCalendarEventDevice(CalendarEventDevice):
         self.entity_id = entity_id
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the device state attributes."""
         return {"offset_reached": self._offset_reached}
 

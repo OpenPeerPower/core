@@ -1,7 +1,9 @@
 """Provides functionality to interact with humidifier devices."""
+from __future__ import annotations
+
 from datetime import timedelta
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any, final
 
 import voluptuous as vol
 
@@ -13,6 +15,7 @@ from openpeerpower.const import (
     SERVICE_TURN_ON,
     STATE_ON,
 )
+from openpeerpower.core import OpenPeerPower
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.config_validation import (  # noqa: F401
     PLATFORM_SCHEMA,
@@ -20,7 +23,7 @@ from openpeerpower.helpers.config_validation import (  # noqa: F401
 )
 from openpeerpower.helpers.entity import ToggleEntity
 from openpeerpower.helpers.entity_component import EntityComponent
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 from openpeerpower.loader import bind_opp
 
 from .const import (
@@ -57,9 +60,11 @@ def is_on(opp, entity_id):
     return opp.states.is_state(entity_id, STATE_ON)
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up humidifier devices."""
-    component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp, SCAN_INTERVAL)
+    component = opp.data[DOMAIN] = EntityComponent(
+        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
+    )
     await component.async_setup(config)
 
     component.async_register_entity_service(SERVICE_TURN_ON, {}, "async_turn_on")
@@ -84,21 +89,21 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up a config entry."""
     return await opp.data[DOMAIN].async_setup_entry(entry)
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     return await opp.data[DOMAIN].async_unload_entry(entry)
 
 
 class HumidifierEntity(ToggleEntity):
-    """Representation of a humidifier device."""
+    """Base class for humidifier entities."""
 
     @property
-    def capability_attributes(self) -> Dict[str, Any]:
+    def capability_attributes(self) -> dict[str, Any]:
         """Return capability attributes."""
         supported_features = self.supported_features or 0
         data = {
@@ -111,8 +116,9 @@ class HumidifierEntity(ToggleEntity):
 
         return data
 
+    @final
     @property
-    def state_attributes(self) -> Dict[str, Any]:
+    def state_attributes(self) -> dict[str, Any]:
         """Return the optional state attributes."""
         supported_features = self.supported_features or 0
         data = {}
@@ -126,12 +132,12 @@ class HumidifierEntity(ToggleEntity):
         return data
 
     @property
-    def target_humidity(self) -> Optional[int]:
+    def target_humidity(self) -> int | None:
         """Return the humidity we try to reach."""
         return None
 
     @property
-    def mode(self) -> Optional[str]:
+    def mode(self) -> str | None:
         """Return the current mode, e.g., home, auto, baby.
 
         Requires SUPPORT_MODES.
@@ -139,7 +145,7 @@ class HumidifierEntity(ToggleEntity):
         raise NotImplementedError
 
     @property
-    def available_modes(self) -> Optional[List[str]]:
+    def available_modes(self) -> list[str] | None:
         """Return a list of available modes.
 
         Requires SUPPORT_MODES.

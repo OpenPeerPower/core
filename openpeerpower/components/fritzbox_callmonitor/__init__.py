@@ -1,5 +1,4 @@
 """The fritzbox_callmonitor integration."""
-from asyncio import gather
 import logging
 
 from fritzconnection.core.exceptions import FritzConnectionException, FritzSecurityError
@@ -19,11 +18,6 @@ from .const import (
 )
 
 _LOGGER = logging.getLogger(__name__)
-
-
-async def async_setup(opp, config):
-    """Set up the fritzbox_callmonitor integration."""
-    return True
 
 
 async def async_setup_entry(opp, config_entry):
@@ -59,10 +53,7 @@ async def async_setup_entry(opp, config_entry):
         UNDO_UPDATE_LISTENER: undo_listener,
     }
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(config_entry, PLATFORMS)
 
     return True
 
@@ -70,13 +61,8 @@ async def async_setup_entry(opp, config_entry):
 async def async_unload_entry(opp, config_entry):
     """Unloading the fritzbox_callmonitor platforms."""
 
-    unload_ok = all(
-        await gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(config_entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
+    unload_ok = await opp.config_entries.async_unload_platforms(
+        config_entry, PLATFORMS
     )
 
     opp.data[DOMAIN][config_entry.entry_id][UNDO_UPDATE_LISTENER]()

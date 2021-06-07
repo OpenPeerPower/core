@@ -1,6 +1,8 @@
 """Generic entity for the HomematicIP Cloud component."""
+from __future__ import annotations
+
 import logging
-from typing import Any, Dict, Optional
+from typing import Any
 
 from homematicip.aio.device import AsyncDevice
 from homematicip.aio.group import AsyncGroup
@@ -8,7 +10,7 @@ from homematicip.aio.group import AsyncGroup
 from openpeerpower.const import ATTR_ID
 from openpeerpower.core import callback
 from openpeerpower.helpers import device_registry as dr, entity_registry as er
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity import DeviceInfo, Entity
 
 from .const import DOMAIN as HMIPC_DOMAIN
 from .hap import HomematicipHAP
@@ -74,9 +76,9 @@ class HomematicipGenericEntity(Entity):
         self,
         hap: HomematicipHAP,
         device,
-        post: Optional[str] = None,
-        channel: Optional[int] = None,
-        is_multi_channel: Optional[bool] = False,
+        post: str | None = None,
+        channel: int | None = None,
+        is_multi_channel: bool | None = False,
     ) -> None:
         """Initialize the generic entity."""
         self._hap = hap
@@ -90,9 +92,9 @@ class HomematicipGenericEntity(Entity):
         _LOGGER.info("Setting up %s (%s)", self.name, self._device.modelType)
 
     @property
-    def device_info(self) -> Dict[str, Any]:
+    def device_info(self) -> DeviceInfo:
         """Return device specific attributes."""
-        # Only physical devices should be OP devices.
+        # Only physical devices should be OPP devices.
         if isinstance(self._device, AsyncDevice):
             return {
                 "identifiers": {
@@ -223,7 +225,7 @@ class HomematicipGenericEntity(Entity):
         return unique_id
 
     @property
-    def icon(self) -> Optional[str]:
+    def icon(self) -> str | None:
         """Return the icon."""
         for attr, icon in DEVICE_ATTRIBUTE_ICONS.items():
             if getattr(self._device, attr, None):
@@ -232,7 +234,7 @@ class HomematicipGenericEntity(Entity):
         return None
 
     @property
-    def device_state_attributes(self) -> Dict[str, Any]:
+    def extra_state_attributes(self) -> dict[str, Any]:
         """Return the state attributes of the generic entity."""
         state_attr = {}
 

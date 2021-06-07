@@ -27,7 +27,7 @@ from openpeerpower.const import (
     STATE_ON,
 )
 from openpeerpower.core import callback, split_entity_id
-from openpeerpower.helpers.event import call_later
+from openpeerpower.helpers.event import async_call_later
 
 from .accessories import TYPES, HomeAccessory
 from .const import (
@@ -134,7 +134,7 @@ class Switch(HomeAccessory):
         self.async_call_service(self._domain, service, params)
 
         if self.activate_only:
-            call_later(self.opp, 1, self.reset_switch)
+            async_call_later(self.opp, 1, self.reset_switch)
 
     @callback
     def async_update_state(self, new_state):

@@ -6,7 +6,7 @@ import logging
 import dweepy
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_DEVICE,
     CONF_NAME,
@@ -14,7 +14,6 @@ from openpeerpower.const import (
     CONF_VALUE_TEMPLATE,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -56,7 +55,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities([DweetSensor(opp, dweet, name, value_template, unit)], True)
 
 
-class DweetSensor(Entity):
+class DweetSensor(SensorEntity):
     """Representation of a Dweet sensor."""
 
     def __init__(self, opp, dweet, name, value_template, unit_of_measurement):

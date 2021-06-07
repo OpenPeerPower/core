@@ -1,11 +1,14 @@
 """Support for the Dynalite devices as entities."""
-from typing import Any, Callable, Dict
+from __future__ import annotations
+
+from typing import Any, Callable
 
 from openpeerpower.components.dynalite.bridge import DynaliteBridge
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity import DeviceInfo, Entity
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 
 from .const import DOMAIN, LOGGER
 
@@ -13,7 +16,7 @@ from .const import DOMAIN, LOGGER
 def async_setup_entry_base(
     opp: OpenPeerPower,
     config_entry: ConfigEntry,
-    async_add_entities: Callable,
+    async_add_entities: AddEntitiesCallback,
     platform: str,
     entity_from_device: Callable,
 ) -> None:
@@ -58,7 +61,7 @@ class DynaliteBase(Entity):
         return self._device.available
 
     @property
-    def device_info(self) -> Dict[str, Any]:
+    def device_info(self) -> DeviceInfo:
         """Device info for this entity."""
         return {
             "identifiers": {(DOMAIN, self._device.unique_id)},
@@ -67,7 +70,7 @@ class DynaliteBase(Entity):
         }
 
     async def async_added_to_opp(self) -> None:
-        """Added to opp so need to register to dispatch."""
+        """Added to opp.so need to register to dispatch."""
         # register for device specific update
         self._unsub_dispatchers.append(
             async_dispatcher_connect(

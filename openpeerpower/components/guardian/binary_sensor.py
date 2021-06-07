@@ -1,5 +1,5 @@
 """Binary sensors for the Elexa Guardian integration."""
-from typing import Callable, Dict, Optional
+from __future__ import annotations
 
 from openpeerpower.components.binary_sensor import (
     DEVICE_CLASS_CONNECTIVITY,
@@ -10,6 +10,7 @@ from openpeerpower.components.binary_sensor import (
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from . import PairedSensorEntity, ValveControllerEntity
@@ -41,7 +42,7 @@ VALVE_CONTROLLER_SENSORS = [SENSOR_KIND_AP_INFO, SENSOR_KIND_LEAK_DETECTED]
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
     """Set up Guardian switches based on a config entry."""
 
@@ -68,7 +69,7 @@ async def async_setup_entry(
 
         async_add_entities(entities)
 
-    # Handle adding paired sensors after OPP startup:
+    # Handle adding paired sensors after HASS startup:
     opp.data[DOMAIN][DATA_UNSUB_DISPATCHER_CONNECT][entry.entry_id].append(
         async_dispatcher_connect(
             opp,
@@ -122,8 +123,8 @@ class PairedSensorBinarySensor(PairedSensorEntity, BinarySensorEntity):
         coordinator: DataUpdateCoordinator,
         kind: str,
         name: str,
-        device_class: Optional[str],
-        icon: Optional[str],
+        device_class: str | None,
+        icon: str | None,
     ) -> None:
         """Initialize."""
         super().__init__(entry, coordinator, kind, name, device_class, icon)
@@ -155,11 +156,11 @@ class ValveControllerBinarySensor(ValveControllerEntity, BinarySensorEntity):
     def __init__(
         self,
         entry: ConfigEntry,
-        coordinators: Dict[str, DataUpdateCoordinator],
+        coordinators: dict[str, DataUpdateCoordinator],
         kind: str,
         name: str,
-        device_class: Optional[str],
-        icon: Optional[str],
+        device_class: str | None,
+        icon: str | None,
     ) -> None:
         """Initialize."""
         super().__init__(entry, coordinators, kind, name, device_class, icon)

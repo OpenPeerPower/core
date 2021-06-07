@@ -39,7 +39,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
                 token = tokenfile.read()
         else:
             try:
-                token = greenwave.grab_token(host, "opp", "openpeerpower")
+                token = greenwave.grab_token(host, "opp., "openpeerpower")
             except PermissionError:
                 _LOGGER.error("The Gateway Is Not In Sync Mode")
                 raise
@@ -62,7 +62,7 @@ class GreenwaveLight(LightEntity):
         self._did = int(light["did"])
         self._name = light["name"]
         self._state = int(light["state"])
-        self._brightness = greenwave.hass_brightness(light)
+        self._brightness = greenwave.opp_brightness(light)
         self._host = host
         self._online = greenwave.check_online(light)
         self._token = token
@@ -109,7 +109,7 @@ class GreenwaveLight(LightEntity):
         bulbs = self._gatewaydata.greenwave
 
         self._state = int(bulbs[self._did]["state"])
-        self._brightness = greenwave.hass_brightness(bulbs[self._did])
+        self._brightness = greenwave.opp_brightness(bulbs[self._did])
         self._online = greenwave.check_online(bulbs[self._did])
         self._name = bulbs[self._did]["name"]
 

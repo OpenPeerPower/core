@@ -5,7 +5,7 @@ import logging
 
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_DISPLAY_OPTIONS,
     CONF_NAME,
@@ -14,7 +14,6 @@ from openpeerpower.const import (
     VOLT,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
@@ -71,7 +70,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(dev, True)
 
 
-class EnvirophatSensor(Entity):
+class EnvirophatSensor(SensorEntity):
     """Representation of an Enviro pHAT sensor."""
 
     def __init__(self, data, sensor_types):

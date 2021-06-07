@@ -19,15 +19,10 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["binary_sensor", "sensor", "switch"]
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the flo component."""
-    opp.data[DOMAIN] = {}
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up flo from a config entry."""
     session = async_get_clientsession(opp)
+    opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = {}
     try:
         opp.data[DOMAIN][entry.entry_id][CLIENT] = client = await async_get_api(
@@ -49,25 +44,14 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     tasks = [device.async_refresh() for device in devices]
     await asyncio.gather(*tasks)
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
-
     return unload_ok

@@ -1,5 +1,4 @@
 """The habitica integration."""
-import asyncio
 import logging
 
 from habitipy.aio import HabitipyAsync
@@ -100,7 +99,7 @@ async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up habitica from a config entry."""
 
     class HAHabitipyAsync(HabitipyAsync):
@@ -131,7 +130,7 @@ async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
         )
 
     data = opp.data.setdefault(DOMAIN, {})
-    config = config_entry.data
+    config = entry.data
     websession = async_get_clientsession(opp)
     url = config[CONF_URL]
     username = config[CONF_API_USER]
@@ -143,15 +142,12 @@ async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
     if name is None:
         name = user["profile"]["name"]
         opp.config_entries.async_update_entry(
-            config_entry,
-            data={**config_entry.data, CONF_NAME: name},
+            entry,
+            data={**entry.data, CONF_NAME: name},
         )
-    data[config_entry.entry_id] = api
+    data[entry.entry_id] = api
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     if not opp.services.has_service(DOMAIN, SERVICE_API_CALL):
         opp.services.async_register(
@@ -163,14 +159,7 @@ async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
 

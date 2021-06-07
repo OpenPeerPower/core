@@ -229,7 +229,7 @@ async def async_safe_fetch(bridge, fetch_method):
     except aiohue.Unauthorized as err:
         await bridge.handle_unauthorized_error()
         raise UpdateFailed("Unauthorized") from err
-    except (aiohue.AiohueException,) as err:
+    except aiohue.AiohueException as err:
         raise UpdateFailed(f"Hue error: {err}") from err
 
 
@@ -257,12 +257,12 @@ def async_update_items(
 
 
 def hue_brightness_to_opp(value):
-    """Convert hue brightness 1..254 to opp format 0..255."""
+    """Convert hue brightness 1..254 to opp.format 0..255."""
     return min(255, round((value / 254) * 255))
 
 
 def opp_to_hue_brightness(value):
-    """Convert opp brightness 0..255 to hue 1..254 scale."""
+    """Convert opp.brightness 0..255 to hue 1..254 scale."""
     return max(1, round((value / 255) * 254))
 
 
@@ -297,17 +297,20 @@ class HueLight(CoordinatorEntity, LightEntity):
                     "bulb in the Philips Hue App."
                 )
                 _LOGGER.warning(err, self.name)
-            if self.gamut:
-                if not color.check_valid_gamut(self.gamut):
-                    err = "Color gamut of %s: %s, not valid, setting gamut to None."
-                    _LOGGER.warning(err, self.name, str(self.gamut))
-                    self.gamut_typ = GAMUT_TYPE_UNAVAILABLE
-                    self.gamut = None
+            if self.gamut and not color.check_valid_gamut(self.gamut):
+                err = "Color gamut of %s: %s, not valid, setting gamut to None."
+                _LOGGER.debug(err, self.name, str(self.gamut))
+                self.gamut_typ = GAMUT_TYPE_UNAVAILABLE
+                self.gamut = None
 
     @property
     def unique_id(self):
         """Return the unique ID of this Hue light."""
-        return self.light.uniqueid
+        unique_id = self.light.uniqueid
+        if not unique_id and self.is_group and self.light.room:
+            unique_id = self.light.room["id"]
+
+        return unique_id
 
     @property
     def device_id(self):
@@ -449,6 +452,15 @@ class HueLight(CoordinatorEntity, LightEntity):
 
         return info
 
+    async def async_added_to_opp(self) -> None:
+        """Handle entity being added to Open Peer Power."""
+        self.async_on_remove(
+            self.bridge.listen_updates(
+                self.light.ITEM_TYPE, self.light.id, self.async_write_op_state
+            )
+        )
+        await super().async_added_to_opp()
+
     async def async_turn_on(self, **kwargs):
         """Turn the specified or all lights on."""
         command = {"on": True}
@@ -535,7 +547,7 @@ class HueLight(CoordinatorEntity, LightEntity):
         await self.coordinator.async_request_refresh()
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the device state attributes."""
         if not self.is_group:
             return {}

@@ -116,20 +116,22 @@ async def async_devices_query(opp, data, payload):
 
     https://developers.google.com/assistant/smarthome/develop/process-intents#QUERY
     """
+    payload_devices = payload.get("devices", [])
+
+    opp.bus.async_fire(
+        EVENT_QUERY_RECEIVED,
+        {
+            "request_id": data.request_id,
+            ATTR_ENTITY_ID: [device["id"] for device in payload_devices],
+            "source": data.source,
+        },
+        context=data.context,
+    )
+
     devices = {}
-    for device in payload.get("devices", []):
+    for device in payload_devices:
         devid = device["id"]
         state = opp.states.get(devid)
-
-        opp.bus.async_fire(
-            EVENT_QUERY_RECEIVED,
-            {
-                "request_id": data.request_id,
-                ATTR_ENTITY_ID: devid,
-                "source": data.source,
-            },
-            context=data.context,
-        )
 
         if not state:
             # If we can't find a state, the device is offline
@@ -175,19 +177,19 @@ async def handle_devices_execute(opp, data, payload):
     results = {}
 
     for command in payload["commands"]:
+        opp.bus.async_fire(
+            EVENT_COMMAND_RECEIVED,
+            {
+                "request_id": data.request_id,
+                ATTR_ENTITY_ID: [device["id"] for device in command["devices"]],
+                "execution": command["execution"],
+                "source": data.source,
+            },
+            context=data.context,
+        )
+
         for device, execution in product(command["devices"], command["execution"]):
             entity_id = device["id"]
-
-            opp.bus.async_fire(
-                EVENT_COMMAND_RECEIVED,
-                {
-                    "request_id": data.request_id,
-                    ATTR_ENTITY_ID: entity_id,
-                    "execution": execution,
-                    "source": data.source,
-                },
-                context=data.context,
-            )
 
             # Happens if error occurred. Skip entity for further processing
             if entity_id in results:

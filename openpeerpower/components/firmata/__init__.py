@@ -184,7 +184,9 @@ async def async_setup_entry(
         if config_entry.entry_id in opp.data[DOMAIN]:
             await board.async_reset()
 
-    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, handle_shutdown)
+    config_entry.async_on_unload(
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, handle_shutdown)
+    )
 
     device_registry = await dr.async_get_registry(opp)
     device_registry.async_get_or_create(

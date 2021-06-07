@@ -8,7 +8,6 @@ from huisbaasje import Huisbaasje, HuisbaasjeException
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
 from openpeerpower.core import OpenPeerPower
-from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import (
@@ -24,20 +23,17 @@ from .const import (
     SOURCE_TYPES,
 )
 
+PLATFORMS = ["sensor"]
+
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the Huisbaasje component."""
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Huisbaasje from a config entry."""
     # Create the Huisbaasje client
     huisbaasje = Huisbaasje(
-        username=config_entry.data[CONF_USERNAME],
-        password=config_entry.data[CONF_PASSWORD],
+        username=entry.data[CONF_USERNAME],
+        password=entry.data[CONF_PASSWORD],
         source_types=SOURCE_TYPES,
         request_timeout=FETCH_TIMEOUT,
     )
@@ -61,34 +57,25 @@ async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
         update_interval=timedelta(seconds=POLLING_INTERVAL),
     )
 
-    await coordinator.async_refresh()
-
-    if not coordinator.last_update_success:
-        raise ConfigEntryNotReady
+    await coordinator.async_config_entry_first_refresh()
 
     # Load the client in the data of open peer power
-    opp.data.setdefault(DOMAIN, {})[config_entry.entry_id] = {
-        DATA_COORDINATOR: coordinator
-    }
+    opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {DATA_COORDINATOR: coordinator}
 
     # Offload the loading of entities to the platform
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_setup(config_entry, "sensor")
-    )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     # Forward the unloading of the entry to the platform
-    unload_ok = await opp.config_entries.async_forward_entry_unload(
-        config_entry, "sensor"
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     # If successful, unload the Huisbaasje client
     if unload_ok:
-        opp.data[DOMAIN].pop(config_entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 
@@ -100,7 +87,7 @@ async def async_update_huisbaasje(huisbaasje):
         # handled by the data update coordinator.
         async with async_timeout.timeout(FETCH_TIMEOUT):
             if not huisbaasje.is_authenticated():
-                _LOGGER.warning("Huisbaasje is unauthenticated. Reauthenticating...")
+                _LOGGER.warning("Huisbaasje is unauthenticated. Reauthenticating")
                 await huisbaasje.authenticate()
 
             current_measurements = await huisbaasje.current_measurements()
@@ -141,7 +128,7 @@ def _get_cumulative_value(
     :param source_type: The source of energy (electricity or gas)
     :param period_type: The period for which cumulative value should be given.
     """
-    if source_type in current_measurements.keys():
+    if source_type in current_measurements:
         if (
             period_type in current_measurements[source_type]
             and current_measurements[source_type][period_type] is not None

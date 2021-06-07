@@ -1,18 +1,20 @@
 """Denon HEOS Media Player."""
+from __future__ import annotations
+
 import asyncio
 from datetime import timedelta
 import logging
-from typing import Dict
 
 from pyheos import Heos, HeosError, const as heos_const
 import voluptuous as vol
 
 from openpeerpower.components.media_player.const import DOMAIN as MEDIA_PLAYER_DOMAIN
-from openpeerpower.config_entries import ConfigEntry
+from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry
 from openpeerpower.const import CONF_HOST, EVENT_OPENPEERPOWER_STOP
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.exceptions import ConfigEntryNotReady
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 from openpeerpower.util import Throttle
 
 from . import services
@@ -26,8 +28,14 @@ from .const import (
     SIGNAL_HEOS_UPDATED,
 )
 
+PLATFORMS = [MEDIA_PLAYER_DOMAIN]
+
 CONFIG_SCHEMA = vol.Schema(
-    {DOMAIN: vol.Schema({vol.Required(CONF_HOST): cv.string})}, extra=vol.ALLOW_EXTRA
+    vol.All(
+        cv.deprecated(DOMAIN),
+        {DOMAIN: vol.Schema({vol.Required(CONF_HOST): cv.string})},
+    ),
+    extra=vol.ALLOW_EXTRA,
 )
 
 MIN_UPDATE_SOURCES = timedelta(seconds=1)
@@ -35,7 +43,7 @@ MIN_UPDATE_SOURCES = timedelta(seconds=1)
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
+async def async_setup(opp: OpenPeerPower, config: ConfigType):
     """Set up the HEOS component."""
     if DOMAIN not in config:
         return True
@@ -45,7 +53,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
         # Create new entry based on config
         opp.async_create_task(
             opp.config_entries.flow.async_init(
-                DOMAIN, context={"source": "import"}, data={CONF_HOST: host}
+                DOMAIN, context={"source": SOURCE_IMPORT}, data={CONF_HOST: host}
             )
         )
     else:
@@ -59,7 +67,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Initialize config entry which represents the HEOS controller."""
     # For backwards compat
     if entry.unique_id is None:
@@ -81,7 +89,9 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     async def disconnect_controller(event):
         await controller.disconnect()
 
-    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, disconnect_controller)
+    entry.async_on_unload(
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, disconnect_controller)
+    )
 
     # Get players and sources
     try:
@@ -115,13 +125,12 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
 
     services.register(opp, controller)
 
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_setup(entry, MEDIA_PLAYER_DOMAIN)
-    )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
+
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     controller_manager = opp.data[DOMAIN][DATA_CONTROLLER_MANAGER]
     await controller_manager.disconnect()
@@ -129,9 +138,7 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
 
     services.remove(opp)
 
-    return await opp.config_entries.async_forward_entry_unload(
-        entry, MEDIA_PLAYER_DOMAIN
-    )
+    return await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
 
 class ControllerManager:
@@ -191,7 +198,7 @@ class ControllerManager:
         # Update players
         self._opp.helpers.dispatcher.async_dispatcher_send(SIGNAL_HEOS_UPDATED)
 
-    def update_ids(self, mapped_ids: Dict[int, int]):
+    def update_ids(self, mapped_ids: dict[int, int]):
         """Update the IDs in the device and entity registry."""
         # mapped_ids contains the mapped IDs (new:old)
         for new_id, old_id in mapped_ids.items():

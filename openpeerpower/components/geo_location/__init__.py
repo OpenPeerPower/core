@@ -1,7 +1,9 @@
 """Support for Geolocation."""
+from __future__ import annotations
+
 from datetime import timedelta
 import logging
-from typing import Optional
+from typing import final
 
 from openpeerpower.const import ATTR_LATITUDE, ATTR_LONGITUDE
 from openpeerpower.helpers.config_validation import (  # noqa: F401
@@ -27,7 +29,9 @@ SCAN_INTERVAL = timedelta(seconds=60)
 
 async def async_setup(opp, config):
     """Set up the Geolocation component."""
-    component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp, SCAN_INTERVAL)
+    component = opp.data[DOMAIN] = EntityComponent(
+        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
+    )
     await component.async_setup(config)
     return True
 
@@ -43,7 +47,7 @@ async def async_unload_entry(opp, entry):
 
 
 class GeolocationEvent(Entity):
-    """This represents an external event with an associated geolocation."""
+    """Base class for an external event with an associated geolocation."""
 
     @property
     def state(self):
@@ -58,20 +62,21 @@ class GeolocationEvent(Entity):
         raise NotImplementedError
 
     @property
-    def distance(self) -> Optional[float]:
+    def distance(self) -> float | None:
         """Return distance value of this external event."""
         return None
 
     @property
-    def latitude(self) -> Optional[float]:
+    def latitude(self) -> float | None:
         """Return latitude value of this external event."""
         return None
 
     @property
-    def longitude(self) -> Optional[float]:
+    def longitude(self) -> float | None:
         """Return longitude value of this external event."""
         return None
 
+    @final
     @property
     def state_attributes(self):
         """Return the state attributes of this external event."""

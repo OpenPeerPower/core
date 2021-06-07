@@ -89,7 +89,7 @@ def setup(opp, config):
     except (ConnectTimeout, HTTPError) as ex:
         _LOGGER.error("Unable to connect to Hydrawise cloud service: %s", str(ex))
         opp.components.persistent_notification.create(
-            f"Error: {ex}<br />You will need to restart opp after fixing.",
+            f"Error: {ex}<br />You will need to restart opp.after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
@@ -144,14 +144,7 @@ class HydrawiseEntity(Entity):
         self.async_schedule_update_op_state(True)
 
     @property
-    def unit_of_measurement(self):
-        """Return the units of measurement."""
-        return DEVICE_MAP[self._sensor_type][
-            DEVICE_MAP_INDEX.index("UNIT_OF_MEASURE_INDEX")
-        ]
-
-    @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return {ATTR_ATTRIBUTION: ATTRIBUTION, "identifier": self.data.get("relay")}
 

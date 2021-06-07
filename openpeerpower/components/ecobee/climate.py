@@ -1,6 +1,7 @@
 """Support for Ecobee Thermostats."""
+from __future__ import annotations
+
 import collections
-from typing import Optional
 
 import voluptuous as vol
 
@@ -31,6 +32,7 @@ from openpeerpower.components.climate.const import (
 from openpeerpower.const import (
     ATTR_ENTITY_ID,
     ATTR_TEMPERATURE,
+    PRECISION_TENTHS,
     STATE_ON,
     TEMP_FAHRENHEIT,
 )
@@ -71,7 +73,7 @@ HUMIDIFIER_MANUAL_MODE = "manual"
 
 
 # Order matters, because for reverse mapping we don't want to map HEAT to AUX
-ECOBEE_HVAC_TO_OPP = collections.OrderedDict(
+ECOBEE_HVAC_TO_HASS = collections.OrderedDict(
     [
         ("heat", HVAC_MODE_HEAT),
         ("cool", HVAC_MODE_COOL),
@@ -81,7 +83,7 @@ ECOBEE_HVAC_TO_OPP = collections.OrderedDict(
     ]
 )
 
-ECOBEE_HVAC_ACTION_TO_OPP = {
+ECOBEE_HVAC_ACTION_TO_HASS = {
     # Map to None if we do not know how to represent.
     "heatPump": CURRENT_HVAC_HEAT,
     "heatPump2": CURRENT_HVAC_HEAT,
@@ -179,7 +181,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
 
     async_add_entities(devices, True)
 
-    platform = entity_platform.current_platform.get()
+    platform = entity_platform.async_get_current_platform()
 
     def create_vacation_service(service):
         """Create a vacation on the target thermostat."""
@@ -379,6 +381,11 @@ class Thermostat(ClimateEntity):
         return TEMP_FAHRENHEIT
 
     @property
+    def precision(self) -> float:
+        """Return the precision of the system."""
+        return PRECISION_TENTHS
+
+    @property
     def current_temperature(self):
         """Return the current temperature."""
         return self.thermostat["runtime"]["actualTemperature"] / 10.0
@@ -387,14 +394,14 @@ class Thermostat(ClimateEntity):
     def target_temperature_low(self):
         """Return the lower bound temperature we try to reach."""
         if self.hvac_mode == HVAC_MODE_HEAT_COOL:
-            return self.thermostat["runtime"]["desiredHeat"] / 10.0
+            return round(self.thermostat["runtime"]["desiredHeat"] / 10.0)
         return None
 
     @property
     def target_temperature_high(self):
         """Return the upper bound temperature we try to reach."""
         if self.hvac_mode == HVAC_MODE_HEAT_COOL:
-            return self.thermostat["runtime"]["desiredCool"] / 10.0
+            return round(self.thermostat["runtime"]["desiredCool"] / 10.0)
         return None
 
     @property
@@ -406,7 +413,7 @@ class Thermostat(ClimateEntity):
         )
 
     @property
-    def target_humidity(self) -> Optional[int]:
+    def target_humidity(self) -> int | None:
         """Return the desired humidity set point."""
         if self.has_humidifier_control:
             return self.thermostat["runtime"]["desiredHumidity"]
@@ -428,9 +435,9 @@ class Thermostat(ClimateEntity):
         if self.hvac_mode == HVAC_MODE_HEAT_COOL:
             return None
         if self.hvac_mode == HVAC_MODE_HEAT:
-            return self.thermostat["runtime"]["desiredHeat"] / 10.0
+            return round(self.thermostat["runtime"]["desiredHeat"] / 10.0)
         if self.hvac_mode == HVAC_MODE_COOL:
-            return self.thermostat["runtime"]["desiredCool"] / 10.0
+            return round(self.thermostat["runtime"]["desiredCool"] / 10.0)
         return None
 
     @property
@@ -476,7 +483,7 @@ class Thermostat(ClimateEntity):
     @property
     def hvac_mode(self):
         """Return current operation."""
-        return ECOBEE_HVAC_TO_OPP[self.thermostat["settings"]["hvacMode"]]
+        return ECOBEE_HVAC_TO_HASS[self.thermostat["settings"]["hvacMode"]]
 
     @property
     def hvac_modes(self):
@@ -484,7 +491,7 @@ class Thermostat(ClimateEntity):
         return self._operation_list
 
     @property
-    def current_humidity(self) -> Optional[int]:
+    def current_humidity(self) -> int | None:
         """Return the current humidity."""
         return self.thermostat["runtime"]["actualHumidity"]
 
@@ -496,15 +503,15 @@ class Thermostat(ClimateEntity):
         We are prioritizing any heating/cooling equipment, otherwase look at
         drying/fanning. Idle if nothing going on.
 
-        We are unable to map all actions to OP equivalents.
+        We are unable to map all actions to OPP equivalents.
         """
         if self.thermostat["equipmentStatus"] == "":
             return CURRENT_HVAC_IDLE
 
         actions = [
-            ECOBEE_HVAC_ACTION_TO_OPP[status]
+            ECOBEE_HVAC_ACTION_TO_HASS[status]
             for status in self.thermostat["equipmentStatus"].split(",")
-            if ECOBEE_HVAC_ACTION_TO_OPP[status] is not None
+            if ECOBEE_HVAC_ACTION_TO_HASS[status] is not None
         ]
 
         for action in (
@@ -519,7 +526,7 @@ class Thermostat(ClimateEntity):
         return CURRENT_HVAC_IDLE
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return device specific state attributes."""
         status = self.thermostat["equipmentStatus"]
         return {
@@ -643,14 +650,11 @@ class Thermostat(ClimateEntity):
             _LOGGER.error(error)
             return
 
-        cool_temp = self.thermostat["runtime"]["desiredCool"] / 10.0
-        heat_temp = self.thermostat["runtime"]["desiredHeat"] / 10.0
         self.data.ecobee.set_fan_mode(
             self.thermostat_index,
             fan_mode,
-            cool_temp,
-            heat_temp,
             self.hold_preference(),
+            holdHours=self.hold_hours(),
         )
 
         _LOGGER.info("Setting fan mode to: %s", fan_mode)
@@ -703,7 +707,7 @@ class Thermostat(ClimateEntity):
     def set_hvac_mode(self, hvac_mode):
         """Set HVAC mode (auto, auxHeatOnly, cool, heat, off)."""
         ecobee_value = next(
-            (k for k, v in ECOBEE_HVAC_TO_OPP.items() if v == hvac_mode), None
+            (k for k, v in ECOBEE_HVAC_TO_HASS.items() if v == hvac_mode), None
         )
         if ecobee_value is None:
             _LOGGER.error("Invalid mode for set_hvac_mode: %s", hvac_mode)

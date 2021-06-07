@@ -11,27 +11,23 @@ from .const import CONF_LISTEN_PORT, DEFAULT_NAME, DEFAULT_PORT, DOMAIN
 @callback
 def configured_servers(opp):
     """Return a set of the configured servers."""
-    return {entry.data[CONF_NAME] for entry in opp.config_entries.async_entries(DOMAIN)}
+    return {
+        entry.data[CONF_NAME] for entry in opp.config_entries.async_entries(DOMAIN)
+    }
 
 
-@config_entries.HANDLERS.register(DOMAIN)
-class EmulatedRokuFlowHandler(config_entries.ConfigFlow):
+class EmulatedRokuFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle an emulated_roku config flow."""
 
     VERSION = 1
-    CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_PUSH
 
     async def async_step_user(self, user_input=None):
         """Handle a flow initialized by the user."""
         errors = {}
 
         if user_input is not None:
-            name = user_input[CONF_NAME]
-
-            if name in configured_servers(self.opp):
-                return self.async_abort(reason="already_configured")
-
-            return self.async_create_entry(title=name, data=user_input)
+            self._async_abort_entries_match({CONF_NAME: user_input[CONF_NAME]})
+            return self.async_create_entry(title=user_input[CONF_NAME], data=user_input)
 
         servers_num = len(configured_servers(self.opp))
 

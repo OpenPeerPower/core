@@ -140,13 +140,13 @@ def do_authentication(opp, opp_config, config):
         client_id=config[CONF_CLIENT_ID],
         client_secret=config[CONF_CLIENT_SECRET],
         scope="https://www.googleapis.com/auth/calendar",
-        redirect_uri="openpeerpower.io",
+        redirect_uri="Open-Peer-Power.io",
     )
     try:
         dev_flow = oauth.step1_get_device_and_user_codes()
     except OAuth2DeviceCodeError as err:
         opp.components.persistent_notification.create(
-            f"Error: {err}<br />You will need to restart opp after fixing." "",
+            f"Error: {err}<br />You will need to restart opp.after fixing." "",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
@@ -364,7 +364,7 @@ def get_calendar_info(opp, calendar):
                     CONF_TRACK: calendar["track"],
                     CONF_NAME: calendar["summary"],
                     CONF_DEVICE_ID: generate_entity_id(
-                        "{}", calendar["summary"], opp=opp
+                        "{}", calendar["summary"], opp.opp
                     ),
                 }
             ],

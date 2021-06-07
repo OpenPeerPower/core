@@ -1,4 +1,4 @@
-"""API for Home Connect bound to OPP OAuth."""
+"""API for Home Connect bound to HASS OAuth."""
 
 from asyncio import run_coroutine_threadsafe
 import logging
@@ -46,7 +46,7 @@ class ConfigEntryAuth(homeconnect.HomeConnectAPI):
         opp: core.OpenPeerPower,
         config_entry: config_entries.ConfigEntry,
         implementation: config_entry_oauth2_flow.AbstractOAuth2Implementation,
-    ):
+    ) -> None:
         """Initialize Home Connect Auth."""
         self.opp = opp
         self.config_entry = config_entry

@@ -1,13 +1,17 @@
 """Support for the DIRECTV remote."""
+from __future__ import annotations
+
+from collections.abc import Iterable
 from datetime import timedelta
 import logging
-from typing import Any, Callable, Iterable, List
+from typing import Any
 
 from directv import DIRECTV, DIRECTVError
 
 from openpeerpower.components.remote import ATTR_NUM_REPEATS, RemoteEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 
 from . import DIRECTVEntity
 from .const import DOMAIN
@@ -18,9 +22,9 @@ SCAN_INTERVAL = timedelta(minutes=2)
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     entry: ConfigEntry,
-    async_add_entities: Callable[[List, bool], None],
+    async_add_entities: AddEntitiesCallback,
 ) -> bool:
     """Load DirecTV remote based on a config entry."""
     dtv = opp.data[DOMAIN][entry.entry_id]

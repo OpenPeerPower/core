@@ -4,7 +4,7 @@ import logging
 import requests
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_CURRENCY,
     CONF_MONITORED_VARIABLES,
@@ -13,7 +13,6 @@ from openpeerpower.const import (
     POWER_WATT,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 _RESOURCE = "https://engage.efergy.com/mobile_proxy/"
@@ -94,7 +93,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(dev, True)
 
 
-class EfergySensor(Entity):
+class EfergySensor(SensorEntity):
     """Implementation of an Efergy sensor."""
 
     def __init__(self, sensor_type, app_token, utc_offset, period, currency, sid=None):

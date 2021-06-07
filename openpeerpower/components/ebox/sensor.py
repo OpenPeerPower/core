@@ -10,7 +10,7 @@ from pyebox import EboxClient
 from pyebox.client import PyEboxError
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_MONITORED_VARIABLES,
     CONF_NAME,
@@ -22,7 +22,6 @@ from openpeerpower.const import (
 )
 from openpeerpower.exceptions import PlatformNotReady
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
@@ -90,7 +89,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities(sensors, True)
 
 
-class EBoxSensor(Entity):
+class EBoxSensor(SensorEntity):
     """Implementation of a EBox sensor."""
 
     def __init__(self, ebox_data, sensor_type, name):

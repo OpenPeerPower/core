@@ -2,20 +2,16 @@
 
 from .const import DOMAIN
 
-
-async def async_setup(opp, config):
-    """Set up devices."""
-    opp.data[DOMAIN] = {}
-    return True
+PLATFORMS = ["sensor"]
 
 
 async def async_setup_entry(opp, entry):
     """Set up flood monitoring sensors for this config entry."""
-    opp.async_create_task(opp.config_entries.async_forward_entry_setup(entry, "sensor"))
-
+    opp.data.setdefault(DOMAIN, {})
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
     return True
 
 
-async def async_unload_entry(opp, config_entry):
+async def async_unload_entry(opp, entry):
     """Unload flood monitoring sensors."""
-    return await opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
+    return await opp.config_entries.async_unload_platforms(entry, PLATFORMS)

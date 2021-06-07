@@ -12,7 +12,7 @@ DOMAIN = "freebox"
 SERVICE_REBOOT = "reboot"
 
 APP_DESC = {
-    "app_id": "opp",
+    "app_id": "opp.,
     "app_name": "Open Peer Power",
     "app_version": "0.106",
     "device_name": socket.gethostname(),

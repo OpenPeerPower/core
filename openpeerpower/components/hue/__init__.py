@@ -3,19 +3,18 @@ import asyncio
 import logging
 
 from aiohue.util import normalize_bridge_id
+import voluptuous as vol
 
 from openpeerpower import config_entries, core
 from openpeerpower.components import persistent_notification
-from openpeerpower.helpers import device_registry as dr
+from openpeerpower.helpers import config_validation as cv, device_registry as dr
+from openpeerpower.helpers.service import verify_domain_control
 
-from .bridge import (
+from .bridge import HueBridge
+from .const import (
     ATTR_GROUP_NAME,
     ATTR_SCENE_NAME,
-    SCENE_SCHEMA,
-    SERVICE_HUE_SCENE,
-    HueBridge,
-)
-from .const import (
+    ATTR_TRANSITION,
     CONF_ALLOW_HUE_GROUPS,
     CONF_ALLOW_UNREACHABLE,
     DEFAULT_ALLOW_HUE_GROUPS,
@@ -24,49 +23,12 @@ from .const import (
 )
 
 _LOGGER = logging.getLogger(__name__)
+SERVICE_HUE_SCENE = "hue_activate_scene"
 
 
-async def async_setup(opp, config):
-    """Set up the Hue platform."""
-
-    async def hue_activate_scene(call, skip_reload=True):
-        """Handle activation of Hue scene."""
-        # Get parameters
-        group_name = call.data[ATTR_GROUP_NAME]
-        scene_name = call.data[ATTR_SCENE_NAME]
-
-        # Call the set scene function on each bridge
-        tasks = [
-            bridge.hue_activate_scene(
-                call, updated=skip_reload, hide_warnings=skip_reload
-            )
-            for bridge in opp.data[DOMAIN].values()
-            if isinstance(bridge, HueBridge)
-        ]
-        results = await asyncio.gather(*tasks)
-
-        # Did *any* bridge succeed? If not, refresh / retry
-        # Note that we'll get a "None" value for a successful call
-        if None not in results:
-            if skip_reload:
-                await hue_activate_scene(call, skip_reload=False)
-                return
-            _LOGGER.warning(
-                "No bridge was able to activate " "scene %s in group %s",
-                scene_name,
-                group_name,
-            )
-
-    # Register a local handler for scene activation
-    opp.services.async_register(
-        DOMAIN, SERVICE_HUE_SCENE, hue_activate_scene, schema=SCENE_SCHEMA
-    )
-
-    opp.data[DOMAIN] = {}
-    return True
-
-
-async def async_setup_entry(opp: core.OpenPeerPower, entry: config_entries.ConfigEntry):
+async def async_setup_entry(
+    opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
+):
     """Set up a bridge from a config entry."""
 
     # Migrate allow_unreachable from config entry data to config entry options
@@ -102,7 +64,8 @@ async def async_setup_entry(opp: core.OpenPeerPower, entry: config_entries.Confi
     if not await bridge.async_setup():
         return False
 
-    opp.data[DOMAIN][entry.entry_id] = bridge
+    _register_services(opp)
+
     config = bridge.api.config
 
     # For backwards compat
@@ -128,7 +91,9 @@ async def async_setup_entry(opp: core.OpenPeerPower, entry: config_entries.Confi
 
         elif other_entry.source == config_entries.SOURCE_IGNORE:
             # There is another entry but it is ignored, delete that one and update this one
-            opp.async_create_task(opp.config_entries.async_remove(other_entry.entry_id))
+            opp.async_create_task(
+                opp.config_entries.async_remove(other_entry.entry_id)
+            )
             opp.config_entries.async_update_entry(entry, unique_id=unique_id)
         else:
             # There is another entry that already has the right unique ID. Delete this entry
@@ -167,6 +132,56 @@ async def async_setup_entry(opp: core.OpenPeerPower, entry: config_entries.Confi
 
 async def async_unload_entry(opp, entry):
     """Unload a config entry."""
-    bridge = opp.data[DOMAIN].pop(entry.entry_id)
-    opp.services.async_remove(DOMAIN, SERVICE_HUE_SCENE)
-    return await bridge.async_reset()
+    unload_success = await opp.data[DOMAIN][entry.entry_id].async_reset()
+    if len(opp.data[DOMAIN]) == 0:
+        opp.data.pop(DOMAIN)
+        opp.services.async_remove(DOMAIN, SERVICE_HUE_SCENE)
+    return unload_success
+
+
+@core.callback
+def _register_services(opp):
+    """Register Hue services."""
+
+    async def hue_activate_scene(call, skip_reload=True):
+        """Handle activation of Hue scene."""
+        # Get parameters
+        group_name = call.data[ATTR_GROUP_NAME]
+        scene_name = call.data[ATTR_SCENE_NAME]
+
+        # Call the set scene function on each bridge
+        tasks = [
+            bridge.hue_activate_scene(
+                call.data, skip_reload=skip_reload, hide_warnings=skip_reload
+            )
+            for bridge in opp.data[DOMAIN].values()
+            if isinstance(bridge, HueBridge)
+        ]
+        results = await asyncio.gather(*tasks)
+
+        # Did *any* bridge succeed? If not, refresh / retry
+        # Note that we'll get a "None" value for a successful call
+        if None not in results:
+            if skip_reload:
+                await hue_activate_scene(call, skip_reload=False)
+                return
+            _LOGGER.warning(
+                "No bridge was able to activate " "scene %s in group %s",
+                scene_name,
+                group_name,
+            )
+
+    if not opp.services.has_service(DOMAIN, SERVICE_HUE_SCENE):
+        # Register a local handler for scene activation
+        opp.services.async_register(
+            DOMAIN,
+            SERVICE_HUE_SCENE,
+            verify_domain_control(opp, DOMAIN)(hue_activate_scene),
+            schema=vol.Schema(
+                {
+                    vol.Required(ATTR_GROUP_NAME): cv.string,
+                    vol.Required(ATTR_SCENE_NAME): cv.string,
+                    vol.Optional(ATTR_TRANSITION): cv.positive_int,
+                }
+            ),
+        )

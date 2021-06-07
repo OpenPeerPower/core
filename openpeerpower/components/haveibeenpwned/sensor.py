@@ -6,7 +6,7 @@ from aiohttp.hdrs import USER_AGENT
 import requests
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_ATTRIBUTION,
     CONF_API_KEY,
@@ -15,7 +15,6 @@ from openpeerpower.const import (
     HTTP_OK,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.event import track_point_in_time
 from openpeerpower.util import Throttle
 import openpeerpower.util.dt as dt_util
@@ -54,7 +53,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(devices)
 
 
-class HaveIBeenPwnedSensor(Entity):
+class HaveIBeenPwnedSensor(SensorEntity):
     """Implementation of a HaveIBeenPwned sensor."""
 
     def __init__(self, data, email):
@@ -80,7 +79,7 @@ class HaveIBeenPwnedSensor(Entity):
         return self._state
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the attributes of the sensor."""
         val = {ATTR_ATTRIBUTION: ATTRIBUTION}
         if self._email not in self._data.data:
@@ -109,7 +108,7 @@ class HaveIBeenPwnedSensor(Entity):
         # Schedule a forced update 5 seconds in the future if the update above
         # returned no data for this sensors email. This is mainly to make sure
         # that we don't get HTTP Error "too many requests" and to have initial
-        # data after opp startup once we have the data it will update as
+        # data after opp.startup once we have the data it will update as
         # normal using update
         if self._email not in self._data.data:
             track_point_in_time(

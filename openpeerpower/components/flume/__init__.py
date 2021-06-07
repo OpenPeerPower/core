@@ -1,8 +1,4 @@
 """The flume integration."""
-import asyncio
-from functools import partial
-import logging
-
 from pyflume import FlumeAuth, FlumeDeviceList
 from requests import Session
 from requests.exceptions import RequestException
@@ -15,7 +11,7 @@ from openpeerpower.const import (
     CONF_USERNAME,
 )
 from openpeerpower.core import OpenPeerPower
-from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
 
 from .const import (
     BASE_TOKEN_FILENAME,
@@ -26,18 +22,9 @@ from .const import (
     PLATFORMS,
 )
 
-_LOGGER = logging.getLogger(__name__)
 
-
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the flume component."""
-    opp.data.setdefault(DOMAIN, {})
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
-    """Set up flume from a config entry."""
-
+def _setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+    """Config entry set up in executor."""
     config = entry.data
 
     username = config[CONF_USERNAME]
@@ -49,54 +36,44 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     http_session = Session()
 
     try:
-        flume_auth = await opp.async_add_executor_job(
-            partial(
-                FlumeAuth,
-                username,
-                password,
-                client_id,
-                client_secret,
-                flume_token_file=flume_token_full_path,
-                http_session=http_session,
-            )
+        flume_auth = FlumeAuth(
+            username,
+            password,
+            client_id,
+            client_secret,
+            flume_token_file=flume_token_full_path,
+            http_session=http_session,
         )
-        flume_devices = await opp.async_add_executor_job(
-            partial(
-                FlumeDeviceList,
-                flume_auth,
-                http_session=http_session,
-            )
-        )
+        flume_devices = FlumeDeviceList(flume_auth, http_session=http_session)
     except RequestException as ex:
         raise ConfigEntryNotReady from ex
     except Exception as ex:  # pylint: disable=broad-except
-        _LOGGER.error("Invalid credentials for flume: %s", ex)
-        return False
+        raise ConfigEntryAuthFailed from ex
 
-    opp.data[DOMAIN][entry.entry_id] = {
+    return flume_auth, flume_devices, http_session
+
+
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+    """Set up flume from a config entry."""
+
+    flume_auth, flume_devices, http_session = await opp.async_add_executor_job(
+        _setup_entry, opp, entry
+    )
+
+    opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {
         FLUME_DEVICES: flume_devices,
         FLUME_AUTH: flume_auth,
         FLUME_HTTP_SESSION: http_session,
     }
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     opp.data[DOMAIN][entry.entry_id][FLUME_HTTP_SESSION].close()
 

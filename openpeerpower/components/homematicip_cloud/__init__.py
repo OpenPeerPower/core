@@ -4,10 +4,11 @@ import voluptuous as vol
 from openpeerpower import config_entries
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_NAME, EVENT_OPENPEERPOWER_STOP
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers import device_registry as dr, entity_registry as er
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.entity_registry import async_entries_for_config_entry
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 
 from .const import (
     CONF_ACCESSPOINT,
@@ -40,7 +41,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up the HomematicIP Cloud component."""
     opp.data[DOMAIN] = {}
 
@@ -66,7 +67,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up an access point from a config entry."""
 
     # 0.104 introduced config entry unique id, this makes upgrading possible
@@ -86,7 +87,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     await async_setup_services(opp)
     await async_remove_obsolete_entities(opp, entry, hap)
 
-    # Register on OP stop event to gracefully shutdown HomematicIP Cloud connection
+    # Register on OPP stop event to gracefully shutdown HomematicIP Cloud connection
     hap.reset_connection_listener = opp.bus.async_listen_once(
         EVENT_OPENPEERPOWER_STOP, hap.shutdown
     )
@@ -107,7 +108,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     hap = opp.data[DOMAIN].pop(entry.unique_id)
     hap.reset_connection_listener()
@@ -118,7 +119,7 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
 
 
 async def async_remove_obsolete_entities(
-    opp: OpenPeerPowerType, entry: ConfigEntry, hap: HomematicipHAP
+    opp: OpenPeerPower, entry: ConfigEntry, hap: HomematicipHAP
 ):
     """Remove obsolete entities from entity registry."""
 

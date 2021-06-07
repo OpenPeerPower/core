@@ -1,5 +1,5 @@
 """Allows to configuration ecoal (esterownik.pl) pumps as switches."""
-from typing import Optional
+from __future__ import annotations
 
 from openpeerpower.components.switch import SwitchEntity
 
@@ -25,7 +25,7 @@ class EcoalSwitch(SwitchEntity):
         """
         Initialize switch.
 
-        Sets OP switch to state as read from controller.
+        Sets OPP switch to state as read from controller.
         """
         self._ecoal_contr = ecoal_contr
         self._name = name
@@ -40,7 +40,7 @@ class EcoalSwitch(SwitchEntity):
         self._state = None
 
     @property
-    def name(self) -> Optional[str]:
+    def name(self) -> str | None:
         """Return the name of the switch."""
         return self._name
 

@@ -16,12 +16,13 @@ from openpeerpower.const import (
     CONF_USERNAME,
     CONF_VERIFY_SSL,
 )
-from openpeerpower.core import Config, OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
 from openpeerpower.helpers.event import async_track_time_interval
+from openpeerpower.helpers.typing import ConfigType
 
 from .const import (
     CONF_VERSION,
@@ -35,6 +36,8 @@ from .const import (
 )
 
 _LOGGER = logging.getLogger(__name__)
+
+PLATFORMS = ["sensor"]
 
 GLANCES_SCHEMA = vol.All(
     vol.Schema(
@@ -52,11 +55,12 @@ GLANCES_SCHEMA = vol.All(
 )
 
 CONFIG_SCHEMA = vol.Schema(
-    {DOMAIN: vol.All(cv.ensure_list, [GLANCES_SCHEMA])}, extra=vol.ALLOW_EXTRA
+    vol.All(cv.deprecated(DOMAIN), {DOMAIN: vol.All(cv.ensure_list, [GLANCES_SCHEMA])}),
+    extra=vol.ALLOW_EXTRA,
 )
 
 
-async def async_setup(opp: OpenPeerPower, config: Config) -> bool:
+async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Configure Glances using config flow only."""
     if DOMAIN in config:
         for entry in config[DOMAIN]:
@@ -79,11 +83,12 @@ async def async_setup_entry(opp, config_entry):
     return True
 
 
-async def async_unload_entry(opp, config_entry):
+async def async_unload_entry(opp, entry):
     """Unload a config entry."""
-    await opp.config_entries.async_forward_entry_unload(config_entry, "sensor")
-    opp.data[DOMAIN].pop(config_entry.entry_id)
-    return True
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
+    if unload_ok:
+        opp.data[DOMAIN].pop(entry.entry_id)
+    return unload_ok
 
 
 class GlancesData:
@@ -127,13 +132,12 @@ class GlancesData:
 
         self.add_options()
         self.set_scan_interval(self.config_entry.options[CONF_SCAN_INTERVAL])
-        self.config_entry.add_update_listener(self.async_options_updated)
-
-        self.opp.async_create_task(
-            self.opp.config_entries.async_forward_entry_setup(
-                self.config_entry, "sensor"
-            )
+        self.config_entry.async_on_unload(
+            self.config_entry.add_update_listener(self.async_options_updated)
         )
+
+        self.opp.config_entries.async_setup_platforms(self.config_entry, PLATFORMS)
+
         return True
 
     def add_options(self):

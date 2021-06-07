@@ -1,4 +1,6 @@
-"""Support for Elgato Key Lights."""
+"""Support for Elgato Lights."""
+import logging
+
 from elgato import Elgato, ElgatoConnectionError
 
 from openpeerpower.components.light import DOMAIN as LIGHT_DOMAIN
@@ -7,18 +9,14 @@ from openpeerpower.const import CONF_HOST, CONF_PORT
 from openpeerpower.core import OpenPeerPower
 from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
-from openpeerpower.helpers.typing import ConfigType
 
 from .const import DATA_ELGATO_CLIENT, DOMAIN
 
-
-async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
-    """Set up the Elgato Key Light components."""
-    return True
+PLATFORMS = [LIGHT_DOMAIN]
 
 
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
-    """Set up Elgato Key Light from a config entry."""
+    """Set up Elgato Light from a config entry."""
     session = async_get_clientsession(opp)
     elgato = Elgato(
         entry.data[CONF_HOST],
@@ -30,26 +28,23 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     try:
         await elgato.info()
     except ElgatoConnectionError as exception:
+        logging.getLogger(__name__).debug("Unable to connect: %s", exception)
         raise ConfigEntryNotReady from exception
 
     opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = {DATA_ELGATO_CLIENT: elgato}
-
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_setup(entry, LIGHT_DOMAIN)
-    )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
-    """Unload Elgato Key Light config entry."""
+    """Unload Elgato Light config entry."""
     # Unload entities for this entry/device.
-    await opp.config_entries.async_forward_entry_unload(entry, LIGHT_DOMAIN)
-
-    # Cleanup
-    del opp.data[DOMAIN][entry.entry_id]
-    if not opp.data[DOMAIN]:
-        del opp.data[DOMAIN]
-
-    return True
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
+    if unload_ok:
+        # Cleanup
+        del opp.data[DOMAIN][entry.entry_id]
+        if not opp.data[DOMAIN]:
+            del opp.data[DOMAIN]
+    return unload_ok

@@ -1,6 +1,6 @@
 """Allows reading temperatures from ecoal/esterownik.pl controller."""
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import TEMP_CELSIUS
-from openpeerpower.helpers.entity import Entity
 
 from . import AVAILABLE_SENSORS, DATA_ECOAL_BOILER
 
@@ -17,7 +17,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(devices, True)
 
 
-class EcoalTempSensor(Entity):
+class EcoalTempSensor(SensorEntity):
     """Representation of a temperature sensor using ecoal status data."""
 
     def __init__(self, ecoal_contr, name, status_attr):

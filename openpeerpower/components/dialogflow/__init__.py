@@ -24,11 +24,6 @@ class DialogFlowError(OpenPeerPowerError):
     """Raised when a DialogFlow error happens."""
 
 
-async def async_setup(opp, config):
-    """Set up the Dialogflow component."""
-    return True
-
-
 async def handle_webhook(opp, webhook_id, request):
     """Handle incoming webhook with Dialogflow requests."""
     message = await request.json()

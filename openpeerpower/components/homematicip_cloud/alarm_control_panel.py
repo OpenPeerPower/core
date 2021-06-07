@@ -1,6 +1,7 @@
 """Support for HomematicIP Cloud alarm control panel."""
+from __future__ import annotations
+
 import logging
-from typing import Any, Dict
 
 from homematicip.functionalHomes import SecurityAndAlarmHome
 
@@ -16,8 +17,8 @@ from openpeerpower.const import (
     STATE_ALARM_DISARMED,
     STATE_ALARM_TRIGGERED,
 )
-from openpeerpower.core import callback
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers.entity import DeviceInfo
 
 from . import DOMAIN as HMIPC_DOMAIN
 from .hap import HomematicipHAP
@@ -28,7 +29,7 @@ CONST_ALARM_CONTROL_PANEL_NAME = "HmIP Alarm Control Panel"
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the HomematicIP alrm control panel from a config entry."""
     hap = opp.data[HMIPC_DOMAIN][config_entry.unique_id]
@@ -44,7 +45,7 @@ class HomematicipAlarmControlPanelEntity(AlarmControlPanelEntity):
         _LOGGER.info("Setting up %s", self.name)
 
     @property
-    def device_info(self) -> Dict[str, Any]:
+    def device_info(self) -> DeviceInfo:
         """Return device specific attributes."""
         return {
             "identifiers": {(HMIPC_DOMAIN, f"ACP {self._home.id}")},

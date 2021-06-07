@@ -15,11 +15,11 @@ _LOGGER = logging.getLogger(__name__)
 OPP_TO_HOMEKIT = {
     STATE_UNLOCKED: 0,
     STATE_LOCKED: 1,
-    # Value 2 is Jammed which opp doesn't have a state for
+    # Value 2 is Jammed which opp.doesn't have a state for
     STATE_UNKNOWN: 3,
 }
 
-HOMEKIT_TO_OPP = {c: s for s, c in OPP_TO_HOMEKIT.items()}
+HOMEKIT_TO_HASS = {c: s for s, c in OPP_TO_HOMEKIT.items()}
 
 STATE_TO_SERVICE = {STATE_LOCKED: "lock", STATE_UNLOCKED: "unlock"}
 
@@ -52,7 +52,7 @@ class Lock(HomeAccessory):
         """Set lock state to value if call came from HomeKit."""
         _LOGGER.debug("%s: Set state to %d", self.entity_id, value)
 
-        opp_value = HOMEKIT_TO_OPP.get(value)
+        opp_value = HOMEKIT_TO_HASS.get(value)
         service = STATE_TO_SERVICE[opp_value]
 
         if self.char_current_state.value != value:
@@ -78,9 +78,11 @@ class Lock(HomeAccessory):
             # LockTargetState only supports locked and unlocked
             # Must set lock target state before current state
             # or there will be no notification
-            if opp_state in (STATE_LOCKED, STATE_UNLOCKED):
-                if self.char_target_state.value != current_lock_state:
-                    self.char_target_state.set_value(current_lock_state)
+            if (
+                opp_state in (STATE_LOCKED, STATE_UNLOCKED)
+                and self.char_target_state.value != current_lock_state
+            ):
+                self.char_target_state.set_value(current_lock_state)
 
             # Set lock current state ONLY after ensuring that
             # target state is correct or there will be no

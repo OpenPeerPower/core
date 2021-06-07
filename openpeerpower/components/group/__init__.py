@@ -1,9 +1,12 @@
 """Provide the functionality to group entities."""
+from __future__ import annotations
+
 from abc import abstractmethod
 import asyncio
+from collections.abc import Iterable
 from contextvars import ContextVar
 import logging
-from typing import Any, Dict, Iterable, List, Optional, Set, cast
+from typing import Any, List, cast
 
 import voluptuous as vol
 
@@ -23,7 +26,7 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpower.core import CoreState, callback, split_entity_id
+from openpeerpower.core import CoreState, OpenPeerPower, callback, split_entity_id
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.entity import Entity, async_generate_entity_id
 from openpeerpower.helpers.entity_component import EntityComponent
@@ -32,7 +35,6 @@ from openpeerpower.helpers.integration_platform import (
     async_process_integration_platforms,
 )
 from openpeerpower.helpers.reload import async_reload_integration_platforms
-from openpeerpower.helpers.typing import OpenPeerPowerType
 from openpeerpower.loader import bind_opp
 
 # mypy: allow-untyped-calls, allow-untyped-defs, no-check-untyped-defs
@@ -91,16 +93,16 @@ CONFIG_SCHEMA = vol.Schema(
 class GroupIntegrationRegistry:
     """Class to hold a registry of integrations."""
 
-    on_off_mapping: Dict[str, str] = {STATE_ON: STATE_OFF}
-    off_on_mapping: Dict[str, str] = {STATE_OFF: STATE_ON}
-    on_states_by_domain: Dict[str, Set] = {}
-    exclude_domains: Set = set()
+    on_off_mapping: dict[str, str] = {STATE_ON: STATE_OFF}
+    off_on_mapping: dict[str, str] = {STATE_OFF: STATE_ON}
+    on_states_by_domain: dict[str, set] = {}
+    exclude_domains: set = set()
 
     def exclude_domain(self) -> None:
         """Exclude the current domain."""
         self.exclude_domains.add(current_domain.get())
 
-    def on_off_states(self, on_states: Set, off_state: str) -> None:
+    def on_off_states(self, on_states: set, off_state: str) -> None:
         """Register on and off states for the current domain."""
         for on_state in on_states:
             if on_state not in self.on_off_mapping:
@@ -128,12 +130,12 @@ def is_on(opp, entity_id):
 
 
 @bind_opp
-def expand_entity_ids(opp: OpenPeerPowerType, entity_ids: Iterable[Any]) -> List[str]:
+def expand_entity_ids(opp: OpenPeerPower, entity_ids: Iterable[Any]) -> list[str]:
     """Return entity_ids with group entity ids replaced by their members.
 
     Async friendly.
     """
-    found_ids: List[str] = []
+    found_ids: list[str] = []
     for entity_id in entity_ids:
         if not isinstance(entity_id, str) or entity_id in (
             ENTITY_MATCH_NONE,
@@ -171,8 +173,8 @@ def expand_entity_ids(opp: OpenPeerPowerType, entity_ids: Iterable[Any]) -> List
 
 @bind_opp
 def get_entity_ids(
-    opp: OpenPeerPowerType, entity_id: str, domain_filter: Optional[str] = None
-) -> List[str]:
+    opp: OpenPeerPower, entity_id: str, domain_filter: str | None = None
+) -> list[str]:
     """Get members of this group.
 
     Async friendly.
@@ -192,7 +194,7 @@ def get_entity_ids(
 
 
 @bind_opp
-def groups_with_entity(opp: OpenPeerPowerType, entity_id: str) -> List[str]:
+def groups_with_entity(opp: OpenPeerPower, entity_id: str) -> list[str]:
     """Get all groups that contain this entity.
 
     Async friendly.
@@ -395,7 +397,6 @@ class GroupEntity(Entity):
 
     async def async_added_to_opp(self) -> None:
         """Register listeners."""
-        assert self.opp is not None
 
         async def _update_at_start(_):
             await self.async_update()
@@ -405,8 +406,6 @@ class GroupEntity(Entity):
 
     async def async_defer_or_update_op_state(self) -> None:
         """Only update once at start."""
-        assert self.opp is not None
-
         if self.opp.state != CoreState.running:
             return
 
@@ -504,7 +503,7 @@ class Group(Entity):
         )
 
         group.entity_id = async_generate_entity_id(
-            ENTITY_ID_FORMAT, object_id or name, opp=opp
+            ENTITY_ID_FORMAT, object_id or name, opp.opp
         )
 
         # If called before the platform async_setup is called (test cases)
@@ -548,7 +547,7 @@ class Group(Entity):
         self._icon = value
 
     @property
-    def state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes for the group."""
         data = {ATTR_ENTITY_ID: self.tracking, ATTR_ORDER: self._order}
         if not self.user_defined:
@@ -639,7 +638,9 @@ class Group(Entity):
     async def async_added_to_opp(self):
         """Handle addition to Open Peer Power."""
         if self.opp.state != CoreState.running:
-            self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, self._async_start)
+            self.opp.bus.async_listen_once(
+                EVENT_OPENPEERPOWER_START, self._async_start
+            )
             return
 
         if self.tracking:

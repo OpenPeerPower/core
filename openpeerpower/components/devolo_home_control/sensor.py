@@ -1,14 +1,17 @@
 """Platform for sensor integration."""
 from openpeerpower.components.sensor import (
     DEVICE_CLASS_BATTERY,
+    DEVICE_CLASS_ENERGY,
     DEVICE_CLASS_HUMIDITY,
     DEVICE_CLASS_ILLUMINANCE,
     DEVICE_CLASS_POWER,
     DEVICE_CLASS_TEMPERATURE,
+    DEVICE_CLASS_VOLTAGE,
+    SensorEntity,
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import PERCENTAGE
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from .const import DOMAIN
 from .devolo_device import DevoloDeviceEntity
@@ -19,12 +22,13 @@ DEVICE_CLASS_MAPPING = {
     "light": DEVICE_CLASS_ILLUMINANCE,
     "humidity": DEVICE_CLASS_HUMIDITY,
     "current": DEVICE_CLASS_POWER,
-    "total": DEVICE_CLASS_POWER,
+    "total": DEVICE_CLASS_ENERGY,
+    "voltage": DEVICE_CLASS_VOLTAGE,
 }
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Get all sensor devices and setup them via config entry."""
     entities = []
@@ -63,7 +67,7 @@ async def async_setup_entry(
     async_add_entities(entities, False)
 
 
-class DevoloMultiLevelDeviceEntity(DevoloDeviceEntity):
+class DevoloMultiLevelDeviceEntity(DevoloDeviceEntity, SensorEntity):
     """Abstract representation of a multi level sensor within devolo Home Control."""
 
     @property

@@ -7,14 +7,14 @@ from openpeerpower.components.cover import (
     CoverEntity,
 )
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from .const import DOMAIN
 from .devolo_multi_level_switch import DevoloMultiLevelSwitchDeviceEntity
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Get all cover devices and setup them via config entry."""
     entities = []

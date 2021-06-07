@@ -3,9 +3,8 @@ import logging
 
 from openpeerpower.components.switch import SwitchEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import DATA_CLIENT, DATA_COORDINATOR, DOMAIN as FIRESERVICEROTA_DOMAIN
 
@@ -13,7 +12,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up FireServiceRota switch based on a config entry."""
     client = opp.data[FIRESERVICEROTA_DOMAIN][entry.entry_id][DATA_CLIENT]
@@ -73,7 +72,7 @@ class ResponseSwitch(SwitchEntity):
         return self._client.on_duty
 
     @property
-    def device_state_attributes(self) -> object:
+    def extra_state_attributes(self) -> object:
         """Return available attributes for switch."""
         attr = {}
         if not self._state_attributes:

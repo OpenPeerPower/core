@@ -34,7 +34,7 @@ from openpeerpower.const import (
     SERVICE_RELOAD,
 )
 from openpeerpower.core import CoreState, OpenPeerPower, callback
-from openpeerpower.exceptions import ConfigEntryNotReady, Unauthorized
+from openpeerpower.exceptions import Unauthorized
 from openpeerpower.helpers import device_registry, entity_registry
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.entityfilter import BASE_FILTER_SCHEMA, FILTER_SCHEMA
@@ -50,6 +50,7 @@ from . import (  # noqa: F401
     type_lights,
     type_locks,
     type_media_players,
+    type_remotes,
     type_security_systems,
     type_sensors,
     type_switches,
@@ -58,7 +59,6 @@ from . import (  # noqa: F401
 from .accessories import HomeBridge, HomeDriver, get_accessory
 from .aidmanager import AccessoryAidStorage
 from .const import (
-    AID_STORAGE,
     ATTR_INTERGRATION,
     ATTR_MANUFACTURER,
     ATTR_MODEL,
@@ -95,7 +95,6 @@ from .const import (
     SERVICE_HOMEKIT_RESET_ACCESSORY,
     SERVICE_HOMEKIT_START,
     SHUTDOWN_TIMEOUT,
-    UNDO_UPDATE_LISTENER,
 )
 from .util import (
     accessory_friendly_name,
@@ -118,6 +117,8 @@ STATUS_RUNNING = 1
 STATUS_STOPPED = 2
 STATUS_WAIT = 3
 
+PORT_CLEANUP_CHECK_INTERVAL_SECS = 1
+
 
 def _has_all_unique_names_and_ports(bridges):
     """Validate that each homekit bridge configured has a unique name."""
@@ -131,6 +132,7 @@ def _has_all_unique_names_and_ports(bridges):
 BRIDGE_SCHEMA = vol.All(
     cv.deprecated(CONF_ZEROCONF_DEFAULT_INTERFACE),
     cv.deprecated(CONF_SAFE_MODE),
+    cv.deprecated(CONF_AUTO_START),
     vol.Schema(
         {
             vol.Optional(CONF_HOMEKIT_MODE, default=DEFAULT_HOMEKIT_MODE): vol.In(
@@ -229,7 +231,7 @@ def _async_update_config_entry_if_from_yaml(opp, entries_by_name, conf):
     return False
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up HomeKit from a config entry."""
     _async_import_options_from_data_if_missing(opp, entry)
 
@@ -240,9 +242,6 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     port = conf[CONF_PORT]
     _LOGGER.debug("Begin setup HomeKit for %s", name)
 
-    aid_storage = AccessoryAidStorage(opp, entry.entry_id)
-
-    await aid_storage.async_initialize()
     # ip_address and advertise_ip are yaml only
     ip_address = conf.get(CONF_IP_ADDRESS)
     advertise_ip = conf.get(CONF_ADVERTISE_IP)
@@ -275,25 +274,13 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         entry.entry_id,
         entry.title,
     )
-    zeroconf_instance = await zeroconf.async_get_instance(opp)
 
-    # If the previous instance hasn't cleaned up yet
-    # we need to wait a bit
-    try:
-        await opp.async_add_executor_job(homekit.setup, zeroconf_instance)
-    except (OSError, AttributeError) as ex:
-        _LOGGER.warning(
-            "%s could not be setup because the local port %s is in use", name, port
-        )
-        raise ConfigEntryNotReady from ex
+    entry.async_on_unload(entry.add_update_listener(_async_update_listener))
+    entry.async_on_unload(
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, homekit.async_stop)
+    )
 
-    undo_listener = entry.add_update_listener(_async_update_listener)
-
-    opp.data[DOMAIN][entry.entry_id] = {
-        AID_STORAGE: aid_storage,
-        HOMEKIT: homekit,
-        UNDO_UPDATE_LISTENER: undo_listener,
-    }
+    opp.data[DOMAIN][entry.entry_id] = {HOMEKIT: homekit}
 
     if opp.state == CoreState.running:
         await homekit.async_start()
@@ -310,23 +297,24 @@ async def _async_update_listener(opp: OpenPeerPower, entry: ConfigEntry):
     await opp.config_entries.async_reload(entry.entry_id)
 
 
-async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     dismiss_setup_message(opp, entry.entry_id)
-
-    opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
-
     homekit = opp.data[DOMAIN][entry.entry_id][HOMEKIT]
 
     if homekit.status == STATUS_RUNNING:
         await homekit.async_stop()
 
+    logged_shutdown_wait = False
     for _ in range(0, SHUTDOWN_TIMEOUT):
-        if not await opp.async_add_executor_job(
-            port_is_available, entry.data[CONF_PORT]
-        ):
+        if await opp.async_add_executor_job(port_is_available, entry.data[CONF_PORT]):
+            break
+
+        if not logged_shutdown_wait:
             _LOGGER.info("Waiting for the HomeKit server to shutdown")
-            await asyncio.sleep(1)
+            logged_shutdown_wait = True
+
+        await asyncio.sleep(PORT_CLEANUP_CHECK_INTERVAL_SECS)
 
     opp.data[DOMAIN].pop(entry.entry_id)
 
@@ -420,7 +408,8 @@ def _async_register_events_and_services(opp: OpenPeerPower):
             _async_update_config_entry_if_from_yaml(opp, entries_by_name, conf)
 
         reload_tasks = [
-            opp.config_entries.async_reload(entry.entry_id) for entry in current_entries
+            opp.config_entries.async_reload(entry.entry_id)
+            for entry in current_entries
         ]
 
         await asyncio.gather(*reload_tasks)
@@ -461,14 +450,14 @@ class HomeKit:
         self._entry_id = entry_id
         self._entry_title = entry_title
         self._homekit_mode = homekit_mode
+        self.aid_storage = None
         self.status = STATUS_READY
 
         self.bridge = None
         self.driver = None
 
-    def setup(self, zeroconf_instance):
+    def setup(self, async_zeroconf_instance):
         """Set up bridge and accessory driver."""
-        self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, self.async_stop)
         ip_addr = self._ip_address or get_local_ip()
         persist_file = get_persist_fullpath_for_entry_id(self.opp, self._entry_id)
 
@@ -482,7 +471,7 @@ class HomeKit:
             port=self._port,
             persist_file=persist_file,
             advertised_address=self._advertise_ip,
-            zeroconf_instance=zeroconf_instance,
+            async_zeroconf_instance=async_zeroconf_instance,
         )
 
         # If we do not load the mac address will be wrong
@@ -501,10 +490,9 @@ class HomeKit:
             self.driver.config_changed()
             return
 
-        aid_storage = self.opp.data[DOMAIN][self._entry_id][AID_STORAGE]
         removed = []
         for entity_id in entity_ids:
-            aid = aid_storage.get_or_allocate_aid_for_entity_id(entity_id)
+            aid = self.aid_storage.get_or_allocate_aid_for_entity_id(entity_id)
             if aid not in self.bridge.accessories:
                 continue
 
@@ -529,9 +517,6 @@ class HomeKit:
 
     def add_bridge_accessory(self, state):
         """Try adding accessory to bridge if configured beforehand."""
-        if not self._filter(state.entity_id):
-            return
-
         # The bridge itself counts as an accessory
         if len(self.bridge.accessories) + 1 >= MAX_DEVICES:
             _LOGGER.warning(
@@ -548,14 +533,12 @@ class HomeKit:
                 "The bridge %s has entity %s. For best performance, "
                 "and to prevent unexpected unavailability, create and "
                 "pair a separate HomeKit instance in accessory mode for "
-                "this entity.",
+                "this entity",
                 self._name,
                 state.entity_id,
             )
 
-        aid = self.opp.data[DOMAIN][self._entry_id][
-            AID_STORAGE
-        ].get_or_allocate_aid_for_entity_id(state.entity_id)
+        aid = self.aid_storage.get_or_allocate_aid_for_entity_id(state.entity_id)
         conf = self._config.pop(state.entity_id, {})
         # If an accessory cannot be created or added due to an exception
         # of any kind (usually in pyhap) it should not prevent
@@ -576,15 +559,10 @@ class HomeKit:
             acc = self.bridge.accessories.pop(aid)
         return acc
 
-    async def async_start(self, *args):
-        """Start the accessory driver."""
-        if self.status != STATUS_READY:
-            return
-        self.status = STATUS_WAIT
-
-        ent_reg = await entity_registry.async_get_registry(self.opp)
-        dev_reg = await device_registry.async_get_registry(self.opp)
-
+    async def async_configure_accessories(self):
+        """Configure accessories for the included states."""
+        dev_reg = device_registry.async_get(self.opp)
+        ent_reg = entity_registry.async_get(self.opp)
         device_lookup = ent_reg.async_get_device_class_lookup(
             {
                 (BINARY_SENSOR_DOMAIN, DEVICE_CLASS_BATTERY_CHARGING),
@@ -595,10 +573,9 @@ class HomeKit:
             }
         )
 
-        bridged_states = []
+        entity_states = []
         for state in self.opp.states.async_all():
             entity_id = state.entity_id
-
             if not self._filter(entity_id):
                 continue
 
@@ -609,17 +586,40 @@ class HomeKit:
                 )
                 self._async_configure_linked_sensors(ent_reg_ent, device_lookup, state)
 
-            bridged_states.append(state)
+            entity_states.append(state)
 
-        self._async_register_bridge(dev_reg)
-        await self._async_start(bridged_states)
+        return entity_states
+
+    async def async_start(self, *args):
+        """Load storage and start."""
+        if self.status != STATUS_READY:
+            return
+        self.status = STATUS_WAIT
+        async_zc_instance = await zeroconf.async_get_async_instance(self.opp)
+        await self.opp.async_add_executor_job(self.setup, async_zc_instance)
+        self.aid_storage = AccessoryAidStorage(self.opp, self._entry_id)
+        await self.aid_storage.async_initialize()
+        await self._async_create_accessories()
+        self._async_register_bridge()
         _LOGGER.debug("Driver start for %s", self._name)
-        self.opp.add_job(self.driver.start_service)
+        await self.driver.async_start()
         self.status = STATUS_RUNNING
 
+        if self.driver.state.paired:
+            return
+
+        show_setup_message(
+            self.opp,
+            self._entry_id,
+            accessory_friendly_name(self._entry_title, self.driver.accessory),
+            self.driver.state.pincode,
+            self.driver.accessory.xhm_uri(),
+        )
+
     @callback
-    def _async_register_bridge(self, dev_reg):
+    def _async_register_bridge(self):
         """Register the bridge as a device so homekit_controller and exclude it from discovery."""
+        dev_reg = device_registry.async_get(self.opp)
         formatted_mac = device_registry.format_mac(self.driver.state.mac)
         # Connections and identifiers are both used here.
         #
@@ -643,8 +643,9 @@ class HomeKit:
             identifiers={identifier},
             connections={connection},
             manufacturer=MANUFACTURER,
-            name=self._name,
-            model=f"Open Peer Power HomeKit {hk_mode_name}",
+            name=accessory_friendly_name(self._entry_title, self.driver.accessory),
+            model=f"HomeKit {hk_mode_name}",
+            entry_type="service",
         )
 
     @callback
@@ -661,30 +662,21 @@ class HomeKit:
         for device_id in devices_to_purge:
             dev_reg.async_remove_device(device_id)
 
-    async def _async_start(self, entity_states):
-        """Start the accessory."""
+    async def _async_create_accessories(self):
+        """Create the accessories."""
+        entity_states = await self.async_configure_accessories()
         if self._homekit_mode == HOMEKIT_MODE_ACCESSORY:
             state = entity_states[0]
             conf = self._config.pop(state.entity_id, {})
             acc = get_accessory(self.opp, self.driver, state, STANDALONE_AID, conf)
-
-            self.driver.add_accessory(acc)
         else:
             self.bridge = HomeBridge(self.opp, self.driver, self._name)
             for state in entity_states:
                 self.add_bridge_accessory(state)
             acc = self.bridge
 
-        await self.opp.async_add_executor_job(self.driver.add_accessory, acc)
-
-        if not self.driver.state.paired:
-            show_setup_message(
-                self.opp,
-                self._entry_id,
-                accessory_friendly_name(self._entry_title, self.driver.accessory),
-                self.driver.state.pincode,
-                self.driver.accessory.xhm_uri(),
-            )
+        # No need to load/persist as we do it in setup
+        self.driver.accessory = acc
 
     async def async_stop(self, *args):
         """Stop the accessory driver."""
@@ -794,12 +786,12 @@ class HomeKitPairingQRView(OpenPeerPowerView):
         entry_id, secret = request.query_string.split("-")
 
         if (
-            entry_id not in request.app["opp"].data[DOMAIN]
+            entry_id not in request.app["opp.].data[DOMAIN]
             or secret
-            != request.app["opp"].data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR_SECRET]
+            != request.app["opp.].data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR_SECRET]
         ):
             raise Unauthorized()
         return web.Response(
-            body=request.app["opp"].data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR],
+            body=request.app["opp.].data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR],
             content_type="image/svg+xml",
         )

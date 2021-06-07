@@ -1,7 +1,7 @@
 """The DirecTV integration."""
-import asyncio
+from __future__ import annotations
+
 from datetime import timedelta
-from typing import Any, Dict
 
 from directv import DIRECTV, DIRECTVError
 
@@ -11,7 +11,7 @@ from openpeerpower.core import OpenPeerPower
 from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity import DeviceInfo, Entity
 
 from .const import (
     ATTR_IDENTIFIERS,
@@ -28,12 +28,6 @@ PLATFORMS = ["media_player", "remote"]
 SCAN_INTERVAL = timedelta(seconds=30)
 
 
-async def async_setup(opp: OpenPeerPower, config: Dict) -> bool:
-    """Set up the DirecTV component."""
-    opp.data.setdefault(DOMAIN, {})
-    return True
-
-
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up DirecTV from a config entry."""
     dtv = DIRECTV(entry.data[CONF_HOST], session=async_get_clientsession(opp))
@@ -43,27 +37,17 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     except DIRECTVError as err:
         raise ConfigEntryNotReady from err
 
+    opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = dtv
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
-
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
 
@@ -87,7 +71,7 @@ class DIRECTVEntity(Entity):
         return self._name
 
     @property
-    def device_info(self) -> Dict[str, Any]:
+    def device_info(self) -> DeviceInfo:
         """Return device information about this DirecTV receiver."""
         return {
             ATTR_IDENTIFIERS: {(DOMAIN, self._device_id)},

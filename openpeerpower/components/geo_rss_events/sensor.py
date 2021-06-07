@@ -2,7 +2,7 @@
 Generic GeoRSS events service.
 
 Retrieves current events (typically incidents or alerts) in GeoRSS format, and
-shows information on events filtered by distance to the OP instance's location
+shows information on events filtered by distance to the OPP instance's location
 and grouped by category.
 """
 from datetime import timedelta
@@ -12,7 +12,7 @@ from georss_client import UPDATE_OK, UPDATE_OK_NO_DATA
 from georss_generic_client import GenericFeed
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_LATITUDE,
     CONF_LONGITUDE,
@@ -23,7 +23,6 @@ from openpeerpower.const import (
     LENGTH_KILOMETERS,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -96,7 +95,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(devices, True)
 
 
-class GeoRssServiceSensor(Entity):
+class GeoRssServiceSensor(SensorEntity):
     """Representation of a Sensor."""
 
     def __init__(
@@ -137,7 +136,7 @@ class GeoRssServiceSensor(Entity):
         return DEFAULT_ICON
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return self._state_attributes
 

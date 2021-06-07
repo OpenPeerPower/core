@@ -43,7 +43,7 @@ def setup(opp, config):
         path = watcher[CONF_FOLDER]
         patterns = watcher[CONF_PATTERNS]
         if not opp.config.is_allowed_path(path):
-            _LOGGER.error("folder %s is not valid or allowed", path)
+            _LOGGER.error("Folder %s is not valid or allowed", path)
             return False
         Watcher(path, patterns, opp)
 
@@ -62,7 +62,7 @@ def create_event_handler(patterns, opp):
             self.opp = opp
 
         def process(self, event):
-            """On Watcher event, fire OP event."""
+            """On Watcher event, fire OPP event."""
             _LOGGER.debug("process(%s)", event)
             if not event.is_directory:
                 folder, file_name = os.path.split(event.src_path)
@@ -90,6 +90,10 @@ def create_event_handler(patterns, opp):
 
         def on_deleted(self, event):
             """File deleted."""
+            self.process(event)
+
+        def on_closed(self, event):
+            """File closed."""
             self.process(event)
 
     return EventHandler(patterns, opp)

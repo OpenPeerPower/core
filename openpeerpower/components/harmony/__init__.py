@@ -4,26 +4,26 @@ import logging
 
 from openpeerpower.components.remote import ATTR_ACTIVITY, ATTR_DELAY_SECS
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.const import CONF_HOST, CONF_NAME
+from openpeerpower.const import CONF_HOST, CONF_NAME, EVENT_OPENPEERPOWER_STOP
 from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers import entity_registry
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
 
-from .const import DOMAIN, HARMONY_OPTIONS_UPDATE, PLATFORMS
+from .const import (
+    CANCEL_LISTENER,
+    CANCEL_STOP,
+    DOMAIN,
+    HARMONY_DATA,
+    HARMONY_OPTIONS_UPDATE,
+    PLATFORMS,
+)
 from .data import HarmonyData
 
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the Logitech Harmony Hub component."""
-    opp.data.setdefault(DOMAIN, {})
-
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Logitech Harmony Hub from a config entry."""
     # As there currently is no way to import options from yaml
     # when setting up a config entry, we fallback to adding
@@ -42,21 +42,30 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     if not connected_ok:
         raise ConfigEntryNotReady
 
-    opp.data[DOMAIN][entry.entry_id] = data
-
     await _migrate_old_unique_ids(opp, entry.entry_id, data)
 
-    entry.add_update_listener(_update_listener)
+    cancel_listener = entry.add_update_listener(_update_listener)
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    async def _async_on_stop(event):
+        await data.shutdown()
+
+    cancel_stop = opp.bus.async_listen(EVENT_OPENPEERPOWER_STOP, _async_on_stop)
+
+    opp.data.setdefault(DOMAIN, {})
+    opp.data[DOMAIN][entry.entry_id] = {
+        HARMONY_DATA: data,
+        CANCEL_LISTENER: cancel_listener,
+        CANCEL_STOP: cancel_stop,
+    }
+
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
-async def _migrate_old_unique_ids(opp: OpenPeerPower, entry_id: str, data: HarmonyData):
+async def _migrate_old_unique_ids(
+    opp: OpenPeerPower, entry_id: str, data: HarmonyData
+):
     names_to_ids = {activity["label"]: activity["id"] for activity in data.activities}
 
     @callback
@@ -103,18 +112,13 @@ async def _update_listener(opp: OpenPeerPower, entry: ConfigEntry):
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     # Shutdown a harmony remote for removal
-    data = opp.data[DOMAIN][entry.entry_id]
-    await data.shutdown()
+    entry_data = opp.data[DOMAIN][entry.entry_id]
+    entry_data[CANCEL_LISTENER]()
+    entry_data[CANCEL_STOP]()
+    await entry_data[HARMONY_DATA].shutdown()
 
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)

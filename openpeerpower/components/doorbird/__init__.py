@@ -1,18 +1,15 @@
 """Support for DoorBird devices."""
-import asyncio
 import logging
-import urllib
-from urllib.error import HTTPError
 
 from aiohttp import web
 from doorbirdpy import DoorBird
+import requests
 import voluptuous as vol
 
 from openpeerpower.components.http import OpenPeerPowerView
-from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry
+from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import (
     ATTR_ENTITY_ID,
-    CONF_DEVICES,
     CONF_HOST,
     CONF_NAME,
     CONF_PASSWORD,
@@ -58,17 +55,7 @@ DEVICE_SCHEMA = vol.Schema(
     }
 )
 
-CONFIG_SCHEMA = vol.Schema(
-    vol.All(
-        cv.deprecated(DOMAIN),
-        {
-            DOMAIN: vol.Schema(
-                {vol.Required(CONF_DEVICES): vol.All(cv.ensure_list, [DEVICE_SCHEMA])}
-            )
-        },
-    ),
-    extra=vol.ALLOW_EXTRA,
-)
+CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 
 
 async def async_setup(opp: OpenPeerPower, config: dict):
@@ -77,17 +64,6 @@ async def async_setup(opp: OpenPeerPower, config: dict):
 
     # Provide an endpoint for the doorstations to call to trigger events
     opp.http.register_view(DoorBirdRequestView)
-
-    if DOMAIN in config and CONF_DEVICES in config[DOMAIN]:
-        for index, doorstation_config in enumerate(config[DOMAIN][CONF_DEVICES]):
-            if CONF_NAME not in doorstation_config:
-                doorstation_config[CONF_NAME] = f"DoorBird {index + 1}"
-
-            opp.async_create_task(
-                opp.config_entries.flow.async_init(
-                    DOMAIN, context={"source": SOURCE_IMPORT}, data=doorstation_config
-                )
-            )
 
     def _reset_device_favorites_handler(event):
         """Handle clearing favorites on device."""
@@ -114,7 +90,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up DoorBird from a config entry."""
 
     _async_import_options_from_data_if_missing(opp, entry)
@@ -130,8 +106,8 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     device = DoorBird(device_ip, username, password)
     try:
         status, info = await opp.async_add_executor_job(_init_doorbird_device, device)
-    except urllib.error.HTTPError as err:
-        if err.code == HTTP_UNAUTHORIZED:
+    except requests.exceptions.HTTPError as err:
+        if err.response.status_code == HTTP_UNAUTHORIZED:
             _LOGGER.error(
                 "Authorization rejected by DoorBird for %s@%s", username, device_ip
             )
@@ -168,10 +144,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         UNDO_UPDATE_LISTENER: undo_listener,
     }
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
@@ -185,14 +158,7 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
     opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
 
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
 
@@ -202,7 +168,7 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
 async def _async_register_events(opp, doorstation):
     try:
         await opp.async_add_executor_job(doorstation.register_events, opp)
-    except HTTPError:
+    except requests.exceptions.HTTPError:
         opp.components.persistent_notification.async_create(
             "Doorbird configuration failed.  Please verify that API "
             "Operator permission is enabled for the Doorbird user. "
@@ -301,7 +267,7 @@ class ConfiguredDoorBird:
         """Add a schedule entry in the device for a sensor."""
         url = f"{opp_url}{API_URL}/{event}?token={self._token}"
 
-        # Register OP URL as webhook if not already, then get the ID
+        # Register OPP URL as webhook if not already, then get the ID
         if not self.webhook_is_registered(url):
             self.device.change_favorite("http", f"Open Peer Power ({event})", url)
 
@@ -337,7 +303,7 @@ class ConfiguredDoorBird:
         return None
 
     def get_event_data(self):
-        """Get data to pass along with OP event."""
+        """Get data to pass along with OPP event."""
         return {
             "timestamp": dt_util.utcnow().isoformat(),
             "live_video_url": self._device.live_video_url,
@@ -357,7 +323,7 @@ class DoorBirdRequestView(OpenPeerPowerView):
 
     async def get(self, request, event):
         """Respond to requests from the device."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
 
         token = request.query.get("token")
 

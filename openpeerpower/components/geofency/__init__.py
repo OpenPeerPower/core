@@ -19,6 +19,8 @@ from openpeerpower.util import slugify
 
 from .const import DOMAIN
 
+PLATFORMS = [DEVICE_TRACKER]
+
 CONF_MOBILE_BEACONS = "mobile_beacons"
 
 CONFIG_SCHEMA = vol.Schema(
@@ -115,7 +117,7 @@ def _device_name(data):
 
 
 def _set_location(opp, data, location_name):
-    """Fire OP event to set location."""
+    """Fire OPP event to set location."""
     device = _device_name(data)
 
     async_dispatcher_send(
@@ -136,9 +138,7 @@ async def async_setup_entry(opp, entry):
         DOMAIN, "Geofency", entry.data[CONF_WEBHOOK_ID], handle_webhook
     )
 
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_setup(entry, DEVICE_TRACKER)
-    )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
     return True
 
 
@@ -146,8 +146,7 @@ async def async_unload_entry(opp, entry):
     """Unload a config entry."""
     opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
     opp.data[DOMAIN]["unsub_device_tracker"].pop(entry.entry_id)()
-    await opp.config_entries.async_forward_entry_unload(entry, DEVICE_TRACKER)
-    return True
+    return await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
 
 async_remove_entry = config_entry_flow.webhook_async_remove_entry

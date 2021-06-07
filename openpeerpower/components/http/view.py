@@ -1,8 +1,11 @@
 """Support for views."""
+from __future__ import annotations
+
 import asyncio
+from collections.abc import Awaitable, Callable
 import json
 import logging
-from typing import Any, Callable, List, Optional
+from typing import Any
 
 from aiohttp import web
 from aiohttp.typedefs import LooseHeaders
@@ -11,6 +14,7 @@ from aiohttp.web_exceptions import (
     HTTPInternalServerError,
     HTTPUnauthorized,
 )
+from aiohttp.web_urldispatcher import AbstractRoute
 import voluptuous as vol
 
 from openpeerpower import exceptions
@@ -18,7 +22,7 @@ from openpeerpower.const import CONTENT_TYPE_JSON, HTTP_OK, HTTP_SERVICE_UNAVAIL
 from openpeerpower.core import Context, is_callback
 from openpeerpower.helpers.json import JSONEncoder
 
-from .const import KEY_AUTHENTICATED, KEY_OPP
+from .const import KEY_AUTHENTICATED, KEY_HASS
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -26,8 +30,8 @@ _LOGGER = logging.getLogger(__name__)
 class OpenPeerPowerView:
     """Base view for all views."""
 
-    url: Optional[str] = None
-    extra_urls: List[str] = []
+    url: str | None = None
+    extra_urls: list[str] = []
     # Views inheriting from this class can override this
     requires_auth = True
     cors_allowed = False
@@ -45,7 +49,7 @@ class OpenPeerPowerView:
     def json(
         result: Any,
         status_code: int = HTTP_OK,
-        headers: Optional[LooseHeaders] = None,
+        headers: LooseHeaders | None = None,
     ) -> web.Response:
         """Return a JSON response."""
         try:
@@ -66,8 +70,8 @@ class OpenPeerPowerView:
         self,
         message: str,
         status_code: int = HTTP_OK,
-        message_code: Optional[str] = None,
-        headers: Optional[LooseHeaders] = None,
+        message_code: str | None = None,
+        headers: LooseHeaders | None = None,
     ) -> web.Response:
         """Return a JSON message response."""
         data = {"message": message}
@@ -79,7 +83,7 @@ class OpenPeerPowerView:
         """Register the view with a router."""
         assert self.url is not None, "No url set for view"
         urls = [self.url] + self.extra_urls
-        routes = []
+        routes: list[AbstractRoute] = []
 
         for method in ("get", "post", "delete", "put", "patch", "head", "options"):
             handler = getattr(self, method, None)
@@ -99,7 +103,9 @@ class OpenPeerPowerView:
             app["allow_cors"](route)
 
 
-def request_handler_factory(view: OpenPeerPowerView, handler: Callable) -> Callable:
+def request_handler_factory(
+    view: OpenPeerPowerView, handler: Callable
+) -> Callable[[web.Request], Awaitable[web.StreamResponse]]:
     """Wrap the handler classes."""
     assert asyncio.iscoroutinefunction(handler) or is_callback(
         handler
@@ -107,7 +113,7 @@ def request_handler_factory(view: OpenPeerPowerView, handler: Callable) -> Calla
 
     async def handle(request: web.Request) -> web.StreamResponse:
         """Handle incoming request."""
-        if request.app[KEY_OPP].is_stopping:
+        if request.app[KEY_HASS].is_stopping:
             return web.Response(status=HTTP_SERVICE_UNAVAILABLE)
 
         authenticated = request.get(KEY_AUTHENTICATED, False)

@@ -2,6 +2,7 @@
   "domain": "epsonworkforce",
   "name": "Epson Workforce",
   "documentation": "https://www.openpeerpower.io/integrations/epsonworkforce",
-  "codeowners": [],
-  "requirements": ["epsonprinter==0.0.9"]
+  "codeowners": ["@ThaStealth"],
+  "requirements": ["epsonprinter==0.0.9"],
+  "iot_class": "local_polling"
 }

@@ -3,5 +3,6 @@
   "name": "FFmpeg Motion",
   "documentation": "https://www.openpeerpower.io/integrations/ffmpeg_motion",
   "dependencies": ["ffmpeg"],
-  "codeowners": []
+  "codeowners": [],
+  "iot_class": "calculated"
 }

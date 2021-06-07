@@ -1,5 +1,4 @@
 """The Dexcom integration."""
-import asyncio
 from datetime import timedelta
 import logging
 
@@ -26,13 +25,7 @@ _LOGGER = logging.getLogger(__name__)
 SCAN_INTERVAL = timedelta(seconds=180)
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up configured Dexcom."""
-    opp.data[DOMAIN] = {}
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Dexcom from a config entry."""
     try:
         dexcom = await opp.async_add_executor_job(
@@ -57,6 +50,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         except SessionError as error:
             raise UpdateFailed(error) from error
 
+    opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = {
         COORDINATOR: DataUpdateCoordinator(
             opp,
@@ -68,26 +62,18 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         UNDO_UPDATE_LISTENER: entry.add_update_listener(update_listener),
     }
 
-    await opp.data[DOMAIN][entry.entry_id][COORDINATOR].async_refresh()
+    await opp.data[DOMAIN][entry.entry_id][
+        COORDINATOR
+    ].async_config_entry_first_refresh()
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
 
     if unload_ok:

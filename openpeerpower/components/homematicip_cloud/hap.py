@@ -8,10 +8,9 @@ from homematicip.base.base_connection import HmipConnectionError
 from homematicip.base.enums import EventType
 
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import HMIPC_AUTHTOKEN, HMIPC_HAPID, HMIPC_NAME, HMIPC_PIN, PLATFORMS
 from .errors import HmipcConnectionError
@@ -54,7 +53,7 @@ class HomematicipAuth:
         except HmipConnectionError:
             return False
 
-    async def get_auth(self, opp: OpenPeerPowerType, hapid, pin):
+    async def get_auth(self, opp: OpenPeerPower, hapid, pin):
         """Create a HomematicIP access point object."""
         auth = AsyncAuth(opp.loop, async_get_clientsession(opp))
         try:
@@ -70,7 +69,7 @@ class HomematicipAuth:
 class HomematicipHAP:
     """Manages HomematicIP HTTP and WebSocket connection."""
 
-    def __init__(self, opp: OpenPeerPowerType, config_entry: ConfigEntry) -> None:
+    def __init__(self, opp: OpenPeerPower, config_entry: ConfigEntry) -> None:
         """Initialize HomematicIP Cloud connection."""
         self.opp = opp
         self.config_entry = config_entry
@@ -102,12 +101,8 @@ class HomematicipHAP:
             "Connected to HomematicIP with HAP %s", self.config_entry.unique_id
         )
 
-        for platform in PLATFORMS:
-            self.opp.async_create_task(
-                self.opp.config_entries.async_forward_entry_setup(
-                    self.config_entry, platform
-                )
-            )
+        self.opp.config_entries.async_setup_platforms(self.config_entry, PLATFORMS)
+
         return True
 
     @callback
@@ -215,10 +210,9 @@ class HomematicipHAP:
             self._retry_task.cancel()
         await self.home.disable_events()
         _LOGGER.info("Closed connection to HomematicIP cloud server")
-        for platform in PLATFORMS:
-            await self.opp.config_entries.async_forward_entry_unload(
-                self.config_entry, platform
-            )
+        await self.opp.config_entries.async_unload_platforms(
+            self.config_entry, PLATFORMS
+        )
         self.hmip_device_by_entity_id = {}
         return True
 
@@ -234,7 +228,7 @@ class HomematicipHAP:
         )
 
     async def get_hap(
-        self, opp: OpenPeerPowerType, hapid: str, authtoken: str, name: str
+        self, opp: OpenPeerPower, hapid: str, authtoken: str, name: str
     ) -> AsyncHome:
         """Create a HomematicIP access point object."""
         home = AsyncHome(opp.loop, async_get_clientsession(opp))

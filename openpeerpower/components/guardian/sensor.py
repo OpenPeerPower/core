@@ -1,6 +1,7 @@
 """Sensors for the Elexa Guardian integration."""
-from typing import Callable, Dict, Optional
+from __future__ import annotations
 
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import (
     DEVICE_CLASS_BATTERY,
@@ -11,6 +12,7 @@ from openpeerpower.const import (
 )
 from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from . import PairedSensorEntity, ValveControllerEntity
@@ -45,7 +47,7 @@ VALVE_CONTROLLER_SENSORS = [SENSOR_KIND_TEMPERATURE, SENSOR_KIND_UPTIME]
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
     """Set up Guardian switches based on a config entry."""
 
@@ -67,7 +69,7 @@ async def async_setup_entry(
 
         async_add_entities(entities, True)
 
-    # Handle adding paired sensors after OPP startup:
+    # Handle adding paired sensors after HASS startup:
     opp.data[DOMAIN][DATA_UNSUB_DISPATCHER_CONNECT][entry.entry_id].append(
         async_dispatcher_connect(
             opp,
@@ -108,7 +110,7 @@ async def async_setup_entry(
     async_add_entities(sensors)
 
 
-class PairedSensorSensor(PairedSensorEntity):
+class PairedSensorSensor(PairedSensorEntity, SensorEntity):
     """Define a binary sensor related to a Guardian valve controller."""
 
     def __init__(
@@ -117,9 +119,9 @@ class PairedSensorSensor(PairedSensorEntity):
         coordinator: DataUpdateCoordinator,
         kind: str,
         name: str,
-        device_class: Optional[str],
-        icon: Optional[str],
-        unit: Optional[str],
+        device_class: str | None,
+        icon: str | None,
+        unit: str | None,
     ) -> None:
         """Initialize."""
         super().__init__(entry, coordinator, kind, name, device_class, icon)
@@ -151,18 +153,18 @@ class PairedSensorSensor(PairedSensorEntity):
             self._state = self.coordinator.data["temperature"]
 
 
-class ValveControllerSensor(ValveControllerEntity):
+class ValveControllerSensor(ValveControllerEntity, SensorEntity):
     """Define a generic Guardian sensor."""
 
     def __init__(
         self,
         entry: ConfigEntry,
-        coordinators: Dict[str, DataUpdateCoordinator],
+        coordinators: dict[str, DataUpdateCoordinator],
         kind: str,
         name: str,
-        device_class: Optional[str],
-        icon: Optional[str],
-        unit: Optional[str],
+        device_class: str | None,
+        icon: str | None,
+        unit: str | None,
     ) -> None:
         """Initialize."""
         super().__init__(entry, coordinators, kind, name, device_class, icon)

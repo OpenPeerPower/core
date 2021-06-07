@@ -12,10 +12,12 @@ import voluptuous as vol
 
 from openpeerpower.components import binary_sensor, media_player, sensor
 from openpeerpower.components.camera import DOMAIN as CAMERA_DOMAIN
+from openpeerpower.components.lock import DOMAIN as LOCK_DOMAIN
 from openpeerpower.components.media_player import (
     DEVICE_CLASS_TV,
     DOMAIN as MEDIA_PLAYER_DOMAIN,
 )
+from openpeerpower.components.remote import DOMAIN as REMOTE_DOMAIN, SUPPORT_ACTIVITY
 from openpeerpower.const import (
     ATTR_CODE,
     ATTR_DEVICE_CLASS,
@@ -400,7 +402,9 @@ def get_persist_fullpath_for_entry_id(opp: OpenPeerPower, entry_id: str):
 
 def get_aid_storage_fullpath_for_entry_id(opp: OpenPeerPower, entry_id: str):
     """Determine the path to the homekit aid storage file."""
-    return opp.config.path(STORAGE_DIR, get_aid_storage_filename_for_entry_id(entry_id))
+    return opp.config.path(
+        STORAGE_DIR, get_aid_storage_filename_for_entry_id(entry_id)
+    )
 
 
 def format_sw_version(version):
@@ -442,10 +446,11 @@ def port_is_available(port: int) -> bool:
 
 async def async_find_next_available_port(opp: OpenPeerPower, start_port: int) -> int:
     """Find the next available port not assigned to a config entry."""
-    exclude_ports = set()
-    for entry in opp.config_entries.async_entries(DOMAIN):
-        if CONF_PORT in entry.data:
-            exclude_ports.add(entry.data[CONF_PORT])
+    exclude_ports = {
+        entry.data[CONF_PORT]
+        for entry in opp.config_entries.async_entries(DOMAIN)
+        if CONF_PORT in entry.data
+    }
 
     return await opp.async_add_executor_job(
         _find_next_available_port, start_port, exclude_ports
@@ -485,8 +490,10 @@ def accessory_friendly_name(opp_name, accessory):
     see both to identify the accessory.
     """
     accessory_mdns_name = accessory.display_name
-    if opp_name.startswith(accessory_mdns_name):
+    if opp_name.casefold().startswith(accessory_mdns_name.casefold()):
         return opp_name
+    if accessory_mdns_name.casefold().startswith(opp_name.casefold()):
+        return accessory_mdns_name
     return f"{opp_name} ({accessory_mdns_name})"
 
 
@@ -495,10 +502,10 @@ def state_needs_accessory_mode(state):
     if state.domain == CAMERA_DOMAIN:
         return True
 
-    if (
-        state.domain == MEDIA_PLAYER_DOMAIN
+    return (
+        state.domain == LOCK_DOMAIN
+        or state.domain == MEDIA_PLAYER_DOMAIN
         and state.attributes.get(ATTR_DEVICE_CLASS) == DEVICE_CLASS_TV
-    ):
-        return True
-
-    return False
+        or state.domain == REMOTE_DOMAIN
+        and state.attributes.get(ATTR_SUPPORTED_FEATURES, 0) & SUPPORT_ACTIVITY
+    )

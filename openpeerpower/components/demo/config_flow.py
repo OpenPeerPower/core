@@ -5,7 +5,6 @@ from openpeerpower import config_entries
 from openpeerpower.core import callback
 import openpeerpower.helpers.config_validation as cv
 
-# pylint: disable=unused-import
 from . import DOMAIN
 
 CONF_STRING = "string"

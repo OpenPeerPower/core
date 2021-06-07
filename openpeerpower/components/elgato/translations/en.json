@@ -7,18 +7,18 @@
         "error": {
             "cannot_connect": "Failed to connect"
         },
-        "flow_title": "Elgato Key Light: {serial_number}",
+        "flow_title": "{serial_number}",
         "step": {
             "user": {
                 "data": {
                     "host": "Host",
                     "port": "Port"
                 },
-                "description": "Set up your Elgato Key Light to integrate with Open Peer Power."
+                "description": "Set up your Elgato Light to integrate with Open Peer Power."
             },
             "zeroconf_confirm": {
-                "description": "Do you want to add the Elgato Key Light with serial number `{serial_number}` to Open Peer Power?",
-                "title": "Discovered Elgato Key Light device"
+                "description": "Do you want to add the Elgato Light with serial number `{serial_number}` to Open Peer Power?",
+                "title": "Discovered Elgato Light device"
             }
         }
     }

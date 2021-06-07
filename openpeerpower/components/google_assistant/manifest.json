@@ -4,5 +4,6 @@
   "documentation": "https://www.openpeerpower.io/integrations/google_assistant",
   "dependencies": ["http"],
   "after_dependencies": ["camera"],
-  "codeowners": ["@open-peer-power/cloud"]
+  "codeowners": ["@openpeerpower/cloud"],
+  "iot_class": "cloud_push"
 }

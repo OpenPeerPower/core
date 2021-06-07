@@ -19,7 +19,7 @@ from .const import (
     _LOGGER,
     DOMAIN,
     ECOBEE_MODEL_TO_NAME,
-    ECOBEE_WEATHER_SYMBOL_TO_OPP,
+    ECOBEE_WEATHER_SYMBOL_TO_HASS,
     MANUFACTURER,
 )
 
@@ -92,7 +92,7 @@ class EcobeeWeather(WeatherEntity):
     def condition(self):
         """Return the current condition."""
         try:
-            return ECOBEE_WEATHER_SYMBOL_TO_OPP[self.get_forecast(0, "weatherSymbol")]
+            return ECOBEE_WEATHER_SYMBOL_TO_HASS[self.get_forecast(0, "weatherSymbol")]
         except ValueError:
             return None
 
@@ -190,7 +190,7 @@ def _process_forecast(json):
     """Process a single ecobee API forecast to return expected values."""
     forecast = {}
     try:
-        forecast[ATTR_FORECAST_CONDITION] = ECOBEE_WEATHER_SYMBOL_TO_OPP[
+        forecast[ATTR_FORECAST_CONDITION] = ECOBEE_WEATHER_SYMBOL_TO_HASS[
             json["weatherSymbol"]
         ]
         if json["tempHigh"] != ECOBEE_STATE_UNKNOWN:

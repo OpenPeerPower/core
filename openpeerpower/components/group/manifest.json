@@ -2,6 +2,7 @@
   "domain": "group",
   "name": "Group",
   "documentation": "https://www.openpeerpower.io/integrations/group",
-  "codeowners": [],
-  "quality_scale": "internal"
+  "codeowners": ["@openpeerpower/core"],
+  "quality_scale": "internal",
+  "iot_class": "calculated"
 }

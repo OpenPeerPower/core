@@ -5,8 +5,8 @@ import logging
 from pyheos import CommandFailedError, Heos, HeosError, const
 import voluptuous as vol
 
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers import config_validation as cv
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import (
     ATTR_PASSWORD,
@@ -25,7 +25,7 @@ HEOS_SIGN_IN_SCHEMA = vol.Schema(
 HEOS_SIGN_OUT_SCHEMA = vol.Schema({})
 
 
-def register(opp: OpenPeerPowerType, controller: Heos):
+def register(opp: OpenPeerPower, controller: Heos):
     """Register HEOS services."""
     opp.services.async_register(
         DOMAIN,
@@ -41,7 +41,7 @@ def register(opp: OpenPeerPowerType, controller: Heos):
     )
 
 
-def remove(opp: OpenPeerPowerType):
+def remove(opp: OpenPeerPower):
     """Unregister HEOS services."""
     opp.services.async_remove(DOMAIN, SERVICE_SIGN_IN)
     opp.services.async_remove(DOMAIN, SERVICE_SIGN_OUT)

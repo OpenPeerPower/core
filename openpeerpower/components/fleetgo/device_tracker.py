@@ -5,7 +5,9 @@ import requests
 from ritassist import API
 import voluptuous as vol
 
-from openpeerpower.components.device_tracker import PLATFORM_SCHEMA
+from openpeerpower.components.device_tracker import (
+    PLATFORM_SCHEMA as PARENT_PLATFORM_SCHEMA,
+)
 from openpeerpower.const import (
     CONF_CLIENT_ID,
     CONF_CLIENT_SECRET,
@@ -18,7 +20,7 @@ from openpeerpower.helpers.event import track_utc_time_change
 
 _LOGGER = logging.getLogger(__name__)
 
-PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
+PLATFORM_SCHEMA = PARENT_PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_USERNAME): cv.string,
         vol.Required(CONF_PASSWORD): cv.string,
@@ -56,7 +58,9 @@ class FleetGoDeviceScanner:
     def setup(self, opp):
         """Set up a timer and start gathering devices."""
         self._refresh()
-        track_utc_time_change(opp, lambda now: self._refresh(), second=range(0, 60, 30))
+        track_utc_time_change(
+            opp, lambda now: self._refresh(), second=range(0, 60, 30)
+        )
 
     def login(self, opp):
         """Perform a login on the FleetGO API."""

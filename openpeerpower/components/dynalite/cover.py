@@ -1,5 +1,4 @@
 """Support for the Dynalite channels as covers."""
-from typing import Callable
 
 from openpeerpower.components.cover import (
     DEVICE_CLASS_SHUTTER,
@@ -8,6 +7,7 @@ from openpeerpower.components.cover import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 
 from .dynalitebase import DynaliteBase, async_setup_entry_base
 
@@ -15,7 +15,9 @@ DEFAULT_COVER_CLASS = DEVICE_CLASS_SHUTTER
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities: Callable
+    opp: OpenPeerPower,
+    config_entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Record the async_add_entities function to add them later when received from Dynalite."""
 

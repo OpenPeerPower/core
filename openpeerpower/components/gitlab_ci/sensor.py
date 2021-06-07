@@ -5,7 +5,7 @@ import logging
 from gitlab import Gitlab, GitlabAuthenticationError, GitlabGetError
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_ATTRIBUTION,
     CONF_NAME,
@@ -14,7 +14,6 @@ from openpeerpower.const import (
     CONF_URL,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
@@ -66,7 +65,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities([GitLabSensor(_gitlab_data, _name)], True)
 
 
-class GitLabSensor(Entity):
+class GitLabSensor(SensorEntity):
     """Representation of a GitLab sensor."""
 
     def __init__(self, gitlab_data, name):
@@ -99,7 +98,7 @@ class GitLabSensor(Entity):
         return self._available
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return {
             ATTR_ATTRIBUTION: ATTRIBUTION,

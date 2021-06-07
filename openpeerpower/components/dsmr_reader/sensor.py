@@ -1,7 +1,7 @@
 """Support for DSMR Reader through MQTT."""
 from openpeerpower.components import mqtt
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.core import callback
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import slugify
 
 from .definitions import DEFINITIONS
@@ -19,7 +19,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities(sensors)
 
 
-class DSMRSensor(Entity):
+class DSMRSensor(SensorEntity):
     """Representation of a DSMR sensor that is updated via MQTT."""
 
     def __init__(self, topic):

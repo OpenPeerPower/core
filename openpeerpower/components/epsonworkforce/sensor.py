@@ -4,11 +4,10 @@ from datetime import timedelta
 from epsonprinter_pkg.epsonprinterapi import EpsonPrinterAPI
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_HOST, CONF_MONITORED_CONDITIONS, PERCENTAGE
 from openpeerpower.exceptions import PlatformNotReady
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 MONITORED_CONDITIONS = {
     "black": ["Ink level Black", PERCENTAGE, "mdi:water"],
@@ -45,7 +44,7 @@ def setup_platform(opp, config, add_devices, discovery_info=None):
     add_devices(sensors, True)
 
 
-class EpsonPrinterCartridge(Entity):
+class EpsonPrinterCartridge(SensorEntity):
     """Representation of a cartridge sensor."""
 
     def __init__(self, api, cartridgeidx):

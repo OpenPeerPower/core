@@ -21,7 +21,7 @@ from openpeerpower.components.weather import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import TEMP_CELSIUS
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from . import DOMAIN as HMIPC_DOMAIN, HomematicipGenericEntity
 from .hap import HomematicipHAP
@@ -46,7 +46,7 @@ HOME_WEATHER_CONDITION = {
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the HomematicIP weather sensor from a config entry."""
     hap = opp.data[HMIPC_DOMAIN][config_entry.unique_id]

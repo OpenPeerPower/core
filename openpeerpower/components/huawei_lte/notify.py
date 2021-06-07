@@ -3,14 +3,14 @@ from __future__ import annotations
 
 import logging
 import time
-from typing import Any, Dict, List, Optional
+from typing import Any
 
 import attr
 from huawei_lte_api.exceptions import ResponseErrorException
 
 from openpeerpower.components.notify import ATTR_TARGET, BaseNotificationService
 from openpeerpower.const import CONF_RECIPIENT, CONF_URL
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from . import Router
 from .const import DOMAIN
@@ -19,10 +19,10 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_get_service(
-    opp: OpenPeerPowerType,
-    config: Dict[str, Any],
-    discovery_info: Optional[Dict[str, Any]] = None,
-) -> Optional[HuaweiLteSmsNotificationService]:
+    opp: OpenPeerPower,
+    config: dict[str, Any],
+    discovery_info: dict[str, Any] | None = None,
+) -> HuaweiLteSmsNotificationService | None:
     """Get the notification service."""
     if discovery_info is None:
         return None
@@ -38,7 +38,7 @@ class HuaweiLteSmsNotificationService(BaseNotificationService):
     """Huawei LTE router SMS notification service."""
 
     router: Router = attr.ib()
-    default_targets: List[str] = attr.ib()
+    default_targets: list[str] = attr.ib()
 
     def send_message(self, message: str = "", **kwargs: Any) -> None:
         """Send message to target numbers."""

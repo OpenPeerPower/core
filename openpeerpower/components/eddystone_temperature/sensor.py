@@ -10,7 +10,7 @@ import logging
 from beacontools import BeaconScanner, EddystoneFilter, EddystoneTLMFrame
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_NAME,
     EVENT_OPENPEERPOWER_START,
@@ -19,7 +19,6 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -97,7 +96,7 @@ def get_from_conf(config, config_key, length):
     return string
 
 
-class EddystoneTemp(Entity):
+class EddystoneTemp(SensorEntity):
     """Representation of a temperature sensor."""
 
     def __init__(self, name, namespace, instance):
@@ -171,15 +170,18 @@ class Monitor:
         )
 
         for dev in self.devices:
-            if dev.namespace == namespace and dev.instance == instance:
-                if dev.temperature != temperature:
-                    dev.temperature = temperature
-                    dev.schedule_update_op_state()
+            if (
+                dev.namespace == namespace
+                and dev.instance == instance
+                and dev.temperature != temperature
+            ):
+                dev.temperature = temperature
+                dev.schedule_update_op_state()
 
     def stop(self):
         """Signal runner to stop and join thread."""
         if self.scanning:
-            _LOGGER.debug("Stopping...")
+            _LOGGER.debug("Stopping")
             self.scanner.stop()
             _LOGGER.debug("Stopped")
             self.scanning = False

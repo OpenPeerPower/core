@@ -37,7 +37,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
         if entities:
             async_add_entities(entities)
 
-    gateway.listeners.append(
+    config_entry.async_on_unload(
         async_dispatcher_connect(
             opp, gateway.async_signal_new_device(NEW_LIGHT), async_add_switch
         )

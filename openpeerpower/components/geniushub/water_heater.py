@@ -1,5 +1,5 @@
 """Support for Genius Hub water_heater devices."""
-from typing import List
+from __future__ import annotations
 
 from openpeerpower.components.water_heater import (
     SUPPORT_OPERATION_MODE,
@@ -7,7 +7,8 @@ from openpeerpower.components.water_heater import (
     WaterHeaterEntity,
 )
 from openpeerpower.const import STATE_OFF
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers.typing import ConfigType
 
 from . import DOMAIN, GeniusHeatingZone
 
@@ -32,7 +33,7 @@ GH_HEATERS = ["hot water temperature"]
 
 
 async def async_setup_platform(
-    opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
+    opp: OpenPeerPower, config: ConfigType, async_add_entities, discovery_info=None
 ) -> None:
     """Set up the Genius Hub water_heater entities."""
     if discovery_info is None:
@@ -61,7 +62,7 @@ class GeniusWaterHeater(GeniusHeatingZone, WaterHeaterEntity):
         self._supported_features = SUPPORT_TARGET_TEMPERATURE | SUPPORT_OPERATION_MODE
 
     @property
-    def operation_list(self) -> List[str]:
+    def operation_list(self) -> list[str]:
         """Return the list of available operation modes."""
         return list(HA_OPMODE_TO_GH)
 

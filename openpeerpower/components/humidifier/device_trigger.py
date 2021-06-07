@@ -1,5 +1,5 @@
 """Provides device automations for Climate."""
-from typing import List
+from __future__ import annotations
 
 import voluptuous as vol
 
@@ -48,7 +48,7 @@ TOGGLE_TRIGGER_SCHEMA = toggle_entity.TRIGGER_SCHEMA.extend(
 TRIGGER_SCHEMA = vol.Any(TARGET_TRIGGER_SCHEMA, TOGGLE_TRIGGER_SCHEMA)
 
 
-async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> list[dict]:
     """List device triggers for Humidifier devices."""
     registry = await entity_registry.async_get_registry(opp)
     triggers = await toggle_entity.async_get_triggers(opp, device_id, DOMAIN)

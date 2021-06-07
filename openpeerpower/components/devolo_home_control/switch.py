@@ -1,14 +1,14 @@
 """Platform for switch integration."""
 from openpeerpower.components.switch import SwitchEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from .const import DOMAIN
 from .devolo_device import DevoloDeviceEntity
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Get all devices and setup the switch devices via config entry."""
     entities = []

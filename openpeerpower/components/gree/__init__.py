@@ -1,56 +1,45 @@
 """The Gree Climate integration."""
-import asyncio
+from datetime import timedelta
 import logging
 
 from openpeerpower.components.climate import DOMAIN as CLIMATE_DOMAIN
 from openpeerpower.components.switch import DOMAIN as SWITCH_DOMAIN
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers.event import async_track_time_interval
 
-from .bridge import CannotConnect, DeviceDataUpdateCoordinator, DeviceHelper
-from .const import COORDINATOR, DOMAIN
+from .bridge import DiscoveryService
+from .const import (
+    COORDINATORS,
+    DATA_DISCOVERY_INTERVAL,
+    DATA_DISCOVERY_SERVICE,
+    DISCOVERY_SCAN_INTERVAL,
+    DISPATCHERS,
+    DOMAIN,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
-
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the Gree Climate component."""
-    opp.data[DOMAIN] = {}
-    return True
+PLATFORMS = [CLIMATE_DOMAIN, SWITCH_DOMAIN]
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Gree Climate from a config entry."""
-    devices = []
+    opp.data.setdefault(DOMAIN, {})
+    gree_discovery = DiscoveryService(opp)
+    opp.data[DATA_DISCOVERY_SERVICE] = gree_discovery
 
-    # First we'll grab as many devices as we can find on the network
-    # it's necessary to bind static devices anyway
+    opp.data[DOMAIN].setdefault(DISPATCHERS, [])
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
+
+    async def _async_scan_update(_=None):
+        await gree_discovery.discovery.scan()
+
     _LOGGER.debug("Scanning network for Gree devices")
+    await _async_scan_update()
 
-    for device_info in await DeviceHelper.find_devices():
-        try:
-            device = await DeviceHelper.try_bind_device(device_info)
-        except CannotConnect:
-            _LOGGER.error("Unable to bind to gree device: %s", device_info)
-            continue
-
-        _LOGGER.debug(
-            "Adding Gree device at %s:%i (%s)",
-            device.device_info.ip,
-            device.device_info.port,
-            device.device_info.name,
-        )
-        devices.append(device)
-
-    coordinators = [DeviceDataUpdateCoordinator(opp, d) for d in devices]
-    await asyncio.gather(*[x.async_refresh() for x in coordinators])
-
-    opp.data[DOMAIN][COORDINATOR] = coordinators
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_setup(entry, CLIMATE_DOMAIN)
-    )
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_setup(entry, SWITCH_DOMAIN)
+    opp.data[DOMAIN][DATA_DISCOVERY_INTERVAL] = async_track_time_interval(
+        opp, _async_scan_update, timedelta(seconds=DISCOVERY_SCAN_INTERVAL)
     )
 
     return True
@@ -58,15 +47,20 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    results = asyncio.gather(
-        opp.config_entries.async_forward_entry_unload(entry, CLIMATE_DOMAIN),
-        opp.config_entries.async_forward_entry_unload(entry, SWITCH_DOMAIN),
-    )
+    if opp.data[DOMAIN].get(DISPATCHERS) is not None:
+        for cleanup in opp.data[DOMAIN][DISPATCHERS]:
+            cleanup()
 
-    unload_ok = all(await results)
+    if opp.data[DOMAIN].get(DATA_DISCOVERY_INTERVAL) is not None:
+        opp.data[DOMAIN].pop(DATA_DISCOVERY_INTERVAL)()
+
+    if opp.data.get(DATA_DISCOVERY_SERVICE) is not None:
+        opp.data.pop(DATA_DISCOVERY_SERVICE)
+
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
+
     if unload_ok:
-        opp.data[DOMAIN].pop("devices", None)
-        opp.data[DOMAIN].pop(CLIMATE_DOMAIN, None)
-        opp.data[DOMAIN].pop(SWITCH_DOMAIN, None)
+        opp.data[DOMAIN].pop(COORDINATORS, None)
+        opp.data[DOMAIN].pop(DISPATCHERS, None)
 
     return unload_ok

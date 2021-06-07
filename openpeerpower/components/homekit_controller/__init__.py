@@ -1,5 +1,8 @@
 """Support for Homekit device discovery."""
-from typing import Any, Dict
+from __future__ import annotations
+
+import asyncio
+from typing import Any
 
 import aiohomekit
 from aiohomekit.model import Accessory
@@ -11,6 +14,7 @@ from aiohomekit.model.characteristics import (
 from aiohomekit.model.services import Service, ServicesTypes
 
 from openpeerpower.components import zeroconf
+from openpeerpower.const import EVENT_OPENPEERPOWER_STOP
 from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers.entity import Entity
 
@@ -27,6 +31,8 @@ def escape_characteristic_name(char_name):
 
 class HomeKitEntity(Entity):
     """Representation of a Open Peer Power HomeKit device."""
+
+    _attr_should_poll = False
 
     def __init__(self, accessory, devinfo):
         """Initialise a generic HomeKit device."""
@@ -77,7 +83,7 @@ class HomeKitEntity(Entity):
             signal_remove()
         self._signals.clear()
 
-    async def async_put_characteristics(self, characteristics: Dict[str, Any]):
+    async def async_put_characteristics(self, characteristics: dict[str, Any]):
         """
         Write characteristics to the device.
 
@@ -94,14 +100,6 @@ class HomeKitEntity(Entity):
         """
         payload = self.service.build_update(characteristics)
         return await self._accessory.put_characteristics(payload)
-
-    @property
-    def should_poll(self) -> bool:
-        """Return False.
-
-        Data update is triggered from HKDevice.
-        """
-        return False
 
     def setup(self):
         """Configure an entity baed on its HomeKit characteristics metadata."""
@@ -225,6 +223,16 @@ async def async_setup(opp, config):
     opp.data[CONTROLLER] = aiohomekit.Controller(zeroconf_instance=zeroconf_instance)
     opp.data[KNOWN_DEVICES] = {}
     opp.data[TRIGGERS] = {}
+
+    async def _async_stop_homekit_controller(event):
+        await asyncio.gather(
+            *[
+                connection.async_unload()
+                for connection in opp.data[KNOWN_DEVICES].values()
+            ]
+        )
+
+    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _async_stop_homekit_controller)
 
     return True
 

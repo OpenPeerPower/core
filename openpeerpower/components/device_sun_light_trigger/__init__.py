@@ -72,7 +72,7 @@ async def async_setup(opp, config):
             opp, device_group, light_group, light_profile, disable_turn_off
         )
 
-    if opp.is_running:
+    if opp is_running:
         await activate_on_start(None)
     else:
         opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, activate_on_start)
@@ -80,7 +80,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def activate_automation(
+async def activate_automation(  # noqa: C901
     opp, device_group, light_group, light_profile, disable_turn_off
 ):
     """Activate the automation."""
@@ -141,7 +141,7 @@ async def activate_automation(
             SERVICE_TURN_ON,
             {
                 ATTR_ENTITY_ID: light_id,
-                ATTR_TRANSITION: LIGHT_TRANSITION_TIME.seconds,
+                ATTR_TRANSITION: LIGHT_TRANSITION_TIME.total_seconds(),
                 ATTR_PROFILE: light_profile,
             },
         )

@@ -1,12 +1,14 @@
 """Support for Freebox Delta, Revolution and Mini 4K."""
+from __future__ import annotations
+
 import logging
-from typing import Dict
 
 from freebox_api.exceptions import InsufficientPermissionsError
 
 from openpeerpower.components.switch import SwitchEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers.entity import DeviceInfo
 
 from .const import DOMAIN
 from .router import FreeboxRouter
@@ -15,7 +17,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the switch."""
     router = opp.data[DOMAIN][entry.unique_id]
@@ -48,7 +50,7 @@ class FreeboxWifiSwitch(SwitchEntity):
         return self._state
 
     @property
-    def device_info(self) -> Dict[str, any]:
+    def device_info(self) -> DeviceInfo:
         """Return the device information."""
         return self._router.device_info
 

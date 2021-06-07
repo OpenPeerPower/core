@@ -1,5 +1,4 @@
 """Support for ecobee."""
-import asyncio
 from datetime import timedelta
 
 from pyecobee import ECOBEE_API_KEY, ECOBEE_REFRESH_TOKEN, Ecobee, ExpiredTokenError
@@ -60,10 +59,7 @@ async def async_setup_entry(opp, entry):
 
     opp.data[DOMAIN] = data
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
@@ -109,14 +105,9 @@ class EcobeeData:
         return False
 
 
-async def async_unload_entry(opp, config_entry):
+async def async_unload_entry(opp, entry):
     """Unload the config entry and platforms."""
-    opp.data.pop(DOMAIN)
-
-    tasks = []
-    for platform in PLATFORMS:
-        tasks.append(
-            opp.config_entries.async_forward_entry_unload(config_entry, platform)
-        )
-
-    return all(await asyncio.gather(*tasks))
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
+    if unload_ok:
+        opp.data.pop(DOMAIN)
+    return unload_ok

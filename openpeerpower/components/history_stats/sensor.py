@@ -5,8 +5,8 @@ import math
 
 import voluptuous as vol
 
-from openpeerpower.components import history
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.recorder import history
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_ENTITY_ID,
     CONF_NAME,
@@ -19,9 +19,8 @@ from openpeerpower.const import (
 from openpeerpower.core import CoreState, callback
 from openpeerpower.exceptions import TemplateError
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.event import async_track_state_change_event
-from openpeerpower.helpers.reload import setup_reload_service
+from openpeerpower.helpers.reload import async_setup_reload_service
 import openpeerpower.util.dt as dt_util
 
 from . import DOMAIN, PLATFORMS
@@ -75,9 +74,9 @@ PLATFORM_SCHEMA = vol.All(
 
 
 # noinspection PyUnusedLocal
-def setup_platform(opp, config, add_entities, discovery_info=None):
+async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the History Stats sensor."""
-    setup_reload_service(opp, DOMAIN, PLATFORMS)
+    await async_setup_reload_service(opp, DOMAIN, PLATFORMS)
 
     entity_id = config.get(CONF_ENTITY_ID)
     entity_states = config.get(CONF_STATE)
@@ -91,7 +90,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         if template is not None:
             template.opp = opp
 
-    add_entities(
+    async_add_entities(
         [
             HistoryStatsSensor(
                 opp, entity_id, entity_states, start, end, duration, sensor_type, name
@@ -102,7 +101,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     return True
 
 
-class HistoryStatsSensor(Entity):
+class HistoryStatsSensor(SensorEntity):
     """Representation of a HistoryStats sensor."""
 
     def __init__(
@@ -174,7 +173,7 @@ class HistoryStatsSensor(Entity):
         return self._unit_of_measurement
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of the sensor."""
         if self.value is None:
             return {}
@@ -187,7 +186,7 @@ class HistoryStatsSensor(Entity):
         """Return the icon to use in the frontend, if any."""
         return ICON
 
-    def update(self):
+    async def async_update(self):
         """Get the latest data and updates the states."""
         # Get previous values of start and end
         p_start, p_end = self._period
@@ -219,6 +218,11 @@ class HistoryStatsSensor(Entity):
             # Don't compute anything as the value cannot have changed
             return
 
+        await self.opp.async_add_executor_job(
+            self._update, start, end, now_timestamp, start_timestamp, end_timestamp
+        )
+
+    def _update(self, start, end, now_timestamp, start_timestamp, end_timestamp):
         # Get history between start and end
         history_list = history.state_changes_during_period(
             self.opp, start, end, str(self._entity_id)
@@ -266,7 +270,7 @@ class HistoryStatsSensor(Entity):
         # Parse start
         if self._start is not None:
             try:
-                start_rendered = self._start.render()
+                start_rendered = self._start.async_render()
             except (TemplateError, TypeError) as ex:
                 HistoryStatsHelper.handle_template_exception(ex, "start")
                 return
@@ -286,7 +290,7 @@ class HistoryStatsSensor(Entity):
         # Parse end
         if self._end is not None:
             try:
-                end_rendered = self._end.render()
+                end_rendered = self._end.async_render()
             except (TemplateError, TypeError) as ex:
                 HistoryStatsHelper.handle_template_exception(ex, "end")
                 return
@@ -348,8 +352,7 @@ class HistoryStatsHelper:
     def handle_template_exception(ex, field):
         """Log an error nicely if the template cannot be interpreted."""
         if ex.args and ex.args[0].startswith("UndefinedError: 'None' has no attribute"):
-            # Common during OP startup - so just a warning
+            # Common during OPP startup - so just a warning
             _LOGGER.warning(ex)
             return
-        _LOGGER.error("Error parsing template for field %s", field)
-        _LOGGER.error(ex)
+        _LOGGER.error("Error parsing template for field %s", field, exc_info=ex)

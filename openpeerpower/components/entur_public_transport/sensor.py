@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 from enturclient import EnturPublicTransportData
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_ATTRIBUTION,
     CONF_LATITUDE,
@@ -15,7 +15,6 @@ from openpeerpower.const import (
 )
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 import openpeerpower.util.dt as dt_util
 
@@ -148,10 +147,12 @@ class EnturProxy:
         return self._api.get_stop_info(stop_id)
 
 
-class EnturPublicTransportSensor(Entity):
+class EnturPublicTransportSensor(SensorEntity):
     """Implementation of a Entur public transport sensor."""
 
-    def __init__(self, api: EnturProxy, name: str, stop: str, show_on_map: bool):
+    def __init__(
+        self, api: EnturProxy, name: str, stop: str, show_on_map: bool
+    ) -> None:
         """Initialize the sensor."""
         self.api = api
         self._stop = stop
@@ -172,7 +173,7 @@ class EnturPublicTransportSensor(Entity):
         return self._state
 
     @property
-    def device_state_attributes(self) -> dict:
+    def extra_state_attributes(self) -> dict:
         """Return the state attributes."""
         self._attributes[ATTR_ATTRIBUTION] = ATTRIBUTION
         self._attributes[ATTR_STOP_ID] = self._stop

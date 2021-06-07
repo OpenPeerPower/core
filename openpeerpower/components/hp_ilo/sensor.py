@@ -5,7 +5,7 @@ import logging
 import hpilo
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_HOST,
     CONF_MONITORED_VARIABLES,
@@ -18,7 +18,6 @@ from openpeerpower.const import (
     CONF_VALUE_TEMPLATE,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
@@ -88,7 +87,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     devices = []
     for monitored_variable in monitored_variables:
         new_device = HpIloSensor(
-            opp=opp,
+            opp.opp,
             hp_ilo_data=hp_ilo_data,
             sensor_name=f"{config.get(CONF_NAME)} {monitored_variable[CONF_NAME]}",
             sensor_type=monitored_variable[CONF_SENSOR_TYPE],
@@ -100,7 +99,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(devices, True)
 
 
-class HpIloSensor(Entity):
+class HpIloSensor(SensorEntity):
     """Representation of a HP iLO sensor."""
 
     def __init__(
@@ -144,7 +143,7 @@ class HpIloSensor(Entity):
         return self._state
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the device state attributes."""
         return self._state_attributes
 

@@ -8,7 +8,7 @@ from time import sleep
 from fritzconnection.core.fritzmonitor import FritzMonitor
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.config_entries import SOURCE_IMPORT
 from openpeerpower.const import (
     CONF_HOST,
@@ -19,7 +19,6 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_STOP,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 from .const import (
     ATTR_PREFIXES,
@@ -102,7 +101,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     async_add_entities([sensor])
 
 
-class FritzBoxCallSensor(Entity):
+class FritzBoxCallSensor(SensorEntity):
     """Implementation of a Fritz!Box call monitor."""
 
     def __init__(self, name, unique_id, fritzbox_phonebook, prefixes, host, port):
@@ -169,7 +168,7 @@ class FritzBoxCallSensor(Entity):
         return ICON_PHONE
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         if self._prefixes:
             self._attributes[ATTR_PREFIXES] = self._prefixes

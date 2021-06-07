@@ -167,7 +167,9 @@ async def async_setup(opp: OpenPeerPower, opp_config: ConfigType) -> bool:
         # to ensure the entry if updated before async_setup_entry
         # is called to avoid a situation where the user has to restart
         # twice for the changes to take effect
-        current_config_entry = _async_find_matching_config_entry(opp, conf[CONF_PREFIX])
+        current_config_entry = _async_find_matching_config_entry(
+            opp, conf[CONF_PREFIX]
+        )
         if current_config_entry:
             # If they alter the yaml config we import the changes
             # since there currently is no practical way to do an options flow
@@ -193,7 +195,7 @@ def _async_find_matching_config_entry(opp, prefix):
             return entry
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Elk-M1 Control from a config entry."""
     conf = entry.data
 
@@ -260,10 +262,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         "keypads": {},
     }
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
@@ -284,14 +283,7 @@ def _find_elk_by_prefix(opp, prefix):
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     # disconnect cleanly
     opp.data[DOMAIN][entry.entry_id]["elk"].disconnect()
@@ -427,7 +419,7 @@ class ElkEntity(Entity):
         return False
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the default attributes of the element."""
         return {**self._element.as_dict(), **self.initial_attrs()}
 

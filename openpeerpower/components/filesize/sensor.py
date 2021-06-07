@@ -5,10 +5,9 @@ import os
 
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import DATA_MEGABYTES
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.reload import setup_reload_service
 
 from . import DOMAIN, PLATFORMS
@@ -40,7 +39,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         add_entities(sensors, True)
 
 
-class Filesize(Entity):
+class Filesize(SensorEntity):
     """Encapsulates file size information."""
 
     def __init__(self, path):
@@ -76,7 +75,7 @@ class Filesize(Entity):
         return ICON
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return other details about the sensor state."""
         return {
             "path": self._path,

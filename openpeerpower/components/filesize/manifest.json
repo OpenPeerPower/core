@@ -2,5 +2,6 @@
   "domain": "filesize",
   "name": "File Size",
   "documentation": "https://www.openpeerpower.io/integrations/filesize",
-  "codeowners": []
+  "codeowners": [],
+  "iot_class": "local_polling"
 }

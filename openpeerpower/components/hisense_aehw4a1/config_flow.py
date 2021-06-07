@@ -1,7 +1,6 @@
 """Config flow for Hisense AEH-W4A1 integration."""
 from pyaehw4a1.aehw4a1 import AehW4a1
 
-from openpeerpower import config_entries
 from openpeerpower.helpers import config_entry_flow
 
 from .const import DOMAIN
@@ -14,5 +13,5 @@ async def _async_has_devices(opp):
 
 
 config_entry_flow.register_discovery_flow(
-    DOMAIN, "Hisense AEH-W4A1", _async_has_devices, config_entries.CONN_CLASS_LOCAL_POLL
+    DOMAIN, "Hisense AEH-W4A1", _async_has_devices
 )

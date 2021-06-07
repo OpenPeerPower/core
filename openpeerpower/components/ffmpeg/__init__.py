@@ -1,7 +1,8 @@
 """Support for FFmpeg."""
+from __future__ import annotations
+
 import asyncio
 import re
-from typing import Optional
 
 from haffmpeg.tools import IMAGE_JPEG, FFVersion, ImageFrame
 import voluptuous as vol
@@ -12,14 +13,13 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_START,
     EVENT_OPENPEERPOWER_STOP,
 )
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
 )
 from openpeerpower.helpers.entity import Entity
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 DOMAIN = "ffmpeg"
 
@@ -90,10 +90,10 @@ async def async_setup(opp, config):
 
 
 async def async_get_image(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     input_source: str,
     output_format: str = IMAGE_JPEG,
-    extra_cmd: Optional[str] = None,
+    extra_cmd: str | None = None,
 ):
     """Get an image from a frame of an RTSP stream."""
     manager = opp.data[DATA_FFMPEG]

@@ -2,10 +2,10 @@
 
 import logging
 
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_NAME, CONF_PIN
 from openpeerpower.core import OpenPeerPower
-from openpeerpower.helpers.entity import Entity
 
 from .const import CONF_DIFFERENTIAL, CONF_PIN_MODE, DOMAIN
 from .entity import FirmataPinEntity
@@ -42,7 +42,7 @@ async def async_setup_entry(
         async_add_entities(new_entities)
 
 
-class FirmataSensor(FirmataPinEntity, Entity):
+class FirmataSensor(FirmataPinEntity, SensorEntity):
     """Representation of a sensor on a Firmata board."""
 
     async def async_added_to_opp(self) -> None:

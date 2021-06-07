@@ -1,6 +1,7 @@
 """Support for Genius Hub binary_sensor devices."""
 from openpeerpower.components.binary_sensor import BinarySensorEntity
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers.typing import ConfigType
 
 from . import DOMAIN, GeniusDevice
 
@@ -8,7 +9,7 @@ GH_STATE_ATTR = "outputOnOff"
 
 
 async def async_setup_platform(
-    opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
+    opp: OpenPeerPower, config: ConfigType, async_add_entities, discovery_info=None
 ) -> None:
     """Set up the Genius Hub sensor entities."""
     if discovery_info is None:

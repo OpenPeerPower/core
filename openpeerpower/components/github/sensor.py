@@ -5,7 +5,7 @@ import logging
 import github
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_NAME,
     CONF_ACCESS_TOKEN,
@@ -14,7 +14,6 @@ from openpeerpower.const import (
     CONF_URL,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -72,7 +71,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(sensors, True)
 
 
-class GitHubSensor(Entity):
+class GitHubSensor(SensorEntity):
     """Representation of a GitHub sensor."""
 
     def __init__(self, github_data):
@@ -119,7 +118,7 @@ class GitHubSensor(Entity):
         return self._available
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         attrs = {
             ATTR_PATH: self._repository_path,

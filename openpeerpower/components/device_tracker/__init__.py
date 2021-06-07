@@ -1,6 +1,7 @@
 """Provide functionality to keep track of devices."""
 from openpeerpower.const import ATTR_GPS_ACCURACY, STATE_HOME  # noqa: F401
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers.typing import ConfigType
 from openpeerpower.loader import bind_opp
 
 from .config_entry import async_setup_entry, async_unload_entry  # noqa: F401
@@ -36,12 +37,12 @@ from .legacy import (  # noqa: F401
 
 
 @bind_opp
-def is_on(opp: OpenPeerPowerType, entity_id: str):
+def is_on(opp: OpenPeerPower, entity_id: str) -> bool:
     """Return the state if any or a specified device is home."""
     return opp.states.is_state(entity_id, STATE_HOME)
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
+async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up the device tracker."""
     await async_setup_legacy_integration(opp, config)
 

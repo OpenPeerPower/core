@@ -15,7 +15,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
 
     @callback
     def _receive_data(device, gps, location_name, attributes):
-        """Fire OP event to set location."""
+        """Fire OPP event to set location."""
         if device in opp.data[GF_DOMAIN]["devices"]:
             return
 
@@ -56,7 +56,7 @@ class GeofencyEntity(TrackerEntity, RestoreEntity):
         self._unique_id = device
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return device specific attributes."""
         return self._attributes
 

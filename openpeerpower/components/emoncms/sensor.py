@@ -5,7 +5,7 @@ import logging
 import requests
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_API_KEY,
     CONF_ID,
@@ -19,7 +19,6 @@ from openpeerpower.const import (
 )
 from openpeerpower.helpers import template
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
@@ -93,13 +92,11 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 
     for elem in data.data:
 
-        if exclude_feeds is not None:
-            if int(elem["id"]) in exclude_feeds:
-                continue
+        if exclude_feeds is not None and int(elem["id"]) in exclude_feeds:
+            continue
 
-        if include_only_feeds is not None:
-            if int(elem["id"]) not in include_only_feeds:
-                continue
+        if include_only_feeds is not None and int(elem["id"]) not in include_only_feeds:
+            continue
 
         name = None
         if sensor_names is not None:
@@ -125,7 +122,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(sensors)
 
 
-class EmonCmsSensor(Entity):
+class EmonCmsSensor(SensorEntity):
     """Implementation of an Emoncms sensor."""
 
     def __init__(
@@ -175,7 +172,7 @@ class EmonCmsSensor(Entity):
         return self._state
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the attributes of the sensor."""
         return {
             ATTR_FEEDID: self._elem["id"],

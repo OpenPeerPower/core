@@ -1,4 +1,5 @@
 """Support for Fast.com internet speed testing sensor."""
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import DATA_RATE_MEGABITS_PER_SECOND
 from openpeerpower.core import callback
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
@@ -14,7 +15,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities([SpeedtestSensor(opp.data[FASTDOTCOM_DOMAIN])])
 
 
-class SpeedtestSensor(RestoreEntity):
+class SpeedtestSensor(RestoreEntity, SensorEntity):
     """Implementation of a FAst.com sensor."""
 
     def __init__(self, speedtest_data):

@@ -6,11 +6,10 @@ import logging
 import eliqonline
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_ACCESS_TOKEN, CONF_NAME, POWER_WATT
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -52,7 +51,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities([EliqSensor(api, channel_id, name)], True)
 
 
-class EliqSensor(Entity):
+class EliqSensor(SensorEntity):
     """Implementation of an ELIQ Online sensor."""
 
     def __init__(self, api, channel_id, name):

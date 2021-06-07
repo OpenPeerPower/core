@@ -1,4 +1,5 @@
 """HTML5 Push Messaging notification service."""
+from contextlib import suppress
 from datetime import datetime, timedelta
 from functools import partial
 import json
@@ -202,10 +203,8 @@ def get_service(opp, config, discovery_info=None):
 
 def _load_config(filename):
     """Load configuration."""
-    try:
+    with suppress(OpenPeerPowerError):
         return load_json(filename)
-    except OpenPeerPowerError:
-        pass
     return {}
 
 
@@ -240,7 +239,7 @@ class HTML5PushRegistrationView(OpenPeerPowerView):
         self.registrations[name] = data
 
         try:
-            opp = request.app["opp"]
+            opp = request.app["opp.]
 
             await opp.async_add_executor_job(
                 save_json, self.json_path, self.registrations
@@ -288,7 +287,7 @@ class HTML5PushRegistrationView(OpenPeerPowerView):
         reg = self.registrations.pop(found)
 
         try:
-            opp = request.app["opp"]
+            opp = request.app["opp.]
 
             await opp.async_add_executor_job(
                 save_json, self.json_path, self.registrations
@@ -325,10 +324,8 @@ class HTML5PushCallbackView(OpenPeerPowerView):
         if target_check.get(ATTR_TARGET) in self.registrations:
             possible_target = self.registrations[target_check[ATTR_TARGET]]
             key = possible_target[ATTR_SUBSCRIPTION][ATTR_KEYS][ATTR_AUTH]
-            try:
+            with suppress(jwt.exceptions.DecodeError):
                 return jwt.decode(token, key, algorithms=["ES256", "HS256"])
-            except jwt.exceptions.DecodeError:
-                pass
 
         return self.json_message(
             "No target found in JWT", status_code=HTTP_UNAUTHORIZED
@@ -397,7 +394,7 @@ class HTML5PushCallbackView(OpenPeerPowerView):
             )
 
         event_name = f"{NOTIFY_CALLBACK_EVENT}.{event_payload[ATTR_TYPE]}"
-        request.app["opp"].bus.fire(event_name, event_payload)
+        request.app["opp.].bus.fire(event_name, event_payload)
         return self.json({"status": "ok", "event": event_payload[ATTR_TYPE]})
 
 

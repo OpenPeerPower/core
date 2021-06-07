@@ -51,7 +51,7 @@ OPP_TO_HOMEKIT_SERVICES = {
     SERVICE_ALARM_DISARM: 3,
 }
 
-HOMEKIT_TO_OPP = {c: s for s, c in OPP_TO_HOMEKIT.items()}
+HOMEKIT_TO_HASS = {c: s for s, c in OPP_TO_HOMEKIT.items()}
 
 STATE_TO_SERVICE = {
     STATE_ALARM_ARMED_AWAY: SERVICE_ALARM_ARM_AWAY,
@@ -144,7 +144,7 @@ class SecuritySystem(HomeAccessory):
     def set_security_state(self, value):
         """Move security state to value if call came from HomeKit."""
         _LOGGER.debug("%s: Set security state to %d", self.entity_id, value)
-        opp_value = HOMEKIT_TO_OPP[value]
+        opp_value = HOMEKIT_TO_HASS[value]
         service = STATE_TO_SERVICE[opp_value]
 
         params = {ATTR_ENTITY_ID: self.entity_id}

@@ -1,7 +1,7 @@
 """Binary Sensor platform for FireServiceRota integration."""
 from openpeerpower.components.binary_sensor import BinarySensorEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
@@ -11,7 +11,7 @@ from .const import DATA_CLIENT, DATA_COORDINATOR, DOMAIN as FIRESERVICEROTA_DOMA
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up FireServiceRota binary sensor based on a config entry."""
 
@@ -62,7 +62,7 @@ class ResponseBinarySensor(CoordinatorEntity, BinarySensorEntity):
         return self._state
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return available attributes for binary sensor."""
         attr = {}
         if not self.coordinator.data:

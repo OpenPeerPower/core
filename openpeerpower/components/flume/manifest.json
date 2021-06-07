@@ -3,10 +3,12 @@
   "name": "Flume",
   "documentation": "https://www.openpeerpower.io/integrations/flume/",
   "requirements": ["pyflume==0.5.5"],
-  "codeowners": [],
+  "codeowners": ["@ChrisMandich", "@bdraco"],
   "config_flow": true,
   "dhcp": [
-   {"hostname":"flume-gw-*","macaddress":"ECFABC*"},
-   {"hostname":"flume-gw-*","macaddress":"B4E62D*"}
-  ]
+    {
+      "hostname": "flume-gw-*"
+    }
+  ],
+  "iot_class": "cloud_polling"
 }

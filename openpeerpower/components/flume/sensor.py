@@ -6,7 +6,7 @@ from numbers import Number
 from pyflume import FlumeData
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.config_entries import SOURCE_IMPORT
 from openpeerpower.const import (
     CONF_CLIENT_ID,
@@ -108,7 +108,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
         async_add_entities(flume_entity_list)
 
 
-class FlumeSensor(CoordinatorEntity):
+class FlumeSensor(CoordinatorEntity, SensorEntity):
     """Representation of the Flume sensor."""
 
     def __init__(self, coordinator, flume_device, flume_query_sensor, name, device_id):

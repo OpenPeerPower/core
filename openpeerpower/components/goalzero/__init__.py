@@ -1,9 +1,10 @@
 """The Goal Zero Yeti integration."""
-import asyncio
 import logging
 
 from goalzero import Yeti, exceptions
 
+from openpeerpower.components.binary_sensor import DOMAIN as DOMAIN_BINARY_SENSOR
+from openpeerpower.components.switch import DOMAIN as DOMAIN_SWITCH
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_HOST, CONF_NAME
 from openpeerpower.core import OpenPeerPower
@@ -20,15 +21,7 @@ from .const import DATA_KEY_API, DATA_KEY_COORDINATOR, DOMAIN, MIN_TIME_BETWEEN_
 _LOGGER = logging.getLogger(__name__)
 
 
-PLATFORMS = ["binary_sensor"]
-
-
-async def async_setup(opp: OpenPeerPower, config):
-    """Set up the Goal Zero Yeti component."""
-
-    opp.data[DOMAIN] = {}
-
-    return True
+PLATFORMS = [DOMAIN_BINARY_SENSOR, DOMAIN_SWITCH]
 
 
 async def async_setup_entry(opp, entry):
@@ -39,7 +32,7 @@ async def async_setup_entry(opp, entry):
     session = async_get_clientsession(opp)
     api = Yeti(host, opp.loop, session)
     try:
-        await api.get_state()
+        await api.init_connect()
     except exceptions.ConnectError as ex:
         _LOGGER.warning("Failed to connect: %s", ex)
         raise ConfigEntryNotReady from ex
@@ -49,7 +42,7 @@ async def async_setup_entry(opp, entry):
         try:
             await api.get_state()
         except exceptions.ConnectError as err:
-            raise UpdateFailed(f"Failed to communicating with API: {err}") from err
+            raise UpdateFailed(f"Failed to communicating with device {err}") from err
 
     coordinator = DataUpdateCoordinator(
         opp,
@@ -58,29 +51,20 @@ async def async_setup_entry(opp, entry):
         update_method=async_update_data,
         update_interval=MIN_TIME_BETWEEN_UPDATES,
     )
+    opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = {
         DATA_KEY_API: api,
         DATA_KEY_COORDINATOR: coordinator,
     }
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
     return unload_ok
@@ -100,11 +84,16 @@ class YetiEntity(CoordinatorEntity):
     @property
     def device_info(self):
         """Return the device information of the entity."""
-        return {
+        info = {
             "identifiers": {(DOMAIN, self._server_unique_id)},
-            "name": self._name,
             "manufacturer": "Goal Zero",
+            "name": self._name,
         }
+        if self.api.sysdata:
+            info["model"] = self.api.sysdata["model"]
+        if self.api.data:
+            info["sw_version"] = self.api.data["firmwareVersion"]
+        return info
 
     @property
     def device_class(self):
