@@ -17,7 +17,7 @@ TRIGGER_SCHEMA = vol.Schema(
 )
 
 
-async def _handle_webhook(job, opp, webhook_id, request):
+async def _handle_webhook(job, trigger_id, opp, webhook_id, request):
     """Handle incoming webhook."""
     result = {"platform": "webhook", "webhook_id": webhook_id}
 
@@ -28,18 +28,20 @@ async def _handle_webhook(job, opp, webhook_id, request):
 
     result["query"] = request.query
     result["description"] = "webhook"
+    result["id"] = trigger_id
     opp.async_run_opp_job(job, {"trigger": result})
 
 
 async def async_attach_trigger(opp, config, action, automation_info):
     """Trigger based on incoming webhooks."""
+    trigger_id = automation_info.get("trigger_id") if automation_info else None
     webhook_id = config.get(CONF_WEBHOOK_ID)
     job = OppJob(action)
     opp.components.webhook.async_register(
         automation_info["domain"],
         automation_info["name"],
         webhook_id,
-        partial(_handle_webhook, job),
+        partial(_handle_webhook, job, trigger_id),
     )
 
     @callback

@@ -14,6 +14,7 @@ from openpeerpower.const import (
     CONF_MAC,
     CONF_NAME,
 )
+from openpeerpower.helpers import device_registry as dr
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.script import Script
 
@@ -57,7 +58,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
                 broadcast_port,
             )
         ],
-        True,
+        host is not None,
     )
 
 
@@ -82,8 +83,12 @@ class WolSwitch(SwitchEntity):
         self._broadcast_address = broadcast_address
         self._broadcast_port = broadcast_port
         domain = __name__.split(".")[-2]
-        self._off_script = Script(opp, off_action, name, domain) if off_action else None
+        self._off_script = (
+            Script(opp, off_action, name, domain) if off_action else None
+        )
         self._state = False
+        self._assumed_state = host is None
+        self._unique_id = dr.format_mac(mac_address)
 
     @property
     def is_on(self):
@@ -94,6 +99,21 @@ class WolSwitch(SwitchEntity):
     def name(self):
         """Return the name of the switch."""
         return self._name
+
+    @property
+    def assumed_state(self):
+        """Return true if no host is provided."""
+        return self._assumed_state
+
+    @property
+    def should_poll(self):
+        """Return false if assumed state is true."""
+        return not self._assumed_state
+
+    @property
+    def unique_id(self):
+        """Return the unique id of this switch."""
+        return self._unique_id
 
     def turn_on(self, **kwargs):
         """Turn the device on."""
@@ -112,13 +132,21 @@ class WolSwitch(SwitchEntity):
 
         wakeonlan.send_magic_packet(self._mac_address, **service_kwargs)
 
+        if self._assumed_state:
+            self._state = True
+            self.async_write_op_state()
+
     def turn_off(self, **kwargs):
         """Turn the device off if an off action is present."""
         if self._off_script is not None:
             self._off_script.run(context=self._context)
 
+        if self._assumed_state:
+            self._state = False
+            self.async_write_op_state()
+
     def update(self):
-        """Check if device is on and update the state."""
+        """Check if device is on and update the state. Only called if assumed state is false."""
         if platform.system().lower() == "windows":
             ping_cmd = [
                 "ping",

@@ -1,5 +1,4 @@
 """The WiLight integration."""
-import asyncio
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.core import OpenPeerPower, callback
@@ -14,15 +13,7 @@ DOMAIN = "wilight"
 PLATFORMS = ["cover", "fan", "light"]
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the WiLight with Config Flow component."""
-
-    opp.data[DOMAIN] = {}
-
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up a wilight config entry."""
 
     parent = WiLightParent(opp, entry)
@@ -30,13 +21,11 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     if not await parent.async_setup():
         raise ConfigEntryNotReady
 
+    opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = parent
 
     # Set up all platforms for this device/entry.
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
@@ -45,19 +34,14 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload WiLight config entry."""
 
     # Unload entities for this entry/device.
-    await asyncio.gather(
-        *(
-            opp.config_entries.async_forward_entry_unload(entry, platform)
-            for platform in PLATFORMS
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     # Cleanup
     parent = opp.data[DOMAIN][entry.entry_id]
     await parent.async_reset()
     del opp.data[DOMAIN][entry.entry_id]
 
-    return True
+    return unload_ok
 
 
 class WiLightDevice(Entity):

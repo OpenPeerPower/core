@@ -1,6 +1,8 @@
 """Support for LED lights."""
+from __future__ import annotations
+
 from functools import partial
-from typing import Any, Callable, Dict, List, Optional, Tuple, Union
+from typing import Any
 
 import voluptuous as vol
 
@@ -20,16 +22,15 @@ from openpeerpower.components.light import (
     LightEntity,
 )
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers import config_validation as cv, entity_platform
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 from openpeerpower.helpers.entity_registry import (
     async_get_registry as async_get_entity_registry,
 )
-from openpeerpower.helpers.typing import OpenPeerPowerType
 import openpeerpower.util.color as color_util
 
-from . import WLEDDataUpdateCoordinator, WLEDDeviceEntity, wled_exception_handler
+from . import WLEDDataUpdateCoordinator, WLEDEntity, wled_exception_handler
 from .const import (
     ATTR_COLOR_PRIMARY,
     ATTR_INTENSITY,
@@ -49,14 +50,14 @@ PARALLEL_UPDATES = 1
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     entry: ConfigEntry,
-    async_add_entities: Callable[[List[Entity], bool], None],
+    async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up WLED light based on a config entry."""
     coordinator: WLEDDataUpdateCoordinator = opp.data[DOMAIN][entry.entry_id]
 
-    platform = entity_platform.current_platform.get()
+    platform = entity_platform.async_get_current_platform()
 
     platform.async_register_entity_service(
         SERVICE_EFFECT,
@@ -92,30 +93,20 @@ async def async_setup_entry(
     update_segments()
 
 
-class WLEDMasterLight(LightEntity, WLEDDeviceEntity):
+class WLEDMasterLight(WLEDEntity, LightEntity):
     """Defines a WLED master light."""
 
-    def __init__(self, entry_id: str, coordinator: WLEDDataUpdateCoordinator):
+    _attr_supported_features = SUPPORT_BRIGHTNESS | SUPPORT_TRANSITION
+    _attr_icon = "mdi:led-strip-variant"
+
+    def __init__(self, coordinator: WLEDDataUpdateCoordinator) -> None:
         """Initialize WLED master light."""
-        super().__init__(
-            entry_id=entry_id,
-            coordinator=coordinator,
-            name=f"{coordinator.data.info.name} Master",
-            icon="mdi:led-strip-variant",
-        )
+        super().__init__(coordinator=coordinator)
+        self._attr_name = f"{coordinator.data.info.name} Master"
+        self._attr_unique_id = coordinator.data.info.mac_address
 
     @property
-    def unique_id(self) -> str:
-        """Return the unique ID for this sensor."""
-        return f"{self.coordinator.data.info.mac_address}"
-
-    @property
-    def supported_features(self) -> int:
-        """Flag supported features."""
-        return SUPPORT_BRIGHTNESS | SUPPORT_TRANSITION
-
-    @property
-    def brightness(self) -> Optional[int]:
+    def brightness(self) -> int | None:
         """Return the brightness of this light between 1..255."""
         return self.coordinator.data.state.brightness
 
@@ -127,7 +118,7 @@ class WLEDMasterLight(LightEntity, WLEDDeviceEntity):
     @wled_exception_handler
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn off the light."""
-        data = {ATTR_ON: False}
+        data: dict[str, bool | int] = {ATTR_ON: False}
 
         if ATTR_TRANSITION in kwargs:
             # WLED uses 100ms per unit, so 10 = 1 second.
@@ -138,7 +129,7 @@ class WLEDMasterLight(LightEntity, WLEDDeviceEntity):
     @wled_exception_handler
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn on the light."""
-        data = {ATTR_ON: True}
+        data: dict[str, bool | int] = {ATTR_ON: True}
 
         if ATTR_TRANSITION in kwargs:
             # WLED uses 100ms per unit, so 10 = 1 second.
@@ -149,33 +140,47 @@ class WLEDMasterLight(LightEntity, WLEDDeviceEntity):
 
         await self.coordinator.wled.master(**data)
 
+    async def async_effect(
+        self,
+        effect: int | str | None = None,
+        intensity: int | None = None,
+        palette: int | str | None = None,
+        reverse: bool | None = None,
+        speed: int | None = None,
+    ) -> None:
+        """Set the effect of a WLED light."""
+        # Master light does not have an effect setting.
 
-class WLEDSegmentLight(LightEntity, WLEDDeviceEntity):
+    @wled_exception_handler
+    async def async_preset(
+        self,
+        preset: int,
+    ) -> None:
+        """Set a WLED light to a saved preset."""
+        data = {ATTR_PRESET: preset}
+
+        await self.coordinator.wled.preset(**data)
+
+
+class WLEDSegmentLight(WLEDEntity, LightEntity):
     """Defines a WLED light based on a segment."""
 
-    def __init__(
-        self, entry_id: str, coordinator: WLEDDataUpdateCoordinator, segment: int
-    ):
+    _attr_icon = "mdi:led-strip-variant"
+
+    def __init__(self, coordinator: WLEDDataUpdateCoordinator, segment: int) -> None:
         """Initialize WLED segment light."""
+        super().__init__(coordinator=coordinator)
         self._rgbw = coordinator.data.info.leds.rgbw
         self._segment = segment
 
         # If this is the one and only segment, use a simpler name
-        name = f"{coordinator.data.info.name} Segment {self._segment}"
+        self._attr_name = f"{coordinator.data.info.name} Segment {segment}"
         if len(coordinator.data.state.segments) == 1:
-            name = coordinator.data.info.name
+            self._attr_name = coordinator.data.info.name
 
-        super().__init__(
-            entry_id=entry_id,
-            coordinator=coordinator,
-            name=name,
-            icon="mdi:led-strip-variant",
+        self._attr_unique_id = (
+            f"{self.coordinator.data.info.mac_address}_{self._segment}"
         )
-
-    @property
-    def unique_id(self) -> str:
-        """Return the unique ID for this sensor."""
-        return f"{self.coordinator.data.info.mac_address}_{self._segment}"
 
     @property
     def available(self) -> bool:
@@ -188,7 +193,7 @@ class WLEDSegmentLight(LightEntity, WLEDDeviceEntity):
         return super().available
 
     @property
-    def device_state_attributes(self) -> Optional[Dict[str, Any]]:
+    def extra_state_attributes(self) -> dict[str, Any] | None:
         """Return the state attributes of the entity."""
         playlist = self.coordinator.data.state.playlist
         if playlist == -1:
@@ -209,18 +214,18 @@ class WLEDSegmentLight(LightEntity, WLEDDeviceEntity):
         }
 
     @property
-    def hs_color(self) -> Optional[Tuple[float, float]]:
+    def hs_color(self) -> tuple[float, float]:
         """Return the hue and saturation color value [float, float]."""
         color = self.coordinator.data.state.segments[self._segment].color_primary
         return color_util.color_RGB_to_hs(*color[:3])
 
     @property
-    def effect(self) -> Optional[str]:
+    def effect(self) -> str | None:
         """Return the current effect of the light."""
         return self.coordinator.data.state.segments[self._segment].effect.name
 
     @property
-    def brightness(self) -> Optional[int]:
+    def brightness(self) -> int | None:
         """Return the brightness of this light between 1..255."""
         state = self.coordinator.data.state
 
@@ -234,7 +239,7 @@ class WLEDSegmentLight(LightEntity, WLEDDeviceEntity):
         return state.segments[self._segment].brightness
 
     @property
-    def white_value(self) -> Optional[int]:
+    def white_value(self) -> int | None:
         """Return the white value of this light between 0..255."""
         color = self.coordinator.data.state.segments[self._segment].color_primary
         return color[-1] if self._rgbw else None
@@ -256,7 +261,7 @@ class WLEDSegmentLight(LightEntity, WLEDDeviceEntity):
         return flags
 
     @property
-    def effect_list(self) -> List[str]:
+    def effect_list(self) -> list[str]:
         """Return the list of supported effects."""
         return [effect.name for effect in self.coordinator.data.effects]
 
@@ -274,7 +279,7 @@ class WLEDSegmentLight(LightEntity, WLEDDeviceEntity):
     @wled_exception_handler
     async def async_turn_off(self, **kwargs: Any) -> None:
         """Turn off the light."""
-        data = {ATTR_ON: False}
+        data: dict[str, bool | int] = {ATTR_ON: False}
 
         if ATTR_TRANSITION in kwargs:
             # WLED uses 100ms per unit, so 10 = 1 second.
@@ -291,7 +296,10 @@ class WLEDSegmentLight(LightEntity, WLEDDeviceEntity):
     @wled_exception_handler
     async def async_turn_on(self, **kwargs: Any) -> None:
         """Turn on the light."""
-        data = {ATTR_ON: True, ATTR_SEGMENT_ID: self._segment}
+        data: dict[str, Any] = {
+            ATTR_ON: True,
+            ATTR_SEGMENT_ID: self._segment,
+        }
 
         if ATTR_COLOR_TEMP in kwargs:
             mireds = color_util.color_temperature_kelvin_to_mired(
@@ -357,14 +365,14 @@ class WLEDSegmentLight(LightEntity, WLEDDeviceEntity):
     @wled_exception_handler
     async def async_effect(
         self,
-        effect: Optional[Union[int, str]] = None,
-        intensity: Optional[int] = None,
-        palette: Optional[Union[int, str]] = None,
-        reverse: Optional[bool] = None,
-        speed: Optional[int] = None,
+        effect: int | str | None = None,
+        intensity: int | None = None,
+        palette: int | str | None = None,
+        reverse: bool | None = None,
+        speed: int | None = None,
     ) -> None:
         """Set the effect of a WLED light."""
-        data = {ATTR_SEGMENT_ID: self._segment}
+        data: dict[str, bool | int | str | None] = {ATTR_SEGMENT_ID: self._segment}
 
         if effect is not None:
             data[ATTR_EFFECT] = effect
@@ -398,7 +406,7 @@ class WLEDSegmentLight(LightEntity, WLEDDeviceEntity):
 def async_update_segments(
     entry: ConfigEntry,
     coordinator: WLEDDataUpdateCoordinator,
-    current: Dict[int, WLEDSegmentLight],
+    current: dict[int, WLEDSegmentLight | WLEDMasterLight],
     async_add_entities,
 ) -> None:
     """Update segments."""
@@ -411,12 +419,12 @@ def async_update_segments(
     # Process new segments, add them to Open Peer Power
     new_entities = []
     for segment_id in segment_ids - current_ids:
-        current[segment_id] = WLEDSegmentLight(entry.entry_id, coordinator, segment_id)
+        current[segment_id] = WLEDSegmentLight(coordinator, segment_id)
         new_entities.append(current[segment_id])
 
     # More than 1 segment now? Add master controls
     if len(current_ids) < 2 and len(segment_ids) > 1:
-        current[-1] = WLEDMasterLight(entry.entry_id, coordinator)
+        current[-1] = WLEDMasterLight(coordinator)
         new_entities.append(current[-1])
 
     if new_entities:
@@ -430,13 +438,15 @@ def async_update_segments(
 
     # Remove master if there is only 1 segment left
     if len(current_ids) > 1 and len(segment_ids) < 2:
-        coordinator.opp.async_create_task(async_remove_entity(-1, coordinator, current))
+        coordinator.opp.async_create_task(
+            async_remove_entity(-1, coordinator, current)
+        )
 
 
 async def async_remove_entity(
     index: int,
     coordinator: WLEDDataUpdateCoordinator,
-    current: Dict[int, WLEDSegmentLight],
+    current: dict[int, WLEDSegmentLight | WLEDMasterLight],
 ) -> None:
     """Remove WLED segment light from Open Peer Power."""
     entity = current[index]

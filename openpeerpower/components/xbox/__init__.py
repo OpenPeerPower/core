@@ -1,9 +1,10 @@
 """The xbox integration."""
-import asyncio
+from __future__ import annotations
+
+from contextlib import suppress
 from dataclasses import dataclass
 from datetime import timedelta
 import logging
-from typing import Dict, Optional
 
 import voluptuous as vol
 from xbox.webapi.api.client import XboxLiveClient
@@ -27,7 +28,6 @@ from openpeerpower.helpers import (
     config_entry_oauth2_flow,
     config_validation as cv,
 )
-from openpeerpower.helpers.typing import OpenPeerPowerType
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from . import api, config_flow
@@ -72,10 +72,12 @@ async def async_setup(opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up xbox from a config entry."""
     implementation = (
-        await config_entry_oauth2_flow.async_get_config_entry_implementation(opp, entry)
+        await config_entry_oauth2_flow.async_get_config_entry_implementation(
+            opp, entry
+        )
     )
     session = config_entry_oauth2_flow.OAuth2Session(opp, entry, implementation)
     auth = api.AsyncConfigEntryAuth(
@@ -91,7 +93,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     coordinator = XboxUpdateCoordinator(opp, client, consoles)
-    await coordinator.async_refresh()
+    await coordinator.async_config_entry_first_refresh()
 
     opp.data[DOMAIN][entry.entry_id] = {
         "client": XboxLiveClient(auth),
@@ -99,24 +101,14 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         "coordinator": coordinator,
     }
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         # Unsub from coordinator updates
         opp.data[DOMAIN][entry.entry_id]["sensor_unsub"]()
@@ -131,7 +123,7 @@ class ConsoleData:
     """Xbox console status data."""
 
     status: SmartglassConsoleStatus
-    app_details: Optional[Product]
+    app_details: Product | None
 
 
 @dataclass
@@ -147,7 +139,7 @@ class PresenceData:
     in_game: bool
     in_multiplayer: bool
     gamer_score: str
-    gold_tenure: Optional[str]
+    gold_tenure: str | None
     account_tier: str
 
 
@@ -155,8 +147,8 @@ class PresenceData:
 class XboxData:
     """Xbox dataclass for update coordinator."""
 
-    consoles: Dict[str, ConsoleData]
-    presence: Dict[str, PresenceData]
+    consoles: dict[str, ConsoleData]
+    presence: dict[str, PresenceData]
 
 
 class XboxUpdateCoordinator(DataUpdateCoordinator):
@@ -164,7 +156,7 @@ class XboxUpdateCoordinator(DataUpdateCoordinator):
 
     def __init__(
         self,
-        opp: OpenPeerPowerType,
+        opp: OpenPeerPower,
         client: XboxLiveClient,
         consoles: SmartglassConsoleList,
     ) -> None:
@@ -182,9 +174,9 @@ class XboxUpdateCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self) -> XboxData:
         """Fetch the latest console status."""
         # Update Console Status
-        new_console_data: Dict[str, ConsoleData] = {}
+        new_console_data: dict[str, ConsoleData] = {}
         for console in self.consoles.result:
-            current_state: Optional[ConsoleData] = self.data.consoles.get(console.id)
+            current_state: ConsoleData | None = self.data.consoles.get(console.id)
             status: SmartglassConsoleStatus = (
                 await self.client.smartglass.get_console_status(console.id)
             )
@@ -196,7 +188,7 @@ class XboxUpdateCoordinator(DataUpdateCoordinator):
             )
 
             # Setup focus app
-            app_details: Optional[Product] = None
+            app_details: Product | None = None
             if current_state is not None:
                 app_details = current_state.app_details
 
@@ -244,13 +236,11 @@ class XboxUpdateCoordinator(DataUpdateCoordinator):
 
 def _build_presence_data(person: Person) -> PresenceData:
     """Build presence data from a person."""
-    active_app: Optional[PresenceDetail] = None
-    try:
+    active_app: PresenceDetail | None = None
+    with suppress(StopIteration):
         active_app = next(
             presence for presence in person.presence_details if presence.is_primary
         )
-    except StopIteration:
-        pass
 
     return PresenceData(
         xuid=person.xuid,

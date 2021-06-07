@@ -58,7 +58,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 
 class WirelessTagPlatform:
-    """Principal object to manage all registered in OP tags."""
+    """Principal object to manage all registered in OPP tags."""
 
     def __init__(self, opp, api):
         """Designated initializer for wirelesstags platform."""
@@ -129,7 +129,7 @@ class WirelessTagPlatform:
 
     @property
     def local_base_url(self):
-        """Define base url of opp in local network."""
+        """Define base url of opp.in local network."""
         if self._local_base_url is None:
             self._local_base_url = f"http://{util.get_local_ip()}"
 
@@ -150,7 +150,7 @@ class WirelessTagPlatform:
 
     def handle_update_tags_event(self, event):
         """Handle push event from wireless tag manager."""
-        _LOGGER.info("push notification for update arrived: %s", event)
+        _LOGGER.info("Push notification for update arrived: %s", event)
         try:
             tag_id = event.data.get("id")
             mac = event.data.get("mac")
@@ -199,21 +199,23 @@ def setup(opp, config):
     except (ConnectTimeout, HTTPError, WirelessTagsException) as ex:
         _LOGGER.error("Unable to connect to wirelesstag.net service: %s", str(ex))
         opp.components.persistent_notification.create(
-            f"Error: {ex}<br />Please restart opp after fixing this.",
+            f"Error: {ex}<br />Please restart opp.after fixing this.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
         return False
 
     # listen to custom events
-    opp.bus.listen("wirelesstag_update_tags", opp.data[DOMAIN].handle_update_tags_event)
+    opp.bus.listen(
+        "wirelesstag_update_tags", opp.data[DOMAIN].handle_update_tags_event
+    )
     opp.bus.listen("wirelesstag_binary_event", opp.data[DOMAIN].handle_binary_event)
 
     return True
 
 
 class WirelessTagBaseSensor(Entity):
-    """Base class for OP implementation for Wireless Sensor Tag."""
+    """Base class for OPP implementation for Wireless Sensor Tag."""
 
     def __init__(self, api, tag):
         """Initialize a base sensor for Wireless Sensor Tag platform."""
@@ -270,7 +272,7 @@ class WirelessTagBaseSensor(Entity):
         self._state = self.updated_state_value()
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return {
             ATTR_BATTERY_LEVEL: int(self._tag.battery_remaining * 100),

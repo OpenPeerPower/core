@@ -56,9 +56,9 @@ DEVICE_MAPPINGS = {
 # support for white light colors
 TEMP_COLOR_MAX = 500  # mireds (inverted)
 TEMP_COLOR_MIN = 154
-TEMP_MID_OPP = (TEMP_COLOR_MAX - TEMP_COLOR_MIN) / 2 + TEMP_COLOR_MIN
-TEMP_WARM_OPP = (TEMP_COLOR_MAX - TEMP_COLOR_MIN) / 3 * 2 + TEMP_COLOR_MIN
-TEMP_COLD_OPP = (TEMP_COLOR_MAX - TEMP_COLOR_MIN) / 3 + TEMP_COLOR_MIN
+TEMP_MID_HASS = (TEMP_COLOR_MAX - TEMP_COLOR_MIN) / 2 + TEMP_COLOR_MIN
+TEMP_WARM_HASS = (TEMP_COLOR_MAX - TEMP_COLOR_MIN) / 3 * 2 + TEMP_COLOR_MIN
+TEMP_COLD_HASS = (TEMP_COLOR_MAX - TEMP_COLOR_MIN) / 3 + TEMP_COLOR_MIN
 
 
 async def async_setup_entry(opp, config_entry, async_add_entities):
@@ -138,10 +138,12 @@ class ZwaveDimmer(ZWaveDeviceEntity, LightEntity):
                 int(self.node.manufacturer_id, 16),
                 int(self.node.product_id, 16),
             )
-            if specific_sensor_key in DEVICE_MAPPINGS:
-                if DEVICE_MAPPINGS[specific_sensor_key] == WORKAROUND_ZW098:
-                    _LOGGER.debug("AEOTEC ZW098 workaround enabled")
-                    self._zw098 = 1
+            if (
+                specific_sensor_key in DEVICE_MAPPINGS
+                and DEVICE_MAPPINGS[specific_sensor_key] == WORKAROUND_ZW098
+            ):
+                _LOGGER.debug("AEOTEC ZW098 workaround enabled")
+                self._zw098 = 1
 
         # Used for value change event handling
         self._refreshing = False
@@ -318,14 +320,14 @@ class ZwaveColorLight(ZwaveDimmer):
         # indicate brightness for warm/cold color temperature.
         if self._zw098:
             if warm_white > 0:
-                self._ct = TEMP_WARM_OPP
+                self._ct = TEMP_WARM_HASS
                 self._hs = ct_to_hs(self._ct)
             elif cold_white > 0:
-                self._ct = TEMP_COLD_OPP
+                self._ct = TEMP_COLD_HASS
                 self._hs = ct_to_hs(self._ct)
             else:
                 # RGB color is being used. Just report midpoint.
-                self._ct = TEMP_MID_OPP
+                self._ct = TEMP_MID_HASS
 
         elif self._color_channels & COLOR_CHANNEL_WARM_WHITE:
             self._white = warm_white
@@ -368,11 +370,11 @@ class ZwaveColorLight(ZwaveDimmer):
             # temperatures are supported. The warm and cold channel values
             # indicate brightness for warm/cold color temperature.
             if self._zw098:
-                if kwargs[ATTR_COLOR_TEMP] > TEMP_MID_OPP:
-                    self._ct = TEMP_WARM_OPP
+                if kwargs[ATTR_COLOR_TEMP] > TEMP_MID_HASS:
+                    self._ct = TEMP_WARM_HASS
                     rgbw = "#000000ff00"
                 else:
-                    self._ct = TEMP_COLD_OPP
+                    self._ct = TEMP_COLD_HASS
                     rgbw = "#00000000ff"
         elif ATTR_HS_COLOR in kwargs:
             self._hs = kwargs[ATTR_HS_COLOR]

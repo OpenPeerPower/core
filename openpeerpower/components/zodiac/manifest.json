@@ -2,6 +2,7 @@
   "domain": "zodiac",
   "name": "Zodiac",
   "documentation": "https://www.openpeerpower.io/integrations/zodiac",
-  "codeowners": [],
-  "quality_scale": "silver"
+  "codeowners": ["@JulienTant"],
+  "quality_scale": "silver",
+  "iot_class": "local_polling"
 }

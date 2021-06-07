@@ -11,7 +11,7 @@ from .const import CREATE_ENTITY_SIGNAL
 async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up platform for a new integration.
 
-    Called by the OP framework after async_forward_entry_setup has been called
+    Called by the OPP framework after async_forward_entry_setup has been called
     during initialization of a new integration (= wiffi).
     """
 

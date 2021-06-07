@@ -73,7 +73,7 @@ class ZWaveBaseEntity(Entity):
         If value changed after device was created but before setup_platform
         was called - skip updating state.
         """
-        if self.opp and not self._update_scheduled:
+        if self.opp.and not self._update_scheduled:
             self.opp.add_job(self._schedule_update)
 
     @callback
@@ -99,7 +99,7 @@ class ZWaveBaseEntity(Entity):
             self.entity_id = None
             await self.platform.async_add_entities([self])
 
-        if self.opp and self.platform:
+        if self.opp.and self.platform:
             self.opp.add_job(_async_remove_and_add)
 
     async def node_removed(self):
@@ -351,7 +351,7 @@ class ZWaveNodeEntity(ZWaveBaseEntity):
         return self._name
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the device specific state attributes."""
         attrs = {
             ATTR_NODE_ID: self.node_id,

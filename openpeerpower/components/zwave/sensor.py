@@ -1,5 +1,5 @@
 """Support for Z-Wave sensors."""
-from openpeerpower.components.sensor import DEVICE_CLASS_BATTERY, DOMAIN
+from openpeerpower.components.sensor import DEVICE_CLASS_BATTERY, DOMAIN, SensorEntity
 from openpeerpower.const import TEMP_CELSIUS, TEMP_FAHRENHEIT
 from openpeerpower.core import callback
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
@@ -37,7 +37,7 @@ def get_device(node, values, **kwargs):
     return None
 
 
-class ZWaveSensor(ZWaveDeviceEntity):
+class ZWaveSensor(ZWaveDeviceEntity, SensorEntity):
     """Representation of a Z-Wave sensor."""
 
     def __init__(self, values):

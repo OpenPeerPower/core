@@ -1,5 +1,4 @@
 """Component for wiffi support."""
-import asyncio
 from datetime import timedelta
 import errno
 import logging
@@ -33,22 +32,17 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["sensor", "binary_sensor"]
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the wiffi component. config contains data from configuration.yaml."""
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up wiffi from a config entry, config_entry contains data from config entry database."""
-    if not config_entry.update_listeners:
-        config_entry.add_update_listener(async_update_options)
+    if not entry.update_listeners:
+        entry.add_update_listener(async_update_options)
 
     # create api object
     api = WiffiIntegrationApi(opp)
-    api.async_setup(config_entry)
+    api.async_setup(entry)
 
     # store api object
-    opp.data.setdefault(DOMAIN, {})[config_entry.entry_id] = api
+    opp.data.setdefault(DOMAIN, {})[entry.entry_id] = api
 
     try:
         await api.server.start_server()
@@ -56,37 +50,27 @@ async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
         if exc.errno != errno.EADDRINUSE:
             _LOGGER.error("Start_server failed, errno: %d", exc.errno)
             return False
-        _LOGGER.error("Port %s already in use", config_entry.data[CONF_PORT])
+        _LOGGER.error("Port %s already in use", entry.data[CONF_PORT])
         raise ConfigEntryNotReady from exc
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
-async def async_update_options(opp: OpenPeerPower, config_entry: ConfigEntry):
+async def async_update_options(opp: OpenPeerPower, entry: ConfigEntry):
     """Update options."""
-    await opp.config_entries.async_reload(config_entry.entry_id)
+    await opp.config_entries.async_reload(entry.entry_id)
 
 
-async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    api: "WiffiIntegrationApi" = opp.data[DOMAIN][config_entry.entry_id]
+    api: WiffiIntegrationApi = opp.data[DOMAIN][entry.entry_id]
     await api.server.close_server()
 
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(config_entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
-        api = opp.data[DOMAIN].pop(config_entry.entry_id)
+        api = opp.data[DOMAIN].pop(entry.entry_id)
         api.shutdown()
 
     return unload_ok

@@ -4,10 +4,10 @@ from urllib.parse import urlparse
 import pywilight
 
 from openpeerpower.components import ssdp
-from openpeerpower.config_entries import CONN_CLASS_LOCAL_PUSH, ConfigFlow
+from openpeerpower.config_entries import ConfigFlow
 from openpeerpower.const import CONF_HOST
 
-from . import DOMAIN  # pylint: disable=unused-import
+from . import DOMAIN
 
 CONF_SERIAL_NUMBER = "serial_number"
 CONF_MODEL_NAME = "model_name"
@@ -22,7 +22,6 @@ class WiLightFlowHandler(ConfigFlow, domain=DOMAIN):
     """Handle a WiLight config flow."""
 
     VERSION = 1
-    CONNECTION_CLASS = CONN_CLASS_LOCAL_PUSH
 
     def __init__(self):
         """Initialize the WiLight flow."""
@@ -72,7 +71,7 @@ class WiLightFlowHandler(ConfigFlow, domain=DOMAIN):
         if not self._wilight_update(host, serial_number, model_name):
             return self.async_abort(reason="not_wilight_device")
 
-        # Check if all components of this WiLight are allowed in this version of the OP integration
+        # Check if all components of this WiLight are allowed in this version of the OPP integration
         component_ok = all(
             wilight_component in ALLOWED_WILIGHT_COMPONENTS
             for wilight_component in self._wilight_components

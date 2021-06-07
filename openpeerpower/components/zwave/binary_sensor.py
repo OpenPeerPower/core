@@ -82,13 +82,15 @@ class ZWaveTriggerSensor(ZWaveBinarySensor):
             _LOGGER.debug("off_delay.data=%s", self.values.off_delay.data)
             self.re_arm_sec = self.values.off_delay.data * 8
         # only allow this value to be true for re_arm secs
-        if not self.opp:
+        if not self.opp.
             return
 
         self.invalidate_after = dt_util.utcnow() + datetime.timedelta(
             seconds=self.re_arm_sec
         )
-        track_point_in_time(self.opp, self.async_update_op_state, self.invalidate_after)
+        track_point_in_time(
+            self.opp, self.async_update_op_state, self.invalidate_after
+        )
 
     @property
     def is_on(self):

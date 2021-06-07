@@ -89,7 +89,7 @@ async def async_handle_webhook(opp, webhook_id, request):
         # Look at content to provide some context for received webhook
         # Limit to 64 chars to avoid flooding the log
         content = await request.content.read(64)
-        _LOGGER.debug("%s...", content)
+        _LOGGER.debug("%s", content)
         return Response(status=HTTP_OK)
 
     try:
@@ -122,7 +122,7 @@ class WebhookView(OpenPeerPowerView):
     async def _handle(self, request: Request, webhook_id):
         """Handle webhook call."""
         _LOGGER.debug("Handling webhook %s payload for %s", request.method, webhook_id)
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         return await async_handle_webhook(opp, webhook_id, request)
 
     head = _handle

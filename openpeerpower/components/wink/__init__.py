@@ -280,7 +280,7 @@ def _request_oauth_completion(opp, config):
     )
 
 
-def setup(opp, config):
+def setup(opp, config):  # noqa: C901
     """Set up the Wink component."""
 
     if opp.data.get(DOMAIN) is None:
@@ -418,7 +418,7 @@ def setup(opp, config):
     opp.bus.listen(EVENT_OPENPEERPOWER_STOP, save_credentials)
 
     # Save the users potentially updated oauth credentials at a regular
-    # interval to prevent them from being expired after a OP reboot.
+    # interval to prevent them from being expired after a OPP reboot.
     track_time_interval(opp, save_credentials, timedelta(minutes=60))
 
     def force_update(call):
@@ -688,7 +688,7 @@ class WinkAuthCallbackView(OpenPeerPowerView):
     @callback
     def get(self, request):
         """Finish OAuth callback request."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         data = request.query
 
         response_message = """Wink has been successfully authorized!
@@ -778,7 +778,7 @@ class WinkDevice(Entity):
         return self.wink.pubnub_channel is None
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         attributes = {}
         battery = self._battery_level
@@ -855,9 +855,9 @@ class WinkSirenDevice(WinkDevice):
         return "mdi:bell-ring"
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the device state attributes."""
-        attributes = super().device_state_attributes
+        attributes = super().extra_state_attributes
 
         auto_shutoff = self.wink.auto_shutoff()
         if auto_shutoff is not None:
@@ -913,9 +913,9 @@ class WinkNimbusDialDevice(WinkDevice):
         return f"{self.parent.name()} dial {self.wink.index() + 1}"
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the device state attributes."""
-        attributes = super().device_state_attributes
+        attributes = super().extra_state_attributes
         dial_attributes = self.dial_attributes()
 
         return {**attributes, **dial_attributes}

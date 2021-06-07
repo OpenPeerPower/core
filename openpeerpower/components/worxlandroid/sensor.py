@@ -6,11 +6,10 @@ import aiohttp
 import async_timeout
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_HOST, CONF_PIN, CONF_TIMEOUT, PERCENTAGE
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -50,7 +49,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         async_add_entities([WorxLandroidSensor(typ, config)])
 
 
-class WorxLandroidSensor(Entity):
+class WorxLandroidSensor(SensorEntity):
     """Implementation of a Worx Landroid sensor."""
 
     def __init__(self, sensor, config):
@@ -128,9 +127,8 @@ class WorxLandroidSensor(Entity):
     def get_error(obj):
         """Get the mower error."""
         for i, err in enumerate(obj["allarmi"]):
-            if i != 2:  # ignore wire bounce errors
-                if err == 1:
-                    return ERROR_STATE[i]
+            if i != 2 and err == 1:  # ignore wire bounce errors
+                return ERROR_STATE[i]
 
         return None
 

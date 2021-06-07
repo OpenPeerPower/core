@@ -10,7 +10,6 @@ from openpeerpower.const import CONF_HOST, CONF_MAC, CONF_NAME, CONF_PORT, CONF_
 from openpeerpower.core import callback
 from openpeerpower.helpers.device_registry import format_mac
 
-# pylint: disable=unused-import
 from .const import (
     CONF_INTERFACE,
     CONF_KEY,
@@ -47,7 +46,6 @@ class XiaomiAqaraFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a Xiaomi Aqara config flow."""
 
     VERSION = 1
-    CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_PUSH
 
     def __init__(self):
         """Initialize."""

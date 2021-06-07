@@ -1,6 +1,7 @@
 """Weather component that handles meteorological data for your location."""
 from datetime import timedelta
 import logging
+from typing import final
 
 from openpeerpower.const import PRECISION_TENTHS, PRECISION_WHOLE, TEMP_CELSIUS
 from openpeerpower.helpers.config_validation import (  # noqa: F401
@@ -59,7 +60,9 @@ SCAN_INTERVAL = timedelta(seconds=30)
 
 async def async_setup(opp, config):
     """Set up the weather component."""
-    component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp, SCAN_INTERVAL)
+    component = opp.data[DOMAIN] = EntityComponent(
+        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
+    )
     await component.async_setup(config)
     return True
 
@@ -136,6 +139,7 @@ class WeatherEntity(Entity):
             else PRECISION_WHOLE
         )
 
+    @final
     @property
     def state_attributes(self):
         """Return the state attributes."""

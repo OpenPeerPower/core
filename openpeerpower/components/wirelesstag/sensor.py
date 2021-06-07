@@ -3,7 +3,7 @@ import logging
 
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_MONITORED_CONDITIONS
 from openpeerpower.core import callback
 import openpeerpower.helpers.config_validation as cv
@@ -44,7 +44,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(sensors, True)
 
 
-class WirelessTagSensor(WirelessTagBaseSensor):
+class WirelessTagSensor(WirelessTagBaseSensor, SensorEntity):
     """Representation of a Sensor."""
 
     def __init__(self, api, tag, sensor_type, config):

@@ -5,11 +5,10 @@ import logging
 import voluptuous as vol
 from xboxapi import Client
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_API_KEY, CONF_SCAN_INTERVAL
 from openpeerpower.core import callback
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.event import async_track_time_interval
 
 _LOGGER = logging.getLogger(__name__)
@@ -73,7 +72,7 @@ def get_user_gamercard(api, xuid):
     return None
 
 
-class XboxSensor(Entity):
+class XboxSensor(SensorEntity):
     """A class for the Xbox account."""
 
     def __init__(self, api, xuid, gamercard, interval):
@@ -104,7 +103,7 @@ class XboxSensor(Entity):
         return self._state
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         attributes = {"gamerscore": self._gamerscore, "tier": self._tier}
 

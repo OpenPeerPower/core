@@ -3,7 +3,8 @@
   "name": "Z-Wave JS",
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/zwave_js",
-  "requirements": ["zwave-js-server-python==0.20.1"],
-  "codeowners": ["@open-peer-power/z-wave"],
-  "dependencies": ["http", "websocket_api"]
+  "requirements": ["zwave-js-server-python==0.26.1"],
+  "codeowners": ["@openpeerpower/z-wave"],
+  "dependencies": ["http", "websocket_api"],
+  "iot_class": "local_push"
 }

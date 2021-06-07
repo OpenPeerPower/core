@@ -91,6 +91,8 @@ def setup(opp, config):
         DOMAIN, SERVICE_SET_RUN_STATE, set_active_state, schema=SET_RUN_STATE_SCHEMA
     )
 
-    opp.async_create_task(async_load_platform(opp, "binary_sensor", DOMAIN, {}, config))
+    opp.async_create_task(
+        async_load_platform(opp, "binary_sensor", DOMAIN, {}, config)
+    )
 
     return success

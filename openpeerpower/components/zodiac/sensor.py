@@ -1,5 +1,5 @@
 """Support for tracking the zodiac sign."""
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.util.dt import as_local, utcnow
 
 from .const import (
@@ -162,7 +162,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities([ZodiacSensor()], True)
 
 
-class ZodiacSensor(Entity):
+class ZodiacSensor(SensorEntity):
     """Representation of a Zodiac sensor."""
 
     def __init__(self):
@@ -196,7 +196,7 @@ class ZodiacSensor(Entity):
         return ZODIAC_ICONS.get(self._state)
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return self._attrs
 

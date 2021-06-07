@@ -11,6 +11,7 @@ import voluptuous as vol
 from openpeerpower import config_entries
 from openpeerpower.const import (
     ATTR_ENTITY_ID,
+    ATTR_NAME,
     EVENT_OPENPEERPOWER_START,
     EVENT_OPENPEERPOWER_STOP,
 )
@@ -103,7 +104,7 @@ PLATFORMS = [
 RENAME_NODE_SCHEMA = vol.Schema(
     {
         vol.Required(const.ATTR_NODE_ID): vol.Coerce(int),
-        vol.Required(const.ATTR_NAME): cv.string,
+        vol.Required(ATTR_NAME): cv.string,
         vol.Optional(const.ATTR_UPDATE_IDS, default=False): cv.boolean,
     }
 )
@@ -112,7 +113,7 @@ RENAME_VALUE_SCHEMA = vol.Schema(
     {
         vol.Required(const.ATTR_NODE_ID): vol.Coerce(int),
         vol.Required(const.ATTR_VALUE_ID): vol.Coerce(int),
-        vol.Required(const.ATTR_NAME): cv.string,
+        vol.Required(ATTR_NAME): cv.string,
         vol.Optional(const.ATTR_UPDATE_IDS, default=False): cv.boolean,
     }
 )
@@ -391,7 +392,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry(opp, config_entry):
+async def async_setup_entry(opp, config_entry):  # noqa: C901
     """Set up Z-Wave from a config entry.
 
     Will automatically load components to support devices found on the network.
@@ -496,7 +497,7 @@ async def async_setup_entry(opp, config_entry):
             opp.data[DATA_ENTITY_VALUES] = new_values
 
     platform = EntityPlatform(
-        opp=opp,
+        opp.opp,
         logger=_LOGGER,
         domain=DOMAIN,
         platform_name=DOMAIN,
@@ -661,7 +662,7 @@ async def async_setup_entry(opp, config_entry):
         """Rename a node."""
         node_id = service.data.get(const.ATTR_NODE_ID)
         node = network.nodes[node_id]  # pylint: disable=unsubscriptable-object
-        name = service.data.get(const.ATTR_NAME)
+        name = service.data.get(ATTR_NAME)
         node.name = name
         _LOGGER.info("Renamed Z-Wave node %d to %s", node_id, name)
         update_ids = service.data.get(const.ATTR_UPDATE_IDS)
@@ -682,7 +683,7 @@ async def async_setup_entry(opp, config_entry):
         value_id = service.data.get(const.ATTR_VALUE_ID)
         node = network.nodes[node_id]  # pylint: disable=unsubscriptable-object
         value = node.values[value_id]
-        name = service.data.get(const.ATTR_NAME)
+        name = service.data.get(ATTR_NAME)
         value.label = name
         _LOGGER.info(
             "Renamed Z-Wave value (Node %d Value %d) to %s", node_id, value_id, name
@@ -888,9 +889,7 @@ async def async_setup_entry(opp, config_entry):
                 continue
             network.manager.pressButton(value.value_id)
             network.manager.releaseButton(value.value_id)
-            _LOGGER.info(
-                "Resetting meters on node %s instance %s....", node_id, instance
-            )
+            _LOGGER.info("Resetting meters on node %s instance %s", node_id, instance)
             return
         _LOGGER.info(
             "Node %s on instance %s does not have resettable meters", node_id, instance
@@ -914,7 +913,7 @@ async def async_setup_entry(opp, config_entry):
 
     def start_zwave(_service_or_event):
         """Startup Z-Wave network."""
-        _LOGGER.info("Starting Z-Wave network...")
+        _LOGGER.info("Starting Z-Wave network")
         network.start()
         opp.bus.fire(const.EVENT_NETWORK_START)
 
@@ -938,7 +937,7 @@ async def async_setup_entry(opp, config_entry):
                         "Z-Wave not ready after %d seconds, continuing anyway", waited
                     )
                     _LOGGER.info(
-                        "final network state: %d %s", network.state, network.state_str
+                        "Final network state: %d %s", network.state, network.state_str
                     )
                     break
 
@@ -1192,7 +1191,7 @@ class ZWaveDeviceEntityValues:
         platform = import_module(f".{component}", __name__)
 
         device = platform.get_device(
-            node=self._node, values=self, node_config=node_config, opp=self._opp
+            node=self._node, values=self, node_config=node_config, opp.self._opp
         )
         if device is None:
             # No entity will be created for this value
@@ -1361,7 +1360,7 @@ class ZWaveDeviceEntity(ZWaveBaseEntity):
         return self._name
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the device specific state attributes."""
         attrs = {
             const.ATTR_NODE_ID: self.node_id,

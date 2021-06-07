@@ -1,13 +1,14 @@
 """Support for Xiaomi Yeelight WiFi color bulb."""
+from __future__ import annotations
+
 import asyncio
 from datetime import timedelta
 import logging
-from typing import Optional
 
 import voluptuous as vol
 from yeelight import Bulb, BulbException, discover_bulbs
 
-from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry
+from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry, ConfigEntryNotReady
 from openpeerpower.const import (
     CONF_DEVICES,
     CONF_HOST,
@@ -18,7 +19,7 @@ from openpeerpower.const import (
 from openpeerpower.core import OpenPeerPower, callback
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect, dispatcher_send
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity import DeviceInfo, Entity
 from openpeerpower.helpers.event import async_track_time_interval
 
 _LOGGER = logging.getLogger(__name__)
@@ -47,8 +48,8 @@ DATA_CONFIG_ENTRIES = "config_entries"
 DATA_CUSTOM_EFFECTS = "custom_effects"
 DATA_SCAN_INTERVAL = "scan_interval"
 DATA_DEVICE = "device"
-DATA_UNSUB_UPDATE_LISTENER = "unsub_update_listener"
 DATA_REMOVE_INIT_DISPATCHER = "remove_init_dispatcher"
+DATA_PLATFORMS_LOADED = "platforms_loaded"
 
 ATTR_COUNT = "count"
 ATTR_ACTION = "action"
@@ -163,108 +164,120 @@ async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
     # Import manually configured devices
     for host, device_config in config.get(DOMAIN, {}).get(CONF_DEVICES, {}).items():
         _LOGGER.debug("Importing configured %s", host)
-        entry_config = {
-            CONF_HOST: host,
-            **device_config,
-        }
+        entry_config = {CONF_HOST: host, **device_config}
         opp.async_create_task(
             opp.config_entries.flow.async_init(
-                DOMAIN,
-                context={"source": SOURCE_IMPORT},
-                data=entry_config,
-            ),
+                DOMAIN, context={"source": SOURCE_IMPORT}, data=entry_config
+            )
         )
 
     return True
+
+
+async def _async_initialize(
+    opp: OpenPeerPower,
+    entry: ConfigEntry,
+    host: str,
+    device: YeelightDevice | None = None,
+) -> None:
+    entry_data = opp.data[DOMAIN][DATA_CONFIG_ENTRIES][entry.entry_id] = {
+        DATA_PLATFORMS_LOADED: False
+    }
+    entry.async_on_unload(entry.add_update_listener(_async_update_listener))
+
+    @callback
+    def _async_load_platforms():
+        if entry_data[DATA_PLATFORMS_LOADED]:
+            return
+        entry_data[DATA_PLATFORMS_LOADED] = True
+        opp.config_entries.async_setup_platforms(entry, PLATFORMS)
+
+    if not device:
+        device = await _async_get_device(opp, host, entry)
+    entry_data[DATA_DEVICE] = device
+
+    entry.async_on_unload(
+        async_dispatcher_connect(
+            opp, DEVICE_INITIALIZED.format(host), _async_load_platforms
+        )
+    )
+
+    entry.async_on_unload(device.async_unload)
+    await device.async_setup()
+
+
+@callback
+def _async_populate_entry_options(opp: OpenPeerPower, entry: ConfigEntry) -> None:
+    """Move options from data for imported entries.
+
+    Initialize options with default values for other entries.
+    """
+    if entry.options:
+        return
+
+    opp.config_entries.async_update_entry(
+        entry,
+        data={CONF_HOST: entry.data.get(CONF_HOST), CONF_ID: entry.data.get(CONF_ID)},
+        options={
+            CONF_NAME: entry.data.get(CONF_NAME, ""),
+            CONF_MODEL: entry.data.get(CONF_MODEL, ""),
+            CONF_TRANSITION: entry.data.get(CONF_TRANSITION, DEFAULT_TRANSITION),
+            CONF_MODE_MUSIC: entry.data.get(CONF_MODE_MUSIC, DEFAULT_MODE_MUSIC),
+            CONF_SAVE_ON_CHANGE: entry.data.get(
+                CONF_SAVE_ON_CHANGE, DEFAULT_SAVE_ON_CHANGE
+            ),
+            CONF_NIGHTLIGHT_SWITCH: entry.data.get(
+                CONF_NIGHTLIGHT_SWITCH, DEFAULT_NIGHTLIGHT_SWITCH
+            ),
+        },
+    )
 
 
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Yeelight from a config entry."""
-
-    async def _initialize(host: str, capabilities: Optional[dict] = None) -> None:
-        remove_dispatcher = async_dispatcher_connect(
-            opp,
-            DEVICE_INITIALIZED.format(host),
-            _load_platforms,
-        )
-        opp.data[DOMAIN][DATA_CONFIG_ENTRIES][entry.entry_id][
-            DATA_REMOVE_INIT_DISPATCHER
-        ] = remove_dispatcher
-
-        device = await _async_get_device(opp, host, entry, capabilities)
-        opp.data[DOMAIN][DATA_CONFIG_ENTRIES][entry.entry_id][DATA_DEVICE] = device
-
-        await device.async_setup()
-
-    async def _load_platforms():
-
-        for platform in PLATFORMS:
-            opp.async_create_task(
-                opp.config_entries.async_forward_entry_setup(entry, platform)
-            )
-
-    # Move options from data for imported entries
-    # Initialize options with default values for other entries
-    if not entry.options:
-        opp.config_entries.async_update_entry(
-            entry,
-            data={
-                CONF_HOST: entry.data.get(CONF_HOST),
-                CONF_ID: entry.data.get(CONF_ID),
-            },
-            options={
-                CONF_NAME: entry.data.get(CONF_NAME, ""),
-                CONF_MODEL: entry.data.get(CONF_MODEL, ""),
-                CONF_TRANSITION: entry.data.get(CONF_TRANSITION, DEFAULT_TRANSITION),
-                CONF_MODE_MUSIC: entry.data.get(CONF_MODE_MUSIC, DEFAULT_MODE_MUSIC),
-                CONF_SAVE_ON_CHANGE: entry.data.get(
-                    CONF_SAVE_ON_CHANGE, DEFAULT_SAVE_ON_CHANGE
-                ),
-                CONF_NIGHTLIGHT_SWITCH: entry.data.get(
-                    CONF_NIGHTLIGHT_SWITCH, DEFAULT_NIGHTLIGHT_SWITCH
-                ),
-            },
-        )
-
-    opp.data[DOMAIN][DATA_CONFIG_ENTRIES][entry.entry_id] = {
-        DATA_UNSUB_UPDATE_LISTENER: entry.add_update_listener(_async_update_listener)
-    }
+    _async_populate_entry_options(opp, entry)
 
     if entry.data.get(CONF_HOST):
-        # manually added device
-        await _initialize(entry.data[CONF_HOST])
-    else:
-        # discovery
-        scanner = YeelightScanner.async_get(opp)
-        scanner.async_register_callback(entry.data[CONF_ID], _initialize)
+        try:
+            device = await _async_get_device(opp, entry.data[CONF_HOST], entry)
+        except OSError as ex:
+            # If CONF_ID is not valid we cannot fallback to discovery
+            # so we must retry by raising ConfigEntryNotReady
+            if not entry.data.get(CONF_ID):
+                raise ConfigEntryNotReady from ex
+            # Otherwise fall through to discovery
+        else:
+            # manually added device
+            await _async_initialize(opp, entry, entry.data[CONF_HOST], device=device)
+            return True
 
+    # discovery
+    scanner = YeelightScanner.async_get(opp)
+
+    async def _async_from_discovery(host: str) -> None:
+        await _async_initialize(opp, entry, host)
+
+    scanner.async_register_callback(entry.data[CONF_ID], _async_from_discovery)
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    data_config_entries = opp.data[DOMAIN][DATA_CONFIG_ENTRIES]
+    entry_data = data_config_entries[entry.entry_id]
 
-    if unload_ok:
-        data = opp.data[DOMAIN][DATA_CONFIG_ENTRIES].pop(entry.entry_id)
-        remove_init_dispatcher = data.get(DATA_REMOVE_INIT_DISPATCHER)
-        if remove_init_dispatcher is not None:
-            remove_init_dispatcher()
-        data[DATA_UNSUB_UPDATE_LISTENER]()
-        data[DATA_DEVICE].async_unload()
-        if entry.data[CONF_ID]:
-            # discovery
-            scanner = YeelightScanner.async_get(opp)
-            scanner.async_unregister_callback(entry.data[CONF_ID])
+    if entry_data[DATA_PLATFORMS_LOADED]:
+        if not await opp.config_entries.async_unload_platforms(entry, PLATFORMS):
+            return False
 
-    return unload_ok
+    if entry.data.get(CONF_ID):
+        # discovery
+        scanner = YeelightScanner.async_get(opp)
+        scanner.async_unregister_callback(entry.data[CONF_ID])
+
+    data_config_entries.pop(entry.entry_id)
+
+    return True
 
 
 @callback
@@ -293,7 +306,7 @@ class YeelightScanner:
             cls._scanner = cls(opp)
         return cls._scanner
 
-    def __init__(self, opp: OpenPeerPower):
+    def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize class."""
         self._opp = opp
         self._seen = {}
@@ -318,7 +331,7 @@ class YeelightScanner:
                     if len(self._callbacks) == 0:
                         self._async_stop_scan()
 
-        await asyncio.sleep(SCAN_INTERVAL.seconds)
+        await asyncio.sleep(SCAN_INTERVAL.total_seconds())
         self._scan_task = self._opp.loop.create_task(self._async_scan())
 
     @callback
@@ -550,7 +563,7 @@ class YeelightDevice:
 class YeelightEntity(Entity):
     """Represents single Yeelight entity."""
 
-    def __init__(self, device: YeelightDevice, entry: ConfigEntry):
+    def __init__(self, device: YeelightDevice, entry: ConfigEntry) -> None:
         """Initialize the entity."""
         self._device = device
         self._unique_id = entry.entry_id
@@ -564,7 +577,7 @@ class YeelightEntity(Entity):
         return self._unique_id
 
     @property
-    def device_info(self) -> dict:
+    def device_info(self) -> DeviceInfo:
         """Return the device info."""
         return {
             "identifiers": {(DOMAIN, self._unique_id)},
@@ -590,19 +603,13 @@ class YeelightEntity(Entity):
 
 
 async def _async_get_device(
-    opp: OpenPeerPower,
-    host: str,
-    entry: ConfigEntry,
-    capabilities: Optional[dict],
+    opp: OpenPeerPower, host: str, entry: ConfigEntry
 ) -> YeelightDevice:
     # Get model from config and capabilities
     model = entry.options.get(CONF_MODEL)
-    if not model and capabilities is not None:
-        model = capabilities.get("model")
 
     # Set up device
     bulb = Bulb(host, model=model or None)
-    if capabilities is None:
-        capabilities = await opp.async_add_executor_job(bulb.get_capabilities)
+    capabilities = await opp.async_add_executor_job(bulb.get_capabilities)
 
     return YeelightDevice(opp, host, entry.options, bulb, capabilities)

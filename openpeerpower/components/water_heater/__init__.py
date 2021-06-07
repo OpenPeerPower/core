@@ -2,6 +2,7 @@
 from datetime import timedelta
 import functools as ft
 import logging
+from typing import final
 
 import voluptuous as vol
 
@@ -92,7 +93,9 @@ SET_OPERATION_MODE_SCHEMA = vol.Schema(
 
 async def async_setup(opp, config):
     """Set up water_heater devices."""
-    component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp, SCAN_INTERVAL)
+    component = opp.data[DOMAIN] = EntityComponent(
+        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
+    )
     await component.async_setup(config)
 
     component.async_register_entity_service(
@@ -127,7 +130,7 @@ async def async_unload_entry(opp, entry):
 
 
 class WaterHeaterEntity(Entity):
-    """Representation of a water_heater device."""
+    """Base class for water heater entities."""
 
     @property
     def state(self):
@@ -160,6 +163,7 @@ class WaterHeaterEntity(Entity):
 
         return data
 
+    @final
     @property
     def state_attributes(self):
         """Return the optional state attributes."""

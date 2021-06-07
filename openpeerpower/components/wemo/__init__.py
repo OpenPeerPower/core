@@ -1,4 +1,6 @@
 """Support for WeMo device discovery."""
+from __future__ import annotations
+
 import logging
 
 import pywemo
@@ -96,16 +98,16 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up a wemo config entry."""
     config = opp.data[DOMAIN].pop("config")
 
     # Keep track of WeMo device subscriptions for push updates
     registry = opp.data[DOMAIN]["registry"] = pywemo.SubscriptionRegistry()
     await opp.async_add_executor_job(registry.start)
-
+    static_conf = config.get(CONF_STATIC, [])
     wemo_dispatcher = WemoDispatcher(entry)
-    wemo_discovery = WemoDiscovery(opp, wemo_dispatcher)
+    wemo_discovery = WemoDiscovery(opp, wemo_dispatcher, static_conf)
 
     async def async_stop_wemo(event):
         """Shutdown Wemo subscriptions and subscription thread on exit."""
@@ -113,20 +115,12 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         await opp.async_add_executor_job(registry.stop)
         wemo_discovery.async_stop_discovery()
 
-    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_stop_wemo)
+    entry.async_on_unload(
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, async_stop_wemo)
+    )
 
-    static_conf = config.get(CONF_STATIC, [])
-    if static_conf:
-        _LOGGER.debug("Adding statically configured WeMo devices...")
-        for device in await gather_with_concurrency(
-            MAX_CONCURRENCY,
-            *[
-                opp.async_add_executor_job(validate_static_config, host, port)
-                for host, port in static_conf
-            ],
-        ):
-            if device:
-                wemo_dispatcher.async_add_unique_device(opp, device)
+    # Need to do this at least once in case statics are defined and discovery is disabled
+    await wemo_discovery.discover_statics()
 
     if config.get(CONF_DISCOVERY, DEFAULT_DISCOVERY):
         await wemo_discovery.async_discover_and_schedule()
@@ -137,7 +131,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 class WemoDispatcher:
     """Dispatch WeMo devices to the correct platform."""
 
-    def __init__(self, config_entry: ConfigEntry):
+    def __init__(self, config_entry: ConfigEntry) -> None:
         """Initialize the WemoDispatcher."""
         self._config_entry = config_entry
         self._added_serial_numbers = set()
@@ -147,7 +141,7 @@ class WemoDispatcher:
     def async_add_unique_device(
         self, opp: OpenPeerPower, device: pywemo.WeMoDevice
     ) -> None:
-        """Add a WeMo device to opp if it has not already been added."""
+        """Add a WeMo device to opp.if it has not already been added."""
         if device.serialnumber in self._added_serial_numbers:
             return
 
@@ -186,52 +180,31 @@ class WemoDiscovery:
     ADDITIONAL_SECONDS_BETWEEN_SCANS = 10
     MAX_SECONDS_BETWEEN_SCANS = 300
 
-    def __init__(self, opp: OpenPeerPower, wemo_dispatcher: WemoDispatcher) -> None:
+    def __init__(
+        self,
+        opp: OpenPeerPower,
+        wemo_dispatcher: WemoDispatcher,
+        static_config: list[tuple[[str, str | None]]],
+    ) -> None:
         """Initialize the WemoDiscovery."""
         self._opp = opp
         self._wemo_dispatcher = wemo_dispatcher
         self._stop = None
         self._scan_delay = 0
-        self._upnp_entries = set()
-
-    async def async_add_from_upnp_entry(self, entry: pywemo.ssdp.UPNPEntry) -> None:
-        """Create a WeMoDevice from an UPNPEntry and add it to the dispatcher.
-
-        Uses the self._upnp_entries set to avoid interrogating the same device
-        multiple times.
-        """
-        if entry in self._upnp_entries:
-            return
-        try:
-            device = await self._opp.async_add_executor_job(
-                pywemo.discovery.device_from_uuid_and_location,
-                entry.udn,
-                entry.location,
-            )
-        except pywemo.PyWeMoException as err:
-            _LOGGER.error("Unable to setup WeMo %r (%s)", entry, err)
-        else:
-            self._wemo_dispatcher.async_add_unique_device(self._opp, device)
-            self._upnp_entries.add(entry)
+        self._static_config = static_config
 
     async def async_discover_and_schedule(self, *_) -> None:
         """Periodically scan the network looking for WeMo devices."""
-        _LOGGER.debug("Scanning network for WeMo devices...")
+        _LOGGER.debug("Scanning network for WeMo devices")
         try:
-            # pywemo.ssdp.scan is a light-weight UDP UPnP scan for WeMo devices.
-            entries = await self._opp.async_add_executor_job(pywemo.ssdp.scan)
+            for device in await self._opp.async_add_executor_job(
+                pywemo.discover_devices
+            ):
+                self._wemo_dispatcher.async_add_unique_device(self._opp, device)
+            await self.discover_statics()
 
-            # async_add_from_upnp_entry causes multiple HTTP requests to be sent
-            # to the WeMo device for the initial setup of the WeMoDevice
-            # instance. This may take some time to complete. The per-device
-            # setup work is done in parallel to speed up initial setup for the
-            # component.
-            await gather_with_concurrency(
-                MAX_CONCURRENCY,
-                *[self.async_add_from_upnp_entry(entry) for entry in entries],
-            )
         finally:
-            # Run discovery more frequently after opp has just started.
+            # Run discovery more frequently after opp.has just started.
             self._scan_delay = min(
                 self._scan_delay + self.ADDITIONAL_SECONDS_BETWEEN_SCANS,
                 self.MAX_SECONDS_BETWEEN_SCANS,
@@ -248,6 +221,22 @@ class WemoDiscovery:
         if self._stop:
             self._stop()
             self._stop = None
+
+    async def discover_statics(self):
+        """Initialize or Re-Initialize connections to statically configured devices."""
+        if self._static_config:
+            _LOGGER.debug("Adding statically configured WeMo devices")
+            for device in await gather_with_concurrency(
+                MAX_CONCURRENCY,
+                *[
+                    self._opp.async_add_executor_job(
+                        validate_static_config, host, port
+                    )
+                    for host, port in self._static_config
+                ],
+            ):
+                if device:
+                    self._wemo_dispatcher.async_add_unique_device(self._opp, device)
 
 
 def validate_static_config(host, port):

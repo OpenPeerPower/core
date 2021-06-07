@@ -3,13 +3,14 @@ Support for the Withings API.
 
 For more details about this platform, please refer to the documentation at
 """
+from __future__ import annotations
+
 import asyncio
-from typing import Optional, cast
 
 from aiohttp.web import Request, Response
 import voluptuous as vol
 from withings_api import WithingsAuth
-from withings_api.common import NotifyAppli, enum_or_raise
+from withings_api.common import NotifyAppli
 
 from openpeerpower.components import webhook
 from openpeerpower.components.binary_sensor import DOMAIN as BINARY_SENSOR_DOMAIN
@@ -20,7 +21,6 @@ from openpeerpower.components.webhook import (
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET, CONF_WEBHOOK_ID
 from openpeerpower.core import OpenPeerPower, callback
-from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.helpers.event import async_call_later
 from openpeerpower.helpers.typing import ConfigType
@@ -120,9 +120,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     data_manager = await async_get_data_manager(opp, entry)
 
     _LOGGER.debug("Confirming %s is authenticated to withings", data_manager.profile)
-    await data_manager.poll_data_update_coordinator.async_refresh()
-    if not data_manager.poll_data_update_coordinator.last_update_success:
-        raise ConfigEntryNotReady()
+    await data_manager.poll_data_update_coordinator.async_config_entry_first_refresh()
 
     webhook.async_register(
         opp,
@@ -175,7 +173,7 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
 async def async_webhook_handler(
     opp: OpenPeerPower, webhook_id: str, request: Request
-) -> Optional[Response]:
+) -> Response | None:
     """Handle webhooks calls."""
     # Handle http head calls to the path.
     # When creating a notify subscription, Withings will check that the endpoint is running by sending a HEAD request.
@@ -195,9 +193,7 @@ async def async_webhook_handler(
         return json_message_response("Parameter appli not provided", message_code=20)
 
     try:
-        appli = cast(
-            NotifyAppli, enum_or_raise(int(params.getone("appli")), NotifyAppli)
-        )
+        appli = NotifyAppli(int(params.getone("appli")))
     except ValueError:
         return json_message_response("Invalid appli provided", message_code=21)
 

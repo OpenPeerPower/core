@@ -68,7 +68,7 @@ def setup(opp, config):
         )
         return False
 
-    _LOGGER.debug("Establishing connection to XS1 gateway and retrieving data...")
+    _LOGGER.debug("Establishing connection to XS1 gateway and retrieving data")
 
     opp.data[DOMAIN] = {}
 
@@ -78,7 +78,7 @@ def setup(opp, config):
     opp.data[DOMAIN][ACTUATORS] = actuators
     opp.data[DOMAIN][SENSORS] = sensors
 
-    _LOGGER.debug("Loading platforms for XS1 integration...")
+    _LOGGER.debug("Loading platforms for XS1 integration")
     # Load platforms for supported devices
     for platform in PLATFORMS:
         discovery.load_platform(opp, platform, DOMAIN, {}, config)

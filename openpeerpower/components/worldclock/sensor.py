@@ -1,10 +1,9 @@
 """Support for showing the time in a different time zone."""
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_NAME, CONF_TIME_ZONE
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 import openpeerpower.util.dt as dt_util
 
 CONF_TIME_FORMAT = "time_format"
@@ -39,7 +38,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     )
 
 
-class WorldClockSensor(Entity):
+class WorldClockSensor(SensorEntity):
     """Representation of a World clock sensor."""
 
     def __init__(self, time_zone, name, time_format):

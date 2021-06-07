@@ -5,6 +5,7 @@ from openpeerpower.components.sensor import (
     DEVICE_CLASS_ILLUMINANCE,
     DEVICE_CLASS_PRESSURE,
     DEVICE_CLASS_TEMPERATURE,
+    SensorEntity,
 )
 from openpeerpower.const import DEGREE, PRESSURE_MBAR, TEMP_CELSIUS
 from openpeerpower.core import callback
@@ -20,7 +21,7 @@ from .wiffi_strings import (
     WIFFI_UOM_TEMP_CELSIUS,
 )
 
-# map to determine OP device class from wiffi's unit of measurement
+# map to determine OPP device class from wiffi's unit of measurement
 UOM_TO_DEVICE_CLASS_MAP = {
     WIFFI_UOM_TEMP_CELSIUS: DEVICE_CLASS_TEMPERATURE,
     WIFFI_UOM_PERCENT: DEVICE_CLASS_HUMIDITY,
@@ -28,7 +29,7 @@ UOM_TO_DEVICE_CLASS_MAP = {
     WIFFI_UOM_LUX: DEVICE_CLASS_ILLUMINANCE,
 }
 
-# map to convert wiffi unit of measurements to common OP uom's
+# map to convert wiffi unit of measurements to common OPP uom's
 UOM_MAP = {
     WIFFI_UOM_DEGREE: DEGREE,
     WIFFI_UOM_TEMP_CELSIUS: TEMP_CELSIUS,
@@ -39,7 +40,7 @@ UOM_MAP = {
 async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up platform for a new integration.
 
-    Called by the OP framework after async_forward_entry_setup has been called
+    Called by the OPP framework after async_forward_entry_setup has been called
     during initialization of a new integration (= wiffi).
     """
 
@@ -58,7 +59,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     async_dispatcher_connect(opp, CREATE_ENTITY_SIGNAL, _create_entity)
 
 
-class NumberEntity(WiffiEntity):
+class NumberEntity(WiffiEntity, SensorEntity):
     """Entity for wiffi metrics which have a number value."""
 
     def __init__(self, device, metric, options):
@@ -100,7 +101,7 @@ class NumberEntity(WiffiEntity):
         self.async_write_op_state()
 
 
-class StringEntity(WiffiEntity):
+class StringEntity(WiffiEntity, SensorEntity):
     """Entity for wiffi metrics which have a string value."""
 
     def __init__(self, device, metric, options):

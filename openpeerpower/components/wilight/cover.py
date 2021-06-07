@@ -18,7 +18,9 @@ from openpeerpower.core import OpenPeerPower
 from . import DOMAIN, WiLightDevice
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry, async_add_entities):
+async def async_setup_entry(
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
+):
     """Set up WiLight covers from a config entry."""
     parent = opp.data[DOMAIN][entry.entry_id]
 
@@ -38,12 +40,12 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry, async_add_en
 
 
 def wilight_to_opp_position(value):
-    """Convert wilight position 1..255 to opp format 0..100."""
+    """Convert wilight position 1..255 to opp.format 0..100."""
     return min(100, round((value * 100) / 255))
 
 
 def opp_to_wilight_position(value):
-    """Convert opp position 0..100 to wilight 1..255 scale."""
+    """Convert opp.position 0..100 to wilight 1..255 scale."""
     return min(255, round((value * 255) / 100))
 
 

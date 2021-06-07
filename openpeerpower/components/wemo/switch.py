@@ -59,12 +59,12 @@ class WemoSwitch(WemoSubscriptionEntity, SwitchEntity):
         self._mode_string = None
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of the device."""
         attr = {}
         if self.maker_params:
             # Is the maker sensor on or off.
-            if self.maker_params["oppensor"]:
+            if self.maker_params["opp.nsor"]:
                 # Note a state of 1 matches the WeMo app 'not triggered'!
                 if self.maker_params["sensorstate"]:
                     attr[ATTR_SENSOR_STATE] = STATE_OFF
