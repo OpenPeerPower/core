@@ -1,13 +1,14 @@
 """Helper for httpx."""
+from __future__ import annotations
+
 import sys
-from typing import Any, Callable, Optional
+from typing import Any, Callable
 
 import httpx
 
 from openpeerpower.const import EVENT_OPENPEERPOWER_CLOSE, __version__
-from openpeerpower.core import Event, callback
+from openpeerpower.core import Event, OpenPeerPower, callback
 from openpeerpower.helpers.frame import warn_use
-from openpeerpower.helpers.typing import OpenPeerPowerType
 from openpeerpower.loader import bind_opp
 
 DATA_ASYNC_CLIENT = "httpx_async_client"
@@ -20,16 +21,14 @@ USER_AGENT = "User-Agent"
 
 @callback
 @bind_opp
-def get_async_client(
-    opp: OpenPeerPowerType, verify_ssl: bool = True
-) -> httpx.AsyncClient:
+def get_async_client(opp: OpenPeerPower, verify_ssl: bool = True) -> httpx.AsyncClient:
     """Return default httpx AsyncClient.
 
     This method must be run in the event loop.
     """
     key = DATA_ASYNC_CLIENT if verify_ssl else DATA_ASYNC_CLIENT_NOVERIFY
 
-    client: Optional[httpx.AsyncClient] = opp.data.get(key)
+    client: httpx.AsyncClient | None = opp.data.get(key)
 
     if client is None:
         client = opp.data[key] = create_async_httpx_client(opp, verify_ssl)
@@ -37,9 +36,20 @@ def get_async_client(
     return client
 
 
+class OppHttpXAsyncClient(httpx.AsyncClient):
+    """httpx AsyncClient that suppresses context management."""
+
+    async def __aenter__(self: OppHttpXAsyncClient) -> OppHttpXAsyncClient:
+        """Prevent an integration from reopen of the client via context manager."""
+        return self
+
+    async def __aexit__(self, *args: Any) -> None:
+        """Prevent an integration from close of the client via context manager."""
+
+
 @callback
 def create_async_httpx_client(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     verify_ssl: bool = True,
     auto_cleanup: bool = True,
     **kwargs: Any,
@@ -51,7 +61,7 @@ def create_async_httpx_client(
 
     This method must be run in the event loop.
     """
-    client = httpx.AsyncClient(
+    client = OppHttpXAsyncClient(
         verify=verify_ssl,
         headers={USER_AGENT: SERVER_SOFTWARE},
         **kwargs,
@@ -71,7 +81,7 @@ def create_async_httpx_client(
 
 @callback
 def _async_register_async_client_shutdown(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     client: httpx.AsyncClient,
     original_aclose: Callable[..., Any],
 ) -> None:

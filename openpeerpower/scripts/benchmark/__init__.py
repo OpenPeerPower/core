@@ -1,4 +1,6 @@
 """Script to run benchmarks."""
+from __future__ import annotations
+
 import argparse
 import asyncio
 import collections
@@ -7,7 +9,7 @@ from datetime import datetime
 import json
 import logging
 from timeit import default_timer as timer
-from typing import Callable, Dict, TypeVar
+from typing import Callable, TypeVar
 
 from openpeerpower import core
 from openpeerpower.components.websocket_api.const import JSON_DUMP
@@ -21,7 +23,7 @@ from openpeerpower.util import dt as dt_util
 
 CALLABLE_T = TypeVar("CALLABLE_T", bound=Callable)  # pylint: disable=invalid-name
 
-BENCHMARKS: Dict[str, Callable] = {}
+BENCHMARKS: dict[str, Callable] = {}
 
 
 def run(args):

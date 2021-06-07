@@ -1,4 +1,6 @@
 """Script to check the configuration file."""
+from __future__ import annotations
+
 import argparse
 import asyncio
 from collections import OrderedDict
@@ -6,7 +8,7 @@ from collections.abc import Mapping, Sequence
 from glob import glob
 import logging
 import os
-from typing import Any, Callable, Dict, List, Tuple
+from typing import Any, Callable
 from unittest.mock import patch
 
 from openpeerpower import core
@@ -18,17 +20,17 @@ import openpeerpower.util.yaml.loader as yaml_loader
 
 # mypy: allow-untyped-calls, allow-untyped-defs
 
-REQUIREMENTS = ("colorlog==4.7.2",)
+REQUIREMENTS = ("colorlog==5.0.1",)
 
 _LOGGER = logging.getLogger(__name__)
 # pylint: disable=protected-access
-MOCKS: Dict[str, Tuple[str, Callable]] = {
+MOCKS: dict[str, tuple[str, Callable]] = {
     "load": ("openpeerpower.util.yaml.loader.load_yaml", yaml_loader.load_yaml),
     "load*": ("openpeerpower.config.load_yaml", yaml_loader.load_yaml),
     "secrets": ("openpeerpower.util.yaml.loader.secret_yaml", yaml_loader.secret_yaml),
 }
 
-PATCHES: Dict[str, Any] = {}
+PATCHES: dict[str, Any] = {}
 
 C_HEAD = "bold"
 ERROR_STR = "General Errors"
@@ -48,7 +50,7 @@ def color(the_color, *args, reset=None):
         raise ValueError(f"Invalid color {k!s} in {the_color}") from k
 
 
-def run(script_args: List) -> int:
+def run(script_args: list) -> int:
     """Handle check config commandline script."""
     parser = argparse.ArgumentParser(description="Check Open Peer Power configuration.")
     parser.add_argument("--script", choices=["check_config"])
@@ -83,7 +85,7 @@ def run(script_args: List) -> int:
 
     res = check(config_dir, args.secrets)
 
-    domain_info: List[str] = []
+    domain_info: list[str] = []
     if args.info:
         domain_info = args.info.split(",")
 
@@ -123,7 +125,7 @@ def run(script_args: List) -> int:
                 dump_dict(res["components"].get(domain))
 
     if args.secrets:
-        flatsecret: Dict[str, str] = {}
+        flatsecret: dict[str, str] = {}
 
         for sfn, sdict in res["secret_cache"].items():
             sss = []
@@ -147,9 +149,9 @@ def run(script_args: List) -> int:
 
 
 def check(config_dir, secrets=False):
-    """Perform a check by mocking opp load functions."""
+    """Perform a check by mocking opp.load functions."""
     logging.getLogger("openpeerpower.loader").setLevel(logging.CRITICAL)
-    res: Dict[str, Any] = {
+    res: dict[str, Any] = {
         "yaml_files": OrderedDict(),  # yaml_files loaded
         "secrets": OrderedDict(),  # secret cache and secrets loaded
         "except": OrderedDict(),  # exceptions raised (with config)
@@ -224,7 +226,7 @@ def check(config_dir, secrets=False):
 
 
 async def async_check_config(config_dir):
-    """Check the OP config."""
+    """Check the OPP config."""
     opp = core.OpenPeerPower()
     opp.config.config_dir = config_dir
     components = await async_check_op_config_file(opp)

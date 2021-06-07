@@ -1,17 +1,18 @@
 """Helper to gather system info."""
+from __future__ import annotations
+
 import os
 import platform
-from typing import Any, Dict
+from typing import Any
 
 from openpeerpower.const import __version__ as current_version
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.loader import bind_opp
 from openpeerpower.util.package import is_virtual_env
 
-from .typing import OpenPeerPowerType
-
 
 @bind_opp
-async def async_get_system_info(opp: OpenPeerPowerType) -> Dict[str, Any]:
+async def async_get_system_info(opp: OpenPeerPower) -> dict[str, Any]:
     """Return info about the system."""
     info_object = {
         "installation_type": "Unknown",
@@ -48,9 +49,9 @@ async def async_get_system_info(opp: OpenPeerPowerType) -> Dict[str, Any]:
         info_object["supervisor"] = info.get("supervisor")
         info_object["host_os"] = host.get("operating_system")
         info_object["docker_version"] = info.get("docker")
-        info_object["coppis"] = host.get("coppis")
+        info_object["copp.s"] = host.get("copp.s")
 
-        if info.get("oppos") is not None:
+        if info.get("opp.s") is not None:
             info_object["installation_type"] = "Open Peer Power OS"
         else:
             info_object["installation_type"] = "Open Peer Power Supervised"

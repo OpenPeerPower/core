@@ -8,8 +8,10 @@ omit =
     openpeerpower/scripts/*.py
 
     # omit pieces of code that rely on external devices being present
-    openpeerpower/components/acer_projector/switch.py
+    openpeerpower/components/acer_projector/*
+    openpeerpower/components/actiontec/const.py
     openpeerpower/components/actiontec/device_tracker.py
+    openpeerpower/components/actiontec/model.py
     openpeerpower/components/acmeda/__init__.py
     openpeerpower/components/acmeda/base.py
     openpeerpower/components/acmeda/const.py
@@ -36,19 +38,20 @@ omit =
     openpeerpower/components/airvisual/__init__.py
     openpeerpower/components/airvisual/air_quality.py
     openpeerpower/components/airvisual/sensor.py
-    openpeerpower/components/aladdin_connect/cover.py
+    openpeerpower/components/aladdin_connect/*
     openpeerpower/components/alarmdecoder/__init__.py
     openpeerpower/components/alarmdecoder/alarm_control_panel.py
     openpeerpower/components/alarmdecoder/binary_sensor.py
     openpeerpower/components/alarmdecoder/const.py
     openpeerpower/components/alarmdecoder/sensor.py
     openpeerpower/components/alpha_vantage/sensor.py
-    openpeerpower/components/amazon_polly/tts.py
+    openpeerpower/components/amazon_polly/*
     openpeerpower/components/ambiclimate/climate.py
     openpeerpower/components/ambient_station/*
     openpeerpower/components/amcrest/*
     openpeerpower/components/ampio/*
     openpeerpower/components/android_ip_webcam/*
+    openpeerpower/components/anel_pwrctrl/switch.py
     openpeerpower/components/anthemav/media_player.py
     openpeerpower/components/apcupsd/*
     openpeerpower/components/apple_tv/__init__.py

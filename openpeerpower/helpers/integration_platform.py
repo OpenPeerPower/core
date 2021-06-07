@@ -1,7 +1,10 @@
 """Helpers to help with integration platforms."""
+from __future__ import annotations
+
 import asyncio
+from collections.abc import Awaitable
 import logging
-from typing import Any, Awaitable, Callable
+from typing import Any, Callable
 
 from openpeerpower.core import Event, OpenPeerPower
 from openpeerpower.loader import async_get_integration, bind_opp

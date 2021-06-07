@@ -9,8 +9,6 @@ ConfigType = Dict[str, Any]
 ContextType = openpeerpower.core.Context
 DiscoveryInfoType = Dict[str, Any]
 EventType = openpeerpower.core.Event
-OpenPeerPowerType = openpeerpower.core.OpenPeerPower
-ServiceCallType = openpeerpower.core.ServiceCall
 ServiceDataType = Dict[str, Any]
 StateType = Union[None, str, int, float]
 TemplateVarsType = Optional[Mapping[str, Any]]
@@ -20,10 +18,17 @@ QueryType = Any
 
 
 class UndefinedType(Enum):
-    # pylint: disable=invalid-name
     """Singleton type for use with not set sentinel values."""
 
     _singleton = 0
 
 
 UNDEFINED = UndefinedType._singleton  # pylint: disable=protected-access
+
+# The following types should not used and
+# are not present in the core code base.
+# They are kept in order not to break custom integrations
+# that may rely on them.
+# In due time they will be removed.
+OpenPeerPowerType = openpeerpower.core.OpenPeerPower
+ServiceCallType = openpeerpower.core.ServiceCall

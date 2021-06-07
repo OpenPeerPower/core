@@ -4,7 +4,7 @@ from __future__ import annotations
 import asyncio
 from datetime import datetime, timedelta
 import logging
-from typing import Any, Dict, List, Optional, Set, cast
+from typing import Any, cast
 
 from openpeerpower.const import EVENT_OPENPEERPOWER_START, EVENT_OPENPEERPOWER_STOP
 from openpeerpower.core import (
@@ -45,12 +45,12 @@ class StoredState:
         self.state = state
         self.last_seen = last_seen
 
-    def as_dict(self) -> Dict[str, Any]:
+    def as_dict(self) -> dict[str, Any]:
         """Return a dict representation of the stored state."""
         return {"state": self.state.as_dict(), "last_seen": self.last_seen}
 
     @classmethod
-    def from_dict(cls, json_dict: Dict) -> StoredState:
+    def from_dict(cls, json_dict: dict) -> StoredState:
         """Initialize a stored state from a dict."""
         last_seen = json_dict["last_seen"]
 
@@ -102,15 +102,15 @@ class RestoreStateData:
 
     def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize the restore state data class."""
-        self.opp: OpenPeerPower = opp
+        self.opp: OpenPeerPower =.opp
         self.store: Store = Store(
             opp, STORAGE_VERSION, STORAGE_KEY, encoder=JSONEncoder
         )
-        self.last_states: Dict[str, StoredState] = {}
-        self.entity_ids: Set[str] = set()
+        self.last_states: dict[str, StoredState] = {}
+        self.entity_ids: set[str] = set()
 
     @callback
-    def async_get_stored_states(self) -> List[StoredState]:
+    def async_get_stored_states(self) -> list[StoredState]:
         """Get the set of states which should be stored.
 
         This includes the states of all registered entities, as well as the
@@ -177,10 +177,18 @@ class RestoreStateData:
         self.opp.async_create_task(_async_dump_states())
 
         # Dump states periodically
-        async_track_time_interval(self.opp, _async_dump_states, STATE_DUMP_INTERVAL)
+        cancel_interval = async_track_time_interval(
+            self.opp, _async_dump_states, STATE_DUMP_INTERVAL
+        )
 
-        # Dump states when stopping opp
-        self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _async_dump_states)
+        async def _async_dump_states_at_stop(*_: Any) -> None:
+            cancel_interval()
+            await self.async_dump_states()
+
+        # Dump states when stopping.opp
+        self.opp.bus.async_listen_once(
+            EVENT_OPENPEERPOWER_STOP, _async_dump_states_at_stop
+        )
 
     @callback
     def async_restore_entity_added(self, entity_id: str) -> None:
@@ -235,7 +243,6 @@ class RestoreEntity(Entity):
 
     async def async_internal_added_to_opp(self) -> None:
         """Register this entity as a restorable entity."""
-        assert self.opp is not None
         _, data = await asyncio.gather(
             super().async_internal_added_to_opp(),
             RestoreStateData.async_get_instance(self.opp),
@@ -244,18 +251,17 @@ class RestoreEntity(Entity):
 
     async def async_internal_will_remove_from_opp(self) -> None:
         """Run when entity will be removed from opp."""
-        assert self.opp is not None
         _, data = await asyncio.gather(
             super().async_internal_will_remove_from_opp(),
             RestoreStateData.async_get_instance(self.opp),
         )
         data.async_restore_entity_removed(self.entity_id)
 
-    async def async_get_last_state(self) -> Optional[State]:
+    async def async_get_last_state(self) -> State | None:
         """Get the entity state from the previous run."""
         if self.opp is None or self.entity_id is None:
-            # Return None if this entity isn't added to opp yet
-            _LOGGER.warning("Cannot get last state. Entity not added to opp")
+            # Return None if this entity isn't added to opp.yet
+            _LOGGER.warning("Cannot get last state. Entity not added to opp.)  # type: ignore[unreachable]
             return None
         data = await RestoreStateData.async_get_instance(self.opp)
         if self.entity_id not in data.last_states:

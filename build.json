@@ -1,14 +1,22 @@
 {
   "image": "openpeerpower/{arch}-openpeerpower",
+  "shadow_repository": "ghcr.io/openpeerpower",
   "build_from": {
-    "aarch64": "openpeerpower/aarch64-openpeerpower-base:2021.02.0",
-    "armhf": "openpeerpower/armhf-openpeerpower-base:2021.02.0",
-    "armv7": "openpeerpower/armv7-openpeerpower-base:2021.02.0",
-    "amd64": "openpeerpower/amd64-openpeerpower-base:2021.02.0",
-    "i386": "openpeerpower/i386-openpeerpower-base:2021.02.0"
+    "aarch64": "ghcr.io/openpeerpower/aarch64-openpeerpower-base:2021.05.0",
+    "armhf": "ghcr.io/openpeerpower/armhf-openpeerpower-base:2021.05.0",
+    "armv7": "ghcr.io/openpeerpower/armv7-openpeerpower-base:2021.05.0",
+    "amd64": "ghcr.io/openpeerpower/amd64-openpeerpower-base:2021.05.0",
+    "i386": "ghcr.io/openpeerpower/i386-openpeerpower-base:2021.05.0"
   },
   "labels": {
-    "io.opp.type": "core"
+    "io.opp.type": "core",
+    "org.opencontainers.image.title": "Open Peer Power",
+    "org.opencontainers.image.description": "Open-source home automation platform running on Python 3",
+    "org.opencontainers.image.source": "https://github.com/openpeerpower/core",
+    "org.opencontainers.image.authors": "The Open Peer Power Authors",
+    "org.opencontainers.image.url": "https://www.openpeerpower.io/",
+    "org.opencontainers.image.documentation": "https://www.openpeerpower.io/docs/",
+    "org.opencontainers.image.licenses": "Apache License 2.0"
   },
   "version_tag": true
 }

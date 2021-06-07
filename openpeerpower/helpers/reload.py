@@ -1,16 +1,17 @@
 """Class to reload platforms."""
+from __future__ import annotations
 
 import asyncio
+from collections.abc import Iterable
 import logging
-from typing import Dict, Iterable, List, Optional
 
 from openpeerpower import config as conf_util
 from openpeerpower.const import SERVICE_RELOAD
-from openpeerpower.core import Event, callback
+from openpeerpower.core import Event, OpenPeerPower, callback
 from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers import config_per_platform
 from openpeerpower.helpers.entity_platform import EntityPlatform, async_get_platforms
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 from openpeerpower.loader import async_get_integration
 from openpeerpower.setup import async_setup_component
 
@@ -18,7 +19,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_reload_integration_platforms(
-    opp: OpenPeerPowerType, integration_name: str, integration_platforms: Iterable
+    opp: OpenPeerPower, integration_name: str, integration_platforms: Iterable
 ) -> None:
     """Reload an integration's platforms.
 
@@ -44,7 +45,7 @@ async def async_reload_integration_platforms(
 
 
 async def _resetup_platform(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     integration_name: str,
     integration_platform: str,
     unprocessed_conf: ConfigType,
@@ -59,7 +60,7 @@ async def _resetup_platform(
     if not conf:
         return
 
-    root_config: Dict = {integration_platform: []}
+    root_config: dict = {integration_platform: []}
     # Extract only the config for template, ignore the rest.
     for p_type, p_config in config_per_platform(conf, integration_platform):
         if p_type != integration_name:
@@ -96,10 +97,10 @@ async def _resetup_platform(
 
 
 async def _async_setup_platform(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     integration_name: str,
     integration_platform: str,
-    platform_configs: List[Dict],
+    platform_configs: list[dict],
 ) -> None:
     """Platform for the first time when new configuration is added."""
     if integration_platform not in opp.data:
@@ -117,17 +118,17 @@ async def _async_setup_platform(
 
 
 async def _async_reconfig_platform(
-    platform: EntityPlatform, platform_configs: List[Dict]
+    platform: EntityPlatform, platform_configs: list[dict]
 ) -> None:
     """Reconfigure an already loaded platform."""
     await platform.async_reset()
-    tasks = [platform.async_setup(p_config) for p_config in platform_configs]  # type: ignore
+    tasks = [platform.async_setup(p_config) for p_config in platform_configs]
     await asyncio.gather(*tasks)
 
 
 async def async_integration_yaml_config(
-    opp: OpenPeerPowerType, integration_name: str
-) -> Optional[ConfigType]:
+    opp: OpenPeerPower, integration_name: str
+) -> ConfigType | None:
     """Fetch the latest yaml configuration for an integration."""
     integration = await async_get_integration(opp, integration_name)
 
@@ -138,8 +139,8 @@ async def async_integration_yaml_config(
 
 @callback
 def async_get_platform_without_config_entry(
-    opp: OpenPeerPowerType, integration_name: str, integration_platform_name: str
-) -> Optional[EntityPlatform]:
+    opp: OpenPeerPower, integration_name: str, integration_platform_name: str
+) -> EntityPlatform | None:
     """Find an existing platform that is not a config entry."""
     for integration_platform in async_get_platforms(opp, integration_name):
         if integration_platform.config_entry is not None:
@@ -152,7 +153,7 @@ def async_get_platform_without_config_entry(
 
 
 async def async_setup_reload_service(
-    opp: OpenPeerPowerType, domain: str, platforms: Iterable
+    opp: OpenPeerPower, domain: str, platforms: Iterable
 ) -> None:
     """Create the reload service for the domain."""
     if opp.services.has_service(domain, SERVICE_RELOAD):
@@ -168,9 +169,7 @@ async def async_setup_reload_service(
     )
 
 
-def setup_reload_service(
-    opp: OpenPeerPowerType, domain: str, platforms: Iterable
-) -> None:
+def setup_reload_service(opp: OpenPeerPower, domain: str, platforms: Iterable) -> None:
     """Sync version of async_setup_reload_service."""
     asyncio.run_coroutine_threadsafe(
         async_setup_reload_service(opp, domain, platforms),

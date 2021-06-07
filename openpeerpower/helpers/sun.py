@@ -2,71 +2,80 @@
 from __future__ import annotations
 
 import datetime
-from typing import TYPE_CHECKING, Optional, Union
+from typing import TYPE_CHECKING
 
 from openpeerpower.const import SUN_EVENT_SUNRISE, SUN_EVENT_SUNSET
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.loader import bind_opp
 from openpeerpower.util import dt as dt_util
-
-from .typing import OpenPeerPowerType
 
 if TYPE_CHECKING:
     import astral
 
 DATA_LOCATION_CACHE = "astral_location_cache"
 
+ELEVATION_AGNOSTIC_EVENTS = ("noon", "midnight")
+
 
 @callback
 @bind_opp
-def get_astral_location(opp: OpenPeerPowerType) -> astral.Location:
+def get_astral_location(
+    opp: OpenPeerPower,
+) -> tuple[astral.location.Location, astral.Elevation]:
     """Get an astral location for the current Open Peer Power configuration."""
-    from astral import Location  # pylint: disable=import-outside-toplevel
+    from astral import LocationInfo  # pylint: disable=import-outside-toplevel
+    from astral.location import Location  # pylint: disable=import-outside-toplevel
 
     latitude = opp.config.latitude
     longitude = opp.config.longitude
     timezone = str(opp.config.time_zone)
     elevation = opp.config.elevation
-    info = ("", "", latitude, longitude, timezone, elevation)
+    info = ("", "", timezone, latitude, longitude)
 
     # Cache astral locations so they aren't recreated with the same args
     if DATA_LOCATION_CACHE not in opp.data:
         opp.data[DATA_LOCATION_CACHE] = {}
 
     if info not in opp.data[DATA_LOCATION_CACHE]:
-        opp.data[DATA_LOCATION_CACHE][info] = Location(info)
+        opp.data[DATA_LOCATION_CACHE][info] = Location(LocationInfo(*info))
 
-    return opp.data[DATA_LOCATION_CACHE][info]
+    return opp.data[DATA_LOCATION_CACHE][info], elevation
 
 
 @callback
 @bind_opp
 def get_astral_event_next(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     event: str,
-    utc_point_in_time: Optional[datetime.datetime] = None,
-    offset: Optional[datetime.timedelta] = None,
+    utc_point_in_time: datetime.datetime | None = None,
+    offset: datetime.timedelta | None = None,
 ) -> datetime.datetime:
     """Calculate the next specified solar event."""
-    location = get_astral_location(opp)
-    return get_location_astral_event_next(location, event, utc_point_in_time, offset)
+    location, elevation = get_astral_location(opp)
+    return get_location_astral_event_next(
+        location, elevation, event, utc_point_in_time, offset
+    )
 
 
 @callback
 def get_location_astral_event_next(
-    location: "astral.Location",
+    location: astral.location.Location,
+    elevation: astral.Elevation,
     event: str,
-    utc_point_in_time: Optional[datetime.datetime] = None,
-    offset: Optional[datetime.timedelta] = None,
+    utc_point_in_time: datetime.datetime | None = None,
+    offset: datetime.timedelta | None = None,
 ) -> datetime.datetime:
     """Calculate the next specified solar event."""
-    from astral import AstralError  # pylint: disable=import-outside-toplevel
 
     if offset is None:
         offset = datetime.timedelta()
 
     if utc_point_in_time is None:
         utc_point_in_time = dt_util.utcnow()
+
+    kwargs = {"local": False}
+    if event not in ELEVATION_AGNOSTIC_EVENTS:
+        kwargs["observer_elevation"] = elevation
 
     mod = -1
     while True:
@@ -75,13 +84,13 @@ def get_location_astral_event_next(
                 getattr(location, event)(
                     dt_util.as_local(utc_point_in_time).date()
                     + datetime.timedelta(days=mod),
-                    local=False,
+                    **kwargs,
                 )
                 + offset
             )
             if next_dt > utc_point_in_time:
                 return next_dt
-        except AstralError:
+        except ValueError:
             pass
         mod += 1
 
@@ -89,14 +98,12 @@ def get_location_astral_event_next(
 @callback
 @bind_opp
 def get_astral_event_date(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     event: str,
-    date: Union[datetime.date, datetime.datetime, None] = None,
-) -> Optional[datetime.datetime]:
+    date: datetime.date | datetime.datetime | None = None,
+) -> datetime.datetime | None:
     """Calculate the astral event time for the specified date."""
-    from astral import AstralError  # pylint: disable=import-outside-toplevel
-
-    location = get_astral_location(opp)
+    location, elevation = get_astral_location(opp)
 
     if date is None:
         date = dt_util.now().date()
@@ -104,9 +111,13 @@ def get_astral_event_date(
     if isinstance(date, datetime.datetime):
         date = dt_util.as_local(date).date()
 
+    kwargs = {"local": False}
+    if event not in ELEVATION_AGNOSTIC_EVENTS:
+        kwargs["observer_elevation"] = elevation
+
     try:
-        return getattr(location, event)(date, local=False)  # type: ignore
-    except AstralError:
+        return getattr(location, event)(date, **kwargs)  # type: ignore
+    except ValueError:
         # Event never occurs for specified date.
         return None
 
@@ -114,7 +125,7 @@ def get_astral_event_date(
 @callback
 @bind_opp
 def is_up(
-    opp: OpenPeerPowerType, utc_point_in_time: Optional[datetime.datetime] = None
+    opp: OpenPeerPower, utc_point_in_time: datetime.datetime | None = None
 ) -> bool:
     """Calculate if the sun is currently up."""
     if utc_point_in_time is None:

@@ -1,4 +1,4 @@
-"""Script to install/uninstall OP into OS X."""
+"""Script to install/uninstall OPP into OS X."""
 import os
 import time
 

@@ -5,7 +5,7 @@ from collections import OrderedDict
 import logging
 import os
 from pathlib import Path
-from typing import List, NamedTuple, Optional
+from typing import NamedTuple
 
 import voluptuous as vol
 
@@ -35,8 +35,8 @@ class CheckConfigError(NamedTuple):
     """Configuration check error."""
 
     message: str
-    domain: Optional[str]
-    config: Optional[ConfigType]
+    domain: str | None
+    config: ConfigType | None
 
 
 class OpenPeerPowerConfig(OrderedDict):
@@ -45,13 +45,13 @@ class OpenPeerPowerConfig(OrderedDict):
     def __init__(self) -> None:
         """Initialize OP config."""
         super().__init__()
-        self.errors: List[CheckConfigError] = []
+        self.errors: list[CheckConfigError] = []
 
     def add_error(
         self,
         message: str,
-        domain: Optional[str] = None,
-        config: Optional[ConfigType] = None,
+        domain: str | None = None,
+        config: ConfigType | None = None,
     ) -> OpenPeerPowerConfig:
         """Add a single error."""
         self.errors.append(CheckConfigError(str(message), domain, config))
@@ -63,7 +63,9 @@ class OpenPeerPowerConfig(OrderedDict):
         return "\n".join([err.message for err in self.errors])
 
 
-async def async_check_op_config_file(opp: OpenPeerPower) -> OpenPeerPowerConfig:
+async def async_check_op_config_file(  # noqa: C901
+    opp: OpenPeerPower,
+) -> OpenPeerPowerConfig:
     """Load and check if Open Peer Power configuration file is valid.
 
     This method is a coroutine.

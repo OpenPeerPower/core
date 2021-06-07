@@ -1,12 +1,16 @@
 """Offer reusable conditions."""
+from __future__ import annotations
+
 import asyncio
 from collections import deque
+from collections.abc import Container, Generator
+from contextlib import contextmanager
 from datetime import datetime, timedelta
 import functools as ft
 import logging
 import re
 import sys
-from typing import Any, Callable, Container, List, Optional, Set, Union, cast
+from typing import Any, Callable, cast
 
 from openpeerpower.components import zone as zone_cmp
 from openpeerpower.components.device_automation import (
@@ -51,6 +55,17 @@ from openpeerpower.helpers.typing import ConfigType, TemplateVarsType
 from openpeerpower.util.async_ import run_callback_threadsafe
 import openpeerpower.util.dt as dt_util
 
+from .trace import (
+    TraceElement,
+    trace_append_element,
+    trace_path,
+    trace_path_get,
+    trace_stack_cv,
+    trace_stack_pop,
+    trace_stack_push,
+    trace_stack_top,
+)
+
 FROM_CONFIG_FORMAT = "{}_from_config"
 ASYNC_FROM_CONFIG_FORMAT = "async_{}_from_config"
 
@@ -63,9 +78,75 @@ INPUT_ENTITY_ID = re.compile(
 ConditionCheckerType = Callable[[OpenPeerPower, TemplateVarsType], bool]
 
 
+def condition_trace_append(variables: TemplateVarsType, path: str) -> TraceElement:
+    """Append a TraceElement to trace[path]."""
+    trace_element = TraceElement(variables, path)
+    trace_append_element(trace_element)
+    return trace_element
+
+
+def condition_trace_set_result(result: bool, **kwargs: Any) -> None:
+    """Set the result of TraceElement at the top of the stack."""
+    node = trace_stack_top(trace_stack_cv)
+
+    # The condition function may be called directly, in which case tracing
+    # is not setup
+    if not node:
+        return
+
+    node.set_result(result=result, **kwargs)
+
+
+def condition_trace_update_result(**kwargs: Any) -> None:
+    """Update the result of TraceElement at the top of the stack."""
+    node = trace_stack_top(trace_stack_cv)
+
+    # The condition function may be called directly, in which case tracing
+    # is not setup
+    if not node:
+        return
+
+    node.update_result(**kwargs)
+
+
+@contextmanager
+def trace_condition(variables: TemplateVarsType) -> Generator:
+    """Trace condition evaluation."""
+    should_pop = True
+    trace_element = trace_stack_top(trace_stack_cv)
+    if trace_element and trace_element.reuse_by_child:
+        should_pop = False
+        trace_element.reuse_by_child = False
+    else:
+        trace_element = condition_trace_append(variables, trace_path_get())
+        trace_stack_push(trace_stack_cv, trace_element)
+    try:
+        yield trace_element
+    except Exception as ex:
+        trace_element.set_error(ex)
+        raise ex
+    finally:
+        if should_pop:
+            trace_stack_pop(trace_stack_cv)
+
+
+def trace_condition_function(condition: ConditionCheckerType) -> ConditionCheckerType:
+    """Wrap a condition function to enable basic tracing."""
+
+    @ft.wraps(condition)
+    def wrapper(opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
+        """Trace condition."""
+        with trace_condition(variables):
+            result = condition(opp, variables)
+            condition_trace_update_result(result=result)
+            return result
+
+    return wrapper
+
+
 async def async_from_config(
     opp: OpenPeerPower,
-    config: Union[ConfigType, Template],
+    config: ConfigType | Template,
     config_validation: bool = True,
 ) -> ConditionCheckerType:
     """Turn a condition configuration into a method.
@@ -109,6 +190,7 @@ async def async_and_from_config(
         await async_from_config(opp, entry, False) for entry in config["conditions"]
     ]
 
+    @trace_condition_function
     def if_and_condition(
         opp: OpenPeerPower, variables: TemplateVarsType = None
     ) -> bool:
@@ -116,8 +198,9 @@ async def async_and_from_config(
         errors = []
         for index, check in enumerate(checks):
             try:
-                if not check(opp, variables):
-                    return False
+                with trace_path(["conditions", str(index)]):
+                    if not check(opp, variables):
+                        return False
             except ConditionError as ex:
                 errors.append(
                     ConditionErrorIndex("and", index=index, total=len(checks), error=ex)
@@ -142,13 +225,15 @@ async def async_or_from_config(
         await async_from_config(opp, entry, False) for entry in config["conditions"]
     ]
 
+    @trace_condition_function
     def if_or_condition(opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Test or condition."""
         errors = []
         for index, check in enumerate(checks):
             try:
-                if check(opp, variables):
-                    return True
+                with trace_path(["conditions", str(index)]):
+                    if check(opp, variables):
+                        return True
             except ConditionError as ex:
                 errors.append(
                     ConditionErrorIndex("or", index=index, total=len(checks), error=ex)
@@ -173,6 +258,7 @@ async def async_not_from_config(
         await async_from_config(opp, entry, False) for entry in config["conditions"]
     ]
 
+    @trace_condition_function
     def if_not_condition(
         opp: OpenPeerPower, variables: TemplateVarsType = None
     ) -> bool:
@@ -180,8 +266,9 @@ async def async_not_from_config(
         errors = []
         for index, check in enumerate(checks):
             try:
-                if check(opp, variables):
-                    return False
+                with trace_path(["conditions", str(index)]):
+                    if check(opp, variables):
+                        return False
             except ConditionError as ex:
                 errors.append(
                     ConditionErrorIndex("not", index=index, total=len(checks), error=ex)
@@ -198,10 +285,10 @@ async def async_not_from_config(
 
 def numeric_state(
     opp: OpenPeerPower,
-    entity: Union[None, str, State],
-    below: Optional[Union[float, str]] = None,
-    above: Optional[Union[float, str]] = None,
-    value_template: Optional[Template] = None,
+    entity: None | str | State,
+    below: float | str | None = None,
+    above: float | str | None = None,
+    value_template: Template | None = None,
     variables: TemplateVarsType = None,
 ) -> bool:
     """Test a numeric state condition."""
@@ -217,14 +304,14 @@ def numeric_state(
     ).result()
 
 
-def async_numeric_state(
+def async_numeric_state(  # noqa: C901
     opp: OpenPeerPower,
-    entity: Union[None, str, State],
-    below: Optional[Union[float, str]] = None,
-    above: Optional[Union[float, str]] = None,
-    value_template: Optional[Template] = None,
+    entity: None | str | State,
+    below: float | str | None = None,
+    above: float | str | None = None,
+    value_template: Template | None = None,
     variables: TemplateVarsType = None,
-    attribute: Optional[str] = None,
+    attribute: str | None = None,
 ) -> bool:
     """Test a numeric state condition."""
     if entity is None:
@@ -261,10 +348,9 @@ def async_numeric_state(
                 "numeric_state", f"template error: {ex}"
             ) from ex
 
+    # Known states that never match the numeric condition
     if value in (STATE_UNAVAILABLE, STATE_UNKNOWN):
-        raise ConditionErrorMessage(
-            "numeric_state", f"state of {entity_id} is unavailable"
-        )
+        return False
 
     try:
         fvalue = float(value)
@@ -277,15 +363,22 @@ def async_numeric_state(
     if below is not None:
         if isinstance(below, str):
             below_entity = opp.states.get(below)
-            if not below_entity or below_entity.state in (
+            if not below_entity:
+                raise ConditionErrorMessage(
+                    "numeric_state", f"unknown 'below' entity {below}"
+                )
+            if below_entity.state in (
                 STATE_UNAVAILABLE,
                 STATE_UNKNOWN,
             ):
-                raise ConditionErrorMessage(
-                    "numeric_state", f"the 'below' entity {below} is unavailable"
-                )
+                return False
             try:
                 if fvalue >= float(below_entity.state):
+                    condition_trace_set_result(
+                        False,
+                        state=fvalue,
+                        wanted_state_below=float(below_entity.state),
+                    )
                     return False
             except (ValueError, TypeError) as ex:
                 raise ConditionErrorMessage(
@@ -293,20 +386,28 @@ def async_numeric_state(
                     f"the 'below' entity {below} state '{below_entity.state}' cannot be processed as a number",
                 ) from ex
         elif fvalue >= below:
+            condition_trace_set_result(False, state=fvalue, wanted_state_below=below)
             return False
 
     if above is not None:
         if isinstance(above, str):
             above_entity = opp.states.get(above)
-            if not above_entity or above_entity.state in (
+            if not above_entity:
+                raise ConditionErrorMessage(
+                    "numeric_state", f"unknown 'above' entity {above}"
+                )
+            if above_entity.state in (
                 STATE_UNAVAILABLE,
                 STATE_UNKNOWN,
             ):
-                raise ConditionErrorMessage(
-                    "numeric_state", f"the 'above' entity {above} is unavailable"
-                )
+                return False
             try:
                 if fvalue <= float(above_entity.state):
+                    condition_trace_set_result(
+                        False,
+                        state=fvalue,
+                        wanted_state_above=float(above_entity.state),
+                    )
                     return False
             except (ValueError, TypeError) as ex:
                 raise ConditionErrorMessage(
@@ -314,8 +415,10 @@ def async_numeric_state(
                     f"the 'above' entity {above} state '{above_entity.state}' cannot be processed as a number",
                 ) from ex
         elif fvalue <= above:
+            condition_trace_set_result(False, state=fvalue, wanted_state_above=above)
             return False
 
+    condition_trace_set_result(True, state=fvalue)
     return True
 
 
@@ -331,6 +434,7 @@ def async_numeric_state_from_config(
     above = config.get(CONF_ABOVE)
     value_template = config.get(CONF_VALUE_TEMPLATE)
 
+    @trace_condition_function
     def if_numeric_state(
         opp: OpenPeerPower, variables: TemplateVarsType = None
     ) -> bool:
@@ -341,10 +445,17 @@ def async_numeric_state_from_config(
         errors = []
         for index, entity_id in enumerate(entity_ids):
             try:
-                if not async_numeric_state(
-                    opp, entity_id, below, above, value_template, variables, attribute
-                ):
-                    return False
+                with trace_path(["entity_id", str(index)]), trace_condition(variables):
+                    if not async_numeric_state(
+                        opp,
+                        entity_id,
+                        below,
+                        above,
+                        value_template,
+                        variables,
+                        attribute,
+                    ):
+                        return False
             except ConditionError as ex:
                 errors.append(
                     ConditionErrorIndex(
@@ -363,10 +474,10 @@ def async_numeric_state_from_config(
 
 def state(
     opp: OpenPeerPower,
-    entity: Union[None, str, State],
+    entity: None | str | State,
     req_state: Any,
-    for_period: Optional[timedelta] = None,
-    attribute: Optional[str] = None,
+    for_period: timedelta | None = None,
+    attribute: str | None = None,
 ) -> bool:
     """Test if state matches requirements.
 
@@ -417,9 +528,13 @@ def state(
             break
 
     if for_period is None or not is_state:
+        condition_trace_set_result(is_state, state=value, wanted_state=state_value)
         return is_state
 
-    return dt_util.utcnow() - for_period > entity.last_changed
+    duration = dt_util.utcnow() - for_period
+    duration_ok = duration > entity.last_changed
+    condition_trace_set_result(duration_ok, state=value, duration=duration)
+    return duration_ok
 
 
 def state_from_config(
@@ -429,20 +544,22 @@ def state_from_config(
     if config_validation:
         config = cv.STATE_CONDITION_SCHEMA(config)
     entity_ids = config.get(CONF_ENTITY_ID, [])
-    req_states: Union[str, List[str]] = config.get(CONF_STATE, [])
+    req_states: str | list[str] = config.get(CONF_STATE, [])
     for_period = config.get("for")
     attribute = config.get(CONF_ATTRIBUTE)
 
     if not isinstance(req_states, list):
         req_states = [req_states]
 
+    @trace_condition_function
     def if_state(opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Test if condition."""
         errors = []
         for index, entity_id in enumerate(entity_ids):
             try:
-                if not state(opp, entity_id, req_states, for_period, attribute):
-                    return False
+                with trace_path(["entity_id", str(index)]), trace_condition(variables):
+                    if not state(opp, entity_id, req_states, for_period, attribute):
+                        return False
             except ConditionError as ex:
                 errors.append(
                     ConditionErrorIndex(
@@ -461,10 +578,10 @@ def state_from_config(
 
 def sun(
     opp: OpenPeerPower,
-    before: Optional[str] = None,
-    after: Optional[str] = None,
-    before_offset: Optional[timedelta] = None,
-    after_offset: Optional[timedelta] = None,
+    before: str | None = None,
+    after: str | None = None,
+    before_offset: timedelta | None = None,
+    after_offset: timedelta | None = None,
 ) -> bool:
     """Test if current time matches sun requirements."""
     utcnow = dt_util.utcnow()
@@ -493,23 +610,37 @@ def sun(
 
     if sunrise is None and SUN_EVENT_SUNRISE in (before, after):
         # There is no sunrise today
+        condition_trace_set_result(False, message="no sunrise today")
         return False
 
     if sunset is None and SUN_EVENT_SUNSET in (before, after):
         # There is no sunset today
+        condition_trace_set_result(False, message="no sunset today")
         return False
 
-    if before == SUN_EVENT_SUNRISE and utcnow > cast(datetime, sunrise) + before_offset:
-        return False
+    if before == SUN_EVENT_SUNRISE:
+        wanted_time_before = cast(datetime, sunrise) + before_offset
+        condition_trace_update_result(wanted_time_before=wanted_time_before)
+        if utcnow > wanted_time_before:
+            return False
 
-    if before == SUN_EVENT_SUNSET and utcnow > cast(datetime, sunset) + before_offset:
-        return False
+    if before == SUN_EVENT_SUNSET:
+        wanted_time_before = cast(datetime, sunset) + before_offset
+        condition_trace_update_result(wanted_time_before=wanted_time_before)
+        if utcnow > wanted_time_before:
+            return False
 
-    if after == SUN_EVENT_SUNRISE and utcnow < cast(datetime, sunrise) + after_offset:
-        return False
+    if after == SUN_EVENT_SUNRISE:
+        wanted_time_after = cast(datetime, sunrise) + after_offset
+        condition_trace_update_result(wanted_time_after=wanted_time_after)
+        if utcnow < wanted_time_after:
+            return False
 
-    if after == SUN_EVENT_SUNSET and utcnow < cast(datetime, sunset) + after_offset:
-        return False
+    if after == SUN_EVENT_SUNSET:
+        wanted_time_after = cast(datetime, sunset) + after_offset
+        condition_trace_update_result(wanted_time_after=wanted_time_after)
+        if utcnow < wanted_time_after:
+            return False
 
     return True
 
@@ -525,11 +656,12 @@ def sun_from_config(
     before_offset = config.get("before_offset")
     after_offset = config.get("after_offset")
 
-    def time_if(opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
+    @trace_condition_function
+    def sun_if(opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Validate time based if-condition."""
         return sun(opp, before, after, before_offset, after_offset)
 
-    return time_if
+    return sun_if
 
 
 def template(
@@ -542,15 +674,22 @@ def template(
 
 
 def async_template(
-    opp: OpenPeerPower, value_template: Template, variables: TemplateVarsType = None
+    opp: OpenPeerPower,
+    value_template: Template,
+    variables: TemplateVarsType = None,
+    trace_result: bool = True,
 ) -> bool:
     """Test if template condition matches."""
     try:
-        value: str = value_template.async_render(variables, parse_result=False)
+        info = value_template.async_render_to_info(variables, parse_result=False)
+        value = info.result()
     except TemplateError as ex:
         raise ConditionErrorMessage("template", str(ex)) from ex
 
-    return value.lower() == "true"
+    result = value.lower() == "true"
+    if trace_result:
+        condition_trace_set_result(result, entities=list(info.entities))
+    return result
 
 
 def async_template_from_config(
@@ -561,6 +700,7 @@ def async_template_from_config(
         config = cv.TEMPLATE_CONDITION_SCHEMA(config)
     value_template = cast(Template, config.get(CONF_VALUE_TEMPLATE))
 
+    @trace_condition_function
     def template_if(opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Validate template based if-condition."""
         value_template.opp = opp
@@ -572,9 +712,9 @@ def async_template_from_config(
 
 def time(
     opp: OpenPeerPower,
-    before: Optional[Union[dt_util.dt.time, str]] = None,
-    after: Optional[Union[dt_util.dt.time, str]] = None,
-    weekday: Union[None, str, Container[str]] = None,
+    before: dt_util.dt.time | str | None = None,
+    after: dt_util.dt.time | str | None = None,
+    weekday: None | str | Container[str] = None,
 ) -> bool:
     """Test if local time condition matches.
 
@@ -608,19 +748,21 @@ def time(
             before_entity.attributes.get("hour", 23),
             before_entity.attributes.get("minute", 59),
             before_entity.attributes.get("second", 59),
-            999999,
         )
 
     if after < before:
+        condition_trace_update_result(after=after, now_time=now_time, before=before)
         if not after <= now_time < before:
             return False
     else:
+        condition_trace_update_result(after=after, now_time=now_time, before=before)
         if before <= now_time < after:
             return False
 
     if weekday is not None:
         now_weekday = WEEKDAYS[now.weekday()]
 
+        condition_trace_update_result(weekday=weekday, now_weekday=now_weekday)
         if (
             isinstance(weekday, str)
             and weekday != now_weekday
@@ -641,6 +783,7 @@ def time_from_config(
     after = config.get(CONF_AFTER)
     weekday = config.get(CONF_WEEKDAY)
 
+    @trace_condition_function
     def time_if(opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Validate time based if-condition."""
         return time(opp, before, after, weekday)
@@ -650,8 +793,8 @@ def time_from_config(
 
 def zone(
     opp: OpenPeerPower,
-    zone_ent: Union[None, str, State],
-    entity: Union[None, str, State],
+    zone_ent: None | str | State,
+    entity: None | str | State,
 ) -> bool:
     """Test if zone-condition matches.
 
@@ -706,6 +849,7 @@ def zone_from_config(
     entity_ids = config.get(CONF_ENTITY_ID, [])
     zone_entity_ids = config.get(CONF_ZONE, [])
 
+    @trace_condition_function
     def if_in_zone(opp: OpenPeerPower, variables: TemplateVarsType = None) -> bool:
         """Test if condition."""
         errors = []
@@ -746,15 +890,17 @@ async def async_device_from_config(
     platform = await async_get_device_automation_platform(
         opp, config[CONF_DOMAIN], "condition"
     )
-    return cast(
-        ConditionCheckerType,
-        platform.async_condition_from_config(config, config_validation),  # type: ignore
+    return trace_condition_function(
+        cast(
+            ConditionCheckerType,
+            platform.async_condition_from_config(config, config_validation),  # type: ignore
+        )
     )
 
 
 async def async_validate_condition_config(
-    opp: OpenPeerPower, config: Union[ConfigType, Template]
-) -> Union[ConfigType, Template]:
+    opp: OpenPeerPower, config: ConfigType | Template
+) -> ConfigType | Template:
     """Validate config."""
     if isinstance(config, Template):
         return config
@@ -779,9 +925,9 @@ async def async_validate_condition_config(
 
 
 @callback
-def async_extract_entities(config: Union[ConfigType, Template]) -> Set[str]:
+def async_extract_entities(config: ConfigType | Template) -> set[str]:
     """Extract entities from a condition."""
-    referenced: Set[str] = set()
+    referenced: set[str] = set()
     to_process = deque([config])
 
     while to_process:
@@ -807,7 +953,7 @@ def async_extract_entities(config: Union[ConfigType, Template]) -> Set[str]:
 
 
 @callback
-def async_extract_devices(config: Union[ConfigType, Template]) -> Set[str]:
+def async_extract_devices(config: ConfigType | Template) -> set[str]:
     """Extract devices from a condition."""
     referenced = set()
     to_process = deque([config])

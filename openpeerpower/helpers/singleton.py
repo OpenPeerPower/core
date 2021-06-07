@@ -1,7 +1,9 @@
 """Helper to help coordinating calls."""
+from __future__ import annotations
+
 import asyncio
 import functools
-from typing import Callable, Optional, TypeVar, cast
+from typing import Callable, TypeVar, cast
 
 from openpeerpower.core import OpenPeerPower
 from openpeerpower.loader import bind_opp
@@ -24,7 +26,7 @@ def singleton(data_key: str) -> Callable[[FUNC], FUNC]:
             @bind_opp
             @functools.wraps(func)
             def wrapped(opp: OpenPeerPower) -> T:
-                obj: Optional[T] = opp.data.get(data_key)
+                obj: T | None = opp.data.get(data_key)
                 if obj is None:
                     obj = opp.data[data_key] = func(opp)
                 return obj

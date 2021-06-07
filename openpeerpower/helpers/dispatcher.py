@@ -2,12 +2,10 @@
 import logging
 from typing import Any, Callable
 
-from openpeerpower.core import OppJob, callback
+from openpeerpower.core import OpenPeerPower, OppJob, callback
 from openpeerpower.loader import bind_opp
 from openpeerpower.util.async_ import run_callback_threadsafe
 from openpeerpower.util.logging import catch_log_exception
-
-from .typing import OpenPeerPowerType
 
 _LOGGER = logging.getLogger(__name__)
 DATA_DISPATCHER = "dispatcher"
@@ -15,7 +13,7 @@ DATA_DISPATCHER = "dispatcher"
 
 @bind_opp
 def dispatcher_connect(
-    opp: OpenPeerPowerType, signal: str, target: Callable[..., None]
+    opp: OpenPeerPower, signal: str, target: Callable[..., None]
 ) -> Callable[[], None]:
     """Connect a callable function to a signal."""
     async_unsub = run_callback_threadsafe(
@@ -32,7 +30,7 @@ def dispatcher_connect(
 @callback
 @bind_opp
 def async_dispatcher_connect(
-    opp: OpenPeerPowerType, signal: str, target: Callable[..., Any]
+    opp: OpenPeerPower, signal: str, target: Callable[..., Any]
 ) -> Callable[[], None]:
     """Connect a callable function to a signal.
 
@@ -69,14 +67,14 @@ def async_dispatcher_connect(
 
 
 @bind_opp
-def dispatcher_send(opp: OpenPeerPowerType, signal: str, *args: Any) -> None:
+def dispatcher_send(opp: OpenPeerPower, signal: str, *args: Any) -> None:
     """Send signal and data."""
     opp.loop.call_soon_threadsafe(async_dispatcher_send, opp, signal, *args)
 
 
 @callback
 @bind_opp
-def async_dispatcher_send(opp: OpenPeerPowerType, signal: str, *args: Any) -> None:
+def async_dispatcher_send(opp: OpenPeerPower, signal: str, *args: Any) -> None:
     """Send signal and data.
 
     This method must be run in the event loop.

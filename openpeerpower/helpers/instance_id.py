@@ -1,5 +1,6 @@
 """Helper to create a unique instance ID."""
-from typing import Dict, Optional
+from __future__ import annotations
+
 import uuid
 
 from openpeerpower.core import OpenPeerPower
@@ -14,10 +15,10 @@ LEGACY_UUID_FILE = ".uuid"
 
 @singleton.singleton(DATA_KEY)
 async def async_get(opp: OpenPeerPower) -> str:
-    """Get unique ID for the opp instance."""
+    """Get unique ID for the opp.instance."""
     store = storage.Store(opp, DATA_VERSION, DATA_KEY, True)
 
-    data: Optional[Dict[str, str]] = await storage.async_migrator(  # type: ignore
+    data: dict[str, str] | None = await storage.async_migrator(  # type: ignore
         opp,
         opp.config.path(LEGACY_UUID_FILE),
         store,

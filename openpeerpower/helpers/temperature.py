@@ -1,6 +1,7 @@
 """Temperature helpers for Open Peer Power."""
+from __future__ import annotations
+
 from numbers import Number
-from typing import Optional
 
 from openpeerpower.const import PRECISION_HALVES, PRECISION_TENTHS
 from openpeerpower.core import OpenPeerPower
@@ -8,8 +9,8 @@ from openpeerpower.util.temperature import convert as convert_temperature
 
 
 def display_temp(
-    opp: OpenPeerPower, temperature: Optional[float], unit: str, precision: float
-) -> Optional[float]:
+    opp: OpenPeerPower, temperature: float | None, unit: str, precision: float
+) -> float | None:
     """Convert temperature into preferred units/precision for display."""
     temperature_unit = unit
     ha_unit = opp.config.units.temperature_unit

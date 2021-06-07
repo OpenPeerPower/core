@@ -5,7 +5,9 @@ There are two different types of discoveries that can be fired/listened for.
  - listen_platform/discover_platform is for platforms. These are used by
    components to allow discovery of their platforms.
 """
-from typing import Any, Callable, Dict, Optional, TypedDict
+from __future__ import annotations
+
+from typing import Any, Callable, TypedDict
 
 from openpeerpower import core, setup
 from openpeerpower.core import CALLBACK_TYPE
@@ -26,8 +28,8 @@ class DiscoveryDict(TypedDict):
     """Discovery data."""
 
     service: str
-    platform: Optional[str]
-    discovered: Optional[DiscoveryInfoType]
+    platform: str | None
+    discovered: DiscoveryInfoType | None
 
 
 @core.callback
@@ -74,8 +76,8 @@ def discover(
 async def async_discover(
     opp: core.OpenPeerPower,
     service: str,
-    discovered: Optional[DiscoveryInfoType],
-    component: Optional[str],
+    discovered: DiscoveryInfoType | None,
+    component: str | None,
     opp_config: ConfigType,
 ) -> None:
     """Fire discovery event. Can ensure a component is loaded."""
@@ -95,7 +97,7 @@ async def async_discover(
 def async_listen_platform(
     opp: core.OpenPeerPower,
     component: str,
-    callback: Callable[[str, Optional[Dict[str, Any]]], Any],
+    callback: Callable[[str, dict[str, Any] | None], Any],
 ) -> None:
     """Register a platform loader listener.
 
@@ -151,7 +153,7 @@ async def async_load_platform(
     Warning: Do not await this inside a setup method to avoid a dead lock.
     Use `opp.async_create_task(async_load_platform(..))` instead.
     """
-    assert opp_config, "You need to pass in the real opp config"
+    assert opp_config, "You need to pass in the real opp.config"
 
     setup_success = True
 
