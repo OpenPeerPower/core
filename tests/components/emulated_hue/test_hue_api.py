@@ -90,6 +90,9 @@ ENTITY_IDS_BY_NUMBER = {
     "21": "humidifier.hygrostat",
     "22": "scene.light_on",
     "23": "scene.light_off",
+    "24": "media_player.kitchen",
+    "25": "light.office_rgbw_lights",
+    "26": "light.living_room_rgbww_lights",
 }
 
 ENTITY_NUMBERS_BY_ID = {v: k for k, v in ENTITY_IDS_BY_NUMBER.items()}
@@ -362,7 +365,7 @@ async def test_light_without_brightness_can_be_turned_off(opp_hue, hue_client):
     call = turn_off_calls[-1]
 
     assert light.DOMAIN == call.domain
-    assert SERVICE_TURN_OFF == call.service
+    assert call.service == SERVICE_TURN_OFF
     assert "light.no_brightness" in call.data[ATTR_ENTITY_ID]
 
 
@@ -400,11 +403,11 @@ async def test_light_without_brightness_can_be_turned_on(opp_hue, hue_client):
 
     # Verify that SERVICE_TURN_ON has been called
     await opp_hue.async_block_till_done()
-    assert 1 == len(turn_on_calls)
+    assert len(turn_on_calls) == 1
     call = turn_on_calls[-1]
 
     assert light.DOMAIN == call.domain
-    assert SERVICE_TURN_ON == call.service
+    assert call.service == SERVICE_TURN_ON
     assert "light.no_brightness" in call.data[ATTR_ENTITY_ID]
 
 
@@ -466,7 +469,7 @@ async def test_discover_full_state(hue_client):
     assert "whitelist" in config_json
     assert HUE_API_USERNAME in config_json["whitelist"]
     assert "name" in config_json["whitelist"][HUE_API_USERNAME]
-    assert "OPP BRIDGE" in config_json["whitelist"][HUE_API_USERNAME]["name"]
+    assert "HASS BRIDGE" in config_json["whitelist"][HUE_API_USERNAME]["name"]
 
     # Make sure the correct ip in config
     assert "ipaddress" in config_json
@@ -505,7 +508,7 @@ async def test_discover_config(hue_client):
     assert "whitelist" in config_json
     assert HUE_API_USERNAME in config_json["whitelist"]
     assert "name" in config_json["whitelist"][HUE_API_USERNAME]
-    assert "OPP BRIDGE" in config_json["whitelist"][HUE_API_USERNAME]["name"]
+    assert "HASS BRIDGE" in config_json["whitelist"][HUE_API_USERNAME]["name"]
 
     # Make sure the correct ip in config
     assert "ipaddress" in config_json
@@ -741,9 +744,10 @@ async def test_put_light_state(opp, opp_hue, hue_client):
     )
 
     # mock light.turn_on call
-    opp.states.async_set(
-        "light.ceiling_lights", STATE_ON, {ATTR_SUPPORTED_FEATURES: 55}
-    )
+    attributes = opp.states.get("light.ceiling_lights").attributes
+    supported_features = attributes[ATTR_SUPPORTED_FEATURES] | light.SUPPORT_TRANSITION
+    attributes = {**attributes, ATTR_SUPPORTED_FEATURES: supported_features}
+    opp.states.async_set("light.ceiling_lights", STATE_ON, attributes)
     call_turn_on = async_mock_service(opp, "light", "turn_on")
 
     # update light state through api
@@ -883,10 +887,10 @@ async def test_put_light_state_media_player(opp_hue, hue_client):
     assert walkman.attributes[media_player.ATTR_MEDIA_VOLUME_LEVEL] == level
 
 
-async def test_close_cover(opp_hue, hue_client):
+async def test_open_cover_without_position(opp_hue, hue_client):
     """Test opening cover ."""
     cover_id = "cover.living_room_window"
-    # Turn the office light off first
+    # Close cover first
     await opp_hue.services.async_call(
         cover.DOMAIN,
         const.SERVICE_CLOSE_COVER,
@@ -906,25 +910,44 @@ async def test_close_cover(opp_hue, hue_client):
     assert cover_test.state == "closed"
 
     # Go through the API to turn it on
-    cover_result = await perform_put_light_state(
-        opp_hue, hue_client, cover_id, True, 100
-    )
+    cover_result = await perform_put_light_state(opp_hue, hue_client, cover_id, True)
 
     assert cover_result.status == HTTP_OK
     assert CONTENT_TYPE_JSON in cover_result.headers["content-type"]
 
-    for _ in range(7):
+    for _ in range(11):
         future = dt_util.utcnow() + timedelta(seconds=1)
         async_fire_time_changed(opp_hue, future)
         await opp_hue.async_block_till_done()
 
     cover_result_json = await cover_result.json()
 
-    assert len(cover_result_json) == 2
+    assert len(cover_result_json) == 1
 
     # Check to make sure the state changed
     cover_test_2 = opp_hue.states.get(cover_id)
     assert cover_test_2.state == "open"
+    assert cover_test_2.attributes.get("current_position") == 100
+
+    # Go through the API to turn it off
+    cover_result = await perform_put_light_state(opp_hue, hue_client, cover_id, False)
+
+    assert cover_result.status == HTTP_OK
+    assert CONTENT_TYPE_JSON in cover_result.headers["content-type"]
+
+    for _ in range(11):
+        future = dt_util.utcnow() + timedelta(seconds=1)
+        async_fire_time_changed(opp_hue, future)
+        await opp_hue.async_block_till_done()
+
+    cover_result_json = await cover_result.json()
+
+    assert len(cover_result_json) == 1
+
+    # Check to make sure the state changed
+    cover_test_2 = opp_hue.states.get(cover_id)
+    assert cover_test_2.state == "closed"
+    assert cover_test_2.attributes.get("current_position") == 0
 
 
 async def test_set_position_cover(opp_hue, hue_client):
@@ -1327,7 +1350,7 @@ async def test_put_then_get_cached_properly(opp, opp_hue, hue_client):
         brightness=254,
     )
 
-    # Check that a Hue brightness level of 254 becomes 255 in OP realm.
+    # Check that a Hue brightness level of 254 becomes 255 in OPP realm.
     assert (
         opp.states.get("light.ceiling_lights").attributes[light.ATTR_BRIGHTNESS] == 255
     )

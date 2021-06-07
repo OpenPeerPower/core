@@ -353,29 +353,16 @@ async def test_query_message(opp):
 
     await opp.async_block_till_done()
 
-    assert len(events) == 4
+    assert len(events) == 1
     assert events[0].event_type == EVENT_QUERY_RECEIVED
     assert events[0].data == {
         "request_id": REQ_ID,
-        "entity_id": "light.demo_light",
-        "source": "cloud",
-    }
-    assert events[1].event_type == EVENT_QUERY_RECEIVED
-    assert events[1].data == {
-        "request_id": REQ_ID,
-        "entity_id": "light.another_light",
-        "source": "cloud",
-    }
-    assert events[2].event_type == EVENT_QUERY_RECEIVED
-    assert events[2].data == {
-        "request_id": REQ_ID,
-        "entity_id": "light.color_temp_light",
-        "source": "cloud",
-    }
-    assert events[3].event_type == EVENT_QUERY_RECEIVED
-    assert events[3].data == {
-        "request_id": REQ_ID,
-        "entity_id": "light.non_existing",
+        "entity_id": [
+            "light.demo_light",
+            "light.another_light",
+            "light.color_temp_light",
+            "light.non_existing",
+        ],
         "source": "cloud",
     }
 
@@ -467,65 +454,25 @@ async def test_execute(opp):
         },
     }
 
-    assert len(events) == 6
+    assert len(events) == 1
     assert events[0].event_type == EVENT_COMMAND_RECEIVED
     assert events[0].data == {
         "request_id": REQ_ID,
-        "entity_id": "light.non_existing",
-        "execution": {
-            "command": "action.devices.commands.OnOff",
-            "params": {"on": True},
-        },
-        "source": "cloud",
-    }
-    assert events[1].event_type == EVENT_COMMAND_RECEIVED
-    assert events[1].data == {
-        "request_id": REQ_ID,
-        "entity_id": "light.non_existing",
-        "execution": {
-            "command": "action.devices.commands.BrightnessAbsolute",
-            "params": {"brightness": 20},
-        },
-        "source": "cloud",
-    }
-    assert events[2].event_type == EVENT_COMMAND_RECEIVED
-    assert events[2].data == {
-        "request_id": REQ_ID,
-        "entity_id": "light.ceiling_lights",
-        "execution": {
-            "command": "action.devices.commands.OnOff",
-            "params": {"on": True},
-        },
-        "source": "cloud",
-    }
-    assert events[3].event_type == EVENT_COMMAND_RECEIVED
-    assert events[3].data == {
-        "request_id": REQ_ID,
-        "entity_id": "light.ceiling_lights",
-        "execution": {
-            "command": "action.devices.commands.BrightnessAbsolute",
-            "params": {"brightness": 20},
-        },
-        "source": "cloud",
-    }
-    assert events[4].event_type == EVENT_COMMAND_RECEIVED
-    assert events[4].data == {
-        "request_id": REQ_ID,
-        "entity_id": "light.kitchen_lights",
-        "execution": {
-            "command": "action.devices.commands.OnOff",
-            "params": {"on": True},
-        },
-        "source": "cloud",
-    }
-    assert events[5].event_type == EVENT_COMMAND_RECEIVED
-    assert events[5].data == {
-        "request_id": REQ_ID,
-        "entity_id": "light.kitchen_lights",
-        "execution": {
-            "command": "action.devices.commands.BrightnessAbsolute",
-            "params": {"brightness": 20},
-        },
+        "entity_id": [
+            "light.non_existing",
+            "light.ceiling_lights",
+            "light.kitchen_lights",
+        ],
+        "execution": [
+            {
+                "command": "action.devices.commands.OnOff",
+                "params": {"on": True},
+            },
+            {
+                "command": "action.devices.commands.BrightnessAbsolute",
+                "params": {"brightness": 20},
+            },
+        ],
         "source": "cloud",
     }
 
@@ -543,9 +490,8 @@ async def test_execute(opp):
         "service": "turn_on",
         "service_data": {"brightness_pct": 20, "entity_id": "light.ceiling_lights"},
     }
-    assert service_events[0].context == events[2].context
-    assert service_events[1].context == events[2].context
-    assert service_events[1].context == events[3].context
+    assert service_events[0].context == events[0].context
+    assert service_events[1].context == events[0].context
     assert service_events[2].data == {
         "domain": "light",
         "service": "turn_on",
@@ -556,9 +502,8 @@ async def test_execute(opp):
         "service": "turn_on",
         "service_data": {"brightness_pct": 20, "entity_id": "light.kitchen_lights"},
     }
-    assert service_events[2].context == events[4].context
-    assert service_events[3].context == events[4].context
-    assert service_events[3].context == events[5].context
+    assert service_events[2].context == events[0].context
+    assert service_events[3].context == events[0].context
 
 
 async def test_raising_error_trait(opp):
@@ -618,11 +563,13 @@ async def test_raising_error_trait(opp):
     assert events[0].event_type == EVENT_COMMAND_RECEIVED
     assert events[0].data == {
         "request_id": REQ_ID,
-        "entity_id": "climate.bla",
-        "execution": {
-            "command": "action.devices.commands.ThermostatTemperatureSetpoint",
-            "params": {"thermostatTemperatureSetpoint": 10},
-        },
+        "entity_id": ["climate.bla"],
+        "execution": [
+            {
+                "command": "action.devices.commands.ThermostatTemperatureSetpoint",
+                "params": {"thermostatTemperatureSetpoint": 10},
+            }
+        ],
         "source": "cloud",
     }
 
@@ -918,7 +865,7 @@ async def test_device_media_player(opp, device_class, google_type):
 
 async def test_query_disconnect(opp):
     """Test a disconnect message."""
-    config = MockConfig(opp=opp)
+    config = MockConfig(opp.opp)
     config.async_enable_report_state()
     assert config._unsub_report_state is not None
     with patch.object(config, "async_disconnect_agent_user") as mock_disconnect:
@@ -1171,7 +1118,7 @@ async def test_sync_message_recovery(opp, caplog):
         "on",
         {
             "min_mireds": "badvalue",
-            "supported_features": opp.components.light.SUPPORT_COLOR_TEMP,
+            "supported_color_modes": ["color_temp"],
         },
     )
 
@@ -1220,7 +1167,7 @@ async def test_query_recover(opp, caplog):
         "light.good",
         "on",
         {
-            "supported_features": opp.components.light.SUPPORT_BRIGHTNESS,
+            "supported_color_modes": ["brightness"],
             "brightness": 50,
         },
     )
@@ -1228,7 +1175,7 @@ async def test_query_recover(opp, caplog):
         "light.bad",
         "on",
         {
-            "supported_features": opp.components.light.SUPPORT_BRIGHTNESS,
+            "supported_color_modes": ["brightness"],
             "brightness": "shoe",
         },
     )

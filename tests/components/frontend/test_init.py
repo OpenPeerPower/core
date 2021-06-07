@@ -1,5 +1,6 @@
 """The tests for Open Peer Power frontend."""
 from datetime import timedelta
+import re
 from unittest.mock import patch
 
 import pytest
@@ -9,26 +10,44 @@ from openpeerpower.components.frontend import (
     CONF_EXTRA_HTML_URL_ES5,
     CONF_JS_VERSION,
     CONF_THEMES,
+    DEFAULT_THEME_COLOR,
     DOMAIN,
     EVENT_PANELS_UPDATED,
     THEMES_STORAGE_KEY,
 )
 from openpeerpower.components.websocket_api.const import TYPE_RESULT
-from openpeerpower.const import HTTP_NOT_FOUND
+from openpeerpower.const import HTTP_NOT_FOUND, HTTP_OK
 from openpeerpower.loader import async_get_integration
 from openpeerpower.setup import async_setup_component
 from openpeerpower.util import dt
 
 from tests.common import async_capture_events, async_fire_time_changed
 
-CONFIG_THEMES = {
-    DOMAIN: {
-        CONF_THEMES: {
-            "happy": {"primary-color": "red"},
-            "dark": {"primary-color": "black"},
-        }
-    }
+MOCK_THEMES = {
+    "happy": {"primary-color": "red", "app-header-background-color": "blue"},
+    "dark": {"primary-color": "black"},
+    "light_only": {
+        "primary-color": "blue",
+        "modes": {
+            "light": {"secondary-color": "black"},
+        },
+    },
+    "dark_only": {
+        "primary-color": "blue",
+        "modes": {
+            "dark": {"secondary-color": "white"},
+        },
+    },
+    "light_and_dark": {
+        "primary-color": "blue",
+        "modes": {
+            "light": {"secondary-color": "black"},
+            "dark": {"secondary-color": "white"},
+        },
+    },
 }
+
+CONFIG_THEMES = {DOMAIN: {CONF_THEMES: MOCK_THEMES}}
 
 
 @pytest.fixture
@@ -104,6 +123,23 @@ def mock_onboarded():
         yield
 
 
+async def test_frontend_and_static(mock_http_client, mock_onboarded):
+    """Test if we can get the frontend."""
+    resp = await mock_http_client.get("")
+    assert resp.status == 200
+    assert "cache-control" not in resp.headers
+
+    text = await resp.text()
+
+    # Test we can retrieve frontend.js
+    frontendjs = re.search(r"(?P<app>\/frontend_es5\/app.[A-Za-z0-9]{8}.js)", text)
+
+    assert frontendjs is not None, text
+    resp = await mock_http_client.get(frontendjs.groups(0)[0])
+    assert resp.status == 200
+    assert "public" in resp.headers.get("cache-control")
+
+
 async def test_dont_cache_service_worker(mock_http_client):
     """Test that we don't cache the service worker."""
     resp = await mock_http_client.get("/service_worker.js")
@@ -130,10 +166,7 @@ async def test_themes_api(opp, themes_ws_client):
 
     assert msg["result"]["default_theme"] == "default"
     assert msg["result"]["default_dark_theme"] is None
-    assert msg["result"]["themes"] == {
-        "happy": {"primary-color": "red"},
-        "dark": {"primary-color": "black"},
-    }
+    assert msg["result"]["themes"] == MOCK_THEMES
 
     # safe mode
     opp.config.safe_mode = True
@@ -170,7 +203,9 @@ async def test_themes_persist(opp, opp_storage, opp_ws_client, ignore_frontend_d
 async def test_themes_save_storage(opp, opp_storage, frontend_themes):
     """Test that theme settings are restores after restart."""
 
-    await opp.services.async_call(DOMAIN, "set_theme", {"name": "happy"}, blocking=True)
+    await opp.services.async_call(
+        DOMAIN, "set_theme", {"name": "happy"}, blocking=True
+    )
 
     await opp.services.async_call(
         DOMAIN, "set_theme", {"name": "dark", "mode": "dark"}, blocking=True
@@ -189,7 +224,9 @@ async def test_themes_save_storage(opp, opp_storage, frontend_themes):
 
 async def test_themes_set_theme(opp, themes_ws_client):
     """Test frontend.set_theme service."""
-    await opp.services.async_call(DOMAIN, "set_theme", {"name": "happy"}, blocking=True)
+    await opp.services.async_call(
+        DOMAIN, "set_theme", {"name": "happy"}, blocking=True
+    )
 
     await themes_ws_client.send_json({"id": 5, "type": "frontend/get_themes"})
     msg = await themes_ws_client.receive_json()
@@ -205,7 +242,9 @@ async def test_themes_set_theme(opp, themes_ws_client):
 
     assert msg["result"]["default_theme"] == "default"
 
-    await opp.services.async_call(DOMAIN, "set_theme", {"name": "happy"}, blocking=True)
+    await opp.services.async_call(
+        DOMAIN, "set_theme", {"name": "happy"}, blocking=True
+    )
 
     await opp.services.async_call(DOMAIN, "set_theme", {"name": "none"}, blocking=True)
 
@@ -218,7 +257,9 @@ async def test_themes_set_theme(opp, themes_ws_client):
 async def test_themes_set_theme_wrong_name(opp, themes_ws_client):
     """Test frontend.set_theme service called with wrong name."""
 
-    await opp.services.async_call(DOMAIN, "set_theme", {"name": "wrong"}, blocking=True)
+    await opp.services.async_call(
+        DOMAIN, "set_theme", {"name": "wrong"}, blocking=True
+    )
 
     await themes_ws_client.send_json({"id": 5, "type": "frontend/get_themes"})
 
@@ -256,6 +297,15 @@ async def test_themes_set_dark_theme(opp, themes_ws_client):
     msg = await themes_ws_client.receive_json()
 
     assert msg["result"]["default_dark_theme"] is None
+
+    await opp.services.async_call(
+        DOMAIN, "set_theme", {"name": "light_and_dark", "mode": "dark"}, blocking=True
+    )
+
+    await themes_ws_client.send_json({"id": 8, "type": "frontend/get_themes"})
+    msg = await themes_ws_client.receive_json()
+
+    assert msg["result"]["default_dark_theme"] == "light_and_dark"
 
 
 async def test_themes_set_dark_theme_wrong_name(opp, frontend, themes_ws_client):
@@ -400,6 +450,47 @@ async def test_onboarding_load(opp):
     assert "onboarding" in frontend.dependencies
 
 
+async def test_auth_authorize(mock_http_client):
+    """Test the authorize endpoint works."""
+    resp = await mock_http_client.get(
+        "/auth/authorize?response_type=code&client_id=https://localhost/&"
+        "redirect_uri=https://localhost/&state=123%23456"
+    )
+    assert resp.status == 200
+    # No caching of auth page.
+    assert "cache-control" not in resp.headers
+
+    text = await resp.text()
+
+    # Test we can retrieve authorize.js
+    authorizejs = re.search(
+        r"(?P<app>\/frontend_latest\/authorize.[A-Za-z0-9]{8}.js)", text
+    )
+
+    assert authorizejs is not None, text
+    resp = await mock_http_client.get(authorizejs.groups(0)[0])
+    assert resp.status == 200
+    assert "public" in resp.headers.get("cache-control")
+
+
+async def test_get_version(opp, ws_client):
+    """Test get_version command."""
+    frontend = await async_get_integration(opp, "frontend")
+    cur_version = next(
+        req.split("==", 1)[1]
+        for req in frontend.requirements
+        if req.startswith("open-peer-power-frontend==")
+    )
+
+    await ws_client.send_json({"id": 5, "type": "frontend/get_version"})
+    msg = await ws_client.receive_json()
+
+    assert msg["id"] == 5
+    assert msg["type"] == TYPE_RESULT
+    assert msg["success"]
+    assert msg["result"] == {"version": cur_version}
+
+
 async def test_static_paths(opp, mock_http_client):
     """Test static paths."""
     resp = await mock_http_client.get(
@@ -407,3 +498,25 @@ async def test_static_paths(opp, mock_http_client):
     )
     assert resp.status == 302
     assert resp.headers["location"] == "/profile"
+
+
+async def test_manifest_json(opp, frontend_themes, mock_http_client):
+    """Test for fetching manifest.json."""
+    resp = await mock_http_client.get("/manifest.json")
+    assert resp.status == HTTP_OK
+    assert "cache-control" not in resp.headers
+
+    json = await resp.json()
+    assert json["theme_color"] == DEFAULT_THEME_COLOR
+
+    await opp.services.async_call(
+        DOMAIN, "set_theme", {"name": "happy"}, blocking=True
+    )
+    await opp.async_block_till_done()
+
+    resp = await mock_http_client.get("/manifest.json")
+    assert resp.status == HTTP_OK
+    assert "cache-control" not in resp.headers
+
+    json = await resp.json()
+    assert json["theme_color"] != DEFAULT_THEME_COLOR

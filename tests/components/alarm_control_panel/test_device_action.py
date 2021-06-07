@@ -116,7 +116,9 @@ async def test_get_actions_arm_night_only(opp, device_reg, entity_reg):
     assert_lists_same(actions, expected_actions)
 
 
-async def test_get_action_capabilities(opp, device_reg, entity_reg):
+async def test_get_action_capabilities(
+    opp, device_reg, entity_reg, enable_custom_integrations
+):
     """Test we get the expected capabilities from a sensor trigger."""
     platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
@@ -154,7 +156,9 @@ async def test_get_action_capabilities(opp, device_reg, entity_reg):
         assert capabilities == expected_capabilities[action["type"]]
 
 
-async def test_get_action_capabilities_arm_code(opp, device_reg, entity_reg):
+async def test_get_action_capabilities_arm_code(
+    opp, device_reg, entity_reg, enable_custom_integrations
+):
     """Test we get the expected capabilities from a sensor trigger."""
     platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()
@@ -198,7 +202,7 @@ async def test_get_action_capabilities_arm_code(opp, device_reg, entity_reg):
         assert capabilities == expected_capabilities[action["type"]]
 
 
-async def test_action(opp):
+async def test_action(opp, enable_custom_integrations):
     """Test for turn_on and turn_off actions."""
     platform = getattr(opp.components, f"test.{DOMAIN}")
     platform.init()

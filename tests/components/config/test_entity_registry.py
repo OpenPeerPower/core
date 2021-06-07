@@ -5,7 +5,7 @@ import pytest
 
 from openpeerpower.components.config import entity_registry
 from openpeerpower.const import ATTR_ICON
-from openpeerpower.helpers.entity_registry import RegistryEntry
+from openpeerpower.helpers.entity_registry import DISABLED_USER, RegistryEntry
 
 from tests.common import (
     MockConfigEntry,
@@ -200,14 +200,14 @@ async def test_update_entity(opp, client):
             "id": 7,
             "type": "config/entity_registry/update",
             "entity_id": "test_domain.world",
-            "disabled_by": "user",
+            "disabled_by": DISABLED_USER,
         }
     )
 
     msg = await client.receive_json()
 
     assert opp.states.get("test_domain.world") is None
-    assert registry.entities["test_domain.world"].disabled_by == "user"
+    assert registry.entities["test_domain.world"].disabled_by == DISABLED_USER
 
     # UPDATE DISABLED_BY TO NONE
     await client.send_json(
@@ -305,7 +305,7 @@ async def test_enable_entity_disabled_device(opp, client, device_registry):
         identifiers={("bridgeid", "0123")},
         manufacturer="manufacturer",
         model="model",
-        disabled_by="user",
+        disabled_by=DISABLED_USER,
     )
 
     mock_registry(

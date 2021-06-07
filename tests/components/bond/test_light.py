@@ -16,6 +16,7 @@ from openpeerpower.const import (
     SERVICE_TURN_OFF,
     SERVICE_TURN_ON,
 )
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.helpers.entity_registry import EntityRegistry
 from openpeerpower.util import utcnow
 
@@ -107,7 +108,7 @@ async def test_fan_entity_registry(opp: core.OpenPeerPower):
         bond_device_id="test-device-id",
     )
 
-    registry: EntityRegistry = await opp.helpers.entity_registry.async_get_registry()
+    registry: EntityRegistry = er.async_get(opp)
     entity = registry.entities["light.fan_name"]
     assert entity.unique_id == "test-hub-id_test-device-id"
 
@@ -122,7 +123,7 @@ async def test_fan_up_light_entity_registry(opp: core.OpenPeerPower):
         bond_device_id="test-device-id",
     )
 
-    registry: EntityRegistry = await opp.helpers.entity_registry.async_get_registry()
+    registry: EntityRegistry = er.async_get(opp)
     entity = registry.entities["light.fan_name_up_light"]
     assert entity.unique_id == "test-hub-id_test-device-id_up_light"
 
@@ -137,7 +138,7 @@ async def test_fan_down_light_entity_registry(opp: core.OpenPeerPower):
         bond_device_id="test-device-id",
     )
 
-    registry: EntityRegistry = await opp.helpers.entity_registry.async_get_registry()
+    registry: EntityRegistry = er.async_get(opp)
     entity = registry.entities["light.fan_name_down_light"]
     assert entity.unique_id == "test-hub-id_test-device-id_down_light"
 
@@ -152,7 +153,7 @@ async def test_fireplace_entity_registry(opp: core.OpenPeerPower):
         bond_device_id="test-device-id",
     )
 
-    registry: EntityRegistry = await opp.helpers.entity_registry.async_get_registry()
+    registry: EntityRegistry = er.async_get(opp)
     entity = registry.entities["light.fireplace_name"]
     assert entity.unique_id == "test-hub-id_test-device-id"
 
@@ -167,7 +168,7 @@ async def test_fireplace_with_light_entity_registry(opp: core.OpenPeerPower):
         bond_device_id="test-device-id",
     )
 
-    registry: EntityRegistry = await opp.helpers.entity_registry.async_get_registry()
+    registry: EntityRegistry = er.async_get(opp)
     entity_flame = registry.entities["light.fireplace_name"]
     assert entity_flame.unique_id == "test-hub-id_test-device-id"
     entity_light = registry.entities["light.fireplace_name_light"]
@@ -184,7 +185,7 @@ async def test_light_entity_registry(opp: core.OpenPeerPower):
         bond_device_id="test-device-id",
     )
 
-    registry: EntityRegistry = await opp.helpers.entity_registry.async_get_registry()
+    registry: EntityRegistry = er.async_get(opp)
     entity = registry.entities["light.light_name"]
     assert entity.unique_id == "test-hub-id_test-device-id"
 
@@ -530,7 +531,7 @@ async def test_turn_off_fireplace(opp: core.OpenPeerPower):
 
 
 async def test_flame_converted_to_brightness(opp: core.OpenPeerPower):
-    """Tests that reported flame level (0..100) converted to OP brightness (0...255)."""
+    """Tests that reported flame level (0..100) converted to OPP brightness (0...255)."""
     await setup_platform(opp, LIGHT_DOMAIN, fireplace("name-1"))
 
     with patch_bond_device_state(return_value={"power": 1, "flame": 50}):
@@ -548,7 +549,7 @@ async def test_light_available(opp: core.OpenPeerPower):
 
 
 async def test_parse_brightness(opp: core.OpenPeerPower):
-    """Tests that reported brightness level (0..100) converted to OP brightness (0...255)."""
+    """Tests that reported brightness level (0..100) converted to OPP brightness (0...255)."""
     await setup_platform(opp, LIGHT_DOMAIN, dimmable_ceiling_fan("name-1"))
 
     with patch_bond_device_state(return_value={"light": 1, "brightness": 50}):

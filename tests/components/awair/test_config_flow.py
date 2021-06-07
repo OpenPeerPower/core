@@ -6,7 +6,7 @@ from python_awair.exceptions import AuthError, AwairError
 
 from openpeerpower import data_entry_flow
 from openpeerpower.components.awair.const import DOMAIN
-from openpeerpower.config_entries import SOURCE_IMPORT, SOURCE_USER
+from openpeerpower.config_entries import SOURCE_IMPORT, SOURCE_REAUTH, SOURCE_USER
 from openpeerpower.const import CONF_ACCESS_TOKEN
 
 from .const import CONFIG, DEVICES_FIXTURE, NO_DEVICES_FIXTURE, UNIQUE_ID, USER_FIXTURE
@@ -56,7 +56,9 @@ async def test_duplicate_error(opp):
         "openpeerpower.components.awair.sensor.async_setup_entry",
         return_value=True,
     ):
-        MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG).add_to_opp(opp)
+        MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG).add_to_opp(
+           .opp
+        )
 
         result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
@@ -124,7 +126,9 @@ async def test_import_aborts_if_configured(opp):
         "openpeerpower.components.awair.sensor.async_setup_entry",
         return_value=True,
     ):
-        MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG).add_to_opp(opp)
+        MockConfigEntry(domain=DOMAIN, unique_id=UNIQUE_ID, data=CONFIG).add_to_opp(
+           .opp
+        )
 
         result = await opp.config_entries.flow.async_init(
             DOMAIN,
@@ -152,7 +156,7 @@ async def test_reauth(opp):
 
         result = await opp.config_entries.flow.async_init(
             DOMAIN,
-            context={"source": "reauth", "unique_id": UNIQUE_ID},
+            context={"source": SOURCE_REAUTH, "unique_id": UNIQUE_ID},
             data=CONFIG,
         )
 
@@ -162,7 +166,7 @@ async def test_reauth(opp):
     with patch("python_awair.AwairClient.query", side_effect=AuthError()):
         result = await opp.config_entries.flow.async_init(
             DOMAIN,
-            context={"source": "reauth", "unique_id": UNIQUE_ID},
+            context={"source": SOURCE_REAUTH, "unique_id": UNIQUE_ID},
             data=CONFIG,
         )
 
@@ -171,7 +175,7 @@ async def test_reauth(opp):
     with patch("python_awair.AwairClient.query", side_effect=AwairError()):
         result = await opp.config_entries.flow.async_init(
             DOMAIN,
-            context={"source": "reauth", "unique_id": UNIQUE_ID},
+            context={"source": SOURCE_REAUTH, "unique_id": UNIQUE_ID},
             data=CONFIG,
         )
 

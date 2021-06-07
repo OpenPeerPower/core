@@ -5,7 +5,7 @@ import logging
 import blebox_uniapi
 
 from openpeerpower.components.blebox.const import DOMAIN
-from openpeerpower.config_entries import ENTRY_STATE_NOT_LOADED, ENTRY_STATE_SETUP_RETRY
+from openpeerpower.config_entries import ConfigEntryState
 
 from .conftest import mock_config, patch_product_identify
 
@@ -23,7 +23,7 @@ async def test_setup_failure(opp, caplog):
     await opp.async_block_till_done()
 
     assert "Identify failed at 172.100.123.4:80 ()" in caplog.text
-    assert entry.state == ENTRY_STATE_SETUP_RETRY
+    assert entry.state is ConfigEntryState.SETUP_RETRY
 
 
 async def test_setup_failure_on_connection(opp, caplog):
@@ -39,7 +39,7 @@ async def test_setup_failure_on_connection(opp, caplog):
     await opp.async_block_till_done()
 
     assert "Identify failed at 172.100.123.4:80 ()" in caplog.text
-    assert entry.state == ENTRY_STATE_SETUP_RETRY
+    assert entry.state is ConfigEntryState.SETUP_RETRY
 
 
 async def test_unload_config_entry(opp):
@@ -57,4 +57,4 @@ async def test_unload_config_entry(opp):
     await opp.async_block_till_done()
     assert not opp.data.get(DOMAIN)
 
-    assert entry.state == ENTRY_STATE_NOT_LOADED
+    assert entry.state is ConfigEntryState.NOT_LOADED

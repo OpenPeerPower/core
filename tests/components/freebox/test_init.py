@@ -5,9 +5,9 @@ from openpeerpower.components.device_tracker import DOMAIN as DT_DOMAIN
 from openpeerpower.components.freebox.const import DOMAIN as DOMAIN, SERVICE_REBOOT
 from openpeerpower.components.sensor import DOMAIN as SENSOR_DOMAIN
 from openpeerpower.components.switch import DOMAIN as SWITCH_DOMAIN
-from openpeerpower.config_entries import ENTRY_STATE_LOADED, ENTRY_STATE_NOT_LOADED
+from openpeerpower.config_entries import ConfigEntryState
 from openpeerpower.const import CONF_HOST, CONF_PORT, STATE_UNAVAILABLE
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.setup import async_setup_component
 
 from .const import MOCK_HOST, MOCK_PORT
@@ -15,7 +15,7 @@ from .const import MOCK_HOST, MOCK_PORT
 from tests.common import MockConfigEntry
 
 
-async def test_setup(opp: OpenPeerPowerType, router: Mock):
+async def test_setup(opp: OpenPeerPower, router: Mock):
     """Test setup of integration."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -44,7 +44,7 @@ async def test_setup(opp: OpenPeerPowerType, router: Mock):
         mock_service.assert_called_once()
 
 
-async def test_setup_import(opp: OpenPeerPowerType, router: Mock):
+async def test_setup_import(opp: OpenPeerPower, router: Mock):
     """Test setup of integration from import."""
     await async_setup_component(opp, "persistent_notification", {})
 
@@ -66,7 +66,7 @@ async def test_setup_import(opp: OpenPeerPowerType, router: Mock):
     assert opp.services.has_service(DOMAIN, SERVICE_REBOOT)
 
 
-async def test_unload_remove(opp: OpenPeerPowerType, router: Mock):
+async def test_unload_remove(opp: OpenPeerPower, router: Mock):
     """Test unload and remove of integration."""
     entity_id_dt = f"{DT_DOMAIN}.freebox_server_r2"
     entity_id_sensor = f"{SENSOR_DOMAIN}.freebox_download_speed"
@@ -85,7 +85,7 @@ async def test_unload_remove(opp: OpenPeerPowerType, router: Mock):
     assert await async_setup_component(opp, DOMAIN, {}) is True
     await opp.async_block_till_done()
 
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
     state_dt = opp.states.get(entity_id_dt)
     assert state_dt
     state_sensor = opp.states.get(entity_id_sensor)
@@ -95,7 +95,7 @@ async def test_unload_remove(opp: OpenPeerPowerType, router: Mock):
 
     await opp.config_entries.async_unload(entry.entry_id)
 
-    assert entry.state == ENTRY_STATE_NOT_LOADED
+    assert entry.state is ConfigEntryState.NOT_LOADED
     state_dt = opp.states.get(entity_id_dt)
     assert state_dt.state == STATE_UNAVAILABLE
     state_sensor = opp.states.get(entity_id_sensor)
@@ -110,7 +110,7 @@ async def test_unload_remove(opp: OpenPeerPowerType, router: Mock):
     await opp.async_block_till_done()
 
     assert router().close.call_count == 1
-    assert entry.state == ENTRY_STATE_NOT_LOADED
+    assert entry.state is ConfigEntryState.NOT_LOADED
     state_dt = opp.states.get(entity_id_dt)
     assert state_dt is None
     state_sensor = opp.states.get(entity_id_sensor)

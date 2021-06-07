@@ -1,13 +1,15 @@
 """The tests for the Command line Binary sensor platform."""
+from __future__ import annotations
+
+from typing import Any
+
 from openpeerpower import setup
 from openpeerpower.components.binary_sensor import DOMAIN
 from openpeerpower.const import STATE_OFF, STATE_ON
-from openpeerpower.helpers.typing import Any, Dict, OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 
-async def setup_test_entity(
-    opp: OpenPeerPowerType, config_dict: Dict[str, Any]
-) -> None:
+async def setup_test_entity(opp: OpenPeerPower, config_dict: dict[str, Any]) -> None:
     """Set up a test command line binary_sensor entity."""
     assert await setup.async_setup_component(
         opp,
@@ -17,7 +19,7 @@ async def setup_test_entity(
     await opp.async_block_till_done()
 
 
-async def test_setup(opp: OpenPeerPowerType) -> None:
+async def test_setup(opp: OpenPeerPower) -> None:
     """Test sensor setup."""
     await setup_test_entity(
         opp,
@@ -34,7 +36,7 @@ async def test_setup(opp: OpenPeerPowerType) -> None:
     assert entity_state.name == "Test"
 
 
-async def test_template(opp: OpenPeerPowerType) -> None:
+async def test_template(opp: OpenPeerPower) -> None:
     """Test setting the state with a template."""
 
     await setup_test_entity(
@@ -51,7 +53,7 @@ async def test_template(opp: OpenPeerPowerType) -> None:
     assert entity_state.state == STATE_ON
 
 
-async def test_sensor_off(opp: OpenPeerPowerType) -> None:
+async def test_sensor_off(opp: OpenPeerPower) -> None:
     """Test setting the state with a template."""
     await setup_test_entity(
         opp,

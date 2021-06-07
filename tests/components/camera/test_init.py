@@ -11,7 +11,12 @@ from openpeerpower.components.camera.const import DOMAIN, PREF_PRELOAD_STREAM
 from openpeerpower.components.camera.prefs import CameraEntityPreferences
 from openpeerpower.components.websocket_api.const import TYPE_RESULT
 from openpeerpower.config import async_process_op_core_config
-from openpeerpower.const import ATTR_ENTITY_ID, EVENT_OPENPEERPOWER_START
+from openpeerpower.const import (
+    ATTR_ENTITY_ID,
+    EVENT_OPENPEERPOWER_START,
+    HTTP_BAD_GATEWAY,
+    HTTP_OK,
+)
 from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.setup import async_setup_component
 
@@ -152,7 +157,9 @@ async def test_websocket_camera_thumbnail(opp, opp_ws_client, mock_camera):
     assert msg["result"]["content"] == base64.b64encode(b"Test").decode("utf-8")
 
 
-async def test_websocket_stream_no_source(opp, opp_ws_client, mock_camera, mock_stream):
+async def test_websocket_stream_no_source(
+    opp, opp_ws_client, mock_camera, mock_stream
+):
     """Test camera/stream websocket command with camera with no source."""
     await async_setup_component(opp, "camera", {})
 
@@ -318,9 +325,9 @@ async def test_preload_stream(opp, mock_stream):
 
 async def test_record_service_invalid_path(opp, mock_camera):
     """Test record service with invalid path."""
-    with patch.object(opp.config, "is_allowed_path", return_value=False), pytest.raises(
-        OpenPeerPowerError
-    ):
+    with patch.object(
+        opp.config, "is_allowed_path", return_value=False
+    ), pytest.raises(OpenPeerPowerError):
         # Call service
         await opp.services.async_call(
             camera.DOMAIN,
@@ -352,3 +359,19 @@ async def test_record_service(opp, mock_camera, mock_stream):
         # So long as we call stream.record, the rest should be covered
         # by those tests.
         assert mock_record.called
+
+
+async def test_camera_proxy_stream(opp, mock_camera, opp_client):
+    """Test record service."""
+
+    client = await opp_client()
+
+    response = await client.get("/api/camera_proxy_stream/camera.demo_camera")
+    assert response.status == HTTP_OK
+
+    with patch(
+        "openpeerpower.components.demo.camera.DemoCamera.handle_async_mjpeg_stream",
+        return_value=None,
+    ):
+        response = await client.get("/api/camera_proxy_stream/camera.demo_camera")
+        assert response.status == HTTP_BAD_GATEWAY

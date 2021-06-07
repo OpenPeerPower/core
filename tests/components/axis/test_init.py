@@ -13,7 +13,7 @@ from openpeerpower.const import (
     CONF_PORT,
     CONF_USERNAME,
 )
-from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.helpers.device_registry import format_mac
 from openpeerpower.setup import async_setup_component
 
@@ -83,7 +83,7 @@ async def test_migrate_entry(opp):
     assert not entry.unique_id
 
     # Create entity entry to migrate to new unique ID
-    registry = await entity_registry.async_get_registry(opp)
+    registry = er.async_get(opp)
     registry.async_get_or_create(
         BINARY_SENSOR_DOMAIN,
         AXIS_DOMAIN,

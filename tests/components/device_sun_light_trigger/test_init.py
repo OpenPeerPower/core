@@ -29,7 +29,7 @@ from tests.common import async_fire_time_changed
 
 
 @pytest.fixture
-def scanner(opp):
+def scanner(opp, enable_custom_integrations):
     """Initialize components."""
     scanner = getattr(opp.components, "test.device_tracker").get_scanner(None, None)
 
@@ -100,7 +100,7 @@ async def test_lights_on_when_sun_sets(opp, scanner):
     )
 
 
-async def test_lights_turn_off_when_everyone_leaves(opp):
+async def test_lights_turn_off_when_everyone_leaves(opp, enable_custom_integrations):
     """Test lights turn off when everyone leaves the house."""
     assert await async_setup_component(
         opp, "light", {light.DOMAIN: {CONF_PLATFORM: "test"}}
@@ -221,7 +221,7 @@ async def test_lights_turn_on_when_coming_home_after_sun_set_person(opp, scanner
 
 
 async def test_initialize_start(opp):
-    """Test we initialize when OP starts."""
+    """Test we initialize when OPP starts."""
     opp.state = CoreState.not_running
     assert await async_setup_component(
         opp,

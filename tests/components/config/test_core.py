@@ -1,4 +1,4 @@
-"""Test oppbian config."""
+"""Test opp.ian config."""
 from unittest.mock import patch
 
 import pytest
@@ -57,7 +57,7 @@ async def test_websocket_core_update(opp, client):
     assert opp.config.elevation != 25
     assert opp.config.location_name != "Huis"
     assert opp.config.units.name != CONF_UNIT_SYSTEM_IMPERIAL
-    assert opp.config.time_zone.zone != "America/New_York"
+    assert opp.config.time_zone != "America/New_York"
     assert opp.config.external_url != "https://www.example.com"
     assert opp.config.internal_url != "http://example.com"
 
@@ -91,7 +91,7 @@ async def test_websocket_core_update(opp, client):
     assert opp.config.internal_url == "http://example.local"
 
     assert len(mock_set_tz.mock_calls) == 1
-    assert mock_set_tz.mock_calls[0][1][0].zone == "America/New_York"
+    assert mock_set_tz.mock_calls[0][1][0] == dt_util.get_time_zone("America/New_York")
 
 
 async def test_websocket_core_update_not_admin(opp, opp_ws_client, opp_admin_user):
@@ -144,7 +144,6 @@ async def test_detect_config_fail(opp, client):
         return_value=location.LocationInfo(
             ip=None,
             country_code=None,
-            country_name=None,
             region_code=None,
             region_name=None,
             city=None,

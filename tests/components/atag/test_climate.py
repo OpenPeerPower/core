@@ -1,8 +1,7 @@
 """Tests for the Atag climate platform."""
-
 from unittest.mock import PropertyMock, patch
 
-from openpeerpower.components.atag import CLIMATE, DOMAIN
+from openpeerpower.components.atag.climate import CLIMATE, DOMAIN, PRESET_MAP
 from openpeerpower.components.climate import (
     ATTR_HVAC_ACTION,
     ATTR_HVAC_MODE,
@@ -12,13 +11,11 @@ from openpeerpower.components.climate import (
     SERVICE_SET_PRESET_MODE,
     SERVICE_SET_TEMPERATURE,
 )
-from openpeerpower.components.climate.const import CURRENT_HVAC_HEAT, PRESET_AWAY
-from openpeerpower.components.openpeerpower import (
-    DOMAIN as HA_DOMAIN,
-    SERVICE_UPDATE_ENTITY,
-)
+from openpeerpower.components.climate.const import CURRENT_HVAC_IDLE, PRESET_AWAY
+from openpeerpower.components.openpeerpower import DOMAIN as HA_DOMAIN
 from openpeerpower.const import ATTR_ENTITY_ID, ATTR_TEMPERATURE, STATE_UNKNOWN
 from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.setup import async_setup_component
 
 from tests.components.atag import UID, init_integration
@@ -27,18 +24,17 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 CLIMATE_ID = f"{CLIMATE}.{DOMAIN}"
 
 
-async def test_climate(opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker) -> None:
+async def test_climate(
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+) -> None:
     """Test the creation and values of Atag climate device."""
-    with patch("pyatag.entities.Climate.status"):
-        entry = await init_integration(opp, aioclient_mock)
-        registry = await opp.helpers.entity_registry.async_get_registry()
+    await init_integration(opp, aioclient_mock)
+    entity_registry = er.async_get(opp)
 
-        assert registry.async_is_registered(CLIMATE_ID)
-        entry = registry.async_get(CLIMATE_ID)
-        assert entry.unique_id == f"{UID}-{CLIMATE}"
-        assert (
-            opp.states.get(CLIMATE_ID).attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_HEAT
-        )
+    assert entity_registry.async_is_registered(CLIMATE_ID)
+    entity = entity_registry.async_get(CLIMATE_ID)
+    assert entity.unique_id == f"{UID}-{CLIMATE}"
+    assert opp.states.get(CLIMATE_ID).attributes[ATTR_HVAC_ACTION] == CURRENT_HVAC_IDLE
 
 
 async def test_setting_climate(
@@ -64,7 +60,7 @@ async def test_setting_climate(
             blocking=True,
         )
         await opp.async_block_till_done()
-        mock_set_preset.assert_called_once_with(PRESET_AWAY)
+        mock_set_preset.assert_called_once_with(PRESET_MAP[PRESET_AWAY])
 
     with patch("pyatag.entities.Climate.set_hvac_mode") as mock_set_hvac:
         await opp.services.async_call(
@@ -90,18 +86,18 @@ async def test_incorrect_modes(
         assert opp.states.get(CLIMATE_ID).state == STATE_UNKNOWN
 
 
-async def test_update_service(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+async def test_update_failed(
+    opp: OpenPeerPower,
+    aioclient_mock: AiohttpClientMocker,
 ) -> None:
-    """Test the updater service is called."""
-    await init_integration(opp, aioclient_mock)
+    """Test data is not destroyed on update failure."""
+    entry = await init_integration(opp, aioclient_mock)
     await async_setup_component(opp, HA_DOMAIN, {})
-    with patch("pyatag.AtagOne.update") as updater:
-        await opp.services.async_call(
-            HA_DOMAIN,
-            SERVICE_UPDATE_ENTITY,
-            {ATTR_ENTITY_ID: CLIMATE_ID},
-            blocking=True,
-        )
+    assert opp.states.get(CLIMATE_ID).state == HVAC_MODE_HEAT
+    coordinator = opp.data[DOMAIN][entry.entry_id]
+    with patch("pyatag.AtagOne.update", side_effect=TimeoutError) as updater:
+        await coordinator.async_refresh()
         await opp.async_block_till_done()
         updater.assert_called_once()
+        assert not coordinator.last_update_success
+        assert coordinator.data.id == UID

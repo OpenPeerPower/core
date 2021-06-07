@@ -15,7 +15,7 @@ async def test_valve_switches(opp, config_entry, aioclient_mock_fixture):
     )
     await opp.async_block_till_done()
 
-    assert len(opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 1
+    assert len(opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 2
 
     entity_id = "switch.shutoff_valve"
     assert opp.states.get(entity_id).state == STATE_ON

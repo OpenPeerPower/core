@@ -7,7 +7,7 @@ from openpeerpower.const import (
     HTTP_FORBIDDEN,
     HTTP_INTERNAL_SERVER_ERROR,
 )
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from tests.common import MockConfigEntry, load_fixture
 from tests.test_util.aiohttp import AiohttpClientMocker
@@ -99,7 +99,7 @@ def mock_connection(aioclient_mock: AiohttpClientMocker) -> None:
 
 
 async def setup_integration(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     aioclient_mock: AiohttpClientMocker,
     skip_entry_setup: bool = False,
     setup_error: bool = False,

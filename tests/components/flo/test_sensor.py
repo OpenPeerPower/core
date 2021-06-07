@@ -14,14 +14,19 @@ async def test_sensors(opp, config_entry, aioclient_mock_fixture):
     )
     await opp.async_block_till_done()
 
-    assert len(opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 1
+    assert len(opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 2
 
-    # we should have 5 entities for the device
+    # we should have 5 entities for the valve
     assert opp.states.get("sensor.current_system_mode").state == "home"
     assert opp.states.get("sensor.today_s_water_usage").state == "3.7"
     assert opp.states.get("sensor.water_flow_rate").state == "0"
     assert opp.states.get("sensor.water_pressure").state == "54.2"
-    assert opp.states.get("sensor.water_temperature").state == "21.1"
+    assert opp.states.get("sensor.water_temperature").state == "21"
+
+    # and 3 entities for the detector
+    assert opp.states.get("sensor.temperature").state == "16"
+    assert opp.states.get("sensor.humidity").state == "43"
+    assert opp.states.get("sensor.battery").state == "100"
 
 
 async def test_manual_update_entity(
@@ -34,7 +39,7 @@ async def test_manual_update_entity(
     )
     await opp.async_block_till_done()
 
-    assert len(opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 1
+    assert len(opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 2
 
     await async_setup_component(opp, "openpeerpower", {})
 

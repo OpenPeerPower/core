@@ -87,7 +87,7 @@ async def test_setup_backoff(opp, aioclient_mock):
     tme = utcnow()
     await opp.async_block_till_done()
 
-    _LOGGER.debug("Backoff...")
+    _LOGGER.debug("Backoff")
     for idx in range(1, len(intervals)):
         tme += intervals[idx]
         async_fire_time_changed(opp, tme)
@@ -156,7 +156,7 @@ async def test_async_track_time_interval_backoff(opp):
 
     assert call_count == 1
 
-    _LOGGER.debug("Backoff...")
+    _LOGGER.debug("Backoff")
     for idx in range(1, len(intervals)):
         tme += intervals[idx]
         async_fire_time_changed(opp, tme + timedelta(seconds=0.1))

@@ -11,6 +11,7 @@ from openpeerpower.const import (
     SERVICE_OPEN_COVER,
     SERVICE_STOP_COVER,
 )
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.helpers.entity_registry import EntityRegistry
 from openpeerpower.util import utcnow
 
@@ -39,7 +40,7 @@ async def test_entity_registry(opp: core.OpenPeerPower):
         bond_device_id="test-device-id",
     )
 
-    registry: EntityRegistry = await opp.helpers.entity_registry.async_get_registry()
+    registry: EntityRegistry = er.async_get(opp)
     entity = registry.entities["cover.name_1"]
     assert entity.unique_id == "test-hub-id_test-device-id"
 

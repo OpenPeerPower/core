@@ -4,7 +4,57 @@ from unittest.mock import patch
 
 from openpeerpower.bootstrap import async_setup_component
 from openpeerpower.components import config
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.util.yaml import dump
+
+
+async def test_create_scene(opp, opp_client):
+    """Test creating a scene."""
+    with patch.object(config, "SECTIONS", ["scene"]):
+        await async_setup_component(opp, "config", {})
+
+    client = await opp_client()
+
+    def mock_read(path):
+        """Mock reading data."""
+        return None
+
+    written = []
+
+    def mock_write(path, data):
+        """Mock writing data."""
+        data = dump(data)
+        written.append(data)
+
+    with patch("openpeerpower.components.config._read", mock_read), patch(
+        "openpeerpower.components.config._write", mock_write
+    ), patch("openpeerpower.config.async_opp_config_yaml", return_value={}):
+        resp = await client.post(
+            "/api/config/scene/config/light_off",
+            data=json.dumps(
+                {
+                    # "id": "light_off",
+                    "name": "Lights off",
+                    "entities": {"light.bedroom": {"state": "off"}},
+                }
+            ),
+        )
+
+    assert resp.status == 200
+    result = await resp.json()
+    assert result == {"result": "ok"}
+
+    assert len(written) == 1
+    written_yaml = written[0]
+    assert (
+        written_yaml
+        == """- id: light_off
+  name: Lights off
+  entities:
+    light.bedroom:
+      state: 'off'
+"""
+    )
 
 
 async def test_update_scene(opp, opp_client):
@@ -114,7 +164,7 @@ async def test_bad_formatted_scene(opp, opp_client):
 
 async def test_delete_scene(opp, opp_client):
     """Test deleting a scene."""
-    ent_reg = await opp.helpers.entity_registry.async_get_registry()
+    ent_reg = er.async_get(opp)
 
     assert await async_setup_component(
         opp,

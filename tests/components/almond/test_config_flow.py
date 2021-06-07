@@ -49,7 +49,7 @@ async def test_oppio(opp):
     """Test that Opp.io can discover this integration."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
-        context={"source": "oppio"},
+        context={"source": config_entries.SOURCE_OPPIO},
         data={"addon": "Almond add-on", "host": "almond-addon", "port": "1234"},
     )
 

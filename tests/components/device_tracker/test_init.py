@@ -76,7 +76,7 @@ async def test_reading_broken_yaml_config(opp):
         "allok.yaml": "My Device:\n  name: Device",
         "oneok.yaml": ("My Device!:\n  name: Device\nbad_device:\n  nme: Device"),
     }
-    args = {"opp": opp, "consider_home": timedelta(seconds=60)}
+    args = {"opp.: opp, "consider_home": timedelta(seconds=60)}
     with patch_yaml_files(files):
         assert await legacy.async_load_config("empty.yaml", **args) == []
         assert await legacy.async_load_config("nodict.yaml", **args) == []
@@ -94,7 +94,7 @@ async def test_reading_broken_yaml_config(opp):
         assert res[0].dev_id == "my_device"
 
 
-async def test_reading_yaml_config(opp, yaml_devices):
+async def test_reading_yaml_config(opp, yaml_devices, enable_custom_integrations):
     """Test the rendering of the YAML configuration."""
     dev_id = "test"
     device = legacy.Device(
@@ -107,7 +107,9 @@ async def test_reading_yaml_config(opp, yaml_devices):
         picture="http://test.picture",
         icon="mdi:kettle",
     )
-    await opp.async_add_executor_job(legacy.update_config, yaml_devices, dev_id, device)
+    await opp.async_add_executor_job(
+        legacy.update_config, yaml_devices, dev_id, device
+    )
     assert await async_setup_component(opp, device_tracker.DOMAIN, TEST_PLATFORM)
     config = (await legacy.async_load_config(yaml_devices, opp, device.consider_home))[
         0
@@ -118,6 +120,7 @@ async def test_reading_yaml_config(opp, yaml_devices):
     assert device.config_picture == config.config_picture
     assert device.consider_home == config.consider_home
     assert device.icon == config.icon
+    assert f"{device_tracker.DOMAIN}.test" in opp.config.components
 
 
 @patch("openpeerpower.components.device_tracker.const.LOGGER.warning")
@@ -158,7 +161,7 @@ async def test_duplicate_mac_dev_id(mock_warning, opp):
     assert "Duplicate device IDs" in args[0], "Duplicate device IDs warning expected"
 
 
-async def test_setup_without_yaml_file(opp):
+async def test_setup_without_yaml_file(opp, enable_custom_integrations):
     """Test with no YAML file."""
     with assert_setup_component(1, device_tracker.DOMAIN):
         assert await async_setup_component(opp, device_tracker.DOMAIN, TEST_PLATFORM)
@@ -221,7 +224,7 @@ async def test_discover_platform(mock_demo_setup_scanner, mock_see, opp):
     )
 
 
-async def test_update_stale(opp, mock_device_tracker_conf):
+async def test_update_stale(opp, mock_device_tracker_conf, enable_custom_integrations):
     """Test stalled update."""
 
     scanner = getattr(opp.components, "test.device_tracker").SCANNER
@@ -235,21 +238,20 @@ async def test_update_stale(opp, mock_device_tracker_conf):
     with patch(
         "openpeerpower.components.device_tracker.legacy.dt_util.utcnow",
         return_value=register_time,
-    ):
-        with assert_setup_component(1, device_tracker.DOMAIN):
-            assert await async_setup_component(
-                opp,
-                device_tracker.DOMAIN,
-                {
-                    device_tracker.DOMAIN: {
-                        CONF_PLATFORM: "test",
-                        device_tracker.CONF_CONSIDER_HOME: 59,
-                    }
-                },
-            )
-            await opp.async_block_till_done()
+    ), assert_setup_component(1, device_tracker.DOMAIN):
+        assert await async_setup_component(
+            opp,
+            device_tracker.DOMAIN,
+            {
+                device_tracker.DOMAIN: {
+                    CONF_PLATFORM: "test",
+                    device_tracker.CONF_CONSIDER_HOME: 59,
+                }
+            },
+        )
+        await opp.async_block_till_done()
 
-    assert STATE_HOME == opp.states.get("device_tracker.dev1").state
+    assert opp.states.get("device_tracker.dev1").state == STATE_HOME
 
     scanner.leave_home("DEV1")
 
@@ -260,10 +262,12 @@ async def test_update_stale(opp, mock_device_tracker_conf):
         async_fire_time_changed(opp, scan_time)
         await opp.async_block_till_done()
 
-    assert STATE_NOT_HOME == opp.states.get("device_tracker.dev1").state
+    assert opp.states.get("device_tracker.dev1").state == STATE_NOT_HOME
 
 
-async def test_entity_attributes(opp, mock_device_tracker_conf):
+async def test_entity_attributes(
+    opp, mock_device_tracker_conf, enable_custom_integrations
+):
     """Test the entity attributes."""
     devices = mock_device_tracker_conf
     dev_id = "test_entity"
@@ -295,7 +299,7 @@ async def test_entity_attributes(opp, mock_device_tracker_conf):
 
 
 @patch("openpeerpower.components.device_tracker.legacy." "DeviceTracker.async_see")
-async def test_see_service(mock_see, opp):
+async def test_see_service(mock_see, opp, enable_custom_integrations):
     """Test the see service with a unicode dev_id and NO MAC."""
     with assert_setup_component(1, device_tracker.DOMAIN):
         assert await async_setup_component(opp, device_tracker.DOMAIN, TEST_PLATFORM)
@@ -322,7 +326,9 @@ async def test_see_service(mock_see, opp):
     assert mock_see.call_args == call(**params)
 
 
-async def test_see_service_guard_config_entry(opp, mock_device_tracker_conf):
+async def test_see_service_guard_config_entry(
+    opp, mock_device_tracker_conf, enable_custom_integrations
+):
     """Test the guard if the device is registered in the entity registry."""
     mock_entry = Mock()
     dev_id = "test"
@@ -338,7 +344,9 @@ async def test_see_service_guard_config_entry(opp, mock_device_tracker_conf):
     assert not devices
 
 
-async def test_new_device_event_fired(opp, mock_device_tracker_conf):
+async def test_new_device_event_fired(
+    opp, mock_device_tracker_conf, enable_custom_integrations
+):
     """Test that the device tracker will fire an event."""
     with assert_setup_component(1, device_tracker.DOMAIN):
         assert await async_setup_component(opp, device_tracker.DOMAIN, TEST_PLATFORM)
@@ -368,7 +376,9 @@ async def test_new_device_event_fired(opp, mock_device_tracker_conf):
     }
 
 
-async def test_duplicate_yaml_keys(opp, mock_device_tracker_conf):
+async def test_duplicate_yaml_keys(
+    opp, mock_device_tracker_conf, enable_custom_integrations
+):
     """Test that the device tracker will not generate invalid YAML."""
     devices = mock_device_tracker_conf
     with assert_setup_component(1, device_tracker.DOMAIN):
@@ -383,7 +393,9 @@ async def test_duplicate_yaml_keys(opp, mock_device_tracker_conf):
     assert devices[0].dev_id != devices[1].dev_id
 
 
-async def test_invalid_dev_id(opp, mock_device_tracker_conf):
+async def test_invalid_dev_id(
+    opp, mock_device_tracker_conf, enable_custom_integrations
+):
     """Test that the device tracker will not allow invalid dev ids."""
     devices = mock_device_tracker_conf
     with assert_setup_component(1, device_tracker.DOMAIN):
@@ -395,7 +407,7 @@ async def test_invalid_dev_id(opp, mock_device_tracker_conf):
     assert not devices
 
 
-async def test_see_state(opp, yaml_devices):
+async def test_see_state(opp, yaml_devices, enable_custom_integrations):
     """Test device tracker see records state correctly."""
     assert await async_setup_component(opp, device_tracker.DOMAIN, TEST_PLATFORM)
 
@@ -431,7 +443,9 @@ async def test_see_state(opp, yaml_devices):
     assert attrs["number"] == 1
 
 
-async def test_see_passive_zone_state(opp, mock_device_tracker_conf):
+async def test_see_passive_zone_state(
+    opp, mock_device_tracker_conf, enable_custom_integrations
+):
     """Test that the device tracker sets gps for passive trackers."""
     now = dt_util.utcnow()
 
@@ -456,23 +470,22 @@ async def test_see_passive_zone_state(opp, mock_device_tracker_conf):
     with patch(
         "openpeerpower.components.device_tracker.legacy.dt_util.utcnow",
         return_value=register_time,
-    ):
-        with assert_setup_component(1, device_tracker.DOMAIN):
-            assert await async_setup_component(
-                opp,
-                device_tracker.DOMAIN,
-                {
-                    device_tracker.DOMAIN: {
-                        CONF_PLATFORM: "test",
-                        device_tracker.CONF_CONSIDER_HOME: 59,
-                    }
-                },
-            )
-            await opp.async_block_till_done()
+    ), assert_setup_component(1, device_tracker.DOMAIN):
+        assert await async_setup_component(
+            opp,
+            device_tracker.DOMAIN,
+            {
+                device_tracker.DOMAIN: {
+                    CONF_PLATFORM: "test",
+                    device_tracker.CONF_CONSIDER_HOME: 59,
+                }
+            },
+        )
+        await opp.async_block_till_done()
 
     state = opp.states.get("device_tracker.dev1")
     attrs = state.attributes
-    assert STATE_HOME == state.state
+    assert state.state == STATE_HOME
     assert state.object_id == "dev1"
     assert state.name == "dev1"
     assert attrs.get("friendly_name") == "dev1"
@@ -492,7 +505,7 @@ async def test_see_passive_zone_state(opp, mock_device_tracker_conf):
 
     state = opp.states.get("device_tracker.dev1")
     attrs = state.attributes
-    assert STATE_NOT_HOME == state.state
+    assert state.state == STATE_NOT_HOME
     assert state.object_id == "dev1"
     assert state.name == "dev1"
     assert attrs.get("friendly_name") == "dev1"
@@ -558,8 +571,12 @@ async def test_bad_platform(opp):
     with assert_setup_component(0, device_tracker.DOMAIN):
         assert await async_setup_component(opp, device_tracker.DOMAIN, config)
 
+    assert f"{device_tracker.DOMAIN}.bad_platform" not in opp.config.components
 
-async def test_adding_unknown_device_to_config(mock_device_tracker_conf, opp):
+
+async def test_adding_unknown_device_to_config(
+    mock_device_tracker_conf, opp, enable_custom_integrations
+):
     """Test the adding of unknown devices to configuration file."""
     scanner = getattr(opp.components, "test.device_tracker").SCANNER
     scanner.reset()

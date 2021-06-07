@@ -23,8 +23,6 @@ async def test_form(opp):
         "openpeerpower.components.blink.config_flow.Auth.check_key_required",
         return_value=False,
     ), patch(
-        "openpeerpower.components.blink.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.blink.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -47,7 +45,6 @@ async def test_form(opp):
         "client_id": None,
         "region_id": None,
     }
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -61,9 +58,7 @@ async def test_form_2fa(opp):
     with patch("openpeerpower.components.blink.config_flow.Auth.startup"), patch(
         "openpeerpower.components.blink.config_flow.Auth.check_key_required",
         return_value=True,
-    ), patch(
-        "openpeerpower.components.blink.async_setup", return_value=True
-    ) as mock_setup:
+    ):
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"username": "blink@example.com", "password": "example"},
@@ -82,8 +77,6 @@ async def test_form_2fa(opp):
         "openpeerpower.components.blink.config_flow.Blink.setup_urls",
         return_value=True,
     ), patch(
-        "openpeerpower.components.blink.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.blink.async_setup_entry", return_value=True
     ) as mock_setup_entry:
         result3 = await opp.config_entries.flow.async_configure(
@@ -94,7 +87,6 @@ async def test_form_2fa(opp):
     assert result3["type"] == "create_entry"
     assert result3["title"] == "blink"
     assert result3["result"].unique_id == "blink@example.com"
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -108,7 +100,7 @@ async def test_form_2fa_connect_error(opp):
     with patch("openpeerpower.components.blink.config_flow.Auth.startup"), patch(
         "openpeerpower.components.blink.config_flow.Auth.check_key_required",
         return_value=True,
-    ), patch("openpeerpower.components.blink.async_setup", return_value=True):
+    ):
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"username": "blink@example.com", "password": "example"},
@@ -126,8 +118,6 @@ async def test_form_2fa_connect_error(opp):
     ), patch(
         "openpeerpower.components.blink.config_flow.Blink.setup_urls",
         side_effect=BlinkSetupError,
-    ), patch(
-        "openpeerpower.components.blink.async_setup", return_value=True
     ), patch(
         "openpeerpower.components.blink.async_setup_entry", return_value=True
     ):
@@ -149,7 +139,7 @@ async def test_form_2fa_invalid_key(opp):
     with patch("openpeerpower.components.blink.config_flow.Auth.startup"), patch(
         "openpeerpower.components.blink.config_flow.Auth.check_key_required",
         return_value=True,
-    ), patch("openpeerpower.components.blink.async_setup", return_value=True):
+    ):
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"username": "blink@example.com", "password": "example"},
@@ -167,8 +157,6 @@ async def test_form_2fa_invalid_key(opp):
     ), patch(
         "openpeerpower.components.blink.config_flow.Blink.setup_urls",
         return_value=True,
-    ), patch(
-        "openpeerpower.components.blink.async_setup", return_value=True
     ), patch(
         "openpeerpower.components.blink.async_setup_entry", return_value=True
     ):
@@ -190,7 +178,7 @@ async def test_form_2fa_unknown_error(opp):
     with patch("openpeerpower.components.blink.config_flow.Auth.startup"), patch(
         "openpeerpower.components.blink.config_flow.Auth.check_key_required",
         return_value=True,
-    ), patch("openpeerpower.components.blink.async_setup", return_value=True):
+    ):
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             {"username": "blink@example.com", "password": "example"},
@@ -208,8 +196,6 @@ async def test_form_2fa_unknown_error(opp):
     ), patch(
         "openpeerpower.components.blink.config_flow.Blink.setup_urls",
         side_effect=KeyError,
-    ), patch(
-        "openpeerpower.components.blink.async_setup", return_value=True
     ), patch(
         "openpeerpower.components.blink.async_setup_entry", return_value=True
     ):
@@ -260,7 +246,7 @@ async def test_form_unknown_error(opp):
 async def test_reauth_shows_user_step(opp):
     """Test reauth shows the user form."""
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "reauth"}
+        DOMAIN, context={"source": config_entries.SOURCE_REAUTH}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
@@ -273,7 +259,7 @@ async def test_options_flow(opp):
         data={"username": "blink@example.com", "password": "example"},
         options={},
         entry_id=1,
-        version=2,
+        version=3,
     )
     config_entry.add_to_opp(opp)
 

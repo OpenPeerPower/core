@@ -11,7 +11,7 @@ async def mock_cloud(opp, config=None):
     """Mock cloud."""
     assert await async_setup_component(opp, cloud.DOMAIN, {"cloud": config or {}})
     cloud_inst = opp.data["cloud"]
-    with patch("opp_net.Cloud.run_executor", AsyncMock(return_value=None)):
+    with patch("opp_nabucasa.Cloud.run_executor", AsyncMock(return_value=None)):
         await cloud_inst.start()
 
 

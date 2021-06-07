@@ -11,7 +11,7 @@ from openpeerpower.components import emulated_hue
 from openpeerpower.components.emulated_hue import upnp
 from openpeerpower.const import CONTENT_TYPE_JSON, HTTP_OK
 
-from tests.common import get_test_instance_port, get_test_open_peer_power
+from tests.common import get_test_open_peer_power, get_test_instance_port
 
 HTTP_SERVER_PORT = get_test_instance_port()
 BRIDGE_SERVER_PORT = get_test_instance_port()

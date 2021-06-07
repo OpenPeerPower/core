@@ -1,8 +1,9 @@
 """The tests for the Cast Media player platform."""
 # pylint: disable=protected-access
+from __future__ import annotations
+
 import json
-from typing import Optional
-from unittest.mock import ANY, MagicMock, Mock, patch
+from unittest.mock import ANY, MagicMock, patch
 from uuid import UUID
 
 import attr
@@ -27,9 +28,9 @@ from openpeerpower.components.media_player.const import (
 )
 from openpeerpower.config import async_process_op_core_config
 from openpeerpower.const import EVENT_OPENPEERPOWER_STOP
-from openpeerpower.exceptions import PlatformNotReady
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
-from openpeerpower.helpers.typing import OpenPeerPowerType
 from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry, assert_setup_component
@@ -49,14 +50,14 @@ def get_fake_chromecast(info: ChromecastInfo):
 
 
 def get_fake_chromecast_info(
-    host="192.168.178.42", port=8009, uuid: Optional[UUID] = FakeUUID
+    host="192.168.178.42", port=8009, uuid: UUID | None = FakeUUID
 ):
     """Generate a Fake ChromecastInfo with the specified arguments."""
 
     @attr.s(slots=True, frozen=True, eq=False)
     class ExtendedChromecastInfo(ChromecastInfo):
-        host: Optional[str] = attr.ib(default=None)
-        port: Optional[int] = attr.ib(default=0)
+        host: str | None = attr.ib(default=None)
+        port: int | None = attr.ib(default=0)
 
         def __eq__(self, other):
             if isinstance(other, ChromecastInfo):
@@ -98,11 +99,13 @@ async def async_setup_cast(opp, config=None):
     """Set up the cast platform."""
     if config is None:
         config = {}
+    data = {**{"ignore_cec": [], "known_hosts": [], "uuid": []}, **config}
     with patch(
         "openpeerpower.helpers.entity_platform.EntityPlatform._async_schedule_add_entities"
     ) as add_entities:
-        MockConfigEntry(domain="cast").add_to_opp(opp)
-        await async_setup_component(opp, "cast", {"cast": {"media_player": config}})
+        entry = MockConfigEntry(data=data, domain="cast")
+        entry.add_to_opp(opp)
+        assert await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
     return add_entities
@@ -155,7 +158,7 @@ async def async_setup_cast_internal_discovery(opp, config=None):
     return discover_chromecast, remove_chromecast, add_entities
 
 
-async def async_setup_media_player_cast(opp: OpenPeerPowerType, info: ChromecastInfo):
+async def async_setup_media_player_cast(opp: OpenPeerPower, info: ChromecastInfo):
     """Set up the cast platform with async_setup_component."""
     browser = MagicMock(devices={}, zc={})
     chromecast = get_fake_chromecast(info)
@@ -386,44 +389,6 @@ async def test_create_cast_device_with_uuid(opp):
     assert cast_device is None
 
 
-async def test_replay_past_chromecasts(opp):
-    """Test cast platform re-playing past chromecasts when adding new one."""
-    cast_group1 = get_fake_chromecast_info(host="host1", port=8009, uuid=FakeUUID)
-    cast_group2 = get_fake_chromecast_info(
-        host="host2", port=8009, uuid=UUID("9462202c-e747-4af5-a66b-7dce0e1ebc09")
-    )
-    zconf_1 = get_fake_zconf(host="host1", port=8009)
-    zconf_2 = get_fake_zconf(host="host2", port=8009)
-
-    discover_cast, _, add_dev1 = await async_setup_cast_internal_discovery(
-        opp, config={"uuid": FakeUUID}
-    )
-
-    with patch(
-        "openpeerpower.components.cast.discovery.ChromeCastZeroconf.get_zeroconf",
-        return_value=zconf_2,
-    ):
-        discover_cast("service2", cast_group2)
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()  # having tasks that add jobs
-    assert add_dev1.call_count == 0
-
-    with patch(
-        "openpeerpower.components.cast.discovery.ChromeCastZeroconf.get_zeroconf",
-        return_value=zconf_1,
-    ):
-        discover_cast("service1", cast_group1)
-    await opp.async_block_till_done()
-    await opp.async_block_till_done()  # having tasks that add jobs
-    assert add_dev1.call_count == 1
-
-    add_dev2 = Mock()
-    entry = opp.config_entries.async_entries("cast")[0]
-    await cast._async_setup_platform(opp, {"host": "host2"}, add_dev2, entry)
-    await opp.async_block_till_done()
-    assert add_dev2.call_count == 1
-
-
 async def test_manual_cast_chromecasts_uuid(opp):
     """Test only wanted casts are added for manual configuration."""
     cast_1 = get_fake_chromecast_info(host="host_1", uuid=FakeUUID)
@@ -433,7 +398,7 @@ async def test_manual_cast_chromecasts_uuid(opp):
 
     # Manual configuration of media player with host "configured_host"
     discover_cast, _, add_dev1 = await async_setup_cast_internal_discovery(
-        opp, config={"uuid": FakeUUID}
+        opp, config={"uuid": str(FakeUUID)}
     )
     with patch(
         "openpeerpower.components.cast.discovery.ChromeCastZeroconf.get_zeroconf",
@@ -489,7 +454,7 @@ async def test_discover_dynamic_group(opp, dial_mock, pycast_mock, caplog):
     zconf_1 = get_fake_zconf(host="host_1", port=23456)
     zconf_2 = get_fake_zconf(host="host_2", port=34567)
 
-    reg = await opp.helpers.entity_registry.async_get_registry()
+    reg = er.async_get(opp)
 
     # Fake dynamic group info
     tmp1 = MagicMock()
@@ -500,7 +465,7 @@ async def test_discover_dynamic_group(opp, dial_mock, pycast_mock, caplog):
 
     pycast_mock.get_chromecast_from_cast_info.assert_not_called()
     discover_cast, remove_cast, add_dev1 = await async_setup_cast_internal_discovery(
-        opp
+       .opp
     )
 
     # Discover cast service
@@ -584,7 +549,7 @@ async def test_update_cast_chromecasts(opp):
     assert add_dev1.call_count == 1
 
 
-async def test_entity_availability(opp: OpenPeerPowerType):
+async def test_entity_availability(opp: OpenPeerPower):
     """Test handling of connection status."""
     entity_id = "media_player.speaker"
     info = get_fake_chromecast_info()
@@ -610,10 +575,10 @@ async def test_entity_availability(opp: OpenPeerPowerType):
     assert state.state == "unavailable"
 
 
-async def test_entity_cast_status(opp: OpenPeerPowerType):
+async def test_entity_cast_status(opp: OpenPeerPower):
     """Test handling of cast status."""
     entity_id = "media_player.speaker"
-    reg = await opp.helpers.entity_registry.async_get_registry()
+    reg = er.async_get(opp)
 
     info = get_fake_chromecast_info()
     full_info = attr.evolve(
@@ -679,10 +644,10 @@ async def test_entity_cast_status(opp: OpenPeerPowerType):
     )
 
 
-async def test_entity_play_media(opp: OpenPeerPowerType):
+async def test_entity_play_media(opp: OpenPeerPower):
     """Test playing media."""
     entity_id = "media_player.speaker"
-    reg = await opp.helpers.entity_registry.async_get_registry()
+    reg = er.async_get(opp)
 
     info = get_fake_chromecast_info()
     full_info = attr.evolve(
@@ -708,10 +673,10 @@ async def test_entity_play_media(opp: OpenPeerPowerType):
     chromecast.media_controller.play_media.assert_called_once_with("best.mp3", "audio")
 
 
-async def test_entity_play_media_cast(opp: OpenPeerPowerType, quick_play_mock):
+async def test_entity_play_media_cast(opp: OpenPeerPower, quick_play_mock):
     """Test playing media with cast special features."""
     entity_id = "media_player.speaker"
-    reg = await opp.helpers.entity_registry.async_get_registry()
+    reg = er.async_get(opp)
 
     info = get_fake_chromecast_info()
     full_info = attr.evolve(
@@ -744,7 +709,7 @@ async def test_entity_play_media_cast(opp: OpenPeerPowerType, quick_play_mock):
 async def test_entity_play_media_cast_invalid(opp, caplog, quick_play_mock):
     """Test playing media."""
     entity_id = "media_player.speaker"
-    reg = await opp.helpers.entity_registry.async_get_registry()
+    reg = er.async_get(opp)
 
     info = get_fake_chromecast_info()
     full_info = attr.evolve(
@@ -787,7 +752,7 @@ async def test_entity_play_media_cast_invalid(opp, caplog, quick_play_mock):
     assert "App unknown not supported" in caplog.text
 
 
-async def test_entity_play_media_sign_URL(opp: OpenPeerPowerType):
+async def test_entity_play_media_sign_URL(opp: OpenPeerPower):
     """Test playing media."""
     entity_id = "media_player.speaker"
 
@@ -814,10 +779,10 @@ async def test_entity_play_media_sign_URL(opp: OpenPeerPowerType):
     )
 
 
-async def test_entity_media_content_type(opp: OpenPeerPowerType):
+async def test_entity_media_content_type(opp: OpenPeerPower):
     """Test various content types."""
     entity_id = "media_player.speaker"
-    reg = await opp.helpers.entity_registry.async_get_registry()
+    reg = er.async_get(opp)
 
     info = get_fake_chromecast_info()
     full_info = attr.evolve(
@@ -868,10 +833,10 @@ async def test_entity_media_content_type(opp: OpenPeerPowerType):
     assert state.attributes.get("media_content_type") == "movie"
 
 
-async def test_entity_control(opp: OpenPeerPowerType):
+async def test_entity_control(opp: OpenPeerPower):
     """Test various device and media controls."""
     entity_id = "media_player.speaker"
-    reg = await opp.helpers.entity_registry.async_get_registry()
+    reg = er.async_get(opp)
 
     info = get_fake_chromecast_info()
     full_info = attr.evolve(
@@ -977,10 +942,10 @@ async def test_entity_control(opp: OpenPeerPowerType):
     chromecast.media_controller.seek.assert_called_once_with(123)
 
 
-async def test_entity_media_states(opp: OpenPeerPowerType):
+async def test_entity_media_states(opp: OpenPeerPower):
     """Test various entity media states."""
     entity_id = "media_player.speaker"
-    reg = await opp.helpers.entity_registry.async_get_registry()
+    reg = er.async_get(opp)
 
     info = get_fake_chromecast_info()
     full_info = attr.evolve(
@@ -1039,7 +1004,7 @@ async def test_entity_media_states(opp: OpenPeerPowerType):
 async def test_group_media_states(opp, mz_mock):
     """Test media states are read from group if entity has no state."""
     entity_id = "media_player.speaker"
-    reg = await opp.helpers.entity_registry.async_get_registry()
+    reg = er.async_get(opp)
 
     info = get_fake_chromecast_info()
     full_info = attr.evolve(
@@ -1092,7 +1057,7 @@ async def test_group_media_states(opp, mz_mock):
 async def test_group_media_control(opp, mz_mock):
     """Test media controls are handled by group if entity has no state."""
     entity_id = "media_player.speaker"
-    reg = await opp.helpers.entity_registry.async_get_registry()
+    reg = er.async_get(opp)
 
     info = get_fake_chromecast_info()
     full_info = attr.evolve(
@@ -1277,7 +1242,7 @@ async def test_failed_cast_tts_base_url(opp, caplog):
     )
 
 
-async def test_disconnect_on_stop(opp: OpenPeerPowerType):
+async def test_disconnect_on_stop(opp: OpenPeerPower):
     """Test cast device disconnects socket on stop."""
     info = get_fake_chromecast_info()
 
@@ -1288,66 +1253,55 @@ async def test_disconnect_on_stop(opp: OpenPeerPowerType):
     assert chromecast.disconnect.call_count == 1
 
 
-async def test_entry_setup_no_config(opp: OpenPeerPowerType):
-    """Test setting up entry with no config.."""
+async def test_entry_setup_no_config(opp: OpenPeerPower):
+    """Test deprecated empty yaml config.."""
     await async_setup_component(opp, "cast", {})
     await opp.async_block_till_done()
 
-    with patch(
-        "openpeerpower.components.cast.media_player._async_setup_platform",
-    ) as mock_setup:
-        await cast.async_setup_entry(opp, MockConfigEntry(), None)
-
-    assert len(mock_setup.mock_calls) == 1
-    assert mock_setup.mock_calls[0][1][1] == {}
+    assert not opp.config_entries.async_entries("cast")
 
 
-async def test_entry_setup_single_config(opp: OpenPeerPowerType):
-    """Test setting up entry and having a single config option."""
+async def test_entry_setup_empty_config(opp: OpenPeerPower):
+    """Test deprecated empty yaml config.."""
+    await async_setup_component(opp, "cast", {"cast": {}})
+    await opp.async_block_till_done()
+
+    config_entry = opp.config_entries.async_entries("cast")[0]
+    assert config_entry.data["uuid"] == []
+    assert config_entry.data["ignore_cec"] == []
+
+
+async def test_entry_setup_single_config(opp: OpenPeerPower, pycast_mock):
+    """Test deprecated yaml config with a single config media_player."""
     await async_setup_component(
-        opp, "cast", {"cast": {"media_player": {"uuid": "bla"}}}
+        opp, "cast", {"cast": {"media_player": {"uuid": "bla", "ignore_cec": "cast1"}}}
     )
     await opp.async_block_till_done()
 
-    with patch(
-        "openpeerpower.components.cast.media_player._async_setup_platform",
-    ) as mock_setup:
-        await cast.async_setup_entry(opp, MockConfigEntry(), None)
+    config_entry = opp.config_entries.async_entries("cast")[0]
+    assert config_entry.data["uuid"] == ["bla"]
+    assert config_entry.data["ignore_cec"] == ["cast1"]
 
-    assert len(mock_setup.mock_calls) == 1
-    assert mock_setup.mock_calls[0][1][1] == {"uuid": "bla"}
+    assert pycast_mock.IGNORE_CEC == ["cast1"]
 
 
-async def test_entry_setup_list_config(opp: OpenPeerPowerType):
-    """Test setting up entry and having multiple config options."""
+async def test_entry_setup_list_config(opp: OpenPeerPower, pycast_mock):
+    """Test deprecated yaml config with multiple media_players."""
     await async_setup_component(
-        opp, "cast", {"cast": {"media_player": [{"uuid": "bla"}, {"uuid": "blu"}]}}
+        opp,
+        "cast",
+        {
+            "cast": {
+                "media_player": [
+                    {"uuid": "bla", "ignore_cec": "cast1"},
+                    {"uuid": "blu", "ignore_cec": ["cast2", "cast3"]},
+                ]
+            }
+        },
     )
     await opp.async_block_till_done()
 
-    with patch(
-        "openpeerpower.components.cast.media_player._async_setup_platform",
-    ) as mock_setup:
-        await cast.async_setup_entry(opp, MockConfigEntry(), None)
-
-    assert len(mock_setup.mock_calls) == 2
-    assert mock_setup.mock_calls[0][1][1] == {"uuid": "bla"}
-    assert mock_setup.mock_calls[1][1][1] == {"uuid": "blu"}
-
-
-async def test_entry_setup_platform_not_ready(opp: OpenPeerPowerType):
-    """Test failed setting up entry will raise PlatformNotReady."""
-    await async_setup_component(
-        opp, "cast", {"cast": {"media_player": {"uuid": "bla"}}}
-    )
-    await opp.async_block_till_done()
-
-    with patch(
-        "openpeerpower.components.cast.media_player._async_setup_platform",
-        side_effect=Exception,
-    ) as mock_setup:
-        with pytest.raises(PlatformNotReady):
-            await cast.async_setup_entry(opp, MockConfigEntry(), None)
-
-    assert len(mock_setup.mock_calls) == 1
-    assert mock_setup.mock_calls[0][1][1] == {"uuid": "bla"}
+    config_entry = opp.config_entries.async_entries("cast")[0]
+    assert set(config_entry.data["uuid"]) == {"bla", "blu"}
+    assert set(config_entry.data["ignore_cec"]) == {"cast1", "cast2", "cast3"}
+    assert set(pycast_mock.IGNORE_CEC) == {"cast1", "cast2", "cast3"}

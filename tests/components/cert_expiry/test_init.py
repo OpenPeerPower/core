@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 from openpeerpower.components.cert_expiry.const import DOMAIN
 from openpeerpower.components.sensor import DOMAIN as SENSOR_DOMAIN
-from openpeerpower.config_entries import ENTRY_STATE_LOADED, ENTRY_STATE_NOT_LOADED
+from openpeerpower.config_entries import ConfigEntryState
 from openpeerpower.const import (
     CONF_HOST,
     CONF_PORT,
@@ -63,7 +63,7 @@ async def test_update_unique_id(opp):
         assert await async_setup_component(opp, DOMAIN, {}) is True
         await opp.async_block_till_done()
 
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
     assert entry.unique_id == f"{HOST}:{PORT}"
 
 
@@ -89,7 +89,7 @@ async def test_unload_config_entry(mock_now, opp):
         assert await async_setup_component(opp, DOMAIN, {}) is True
         await opp.async_block_till_done()
 
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
     state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state.state == timestamp.isoformat()
     assert state.attributes.get("error") == "None"
@@ -97,7 +97,7 @@ async def test_unload_config_entry(mock_now, opp):
 
     await opp.config_entries.async_unload(entry.entry_id)
 
-    assert entry.state == ENTRY_STATE_NOT_LOADED
+    assert entry.state is ConfigEntryState.NOT_LOADED
     state = opp.states.get("sensor.cert_expiry_timestamp_example_com")
     assert state.state == STATE_UNAVAILABLE
 

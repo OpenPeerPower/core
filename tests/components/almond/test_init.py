@@ -21,7 +21,7 @@ def patch_opp_state(opp):
 
 
 async def test_set_up_oauth_remote_url(opp, aioclient_mock):
-    """Test we set up Almond to connect to OP if we have external url."""
+    """Test we set up Almond to connect to OPP if we have external url."""
     entry = MockConfigEntry(
         domain="almond",
         data={
@@ -38,7 +38,7 @@ async def test_set_up_oauth_remote_url(opp, aioclient_mock):
     ):
         assert await async_setup_component(opp, "almond", {})
 
-    assert entry.state == config_entries.ENTRY_STATE_LOADED
+    assert entry.state is config_entries.ConfigEntryState.LOADED
 
     opp.config.components.add("cloud")
     with patch("openpeerpower.components.almond.ALMOND_SETUP_DELAY", 0), patch(
@@ -54,7 +54,7 @@ async def test_set_up_oauth_remote_url(opp, aioclient_mock):
 
 
 async def test_set_up_oauth_no_external_url(opp, aioclient_mock):
-    """Test we do not set up Almond to connect to OP if we have no external url."""
+    """Test we do not set up Almond to connect to OPP if we have no external url."""
     entry = MockConfigEntry(
         domain="almond",
         data={
@@ -71,12 +71,12 @@ async def test_set_up_oauth_no_external_url(opp, aioclient_mock):
     ), patch("pyalmond.WebAlmondAPI.async_create_device") as mock_create_device:
         assert await async_setup_component(opp, "almond", {})
 
-    assert entry.state == config_entries.ENTRY_STATE_LOADED
+    assert entry.state is config_entries.ConfigEntryState.LOADED
     assert len(mock_create_device.mock_calls) == 0
 
 
 async def test_set_up_oppio(opp, aioclient_mock):
-    """Test we do not set up Almond to connect to OP if we use Opp.io."""
+    """Test we do not set up Almond to connect to OPP if we use Opp.io."""
     entry = MockConfigEntry(
         domain="almond",
         data={
@@ -90,12 +90,12 @@ async def test_set_up_oppio(opp, aioclient_mock):
     with patch("pyalmond.WebAlmondAPI.async_create_device") as mock_create_device:
         assert await async_setup_component(opp, "almond", {})
 
-    assert entry.state == config_entries.ENTRY_STATE_LOADED
+    assert entry.state is config_entries.ConfigEntryState.LOADED
     assert len(mock_create_device.mock_calls) == 0
 
 
 async def test_set_up_local(opp, aioclient_mock):
-    """Test we do not set up Almond to connect to OP if we use local."""
+    """Test we do not set up Almond to connect to OPP if we use local."""
 
     # Set up an internal URL, as Almond won't be set up if there is no URL available
     await async_process_op_core_config(
@@ -112,5 +112,5 @@ async def test_set_up_local(opp, aioclient_mock):
     with patch("pyalmond.WebAlmondAPI.async_create_device") as mock_create_device:
         assert await async_setup_component(opp, "almond", {})
 
-    assert entry.state == config_entries.ENTRY_STATE_LOADED
+    assert entry.state is config_entries.ConfigEntryState.LOADED
     assert len(mock_create_device.mock_calls) == 1

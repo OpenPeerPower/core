@@ -18,7 +18,7 @@ from openpeerpower.const import ATTR_BATTERY_LEVEL, STATE_HOME, STATE_NOT_HOME
 from tests.common import MockConfigEntry
 
 
-async def test_scanner_entity_device_tracker(opp):
+async def test_scanner_entity_device_tracker(opp, enable_custom_integrations):
     """Test ScannerEntity based device tracker."""
     config_entry = MockConfigEntry(domain="test")
     config_entry.add_to_opp(opp)

@@ -1,6 +1,7 @@
 """The tests for the DirecTV Media player platform."""
+from __future__ import annotations
+
 from datetime import datetime, timedelta
-from typing import Optional
 from unittest.mock import patch
 
 from pytest import fixture
@@ -53,7 +54,8 @@ from openpeerpower.const import (
     STATE_PLAYING,
     STATE_UNAVAILABLE,
 )
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.util import dt as dt_util
 
 from tests.components.directv import setup_integration
@@ -76,48 +78,38 @@ def mock_now() -> datetime:
     return dt_util.utcnow()
 
 
-async def async_turn_on(
-    opp: OpenPeerPowerType, entity_id: Optional[str] = None
-) -> None:
+async def async_turn_on(opp: OpenPeerPower, entity_id: str | None = None) -> None:
     """Turn on specified media player or all."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
     await opp.services.async_call(MP_DOMAIN, SERVICE_TURN_ON, data)
 
 
-async def async_turn_off(
-    opp: OpenPeerPowerType, entity_id: Optional[str] = None
-) -> None:
+async def async_turn_off(opp: OpenPeerPower, entity_id: str | None = None) -> None:
     """Turn off specified media player or all."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
     await opp.services.async_call(MP_DOMAIN, SERVICE_TURN_OFF, data)
 
 
-async def async_media_pause(
-    opp: OpenPeerPowerType, entity_id: Optional[str] = None
-) -> None:
+async def async_media_pause(opp: OpenPeerPower, entity_id: str | None = None) -> None:
     """Send the media player the command for pause."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
     await opp.services.async_call(MP_DOMAIN, SERVICE_MEDIA_PAUSE, data)
 
 
-async def async_media_play(
-    opp: OpenPeerPowerType, entity_id: Optional[str] = None
-) -> None:
+async def async_media_play(opp: OpenPeerPower, entity_id: str | None = None) -> None:
     """Send the media player the command for play/pause."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
     await opp.services.async_call(MP_DOMAIN, SERVICE_MEDIA_PLAY, data)
 
 
-async def async_media_stop(
-    opp: OpenPeerPowerType, entity_id: Optional[str] = None
-) -> None:
+async def async_media_stop(opp: OpenPeerPower, entity_id: str | None = None) -> None:
     """Send the media player the command for stop."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
     await opp.services.async_call(MP_DOMAIN, SERVICE_MEDIA_STOP, data)
 
 
 async def async_media_next_track(
-    opp: OpenPeerPowerType, entity_id: Optional[str] = None
+    opp: OpenPeerPower, entity_id: str | None = None
 ) -> None:
     """Send the media player the command for next track."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
@@ -125,7 +117,7 @@ async def async_media_next_track(
 
 
 async def async_media_previous_track(
-    opp: OpenPeerPowerType, entity_id: Optional[str] = None
+    opp: OpenPeerPower, entity_id: str | None = None
 ) -> None:
     """Send the media player the command for prev track."""
     data = {ATTR_ENTITY_ID: entity_id} if entity_id else {}
@@ -133,11 +125,11 @@ async def async_media_previous_track(
 
 
 async def async_play_media(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     media_type: str,
     media_id: str,
-    entity_id: Optional[str] = None,
-    enqueue: Optional[str] = None,
+    entity_id: str | None = None,
+    enqueue: str | None = None,
 ) -> None:
     """Send the media player the command for playing media."""
     data = {ATTR_MEDIA_CONTENT_TYPE: media_type, ATTR_MEDIA_CONTENT_ID: media_id}
@@ -151,9 +143,7 @@ async def async_play_media(
     await opp.services.async_call(MP_DOMAIN, SERVICE_PLAY_MEDIA, data)
 
 
-async def test_setup(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
-) -> None:
+async def test_setup(opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker) -> None:
     """Test setup with basic config."""
     await setup_integration(opp, aioclient_mock)
     assert opp.states.get(MAIN_ENTITY_ID)
@@ -162,12 +152,12 @@ async def test_setup(
 
 
 async def test_unique_id(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test unique id."""
     await setup_integration(opp, aioclient_mock)
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     main = entity_registry.async_get(MAIN_ENTITY_ID)
     assert main.device_class == DEVICE_CLASS_RECEIVER
@@ -183,7 +173,7 @@ async def test_unique_id(
 
 
 async def test_supported_features(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test supported features."""
     await setup_integration(opp, aioclient_mock)
@@ -216,7 +206,7 @@ async def test_supported_features(
 
 
 async def test_check_attributes(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     mock_now: dt_util.dt.datetime,
     aioclient_mock: AiohttpClientMocker,
 ) -> None:
@@ -323,7 +313,7 @@ async def test_check_attributes(
 
 
 async def test_attributes_paused(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     mock_now: dt_util.dt.datetime,
     aioclient_mock: AiohttpClientMocker,
 ):
@@ -347,7 +337,7 @@ async def test_attributes_paused(
 
 
 async def test_main_services(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     mock_now: dt_util.dt.datetime,
     aioclient_mock: AiohttpClientMocker,
 ) -> None:

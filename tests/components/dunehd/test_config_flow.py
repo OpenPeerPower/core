@@ -64,6 +64,21 @@ async def test_user_invalid_host(opp):
     assert result["errors"] == {CONF_HOST: "invalid_host"}
 
 
+async def test_user_very_long_host(opp):
+    """Test that errors are shown when the host is longer than 253 chars."""
+    long_host = (
+        "very_long_host_very_long_host_very_long_host_very_long_host_very_long_"
+        "host_very_long_host_very_long_host_very_long_host_very_long_host_very_long_"
+        "host_very_long_host_very_long_host_very_long_host_very_long_host_very_long_"
+        "host_very_long_host_very_long_host"
+    )
+    result = await opp.config_entries.flow.async_init(
+        DOMAIN, context={"source": SOURCE_USER}, data={CONF_HOST: long_host}
+    )
+
+    assert result["errors"] == {CONF_HOST: "invalid_host"}
+
+
 async def test_user_cannot_connect(opp):
     """Test that errors are shown when cannot connect to the host."""
     with patch("pdunehd.DuneHDPlayer.update_state", return_value={}):
@@ -101,3 +116,17 @@ async def test_create_entry(opp):
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == "dunehd-host"
         assert result["data"] == {CONF_HOST: "dunehd-host"}
+
+
+async def test_create_entry_with_ipv6_address(opp):
+    """Test that the user step works with device IPv6 address.."""
+    with patch("pdunehd.DuneHDPlayer.update_state", return_value=DUNEHD_STATE):
+        result = await opp.config_entries.flow.async_init(
+            DOMAIN,
+            context={"source": SOURCE_USER},
+            data={CONF_HOST: "2001:db8::1428:57ab"},
+        )
+
+        assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
+        assert result["title"] == "2001:db8::1428:57ab"
+        assert result["data"] == {CONF_HOST: "2001:db8::1428:57ab"}

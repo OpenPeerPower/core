@@ -4,6 +4,7 @@ from unittest.mock import patch
 
 from openpeerpower.bootstrap import async_setup_component
 from openpeerpower.components import config
+from openpeerpower.helpers import entity_registry as er
 
 from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa: F401
 
@@ -110,7 +111,7 @@ async def test_bad_formatted_automations(opp, opp_client):
 
 async def test_delete_automation(opp, opp_client):
     """Test deleting an automation."""
-    ent_reg = await opp.helpers.entity_registry.async_get_registry()
+    ent_reg = er.async_get(opp)
 
     assert await async_setup_component(
         opp,

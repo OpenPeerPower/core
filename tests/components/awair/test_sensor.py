@@ -1,5 +1,4 @@
 """Tests for the Awair sensor platform."""
-
 from unittest.mock import patch
 
 from openpeerpower.components.awair.const import (
@@ -27,6 +26,7 @@ from openpeerpower.const import (
     STATE_UNAVAILABLE,
     TEMP_CELSIUS,
 )
+from openpeerpower.helpers import entity_registry as er
 
 from .const import (
     AWAIR_UUID,
@@ -55,7 +55,9 @@ async def setup_awair(opp, fixtures):
         await opp.async_block_till_done()
 
 
-def assert_expected_properties(opp, registry, name, unique_id, state_value, attributes):
+def assert_expected_properties(
+    opp, registry, name, unique_id, state_value, attributes
+):
     """Assert expected properties from a dict."""
 
     entry = registry.async_get(name)
@@ -72,7 +74,7 @@ async def test_awair_gen1_sensors(opp):
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, GEN1_DATA_FIXTURE]
     await setup_awair(opp, fixtures)
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     assert_expected_properties(
         opp,
@@ -168,7 +170,7 @@ async def test_awair_gen2_sensors(opp):
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, GEN2_DATA_FIXTURE]
     await setup_awair(opp, fixtures)
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     assert_expected_properties(
         opp,
@@ -202,7 +204,7 @@ async def test_awair_mint_sensors(opp):
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, MINT_DATA_FIXTURE]
     await setup_awair(opp, fixtures)
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     assert_expected_properties(
         opp,
@@ -244,7 +246,7 @@ async def test_awair_glow_sensors(opp):
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, GLOW_DATA_FIXTURE]
     await setup_awair(opp, fixtures)
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     assert_expected_properties(
         opp,
@@ -264,7 +266,7 @@ async def test_awair_omni_sensors(opp):
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, OMNI_DATA_FIXTURE]
     await setup_awair(opp, fixtures)
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     assert_expected_properties(
         opp,
@@ -317,7 +319,7 @@ async def test_awair_unavailable(opp):
 
     fixtures = [USER_FIXTURE, DEVICES_FIXTURE, GEN1_DATA_FIXTURE]
     await setup_awair(opp, fixtures)
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     assert_expected_properties(
         opp,

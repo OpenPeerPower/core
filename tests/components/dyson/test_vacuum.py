@@ -24,7 +24,7 @@ from openpeerpower.const import (
     STATE_ON,
 )
 from openpeerpower.core import OpenPeerPower, callback
-from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers import entity_registry as er
 
 from .common import (
     ENTITY_NAME,
@@ -45,8 +45,8 @@ def async_get_device(state=Dyson360EyeMode.FULL_CLEAN_RUNNING) -> Dyson360Eye:
 
 async def test_state(opp: OpenPeerPower, device: Dyson360Eye) -> None:
     """Test the state of the vacuum."""
-    er = await entity_registry.async_get_registry(opp)
-    assert er.async_get(ENTITY_ID).unique_id == SERIAL
+    entity_registry = er.async_get(opp)
+    assert entity_registry.async_get(ENTITY_ID).unique_id == SERIAL
 
     state = opp.states.get(ENTITY_ID)
     assert state.name == NAME

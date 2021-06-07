@@ -1,5 +1,6 @@
 """Test the Dyson sensor(s) component."""
-from typing import List, Type
+from __future__ import annotations
+
 from unittest.mock import patch
 
 from libpurecool.dyson_pure_cool import DysonPureCool
@@ -16,7 +17,7 @@ from openpeerpower.const import (
     TEMP_FAHRENHEIT,
 )
 from openpeerpower.core import OpenPeerPower, callback
-from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.util.unit_system import IMPERIAL_SYSTEM, METRIC_SYSTEM, UnitSystem
 
 from .common import (
@@ -79,7 +80,7 @@ def _async_assign_values(
 
 
 @callback
-def async_get_device(spec: Type[DysonPureCoolLink], combi=False) -> DysonPureCoolLink:
+def async_get_device(spec: type[DysonPureCoolLink], combi=False) -> DysonPureCoolLink:
     """Return a device of the given type."""
     device = async_get_basic_device(spec)
     _async_assign_values(device, combi=combi)
@@ -113,19 +114,19 @@ def _async_get_entity_id(sensor_type: str) -> str:
     indirect=["device"],
 )
 async def test_sensors(
-    opp: OpenPeerPower, device: DysonPureCoolLink, sensors: List[str]
+    opp: OpenPeerPower, device: DysonPureCoolLink, sensors: list[str]
 ) -> None:
     """Test the sensors."""
     # Temperature is given by the device in kelvin
     # Make sure no other sensors are set up
     assert len(opp.states.async_all()) == len(sensors)
 
-    er = await entity_registry.async_get_registry(opp)
+    entity_registry = er.async_get(opp)
     for sensor in sensors:
         entity_id = _async_get_entity_id(sensor)
 
         # Test unique id
-        assert er.async_get(entity_id).unique_id == f"{SERIAL}-{sensor}"
+        assert entity_registry.async_get(entity_id).unique_id == f"{SERIAL}-{sensor}"
 
         # Test state
         state = opp.states.get(entity_id)

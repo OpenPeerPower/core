@@ -3,7 +3,7 @@ import socket
 import ssl
 from unittest.mock import patch
 
-from openpeerpower import data_entry_flow
+from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.components.cert_expiry.const import DEFAULT_PORT, DOMAIN
 from openpeerpower.const import CONF_HOST, CONF_NAME, CONF_PORT
 
@@ -16,7 +16,7 @@ from tests.common import MockConfigEntry
 async def test_user(opp):
     """Test user config."""
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "user"}
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
@@ -40,7 +40,7 @@ async def test_user(opp):
 async def test_user_with_bad_cert(opp):
     """Test user config with bad certificate."""
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "user"}
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
@@ -72,7 +72,9 @@ async def test_import_host_only(opp):
         return_value=future_timestamp(1),
     ):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "import"}, data={CONF_HOST: HOST}
+            DOMAIN,
+            context={"source": config_entries.SOURCE_IMPORT},
+            data={CONF_HOST: HOST},
         )
         await opp.async_block_till_done()
 
@@ -93,7 +95,7 @@ async def test_import_host_and_port(opp):
     ):
         result = await opp.config_entries.flow.async_init(
             DOMAIN,
-            context={"source": "import"},
+            context={"source": config_entries.SOURCE_IMPORT},
             data={CONF_HOST: HOST, CONF_PORT: PORT},
         )
         await opp.async_block_till_done()
@@ -114,7 +116,9 @@ async def test_import_non_default_port(opp):
         return_value=future_timestamp(1),
     ):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "import"}, data={CONF_HOST: HOST, CONF_PORT: 888}
+            DOMAIN,
+            context={"source": config_entries.SOURCE_IMPORT},
+            data={CONF_HOST: HOST, CONF_PORT: 888},
         )
         await opp.async_block_till_done()
 
@@ -135,7 +139,7 @@ async def test_import_with_name(opp):
     ):
         result = await opp.config_entries.flow.async_init(
             DOMAIN,
-            context={"source": "import"},
+            context={"source": config_entries.SOURCE_IMPORT},
             data={CONF_NAME: "legacy", CONF_HOST: HOST, CONF_PORT: PORT},
         )
         await opp.async_block_till_done()
@@ -154,7 +158,9 @@ async def test_bad_import(opp):
         side_effect=ConnectionRefusedError(),
     ):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "import"}, data={CONF_HOST: HOST}
+            DOMAIN,
+            context={"source": config_entries.SOURCE_IMPORT},
+            data={CONF_HOST: HOST},
         )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -170,13 +176,17 @@ async def test_abort_if_already_setup(opp):
     ).add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "import"}, data={CONF_HOST: HOST, CONF_PORT: PORT}
+        DOMAIN,
+        context={"source": config_entries.SOURCE_IMPORT},
+        data={CONF_HOST: HOST, CONF_PORT: PORT},
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
 
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "user"}, data={CONF_HOST: HOST, CONF_PORT: PORT}
+        DOMAIN,
+        context={"source": config_entries.SOURCE_USER},
+        data={CONF_HOST: HOST, CONF_PORT: PORT},
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
@@ -185,7 +195,7 @@ async def test_abort_if_already_setup(opp):
 async def test_abort_on_socket_failed(opp):
     """Test we abort of we have errors during socket creation."""
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "user"}
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     with patch(

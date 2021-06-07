@@ -1,14 +1,15 @@
 """The tests for the Command line sensor platform."""
+from __future__ import annotations
+
+from typing import Any
 from unittest.mock import patch
 
 from openpeerpower import setup
 from openpeerpower.components.sensor import DOMAIN
-from openpeerpower.helpers.typing import Any, Dict, OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 
-async def setup_test_entities(
-    opp: OpenPeerPowerType, config_dict: Dict[str, Any]
-) -> None:
+async def setup_test_entities(opp: OpenPeerPower, config_dict: dict[str, Any]) -> None:
     """Set up a test command line sensor entity."""
     assert await setup.async_setup_component(
         opp,
@@ -30,7 +31,7 @@ async def setup_test_entities(
     await opp.async_block_till_done()
 
 
-async def test_setup(opp: OpenPeerPowerType) -> None:
+async def test_setup(opp: OpenPeerPower) -> None:
     """Test sensor setup."""
     await setup_test_entities(
         opp,
@@ -46,7 +47,7 @@ async def test_setup(opp: OpenPeerPowerType) -> None:
     assert entity_state.attributes["unit_of_measurement"] == "in"
 
 
-async def test_template(opp: OpenPeerPowerType) -> None:
+async def test_template(opp: OpenPeerPower) -> None:
     """Test command sensor with template."""
     await setup_test_entities(
         opp,
@@ -61,7 +62,7 @@ async def test_template(opp: OpenPeerPowerType) -> None:
     assert float(entity_state.state) == 5
 
 
-async def test_template_render(opp: OpenPeerPowerType) -> None:
+async def test_template_render(opp: OpenPeerPower) -> None:
     """Ensure command with templates get rendered properly."""
 
     await setup_test_entities(
@@ -75,7 +76,7 @@ async def test_template_render(opp: OpenPeerPowerType) -> None:
     assert entity_state.state == "template_value"
 
 
-async def test_template_render_with_quote(opp: OpenPeerPowerType) -> None:
+async def test_template_render_with_quote(opp: OpenPeerPower) -> None:
     """Ensure command with templates and quotes get rendered properly."""
 
     with patch(
@@ -96,7 +97,7 @@ async def test_template_render_with_quote(opp: OpenPeerPowerType) -> None:
         )
 
 
-async def test_bad_template_render(caplog: Any, opp: OpenPeerPowerType) -> None:
+async def test_bad_template_render(caplog: Any, opp: OpenPeerPower) -> None:
     """Test rendering a broken template."""
 
     await setup_test_entities(
@@ -109,7 +110,7 @@ async def test_bad_template_render(caplog: Any, opp: OpenPeerPowerType) -> None:
     assert "Error rendering command template" in caplog.text
 
 
-async def test_bad_command(opp: OpenPeerPowerType) -> None:
+async def test_bad_command(opp: OpenPeerPower) -> None:
     """Test bad command."""
     await setup_test_entities(
         opp,
@@ -122,7 +123,7 @@ async def test_bad_command(opp: OpenPeerPowerType) -> None:
     assert entity_state.state == "unknown"
 
 
-async def test_update_with_json_attrs(opp: OpenPeerPowerType) -> None:
+async def test_update_with_json_attrs(opp: OpenPeerPower) -> None:
     """Test attributes get extracted from a JSON result."""
     await setup_test_entities(
         opp,
@@ -139,7 +140,7 @@ async def test_update_with_json_attrs(opp: OpenPeerPowerType) -> None:
     assert entity_state.attributes["key_three"] == "value_three"
 
 
-async def test_update_with_json_attrs_no_data(caplog, opp: OpenPeerPowerType) -> None:  # type: ignore[no-untyped-def]
+async def test_update_with_json_attrs_no_data(caplog, opp: OpenPeerPower) -> None:  # type: ignore[no-untyped-def]
     """Test attributes when no JSON result fetched."""
 
     await setup_test_entities(
@@ -155,7 +156,7 @@ async def test_update_with_json_attrs_no_data(caplog, opp: OpenPeerPowerType) ->
     assert "Empty reply found when expecting JSON data" in caplog.text
 
 
-async def test_update_with_json_attrs_not_dict(caplog, opp: OpenPeerPowerType) -> None:  # type: ignore[no-untyped-def]
+async def test_update_with_json_attrs_not_dict(caplog, opp: OpenPeerPower) -> None:  # type: ignore[no-untyped-def]
     """Test attributes when the return value not a dict."""
 
     await setup_test_entities(
@@ -171,7 +172,7 @@ async def test_update_with_json_attrs_not_dict(caplog, opp: OpenPeerPowerType) -
     assert "JSON result was not a dictionary" in caplog.text
 
 
-async def test_update_with_json_attrs_bad_json(caplog, opp: OpenPeerPowerType) -> None:  # type: ignore[no-untyped-def]
+async def test_update_with_json_attrs_bad_json(caplog, opp: OpenPeerPower) -> None:  # type: ignore[no-untyped-def]
     """Test attributes when the return value is invalid JSON."""
 
     await setup_test_entities(
@@ -187,7 +188,7 @@ async def test_update_with_json_attrs_bad_json(caplog, opp: OpenPeerPowerType) -
     assert "Unable to parse output as JSON" in caplog.text
 
 
-async def test_update_with_missing_json_attrs(caplog, opp: OpenPeerPowerType) -> None:  # type: ignore[no-untyped-def]
+async def test_update_with_missing_json_attrs(caplog, opp: OpenPeerPower) -> None:  # type: ignore[no-untyped-def]
     """Test attributes when an expected key is missing."""
 
     await setup_test_entities(
@@ -206,7 +207,7 @@ async def test_update_with_missing_json_attrs(caplog, opp: OpenPeerPowerType) ->
     assert "missing_key" not in entity_state.attributes
 
 
-async def test_update_with_unnecessary_json_attrs(caplog, opp: OpenPeerPowerType) -> None:  # type: ignore[no-untyped-def]
+async def test_update_with_unnecessary_json_attrs(caplog, opp: OpenPeerPower) -> None:  # type: ignore[no-untyped-def]
     """Test attributes when an expected key is missing."""
 
     await setup_test_entities(

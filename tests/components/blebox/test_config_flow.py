@@ -173,7 +173,7 @@ async def test_async_setup_entry(opp, valid_feature_mock):
     await opp.async_block_till_done()
 
     assert opp.config_entries.async_entries() == [config]
-    assert config.state == config_entries.ENTRY_STATE_LOADED
+    assert config.state is config_entries.ConfigEntryState.LOADED
 
 
 async def test_async_remove_entry(opp, valid_feature_mock):
@@ -189,4 +189,4 @@ async def test_async_remove_entry(opp, valid_feature_mock):
     await opp.async_block_till_done()
 
     assert opp.config_entries.async_entries() == []
-    assert config.state == config_entries.ENTRY_STATE_NOT_LOADED
+    assert config.state is config_entries.ConfigEntryState.NOT_LOADED

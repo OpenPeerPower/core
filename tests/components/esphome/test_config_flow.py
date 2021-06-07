@@ -4,6 +4,7 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
+from openpeerpower import config_entries
 from openpeerpower.components.esphome import DOMAIN
 from openpeerpower.const import CONF_HOST, CONF_PASSWORD, CONF_PORT
 from openpeerpower.data_entry_flow import (
@@ -51,7 +52,7 @@ async def test_user_connection_works(opp, mock_client):
     """Test we can finish a config flow."""
     result = await opp.config_entries.flow.async_init(
         "esphome",
-        context={"source": "user"},
+        context={"source": config_entries.SOURCE_USER},
         data=None,
     )
 
@@ -62,7 +63,7 @@ async def test_user_connection_works(opp, mock_client):
 
     result = await opp.config_entries.flow.async_init(
         "esphome",
-        context={"source": "user"},
+        context={"source": config_entries.SOURCE_USER},
         data={CONF_HOST: "127.0.0.1", CONF_PORT: 80},
     )
 
@@ -95,7 +96,7 @@ async def test_user_resolve_error(opp, mock_api_connection_error, mock_client):
         mock_client.device_info.side_effect = exc
         result = await opp.config_entries.flow.async_init(
             "esphome",
-            context={"source": "user"},
+            context={"source": config_entries.SOURCE_USER},
             data={CONF_HOST: "127.0.0.1", CONF_PORT: 6053},
         )
 
@@ -114,7 +115,7 @@ async def test_user_connection_error(opp, mock_api_connection_error, mock_client
 
     result = await opp.config_entries.flow.async_init(
         "esphome",
-        context={"source": "user"},
+        context={"source": config_entries.SOURCE_USER},
         data={CONF_HOST: "127.0.0.1", CONF_PORT: 6053},
     )
 
@@ -133,7 +134,7 @@ async def test_user_with_password(opp, mock_client):
 
     result = await opp.config_entries.flow.async_init(
         "esphome",
-        context={"source": "user"},
+        context={"source": config_entries.SOURCE_USER},
         data={CONF_HOST: "127.0.0.1", CONF_PORT: 6053},
     )
 
@@ -159,7 +160,7 @@ async def test_user_invalid_password(opp, mock_api_connection_error, mock_client
 
     result = await opp.config_entries.flow.async_init(
         "esphome",
-        context={"source": "user"},
+        context={"source": config_entries.SOURCE_USER},
         data={CONF_HOST: "127.0.0.1", CONF_PORT: 6053},
     )
 
@@ -188,7 +189,7 @@ async def test_discovery_initiation(opp, mock_client):
         "properties": {},
     }
     flow = await opp.config_entries.flow.async_init(
-        "esphome", context={"source": "zeroconf"}, data=service_info
+        "esphome", context={"source": config_entries.SOURCE_ZEROCONF}, data=service_info
     )
 
     result = await opp.config_entries.flow.async_configure(
@@ -220,7 +221,7 @@ async def test_discovery_already_configured_hostname(opp, mock_client):
         "properties": {},
     }
     result = await opp.config_entries.flow.async_init(
-        "esphome", context={"source": "zeroconf"}, data=service_info
+        "esphome", context={"source": config_entries.SOURCE_ZEROCONF}, data=service_info
     )
 
     assert result["type"] == RESULT_TYPE_ABORT
@@ -245,7 +246,7 @@ async def test_discovery_already_configured_ip(opp, mock_client):
         "properties": {"address": "192.168.43.183"},
     }
     result = await opp.config_entries.flow.async_init(
-        "esphome", context={"source": "zeroconf"}, data=service_info
+        "esphome", context={"source": config_entries.SOURCE_ZEROCONF}, data=service_info
     )
 
     assert result["type"] == RESULT_TYPE_ABORT
@@ -273,7 +274,7 @@ async def test_discovery_already_configured_name(opp, mock_client):
         "properties": {"address": "test8266.local"},
     }
     result = await opp.config_entries.flow.async_init(
-        "esphome", context={"source": "zeroconf"}, data=service_info
+        "esphome", context={"source": config_entries.SOURCE_ZEROCONF}, data=service_info
     )
 
     assert result["type"] == RESULT_TYPE_ABORT
@@ -295,13 +296,13 @@ async def test_discovery_duplicate_data(opp, mock_client):
     mock_client.device_info = AsyncMock(return_value=MockDeviceInfo(False, "test8266"))
 
     result = await opp.config_entries.flow.async_init(
-        "esphome", data=service_info, context={"source": "zeroconf"}
+        "esphome", data=service_info, context={"source": config_entries.SOURCE_ZEROCONF}
     )
     assert result["type"] == RESULT_TYPE_FORM
     assert result["step_id"] == "discovery_confirm"
 
     result = await opp.config_entries.flow.async_init(
-        "esphome", data=service_info, context={"source": "zeroconf"}
+        "esphome", data=service_info, context={"source": config_entries.SOURCE_ZEROCONF}
     )
     assert result["type"] == RESULT_TYPE_ABORT
     assert result["reason"] == "already_in_progress"
@@ -323,7 +324,7 @@ async def test_discovery_updates_unique_id(opp, mock_client):
         "properties": {"address": "test8266.local"},
     }
     result = await opp.config_entries.flow.async_init(
-        "esphome", context={"source": "zeroconf"}, data=service_info
+        "esphome", context={"source": config_entries.SOURCE_ZEROCONF}, data=service_info
     )
 
     assert result["type"] == RESULT_TYPE_ABORT

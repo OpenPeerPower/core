@@ -4,10 +4,10 @@ from ipaddress import ip_network
 from unittest.mock import AsyncMock, MagicMock, Mock, patch
 
 import aiohttp
+from opp_nabucasa import thingtalk, voice
+from opp_nabucasa.auth import Unauthenticated, UnknownError
+from opp_nabucasa.const import STATE_CONNECTED
 from jose import jwt
-from opp_net import thingtalk, voice
-from opp_net.auth import Unauthenticated, UnknownError
-from opp_net.const import STATE_CONNECTED
 import pytest
 
 from openpeerpower.auth.providers import trusted_networks as tn_auth
@@ -28,7 +28,7 @@ SUBSCRIPTION_INFO_URL = "https://api-test.opp.io/subscription_info"
 @pytest.fixture(name="mock_auth")
 def mock_auth_fixture():
     """Mock check token."""
-    with patch("opp_net.auth.CognitoAuth.async_check_token"):
+    with patch("opp_nabucasa.auth.CognitoAuth.async_check_token"):
         yield
 
 
@@ -71,21 +71,21 @@ def setup_api_fixture(opp, aioclient_mock):
 @pytest.fixture(name="cloud_client")
 def cloud_client_fixture(opp, opp_client):
     """Fixture that can fetch from the cloud client."""
-    with patch("opp_net.Cloud.write_user_info"):
+    with patch("opp_nabucasa.Cloud.write_user_info"):
         yield opp.loop.run_until_complete(opp_client())
 
 
 @pytest.fixture(name="mock_cognito")
 def mock_cognito_fixture():
     """Mock warrant."""
-    with patch("opp_net.auth.CognitoAuth._cognito") as mock_cog:
+    with patch("opp_nabucasa.auth.CognitoAuth._cognito") as mock_cog:
         yield mock_cog()
 
 
 async def test_google_actions_sync(mock_cognito, mock_cloud_login, cloud_client):
     """Test syncing Google Actions."""
     with patch(
-        "opp_net.cloud_api.async_google_actions_request_sync",
+        "opp_nabucasa.cloud_api.async_google_actions_request_sync",
         return_value=Mock(status=200),
     ) as mock_request_sync:
         req = await cloud_client.post("/api/cloud/google_actions/sync")
@@ -96,7 +96,7 @@ async def test_google_actions_sync(mock_cognito, mock_cloud_login, cloud_client)
 async def test_google_actions_sync_fails(mock_cognito, mock_cloud_login, cloud_client):
     """Test syncing Google Actions gone bad."""
     with patch(
-        "opp_net.cloud_api.async_google_actions_request_sync",
+        "opp_nabucasa.cloud_api.async_google_actions_request_sync",
         return_value=Mock(status=HTTP_INTERNAL_SERVER_ERROR),
     ) as mock_request_sync:
         req = await cloud_client.post("/api/cloud/google_actions/sync")
@@ -130,7 +130,7 @@ async def test_login_view_random_exception(cloud_client):
 
 async def test_login_view_invalid_json(cloud_client):
     """Try logging in with invalid JSON."""
-    with patch("opp_net.auth.CognitoAuth.async_login") as mock_login:
+    with patch("opp_nabucasa.auth.CognitoAuth.async_login") as mock_login:
         req = await cloud_client.post("/api/cloud/login", data="Not JSON")
     assert req.status == 400
     assert len(mock_login.mock_calls) == 0
@@ -138,7 +138,7 @@ async def test_login_view_invalid_json(cloud_client):
 
 async def test_login_view_invalid_schema(cloud_client):
     """Try logging in with invalid schema."""
-    with patch("opp_net.auth.CognitoAuth.async_login") as mock_login:
+    with patch("opp_nabucasa.auth.CognitoAuth.async_login") as mock_login:
         req = await cloud_client.post("/api/cloud/login", json={"invalid": "schema"})
     assert req.status == 400
     assert len(mock_login.mock_calls) == 0
@@ -147,7 +147,7 @@ async def test_login_view_invalid_schema(cloud_client):
 async def test_login_view_request_timeout(cloud_client):
     """Test request timeout while trying to log in."""
     with patch(
-        "opp_net.auth.CognitoAuth.async_login", side_effect=asyncio.TimeoutError
+        "opp_nabucasa.auth.CognitoAuth.async_login", side_effect=asyncio.TimeoutError
     ):
         req = await cloud_client.post(
             "/api/cloud/login", json={"email": "my_username", "password": "my_password"}
@@ -158,7 +158,9 @@ async def test_login_view_request_timeout(cloud_client):
 
 async def test_login_view_invalid_credentials(cloud_client):
     """Test logging in with invalid credentials."""
-    with patch("opp_net.auth.CognitoAuth.async_login", side_effect=Unauthenticated):
+    with patch(
+        "opp_nabucasa.auth.CognitoAuth.async_login", side_effect=Unauthenticated
+    ):
         req = await cloud_client.post(
             "/api/cloud/login", json={"email": "my_username", "password": "my_password"}
         )
@@ -168,7 +170,7 @@ async def test_login_view_invalid_credentials(cloud_client):
 
 async def test_login_view_unknown_error(cloud_client):
     """Test unknown error while logging in."""
-    with patch("opp_net.auth.CognitoAuth.async_login", side_effect=UnknownError):
+    with patch("opp_nabucasa.auth.CognitoAuth.async_login", side_effect=UnknownError):
         req = await cloud_client.post(
             "/api/cloud/login", json={"email": "my_username", "password": "my_password"}
         )
@@ -377,6 +379,7 @@ async def test_websocket_status(
             "exclude_entity_globs": [],
             "exclude_entities": [],
         },
+        "google_registered": False,
         "remote_domain": None,
         "remote_connected": False,
         "remote_certificate": None,
@@ -399,8 +402,8 @@ async def test_websocket_subscription_reconnect(
     client = await opp_ws_client(opp)
 
     with patch(
-        "opp_net.auth.CognitoAuth.async_renew_access_token"
-    ) as mock_renew, patch("opp_net.iot.CloudIoT.connect") as mock_connect:
+        "opp_nabucasa.auth.CognitoAuth.async_renew_access_token"
+    ) as mock_renew, patch("opp_nabucasa.iot.CloudIoT.connect") as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/subscription"})
         response = await client.receive_json()
 
@@ -418,8 +421,8 @@ async def test_websocket_subscription_no_reconnect_if_connected(
     client = await opp_ws_client(opp)
 
     with patch(
-        "opp_net.auth.CognitoAuth.async_renew_access_token"
-    ) as mock_renew, patch("opp_net.iot.CloudIoT.connect") as mock_connect:
+        "opp_nabucasa.auth.CognitoAuth.async_renew_access_token"
+    ) as mock_renew, patch("opp_nabucasa.iot.CloudIoT.connect") as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/subscription"})
         response = await client.receive_json()
 
@@ -436,8 +439,8 @@ async def test_websocket_subscription_no_reconnect_if_expired(
     client = await opp_ws_client(opp)
 
     with patch(
-        "opp_net.auth.CognitoAuth.async_renew_access_token"
-    ) as mock_renew, patch("opp_net.iot.CloudIoT.connect") as mock_connect:
+        "opp_nabucasa.auth.CognitoAuth.async_renew_access_token"
+    ) as mock_renew, patch("opp_nabucasa.iot.CloudIoT.connect") as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/subscription"})
         response = await client.receive_json()
 
@@ -463,7 +466,7 @@ async def test_websocket_subscription_not_logged_in(opp, opp_ws_client):
     """Test querying the status."""
     client = await opp_ws_client(opp)
     with patch(
-        "opp_net.Cloud.fetch_subscription_info",
+        "opp_nabucasa.Cloud.fetch_subscription_info",
         return_value={"return": "value"},
     ):
         await client.send_json({"id": 5, "type": "cloud/subscription"})
@@ -548,7 +551,7 @@ async def test_enabling_webhook(opp, opp_ws_client, setup_api, mock_cloud_login)
     """Test we call right code to enable webhooks."""
     client = await opp_ws_client(opp)
     with patch(
-        "opp_net.cloudhooks.Cloudhooks.async_create", return_value={}
+        "opp_nabucasa.cloudhooks.Cloudhooks.async_create", return_value={}
     ) as mock_enable:
         await client.send_json(
             {"id": 5, "type": "cloud/cloudhook/create", "webhook_id": "mock-webhook-id"}
@@ -563,7 +566,7 @@ async def test_enabling_webhook(opp, opp_ws_client, setup_api, mock_cloud_login)
 async def test_disabling_webhook(opp, opp_ws_client, setup_api, mock_cloud_login):
     """Test we call right code to disable webhooks."""
     client = await opp_ws_client(opp)
-    with patch("opp_net.cloudhooks.Cloudhooks.async_delete") as mock_disable:
+    with patch("opp_nabucasa.cloudhooks.Cloudhooks.async_delete") as mock_disable:
         await client.send_json(
             {"id": 5, "type": "cloud/cloudhook/delete", "webhook_id": "mock-webhook-id"}
         )
@@ -579,7 +582,7 @@ async def test_enabling_remote(opp, opp_ws_client, setup_api, mock_cloud_login):
     client = await opp_ws_client(opp)
     cloud = opp.data[DOMAIN]
 
-    with patch("opp_net.remote.RemoteUI.connect") as mock_connect:
+    with patch("opp_nabucasa.remote.RemoteUI.connect") as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/remote/connect"})
         response = await client.receive_json()
     assert response["success"]
@@ -593,7 +596,7 @@ async def test_disabling_remote(opp, opp_ws_client, setup_api, mock_cloud_login)
     client = await opp_ws_client(opp)
     cloud = opp.data[DOMAIN]
 
-    with patch("opp_net.remote.RemoteUI.disconnect") as mock_disconnect:
+    with patch("opp_nabucasa.remote.RemoteUI.disconnect") as mock_disconnect:
         await client.send_json({"id": 5, "type": "cloud/remote/disconnect"})
         response = await client.receive_json()
     assert response["success"]
@@ -620,7 +623,7 @@ async def test_enabling_remote_trusted_networks_local4(
     client = await opp_ws_client(opp)
 
     with patch(
-        "opp_net.remote.RemoteUI.connect", side_effect=AssertionError
+        "opp_nabucasa.remote.RemoteUI.connect", side_effect=AssertionError
     ) as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/remote/connect"})
         response = await client.receive_json()
@@ -653,7 +656,7 @@ async def test_enabling_remote_trusted_networks_local6(
     client = await opp_ws_client(opp)
 
     with patch(
-        "opp_net.remote.RemoteUI.connect", side_effect=AssertionError
+        "opp_nabucasa.remote.RemoteUI.connect", side_effect=AssertionError
     ) as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/remote/connect"})
         response = await client.receive_json()
@@ -686,7 +689,7 @@ async def test_enabling_remote_trusted_networks_other(
     client = await opp_ws_client(opp)
     cloud = opp.data[DOMAIN]
 
-    with patch("opp_net.remote.RemoteUI.connect") as mock_connect:
+    with patch("opp_nabucasa.remote.RemoteUI.connect") as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/remote/connect"})
         response = await client.receive_json()
 
@@ -782,7 +785,7 @@ async def test_enabling_remote_trusted_proxies_local4(
     client = await opp_ws_client(opp)
 
     with patch(
-        "opp_net.remote.RemoteUI.connect", side_effect=AssertionError
+        "opp_nabucasa.remote.RemoteUI.connect", side_effect=AssertionError
     ) as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/remote/connect"})
         response = await client.receive_json()
@@ -806,7 +809,7 @@ async def test_enabling_remote_trusted_proxies_local6(
     client = await opp_ws_client(opp)
 
     with patch(
-        "opp_net.remote.RemoteUI.connect", side_effect=AssertionError
+        "opp_nabucasa.remote.RemoteUI.connect", side_effect=AssertionError
     ) as mock_connect:
         await client.send_json({"id": 5, "type": "cloud/remote/connect"})
         response = await client.receive_json()

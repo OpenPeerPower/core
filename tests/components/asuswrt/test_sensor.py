@@ -1,13 +1,13 @@
 """Tests for the AsusWrt sensor."""
 from datetime import timedelta
-from unittest.mock import AsyncMock, patch
+from unittest.mock import AsyncMock, Mock, patch
 
 from aioasuswrt.asuswrt import Device
 import pytest
 
 from openpeerpower.components import device_tracker, sensor
 from openpeerpower.components.asuswrt.const import DOMAIN
-from openpeerpower.components.asuswrt.sensor import _SensorTypes
+from openpeerpower.components.asuswrt.sensor import DEFAULT_PREFIX
 from openpeerpower.components.device_tracker.const import CONF_CONSIDER_HOME
 from openpeerpower.const import (
     CONF_HOST,
@@ -19,6 +19,7 @@ from openpeerpower.const import (
     STATE_HOME,
     STATE_NOT_HOME,
 )
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.util.dt import utcnow
 
 from tests.common import MockConfigEntry, async_fire_time_changed
@@ -35,23 +36,35 @@ CONFIG_DATA = {
     CONF_MODE: "router",
 }
 
-MOCK_DEVICES = {
-    "a1:b1:c1:d1:e1:f1": Device("a1:b1:c1:d1:e1:f1", "192.168.1.2", "Test"),
-    "a2:b2:c2:d2:e2:f2": Device("a2:b2:c2:d2:e2:f2", "192.168.1.3", "TestTwo"),
-}
 MOCK_BYTES_TOTAL = [60000000000, 50000000000]
 MOCK_CURRENT_TRANSFER_RATES = [20000000, 10000000]
 
 
+@pytest.fixture(name="mock_devices")
+def mock_devices_fixture():
+    """Mock a list of devices."""
+    return {
+        "a1:b1:c1:d1:e1:f1": Device("a1:b1:c1:d1:e1:f1", "192.168.1.2", "Test"),
+        "a2:b2:c2:d2:e2:f2": Device("a2:b2:c2:d2:e2:f2", "192.168.1.3", "TestTwo"),
+    }
+
+
 @pytest.fixture(name="connect")
-def mock_controller_connect():
+def mock_controller_connect(mock_devices):
     """Mock a successful connection."""
     with patch("openpeerpower.components.asuswrt.router.AsusWrt") as service_mock:
         service_mock.return_value.connection.async_connect = AsyncMock()
         service_mock.return_value.is_connected = True
-        service_mock.return_value.connection.disconnect = AsyncMock()
+        service_mock.return_value.connection.disconnect = Mock()
+        service_mock.return_value.async_get_nvram = AsyncMock(
+            return_value={
+                "model": "abcd",
+                "firmver": "efg",
+                "buildno": "123",
+            }
+        )
         service_mock.return_value.async_get_connected_devices = AsyncMock(
-            return_value=MOCK_DEVICES
+            return_value=mock_devices
         )
         service_mock.return_value.async_get_bytes_total = AsyncMock(
             return_value=MOCK_BYTES_TOTAL
@@ -62,46 +75,9 @@ def mock_controller_connect():
         yield service_mock
 
 
-async def test_sensors(opp, connect):
+async def test_sensors(opp, connect, mock_devices):
     """Test creating an AsusWRT sensor."""
-    entity_reg = await opp.helpers.entity_registry.async_get_registry()
-
-    # Pre-enable the status sensor
-    entity_reg.async_get_or_create(
-        sensor.DOMAIN,
-        DOMAIN,
-        f"{DOMAIN} {_SensorTypes(_SensorTypes.DEVICES).sensor_name}",
-        suggested_object_id="asuswrt_connected_devices",
-        disabled_by=None,
-    )
-    entity_reg.async_get_or_create(
-        sensor.DOMAIN,
-        DOMAIN,
-        f"{DOMAIN} {_SensorTypes(_SensorTypes.DOWNLOAD_SPEED).sensor_name}",
-        suggested_object_id="asuswrt_download_speed",
-        disabled_by=None,
-    )
-    entity_reg.async_get_or_create(
-        sensor.DOMAIN,
-        DOMAIN,
-        f"{DOMAIN} {_SensorTypes(_SensorTypes.DOWNLOAD).sensor_name}",
-        suggested_object_id="asuswrt_download",
-        disabled_by=None,
-    )
-    entity_reg.async_get_or_create(
-        sensor.DOMAIN,
-        DOMAIN,
-        f"{DOMAIN} {_SensorTypes(_SensorTypes.UPLOAD_SPEED).sensor_name}",
-        suggested_object_id="asuswrt_upload_speed",
-        disabled_by=None,
-    )
-    entity_reg.async_get_or_create(
-        sensor.DOMAIN,
-        DOMAIN,
-        f"{DOMAIN} {_SensorTypes(_SensorTypes.UPLOAD).sensor_name}",
-        suggested_object_id="asuswrt_upload",
-        disabled_by=None,
-    )
+    entity_reg = er.async_get(opp)
 
     # init config entry
     config_entry = MockConfigEntry(
@@ -109,6 +85,50 @@ async def test_sensors(opp, connect):
         data=CONFIG_DATA,
         options={CONF_CONSIDER_HOME: 60},
     )
+
+    # init variable
+    unique_id = DOMAIN
+    name_prefix = DEFAULT_PREFIX
+    obj_prefix = name_prefix.lower()
+    sensor_prefix = f"{sensor.DOMAIN}.{obj_prefix}"
+
+    # Pre-enable the status sensor
+    entity_reg.async_get_or_create(
+        sensor.DOMAIN,
+        DOMAIN,
+        f"{unique_id} {name_prefix} Devices Connected",
+        suggested_object_id=f"{obj_prefix}_devices_connected",
+        disabled_by=None,
+    )
+    entity_reg.async_get_or_create(
+        sensor.DOMAIN,
+        DOMAIN,
+        f"{unique_id} {name_prefix} Download Speed",
+        suggested_object_id=f"{obj_prefix}_download_speed",
+        disabled_by=None,
+    )
+    entity_reg.async_get_or_create(
+        sensor.DOMAIN,
+        DOMAIN,
+        f"{unique_id} {name_prefix} Download",
+        suggested_object_id=f"{obj_prefix}_download",
+        disabled_by=None,
+    )
+    entity_reg.async_get_or_create(
+        sensor.DOMAIN,
+        DOMAIN,
+        f"{unique_id} {name_prefix} Upload Speed",
+        suggested_object_id=f"{obj_prefix}_upload_speed",
+        disabled_by=None,
+    )
+    entity_reg.async_get_or_create(
+        sensor.DOMAIN,
+        DOMAIN,
+        f"{unique_id} {name_prefix} Upload",
+        suggested_object_id=f"{obj_prefix}_upload",
+        disabled_by=None,
+    )
+
     config_entry.add_to_opp(opp)
 
     # initial devices setup
@@ -119,17 +139,18 @@ async def test_sensors(opp, connect):
 
     assert opp.states.get(f"{device_tracker.DOMAIN}.test").state == STATE_HOME
     assert opp.states.get(f"{device_tracker.DOMAIN}.testtwo").state == STATE_HOME
-    assert opp.states.get(f"{sensor.DOMAIN}.asuswrt_connected_devices").state == "2"
-    assert opp.states.get(f"{sensor.DOMAIN}.asuswrt_download_speed").state == "160.0"
-    assert opp.states.get(f"{sensor.DOMAIN}.asuswrt_download").state == "60.0"
-    assert opp.states.get(f"{sensor.DOMAIN}.asuswrt_upload_speed").state == "80.0"
-    assert opp.states.get(f"{sensor.DOMAIN}.asuswrt_upload").state == "50.0"
+    assert opp.states.get(f"{sensor_prefix}_download_speed").state == "160.0"
+    assert opp.states.get(f"{sensor_prefix}_download").state == "60.0"
+    assert opp.states.get(f"{sensor_prefix}_upload_speed").state == "80.0"
+    assert opp.states.get(f"{sensor_prefix}_upload").state == "50.0"
+    assert opp.states.get(f"{sensor_prefix}_devices_connected").state == "2"
 
     # add one device and remove another
-    MOCK_DEVICES.pop("a1:b1:c1:d1:e1:f1")
-    MOCK_DEVICES["a3:b3:c3:d3:e3:f3"] = Device(
+    mock_devices.pop("a1:b1:c1:d1:e1:f1")
+    mock_devices["a3:b3:c3:d3:e3:f3"] = Device(
         "a3:b3:c3:d3:e3:f3", "192.168.1.4", "TestThree"
     )
+
     async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
     await opp.async_block_till_done()
 
@@ -137,9 +158,11 @@ async def test_sensors(opp, connect):
     assert opp.states.get(f"{device_tracker.DOMAIN}.test").state == STATE_HOME
     assert opp.states.get(f"{device_tracker.DOMAIN}.testtwo").state == STATE_HOME
     assert opp.states.get(f"{device_tracker.DOMAIN}.testthree").state == STATE_HOME
-    assert opp.states.get(f"{sensor.DOMAIN}.asuswrt_connected_devices").state == "2"
+    assert opp.states.get(f"{sensor_prefix}_devices_connected").state == "2"
 
-    opp.config_entries.async_update_entry(config_entry, options={CONF_CONSIDER_HOME: 0})
+    opp.config_entries.async_update_entry(
+        config_entry, options={CONF_CONSIDER_HOME: 0}
+    )
     await opp.async_block_till_done()
     async_fire_time_changed(opp, utcnow() + timedelta(seconds=30))
     await opp.async_block_till_done()

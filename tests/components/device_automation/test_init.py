@@ -490,7 +490,9 @@ async def test_automation_with_non_existing_integration(opp, caplog):
     assert "Integration 'beer' not found" in caplog.text
 
 
-async def test_automation_with_integration_without_device_action(opp, caplog):
+async def test_automation_with_integration_without_device_action(
+    opp, caplog, enable_custom_integrations
+):
     """Test automation with integration without device action support."""
     assert await async_setup_component(
         opp,
@@ -509,7 +511,9 @@ async def test_automation_with_integration_without_device_action(opp, caplog):
     )
 
 
-async def test_automation_with_integration_without_device_condition(opp, caplog):
+async def test_automation_with_integration_without_device_condition(
+    opp, caplog, enable_custom_integrations
+):
     """Test automation with integration without device condition support."""
     assert await async_setup_component(
         opp,
@@ -534,7 +538,9 @@ async def test_automation_with_integration_without_device_condition(opp, caplog)
     )
 
 
-async def test_automation_with_integration_without_device_trigger(opp, caplog):
+async def test_automation_with_integration_without_device_trigger(
+    opp, caplog, enable_custom_integrations
+):
     """Test automation with integration without device trigger support."""
     assert await async_setup_component(
         opp,
@@ -615,7 +621,7 @@ def calls(opp):
     return async_mock_service(opp, "test", "automation")
 
 
-async def test_automation_with_sub_condition(opp, calls):
+async def test_automation_with_sub_condition(opp, calls, enable_custom_integrations):
     """Test automation with device condition under and/or conditions."""
     DOMAIN = "light"
     platform = getattr(opp.components, f"test.{DOMAIN}")

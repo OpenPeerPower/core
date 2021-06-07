@@ -10,7 +10,7 @@ from openpeerpower.components.canary.const import (
     DOMAIN,
 )
 from openpeerpower.const import CONF_PASSWORD, CONF_TIMEOUT, CONF_USERNAME
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from tests.common import MockConfigEntry
 
@@ -51,7 +51,7 @@ def _patch_async_setup_entry(return_value=True):
 
 
 async def init_integration(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     *,
     data: dict = ENTRY_CONFIG,
     options: dict = ENTRY_OPTIONS,

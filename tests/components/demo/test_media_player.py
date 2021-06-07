@@ -400,6 +400,26 @@ async def test_seek(opp, mock_media_seek):
     assert mock_media_seek.called
 
 
+async def test_stop(opp):
+    """Test stop."""
+    assert await async_setup_component(
+        opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
+    )
+    await opp.async_block_till_done()
+
+    state = opp.states.get(TEST_ENTITY_ID)
+    assert state.state == STATE_PLAYING
+
+    await opp.services.async_call(
+        mp.DOMAIN,
+        mp.SERVICE_MEDIA_STOP,
+        {ATTR_ENTITY_ID: TEST_ENTITY_ID},
+        blocking=True,
+    )
+    state = opp.states.get(TEST_ENTITY_ID)
+    assert state.state == STATE_OFF
+
+
 async def test_media_image_proxy(opp, opp_client):
     """Test the media server image proxy server ."""
     assert await async_setup_component(
@@ -442,3 +462,39 @@ async def test_media_image_proxy(opp, opp_client):
     req = await client.get(state.attributes.get(ATTR_ENTITY_PICTURE))
     assert req.status == 200
     assert await req.text() == fake_picture_data
+
+
+async def test_grouping(opp):
+    """Test the join/unjoin services."""
+    walkman = "media_player.walkman"
+    kitchen = "media_player.kitchen"
+
+    assert await async_setup_component(
+        opp, mp.DOMAIN, {"media_player": {"platform": "demo"}}
+    )
+    await opp.async_block_till_done()
+    state = opp.states.get(walkman)
+    assert state.attributes.get(mp.ATTR_GROUP_MEMBERS) == []
+
+    await opp.services.async_call(
+        mp.DOMAIN,
+        mp.SERVICE_JOIN,
+        {
+            ATTR_ENTITY_ID: walkman,
+            mp.ATTR_GROUP_MEMBERS: [
+                kitchen,
+            ],
+        },
+        blocking=True,
+    )
+    state = opp.states.get(walkman)
+    assert state.attributes.get(mp.ATTR_GROUP_MEMBERS) == [walkman, kitchen]
+
+    await opp.services.async_call(
+        mp.DOMAIN,
+        mp.SERVICE_UNJOIN,
+        {ATTR_ENTITY_ID: walkman},
+        blocking=True,
+    )
+    state = opp.states.get(walkman)
+    assert state.attributes.get(mp.ATTR_GROUP_MEMBERS) == []

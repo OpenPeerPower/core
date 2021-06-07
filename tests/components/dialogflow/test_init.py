@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from openpeerpower import data_entry_flow
+from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.components import dialogflow, intent_script
 from openpeerpower.config import async_process_op_core_config
 from openpeerpower.core import callback
@@ -84,7 +84,7 @@ async def fixture(opp, aiohttp_client):
     )
 
     result = await opp.config_entries.flow.async_init(
-        "dialogflow", context={"source": "user"}
+        "dialogflow", context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM, result
 

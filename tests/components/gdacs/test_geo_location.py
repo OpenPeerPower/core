@@ -29,7 +29,7 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_START,
     LENGTH_KILOMETERS,
 )
-from openpeerpower.helpers.entity_registry import async_get_registry
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.setup import async_setup_component
 import openpeerpower.util.dt as dt_util
 from openpeerpower.util.unit_system import IMPERIAL_SYSTEM
@@ -99,7 +99,7 @@ async def test_setup(opp, legacy_patchable_time):
         all_states = opp.states.async_all()
         # 3 geolocation and 1 sensor entities
         assert len(all_states) == 4
-        entity_registry = await async_get_registry(opp)
+        entity_registry = er.async_get(opp)
         assert len(entity_registry.entities) == 4
 
         state = opp.states.get("geo_location.drought_name_1")

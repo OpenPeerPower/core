@@ -41,7 +41,7 @@ async def test_list(opp, opp_ws_client, opp_admin_user):
     )
 
     system = MockUser(id="efg", name="Test Opp.io", system_generated=True).add_to_opp(
-        opp
+       .opp
     )
 
     inactive = MockUser(

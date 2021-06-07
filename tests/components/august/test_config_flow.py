@@ -1,7 +1,7 @@
 """Test the August config flow."""
 from unittest.mock import patch
 
-from august.authenticator import ValidationResult
+from yalexs.authenticator import ValidationResult
 
 from openpeerpower import config_entries, setup
 from openpeerpower.components.august.const import (
@@ -34,8 +34,6 @@ async def test_form(opp):
         "openpeerpower.components.august.config_flow.AugustGateway.async_authenticate",
         return_value=True,
     ), patch(
-        "openpeerpower.components.august.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.august.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -54,12 +52,9 @@ async def test_form(opp):
     assert result2["data"] == {
         CONF_LOGIN_METHOD: "email",
         CONF_USERNAME: "my@email.tld",
-        CONF_PASSWORD: "test-password",
         CONF_INSTALL_ID: None,
-        CONF_TIMEOUT: 10,
         CONF_ACCESS_TOKEN_CACHE_FILE: ".my@email.tld.august.conf",
     }
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -170,8 +165,6 @@ async def test_form_needs_validate(opp):
         "openpeerpower.components.august.gateway.AuthenticatorAsync.async_send_verification_code",
         return_value=True,
     ) as mock_send_verification_code, patch(
-        "openpeerpower.components.august.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.august.async_setup_entry", return_value=True
     ) as mock_setup_entry:
         result3 = await opp.config_entries.flow.async_configure(
@@ -198,8 +191,6 @@ async def test_form_needs_validate(opp):
         "openpeerpower.components.august.gateway.AuthenticatorAsync.async_send_verification_code",
         return_value=True,
     ) as mock_send_verification_code, patch(
-        "openpeerpower.components.august.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.august.async_setup_entry", return_value=True
     ) as mock_setup_entry:
         result4 = await opp.config_entries.flow.async_configure(
@@ -215,12 +206,9 @@ async def test_form_needs_validate(opp):
     assert result4["data"] == {
         CONF_LOGIN_METHOD: "email",
         CONF_USERNAME: "my@email.tld",
-        CONF_PASSWORD: "test-password",
         CONF_INSTALL_ID: None,
-        CONF_TIMEOUT: 10,
         CONF_ACCESS_TOKEN_CACHE_FILE: ".my@email.tld.august.conf",
     }
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -242,7 +230,7 @@ async def test_form_reauth(opp):
     entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "reauth"}, data=entry.data
+        DOMAIN, context={"source": config_entries.SOURCE_REAUTH}, data=entry.data
     )
     assert result["type"] == "form"
     assert result["errors"] == {}
@@ -251,8 +239,6 @@ async def test_form_reauth(opp):
         "openpeerpower.components.august.config_flow.AugustGateway.async_authenticate",
         return_value=True,
     ), patch(
-        "openpeerpower.components.august.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.august.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -266,5 +252,73 @@ async def test_form_reauth(opp):
 
     assert result2["type"] == "abort"
     assert result2["reason"] == "reauth_successful"
-    assert len(mock_setup.mock_calls) == 1
+    assert len(mock_setup_entry.mock_calls) == 1
+
+
+async def test_form_reauth_with_2fa(opp):
+    """Test reauthenticate with 2fa."""
+
+    entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={
+            CONF_LOGIN_METHOD: "email",
+            CONF_USERNAME: "my@email.tld",
+            CONF_PASSWORD: "test-password",
+            CONF_INSTALL_ID: None,
+            CONF_TIMEOUT: 10,
+            CONF_ACCESS_TOKEN_CACHE_FILE: ".my@email.tld.august.conf",
+        },
+        unique_id="my@email.tld",
+    )
+    entry.add_to_opp(opp)
+
+    result = await opp.config_entries.flow.async_init(
+        DOMAIN, context={"source": config_entries.SOURCE_REAUTH}, data=entry.data
+    )
+    assert result["type"] == "form"
+    assert result["errors"] == {}
+
+    with patch(
+        "openpeerpower.components.august.config_flow.AugustGateway.async_authenticate",
+        side_effect=RequireValidation,
+    ), patch(
+        "openpeerpower.components.august.gateway.AuthenticatorAsync.async_send_verification_code",
+        return_value=True,
+    ) as mock_send_verification_code:
+        result2 = await opp.config_entries.flow.async_configure(
+            result["flow_id"],
+            {
+                CONF_PASSWORD: "new-test-password",
+            },
+        )
+        await opp.async_block_till_done()
+
+    assert len(mock_send_verification_code.mock_calls) == 1
+    assert result2["type"] == "form"
+    assert result2["errors"] is None
+    assert result2["step_id"] == "validation"
+
+    # Try with the CORRECT verification code and we setup
+    with patch(
+        "openpeerpower.components.august.config_flow.AugustGateway.async_authenticate",
+        return_value=True,
+    ), patch(
+        "openpeerpower.components.august.gateway.AuthenticatorAsync.async_validate_verification_code",
+        return_value=ValidationResult.VALIDATED,
+    ) as mock_validate_verification_code, patch(
+        "openpeerpower.components.august.gateway.AuthenticatorAsync.async_send_verification_code",
+        return_value=True,
+    ) as mock_send_verification_code, patch(
+        "openpeerpower.components.august.async_setup_entry", return_value=True
+    ) as mock_setup_entry:
+        result3 = await opp.config_entries.flow.async_configure(
+            result2["flow_id"],
+            {VERIFICATION_CODE_KEY: "correct"},
+        )
+        await opp.async_block_till_done()
+
+    assert len(mock_validate_verification_code.mock_calls) == 1
+    assert len(mock_send_verification_code.mock_calls) == 0
+    assert result3["type"] == "abort"
+    assert result3["reason"] == "reauth_successful"
     assert len(mock_setup_entry.mock_calls) == 1

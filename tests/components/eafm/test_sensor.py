@@ -31,12 +31,11 @@ async def async_setup_test_fixture(opp, mock_get_station, initial_value):
         entry_id="VikingRecorder1234",
         data={"station": "L1234"},
         title="Viking Recorder",
-        connection_class=config_entries.CONN_CLASS_CLOUD_PUSH,
     )
     entry.add_to_opp(opp)
 
     assert await async_setup_component(opp, "eafm", {})
-    assert entry.state == config_entries.ENTRY_STATE_LOADED
+    assert entry.state is config_entries.ConfigEntryState.LOADED
     await opp.async_block_till_done()
 
     async def poll(value):
@@ -430,5 +429,6 @@ async def test_unload_entry(opp, mock_get_station):
 
     # And the entity should be unavailable
     assert (
-        opp.states.get("sensor.my_station_water_level_stage").state == STATE_UNAVAILABLE
+        opp.states.get("sensor.my_station_water_level_stage").state
+        == STATE_UNAVAILABLE
     )

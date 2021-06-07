@@ -68,54 +68,55 @@ async def test_setup(opp, mock_feed):
 
     utcnow = dt_util.utcnow()
     # Patching 'utcnow' to gain more control over the timed update.
-    with patch("openpeerpower.util.dt.utcnow", return_value=utcnow):
-        with assert_setup_component(1, sensor.DOMAIN):
-            assert await async_setup_component(opp, sensor.DOMAIN, VALID_CONFIG)
-            # Artificially trigger update.
-            opp.bus.fire(EVENT_OPENPEERPOWER_START)
-            # Collect events.
-            await opp.async_block_till_done()
+    with patch(
+        "openpeerpower.util.dt.utcnow", return_value=utcnow
+    ), assert_setup_component(1, sensor.DOMAIN):
+        assert await async_setup_component(opp, sensor.DOMAIN, VALID_CONFIG)
+        # Artificially trigger update.
+        opp.bus.fire(EVENT_OPENPEERPOWER_START)
+        # Collect events.
+        await opp.async_block_till_done()
 
-            all_states = opp.states.async_all()
-            assert len(all_states) == 1
+        all_states = opp.states.async_all()
+        assert len(all_states) == 1
 
-            state = opp.states.get("sensor.event_service_any")
-            assert state is not None
-            assert state.name == "Event Service Any"
-            assert int(state.state) == 2
-            assert state.attributes == {
-                ATTR_FRIENDLY_NAME: "Event Service Any",
-                ATTR_UNIT_OF_MEASUREMENT: "Events",
-                ATTR_ICON: "mdi:alert",
-                "Title 1": "16km",
-                "Title 2": "20km",
-            }
+        state = opp.states.get("sensor.event_service_any")
+        assert state is not None
+        assert state.name == "Event Service Any"
+        assert int(state.state) == 2
+        assert state.attributes == {
+            ATTR_FRIENDLY_NAME: "Event Service Any",
+            ATTR_UNIT_OF_MEASUREMENT: "Events",
+            ATTR_ICON: "mdi:alert",
+            "Title 1": "16km",
+            "Title 2": "20km",
+        }
 
-            # Simulate an update - empty data, but successful update,
-            # so no changes to entities.
-            mock_feed.return_value.update.return_value = "OK_NO_DATA", None
-            async_fire_time_changed(opp, utcnow + geo_rss_events.SCAN_INTERVAL)
-            await opp.async_block_till_done()
+        # Simulate an update - empty data, but successful update,
+        # so no changes to entities.
+        mock_feed.return_value.update.return_value = "OK_NO_DATA", None
+        async_fire_time_changed(opp, utcnow + geo_rss_events.SCAN_INTERVAL)
+        await opp.async_block_till_done()
 
-            all_states = opp.states.async_all()
-            assert len(all_states) == 1
-            state = opp.states.get("sensor.event_service_any")
-            assert int(state.state) == 2
+        all_states = opp.states.async_all()
+        assert len(all_states) == 1
+        state = opp.states.get("sensor.event_service_any")
+        assert int(state.state) == 2
 
-            # Simulate an update - empty data, removes all entities
-            mock_feed.return_value.update.return_value = "ERROR", None
-            async_fire_time_changed(opp, utcnow + 2 * geo_rss_events.SCAN_INTERVAL)
-            await opp.async_block_till_done()
+        # Simulate an update - empty data, removes all entities
+        mock_feed.return_value.update.return_value = "ERROR", None
+        async_fire_time_changed(opp, utcnow + 2 * geo_rss_events.SCAN_INTERVAL)
+        await opp.async_block_till_done()
 
-            all_states = opp.states.async_all()
-            assert len(all_states) == 1
-            state = opp.states.get("sensor.event_service_any")
-            assert int(state.state) == 0
-            assert state.attributes == {
-                ATTR_FRIENDLY_NAME: "Event Service Any",
-                ATTR_UNIT_OF_MEASUREMENT: "Events",
-                ATTR_ICON: "mdi:alert",
-            }
+        all_states = opp.states.async_all()
+        assert len(all_states) == 1
+        state = opp.states.get("sensor.event_service_any")
+        assert int(state.state) == 0
+        assert state.attributes == {
+            ATTR_FRIENDLY_NAME: "Event Service Any",
+            ATTR_UNIT_OF_MEASUREMENT: "Events",
+            ATTR_ICON: "mdi:alert",
+        }
 
 
 async def test_setup_with_categories(opp, mock_feed):

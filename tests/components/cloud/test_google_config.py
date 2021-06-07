@@ -1,5 +1,5 @@
 """Test the Cloud Google Config."""
-from unittest.mock import AsyncMock, Mock, patch
+from unittest.mock import Mock, patch
 
 import pytest
 
@@ -41,21 +41,19 @@ async def test_google_update_report_state(mock_conf, opp, cloud_prefs):
     assert len(mock_report_state.mock_calls) == 1
 
 
-async def test_sync_entities(aioclient_mock, opp, cloud_prefs):
+async def test_sync_entities(mock_conf, opp, cloud_prefs):
     """Test sync devices."""
-    config = CloudGoogleConfig(
-        opp,
-        GACTIONS_SCHEMA({}),
-        "mock-user-id",
-        cloud_prefs,
-        Mock(auth=Mock(async_check_token=AsyncMock())),
-    )
+    await mock_conf.async_initialize()
+    await mock_conf.async_connect_agent_user("mock-user-id")
+
+    assert len(mock_conf._store.agent_user_ids) == 1
 
     with patch(
-        "opp_net.cloud_api.async_google_actions_request_sync",
+        "opp_nabucasa.cloud_api.async_google_actions_request_sync",
         return_value=Mock(status=HTTP_NOT_FOUND),
     ) as mock_request_sync:
-        assert await config.async_sync_entities("user") == HTTP_NOT_FOUND
+        assert await mock_conf.async_sync_entities("mock-user-id") == HTTP_NOT_FOUND
+        assert len(mock_conf._store.agent_user_ids) == 0
         assert len(mock_request_sync.mock_calls) == 1
 
 
@@ -165,7 +163,29 @@ async def test_google_entity_registry_sync(opp, mock_cloud_login, cloud_prefs):
 
         assert len(mock_sync.mock_calls) == 3
 
+
+async def test_sync_google_when_started(opp, mock_cloud_login, cloud_prefs):
+    """Test Google config syncs on init."""
+    config = CloudGoogleConfig(
+        opp, GACTIONS_SCHEMA({}), "mock-user-id", cloud_prefs, opp.data["cloud"]
+    )
     with patch.object(config, "async_sync_entities_all") as mock_sync:
+        await config.async_initialize()
+        await config.async_connect_agent_user("mock-user-id")
+        assert len(mock_sync.mock_calls) == 1
+
+
+async def test_sync_google_on_open_peer_power_start(opp, mock_cloud_login, cloud_prefs):
+    """Test Google config syncs when open peer power started."""
+    config = CloudGoogleConfig(
+        opp, GACTIONS_SCHEMA({}), "mock-user-id", cloud_prefs, opp.data["cloud"]
+    )
+    opp.state = CoreState.starting
+    with patch.object(config, "async_sync_entities_all") as mock_sync:
+        await config.async_initialize()
+        await config.async_connect_agent_user("mock-user-id")
+        assert len(mock_sync.mock_calls) == 0
+
         opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
         await opp.async_block_till_done()
         assert len(mock_sync.mock_calls) == 1
@@ -205,3 +225,20 @@ def test_enabled_requires_valid_sub(opp, mock_expired_cloud_login, cloud_prefs):
     )
 
     assert not config.enabled
+
+
+async def test_setup_integration(opp, mock_conf, cloud_prefs):
+    """Test that we set up the integration if used."""
+    mock_conf._cloud.subscription_expired = False
+
+    assert "google_assistant" not in opp.config.components
+
+    await mock_conf.async_initialize()
+    await opp.async_block_till_done()
+    assert "google_assistant" in opp.config.components
+
+    opp.config.components.remove("google_assistant")
+
+    await cloud_prefs.async_update()
+    await opp.async_block_till_done()
+    assert "google_assistant" in opp.config.components

@@ -6,6 +6,7 @@ from bond_api import Action, DeviceType
 from openpeerpower import core
 from openpeerpower.components.switch import DOMAIN as SWITCH_DOMAIN
 from openpeerpower.const import ATTR_ENTITY_ID, SERVICE_TURN_OFF, SERVICE_TURN_ON
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.helpers.entity_registry import EntityRegistry
 from openpeerpower.util import utcnow
 
@@ -34,7 +35,7 @@ async def test_entity_registry(opp: core.OpenPeerPower):
         bond_device_id="test-device-id",
     )
 
-    registry: EntityRegistry = await opp.helpers.entity_registry.async_get_registry()
+    registry: EntityRegistry = er.async_get(opp)
     entity = registry.entities["switch.name_1"]
     assert entity.unique_id == "test-hub-id_test-device-id"
 

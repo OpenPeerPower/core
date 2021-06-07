@@ -3,7 +3,7 @@ from unittest.mock import AsyncMock, Mock, call, patch
 
 from openpeerpower.components import dynalite
 from openpeerpower.const import ATTR_SERVICE
-from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers import entity_registry as er
 
 from tests.common import MockConfigEntry
 
@@ -23,7 +23,7 @@ def create_mock_device(platform, spec):
 
 async def get_entry_id_from_opp(opp):
     """Get the config entry id from opp."""
-    ent_reg = await entity_registry.async_get_registry(opp)
+    ent_reg = er.async_get(opp)
     assert ent_reg
     conf_entries = opp.config_entries.async_entries(dynalite.DOMAIN)
     assert len(conf_entries) == 1

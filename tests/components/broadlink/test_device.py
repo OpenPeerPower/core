@@ -5,12 +5,7 @@ import broadlink.exceptions as blke
 
 from openpeerpower.components.broadlink.const import DOMAIN
 from openpeerpower.components.broadlink.device import get_domains
-from openpeerpower.config_entries import (
-    ENTRY_STATE_LOADED,
-    ENTRY_STATE_NOT_LOADED,
-    ENTRY_STATE_SETUP_ERROR,
-    ENTRY_STATE_SETUP_RETRY,
-)
+from openpeerpower.config_entries import ConfigEntryState
 from openpeerpower.helpers.entity_registry import async_entries_for_device
 
 from . import get_device
@@ -24,10 +19,12 @@ async def test_device_setup(opp):
 
     with patch.object(
         opp.config_entries, "async_forward_entry_setup"
-    ) as mock_forward, patch.object(opp.config_entries.flow, "async_init") as mock_init:
+    ) as mock_forward, patch.object(
+        opp.config_entries.flow, "async_init"
+    ) as mock_init:
         mock_api, mock_entry = await device.setup_entry(opp)
 
-    assert mock_entry.state == ENTRY_STATE_LOADED
+    assert mock_entry.state == ConfigEntryState.LOADED
     assert mock_api.auth.call_count == 1
     assert mock_api.get_fwversion.call_count == 1
     forward_entries = {c[1][1] for c in mock_forward.mock_calls}
@@ -45,10 +42,12 @@ async def test_device_setup_authentication_error(opp):
 
     with patch.object(
         opp.config_entries, "async_forward_entry_setup"
-    ) as mock_forward, patch.object(opp.config_entries.flow, "async_init") as mock_init:
+    ) as mock_forward, patch.object(
+        opp.config_entries.flow, "async_init"
+    ) as mock_init:
         mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
-    assert mock_entry.state == ENTRY_STATE_SETUP_ERROR
+    assert mock_entry.state == ConfigEntryState.SETUP_ERROR
     assert mock_api.auth.call_count == 1
     assert mock_forward.call_count == 0
     assert mock_init.call_count == 1
@@ -67,10 +66,12 @@ async def test_device_setup_network_timeout(opp):
 
     with patch.object(
         opp.config_entries, "async_forward_entry_setup"
-    ) as mock_forward, patch.object(opp.config_entries.flow, "async_init") as mock_init:
+    ) as mock_forward, patch.object(
+        opp.config_entries.flow, "async_init"
+    ) as mock_init:
         mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
-    assert mock_entry.state == ENTRY_STATE_SETUP_RETRY
+    assert mock_entry.state is ConfigEntryState.SETUP_RETRY
     assert mock_api.auth.call_count == 1
     assert mock_forward.call_count == 0
     assert mock_init.call_count == 0
@@ -84,10 +85,12 @@ async def test_device_setup_os_error(opp):
 
     with patch.object(
         opp.config_entries, "async_forward_entry_setup"
-    ) as mock_forward, patch.object(opp.config_entries.flow, "async_init") as mock_init:
+    ) as mock_forward, patch.object(
+        opp.config_entries.flow, "async_init"
+    ) as mock_init:
         mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
-    assert mock_entry.state == ENTRY_STATE_SETUP_RETRY
+    assert mock_entry.state is ConfigEntryState.SETUP_RETRY
     assert mock_api.auth.call_count == 1
     assert mock_forward.call_count == 0
     assert mock_init.call_count == 0
@@ -101,10 +104,12 @@ async def test_device_setup_broadlink_exception(opp):
 
     with patch.object(
         opp.config_entries, "async_forward_entry_setup"
-    ) as mock_forward, patch.object(opp.config_entries.flow, "async_init") as mock_init:
+    ) as mock_forward, patch.object(
+        opp.config_entries.flow, "async_init"
+    ) as mock_init:
         mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
-    assert mock_entry.state == ENTRY_STATE_SETUP_ERROR
+    assert mock_entry.state is ConfigEntryState.SETUP_ERROR
     assert mock_api.auth.call_count == 1
     assert mock_forward.call_count == 0
     assert mock_init.call_count == 0
@@ -118,10 +123,12 @@ async def test_device_setup_update_network_timeout(opp):
 
     with patch.object(
         opp.config_entries, "async_forward_entry_setup"
-    ) as mock_forward, patch.object(opp.config_entries.flow, "async_init") as mock_init:
+    ) as mock_forward, patch.object(
+        opp.config_entries.flow, "async_init"
+    ) as mock_init:
         mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
-    assert mock_entry.state == ENTRY_STATE_SETUP_RETRY
+    assert mock_entry.state is ConfigEntryState.SETUP_RETRY
     assert mock_api.auth.call_count == 1
     assert mock_api.check_sensors.call_count == 1
     assert mock_forward.call_count == 0
@@ -132,14 +139,19 @@ async def test_device_setup_update_authorization_error(opp):
     """Test we handle an authorization error in the update step."""
     device = get_device("Office")
     mock_api = device.get_mock_api()
-    mock_api.check_sensors.side_effect = (blke.AuthorizationError(), None)
+    mock_api.check_sensors.side_effect = (
+        blke.AuthorizationError(),
+        {"temperature": 30},
+    )
 
     with patch.object(
         opp.config_entries, "async_forward_entry_setup"
-    ) as mock_forward, patch.object(opp.config_entries.flow, "async_init") as mock_init:
+    ) as mock_forward, patch.object(
+        opp.config_entries.flow, "async_init"
+    ) as mock_init:
         mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
-    assert mock_entry.state == ENTRY_STATE_LOADED
+    assert mock_entry.state is ConfigEntryState.LOADED
     assert mock_api.auth.call_count == 2
     assert mock_api.check_sensors.call_count == 2
     forward_entries = {c[1][1] for c in mock_forward.mock_calls}
@@ -158,10 +170,12 @@ async def test_device_setup_update_authentication_error(opp):
 
     with patch.object(
         opp.config_entries, "async_forward_entry_setup"
-    ) as mock_forward, patch.object(opp.config_entries.flow, "async_init") as mock_init:
+    ) as mock_forward, patch.object(
+        opp.config_entries.flow, "async_init"
+    ) as mock_init:
         mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
-    assert mock_entry.state == ENTRY_STATE_SETUP_RETRY
+    assert mock_entry.state is ConfigEntryState.SETUP_RETRY
     assert mock_api.auth.call_count == 2
     assert mock_api.check_sensors.call_count == 1
     assert mock_forward.call_count == 0
@@ -181,10 +195,12 @@ async def test_device_setup_update_broadlink_exception(opp):
 
     with patch.object(
         opp.config_entries, "async_forward_entry_setup"
-    ) as mock_forward, patch.object(opp.config_entries.flow, "async_init") as mock_init:
+    ) as mock_forward, patch.object(
+        opp.config_entries.flow, "async_init"
+    ) as mock_init:
         mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
-    assert mock_entry.state == ENTRY_STATE_SETUP_RETRY
+    assert mock_entry.state is ConfigEntryState.SETUP_RETRY
     assert mock_api.auth.call_count == 1
     assert mock_api.check_sensors.call_count == 1
     assert mock_forward.call_count == 0
@@ -200,7 +216,7 @@ async def test_device_setup_get_fwversion_broadlink_exception(opp):
     with patch.object(opp.config_entries, "async_forward_entry_setup") as mock_forward:
         mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
-    assert mock_entry.state == ENTRY_STATE_LOADED
+    assert mock_entry.state is ConfigEntryState.LOADED
     forward_entries = {c[1][1] for c in mock_forward.mock_calls}
     domains = get_domains(mock_api.type)
     assert mock_forward.call_count == len(domains)
@@ -216,7 +232,7 @@ async def test_device_setup_get_fwversion_os_error(opp):
     with patch.object(opp.config_entries, "async_forward_entry_setup") as mock_forward:
         _, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
-    assert mock_entry.state == ENTRY_STATE_LOADED
+    assert mock_entry.state is ConfigEntryState.LOADED
     forward_entries = {c[1][1] for c in mock_forward.mock_calls}
     domains = get_domains(mock_api.type)
     assert mock_forward.call_count == len(domains)
@@ -258,7 +274,7 @@ async def test_device_unload_works(opp):
     ) as mock_forward:
         await opp.config_entries.async_unload(mock_entry.entry_id)
 
-    assert mock_entry.state == ENTRY_STATE_NOT_LOADED
+    assert mock_entry.state is ConfigEntryState.NOT_LOADED
     forward_entries = {c[1][1] for c in mock_forward.mock_calls}
     domains = get_domains(mock_api.type)
     assert mock_forward.call_count == len(domains)
@@ -281,7 +297,7 @@ async def test_device_unload_authentication_error(opp):
     ) as mock_forward:
         await opp.config_entries.async_unload(mock_entry.entry_id)
 
-    assert mock_entry.state == ENTRY_STATE_NOT_LOADED
+    assert mock_entry.state is ConfigEntryState.NOT_LOADED
     assert mock_forward.call_count == 0
 
 
@@ -299,7 +315,7 @@ async def test_device_unload_update_failed(opp):
     ) as mock_forward:
         await opp.config_entries.async_unload(mock_entry.entry_id)
 
-    assert mock_entry.state == ENTRY_STATE_NOT_LOADED
+    assert mock_entry.state is ConfigEntryState.NOT_LOADED
     assert mock_forward.call_count == 0
 
 

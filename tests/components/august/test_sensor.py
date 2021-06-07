@@ -1,6 +1,6 @@
 """The sensor tests for the august platform."""
-
 from openpeerpower.const import ATTR_UNIT_OF_MEASUREMENT, PERCENTAGE, STATE_UNKNOWN
+from openpeerpower.helpers import entity_registry as er
 
 from tests.components.august.mocks import (
     _create_august_with_devices,
@@ -29,7 +29,7 @@ async def test_create_doorbell_offline(opp):
     """Test creation of a doorbell that is offline."""
     doorbell_one = await _mock_doorbell_from_fixture(opp, "get_doorbell.offline.json")
     await _create_august_with_devices(opp, [doorbell_one])
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     sensor_tmt100_name_battery = opp.states.get("sensor.tmt100_name_battery")
     assert sensor_tmt100_name_battery.state == "81"
@@ -42,7 +42,9 @@ async def test_create_doorbell_offline(opp):
 
 async def test_create_doorbell_hardwired(opp):
     """Test creation of a doorbell that is hardwired without a battery."""
-    doorbell_one = await _mock_doorbell_from_fixture(opp, "get_doorbell.nobattery.json")
+    doorbell_one = await _mock_doorbell_from_fixture(
+        opp, "get_doorbell.nobattery.json"
+    )
     await _create_august_with_devices(opp, [doorbell_one])
 
     sensor_tmt100_name_battery = opp.states.get("sensor.tmt100_name_battery")
@@ -53,7 +55,7 @@ async def test_create_lock_with_linked_keypad(opp):
     """Test creation of a lock with a linked keypad that both have a battery."""
     lock_one = await _mock_lock_from_fixture(opp, "get_lock.doorsense_init.json")
     await _create_august_with_devices(opp, [lock_one])
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     sensor_a6697750d607098bae8d6baa11ef8063_name_battery = opp.states.get(
         "sensor.a6697750d607098bae8d6baa11ef8063_name_battery"
@@ -83,7 +85,7 @@ async def test_create_lock_with_low_battery_linked_keypad(opp):
     """Test creation of a lock with a linked keypad that both have a battery."""
     lock_one = await _mock_lock_from_fixture(opp, "get_lock.low_keypad_battery.json")
     await _create_august_with_devices(opp, [lock_one])
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     sensor_a6697750d607098bae8d6baa11ef8063_name_battery = opp.states.get(
         "sensor.a6697750d607098bae8d6baa11ef8063_name_battery"
@@ -131,7 +133,7 @@ async def test_lock_operator_bluetooth(opp):
     )
     await _create_august_with_devices(opp, [lock_one], activities=activities)
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
     lock_operator_sensor = entity_registry.async_get(
         "sensor.online_with_doorsense_name_operator"
     )
@@ -175,7 +177,7 @@ async def test_lock_operator_keypad(opp):
     )
     await _create_august_with_devices(opp, [lock_one], activities=activities)
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
     lock_operator_sensor = entity_registry.async_get(
         "sensor.online_with_doorsense_name_operator"
     )
@@ -217,7 +219,7 @@ async def test_lock_operator_remote(opp):
     activities = await _mock_activities_from_fixture(opp, "get_activity.lock.json")
     await _create_august_with_devices(opp, [lock_one], activities=activities)
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
     lock_operator_sensor = entity_registry.async_get(
         "sensor.online_with_doorsense_name_operator"
     )
@@ -261,7 +263,7 @@ async def test_lock_operator_autorelock(opp):
     )
     await _create_august_with_devices(opp, [lock_one], activities=activities)
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
     lock_operator_sensor = entity_registry.async_get(
         "sensor.online_with_doorsense_name_operator"
     )

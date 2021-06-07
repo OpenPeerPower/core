@@ -34,7 +34,7 @@ async def test_google_entity_sync_serialize_with_local_sdk(opp):
 
     opp.http = Mock(server_port=1234)
     config = MockConfig(
-        opp=opp,
+        opp.opp,
         local_sdk_webhook_id="mock-webhook-id",
         local_sdk_user_id="mock-user-id",
     )
@@ -77,7 +77,7 @@ async def test_config_local_sdk(opp, opp_client):
     assert await async_setup_component(opp, "webhook", {})
 
     config = MockConfig(
-        opp=opp,
+        opp.opp,
         local_sdk_webhook_id="mock-webhook-id",
         local_sdk_user_id="mock-user-id",
     )
@@ -135,7 +135,7 @@ async def test_config_local_sdk_if_disabled(opp, opp_client):
     assert await async_setup_component(opp, "webhook", {})
 
     config = MockConfig(
-        opp=opp,
+        opp.opp,
         local_sdk_webhook_id="mock-webhook-id",
         local_sdk_user_id="mock-user-id",
         enabled=False,

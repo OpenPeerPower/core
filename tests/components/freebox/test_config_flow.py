@@ -11,7 +11,7 @@ from openpeerpower import data_entry_flow
 from openpeerpower.components.freebox.const import DOMAIN
 from openpeerpower.config_entries import SOURCE_IMPORT, SOURCE_USER, SOURCE_ZEROCONF
 from openpeerpower.const import CONF_HOST, CONF_PORT
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from .const import MOCK_HOST, MOCK_PORT
 
@@ -37,7 +37,7 @@ MOCK_ZEROCONF_DATA = {
 }
 
 
-async def test_user(opp: OpenPeerPowerType):
+async def test_user(opp: OpenPeerPower):
     """Test user config."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -55,7 +55,7 @@ async def test_user(opp: OpenPeerPowerType):
     assert result["step_id"] == "link"
 
 
-async def test_import(opp: OpenPeerPowerType):
+async def test_import(opp: OpenPeerPower):
     """Test import step."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -66,7 +66,7 @@ async def test_import(opp: OpenPeerPowerType):
     assert result["step_id"] == "link"
 
 
-async def test_zeroconf(opp: OpenPeerPowerType):
+async def test_zeroconf(opp: OpenPeerPower):
     """Test zeroconf step."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -77,7 +77,7 @@ async def test_zeroconf(opp: OpenPeerPowerType):
     assert result["step_id"] == "link"
 
 
-async def test_link(opp: OpenPeerPowerType, router: Mock):
+async def test_link(opp: OpenPeerPower, router: Mock):
     """Test linking."""
     with patch(
         "openpeerpower.components.freebox.async_setup", return_value=True
@@ -102,7 +102,7 @@ async def test_link(opp: OpenPeerPowerType, router: Mock):
         assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_abort_if_already_setup(opp: OpenPeerPowerType):
+async def test_abort_if_already_setup(opp: OpenPeerPower):
     """Test we abort if component is already setup."""
     MockConfigEntry(
         domain=DOMAIN,
@@ -129,7 +129,7 @@ async def test_abort_if_already_setup(opp: OpenPeerPowerType):
     assert result["reason"] == "already_configured"
 
 
-async def test_on_link_failed(opp: OpenPeerPowerType):
+async def test_on_link_failed(opp: OpenPeerPower):
     """Test when we have errors during linking the router."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

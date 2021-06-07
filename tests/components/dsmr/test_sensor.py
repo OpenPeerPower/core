@@ -11,6 +11,7 @@ from decimal import Decimal
 from itertools import chain, repeat
 from unittest.mock import DEFAULT, MagicMock
 
+from openpeerpower import config_entries
 from openpeerpower.components.dsmr.const import DOMAIN
 from openpeerpower.components.dsmr.sensor import DerivativeDSMREntity
 from openpeerpower.components.sensor import DOMAIN as SENSOR_DOMAIN
@@ -19,6 +20,7 @@ from openpeerpower.const import (
     VOLUME_CUBIC_METERS,
     VOLUME_FLOW_RATE_CUBIC_METERS_PER_HOUR,
 )
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry, patch
@@ -38,7 +40,7 @@ async def test_setup_platform(opp, dsmr_connection_fixture):
 
     serial_data = {"serial_id": "1234", "serial_id_gas": "5678"}
 
-    with patch("openpeerpower.components.dsmr.async_setup", return_value=True), patch(
+    with patch(
         "openpeerpower.components.dsmr.async_setup_entry", return_value=True
     ), patch(
         "openpeerpower.components.dsmr.config_flow._validate_dsmr_connection",
@@ -58,7 +60,7 @@ async def test_setup_platform(opp, dsmr_connection_fixture):
 
     entry = conf_entries[0]
 
-    assert entry.state == "loaded"
+    assert entry.state == config_entries.ConfigEntryState.LOADED
     assert entry.data == {**entry_data, **serial_data}
 
 
@@ -107,7 +109,7 @@ async def test_default_setup(opp, dsmr_connection_fixture):
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     entry = registry.async_get("sensor.power_consumption")
     assert entry
@@ -167,7 +169,7 @@ async def test_setup_only_energy(opp, dsmr_connection_fixture):
     await opp.config_entries.async_setup(mock_entry.entry_id)
     await opp.async_block_till_done()
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     entry = registry.async_get("sensor.power_consumption")
     assert entry
@@ -624,4 +626,4 @@ async def test_reconnect(opp, dsmr_connection_fixture):
 
     await opp.config_entries.async_unload(mock_entry.entry_id)
 
-    assert mock_entry.state == "not_loaded"
+    assert mock_entry.state == config_entries.ConfigEntryState.NOT_LOADED

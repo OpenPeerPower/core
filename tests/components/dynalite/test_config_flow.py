@@ -13,9 +13,9 @@ from tests.common import MockConfigEntry
 @pytest.mark.parametrize(
     "first_con, second_con,exp_type, exp_result, exp_reason",
     [
-        (True, True, "create_entry", "loaded", ""),
-        (False, False, "abort", "", "no_connection"),
-        (True, False, "create_entry", "setup_retry", ""),
+        (True, True, "create_entry", config_entries.ConfigEntryState.LOADED, ""),
+        (False, False, "abort", None, "no_connection"),
+        (True, False, "create_entry", config_entries.ConfigEntryState.SETUP_RETRY, ""),
     ],
 )
 async def test_flow(opp, first_con, second_con, exp_type, exp_result, exp_reason):
@@ -41,9 +41,9 @@ async def test_flow(opp, first_con, second_con, exp_type, exp_result, exp_reason
 async def test_existing(opp):
     """Test when the entry exists with the same config."""
     host = "1.2.3.4"
-    MockConfigEntry(domain=dynalite.DOMAIN, data={dynalite.CONF_HOST: host}).add_to_opp(
-        opp
-    )
+    MockConfigEntry(
+        domain=dynalite.DOMAIN, data={dynalite.CONF_HOST: host}
+    ).add_to_opp(opp)
     with patch(
         "openpeerpower.components.dynalite.bridge.DynaliteDevices.async_setup",
         return_value=True,
@@ -104,4 +104,4 @@ async def test_two_entries(opp):
             data={dynalite.CONF_HOST: host2},
         )
     assert result["type"] == "create_entry"
-    assert result["result"].state == "loaded"
+    assert result["result"].state == config_entries.ConfigEntryState.LOADED

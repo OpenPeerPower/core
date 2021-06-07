@@ -1,4 +1,5 @@
 """Tests for emulated_roku config flow."""
+from openpeerpower import config_entries
 from openpeerpower.components.emulated_roku import config_flow
 
 from tests.common import MockConfigEntry
@@ -6,10 +7,10 @@ from tests.common import MockConfigEntry
 
 async def test_flow_works(opp):
     """Test that config flow works."""
-    flow = config_flow.EmulatedRokuFlowHandler()
-    flow.opp = opp
-    result = await flow.async_step_user(
-        user_input={"name": "Emulated Roku Test", "listen_port": 8060}
+    result = await opp.config_entries.flow.async_init(
+        config_flow.DOMAIN,
+        context={"source": config_entries.SOURCE_USER},
+        data={"name": "Emulated Roku Test", "listen_port": 8060},
     )
 
     assert result["type"] == "create_entry"
@@ -22,10 +23,12 @@ async def test_flow_already_registered_entry(opp):
     MockConfigEntry(
         domain="emulated_roku", data={"name": "Emulated Roku Test", "listen_port": 8062}
     ).add_to_opp(opp)
-    flow = config_flow.EmulatedRokuFlowHandler()
-    flow.opp = opp
 
-    result = await flow.async_step_user(
-        user_input={"name": "Emulated Roku Test", "listen_port": 8062}
+    result = await opp.config_entries.flow.async_init(
+        config_flow.DOMAIN,
+        context={"source": config_entries.SOURCE_USER},
+        data={"name": "Emulated Roku Test", "listen_port": 8062},
     )
+
     assert result["type"] == "abort"
+    assert result["reason"] == "already_configured"

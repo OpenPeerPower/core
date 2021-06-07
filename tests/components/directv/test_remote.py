@@ -7,7 +7,8 @@ from openpeerpower.components.remote import (
     SERVICE_SEND_COMMAND,
 )
 from openpeerpower.const import ATTR_ENTITY_ID, SERVICE_TURN_OFF, SERVICE_TURN_ON
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import entity_registry as er
 
 from tests.components.directv import setup_integration
 from tests.test_util.aiohttp import AiohttpClientMocker
@@ -20,9 +21,7 @@ UNAVAILABLE_ENTITY_ID = f"{REMOTE_DOMAIN}.unavailable_client"
 # pylint: disable=redefined-outer-name
 
 
-async def test_setup(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
-) -> None:
+async def test_setup(opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker) -> None:
     """Test setup with basic config."""
     await setup_integration(opp, aioclient_mock)
     assert opp.states.get(MAIN_ENTITY_ID)
@@ -31,12 +30,12 @@ async def test_setup(
 
 
 async def test_unique_id(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test unique id."""
     await setup_integration(opp, aioclient_mock)
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     main = entity_registry.async_get(MAIN_ENTITY_ID)
     assert main.unique_id == "028877455858"
@@ -49,7 +48,7 @@ async def test_unique_id(
 
 
 async def test_main_services(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the different services."""
     await setup_integration(opp, aioclient_mock)

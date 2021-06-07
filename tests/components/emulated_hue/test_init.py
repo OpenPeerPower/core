@@ -1,103 +1,101 @@
 """Test the Emulated Hue component."""
-from unittest.mock import MagicMock, Mock, patch
+from datetime import timedelta
 
-from openpeerpower.components.emulated_hue import Config
+from openpeerpower.components.emulated_hue import (
+    DATA_KEY,
+    DATA_VERSION,
+    SAVE_DELAY,
+    Config,
+)
+from openpeerpower.util import utcnow
+
+from tests.common import async_fire_time_changed
 
 
-def test_config_google_home_entity_id_to_number():
+async def test_config_google_home_entity_id_to_number(opp, opp_storage):
     """Test config adheres to the type."""
-    mock_opp = Mock()
-    mock_opp.config.path = MagicMock("path", return_value="test_path")
-    conf = Config(mock_opp, {"type": "google_home"})
+    conf = Config(opp, {"type": "google_home"})
+    opp_storage[DATA_KEY] = {
+        "version": DATA_VERSION,
+        "key": DATA_KEY,
+        "data": {"1": "light.test2"},
+    }
 
-    with patch(
-        "openpeerpower.components.emulated_hue.load_json",
-        return_value={"1": "light.test2"},
-    ) as json_loader:
-        with patch("openpeerpower.components.emulated_hue.save_json") as json_saver:
-            number = conf.entity_id_to_number("light.test")
-            assert number == "2"
+    await conf.async_setup()
 
-            assert json_saver.mock_calls[0][1][1] == {
-                "1": "light.test2",
-                "2": "light.test",
-            }
+    number = conf.entity_id_to_number("light.test")
+    assert number == "2"
 
-            assert json_saver.call_count == 1
-            assert json_loader.call_count == 1
+    async_fire_time_changed(opp, utcnow() + timedelta(seconds=SAVE_DELAY))
+    await opp.async_block_till_done()
+    assert opp_storage[DATA_KEY]["data"] == {
+        "1": "light.test2",
+        "2": "light.test",
+    }
 
-            number = conf.entity_id_to_number("light.test")
-            assert number == "2"
-            assert json_saver.call_count == 1
+    number = conf.entity_id_to_number("light.test")
+    assert number == "2"
 
-            number = conf.entity_id_to_number("light.test2")
-            assert number == "1"
-            assert json_saver.call_count == 1
+    number = conf.entity_id_to_number("light.test2")
+    assert number == "1"
 
-            entity_id = conf.number_to_entity_id("1")
-            assert entity_id == "light.test2"
+    entity_id = conf.number_to_entity_id("1")
+    assert entity_id == "light.test2"
 
 
-def test_config_google_home_entity_id_to_number_altered():
+async def test_config_google_home_entity_id_to_number_altered(opp, opp_storage):
     """Test config adheres to the type."""
-    mock_opp = Mock()
-    mock_opp.config.path = MagicMock("path", return_value="test_path")
-    conf = Config(mock_opp, {"type": "google_home"})
+    conf = Config(opp, {"type": "google_home"})
+    opp_storage[DATA_KEY] = {
+        "version": DATA_VERSION,
+        "key": DATA_KEY,
+        "data": {"21": "light.test2"},
+    }
 
-    with patch(
-        "openpeerpower.components.emulated_hue.load_json",
-        return_value={"21": "light.test2"},
-    ) as json_loader:
-        with patch("openpeerpower.components.emulated_hue.save_json") as json_saver:
-            number = conf.entity_id_to_number("light.test")
-            assert number == "22"
-            assert json_saver.call_count == 1
-            assert json_loader.call_count == 1
+    await conf.async_setup()
 
-            assert json_saver.mock_calls[0][1][1] == {
-                "21": "light.test2",
-                "22": "light.test",
-            }
+    number = conf.entity_id_to_number("light.test")
+    assert number == "22"
 
-            number = conf.entity_id_to_number("light.test")
-            assert number == "22"
-            assert json_saver.call_count == 1
+    async_fire_time_changed(opp, utcnow() + timedelta(seconds=SAVE_DELAY))
+    await opp.async_block_till_done()
+    assert opp_storage[DATA_KEY]["data"] == {
+        "21": "light.test2",
+        "22": "light.test",
+    }
 
-            number = conf.entity_id_to_number("light.test2")
-            assert number == "21"
-            assert json_saver.call_count == 1
+    number = conf.entity_id_to_number("light.test")
+    assert number == "22"
 
-            entity_id = conf.number_to_entity_id("21")
-            assert entity_id == "light.test2"
+    number = conf.entity_id_to_number("light.test2")
+    assert number == "21"
+
+    entity_id = conf.number_to_entity_id("21")
+    assert entity_id == "light.test2"
 
 
-def test_config_google_home_entity_id_to_number_empty():
+async def test_config_google_home_entity_id_to_number_empty(opp, opp_storage):
     """Test config adheres to the type."""
-    mock_opp = Mock()
-    mock_opp.config.path = MagicMock("path", return_value="test_path")
-    conf = Config(mock_opp, {"type": "google_home"})
+    conf = Config(opp, {"type": "google_home"})
+    opp_storage[DATA_KEY] = {"version": DATA_VERSION, "key": DATA_KEY, "data": {}}
 
-    with patch(
-        "openpeerpower.components.emulated_hue.load_json", return_value={}
-    ) as json_loader:
-        with patch("openpeerpower.components.emulated_hue.save_json") as json_saver:
-            number = conf.entity_id_to_number("light.test")
-            assert number == "1"
-            assert json_saver.call_count == 1
-            assert json_loader.call_count == 1
+    await conf.async_setup()
 
-            assert json_saver.mock_calls[0][1][1] == {"1": "light.test"}
+    number = conf.entity_id_to_number("light.test")
+    assert number == "1"
 
-            number = conf.entity_id_to_number("light.test")
-            assert number == "1"
-            assert json_saver.call_count == 1
+    async_fire_time_changed(opp, utcnow() + timedelta(seconds=SAVE_DELAY))
+    await opp.async_block_till_done()
+    assert opp_storage[DATA_KEY]["data"] == {"1": "light.test"}
 
-            number = conf.entity_id_to_number("light.test2")
-            assert number == "2"
-            assert json_saver.call_count == 2
+    number = conf.entity_id_to_number("light.test")
+    assert number == "1"
 
-            entity_id = conf.number_to_entity_id("2")
-            assert entity_id == "light.test2"
+    number = conf.entity_id_to_number("light.test2")
+    assert number == "2"
+
+    entity_id = conf.number_to_entity_id("2")
+    assert entity_id == "light.test2"
 
 
 def test_config_alexa_entity_id_to_number():

@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 from glances_api import Glances
 
-from openpeerpower import data_entry_flow
+from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.components import glances
 from openpeerpower.const import CONF_SCAN_INTERVAL
 
@@ -33,7 +33,7 @@ async def test_form(opp):
     """Test config entry configured successfully."""
 
     result = await opp.config_entries.flow.async_init(
-        glances.DOMAIN, context={"source": "user"}
+        glances.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
@@ -56,7 +56,7 @@ async def test_form_cannot_connect(opp):
 
     with patch("glances_api.Glances"):
         result = await opp.config_entries.flow.async_init(
-            glances.DOMAIN, context={"source": "user"}
+            glances.DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
         result = await opp.config_entries.flow.async_configure(
             result["flow_id"], user_input=DEMO_USER_INPUT
@@ -72,7 +72,7 @@ async def test_form_wrong_version(opp):
     user_input = DEMO_USER_INPUT.copy()
     user_input.update(version=1)
     result = await opp.config_entries.flow.async_init(
-        glances.DOMAIN, context={"source": "user"}
+        glances.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=user_input
@@ -90,7 +90,7 @@ async def test_form_already_configured(opp):
     entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
-        glances.DOMAIN, context={"source": "user"}
+        glances.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=DEMO_USER_INPUT

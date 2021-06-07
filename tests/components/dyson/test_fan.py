@@ -1,5 +1,5 @@
 """Test the Dyson fan component."""
-from typing import Type
+from __future__ import annotations
 
 from libpurecool.const import FanMode, FanSpeed, NightMode, Oscillation
 from libpurecool.dyson_pure_cool import DysonPureCool, DysonPureCoolLink
@@ -52,7 +52,7 @@ from openpeerpower.const import (
     STATE_ON,
 )
 from openpeerpower.core import OpenPeerPower, callback
-from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers import entity_registry as er
 
 from .common import (
     ENTITY_NAME,
@@ -67,7 +67,7 @@ ENTITY_ID = f"{PLATFORM_DOMAIN}.{ENTITY_NAME}"
 
 
 @callback
-def async_get_device(spec: Type[DysonPureCoolLink]) -> DysonPureCoolLink:
+def async_get_device(spec: type[DysonPureCoolLink]) -> DysonPureCoolLink:
     """Return a Dyson fan device."""
     if spec == DysonPureCoolLink:
         return async_get_purecoollink_device()
@@ -79,8 +79,8 @@ async def test_state_purecoollink(
     opp: OpenPeerPower, device: DysonPureCoolLink
 ) -> None:
     """Test the state of a PureCoolLink fan."""
-    er = await entity_registry.async_get_registry(opp)
-    assert er.async_get(ENTITY_ID).unique_id == SERIAL
+    entity_registry = er.async_get(opp)
+    assert entity_registry.async_get(ENTITY_ID).unique_id == SERIAL
 
     state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON
@@ -128,8 +128,8 @@ async def test_state_purecoollink(
 @pytest.mark.parametrize("device", [DysonPureCool], indirect=True)
 async def test_state_purecool(opp: OpenPeerPower, device: DysonPureCool) -> None:
     """Test the state of a PureCool fan."""
-    er = await entity_registry.async_get_registry(opp)
-    assert er.async_get(ENTITY_ID).unique_id == SERIAL
+    entity_registry = er.async_get(opp)
+    assert entity_registry.async_get(ENTITY_ID).unique_id == SERIAL
 
     state = opp.states.get(ENTITY_ID)
     assert state.state == STATE_ON

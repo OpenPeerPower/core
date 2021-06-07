@@ -1,15 +1,14 @@
 """Test init of GIOS integration."""
+import json
 from unittest.mock import patch
 
 from openpeerpower.components.gios.const import DOMAIN
-from openpeerpower.config_entries import (
-    ENTRY_STATE_LOADED,
-    ENTRY_STATE_NOT_LOADED,
-    ENTRY_STATE_SETUP_RETRY,
-)
+from openpeerpower.config_entries import ConfigEntryState
 from openpeerpower.const import STATE_UNAVAILABLE
 
-from tests.common import MockConfigEntry
+from . import STATIONS
+
+from tests.common import MockConfigEntry, load_fixture, mock_device_registry
 from tests.components.gios import init_integration
 
 
@@ -38,7 +37,7 @@ async def test_config_not_ready(opp):
     ):
         entry.add_to_opp(opp)
         await opp.config_entries.async_setup(entry.entry_id)
-        assert entry.state == ENTRY_STATE_SETUP_RETRY
+        assert entry.state is ConfigEntryState.SETUP_RETRY
 
 
 async def test_unload_entry(opp):
@@ -46,10 +45,53 @@ async def test_unload_entry(opp):
     entry = await init_integration(opp)
 
     assert len(opp.config_entries.async_entries(DOMAIN)) == 1
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
 
     assert await opp.config_entries.async_unload(entry.entry_id)
     await opp.async_block_till_done()
 
-    assert entry.state == ENTRY_STATE_NOT_LOADED
+    assert entry.state is ConfigEntryState.NOT_LOADED
     assert not opp.data.get(DOMAIN)
+
+
+async def test_migrate_device_and_config_entry(opp):
+    """Test device_info identifiers and config entry migration."""
+    config_entry = MockConfigEntry(
+        domain=DOMAIN,
+        title="Home",
+        unique_id=123,
+        data={
+            "station_id": 123,
+            "name": "Home",
+        },
+    )
+
+    indexes = json.loads(load_fixture("gios/indexes.json"))
+    station = json.loads(load_fixture("gios/station.json"))
+    sensors = json.loads(load_fixture("gios/sensors.json"))
+
+    with patch(
+        "openpeerpower.components.gios.Gios._get_stations", return_value=STATIONS
+    ), patch(
+        "openpeerpower.components.gios.Gios._get_station",
+        return_value=station,
+    ), patch(
+        "openpeerpower.components.gios.Gios._get_all_sensors",
+        return_value=sensors,
+    ), patch(
+        "openpeerpower.components.gios.Gios._get_indexes", return_value=indexes
+    ):
+        config_entry.add_to_opp(opp)
+
+        device_reg = mock_device_registry(opp)
+        device_entry = device_reg.async_get_or_create(
+            config_entry_id=config_entry.entry_id, identifiers={(DOMAIN, 123)}
+        )
+
+        await opp.config_entries.async_setup(config_entry.entry_id)
+        await opp.async_block_till_done()
+
+        migrated_device_entry = device_reg.async_get_or_create(
+            config_entry_id=config_entry.entry_id, identifiers={(DOMAIN, "123")}
+        )
+        assert device_entry.id == migrated_device_entry.id

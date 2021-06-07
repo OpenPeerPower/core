@@ -127,7 +127,9 @@ async def test_invalid_config_no_lights(opp):
         await opp.async_block_till_done()
 
 
-async def test_flux_when_switch_is_off(opp, legacy_patchable_time):
+async def test_flux_when_switch_is_off(
+    opp, legacy_patchable_time, enable_custom_integrations
+):
     """Test the flux switch when it is off."""
     platform = getattr(opp.components, "test.light")
     platform.init()
@@ -140,7 +142,7 @@ async def test_flux_when_switch_is_off(opp, legacy_patchable_time):
 
     # Verify initial state of light
     state = opp.states.get(ent1.entity_id)
-    assert STATE_ON == state.state
+    assert state.state == STATE_ON
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
 
@@ -178,7 +180,9 @@ async def test_flux_when_switch_is_off(opp, legacy_patchable_time):
     assert not turn_on_calls
 
 
-async def test_flux_before_sunrise(opp, legacy_patchable_time):
+async def test_flux_before_sunrise(
+    opp, legacy_patchable_time, enable_custom_integrations
+):
     """Test the flux switch before sunrise."""
     platform = getattr(opp.components, "test.light")
     platform.init()
@@ -191,7 +195,7 @@ async def test_flux_before_sunrise(opp, legacy_patchable_time):
 
     # Verify initial state of light
     state = opp.states.get(ent1.entity_id)
-    assert STATE_ON == state.state
+    assert state.state == STATE_ON
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
 
@@ -237,7 +241,9 @@ async def test_flux_before_sunrise(opp, legacy_patchable_time):
     assert call.data[light.ATTR_XY_COLOR] == [0.606, 0.379]
 
 
-async def test_flux_before_sunrise_known_location(opp, legacy_patchable_time):
+async def test_flux_before_sunrise_known_location(
+    opp, legacy_patchable_time, enable_custom_integrations
+):
     """Test the flux switch before sunrise."""
     platform = getattr(opp.components, "test.light")
     platform.init()
@@ -250,7 +256,7 @@ async def test_flux_before_sunrise_known_location(opp, legacy_patchable_time):
 
     # Verify initial state of light
     state = opp.states.get(ent1.entity_id)
-    assert STATE_ON == state.state
+    assert state.state == STATE_ON
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
 
@@ -296,7 +302,9 @@ async def test_flux_before_sunrise_known_location(opp, legacy_patchable_time):
 
 
 # pylint: disable=invalid-name
-async def test_flux_after_sunrise_before_sunset(opp, legacy_patchable_time):
+async def test_flux_after_sunrise_before_sunset(
+    opp, legacy_patchable_time, enable_custom_integrations
+):
     """Test the flux switch after sunrise and before sunset."""
     platform = getattr(opp.components, "test.light")
     platform.init()
@@ -309,7 +317,7 @@ async def test_flux_after_sunrise_before_sunset(opp, legacy_patchable_time):
 
     # Verify initial state of light
     state = opp.states.get(ent1.entity_id)
-    assert STATE_ON == state.state
+    assert state.state == STATE_ON
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
 
@@ -355,7 +363,9 @@ async def test_flux_after_sunrise_before_sunset(opp, legacy_patchable_time):
 
 
 # pylint: disable=invalid-name
-async def test_flux_after_sunset_before_stop(opp, legacy_patchable_time):
+async def test_flux_after_sunset_before_stop(
+    opp, legacy_patchable_time, enable_custom_integrations
+):
     """Test the flux switch after sunset and before stop."""
     platform = getattr(opp.components, "test.light")
     platform.init()
@@ -368,7 +378,7 @@ async def test_flux_after_sunset_before_stop(opp, legacy_patchable_time):
 
     # Verify initial state of light
     state = opp.states.get(ent1.entity_id)
-    assert STATE_ON == state.state
+    assert state.state == STATE_ON
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
 
@@ -415,7 +425,9 @@ async def test_flux_after_sunset_before_stop(opp, legacy_patchable_time):
 
 
 # pylint: disable=invalid-name
-async def test_flux_after_stop_before_sunrise(opp, legacy_patchable_time):
+async def test_flux_after_stop_before_sunrise(
+    opp, legacy_patchable_time, enable_custom_integrations
+):
     """Test the flux switch after stop and before sunrise."""
     platform = getattr(opp.components, "test.light")
     platform.init()
@@ -428,7 +440,7 @@ async def test_flux_after_stop_before_sunrise(opp, legacy_patchable_time):
 
     # Verify initial state of light
     state = opp.states.get(ent1.entity_id)
-    assert STATE_ON == state.state
+    assert state.state == STATE_ON
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
 
@@ -474,7 +486,9 @@ async def test_flux_after_stop_before_sunrise(opp, legacy_patchable_time):
 
 
 # pylint: disable=invalid-name
-async def test_flux_with_custom_start_stop_times(opp, legacy_patchable_time):
+async def test_flux_with_custom_start_stop_times(
+    opp, legacy_patchable_time, enable_custom_integrations
+):
     """Test the flux with custom start and stop times."""
     platform = getattr(opp.components, "test.light")
     platform.init()
@@ -487,7 +501,7 @@ async def test_flux_with_custom_start_stop_times(opp, legacy_patchable_time):
 
     # Verify initial state of light
     state = opp.states.get(ent1.entity_id)
-    assert STATE_ON == state.state
+    assert state.state == STATE_ON
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
 
@@ -534,7 +548,9 @@ async def test_flux_with_custom_start_stop_times(opp, legacy_patchable_time):
     assert call.data[light.ATTR_XY_COLOR] == [0.504, 0.385]
 
 
-async def test_flux_before_sunrise_stop_next_day(opp, legacy_patchable_time):
+async def test_flux_before_sunrise_stop_next_day(
+    opp, legacy_patchable_time, enable_custom_integrations
+):
     """Test the flux switch before sunrise.
 
     This test has the stop_time on the next day (after midnight).
@@ -550,7 +566,7 @@ async def test_flux_before_sunrise_stop_next_day(opp, legacy_patchable_time):
 
     # Verify initial state of light
     state = opp.states.get(ent1.entity_id)
-    assert STATE_ON == state.state
+    assert state.state == STATE_ON
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
 
@@ -598,7 +614,7 @@ async def test_flux_before_sunrise_stop_next_day(opp, legacy_patchable_time):
 
 # pylint: disable=invalid-name
 async def test_flux_after_sunrise_before_sunset_stop_next_day(
-    opp, legacy_patchable_time
+    opp, legacy_patchable_time, enable_custom_integrations
 ):
     """
     Test the flux switch after sunrise and before sunset.
@@ -616,7 +632,7 @@ async def test_flux_after_sunrise_before_sunset_stop_next_day(
 
     # Verify initial state of light
     state = opp.states.get(ent1.entity_id)
-    assert STATE_ON == state.state
+    assert state.state == STATE_ON
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
 
@@ -665,7 +681,7 @@ async def test_flux_after_sunrise_before_sunset_stop_next_day(
 # pylint: disable=invalid-name
 @pytest.mark.parametrize("x", [0, 1])
 async def test_flux_after_sunset_before_midnight_stop_next_day(
-    opp, legacy_patchable_time, x
+    opp, legacy_patchable_time, x, enable_custom_integrations
 ):
     """Test the flux switch after sunset and before stop.
 
@@ -682,7 +698,7 @@ async def test_flux_after_sunset_before_midnight_stop_next_day(
 
     # Verify initial state of light
     state = opp.states.get(ent1.entity_id)
-    assert STATE_ON == state.state
+    assert state.state == STATE_ON
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
 
@@ -730,7 +746,7 @@ async def test_flux_after_sunset_before_midnight_stop_next_day(
 
 # pylint: disable=invalid-name
 async def test_flux_after_sunset_after_midnight_stop_next_day(
-    opp, legacy_patchable_time
+    opp, legacy_patchable_time, enable_custom_integrations
 ):
     """Test the flux switch after sunset and before stop.
 
@@ -747,7 +763,7 @@ async def test_flux_after_sunset_after_midnight_stop_next_day(
 
     # Verify initial state of light
     state = opp.states.get(ent1.entity_id)
-    assert STATE_ON == state.state
+    assert state.state == STATE_ON
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
 
@@ -794,7 +810,9 @@ async def test_flux_after_sunset_after_midnight_stop_next_day(
 
 
 # pylint: disable=invalid-name
-async def test_flux_after_stop_before_sunrise_stop_next_day(opp, legacy_patchable_time):
+async def test_flux_after_stop_before_sunrise_stop_next_day(
+    opp, legacy_patchable_time, enable_custom_integrations
+):
     """Test the flux switch after stop and before sunrise.
 
     This test has the stop_time on the next day (after midnight).
@@ -810,7 +828,7 @@ async def test_flux_after_stop_before_sunrise_stop_next_day(opp, legacy_patchabl
 
     # Verify initial state of light
     state = opp.states.get(ent1.entity_id)
-    assert STATE_ON == state.state
+    assert state.state == STATE_ON
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
 
@@ -857,7 +875,9 @@ async def test_flux_after_stop_before_sunrise_stop_next_day(opp, legacy_patchabl
 
 
 # pylint: disable=invalid-name
-async def test_flux_with_custom_colortemps(opp, legacy_patchable_time):
+async def test_flux_with_custom_colortemps(
+    opp, legacy_patchable_time, enable_custom_integrations
+):
     """Test the flux with custom start and stop colortemps."""
     platform = getattr(opp.components, "test.light")
     platform.init()
@@ -870,7 +890,7 @@ async def test_flux_with_custom_colortemps(opp, legacy_patchable_time):
 
     # Verify initial state of light
     state = opp.states.get(ent1.entity_id)
-    assert STATE_ON == state.state
+    assert state.state == STATE_ON
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
 
@@ -919,7 +939,9 @@ async def test_flux_with_custom_colortemps(opp, legacy_patchable_time):
 
 
 # pylint: disable=invalid-name
-async def test_flux_with_custom_brightness(opp, legacy_patchable_time):
+async def test_flux_with_custom_brightness(
+    opp, legacy_patchable_time, enable_custom_integrations
+):
     """Test the flux with custom start and stop colortemps."""
     platform = getattr(opp.components, "test.light")
     platform.init()
@@ -932,7 +954,7 @@ async def test_flux_with_custom_brightness(opp, legacy_patchable_time):
 
     # Verify initial state of light
     state = opp.states.get(ent1.entity_id)
-    assert STATE_ON == state.state
+    assert state.state == STATE_ON
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
 
@@ -979,7 +1001,9 @@ async def test_flux_with_custom_brightness(opp, legacy_patchable_time):
     assert call.data[light.ATTR_XY_COLOR] == [0.506, 0.385]
 
 
-async def test_flux_with_multiple_lights(opp, legacy_patchable_time):
+async def test_flux_with_multiple_lights(
+    opp, legacy_patchable_time, enable_custom_integrations
+):
     """Test the flux switch with multiple light entities."""
     platform = getattr(opp.components, "test.light")
     platform.init()
@@ -999,17 +1023,17 @@ async def test_flux_with_multiple_lights(opp, legacy_patchable_time):
     await opp.async_block_till_done()
 
     state = opp.states.get(ent1.entity_id)
-    assert STATE_ON == state.state
+    assert state.state == STATE_ON
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
 
     state = opp.states.get(ent2.entity_id)
-    assert STATE_ON == state.state
+    assert state.state == STATE_ON
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
 
     state = opp.states.get(ent3.entity_id)
-    assert STATE_ON == state.state
+    assert state.state == STATE_ON
     assert state.attributes.get("xy_color") is None
     assert state.attributes.get("brightness") is None
 
@@ -1062,7 +1086,7 @@ async def test_flux_with_multiple_lights(opp, legacy_patchable_time):
     assert call.data[light.ATTR_XY_COLOR] == [0.46, 0.376]
 
 
-async def test_flux_with_mired(opp, legacy_patchable_time):
+async def test_flux_with_mired(opp, legacy_patchable_time, enable_custom_integrations):
     """Test the flux switch´s mode mired."""
     platform = getattr(opp.components, "test.light")
     platform.init()
@@ -1075,7 +1099,7 @@ async def test_flux_with_mired(opp, legacy_patchable_time):
 
     # Verify initial state of light
     state = opp.states.get(ent1.entity_id)
-    assert STATE_ON == state.state
+    assert state.state == STATE_ON
     assert state.attributes.get("color_temp") is None
 
     test_time = dt_util.utcnow().replace(hour=8, minute=30, second=0)
@@ -1119,7 +1143,7 @@ async def test_flux_with_mired(opp, legacy_patchable_time):
     assert call.data[light.ATTR_COLOR_TEMP] == 269
 
 
-async def test_flux_with_rgb(opp, legacy_patchable_time):
+async def test_flux_with_rgb(opp, legacy_patchable_time, enable_custom_integrations):
     """Test the flux switch´s mode rgb."""
     platform = getattr(opp.components, "test.light")
     platform.init()
@@ -1132,7 +1156,7 @@ async def test_flux_with_rgb(opp, legacy_patchable_time):
 
     # Verify initial state of light
     state = opp.states.get(ent1.entity_id)
-    assert STATE_ON == state.state
+    assert state.state == STATE_ON
     assert state.attributes.get("color_temp") is None
 
     test_time = dt_util.utcnow().replace(hour=8, minute=30, second=0)

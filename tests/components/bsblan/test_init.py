@@ -2,7 +2,7 @@
 import aiohttp
 
 from openpeerpower.components.bsblan.const import DOMAIN
-from openpeerpower.config_entries import ENTRY_STATE_SETUP_RETRY
+from openpeerpower.config_entries import ConfigEntryState
 from openpeerpower.core import OpenPeerPower
 
 from tests.components.bsblan import init_integration, init_integration_without_auth
@@ -19,7 +19,7 @@ async def test_config_entry_not_ready(
     )
 
     entry = await init_integration(opp, aioclient_mock)
-    assert entry.state == ENTRY_STATE_SETUP_RETRY
+    assert entry.state is ConfigEntryState.SETUP_RETRY
 
 
 async def test_unload_config_entry(
@@ -44,4 +44,4 @@ async def test_config_entry_no_authentication(
     )
 
     entry = await init_integration_without_auth(opp, aioclient_mock)
-    assert entry.state == ENTRY_STATE_SETUP_RETRY
+    assert entry.state is ConfigEntryState.SETUP_RETRY

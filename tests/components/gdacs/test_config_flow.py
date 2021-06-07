@@ -4,7 +4,7 @@ from unittest.mock import patch
 
 import pytest
 
-from openpeerpower import data_entry_flow
+from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.components.gdacs import CONF_CATEGORIES, DOMAIN
 from openpeerpower.const import (
     CONF_LATITUDE,
@@ -27,7 +27,7 @@ async def test_duplicate_error(opp, config_entry):
     config_entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "user"}, data=conf
+        DOMAIN, context={"source": config_entries.SOURCE_USER}, data=conf
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
@@ -36,7 +36,7 @@ async def test_duplicate_error(opp, config_entry):
 async def test_show_form(opp):
     """Test that the form is served with no input."""
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "user"}
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
@@ -53,7 +53,7 @@ async def test_step_import(opp):
     }
 
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "import"}, data=conf
+        DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=conf
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == "-41.2, 174.7"
@@ -73,7 +73,7 @@ async def test_step_user(opp):
     conf = {CONF_RADIUS: 25}
 
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "user"}, data=conf
+        DOMAIN, context={"source": config_entries.SOURCE_USER}, data=conf
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == "-41.2, 174.7"

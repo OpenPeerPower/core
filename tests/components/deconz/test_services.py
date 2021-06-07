@@ -1,6 +1,4 @@
 """deCONZ service tests."""
-
-from copy import deepcopy
 from unittest.mock import Mock, patch
 
 import pytest
@@ -10,7 +8,7 @@ from openpeerpower.components.deconz.const import (
     CONF_BRIDGE_ID,
     DOMAIN as DECONZ_DOMAIN,
 )
-from openpeerpower.components.deconz.gateway import get_gateway_from_config_entry
+from openpeerpower.components.deconz.deconz_event import CONF_DECONZ_EVENT
 from openpeerpower.components.deconz.services import (
     DECONZ_SERVICES,
     SERVICE_CONFIGURE_DEVICE,
@@ -23,6 +21,7 @@ from openpeerpower.components.deconz.services import (
     async_unload_services,
 )
 from openpeerpower.components.sensor import DOMAIN as SENSOR_DOMAIN
+from openpeerpower.helpers import device_registry as dr, entity_registry as er
 from openpeerpower.helpers.entity_registry import async_entries_for_config_entry
 
 from .test_gateway import (
@@ -33,49 +32,7 @@ from .test_gateway import (
     setup_deconz_integration,
 )
 
-GROUP = {
-    "1": {
-        "id": "Group 1 id",
-        "name": "Group 1 name",
-        "type": "LightGroup",
-        "state": {},
-        "action": {},
-        "scenes": [{"id": "1", "name": "Scene 1"}],
-        "lights": ["1"],
-    }
-}
-
-LIGHT = {
-    "1": {
-        "id": "Light 1 id",
-        "name": "Light 1 name",
-        "state": {"reachable": True},
-        "type": "Light",
-        "uniqueid": "00:00:00:00:00:00:00:01-00",
-    }
-}
-
-SENSOR = {
-    "1": {
-        "id": "Sensor 1 id",
-        "name": "Sensor 1 name",
-        "type": "ZHALightLevel",
-        "state": {"lightlevel": 30000, "dark": False},
-        "config": {"reachable": True},
-        "uniqueid": "00:00:00:00:00:00:00:02-00",
-    }
-}
-
-SWITCH = {
-    "1": {
-        "id": "Switch 1 id",
-        "name": "Switch 1",
-        "type": "ZHASwitch",
-        "state": {"buttonevent": 1000, "gesture": 1},
-        "config": {"battery": 100},
-        "uniqueid": "00:00:00:00:00:00:00:03-00",
-    },
-}
+from tests.common import async_capture_events
 
 
 async def test_service_setup(opp):
@@ -140,10 +97,19 @@ async def test_configure_service_with_field(opp, aioclient_mock):
 
 async def test_configure_service_with_entity(opp, aioclient_mock):
     """Test that service invokes pydeconz with the correct path and data."""
-    config_entry = await setup_deconz_integration(opp, aioclient_mock)
-    gateway = get_gateway_from_config_entry(opp, config_entry)
+    data = {
+        "lights": {
+            "1": {
+                "name": "Test",
+                "state": {"reachable": True},
+                "type": "Light",
+                "uniqueid": "00:00:00:00:00:00:00:01-00",
+            }
+        }
+    }
+    with patch.dict(DECONZ_WEB_REQUEST, data):
+        config_entry = await setup_deconz_integration(opp, aioclient_mock)
 
-    gateway.deconz_ids["light.test"] = "/lights/1"
     data = {
         SERVICE_ENTITY: "light.test",
         SERVICE_DATA: {"on": True, "attr1": 10, "attr2": 20},
@@ -159,10 +125,19 @@ async def test_configure_service_with_entity(opp, aioclient_mock):
 
 async def test_configure_service_with_entity_and_field(opp, aioclient_mock):
     """Test that service invokes pydeconz with the correct path and data."""
-    config_entry = await setup_deconz_integration(opp, aioclient_mock)
-    gateway = get_gateway_from_config_entry(opp, config_entry)
+    data = {
+        "lights": {
+            "1": {
+                "name": "Test",
+                "state": {"reachable": True},
+                "type": "Light",
+                "uniqueid": "00:00:00:00:00:00:00:01-00",
+            }
+        }
+    }
+    with patch.dict(DECONZ_WEB_REQUEST, data):
+        config_entry = await setup_deconz_integration(opp, aioclient_mock)
 
-    gateway.deconz_ids["light.test"] = "/lights/1"
     data = {
         SERVICE_ENTITY: "light.test",
         SERVICE_FIELD: "/state",
@@ -193,61 +168,162 @@ async def test_configure_service_with_faulty_field(opp, aioclient_mock):
 async def test_configure_service_with_faulty_entity(opp, aioclient_mock):
     """Test that service invokes pydeconz with the correct path and data."""
     await setup_deconz_integration(opp, aioclient_mock)
+    aioclient_mock.clear_requests()
 
     data = {
         SERVICE_ENTITY: "light.nonexisting",
         SERVICE_DATA: {},
     }
 
-    with patch("pydeconz.DeconzSession.request", return_value=Mock(True)) as put_state:
-        await opp.services.async_call(
-            DECONZ_DOMAIN, SERVICE_CONFIGURE_DEVICE, service_data=data
-        )
-        await opp.async_block_till_done()
-        put_state.assert_not_called()
+    await opp.services.async_call(
+        DECONZ_DOMAIN, SERVICE_CONFIGURE_DEVICE, service_data=data
+    )
+    await opp.async_block_till_done()
+
+    assert len(aioclient_mock.mock_calls) == 0
 
 
 async def test_service_refresh_devices(opp, aioclient_mock):
     """Test that service can refresh devices."""
     config_entry = await setup_deconz_integration(opp, aioclient_mock)
-    gateway = get_gateway_from_config_entry(opp, config_entry)
+
+    assert len(opp.states.async_all()) == 0
+
     aioclient_mock.clear_requests()
 
-    data = {CONF_BRIDGE_ID: BRIDGEID}
+    data = {
+        "groups": {
+            "1": {
+                "id": "Group 1 id",
+                "name": "Group 1 name",
+                "type": "LightGroup",
+                "state": {},
+                "action": {},
+                "scenes": [{"id": "1", "name": "Scene 1"}],
+                "lights": ["1"],
+            }
+        },
+        "lights": {
+            "1": {
+                "name": "Light 1 name",
+                "state": {"reachable": True},
+                "type": "Light",
+                "uniqueid": "00:00:00:00:00:00:00:01-00",
+            }
+        },
+        "sensors": {
+            "1": {
+                "name": "Sensor 1 name",
+                "type": "ZHALightLevel",
+                "state": {"lightlevel": 30000, "dark": False},
+                "config": {"reachable": True},
+                "uniqueid": "00:00:00:00:00:00:00:02-00",
+            }
+        },
+    }
 
-    mock_deconz_request(
-        aioclient_mock,
-        config_entry.data,
-        {"groups": GROUP, "lights": LIGHT, "sensors": SENSOR},
-    )
+    mock_deconz_request(aioclient_mock, config_entry.data, data)
 
     await opp.services.async_call(
-        DECONZ_DOMAIN, SERVICE_DEVICE_REFRESH, service_data=data
+        DECONZ_DOMAIN, SERVICE_DEVICE_REFRESH, service_data={CONF_BRIDGE_ID: BRIDGEID}
     )
     await opp.async_block_till_done()
 
-    assert gateway.deconz_ids == {
-        "light.group_1_name": "/groups/1",
-        "light.light_1_name": "/lights/1",
-        "scene.group_1_name_scene_1": "/groups/1/scenes/1",
-        "sensor.sensor_1_name": "/sensors/1",
+    assert len(opp.states.async_all()) == 4
+
+
+async def test_service_refresh_devices_trigger_no_state_update(opp, aioclient_mock):
+    """Verify that gateway.ignore_state_updates are honored."""
+    data = {
+        "sensors": {
+            "1": {
+                "name": "Switch 1",
+                "type": "ZHASwitch",
+                "state": {"buttonevent": 1000},
+                "config": {"battery": 100},
+                "uniqueid": "00:00:00:00:00:00:00:01-00",
+            }
+        }
     }
+    with patch.dict(DECONZ_WEB_REQUEST, data):
+        config_entry = await setup_deconz_integration(opp, aioclient_mock)
+
+    assert len(opp.states.async_all()) == 1
+
+    captured_events = async_capture_events(opp, CONF_DECONZ_EVENT)
+
+    aioclient_mock.clear_requests()
+
+    data = {
+        "groups": {
+            "1": {
+                "id": "Group 1 id",
+                "name": "Group 1 name",
+                "type": "LightGroup",
+                "state": {},
+                "action": {},
+                "scenes": [{"id": "1", "name": "Scene 1"}],
+                "lights": ["1"],
+            }
+        },
+        "lights": {
+            "1": {
+                "name": "Light 1 name",
+                "state": {"reachable": True},
+                "type": "Light",
+                "uniqueid": "00:00:00:00:00:00:00:01-00",
+            }
+        },
+        "sensors": {
+            "1": {
+                "name": "Switch 1",
+                "type": "ZHASwitch",
+                "state": {"buttonevent": 1000},
+                "config": {"battery": 100},
+                "uniqueid": "00:00:00:00:00:00:00:01-00",
+            }
+        },
+    }
+
+    mock_deconz_request(aioclient_mock, config_entry.data, data)
+
+    await opp.services.async_call(
+        DECONZ_DOMAIN, SERVICE_DEVICE_REFRESH, service_data={CONF_BRIDGE_ID: BRIDGEID}
+    )
+    await opp.async_block_till_done()
+
+    assert len(opp.states.async_all()) == 4
+    assert len(captured_events) == 0
 
 
 async def test_remove_orphaned_entries_service(opp, aioclient_mock):
     """Test service works and also don't remove more than expected."""
-    data = deepcopy(DECONZ_WEB_REQUEST)
-    data["lights"] = deepcopy(LIGHT)
-    data["sensors"] = deepcopy(SWITCH)
-    config_entry = await setup_deconz_integration(
-        opp, aioclient_mock, get_state_response=data
-    )
+    data = {
+        "lights": {
+            "1": {
+                "name": "Light 1 name",
+                "state": {"reachable": True},
+                "type": "Light",
+                "uniqueid": "00:00:00:00:00:00:00:01-00",
+            }
+        },
+        "sensors": {
+            "1": {
+                "name": "Switch 1",
+                "type": "ZHASwitch",
+                "state": {"buttonevent": 1000, "gesture": 1},
+                "config": {"battery": 100},
+                "uniqueid": "00:00:00:00:00:00:00:03-00",
+            },
+        },
+    }
+    with patch.dict(DECONZ_WEB_REQUEST, data):
+        config_entry = await setup_deconz_integration(opp, aioclient_mock)
 
-    data = {CONF_BRIDGE_ID: BRIDGEID}
-
-    device_registry = await opp.helpers.device_registry.async_get_registry()
+    device_registry = dr.async_get(opp)
     device = device_registry.async_get_or_create(
-        config_entry_id=config_entry.entry_id, identifiers={("mac", "123")}
+        config_entry_id=config_entry.entry_id,
+        connections={(dr.CONNECTION_NETWORK_MAC, "123")},
     )
 
     assert (
@@ -261,7 +337,7 @@ async def test_remove_orphaned_entries_service(opp, aioclient_mock):
         == 5  # Host, gateway, light, switch and orphan
     )
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
     entity_registry.async_get_or_create(
         SENSOR_DOMAIN,
         DECONZ_DOMAIN,
@@ -279,7 +355,7 @@ async def test_remove_orphaned_entries_service(opp, aioclient_mock):
     await opp.services.async_call(
         DECONZ_DOMAIN,
         SERVICE_REMOVE_ORPHANED_ENTRIES,
-        service_data=data,
+        service_data={CONF_BRIDGE_ID: BRIDGEID},
     )
     await opp.async_block_till_done()
 

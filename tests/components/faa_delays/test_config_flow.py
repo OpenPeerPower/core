@@ -27,8 +27,6 @@ async def test_form(opp):
     assert result["errors"] == {}
 
     with patch.object(faadelays.Airport, "update", new=mock_valid_airport), patch(
-        "openpeerpower.components.faa_delays.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.faa_delays.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -45,7 +43,6 @@ async def test_form(opp):
         "id": "test",
     }
     await opp.async_block_till_done()
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 

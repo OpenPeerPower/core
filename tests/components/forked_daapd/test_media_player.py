@@ -54,7 +54,7 @@ from openpeerpower.components.media_player.const import (
     MEDIA_TYPE_MUSIC,
     MEDIA_TYPE_TVSHOW,
 )
-from openpeerpower.config_entries import CONN_CLASS_LOCAL_PUSH, SOURCE_USER
+from openpeerpower.config_entries import SOURCE_USER
 from openpeerpower.const import (
     ATTR_ENTITY_ID,
     ATTR_FRIENDLY_NAME,
@@ -270,7 +270,7 @@ SAMPLE_PLAYLISTS = [{"id": 7, "name": "test_playlist", "uri": "library:playlist:
 
 @pytest.fixture(name="config_entry")
 def config_entry_fixture():
-    """Create opp config_entry fixture."""
+    """Create opp.config_entry fixture."""
     data = {
         CONF_HOST: "192.168.1.1",
         CONF_PORT: "2345",
@@ -282,9 +282,7 @@ def config_entry_fixture():
         title="",
         data=data,
         options={CONF_TTS_PAUSE_TIME: 0},
-        system_options={},
         source=SOURCE_USER,
-        connection_class=CONN_CLASS_LOCAL_PUSH,
         entry_id=1,
     )
 

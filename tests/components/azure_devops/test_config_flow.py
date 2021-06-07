@@ -62,7 +62,9 @@ async def test_reauth_authorization_error(opp: OpenPeerPower) -> None:
         return_value=False,
     ):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "reauth"}, data=FIXTURE_USER_INPUT
+            DOMAIN,
+            context={"source": config_entries.SOURCE_REAUTH},
+            data=FIXTURE_USER_INPUT,
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -110,7 +112,9 @@ async def test_reauth_connection_error(opp: OpenPeerPower) -> None:
         side_effect=aiohttp.ClientError,
     ):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "reauth"}, data=FIXTURE_USER_INPUT
+            DOMAIN,
+            context={"source": config_entries.SOURCE_REAUTH},
+            data=FIXTURE_USER_INPUT,
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -168,7 +172,9 @@ async def test_reauth_project_error(opp: OpenPeerPower) -> None:
         return_value=None,
     ):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "reauth"}, data=FIXTURE_USER_INPUT
+            DOMAIN,
+            context={"source": config_entries.SOURCE_REAUTH},
+            data=FIXTURE_USER_INPUT,
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -197,7 +203,9 @@ async def test_reauth_flow(opp: OpenPeerPower) -> None:
         mock_config.add_to_opp(opp)
 
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "reauth"}, data=FIXTURE_USER_INPUT
+            DOMAIN,
+            context={"source": config_entries.SOURCE_REAUTH},
+            data=FIXTURE_USER_INPUT,
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -228,8 +236,6 @@ async def test_reauth_flow(opp: OpenPeerPower) -> None:
 async def test_full_flow_implementation(opp: OpenPeerPower) -> None:
     """Test registering an integration and finishing flow works."""
     with patch(
-        "openpeerpower.components.azure_devops.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.azure_devops.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry, patch(
@@ -255,7 +261,6 @@ async def test_full_flow_implementation(opp: OpenPeerPower) -> None:
             FIXTURE_USER_INPUT,
         )
         await opp.async_block_till_done()
-        assert len(mock_setup.mock_calls) == 1
         assert len(mock_setup_entry.mock_calls) == 1
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY

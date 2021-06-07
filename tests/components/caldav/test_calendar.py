@@ -401,8 +401,6 @@ async def test_ongoing_floating_event_returned(mock_now, opp, calendar):
     await opp.async_block_till_done()
 
     state = opp.states.get("calendar.private")
-    print(dt.DEFAULT_TIME_ZONE)
-    print(state)
     assert state.name == calendar.name
     assert state.state == STATE_ON
     assert dict(state.attributes) == {

@@ -1,11 +1,11 @@
 """Tests for the Atag water heater platform."""
-
 from unittest.mock import patch
 
 from openpeerpower.components.atag import DOMAIN, WATER_HEATER
 from openpeerpower.components.water_heater import SERVICE_SET_TEMPERATURE
 from openpeerpower.const import ATTR_ENTITY_ID, ATTR_TEMPERATURE
 from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import entity_registry as er
 
 from tests.components.atag import UID, init_integration
 from tests.test_util.aiohttp import AiohttpClientMocker
@@ -19,7 +19,7 @@ async def test_water_heater(
     """Test the creation of Atag water heater."""
     with patch("pyatag.entities.DHW.status"):
         entry = await init_integration(opp, aioclient_mock)
-        registry = await opp.helpers.entity_registry.async_get_registry()
+        registry = er.async_get(opp)
 
         assert registry.async_is_registered(WATER_HEATER_ID)
         entry = registry.async_get(WATER_HEATER_ID)

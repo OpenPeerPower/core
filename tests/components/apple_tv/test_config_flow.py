@@ -519,7 +519,7 @@ async def test_reconfigure_update_credentials(opp, mrp_device, pairing):
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
-        context={"source": "reauth"},
+        context={"source": config_entries.SOURCE_REAUTH},
         data={"identifier": "mrpid", "name": "apple tv"},
     )
 
@@ -552,11 +552,11 @@ async def test_reconfigure_ongoing_aborts(opp, mrp_device):
     }
 
     await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "reauth"}, data=data
+        DOMAIN, context={"source": config_entries.SOURCE_REAUTH}, data=data
     )
 
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "reauth"}, data=data
+        DOMAIN, context={"source": config_entries.SOURCE_REAUTH}, data=data
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_in_progress"

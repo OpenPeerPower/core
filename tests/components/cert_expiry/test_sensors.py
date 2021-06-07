@@ -5,7 +5,7 @@ import ssl
 from unittest.mock import patch
 
 from openpeerpower.components.cert_expiry.const import DOMAIN
-from openpeerpower.config_entries import ENTRY_STATE_SETUP_RETRY
+from openpeerpower.config_entries import ConfigEntryState
 from openpeerpower.const import CONF_HOST, CONF_PORT, STATE_UNAVAILABLE, STATE_UNKNOWN
 from openpeerpower.util.dt import utcnow
 
@@ -81,7 +81,7 @@ async def test_async_setup_entry_host_unavailable(opp):
         assert await opp.config_entries.async_setup(entry.entry_id) is False
         await opp.async_block_till_done()
 
-    assert entry.state == ENTRY_STATE_SETUP_RETRY
+    assert entry.state is ConfigEntryState.SETUP_RETRY
 
     next_update = utcnow() + timedelta(seconds=45)
     async_fire_time_changed(opp, next_update)
