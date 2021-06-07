@@ -248,7 +248,7 @@ class NuHeatThermostat(CoordinatorEntity, ClimateEntity):
         self._schedule_update()
 
     def _schedule_update(self):
-        if not self.opp:
+        if not self.opp.
             return
 
         # Update the new state

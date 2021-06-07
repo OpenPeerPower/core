@@ -20,7 +20,7 @@
     },
     "options": {
         "step": {
-            "op_to_risco": {
+            "ha_to_risco": {
                 "data": {
                     "armed_away": "Nep\u0159\u00edtomnost",
                     "armed_custom_bypass": "Zabezpe\u010deno u\u017eivatelsk\u00fdm obejit\u00edm",

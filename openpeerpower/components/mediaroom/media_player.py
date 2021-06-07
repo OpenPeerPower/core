@@ -130,7 +130,7 @@ class MediaroomDevice(MediaPlayerEntity):
     """Representation of a Mediaroom set-up-box on the network."""
 
     def set_state(self, mediaroom_state):
-        """Map pymediaroom state to OP state."""
+        """Map pymediaroom state to OPP state."""
 
         state_map = {
             State.OFF: STATE_OFF,
@@ -187,7 +187,9 @@ class MediaroomDevice(MediaPlayerEntity):
             self.async_write_op_state()
 
         self.async_on_remove(
-            async_dispatcher_connect(self.opp, SIGNAL_STB_NOTIFY, async_notify_received)
+            async_dispatcher_connect(
+                self.opp, SIGNAL_STB_NOTIFY, async_notify_received
+            )
         )
 
     async def async_play_media(self, media_type, media_id, **kwargs):

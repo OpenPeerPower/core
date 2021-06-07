@@ -1,4 +1,5 @@
 """Support for OpenUV sensors."""
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import TIME_MINUTES, UV_INDEX
 from openpeerpower.core import callback
 from openpeerpower.util.dt import as_local, parse_datetime
@@ -87,7 +88,7 @@ async def async_setup_entry(opp, entry, async_add_entities):
     async_add_entities(sensors, True)
 
 
-class OpenUvSensor(OpenUvEntity):
+class OpenUvSensor(OpenUvEntity, SensorEntity):
     """Define a binary sensor for OpenUV."""
 
     def __init__(self, openuv, sensor_type, name, icon, unit, entry_id):

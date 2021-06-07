@@ -1,10 +1,11 @@
 """Support for Ring Doorbell/Chimes."""
+from __future__ import annotations
+
 import asyncio
 from datetime import timedelta
 from functools import partial
 import logging
 from pathlib import Path
-from typing import Optional
 
 from oauthlib.oauth2 import AccessDeniedError
 import requests
@@ -99,10 +100,7 @@ async def async_setup_entry(opp, entry):
         ),
     }
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     if opp.services.has_service(DOMAIN, "update"):
         return True
@@ -123,15 +121,7 @@ async def async_setup_entry(opp, entry):
 
 async def async_unload_entry(opp, entry):
     """Unload Ring entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
-    if not unload_ok:
+    if not await opp.config_entries.async_unload_platforms(entry, PLATFORMS):
         return False
 
     opp.data[DOMAIN].pop(entry.entry_id)
@@ -156,7 +146,7 @@ class GlobalDataUpdater:
         ring: Ring,
         update_method: str,
         update_interval: timedelta,
-    ):
+    ) -> None:
         """Initialize global data updater."""
         self.opp = opp
         self.data_type = data_type
@@ -187,7 +177,7 @@ class GlobalDataUpdater:
             self._unsub_interval()
             self._unsub_interval = None
 
-    async def async_refresh_all(self, _now: Optional[int] = None) -> None:
+    async def async_refresh_all(self, _now: int | None = None) -> None:
         """Time to update."""
         if not self.listeners:
             return
@@ -229,7 +219,7 @@ class DeviceDataUpdater:
         ring: Ring,
         update_method: str,
         update_interval: timedelta,
-    ):
+    ) -> None:
         """Initialize device data updater."""
         self.data_type = data_type
         self.opp = opp

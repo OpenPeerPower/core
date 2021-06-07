@@ -67,7 +67,6 @@ PLATFORMS = ["light", "switch", "cover", "scene", "fan", "binary_sensor"]
 
 async def async_setup(opp, base_config):
     """Set up the Lutron component."""
-
     opp.data.setdefault(DOMAIN, {})
 
     if DOMAIN in base_config:
@@ -92,7 +91,6 @@ async def async_setup(opp, base_config):
 
 async def async_setup_entry(opp, config_entry):
     """Set up a bridge from a config entry."""
-
     host = config_entry.data[CONF_HOST]
     keyfile = opp.config.path(config_entry.data[CONF_KEYFILE])
     certfile = opp.config.path(config_entry.data[CONF_CERTFILE])
@@ -139,10 +137,7 @@ async def async_setup_entry(opp, config_entry):
         # pico remotes to control other devices.
         await async_setup_lip(opp, config_entry, bridge.lip_devices)
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(config_entry, PLATFORMS)
 
     return True
 
@@ -280,21 +275,14 @@ def _async_subscribe_pico_remote_events(opp, lip, button_devices_by_id):
 
 async def async_unload_entry(opp, config_entry):
     """Unload the bridge bridge from a config entry."""
-
     data = opp.data[DOMAIN][config_entry.entry_id]
     data[BRIDGE_LEAP].close()
     if data[BRIDGE_LIP]:
         await data[BRIDGE_LIP].async_stop()
 
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(config_entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
+    unload_ok = await opp.config_entries.async_unload_platforms(
+        config_entry, PLATFORMS
     )
-
     if unload_ok:
         opp.data[DOMAIN].pop(config_entry.entry_id)
 
@@ -352,7 +340,7 @@ class LutronCasetaDevice(Entity):
         }
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return {"device_id": self.device_id, "zone_id": self._device["zone"]}
 

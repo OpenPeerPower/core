@@ -6,7 +6,7 @@ from aioimaplib import IMAP4_SSL, AioImapException
 import async_timeout
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_NAME,
     CONF_PASSWORD,
@@ -16,7 +16,6 @@ from openpeerpower.const import (
 )
 from openpeerpower.exceptions import PlatformNotReady
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -62,7 +61,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities([sensor], True)
 
 
-class ImapSensor(Entity):
+class ImapSensor(SensorEntity):
     """Representation of an IMAP sensor."""
 
     def __init__(self, name, user, password, server, port, charset, folder, search):

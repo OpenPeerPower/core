@@ -3,5 +3,6 @@
   "name": "My Open Peer Power",
   "documentation": "https://www.openpeerpower.io/integrations/my",
   "dependencies": ["frontend"],
-  "codeowners": ["@open-peer-power/core"]
+  "codeowners": ["@openpeerpower/core"],
+  "quality_scale": "internal"
 }

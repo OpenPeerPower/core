@@ -21,8 +21,8 @@
                 "data": {
                     "discovery": "Ativar descoberta"
                 },
-                "description": "Deseja configurar o Open Peer Power para se conectar ao broker MQTT fornecido pelo complemento opp.io {addon}?",
-                "title": "MQTT Broker via add-on Opp.io"
+                "description": "Deseja configurar o Open Peer Power para se conectar ao broker MQTT fornecido pelo complemento Supervisor {addon}?",
+                "title": "MQTT Broker via add-on Supervisor"
             }
         }
     },

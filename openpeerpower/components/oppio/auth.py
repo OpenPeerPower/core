@@ -8,14 +8,13 @@ from aiohttp.web_exceptions import HTTPNotFound, HTTPUnauthorized
 import voluptuous as vol
 
 from openpeerpower.auth.models import User
-from openpeerpower.auth.providers import openpeerpower as auth_op
+from openpeerpower.auth.providers import openpeerpower as auth_ha
 from openpeerpower.components.http import OpenPeerPowerView
 from openpeerpower.components.http.const import KEY_OPP_USER
 from openpeerpower.components.http.data_validator import RequestDataValidator
 from openpeerpower.const import HTTP_OK
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import ATTR_ADDON, ATTR_PASSWORD, ATTR_USERNAME
 
@@ -23,7 +22,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 @callback
-def async_setup_auth_view(opp: OpenPeerPowerType, user: User):
+def async_setup_auth_view(opp: OpenPeerPower, user: User):
     """Auth setup."""
     oppio_auth = OppIOAuth(opp, user)
     oppio_password_reset = OppIOPasswordReset(opp, user)
@@ -35,7 +34,7 @@ def async_setup_auth_view(opp: OpenPeerPowerType, user: User):
 class OppIOBaseAuth(OpenPeerPowerView):
     """Opp.io view to handle auth requests."""
 
-    def __init__(self, opp: OpenPeerPowerType, user: User):
+    def __init__(self, opp: OpenPeerPower, user: User) -> None:
         """Initialize WebView."""
         self.opp = opp
         self.user = user
@@ -75,13 +74,13 @@ class OppIOAuth(OppIOBaseAuth):
     async def post(self, request, data):
         """Handle auth requests."""
         self._check_access(request)
-        provider = auth_op.async_get_provider(request.app["opp"])
+        provider = auth_ha.async_get_provider(request.app["opp.])
 
         try:
             await provider.async_validate_login(
                 data[ATTR_USERNAME], data[ATTR_PASSWORD]
             )
-        except auth_op.InvalidAuth:
+        except auth_ha.InvalidAuth:
             raise HTTPNotFound() from None
 
         return web.Response(status=HTTP_OK)
@@ -105,13 +104,13 @@ class OppIOPasswordReset(OppIOBaseAuth):
     async def post(self, request, data):
         """Handle password reset requests."""
         self._check_access(request)
-        provider = auth_op.async_get_provider(request.app["opp"])
+        provider = auth_ha.async_get_provider(request.app["opp.])
 
         try:
             await provider.async_change_password(
                 data[ATTR_USERNAME], data[ATTR_PASSWORD]
             )
-        except auth_op.InvalidUser as err:
+        except auth_ha.InvalidUser as err:
             raise HTTPNotFound() from err
 
         return web.Response(status=HTTP_OK)

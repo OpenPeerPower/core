@@ -27,13 +27,7 @@ LAST_EVENT_TIMESTAMP_KEY = "last_event_timestamp"
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the Risco component."""
-    opp.data.setdefault(DOMAIN, {})
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Risco from a config entry."""
     data = entry.data
     risco = RiscoAPI(data[CONF_USERNAME], data[CONF_PASSWORD], data[CONF_PIN])
@@ -47,13 +41,14 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
     scan_interval = entry.options.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)
     coordinator = RiscoDataUpdateCoordinator(opp, risco, scan_interval)
-    await coordinator.async_refresh()
+    await coordinator.async_config_entry_first_refresh()
     events_coordinator = RiscoEventsDataUpdateCoordinator(
         opp, risco, entry.entry_id, 60
     )
 
     undo_listener = entry.add_update_listener(_update_listener)
 
+    opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = {
         DATA_COORDINATOR: coordinator,
         UNDO_UPDATE_LISTENER: undo_listener,
@@ -76,15 +71,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
-
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
         opp.data[DOMAIN].pop(entry.entry_id)

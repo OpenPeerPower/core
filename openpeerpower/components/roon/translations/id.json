@@ -1,0 +1,23 @@
+{
+    "config": {
+        "abort": {
+            "already_configured": "Perangkat sudah dikonfigurasi"
+        },
+        "error": {
+            "invalid_auth": "Autentikasi tidak valid",
+            "unknown": "Kesalahan yang tidak diharapkan"
+        },
+        "step": {
+            "link": {
+                "description": "Anda harus mengotorisasi Open Peer Power di Roon. Setelah Anda mengeklik kirim, buka aplikasi Roon Core, buka Pengaturan dan aktifkan OpenPeerPower pada tab Ekstensi.",
+                "title": "Otorisasi OpenPeerPower di Roon"
+            },
+            "user": {
+                "data": {
+                    "host": "Host"
+                },
+                "description": "Tidak dapat menemukan server Roon, masukkan Nama Host atau IP Anda."
+            }
+        }
+    }
+}

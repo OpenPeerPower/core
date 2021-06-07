@@ -343,7 +343,9 @@ class RememberTheMilk(Entity):
                 timeline=timeline,
             )
             self._rtm_config.delete_rtm_id(self._name, opp_id)
-            _LOGGER.debug("Completed task with id %s in account %s", opp_id, self._name)
+            _LOGGER.debug(
+                "Completed task with id %s in account %s", opp_id, self._name
+            )
         except RtmRequestFailedException as rtm_exception:
             _LOGGER.error(
                 "Error creating new Remember The Milk task for account %s: %s",

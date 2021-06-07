@@ -1,5 +1,5 @@
 """Provides device automations for Kodi."""
-from typing import List
+from __future__ import annotations
 
 import voluptuous as vol
 
@@ -13,7 +13,7 @@ from openpeerpower.const import (
     CONF_PLATFORM,
     CONF_TYPE,
 )
-from openpeerpower.core import CALLBACK_TYPE, Event, OpenPeerPower, OppJob, callback
+from openpeerpower.core import CALLBACK_TYPE, Event, OppJob, OpenPeerPower, callback
 from openpeerpower.helpers import config_validation as cv, entity_registry
 from openpeerpower.helpers.typing import ConfigType
 
@@ -29,7 +29,7 @@ TRIGGER_SCHEMA = TRIGGER_BASE_SCHEMA.extend(
 )
 
 
-async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> list[dict]:
     """List device triggers for Kodi devices."""
     registry = await entity_registry.async_get_registry(opp)
     triggers = []
@@ -61,8 +61,13 @@ async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
 
 @callback
 def _attach_trigger(
-    opp: OpenPeerPower, config: ConfigType, action: AutomationActionType, event_type
+    opp: OpenPeerPower,
+    config: ConfigType,
+    action: AutomationActionType,
+    event_type,
+    automation_info: dict,
 ):
+    trigger_id = automation_info.get("trigger_id") if automation_info else None
     job = OppJob(action)
 
     @callback
@@ -70,7 +75,7 @@ def _attach_trigger(
         if event.data[ATTR_ENTITY_ID] == config[CONF_ENTITY_ID]:
             opp.async_run_opp_job(
                 job,
-                {"trigger": {**config, "description": event_type}},
+                {"trigger": {**config, "description": event_type, "id": trigger_id}},
                 event.context,
             )
 
@@ -84,12 +89,10 @@ async def async_attach_trigger(
     automation_info: dict,
 ) -> CALLBACK_TYPE:
     """Attach a trigger."""
-    config = TRIGGER_SCHEMA(config)
-
     if config[CONF_TYPE] == "turn_on":
-        return _attach_trigger(opp, config, action, EVENT_TURN_ON)
+        return _attach_trigger(opp, config, action, EVENT_TURN_ON, automation_info)
 
     if config[CONF_TYPE] == "turn_off":
-        return _attach_trigger(opp, config, action, EVENT_TURN_OFF)
+        return _attach_trigger(opp, config, action, EVENT_TURN_OFF, automation_info)
 
     return lambda: None

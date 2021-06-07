@@ -1,7 +1,10 @@
 """Support for displaying persistent notifications."""
+from __future__ import annotations
+
 from collections import OrderedDict
+from collections.abc import Mapping, MutableMapping
 import logging
-from typing import Any, Mapping, MutableMapping, Optional
+from typing import Any
 
 import voluptuous as vol
 
@@ -71,8 +74,8 @@ def dismiss(opp, notification_id):
 def async_create(
     opp: OpenPeerPower,
     message: str,
-    title: Optional[str] = None,
-    notification_id: Optional[str] = None,
+    title: str | None = None,
+    notification_id: str | None = None,
 ) -> None:
     """Generate a notification."""
     data = {
@@ -113,7 +116,7 @@ async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
             entity_id = ENTITY_ID_FORMAT.format(slugify(notification_id))
         else:
             entity_id = async_generate_entity_id(
-                ENTITY_ID_FORMAT, DEFAULT_OBJECT_ID, opp=opp
+                ENTITY_ID_FORMAT, DEFAULT_OBJECT_ID, opp.opp
             )
             notification_id = entity_id.split(".")[1]
 

@@ -2,6 +2,7 @@
   "domain": "random",
   "name": "Random",
   "documentation": "https://www.openpeerpower.io/integrations/random",
-  "codeowners": [],
-  "quality_scale": "internal"
+  "codeowners": ["@fabaff"],
+  "quality_scale": "internal",
+  "iot_class": "local_polling"
 }

@@ -1,21 +1,22 @@
 """Provides functionality to notify people."""
+from __future__ import annotations
+
 import asyncio
 from functools import partial
 import logging
-from typing import Any, Dict, Optional, cast
+from typing import Any, cast
 
 import voluptuous as vol
 
 import openpeerpower.components.persistent_notification as pn
-from openpeerpower.const import CONF_NAME, CONF_PLATFORM
-from openpeerpower.core import ServiceCall
+from openpeerpower.const import CONF_DESCRIPTION, CONF_NAME, CONF_PLATFORM
+from openpeerpower.core import OpenPeerPower, ServiceCall
 from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers import config_per_platform, discovery
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.service import async_set_service_schema
-from openpeerpower.helpers.typing import OpenPeerPowerType
 from openpeerpower.loader import async_get_integration, bind_opp
-from openpeerpower.setup import async_prepare_setup_platform
+from openpeerpower.setup import async_prepare_setup_platform, async_start_setup
 from openpeerpower.util import slugify
 from openpeerpower.util.yaml import load_yaml
 
@@ -43,7 +44,6 @@ SERVICE_PERSISTENT_NOTIFICATION = "persistent_notification"
 
 NOTIFY_SERVICES = "notify_services"
 
-CONF_DESCRIPTION = "description"
 CONF_FIELDS = "fields"
 
 PLATFORM_SCHEMA = vol.Schema(
@@ -69,7 +69,7 @@ PERSISTENT_NOTIFICATION_SERVICE_SCHEMA = vol.Schema(
 
 
 @bind_opp
-async def async_reload(opp: OpenPeerPowerType, integration_name: str) -> None:
+async def async_reload(opp: OpenPeerPower, integration_name: str) -> None:
     """Register notify services for an integration."""
     if not _async_integration_has_notify_services(opp, integration_name):
         return
@@ -83,7 +83,7 @@ async def async_reload(opp: OpenPeerPowerType, integration_name: str) -> None:
 
 
 @bind_opp
-async def async_reset_platform(opp: OpenPeerPowerType, integration_name: str) -> None:
+async def async_reset_platform(opp: OpenPeerPower, integration_name: str) -> None:
     """Unregister notify services for an integration."""
     if not _async_integration_has_notify_services(opp, integration_name):
         return
@@ -99,7 +99,7 @@ async def async_reset_platform(opp: OpenPeerPowerType, integration_name: str) ->
 
 
 def _async_integration_has_notify_services(
-    opp: OpenPeerPowerType, integration_name: str
+    opp: OpenPeerPower, integration_name: str
 ) -> bool:
     """Determine if an integration has notify services registered."""
     if (
@@ -114,9 +114,12 @@ def _async_integration_has_notify_services(
 class BaseNotificationService:
     """An abstract class for notification services."""
 
-    opp: Optional[OpenPeerPowerType] = None
+    # While not purely typed, it makes typehinting more useful for us
+    # and removes the need for constant None checks or asserts.
+    opp: OpenPeerPower = None  # type: ignore
+
     # Name => target
-    registered_targets: Dict[str, str]
+    registered_targets: dict[str, str]
 
     def send_message(self, message, **kwargs):
         """Send a message.
@@ -130,7 +133,9 @@ class BaseNotificationService:
 
         kwargs can contain ATTR_TITLE to specify a title.
         """
-        await self.opp.async_add_executor_job(partial(self.send_message, message, **kwargs))  # type: ignore
+        await self.opp.async_add_executor_job(
+            partial(self.send_message, message, **kwargs)
+        )
 
     async def _async_notify_message_service(self, service: ServiceCall) -> None:
         """Handle sending notification message service calls."""
@@ -155,7 +160,7 @@ class BaseNotificationService:
 
     async def async_setup(
         self,
-        opp: OpenPeerPowerType,
+        opp: OpenPeerPower,
         service_name: str,
         target_service_name_prefix: str,
     ) -> None:
@@ -175,8 +180,6 @@ class BaseNotificationService:
 
     async def async_register_services(self) -> None:
         """Create or update the notify services."""
-        assert self.opp
-
         if hasattr(self, "targets"):
             stale_targets = set(self.registered_targets)
 
@@ -232,8 +235,6 @@ class BaseNotificationService:
 
     async def async_unregister_services(self) -> None:
         """Unregister the notify services."""
-        assert self.opp
-
         if self.registered_targets:
             remove_targets = set(self.registered_targets)
             for remove_target_name in remove_targets:
@@ -287,47 +288,52 @@ async def async_setup(opp, config):
             _LOGGER.error("Unknown notification service specified")
             return
 
-        _LOGGER.info("Setting up %s.%s", DOMAIN, integration_name)
-        notify_service = None
-        try:
-            if hasattr(platform, "async_get_service"):
-                notify_service = await platform.async_get_service(
-                    opp, p_config, discovery_info
-                )
-            elif hasattr(platform, "get_service"):
-                notify_service = await opp.async_add_executor_job(
-                    platform.get_service, opp, p_config, discovery_info
-                )
-            else:
-                raise OpenPeerPowerError("Invalid notify platform.")
-
-            if notify_service is None:
-                # Platforms can decide not to create a service based
-                # on discovery data.
-                if discovery_info is None:
-                    _LOGGER.error(
-                        "Failed to initialize notification service %s", integration_name
+        full_name = f"{DOMAIN}.{integration_name}"
+        _LOGGER.info("Setting up %s", full_name)
+        with async_start_setup(opp, [full_name]):
+            notify_service = None
+            try:
+                if hasattr(platform, "async_get_service"):
+                    notify_service = await platform.async_get_service(
+                        opp, p_config, discovery_info
                     )
+                elif hasattr(platform, "get_service"):
+                    notify_service = await opp.async_add_executor_job(
+                        platform.get_service, opp, p_config, discovery_info
+                    )
+                else:
+                    raise OpenPeerPowerError("Invalid notify platform.")
+
+                if notify_service is None:
+                    # Platforms can decide not to create a service based
+                    # on discovery data.
+                    if discovery_info is None:
+                        _LOGGER.error(
+                            "Failed to initialize notification service %s",
+                            integration_name,
+                        )
+                    return
+
+            except Exception:  # pylint: disable=broad-except
+                _LOGGER.exception("Error setting up platform %s", integration_name)
                 return
 
-        except Exception:  # pylint: disable=broad-except
-            _LOGGER.exception("Error setting up platform %s", integration_name)
-            return
+            if discovery_info is None:
+                discovery_info = {}
 
-        if discovery_info is None:
-            discovery_info = {}
+            conf_name = p_config.get(CONF_NAME) or discovery_info.get(CONF_NAME)
+            target_service_name_prefix = conf_name or integration_name
+            service_name = slugify(conf_name or SERVICE_NOTIFY)
 
-        conf_name = p_config.get(CONF_NAME) or discovery_info.get(CONF_NAME)
-        target_service_name_prefix = conf_name or integration_name
-        service_name = slugify(conf_name or SERVICE_NOTIFY)
+            await notify_service.async_setup(
+                opp, service_name, target_service_name_prefix
+            )
+            await notify_service.async_register_services()
 
-        await notify_service.async_setup(opp, service_name, target_service_name_prefix)
-        await notify_service.async_register_services()
-
-        opp.data[NOTIFY_SERVICES].setdefault(integration_name, []).append(
-            notify_service
-        )
-        opp.config.components.add(f"{DOMAIN}.{integration_name}")
+            opp.data[NOTIFY_SERVICES].setdefault(integration_name, []).append(
+                notify_service
+            )
+            opp.config.components.add(f"{DOMAIN}.{integration_name}")
 
         return True
 

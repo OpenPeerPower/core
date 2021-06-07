@@ -2,6 +2,7 @@
 
 import logging
 
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import (
     DEVICE_CLASS_BATTERY,
     DEVICE_CLASS_ILLUMINANCE,
@@ -17,7 +18,6 @@ from openpeerpower.const import (
     VOLUME_CUBIC_METERS,
 )
 from openpeerpower.core import callback
-from openpeerpower.helpers.entity import Entity
 
 from .const import (
     COOL_ICON,
@@ -236,7 +236,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     async_add_entities(entities, True)
 
 
-class SmileSensor(SmileGateway):
+class SmileSensor(SmileGateway, SensorEntity):
     """Represent Smile Sensors."""
 
     def __init__(self, api, coordinator, name, dev_id, sensor):
@@ -282,7 +282,7 @@ class SmileSensor(SmileGateway):
         return self._unit_of_measurement
 
 
-class PwThermostatSensor(SmileSensor, Entity):
+class PwThermostatSensor(SmileSensor):
     """Thermostat (or generic) sensor devices."""
 
     def __init__(self, api, coordinator, name, dev_id, sensor, sensor_type):
@@ -311,7 +311,7 @@ class PwThermostatSensor(SmileSensor, Entity):
         self.async_write_op_state()
 
 
-class PwAuxDeviceSensor(SmileSensor, Entity):
+class PwAuxDeviceSensor(SmileSensor):
     """Auxiliary Device Sensors."""
 
     def __init__(self, api, coordinator, name, dev_id, sensor):
@@ -348,7 +348,7 @@ class PwAuxDeviceSensor(SmileSensor, Entity):
         self.async_write_op_state()
 
 
-class PwPowerSensor(SmileSensor, Entity):
+class PwPowerSensor(SmileSensor):
     """Power sensor entities."""
 
     def __init__(self, api, coordinator, name, dev_id, sensor, sensor_type, model):

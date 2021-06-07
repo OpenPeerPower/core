@@ -343,7 +343,9 @@ def async_register_services(opp):
         schema=ADD_DEFAULT_LINKS_SCHEMA,
     )
     async_dispatcher_connect(opp, SIGNAL_SAVE_DEVICES, async_srv_save_devices)
-    async_dispatcher_connect(opp, SIGNAL_ADD_DEVICE_OVERRIDE, async_add_device_override)
+    async_dispatcher_connect(
+        opp, SIGNAL_ADD_DEVICE_OVERRIDE, async_add_device_override
+    )
     async_dispatcher_connect(
         opp, SIGNAL_REMOVE_DEVICE_OVERRIDE, async_remove_device_override
     )

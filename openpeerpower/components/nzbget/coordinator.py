@@ -14,7 +14,7 @@ from openpeerpower.const import (
     CONF_USERNAME,
     CONF_VERIFY_SSL,
 )
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import DOMAIN
@@ -25,7 +25,7 @@ _LOGGER = logging.getLogger(__name__)
 class NZBGetDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to manage fetching NZBGet data."""
 
-    def __init__(self, opp: OpenPeerPowerType, *, config: dict, options: dict):
+    def __init__(self, opp: OpenPeerPower, *, config: dict, options: dict) -> None:
         """Initialize global NZBGet data updater."""
         self.nzbget = NZBGetAPI(
             config[CONF_HOST],

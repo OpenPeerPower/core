@@ -1,5 +1,4 @@
 """Integration with the Rachio Iro sprinkler system controller."""
-import asyncio
 import logging
 import secrets
 
@@ -26,28 +25,11 @@ PLATFORMS = ["switch", "binary_sensor"]
 CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the rachio component from YAML."""
-
-    opp.data.setdefault(DOMAIN, {})
-
-    return True
-
-
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
-
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
-
     return unload_ok
 
 
@@ -57,7 +39,7 @@ async def async_remove_entry(opp, entry):
         await opp.components.cloud.async_delete_cloudhook(entry.data[CONF_WEBHOOK_ID])
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up the Rachio config entry."""
 
     config = entry.data
@@ -84,7 +66,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
     # Get the API user
     try:
-        await opp.async_add_executor_job(person.setup, opp)
+        await person.async_setup(opp)
     except ConnectTimeout as error:
         _LOGGER.error("Could not reach the Rachio API: %s", error)
         raise ConfigEntryNotReady from error
@@ -100,12 +82,10 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     # Enable platform
+    opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = person
     async_register_webhook(opp, webhook_id, entry.entry_id)
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True

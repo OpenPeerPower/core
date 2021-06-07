@@ -1,5 +1,5 @@
 """Support for Netgear LTE sensors."""
-from openpeerpower.components.sensor import DOMAIN
+from openpeerpower.components.sensor import DOMAIN, SensorEntity
 from openpeerpower.exceptions import PlatformNotReady
 
 from . import CONF_MONITORED_CONDITIONS, DATA_KEY, LTEEntity
@@ -33,7 +33,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info):
     async_add_entities(sensors)
 
 
-class LTESensor(LTEEntity):
+class LTESensor(LTEEntity, SensorEntity):
     """Base LTE sensor entity."""
 
     @property

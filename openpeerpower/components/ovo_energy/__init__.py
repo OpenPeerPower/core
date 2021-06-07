@@ -1,7 +1,8 @@
 """Support for OVO Energy."""
+from __future__ import annotations
+
 from datetime import datetime, timedelta
 import logging
-from typing import Any, Dict
 
 import aiohttp
 import async_timeout
@@ -10,8 +11,10 @@ from ovoenergy.ovoenergy import OVOEnergy
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
-from openpeerpower.exceptions import ConfigEntryNotReady
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
+from openpeerpower.helpers.entity import DeviceInfo
+from openpeerpower.helpers.typing import ConfigType
 from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
@@ -22,13 +25,10 @@ from .const import DATA_CLIENT, DATA_COORDINATOR, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
-
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
-    """Set up the OVO Energy components."""
-    return True
+PLATFORMS = ["sensor"]
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up OVO Energy from a config entry."""
 
     client = OVOEnergy()
@@ -42,12 +42,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         raise ConfigEntryNotReady from exception
 
     if not authenticated:
-        opp.async_create_task(
-            opp.config_entries.flow.async_init(
-                DOMAIN, context={"source": "reauth"}, data=entry.data
-            )
-        )
-        return False
+        raise ConfigEntryAuthFailed
 
     async def async_update_data() -> OVODailyUsage:
         """Fetch data from OVO Energy."""
@@ -59,12 +54,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             except aiohttp.ClientError as exception:
                 raise UpdateFailed(exception) from exception
             if not authenticated:
-                opp.async_create_task(
-                    opp.config_entries.flow.async_init(
-                        DOMAIN, context={"source": "reauth"}, data=entry.data
-                    )
-                )
-                raise UpdateFailed("Not authenticated with OVO Energy")
+                raise ConfigEntryAuthFailed("Not authenticated with OVO Energy")
             return await client.get_daily_usage(datetime.utcnow().strftime("%Y-%m"))
 
     coordinator = DataUpdateCoordinator(
@@ -84,22 +74,22 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     }
 
     # Fetch initial data so we have data when entities subscribe
-    await coordinator.async_refresh()
+    await coordinator.async_config_entry_first_refresh()
 
     # Setup components
-    opp.async_create_task(opp.config_entries.async_forward_entry_setup(entry, "sensor"))
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigType) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigType) -> bool:
     """Unload OVO Energy config entry."""
     # Unload sensors
-    await opp.config_entries.async_forward_entry_unload(entry, "sensor")
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     del opp.data[DOMAIN][entry.entry_id]
 
-    return True
+    return unload_ok
 
 
 class OVOEnergyEntity(CoordinatorEntity):
@@ -146,7 +136,7 @@ class OVOEnergyDeviceEntity(OVOEnergyEntity):
     """Defines a OVO Energy device entity."""
 
     @property
-    def device_info(self) -> Dict[str, Any]:
+    def device_info(self) -> DeviceInfo:
         """Return device information about this OVO Energy instance."""
         return {
             "identifiers": {(DOMAIN, self._client.account_id)},

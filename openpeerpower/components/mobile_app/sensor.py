@@ -1,6 +1,5 @@
 """Sensor platform for mobile_app."""
-from functools import partial
-
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import CONF_NAME, CONF_UNIQUE_ID, CONF_WEBHOOK_ID
 from openpeerpower.core import callback
 from openpeerpower.helpers import entity_registry as er
@@ -49,7 +48,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     async_add_entities(entities)
 
     @callback
-    def handle_sensor_registration(webhook_id, data):
+    def handle_sensor_registration(data):
         if data[CONF_WEBHOOK_ID] != webhook_id:
             return
 
@@ -67,11 +66,11 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     async_dispatcher_connect(
         opp,
         f"{DOMAIN}_{ENTITY_TYPE}_register",
-        partial(handle_sensor_registration, webhook_id),
+        handle_sensor_registration,
     )
 
 
-class MobileAppSensor(MobileAppEntity):
+class MobileAppSensor(MobileAppEntity, SensorEntity):
     """Representation of an mobile app sensor."""
 
     @property

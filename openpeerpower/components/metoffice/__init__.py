@@ -1,6 +1,5 @@
 """The Met Office integration."""
 
-import asyncio
 import logging
 
 from openpeerpower.config_entries import ConfigEntry
@@ -23,12 +22,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["sensor", "weather"]
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the Met Office weather component."""
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up a Met Office entry."""
 
     latitude = entry.data[CONF_LATITUDE]
@@ -61,24 +55,14 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     if metoffice_data.now is None:
         raise ConfigEntryNotReady()
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
         if not opp.data[DOMAIN]:

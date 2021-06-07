@@ -1,12 +1,14 @@
 """Support for tracking for iCloud devices."""
-from typing import Dict
+from __future__ import annotations
+
+from typing import Any
 
 from openpeerpower.components.device_tracker import SOURCE_TYPE_GPS
 from openpeerpower.components.device_tracker.config_entry import TrackerEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.entity import DeviceInfo
 
 from .account import IcloudAccount, IcloudDevice
 from .const import (
@@ -17,12 +19,12 @@ from .const import (
 )
 
 
-async def async_setup_scanner(opp: OpenPeerPowerType, config, see, discovery_info=None):
+async def async_setup_scanner(opp: OpenPeerPower, config, see, discovery_info=None):
     """Old way of setting up the iCloud tracker."""
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up device tracker for iCloud component."""
     account = opp.data[DOMAIN][entry.unique_id]
@@ -59,7 +61,7 @@ def add_entities(account, async_add_entities, tracked):
 class IcloudTrackerEntity(TrackerEntity):
     """Represent a tracked device."""
 
-    def __init__(self, account: IcloudAccount, device: IcloudDevice):
+    def __init__(self, account: IcloudAccount, device: IcloudDevice) -> None:
         """Set up the iCloud tracker entity."""
         self._account = account
         self._device = device
@@ -106,12 +108,12 @@ class IcloudTrackerEntity(TrackerEntity):
         return icon_for_icloud_device(self._device)
 
     @property
-    def device_state_attributes(self) -> Dict[str, any]:
+    def extra_state_attributes(self) -> dict[str, Any]:
         """Return the device state attributes."""
-        return self._device.state_attributes
+        return self._device.extra_state_attributes
 
     @property
-    def device_info(self) -> Dict[str, any]:
+    def device_info(self) -> DeviceInfo:
         """Return the device information."""
         return {
             "identifiers": {(DOMAIN, self._device.unique_id)},

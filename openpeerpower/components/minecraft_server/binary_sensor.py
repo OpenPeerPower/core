@@ -5,14 +5,14 @@ from openpeerpower.components.binary_sensor import (
     BinarySensorEntity,
 )
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from . import MinecraftServer, MinecraftServerEntity
 from .const import DOMAIN, ICON_STATUS, NAME_STATUS
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the Minecraft Server binary sensor platform."""
     server = opp.data[DOMAIN][config_entry.unique_id]

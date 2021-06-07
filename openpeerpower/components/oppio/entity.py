@@ -1,20 +1,23 @@
 """Base for Opp.io entities."""
-from typing import Any, Dict
+from __future__ import annotations
+
+from typing import Any
 
 from openpeerpower.const import ATTR_NAME
+from openpeerpower.helpers.entity import DeviceInfo
 from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 
-from . import DOMAIN, OppioDataUpdateCoordinator
+from . import DOMAIN, HassioDataUpdateCoordinator
 from .const import ATTR_SLUG
 
 
-class OppioAddonEntity(CoordinatorEntity):
+class HassioAddonEntity(CoordinatorEntity):
     """Base entity for a Opp.io add-on."""
 
     def __init__(
         self,
-        coordinator: OppioDataUpdateCoordinator,
-        addon: Dict[str, Any],
+        coordinator: HassioDataUpdateCoordinator,
+        addon: dict[str, Any],
         attribute_name: str,
         sensor_name: str,
     ) -> None:
@@ -27,7 +30,7 @@ class OppioAddonEntity(CoordinatorEntity):
         super().__init__(coordinator)
 
     @property
-    def addon_info(self) -> Dict[str, Any]:
+    def addon_info(self) -> dict[str, Any]:
         """Return add-on info."""
         return self.coordinator.data[self._data_key][self.addon_slug]
 
@@ -47,17 +50,17 @@ class OppioAddonEntity(CoordinatorEntity):
         return f"{self.addon_slug}_{self.attribute_name}"
 
     @property
-    def device_info(self) -> Dict[str, Any]:
+    def device_info(self) -> DeviceInfo:
         """Return device specific attributes."""
         return {"identifiers": {(DOMAIN, self.addon_slug)}}
 
 
-class OppioOSEntity(CoordinatorEntity):
+class HassioOSEntity(CoordinatorEntity):
     """Base Entity for Opp.io OS."""
 
     def __init__(
         self,
-        coordinator: OppioDataUpdateCoordinator,
+        coordinator: HassioDataUpdateCoordinator,
         attribute_name: str,
         sensor_name: str,
     ) -> None:
@@ -68,7 +71,7 @@ class OppioOSEntity(CoordinatorEntity):
         super().__init__(coordinator)
 
     @property
-    def os_info(self) -> Dict[str, Any]:
+    def os_info(self) -> dict[str, Any]:
         """Return OS info."""
         return self.coordinator.data[self._data_key]
 
@@ -88,6 +91,6 @@ class OppioOSEntity(CoordinatorEntity):
         return f"open_peer_power_os_{self.attribute_name}"
 
     @property
-    def device_info(self) -> Dict[str, Any]:
+    def device_info(self) -> DeviceInfo:
         """Return device specific attributes."""
         return {"identifiers": {(DOMAIN, "OS")}}

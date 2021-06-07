@@ -1,5 +1,4 @@
 """The openweathermap component."""
-import asyncio
 import logging
 
 from pyowm import OWM
@@ -14,7 +13,6 @@ from openpeerpower.const import (
     CONF_NAME,
 )
 from openpeerpower.core import OpenPeerPower
-from openpeerpower.exceptions import ConfigEntryNotReady
 
 from .const import (
     CONF_LANGUAGE,
@@ -32,46 +30,34 @@ from .weather_update_coordinator import WeatherUpdateCoordinator
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
-    """Set up the OpenWeatherMap component."""
-    opp.data.setdefault(DOMAIN, {})
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up OpenWeatherMap as config entry."""
-    name = config_entry.data[CONF_NAME]
-    api_key = config_entry.data[CONF_API_KEY]
-    latitude = config_entry.data.get(CONF_LATITUDE, opp.config.latitude)
-    longitude = config_entry.data.get(CONF_LONGITUDE, opp.config.longitude)
-    forecast_mode = _get_config_value(config_entry, CONF_MODE)
-    language = _get_config_value(config_entry, CONF_LANGUAGE)
+    name = entry.data[CONF_NAME]
+    api_key = entry.data[CONF_API_KEY]
+    latitude = entry.data.get(CONF_LATITUDE, opp.config.latitude)
+    longitude = entry.data.get(CONF_LONGITUDE, opp.config.longitude)
+    forecast_mode = _get_config_value(entry, CONF_MODE)
+    language = _get_config_value(entry, CONF_LANGUAGE)
 
     config_dict = _get_owm_config(language)
 
     owm = OWM(api_key, config_dict).weather_manager()
     weather_coordinator = WeatherUpdateCoordinator(
-        owm, latitude, longitude, forecast_mode, opp
+        owm, latitude, longitude, forecast_mode,.opp
     )
 
-    await weather_coordinator.async_refresh()
-
-    if not weather_coordinator.last_update_success:
-        raise ConfigEntryNotReady
+    await weather_coordinator.async_config_entry_first_refresh()
 
     opp.data.setdefault(DOMAIN, {})
-    opp.data[DOMAIN][config_entry.entry_id] = {
+    opp.data[DOMAIN][entry.entry_id] = {
         ENTRY_NAME: name,
         ENTRY_WEATHER_COORDINATOR: weather_coordinator,
     }
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
-    update_listener = config_entry.add_update_listener(async_update_options)
-    opp.data[DOMAIN][config_entry.entry_id][UPDATE_LISTENER] = update_listener
+    update_listener = entry.add_update_listener(async_update_options)
+    opp.data[DOMAIN][entry.entry_id][UPDATE_LISTENER] = update_listener
 
     return True
 
@@ -98,25 +84,18 @@ async def async_migrate_entry(opp, entry):
     return True
 
 
-async def async_update_options(opp: OpenPeerPower, config_entry: ConfigEntry):
+async def async_update_options(opp: OpenPeerPower, entry: ConfigEntry):
     """Update options."""
-    await opp.config_entries.async_reload(config_entry.entry_id)
+    await opp.config_entries.async_reload(entry.entry_id)
 
 
-async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(config_entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
-        update_listener = opp.data[DOMAIN][config_entry.entry_id][UPDATE_LISTENER]
+        update_listener = opp.data[DOMAIN][entry.entry_id][UPDATE_LISTENER]
         update_listener()
-        opp.data[DOMAIN].pop(config_entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 

@@ -212,20 +212,20 @@ CONFIGURATION_FILE = ".ios.conf"
 
 def devices_with_push(opp):
     """Return a dictionary of push enabled targets."""
-    targets = {}
-    for device_name, device in opp.data[DOMAIN][ATTR_DEVICES].items():
-        if device.get(ATTR_PUSH_ID) is not None:
-            targets[device_name] = device.get(ATTR_PUSH_ID)
-    return targets
+    return {
+        device_name: device.get(ATTR_PUSH_ID)
+        for device_name, device in opp.data[DOMAIN][ATTR_DEVICES].items()
+        if device.get(ATTR_PUSH_ID) is not None
+    }
 
 
 def enabled_push_ids(opp):
     """Return a list of push enabled target push IDs."""
-    push_ids = []
-    for device in opp.data[DOMAIN][ATTR_DEVICES].values():
-        if device.get(ATTR_PUSH_ID) is not None:
-            push_ids.append(device.get(ATTR_PUSH_ID))
-    return push_ids
+    return [
+        device.get(ATTR_PUSH_ID)
+        for device in opp.data[DOMAIN][ATTR_DEVICES].values()
+        if device.get(ATTR_PUSH_ID) is not None
+    ]
 
 
 def devices(opp):
@@ -274,7 +274,9 @@ async def async_setup(opp, config):
 
 async def async_setup_entry(opp, entry):
     """Set up an iOS entry."""
-    opp.async_create_task(opp.config_entries.async_forward_entry_setup(entry, "sensor"))
+    opp.async_create_task(
+        opp.config_entries.async_forward_entry_setup(entry, "sensor")
+    )
 
     opp.http.register_view(iOSIdentifyDeviceView(opp.config.path(CONFIGURATION_FILE)))
     opp.http.register_view(iOSPushConfigView(opp.data[DOMAIN][CONF_USER][CONF_PUSH]))
@@ -333,15 +335,7 @@ class iOSIdentifyDeviceView(OpenPeerPowerView):
         except ValueError:
             return self.json_message("Invalid JSON", HTTP_BAD_REQUEST)
 
-        opp = request.app["opp"]
-
-        # Commented for now while iOS app is getting frequent updates
-        # try:
-        #     data = IDENTIFY_SCHEMA(req_data)
-        # except vol.Invalid as ex:
-        #     return self.json_message(
-        #         vol.humanize.humanize_error(request.json, ex),
-        #         HTTP_BAD_REQUEST)
+        opp = request.app["opp.]
 
         data[ATTR_LAST_SEEN_AT] = datetime.datetime.now().isoformat()
 

@@ -8,11 +8,12 @@ import re
 import time
 
 from openpeerpower.const import CONF_DEVICE, CONF_PLATFORM
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.data_entry_flow import RESULT_TYPE_ABORT
 from openpeerpower.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
 )
-from openpeerpower.helpers.typing import OpenPeerPowerType
 from openpeerpower.loader import async_get_mqtt
 
 from .. import mqtt
@@ -79,8 +80,8 @@ class MQTTConfig(dict):
     """Dummy class to allow adding attributes."""
 
 
-async def async_start(
-    opp: OpenPeerPowerType, discovery_topic, config_entry=None
+async def async_start(  # noqa: C901
+    opp: OpenPeerPower, discovery_topic, config_entry=None
 ) -> bool:
     """Start MQTT Discovery."""
     mqtt_integrations = {}
@@ -229,7 +230,9 @@ async def async_start(
             )
         else:
             # Unhandled discovery message
-            async_dispatcher_send(opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None)
+            async_dispatcher_send(
+                opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None
+            )
 
     opp.data[DATA_CONFIG_ENTRY_LOCK] = asyncio.Lock()
     opp.data[DATA_CONFIG_FLOW_LOCK] = asyncio.Lock()
@@ -272,7 +275,7 @@ async def async_start(
                 )
                 if (
                     result
-                    and result["type"] == "abort"
+                    and result["type"] == RESULT_TYPE_ABORT
                     and result["reason"]
                     in ["already_configured", "single_instance_allowed"]
                 ):
@@ -293,7 +296,7 @@ async def async_start(
     return True
 
 
-async def async_stop(opp: OpenPeerPowerType) -> bool:
+async def async_stop(opp: OpenPeerPower) -> bool:
     """Stop MQTT Discovery."""
     if DISCOVERY_UNSUBSCRIBE in opp.data:
         for unsub in opp.data[DISCOVERY_UNSUBSCRIBE]:

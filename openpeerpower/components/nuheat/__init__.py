@@ -1,5 +1,4 @@
 """Support for NuHeat thermostats."""
-import asyncio
 from datetime import timedelta
 import logging
 
@@ -25,19 +24,13 @@ _LOGGER = logging.getLogger(__name__)
 CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the NuHeat component."""
-    opp.data.setdefault(DOMAIN, {})
-    return True
-
-
 def _get_thermostat(api, serial_number):
     """Authenticate and create the thermostat object."""
     api.authenticate()
     return api.get_thermostat(serial_number)
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up NuHeat from a config entry."""
 
     conf = entry.data
@@ -78,26 +71,17 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         update_interval=timedelta(minutes=5),
     )
 
+    opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = (thermostat, coordinator)
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
 

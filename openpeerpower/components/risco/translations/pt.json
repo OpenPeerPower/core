@@ -20,7 +20,7 @@
     },
     "options": {
         "step": {
-            "op_to_risco": {
+            "ha_to_risco": {
                 "data": {
                     "armed_away": "Armado Ausente",
                     "armed_custom_bypass": "Armado - Desativa\u00e7\u00e3o personalizada",

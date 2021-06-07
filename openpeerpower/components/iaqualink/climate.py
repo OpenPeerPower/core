@@ -1,6 +1,7 @@
 """Support for Aqualink Thermostats."""
+from __future__ import annotations
+
 import logging
-from typing import List, Optional
 
 from iaqualink import AqualinkHeater, AqualinkPump, AqualinkSensor, AqualinkState
 from iaqualink.const import (
@@ -19,7 +20,7 @@ from openpeerpower.components.climate.const import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import ATTR_TEMPERATURE, TEMP_CELSIUS, TEMP_FAHRENHEIT
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from . import AqualinkEntity, refresh_system
 from .const import CLIMATE_SUPPORTED_MODES, DOMAIN as AQUALINK_DOMAIN
@@ -30,7 +31,7 @@ PARALLEL_UPDATES = 0
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up discovered switches."""
     devs = []
@@ -53,7 +54,7 @@ class OppAqualinkThermostat(AqualinkEntity, ClimateEntity):
         return SUPPORT_TARGET_TEMPERATURE
 
     @property
-    def hvac_modes(self) -> List[str]:
+    def hvac_modes(self) -> list[str]:
         """Return the list of supported HVAC modes."""
         return CLIMATE_SUPPORTED_MODES
 
@@ -119,7 +120,7 @@ class OppAqualinkThermostat(AqualinkEntity, ClimateEntity):
         return self.dev.system.devices[sensor]
 
     @property
-    def current_temperature(self) -> Optional[float]:
+    def current_temperature(self) -> float | None:
         """Return the current temperature."""
         if self.sensor.state != "":
             return float(self.sensor.state)

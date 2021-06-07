@@ -17,7 +17,7 @@ from openpeerpower.components.image_processing import (
 from openpeerpower.components.openalpr_local.image_processing import (
     ImageProcessingAlprEntity,
 )
-from openpeerpower.const import CONF_API_KEY, HTTP_OK
+from openpeerpower.const import CONF_API_KEY, CONF_REGION, HTTP_OK
 from openpeerpower.core import split_entity_id
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
@@ -40,8 +40,6 @@ OPENALPR_REGIONS = [
     "us",
     "vn2",
 ]
-
-CONF_REGION = "region"
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {

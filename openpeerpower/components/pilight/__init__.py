@@ -97,7 +97,7 @@ def setup(opp, config):
 
     opp.services.register(DOMAIN, SERVICE_NAME, send_code, schema=RF_CODE_SCHEMA)
 
-    # Publish received codes on the OP event bus
+    # Publish received codes on the OPP event bus
     # A whitelist of codes to be published in the event bus
     whitelist = config[DOMAIN].get(CONF_WHITELIST)
 

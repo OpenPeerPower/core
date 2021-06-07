@@ -1,38 +1,38 @@
 """Binary sensor platform for Opp.io addons."""
-from typing import Callable, List
+from __future__ import annotations
 
 from openpeerpower.components.binary_sensor import BinarySensorEntity
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.core import OpenPeerPower
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 
 from . import ADDONS_COORDINATOR
 from .const import ATTR_UPDATE_AVAILABLE
-from .entity import OppioAddonEntity, OppioOSEntity
+from .entity import HassioAddonEntity, HassioOSEntity
 
 
 async def async_setup_entry(
     opp: OpenPeerPower,
     config_entry: ConfigEntry,
-    async_add_entities: Callable[[List[Entity], bool], None],
+    async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Binary sensor set up for Opp.io config entry."""
     coordinator = opp.data[ADDONS_COORDINATOR]
 
     entities = [
-        OppioAddonBinarySensor(
+        HassioAddonBinarySensor(
             coordinator, addon, ATTR_UPDATE_AVAILABLE, "Update Available"
         )
         for addon in coordinator.data["addons"].values()
     ]
     if coordinator.is_opp_os:
         entities.append(
-            OppioOSBinarySensor(coordinator, ATTR_UPDATE_AVAILABLE, "Update Available")
+            HassioOSBinarySensor(coordinator, ATTR_UPDATE_AVAILABLE, "Update Available")
         )
     async_add_entities(entities)
 
 
-class OppioAddonBinarySensor(OppioAddonEntity, BinarySensorEntity):
+class HassioAddonBinarySensor(HassioAddonEntity, BinarySensorEntity):
     """Binary sensor to track whether an update is available for a Opp.io add-on."""
 
     @property
@@ -41,7 +41,7 @@ class OppioAddonBinarySensor(OppioAddonEntity, BinarySensorEntity):
         return self.addon_info[self.attribute_name]
 
 
-class OppioOSBinarySensor(OppioOSEntity, BinarySensorEntity):
+class HassioOSBinarySensor(HassioOSEntity, BinarySensorEntity):
     """Binary sensor to track whether an update is available for Opp.io OS."""
 
     @property

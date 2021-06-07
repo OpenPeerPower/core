@@ -188,7 +188,7 @@ class MelissaClimate(ClimateEntity):
             _LOGGER.warning("Unable to update entity %s", self.entity_id)
 
     def melissa_op_to_opp(self, mode):
-        """Translate Melissa modes to opp states."""
+        """Translate Melissa modes to opp.states."""
         if mode == self._api.MODE_HEAT:
             return HVAC_MODE_HEAT
         if mode == self._api.MODE_COOL:
@@ -197,11 +197,11 @@ class MelissaClimate(ClimateEntity):
             return HVAC_MODE_DRY
         if mode == self._api.MODE_FAN:
             return HVAC_MODE_FAN_ONLY
-        _LOGGER.warning("Operation mode %s could not be mapped to opp", mode)
+        _LOGGER.warning("Operation mode %s could not be mapped to opp., mode)
         return None
 
     def melissa_fan_to_opp(self, fan):
-        """Translate Melissa fan modes to opp modes."""
+        """Translate Melissa fan modes to opp.modes."""
         if fan == self._api.FAN_AUTO:
             return HVAC_MODE_AUTO
         if fan == self._api.FAN_LOW:
@@ -210,11 +210,11 @@ class MelissaClimate(ClimateEntity):
             return FAN_MEDIUM
         if fan == self._api.FAN_HIGH:
             return FAN_HIGH
-        _LOGGER.warning("Fan mode %s could not be mapped to opp", fan)
+        _LOGGER.warning("Fan mode %s could not be mapped to opp., fan)
         return None
 
     def opp_mode_to_melissa(self, mode):
-        """Translate opp states to melissa modes."""
+        """Translate opp.states to melissa modes."""
         if mode == HVAC_MODE_HEAT:
             return self._api.MODE_HEAT
         if mode == HVAC_MODE_COOL:
@@ -226,7 +226,7 @@ class MelissaClimate(ClimateEntity):
         _LOGGER.warning("Melissa have no setting for %s mode", mode)
 
     def opp_fan_to_melissa(self, fan):
-        """Translate opp fan modes to melissa modes."""
+        """Translate opp.fan modes to melissa modes."""
         if fan == HVAC_MODE_AUTO:
             return self._api.FAN_AUTO
         if fan == FAN_LOW:

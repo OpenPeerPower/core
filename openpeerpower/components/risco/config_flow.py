@@ -23,9 +23,9 @@ from .const import (
     CONF_HA_STATES_TO_RISCO,
     CONF_RISCO_STATES_TO_HA,
     DEFAULT_OPTIONS,
+    DOMAIN,
     RISCO_STATES,
 )
-from .const import DOMAIN  # pylint:disable=unused-import
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -58,7 +58,6 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a config flow for Risco."""
 
     VERSION = 1
-    CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
 
     @staticmethod
     @core.callback
@@ -123,7 +122,7 @@ class RiscoOptionsFlowHandler(config_entries.OptionsFlow):
         return self.async_show_form(step_id="init", data_schema=self._options_schema())
 
     async def async_step_risco_to_ha(self, user_input=None):
-        """Map Risco states to OP states."""
+        """Map Risco states to OPP states."""
         if user_input is not None:
             self._data[CONF_RISCO_STATES_TO_HA] = user_input
             return await self.async_step_op_to_risco()
@@ -141,7 +140,7 @@ class RiscoOptionsFlowHandler(config_entries.OptionsFlow):
         return self.async_show_form(step_id="risco_to_ha", data_schema=options)
 
     async def async_step_op_to_risco(self, user_input=None):
-        """Map OP states to Risco states."""
+        """Map OPP states to Risco states."""
         if user_input is not None:
             self._data[CONF_HA_STATES_TO_RISCO] = user_input
             return self.async_create_entry(title="", data=self._data)
@@ -165,5 +164,5 @@ class RiscoOptionsFlowHandler(config_entries.OptionsFlow):
             options[vol.Required(ha_state, default=current)] = vol.In(values)
 
         return self.async_show_form(
-            step_id="op_to_risco", data_schema=vol.Schema(options)
+            step_id="ha_to_risco", data_schema=vol.Schema(options)
         )

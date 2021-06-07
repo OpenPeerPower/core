@@ -4,8 +4,9 @@ import functools
 import voluptuous as vol
 
 from openpeerpower.components import light
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers.reload import async_setup_reload_service
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 
 from .. import DOMAIN, PLATFORMS
 from ..mixins import async_setup_entry_helper
@@ -31,7 +32,7 @@ PLATFORM_SCHEMA = vol.All(
 
 
 async def async_setup_platform(
-    opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
+    opp: OpenPeerPower, config: ConfigType, async_add_entities, discovery_info=None
 ):
     """Set up MQTT light through configuration.yaml."""
     await async_setup_reload_service(opp, DOMAIN, PLATFORMS)

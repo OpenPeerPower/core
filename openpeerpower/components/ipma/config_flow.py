@@ -9,12 +9,10 @@ from .const import DOMAIN, HOME_LOCATION_NAME
 from .weather import FORECAST_MODE
 
 
-@config_entries.HANDLERS.register(DOMAIN)
-class IpmaFlowHandler(config_entries.ConfigFlow):
+class IpmaFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Config flow for IPMA component."""
 
     VERSION = 1
-    CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
 
     def __init__(self):
         """Init IpmaFlowHandler."""
@@ -34,7 +32,7 @@ class IpmaFlowHandler(config_entries.ConfigFlow):
 
             self._errors[CONF_NAME] = "name_exists"
 
-        # default location is set opp configuration
+        # default location is set opp.configuration
         return await self._show_config_form(
             name=HOME_LOCATION_NAME,
             latitude=self.opp.config.latitude,

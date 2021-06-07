@@ -1,9 +1,9 @@
 """Support for Nexia / Trane XL Thermostats."""
-import asyncio
 from datetime import timedelta
 from functools import partial
 import logging
 
+from nexia.const import BRAND_NEXIA
 from nexia.home import NexiaHome
 from requests.exceptions import ConnectTimeout, HTTPError
 
@@ -14,7 +14,7 @@ from openpeerpower.exceptions import ConfigEntryNotReady
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
-from .const import DOMAIN, NEXIA_DEVICE, PLATFORMS, UPDATE_COORDINATOR
+from .const import CONF_BRAND, DOMAIN, NEXIA_DEVICE, PLATFORMS, UPDATE_COORDINATOR
 from .util import is_invalid_auth_code
 
 _LOGGER = logging.getLogger(__name__)
@@ -24,20 +24,13 @@ CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 DEFAULT_UPDATE_RATE = 120
 
 
-async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
-    """Set up the nexia component from YAML."""
-
-    opp.data.setdefault(DOMAIN, {})
-
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Configure the base Nexia device for Open Peer Power."""
 
     conf = entry.data
     username = conf[CONF_USERNAME]
     password = conf[CONF_PASSWORD]
+    brand = conf.get(CONF_BRAND, BRAND_NEXIA)
 
     state_file = opp.config.path(f"nexia_config_{username}.conf")
 
@@ -49,6 +42,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
                 password=password,
                 device_name=opp.config.location_name,
                 state_file=state_file,
+                brand=brand,
             )
         )
     except ConnectTimeout as ex:
@@ -75,29 +69,20 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         update_interval=timedelta(seconds=DEFAULT_UPDATE_RATE),
     )
 
+    opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = {
         NEXIA_DEVICE: nexia_home,
         UPDATE_COORDINATOR: coordinator,
     }
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
 

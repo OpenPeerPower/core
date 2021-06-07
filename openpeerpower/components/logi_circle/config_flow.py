@@ -54,12 +54,10 @@ def register_flow_implementation(
     }
 
 
-@config_entries.HANDLERS.register(DOMAIN)
-class LogiCircleFlowHandler(config_entries.ConfigFlow):
+class LogiCircleFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Config flow for Logi Circle component."""
 
     VERSION = 1
-    CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
 
     def __init__(self):
         """Initialize flow."""
@@ -67,8 +65,7 @@ class LogiCircleFlowHandler(config_entries.ConfigFlow):
 
     async def async_step_import(self, user_input=None):
         """Handle external yaml configuration."""
-        if self.opp.config_entries.async_entries(DOMAIN):
-            return self.async_abort(reason="already_configured")
+        self._async_abort_entries_match()
 
         self.flow_impl = DOMAIN
 
@@ -78,8 +75,7 @@ class LogiCircleFlowHandler(config_entries.ConfigFlow):
         """Handle a flow start."""
         flows = self.opp.data.get(DATA_FLOW_IMPL, {})
 
-        if self.opp.config_entries.async_entries(DOMAIN):
-            return self.async_abort(reason="already_configured")
+        self._async_abort_entries_match()
 
         if not flows:
             return self.async_abort(reason="missing_configuration")
@@ -99,7 +95,7 @@ class LogiCircleFlowHandler(config_entries.ConfigFlow):
 
     async def async_step_auth(self, user_input=None):
         """Create an entry for auth."""
-        if self.opp.config_entries.async_entries(DOMAIN):
+        if self._async_current_entries():
             return self.async_abort(reason="external_setup")
 
         external_error = self.opp.data[DATA_FLOW_IMPL][DOMAIN][EXTERNAL_ERRORS]
@@ -140,8 +136,7 @@ class LogiCircleFlowHandler(config_entries.ConfigFlow):
 
     async def async_step_code(self, code=None):
         """Received code for authentication."""
-        if self.opp.config_entries.async_entries(DOMAIN):
-            return self.async_abort(reason="already_configured")
+        self._async_abort_entries_match()
 
         return await self._async_create_session(code)
 
@@ -197,7 +192,7 @@ class LogiCircleAuthCallbackView(OpenPeerPowerView):
 
     async def get(self, request):
         """Receive authorization code."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         if "code" in request.query:
             opp.async_create_task(
                 opp.config_entries.flow.async_init(

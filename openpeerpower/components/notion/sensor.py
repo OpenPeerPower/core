@@ -1,9 +1,9 @@
 """Support for Notion sensors."""
-from typing import Callable
-
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import TEMP_CELSIUS
 from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from . import NotionEntity
@@ -13,7 +13,7 @@ SENSOR_TYPES = {SENSOR_TEMPERATURE: ("Temperature", "temperature", TEMP_CELSIUS)
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ):
     """Set up Notion sensors based on a config entry."""
     coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id]
@@ -42,7 +42,7 @@ async def async_setup_entry(
     async_add_entities(sensor_list)
 
 
-class NotionSensor(NotionEntity):
+class NotionSensor(NotionEntity, SensorEntity):
     """Define a Notion sensor."""
 
     def __init__(
@@ -55,7 +55,7 @@ class NotionSensor(NotionEntity):
         name: str,
         device_class: str,
         unit: str,
-    ):
+    ) -> None:
         """Initialize the entity."""
         super().__init__(
             coordinator, task_id, sensor_id, bridge_id, system_id, name, device_class

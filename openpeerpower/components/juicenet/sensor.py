@@ -1,4 +1,5 @@
 """Support for monitoring juicenet/juicepoint/juicebox based EVSE sensors."""
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import (
     ELECTRICAL_CURRENT_AMPERE,
     ENERGY_WATT_HOUR,
@@ -7,7 +8,6 @@ from openpeerpower.const import (
     TIME_SECONDS,
     VOLT,
 )
-from openpeerpower.helpers.entity import Entity
 
 from .const import DOMAIN, JUICENET_API, JUICENET_COORDINATOR
 from .entity import JuiceNetDevice
@@ -36,7 +36,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     async_add_entities(entities)
 
 
-class JuiceNetSensorDevice(JuiceNetDevice, Entity):
+class JuiceNetSensorDevice(JuiceNetDevice, SensorEntity):
     """Implementation of a JuiceNet sensor."""
 
     def __init__(self, device, sensor_type, coordinator):

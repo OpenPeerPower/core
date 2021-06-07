@@ -4,5 +4,6 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/ps4",
   "requirements": ["pyps4-2ndscreen==1.2.0"],
-  "codeowners": ["@ktnrg45"]
+  "codeowners": ["@ktnrg45"],
+  "iot_class": "local_polling"
 }

@@ -1,5 +1,6 @@
 """Webhook handlers for mobile_app."""
 import asyncio
+from contextlib import suppress
 from functools import wraps
 import logging
 import secrets
@@ -32,7 +33,7 @@ from openpeerpower.const import (
     HTTP_BAD_REQUEST,
     HTTP_CREATED,
 )
-from openpeerpower.core import EventOrigin
+from openpeerpower.core import EventOrigin, OpenPeerPower
 from openpeerpower.exceptions import OpenPeerPowerError, ServiceNotFound
 from openpeerpower.helpers import (
     config_validation as cv,
@@ -41,7 +42,6 @@ from openpeerpower.helpers import (
     template,
 )
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
-from openpeerpower.helpers.typing import OpenPeerPowerType
 from openpeerpower.util.decorator import Registry
 
 from .const import (
@@ -144,7 +144,7 @@ def validate_schema(schema):
 
 
 async def handle_webhook(
-    opp: OpenPeerPowerType, webhook_id: str, request: Request
+    opp: OpenPeerPower, webhook_id: str, request: Request
 ) -> Response:
     """Handle webhook callback."""
     if webhook_id in opp.data[DOMAIN][DATA_DELETED_IDS]:
@@ -471,6 +471,7 @@ async def webhook_update_sensor_states(opp, config_entry, data):
 
     device_name = config_entry.data[ATTR_DEVICE_NAME]
     resp = {}
+
     for sensor in data:
         entity_type = sensor[ATTR_SENSOR_TYPE]
 
@@ -494,8 +495,6 @@ async def webhook_update_sensor_states(opp, config_entry, data):
             }
             continue
 
-        entry = {CONF_WEBHOOK_ID: config_entry.data[CONF_WEBHOOK_ID]}
-
         try:
             sensor = sensor_schema_full(sensor)
         except vol.Invalid as err:
@@ -512,9 +511,8 @@ async def webhook_update_sensor_states(opp, config_entry, data):
             }
             continue
 
-        new_state = {**entry, **sensor}
-
-        async_dispatcher_send(opp, SIGNAL_SENSOR_UPDATE, new_state)
+        sensor[CONF_WEBHOOK_ID] = config_entry.data[CONF_WEBHOOK_ID]
+        async_dispatcher_send(opp, SIGNAL_SENSOR_UPDATE, sensor)
 
         resp[unique_id] = {"success": True}
 
@@ -551,10 +549,8 @@ async def webhook_get_config(opp, config_entry, data):
     if CONF_CLOUDHOOK_URL in config_entry.data:
         resp[CONF_CLOUDHOOK_URL] = config_entry.data[CONF_CLOUDHOOK_URL]
 
-    try:
+    with suppress(opp.components.cloud.CloudNotAvailable):
         resp[CONF_REMOTE_UI_URL] = opp.components.cloud.async_remote_ui_url()
-    except opp.components.cloud.CloudNotAvailable:
-        pass
 
     return webhook_response(resp, registration=config_entry.data)
 

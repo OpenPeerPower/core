@@ -1,6 +1,5 @@
 """Support for Nest devices."""
 
-import asyncio
 import logging
 
 from google_nest_sdm.event import EventMessage
@@ -12,7 +11,7 @@ from google_nest_sdm.exceptions import (
 from google_nest_sdm.google_nest_subscriber import GoogleNestSubscriber
 import voluptuous as vol
 
-from openpeerpower.config_entries import SOURCE_REAUTH, ConfigEntry
+from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import (
     CONF_BINARY_SENSORS,
     CONF_CLIENT_ID,
@@ -22,7 +21,7 @@ from openpeerpower.const import (
     CONF_STRUCTURE,
 )
 from openpeerpower.core import OpenPeerPower
-from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
 from openpeerpower.helpers import (
     aiohttp_client,
     config_entry_oauth2_flow,
@@ -107,7 +106,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
 class SignalUpdateCallback:
     """An EventCallback invoked when new events arrive from subscriber."""
 
-    def __init__(self, opp: OpenPeerPower):
+    def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize EventCallback."""
         self._opp = opp
 
@@ -136,14 +135,16 @@ class SignalUpdateCallback:
             self._opp.bus.async_fire(NEST_EVENT, message)
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Nest from a config entry with dispatch between old/new flows."""
 
     if DATA_SDM not in entry.data:
         return await async_setup_legacy_entry(opp, entry)
 
     implementation = (
-        await config_entry_oauth2_flow.async_get_config_entry_implementation(opp, entry)
+        await config_entry_oauth2_flow.async_get_config_entry_implementation(
+            opp, entry
+        )
     )
 
     config = opp.data[DOMAIN][DATA_NEST_CONFIG]
@@ -165,14 +166,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         await subscriber.start_async()
     except AuthException as err:
         _LOGGER.debug("Subscriber authentication error: %s", err)
-        opp.async_create_task(
-            opp.config_entries.flow.async_init(
-                DOMAIN,
-                context={"source": SOURCE_REAUTH},
-                data=entry.data,
-            )
-        )
-        return False
+        raise ConfigEntryAuthFailed from err
     except ConfigurationException as err:
         _LOGGER.error("Configuration error: %s", err)
         subscriber.stop_async()
@@ -196,10 +190,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     opp.data[DOMAIN].pop(DATA_NEST_UNAVAILABLE, None)
     opp.data[DOMAIN][DATA_SUBSCRIBER] = subscriber
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
@@ -212,14 +203,7 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     _LOGGER.debug("Stopping nest subscriber")
     subscriber = opp.data[DOMAIN][DATA_SUBSCRIBER]
     subscriber.stop_async()
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(DATA_SUBSCRIBER)
         opp.data[DOMAIN].pop(DATA_NEST_UNAVAILABLE, None)

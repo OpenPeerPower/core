@@ -5,10 +5,9 @@ import logging
 from oru import Meter, MeterError
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import ENERGY_KILO_WATT_HOUR
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -39,8 +38,11 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     _LOGGER.debug("Oru meter_number = %s", meter_number)
 
 
-class CurrentEnergyUsageSensor(Entity):
+class CurrentEnergyUsageSensor(SensorEntity):
     """Representation of the sensor."""
+
+    _attr_icon = SENSOR_ICON
+    _attr_unit_of_measurement = ENERGY_KILO_WATT_HOUR
 
     def __init__(self, meter):
         """Initialize the sensor."""
@@ -59,19 +61,9 @@ class CurrentEnergyUsageSensor(Entity):
         return SENSOR_NAME
 
     @property
-    def icon(self):
-        """Return the icon of the sensor."""
-        return SENSOR_ICON
-
-    @property
     def state(self):
         """Return the state of the sensor."""
         return self._state
-
-    @property
-    def unit_of_measurement(self):
-        """Return the unit of measurement."""
-        return ENERGY_KILO_WATT_HOUR
 
     def update(self):
         """Fetch new state data for the sensor."""

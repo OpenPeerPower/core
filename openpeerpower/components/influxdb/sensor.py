@@ -1,10 +1,14 @@
 """InfluxDB component which allows you to get data from an Influx database."""
+from __future__ import annotations
+
 import logging
-from typing import Dict
 
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA as SENSOR_PLATFORM_SCHEMA
+from openpeerpower.components.sensor import (
+    PLATFORM_SCHEMA as SENSOR_PLATFORM_SCHEMA,
+    SensorEntity,
+)
 from openpeerpower.const import (
     CONF_API_VERSION,
     CONF_NAME,
@@ -15,7 +19,6 @@ from openpeerpower.const import (
 )
 from openpeerpower.exceptions import PlatformNotReady, TemplateError
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 from . import create_influx_url, get_influx_connection, validate_version_specific_config
@@ -67,7 +70,7 @@ def _merge_connection_config_into_query(conf, query):
             query[key] = conf[key]
 
 
-def validate_query_format_for_version(conf: Dict) -> Dict:
+def validate_query_format_for_version(conf: dict) -> dict:
     """Ensure queries are provided in correct format based on API version."""
     if conf[CONF_API_VERSION] == API_VERSION_2:
         if CONF_QUERIES_FLUX not in conf:
@@ -168,7 +171,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     opp.bus.listen_once(EVENT_OPENPEERPOWER_STOP, lambda _: influx.close())
 
 
-class InfluxSensor(Entity):
+class InfluxSensor(SensorEntity):
     """Implementation of a Influxdb sensor."""
 
     def __init__(self, opp, influx, query):

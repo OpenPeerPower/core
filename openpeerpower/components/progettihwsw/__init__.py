@@ -1,5 +1,4 @@
 """Automation manager for boards manufactured by ProgettiHWSW Italy."""
-import asyncio
 
 from ProgettiHWSW.ProgettiHWSWAPI import ProgettiHWSWAPI
 from ProgettiHWSW.input import Input
@@ -13,16 +12,9 @@ from .const import DOMAIN
 PLATFORMS = ["switch", "binary_sensor"]
 
 
-async def async_setup(opp, config):
-    """Set up the ProgettiHWSW Automation component."""
-    opp.data[DOMAIN] = {}
-
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up ProgettiHWSW Automation from a config entry."""
-
+    opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = ProgettiHWSWAPI(
         f'{entry.data["host"]}:{entry.data["port"]}'
     )
@@ -30,24 +22,14 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     # Check board validation again to load new values to API.
     await opp.data[DOMAIN][entry.entry_id].check_board()
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
 

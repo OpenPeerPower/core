@@ -22,7 +22,7 @@ ICON = "mdi:remote"
 def setup(opp, config):
     """Set up the LIRC capability."""
     # blocking=True gives unexpected behavior (multiple responses for 1 press)
-    # also by not blocking, we allow opp to shut down the thread gracefully
+    # also by not blocking, we allow opp.to shut down the thread gracefully
     # on exit.
     lirc.init("open-peer-power", blocking=False)
     lirc_interface = LircInterface(opp)

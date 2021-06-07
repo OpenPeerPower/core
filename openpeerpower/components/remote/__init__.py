@@ -1,8 +1,11 @@
 """Support to interface with universal remote control devices."""
+from __future__ import annotations
+
+from collections.abc import Iterable
 from datetime import timedelta
 import functools as ft
 import logging
-from typing import Any, Dict, Iterable, List, Optional, cast
+from typing import Any, cast, final
 
 import voluptuous as vol
 
@@ -14,6 +17,7 @@ from openpeerpower.const import (
     SERVICE_TURN_ON,
     STATE_ON,
 )
+from openpeerpower.core import OpenPeerPower
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.config_validation import (  # noqa: F401
     PLATFORM_SCHEMA,
@@ -22,7 +26,7 @@ from openpeerpower.helpers.config_validation import (  # noqa: F401
 )
 from openpeerpower.helpers.entity import ToggleEntity
 from openpeerpower.helpers.entity_component import EntityComponent
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 from openpeerpower.loader import bind_opp
 
 # mypy: allow-untyped-calls, allow-untyped-defs, no-check-untyped-defs
@@ -66,14 +70,16 @@ REMOTE_SERVICE_ACTIVITY_SCHEMA = make_entity_service_schema(
 
 
 @bind_opp
-def is_on(opp: OpenPeerPowerType, entity_id: str) -> bool:
+def is_on(opp: OpenPeerPower, entity_id: str) -> bool:
     """Return if the remote is on based on the statemachine."""
     return opp.states.is_state(entity_id, STATE_ON)
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Track states and offer events for remotes."""
-    component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp, SCAN_INTERVAL)
+    component = opp.data[DOMAIN] = EntityComponent(
+        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
+    )
     await component.async_setup(config)
 
     component.async_register_entity_service(
@@ -126,18 +132,18 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up a config entry."""
     return await cast(EntityComponent, opp.data[DOMAIN]).async_setup_entry(entry)
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     return await cast(EntityComponent, opp.data[DOMAIN]).async_unload_entry(entry)
 
 
 class RemoteEntity(ToggleEntity):
-    """Representation of a remote."""
+    """Base class for remote entities."""
 
     @property
     def supported_features(self) -> int:
@@ -145,17 +151,18 @@ class RemoteEntity(ToggleEntity):
         return 0
 
     @property
-    def current_activity(self) -> Optional[str]:
+    def current_activity(self) -> str | None:
         """Active activity."""
         return None
 
     @property
-    def activity_list(self) -> Optional[List[str]]:
+    def activity_list(self) -> list[str] | None:
         """List of available activities."""
         return None
 
+    @final
     @property
-    def state_attributes(self) -> Optional[Dict[str, Any]]:
+    def state_attributes(self) -> dict[str, Any] | None:
         """Return optional state attributes."""
         if not self.supported_features & SUPPORT_ACTIVITY:
             return None
@@ -171,7 +178,6 @@ class RemoteEntity(ToggleEntity):
 
     async def async_send_command(self, command: Iterable[str], **kwargs: Any) -> None:
         """Send commands to a device."""
-        assert self.opp is not None
         await self.opp.async_add_executor_job(
             ft.partial(self.send_command, command, **kwargs)
         )
@@ -182,7 +188,6 @@ class RemoteEntity(ToggleEntity):
 
     async def async_learn_command(self, **kwargs: Any) -> None:
         """Learn a command from a device."""
-        assert self.opp is not None
         await self.opp.async_add_executor_job(ft.partial(self.learn_command, **kwargs))
 
     def delete_command(self, **kwargs: Any) -> None:
@@ -191,8 +196,9 @@ class RemoteEntity(ToggleEntity):
 
     async def async_delete_command(self, **kwargs: Any) -> None:
         """Delete commands from the database."""
-        assert self.opp is not None
-        await self.opp.async_add_executor_job(ft.partial(self.delete_command, **kwargs))
+        await self.opp.async_add_executor_job(
+            ft.partial(self.delete_command, **kwargs)
+        )
 
 
 class RemoteDevice(RemoteEntity):

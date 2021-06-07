@@ -1,8 +1,8 @@
 """Support for UK Met Office weather service."""
 from openpeerpower.components.weather import WeatherEntity
 from openpeerpower.const import LENGTH_KILOMETERS, TEMP_CELSIUS
-from openpeerpower.core import callback
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers.typing import ConfigType
 
 from .const import (
     ATTRIBUTION,
@@ -18,7 +18,7 @@ from .const import (
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigType, async_add_entities
+    opp: OpenPeerPower, entry: ConfigType, async_add_entities
 ) -> None:
     """Set up the Met Office weather sensor platform."""
     opp_data = opp.data[DOMAIN][entry.entry_id]

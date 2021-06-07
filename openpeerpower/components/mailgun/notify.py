@@ -68,7 +68,7 @@ class MailgunNotificationService(BaseNotificationService):
         _LOGGER.debug("Mailgun domain: %s", self._client.domain)
         self._domain = self._client.domain
         if not self._sender:
-            self._sender = f"opp@{self._domain}"
+            self._sender = f"opp.{self._domain}"
 
     def connection_is_valid(self):
         """Check whether the provided credentials are valid."""

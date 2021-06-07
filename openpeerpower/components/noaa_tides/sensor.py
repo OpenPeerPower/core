@@ -6,7 +6,7 @@ import noaa_coops as coops
 import requests
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_ATTRIBUTION,
     CONF_NAME,
@@ -15,7 +15,6 @@ from openpeerpower.const import (
 )
 from openpeerpower.exceptions import PlatformNotReady
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -72,7 +71,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities([noaa_sensor], True)
 
 
-class NOAATidesAndCurrentsSensor(Entity):
+class NOAATidesAndCurrentsSensor(SensorEntity):
     """Representation of a NOAA Tides and Currents sensor."""
 
     def __init__(self, name, station_id, timezone, unit_system, station):
@@ -90,7 +89,7 @@ class NOAATidesAndCurrentsSensor(Entity):
         return self._name
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of this device."""
         attr = {ATTR_ATTRIBUTION: DEFAULT_ATTRIBUTION}
         if self.data is None:

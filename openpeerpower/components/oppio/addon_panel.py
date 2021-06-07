@@ -6,15 +6,15 @@ from aiohttp import web
 
 from openpeerpower.components.http import OpenPeerPowerView
 from openpeerpower.const import ATTR_ICON, HTTP_BAD_REQUEST
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from .const import ATTR_ADMIN, ATTR_ENABLE, ATTR_PANELS, ATTR_TITLE
-from .handler import OppioAPIError
+from .handler import HassioAPIError
 
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_addon_panel(opp: OpenPeerPowerType, oppio):
+async def async_setup_addon_panel(opp: OpenPeerPower, oppio):
     """Add-on Ingress Panel setup."""
     oppio_addon_panel = OppIOAddonPanel(opp, oppio)
     opp.http.register_view(oppio_addon_panel)
@@ -70,7 +70,7 @@ class OppIOAddonPanel(OpenPeerPowerView):
         try:
             data = await self.oppio.get_ingress_panels()
             return data[ATTR_PANELS]
-        except OppioAPIError as err:
+        except HassioAPIError as err:
             _LOGGER.error("Can't read panel info: %s", err)
         return {}
 

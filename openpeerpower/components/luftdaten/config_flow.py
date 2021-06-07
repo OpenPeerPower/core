@@ -23,7 +23,8 @@ from .const import CONF_SENSOR_ID, DEFAULT_SCAN_INTERVAL, DOMAIN
 def configured_sensors(opp):
     """Return a set of configured Luftdaten sensors."""
     return {
-        entry.data[CONF_SENSOR_ID] for entry in opp.config_entries.async_entries(DOMAIN)
+        entry.data[CONF_SENSOR_ID]
+        for entry in opp.config_entries.async_entries(DOMAIN)
     }
 
 
@@ -37,12 +38,10 @@ def duplicate_stations(opp):
     return {x for x in stations if stations.count(x) > 1}
 
 
-@config_entries.HANDLERS.register(DOMAIN)
-class LuftDatenFlowHandler(config_entries.ConfigFlow):
+class LuftDatenFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a Luftdaten config flow."""
 
     VERSION = 1
-    CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
 
     @callback
     def _show_form(self, errors=None):
@@ -91,6 +90,6 @@ class LuftDatenFlowHandler(config_entries.ConfigFlow):
             )
 
         scan_interval = user_input.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)
-        user_input.update({CONF_SCAN_INTERVAL: scan_interval.seconds})
+        user_input.update({CONF_SCAN_INTERVAL: scan_interval.total_seconds()})
 
         return self.async_create_entry(title=str(sensor_id), data=user_input)

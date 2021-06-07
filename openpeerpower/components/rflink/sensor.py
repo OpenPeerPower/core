@@ -2,7 +2,7 @@
 from rflink.parser import PACKET_FIELDS, UNITS
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_UNIT_OF_MEASUREMENT,
     CONF_DEVICES,
@@ -98,7 +98,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         opp.data[DATA_DEVICE_REGISTER][EVENT_KEY_SENSOR] = add_new_device
 
 
-class RflinkSensor(RflinkDevice):
+class RflinkSensor(RflinkDevice, SensorEntity):
     """Representation of a Rflink sensor."""
 
     def __init__(
@@ -121,9 +121,9 @@ class RflinkSensor(RflinkDevice):
             tmp_entity
             in self.opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_SENSOR][self._device_id]
         ):
-            self.opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_SENSOR][self._device_id].remove(
-                tmp_entity
-            )
+            self.opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_SENSOR][
+                self._device_id
+            ].remove(tmp_entity)
 
         # Register id and aliases
         self.opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_SENSOR][self._device_id].append(

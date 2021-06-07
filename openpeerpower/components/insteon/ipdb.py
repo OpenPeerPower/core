@@ -104,7 +104,7 @@ DEVICE_PLATFORM = {
 
 
 def get_device_platforms(device):
-    """Return the OP platforms for a device type."""
+    """Return the OPP platforms for a device type."""
     return DEVICE_PLATFORM.get(type(device), {}).keys()
 
 

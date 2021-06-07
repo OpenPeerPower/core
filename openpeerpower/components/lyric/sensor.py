@@ -4,13 +4,14 @@ from datetime import datetime, timedelta
 from aiolyric.objects.device import LyricDevice
 from aiolyric.objects.location import LyricLocation
 
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import (
     DEVICE_CLASS_HUMIDITY,
     DEVICE_CLASS_TEMPERATURE,
     DEVICE_CLASS_TIMESTAMP,
 )
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 from openpeerpower.util import dt as dt_util
 
@@ -33,7 +34,7 @@ LYRIC_SETPOINT_STATUS_NAMES = {
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the Honeywell Lyric sensor platform based on a config entry."""
     coordinator: DataUpdateCoordinator = opp.data[DOMAIN][entry.entry_id]
@@ -67,7 +68,7 @@ async def async_setup_entry(
     async_add_entities(entities, True)
 
 
-class LyricSensor(LyricDeviceEntity):
+class LyricSensor(LyricDeviceEntity, SensorEntity):
     """Defines a Honeywell Lyric sensor."""
 
     def __init__(

@@ -1,34 +1,24 @@
-"""API for Netatmo bound to OPP OAuth."""
-from asyncio import run_coroutine_threadsafe
-
+"""API for Netatmo bound to HASS OAuth."""
+from aiohttp import ClientSession
 import pyatmo
 
-from openpeerpower import config_entries, core
 from openpeerpower.helpers import config_entry_oauth2_flow
 
 
-class ConfigEntryNetatmoAuth(pyatmo.auth.NetatmoOAuth2):
+class AsyncConfigEntryNetatmoAuth(pyatmo.auth.AbstractAsyncAuth):
     """Provide Netatmo authentication tied to an OAuth2 based config entry."""
 
     def __init__(
         self,
-        opp: core.OpenPeerPower,
-        config_entry: config_entries.ConfigEntry,
-        implementation: config_entry_oauth2_flow.AbstractOAuth2Implementation,
-    ):
-        """Initialize Netatmo Auth."""
-        self.opp = opp
-        self.session = config_entry_oauth2_flow.OAuth2Session(
-            opp, config_entry, implementation
-        )
-        super().__init__(token=self.session.token)
+        websession: ClientSession,
+        oauth_session: config_entry_oauth2_flow.OAuth2Session,
+    ) -> None:
+        """Initialize the auth."""
+        super().__init__(websession)
+        self._oauth_session = oauth_session
 
-    def refresh_tokens(
-        self,
-    ) -> dict:
-        """Refresh and return new Netatmo tokens using Open Peer Power OAuth2 session."""
-        run_coroutine_threadsafe(
-            self.session.async_ensure_token_valid(), self.opp.loop
-        ).result()
-
-        return self.session.token
+    async def async_get_access_token(self):
+        """Return a valid access token for Netatmo API."""
+        if not self._oauth_session.valid_token:
+            await self._oauth_session.async_ensure_token_valid()
+        return self._oauth_session.token["access_token"]

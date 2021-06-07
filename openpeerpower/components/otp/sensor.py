@@ -4,11 +4,10 @@ import time
 import pyotp
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_NAME, CONF_TOKEN
 from openpeerpower.core import callback
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 DEFAULT_NAME = "OTP Sensor"
 
@@ -34,7 +33,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 
 
 # Only TOTP supported at the moment, HOTP might be added later
-class TOTPSensor(Entity):
+class TOTPSensor(SensorEntity):
     """Representation of a TOTP sensor."""
 
     def __init__(self, name, token):

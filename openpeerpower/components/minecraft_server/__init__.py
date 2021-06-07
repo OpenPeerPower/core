@@ -1,22 +1,21 @@
 """The Minecraft Server integration."""
+from __future__ import annotations
 
-import asyncio
 from datetime import datetime, timedelta
 import logging
-from typing import Any, Dict
 
 from mcstatus.server import MinecraftServer as MCStatus
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_HOST, CONF_NAME, CONF_PORT
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
 )
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity import DeviceInfo, Entity
 from openpeerpower.helpers.event import async_track_time_interval
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 
 from . import helpers
 from .const import DOMAIN, MANUFACTURER, SCAN_INTERVAL, SIGNAL_NAME_PREFIX
@@ -26,54 +25,43 @@ PLATFORMS = ["binary_sensor", "sensor"]
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
-    """Set up the Minecraft Server component."""
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Minecraft Server from a config entry."""
     domain_data = opp.data.setdefault(DOMAIN, {})
 
     # Create and store server instance.
-    unique_id = config_entry.unique_id
+    unique_id = entry.unique_id
     _LOGGER.debug(
         "Creating server instance for '%s' (%s)",
-        config_entry.data[CONF_NAME],
-        config_entry.data[CONF_HOST],
+        entry.data[CONF_NAME],
+        entry.data[CONF_HOST],
     )
-    server = MinecraftServer(opp, unique_id, config_entry.data)
+    server = MinecraftServer(opp, unique_id, entry.data)
     domain_data[unique_id] = server
     await server.async_update()
     server.start_periodic_update()
 
     # Set up platforms.
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, config_entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Unload Minecraft Server config entry."""
     unique_id = config_entry.unique_id
     server = opp.data[DOMAIN][unique_id]
 
     # Unload platforms.
-    await asyncio.gather(
-        *[
-            opp.config_entries.async_forward_entry_unload(config_entry, platform)
-            for platform in PLATFORMS
-        ]
+    unload_ok = await opp.config_entries.async_unload_platforms(
+        config_entry, PLATFORMS
     )
 
     # Clean up.
     server.stop_periodic_update()
     opp.data[DOMAIN].pop(unique_id)
 
-    return True
+    return unload_ok
 
 
 class MinecraftServer:
@@ -83,7 +71,7 @@ class MinecraftServer:
     _MAX_RETRIES_STATUS = 3
 
     def __init__(
-        self, opp: OpenPeerPowerType, unique_id: str, config_data: ConfigType
+        self, opp: OpenPeerPower, unique_id: str, config_data: ConfigType
     ) -> None:
         """Initialize server instance."""
         self._opp = opp
@@ -244,7 +232,7 @@ class MinecraftServerEntity(Entity):
             "sw_version": self._server.protocol_version,
         }
         self._device_class = device_class
-        self._device_state_attributes = None
+        self._extra_state_attributes = None
         self._disconnect_dispatcher = None
 
     @property
@@ -258,7 +246,7 @@ class MinecraftServerEntity(Entity):
         return self._unique_id
 
     @property
-    def device_info(self) -> Dict[str, Any]:
+    def device_info(self) -> DeviceInfo:
         """Return device information."""
         return self._device_info
 

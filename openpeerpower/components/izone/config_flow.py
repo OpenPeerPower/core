@@ -1,11 +1,11 @@
 """Config flow for izone."""
 
 import asyncio
+from contextlib import suppress
 import logging
 
 from async_timeout import timeout
 
-from openpeerpower import config_entries
 from openpeerpower.core import callback
 from openpeerpower.helpers import config_entry_flow
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
@@ -28,11 +28,9 @@ async def _async_has_devices(opp):
 
     disco = await async_start_discovery_service(opp)
 
-    try:
+    with suppress(asyncio.TimeoutError):
         async with timeout(TIMEOUT_DISCOVERY):
             await controller_ready.wait()
-    except asyncio.TimeoutError:
-        pass
 
     if not disco.pi_disco.controllers:
         await async_stop_discovery_service(opp)
@@ -43,6 +41,4 @@ async def _async_has_devices(opp):
     return True
 
 
-config_entry_flow.register_discovery_flow(
-    IZONE, "iZone Aircon", _async_has_devices, config_entries.CONN_CLASS_LOCAL_POLL
-)
+config_entry_flow.register_discovery_flow(IZONE, "iZone Aircon", _async_has_devices)

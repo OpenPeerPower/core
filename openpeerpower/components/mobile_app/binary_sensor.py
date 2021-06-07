@@ -1,6 +1,4 @@
 """Binary sensor platform for mobile_app."""
-from functools import partial
-
 from openpeerpower.components.binary_sensor import BinarySensorEntity
 from openpeerpower.const import CONF_NAME, CONF_UNIQUE_ID, CONF_WEBHOOK_ID, STATE_ON
 from openpeerpower.core import callback
@@ -48,7 +46,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     async_add_entities(entities)
 
     @callback
-    def handle_sensor_registration(webhook_id, data):
+    def handle_sensor_registration(data):
         if data[CONF_WEBHOOK_ID] != webhook_id:
             return
 
@@ -66,7 +64,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     async_dispatcher_connect(
         opp,
         f"{DOMAIN}_{ENTITY_TYPE}_register",
-        partial(handle_sensor_registration, webhook_id),
+        handle_sensor_registration,
     )
 
 

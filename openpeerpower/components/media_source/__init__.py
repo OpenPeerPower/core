@@ -1,6 +1,8 @@
 """The media_source integration."""
+from __future__ import annotations
+
 from datetime import timedelta
-from typing import Optional
+from urllib.parse import quote
 
 import voluptuous as vol
 
@@ -17,6 +19,8 @@ from openpeerpower.loader import bind_opp
 from . import local_source, models
 from .const import DOMAIN, URI_SCHEME, URI_SCHEME_REGEX
 from .error import Unresolvable
+
+DEFAULT_EXPIRY_TIME = 3600 * 24
 
 
 def is_media_source_id(media_content_id: str):
@@ -38,7 +42,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
     opp.components.websocket_api.async_register_command(websocket_browse_media)
     opp.components.websocket_api.async_register_command(websocket_resolve_media)
     opp.components.frontend.async_register_built_in_panel(
-        "media-browser", "media_browser", "opp:play-box-multiple"
+        "media-browser", "media_browser", "opp.play-box-multiple"
     )
     local_source.async_setup(opp)
     await async_process_integration_platforms(
@@ -54,7 +58,7 @@ async def _process_media_source_platform(opp, domain, platform):
 
 @callback
 def _get_media_item(
-    opp: OpenPeerPower, media_content_id: Optional[str]
+    opp: OpenPeerPower, media_content_id: str | None
 ) -> models.MediaSourceItem:
     """Return media item."""
     if media_content_id:
@@ -104,7 +108,7 @@ async def websocket_browse_media(opp, connection, msg):
     {
         vol.Required("type"): "media_source/resolve_media",
         vol.Required(ATTR_MEDIA_CONTENT_ID): str,
-        vol.Optional("expires", default=30): int,
+        vol.Optional("expires", default=DEFAULT_EXPIRY_TIME): int,
     }
 )
 @websocket_api.async_response
@@ -120,7 +124,7 @@ async def websocket_resolve_media(opp, connection, msg):
             url = async_sign_path(
                 opp,
                 connection.refresh_token_id,
-                url,
+                quote(url),
                 timedelta(seconds=msg["expires"]),
             )
 

@@ -5,12 +5,13 @@ import logging
 from aiohttp import web
 from aiohttp.web_exceptions import HTTPServiceUnavailable
 
+from openpeerpower import config_entries
 from openpeerpower.components.http import OpenPeerPowerView
 from openpeerpower.const import ATTR_NAME, ATTR_SERVICE, EVENT_OPENPEERPOWER_START
 from openpeerpower.core import callback
 
 from .const import ATTR_ADDON, ATTR_CONFIG, ATTR_DISCOVERY, ATTR_UUID
-from .handler import OppioAPIError
+from .handler import HassioAPIError
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -26,7 +27,7 @@ def async_setup_discovery_view(opp: OpenPeerPowerView, oppio):
         """Process all exists discovery on startup."""
         try:
             data = await oppio.retrieve_discovery_messages()
-        except OppioAPIError as err:
+        except HassioAPIError as err:
             _LOGGER.error("Can't read discover info: %s", err)
             return
 
@@ -37,7 +38,9 @@ def async_setup_discovery_view(opp: OpenPeerPowerView, oppio):
         if jobs:
             await asyncio.wait(jobs)
 
-    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _async_discovery_start_handler)
+    opp.bus.async_listen_once(
+        EVENT_OPENPEERPOWER_START, _async_discovery_start_handler
+    )
 
 
 class OppIODiscovery(OpenPeerPowerView):
@@ -56,7 +59,7 @@ class OppIODiscovery(OpenPeerPowerView):
         # Fetch discovery data and prevent injections
         try:
             data = await self.oppio.get_discovery_message(uuid)
-        except OppioAPIError as err:
+        except HassioAPIError as err:
             _LOGGER.error("Can't read discovery data: %s", err)
             raise HTTPServiceUnavailable() from None
 
@@ -78,14 +81,14 @@ class OppIODiscovery(OpenPeerPowerView):
         # Read additional Add-on info
         try:
             addon_info = await self.oppio.get_addon_info(data[ATTR_ADDON])
-        except OppioAPIError as err:
+        except HassioAPIError as err:
             _LOGGER.error("Can't read add-on info: %s", err)
             return
         config_data[ATTR_ADDON] = addon_info[ATTR_NAME]
 
         # Use config flow
         await self.opp.config_entries.flow.async_init(
-            service, context={"source": "oppio"}, data=config_data
+            service, context={"source": config_entries.SOURCE_OPPIO}, data=config_data
         )
 
     async def async_process_del(self, data):
@@ -96,7 +99,7 @@ class OppIODiscovery(OpenPeerPowerView):
         # Check if really deletet / prevent injections
         try:
             data = await self.oppio.get_discovery_message(uuid)
-        except OppioAPIError:
+        except HassioAPIError:
             pass
         else:
             _LOGGER.warning("Retrieve wrong unload for %s", service)
@@ -104,6 +107,6 @@ class OppIODiscovery(OpenPeerPowerView):
 
         # Use config flow
         for entry in self.opp.config_entries.async_entries(service):
-            if entry.source != "oppio":
+            if entry.source != config_entries.SOURCE_OPPIO:
                 continue
             await self.opp.config_entries.async_remove(entry)

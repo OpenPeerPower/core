@@ -10,6 +10,7 @@ import requests.exceptions
 import voluptuous as vol
 
 from openpeerpower import config_entries
+from openpeerpower.components import http
 from openpeerpower.components.http.view import OpenPeerPowerView
 from openpeerpower.components.media_player import DOMAIN as MP_DOMAIN
 from openpeerpower.const import (
@@ -25,7 +26,6 @@ from openpeerpower.const import (
 from openpeerpower.core import callback
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.network import get_url
 
 from .const import (
     AUTH_CALLBACK_NAME,
@@ -51,6 +51,8 @@ from .const import (
 )
 from .errors import NoServersFound, ServerNotSpecified
 from .server import PlexServer
+
+HEADER_FRONTEND_BASE = "HA-Frontend-Base"
 
 _LOGGER = logging.getLogger(__package__)
 
@@ -80,7 +82,6 @@ class PlexFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a Plex config flow."""
 
     VERSION = 1
-    CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_PUSH
 
     @staticmethod
     @callback
@@ -286,7 +287,11 @@ class PlexFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_plex_website_auth(self):
         """Begin external auth flow on Plex website."""
         self.opp.http.register_view(PlexAuthorizationCallbackView)
-        opp_url = get_url(self.opp)
+        if (req := http.current_request.get()) is None:
+            raise RuntimeError("No current request in context")
+        if (opp_url := req.headers.get(HEADER_FRONTEND_BASE)) is None:
+            raise RuntimeError("No header in request")
+
         headers = {"Origin": opp_url}
         payload = {
             "X-Plex-Device-Name": X_PLEX_DEVICE_NAME,
@@ -417,7 +422,7 @@ class PlexAuthorizationCallbackView(OpenPeerPowerView):
 
     async def get(self, request):
         """Receive authorization confirmation."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         await opp.config_entries.flow.async_configure(
             flow_id=request.query["flow_id"], user_input=None
         )

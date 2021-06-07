@@ -20,7 +20,7 @@
     },
     "options": {
         "step": {
-            "op_to_risco": {
+            "ha_to_risco": {
                 "data": {
                     "armed_away": "Aktiv\u00e9iert \u00cbnnerwee",
                     "armed_home": "Aktiv\u00e9iert Doheem",

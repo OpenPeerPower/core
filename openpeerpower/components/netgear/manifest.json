@@ -3,5 +3,6 @@
   "name": "NETGEAR",
   "documentation": "https://www.openpeerpower.io/integrations/netgear",
   "requirements": ["pynetgear==0.6.1"],
-  "codeowners": []
+  "codeowners": [],
+  "iot_class": "local_polling"
 }

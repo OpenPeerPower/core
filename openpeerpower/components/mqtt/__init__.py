@@ -1,14 +1,15 @@
 """Support for MQTT message handling."""
+from __future__ import annotations
+
 import asyncio
 from functools import lru_cache, partial, wraps
 import inspect
 from itertools import groupby
 import logging
 from operator import attrgetter
-import os
 import ssl
 import time
-from typing import Any, Callable, List, Optional, Union
+from typing import Any, Callable, Union
 import uuid
 
 import attr
@@ -29,11 +30,18 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_STARTED,
     EVENT_OPENPEERPOWER_STOP,
 )
-from openpeerpower.core import CoreState, Event, OppJob, ServiceCall, callback
+from openpeerpower.core import (
+    CoreState,
+    Event,
+    OppJob,
+    OpenPeerPower,
+    ServiceCall,
+    callback,
+)
 from openpeerpower.exceptions import OpenPeerPowerError, Unauthorized
 from openpeerpower.helpers import config_validation as cv, event, template
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect, dispatcher_send
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType, ServiceDataType
+from openpeerpower.helpers.typing import ConfigType, ServiceDataType
 from openpeerpower.loader import bind_opp
 from openpeerpower.util import dt as dt_util
 from openpeerpower.util.async_ import run_callback_threadsafe
@@ -243,7 +251,7 @@ def _build_publish_data(topic: Any, qos: int, retain: bool) -> ServiceDataType:
 
 
 @bind_opp
-def publish(opp: OpenPeerPowerType, topic, payload, qos=None, retain=None) -> None:
+def publish(opp: OpenPeerPower, topic, payload, qos=None, retain=None) -> None:
     """Publish message to an MQTT topic."""
     opp.add_job(async_publish, opp, topic, payload, qos, retain)
 
@@ -251,7 +259,7 @@ def publish(opp: OpenPeerPowerType, topic, payload, qos=None, retain=None) -> No
 @callback
 @bind_opp
 def async_publish(
-    opp: OpenPeerPowerType, topic: Any, payload, qos=None, retain=None
+    opp: OpenPeerPower, topic: Any, payload, qos=None, retain=None
 ) -> None:
     """Publish message to an MQTT topic."""
     data = _build_publish_data(topic, qos, retain)
@@ -261,7 +269,7 @@ def async_publish(
 
 @bind_opp
 def publish_template(
-    opp: OpenPeerPowerType, topic, payload_template, qos=None, retain=None
+    opp: OpenPeerPower, topic, payload_template, qos=None, retain=None
 ) -> None:
     """Publish message to an MQTT topic."""
     opp.add_job(async_publish_template, opp, topic, payload_template, qos, retain)
@@ -269,7 +277,7 @@ def publish_template(
 
 @bind_opp
 def async_publish_template(
-    opp: OpenPeerPowerType, topic, payload_template, qos=None, retain=None
+    opp: OpenPeerPower, topic, payload_template, qos=None, retain=None
 ) -> None:
     """Publish message to an MQTT topic using a template payload."""
     data = _build_publish_data(topic, qos, retain)
@@ -306,11 +314,11 @@ def wrap_msg_callback(msg_callback: MessageCallbackType) -> MessageCallbackType:
 
 @bind_opp
 async def async_subscribe(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     topic: str,
     msg_callback: MessageCallbackType,
     qos: int = DEFAULT_QOS,
-    encoding: Optional[str] = "utf-8",
+    encoding: str | None = "utf-8",
 ):
     """Subscribe to an MQTT topic.
 
@@ -351,7 +359,7 @@ async def async_subscribe(
 
 @bind_opp
 def subscribe(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     topic: str,
     msg_callback: MessageCallbackType,
     qos: int = DEFAULT_QOS,
@@ -370,7 +378,7 @@ def subscribe(
 
 
 async def _async_setup_discovery(
-    opp: OpenPeerPowerType, conf: ConfigType, config_entry
+    opp: OpenPeerPower, conf: ConfigType, config_entry
 ) -> bool:
     """Try to start the discovery of MQTT devices.
 
@@ -383,9 +391,9 @@ async def _async_setup_discovery(
     return success
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Start the MQTT protocol service."""
-    conf: Optional[ConfigType] = config.get(DOMAIN)
+    conf: ConfigType | None = config.get(DOMAIN)
 
     websocket_api.async_register_command(opp, websocket_subscribe)
     websocket_api.async_register_command(opp, websocket_remove_device)
@@ -540,7 +548,7 @@ class MQTT:
 
     def __init__(
         self,
-        opp: OpenPeerPowerType,
+        opp: OpenPeerPower,
         config_entry,
         conf,
     ) -> None:
@@ -552,7 +560,7 @@ class MQTT:
         self.opp = opp
         self.config_entry = config_entry
         self.conf = conf
-        self.subscriptions: List[Subscription] = []
+        self.subscriptions: list[Subscription] = []
         self.connected = False
         self._op_started = asyncio.Event()
         self._last_subscribe = time.time()
@@ -624,18 +632,7 @@ class MQTT:
 
         certificate = self.conf.get(CONF_CERTIFICATE)
 
-        # For cloudmqtt.com, secured connection, auto fill in certificate
-        if (
-            certificate is None
-            and 19999 < self.conf[CONF_PORT] < 30000
-            and self.conf[CONF_BROKER].endswith(".cloudmqtt.com")
-        ):
-            certificate = os.path.join(
-                os.path.dirname(__file__), "addtrustexternalcaroot.crt"
-            )
-
-        # When the certificate is set to auto, use bundled certs from certifi
-        elif certificate == "auto":
+        if certificate == "auto":
             certificate = certifi.where()
 
         client_key = self.conf.get(CONF_CLIENT_KEY)
@@ -730,7 +727,7 @@ class MQTT:
         topic: str,
         msg_callback: MessageCallbackType,
         qos: int,
-        encoding: Optional[str] = None,
+        encoding: str | None = None,
     ) -> Callable[[], None]:
         """Set up a subscription to a topic with the provided qos.
 

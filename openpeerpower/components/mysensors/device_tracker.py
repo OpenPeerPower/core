@@ -3,15 +3,18 @@ from openpeerpower.components import mysensors
 from openpeerpower.components.device_tracker import DOMAIN
 from openpeerpower.components.mysensors import DevId, on_unload
 from openpeerpower.components.mysensors.const import ATTR_GATEWAY_ID, GatewayId
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
-from openpeerpower.helpers.typing import OpenPeerPowerType
 from openpeerpower.util import slugify
 
 
 async def async_setup_scanner(
-    opp: OpenPeerPowerType, config, async_see, discovery_info=None
+    opp: OpenPeerPower, config, async_see, discovery_info=None
 ):
     """Set up the MySensors device scanner."""
+    if not discovery_info:
+        return False
+
     new_devices = mysensors.setup_mysensors_platform(
         opp,
         DOMAIN,
@@ -50,7 +53,7 @@ async def async_setup_scanner(
 class MySensorsDeviceScanner(mysensors.device.MySensorsDevice):
     """Represent a MySensors scanner."""
 
-    def __init__(self, opp: OpenPeerPowerType, async_see, *args):
+    def __init__(self, opp: OpenPeerPower, async_see, *args):
         """Set up instance."""
         super().__init__(*args)
         self.async_see = async_see
@@ -69,5 +72,5 @@ class MySensorsDeviceScanner(mysensors.device.MySensorsDevice):
             host_name=self.name,
             gps=(latitude, longitude),
             battery=node.battery_level,
-            attributes=self.device_state_attributes,
+            attributes=self.extra_state_attributes,
         )

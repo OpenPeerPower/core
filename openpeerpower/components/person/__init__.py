@@ -1,6 +1,8 @@
 """Support for tracking people."""
+from __future__ import annotations
+
 import logging
-from typing import List, Optional, cast
+from typing import cast
 
 import voluptuous as vol
 
@@ -47,7 +49,7 @@ from openpeerpower.helpers.entity_component import EntityComponent
 from openpeerpower.helpers.event import async_track_state_change_event
 from openpeerpower.helpers.restore_state import RestoreEntity
 from openpeerpower.helpers.storage import Store
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 from openpeerpower.loader import bind_opp
 
 _LOGGER = logging.getLogger(__name__)
@@ -166,12 +168,12 @@ class PersonStorageCollection(collection.StorageCollection):
         logger: logging.Logger,
         id_manager: collection.IDManager,
         yaml_collection: collection.YamlCollection,
-    ):
+    ) -> None:
         """Initialize a person storage collection."""
         super().__init__(store, logger, id_manager)
         self.yaml_collection = yaml_collection
 
-    async def _async_load_data(self) -> Optional[dict]:
+    async def _async_load_data(self) -> dict | None:
         """Load the data.
 
         A past bug caused onboarding to create invalid person objects.
@@ -257,7 +259,7 @@ class PersonStorageCollection(collection.StorageCollection):
                 raise ValueError("User already taken")
 
 
-async def filter_yaml_data(opp: OpenPeerPowerType, persons: List[dict]) -> List[dict]:
+async def filter_yaml_data(opp: OpenPeerPower, persons: list[dict]) -> list[dict]:
     """Validate YAML data that we can't validate via schema."""
     filtered = []
     person_invalid_user = []
@@ -265,16 +267,15 @@ async def filter_yaml_data(opp: OpenPeerPowerType, persons: List[dict]) -> List[
     for person_conf in persons:
         user_id = person_conf.get(CONF_USER_ID)
 
-        if user_id is not None:
-            if await opp.auth.async_get_user(user_id) is None:
-                _LOGGER.error(
-                    "Invalid user_id detected for person %s",
-                    person_conf[collection.CONF_ID],
-                )
-                person_invalid_user.append(
-                    f"- Person {person_conf[CONF_NAME]} (id: {person_conf[collection.CONF_ID]}) points at invalid user {user_id}"
-                )
-                continue
+        if user_id is not None and await opp.auth.async_get_user(user_id) is None:
+            _LOGGER.error(
+                "Invalid user_id detected for person %s",
+                person_conf[collection.CONF_ID],
+            )
+            person_invalid_user.append(
+                f"- Person {person_conf[CONF_NAME]} (id: {person_conf[collection.CONF_ID]}) points at invalid user {user_id}"
+            )
+            continue
 
         filtered.append(person_conf)
 
@@ -292,7 +293,7 @@ The following persons point at invalid users:
     return filtered
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
+async def async_setup(opp: OpenPeerPower, config: ConfigType):
     """Set up the person component."""
     entity_component = EntityComponent(_LOGGER, DOMAIN, opp)
     id_manager = collection.IDManager()
@@ -346,7 +347,9 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
             await filter_yaml_data(opp, conf.get(DOMAIN, []))
         )
 
-    service.async_register_admin_service(opp, DOMAIN, SERVICE_RELOAD, async_reload_yaml)
+    service.async_register_admin_service(
+        opp, DOMAIN, SERVICE_RELOAD, async_reload_yaml
+    )
 
     return True
 
@@ -378,7 +381,7 @@ class Person(RestoreEntity):
         return self._config[CONF_NAME]
 
     @property
-    def entity_picture(self) -> Optional[str]:
+    def entity_picture(self) -> str | None:
         """Return entity picture."""
         return self._config.get(CONF_PICTURE)
 
@@ -396,7 +399,7 @@ class Person(RestoreEntity):
         return self._state
 
     @property
-    def state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of the person."""
         data = {ATTR_EDITABLE: self.editable, ATTR_ID: self.unique_id}
         if self._latitude is not None:
@@ -424,16 +427,18 @@ class Person(RestoreEntity):
         if state:
             self._parse_source_state(state)
 
-        if self.opp.is_running:
+        if self.opp is_running:
             # Update person now if opp is already running.
             await self.async_update_config(self._config)
         else:
-            # Wait for opp start to not have race between person
+            # Wait for opp.start to not have race between person
             # and device trackers finishing setup.
             async def person_start_opp(now):
                 await self.async_update_config(self._config)
 
-            self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, person_start_opp)
+            self.opp.bus.async_listen_once(
+                EVENT_OPENPEERPOWER_START, person_start_opp
+            )
 
     async def async_update_config(self, config):
         """Handle when the config is updated."""
@@ -509,7 +514,7 @@ class Person(RestoreEntity):
 
 @websocket_api.websocket_command({vol.Required(CONF_TYPE): "person/list"})
 def ws_list_person(
-    opp: OpenPeerPowerType, connection: websocket_api.ActiveConnection, msg
+    opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg
 ):
     """List persons."""
     yaml, storage = opp.data[DOMAIN]
@@ -518,7 +523,7 @@ def ws_list_person(
     )
 
 
-def _get_latest(prev: Optional[State], curr: State):
+def _get_latest(prev: State | None, curr: State):
     """Get latest state."""
     if prev is None or curr.last_updated > prev.last_updated:
         return curr

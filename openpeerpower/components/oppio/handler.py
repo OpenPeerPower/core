@@ -4,7 +4,6 @@ import logging
 import os
 
 import aiohttp
-import async_timeout
 
 from openpeerpower.components.http import (
     CONF_SERVER_HOST,
@@ -18,7 +17,7 @@ from .const import X_OPPIO
 _LOGGER = logging.getLogger(__name__)
 
 
-class OppioAPIError(RuntimeError):
+class HassioAPIError(RuntimeError):
     """Return if a API trow a error."""
 
 
@@ -30,7 +29,7 @@ def _api_bool(funct):
         try:
             data = await funct(*argv, **kwargs)
             return data["result"] == "ok"
-        except OppioAPIError:
+        except HassioAPIError:
             return False
 
     return _wrapper
@@ -44,7 +43,7 @@ def api_data(funct):
         data = await funct(*argv, **kwargs)
         if data["result"] == "ok":
             return data["data"]
-        raise OppioAPIError(data["message"])
+        raise HassioAPIError(data["message"])
 
     return _wrapper
 
@@ -52,7 +51,12 @@ def api_data(funct):
 class OppIO:
     """Small API wrapper for Opp.io."""
 
-    def __init__(self, loop, websession, ip):
+    def __init__(
+        self,
+        loop: asyncio.AbstractEventLoop,
+        websession: aiohttp.ClientSession,
+        ip: str,
+    ) -> None:
         """Initialize Opp.io API."""
         self.loop = loop
         self.websession = websession
@@ -115,6 +119,14 @@ class OppIO:
         return self.send_command(f"/addons/{addon}/info", method="get")
 
     @api_data
+    def get_store(self):
+        """Return data from the store.
+
+        This method return a coroutine.
+        """
+        return self.send_command("/store", method="get")
+
+    @api_data
     def get_ingress_panels(self):
         """Return data for Add-on ingress panels.
 
@@ -144,7 +156,7 @@ class OppIO:
 
         This method return a coroutine.
         """
-        return self.send_command("/discovery", method="get")
+        return self.send_command("/discovery", method="get", timeout=60)
 
     @api_data
     def get_discovery_message(self, uuid):
@@ -181,26 +193,36 @@ class OppIO:
         """
         return self.send_command("/supervisor/options", payload={"timezone": timezone})
 
+    @_api_bool
+    def update_diagnostics(self, diagnostics: bool):
+        """Update Supervisor diagnostics setting.
+
+        This method return a coroutine.
+        """
+        return self.send_command(
+            "/supervisor/options", payload={"diagnostics": diagnostics}
+        )
+
     async def send_command(self, command, method="post", payload=None, timeout=10):
         """Send API command to Opp.io.
 
         This method is a coroutine.
         """
         try:
-            with async_timeout.timeout(timeout):
-                request = await self.websession.request(
-                    method,
-                    f"http://{self._ip}{command}",
-                    json=payload,
-                    headers={X_OPPIO: os.environ.get("OPPIO_TOKEN", "")},
-                )
+            request = await self.websession.request(
+                method,
+                f"http://{self._ip}{command}",
+                json=payload,
+                headers={X_OPPIO: os.environ.get("OPPIO_TOKEN", "")},
+                timeout=aiohttp.ClientTimeout(total=timeout),
+            )
 
-                if request.status not in (HTTP_OK, HTTP_BAD_REQUEST):
-                    _LOGGER.error("%s return code %d", command, request.status)
-                    raise OppioAPIError()
+            if request.status not in (HTTP_OK, HTTP_BAD_REQUEST):
+                _LOGGER.error("%s return code %d", command, request.status)
+                raise HassioAPIError()
 
-                answer = await request.json()
-                return answer
+            answer = await request.json()
+            return answer
 
         except asyncio.TimeoutError:
             _LOGGER.error("Timeout on %s request", command)
@@ -208,4 +230,4 @@ class OppIO:
         except aiohttp.ClientError as err:
             _LOGGER.error("Client error on %s request %s", command, err)
 
-        raise OppioAPIError()
+        raise HassioAPIError()

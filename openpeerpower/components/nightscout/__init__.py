@@ -1,5 +1,4 @@
 """The Nightscout integration."""
-import asyncio
 from asyncio import TimeoutError as AsyncIOTimeoutError
 
 from aiohttp import ClientError
@@ -19,13 +18,7 @@ PLATFORMS = ["sensor"]
 _API_TIMEOUT = SLOW_UPDATE_WARNING - 1
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the Nightscout component."""
-    opp.data.setdefault(DOMAIN, {})
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Nightscout from a config entry."""
     server_url = entry.data[CONF_URL]
     api_key = entry.data.get(CONF_API_KEY)
@@ -36,6 +29,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     except (ClientError, AsyncIOTimeoutError, OSError) as error:
         raise ConfigEntryNotReady from error
 
+    opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = api
 
     device_registry = await dr.async_get_registry(opp)
@@ -48,25 +42,14 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         entry_type="service",
     )
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
-
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
 

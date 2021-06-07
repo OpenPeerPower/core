@@ -1,11 +1,10 @@
 """Support for tracking the moon phases."""
-from astral import Astral
+from astral import moon
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_NAME
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 import openpeerpower.util.dt as dt_util
 
 DEFAULT_NAME = "Moon"
@@ -42,14 +41,13 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities([MoonSensor(name)], True)
 
 
-class MoonSensor(Entity):
+class MoonSensor(SensorEntity):
     """Representation of a Moon sensor."""
 
     def __init__(self, name):
         """Initialize the moon sensor."""
         self._name = name
         self._state = None
-        self._astral = Astral()
 
     @property
     def name(self):
@@ -88,4 +86,4 @@ class MoonSensor(Entity):
     async def async_update(self):
         """Get the time and updates the states."""
         today = dt_util.as_local(dt_util.utcnow()).date()
-        self._state = self._astral.moon_phase(today)
+        self._state = moon.phase(today)

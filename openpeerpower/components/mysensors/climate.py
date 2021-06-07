@@ -1,6 +1,4 @@
 """MySensors platform that offers a Climate (MySensors-HVAC) component."""
-from typing import Callable
-
 from openpeerpower.components import mysensors
 from openpeerpower.components.climate import ClimateEntity
 from openpeerpower.components.climate.const import (
@@ -19,8 +17,9 @@ from openpeerpower.components.mysensors import on_unload
 from openpeerpower.components.mysensors.const import MYSENSORS_DISCOVERY
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import ATTR_TEMPERATURE, TEMP_CELSIUS, TEMP_FAHRENHEIT
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 
 DICT_HA_TO_MYS = {
     HVAC_MODE_AUTO: "AutoChangeOver",
@@ -40,7 +39,9 @@ OPERATION_LIST = [HVAC_MODE_OFF, HVAC_MODE_AUTO, HVAC_MODE_COOL, HVAC_MODE_HEAT]
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
+    opp: OpenPeerPower,
+    config_entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback,
 ):
     """Set up this platform for a specific ConfigEntry(==Gateway)."""
 

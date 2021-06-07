@@ -2,16 +2,8 @@
   "domain": "onboarding",
   "name": "Open Peer Power Onboarding",
   "documentation": "https://www.openpeerpower.io/integrations/onboarding",
-  "after_dependencies": [
-    "oppio"
-  ],
-  "dependencies": [
-    "auth",
-    "http",
-    "person"
-  ],
-  "codeowners": [
-    "@open-peer-power/core"
-  ],
+  "after_dependencies": ["oppio"],
+  "dependencies": ["analytics", "auth", "http", "person"],
+  "codeowners": ["@openpeerpower/core"],
   "quality_scale": "internal"
 }

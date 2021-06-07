@@ -1,9 +1,9 @@
 """Support for Open Peer Power iOS app sensors."""
 from openpeerpower.components import ios
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import PERCENTAGE
 from openpeerpower.core import callback
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.icon import icon_for_battery_level
 
 from .const import DOMAIN
@@ -32,7 +32,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     async_add_entities(dev, True)
 
 
-class IOSSensor(Entity):
+class IOSSensor(SensorEntity):
     """Representation of an iOS sensor."""
 
     def __init__(self, sensor_type, device_name, device):
@@ -88,7 +88,7 @@ class IOSSensor(Entity):
         return self._unit_of_measurement
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the device state attributes."""
         device = self._device[ios.ATTR_DEVICE]
         device_battery = self._device[ios.ATTR_BATTERY]
@@ -131,7 +131,7 @@ class IOSSensor(Entity):
         self.async_write_op_state()
 
     async def async_added_to_opp(self) -> None:
-        """Added to opp so need to register to dispatch."""
+        """Added to opp.so need to register to dispatch."""
         self._state = self._device[ios.ATTR_BATTERY][self.type]
         device_id = self._device[ios.ATTR_DEVICE_ID]
         self.async_on_remove(

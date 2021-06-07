@@ -3,5 +3,6 @@
   "name": "Mailbox",
   "documentation": "https://www.openpeerpower.io/integrations/mailbox",
   "dependencies": ["http"],
-  "codeowners": []
+  "codeowners": [],
+  "quality_scale": "internal"
 }

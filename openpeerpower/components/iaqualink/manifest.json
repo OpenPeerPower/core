@@ -3,6 +3,7 @@
   "name": "Jandy iAqualink",
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/iaqualink/",
-  "codeowners": [],
-  "requirements": ["iaqualink==0.3.4"]
+  "codeowners": ["@flz"],
+  "requirements": ["iaqualink==0.3.90"],
+  "iot_class": "cloud_polling"
 }

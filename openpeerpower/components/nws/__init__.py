@@ -1,8 +1,10 @@
 """The National Weather Service integration."""
-import asyncio
+from __future__ import annotations
+
+from collections.abc import Awaitable
 import datetime
 import logging
-from typing import Awaitable, Callable, Optional
+from typing import Callable
 
 from pynws import SimpleNWS
 
@@ -26,7 +28,7 @@ from .const import (
 
 _LOGGER = logging.getLogger(__name__)
 
-PLATFORMS = ["weather"]
+PLATFORMS = ["sensor", "weather"]
 
 DEFAULT_SCAN_INTERVAL = datetime.timedelta(minutes=10)
 FAILED_SCAN_INTERVAL = datetime.timedelta(minutes=1)
@@ -36,11 +38,6 @@ DEBOUNCE_TIME = 60  # in seconds
 def base_unique_id(latitude, longitude):
     """Return unique id for entries in configuration."""
     return f"{latitude}_{longitude}"
-
-
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the National Weather Service (NWS) component."""
-    return True
 
 
 class NwsDataUpdateCoordinator(DataUpdateCoordinator):
@@ -58,9 +55,9 @@ class NwsDataUpdateCoordinator(DataUpdateCoordinator):
         name: str,
         update_interval: datetime.timedelta,
         failed_update_interval: datetime.timedelta,
-        update_method: Optional[Callable[[], Awaitable]] = None,
-        request_refresh_debouncer: Optional[debounce.Debouncer] = None,
-    ):
+        update_method: Callable[[], Awaitable] | None = None,
+        request_refresh_debouncer: debounce.Debouncer | None = None,
+    ) -> None:
         """Initialize NWS coordinator."""
         super().__init__(
             opp,
@@ -96,7 +93,7 @@ class NwsDataUpdateCoordinator(DataUpdateCoordinator):
         )
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up a National Weather Service entry."""
     latitude = entry.data[CONF_LATITUDE]
     longitude = entry.data[CONF_LONGITUDE]
@@ -157,23 +154,14 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     await coordinator_forecast.async_refresh()
     await coordinator_forecast_hourly.async_refresh()
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
+
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
         if len(opp.data[DOMAIN]) == 0:

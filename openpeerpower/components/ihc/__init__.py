@@ -18,9 +18,9 @@ from openpeerpower.const import (
     CONF_USERNAME,
     TEMP_CELSIUS,
 )
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers import discovery
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import (
     ATTR_CONTROLLER_ID,
@@ -284,9 +284,7 @@ def get_manual_configuration(opp, config, conf, ihc_controller, controller_id):
             discovery.load_platform(opp, platform, DOMAIN, discovery_info, config)
 
 
-def autosetup_ihc_products(
-    opp: OpenPeerPowerType, config, ihc_controller, controller_id
-):
+def autosetup_ihc_products(opp: OpenPeerPower, config, ihc_controller, controller_id):
     """Auto setup of IHC products from the IHC project file."""
     project_xml = ihc_controller.get_project()
     if not project_xml:
@@ -343,7 +341,7 @@ def get_discovery_info(platform_setup, groups, controller_id):
     return discovery_data
 
 
-def setup_service_functions(opp: OpenPeerPowerType):
+def setup_service_functions(opp: OpenPeerPower):
     """Set up the IHC service functions."""
 
     def _get_controller(call):

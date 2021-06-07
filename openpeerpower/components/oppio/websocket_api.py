@@ -16,6 +16,7 @@ from .const import (
     ATTR_DATA,
     ATTR_ENDPOINT,
     ATTR_METHOD,
+    ATTR_RESULT,
     ATTR_TIMEOUT,
     ATTR_WS_EVENT,
     DOMAIN,
@@ -94,7 +95,6 @@ async def websocket_supervisor_api(
 ):
     """Websocket handler to call Supervisor API."""
     supervisor: OppIO = opp.data[DOMAIN]
-    result = False
     try:
         result = await supervisor.send_command(
             msg[ATTR_ENDPOINT],
@@ -102,7 +102,10 @@ async def websocket_supervisor_api(
             timeout=msg.get(ATTR_TIMEOUT, 10),
             payload=msg.get(ATTR_DATA, {}),
         )
-    except opp.components.oppio.OppioAPIError as err:
+
+        if result.get(ATTR_RESULT) == "error":
+            raise opp.components.oppio.HassioAPIError(result.get("message"))
+    except opp.components.oppio.HassioAPIError as err:
         _LOGGER.error("Failed to to call %s - %s", msg[ATTR_ENDPOINT], err)
         connection.send_error(
             msg[WS_ID], code=websocket_api.ERR_UNKNOWN_ERROR, message=str(err)

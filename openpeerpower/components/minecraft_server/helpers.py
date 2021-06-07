@@ -1,16 +1,17 @@
 """Helper functions for the Minecraft Server integration."""
+from __future__ import annotations
 
-from typing import Any, Dict
+from typing import Any
 
 import aiodns
 
 from openpeerpower.const import CONF_HOST, CONF_PORT
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from .const import SRV_RECORD_PREFIX
 
 
-async def async_check_srv_record(opp: OpenPeerPowerType, host: str) -> Dict[str, Any]:
+async def async_check_srv_record(opp: OpenPeerPower, host: str) -> dict[str, Any]:
     """Check if the given host is a valid Minecraft SRV record."""
     # Check if 'host' is a valid SRV record.
     return_value = None

@@ -1,5 +1,4 @@
 """Support for OpenTherm Gateway devices."""
-import asyncio
 from datetime import date, datetime
 import logging
 
@@ -39,6 +38,8 @@ from .const import (
     CONF_CLIMATE,
     CONF_FLOOR_TEMP,
     CONF_PRECISION,
+    CONF_READ_PRECISION,
+    CONF_SET_PRECISION,
     DATA_GATEWAYS,
     DATA_OPENTHERM_GW,
     DOMAIN,
@@ -79,6 +80,8 @@ CONFIG_SCHEMA = vol.Schema(
     extra=vol.ALLOW_EXTRA,
 )
 
+PLATFORMS = [COMP_BINARY_SENSOR, COMP_CLIMATE, COMP_SENSOR]
+
 
 async def options_updated(opp, entry):
     """Handle options update."""
@@ -94,15 +97,23 @@ async def async_setup_entry(opp, config_entry):
     gateway = OpenThermGatewayDevice(opp, config_entry)
     opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][config_entry.data[CONF_ID]] = gateway
 
+    if config_entry.options.get(CONF_PRECISION):
+        migrate_options = dict(config_entry.options)
+        migrate_options.update(
+            {
+                CONF_READ_PRECISION: config_entry.options[CONF_PRECISION],
+                CONF_SET_PRECISION: config_entry.options[CONF_PRECISION],
+            }
+        )
+        del migrate_options[CONF_PRECISION]
+        opp.config_entries.async_update_entry(config_entry, options=migrate_options)
+
     config_entry.add_update_listener(options_updated)
 
-    # Schedule directly on the loop to avoid blocking OP startup.
+    # Schedule directly on the loop to avoid blocking OPP startup.
     opp.loop.create_task(gateway.connect_and_subscribe())
 
-    for comp in [COMP_BINARY_SENSOR, COMP_CLIMATE, COMP_SENSOR]:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, comp)
-        )
+    opp.config_entries.async_setup_platforms(config_entry, PLATFORMS)
 
     register_services(opp)
     return True
@@ -387,14 +398,10 @@ def register_services(opp):
 
 async def async_unload_entry(opp, entry):
     """Cleanup and disconnect from gateway."""
-    await asyncio.gather(
-        opp.config_entries.async_forward_entry_unload(entry, COMP_BINARY_SENSOR),
-        opp.config_entries.async_forward_entry_unload(entry, COMP_CLIMATE),
-        opp.config_entries.async_forward_entry_unload(entry, COMP_SENSOR),
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     gateway = opp.data[DATA_OPENTHERM_GW][DATA_GATEWAYS][entry.data[CONF_ID]]
     await gateway.cleanup()
-    return True
+    return unload_ok
 
 
 class OpenThermGatewayDevice:

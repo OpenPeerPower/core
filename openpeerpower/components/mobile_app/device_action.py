@@ -1,5 +1,5 @@
 """Provides device actions for Mobile App."""
-from typing import List, Optional
+from __future__ import annotations
 
 import voluptuous as vol
 
@@ -22,7 +22,7 @@ ACTION_SCHEMA = cv.DEVICE_ACTION_BASE_SCHEMA.extend(
 )
 
 
-async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_actions(opp: OpenPeerPower, device_id: str) -> list[dict]:
     """List device actions for Mobile App devices."""
     webhook_id = webhook_id_from_device_id(opp, device_id)
 
@@ -33,7 +33,7 @@ async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
 
 
 async def async_call_action_from_config(
-    opp: OpenPeerPower, config: dict, variables: dict, context: Optional[Context]
+    opp: OpenPeerPower, config: dict, variables: dict, context: Context | None
 ) -> None:
     """Execute a device action."""
     webhook_id = webhook_id_from_device_id(opp, config[CONF_DEVICE_ID])

@@ -61,7 +61,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 
     @callback
     def on_stop(event):
-        """Shutdown cleanly when opp stops."""
+        """Shutdown cleanly when opp.stops."""
         opp.loop.create_task(russ.close())
 
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on_stop)

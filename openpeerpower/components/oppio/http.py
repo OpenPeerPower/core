@@ -1,9 +1,10 @@
 """HTTP Support for Opp.io."""
+from __future__ import annotations
+
 import asyncio
 import logging
 import os
 import re
-from typing import Dict, Union
 
 import aiohttp
 from aiohttp import web
@@ -24,8 +25,8 @@ MAX_UPLOAD_SIZE = 1024 * 1024 * 1024
 NO_TIMEOUT = re.compile(
     r"^(?:"
     r"|openpeerpower/update"
-    r"|oppos/update"
-    r"|oppos/update/cli"
+    r"|opp.s/update"
+    r"|opp.s/update/cli"
     r"|supervisor/update"
     r"|addons/[^/]+/(?:update|install|rebuild)"
     r"|snapshots/.+/full"
@@ -50,16 +51,16 @@ class OppIOView(OpenPeerPowerView):
     url = "/api/oppio/{path:.+}"
     requires_auth = False
 
-    def __init__(self, host: str, websession: aiohttp.ClientSession):
+    def __init__(self, host: str, websession: aiohttp.ClientSession) -> None:
         """Initialize a Opp.io base view."""
         self._host = host
         self._websession = websession
 
     async def _handle(
         self, request: web.Request, path: str
-    ) -> Union[web.Response, web.StreamResponse]:
+    ) -> web.Response | web.StreamResponse:
         """Route data to Opp.io."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         if _need_auth(opp, path) and not request[KEY_AUTHENTICATED]:
             return web.Response(status=HTTP_UNAUTHORIZED)
 
@@ -71,7 +72,7 @@ class OppIOView(OpenPeerPowerView):
 
     async def _command_proxy(
         self, path: str, request: web.Request
-    ) -> Union[web.Response, web.StreamResponse]:
+    ) -> web.Response | web.StreamResponse:
         """Return a client request with proxy origin for Opp.io supervisor.
 
         This method is a coroutine.
@@ -131,7 +132,7 @@ class OppIOView(OpenPeerPowerView):
         raise HTTPBadGateway()
 
 
-def _init_header(request: web.Request) -> Dict[str, str]:
+def _init_header(request: web.Request) -> dict[str, str]:
     """Create initial header."""
     headers = {
         X_OPPIO: os.environ.get("OPPIO_TOKEN", ""),

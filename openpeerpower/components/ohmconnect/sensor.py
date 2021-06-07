@@ -6,10 +6,9 @@ import defusedxml.ElementTree as ET
 import requests
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_ID, CONF_NAME
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
@@ -34,7 +33,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities([OhmconnectSensor(name, ohmid)], True)
 
 
-class OhmconnectSensor(Entity):
+class OhmconnectSensor(SensorEntity):
     """Representation of a OhmConnect sensor."""
 
     def __init__(self, name, ohmid):
@@ -56,7 +55,7 @@ class OhmconnectSensor(Entity):
         return "Inactive"
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return {"Address": self._data.get("address"), "ID": self._ohmid}
 

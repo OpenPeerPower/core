@@ -1,19 +1,22 @@
 """Component to allow numeric input for platforms."""
+from __future__ import annotations
+
 from abc import abstractmethod
 from datetime import timedelta
 import logging
-from typing import Any, Dict
+from typing import Any
 
 import voluptuous as vol
 
 from openpeerpower.config_entries import ConfigEntry
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers.config_validation import (  # noqa: F401
     PLATFORM_SCHEMA,
     PLATFORM_SCHEMA_BASE,
 )
 from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.entity_component import EntityComponent
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 
 from .const import (
     ATTR_MAX,
@@ -36,9 +39,11 @@ MIN_TIME_BETWEEN_SCANS = timedelta(seconds=10)
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up Number entities."""
-    component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp, SCAN_INTERVAL)
+    component = opp.data[DOMAIN] = EntityComponent(
+        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
+    )
     await component.async_setup(config)
 
     component.async_register_entity_service(
@@ -50,12 +55,12 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up a config entry."""
     return await opp.data[DOMAIN].async_setup_entry(entry)  # type: ignore
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
     return await opp.data[DOMAIN].async_unload_entry(entry)  # type: ignore
 
@@ -64,7 +69,7 @@ class NumberEntity(Entity):
     """Representation of a Number entity."""
 
     @property
-    def capability_attributes(self) -> Dict[str, Any]:
+    def capability_attributes(self) -> dict[str, Any]:
         """Return capability attributes."""
         return {
             ATTR_MIN: self.min_value,
@@ -108,5 +113,4 @@ class NumberEntity(Entity):
 
     async def async_set_value(self, value: float) -> None:
         """Set new value."""
-        assert self.opp is not None
         await self.opp.async_add_executor_job(self.set_value, value)

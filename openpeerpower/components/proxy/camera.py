@@ -77,7 +77,7 @@ def _precheck_image(image, opts):
     if imgfmt not in ("PNG", "JPEG"):
         _LOGGER.warning("Image is of unsupported type: %s", imgfmt)
         raise ValueError()
-    if not img.mode == "RGB":
+    if img.mode != "RGB":
         img = img.convert("RGB")
     return img
 
@@ -255,7 +255,9 @@ class ProxyCamera(Camera):
     async def handle_async_mjpeg_stream(self, request):
         """Generate an HTTP MJPEG stream from camera images."""
         if not self._stream_opts:
-            return await async_get_mjpeg_stream(self.opp, request, self._proxied_camera)
+            return await async_get_mjpeg_stream(
+                self.opp, request, self._proxied_camera
+            )
 
         return await async_get_still_stream(
             request, self._async_stream_image, self.content_type, self.frame_interval

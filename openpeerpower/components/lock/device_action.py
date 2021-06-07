@@ -1,5 +1,5 @@
 """Provides device automations for Lock."""
-from typing import List, Optional
+from __future__ import annotations
 
 import voluptuous as vol
 
@@ -30,7 +30,7 @@ ACTION_SCHEMA = cv.DEVICE_ACTION_BASE_SCHEMA.extend(
 )
 
 
-async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_actions(opp: OpenPeerPower, device_id: str) -> list[dict]:
     """List device actions for Lock devices."""
     registry = await entity_registry.async_get_registry(opp)
     actions = []
@@ -41,45 +41,28 @@ async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
             continue
 
         # Add actions for each entity that belongs to this integration
-        actions.append(
-            {
-                CONF_DEVICE_ID: device_id,
-                CONF_DOMAIN: DOMAIN,
-                CONF_ENTITY_ID: entry.entity_id,
-                CONF_TYPE: "lock",
-            }
-        )
-        actions.append(
-            {
-                CONF_DEVICE_ID: device_id,
-                CONF_DOMAIN: DOMAIN,
-                CONF_ENTITY_ID: entry.entity_id,
-                CONF_TYPE: "unlock",
-            }
-        )
+        base_action = {
+            CONF_DEVICE_ID: device_id,
+            CONF_DOMAIN: DOMAIN,
+            CONF_ENTITY_ID: entry.entity_id,
+        }
+
+        actions.append({**base_action, CONF_TYPE: "lock"})
+        actions.append({**base_action, CONF_TYPE: "unlock"})
 
         state = opp.states.get(entry.entity_id)
         if state:
             features = state.attributes.get(ATTR_SUPPORTED_FEATURES, 0)
             if features & (SUPPORT_OPEN):
-                actions.append(
-                    {
-                        CONF_DEVICE_ID: device_id,
-                        CONF_DOMAIN: DOMAIN,
-                        CONF_ENTITY_ID: entry.entity_id,
-                        CONF_TYPE: "open",
-                    }
-                )
+                actions.append({**base_action, CONF_TYPE: "open"})
 
     return actions
 
 
 async def async_call_action_from_config(
-    opp: OpenPeerPower, config: dict, variables: dict, context: Optional[Context]
+    opp: OpenPeerPower, config: dict, variables: dict, context: Context | None
 ) -> None:
     """Execute a device action."""
-    config = ACTION_SCHEMA(config)
-
     service_data = {ATTR_ENTITY_ID: config[CONF_ENTITY_ID]}
 
     if config[CONF_TYPE] == "lock":

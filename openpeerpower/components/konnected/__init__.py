@@ -1,5 +1,4 @@
 """Support for Konnected devices."""
-import asyncio
 import copy
 import hmac
 import json
@@ -251,7 +250,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up panel from a config entry."""
     client = AlarmPanel(opp, entry)
     # creates a panel data store in opp.data[DOMAIN][CONF_DEVICES]
@@ -261,10 +260,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     # async_connect will handle retries until it establishes a connection
     await client.async_connect()
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     # config entry specific data to enable unload
     opp.data[DOMAIN][entry.entry_id] = {
@@ -275,14 +271,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
 
@@ -317,7 +306,7 @@ class KonnectedView(OpenPeerPowerView):
 
     async def update_sensor(self, request: Request, device_id) -> Response:
         """Process a put or post."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         data = opp.data[DOMAIN]
 
         auth = request.headers.get(AUTHORIZATION)
@@ -360,8 +349,14 @@ class KonnectedView(OpenPeerPowerView):
         try:
             zone_num = str(payload.get(CONF_ZONE) or PIN_TO_ZONE[payload[CONF_PIN]])
             payload[CONF_ZONE] = zone_num
-            zone_data = device[CONF_BINARY_SENSORS].get(zone_num) or next(
-                (s for s in device[CONF_SENSORS] if s[CONF_ZONE] == zone_num), None
+            zone_data = (
+                device[CONF_BINARY_SENSORS].get(zone_num)
+                or next(
+                    (s for s in device[CONF_SWITCHES] if s[CONF_ZONE] == zone_num), None
+                )
+                or next(
+                    (s for s in device[CONF_SENSORS] if s[CONF_ZONE] == zone_num), None
+                )
             )
         except KeyError:
             zone_data = None
@@ -383,7 +378,7 @@ class KonnectedView(OpenPeerPowerView):
 
     async def get(self, request: Request, device_id) -> Response:
         """Return the current binary state of a switch."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         data = opp.data[DOMAIN]
 
         device = data[CONF_DEVICES].get(device_id)

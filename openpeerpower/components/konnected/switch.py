@@ -9,6 +9,8 @@ from openpeerpower.const import (
     CONF_SWITCHES,
     CONF_ZONE,
 )
+from openpeerpower.core import callback
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 from openpeerpower.helpers.entity import ToggleEntity
 
 from .const import (
@@ -130,6 +132,16 @@ class KonnectedSwitch(ToggleEntity):
             state,
         )
 
+    @callback
+    def async_set_state(self, state):
+        """Update the switch state."""
+        self._set_state(state)
+
     async def async_added_to_opp(self):
-        """Store entity_id."""
+        """Store entity_id and register state change callback."""
         self._data["entity_id"] = self.entity_id
+        self.async_on_remove(
+            async_dispatcher_connect(
+                self.opp, f"konnected.{self.entity_id}.update", self.async_set_state
+            )
+        )

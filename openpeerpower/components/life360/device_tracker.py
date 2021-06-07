@@ -143,7 +143,9 @@ class Life360Scanner:
 
         self._started = dt_util.utcnow()
         self._update_life360()
-        track_time_interval(self._opp, self._update_life360, config[CONF_SCAN_INTERVAL])
+        track_time_interval(
+            self._opp, self._update_life360, config[CONF_SCAN_INTERVAL]
+        )
 
     def _dev_id(self, name):
         return self._prefix + name
@@ -312,7 +314,7 @@ class Life360Scanner:
         }
 
         # If user wants driving or moving to be shown as state, and current
-        # location is not in a OP zone, then set location name accordingly.
+        # location is not in a OPP zone, then set location name accordingly.
         loc_name = None
         active_zone = run_callback_threadsafe(
             self._opp.loop, async_active_zone, self._opp, lat, lon, gps_accuracy

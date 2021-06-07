@@ -1,17 +1,16 @@
 """Support for MySensors switches."""
-from typing import Callable
-
 import voluptuous as vol
 
 from openpeerpower.components import mysensors
 from openpeerpower.components.switch import DOMAIN, SwitchEntity
 from openpeerpower.const import ATTR_ENTITY_ID, STATE_OFF, STATE_ON
+from openpeerpower.core import OpenPeerPower
 import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 
 from . import on_unload
 from ...config_entries import ConfigEntry
 from ...helpers.dispatcher import async_dispatcher_connect
-from ...helpers.typing import OpenPeerPowerType
 from .const import DOMAIN as MYSENSORS_DOMAIN, MYSENSORS_DISCOVERY, SERVICE_SEND_IR_CODE
 
 ATTR_IR_CODE = "V_IR_SEND"
@@ -22,7 +21,9 @@ SEND_IR_CODE_SERVICE_SCHEMA = vol.Schema(
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
+    opp: OpenPeerPower,
+    config_entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback,
 ):
     """Set up this platform for a specific ConfigEntry(==Gateway)."""
     device_class_map = {

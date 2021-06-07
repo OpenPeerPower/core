@@ -1,6 +1,8 @@
 """Provides an HTTP API for mobile_app."""
+from __future__ import annotations
+
+from contextlib import suppress
 import secrets
-from typing import Dict
 
 from aiohttp.web import Request, Response
 import emoji
@@ -58,9 +60,9 @@ class RegistrationsView(OpenPeerPowerView):
             extra=vol.REMOVE_EXTRA,
         )
     )
-    async def post(self, request: Request, data: Dict) -> Response:
+    async def post(self, request: Request, data: dict) -> Response:
         """Handle the POST request for registration."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
 
         webhook_id = secrets.token_hex()
 
@@ -97,10 +99,8 @@ class RegistrationsView(OpenPeerPowerView):
         )
 
         remote_ui_url = None
-        try:
+        with suppress(opp.components.cloud.CloudNotAvailable):
             remote_ui_url = opp.components.cloud.async_remote_ui_url()
-        except opp.components.cloud.CloudNotAvailable:
-            pass
 
         return self.json(
             {

@@ -1,14 +1,13 @@
 """The ReCollect Waste integration."""
-import asyncio
+from __future__ import annotations
+
 from datetime import date, timedelta
-from typing import List
 
 from aiorecollect.client import Client, PickupEvent
 from aiorecollect.errors import RecollectError
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.core import OpenPeerPower
-from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers import aiohttp_client
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
@@ -35,7 +34,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         entry.data[CONF_PLACE_ID], entry.data[CONF_SERVICE_ID], session=session
     )
 
-    async def async_get_pickup_events() -> List[PickupEvent]:
+    async def async_get_pickup_events() -> list[PickupEvent]:
         """Get the next pickup."""
         try:
             return await client.async_get_pickup_events(
@@ -54,17 +53,11 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         update_method=async_get_pickup_events,
     )
 
-    await coordinator.async_refresh()
-
-    if not coordinator.last_update_success:
-        raise ConfigEntryNotReady
+    await coordinator.async_config_entry_first_refresh()
 
     opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id] = coordinator
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     opp.data[DOMAIN][DATA_LISTENER][entry.entry_id] = entry.add_update_listener(
         async_reload_entry
@@ -80,14 +73,7 @@ async def async_reload_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload an RainMachine config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN][DATA_COORDINATOR].pop(entry.entry_id)
         cancel_listener = opp.data[DOMAIN][DATA_LISTENER].pop(entry.entry_id)

@@ -1,16 +1,18 @@
 """Support for Nightscout sensors."""
+from __future__ import annotations
+
 from asyncio import TimeoutError as AsyncIOTimeoutError
 from datetime import timedelta
 import logging
-from typing import Callable, List
 
 from aiohttp import ClientError
 from py_nightscout import Api as NightscoutAPI
 
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import ATTR_DATE
 from openpeerpower.core import OpenPeerPower
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 
 from .const import ATTR_DELTA, ATTR_DEVICE, ATTR_DIRECTION, DOMAIN
 
@@ -24,14 +26,14 @@ DEFAULT_NAME = "Blood Glucose"
 async def async_setup_entry(
     opp: OpenPeerPower,
     entry: ConfigEntry,
-    async_add_entities: Callable[[List[Entity], bool], None],
+    async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up the Glucose Sensor."""
     api = opp.data[DOMAIN][entry.entry_id]
     async_add_entities([NightscoutSensor(api, "Blood Sugar", entry.unique_id)], True)
 
 
-class NightscoutSensor(Entity):
+class NightscoutSensor(SensorEntity):
     """Implementation of a Nightscout sensor."""
 
     def __init__(self, api: NightscoutAPI, name, unique_id):
@@ -115,6 +117,6 @@ class NightscoutSensor(Entity):
         return switcher.get(self._attributes[ATTR_DIRECTION], "mdi:cloud-question")
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return self._attributes

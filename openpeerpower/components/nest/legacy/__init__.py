@@ -83,10 +83,10 @@ def nest_update_event_broker(opp, nest):
     """
     _LOGGER.debug("Listening for nest.update_event")
 
-    while opp.is_running:
+    while opp is_running:
         nest.update_event.wait()
 
-        if not opp.is_running:
+        if not opp is_running:
             break
 
         nest.update_event.clear()
@@ -225,7 +225,9 @@ async def async_setup_legacy_entry(opp, entry):
         DOMAIN, SERVICE_SET_AWAY_MODE, set_away_mode, schema=SET_AWAY_MODE_SCHEMA
     )
 
-    opp.services.async_register(DOMAIN, SERVICE_SET_ETA, set_eta, schema=SET_ETA_SCHEMA)
+    opp.services.async_register(
+        DOMAIN, SERVICE_SET_ETA, set_eta, schema=SET_ETA_SCHEMA
+    )
 
     opp.services.async_register(
         DOMAIN, SERVICE_CANCEL_ETA, cancel_eta, schema=CANCEL_ETA_SCHEMA
@@ -247,7 +249,9 @@ async def async_setup_legacy_entry(opp, entry):
         """Stop Nest update event listener."""
         nest.update_event.set()
 
-    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, shut_down)
+    entry.async_on_unload(
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, shut_down)
+    )
 
     _LOGGER.debug("async_setup_nest is done")
 
@@ -255,7 +259,7 @@ async def async_setup_legacy_entry(opp, entry):
 
 
 class NestLegacyDevice:
-    """Structure Nest functions for opp for legacy API."""
+    """Structure Nest functions for opp.for legacy API."""
 
     def __init__(self, opp, conf, nest):
         """Init Nest Devices."""
@@ -360,11 +364,6 @@ class NestSensorDevice(Entity):
     def name(self):
         """Return the name of the nest, if any."""
         return self._name
-
-    @property
-    def unit_of_measurement(self):
-        """Return the unit the value is expressed in."""
-        return self._unit
 
     @property
     def should_poll(self):

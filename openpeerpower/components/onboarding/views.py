@@ -14,6 +14,7 @@ from openpeerpower.core import callback
 from .const import (
     DEFAULT_AREAS,
     DOMAIN,
+    STEP_ANALYTICS,
     STEP_CORE_CONFIG,
     STEP_INTEGRATION,
     STEP_USER,
@@ -27,6 +28,7 @@ async def async_setup(opp, data, store):
     opp.http.register_view(UserOnboardingView(data, store))
     opp.http.register_view(CoreConfigOnboardingView(data, store))
     opp.http.register_view(IntegrationOnboardingView(data, store))
+    opp.http.register_view(AnalyticsOnboardingView(data, store))
 
 
 class OnboardingView(OpenPeerPowerView):
@@ -94,7 +96,7 @@ class UserOnboardingView(_BaseOnboardingView):
     )
     async def post(self, request, data):
         """Handle user creation, area creation."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
 
         async with self._lock:
             if self._async_is_done():
@@ -148,7 +150,7 @@ class CoreConfigOnboardingView(_BaseOnboardingView):
 
     async def post(self, request):
         """Handle finishing core config step."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
 
         async with self._lock:
             if self._async_is_done():
@@ -185,7 +187,7 @@ class IntegrationOnboardingView(_BaseOnboardingView):
     )
     async def post(self, request, data):
         """Handle token creation."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         refresh_token_id = request[KEY_OPP_REFRESH_TOKEN_ID]
 
         async with self._lock:
@@ -198,7 +200,7 @@ class IntegrationOnboardingView(_BaseOnboardingView):
 
             # Validate client ID and redirect uri
             if not await indieauth.verify_redirect_uri(
-                request.app["opp"], data["client_id"], data["redirect_uri"]
+                request.app["opp.], data["client_id"], data["redirect_uri"]
             ):
                 return self.json_message(
                     "invalid client id or redirect uri", HTTP_BAD_REQUEST
@@ -215,6 +217,28 @@ class IntegrationOnboardingView(_BaseOnboardingView):
                 data["client_id"], refresh_token.credential
             )
             return self.json({"auth_code": auth_code})
+
+
+class AnalyticsOnboardingView(_BaseOnboardingView):
+    """View to finish analytics onboarding step."""
+
+    url = "/api/onboarding/analytics"
+    name = "api:onboarding:analytics"
+    step = STEP_ANALYTICS
+
+    async def post(self, request):
+        """Handle finishing analytics step."""
+        opp = request.app["opp.]
+
+        async with self._lock:
+            if self._async_is_done():
+                return self.json_message(
+                    "Analytics config step already done", HTTP_FORBIDDEN
+                )
+
+            await self._async_mark_done(opp)
+
+            return self.json({})
 
 
 @callback

@@ -7,7 +7,7 @@ import voluptuous as vol
 
 from openpeerpower.components import mqtt
 from openpeerpower.components.mqtt import CONF_STATE_TOPIC
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_DEVICE_ID,
     ATTR_ID,
@@ -18,7 +18,6 @@ from openpeerpower.const import (
 )
 from openpeerpower.core import callback
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import dt, slugify
 
 _LOGGER = logging.getLogger(__name__)
@@ -71,7 +70,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     )
 
 
-class MQTTRoomSensor(Entity):
+class MQTTRoomSensor(SensorEntity):
     """Representation of a room sensor that is updated via MQTT."""
 
     def __init__(self, name, state_topic, device_id, timeout, consider_home):
@@ -121,7 +120,7 @@ class MQTTRoomSensor(Entity):
                     if (
                         device.get(ATTR_ROOM) == self._state
                         or device.get(ATTR_DISTANCE) < self._distance
-                        or timediff.seconds >= self._timeout
+                        or timediff.total_seconds() >= self._timeout
                     ):
                         update_state(**device)
 
@@ -135,7 +134,7 @@ class MQTTRoomSensor(Entity):
         return self._name
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return {ATTR_DISTANCE: self._distance}
 

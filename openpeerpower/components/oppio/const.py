@@ -21,13 +21,14 @@ ATTR_UUID = "uuid"
 ATTR_WS_EVENT = "event"
 ATTR_ENDPOINT = "endpoint"
 ATTR_METHOD = "method"
+ATTR_RESULT = "result"
 ATTR_TIMEOUT = "timeout"
 
 
-X_OPPIO = "X-Oppio-Key"
+X_OPPIO = "X-Hassio-Key"
 X_INGRESS_PATH = "X-Ingress-Path"
-X_OPP_USER_ID = "X-Opp-User-ID"
-X_OPP_IS_ADMIN = "X-Opp-Is-Admin"
+X_OPP_USER_ID = "X-Hass-User-ID"
+X_OPP_IS_ADMIN = "X-Hass-Is-Admin"
 
 WS_TYPE = "type"
 WS_ID = "id"

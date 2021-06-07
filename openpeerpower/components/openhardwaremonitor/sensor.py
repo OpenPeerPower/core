@@ -5,11 +5,10 @@ import logging
 import requests
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_HOST, CONF_PORT
 from openpeerpower.exceptions import PlatformNotReady
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 from openpeerpower.util.dt import utcnow
 
@@ -44,7 +43,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(data.devices, True)
 
 
-class OpenHardwareMonitorDevice(Entity):
+class OpenHardwareMonitorDevice(SensorEntity):
     """Device used to display information from OpenHardwareMonitor."""
 
     def __init__(self, data, name, path, unit_of_measurement):
@@ -73,8 +72,8 @@ class OpenHardwareMonitorDevice(Entity):
         return self.value
 
     @property
-    def state_attributes(self):
-        """Return the state attributes of the sun."""
+    def extra_state_attributes(self):
+        """Return the state attributes of the entity."""
         return self.attributes
 
     @classmethod

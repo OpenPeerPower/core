@@ -1,4 +1,5 @@
 """Support for UK Met Office weather service."""
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import (
     ATTR_ATTRIBUTION,
     DEVICE_CLASS_HUMIDITY,
@@ -9,9 +10,8 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
     UV_INDEX,
 )
-from openpeerpower.core import callback
-from openpeerpower.helpers.entity import Entity
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers.typing import ConfigType
 
 from .const import (
     ATTRIBUTION,
@@ -78,7 +78,7 @@ SENSOR_TYPES = {
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigType, async_add_entities
+    opp: OpenPeerPower, entry: ConfigType, async_add_entities
 ) -> None:
     """Set up the Met Office weather sensor platform."""
     opp_data = opp.data[DOMAIN][entry.entry_id]
@@ -92,7 +92,7 @@ async def async_setup_entry(
     )
 
 
-class MetOfficeCurrentSensor(Entity):
+class MetOfficeCurrentSensor(SensorEntity):
     """Implementation of a Met Office current weather condition sensor."""
 
     def __init__(self, entry_data, opp_data, sensor_type):
@@ -171,7 +171,7 @@ class MetOfficeCurrentSensor(Entity):
         return SENSOR_TYPES[self._type][1]
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of the device."""
         return {
             ATTR_ATTRIBUTION: ATTRIBUTION,

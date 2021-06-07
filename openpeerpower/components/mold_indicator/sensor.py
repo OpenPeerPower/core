@@ -5,7 +5,7 @@ import math
 import voluptuous as vol
 
 from openpeerpower import util
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_UNIT_OF_MEASUREMENT,
     CONF_NAME,
@@ -17,7 +17,6 @@ from openpeerpower.const import (
 )
 from openpeerpower.core import callback
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.event import async_track_state_change_event
 
 _LOGGER = logging.getLogger(__name__)
@@ -69,7 +68,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     )
 
 
-class MoldIndicator(Entity):
+class MoldIndicator(SensorEntity):
     """Represents a MoldIndication sensor."""
 
     def __init__(
@@ -375,7 +374,7 @@ class MoldIndicator(Entity):
         return self._available
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         if self._is_metric:
             return {

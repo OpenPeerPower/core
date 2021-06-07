@@ -1,6 +1,4 @@
 """The NZBGet integration."""
-import asyncio
-
 import voluptuous as vol
 
 from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry
@@ -13,9 +11,8 @@ from openpeerpower.const import (
     CONF_SSL,
     CONF_USERNAME,
 )
-from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers import config_validation as cv
-from openpeerpower.helpers.typing import OpenPeerPowerType
 from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 
 from .const import (
@@ -37,21 +34,24 @@ from .coordinator import NZBGetDataUpdateCoordinator
 PLATFORMS = ["sensor", "switch"]
 
 CONFIG_SCHEMA = vol.Schema(
-    {
-        DOMAIN: vol.Schema(
-            {
-                vol.Required(CONF_HOST): cv.string,
-                vol.Optional(CONF_PASSWORD): cv.string,
-                vol.Optional(CONF_USERNAME): cv.string,
-                vol.Optional(CONF_PORT, default=DEFAULT_PORT): cv.port,
-                vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
-                vol.Optional(
-                    CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL
-                ): cv.time_period,
-                vol.Optional(CONF_SSL, default=DEFAULT_SSL): cv.boolean,
-            }
-        )
-    },
+    vol.All(
+        cv.deprecated(DOMAIN),
+        {
+            DOMAIN: vol.Schema(
+                {
+                    vol.Required(CONF_HOST): cv.string,
+                    vol.Optional(CONF_PASSWORD): cv.string,
+                    vol.Optional(CONF_USERNAME): cv.string,
+                    vol.Optional(CONF_PORT, default=DEFAULT_PORT): cv.port,
+                    vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
+                    vol.Optional(
+                        CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL
+                    ): cv.time_period,
+                    vol.Optional(CONF_SSL, default=DEFAULT_SSL): cv.boolean,
+                }
+            )
+        },
+    ),
     extra=vol.ALLOW_EXTRA,
 )
 
@@ -60,7 +60,7 @@ SPEED_LIMIT_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup(opp: OpenPeerPowerType, config: dict) -> bool:
+async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
     """Set up the NZBGet integration."""
     opp.data.setdefault(DOMAIN, {})
 
@@ -79,7 +79,7 @@ async def async_setup(opp: OpenPeerPowerType, config: dict) -> bool:
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up NZBGet from a config entry."""
     if not entry.options:
         options = {
@@ -95,10 +95,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         options=entry.options,
     )
 
-    await coordinator.async_refresh()
-
-    if not coordinator.last_update_success:
-        raise ConfigEntryNotReady
+    await coordinator.async_config_entry_first_refresh()
 
     undo_listener = entry.add_update_listener(_async_update_listener)
 
@@ -107,26 +104,16 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         DATA_UNDO_UPDATE_LISTENER: undo_listener,
     }
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     _async_register_services(opp, coordinator)
 
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     if unload_ok:
         opp.data[DOMAIN][entry.entry_id][DATA_UNDO_UPDATE_LISTENER]()
@@ -136,7 +123,7 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
 
 
 def _async_register_services(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     coordinator: NZBGetDataUpdateCoordinator,
 ) -> None:
     """Register integration-level services."""
@@ -160,7 +147,7 @@ def _async_register_services(
     )
 
 
-async def _async_update_listener(opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
+async def _async_update_listener(opp: OpenPeerPower, entry: ConfigEntry) -> None:
     """Handle options update."""
     await opp.config_entries.async_reload(entry.entry_id)
 

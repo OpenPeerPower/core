@@ -6,7 +6,7 @@ from aiohttp.hdrs import CONTENT_TYPE
 import requests
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_HOST,
     CONF_MONITORED_VARIABLES,
@@ -19,7 +19,6 @@ from openpeerpower.const import (
     DATA_RATE_MEGABYTES_PER_SECOND,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
@@ -77,7 +76,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(devices, True)
 
 
-class PyLoadSensor(Entity):
+class PyLoadSensor(SensorEntity):
     """Representation of a pyLoad sensor."""
 
     def __init__(self, api, sensor_type, client_name):

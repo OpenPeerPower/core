@@ -4,7 +4,10 @@ import logging
 
 import voluptuous as vol
 
-from openpeerpower.components.device_tracker import PLATFORM_SCHEMA, SOURCE_TYPE_ROUTER
+from openpeerpower.components.device_tracker import (
+    PLATFORM_SCHEMA as PARENT_PLATFORM_SCHEMA,
+    SOURCE_TYPE_ROUTER,
+)
 from openpeerpower.components.http import OpenPeerPowerView
 from openpeerpower.const import HTTP_BAD_REQUEST, HTTP_UNPROCESSABLE_ENTITY
 from openpeerpower.core import callback
@@ -19,7 +22,7 @@ VERSION = "2.0"
 _LOGGER = logging.getLogger(__name__)
 
 
-PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
+PLATFORM_SCHEMA = PARENT_PLATFORM_SCHEMA.extend(
     {vol.Required(CONF_VALIDATOR): cv.string, vol.Required(CONF_SECRET): cv.string}
 )
 
@@ -56,7 +59,7 @@ class MerakiView(OpenPeerPowerView):
             return self.json_message("Invalid JSON", HTTP_BAD_REQUEST)
         _LOGGER.debug("Meraki Data from Post: %s", json.dumps(data))
         if not data.get("secret", False):
-            _LOGGER.error("secret invalid")
+            _LOGGER.error("The secret is invalid")
             return self.json_message("No secret", HTTP_UNPROCESSABLE_ENTITY)
         if data["secret"] != self.secret:
             _LOGGER.error("Invalid Secret received from Meraki")
@@ -72,7 +75,7 @@ class MerakiView(OpenPeerPowerView):
         if not data["data"]["observations"]:
             _LOGGER.debug("No observations found")
             return
-        self._handle(request.app["opp"], data)
+        self._handle(request.app["opp.], data)
 
     @callback
     def _handle(self, opp, data):

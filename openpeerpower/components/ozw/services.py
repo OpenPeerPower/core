@@ -17,7 +17,7 @@ class ZWaveServices:
     """Class that holds our services ( Zwave Commands) that should be published to opp."""
 
     def __init__(self, opp, manager):
-        """Initialize with both opp and ozwmanager objects."""
+        """Initialize with both opp.and ozwmanager objects."""
         self._opp = opp
         self._manager = manager
 

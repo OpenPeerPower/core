@@ -5,10 +5,9 @@ import os
 from batinfo import Batteries
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import ATTR_NAME, CONF_NAME, DEVICE_CLASS_BATTERY, PERCENTAGE
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -68,7 +67,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities([LinuxBatterySensor(name, battery_id, system)], True)
 
 
-class LinuxBatterySensor(Entity):
+class LinuxBatterySensor(SensorEntity):
     """Representation of a Linux Battery sensor."""
 
     def __init__(self, name, battery_id, system):
@@ -101,7 +100,7 @@ class LinuxBatterySensor(Entity):
         return PERCENTAGE
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of the sensor."""
         if self._system == "android":
             return {

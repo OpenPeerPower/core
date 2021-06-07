@@ -1,9 +1,11 @@
 """Helper to handle a set of topics to subscribe to."""
-from typing import Any, Callable, Dict, Optional
+from __future__ import annotations
+
+from typing import Any, Callable
 
 import attr
 
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.loader import bind_opp
 
 from . import debug_info
@@ -16,10 +18,10 @@ from .models import MessageCallbackType
 class EntitySubscription:
     """Class to hold data about an active entity topic subscription."""
 
-    opp: OpenPeerPowerType = attr.ib()
+    opp: OpenPeerPower = attr.ib()
     topic: str = attr.ib()
     message_callback: MessageCallbackType = attr.ib()
-    unsubscribe_callback: Optional[Callable[[], None]] = attr.ib()
+    unsubscribe_callback: Callable[[], None] | None = attr.ib()
     qos: int = attr.ib(default=0)
     encoding: str = attr.ib(default="utf-8")
 
@@ -61,9 +63,9 @@ class EntitySubscription:
 
 @bind_opp
 async def async_subscribe_topics(
-    opp: OpenPeerPowerType,
-    new_state: Optional[Dict[str, EntitySubscription]],
-    topics: Dict[str, Any],
+    opp: OpenPeerPower,
+    new_state: dict[str, EntitySubscription] | None,
+    topics: dict[str, Any],
 ):
     """(Re)Subscribe to a set of MQTT topics.
 
@@ -84,7 +86,7 @@ async def async_subscribe_topics(
             unsubscribe_callback=None,
             qos=value.get("qos", DEFAULT_QOS),
             encoding=value.get("encoding", "utf-8"),
-            opp=opp,
+            opp.opp,
         )
         # Get the current subscription state
         current = current_subscriptions.pop(key, None)
@@ -104,6 +106,6 @@ async def async_subscribe_topics(
 
 
 @bind_opp
-async def async_unsubscribe_topics(opp: OpenPeerPowerType, sub_state: dict):
+async def async_unsubscribe_topics(opp: OpenPeerPower, sub_state: dict):
     """Unsubscribe from all MQTT topics managed by async_subscribe_topics."""
     return await async_subscribe_topics(opp, sub_state, {})

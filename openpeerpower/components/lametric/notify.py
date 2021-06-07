@@ -54,9 +54,11 @@ def get_service(opp, config, discovery_info=None):
 class LaMetricNotificationService(BaseNotificationService):
     """Implement the notification service for LaMetric."""
 
-    def __init__(self, opplametricmanager, icon, lifetime, cycles, priority, icon_type):
+    def __init__(
+        self, opp.ametricmanager, icon, lifetime, cycles, priority, icon_type
+    ):
         """Initialize the service."""
-        self.opplametricmanager = opplametricmanager
+        self.opp.ametricmanager = opp.ametricmanager
         self._icon = icon
         self._lifetime = lifetime
         self._cycles = cycles
@@ -118,7 +120,7 @@ class LaMetricNotificationService(BaseNotificationService):
         frames = [text_frame]
 
         model = Model(frames=frames, cycles=cycles, sound=sound)
-        lmn = self.opplametricmanager.manager
+        lmn = self.opp.ametricmanager.manager
         try:
             self._devices = lmn.get_devices()
         except TokenExpiredError:

@@ -3,11 +3,14 @@ import voluptuous as vol
 
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_EXCLUDE
+from openpeerpower.core import OpenPeerPower
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 
 from .const import DATA_CONFIG, IZONE
 from .discovery import async_start_discovery_service, async_stop_discovery_service
+
+PLATFORMS = ["climate"]
 
 CONFIG_SCHEMA = vol.Schema(
     {
@@ -23,7 +26,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
+async def async_setup(opp: OpenPeerPower, config: ConfigType):
     """Register the iZone component config."""
     conf = config.get(IZONE)
     if not conf:
@@ -44,15 +47,11 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
 async def async_setup_entry(opp, entry):
     """Set up from a config entry."""
     await async_start_discovery_service(opp)
-
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_setup(entry, "climate")
-    )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
     return True
 
 
 async def async_unload_entry(opp, entry):
     """Unload the config entry and stop discovery process."""
     await async_stop_discovery_service(opp)
-    await opp.config_entries.async_forward_entry_unload(entry, "climate")
-    return True
+    return await opp.config_entries.async_unload_platforms(entry, PLATFORMS)

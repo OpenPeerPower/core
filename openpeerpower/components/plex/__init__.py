@@ -1,5 +1,4 @@
 """Support to embed Plex."""
-import asyncio
 from functools import partial
 import logging
 
@@ -7,7 +6,6 @@ import plexapi.exceptions
 from plexapi.gdm import GDM
 from plexwebsocket import (
     SIGNAL_CONNECTION_STATE,
-    SIGNAL_DATA,
     STATE_CONNECTED,
     STATE_DISCONNECTED,
     STATE_STOPPED,
@@ -16,18 +14,17 @@ from plexwebsocket import (
 import requests.exceptions
 
 from openpeerpower.components.media_player import DOMAIN as MP_DOMAIN
-from openpeerpower.config_entries import ENTRY_STATE_SETUP_RETRY, SOURCE_REAUTH
-from openpeerpower.const import (
-    CONF_SOURCE,
-    CONF_URL,
-    CONF_VERIFY_SSL,
-    EVENT_OPENPEERPOWER_STOP,
-)
+from openpeerpower.config_entries import ConfigEntryState
+from openpeerpower.const import CONF_URL, CONF_VERIFY_SSL, EVENT_OPENPEERPOWER_STOP
 from openpeerpower.core import callback
-from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
+from openpeerpower.helpers import device_registry as dev_reg, entity_registry as ent_reg
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 from openpeerpower.helpers.debounce import Debouncer
-from openpeerpower.helpers.dispatcher import async_dispatcher_connect
+from openpeerpower.helpers.dispatcher import (
+    async_dispatcher_connect,
+    async_dispatcher_send,
+)
 
 from .const import (
     CONF_SERVER,
@@ -39,6 +36,7 @@ from .const import (
     PLATFORMS,
     PLATFORMS_COMPLETED,
     PLEX_SERVER_CONFIG,
+    PLEX_UPDATE_LIBRARY_SIGNAL,
     PLEX_UPDATE_PLATFORMS_SIGNAL,
     SERVERS,
     WEBSOCKETS,
@@ -61,12 +59,16 @@ async def async_setup(opp, config):
 
     gdm = opp.data[PLEX_DOMAIN][GDM_SCANNER] = GDM()
 
+    def gdm_scan():
+        _LOGGER.debug("Scanning for GDM clients")
+        gdm.scan(scan_for_clients=True)
+
     opp.data[PLEX_DOMAIN][GDM_DEBOUNCER] = Debouncer(
         opp,
         _LOGGER,
         cooldown=10,
         immediate=True,
-        function=partial(gdm.scan, scan_for_clients=True),
+        function=gdm_scan,
     ).async_call
 
     return True
@@ -105,26 +107,17 @@ async def async_setup_entry(opp, entry):
             entry, data={**entry.data, PLEX_SERVER_CONFIG: new_server_data}
         )
     except requests.exceptions.ConnectionError as error:
-        if entry.state != ENTRY_STATE_SETUP_RETRY:
+        if entry.state is not ConfigEntryState.SETUP_RETRY:
             _LOGGER.error(
                 "Plex server (%s) could not be reached: [%s]",
                 server_config[CONF_URL],
                 error,
             )
         raise ConfigEntryNotReady from error
-    except plexapi.exceptions.Unauthorized:
-        opp.async_create_task(
-            opp.config_entries.flow.async_init(
-                PLEX_DOMAIN,
-                context={CONF_SOURCE: SOURCE_REAUTH},
-                data=entry.data,
-            )
-        )
-        _LOGGER.error(
-            "Token not accepted, please reauthenticate Plex server '%s'",
-            entry.data[CONF_SERVER],
-        )
-        return False
+    except plexapi.exceptions.Unauthorized as ex:
+        raise ConfigEntryAuthFailed(
+            f"Token not accepted, please reauthenticate Plex server '{entry.data[CONF_SERVER]}'"
+        ) from ex
     except (
         plexapi.exceptions.BadRequest,
         plexapi.exceptions.NotFound,
@@ -145,26 +138,22 @@ async def async_setup_entry(opp, entry):
 
     entry.add_update_listener(async_options_updated)
 
-    async def async_update_plex():
-        await opp.data[PLEX_DOMAIN][GDM_DEBOUNCER]()
-        await plex_server.async_update_platforms()
-
     unsub = async_dispatcher_connect(
         opp,
         PLEX_UPDATE_PLATFORMS_SIGNAL.format(server_id),
-        async_update_plex,
+        plex_server.async_update_platforms,
     )
     opp.data[PLEX_DOMAIN][DISPATCHERS].setdefault(server_id, [])
     opp.data[PLEX_DOMAIN][DISPATCHERS][server_id].append(unsub)
 
     @callback
-    def plex_websocket_callback(signal, data, error):
+    def plex_websocket_callback(msgtype, data, error):
         """Handle callbacks from plexwebsocket library."""
-        if signal == SIGNAL_CONNECTION_STATE:
+        if msgtype == SIGNAL_CONNECTION_STATE:
 
             if data == STATE_CONNECTED:
                 _LOGGER.debug("Websocket to %s successful", entry.data[CONF_SERVER])
-                opp.async_create_task(async_update_plex())
+                opp.async_create_task(plex_server.async_update_platforms())
             elif data == STATE_DISCONNECTED:
                 _LOGGER.debug(
                     "Websocket to %s disconnected, retrying", entry.data[CONF_SERVER]
@@ -178,14 +167,22 @@ async def async_setup_entry(opp, entry):
                 )
                 opp.async_create_task(opp.config_entries.async_reload(entry.entry_id))
 
-        elif signal == SIGNAL_DATA:
+        elif msgtype == "playing":
             opp.async_create_task(plex_server.async_update_session(data))
+        elif msgtype == "status":
+            if data["StatusNotification"][0]["title"] == "Library scan complete":
+                async_dispatcher_send(
+                    opp,
+                    PLEX_UPDATE_LIBRARY_SIGNAL.format(server_id),
+                )
 
     session = async_get_clientsession(opp)
+    subscriptions = ["playing", "status"]
     verify_ssl = server_config.get(CONF_VERIFY_SSL)
     websocket = PlexWebsocket(
         plex_server.plex_server,
         plex_websocket_callback,
+        subscriptions=subscriptions,
         session=session,
         verify_ssl=verify_ssl,
     )
@@ -199,7 +196,9 @@ async def async_setup_entry(opp, entry):
     def close_websocket_session(_):
         websocket.close()
 
-    unsub = opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, close_websocket_session)
+    unsub = opp.bus.async_listen_once(
+        EVENT_OPENPEERPOWER_STOP, close_websocket_session
+    )
     opp.data[PLEX_DOMAIN][DISPATCHERS][server_id].append(unsub)
 
     for platform in PLATFORMS:
@@ -207,6 +206,8 @@ async def async_setup_entry(opp, entry):
             opp.config_entries.async_forward_entry_setup(entry, platform)
         )
         task.add_done_callback(partial(start_websocket_session, platform))
+
+    async_cleanup_plex_devices(opp, entry)
 
     def get_plex_account(plex_server):
         try:
@@ -230,15 +231,11 @@ async def async_unload_entry(opp, entry):
     for unsub in dispatchers:
         unsub()
 
-    tasks = [
-        opp.config_entries.async_forward_entry_unload(entry, platform)
-        for platform in PLATFORMS
-    ]
-    await asyncio.gather(*tasks)
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     opp.data[PLEX_DOMAIN][SERVERS].pop(server_id)
 
-    return True
+    return unload_ok
 
 
 async def async_options_updated(opp, entry):
@@ -248,3 +245,30 @@ async def async_options_updated(opp, entry):
     # Guard incomplete setup during reauth flows
     if server_id in opp.data[PLEX_DOMAIN][SERVERS]:
         opp.data[PLEX_DOMAIN][SERVERS][server_id].options = entry.options
+
+
+@callback
+def async_cleanup_plex_devices(opp, entry):
+    """Clean up old and invalid devices from the registry."""
+    device_registry = dev_reg.async_get(opp)
+    entity_registry = ent_reg.async_get(opp)
+
+    device_entries = opp.helpers.device_registry.async_entries_for_config_entry(
+        device_registry, entry.entry_id
+    )
+
+    for device_entry in device_entries:
+        if (
+            len(
+                opp.helpers.entity_registry.async_entries_for_device(
+                    entity_registry, device_entry.id, include_disabled_entities=True
+                )
+            )
+            == 0
+        ):
+            _LOGGER.debug(
+                "Removing orphaned device: %s / %s",
+                device_entry.name,
+                device_entry.identifiers,
+            )
+            device_registry.async_remove_device(device_entry.id)

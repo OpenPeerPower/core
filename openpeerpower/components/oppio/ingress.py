@@ -1,9 +1,10 @@
 """Opp.io Add-on ingress service."""
+from __future__ import annotations
+
 import asyncio
 from ipaddress import ip_address
 import logging
 import os
-from typing import Dict, Union
 
 import aiohttp
 from aiohttp import hdrs, web
@@ -11,16 +12,15 @@ from aiohttp.web_exceptions import HTTPBadGateway
 from multidict import CIMultiDict
 
 from openpeerpower.components.http import OpenPeerPowerView
-from openpeerpower.core import callback
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower, callback
 
-from .const import X_INGRESS_PATH, X_OPPIO
+from .const import X_OPPIO, X_INGRESS_PATH
 
 _LOGGER = logging.getLogger(__name__)
 
 
 @callback
-def async_setup_ingress_view(opp: OpenPeerPowerType, host: str):
+def async_setup_ingress_view(opp: OpenPeerPower, host: str):
     """Auth setup."""
     websession = opp.helpers.aiohttp_client.async_get_clientsession()
 
@@ -35,7 +35,7 @@ class OppIOIngress(OpenPeerPowerView):
     url = "/api/oppio_ingress/{token}/{path:.*}"
     requires_auth = False
 
-    def __init__(self, host: str, websession: aiohttp.ClientSession):
+    def __init__(self, host: str, websession: aiohttp.ClientSession) -> None:
         """Initialize a Opp.io ingress view."""
         self._host = host
         self._websession = websession
@@ -46,7 +46,7 @@ class OppIOIngress(OpenPeerPowerView):
 
     async def _handle(
         self, request: web.Request, token: str, path: str
-    ) -> Union[web.Response, web.StreamResponse, web.WebSocketResponse]:
+    ) -> web.Response | web.StreamResponse | web.WebSocketResponse:
         """Route data to Opp.io ingress service."""
         try:
             # Websocket
@@ -114,7 +114,7 @@ class OppIOIngress(OpenPeerPowerView):
 
     async def _handle_request(
         self, request: web.Request, token: str, path: str
-    ) -> Union[web.Response, web.StreamResponse]:
+    ) -> web.Response | web.StreamResponse:
         """Ingress route for request."""
         url = self._create_url(token, path)
         data = await request.read()
@@ -159,9 +159,7 @@ class OppIOIngress(OpenPeerPowerView):
             return response
 
 
-def _init_header(
-    request: web.Request, token: str
-) -> Union[CIMultiDict, Dict[str, str]]:
+def _init_header(request: web.Request, token: str) -> CIMultiDict | dict[str, str]:
     """Create initial header."""
     headers = {}
 
@@ -208,7 +206,7 @@ def _init_header(
     return headers
 
 
-def _response_header(response: aiohttp.ClientResponse) -> Dict[str, str]:
+def _response_header(response: aiohttp.ClientResponse) -> dict[str, str]:
     """Create response header."""
     headers = {}
 

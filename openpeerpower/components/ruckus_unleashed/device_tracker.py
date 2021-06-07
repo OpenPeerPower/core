@@ -1,13 +1,13 @@
 """Support for Ruckus Unleashed devices."""
-from typing import Optional
+from __future__ import annotations
 
 from openpeerpower.components.device_tracker import SOURCE_TYPE_ROUTER
 from openpeerpower.components.device_tracker.config_entry import ScannerEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers import entity_registry
 from openpeerpower.helpers.device_registry import CONNECTION_NETWORK_MAC
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.entity import DeviceInfo
 from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 
 from .const import (
@@ -22,7 +22,7 @@ from .const import (
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up device tracker for Ruckus Unleashed component."""
     coordinator = opp.data[DOMAIN][entry.entry_id][COORDINATOR]
@@ -67,14 +67,17 @@ def restore_entities(registry, coordinator, entry, async_add_entities, tracked):
     missing = []
 
     for entity in registry.entities.values():
-        if entity.config_entry_id == entry.entry_id and entity.platform == DOMAIN:
-            if entity.unique_id not in coordinator.data[API_CLIENTS]:
-                missing.append(
-                    RuckusUnleashedDevice(
-                        coordinator, entity.unique_id, entity.original_name
-                    )
+        if (
+            entity.config_entry_id == entry.entry_id
+            and entity.platform == DOMAIN
+            and entity.unique_id not in coordinator.data[API_CLIENTS]
+        ):
+            missing.append(
+                RuckusUnleashedDevice(
+                    coordinator, entity.unique_id, entity.original_name
                 )
-                tracked.add(entity.unique_id)
+            )
+            tracked.add(entity.unique_id)
 
     if missing:
         async_add_entities(missing)
@@ -115,7 +118,7 @@ class RuckusUnleashedDevice(CoordinatorEntity, ScannerEntity):
         return SOURCE_TYPE_ROUTER
 
     @property
-    def device_info(self) -> Optional[dict]:
+    def device_info(self) -> DeviceInfo | None:
         """Return the device information."""
         if self.is_connected:
             return {

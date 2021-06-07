@@ -1,6 +1,5 @@
 """Support for Plaato devices."""
 
-import asyncio
 from datetime import timedelta
 import logging
 
@@ -37,7 +36,6 @@ from openpeerpower.const import (
     VOLUME_LITERS,
 )
 from openpeerpower.core import OpenPeerPower, callback
-from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers import aiohttp_client
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
@@ -85,15 +83,9 @@ WEBHOOK_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the Plaato component."""
-    opp.data.setdefault(DOMAIN, {})
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Configure based on config entry."""
-
+    opp.data.setdefault(DOMAIN, {})
     use_webhook = entry.data[CONF_USE_WEBHOOK]
 
     if use_webhook:
@@ -101,11 +93,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     else:
         await async_setup_coordinator(opp, entry)
 
-    for platform in PLATFORMS:
-        if entry.options.get(platform, True):
-            opp.async_create_task(
-                opp.config_entries.async_forward_entry_setup(entry, platform)
-            )
+    opp.config_entries.async_setup_platforms(
+        entry, [platform for platform in PLATFORMS if entry.options.get(platform, True)]
+    )
 
     return True
 
@@ -134,9 +124,7 @@ async def async_setup_coordinator(opp: OpenPeerPower, entry: ConfigEntry):
         update_interval = timedelta(minutes=DEFAULT_SCAN_INTERVAL)
 
     coordinator = PlaatoCoordinator(opp, auth_token, device_type, update_interval)
-    await coordinator.async_refresh()
-    if not coordinator.last_update_success:
-        raise ConfigEntryNotReady
+    await coordinator.async_config_entry_first_refresh()
 
     _set_entry_data(entry, opp, coordinator, auth_token)
 
@@ -186,14 +174,7 @@ async def async_unload_coordinator(opp: OpenPeerPower, entry: ConfigEntry):
 
 async def async_unload_platforms(opp: OpenPeerPower, entry: ConfigEntry, platforms):
     """Unload platforms."""
-    unloaded = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in platforms
-            ]
-        )
-    )
+    unloaded = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unloaded:
         opp.data[DOMAIN].pop(entry.entry_id)
 

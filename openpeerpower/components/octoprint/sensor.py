@@ -3,8 +3,8 @@ import logging
 
 import requests
 
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import PERCENTAGE, TEMP_CELSIUS
-from openpeerpower.helpers.entity import Entity
 
 from . import DOMAIN as COMPONENT_DOMAIN, SENSOR_TYPES
 
@@ -25,18 +25,17 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     octoprint_api = opp.data[COMPONENT_DOMAIN][base_url]
     tools = octoprint_api.get_tools()
 
-    if "Temperatures" in monitored_conditions:
-        if not tools:
-            opp.components.persistent_notification.create(
-                "Your printer appears to be offline.<br />"
-                "If you do not want to have your printer on <br />"
-                " at all times, and you would like to monitor <br /> "
-                "temperatures, please add <br />"
-                "bed and/or number&#95;of&#95;tools to your configuration <br />"
-                "and restart.",
-                title=NOTIFICATION_TITLE,
-                notification_id=NOTIFICATION_ID,
-            )
+    if "Temperatures" in monitored_conditions and not tools:
+        opp.components.persistent_notification.create(
+            "Your printer appears to be offline.<br />"
+            "If you do not want to have your printer on <br />"
+            " at all times, and you would like to monitor <br /> "
+            "temperatures, please add <br />"
+            "bed and/or number&#95;of&#95;tools to your configuration <br />"
+            "and restart.",
+            title=NOTIFICATION_TITLE,
+            notification_id=NOTIFICATION_ID,
+        )
 
     devices = []
     types = ["actual", "target"]
@@ -71,7 +70,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(devices, True)
 
 
-class OctoPrintSensor(Entity):
+class OctoPrintSensor(SensorEntity):
     """Representation of an OctoPrint sensor."""
 
     def __init__(

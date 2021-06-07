@@ -5,7 +5,7 @@ import logging
 import magicseaweed
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_ATTRIBUTION,
     CONF_API_KEY,
@@ -13,7 +13,6 @@ from openpeerpower.const import (
     CONF_NAME,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 import openpeerpower.util.dt as dt_util
 
@@ -90,7 +89,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(sensors, True)
 
 
-class MagicSeaweedSensor(Entity):
+class MagicSeaweedSensor(SensorEntity):
     """Implementation of a MagicSeaweed sensor."""
 
     def __init__(self, forecast_data, sensor_type, name, unit_system, hour=None):
@@ -136,7 +135,7 @@ class MagicSeaweedSensor(Entity):
         return ICON
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return self._attrs
 

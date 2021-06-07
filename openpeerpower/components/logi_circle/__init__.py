@@ -8,8 +8,9 @@ from logi_circle.exception import AuthorizationFailed
 import voluptuous as vol
 
 from openpeerpower import config_entries
-from openpeerpower.components.camera import ATTR_FILENAME, CAMERA_SERVICE_SCHEMA
+from openpeerpower.components.camera import ATTR_FILENAME
 from openpeerpower.const import (
+    ATTR_ENTITY_ID,
     ATTR_MODE,
     CONF_API_KEY,
     CONF_CLIENT_ID,
@@ -72,19 +73,24 @@ CONFIG_SCHEMA = vol.Schema(
     extra=vol.ALLOW_EXTRA,
 )
 
-LOGI_CIRCLE_SERVICE_SET_CONFIG = CAMERA_SERVICE_SCHEMA.extend(
+LOGI_CIRCLE_SERVICE_SET_CONFIG = vol.Schema(
     {
+        vol.Optional(ATTR_ENTITY_ID): cv.comp_entity_ids,
         vol.Required(ATTR_MODE): vol.In([LED_MODE_KEY, RECORDING_MODE_KEY]),
         vol.Required(ATTR_VALUE): cv.boolean,
     }
 )
 
-LOGI_CIRCLE_SERVICE_SNAPSHOT = CAMERA_SERVICE_SCHEMA.extend(
-    {vol.Required(ATTR_FILENAME): cv.template}
+LOGI_CIRCLE_SERVICE_SNAPSHOT = vol.Schema(
+    {
+        vol.Optional(ATTR_ENTITY_ID): cv.comp_entity_ids,
+        vol.Required(ATTR_FILENAME): cv.template,
+    }
 )
 
-LOGI_CIRCLE_SERVICE_RECORD = CAMERA_SERVICE_SCHEMA.extend(
+LOGI_CIRCLE_SERVICE_RECORD = vol.Schema(
     {
+        vol.Optional(ATTR_ENTITY_ID): cv.comp_entity_ids,
         vol.Required(ATTR_FILENAME): cv.template,
         vol.Required(ATTR_DURATION): cv.positive_int,
     }
@@ -158,14 +164,14 @@ async def async_setup_entry(opp, entry):
         # string, so we'll handle it separately.
         err = f"{_TIMEOUT}s timeout exceeded when connecting to Logi Circle API"
         opp.components.persistent_notification.create(
-            f"Error: {err}<br />You will need to restart opp after fixing.",
+            f"Error: {err}<br />You will need to restart opp.after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
         return False
     except ClientResponseError as ex:
         opp.components.persistent_notification.create(
-            f"Error: {ex}<br />You will need to restart opp after fixing.",
+            f"Error: {ex}<br />You will need to restart opp.after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
@@ -173,10 +179,7 @@ async def async_setup_entry(opp, entry):
 
     opp.data[DATA_LOGI] = logi_circle
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     async def service_handler(service):
         """Dispatch service calls to target entities."""
@@ -214,15 +217,16 @@ async def async_setup_entry(opp, entry):
         """Close Logi Circle aiohttp session."""
         await logi_circle.auth_provider.close()
 
-    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, shut_down)
+    entry.async_on_unload(
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, shut_down)
+    )
 
     return True
 
 
 async def async_unload_entry(opp, entry):
     """Unload a config entry."""
-    for platform in PLATFORMS:
-        await opp.config_entries.async_forward_entry_unload(entry, platform)
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     logi_circle = opp.data.pop(DATA_LOGI)
 
@@ -230,4 +234,4 @@ async def async_unload_entry(opp, entry):
     # and clear all locally cached tokens
     await logi_circle.auth_provider.clear_authorization()
 
-    return True
+    return unload_ok

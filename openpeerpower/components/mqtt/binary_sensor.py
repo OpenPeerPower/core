@@ -11,30 +11,26 @@ from openpeerpower.components.binary_sensor import (
     BinarySensorEntity,
 )
 from openpeerpower.const import (
-    CONF_DEVICE,
     CONF_DEVICE_CLASS,
     CONF_FORCE_UPDATE,
     CONF_NAME,
     CONF_PAYLOAD_OFF,
     CONF_PAYLOAD_ON,
-    CONF_UNIQUE_ID,
     CONF_VALUE_TEMPLATE,
 )
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 import openpeerpower.helpers.config_validation as cv
 import openpeerpower.helpers.event as evt
 from openpeerpower.helpers.event import async_track_point_in_utc_time
 from openpeerpower.helpers.reload import async_setup_reload_service
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 from openpeerpower.util import dt as dt_util
 
 from . import CONF_QOS, CONF_STATE_TOPIC, DOMAIN, PLATFORMS, subscription
 from .. import mqtt
 from .debug_info import log_messages
 from .mixins import (
-    MQTT_AVAILABILITY_SCHEMA,
-    MQTT_ENTITY_DEVICE_INFO_SCHEMA,
-    MQTT_JSON_ATTRS_SCHEMA,
+    MQTT_ENTITY_COMMON_SCHEMA,
     MqttAvailability,
     MqttEntity,
     async_setup_entry_helper,
@@ -49,27 +45,21 @@ DEFAULT_PAYLOAD_ON = "ON"
 DEFAULT_FORCE_UPDATE = False
 CONF_EXPIRE_AFTER = "expire_after"
 
-PLATFORM_SCHEMA = (
-    mqtt.MQTT_RO_PLATFORM_SCHEMA.extend(
-        {
-            vol.Optional(CONF_DEVICE): MQTT_ENTITY_DEVICE_INFO_SCHEMA,
-            vol.Optional(CONF_DEVICE_CLASS): DEVICE_CLASSES_SCHEMA,
-            vol.Optional(CONF_EXPIRE_AFTER): cv.positive_int,
-            vol.Optional(CONF_FORCE_UPDATE, default=DEFAULT_FORCE_UPDATE): cv.boolean,
-            vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
-            vol.Optional(CONF_OFF_DELAY): cv.positive_int,
-            vol.Optional(CONF_PAYLOAD_OFF, default=DEFAULT_PAYLOAD_OFF): cv.string,
-            vol.Optional(CONF_PAYLOAD_ON, default=DEFAULT_PAYLOAD_ON): cv.string,
-            vol.Optional(CONF_UNIQUE_ID): cv.string,
-        }
-    )
-    .extend(MQTT_AVAILABILITY_SCHEMA.schema)
-    .extend(MQTT_JSON_ATTRS_SCHEMA.schema)
-)
+PLATFORM_SCHEMA = mqtt.MQTT_RO_PLATFORM_SCHEMA.extend(
+    {
+        vol.Optional(CONF_DEVICE_CLASS): DEVICE_CLASSES_SCHEMA,
+        vol.Optional(CONF_EXPIRE_AFTER): cv.positive_int,
+        vol.Optional(CONF_FORCE_UPDATE, default=DEFAULT_FORCE_UPDATE): cv.boolean,
+        vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
+        vol.Optional(CONF_OFF_DELAY): cv.positive_int,
+        vol.Optional(CONF_PAYLOAD_OFF, default=DEFAULT_PAYLOAD_OFF): cv.string,
+        vol.Optional(CONF_PAYLOAD_ON, default=DEFAULT_PAYLOAD_ON): cv.string,
+    }
+).extend(MQTT_ENTITY_COMMON_SCHEMA.schema)
 
 
 async def async_setup_platform(
-    opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
+    opp: OpenPeerPower, config: ConfigType, async_add_entities, discovery_info=None
 ):
     """Set up MQTT binary sensor through configuration.yaml."""
     await async_setup_reload_service(opp, DOMAIN, PLATFORMS)
@@ -113,7 +103,6 @@ class MqttBinarySensor(MqttEntity, BinarySensorEntity):
         return PLATFORM_SCHEMA
 
     def _setup_from_config(self, config):
-        self._config = config
         value_template = self._config.get(CONF_VALUE_TEMPLATE)
         if value_template is not None:
             value_template.opp = self.opp
@@ -217,11 +206,6 @@ class MqttBinarySensor(MqttEntity, BinarySensorEntity):
         self._expired = True
 
         self.async_write_op_state()
-
-    @property
-    def name(self):
-        """Return the name of the binary sensor."""
-        return self._config[CONF_NAME]
 
     @property
     def is_on(self):

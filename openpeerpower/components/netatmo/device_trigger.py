@@ -1,5 +1,5 @@
 """Provides device automations for Netatmo."""
-from typing import List
+from __future__ import annotations
 
 import voluptuous as vol
 
@@ -82,7 +82,7 @@ async def async_validate_trigger_config(opp, config):
     return config
 
 
-async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> list[dict]:
     """List device triggers for Netatmo devices."""
     registry = await entity_registry.async_get_registry(opp)
     device_registry = await opp.helpers.device_registry.async_get_registry()
@@ -125,8 +125,6 @@ async def async_attach_trigger(
     automation_info: dict,
 ) -> CALLBACK_TYPE:
     """Attach a trigger."""
-    config = TRIGGER_SCHEMA(config)
-
     device_registry = await opp.helpers.device_registry.async_get_registry()
     device = device_registry.async_get(config[CONF_DEVICE_ID])
 

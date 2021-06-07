@@ -1,5 +1,4 @@
 """The Panasonic Viera integration."""
-import asyncio
 from functools import partial
 import logging
 from urllib.request import URLError
@@ -94,7 +93,7 @@ async def async_setup_entry(opp, config_entry):
         unique_id = config_entry.unique_id
         if device_info is None:
             _LOGGER.error(
-                "Couldn't gather device info. Please restart Open Peer Power with your TV turned on and connected to your network."
+                "Couldn't gather device info; Please restart Open Peer Power with your TV turned on and connected to your network"
             )
         else:
             unique_id = device_info[ATTR_UDN]
@@ -104,25 +103,16 @@ async def async_setup_entry(opp, config_entry):
             data={**config, ATTR_DEVICE_INFO: device_info},
         )
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(config_entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(config_entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
+    unload_ok = await opp.config_entries.async_unload_platforms(
+        config_entry, PLATFORMS
     )
-
     if unload_ok:
         opp.data[DOMAIN].pop(config_entry.entry_id)
 

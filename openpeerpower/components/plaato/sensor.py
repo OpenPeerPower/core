@@ -1,10 +1,10 @@
 """Support for Plaato Airlock sensors."""
-from typing import Optional
+from __future__ import annotations
 
 from pyplaato.models.device import PlaatoDevice
 from pyplaato.plaato import PlaatoKeg
 
-from openpeerpower.components.sensor import DEVICE_CLASS_TEMPERATURE
+from openpeerpower.components.sensor import DEVICE_CLASS_TEMPERATURE, SensorEntity
 from openpeerpower.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
@@ -59,15 +59,17 @@ async def async_setup_entry(opp, entry, async_add_entities):
         )
 
 
-class PlaatoSensor(PlaatoEntity):
+class PlaatoSensor(PlaatoEntity, SensorEntity):
     """Representation of a Plaato Sensor."""
 
     @property
-    def device_class(self) -> Optional[str]:
+    def device_class(self) -> str | None:
         """Return the class of this device, from component DEVICE_CLASSES."""
-        if self._coordinator is not None:
-            if self._sensor_type == PlaatoKeg.Pins.TEMPERATURE:
-                return DEVICE_CLASS_TEMPERATURE
+        if (
+            self._coordinator is not None
+            and self._sensor_type == PlaatoKeg.Pins.TEMPERATURE
+        ):
+            return DEVICE_CLASS_TEMPERATURE
         if self._sensor_type == ATTR_TEMP:
             return DEVICE_CLASS_TEMPERATURE
         return None

@@ -14,7 +14,7 @@ from openpeerpower.components.weather import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_MODE, TEMP_CELSIUS
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
@@ -44,7 +44,7 @@ def format_condition(condition: str):
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the Meteo-France weather platform."""
     coordinator = opp.data[DOMAIN][entry.entry_id][COORDINATOR_FORECAST]
@@ -59,7 +59,7 @@ async def async_setup_entry(
         True,
     )
     _LOGGER.debug(
-        "Weather entity (%s) added for %s.",
+        "Weather entity (%s) added for %s",
         entry.options.get(CONF_MODE, FORECAST_MODE_DAILY),
         coordinator.data.position["name"],
     )
@@ -68,7 +68,7 @@ async def async_setup_entry(
 class MeteoFranceWeather(CoordinatorEntity, WeatherEntity):
     """Representation of a weather condition."""
 
-    def __init__(self, coordinator: DataUpdateCoordinator, mode: str):
+    def __init__(self, coordinator: DataUpdateCoordinator, mode: str) -> None:
         """Initialise the platform with a data instance and station name."""
         super().__init__(coordinator)
         self._city_name = self.coordinator.data.position["name"]

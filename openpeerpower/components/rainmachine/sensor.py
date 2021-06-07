@@ -1,12 +1,13 @@
 """This platform provides support for sensor data from RainMachine."""
 from functools import partial
-from typing import Callable
 
 from regenmaschine.controller import Controller
 
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import TEMP_CELSIUS, VOLUME_CUBIC_METERS
 from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from . import RainMachineEntity
@@ -69,7 +70,7 @@ SENSORS = {
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
     """Set up RainMachine sensors based on a config entry."""
     controller = opp.data[DOMAIN][DATA_CONTROLLER][entry.entry_id]
@@ -108,7 +109,7 @@ async def async_setup_entry(
     )
 
 
-class RainMachineSensor(RainMachineEntity):
+class RainMachineSensor(RainMachineEntity, SensorEntity):
     """Define a general RainMachine sensor."""
 
     def __init__(

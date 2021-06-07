@@ -1,12 +1,12 @@
 """The iCloud component."""
-import asyncio
 
 import voluptuous as vol
 
 from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
+from openpeerpower.core import OpenPeerPower
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType, ServiceDataType
+from openpeerpower.helpers.typing import ConfigType, ServiceDataType
 from openpeerpower.util import slugify
 
 from .account import IcloudAccount
@@ -86,7 +86,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up iCloud from legacy config file."""
 
     conf = config.get(DOMAIN)
@@ -103,7 +103,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up an iCloud account from a config entry."""
 
     opp.data.setdefault(DOMAIN, {})
@@ -134,10 +134,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
     opp.data[DOMAIN][entry.unique_id] = account
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     def play_sound(service: ServiceDataType) -> None:
         """Play sound on the device."""
@@ -221,17 +218,9 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.data[CONF_USERNAME])
-
     return unload_ok

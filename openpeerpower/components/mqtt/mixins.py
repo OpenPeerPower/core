@@ -1,12 +1,13 @@
 """MQTT component mixins and helpers."""
+from __future__ import annotations
+
 from abc import abstractmethod
 import json
 import logging
-from typing import Optional
 
 import voluptuous as vol
 
-from openpeerpower.const import CONF_DEVICE, CONF_NAME, CONF_UNIQUE_ID
+from openpeerpower.const import CONF_DEVICE, CONF_ICON, CONF_NAME, CONF_UNIQUE_ID
 from openpeerpower.core import callback
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.helpers.dispatcher import (
@@ -51,6 +52,7 @@ AVAILABILITY_MODES = [AVAILABILITY_ALL, AVAILABILITY_ANY, AVAILABILITY_LATEST]
 CONF_AVAILABILITY = "availability"
 CONF_AVAILABILITY_MODE = "availability_mode"
 CONF_AVAILABILITY_TOPIC = "availability_topic"
+CONF_ENABLED_BY_DEFAULT = "enabled_by_default"
 CONF_PAYLOAD_AVAILABLE = "payload_available"
 CONF_PAYLOAD_NOT_AVAILABLE = "payload_not_available"
 CONF_JSON_ATTRS_TOPIC = "json_attributes_topic"
@@ -63,6 +65,7 @@ CONF_MODEL = "model"
 CONF_SW_VERSION = "sw_version"
 CONF_VIA_DEVICE = "via_device"
 CONF_DEPRECATED_VIA_HUB = "via_hub"
+CONF_SUGGESTED_AREA = "suggested_area"
 
 MQTT_AVAILABILITY_SINGLE_SCHEMA = vol.Schema(
     {
@@ -129,15 +132,20 @@ MQTT_ENTITY_DEVICE_INFO_SCHEMA = vol.All(
             vol.Optional(CONF_NAME): cv.string,
             vol.Optional(CONF_SW_VERSION): cv.string,
             vol.Optional(CONF_VIA_DEVICE): cv.string,
+            vol.Optional(CONF_SUGGESTED_AREA): cv.string,
         }
     ),
     validate_device_has_at_least_one_identifier,
 )
 
-MQTT_JSON_ATTRS_SCHEMA = vol.Schema(
+MQTT_ENTITY_COMMON_SCHEMA = MQTT_AVAILABILITY_SCHEMA.extend(
     {
+        vol.Optional(CONF_DEVICE): MQTT_ENTITY_DEVICE_INFO_SCHEMA,
+        vol.Optional(CONF_ENABLED_BY_DEFAULT, default=True): cv.boolean,
+        vol.Optional(CONF_ICON): cv.icon,
         vol.Optional(CONF_JSON_ATTRS_TOPIC): valid_subscribe_topic,
         vol.Optional(CONF_JSON_ATTRS_TEMPLATE): cv.template,
+        vol.Optional(CONF_UNIQUE_ID): cv.string,
     }
 )
 
@@ -154,7 +162,9 @@ async def async_setup_entry_helper(opp, domain, async_setup, schema):
         except Exception:
             discovery_hash = discovery_data[ATTR_DISCOVERY_HASH]
             clear_discovery_hash(opp, discovery_hash)
-            async_dispatcher_send(opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None)
+            async_dispatcher_send(
+                opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None
+            )
             raise
 
     async_dispatcher_connect(
@@ -224,7 +234,7 @@ class MqttAttributes(Entity):
         )
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return self._attributes
 
@@ -311,7 +321,7 @@ class MqttAvailability(Entity):
     @callback
     def async_mqtt_connect(self):
         """Update state on connection/disconnection to MQTT broker."""
-        if not self.opp.is_stopping:
+        if not self.opp is_stopping:
             self.async_write_op_state()
 
     async def async_will_remove_from_opp(self):
@@ -323,7 +333,7 @@ class MqttAvailability(Entity):
     @property
     def available(self) -> bool:
         """Return if the device is available."""
-        if not self.opp.data[DATA_MQTT].connected and not self.opp.is_stopping:
+        if not self.opp.data[DATA_MQTT].connected and not self.opp is_stopping:
             return False
         if not self._avail_topics:
             return True
@@ -345,7 +355,7 @@ async def cleanup_device_registry(opp, device_id):
     if (
         device_id
         and not opp.helpers.entity_registry.async_entries_for_device(
-            entity_registry, device_id, include_disabled_entities=True
+            entity_registry, device_id, include_disabled_entities=False
         )
         and not await device_trigger.async_get_triggers(opp, device_id)
         and not tag.async_has_tags(opp, device_id)
@@ -430,7 +440,7 @@ class MqttDiscoveryUpdate(Entity):
 
     async def async_removed_from_registry(self) -> None:
         """Clear retained discovery topic in broker."""
-        if not self._removed_from_opp:
+        if not self._removed_from_opp.
             discovery_topic = self._discovery_data[ATTR_DISCOVERY_TOPIC]
             publish(self.opp, discovery_topic, "", retain=True)
 
@@ -451,7 +461,7 @@ class MqttDiscoveryUpdate(Entity):
 
     def _cleanup_discovery_on_remove(self) -> None:
         """Stop listening to signal and cleanup discovery data."""
-        if self._discovery_data and not self._removed_from_opp:
+        if self._discovery_data and not self._removed_from_opp.
             debug_info.remove_entity_data(self.opp, self.entity_id)
             clear_discovery_hash(self.opp, self._discovery_data[ATTR_DISCOVERY_HASH])
             self._removed_from_opp = True
@@ -486,13 +496,16 @@ def device_info_from_config(config):
     if CONF_VIA_DEVICE in config:
         info["via_device"] = (DOMAIN, config[CONF_VIA_DEVICE])
 
+    if CONF_SUGGESTED_AREA in config:
+        info["suggested_area"] = config[CONF_SUGGESTED_AREA]
+
     return info
 
 
 class MqttEntityDeviceInfo(Entity):
     """Mixin used for mqtt platforms that support the device registry."""
 
-    def __init__(self, device_config: Optional[ConfigType], config_entry=None) -> None:
+    def __init__(self, device_config: ConfigType | None, config_entry=None) -> None:
         """Initialize the device mixin."""
         self._device_config = device_config
         self._config_entry = config_entry
@@ -525,11 +538,12 @@ class MqttEntity(
     def __init__(self, opp, config, config_entry, discovery_data):
         """Init the MQTT Entity."""
         self.opp = opp
+        self._config = config
         self._unique_id = config.get(CONF_UNIQUE_ID)
         self._sub_state = None
 
         # Load config
-        self._setup_from_config(config)
+        self._setup_from_config(self._config)
 
         # Initialize mixin classes
         MqttAttributes.__init__(self, config)
@@ -545,7 +559,8 @@ class MqttEntity(
     async def discovery_update(self, discovery_payload):
         """Handle updated discovery message."""
         config = self.config_schema()(discovery_payload)
-        self._setup_from_config(config)
+        self._config = config
+        self._setup_from_config(self._config)
         await self.attributes_discovery_update(config)
         await self.availability_discovery_update(config)
         await self.device_info_discovery_update(config)
@@ -572,6 +587,21 @@ class MqttEntity(
     @abstractmethod
     async def _subscribe_topics(self):
         """(Re)Subscribe to topics."""
+
+    @property
+    def entity_registry_enabled_default(self) -> bool:
+        """Return if the entity should be enabled when first added to the entity registry."""
+        return self._config[CONF_ENABLED_BY_DEFAULT]
+
+    @property
+    def icon(self):
+        """Return icon of the entity if any."""
+        return self._config.get(CONF_ICON)
+
+    @property
+    def name(self):
+        """Return the name of the device if any."""
+        return self._config.get(CONF_NAME)
 
     @property
     def should_poll(self):

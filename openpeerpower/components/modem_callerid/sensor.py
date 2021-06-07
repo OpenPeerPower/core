@@ -4,7 +4,7 @@ import logging
 from basicmodem.basicmodem import BasicModem as bm
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_DEVICE,
     CONF_NAME,
@@ -12,7 +12,6 @@ from openpeerpower.const import (
     STATE_IDLE,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 DEFAULT_NAME = "Modem CallerID"
@@ -44,7 +43,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities([ModemCalleridSensor(opp, name, port, modem)])
 
 
-class ModemCalleridSensor(Entity):
+class ModemCalleridSensor(SensorEntity):
     """Implementation of USB modem caller ID sensor."""
 
     def __init__(self, opp, name, port, modem):
@@ -86,7 +85,7 @@ class ModemCalleridSensor(Entity):
         return self._name
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return self._attributes
 

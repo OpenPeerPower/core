@@ -47,7 +47,7 @@ class MochadSwitch(SwitchEntity):
         self._name = dev.get(CONF_NAME, "x10_switch_dev_%s" % self._address)
         self._comm_type = dev.get(CONF_COMM_TYPE, "pl")
         self.switch = device.Device(ctrl, self._address, comm_type=self._comm_type)
-        # Init with false to avoid locking OP for long on CM19A (goes from rf
+        # Init with false to avoid locking OPP for long on CM19A (goes from rf
         # to pl via TM751, but not other way around)
         if self._comm_type == "pl":
             self._state = self._get_device_status()

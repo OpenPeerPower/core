@@ -3,7 +3,8 @@
   "name": "Luftdaten",
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/luftdaten",
-  "requirements": ["luftdaten==0.6.4"],
-  "codeowners": [],
-  "quality_scale": "gold"
+  "requirements": ["luftdaten==0.6.5"],
+  "codeowners": ["@fabaff"],
+  "quality_scale": "gold",
+  "iot_class": "cloud_polling"
 }

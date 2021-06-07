@@ -74,7 +74,9 @@ class IdteckReader:
 
     def _callback(self, card):
         """Send a keycard event message into Open Peer Power whenever a card is read."""
-        self.opp.bus.fire(EVENT_IDTECK_PROX_KEYCARD, {"card": card, "name": self._name})
+        self.opp.bus.fire(
+            EVENT_IDTECK_PROX_KEYCARD, {"card": card, "name": self._name}
+        )
 
     def stop(self):
         """Close resources."""

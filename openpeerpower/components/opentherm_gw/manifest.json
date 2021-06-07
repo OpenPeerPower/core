@@ -2,7 +2,8 @@
   "domain": "opentherm_gw",
   "name": "OpenTherm Gateway",
   "documentation": "https://www.openpeerpower.io/integrations/opentherm_gw",
-  "requirements": ["pyotgw==1.0b1"],
-  "codeowners": [],
-  "config_flow": true
+  "requirements": ["pyotgw==1.1b1"],
+  "codeowners": ["@mvn23"],
+  "config_flow": true,
+  "iot_class": "local_push"
 }

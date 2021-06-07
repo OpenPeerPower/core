@@ -6,7 +6,7 @@ import logging
 import voluptuous as vol
 
 from openpeerpower.components.rest.data import RestData
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_DATE,
     ATTR_TEMPERATURE,
@@ -17,7 +17,6 @@ from openpeerpower.const import (
 )
 from openpeerpower.core import callback
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 _ENDPOINT = "http://pvoutput.org/service/r2/getstatus.jsp"
@@ -64,7 +63,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities([PvoutputSensor(rest, name)])
 
 
-class PvoutputSensor(Entity):
+class PvoutputSensor(SensorEntity):
     """Representation of a PVOutput sensor."""
 
     def __init__(self, rest, name):
@@ -100,7 +99,7 @@ class PvoutputSensor(Entity):
         return None
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of the monitored installation."""
         if self.pvcoutput is not None:
             return {

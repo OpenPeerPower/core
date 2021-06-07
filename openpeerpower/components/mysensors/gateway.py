@@ -1,20 +1,23 @@
 """Handle MySensors gateways."""
+from __future__ import annotations
+
 import asyncio
 from collections import defaultdict
+from collections.abc import Coroutine
 import logging
 import socket
 import sys
-from typing import Any, Callable, Coroutine, Dict, Optional
+from typing import Any, Callable
 
 import async_timeout
 from mysensors import BaseAsyncGateway, Message, Sensor, mysensors
 import voluptuous as vol
 
+from openpeerpower.components.mqtt import DOMAIN as MQTT_DOMAIN
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import EVENT_OPENPEERPOWER_STOP
-from openpeerpower.core import Event, callback
+from openpeerpower.core import Event, OpenPeerPower, callback
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import (
     CONF_BAUD_RATE,
@@ -26,17 +29,21 @@ from .const import (
     CONF_TOPIC_OUT_PREFIX,
     CONF_VERSION,
     DOMAIN,
-    MYSENSORS_GATEWAY_READY,
     MYSENSORS_GATEWAY_START_TASK,
     MYSENSORS_GATEWAYS,
     GatewayId,
 )
 from .handler import HANDLERS
-from .helpers import discover_mysensors_platform, validate_child, validate_node
+from .helpers import (
+    discover_mysensors_platform,
+    on_unload,
+    validate_child,
+    validate_node,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
-GATEWAY_READY_TIMEOUT = 15.0
+GATEWAY_READY_TIMEOUT = 20.0
 MQTT_COMPONENT = "mqtt"
 
 
@@ -59,29 +66,21 @@ def is_socket_address(value):
         raise vol.Invalid("Device is not a valid domain name or ip address") from err
 
 
-async def try_connect(opp: OpenPeerPowerType, user_input: Dict[str, str]) -> bool:
+async def try_connect(opp: OpenPeerPower, user_input: dict[str, str]) -> bool:
     """Try to connect to a gateway and report if it worked."""
     if user_input[CONF_DEVICE] == MQTT_COMPONENT:
         return True  # dont validate mqtt. mqtt gateways dont send ready messages :(
     try:
-        gateway_ready = asyncio.Future()
+        gateway_ready = asyncio.Event()
 
-        def gateway_ready_callback(msg):
-            msg_type = msg.gateway.const.MessageType(msg.type)
-            _LOGGER.debug("Received MySensors msg type %s: %s", msg_type.name, msg)
-            if msg_type.name != "internal":
-                return
-            internal = msg.gateway.const.Internal(msg.sub_type)
-            if internal.name != "I_GATEWAY_READY":
-                return
-            _LOGGER.debug("Received gateway ready")
-            gateway_ready.set_result(True)
+        def on_conn_made(_: BaseAsyncGateway) -> None:
+            gateway_ready.set()
 
-        gateway: Optional[BaseAsyncGateway] = await _get_gateway(
+        gateway: BaseAsyncGateway | None = await _get_gateway(
             opp,
             device=user_input[CONF_DEVICE],
             version=user_input[CONF_VERSION],
-            event_callback=gateway_ready_callback,
+            event_callback=lambda _: None,
             persistence_file=None,
             baud_rate=user_input.get(CONF_BAUD_RATE),
             tcp_port=user_input.get(CONF_TCP_PORT),
@@ -92,12 +91,13 @@ async def try_connect(opp: OpenPeerPowerType, user_input: Dict[str, str]) -> boo
         )
         if gateway is None:
             return False
+        gateway.on_conn_made = on_conn_made
 
         connect_task = None
         try:
             connect_task = asyncio.create_task(gateway.start())
-            with async_timeout.timeout(20):
-                await gateway_ready
+            with async_timeout.timeout(GATEWAY_READY_TIMEOUT):
+                await gateway_ready.wait()
                 return True
         except asyncio.TimeoutError:
             _LOGGER.info("Try gateway connect failed with timeout")
@@ -112,8 +112,8 @@ async def try_connect(opp: OpenPeerPowerType, user_input: Dict[str, str]) -> boo
 
 
 def get_mysensors_gateway(
-    opp: OpenPeerPowerType, gateway_id: GatewayId
-) -> Optional[BaseAsyncGateway]:
+    opp: OpenPeerPower, gateway_id: GatewayId
+) -> BaseAsyncGateway | None:
     """Return the Gateway for a given GatewayId."""
     if MYSENSORS_GATEWAYS not in opp.data[DOMAIN]:
         opp.data[DOMAIN][MYSENSORS_GATEWAYS] = {}
@@ -122,8 +122,8 @@ def get_mysensors_gateway(
 
 
 async def setup_gateway(
-    opp: OpenPeerPowerType, entry: ConfigEntry
-) -> Optional[BaseAsyncGateway]:
+    opp: OpenPeerPower, entry: ConfigEntry
+) -> BaseAsyncGateway | None:
     """Set up the Gateway for the given ConfigEntry."""
 
     ready_gateway = await _get_gateway(
@@ -144,28 +144,29 @@ async def setup_gateway(
 
 
 async def _get_gateway(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     device: str,
     version: str,
     event_callback: Callable[[Message], None],
-    persistence_file: Optional[str] = None,
-    baud_rate: Optional[int] = None,
-    tcp_port: Optional[int] = None,
-    topic_in_prefix: Optional[str] = None,
-    topic_out_prefix: Optional[str] = None,
+    persistence_file: str | None = None,
+    baud_rate: int | None = None,
+    tcp_port: int | None = None,
+    topic_in_prefix: str | None = None,
+    topic_out_prefix: str | None = None,
     retain: bool = False,
     persistence: bool = True,  # old persistence option has been deprecated. kwarg is here so we can run try_connect() without persistence
-) -> Optional[BaseAsyncGateway]:
+) -> BaseAsyncGateway | None:
     """Return gateway after setup of the gateway."""
 
     if persistence_file is not None:
-        # interpret relative paths to be in opp config folder. absolute paths will be left as they are
+        # interpret relative paths to be in opp.config folder. absolute paths will be left as they are
         persistence_file = opp.config.path(persistence_file)
 
     if device == MQTT_COMPONENT:
-        # what is the purpose of this?
-        # if not await async_setup_component(opp, MQTT_COMPONENT, entry):
-        #    return None
+        # Make sure the mqtt integration is set up.
+        # Naive check that doesn't consider config entry state.
+        if MQTT_DOMAIN not in opp.config.components:
+            return None
         mqtt = opp.components.mqtt
 
         def pub_callback(topic, payload, qos, retain):
@@ -231,7 +232,7 @@ async def _get_gateway(
 
 
 async def finish_setup(
-    opp: OpenPeerPowerType, entry: ConfigEntry, gateway: BaseAsyncGateway
+    opp: OpenPeerPower, entry: ConfigEntry, gateway: BaseAsyncGateway
 ):
     """Load any persistent devices and platforms and start gateway."""
     discover_tasks = []
@@ -246,7 +247,7 @@ async def finish_setup(
 
 
 async def _discover_persistent_devices(
-    opp: OpenPeerPowerType, entry: ConfigEntry, gateway: BaseAsyncGateway
+    opp: OpenPeerPower, entry: ConfigEntry, gateway: BaseAsyncGateway
 ):
     """Discover platforms for devices loaded via persistence file."""
     tasks = []
@@ -268,18 +269,22 @@ async def _discover_persistent_devices(
 
 async def gw_stop(opp, entry: ConfigEntry, gateway: BaseAsyncGateway):
     """Stop the gateway."""
-    connect_task = opp.data[DOMAIN].get(
-        MYSENSORS_GATEWAY_START_TASK.format(entry.entry_id)
+    connect_task = opp.data[DOMAIN].pop(
+        MYSENSORS_GATEWAY_START_TASK.format(entry.entry_id), None
     )
     if connect_task is not None and not connect_task.done():
         connect_task.cancel()
     await gateway.stop()
 
 
-async def _gw_start(
-    opp: OpenPeerPowerType, entry: ConfigEntry, gateway: BaseAsyncGateway
-):
+async def _gw_start(opp: OpenPeerPower, entry: ConfigEntry, gateway: BaseAsyncGateway):
     """Start the gateway."""
+    gateway_ready = asyncio.Event()
+
+    def gateway_connected(_: BaseAsyncGateway):
+        gateway_ready.set()
+
+    gateway.on_conn_made = gateway_connected
     # Don't use opp.async_create_task to avoid holding up setup indefinitely.
     opp.data[DOMAIN][
         MYSENSORS_GATEWAY_START_TASK.format(entry.entry_id)
@@ -290,29 +295,28 @@ async def _gw_start(
     async def stop_this_gw(_: Event):
         await gw_stop(opp, entry, gateway)
 
-    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_this_gw)
+    await on_unload(
+        opp,
+        entry.entry_id,
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_this_gw),
+    )
+
     if entry.data[CONF_DEVICE] == MQTT_COMPONENT:
         # Gatways connected via mqtt doesn't send gateway ready message.
         return
-    gateway_ready = asyncio.Future()
-    gateway_ready_key = MYSENSORS_GATEWAY_READY.format(entry.entry_id)
-    opp.data[DOMAIN][gateway_ready_key] = gateway_ready
-
     try:
         with async_timeout.timeout(GATEWAY_READY_TIMEOUT):
-            await gateway_ready
+            await gateway_ready.wait()
     except asyncio.TimeoutError:
         _LOGGER.warning(
-            "Gateway %s not ready after %s secs so continuing with setup",
+            "Gateway %s not connected after %s secs so continuing with setup",
             entry.data[CONF_DEVICE],
             GATEWAY_READY_TIMEOUT,
         )
-    finally:
-        opp.data[DOMAIN].pop(gateway_ready_key, None)
 
 
 def _gw_callback_factory(
-    opp: OpenPeerPowerType, gateway_id: GatewayId
+    opp: OpenPeerPower, gateway_id: GatewayId
 ) -> Callable[[Message], None]:
     """Return a new callback for the gateway."""
 

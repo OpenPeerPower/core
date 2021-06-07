@@ -1,5 +1,4 @@
 """The Tesla Powerwall integration."""
-import asyncio
 from datetime import timedelta
 import logging
 
@@ -14,7 +13,7 @@ from tesla_powerwall import (
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_IP_ADDRESS, CONF_PASSWORD
 from openpeerpower.core import OpenPeerPower, callback
-from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
 from openpeerpower.helpers import entity_registry
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
@@ -41,13 +40,6 @@ CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 PLATFORMS = ["binary_sensor", "sensor"]
 
 _LOGGER = logging.getLogger(__name__)
-
-
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the Tesla Powerwall component."""
-    opp.data.setdefault(DOMAIN, {})
-
-    return True
 
 
 async def _migrate_old_unique_ids(opp, entry_id, powerwall_data):
@@ -91,11 +83,12 @@ async def _async_handle_api_changed_error(
     )
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Tesla Powerwall from a config entry."""
 
     entry_id = entry.entry_id
 
+    opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN].setdefault(entry_id, {})
     http_session = requests.Session()
 
@@ -115,8 +108,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     except AccessDeniedError as err:
         _LOGGER.debug("Authentication failed", exc_info=err)
         http_session.close()
-        _async_start_reauth(opp, entry)
-        return False
+        raise ConfigEntryAuthFailed from err
 
     await _migrate_old_unique_ids(opp, entry_id, powerwall_data)
 
@@ -130,13 +122,16 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         _LOGGER.debug("Updating data")
         try:
             return await _async_update_powerwall_data(opp, entry, power_wall)
-        except AccessDeniedError:
+        except AccessDeniedError as err:
             if password is None:
-                raise
+                raise ConfigEntryAuthFailed from err
 
             # If the session expired, relogin, and try again
-            await opp.async_add_executor_job(power_wall.login, "", password)
-            return await _async_update_powerwall_data(opp, entry, power_wall)
+            try:
+                await opp.async_add_executor_job(power_wall.login, "", password)
+                return await _async_update_powerwall_data(opp, entry, power_wall)
+            except AccessDeniedError as ex:
+                raise ConfigEntryAuthFailed from ex
 
     coordinator = DataUpdateCoordinator(
         opp,
@@ -156,12 +151,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         }
     )
 
-    await coordinator.async_refresh()
+    await coordinator.async_config_entry_first_refresh()
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
@@ -181,21 +173,10 @@ async def _async_update_powerwall_data(
         return opp.data[DOMAIN][entry.entry_id][POWERWALL_COORDINATOR].data
 
 
-def _async_start_reauth(opp: OpenPeerPower, entry: ConfigEntry):
-    opp.async_create_task(
-        opp.config_entries.flow.async_init(
-            DOMAIN,
-            context={"source": "reauth"},
-            data=entry.data,
-        )
-    )
-    _LOGGER.error("Password is no longer valid. Please reauthenticate")
-
-
 def _login_and_fetch_base_info(power_wall: Powerwall, password: str):
     """Login to the powerwall and fetch the base info."""
     if password is not None:
-        power_wall.login("", password)
+        power_wall.login(password)
     power_wall.detect_and_pin_version()
     return call_base_info(power_wall)
 
@@ -225,14 +206,7 @@ def _fetch_powerwall_data(power_wall):
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     opp.data[DOMAIN][entry.entry_id][POWERWALL_HTTP_SESSION].close()
 

@@ -1,8 +1,8 @@
 """Support for Roku."""
-import asyncio
+from __future__ import annotations
+
 from datetime import timedelta
 import logging
-from typing import Any, Dict
 
 from rokuecp import Roku, RokuConnectionError, RokuError
 from rokuecp.models import Device
@@ -11,10 +11,10 @@ from openpeerpower.components.media_player import DOMAIN as MEDIA_PLAYER_DOMAIN
 from openpeerpower.components.remote import DOMAIN as REMOTE_DOMAIN
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import ATTR_NAME, CONF_HOST
-from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.entity import DeviceInfo
 from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
@@ -38,44 +38,26 @@ SCAN_INTERVAL = timedelta(seconds=15)
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup(opp: OpenPeerPowerType, config: Dict) -> bool:
-    """Set up the Roku integration."""
-    opp.data.setdefault(DOMAIN, {})
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Roku from a config entry."""
-    coordinator = RokuDataUpdateCoordinator(opp, host=entry.data[CONF_HOST])
-    await coordinator.async_refresh()
+    opp.data.setdefault(DOMAIN, {})
+    coordinator = opp.data[DOMAIN].get(entry.entry_id)
+    if not coordinator:
+        coordinator = RokuDataUpdateCoordinator(opp, host=entry.data[CONF_HOST])
+        opp.data[DOMAIN][entry.entry_id] = coordinator
 
-    if not coordinator.last_update_success:
-        raise ConfigEntryNotReady
+    await coordinator.async_config_entry_first_refresh()
 
-    opp.data[DOMAIN][entry.entry_id] = coordinator
-
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
-
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
-
     return unload_ok
 
 
@@ -100,10 +82,10 @@ class RokuDataUpdateCoordinator(DataUpdateCoordinator[Device]):
 
     def __init__(
         self,
-        opp: OpenPeerPowerType,
+        opp: OpenPeerPower,
         *,
         host: str,
-    ):
+    ) -> None:
         """Initialize global Roku data updater."""
         self.roku = Roku(host=host, session=async_get_clientsession(opp))
 
@@ -151,7 +133,7 @@ class RokuEntity(CoordinatorEntity):
         return self._name
 
     @property
-    def device_info(self) -> Dict[str, Any]:
+    def device_info(self) -> DeviceInfo:
         """Return device information about this Roku device."""
         if self._device_id is None:
             return None

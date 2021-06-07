@@ -1,4 +1,5 @@
 """Event parser and human readable log generator."""
+from contextlib import suppress
 from datetime import timedelta
 from itertools import groupby
 import json
@@ -27,9 +28,9 @@ from openpeerpower.const import (
     ATTR_NAME,
     ATTR_SERVICE,
     EVENT_CALL_SERVICE,
-    EVENT_LOGBOOK_ENTRY,
     EVENT_OPENPEERPOWER_START,
     EVENT_OPENPEERPOWER_STOP,
+    EVENT_LOGBOOK_ENTRY,
     EVENT_STATE_CHANGED,
     HTTP_BAD_REQUEST,
 )
@@ -147,7 +148,7 @@ async def async_setup(opp, config):
         async_log_entry(opp, name, message, domain, entity_id)
 
     opp.components.frontend.async_register_built_in_panel(
-        "logbook", "logbook", "opp:format-list-bulleted-type"
+        "logbook", "logbook", "opp.format-list-bulleted-type"
     )
 
     conf = config.get(DOMAIN, {})
@@ -228,9 +229,15 @@ class LogbookView(OpenPeerPowerView):
             if end_day is None:
                 return self.json_message("Invalid end_time", HTTP_BAD_REQUEST)
 
-        opp = request.app["opp"]
+        opp = request.app["opp.]
 
         entity_matches_only = "entity_matches_only" in request.query
+        context_id = request.query.get("context_id")
+
+        if entity_ids and context_id:
+            return self.json_message(
+                "Can't combine entity with context_id", HTTP_BAD_REQUEST
+            )
 
         def json_events():
             """Fetch events and generate JSON."""
@@ -243,6 +250,7 @@ class LogbookView(OpenPeerPowerView):
                     self.filters,
                     self.entities_filter,
                     entity_matches_only,
+                    context_id,
                 )
             )
 
@@ -268,7 +276,7 @@ def humanify(opp, events, entity_attr_cache, context_lookup):
         # Keep track of last sensor states
         last_sensor_event = {}
 
-        # Group OP start/stop events
+        # Group OPP start/stop events
         # Maps minute of event to 1: stop, 2: stop + start
         start_stop_events = {}
 
@@ -377,10 +385,8 @@ def humanify(opp, events, entity_attr_cache, context_lookup):
                 domain = event_data.get(ATTR_DOMAIN)
                 entity_id = event_data.get(ATTR_ENTITY_ID)
                 if domain is None and entity_id is not None:
-                    try:
+                    with suppress(IndexError):
                         domain = split_entity_id(str(entity_id))[0]
-                    except IndexError:
-                        pass
 
                 data = {
                     "when": event.time_fired_isoformat,
@@ -413,8 +419,13 @@ def _get_events(
     filters=None,
     entities_filter=None,
     entity_matches_only=False,
+    context_id=None,
 ):
     """Get events for a period of time."""
+    assert not (
+        entity_ids and context_id
+    ), "can't pass in both entity_ids and context_id"
+
     entity_attr_cache = EntityAttributeCache(opp)
     context_lookup = {None: None}
 
@@ -433,7 +444,7 @@ def _get_events(
     if entity_ids is not None:
         entities_filter = generate_filter([], entity_ids, [], [])
 
-    with session_scope(opp=opp) as session:
+    with session_scope(opp.opp) as session:
         old_state = aliased(States, name="old_state")
 
         if entity_ids is not None:
@@ -455,7 +466,9 @@ def _get_events(
         else:
             query = _generate_events_query(session)
             query = _apply_event_time_filter(query, start_day, end_day)
-            query = _apply_events_types_and_states_filter(opp, query, old_state).filter(
+            query = _apply_events_types_and_states_filter(
+                opp, query, old_state
+            ).filter(
                 (States.last_updated == States.last_changed)
                 | (Events.event_type != EVENT_STATE_CHANGED)
             )
@@ -463,6 +476,9 @@ def _get_events(
                 query = query.filter(
                     filters.entity_filter() | (Events.event_type != EVENT_STATE_CHANGED)
                 )
+
+            if context_id is not None:
+                query = query.filter(Events.context_id == context_id)
 
         query = query.order_by(Events.time_fired)
 
@@ -484,10 +500,10 @@ def _generate_events_query(session):
 def _generate_events_query_without_states(session):
     return session.query(
         *EVENT_COLUMNS,
-        literal(None).label("state"),
-        literal(None).label("entity_id"),
-        literal(None).label("domain"),
-        literal(None).label("attributes"),
+        literal(value=None, type_=sqlalchemy.String).label("state"),
+        literal(value=None, type_=sqlalchemy.String).label("entity_id"),
+        literal(value=None, type_=sqlalchemy.String).label("domain"),
+        literal(value=None, type_=sqlalchemy.Text).label("attributes"),
     )
 
 
@@ -631,7 +647,7 @@ def _augment_data_with_context(
         return
 
     attr_entity_id = event_data.get(ATTR_ENTITY_ID)
-    if not attr_entity_id or (
+    if not isinstance(attr_entity_id, str) or (
         event_type in SCRIPT_AUTOMATION_EVENTS and attr_entity_id == entity_id
     ):
         return

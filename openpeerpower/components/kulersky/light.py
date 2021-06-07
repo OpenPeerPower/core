@@ -1,8 +1,8 @@
 """Kuler Sky light platform."""
-import asyncio
+from __future__ import annotations
+
 from datetime import timedelta
 import logging
-from typing import Callable, List
 
 import pykulersky
 
@@ -17,12 +17,12 @@ from openpeerpower.components.light import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import EVENT_OPENPEERPOWER_STOP
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 from openpeerpower.helpers.event import async_track_time_interval
-from openpeerpower.helpers.typing import OpenPeerPowerType
 import openpeerpower.util.color as color_util
 
-from .const import DOMAIN
+from .const import DATA_ADDRESSES, DATA_DISCOVERY_SUBSCRIPTION, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -30,94 +30,68 @@ SUPPORT_KULERSKY = SUPPORT_BRIGHTNESS | SUPPORT_COLOR | SUPPORT_WHITE_VALUE
 
 DISCOVERY_INTERVAL = timedelta(seconds=60)
 
-PARALLEL_UPDATES = 0
-
-
-def check_light(light: pykulersky.Light):
-    """Attempt to connect to this light and read the color."""
-    light.connect()
-    light.get_color()
-
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     config_entry: ConfigEntry,
-    async_add_entities: Callable[[List[Entity], bool], None],
+    async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up Kuler sky light devices."""
-    if DOMAIN not in opp.data:
-        opp.data[DOMAIN] = {}
-    if "devices" not in opp.data[DOMAIN]:
-        opp.data[DOMAIN]["devices"] = set()
-    if "discovery" not in opp.data[DOMAIN]:
-        opp.data[DOMAIN]["discovery"] = asyncio.Lock()
 
     async def discover(*args):
         """Attempt to discover new lights."""
-        # Since discovery needs to connect to all discovered bluetooth devices, and
-        # only rules out devices after a timeout, it can potentially take a long
-        # time. If there's already a discovery running, just skip this poll.
-        if opp.data[DOMAIN]["discovery"].locked():
-            return
+        lights = await pykulersky.discover()
 
-        async with opp.data[DOMAIN]["discovery"]:
-            bluetooth_devices = await opp.async_add_executor_job(
-                pykulersky.discover_bluetooth_devices
-            )
+        # Filter out already discovered lights
+        new_lights = [
+            light
+            for light in lights
+            if light.address not in opp.data[DOMAIN][DATA_ADDRESSES]
+        ]
 
-            # Filter out already connected lights
-            new_devices = [
-                device
-                for device in bluetooth_devices
-                if device["address"] not in opp.data[DOMAIN]["devices"]
-            ]
+        new_entities = []
+        for light in new_lights:
+            opp.data[DOMAIN][DATA_ADDRESSES].add(light.address)
+            new_entities.append(KulerskyLight(light))
 
-            for device in new_devices:
-                light = pykulersky.Light(device["address"], device["name"])
-                try:
-                    # If the connection fails, either this is not a Kuler Sky
-                    # light, or it's bluetooth connection is currently locked
-                    # by another device. If the vendor's app is connected to
-                    # the light when open peer power tries to connect, this
-                    # connection will fail.
-                    await opp.async_add_executor_job(check_light, light)
-                except pykulersky.PykulerskyException:
-                    continue
-                # The light has successfully connected
-                opp.data[DOMAIN]["devices"].add(device["address"])
-                async_add_entities([KulerskyLight(light)], update_before_add=True)
+        async_add_entities(new_entities, update_before_add=True)
 
     # Start initial discovery
     opp.async_create_task(discover())
 
     # Perform recurring discovery of new devices
-    async_track_time_interval(opp, discover, DISCOVERY_INTERVAL)
+    opp.data[DOMAIN][DATA_DISCOVERY_SUBSCRIPTION] = async_track_time_interval(
+        opp, discover, DISCOVERY_INTERVAL
+    )
 
 
 class KulerskyLight(LightEntity):
     """Representation of an Kuler Sky Light."""
 
-    def __init__(self, light: pykulersky.Light):
+    def __init__(self, light: pykulersky.Light) -> None:
         """Initialize a Kuler Sky light."""
         self._light = light
         self._hs_color = None
         self._brightness = None
         self._white_value = None
-        self._available = True
+        self._available = None
 
     async def async_added_to_opp(self) -> None:
         """Run when entity about to be added to opp."""
         self.async_on_remove(
-            self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, self.disconnect)
+            self.opp.bus.async_listen_once(
+                EVENT_OPENPEERPOWER_STOP, self.async_will_remove_from_opp
+            )
         )
 
-    async def async_will_remove_from_opp(self) -> None:
+    async def async_will_remove_from_opp(self, *args) -> None:
         """Run when entity will be removed from opp."""
-        await self.opp.async_add_executor_job(self.disconnect)
-
-    def disconnect(self, *args) -> None:
-        """Disconnect the underlying device."""
-        self._light.disconnect()
+        try:
+            await self._light.disconnect()
+        except pykulersky.PykulerskyException:
+            _LOGGER.debug(
+                "Exception disconnected from %s", self._light.address, exc_info=True
+            )
 
     @property
     def name(self):
@@ -168,7 +142,7 @@ class KulerskyLight(LightEntity):
         """Return True if entity is available."""
         return self._available
 
-    def turn_on(self, **kwargs):
+    async def async_turn_on(self, **kwargs):
         """Instruct the light to turn on."""
         default_hs = (0, 0) if self._hs_color is None else self._hs_color
         hue_sat = kwargs.get(ATTR_HS_COLOR, default_hs)
@@ -187,28 +161,28 @@ class KulerskyLight(LightEntity):
 
         rgb = color_util.color_hsv_to_RGB(*hue_sat, brightness / 255 * 100)
 
-        self._light.set_color(*rgb, white_value)
+        await self._light.set_color(*rgb, white_value)
 
-    def turn_off(self, **kwargs):
+    async def async_turn_off(self, **kwargs):
         """Instruct the light to turn off."""
-        self._light.set_color(0, 0, 0, 0)
+        await self._light.set_color(0, 0, 0, 0)
 
-    def update(self):
+    async def async_update(self):
         """Fetch new state data for this light."""
         try:
-            if not self._light.connected:
-                self._light.connect()
+            if not self._available:
+                await self._light.connect()
             # pylint: disable=invalid-name
-            r, g, b, w = self._light.get_color()
+            r, g, b, w = await self._light.get_color()
         except pykulersky.PykulerskyException as exc:
             if self._available:
                 _LOGGER.warning("Unable to connect to %s: %s", self._light.address, exc)
             self._available = False
             return
-        if not self._available:
-            _LOGGER.info("Reconnected to %s", self.entity_id)
-            self._available = True
+        if self._available is False:
+            _LOGGER.info("Reconnected to %s", self._light.address)
 
+        self._available = True
         hsv = color_util.color_RGB_to_hsv(r, g, b)
         self._hs_color = hsv[:2]
         self._brightness = int(round((hsv[2] / 100) * 255))

@@ -1,12 +1,12 @@
 """This platform provides binary sensors for key RainMachine data."""
 from functools import partial
-from typing import Callable
 
 from regenmaschine.controller import Controller
 
 from openpeerpower.components.binary_sensor import BinarySensorEntity
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from . import RainMachineEntity
@@ -73,7 +73,7 @@ BINARY_SENSORS = {
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
     """Set up RainMachine binary sensors based on a config entry."""
     controller = opp.data[DOMAIN][DATA_CONTROLLER][entry.entry_id]

@@ -4,10 +4,9 @@ import logging
 import voluptuous as vol
 
 from openpeerpower.components import pilight
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_NAME, CONF_PAYLOAD, CONF_UNIT_OF_MEASUREMENT
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -29,7 +28,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(
         [
             PilightSensor(
-                opp=opp,
+                opp.opp,
                 name=config.get(CONF_NAME),
                 variable=config.get(CONF_VARIABLE),
                 payload=config.get(CONF_PAYLOAD),
@@ -39,7 +38,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     )
 
 
-class PilightSensor(Entity):
+class PilightSensor(SensorEntity):
     """Representation of a sensor that can be updated using Pilight."""
 
     def __init__(self, opp, name, variable, payload, unit_of_measurement):

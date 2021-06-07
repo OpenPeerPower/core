@@ -3,6 +3,7 @@
   "name": "NZBGet",
   "documentation": "https://www.openpeerpower.io/integrations/nzbget",
   "requirements": ["pynzbgetapi==0.2.0"],
-  "codeowners": [],
-  "config_flow": true
+  "codeowners": ["@chriscla"],
+  "config_flow": true,
+  "iot_class": "local_polling"
 }

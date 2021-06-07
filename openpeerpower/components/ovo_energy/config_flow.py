@@ -3,11 +3,10 @@ import aiohttp
 from ovoenergy.ovoenergy import OVOEnergy
 import voluptuous as vol
 
-from openpeerpower import config_entries
 from openpeerpower.config_entries import ConfigFlow
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
 
-from .const import DOMAIN  # pylint: disable=unused-import
+from .const import DOMAIN
 
 REAUTH_SCHEMA = vol.Schema({vol.Required(CONF_PASSWORD): str})
 USER_SCHEMA = vol.Schema(
@@ -19,7 +18,6 @@ class OVOEnergyFlowHandler(ConfigFlow, domain=DOMAIN):
     """Handle a OVO Energy config flow."""
 
     VERSION = 1
-    CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
 
     def __init__(self):
         """Initialize the flow."""
@@ -74,18 +72,15 @@ class OVOEnergyFlowHandler(ConfigFlow, domain=DOMAIN):
                 errors["base"] = "connection_error"
             else:
                 if authenticated:
-                    await self.async_set_unique_id(self.username)
-
-                    for entry in self._async_current_entries():
-                        if entry.unique_id == self.unique_id:
-                            self.opp.config_entries.async_update_entry(
-                                entry,
-                                data={
-                                    CONF_USERNAME: self.username,
-                                    CONF_PASSWORD: user_input[CONF_PASSWORD],
-                                },
-                            )
-                            return self.async_abort(reason="reauth_successful")
+                    entry = await self.async_set_unique_id(self.username)
+                    self.opp.config_entries.async_update_entry(
+                        entry,
+                        data={
+                            CONF_USERNAME: self.username,
+                            CONF_PASSWORD: user_input[CONF_PASSWORD],
+                        },
+                    )
+                    return self.async_abort(reason="reauth_successful")
 
                 errors["base"] = "authorization_error"
 

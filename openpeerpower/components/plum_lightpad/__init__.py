@@ -17,14 +17,17 @@ from .utils import load_plum
 _LOGGER = logging.getLogger(__name__)
 
 CONFIG_SCHEMA = vol.Schema(
-    {
-        DOMAIN: vol.Schema(
-            {
-                vol.Required(CONF_USERNAME): cv.string,
-                vol.Required(CONF_PASSWORD): cv.string,
-            }
-        )
-    },
+    vol.All(
+        cv.deprecated(DOMAIN),
+        {
+            DOMAIN: vol.Schema(
+                {
+                    vol.Required(CONF_USERNAME): cv.string,
+                    vol.Required(CONF_PASSWORD): cv.string,
+                }
+            )
+        },
+    ),
     extra=vol.ALLOW_EXTRA,
 )
 
@@ -38,7 +41,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
 
     conf = config[DOMAIN]
 
-    _LOGGER.info("Found Plum Lightpad configuration in config, importing...")
+    _LOGGER.info("Found Plum Lightpad configuration in config, importing")
     opp.async_create_task(
         opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_IMPORT}, data=conf
@@ -48,7 +51,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Plum Lightpad from a config entry."""
     _LOGGER.debug("Setting up config entry with ID = %s", entry.unique_id)
 
@@ -76,5 +79,5 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         """Clean up resources."""
         plum.cleanup()
 
-    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, cleanup)
+    entry.async_on_unload(opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, cleanup))
     return True

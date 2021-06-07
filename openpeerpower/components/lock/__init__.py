@@ -2,6 +2,7 @@
 from datetime import timedelta
 import functools as ft
 import logging
+from typing import final
 
 import voluptuous as vol
 
@@ -46,7 +47,9 @@ PROP_TO_ATTR = {"changed_by": ATTR_CHANGED_BY, "code_format": ATTR_CODE_FORMAT}
 
 async def async_setup(opp, config):
     """Track states and offer events for locks."""
-    component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp, SCAN_INTERVAL)
+    component = opp.data[DOMAIN] = EntityComponent(
+        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
+    )
 
     await component.async_setup(config)
 
@@ -74,7 +77,7 @@ async def async_unload_entry(opp, entry):
 
 
 class LockEntity(Entity):
-    """Representation of a lock."""
+    """Base class for lock entities."""
 
     @property
     def changed_by(self):
@@ -115,6 +118,7 @@ class LockEntity(Entity):
         """Open the door latch."""
         await self.opp.async_add_executor_job(ft.partial(self.open, **kwargs))
 
+    @final
     @property
     def state_attributes(self):
         """Return the state attributes."""

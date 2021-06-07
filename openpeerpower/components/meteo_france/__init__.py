@@ -1,5 +1,4 @@
 """Support for Meteo-France weather data."""
-import asyncio
 from datetime import timedelta
 import logging
 
@@ -9,9 +8,10 @@ import voluptuous as vol
 
 from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry
 from openpeerpower.const import CONF_LATITUDE, CONF_LONGITUDE
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.exceptions import ConfigEntryNotReady
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import (
@@ -33,12 +33,15 @@ SCAN_INTERVAL = timedelta(minutes=15)
 CITY_SCHEMA = vol.Schema({vol.Required(CONF_CITY): cv.string})
 
 CONFIG_SCHEMA = vol.Schema(
-    {DOMAIN: vol.Schema(vol.All(cv.ensure_list, [CITY_SCHEMA]))},
+    vol.All(
+        cv.deprecated(DOMAIN),
+        {DOMAIN: vol.Schema(vol.All(cv.ensure_list, [CITY_SCHEMA]))},
+    ),
     extra=vol.ALLOW_EXTRA,
 )
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up Meteo-France from legacy config file."""
     conf = config.get(DOMAIN)
     if not conf:
@@ -54,7 +57,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up an Meteo-France account from a config entry."""
     opp.data.setdefault(DOMAIN, {})
 
@@ -159,7 +162,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
             )
     else:
         _LOGGER.warning(
-            "Weather alert not available: The city %s is not in metropolitan France or Andorre.",
+            "Weather alert not available: The city %s is not in metropolitan France or Andorre",
             entry.title,
         )
 
@@ -172,15 +175,12 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         UNDO_UPDATE_LISTENER: undo_listener,
     }
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     if opp.data[DOMAIN][entry.entry_id][COORDINATOR_ALERT]:
 
@@ -189,18 +189,11 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
         ].data.position.get("dept")
         opp.data[DOMAIN][department] = False
         _LOGGER.debug(
-            "Weather alert for depatment %s unloaded and released. It can be added now by another city.",
+            "Weather alert for depatment %s unloaded and released. It can be added now by another city",
             department,
         )
 
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
         opp.data[DOMAIN].pop(entry.entry_id)
@@ -210,6 +203,6 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     return unload_ok
 
 
-async def _async_update_listener(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def _async_update_listener(opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
     await opp.config_entries.async_reload(entry.entry_id)

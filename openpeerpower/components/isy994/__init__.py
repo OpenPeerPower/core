@@ -1,16 +1,24 @@
 """Support the ISY-994 controllers."""
+from __future__ import annotations
+
 import asyncio
-from functools import partial
-from typing import Optional
 from urllib.parse import urlparse
 
-from pyisy import ISY
+from aiohttp import CookieJar
+import async_timeout
+from pyisy import ISY, ISYConnectionError, ISYInvalidAuthError, ISYResponseParseError
 import voluptuous as vol
 
 from openpeerpower import config_entries
-from openpeerpower.const import CONF_HOST, CONF_PASSWORD, CONF_USERNAME
+from openpeerpower.const import (
+    CONF_HOST,
+    CONF_PASSWORD,
+    CONF_USERNAME,
+    EVENT_OPENPEERPOWER_STOP,
+)
 from openpeerpower.core import OpenPeerPower, callback
-from openpeerpower.helpers import config_validation as cv
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import aiohttp_client, config_validation as cv
 import openpeerpower.helpers.device_registry as dr
 from openpeerpower.helpers.typing import ConfigType
 
@@ -32,7 +40,7 @@ from .const import (
     ISY994_VARIABLES,
     MANUFACTURER,
     PLATFORMS,
-    SUPPORTED_PROGRAM_PLATFORMS,
+    PROGRAM_PLATFORMS,
     UNDO_UPDATE_LISTENER,
 )
 from .helpers import _categorize_nodes, _categorize_programs, _categorize_variables
@@ -67,7 +75,7 @@ CONFIG_SCHEMA = vol.Schema(
 
 async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up the isy994 integration from YAML."""
-    isy_config: Optional[ConfigType] = config.get(DOMAIN)
+    isy_config: ConfigType | None = config.get(DOMAIN)
     opp.data.setdefault(DOMAIN, {})
 
     if not isy_config:
@@ -115,7 +123,7 @@ async def async_setup_entry(
         opp_isy_data[ISY994_NODES][platform] = []
 
     opp_isy_data[ISY994_PROGRAMS] = {}
-    for platform in SUPPORTED_PROGRAM_PLATFORMS:
+    for platform in PROGRAM_PLATFORMS:
         opp_isy_data[ISY994_PROGRAMS][platform] = []
 
     opp_isy_data[ISY994_VARIABLES] = []
@@ -139,58 +147,88 @@ async def async_setup_entry(
     if host.scheme == "http":
         https = False
         port = host.port or 80
+        session = aiohttp_client.async_create_clientsession(
+            opp, verify_ssl=None, cookie_jar=CookieJar(unsafe=True)
+        )
     elif host.scheme == "https":
         https = True
         port = host.port or 443
+        session = aiohttp_client.async_get_clientsession(opp)
     else:
-        _LOGGER.error("isy994 host value in configuration is invalid")
+        _LOGGER.error("The isy994 host value in configuration is invalid")
         return False
 
     # Connect to ISY controller.
-    isy = await opp.async_add_executor_job(
-        partial(
-            ISY,
-            host.hostname,
-            port,
-            username=user,
-            password=password,
-            use_https=https,
-            tls_ver=tls_version,
-            webroot=host.path,
-        )
+    isy = ISY(
+        host.hostname,
+        port,
+        username=user,
+        password=password,
+        use_https=https,
+        tls_ver=tls_version,
+        webroot=host.path,
+        websession=session,
+        use_websocket=True,
     )
-    if not isy.connected:
-        return False
 
-    # Trigger a status update for all nodes, not done automatically in PyISY v2.x
-    await opp.async_add_executor_job(isy.nodes.update)
+    try:
+        async with async_timeout.timeout(30):
+            await isy.initialize()
+    except asyncio.TimeoutError as err:
+        _LOGGER.error(
+            "Timed out initializing the ISY; device may be busy, trying again later: %s",
+            err,
+        )
+        raise ConfigEntryNotReady from err
+    except ISYInvalidAuthError as err:
+        _LOGGER.error(
+            "Invalid credentials for the ISY, please adjust settings and try again: %s",
+            err,
+        )
+        return False
+    except ISYConnectionError as err:
+        _LOGGER.error(
+            "Failed to connect to the ISY, please adjust settings and try again: %s",
+            err,
+        )
+        raise ConfigEntryNotReady from err
+    except ISYResponseParseError as err:
+        _LOGGER.warning(
+            "Error processing responses from the ISY; device may be busy, trying again later"
+        )
+        raise ConfigEntryNotReady from err
 
     _categorize_nodes(opp_isy_data, isy.nodes, ignore_identifier, sensor_identifier)
     _categorize_programs(opp_isy_data, isy.programs)
     _categorize_variables(opp_isy_data, isy.variables, variable_identifier)
 
-    # Dump ISY Clock Information. Future: Add ISY as sensor to Opp with attrs
+    # Dump ISY Clock Information. Future: Add ISY as sensor to Hass with attrs
     _LOGGER.info(repr(isy.clock))
 
     opp_isy_data[ISY994_ISY] = isy
     await _async_get_or_create_isy_device_in_registry(opp, entry, isy)
 
     # Load platforms for the devices in the ISY controller that we support.
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     def _start_auto_update() -> None:
         """Start isy auto update."""
         _LOGGER.debug("ISY Starting Event Stream and automatic updates")
-        isy.auto_update = True
+        isy.websocket.start()
+
+    def _stop_auto_update(event) -> None:
+        """Stop the isy auto update on Open Peer Power Shutdown."""
+        _LOGGER.debug("ISY Stopping Event Stream and automatic updates")
+        isy.websocket.stop()
 
     await opp.async_add_executor_job(_start_auto_update)
 
     undo_listener = entry.add_update_listener(_async_update_listener)
 
     opp_isy_data[UNDO_UPDATE_LISTENER] = undo_listener
+    entry.async_on_unload(
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _stop_auto_update)
+    )
 
     # Register Integration-wide Services:
     async_setup_services(opp)
@@ -198,7 +236,9 @@ async def async_setup_entry(
     return True
 
 
-async def _async_update_listener(opp: OpenPeerPower, entry: config_entries.ConfigEntry):
+async def _async_update_listener(
+    opp: OpenPeerPower, entry: config_entries.ConfigEntry
+):
     """Handle options update."""
     await opp.config_entries.async_reload(entry.entry_id)
 
@@ -242,23 +282,16 @@ async def async_unload_entry(
     opp: OpenPeerPower, entry: config_entries.ConfigEntry
 ) -> bool:
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     opp_isy_data = opp.data[DOMAIN][entry.entry_id]
 
     isy = opp_isy_data[ISY994_ISY]
 
     def _stop_auto_update() -> None:
-        """Start isy auto update."""
+        """Stop the isy auto update."""
         _LOGGER.debug("ISY Stopping Event Stream and automatic updates")
-        isy.auto_update = False
+        isy.websocket.stop()
 
     await opp.async_add_executor_job(_stop_auto_update)
 

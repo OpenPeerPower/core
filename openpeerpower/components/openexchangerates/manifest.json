@@ -2,5 +2,6 @@
   "domain": "openexchangerates",
   "name": "Open Exchange Rates",
   "documentation": "https://www.openpeerpower.io/integrations/openexchangerates",
-  "codeowners": []
+  "codeowners": [],
+  "iot_class": "cloud_polling"
 }

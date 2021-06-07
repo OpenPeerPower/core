@@ -76,7 +76,7 @@ async def async_setup(opp, config):
     except ValueError as ex:
         _LOGGER.warning("Could not set failsafe mode %s", ex)
 
-    # Register services to opp
+    # Register services to.opp
     async def execute_service(call):
         """Execute a service to KEBA charging station.
 
@@ -233,7 +233,7 @@ class KebaHandler(KebaKeContact):
             self._set_fast_polling()
         except (KeyError, ValueError) as ex:
             _LOGGER.warning(
-                "failsafe_timeout, failsafe_fallback and/or "
-                "failsafe_persist value are not correct. %s",
+                "Values are not correct for: failsafe_timeout, failsafe_fallback and/or "
+                "failsafe_persist: %s",
                 ex,
             )

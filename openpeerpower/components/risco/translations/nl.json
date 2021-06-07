@@ -20,18 +20,21 @@
     },
     "options": {
         "step": {
-            "op_to_risco": {
+            "ha_to_risco": {
                 "data": {
                     "armed_away": "Ingeschakeld weg",
                     "armed_custom_bypass": "Ingeschakeld met overbrugging(en)",
                     "armed_home": "Ingeschakeld thuis",
                     "armed_night": "Ingeschakeld nacht"
-                }
+                },
+                "description": "Selecteer in welke staat u uw Risco-alarm wilt instellen wanneer u het Open Peer Power-alarm inschakelt",
+                "title": "Wijs Open Peer Power-staten toe aan Risco-staten"
             },
             "init": {
                 "data": {
                     "code_arm_required": "PIN-code vereist om in te schakelen",
-                    "code_disarm_required": "PIN-code vereist om uit te schakelen"
+                    "code_disarm_required": "PIN-code vereist om uit te schakelen",
+                    "scan_interval": "Polling-interval (in seconden)"
                 },
                 "title": "Configureer opties"
             },
@@ -40,8 +43,12 @@
                     "A": "Groep A",
                     "B": "Groep B",
                     "C": "Groep C",
-                    "D": "Groep D"
-                }
+                    "D": "Groep D",
+                    "arm": "Ingeschakeld (AFWEZIG)",
+                    "partial_arm": "Gedeeltelijk ingeschakeld (AANWEZIG)"
+                },
+                "description": "Selecteer welke staat uw Open Peer Power alarm zal melden voor elke staat gemeld door Risco",
+                "title": "Wijs Risco-staten toe aan Open Peer Power-staten"
             }
         }
     }

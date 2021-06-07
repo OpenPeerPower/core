@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import logging
-import typing
 
 import voluptuous as vol
 
@@ -17,7 +16,7 @@ from openpeerpower.const import (
     SERVICE_TURN_ON,
     STATE_ON,
 )
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, ServiceCall, callback
 from openpeerpower.helpers import collection
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.entity import ToggleEntity
@@ -25,7 +24,7 @@ from openpeerpower.helpers.entity_component import EntityComponent
 from openpeerpower.helpers.restore_state import RestoreEntity
 import openpeerpower.helpers.service
 from openpeerpower.helpers.storage import Store
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType, ServiceCallType
+from openpeerpower.helpers.typing import ConfigType
 from openpeerpower.loader import bind_opp
 
 DOMAIN = "input_boolean"
@@ -62,16 +61,16 @@ class InputBooleanStorageCollection(collection.StorageCollection):
     CREATE_SCHEMA = vol.Schema(CREATE_FIELDS)
     UPDATE_SCHEMA = vol.Schema(UPDATE_FIELDS)
 
-    async def _process_create_data(self, data: typing.Dict) -> typing.Dict:
+    async def _process_create_data(self, data: dict) -> dict:
         """Validate the config is valid."""
         return self.CREATE_SCHEMA(data)
 
     @callback
-    def _get_suggested_id(self, info: typing.Dict) -> str:
+    def _get_suggested_id(self, info: dict) -> str:
         """Suggest an ID based on the config."""
         return info[CONF_NAME]
 
-    async def _update_data(self, data: dict, update_data: typing.Dict) -> typing.Dict:
+    async def _update_data(self, data: dict, update_data: dict) -> dict:
         """Return a new updated data object."""
         update_data = self.UPDATE_SCHEMA(update_data)
         return {**data, **update_data}
@@ -83,7 +82,7 @@ def is_on(opp, entity_id):
     return opp.states.is_state(entity_id, STATE_ON)
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up an input boolean."""
     component = EntityComponent(_LOGGER, DOMAIN, opp)
     id_manager = collection.IDManager()
@@ -113,7 +112,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
         storage_collection, DOMAIN, DOMAIN, CREATE_FIELDS, UPDATE_FIELDS
     ).async_setup(opp)
 
-    async def reload_service_handler(service_call: ServiceCallType) -> None:
+    async def reload_service_handler(service_call: ServiceCall) -> None:
         """Remove all input booleans and load new ones from config."""
         conf = await component.async_prepare_reload(skip_reset=True)
         if conf is None:
@@ -145,14 +144,14 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
 class InputBoolean(ToggleEntity, RestoreEntity):
     """Representation of a boolean input."""
 
-    def __init__(self, config: typing.Optional[dict]):
+    def __init__(self, config: dict | None) -> None:
         """Initialize a boolean input."""
         self._config = config
         self.editable = True
         self._state = config.get(CONF_INITIAL)
 
     @classmethod
-    def from_yaml(cls, config: typing.Dict) -> InputBoolean:
+    def from_yaml(cls, config: dict) -> InputBoolean:
         """Return entity instance initialized from yaml storage."""
         input_bool = cls(config)
         input_bool.entity_id = f"{DOMAIN}.{config[CONF_ID]}"
@@ -170,7 +169,7 @@ class InputBoolean(ToggleEntity, RestoreEntity):
         return self._config.get(CONF_NAME)
 
     @property
-    def state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of the entity."""
         return {ATTR_EDITABLE: self.editable}
 
@@ -209,7 +208,7 @@ class InputBoolean(ToggleEntity, RestoreEntity):
         self._state = False
         self.async_write_op_state()
 
-    async def async_update_config(self, config: typing.Dict) -> None:
+    async def async_update_config(self, config: dict) -> None:
         """Handle when the config is updated."""
         self._config = config
         self.async_write_op_state()

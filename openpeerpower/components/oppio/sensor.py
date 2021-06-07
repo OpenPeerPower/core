@@ -1,19 +1,20 @@
 """Sensor platform for Opp.io addons."""
-from typing import Callable, List
+from __future__ import annotations
 
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.core import OpenPeerPower
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 
 from . import ADDONS_COORDINATOR
 from .const import ATTR_VERSION, ATTR_VERSION_LATEST
-from .entity import OppioAddonEntity, OppioOSEntity
+from .entity import HassioAddonEntity, HassioOSEntity
 
 
 async def async_setup_entry(
     opp: OpenPeerPower,
     config_entry: ConfigEntry,
-    async_add_entities: Callable[[List[Entity], bool], None],
+    async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Sensor set up for Opp.io config entry."""
     coordinator = opp.data[ADDONS_COORDINATOR]
@@ -26,15 +27,15 @@ async def async_setup_entry(
     ):
         for addon in coordinator.data["addons"].values():
             entities.append(
-                OppioAddonSensor(coordinator, addon, attribute_name, sensor_name)
+                HassioAddonSensor(coordinator, addon, attribute_name, sensor_name)
             )
         if coordinator.is_opp_os:
-            entities.append(OppioOSSensor(coordinator, attribute_name, sensor_name))
+            entities.append(HassioOSSensor(coordinator, attribute_name, sensor_name))
 
     async_add_entities(entities)
 
 
-class OppioAddonSensor(OppioAddonEntity):
+class HassioAddonSensor(HassioAddonEntity, SensorEntity):
     """Sensor to track a Opp.io add-on attribute."""
 
     @property
@@ -43,7 +44,7 @@ class OppioAddonSensor(OppioAddonEntity):
         return self.addon_info[self.attribute_name]
 
 
-class OppioOSSensor(OppioOSEntity):
+class HassioOSSensor(HassioOSEntity, SensorEntity):
     """Sensor to track a Opp.io add-on attribute."""
 
     @property

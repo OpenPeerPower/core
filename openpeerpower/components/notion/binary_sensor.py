@@ -1,6 +1,4 @@
 """Support for Notion binary sensors."""
-from typing import Callable
-
 from openpeerpower.components.binary_sensor import (
     DEVICE_CLASS_CONNECTIVITY,
     DEVICE_CLASS_DOOR,
@@ -11,6 +9,7 @@ from openpeerpower.components.binary_sensor import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 
 from . import NotionEntity
 from .const import (
@@ -44,7 +43,7 @@ BINARY_SENSOR_TYPES = {
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: Callable
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ):
     """Set up Notion sensors based on a config entry."""
     coordinator = opp.data[DOMAIN][DATA_COORDINATOR][entry.entry_id]

@@ -1,11 +1,11 @@
 """Support for NZBGet switches."""
-from typing import Callable, List
+from __future__ import annotations
 
 from openpeerpower.components.switch import SwitchEntity
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_NAME
-from openpeerpower.helpers.entity import Entity
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 
 from . import NZBGetEntity
 from .const import DATA_COORDINATOR, DOMAIN
@@ -13,9 +13,9 @@ from .coordinator import NZBGetDataUpdateCoordinator
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     entry: ConfigEntry,
-    async_add_entities: Callable[[List[Entity], bool], None],
+    async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up NZBGet sensor based on a config entry."""
     coordinator: NZBGetDataUpdateCoordinator = opp.data[DOMAIN][entry.entry_id][
@@ -41,7 +41,7 @@ class NZBGetDownloadSwitch(NZBGetEntity, SwitchEntity):
         coordinator: NZBGetDataUpdateCoordinator,
         entry_id: str,
         entry_name: str,
-    ):
+    ) -> None:
         """Initialize a new NZBGet switch."""
         self._unique_id = f"{entry_id}_download"
 

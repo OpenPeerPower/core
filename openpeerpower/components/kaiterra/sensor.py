@@ -1,7 +1,7 @@
 """Support for Kaiterra Temperature ahn Humidity Sensors."""
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import CONF_DEVICE_ID, CONF_NAME, TEMP_CELSIUS, TEMP_FAHRENHEIT
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
-from openpeerpower.helpers.entity import Entity
 
 from .const import DISPATCHER_KAITERRA, DOMAIN
 
@@ -25,7 +25,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     )
 
 
-class KaiterraSensor(Entity):
+class KaiterraSensor(SensorEntity):
     """Implementation of a Kaittera sensor."""
 
     def __init__(self, api, name, device_id, sensor):

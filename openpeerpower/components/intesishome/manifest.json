@@ -2,6 +2,7 @@
   "domain": "intesishome",
   "name": "IntesisHome",
   "documentation": "https://www.openpeerpower.io/integrations/intesishome",
-  "codeowners": [],
-  "requirements": ["pyintesishome==1.7.5"]
+  "codeowners": ["@jnimmo"],
+  "requirements": ["pyintesishome==1.7.6"],
+  "iot_class": "cloud_push"
 }

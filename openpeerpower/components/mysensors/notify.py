@@ -5,6 +5,9 @@ from openpeerpower.components.notify import ATTR_TARGET, DOMAIN, BaseNotificatio
 
 async def async_get_service(opp, config, discovery_info=None):
     """Get the MySensors notification service."""
+    if not discovery_info:
+        return None
+
     new_devices = mysensors.setup_mysensors_platform(
         opp, DOMAIN, discovery_info, MySensorsNotificationDevice
     )

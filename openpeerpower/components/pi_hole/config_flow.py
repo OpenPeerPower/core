@@ -6,7 +6,7 @@ from hole.exceptions import HoleError
 import voluptuous as vol
 
 from openpeerpower import config_entries
-from openpeerpower.components.pi_hole.const import (  # pylint: disable=unused-import
+from openpeerpower.components.pi_hole.const import (
     CONF_LOCATION,
     CONF_STATISTICS_ONLY,
     DEFAULT_LOCATION,
@@ -33,7 +33,6 @@ class PiHoleFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Handle a Pi-hole config flow."""
 
     VERSION = 1
-    CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_POLL
 
     def __init__(self):
         """Initialize the config flow."""

@@ -1,6 +1,7 @@
 """Support for Onkyo Receivers."""
+from __future__ import annotations
+
 import logging
-from typing import List
 
 import eiscp
 from eiscp import eISCP
@@ -56,7 +57,7 @@ SUPPORT_ONKYO_WO_VOLUME = (
     | SUPPORT_PLAY_MEDIA
 )
 
-KNOWN_HOSTS: List[str] = []
+KNOWN_HOSTS: list[str] = []
 DEFAULT_SOURCES = {
     "tv": "TV",
     "bd": "Bluray",
@@ -392,7 +393,7 @@ class OnkyoDevice(MediaPlayerEntity):
         return self._source_list
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return device specific state attributes."""
         return self._attributes
 
@@ -406,7 +407,7 @@ class OnkyoDevice(MediaPlayerEntity):
 
         However full volume on the amp is usually far too loud so allow the user to specify the upper range
         with CONF_MAX_VOLUME.  we change as per max_volume set by user. This means that if max volume is 80 then full
-        volume in OP will give 80% volume on the receiver. Then we convert
+        volume in OPP will give 80% volume on the receiver. Then we convert
         that to the correct scale for the receiver.
         """
         #        HA_VOL * (MAX VOL / 100) * MAX_RECEIVER_VOL
@@ -573,7 +574,7 @@ class OnkyoDeviceZone(OnkyoDevice):
 
         However full volume on the amp is usually far too loud so allow the user to specify the upper range
         with CONF_MAX_VOLUME.  we change as per max_volume set by user. This means that if max volume is 80 then full
-        volume in OP will give 80% volume on the receiver. Then we convert
+        volume in OPP will give 80% volume on the receiver. Then we convert
         that to the correct scale for the receiver.
         """
         # HA_VOL * (MAX VOL / 100) * MAX_RECEIVER_VOL

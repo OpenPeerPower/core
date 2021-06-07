@@ -19,7 +19,7 @@ from RestrictedPython.Guards import (
 )
 import voluptuous as vol
 
-from openpeerpower.const import SERVICE_RELOAD
+from openpeerpower.const import CONF_DESCRIPTION, CONF_NAME, SERVICE_RELOAD
 from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers.service import async_set_service_schema
 from openpeerpower.loader import bind_opp
@@ -35,7 +35,7 @@ FOLDER = "python_scripts"
 
 CONFIG_SCHEMA = vol.Schema({DOMAIN: vol.Schema(dict)}, extra=vol.ALLOW_EXTRA)
 
-ALLOWED_OPP = {"bus", "services", "states"}
+ALLOWED_HASS = {"bus", "services", "states"}
 ALLOWED_EVENTBUS = {"fire"}
 ALLOWED_STATEMACHINE = {
     "entity_ids",
@@ -70,6 +70,8 @@ ALLOWED_DT_UTIL = {
     "parse_date",
     "get_age",
 }
+
+CONF_FIELDS = "fields"
 
 
 class ScriptError(OpenPeerPowerError):
@@ -125,8 +127,9 @@ def discover_scripts(opp):
         opp.services.register(DOMAIN, name, python_script_service_handler)
 
         service_desc = {
-            "description": services_dict.get(name, {}).get("description", ""),
-            "fields": services_dict.get(name, {}).get("fields", {}),
+            CONF_NAME: services_dict.get(name, {}).get("name", name),
+            CONF_DESCRIPTION: services_dict.get(name, {}).get("description", ""),
+            CONF_FIELDS: services_dict.get(name, {}).get("fields", {}),
         }
         async_set_service_schema(opp, DOMAIN, name, service_desc)
 
@@ -163,8 +166,8 @@ def execute(opp, filename, source, data=None):
         if name.startswith("async_"):
             raise ScriptError("Not allowed to access async methods")
         if (
-            obj is opp
-            and name not in ALLOWED_OPP
+            obj is.opp
+            and name not in ALLOWED_HASS
             or obj is opp.bus
             and name not in ALLOWED_EVENTBUS
             or obj is opp.states
@@ -207,7 +210,7 @@ def execute(opp, filename, source, data=None):
         "_getitem_": default_guarded_getitem,
         "_iter_unpack_sequence_": guarded_iter_unpack_sequence,
         "_unpack_sequence_": guarded_unpack_sequence,
-        "opp": opp,
+        "opp.: opp,
         "data": data or {},
         "logger": logger,
     }

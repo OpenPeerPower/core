@@ -1,6 +1,4 @@
 """The ONVIF integration."""
-import asyncio
-
 from onvif.exceptions import ONVIFAuthError, ONVIFError, ONVIFTimeoutError
 
 from openpeerpower.components.ffmpeg import CONF_EXTRA_ARGUMENTS
@@ -61,7 +59,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up ONVIF from a config entry."""
     if DOMAIN not in opp.data:
         opp.data[DOMAIN] = {}
@@ -88,12 +86,11 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     if device.capabilities.events:
         platforms += ["binary_sensor", "sensor"]
 
-    for platform in platforms:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, platforms)
 
-    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, device.async_stop)
+    entry.async_on_unload(
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, device.async_stop)
+    )
 
     return True
 
@@ -108,14 +105,7 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
         platforms += ["binary_sensor", "sensor"]
         await device.events.async_stop()
 
-    return all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in platforms
-            ]
-        )
-    )
+    return await opp.config_entries.async_unload_platforms(entry, platforms)
 
 
 async def _get_snapshot_auth(device):

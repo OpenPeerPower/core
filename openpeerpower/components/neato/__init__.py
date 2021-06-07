@@ -1,5 +1,4 @@
 """Support for Neato botvac connected vacuum cleaners."""
-import asyncio
 from datetime import timedelta
 import logging
 
@@ -7,16 +6,12 @@ from pybotvac import Account, Neato
 from pybotvac.exceptions import NeatoException
 import voluptuous as vol
 
-from openpeerpower.config_entries import SOURCE_REAUTH, ConfigEntry
-from openpeerpower.const import (
-    CONF_CLIENT_ID,
-    CONF_CLIENT_SECRET,
-    CONF_SOURCE,
-    CONF_TOKEN,
-)
-from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.config_entries import ConfigEntry
+from openpeerpower.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET, CONF_TOKEN
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
 from openpeerpower.helpers import config_entry_oauth2_flow, config_validation as cv
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 from openpeerpower.util import Throttle
 
 from . import api, config_flow
@@ -47,7 +42,7 @@ CONFIG_SCHEMA = vol.Schema(
 PLATFORMS = ["camera", "vacuum", "switch", "sensor"]
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up the Neato component."""
     opp.data[NEATO_DOMAIN] = {}
 
@@ -71,20 +66,15 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up config entry."""
     if CONF_TOKEN not in entry.data:
-        # Init reauth flow
-        opp.async_create_task(
-            opp.config_entries.flow.async_init(
-                NEATO_DOMAIN,
-                context={CONF_SOURCE: SOURCE_REAUTH},
-            )
-        )
-        return False
+        raise ConfigEntryAuthFailed
 
     implementation = (
-        await config_entry_oauth2_flow.async_get_config_entry_implementation(opp, entry)
+        await config_entry_oauth2_flow.async_get_config_entry_implementation(
+            opp, entry
+        )
     )
 
     session = config_entry_oauth2_flow.OAuth2Session(opp, entry, implementation)
@@ -101,22 +91,14 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
     opp.data[NEATO_LOGIN] = hub
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigType) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigType) -> bool:
     """Unload config entry."""
-    unload_functions = (
-        opp.config_entries.async_forward_entry_unload(entry, platform)
-        for platform in PLATFORMS
-    )
-
-    unload_ok = all(await asyncio.gather(*unload_functions))
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[NEATO_DOMAIN].pop(entry.entry_id)
 
@@ -126,9 +108,9 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigType) -> bool:
 class NeatoHub:
     """A My Neato hub wrapper class."""
 
-    def __init__(self, opp: OpenPeerPowerType, neato: Account):
+    def __init__(self, opp: OpenPeerPower, neato: Account) -> None:
         """Initialize the Neato hub."""
-        self._opp: OpenPeerPowerType = opp
+        self._opp = opp
         self.my_neato: Account = neato
 
     @Throttle(timedelta(minutes=1))

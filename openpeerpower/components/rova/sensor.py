@@ -7,14 +7,13 @@ from requests.exceptions import ConnectTimeout, HTTPError
 from rova.rova import Rova
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_MONITORED_CONDITIONS,
     CONF_NAME,
     DEVICE_CLASS_TIMESTAMP,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 # Config for rova requests.
@@ -80,7 +79,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(entities, True)
 
 
-class RovaSensor(Entity):
+class RovaSensor(SensorEntity):
     """Representation of a Rova sensor."""
 
     def __init__(self, platform_name, sensor_key, data_service):

@@ -6,9 +6,10 @@ import voluptuous as vol
 from openpeerpower.components import scene
 from openpeerpower.components.scene import Scene
 from openpeerpower.const import CONF_ICON, CONF_NAME, CONF_PAYLOAD_ON, CONF_UNIQUE_ID
+from openpeerpower.core import OpenPeerPower
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.reload import async_setup_reload_service
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 
 from . import CONF_COMMAND_TOPIC, CONF_QOS, CONF_RETAIN, DOMAIN, PLATFORMS
 from .. import mqtt
@@ -35,7 +36,7 @@ PLATFORM_SCHEMA = mqtt.MQTT_BASE_PLATFORM_SCHEMA.extend(
 
 
 async def async_setup_platform(
-    opp: OpenPeerPowerType, config: ConfigType, async_add_entities, discovery_info=None
+    opp: OpenPeerPower, config: ConfigType, async_add_entities, discovery_info=None
 ):
     """Set up MQTT scene through configuration.yaml."""
     await async_setup_reload_service(opp, DOMAIN, PLATFORMS)

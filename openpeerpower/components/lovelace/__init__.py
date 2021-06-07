@@ -6,11 +6,11 @@ import voluptuous as vol
 from openpeerpower.components import frontend
 from openpeerpower.config import async_opp_config_yaml, async_process_component_config
 from openpeerpower.const import CONF_FILENAME, CONF_MODE, CONF_RESOURCES
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, ServiceCall, callback
 from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers import collection, config_validation as cv
 from openpeerpower.helpers.service import async_register_admin_service
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType, ServiceCallType
+from openpeerpower.helpers.typing import ConfigType
 from openpeerpower.loader import async_get_integration
 
 from . import dashboard, resources, websocket
@@ -67,14 +67,14 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
+async def async_setup(opp: OpenPeerPower, config: ConfigType):
     """Set up the Lovelace commands."""
     mode = config[DOMAIN][CONF_MODE]
     yaml_resources = config[DOMAIN].get(CONF_RESOURCES)
 
     frontend.async_register_built_in_panel(opp, DOMAIN, config={"mode": mode})
 
-    async def reload_resources_service_handler(service_call: ServiceCallType) -> None:
+    async def reload_resources_service_handler(service_call: ServiceCall) -> None:
         """Reload yaml resources."""
         try:
             conf = await async_opp_config_yaml(opp)

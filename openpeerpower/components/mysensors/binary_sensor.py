@@ -1,6 +1,4 @@
 """Support for MySensors binary sensors."""
-from typing import Callable
-
 from openpeerpower.components import mysensors
 from openpeerpower.components.binary_sensor import (
     DEVICE_CLASS_MOISTURE,
@@ -16,9 +14,9 @@ from openpeerpower.components.mysensors import on_unload
 from openpeerpower.components.mysensors.const import MYSENSORS_DISCOVERY
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import STATE_ON
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 
 SENSORS = {
     "S_DOOR": "door",
@@ -33,7 +31,9 @@ SENSORS = {
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities: Callable
+    opp: OpenPeerPower,
+    config_entry: ConfigEntry,
+    async_add_entities: AddEntitiesCallback,
 ):
     """Set up this platform for a specific ConfigEntry(==Gateway)."""
 

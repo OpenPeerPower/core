@@ -76,16 +76,18 @@ def async_send_event(opp, event_type, data):
         {"type": event_type, "data": data},
     )
 
-    if event_type not in EVENT_ID_MAP:
-        return
+    event_data = {
+        "type": event_type,
+        "data": data,
+    }
 
-    data_device_id = data[EVENT_ID_MAP[event_type]]
+    if event_type in EVENT_ID_MAP:
+        data_device_id = data[EVENT_ID_MAP[event_type]]
+        event_data[ATTR_DEVICE_ID] = opp.data[DOMAIN][DATA_DEVICE_IDS].get(
+            data_device_id
+        )
 
     opp.bus.async_fire(
         event_type=NETATMO_EVENT,
-        event_data={
-            "type": event_type,
-            "data": data,
-            ATTR_DEVICE_ID: opp.data[DOMAIN][DATA_DEVICE_IDS].get(data_device_id),
-        },
+        event_data=event_data,
     )

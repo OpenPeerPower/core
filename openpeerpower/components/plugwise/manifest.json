@@ -3,7 +3,8 @@
   "name": "Plugwise",
   "documentation": "https://www.openpeerpower.io/integrations/plugwise",
   "requirements": ["plugwise==0.8.5"],
-  "codeowners": [],
+  "codeowners": ["@CoMPaTech", "@bouwew", "@brefra"],
   "zeroconf": ["_plugwise._tcp.local."],
-  "config_flow": true
+  "config_flow": true,
+  "iot_class": "local_polling"
 }

@@ -1,6 +1,8 @@
 """Provides device automations for MQTT."""
+from __future__ import annotations
+
 import logging
-from typing import Callable, List, Optional
+from typing import Callable
 
 import attr
 import voluptuous as vol
@@ -22,7 +24,7 @@ from openpeerpower.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
 )
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 
 from . import CONF_PAYLOAD, CONF_QOS, DOMAIN, debug_info, trigger as mqtt_trigger
 from .. import mqtt
@@ -85,8 +87,8 @@ class TriggerInstance:
 
     action: AutomationActionType = attr.ib()
     automation_info: dict = attr.ib()
-    trigger: "Trigger" = attr.ib()
-    remove: Optional[CALLBACK_TYPE] = attr.ib(default=None)
+    trigger: Trigger = attr.ib()
+    remove: CALLBACK_TYPE | None = attr.ib(default=None)
 
     async def async_attach_trigger(self):
         """Attach MQTT trigger."""
@@ -118,7 +120,7 @@ class Trigger:
 
     device_id: str = attr.ib()
     discovery_data: dict = attr.ib()
-    opp: OpenPeerPowerType = attr.ib()
+    opp: OpenPeerPower = attr.ib()
     payload: str = attr.ib()
     qos: int = attr.ib()
     remove_signal: Callable[[], None] = attr.ib()
@@ -126,7 +128,7 @@ class Trigger:
     topic: str = attr.ib()
     type: str = attr.ib()
     value_template: str = attr.ib()
-    trigger_instances: List[TriggerInstance] = attr.ib(factory=list)
+    trigger_instances: list[TriggerInstance] = attr.ib(factory=list)
 
     async def add_trigger(self, action, automation_info):
         """Add MQTT trigger."""
@@ -242,7 +244,7 @@ async def async_setup_trigger(opp, config, config_entry, discovery_data):
         opp.data[DEVICE_TRIGGERS] = {}
     if discovery_id not in opp.data[DEVICE_TRIGGERS]:
         opp.data[DEVICE_TRIGGERS][discovery_id] = Trigger(
-            opp=opp,
+            opp.opp,
             device_id=device.id,
             discovery_data=discovery_data,
             type=config[CONF_TYPE],
@@ -285,7 +287,7 @@ async def async_device_removed(opp: OpenPeerPower, device_id: str):
             )
 
 
-async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> list[dict]:
     """List device triggers for MQTT devices."""
     triggers = []
 
@@ -317,13 +319,12 @@ async def async_attach_trigger(
     """Attach a trigger."""
     if DEVICE_TRIGGERS not in opp.data:
         opp.data[DEVICE_TRIGGERS] = {}
-    config = TRIGGER_SCHEMA(config)
     device_id = config[CONF_DEVICE_ID]
     discovery_id = config[CONF_DISCOVERY_ID]
 
     if discovery_id not in opp.data[DEVICE_TRIGGERS]:
         opp.data[DEVICE_TRIGGERS][discovery_id] = Trigger(
-            opp=opp,
+            opp.opp,
             device_id=device_id,
             discovery_data=None,
             remove_signal=None,

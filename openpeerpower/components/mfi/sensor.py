@@ -5,7 +5,7 @@ from mficlient.client import FailedToLogin, MFiClient
 import requests
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_HOST,
     CONF_PASSWORD,
@@ -18,7 +18,6 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -74,7 +73,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     )
 
 
-class MfiSensor(Entity):
+class MfiSensor(SensorEntity):
     """Representation of a mFi sensor."""
 
     def __init__(self, port, opp):

@@ -7,7 +7,7 @@ import logging
 
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_DATE,
     CONF_NAME,
@@ -18,7 +18,6 @@ from openpeerpower.const import (
     CONTENT_TYPE_TEXT_PLAIN,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -145,7 +144,7 @@ class EmailReader:
         return None
 
 
-class EmailContentSensor(Entity):
+class EmailContentSensor(SensorEntity):
     """Representation of an EMail sensor."""
 
     def __init__(self, opp, email_reader, name, allowed_senders, value_template):
@@ -171,7 +170,7 @@ class EmailContentSensor(Entity):
         return self._message
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return other state attributes for the message."""
         return self._state_attributes
 
@@ -221,9 +220,11 @@ class EmailContentSensor(Entity):
             elif part.get_content_type() == "text/html":
                 if message_html is None:
                     message_html = part.get_payload()
-            elif part.get_content_type().startswith("text"):
-                if message_untyped_text is None:
-                    message_untyped_text = part.get_payload()
+            elif (
+                part.get_content_type().startswith("text")
+                and message_untyped_text is None
+            ):
+                message_untyped_text = part.get_payload()
 
         if message_text is not None:
             return message_text

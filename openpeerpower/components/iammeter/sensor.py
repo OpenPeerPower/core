@@ -8,7 +8,7 @@ from iammeter import real_time_api
 from iammeter.power_meter import IamMeterError
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_HOST, CONF_NAME, CONF_PORT
 from openpeerpower.exceptions import PlatformNotReady
 from openpeerpower.helpers import debounce
@@ -74,7 +74,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities(entities)
 
 
-class IamMeter(CoordinatorEntity):
+class IamMeter(CoordinatorEntity, SensorEntity):
     """Class for a sensor."""
 
     def __init__(self, coordinator, uid, sensor_name, unit, dev_name):

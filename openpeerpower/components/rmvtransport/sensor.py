@@ -10,11 +10,10 @@ from RMVtransport.rmvtransport import (
 )
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import ATTR_ATTRIBUTION, CONF_NAME, CONF_TIMEOUT, TIME_MINUTES
 from openpeerpower.exceptions import PlatformNotReady
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
@@ -104,7 +103,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities(sensors)
 
 
-class RMVDepartureSensor(Entity):
+class RMVDepartureSensor(SensorEntity):
     """Implementation of an RMV departure sensor."""
 
     def __init__(
@@ -151,7 +150,7 @@ class RMVDepartureSensor(Entity):
         return self._state
 
     @property
-    def state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         try:
             return {

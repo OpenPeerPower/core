@@ -1,14 +1,17 @@
 """Integrates Native Apps to Open Peer Power."""
-import asyncio
+from contextlib import suppress
 
-from openpeerpower.components import cloud, notify as opp_notify
+import voluptuous as vol
+
+from openpeerpower.components import cloud, notify as opp_notify, websocket_api
 from openpeerpower.components.webhook import (
     async_register as webhook_register,
     async_unregister as webhook_unregister,
 )
 from openpeerpower.const import ATTR_DEVICE_ID, CONF_WEBHOOK_ID
+from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers import device_registry as dr, discovery
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 
 from .const import (
     ATTR_DEVICE_NAME,
@@ -16,9 +19,11 @@ from .const import (
     ATTR_MODEL,
     ATTR_OS_VERSION,
     CONF_CLOUDHOOK_URL,
+    CONF_USER_ID,
     DATA_CONFIG_ENTRIES,
     DATA_DELETED_IDS,
     DATA_DEVICES,
+    DATA_PUSH_CHANNEL,
     DATA_STORE,
     DOMAIN,
     STORAGE_KEY,
@@ -31,7 +36,7 @@ from .webhook import handle_webhook
 PLATFORMS = "sensor", "binary_sensor", "device_tracker"
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
+async def async_setup(opp: OpenPeerPower, config: ConfigType):
     """Set up the mobile app component."""
     store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)
     app_config = await store.async_load()
@@ -45,20 +50,23 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
         DATA_CONFIG_ENTRIES: {},
         DATA_DELETED_IDS: app_config.get(DATA_DELETED_IDS, []),
         DATA_DEVICES: {},
+        DATA_PUSH_CHANNEL: {},
         DATA_STORE: store,
     }
 
     opp.http.register_view(RegistrationsView())
 
     for deleted_id in opp.data[DOMAIN][DATA_DELETED_IDS]:
-        try:
-            webhook_register(opp, DOMAIN, "Deleted Webhook", deleted_id, handle_webhook)
-        except ValueError:
-            pass
+        with suppress(ValueError):
+            webhook_register(
+                opp, DOMAIN, "Deleted Webhook", deleted_id, handle_webhook
+            )
 
     opp.async_create_task(
         discovery.async_load_platform(opp, "notify", DOMAIN, {}, config)
     )
+
+    websocket_api.async_register_command(opp, handle_push_notification_channel)
 
     return True
 
@@ -87,10 +95,7 @@ async def async_setup_entry(opp, entry):
     registration_name = f"Mobile App: {registration[ATTR_DEVICE_NAME]}"
     webhook_register(opp, DOMAIN, registration_name, webhook_id, handle_webhook)
 
-    for domain in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, domain)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     await opp_notify.async_reload(opp, DOMAIN)
 
@@ -99,14 +104,7 @@ async def async_setup_entry(opp, entry):
 
 async def async_unload_entry(opp, entry):
     """Unload a mobile app entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if not unload_ok:
         return False
 
@@ -127,7 +125,54 @@ async def async_remove_entry(opp, entry):
     await store.async_save(savable_state(opp))
 
     if CONF_CLOUDHOOK_URL in entry.data:
-        try:
+        with suppress(cloud.CloudNotAvailable):
             await cloud.async_delete_cloudhook(opp, entry.data[CONF_WEBHOOK_ID])
-        except cloud.CloudNotAvailable:
-            pass
+
+
+@callback
+@websocket_api.websocket_command(
+    {
+        vol.Required("type"): "mobile_app/push_notification_channel",
+        vol.Required("webhook_id"): str,
+    }
+)
+def handle_push_notification_channel(opp, connection, msg):
+    """Set up a direct push notification channel."""
+    webhook_id = msg["webhook_id"]
+
+    # Validate that the webhook ID is registered to the user of the websocket connection
+    config_entry = opp.data[DOMAIN][DATA_CONFIG_ENTRIES].get(webhook_id)
+
+    if config_entry is None:
+        connection.send_error(
+            msg["id"], websocket_api.ERR_NOT_FOUND, "Webhook ID not found"
+        )
+        return
+
+    if config_entry.data[CONF_USER_ID] != connection.user.id:
+        connection.send_error(
+            msg["id"],
+            websocket_api.ERR_UNAUTHORIZED,
+            "User not linked to this webhook ID",
+        )
+        return
+
+    registered_channels = opp.data[DOMAIN][DATA_PUSH_CHANNEL]
+
+    if webhook_id in registered_channels:
+        registered_channels.pop(webhook_id)()
+
+    @callback
+    def forward_push_notification(data):
+        """Forward events to websocket."""
+        connection.send_message(websocket_api.messages.event_message(msg["id"], data))
+
+    @callback
+    def unsub():
+        # pylint: disable=comparison-with-callable
+        if registered_channels.get(webhook_id) == forward_push_notification:
+            registered_channels.pop(webhook_id)
+
+    registered_channels[webhook_id] = forward_push_notification
+    connection.subscriptions[msg["id"]] = unsub
+    connection.send_result(msg["id"])

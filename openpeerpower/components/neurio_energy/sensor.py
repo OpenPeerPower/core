@@ -6,10 +6,9 @@ import neurio
 import requests.exceptions
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_API_KEY, ENERGY_KILO_WATT_HOUR, POWER_WATT
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 import openpeerpower.util.dt as dt_util
 
@@ -123,7 +122,7 @@ class NeurioData:
         self._daily_usage = round(kwh, 2)
 
 
-class NeurioEnergy(Entity):
+class NeurioEnergy(SensorEntity):
     """Implementation of a Neurio energy sensor."""
 
     def __init__(self, data, name, sensor_type, update_call):

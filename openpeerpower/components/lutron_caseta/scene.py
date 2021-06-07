@@ -12,7 +12,6 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     Adds scenes from the Caseta bridge associated with the config_entry as
     scene entities.
     """
-
     entities = []
     data = opp.data[CASETA_DOMAIN][config_entry.entry_id]
     bridge = data[BRIDGE_LEAP]

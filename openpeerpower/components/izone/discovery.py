@@ -2,9 +2,9 @@
 import pizone
 
 from openpeerpower.const import EVENT_OPENPEERPOWER_STOP
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers import aiohttp_client
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import (
     DATA_DISCOVERY_SERVICE,
@@ -47,7 +47,7 @@ class DiscoveryService(pizone.Listener):
         async_dispatcher_send(self.opp, DISPATCH_ZONE_UPDATE, ctrl, zone)
 
 
-async def async_start_discovery_service(opp: OpenPeerPowerType):
+async def async_start_discovery_service(opp: OpenPeerPower):
     """Set up the pizone internal discovery."""
     disco = opp.data.get(DATA_DISCOVERY_SERVICE)
     if disco:
@@ -73,7 +73,7 @@ async def async_start_discovery_service(opp: OpenPeerPowerType):
     return disco
 
 
-async def async_stop_discovery_service(opp: OpenPeerPowerType):
+async def async_stop_discovery_service(opp: OpenPeerPower):
     """Stop the discovery service."""
     disco = opp.data.get(DATA_DISCOVERY_SERVICE)
     if not disco:

@@ -2,11 +2,11 @@
 import logging
 from pprint import pformat
 
-from openpeerpower.components.sensor import ENTITY_ID_FORMAT
+from openpeerpower.components.sensor import ENTITY_ID_FORMAT, SensorEntity
 from openpeerpower.const import CONF_ID
 from openpeerpower.core import callback
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
-from openpeerpower.helpers.entity import Entity, async_generate_entity_id
+from openpeerpower.helpers.entity import async_generate_entity_id
 from openpeerpower.helpers.entity_registry import async_get_registry
 
 from . import DOMAIN
@@ -46,7 +46,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
             )
 
         old_style_entity_id = async_generate_entity_id(
-            ENTITY_ID_FORMAT, f"{var}_{gw_dev.gw_id}", opp=gw_dev.opp
+            ENTITY_ID_FORMAT, f"{var}_{gw_dev.gw_id}", opp.gw_dev.opp
         )
         old_ent = ent_reg.async_get(old_style_entity_id)
         if old_ent and old_ent.config_entry_id == config_entry.entry_id:
@@ -77,13 +77,13 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     async_add_entities(sensors)
 
 
-class OpenThermSensor(Entity):
+class OpenThermSensor(SensorEntity):
     """Representation of an OpenTherm Gateway sensor."""
 
     def __init__(self, gw_dev, var, source, device_class, unit, friendly_name_format):
         """Initialize the OpenTherm Gateway sensor."""
         self.entity_id = async_generate_entity_id(
-            ENTITY_ID_FORMAT, f"{var}_{source}_{gw_dev.gw_id}", opp=gw_dev.opp
+            ENTITY_ID_FORMAT, f"{var}_{source}_{gw_dev.gw_id}", opp.gw_dev.opp
         )
         self._gateway = gw_dev
         self._var = var
@@ -178,7 +178,7 @@ class DeprecatedOpenThermSensor(OpenThermSensor):
     def __init__(self, gw_dev, var, device_class, unit, friendly_name_format):
         """Initialize the OpenTherm Gateway sensor."""
         self.entity_id = async_generate_entity_id(
-            ENTITY_ID_FORMAT, f"{var}_{gw_dev.gw_id}", opp=gw_dev.opp
+            ENTITY_ID_FORMAT, f"{var}_{gw_dev.gw_id}", opp.gw_dev.opp
         )
         self._gateway = gw_dev
         self._var = var

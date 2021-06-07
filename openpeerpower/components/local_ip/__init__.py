@@ -1,44 +1,19 @@
 """Get the local IP address of the Open Peer Power instance."""
-import voluptuous as vol
-
-from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry
-from openpeerpower.const import CONF_NAME
+from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.core import OpenPeerPower
 import openpeerpower.helpers.config_validation as cv
 
-from .const import DOMAIN, PLATFORM
+from .const import DOMAIN, PLATFORMS
 
-CONFIG_SCHEMA = vol.Schema(
-    {
-        DOMAIN: vol.All(
-            cv.deprecated(CONF_NAME),
-            vol.Schema({vol.Optional(CONF_NAME, default=DOMAIN): cv.string}),
-        )
-    },
-    extra=vol.ALLOW_EXTRA,
-)
+CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up local_ip from configuration.yaml."""
-    conf = config.get(DOMAIN)
-    if conf:
-        opp.async_create_task(
-            opp.config_entries.flow.async_init(
-                DOMAIN, data=conf, context={"source": SOURCE_IMPORT}
-            )
-        )
-
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up local_ip from a config entry."""
-    opp.async_create_task(opp.config_entries.async_forward_entry_setup(entry, PLATFORM))
-
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    return await opp.config_entries.async_forward_entry_unload(entry, PLATFORM)
+    return await opp.config_entries.async_unload_platforms(entry, PLATFORMS)

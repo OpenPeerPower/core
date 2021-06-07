@@ -1,6 +1,7 @@
 """Support for Plum Lightpad lights."""
+from __future__ import annotations
+
 import asyncio
-from typing import Callable, List
 
 from plumlightpad import Plum
 
@@ -14,7 +15,7 @@ from openpeerpower.components.light import (
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 import openpeerpower.util.color as color_util
 
 from .const import DOMAIN
@@ -23,7 +24,7 @@ from .const import DOMAIN
 async def async_setup_entry(
     opp: OpenPeerPower,
     entry: ConfigEntry,
-    async_add_entities: Callable[[List[Entity]], None],
+    async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up Plum Lightpad dimmer lights and glow rings."""
 

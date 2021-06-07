@@ -1,8 +1,8 @@
 """The Internet Printing Protocol (IPP) integration."""
-import asyncio
+from __future__ import annotations
+
 from datetime import timedelta
 import logging
-from typing import Any, Dict
 
 from pyipp import IPP, IPPError, Printer as IPPPrinter
 
@@ -16,8 +16,8 @@ from openpeerpower.const import (
     CONF_VERIFY_SSL,
 )
 from openpeerpower.core import OpenPeerPower
-from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
+from openpeerpower.helpers.entity import DeviceInfo
 from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
@@ -39,15 +39,9 @@ SCAN_INTERVAL = timedelta(seconds=60)
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup(opp: OpenPeerPower, config: Dict) -> bool:
-    """Set up the IPP component."""
-    opp.data.setdefault(DOMAIN, {})
-    return True
-
-
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up IPP from a config entry."""
-
+    opp.data.setdefault(DOMAIN, {})
     coordinator = opp.data[DOMAIN].get(entry.entry_id)
     if not coordinator:
         # Create IPP instance for this entry
@@ -61,33 +55,18 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         )
         opp.data[DOMAIN][entry.entry_id] = coordinator
 
-    await coordinator.async_refresh()
+    await coordinator.async_config_entry_first_refresh()
 
-    if not coordinator.last_update_success:
-        raise ConfigEntryNotReady
-
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
-
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
-
     return unload_ok
 
 
@@ -103,7 +82,7 @@ class IPPDataUpdateCoordinator(DataUpdateCoordinator[IPPPrinter]):
         base_path: str,
         tls: bool,
         verify_ssl: bool,
-    ):
+    ) -> None:
         """Initialize global IPP data updater."""
         self.ipp = IPP(
             host=host,
@@ -166,7 +145,7 @@ class IPPEntity(CoordinatorEntity):
         return self._enabled_default
 
     @property
-    def device_info(self) -> Dict[str, Any]:
+    def device_info(self) -> DeviceInfo:
         """Return device information about this IPP device."""
         if self._device_id is None:
             return None

@@ -28,6 +28,8 @@ from openpeerpower.helpers.dispatcher import (
 from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.restore_state import RestoreEntity
 
+from .utils import brightness_to_rflink
+
 _LOGGER = logging.getLogger(__name__)
 
 ATTR_EVENT = "event"
@@ -67,6 +69,7 @@ SERVICE_SEND_COMMAND = "send_command"
 
 SIGNAL_AVAILABILITY = "rflink_device_available"
 SIGNAL_HANDLE_EVENT = "rflink_handle_event_{}"
+SIGNAL_EVENT = "rflink_event"
 
 TMP_ENTITY = "tmp.{}"
 
@@ -140,6 +143,15 @@ async def async_setup(opp, config):
             )
         ):
             _LOGGER.error("Failed Rflink command for %s", str(call.data))
+        else:
+            async_dispatcher_send(
+                opp,
+                SIGNAL_EVENT,
+                {
+                    EVENT_KEY_ID: call.data.get(CONF_DEVICE_ID),
+                    EVENT_KEY_COMMAND: call.data.get(CONF_COMMAND),
+                },
+            )
 
     opp.services.async_register(
         DOMAIN, SERVICE_SEND_COMMAND, async_send_command, schema=SEND_COMMAND_SCHEMA
@@ -192,7 +204,9 @@ async def async_setup(opp, config):
                 opp.data[DATA_ENTITY_LOOKUP][event_type][event_id].append(
                     TMP_ENTITY.format(event_id)
                 )
-                opp.async_create_task(opp.data[DATA_DEVICE_REGISTER][event_type](event))
+                opp.async_create_task(
+                    opp.data[DATA_DEVICE_REGISTER][event_type](event)
+                )
             else:
                 _LOGGER.debug("device_id not known and automatic add disabled")
 
@@ -201,25 +215,28 @@ async def async_setup(opp, config):
     # TCP port when host configured, otherwise serial port
     port = config[DOMAIN][CONF_PORT]
 
-    # TCP KEEPALIVE will be enabled if value > 0
-    keepalive_idle_timer = config[DOMAIN][CONF_KEEPALIVE_IDLE]
-    if keepalive_idle_timer < 0:
-        _LOGGER.error(
-            "A bogus TCP Keepalive IDLE timer was provided (%d secs), "
-            "default value will be used. "
-            "Recommended values: 60-3600 (seconds)",
-            keepalive_idle_timer,
-        )
-        keepalive_idle_timer = DEFAULT_TCP_KEEPALIVE_IDLE_TIMER
-    elif keepalive_idle_timer == 0:
-        keepalive_idle_timer = None
-    elif keepalive_idle_timer <= 30:
-        _LOGGER.warning(
-            "A very short TCP Keepalive IDLE timer was provided (%d secs), "
-            "and may produce unexpected disconnections from RFlink device."
-            " Recommended values: 60-3600 (seconds)",
-            keepalive_idle_timer,
-        )
+    keepalive_idle_timer = None
+    # TCP KeepAlive only if this is TCP based connection (not serial)
+    if host is not None:
+        # TCP KEEPALIVE will be enabled if value > 0
+        keepalive_idle_timer = config[DOMAIN][CONF_KEEPALIVE_IDLE]
+        if keepalive_idle_timer < 0:
+            _LOGGER.error(
+                "A bogus TCP Keepalive IDLE timer was provided (%d secs), "
+                "it will be disabled. "
+                "Recommended values: 60-3600 (seconds)",
+                keepalive_idle_timer,
+            )
+            keepalive_idle_timer = None
+        elif keepalive_idle_timer == 0:
+            keepalive_idle_timer = None
+        elif keepalive_idle_timer <= 30:
+            _LOGGER.warning(
+                "A very short TCP Keepalive IDLE timer was provided (%d secs) "
+                "and may produce unexpected disconnections from RFlink device."
+                " Recommended values: 60-3600 (seconds)",
+                keepalive_idle_timer,
+            )
 
     @callback
     def reconnect(exc=None):
@@ -229,13 +246,13 @@ async def async_setup(opp, config):
 
         async_dispatcher_send(opp, SIGNAL_AVAILABILITY, False)
 
-        # If OP is not stopping, initiate new connection
+        # If OPP is not stopping, initiate new connection
         if opp.state != CoreState.stopping:
-            _LOGGER.warning("disconnected from Rflink, reconnecting")
+            _LOGGER.warning("Disconnected from Rflink, reconnecting")
             opp.async_create_task(connect())
 
     async def connect():
-        """Set up connection and hook it into OP for reconnect/shutdown."""
+        """Set up connection and hook it into OPP for reconnect/shutdown."""
         _LOGGER.info("Initiating Rflink connection")
 
         # Rflink create_rflink_connection decides based on the value of host
@@ -281,11 +298,14 @@ async def async_setup(opp, config):
         RflinkCommand.set_rflink_protocol(protocol, config[DOMAIN][CONF_WAIT_FOR_ACK])
 
         # handle shutdown of Rflink asyncio transport
-        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, lambda x: transport.close())
+        opp.bus.async_listen_once(
+            EVENT_OPENPEERPOWER_STOP, lambda x: transport.close()
+        )
 
         _LOGGER.info("Connected to Rflink")
 
     opp.async_create_task(connect())
+    async_dispatcher_connect(opp, SIGNAL_EVENT, event_callback)
     return True
 
 
@@ -491,7 +511,7 @@ class RflinkCommand(RflinkDevice):
 
         elif command == "dim":
             # convert brightness to rflink dim level
-            cmd = str(int(args[0] / 17))
+            cmd = str(brightness_to_rflink(args[0]))
             self._state = True
 
         elif command == "toggle":

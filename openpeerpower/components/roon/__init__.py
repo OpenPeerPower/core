@@ -6,14 +6,9 @@ from .const import DOMAIN
 from .server import RoonServer
 
 
-async def async_setup(opp, config):
-    """Set up the Roon platform."""
-    opp.data[DOMAIN] = {}
-    return True
-
-
 async def async_setup_entry(opp, entry):
     """Set up a roonserver from a config entry."""
+    opp.data.setdefault(DOMAIN, {})
     host = entry.data[CONF_HOST]
     roonserver = RoonServer(opp, entry)
 

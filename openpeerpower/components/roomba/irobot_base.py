@@ -21,6 +21,7 @@ from openpeerpower.components.vacuum import (
     SUPPORT_STOP,
     StateVacuumEntity,
 )
+import openpeerpower.helpers.device_registry as dr
 from openpeerpower.helpers.entity import Entity
 
 from . import roomba_reported_state
@@ -92,13 +93,18 @@ class IRobotEntity(Entity):
     @property
     def device_info(self):
         """Return the device info of the vacuum cleaner."""
-        return {
+        info = {
             "identifiers": {(DOMAIN, self.robot_unique_id)},
             "manufacturer": "iRobot",
             "name": str(self._name),
             "sw_version": self._version,
             "model": self._sku,
         }
+        if mac_address := self.vacuum_state.get("hwPartsRev", {}).get(
+            "wlan0HwAddr", self.vacuum_state.get("mac")
+        ):
+            info["connections"] = {(dr.CONNECTION_NETWORK_MAC, mac_address)}
+        return info
 
     @property
     def _battery_level(self):
@@ -168,7 +174,7 @@ class IRobotVacuum(IRobotEntity, StateVacuumEntity):
         return self._name
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of the device."""
         state = self.vacuum_state
 
@@ -252,4 +258,6 @@ class IRobotVacuum(IRobotEntity, StateVacuumEntity):
     async def async_send_command(self, command, params=None, **kwargs):
         """Send raw command."""
         _LOGGER.debug("async_send_command %s (%s), %s", command, params, kwargs)
-        await self.opp.async_add_executor_job(self.vacuum.send_command, command, params)
+        await self.opp.async_add_executor_job(
+            self.vacuum.send_command, command, params
+        )

@@ -21,8 +21,8 @@
                 "data": {
                     "discovery": "Aktiv\u00e9r opdagelse"
                 },
-                "description": "Vil du konfigurere Open Peer Power til at oprette forbindelse til MQTT-brokeren, der leveres af opp.io-tilf\u00f8jelsen {addon}?",
-                "title": "MQTT-broker via Opp.io-tilf\u00f8jelse"
+                "description": "Vil du konfigurere Open Peer Power til at oprette forbindelse til MQTT-brokeren, der leveres af Supervisor-tilf\u00f8jelsen {addon}?",
+                "title": "MQTT-broker via Supervisor-tilf\u00f8jelse"
             }
         }
     },

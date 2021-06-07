@@ -1,5 +1,8 @@
 {
     "config": {
+        "abort": {
+            "no_home": "No home coordinates are set in the Open Peer Power configuration"
+        },
         "error": {
             "already_configured": "Service is already configured"
         },

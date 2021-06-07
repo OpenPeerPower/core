@@ -1,5 +1,4 @@
 """The Omnilogic integration."""
-import asyncio
 import logging
 
 from omnilogic import LoginException, OmniLogic, OmniLogicException
@@ -11,30 +10,27 @@ from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers import aiohttp_client
 
 from .common import OmniLogicUpdateCoordinator
-from .const import CONF_SCAN_INTERVAL, COORDINATOR, DOMAIN, OMNI_API
+from .const import (
+    CONF_SCAN_INTERVAL,
+    COORDINATOR,
+    DEFAULT_SCAN_INTERVAL,
+    DOMAIN,
+    OMNI_API,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
-PLATFORMS = ["sensor"]
+PLATFORMS = ["sensor", "switch"]
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the Omnilogic component."""
-    opp.data.setdefault(DOMAIN, {})
-
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Omnilogic from a config entry."""
 
     conf = entry.data
     username = conf[CONF_USERNAME]
     password = conf[CONF_PASSWORD]
 
-    polling_interval = 6
-    if CONF_SCAN_INTERVAL in conf:
-        polling_interval = conf[CONF_SCAN_INTERVAL]
+    polling_interval = conf.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)
 
     session = aiohttp_client.async_get_clientsession(opp)
 
@@ -51,39 +47,28 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         raise ConfigEntryNotReady from error
 
     coordinator = OmniLogicUpdateCoordinator(
-        opp=opp,
+        opp.opp,
         api=api,
         name="Omnilogic",
+        config_entry=entry,
         polling_interval=polling_interval,
     )
-    await coordinator.async_refresh()
+    await coordinator.async_config_entry_first_refresh()
 
-    if not coordinator.last_update_success:
-        raise ConfigEntryNotReady
-
+    opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = {
         COORDINATOR: coordinator,
         OMNI_API: api,
     }
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
 

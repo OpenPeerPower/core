@@ -115,7 +115,7 @@ class PwmSimpleLed(LightEntity, RestoreEntity):
         self._brightness = DEFAULT_BRIGHTNESS
 
     async def async_added_to_opp(self):
-        """Handle entity about to be added to opp event."""
+        """Handle entity about to be added to opp.event."""
         await super().async_added_to_opp()
         last_state = await self.async_get_last_state()
         if last_state:
@@ -162,7 +162,9 @@ class PwmSimpleLed(LightEntity, RestoreEntity):
                 brightness=_from_opp_brightness(self._brightness),
             )
         else:
-            self._led.set(is_on=True, brightness=_from_opp_brightness(self._brightness))
+            self._led.set(
+                is_on=True, brightness=_from_opp_brightness(self._brightness)
+            )
 
         self._is_on = True
         self.schedule_update_op_state()
@@ -189,7 +191,7 @@ class PwmRgbLed(PwmSimpleLed):
         self._color = DEFAULT_COLOR
 
     async def async_added_to_opp(self):
-        """Handle entity about to be added to opp event."""
+        """Handle entity about to be added to opp.event."""
         await super().async_added_to_opp()
         last_state = await self.async_get_last_state()
         if last_state:

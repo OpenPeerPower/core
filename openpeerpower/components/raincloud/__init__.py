@@ -107,7 +107,7 @@ def setup(opp, config):
     except (ConnectTimeout, HTTPError) as ex:
         _LOGGER.error("Unable to connect to Rain Cloud service: %s", str(ex))
         opp.components.persistent_notification.create(
-            f"Error: {ex}<br />" "You will need to restart opp after fixing.",
+            f"Error: {ex}<br />" "You will need to restart opp.after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
@@ -161,12 +161,7 @@ class RainCloudEntity(Entity):
         self.schedule_update_op_state(True)
 
     @property
-    def unit_of_measurement(self):
-        """Return the units of measurement."""
-        return UNIT_OF_MEASUREMENT_MAP.get(self._sensor_type)
-
-    @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return {ATTR_ATTRIBUTION: ATTRIBUTION, "identifier": self.data.serial}
 

@@ -5,10 +5,9 @@ import logging
 import requests
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import HTTP_OK
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
@@ -90,7 +89,7 @@ class APIData:
             self.data = parse_api_response(response.json())
 
 
-class AirSensor(Entity):
+class AirSensor(SensorEntity):
     """Single authority air sensor."""
 
     ICON = "mdi:cloud-outline"
@@ -124,7 +123,7 @@ class AirSensor(Entity):
         return self.ICON
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return other details about the sensor state."""
         attrs = {}
         attrs["updated"] = self._updated

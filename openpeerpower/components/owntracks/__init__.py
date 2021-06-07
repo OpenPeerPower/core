@@ -32,6 +32,7 @@ CONF_MQTT_TOPIC = "mqtt_topic"
 CONF_REGION_MAPPING = "region_mapping"
 CONF_EVENTS_ONLY = "events_only"
 BEACON_DEV_ID = "beacon"
+PLATFORMS = ["device_tracker"]
 
 DEFAULT_OWNTRACKS_TOPIC = "owntracks/#"
 
@@ -101,9 +102,7 @@ async def async_setup_entry(opp, entry):
         DOMAIN, "OwnTracks", webhook_id, handle_webhook
     )
 
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_setup(entry, "device_tracker")
-    )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     opp.data[DOMAIN]["unsub"] = opp.helpers.dispatcher.async_dispatcher_connect(
         DOMAIN, async_handle_message
@@ -115,10 +114,10 @@ async def async_setup_entry(opp, entry):
 async def async_unload_entry(opp, entry):
     """Unload an OwnTracks config entry."""
     opp.components.webhook.async_unregister(entry.data[CONF_WEBHOOK_ID])
-    await opp.config_entries.async_forward_entry_unload(entry, "device_tracker")
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     opp.data[DOMAIN]["unsub"]()
 
-    return True
+    return unload_ok
 
 
 async def async_remove_entry(opp, entry):

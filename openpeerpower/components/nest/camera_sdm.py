@@ -1,8 +1,8 @@
 """Support for Google Nest SDM Cameras."""
+from __future__ import annotations
 
 import datetime
 import logging
-from typing import Optional
 
 from google_nest_sdm.camera_traits import (
     CameraEventImageTrait,
@@ -16,9 +16,9 @@ from haffmpeg.tools import IMAGE_JPEG
 from openpeerpower.components.camera import SUPPORT_STREAM, Camera
 from openpeerpower.components.ffmpeg import async_get_image
 from openpeerpower.config_entries import ConfigEntry
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.exceptions import PlatformNotReady
 from openpeerpower.helpers.event import async_track_point_in_utc_time
-from openpeerpower.helpers.typing import OpenPeerPowerType
 from openpeerpower.util.dt import utcnow
 
 from .const import DATA_SUBSCRIBER, DOMAIN
@@ -31,7 +31,7 @@ STREAM_EXPIRATION_BUFFER = datetime.timedelta(seconds=30)
 
 
 async def async_setup_sdm_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up the cameras."""
 
@@ -56,7 +56,7 @@ async def async_setup_sdm_entry(
 class NestCamera(Camera):
     """Devices that support cameras."""
 
-    def __init__(self, device: Device):
+    def __init__(self, device: Device) -> None:
         """Initialize the camera."""
         super().__init__()
         self._device = device
@@ -74,7 +74,7 @@ class NestCamera(Camera):
         return False
 
     @property
-    def unique_id(self) -> Optional[str]:
+    def unique_id(self) -> str | None:
         """Return a unique ID."""
         # The API "name" field is a unique device identifier.
         return f"{self._device.name}-camera"
@@ -145,6 +145,9 @@ class NestCamera(Camera):
             _LOGGER.debug("Failed to extend stream: %s", err)
             # Next attempt to catch a url will get a new one
             self._stream = None
+            if self.stream:
+                self.stream.stop()
+                self.stream = None
             return
         # Update the stream worker with the latest valid url
         if self.stream:

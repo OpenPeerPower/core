@@ -202,24 +202,14 @@ async def async_setup_entry(opp, entry: config_entries.ConfigEntry):
         )
         return False
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp, entry: config_entries.ConfigEntry):
     """Unload RFXtrx component."""
-    if not all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    ):
+    if not await opp.config_entries.async_unload_platforms(entry, PLATFORMS):
         return False
 
     opp.services.async_remove(DOMAIN, SERVICE_SEND)
@@ -316,7 +306,7 @@ async def async_setup_internal(opp, entry: config_entries.ConfigEntry):
         if device_entry:
             event_data[ATTR_DEVICE_ID] = device_entry.id
 
-        # Callback to OP registered components.
+        # Callback to OPP registered components.
         opp.helpers.dispatcher.async_dispatcher_send(SIGNAL_EVENT, event, device_id)
 
         # Signal event to any other listeners
@@ -428,7 +418,7 @@ def find_possible_pt2262_device(device_ids, device_id):
             if size is not None:
                 size = len(dev_id) - size - 1
                 _LOGGER.info(
-                    "rfxtrx: found possible device %s for %s "
+                    "Found possible device %s for %s "
                     "with the following configuration:\n"
                     "data_bits=%d\n"
                     "command_on=0x%s\n"
@@ -505,7 +495,7 @@ class RfxtrxEntity(RestoreEntity):
         return self._name
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the device state attributes."""
         if not self._event:
             return None

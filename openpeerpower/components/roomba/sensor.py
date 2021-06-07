@@ -1,4 +1,5 @@
 """Sensor for checking the battery level of Roomba."""
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.components.vacuum import STATE_DOCKED
 from openpeerpower.const import DEVICE_CLASS_BATTERY, PERCENTAGE
 from openpeerpower.helpers.icon import icon_for_battery_level
@@ -16,7 +17,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     async_add_entities([roomba_vac], True)
 
 
-class RoombaBattery(IRobotEntity):
+class RoombaBattery(IRobotEntity, SensorEntity):
     """Class to hold Roomba Sensor basic info."""
 
     @property

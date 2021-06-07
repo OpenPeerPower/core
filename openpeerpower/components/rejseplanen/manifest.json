@@ -3,5 +3,6 @@
   "name": "Rejseplanen",
   "documentation": "https://www.openpeerpower.io/integrations/rejseplanen",
   "requirements": ["rjpl==0.3.6"],
-  "codeowners": ["@DarkFox"]
+  "codeowners": ["@DarkFox"],
+  "iot_class": "cloud_polling"
 }
