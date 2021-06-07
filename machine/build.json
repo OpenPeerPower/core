@@ -1,0 +1,14 @@
+{
+    "image": "openpeerpower/{machine}-openpeerpower",
+    "shadow_repository": "ghcr.io/openpeerpower",
+    "build_from": {
+        "armhf": "ghcr.io/openpeerpower/armhf-openpeerpower:",
+        "amd64": "ghcr.io/openpeerpower/amd64-openpeerpower:",
+        "i386": "ghcr.io/openpeerpower/i386-openpeerpower:"
+    },
+    "labels": {
+        "io.opp.type": "core",
+        "org.opencontainers.image.source": "https://github.com/openpeerpower/core"
+    },
+    "version_tag": true
+}

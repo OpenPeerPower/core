@@ -1,8 +1,9 @@
 """Tests for the Abode module."""
 from unittest.mock import patch
 
-from abodepy.exceptions import AbodeAuthenticationException
+from abodepy.exceptions import AbodeAuthenticationException, AbodeException
 
+from openpeerpower import data_entry_flow
 from openpeerpower.components.abode import (
     DOMAIN as ABODE_DOMAIN,
     SERVICE_CAPTURE_IMAGE,
@@ -10,6 +11,7 @@ from openpeerpower.components.abode import (
     SERVICE_TRIGGER_AUTOMATION,
 )
 from openpeerpower.components.alarm_control_panel import DOMAIN as ALARM_DOMAIN
+from openpeerpower.config_entries import ConfigEntryState
 from openpeerpower.const import CONF_USERNAME, HTTP_BAD_REQUEST
 
 from .common import setup_platform
@@ -68,8 +70,23 @@ async def test_invalid_credentials(opp):
         "openpeerpower.components.abode.Abode",
         side_effect=AbodeAuthenticationException((HTTP_BAD_REQUEST, "auth error")),
     ), patch(
-        "openpeerpower.components.abode.config_flow.AbodeFlowHandler.async_step_reauth"
+        "openpeerpower.components.abode.config_flow.AbodeFlowHandler.async_step_reauth",
+        return_value={"type": data_entry_flow.RESULT_TYPE_FORM},
     ) as mock_async_step_reauth:
         await setup_platform(opp, ALARM_DOMAIN)
 
         mock_async_step_reauth.assert_called_once()
+
+
+async def test_raise_config_entry_not_ready_when_offline(opp):
+    """Config entry state is SETUP_RETRY when abode is offline."""
+    with patch(
+        "openpeerpower.components.abode.Abode",
+        side_effect=AbodeException("any"),
+    ):
+        config_entry = await setup_platform(opp, ALARM_DOMAIN)
+        await opp.async_block_till_done()
+
+    assert config_entry.state is ConfigEntryState.SETUP_RETRY
+
+    assert opp.config_entries.flow.async_progress() == []

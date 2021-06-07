@@ -16,6 +16,7 @@ from openpeerpower.const import (
     STATE_ALARM_ARMED_HOME,
     STATE_ALARM_DISARMED,
 )
+from openpeerpower.helpers import entity_registry as er
 
 from .common import setup_platform
 
@@ -25,7 +26,7 @@ DEVICE_ID = "alarm_control_panel.abode_alarm"
 async def test_entity_registry(opp):
     """Tests that the devices are registered in the entity registry."""
     await setup_platform(opp, ALARM_DOMAIN)
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     entry = entity_registry.async_get(DEVICE_ID)
     # Abode alarm device unique_id is the MAC address

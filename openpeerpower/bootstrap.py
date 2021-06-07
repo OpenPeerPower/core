@@ -1,4 +1,6 @@
 """Provide methods to bootstrap a Open Peer Power instance."""
+from __future__ import annotations
+
 import asyncio
 import contextlib
 from datetime import datetime
@@ -8,7 +10,7 @@ import os
 import sys
 import threading
 from time import monotonic
-from typing import TYPE_CHECKING, Any, Dict, Optional, Set
+from typing import TYPE_CHECKING, Any
 
 import voluptuous as vol
 import yarl
@@ -18,14 +20,17 @@ from openpeerpower.components import http
 from openpeerpower.const import REQUIRED_NEXT_PYTHON_DATE, REQUIRED_NEXT_PYTHON_VER
 from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers import area_registry, device_registry, entity_registry
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
 from openpeerpower.helpers.typing import ConfigType
 from openpeerpower.setup import (
     DATA_SETUP,
     DATA_SETUP_STARTED,
+    DATA_SETUP_TIME,
     async_set_domains_to_be_loaded,
     async_setup_component,
 )
 from openpeerpower.util.async_ import gather_with_concurrency
+import openpeerpower.util.dt as dt_util
 from openpeerpower.util.logging import async_activate_log_queue_handler
 from openpeerpower.util.package import async_get_user_site, is_virtual_env
 
@@ -40,6 +45,8 @@ ERROR_LOG_FILENAME = "open-peer-power.log"
 DATA_LOGGING = "logging"
 
 LOG_SLOW_STARTUP_INTERVAL = 60
+SLOW_STARTUP_CHECK_INTERVAL = 1
+SIGNAL_BOOTSTRAP_INTEGRATONS = "bootstrap_integrations"
 
 STAGE_1_TIMEOUT = 120
 STAGE_2_TIMEOUT = 300
@@ -74,8 +81,8 @@ STAGE_1_INTEGRATIONS = {
 
 
 async def async_setup_opp(
-    runtime_config: "RuntimeConfig",
-) -> Optional[core.OpenPeerPower]:
+    runtime_config: RuntimeConfig,
+) -> core.OpenPeerPower | None:
     """Set up Open Peer Power."""
     opp = core.OpenPeerPower()
     opp.config.config_dir = runtime_config.config_dir
@@ -186,7 +193,7 @@ def open_opp_ui(opp: core.OpenPeerPower) -> None:
 
 async def async_from_config_dict(
     config: ConfigType, opp: core.OpenPeerPower
-) -> Optional[core.OpenPeerPower]:
+) -> core.OpenPeerPower | None:
     """Try to configure Open Peer Power from a configuration dictionary.
 
     Dynamically loads required components and its dependencies.
@@ -253,8 +260,8 @@ async def async_from_config_dict(
 def async_enable_logging(
     opp: core.OpenPeerPower,
     verbose: bool = False,
-    log_rotate_days: Optional[int] = None,
-    log_file: Optional[str] = None,
+    log_rotate_days: int | None = None,
+    log_file: str | None = None,
     log_no_color: bool = False,
 ) -> None:
     """Set up the logging.
@@ -360,7 +367,7 @@ async def async_mount_local_lib_path(config_dir: str) -> str:
 
 
 @core.callback
-def _get_domains(opp: core.OpenPeerPower, config: Dict[str, Any]) -> Set[str]:
+def _get_domains(opp: core.OpenPeerPower, config: dict[str, Any]) -> set[str]:
     """Get domains of components to set up."""
     # Filter out the repeating and common config section [openpeerpower]
     domains = {key.split(" ")[0] for key in config if key != core.DOMAIN}
@@ -376,38 +383,46 @@ def _get_domains(opp: core.OpenPeerPower, config: Dict[str, Any]) -> Set[str]:
     return domains
 
 
-async def _async_log_pending_setups(
-    opp: core.OpenPeerPower, domains: Set[str], setup_started: Dict[str, datetime]
-) -> None:
+async def _async_watch_pending_setups(opp: core.OpenPeerPower) -> None:
     """Periodic log of setups that are pending for longer than LOG_SLOW_STARTUP_INTERVAL."""
+    loop_count = 0
+    setup_started: dict[str, datetime] = opp.data[DATA_SETUP_STARTED]
+    previous_was_empty = True
     while True:
-        await asyncio.sleep(LOG_SLOW_STARTUP_INTERVAL)
-        remaining = [domain for domain in domains if domain in setup_started]
+        now = dt_util.utcnow()
+        remaining_with_setup_started = {
+            domain: (now - setup_started[domain]).total_seconds()
+            for domain in setup_started
+        }
+        _LOGGER.debug("Integration remaining: %s", remaining_with_setup_started)
+        if remaining_with_setup_started or not previous_was_empty:
+            async_dispatcher_send(
+                opp, SIGNAL_BOOTSTRAP_INTEGRATONS, remaining_with_setup_started
+            )
+        previous_was_empty = not remaining_with_setup_started
+        await asyncio.sleep(SLOW_STARTUP_CHECK_INTERVAL)
+        loop_count += SLOW_STARTUP_CHECK_INTERVAL
 
-        if remaining:
+        if loop_count >= LOG_SLOW_STARTUP_INTERVAL and setup_started:
             _LOGGER.warning(
                 "Waiting on integrations to complete setup: %s",
-                ", ".join(remaining),
+                ", ".join(setup_started),
             )
+            loop_count = 0
         _LOGGER.debug("Running timeout Zones: %s", opp.timeout.zones)
 
 
 async def async_setup_multi_components(
     opp: core.OpenPeerPower,
-    domains: Set[str],
-    config: Dict[str, Any],
-    setup_started: Dict[str, datetime],
+    domains: set[str],
+    config: dict[str, Any],
 ) -> None:
     """Set up multiple domains. Log on failure."""
     futures = {
         domain: opp.async_create_task(async_setup_component(opp, domain, config))
         for domain in domains
     }
-    log_task = asyncio.create_task(
-        _async_log_pending_setups(opp, domains, setup_started)
-    )
     await asyncio.wait(futures.values())
-    log_task.cancel()
     errors = [domain for domain in domains if futures[domain].exception()]
     for domain in errors:
         exception = futures[domain].exception()
@@ -420,15 +435,19 @@ async def async_setup_multi_components(
 
 
 async def _async_set_up_integrations(
-    opp: core.OpenPeerPower, config: Dict[str, Any]
+    opp: core.OpenPeerPower, config: dict[str, Any]
 ) -> None:
     """Set up all the integrations."""
-    setup_started = opp.data[DATA_SETUP_STARTED] = {}
+    opp.data[DATA_SETUP_STARTED] = {}
+    setup_time = opp.data[DATA_SETUP_TIME] = {}
+
+    watch_task = asyncio.create_task(_async_watch_pending_setups(opp))
+
     domains_to_setup = _get_domains(opp, config)
 
     # Resolve all dependencies so we know all integrations
     # that will have to be loaded and start rightaway
-    integration_cache: Dict[str, loader.Integration] = {}
+    integration_cache: dict[str, loader.Integration] = {}
     to_resolve = domains_to_setup
     while to_resolve:
         old_to_resolve = to_resolve
@@ -472,14 +491,14 @@ async def _async_set_up_integrations(
     # Load logging as soon as possible
     if logging_domains:
         _LOGGER.info("Setting up logging: %s", logging_domains)
-        await async_setup_multi_components(opp, logging_domains, config, setup_started)
+        await async_setup_multi_components(opp, logging_domains, config)
 
     # Start up debuggers. Start these first in case they want to wait.
     debuggers = domains_to_setup & DEBUGGER_INTEGRATIONS
 
     if debuggers:
         _LOGGER.debug("Setting up debuggers: %s", debuggers)
-        await async_setup_multi_components(opp, debuggers, config, setup_started)
+        await async_setup_multi_components(opp, debuggers, config)
 
     # calculate what components to setup in what stage
     stage_1_domains = set()
@@ -520,9 +539,7 @@ async def _async_set_up_integrations(
             async with opp.timeout.async_timeout(
                 STAGE_1_TIMEOUT, cool_down=COOLDOWN_TIME
             ):
-                await async_setup_multi_components(
-                    opp, stage_1_domains, config, setup_started
-                )
+                await async_setup_multi_components(opp, stage_1_domains, config)
         except asyncio.TimeoutError:
             _LOGGER.warning("Setup timed out for stage 1 - moving forward")
 
@@ -535,11 +552,22 @@ async def _async_set_up_integrations(
             async with opp.timeout.async_timeout(
                 STAGE_2_TIMEOUT, cool_down=COOLDOWN_TIME
             ):
-                await async_setup_multi_components(
-                    opp, stage_2_domains, config, setup_started
-                )
+                await async_setup_multi_components(opp, stage_2_domains, config)
         except asyncio.TimeoutError:
             _LOGGER.warning("Setup timed out for stage 2 - moving forward")
+
+    watch_task.cancel()
+    async_dispatcher_send(opp, SIGNAL_BOOTSTRAP_INTEGRATONS, {})
+
+    _LOGGER.debug(
+        "Integration setup times: %s",
+        {
+            integration: timedelta.total_seconds()
+            for integration, timedelta in sorted(
+                setup_time.items(), key=lambda item: item[1].total_seconds()  # type: ignore
+            )
+        },
+    )
 
     # Wrap up startup
     _LOGGER.debug("Waiting for startup to wrap up")

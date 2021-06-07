@@ -1,13 +1,17 @@
 """Run Open Peer Power."""
+from __future__ import annotations
+
 import asyncio
-from concurrent.futures import ThreadPoolExecutor
 import dataclasses
 import logging
-from typing import Any, Dict, Optional
+import threading
+from typing import Any
 
 from openpeerpower import bootstrap
 from openpeerpower.core import callback
 from openpeerpower.helpers.frame import warn_use
+from openpeerpower.util.executor import InterruptibleThreadPoolExecutor
+from openpeerpower.util.thread import deadlock_safe_shutdown
 
 # mypy: disallow-any-generics
 
@@ -34,8 +38,8 @@ class RuntimeConfig:
 
     verbose: bool = False
 
-    log_rotate_days: Optional[int] = None
-    log_file: Optional[str] = None
+    log_rotate_days: int | None = None
+    log_file: str | None = None
     log_no_color: bool = False
 
     debug: bool = False
@@ -62,7 +66,7 @@ class OppEventLoopPolicy(asyncio.DefaultEventLoopPolicy):  # type: ignore[valid-
         if self.debug:
             loop.set_debug(True)
 
-        executor = ThreadPoolExecutor(
+        executor = InterruptibleThreadPoolExecutor(
             thread_name_prefix="SyncWorker", max_workers=MAX_EXECUTOR_WORKERS
         )
         loop.set_default_executor(executor)
@@ -74,7 +78,7 @@ class OppEventLoopPolicy(asyncio.DefaultEventLoopPolicy):  # type: ignore[valid-
         orig_close = loop.close
 
         def close() -> None:
-            executor.shutdown(wait=True)
+            executor.logged_shutdown()
             orig_close()
 
         loop.close = close  # type: ignore
@@ -83,7 +87,7 @@ class OppEventLoopPolicy(asyncio.DefaultEventLoopPolicy):  # type: ignore[valid-
 
 
 @callback
-def _async_loop_exception_handler(_: Any, context: Dict[str, Any]) -> None:
+def _async_loop_exception_handler(_: Any, context: dict[str, Any]) -> None:
     """Handle all exception inside the core loop."""
     kwargs = {}
     exception = context.get("exception")
@@ -101,6 +105,9 @@ async def setup_and_run_opp(runtime_config: RuntimeConfig) -> int:
 
     if opp is None:
         return 1
+
+    # threading._shutdown can deadlock forever
+    threading._shutdown = deadlock_safe_shutdown  # type: ignore[attr-defined] # pylint: disable=protected-access
 
     return await opp.async_run()
 

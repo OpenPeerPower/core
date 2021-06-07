@@ -8,6 +8,7 @@ from openpeerpower.components.advantage_air.sensor import (
     ADVANTAGE_AIR_SET_COUNTDOWN_VALUE,
 )
 from openpeerpower.const import ATTR_ENTITY_ID
+from openpeerpower.helpers import entity_registry as er
 
 from tests.components.advantage_air import (
     TEST_SET_RESPONSE,
@@ -31,7 +32,7 @@ async def test_sensor_platform(opp, aioclient_mock):
     )
     await add_mock_config(opp)
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     assert len(aioclient_mock.mock_calls) == 1
 

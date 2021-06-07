@@ -1,7 +1,7 @@
 """Test sensor of AccuWeather integration."""
 from datetime import timedelta
 import json
-from unittest.mock import patch
+from unittest.mock import PropertyMock, patch
 
 from openpeerpower.components.accuweather.const import ATTRIBUTION, DOMAIN
 from openpeerpower.components.sensor import DOMAIN as SENSOR_DOMAIN
@@ -13,6 +13,7 @@ from openpeerpower.const import (
     ATTR_UNIT_OF_MEASUREMENT,
     CONCENTRATION_PARTS_PER_CUBIC_METER,
     DEVICE_CLASS_TEMPERATURE,
+    LENGTH_FEET,
     LENGTH_METERS,
     LENGTH_MILLIMETERS,
     PERCENTAGE,
@@ -22,8 +23,10 @@ from openpeerpower.const import (
     TIME_HOURS,
     UV_INDEX,
 )
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.setup import async_setup_component
 from openpeerpower.util.dt import utcnow
+from openpeerpower.util.unit_system import IMPERIAL_SYSTEM
 
 from tests.common import async_fire_time_changed, load_fixture
 from tests.components.accuweather import init_integration
@@ -32,7 +35,7 @@ from tests.components.accuweather import init_integration
 async def test_sensor_without_forecast(opp):
     """Test states of the sensor without forecast."""
     await init_integration(opp)
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     state = opp.states.get("sensor.home_cloud_ceiling")
     assert state
@@ -94,7 +97,7 @@ async def test_sensor_without_forecast(opp):
 async def test_sensor_with_forecast(opp):
     """Test states of the sensor with forecast."""
     await init_integration(opp, forecast=True)
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     state = opp.states.get("sensor.home_hours_of_sun_0d")
     assert state
@@ -166,13 +169,13 @@ async def test_sensor_with_forecast(opp):
 async def test_sensor_disabled(opp):
     """Test sensor disabled by default."""
     await init_integration(opp)
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     entry = registry.async_get("sensor.home_apparent_temperature")
     assert entry
     assert entry.unique_id == "0123456-apparenttemperature"
     assert entry.disabled
-    assert entry.disabled_by == "integration"
+    assert entry.disabled_by == er.DISABLED_INTEGRATION
 
     # Test enabling entity
     updated_entry = registry.async_update_entity(
@@ -185,7 +188,7 @@ async def test_sensor_disabled(opp):
 
 async def test_sensor_enabled_without_forecast(opp):
     """Test enabling an advanced sensor."""
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     registry.async_get_or_create(
         SENSOR_DOMAIN,
@@ -615,6 +618,10 @@ async def test_availability(opp):
         return_value=json.loads(
             load_fixture("accuweather/current_conditions_data.json")
         ),
+    ), patch(
+        "openpeerpower.components.accuweather.AccuWeather.requests_remaining",
+        new_callable=PropertyMock,
+        return_value=10,
     ):
         async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
@@ -640,7 +647,11 @@ async def test_manual_update_entity(opp):
     ) as mock_current, patch(
         "openpeerpower.components.accuweather.AccuWeather.async_get_forecast",
         return_value=forecast,
-    ) as mock_forecast:
+    ) as mock_forecast, patch(
+        "openpeerpower.components.accuweather.AccuWeather.requests_remaining",
+        new_callable=PropertyMock,
+        return_value=10,
+    ):
         await opp.services.async_call(
             "openpeerpower",
             "update_entity",
@@ -649,3 +660,16 @@ async def test_manual_update_entity(opp):
         )
         assert mock_current.call_count == 1
         assert mock_forecast.call_count == 1
+
+
+async def test_sensor_imperial_units(opp):
+    """Test states of the sensor without forecast."""
+    opp.config.units = IMPERIAL_SYSTEM
+    await init_integration(opp)
+
+    state = opp.states.get("sensor.home_cloud_ceiling")
+    assert state
+    assert state.state == "10500"
+    assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
+    assert state.attributes.get(ATTR_ICON) == "mdi:weather-fog"
+    assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == LENGTH_FEET

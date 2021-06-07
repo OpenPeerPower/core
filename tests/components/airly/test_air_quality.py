@@ -23,6 +23,7 @@ from openpeerpower.const import (
     HTTP_INTERNAL_SERVER_ERROR,
     STATE_UNAVAILABLE,
 )
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.setup import async_setup_component
 from openpeerpower.util.dt import utcnow
 
@@ -35,7 +36,7 @@ from tests.components.airly import init_integration
 async def test_air_quality(opp, aioclient_mock):
     """Test states of the air_quality."""
     await init_integration(opp, aioclient_mock)
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     state = opp.states.get("air_quality.home")
     assert state

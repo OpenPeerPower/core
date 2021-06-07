@@ -1,5 +1,8 @@
 """The exceptions used by Open Peer Power."""
-from typing import TYPE_CHECKING, Generator, Optional, Sequence
+from __future__ import annotations
+
+from collections.abc import Generator, Sequence
+from typing import TYPE_CHECKING
 
 import attr
 
@@ -96,12 +99,24 @@ class ConditionErrorContainer(ConditionError):
             yield from item.output(indent)
 
 
-class PlatformNotReady(OpenPeerPowerError):
+class IntegrationError(OpenPeerPowerError):
+    """Base class for platform and config entry exceptions."""
+
+    def __str__(self) -> str:
+        """Return a human readable error."""
+        return super().__str__() or str(self.__cause__)
+
+
+class PlatformNotReady(IntegrationError):
     """Error to indicate that platform is not ready."""
 
 
-class ConfigEntryNotReady(OpenPeerPowerError):
+class ConfigEntryNotReady(IntegrationError):
     """Error to indicate that config entry is not ready."""
+
+
+class ConfigEntryAuthFailed(IntegrationError):
+    """Error to indicate that config entry could not authenticate."""
 
 
 class InvalidStateError(OpenPeerPowerError):
@@ -113,12 +128,12 @@ class Unauthorized(OpenPeerPowerError):
 
     def __init__(
         self,
-        context: Optional["Context"] = None,
-        user_id: Optional[str] = None,
-        entity_id: Optional[str] = None,
-        config_entry_id: Optional[str] = None,
-        perm_category: Optional[str] = None,
-        permission: Optional[str] = None,
+        context: Context | None = None,
+        user_id: str | None = None,
+        entity_id: str | None = None,
+        config_entry_id: str | None = None,
+        perm_category: str | None = None,
+        permission: str | None = None,
     ) -> None:
         """Unauthorized error."""
         super().__init__(self.__class__.__name__)
@@ -152,3 +167,35 @@ class ServiceNotFound(OpenPeerPowerError):
     def __str__(self) -> str:
         """Return string representation."""
         return f"Unable to find service {self.domain}.{self.service}"
+
+
+class MaxLengthExceeded(OpenPeerPowerError):
+    """Raised when a property value has exceeded the max character length."""
+
+    def __init__(self, value: str, property_name: str, max_length: int) -> None:
+        """Initialize error."""
+        super().__init__(
+            self,
+            (
+                f"Value {value} for property {property_name} has a max length of "
+                f"{max_length} characters"
+            ),
+        )
+        self.value = value
+        self.property_name = property_name
+        self.max_length = max_length
+
+
+class RequiredParameterMissing(OpenPeerPowerError):
+    """Raised when a required parameter is missing from a function call."""
+
+    def __init__(self, parameter_names: list[str]) -> None:
+        """Initialize error."""
+        super().__init__(
+            self,
+            (
+                "Call must include at least one of the following parameters: "
+                f"{', '.join(parameter_names)}"
+            ),
+        )
+        self.parameter_names = parameter_names

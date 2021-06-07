@@ -11,6 +11,7 @@ from openpeerpower.const import (
     ATTR_FRIENDLY_NAME,
     STATE_OFF,
 )
+from openpeerpower.helpers import entity_registry as er
 
 from .common import setup_platform
 
@@ -18,7 +19,7 @@ from .common import setup_platform
 async def test_entity_registry(opp):
     """Tests that the devices are registered in the entity registry."""
     await setup_platform(opp, BINARY_SENSOR_DOMAIN)
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     entry = entity_registry.async_get("binary_sensor.front_door")
     assert entry.unique_id == "2834013428b6035fba7d4054aa7b25a3"

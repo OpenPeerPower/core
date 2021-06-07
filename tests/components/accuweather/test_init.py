@@ -6,11 +6,7 @@ from unittest.mock import patch
 from accuweather import ApiError
 
 from openpeerpower.components.accuweather.const import DOMAIN
-from openpeerpower.config_entries import (
-    ENTRY_STATE_LOADED,
-    ENTRY_STATE_NOT_LOADED,
-    ENTRY_STATE_SETUP_RETRY,
-)
+from openpeerpower.config_entries import ConfigEntryState
 from openpeerpower.const import STATE_UNAVAILABLE
 from openpeerpower.util.dt import utcnow
 
@@ -48,7 +44,7 @@ async def test_config_not_ready(opp):
     ):
         entry.add_to_opp(opp)
         await opp.config_entries.async_setup(entry.entry_id)
-        assert entry.state == ENTRY_STATE_SETUP_RETRY
+        assert entry.state is ConfigEntryState.SETUP_RETRY
 
 
 async def test_unload_entry(opp):
@@ -56,12 +52,12 @@ async def test_unload_entry(opp):
     entry = await init_integration(opp)
 
     assert len(opp.config_entries.async_entries(DOMAIN)) == 1
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
 
     assert await opp.config_entries.async_unload(entry.entry_id)
     await opp.async_block_till_done()
 
-    assert entry.state == ENTRY_STATE_NOT_LOADED
+    assert entry.state is ConfigEntryState.NOT_LOADED
     assert not opp.data.get(DOMAIN)
 
 
@@ -69,7 +65,7 @@ async def test_update_interval(opp):
     """Test correct update interval."""
     entry = await init_integration(opp)
 
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
 
     current = json.loads(load_fixture("accuweather/current_conditions_data.json"))
     future = utcnow() + timedelta(minutes=40)
@@ -91,7 +87,7 @@ async def test_update_interval_forecast(opp):
     """Test correct update interval when forecast is True."""
     entry = await init_integration(opp, forecast=True)
 
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
 
     current = json.loads(load_fixture("accuweather/current_conditions_data.json"))
     forecast = json.loads(load_fixture("accuweather/forecast_data.json"))

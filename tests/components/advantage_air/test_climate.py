@@ -2,10 +2,15 @@
 
 from json import loads
 
-from openpeerpower.components.advantage_air.climate import OPP_FAN_MODES, OPP_HVAC_MODES
+from openpeerpower.components.advantage_air.climate import (
+    ADVANTAGE_AIR_SERVICE_SET_MYZONE,
+    OPP_FAN_MODES,
+    OPP_HVAC_MODES,
+)
 from openpeerpower.components.advantage_air.const import (
     ADVANTAGE_AIR_STATE_OFF,
     ADVANTAGE_AIR_STATE_ON,
+    DOMAIN as ADVANTAGE_AIR_DOMAIN,
 )
 from openpeerpower.components.climate.const import (
     ATTR_FAN_MODE,
@@ -19,6 +24,7 @@ from openpeerpower.components.climate.const import (
     SERVICE_SET_TEMPERATURE,
 )
 from openpeerpower.const import ATTR_ENTITY_ID, ATTR_TEMPERATURE
+from openpeerpower.helpers import entity_registry as er
 
 from tests.components.advantage_air import (
     TEST_SET_RESPONSE,
@@ -42,7 +48,7 @@ async def test_climate_async_setup_entry(opp, aioclient_mock):
     )
     await add_mock_config(opp)
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     assert len(aioclient_mock.mock_calls) == 1
 
@@ -163,6 +169,21 @@ async def test_climate_async_setup_entry(opp, aioclient_mock):
     assert len(aioclient_mock.mock_calls) == 15
     assert aioclient_mock.mock_calls[-2][0] == "GET"
     assert aioclient_mock.mock_calls[-2][1].path == "/setAircon"
+    assert aioclient_mock.mock_calls[-1][0] == "GET"
+    assert aioclient_mock.mock_calls[-1][1].path == "/getSystemData"
+
+    # Test set_myair service
+    await opp.services.async_call(
+        ADVANTAGE_AIR_DOMAIN,
+        ADVANTAGE_AIR_SERVICE_SET_MYZONE,
+        {ATTR_ENTITY_ID: [entity_id]},
+        blocking=True,
+    )
+    assert len(aioclient_mock.mock_calls) == 17
+    assert aioclient_mock.mock_calls[-2][0] == "GET"
+    assert aioclient_mock.mock_calls[-2][1].path == "/setAircon"
+    data = loads(aioclient_mock.mock_calls[-2][1].query["json"])
+    assert data["ac1"]["info"]["myZone"] == 1
     assert aioclient_mock.mock_calls[-1][0] == "GET"
     assert aioclient_mock.mock_calls[-1][1].path == "/getSystemData"
 

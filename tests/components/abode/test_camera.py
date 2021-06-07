@@ -4,6 +4,7 @@ from unittest.mock import patch
 from openpeerpower.components.abode.const import DOMAIN as ABODE_DOMAIN
 from openpeerpower.components.camera import DOMAIN as CAMERA_DOMAIN
 from openpeerpower.const import ATTR_ENTITY_ID, STATE_IDLE
+from openpeerpower.helpers import entity_registry as er
 
 from .common import setup_platform
 
@@ -11,7 +12,7 @@ from .common import setup_platform
 async def test_entity_registry(opp):
     """Tests that the devices are registered in the entity registry."""
     await setup_platform(opp, CAMERA_DOMAIN)
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     entry = entity_registry.async_get("camera.test_cam")
     assert entry.unique_id == "d0a3a1c316891ceb00c20118aae2a133"

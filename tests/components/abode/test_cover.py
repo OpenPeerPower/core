@@ -10,6 +10,7 @@ from openpeerpower.const import (
     SERVICE_OPEN_COVER,
     STATE_CLOSED,
 )
+from openpeerpower.helpers import entity_registry as er
 
 from .common import setup_platform
 
@@ -19,7 +20,7 @@ DEVICE_ID = "cover.garage_door"
 async def test_entity_registry(opp):
     """Tests that the devices are registered in the entity registry."""
     await setup_platform(opp, COVER_DOMAIN)
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     entry = entity_registry.async_get(DEVICE_ID)
     assert entry.unique_id == "61cbz3b542d2o33ed2fz02721bda3324"

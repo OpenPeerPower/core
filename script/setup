@@ -28,9 +28,11 @@ python3 -m pip install -e . --constraint openpeerpower/package_constraints.txt
 
 opp --script ensure_config -c config
 
+if ! grep -R "logger" config/configuration.yaml >> /dev/null;then
 echo "
 logger:
   default: info
   logs:
     openpeerpower.components.cloud: debug
 " >> config/configuration.yaml
+fi

@@ -1,7 +1,7 @@
 """Test weather of AccuWeather integration."""
 from datetime import timedelta
 import json
-from unittest.mock import patch
+from unittest.mock import PropertyMock, patch
 
 from openpeerpower.components.accuweather.const import ATTRIBUTION
 from openpeerpower.components.weather import (
@@ -23,6 +23,7 @@ from openpeerpower.components.weather import (
     ATTR_WEATHER_WIND_SPEED,
 )
 from openpeerpower.const import ATTR_ATTRIBUTION, ATTR_ENTITY_ID, STATE_UNAVAILABLE
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.setup import async_setup_component
 from openpeerpower.util.dt import utcnow
 
@@ -33,7 +34,7 @@ from tests.components.accuweather import init_integration
 async def test_weather_without_forecast(opp):
     """Test states of the weather without forecast."""
     await init_integration(opp)
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     state = opp.states.get("weather.home")
     assert state
@@ -56,7 +57,7 @@ async def test_weather_without_forecast(opp):
 async def test_weather_with_forecast(opp):
     """Test states of the weather with forecast."""
     await init_integration(opp, forecast=True)
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     state = opp.states.get("weather.home")
     assert state
@@ -111,6 +112,10 @@ async def test_availability(opp):
         return_value=json.loads(
             load_fixture("accuweather/current_conditions_data.json")
         ),
+    ), patch(
+        "openpeerpower.components.accuweather.AccuWeather.requests_remaining",
+        new_callable=PropertyMock,
+        return_value=10,
     ):
         async_fire_time_changed(opp, future)
         await opp.async_block_till_done()
@@ -136,7 +141,11 @@ async def test_manual_update_entity(opp):
     ) as mock_current, patch(
         "openpeerpower.components.accuweather.AccuWeather.async_get_forecast",
         return_value=forecast,
-    ) as mock_forecast:
+    ) as mock_forecast, patch(
+        "openpeerpower.components.accuweather.AccuWeather.requests_remaining",
+        new_callable=PropertyMock,
+        return_value=10,
+    ):
         await opp.services.async_call(
             "openpeerpower",
             "update_entity",

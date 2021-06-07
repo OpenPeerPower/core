@@ -7,7 +7,7 @@ from abodepy.helpers.errors import MFA_CODE_REQUIRED
 from openpeerpower import data_entry_flow
 from openpeerpower.components.abode import config_flow
 from openpeerpower.components.abode.const import DOMAIN
-from openpeerpower.config_entries import SOURCE_IMPORT, SOURCE_USER
+from openpeerpower.config_entries import SOURCE_IMPORT, SOURCE_REAUTH, SOURCE_USER
 from openpeerpower.const import (
     CONF_PASSWORD,
     CONF_USERNAME,
@@ -190,7 +190,7 @@ async def test_step_reauth(opp):
     ):
         result = await opp.config_entries.flow.async_init(
             DOMAIN,
-            context={"source": "reauth"},
+            context={"source": SOURCE_REAUTH},
             data=conf,
         )
 

@@ -1,11 +1,12 @@
 """Start Open Peer Power."""
+from __future__ import annotations
+
 import argparse
 import os
 import platform
 import subprocess
 import sys
 import threading
-from typing import List
 
 from openpeerpower.const import REQUIRED_PYTHON_VER, RESTART_EXIT_CODE, __version__
 
@@ -144,6 +145,7 @@ def daemonize() -> None:
         sys.exit(0)
 
     # redirect standard file descriptors to devnull
+    # pylint: disable=consider-using-with
     infd = open(os.devnull)
     outfd = open(os.devnull, "a+")
     sys.stdout.flush()
@@ -206,8 +208,8 @@ def closefds_osx(min_fd: int, max_fd: int) -> None:
             pass
 
 
-def cmdline() -> List[str]:
-    """Collect path and arguments to re-execute the current opp instance."""
+def cmdline() -> list[str]:
+    """Collect path and arguments to re-execute the current opp.instance."""
     if os.path.basename(sys.argv[0]) == "__main__.py":
         modulepath = os.path.dirname(sys.argv[0])
         os.environ["PYTHONPATH"] = os.path.dirname(modulepath)

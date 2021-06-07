@@ -5,8 +5,8 @@ from unittest.mock import MagicMock, patch
 import requests_mock
 
 from openpeerpower import data_entry_flow
-from openpeerpower.components.aemet.const import DOMAIN
-from openpeerpower.config_entries import ENTRY_STATE_LOADED, SOURCE_USER
+from openpeerpower.components.aemet.const import CONF_STATION_UPDATES, DOMAIN
+from openpeerpower.config_entries import SOURCE_USER, ConfigEntryState
 from openpeerpower.const import CONF_API_KEY, CONF_LATITUDE, CONF_LONGITUDE, CONF_NAME
 import openpeerpower.util.dt as dt_util
 
@@ -26,8 +26,6 @@ async def test_form(opp):
     """Test that the form is served with valid input."""
 
     with patch(
-        "openpeerpower.components.aemet.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.aemet.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry, requests_mock.mock() as _m:
@@ -49,7 +47,7 @@ async def test_form(opp):
 
         conf_entries = opp.config_entries.async_entries(DOMAIN)
         entry = conf_entries[0]
-        assert entry.state == ENTRY_STATE_LOADED
+        assert entry.state is ConfigEntryState.LOADED
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == CONFIG[CONF_NAME]
@@ -57,12 +55,67 @@ async def test_form(opp):
         assert result["data"][CONF_LONGITUDE] == CONFIG[CONF_LONGITUDE]
         assert result["data"][CONF_API_KEY] == CONFIG[CONF_API_KEY]
 
-        assert len(mock_setup.mock_calls) == 1
         assert len(mock_setup_entry.mock_calls) == 1
 
 
+async def test_form_options(opp):
+    """Test the form options."""
+
+    now = dt_util.parse_datetime("2021-01-09 12:00:00+00:00")
+    with patch("openpeerpower.util.dt.now", return_value=now), patch(
+        "openpeerpower.util.dt.utcnow", return_value=now
+    ), requests_mock.mock() as _m:
+        aemet_requests_mock(_m)
+
+        entry = MockConfigEntry(
+            domain=DOMAIN, unique_id="40.30403754--3.72935236", data=CONFIG
+        )
+        entry.add_to_opp(opp)
+
+        assert await opp.config_entries.async_setup(entry.entry_id)
+        await opp.async_block_till_done()
+
+        assert entry.state is ConfigEntryState.LOADED
+
+        result = await opp.config_entries.options.async_init(entry.entry_id)
+
+        assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
+        assert result["step_id"] == "init"
+
+        result = await opp.config_entries.options.async_configure(
+            result["flow_id"], user_input={CONF_STATION_UPDATES: False}
+        )
+
+        assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
+        assert entry.options == {
+            CONF_STATION_UPDATES: False,
+        }
+
+        await opp.async_block_till_done()
+
+        assert entry.state is ConfigEntryState.LOADED
+
+        result = await opp.config_entries.options.async_init(entry.entry_id)
+
+        assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
+        assert result["step_id"] == "init"
+
+        result = await opp.config_entries.options.async_configure(
+            result["flow_id"], user_input={CONF_STATION_UPDATES: True}
+        )
+
+        assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
+        assert entry.options == {
+            CONF_STATION_UPDATES: True,
+        }
+
+        await opp.async_block_till_done()
+
+        assert entry.state is ConfigEntryState.LOADED
+
+
 async def test_form_duplicated_id(opp):
-    """Test that the options form."""
+    """Test setting up duplicated entry."""
 
     now = dt_util.parse_datetime("2021-01-09 12:00:00+00:00")
     with patch("openpeerpower.util.dt.now", return_value=now), patch(

@@ -1,5 +1,4 @@
 """Test the Advantage Air Switch Platform."""
-
 from json import loads
 
 from openpeerpower.components.advantage_air.const import (
@@ -12,6 +11,7 @@ from openpeerpower.components.switch import (
     SERVICE_TURN_ON,
 )
 from openpeerpower.const import ATTR_ENTITY_ID, STATE_OFF
+from openpeerpower.helpers import entity_registry as er
 
 from tests.components.advantage_air import (
     TEST_SET_RESPONSE,
@@ -36,7 +36,7 @@ async def test_cover_async_setup_entry(opp, aioclient_mock):
 
     await add_mock_config(opp)
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     assert len(aioclient_mock.mock_calls) == 1
 

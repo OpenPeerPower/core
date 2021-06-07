@@ -13,6 +13,7 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
+from openpeerpower.helpers import entity_registry as er
 
 from .common import setup_platform
 
@@ -25,7 +26,7 @@ DEVICE_UID = "0012a4d3614cb7e2b8c9abea31d2fb2a"
 async def test_entity_registry(opp):
     """Tests that the devices are registered in the entity registry."""
     await setup_platform(opp, SWITCH_DOMAIN)
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     entry = entity_registry.async_get(AUTOMATION_ID)
     assert entry.unique_id == AUTOMATION_UID
