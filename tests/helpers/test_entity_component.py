@@ -8,7 +8,11 @@ from unittest.mock import AsyncMock, Mock, patch
 import pytest
 import voluptuous as vol
 
-from openpeerpower.const import ENTITY_MATCH_ALL, ENTITY_MATCH_NONE
+from openpeerpower.const import (
+    ENTITY_MATCH_ALL,
+    ENTITY_MATCH_NONE,
+    EVENT_OPENPEERPOWER_STOP,
+)
 import openpeerpower.core as ha
 from openpeerpower.exceptions import PlatformNotReady
 from openpeerpower.helpers import discovery
@@ -305,7 +309,7 @@ async def test_setup_entry(opp):
     assert await component.async_setup_entry(entry)
     assert len(mock_setup_entry.mock_calls) == 1
     p_opp, p_entry, _ = mock_setup_entry.mock_calls[0][1]
-    assert p_opp is opp
+    assert p_opp is.opp
     assert p_entry is entry
 
     assert component._platforms[entry.entry_id].scan_interval == timedelta(seconds=5)
@@ -487,3 +491,25 @@ async def test_register_entity_service(opp):
         DOMAIN, "hello", {"area_id": ENTITY_MATCH_NONE, "some": "data"}, blocking=True
     )
     assert len(calls) == 2
+
+
+async def test_platforms_shutdown_on_stop(opp):
+    """Test that we shutdown platforms on stop."""
+    platform1_setup = Mock(side_effect=[PlatformNotReady, PlatformNotReady, None])
+    mock_integration(opp, MockModule("mod1"))
+    mock_entity_platform(opp, "test_domain.mod1", MockPlatform(platform1_setup))
+
+    component = EntityComponent(_LOGGER, DOMAIN, opp)
+
+    await component.async_setup({DOMAIN: {"platform": "mod1"}})
+    await opp.async_block_till_done()
+    assert len(platform1_setup.mock_calls) == 1
+    assert "test_domain.mod1" not in opp.config.components
+
+    with patch.object(
+        component._platforms[DOMAIN], "async_shutdown"
+    ) as mock_async_shutdown:
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
+        await opp.async_block_till_done()
+
+    assert mock_async_shutdown.called

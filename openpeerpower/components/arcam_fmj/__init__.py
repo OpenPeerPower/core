@@ -1,15 +1,17 @@
 """Arcam component."""
 import asyncio
+from contextlib import suppress
 import logging
 
 from arcam.fmj import ConnectionFailed
 from arcam.fmj.client import Client
 import async_timeout
 
-from openpeerpower import config_entries
+from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_HOST, CONF_PORT, EVENT_OPENPEERPOWER_STOP
+from openpeerpower.core import OpenPeerPower
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 
 from .const import (
     DEFAULT_SCAN_INTERVAL,
@@ -25,16 +27,16 @@ _LOGGER = logging.getLogger(__name__)
 
 CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 
+PLATFORMS = ["media_player"]
+
 
 async def _await_cancel(task):
     task.cancel()
-    try:
+    with suppress(asyncio.CancelledError):
         await task
-    except asyncio.CancelledError:
-        pass
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
+async def async_setup(opp: OpenPeerPower, config: ConfigType):
     """Set up the component."""
     opp.data[DOMAIN_DATA_ENTRIES] = {}
     opp.data[DOMAIN_DATA_TASKS] = {}
@@ -49,7 +51,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: config_entries.ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up config entry."""
     entries = opp.data[DOMAIN_DATA_ENTRIES]
     tasks = opp.data[DOMAIN_DATA_TASKS]
@@ -60,23 +62,21 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: config_entries.Config
     task = asyncio.create_task(_run_client(opp, client, DEFAULT_SCAN_INTERVAL))
     tasks[entry.entry_id] = task
 
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_setup(entry, "media_player")
-    )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp, entry):
     """Cleanup before removing config entry."""
-    await opp.config_entries.async_forward_entry_unload(entry, "media_player")
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     task = opp.data[DOMAIN_DATA_TASKS].pop(entry.entry_id)
     await _await_cancel(task)
 
     opp.data[DOMAIN_DATA_ENTRIES].pop(entry.entry_id)
 
-    return True
+    return unload_ok
 
 
 async def _run_client(opp, client, interval):

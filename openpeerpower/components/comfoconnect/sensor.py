@@ -26,7 +26,7 @@ from pycomfoconnect import (
 )
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_DEVICE_CLASS,
     ATTR_ICON,
@@ -45,7 +45,6 @@ from openpeerpower.const import (
 )
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
-from openpeerpower.helpers.entity import Entity
 
 from . import DOMAIN, SIGNAL_COMFOCONNECT_UPDATE_RECEIVED, ComfoConnectBridge
 
@@ -258,7 +257,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(sensors, True)
 
 
-class ComfoConnectSensor(Entity):
+class ComfoConnectSensor(SensorEntity):
     """Representation of a ComfoConnect sensor."""
 
     def __init__(self, name, ccb: ComfoConnectBridge, sensor_type) -> None:

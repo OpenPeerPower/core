@@ -1,28 +1,39 @@
 """Support for Ampio Air Quality data."""
-from datetime import timedelta
+from __future__ import annotations
+
 import logging
+from typing import Final
 
 from asmog import AmpioSmog
 import voluptuous as vol
 
-from openpeerpower.components.air_quality import PLATFORM_SCHEMA, AirQualityEntity
+from openpeerpower.components.air_quality import (
+    PLATFORM_SCHEMA as BASE_PLATFORM_SCHEMA,
+    AirQualityEntity,
+)
 from openpeerpower.const import CONF_NAME
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
+from openpeerpower.helpers.typing import ConfigType, DiscoveryInfoType
 from openpeerpower.util import Throttle
 
-_LOGGER = logging.getLogger(__name__)
+from .const import ATTRIBUTION, CONF_STATION_ID, SCAN_INTERVAL
 
-ATTRIBUTION = "Data provided by Ampio"
-CONF_STATION_ID = "station_id"
-SCAN_INTERVAL = timedelta(minutes=10)
+_LOGGER: Final = logging.getLogger(__name__)
 
-PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
+PLATFORM_SCHEMA: Final = BASE_PLATFORM_SCHEMA.extend(
     {vol.Required(CONF_STATION_ID): cv.string, vol.Optional(CONF_NAME): cv.string}
 )
 
 
-async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
+async def async_setup_platform(
+    opp: OpenPeerPower,
+    config: ConfigType,
+    async_add_entities: AddEntitiesCallback,
+    discovery_info: DiscoveryInfoType | None = None,
+) -> None:
     """Set up the Ampio Smog air quality platform."""
 
     name = config.get(CONF_NAME)
@@ -43,38 +54,40 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 class AmpioSmogQuality(AirQualityEntity):
     """Implementation of an Ampio Smog air quality entity."""
 
-    def __init__(self, api, station_id, name):
+    def __init__(
+        self, api: AmpioSmogMapData, station_id: str, name: str | None
+    ) -> None:
         """Initialize the air quality entity."""
         self._ampio = api
         self._station_id = station_id
         self._name = name or api.api.name
 
     @property
-    def name(self):
+    def name(self) -> str:
         """Return the name of the air quality entity."""
         return self._name
 
     @property
-    def unique_id(self):
+    def unique_id(self) -> str:
         """Return unique_name."""
         return f"ampio_smog_{self._station_id}"
 
     @property
-    def particulate_matter_2_5(self):
+    def particulate_matter_2_5(self) -> str | None:
         """Return the particulate matter 2.5 level."""
-        return self._ampio.api.pm2_5
+        return self._ampio.api.pm2_5  # type: ignore[no-any-return]
 
     @property
-    def particulate_matter_10(self):
+    def particulate_matter_10(self) -> str | None:
         """Return the particulate matter 10 level."""
-        return self._ampio.api.pm10
+        return self._ampio.api.pm10  # type: ignore[no-any-return]
 
     @property
-    def attribution(self):
+    def attribution(self) -> str:
         """Return the attribution."""
         return ATTRIBUTION
 
-    async def async_update(self):
+    async def async_update(self) -> None:
         """Get the latest data from the AmpioMap API."""
         await self._ampio.async_update()
 
@@ -82,11 +95,11 @@ class AmpioSmogQuality(AirQualityEntity):
 class AmpioSmogMapData:
     """Get the latest data and update the states."""
 
-    def __init__(self, api):
+    def __init__(self, api: AmpioSmog) -> None:
         """Initialize the data object."""
         self.api = api
 
     @Throttle(SCAN_INTERVAL)
-    async def async_update(self):
+    async def async_update(self) -> None:
         """Get the latest data from AmpioMap."""
         await self.api.get_data()

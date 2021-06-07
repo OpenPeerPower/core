@@ -2,6 +2,7 @@
   "domain": "aurora_abb_powerone",
   "name": "Aurora ABB Solar PV",
   "documentation": "https://www.openpeerpower.io/integrations/aurora_abb_powerone/",
-  "codeowners": [],
-  "requirements": ["aurorapy==0.2.6"]
+  "codeowners": ["@davet2001"],
+  "requirements": ["aurorapy==0.2.6"],
+  "iot_class": "local_polling"
 }

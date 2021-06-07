@@ -5,7 +5,7 @@ import logging
 from aurorapy.client import AuroraError, AuroraSerialClient
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_ADDRESS,
     CONF_DEVICE,
@@ -14,7 +14,6 @@ from openpeerpower.const import (
     POWER_WATT,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -44,7 +43,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(devices, True)
 
 
-class AuroraABBSolarPVMonitorSensor(Entity):
+class AuroraABBSolarPVMonitorSensor(SensorEntity):
     """Representation of a Sensor."""
 
     def __init__(self, client, name, typename):

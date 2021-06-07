@@ -4,7 +4,7 @@ import logging
 from deluge_client import DelugeRPCClient, FailedToReconnectException
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_HOST,
     CONF_MONITORED_VARIABLES,
@@ -17,7 +17,6 @@ from openpeerpower.const import (
 )
 from openpeerpower.exceptions import PlatformNotReady
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 _THROTTLED_REFRESH = None
@@ -68,7 +67,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(dev)
 
 
-class DelugeSensor(Entity):
+class DelugeSensor(SensorEntity):
     """Representation of a Deluge sensor."""
 
     def __init__(self, sensor_type, deluge_client, client_name):

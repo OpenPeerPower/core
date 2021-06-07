@@ -1,13 +1,12 @@
 {
     "config": {
         "abort": {
-            "existing_instance_updated": "Posodobljena obstoje\u010da konfiguracija.",
-            "single_instance_allowed": "Dovoljena je samo ena konfiguracija AdGuard Home."
+            "existing_instance_updated": "Posodobljena obstoje\u010da konfiguracija."
         },
         "step": {
             "oppio_confirm": {
-                "description": "\u017delite konfigurirati Open Peer Power-a za povezavo z AdGuard Home, ki ga ponuja Opp.io add-on {addon} ?",
-                "title": "AdGuard Home preko dodatka Opp.io"
+                "description": "\u017delite konfigurirati Open Peer Power-a za povezavo z AdGuard Home, ki ga ponuja Supervisor add-on {addon} ?",
+                "title": "AdGuard Home preko dodatka Supervisor"
             },
             "user": {
                 "data": {

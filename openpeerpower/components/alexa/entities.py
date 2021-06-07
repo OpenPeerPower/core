@@ -1,6 +1,8 @@
 """Alexa entity adapters."""
+from __future__ import annotations
+
 import logging
-from typing import TYPE_CHECKING, List
+from typing import TYPE_CHECKING
 
 from openpeerpower.components import (
     alarm_control_panel,
@@ -30,6 +32,7 @@ from openpeerpower.const import (
     ATTR_SUPPORTED_FEATURES,
     ATTR_UNIT_OF_MEASUREMENT,
     CLOUD_NEVER_EXPOSED_ENTITIES,
+    CONF_DESCRIPTION,
     CONF_NAME,
     TEMP_CELSIUS,
     TEMP_FAHRENHEIT,
@@ -37,6 +40,7 @@ from openpeerpower.const import (
 )
 from openpeerpower.core import OpenPeerPower, State, callback
 from openpeerpower.helpers import network
+from openpeerpower.helpers.entity import entity_sources
 from openpeerpower.util.decorator import Registry
 
 from .capabilities import (
@@ -72,7 +76,7 @@ from .capabilities import (
     AlexaTimeHoldController,
     AlexaToggleController,
 )
-from .const import CONF_DESCRIPTION, CONF_DISPLAY_CATEGORIES
+from .const import CONF_DISPLAY_CATEGORIES
 
 if TYPE_CHECKING:
     from .config import AbstractConfig
@@ -251,7 +255,9 @@ class AlexaEntity:
     The API handlers should manipulate entities only through this interface.
     """
 
-    def __init__(self, opp: OpenPeerPower, config: "AbstractConfig", entity: State):
+    def __init__(
+        self, opp: OpenPeerPower, config: AbstractConfig, entity: State
+    ) -> None:
         """Initialize Alexa Entity."""
         self.opp = opp
         self.config = config
@@ -300,7 +306,7 @@ class AlexaEntity:
         Raises _UnsupportedInterface.
         """
 
-    def interfaces(self) -> List[AlexaCapability]:
+    def interfaces(self) -> list[AlexaCapability]:
         """Return a list of supported interfaces.
 
         Used for discovery. The list should contain AlexaInterface instances.
@@ -353,7 +359,7 @@ class AlexaEntity:
 
 
 @callback
-def async_get_entities(opp, config) -> List[AlexaEntity]:
+def async_get_entities(opp, config) -> list[AlexaEntity]:
     """Return all entities that are supported by Alexa."""
     entities = []
     for state in opp.states.async_all():
@@ -501,12 +507,12 @@ class LightCapabilities(AlexaEntity):
         """Yield the supported interfaces."""
         yield AlexaPowerController(self.entity)
 
-        supported = self.entity.attributes.get(ATTR_SUPPORTED_FEATURES, 0)
-        if supported & light.SUPPORT_BRIGHTNESS:
+        color_modes = self.entity.attributes.get(light.ATTR_SUPPORTED_COLOR_MODES)
+        if light.brightness_supported(color_modes):
             yield AlexaBrightnessController(self.entity)
-        if supported & light.SUPPORT_COLOR:
+        if light.color_supported(color_modes):
             yield AlexaColorController(self.entity)
-        if supported & light.SUPPORT_COLOR_TEMP:
+        if light.color_temp_supported(color_modes):
             yield AlexaColorTemperatureController(self.entity)
 
         yield AlexaEndpointHealth(self.opp, self.entity)
@@ -529,12 +535,17 @@ class FanCapabilities(AlexaEntity):
         if supported & fan.SUPPORT_SET_SPEED:
             yield AlexaPercentageController(self.entity)
             yield AlexaPowerLevelController(self.entity)
+            # The use of legacy speeds is deprecated in the schema, support will be removed after a quarter (2021.7)
             yield AlexaRangeController(
                 self.entity, instance=f"{fan.DOMAIN}.{fan.ATTR_SPEED}"
             )
         if supported & fan.SUPPORT_OSCILLATE:
             yield AlexaToggleController(
                 self.entity, instance=f"{fan.DOMAIN}.{fan.ATTR_OSCILLATING}"
+            )
+        if supported & fan.SUPPORT_PRESET_MODE:
+            yield AlexaModeController(
+                self.entity, instance=f"{fan.DOMAIN}.{fan.ATTR_PRESET_MODE}"
             )
         if supported & fan.SUPPORT_DIRECTION:
             yield AlexaModeController(
@@ -610,8 +621,14 @@ class MediaPlayerCapabilities(AlexaEntity):
         if supported & media_player.const.SUPPORT_PLAY_MEDIA:
             yield AlexaChannelController(self.entity)
 
-        if supported & media_player.const.SUPPORT_SELECT_SOUND_MODE:
-            inputs = AlexaInputController.get_valid_inputs(
+        # AlexaEqualizerController is disabled for denonavr
+        # since it blocks alexa from discovering any devices.
+        domain = entity_sources(self.opp).get(self.entity_id, {}).get("domain")
+        if (
+            supported & media_player.const.SUPPORT_SELECT_SOUND_MODE
+            and domain != "denonavr"
+        ):
+            inputs = AlexaEqualizerController.get_valid_inputs(
                 self.entity.attributes.get(media_player.const.ATTR_SOUND_MODE_LIST, [])
             )
             if len(inputs) > 0:
@@ -857,7 +874,7 @@ class CameraCapabilities(AlexaEntity):
         yield Alexa(self.opp)
 
     def _check_requirements(self):
-        """Check the opp URL for HTTPS scheme."""
+        """Check the opp.URL for HTTPS scheme."""
         if "stream" not in self.opp.config.components:
             _LOGGER.debug(
                 "%s requires stream component for AlexaCameraStreamController",

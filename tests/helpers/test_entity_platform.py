@@ -6,10 +6,14 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from openpeerpower.const import PERCENTAGE
-from openpeerpower.core import callback
+from openpeerpower.const import EVENT_OPENPEERPOWER_STARTED, PERCENTAGE
+from openpeerpower.core import CoreState, callback
 from openpeerpower.exceptions import OpenPeerPowerError, PlatformNotReady
-from openpeerpower.helpers import entity_platform, entity_registry
+from openpeerpower.helpers import (
+    device_registry as dr,
+    entity_platform,
+    entity_registry as er,
+)
 from openpeerpower.helpers.entity import async_generate_entity_id
 from openpeerpower.helpers.entity_component import (
     DEFAULT_SCAN_INTERVAL,
@@ -51,6 +55,17 @@ async def test_polling_only_updates_entities_it_should_poll(opp):
 
     assert not no_poll_ent.async_update.called
     assert poll_ent.async_update.called
+
+
+async def test_polling_disabled_by_config_entry(opp):
+    """Test the polling of only updated entities."""
+    entity_platform = MockEntityPlatform(opp)
+    entity_platform.config_entry = MockConfigEntry(pref_disable_polling=True)
+
+    poll_ent = MockEntity(should_poll=True)
+
+    await entity_platform.async_add_entities([poll_ent])
+    assert entity_platform._async_unsub_polling is None
 
 
 async def test_polling_updates_entities_with_exception(opp):
@@ -168,7 +183,7 @@ async def test_adding_entities_with_generator_and_thread_callback(opp):
     def create_entity(number):
         """Create entity helper."""
         entity = MockEntity(unique_id=f"unique{number}")
-        entity.entity_id = async_generate_entity_id(DOMAIN + ".{}", "Number", opp=opp)
+        entity.entity_id = async_generate_entity_id(DOMAIN + ".{}", "Number", opp.opp)
         return entity
 
     await component.async_add_entities(create_entity(i) for i in range(2))
@@ -467,7 +482,7 @@ async def test_overriding_name_from_registry(opp):
     mock_registry(
         opp,
         {
-            "test_domain.world": entity_registry.RegistryEntry(
+            "test_domain.world": er.RegistryEntry(
                 entity_id="test_domain.world",
                 unique_id="1234",
                 # Using component.async_add_entities is equal to platform "domain"
@@ -499,12 +514,12 @@ async def test_registry_respect_entity_disabled(opp):
     mock_registry(
         opp,
         {
-            "test_domain.world": entity_registry.RegistryEntry(
+            "test_domain.world": er.RegistryEntry(
                 entity_id="test_domain.world",
                 unique_id="1234",
                 # Using component.async_add_entities is equal to platform "domain"
                 platform="test_platform",
-                disabled_by=entity_registry.DISABLED_USER,
+                disabled_by=er.DISABLED_USER,
             )
         },
     )
@@ -520,7 +535,7 @@ async def test_entity_registry_updates_name(opp):
     registry = mock_registry(
         opp,
         {
-            "test_domain.world": entity_registry.RegistryEntry(
+            "test_domain.world": er.RegistryEntry(
                 entity_id="test_domain.world",
                 unique_id="1234",
                 # Using component.async_add_entities is equal to platform "domain"
@@ -588,6 +603,52 @@ async def test_setup_entry_platform_not_ready(opp, caplog):
     assert len(mock_call_later.mock_calls) == 1
 
 
+async def test_setup_entry_platform_not_ready_with_message(opp, caplog):
+    """Test when an entry is not ready yet that includes a message."""
+    async_setup_entry = Mock(side_effect=PlatformNotReady("lp0 on fire"))
+    platform = MockPlatform(async_setup_entry=async_setup_entry)
+    config_entry = MockConfigEntry()
+    ent_platform = MockEntityPlatform(
+        opp, platform_name=config_entry.domain, platform=platform
+    )
+
+    with patch.object(entity_platform, "async_call_later") as mock_call_later:
+        assert not await ent_platform.async_setup_entry(config_entry)
+
+    full_name = f"{ent_platform.domain}.{config_entry.domain}"
+    assert full_name not in opp.config.components
+    assert len(async_setup_entry.mock_calls) == 1
+
+    assert "Platform test not ready yet" in caplog.text
+    assert "lp0 on fire" in caplog.text
+    assert len(mock_call_later.mock_calls) == 1
+
+
+async def test_setup_entry_platform_not_ready_from_exception(opp, caplog):
+    """Test when an entry is not ready yet that includes the causing exception string."""
+    original_exception = OpenPeerPowerError("The device dropped the connection")
+    platform_exception = PlatformNotReady()
+    platform_exception.__cause__ = original_exception
+
+    async_setup_entry = Mock(side_effect=platform_exception)
+    platform = MockPlatform(async_setup_entry=async_setup_entry)
+    config_entry = MockConfigEntry()
+    ent_platform = MockEntityPlatform(
+        opp, platform_name=config_entry.domain, platform=platform
+    )
+
+    with patch.object(entity_platform, "async_call_later") as mock_call_later:
+        assert not await ent_platform.async_setup_entry(config_entry)
+
+    full_name = f"{ent_platform.domain}.{config_entry.domain}"
+    assert full_name not in opp.config.components
+    assert len(async_setup_entry.mock_calls) == 1
+
+    assert "Platform test not ready yet" in caplog.text
+    assert "The device dropped the connection" in caplog.text
+    assert len(mock_call_later.mock_calls) == 1
+
+
 async def test_reset_cancels_retry_setup(opp):
     """Test that resetting a platform will cancel scheduled a setup retry."""
     async_setup_entry = Mock(side_effect=PlatformNotReady)
@@ -610,6 +671,54 @@ async def test_reset_cancels_retry_setup(opp):
     assert ent_platform._async_cancel_retry_setup is None
 
 
+async def test_reset_cancels_retry_setup_when_not_started(opp):
+    """Test that resetting a platform will cancel scheduled a setup retry when not yet started."""
+    opp.state = CoreState.starting
+    async_setup_entry = Mock(side_effect=PlatformNotReady)
+    initial_listeners = opp.bus.async_listeners()[EVENT_OPENPEERPOWER_STARTED]
+
+    platform = MockPlatform(async_setup_entry=async_setup_entry)
+    config_entry = MockConfigEntry()
+    ent_platform = MockEntityPlatform(
+        opp, platform_name=config_entry.domain, platform=platform
+    )
+
+    assert not await ent_platform.async_setup_entry(config_entry)
+    await opp.async_block_till_done()
+    assert (
+        opp.bus.async_listeners()[EVENT_OPENPEERPOWER_STARTED] == initial_listeners + 1
+    )
+    assert ent_platform._async_cancel_retry_setup is not None
+
+    await ent_platform.async_reset()
+    await opp.async_block_till_done()
+    assert opp.bus.async_listeners()[EVENT_OPENPEERPOWER_STARTED] == initial_listeners
+    assert ent_platform._async_cancel_retry_setup is None
+
+
+async def test_stop_shutdown_cancels_retry_setup_and_interval_listener(opp):
+    """Test that shutdown will cancel scheduled a setup retry and interval listener."""
+    async_setup_entry = Mock(side_effect=PlatformNotReady)
+    platform = MockPlatform(async_setup_entry=async_setup_entry)
+    config_entry = MockConfigEntry()
+    ent_platform = MockEntityPlatform(
+        opp, platform_name=config_entry.domain, platform=platform
+    )
+
+    with patch.object(entity_platform, "async_call_later") as mock_call_later:
+        assert not await ent_platform.async_setup_entry(config_entry)
+
+    assert len(mock_call_later.mock_calls) == 1
+    assert len(mock_call_later.return_value.mock_calls) == 0
+    assert ent_platform._async_cancel_retry_setup is not None
+
+    await ent_platform.async_shutdown()
+
+    assert len(mock_call_later.return_value.mock_calls) == 1
+    assert ent_platform._async_unsub_polling is None
+    assert ent_platform._async_cancel_retry_setup is None
+
+
 async def test_not_fails_with_adding_empty_entities_(opp):
     """Test for not fails on empty entities list."""
     component = EntityComponent(_LOGGER, DOMAIN, opp)
@@ -624,7 +733,7 @@ async def test_entity_registry_updates_entity_id(opp):
     registry = mock_registry(
         opp,
         {
-            "test_domain.world": entity_registry.RegistryEntry(
+            "test_domain.world": er.RegistryEntry(
                 entity_id="test_domain.world",
                 unique_id="1234",
                 # Using component.async_add_entities is equal to platform "domain"
@@ -656,14 +765,14 @@ async def test_entity_registry_updates_invalid_entity_id(opp):
     registry = mock_registry(
         opp,
         {
-            "test_domain.world": entity_registry.RegistryEntry(
+            "test_domain.world": er.RegistryEntry(
                 entity_id="test_domain.world",
                 unique_id="1234",
                 # Using component.async_add_entities is equal to platform "domain"
                 platform="test_platform",
                 name="Some name",
             ),
-            "test_domain.existing": entity_registry.RegistryEntry(
+            "test_domain.existing": er.RegistryEntry(
                 entity_id="test_domain.existing",
                 unique_id="5678",
                 platform="test_platform",
@@ -703,7 +812,7 @@ async def test_entity_registry_updates_invalid_entity_id(opp):
 
 async def test_device_info_called(opp):
     """Test device info is forwarded correctly."""
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
     via = registry.async_get_or_create(
         config_entry_id="123",
         connections=set(),
@@ -723,7 +832,7 @@ async def test_device_info_called(opp):
                     unique_id="qwer",
                     device_info={
                         "identifiers": {("hue", "1234")},
-                        "connections": {("mac", "abcd")},
+                        "connections": {(dr.CONNECTION_NETWORK_MAC, "abcd")},
                         "manufacturer": "test-manuf",
                         "model": "test-model",
                         "name": "test-name",
@@ -751,7 +860,7 @@ async def test_device_info_called(opp):
     device = registry.async_get_device({("hue", "1234")})
     assert device is not None
     assert device.identifiers == {("hue", "1234")}
-    assert device.connections == {("mac", "abcd")}
+    assert device.connections == {(dr.CONNECTION_NETWORK_MAC, "abcd")}
     assert device.manufacturer == "test-manuf"
     assert device.model == "test-model"
     assert device.name == "test-name"
@@ -763,10 +872,10 @@ async def test_device_info_called(opp):
 
 async def test_device_info_not_overrides(opp):
     """Test device info is forwarded correctly."""
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
     device = registry.async_get_or_create(
         config_entry_id="bla",
-        connections={("mac", "abcd")},
+        connections={(dr.CONNECTION_NETWORK_MAC, "abcd")},
         manufacturer="test-manufacturer",
         model="test-model",
     )
@@ -781,7 +890,7 @@ async def test_device_info_not_overrides(opp):
                 MockEntity(
                     unique_id="qwer",
                     device_info={
-                        "connections": {("mac", "abcd")},
+                        "connections": {(dr.CONNECTION_NETWORK_MAC, "abcd")},
                         "default_name": "default name 1",
                         "default_model": "default model 1",
                         "default_manufacturer": "default manufacturer 1",
@@ -800,7 +909,7 @@ async def test_device_info_not_overrides(opp):
     assert await entity_platform.async_setup_entry(config_entry)
     await opp.async_block_till_done()
 
-    device2 = registry.async_get_device(set(), {("mac", "abcd")})
+    device2 = registry.async_get_device(set(), {(dr.CONNECTION_NETWORK_MAC, "abcd")})
     assert device2 is not None
     assert device.id == device2.id
     assert device2.manufacturer == "test-manufacturer"
@@ -823,12 +932,12 @@ async def test_entity_disabled_by_integration(opp):
     assert entity_disabled.opp is None
     assert entity_disabled.platform is None
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     entry_default = registry.async_get_or_create(DOMAIN, DOMAIN, "default")
     assert entry_default.disabled_by is None
     entry_disabled = registry.async_get_or_create(DOMAIN, DOMAIN, "disabled")
-    assert entry_disabled.disabled_by == "integration"
+    assert entry_disabled.disabled_by == er.DISABLED_INTEGRATION
 
 
 async def test_entity_info_added_to_entity_registry(opp):
@@ -845,10 +954,9 @@ async def test_entity_info_added_to_entity_registry(opp):
 
     await component.async_add_entities([entity_default])
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     entry_default = registry.async_get_or_create(DOMAIN, DOMAIN, "default")
-    print(entry_default)
     assert entry_default.capabilities == {"max": 100}
     assert entry_default.supported_features == 5
     assert entry_default.device_class == "mock-device-class"

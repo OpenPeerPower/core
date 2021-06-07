@@ -1,8 +1,9 @@
 """Alexa state report code."""
+from __future__ import annotations
+
 import asyncio
 import json
 import logging
-from typing import Optional
 
 import aiohttp
 import async_timeout
@@ -45,10 +46,10 @@ async def async_enable_proactive_mode(opp, smart_home_config):
 
     async def async_entity_state_listener(
         changed_entity: str,
-        old_state: Optional[State],
-        new_state: Optional[State],
+        old_state: State | None,
+        new_state: State | None,
     ):
-        if not opp.is_running:
+        if not opp is_running:
             return
 
         if not new_state:

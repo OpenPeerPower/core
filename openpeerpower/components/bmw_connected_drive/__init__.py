@@ -1,7 +1,6 @@
 """Reads vehicle status from BMW connected drive portal."""
 from __future__ import annotations
 
-import asyncio
 import logging
 
 from bimmer_connected.account import ConnectedDriveAccount
@@ -21,7 +20,7 @@ from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers import discovery
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity import DeviceInfo, Entity
 from openpeerpower.helpers.event import track_utc_time_change
 from openpeerpower.util import slugify
 import openpeerpower.util.dt as dt_util
@@ -102,7 +101,7 @@ def _async_migrate_options_from_data_if_missing(opp, entry):
         opp.config_entries.async_update_entry(entry, data=data, options=options)
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up BMW Connected Drive from a config entry."""
     opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN].setdefault(DATA_ENTRIES, {})
@@ -138,11 +137,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
     await _async_update_all()
 
-    for platform in PLATFORMS:
-        if platform != NOTIFY_DOMAIN:
-            opp.async_create_task(
-                opp.config_entries.async_forward_entry_setup(entry, platform)
-            )
+    opp.config_entries.async_setup_platforms(
+        entry, [platform for platform in PLATFORMS if platform != NOTIFY_DOMAIN]
+    )
 
     # set up notify platform, no entry support for notify platform yet,
     # have to use discovery to load platform.
@@ -161,14 +158,8 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-                if platform != NOTIFY_DOMAIN
-            ]
-        )
+    unload_ok = await opp.config_entries.async_unload_platforms(
+        entry, [platform for platform in PLATFORMS if platform != NOTIFY_DOMAIN]
     )
 
     # Only remove services if it is the last account and not read only
@@ -207,7 +198,9 @@ def setup_account(entry: ConfigEntry, opp, name: str) -> BMWConnectedDriveAccoun
 
     _LOGGER.debug("Adding new account %s", name)
 
-    pos = (opp.config.latitude, opp.config.longitude) if use_location else (None, None)
+    pos = (
+        (opp.config.latitude, opp.config.longitude) if use_location else (None, None)
+    )
     cd_account = BMWConnectedDriveAccount(
         username, password, region, name, read_only, *pos
     )
@@ -322,7 +315,7 @@ class BMWConnectedDriveBaseEntity(Entity):
         }
 
     @property
-    def device_info(self) -> dict:
+    def device_info(self) -> DeviceInfo:
         """Return info for device registry."""
         return {
             "identifiers": {(DOMAIN, self._vehicle.vin)},
@@ -332,7 +325,7 @@ class BMWConnectedDriveBaseEntity(Entity):
         }
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of the sensor."""
         return self._attrs
 

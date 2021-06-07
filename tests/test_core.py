@@ -9,7 +9,6 @@ from tempfile import TemporaryDirectory
 from unittest.mock import MagicMock, Mock, PropertyMock, patch
 
 import pytest
-import pytz
 import voluptuous as vol
 
 from openpeerpower.const import (
@@ -36,6 +35,7 @@ import openpeerpower.core as ha
 from openpeerpower.exceptions import (
     InvalidEntityFormatError,
     InvalidStateError,
+    MaxLengthExceeded,
     ServiceNotFound,
 )
 import openpeerpower.util.dt as dt_util
@@ -43,7 +43,7 @@ from openpeerpower.util.unit_system import METRIC_SYSTEM
 
 from tests.common import async_capture_events, async_mock_service
 
-PST = pytz.timezone("America/Los_Angeles")
+PST = dt_util.get_time_zone("America/Los_Angeles")
 
 
 def test_split_entity_id():
@@ -220,6 +220,29 @@ async def test_async_add_job_pending_tasks_coro(opp):
 
     for _ in range(2):
         opp.add_job(test_coro())
+
+    async def wait_finish_callback():
+        """Wait until all stuff is scheduled."""
+        await asyncio.sleep(0)
+        await asyncio.sleep(0)
+
+    await wait_finish_callback()
+
+    assert len(opp._pending_tasks) == 2
+    await opp.async_block_till_done()
+    assert len(call_count) == 2
+
+
+async def test_async_create_task_pending_tasks_coro(opp):
+    """Add a coro to pending tasks."""
+    call_count = []
+
+    async def test_coro():
+        """Test Coro."""
+        call_count.append("call")
+
+    for _ in range(2):
+        opp.create_task(test_coro())
 
     async def wait_finish_callback():
         """Wait until all stuff is scheduled."""
@@ -524,6 +547,21 @@ async def test_eventbus_coroutine_event_listener(opp):
     assert len(coroutine_calls) == 1
 
 
+async def test_eventbus_max_length_exceeded(opp):
+    """Test that an exception is raised when the max character length is exceeded."""
+
+    long_evt_name = (
+        "this_event_exceeds_the_max_character_length_even_with_the_new_limit"
+    )
+
+    with pytest.raises(MaxLengthExceeded) as exc_info:
+        opp.bus.async_fire(long_evt_name)
+
+    assert exc_info.value.property_name == "event_type"
+    assert exc_info.value.max_length == 64
+    assert exc_info.value.value == long_evt_name
+
+
 def test_state_init():
     """Test state.init."""
     with pytest.raises(InvalidEntityFormatError):
@@ -721,7 +759,9 @@ async def test_serviceregistry_call_with_blocking_done_in_time(opp):
     assert registered_events[0].data["domain"] == "test_domain"
     assert registered_events[0].data["service"] == "register_calls"
 
-    assert await opp.services.async_call("test_domain", "REGISTER_CALLS", blocking=True)
+    assert await opp.services.async_call(
+        "test_domain", "REGISTER_CALLS", blocking=True
+    )
     assert len(calls) == 1
 
 
@@ -741,7 +781,9 @@ async def test_serviceregistry_async_service(opp):
 
     opp.services.async_register("test_domain", "register_calls", service_handler)
 
-    assert await opp.services.async_call("test_domain", "REGISTER_CALLS", blocking=True)
+    assert await opp.services.async_call(
+        "test_domain", "REGISTER_CALLS", blocking=True
+    )
     assert len(calls) == 1
 
 
@@ -758,7 +800,9 @@ async def test_serviceregistry_async_service_partial(opp):
     )
     await opp.async_block_till_done()
 
-    assert await opp.services.async_call("test_domain", "REGISTER_CALLS", blocking=True)
+    assert await opp.services.async_call(
+        "test_domain", "REGISTER_CALLS", blocking=True
+    )
     assert len(calls) == 1
 
 
@@ -773,7 +817,9 @@ async def test_serviceregistry_callback_service(opp):
 
     opp.services.async_register("test_domain", "register_calls", service_handler)
 
-    assert await opp.services.async_call("test_domain", "REGISTER_CALLS", blocking=True)
+    assert await opp.services.async_call(
+        "test_domain", "REGISTER_CALLS", blocking=True
+    )
     assert len(calls) == 1
 
 
@@ -848,12 +894,12 @@ def test_config_defaults():
     """Test config defaults."""
     opp = Mock()
     config = ha.Config(opp)
-    assert config.opp is opp
+    assert config.opp is.opp
     assert config.latitude == 0
     assert config.longitude == 0
     assert config.elevation == 0
     assert config.location_name == "Home"
-    assert config.time_zone == dt_util.UTC
+    assert config.time_zone == "UTC"
     assert config.internal_url is None
     assert config.external_url is None
     assert config.config_source == "default"
@@ -930,7 +976,7 @@ def test_config_is_allowed_path():
         config.allowlist_external_dirs = {"/home", "/var"}
 
         invalid = [
-            "/opp/config/secure",
+            "/opp.config/secure",
             "/etc/passwd",
             "/root/secure_file",
             "/var/../etc/passwd",
@@ -1104,7 +1150,7 @@ def test_timer_out_of_sync(mock_monotonic, loop):
 
 
 async def test_opp_start_starts_the_timer(loop):
-    """Test when opp starts, it starts the timer."""
+    """Test when opp.starts, it starts the timer."""
     opp = ha.OpenPeerPower()
 
     try:
@@ -1114,7 +1160,7 @@ async def test_opp_start_starts_the_timer(loop):
         assert opp.state == ha.CoreState.running
         assert not opp._track_task
         assert len(mock_timer.mock_calls) == 1
-        assert mock_timer.mock_calls[0][1][0] is opp
+        assert mock_timer.mock_calls[0][1][0] is.opp
 
     finally:
         await opp.async_stop()
@@ -1134,7 +1180,7 @@ async def test_start_taking_too_long(loop, caplog):
 
         assert opp.state == ha.CoreState.running
         assert len(mock_timer.mock_calls) == 1
-        assert mock_timer.mock_calls[0][1][0] is opp
+        assert mock_timer.mock_calls[0][1][0] is.opp
         assert "Something is blocking Open Peer Power" in caplog.text
 
     finally:
@@ -1450,11 +1496,9 @@ async def test_async_all(opp):
         "light.bowl",
         "light.frog",
     }
-    assert {state.entity_id for state in opp.states.async_all(["light", "switch"])} == {
-        "light.bowl",
-        "light.frog",
-        "switch.link",
-    }
+    assert {
+        state.entity_id for state in opp.states.async_all(["light", "switch"])
+    } == {"light.bowl", "light.frog", "switch.link"}
 
 
 async def test_async_entity_ids_count(opp):

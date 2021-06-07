@@ -1,18 +1,21 @@
 """Support for Canary devices."""
-import asyncio
+from __future__ import annotations
+
 from datetime import timedelta
 import logging
+from typing import Final
 
 from canary.api import Api
-from requests import ConnectTimeout, HTTPError
+from requests.exceptions import ConnectTimeout, HTTPError
 import voluptuous as vol
 
 from openpeerpower.components.camera.const import DOMAIN as CAMERA_DOMAIN
 from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry
 from openpeerpower.const import CONF_PASSWORD, CONF_TIMEOUT, CONF_USERNAME
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.exceptions import ConfigEntryNotReady
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 
 from .const import (
     CONF_FFMPEG_ARGUMENTS,
@@ -24,27 +27,32 @@ from .const import (
 )
 from .coordinator import CanaryDataUpdateCoordinator
 
-_LOGGER = logging.getLogger(__name__)
+_LOGGER: Final = logging.getLogger(__name__)
 
-MIN_TIME_BETWEEN_UPDATES = timedelta(seconds=30)
+MIN_TIME_BETWEEN_UPDATES: Final = timedelta(seconds=30)
 
-CONFIG_SCHEMA = vol.Schema(
-    {
-        DOMAIN: vol.Schema(
-            {
-                vol.Required(CONF_USERNAME): cv.string,
-                vol.Required(CONF_PASSWORD): cv.string,
-                vol.Optional(CONF_TIMEOUT, default=DEFAULT_TIMEOUT): cv.positive_int,
-            }
-        )
-    },
+CONFIG_SCHEMA: Final = vol.Schema(
+    vol.All(
+        cv.deprecated(DOMAIN),
+        {
+            DOMAIN: vol.Schema(
+                {
+                    vol.Required(CONF_USERNAME): cv.string,
+                    vol.Required(CONF_PASSWORD): cv.string,
+                    vol.Optional(
+                        CONF_TIMEOUT, default=DEFAULT_TIMEOUT
+                    ): cv.positive_int,
+                }
+            )
+        },
+    ),
     extra=vol.ALLOW_EXTRA,
 )
 
-PLATFORMS = ["alarm_control_panel", "camera", "sensor"]
+PLATFORMS: Final[list[str]] = ["alarm_control_panel", "camera", "sensor"]
 
 
-async def async_setup(opp: OpenPeerPowerType, config: dict) -> bool:
+async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up the Canary integration."""
     opp.data.setdefault(DOMAIN, {})
 
@@ -77,7 +85,7 @@ async def async_setup(opp: OpenPeerPowerType, config: dict) -> bool:
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Canary from a config entry."""
     if not entry.options:
         options = {
@@ -95,10 +103,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         raise ConfigEntryNotReady from error
 
     coordinator = CanaryDataUpdateCoordinator(opp, api=canary_api)
-    await coordinator.async_refresh()
-
-    if not coordinator.last_update_success:
-        raise ConfigEntryNotReady
+    await coordinator.async_config_entry_first_refresh()
 
     undo_listener = entry.add_update_listener(_async_update_listener)
 
@@ -107,24 +112,14 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         DATA_UNDO_UPDATE_LISTENER: undo_listener,
     }
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     if unload_ok:
         opp.data[DOMAIN][entry.entry_id][DATA_UNDO_UPDATE_LISTENER]()
@@ -133,7 +128,7 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool
     return unload_ok
 
 
-async def _async_update_listener(opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
+async def _async_update_listener(opp: OpenPeerPower, entry: ConfigEntry) -> None:
     """Handle options update."""
     await opp.config_entries.async_reload(entry.entry_id)
 

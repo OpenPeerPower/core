@@ -7,7 +7,7 @@ import voluptuous as vol
 
 from openpeerpower.components.device_tracker import (
     DOMAIN,
-    PLATFORM_SCHEMA,
+    PLATFORM_SCHEMA as PARENT_PLATFORM_SCHEMA,
     DeviceScanner,
 )
 from openpeerpower.const import CONF_API_KEY, CONF_CLIENT_ID, CONF_HOST
@@ -17,7 +17,7 @@ SCAN_INTERVAL = timedelta(seconds=120)
 
 GRANT_TYPE = "client_credentials"
 
-PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
+PLATFORM_SCHEMA = PARENT_PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_HOST): cv.string,
         vol.Required(CONF_CLIENT_ID): cv.string,

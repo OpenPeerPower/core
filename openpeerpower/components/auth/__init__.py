@@ -12,7 +12,7 @@ be in JSON as it's more readable.
 Exchange the authorization code retrieved from the login flow for tokens.
 
 {
-    "client_id": "https://oppbian.local:8123/",
+    "client_id": "https://opp.ian.local:8123/",
     "grant_type": "authorization_code",
     "code": "411ee2f916e648d691e937ae9344681e"
 }
@@ -33,7 +33,7 @@ token.
 Request a new access token using a refresh token.
 
 {
-    "client_id": "https://oppbian.local:8123/",
+    "client_id": "https://opp.ian.local:8123/",
     "grant_type": "refresh_token",
     "refresh_token": "IJKLMNOPQRST"
 }
@@ -114,8 +114,9 @@ Result will be a long-lived access token:
 }
 
 """
+from __future__ import annotations
+
 from datetime import timedelta
-from typing import Union
 import uuid
 
 from aiohttp import web
@@ -183,7 +184,7 @@ RESULT_TYPE_USER = "user"
 
 @bind_opp
 def create_auth_code(
-    opp, client_id: str, credential_or_user: Union[Credentials, User]
+    opp, client_id: str, credential_or_user: Credentials | User
 ) -> str:
     """Create an authorization code to fetch tokens."""
     return opp.data[DOMAIN](client_id, credential_or_user)
@@ -239,7 +240,7 @@ class TokenView(OpenPeerPowerView):
     @log_invalid_auth
     async def post(self, request):
         """Grant a token."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         data = await request.post()
 
         grant_type = data.get("grant_type")
@@ -393,7 +394,7 @@ class LinkUserView(OpenPeerPowerView):
     @RequestDataValidator(vol.Schema({"code": str, "client_id": str}))
     async def post(self, request, data):
         """Link a user."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         user = request["opp_user"]
 
         credentials = self._retrieve_credentials(

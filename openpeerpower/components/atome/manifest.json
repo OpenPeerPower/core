@@ -2,6 +2,7 @@
   "domain": "atome",
   "name": "Atome Linky",
   "documentation": "https://www.openpeerpower.io/integrations/atome",
-  "codeowners": [],
-  "requirements": ["pyatome==0.1.1"]
+  "codeowners": ["@baqs"],
+  "requirements": ["pyatome==0.1.1"],
+  "iot_class": "cloud_polling"
 }

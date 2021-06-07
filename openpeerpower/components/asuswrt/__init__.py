@@ -1,5 +1,4 @@
 """Support for ASUSWRT devices."""
-import asyncio
 
 import voluptuous as vol
 
@@ -14,8 +13,8 @@ from openpeerpower.const import (
     CONF_USERNAME,
     EVENT_OPENPEERPOWER_STOP,
 )
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers import config_validation as cv
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import (
     CONF_DNSMASQ,
@@ -31,7 +30,6 @@ from .const import (
     MODE_ROUTER,
     PROTOCOL_SSH,
     PROTOCOL_TELNET,
-    SENSOR_TYPES,
 )
 from .router import AsusWrtRouter
 
@@ -39,6 +37,7 @@ PLATFORMS = ["device_tracker", "sensor"]
 
 CONF_PUB_KEY = "pub_key"
 SECRET_GROUP = "Password or SSH Key"
+SENSOR_TYPES = ["devices", "upload_speed", "download_speed", "download", "upload"]
 
 CONFIG_SCHEMA = vol.Schema(
     vol.All(
@@ -112,7 +111,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up AsusWrt platform."""
 
     # import options from yaml if empty
@@ -125,13 +124,10 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
 
     router.async_on_close(entry.add_update_listener(update_listener))
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     async def async_close_connection(event):
-        """Close AsusWrt connection on OP Stop."""
+        """Close AsusWrt connection on OPP Stop."""
         await router.close()
 
     stop_listener = opp.bus.async_listen_once(
@@ -146,16 +142,10 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
+
     if unload_ok:
         opp.data[DOMAIN][entry.entry_id]["stop_listener"]()
         router = opp.data[DOMAIN][entry.entry_id][DATA_ASUSWRT]
@@ -166,7 +156,7 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     return unload_ok
 
 
-async def update_listener(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def update_listener(opp: OpenPeerPower, entry: ConfigEntry):
     """Update when config_entry options update."""
     router = opp.data[DOMAIN][entry.entry_id][DATA_ASUSWRT]
 

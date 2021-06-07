@@ -6,7 +6,7 @@ import pybbox
 import requests
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_ATTRIBUTION,
     CONF_MONITORED_VARIABLES,
@@ -15,7 +15,6 @@ from openpeerpower.const import (
     DEVICE_CLASS_TIMESTAMP,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 from openpeerpower.util.dt import utcnow
 
@@ -86,7 +85,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(sensors, True)
 
 
-class BboxUptimeSensor(Entity):
+class BboxUptimeSensor(SensorEntity):
     """Bbox uptime sensor."""
 
     def __init__(self, bbox_data, sensor_type, name):
@@ -115,7 +114,7 @@ class BboxUptimeSensor(Entity):
         return self._icon
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return {ATTR_ATTRIBUTION: ATTRIBUTION}
 
@@ -133,7 +132,7 @@ class BboxUptimeSensor(Entity):
         self._state = uptime.replace(microsecond=0).isoformat()
 
 
-class BboxSensor(Entity):
+class BboxSensor(SensorEntity):
     """Implementation of a Bbox sensor."""
 
     def __init__(self, bbox_data, sensor_type, name):
@@ -167,7 +166,7 @@ class BboxSensor(Entity):
         return self._icon
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return {ATTR_ATTRIBUTION: ATTRIBUTION}
 

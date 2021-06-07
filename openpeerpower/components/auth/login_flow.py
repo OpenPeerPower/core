@@ -26,9 +26,9 @@ And optional parameter 'type' has to set as 'link_user' if login flow used for
 link credential to exist user. Default 'type' is 'authorize'.
 
 {
-    "client_id": "https://oppbian.local:8123/",
+    "client_id": "https://opp.ian.local:8123/",
     "handler": ["local_provider", null],
-    "redirect_url": "https://oppbian.local:8123/",
+    "redirect_url": "https://opp.ian.local:8123/",
     "type': "authorize"
 }
 
@@ -52,7 +52,7 @@ flow for details.
 
 Progress the flow. Most flows will be 1 page, but could optionally add extra
 login challenges, like TFA. Once the flow has finished, the returned step will
-have type "create_entry" and "result" key will contain an authorization code.
+have type RESULT_TYPE_CREATE_ENTRY and "result" key will contain an authorization code.
 The authorization code associated with an authorized user by default, it will
 associate with an credential if "type" set to "link_user" in
 "/auth/login_flow"
@@ -105,7 +105,7 @@ class AuthProvidersView(OpenPeerPowerView):
 
     async def get(self, request):
         """Get available auth providers."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         if not opp.components.onboarding.async_is_user_onboarded():
             return self.json_message(
                 message="Onboarding not finished",
@@ -173,7 +173,7 @@ class LoginFlowIndexView(OpenPeerPowerView):
     async def post(self, request, data):
         """Create a new login flow."""
         if not await indieauth.verify_redirect_uri(
-            request.app["opp"], data["client_id"], data["redirect_uri"]
+            request.app["opp.], data["client_id"], data["redirect_uri"]
         ):
             return self.json_message(
                 "invalid client id or redirect uri", HTTP_BAD_REQUEST

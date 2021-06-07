@@ -7,8 +7,10 @@ from unittest.mock import Mock, patch
 import pytest
 
 from openpeerpower import bootstrap, core, runner
+from openpeerpower.bootstrap import SIGNAL_BOOTSTRAP_INTEGRATONS
 import openpeerpower.config as config_util
 from openpeerpower.exceptions import OpenPeerPowerError
+from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 import openpeerpower.util.dt as dt_util
 
 from tests.common import (
@@ -31,7 +33,7 @@ def apply_mock_storage(opp_storage):
 
 @pytest.fixture(autouse=True)
 async def apply_stop_opp(stop_opp):
-    """Make sure all opp are stopped."""
+    """Make sure all opp.are stopped."""
 
 
 @pytest.fixture(autouse=True)
@@ -45,10 +47,10 @@ def mock_http_start_stop():
 
 @patch("openpeerpower.bootstrap.async_enable_logging", Mock())
 async def test_open_peer_power_core_config_validation(opp):
-    """Test if we pass in wrong information for OP conf."""
-    # Extensive OP conf validation testing is done
+    """Test if we pass in wrong information for OPP conf."""
+    # Extensive OPP conf validation testing is done
     result = await bootstrap.async_from_config_dict(
-        {"openpeerpower": {"latitude": "some string"}}, opp
+        {"openpeerpower": {"latitude": "some string"}},.opp
     )
     assert result is None
 
@@ -431,7 +433,9 @@ async def test_setup_opp_takes_longer_than_log_slow_startup(
     with patch(
         "openpeerpower.config.async_opp_config_yaml",
         return_value={"browser": {}, "frontend": {}},
-    ), patch.object(bootstrap, "LOG_SLOW_STARTUP_INTERVAL", 0.3), patch(
+    ), patch.object(bootstrap, "LOG_SLOW_STARTUP_INTERVAL", 0.3), patch.object(
+        bootstrap, "SLOW_STARTUP_CHECK_INTERVAL", 0.05
+    ), patch(
         "openpeerpower.components.frontend.async_setup",
         side_effect=_async_setup_that_blocks_startup,
     ):
@@ -608,3 +612,60 @@ async def test_setup_safe_mode_if_no_frontend(
     assert opp.config.skip_pip
     assert opp.config.internal_url == "http://192.168.1.100:8123"
     assert opp.config.external_url == "https://abcdef.ui.nabu.casa"
+
+
+@pytest.mark.parametrize("load_registries", [False])
+async def test_empty_integrations_list_is_only_sent_at_the_end_of_bootstrap(opp):
+    """Test empty integrations list is only sent at the end of bootstrap."""
+    order = []
+
+    def gen_domain_setup(domain):
+        async def async_setup(opp, config):
+            order.append(domain)
+            await asyncio.sleep(0.1)
+
+            async def _background_task():
+                await asyncio.sleep(0.2)
+
+            await opp.async_create_task(_background_task())
+            return True
+
+        return async_setup
+
+    mock_integration(
+        opp,
+        MockModule(
+            domain="normal_integration",
+            async_setup=gen_domain_setup("normal_integration"),
+            partial_manifest={"after_dependencies": ["an_after_dep"]},
+        ),
+    )
+    mock_integration(
+        opp,
+        MockModule(
+            domain="an_after_dep",
+            async_setup=gen_domain_setup("an_after_dep"),
+        ),
+    )
+
+    integrations = []
+
+    @core.callback
+    def _bootstrap_integrations(data):
+        integrations.append(data)
+
+    async_dispatcher_connect(
+        opp, SIGNAL_BOOTSTRAP_INTEGRATONS, _bootstrap_integrations
+    )
+    with patch.object(bootstrap, "SLOW_STARTUP_CHECK_INTERVAL", 0.05):
+        await bootstrap._async_set_up_integrations(
+            opp, {"normal_integration": {}, "an_after_dep": {}}
+        )
+
+    assert integrations[0] != {}
+    assert "an_after_dep" in integrations[0]
+    assert integrations[-3] != {}
+    assert integrations[-1] == {}
+
+    assert "normal_integration" in opp.config.components
+    assert order == ["an_after_dep", "normal_integration"]

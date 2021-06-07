@@ -1,0 +1,9 @@
+{
+  "domain": "analytics",
+  "name": "Analytics",
+  "documentation": "https://www.openpeerpower.io/integrations/analytics",
+  "codeowners": ["@openpeerpower/core", "@ludeeus"],
+  "dependencies": ["api", "websocket_api"],
+  "quality_scale": "internal",
+  "iot_class": "cloud_push"
+}

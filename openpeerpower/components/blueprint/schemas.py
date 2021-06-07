@@ -5,6 +5,7 @@ import voluptuous as vol
 
 from openpeerpower.const import (
     CONF_DEFAULT,
+    CONF_DESCRIPTION,
     CONF_DOMAIN,
     CONF_NAME,
     CONF_PATH,
@@ -15,10 +16,9 @@ from openpeerpower.helpers import config_validation as cv, selector
 
 from .const import (
     CONF_BLUEPRINT,
-    CONF_DESCRIPTION,
+    CONF_OPENPEERPOWER,
     CONF_INPUT,
     CONF_MIN_VERSION,
-    CONF_OPENPEERPOWER,
     CONF_SOURCE_URL,
     CONF_USE_BLUEPRINT,
 )

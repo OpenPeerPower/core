@@ -1,4 +1,5 @@
 """Support for Aurora Forecast sensor."""
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import PERCENTAGE
 
 from . import AuroraEntity
@@ -18,7 +19,7 @@ async def async_setup_entry(opp, entry, async_add_entries):
     async_add_entries([entity])
 
 
-class AuroraSensor(AuroraEntity):
+class AuroraSensor(AuroraEntity, SensorEntity):
     """Implementation of an aurora sensor."""
 
     @property

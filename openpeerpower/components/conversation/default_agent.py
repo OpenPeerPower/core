@@ -1,6 +1,7 @@
 """Standard conversastion implementation for Open Peer Power."""
+from __future__ import annotations
+
 import re
-from typing import Optional
 
 from openpeerpower import core, setup
 from openpeerpower.components.cover.intent import INTENT_CLOSE_COVER, INTENT_OPEN_COVER
@@ -52,7 +53,7 @@ def async_register(opp, intent_type, utterances):
 class DefaultAgent(AbstractConversationAgent):
     """Default agent for conversation agent."""
 
-    def __init__(self, opp: core.OpenPeerPower):
+    def __init__(self, opp: core.OpenPeerPower) -> None:
         """Initialize the default agent."""
         self.opp = opp
 
@@ -112,7 +113,7 @@ class DefaultAgent(AbstractConversationAgent):
             async_register(self.opp, intent_type, sentences)
 
     async def async_process(
-        self, text: str, context: core.Context, conversation_id: Optional[str] = None
+        self, text: str, context: core.Context, conversation_id: str | None = None
     ) -> intent.IntentResponse:
         """Process a sentence."""
         intents = self.opp.data[DOMAIN]

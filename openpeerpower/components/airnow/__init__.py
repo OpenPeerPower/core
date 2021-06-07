@@ -1,5 +1,4 @@
 """The AirNow integration."""
-import asyncio
 import datetime
 import logging
 
@@ -11,7 +10,6 @@ from pyairnow.errors import AirNowError
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_API_KEY, CONF_LATITUDE, CONF_LONGITUDE, CONF_RADIUS
 from openpeerpower.core import OpenPeerPower
-from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
@@ -38,12 +36,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["sensor"]
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the AirNow component."""
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up AirNow from a config entry."""
     api_key = entry.data[CONF_API_KEY]
     latitude = entry.data[CONF_LATITUDE]
@@ -60,32 +53,21 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     )
 
     # Sync with Coordinator
-    await coordinator.async_refresh()
-    if not coordinator.last_update_success:
-        raise ConfigEntryNotReady
+    await coordinator.async_config_entry_first_refresh()
 
     # Store Entity and Initialize Platforms
     opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = coordinator
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
+
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
 

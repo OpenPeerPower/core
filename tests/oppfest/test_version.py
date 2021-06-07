@@ -2,7 +2,10 @@
 import pytest
 import voluptuous as vol
 
-from script.oppfest.manifest import CUSTOM_INTEGRATION_MANIFEST_SCHEMA, validate_version
+from script.oppfest.manifest import (
+    CUSTOM_INTEGRATION_MANIFEST_SCHEMA,
+    validate_version,
+)
 from script.oppfest.model import Integration
 
 
@@ -14,7 +17,7 @@ def integration():
         "domain": "test",
         "documentation": "https://example.com",
         "name": "test",
-        "codeowners": [],
+        "codeowners": ["@awesome"],
     }
     return integration
 
@@ -22,10 +25,9 @@ def integration():
 def test_validate_version_no_key(integration: Integration):
     """Test validate version with no key."""
     validate_version(integration)
-    assert (
-        "No 'version' key in the manifest file. This will cause a future version of Open Peer Power to block this integration."
-        in [x.error for x in integration.errors]
-    )
+    assert "No 'version' key in the manifest file." in [
+        x.error for x in integration.errors
+    ]
 
 
 def test_validate_custom_integration_manifest(integration: Integration):

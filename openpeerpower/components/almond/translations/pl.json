@@ -8,8 +8,8 @@
         },
         "step": {
             "oppio_confirm": {
-                "description": "Czy chcesz skonfigurowa\u0107 Open Peer Power, aby \u0142\u0105czy\u0142 si\u0119 z Almond dostarczonym przez dodatek Opp.io: {addon}?",
-                "title": "Almond poprzez dodatek Opp.io"
+                "description": "Czy chcesz skonfigurowa\u0107 Open Peer Power, aby \u0142\u0105czy\u0142 si\u0119 z Almond dostarczonym przez dodatek {addon}?",
+                "title": "Almond poprzez dodatek Open Peer Power"
             },
             "pick_implementation": {
                 "title": "Wybierz metod\u0119 uwierzytelniania"

@@ -29,7 +29,9 @@ CONTROL4_NON_DIMMER_VAR = "LIGHT_STATE"
 CONTROL4_DIMMER_VAR = "LIGHT_LEVEL"
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry, async_add_entities):
+async def async_setup_entry(
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
+):
     """Set up Control4 lights from a config entry."""
     entry_data = opp.data[DOMAIN][entry.entry_id]
     scan_interval = entry_data[CONF_SCAN_INTERVAL]
@@ -148,7 +150,7 @@ class Control4Light(Control4Entity, LightEntity):
         device_model: str,
         device_id: int,
         is_dimmer: bool,
-    ):
+    ) -> None:
         """Initialize Control4 light entity."""
         super().__init__(
             entry_data,

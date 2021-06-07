@@ -4,7 +4,7 @@ import logging
 from typing import Any
 
 import aiohttp
-from opp_net import account_link
+from opp_nabucasa import account_link
 
 from openpeerpower.const import MAJOR_VERSION, MINOR_VERSION, PATCH_VERSION
 from openpeerpower.core import OpenPeerPower, callback
@@ -38,7 +38,7 @@ async def async_provide_implementation(opp: OpenPeerPower, domain: str):
 
 @callback
 def _is_older(version: str) -> bool:
-    """Test if a version is older than the current OP version."""
+    """Test if a version is older than the current OPP version."""
     version_parts = version.split(".")
 
     if len(version_parts) != 3:
@@ -94,7 +94,7 @@ async def _get_services(opp):
 class CloudOAuth2Implementation(config_entry_oauth2_flow.AbstractOAuth2Implementation):
     """Cloud implementation of the OAuth2 flow."""
 
-    def __init__(self, opp: OpenPeerPower, service: str):
+    def __init__(self, opp: OpenPeerPower, service: str) -> None:
         """Initialize cloud OAuth2 implementation."""
         self.opp = opp
         self.service = service

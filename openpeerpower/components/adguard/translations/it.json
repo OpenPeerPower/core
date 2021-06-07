@@ -1,16 +1,16 @@
 {
     "config": {
         "abort": {
-            "existing_instance_updated": "Configurazione esistente aggiornata.",
-            "single_instance_allowed": "Gi\u00e0 configurato. \u00c8 possibile una sola configurazione."
+            "already_configured": "Il servizio \u00e8 gi\u00e0 configurato",
+            "existing_instance_updated": "Configurazione esistente aggiornata."
         },
         "error": {
             "cannot_connect": "Impossibile connettersi"
         },
         "step": {
             "oppio_confirm": {
-                "description": "Vuoi configurare Open Peer Power per connettersi alla AdGuard Home fornita dal componente aggiuntivo di Opp.io: {addon}?",
-                "title": "AdGuard Home tramite il componente aggiuntivo di Opp.io"
+                "description": "Vuoi configurare Open Peer Power per connettersi ad AdGuard Home fornito dal componente aggiuntivo: {addon}?",
+                "title": "AdGuard Home tramite il componente aggiuntivo di Open Peer Power"
             },
             "user": {
                 "data": {

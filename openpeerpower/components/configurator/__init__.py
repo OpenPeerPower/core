@@ -6,6 +6,7 @@ This will return a request id that has to be used for future calls.
 A callback has to be provided to `request_config` which will be called when
 the user has submitted configuration information.
 """
+from contextlib import suppress
 import functools as ft
 
 from openpeerpower.const import (
@@ -96,11 +97,8 @@ def request_config(opp, *args, **kwargs):
 @async_callback
 def async_notify_errors(opp, request_id, error):
     """Add errors to a config request."""
-    try:
+    with suppress(KeyError):  # If request_id does not exist
         opp.data[DATA_REQUESTS][request_id].async_notify_errors(request_id, error)
-    except KeyError:
-        # If request_id does not exist
-        pass
 
 
 @bind_opp
@@ -115,11 +113,8 @@ def notify_errors(opp, request_id, error):
 @async_callback
 def async_request_done(opp, request_id):
     """Mark a configuration request as done."""
-    try:
+    with suppress(KeyError):  # If request_id does not exist
         opp.data[DATA_REQUESTS].pop(request_id).async_request_done(request_id)
-    except KeyError:
-        # If request_id does not exist
-        pass
 
 
 @bind_opp
@@ -152,7 +147,7 @@ class Configurator:
         self, name, callback, description, submit_caption, fields, entity_picture
     ):
         """Set up a request for configuration."""
-        entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, name, opp=self.opp)
+        entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, name, opp.self.opp)
 
         if fields is None:
             fields = []

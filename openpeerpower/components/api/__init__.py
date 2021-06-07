@@ -1,5 +1,6 @@
 """Rest API for Open Peer Power."""
 import asyncio
+from contextlib import suppress
 import json
 import logging
 
@@ -37,7 +38,6 @@ from openpeerpower.helpers import template
 from openpeerpower.helpers.json import JSONEncoder
 from openpeerpower.helpers.network import NoURLAvailableError, get_url
 from openpeerpower.helpers.service import async_get_all_descriptions
-from openpeerpower.helpers.state import AsyncTrackStates
 from openpeerpower.helpers.system_info import async_get_system_info
 
 _LOGGER = logging.getLogger(__name__)
@@ -99,7 +99,7 @@ class APIEventStream(OpenPeerPowerView):
         """Provide a streaming interface for the event bus."""
         if not request["opp_user"].is_admin:
             raise Unauthorized()
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         stop_obj = object()
         to_write = asyncio.Queue()
 
@@ -169,7 +169,7 @@ class APIConfigView(OpenPeerPowerView):
     @ha.callback
     def get(self, request):
         """Get current configuration."""
-        return self.json(request.app["opp"].config.as_dict())
+        return self.json(request.app["opp.].config.as_dict())
 
 
 class APIDiscoveryView(OpenPeerPowerView):
@@ -181,7 +181,7 @@ class APIDiscoveryView(OpenPeerPowerView):
 
     async def get(self, request):
         """Get discovery information."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         uuid = await opp.helpers.instance_id.async_get()
         system_info = await async_get_system_info(opp)
 
@@ -197,15 +197,11 @@ class APIDiscoveryView(OpenPeerPowerView):
             ATTR_VERSION: __version__,
         }
 
-        try:
+        with suppress(NoURLAvailableError):
             data["external_url"] = get_url(opp, allow_internal=False)
-        except NoURLAvailableError:
-            pass
 
-        try:
+        with suppress(NoURLAvailableError):
             data["internal_url"] = get_url(opp, allow_external=False)
-        except NoURLAvailableError:
-            pass
 
         # Set old base URL based on external or internal
         data["base_url"] = data["external_url"] or data["internal_url"]
@@ -226,7 +222,7 @@ class APIStatesView(OpenPeerPowerView):
         entity_perm = user.permissions.check_entity
         states = [
             state
-            for state in request.app["opp"].states.async_all()
+            for state in request.app["opp.].states.async_all()
             if entity_perm(state.entity_id, "read")
         ]
         return self.json(states)
@@ -245,7 +241,7 @@ class APIEntityStateView(OpenPeerPowerView):
         if not user.permissions.check_entity(entity_id, POLICY_READ):
             raise Unauthorized(entity_id=entity_id)
 
-        state = request.app["opp"].states.get(entity_id)
+        state = request.app["opp.].states.get(entity_id)
         if state:
             return self.json(state)
         return self.json_message("Entity not found.", HTTP_NOT_FOUND)
@@ -254,7 +250,7 @@ class APIEntityStateView(OpenPeerPowerView):
         """Update state of entity."""
         if not request["opp_user"].is_admin:
             raise Unauthorized(entity_id=entity_id)
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         try:
             data = await request.json()
         except ValueError:
@@ -288,7 +284,7 @@ class APIEntityStateView(OpenPeerPowerView):
         """Remove entity."""
         if not request["opp_user"].is_admin:
             raise Unauthorized(entity_id=entity_id)
-        if request.app["opp"].states.async_remove(entity_id):
+        if request.app["opp.].states.async_remove(entity_id):
             return self.json_message("Entity removed.")
         return self.json_message("Entity not found.", HTTP_NOT_FOUND)
 
@@ -302,7 +298,7 @@ class APIEventListenersView(OpenPeerPowerView):
     @ha.callback
     def get(self, request):
         """Get event listeners."""
-        return self.json(async_events_json(request.app["opp"]))
+        return self.json(async_events_json(request.app["opp.]))
 
 
 class APIEventView(OpenPeerPowerView):
@@ -337,7 +333,7 @@ class APIEventView(OpenPeerPowerView):
                 if state:
                     event_data[key] = state
 
-        request.app["opp"].bus.async_fire(
+        request.app["opp.].bus.async_fire(
             event_type, event_data, ha.EventOrigin.remote, self.context(request)
         )
 
@@ -352,7 +348,7 @@ class APIServicesView(OpenPeerPowerView):
 
     async def get(self, request):
         """Get registered services."""
-        services = await async_services_json(request.app["opp"])
+        services = await async_services_json(request.app["opp.])
         return self.json(services)
 
 
@@ -367,20 +363,27 @@ class APIDomainServicesView(OpenPeerPowerView):
 
         Returns a list of changed states.
         """
-        opp = request.app["opp"]
+        opp. ha.OpenPeerPower = request.app["opp.]
         body = await request.text()
         try:
             data = json.loads(body) if body else None
         except ValueError:
             return self.json_message("Data should be valid JSON.", HTTP_BAD_REQUEST)
 
-        with AsyncTrackStates(opp) as changed_states:
-            try:
-                await opp.services.async_call(
-                    domain, service, data, blocking=True, context=self.context(request)
-                )
-            except (vol.Invalid, ServiceNotFound) as ex:
-                raise HTTPBadRequest() from ex
+        context = self.context(request)
+
+        try:
+            await opp.services.async_call(
+                domain, service, data, blocking=True, context=context
+            )
+        except (vol.Invalid, ServiceNotFound) as ex:
+            raise HTTPBadRequest() from ex
+
+        changed_states = []
+
+        for state in opp.states.async_all():
+            if state.context is context:
+                changed_states.append(state)
 
         return self.json(changed_states)
 
@@ -394,7 +397,7 @@ class APIComponentsView(OpenPeerPowerView):
     @ha.callback
     def get(self, request):
         """Get current loaded components."""
-        return self.json(request.app["opp"].config.components)
+        return self.json(request.app["opp.].config.components)
 
 
 class APITemplateView(OpenPeerPowerView):
@@ -409,7 +412,7 @@ class APITemplateView(OpenPeerPowerView):
             raise Unauthorized()
         try:
             data = await request.json()
-            tpl = template.Template(data["template"], request.app["opp"])
+            tpl = template.Template(data["template"], request.app["opp.])
             return tpl.async_render(variables=data.get("variables"), parse_result=False)
         except (ValueError, TemplateError) as ex:
             return self.json_message(
@@ -427,7 +430,7 @@ class APIErrorLog(OpenPeerPowerView):
         """Retrieve API error log."""
         if not request["opp_user"].is_admin:
             raise Unauthorized()
-        return web.FileResponse(request.app["opp"].data[DATA_LOGGING])
+        return web.FileResponse(request.app["opp.].data[DATA_LOGGING])
 
 
 async def async_services_json(opp):

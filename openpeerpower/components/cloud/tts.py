@@ -1,7 +1,7 @@
 """Support for the cloud for text to speech service."""
 
-from opp_net import Cloud
-from opp_net.voice import MAP_VOICE, VoiceError
+from opp_nabucasa import Cloud
+from opp_nabucasa.voice import MAP_VOICE, VoiceError
 import voluptuous as vol
 
 from openpeerpower.components.tts import CONF_LANG, PLATFORM_SCHEMA, Provider
@@ -61,7 +61,7 @@ async def async_get_engine(opp, config, discovery_info=None):
 class CloudProvider(Provider):
     """NabuCasa Cloud speech API provider."""
 
-    def __init__(self, cloud: Cloud, language: str, gender: str):
+    def __init__(self, cloud: Cloud, language: str, gender: str) -> None:
         """Initialize cloud provider."""
         self.cloud = cloud
         self.name = "Cloud"

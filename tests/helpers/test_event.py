@@ -4,7 +4,8 @@ import asyncio
 from datetime import datetime, timedelta
 from unittest.mock import patch
 
-from astral import Astral
+from astral import LocationInfo
+import astral.sun
 import jinja2
 import pytest
 
@@ -148,7 +149,9 @@ async def test_track_state_change_from_to_state_match(opp):
     def no_to_from_specified_callback(entity_id, old_state, new_state):
         no_to_from_specified_runs.append(1)
 
-    async_track_state_change(opp, "light.Bowl", from_and_to_state_callback, "on", "off")
+    async_track_state_change(
+        opp, "light.Bowl", from_and_to_state_callback, "on", "off"
+    )
     async_track_state_change(opp, "light.Bowl", only_from_state_callback, "on", None)
     async_track_state_change(
         opp, "light.Bowl", only_to_state_callback, None, ["off", "standby"]
@@ -771,7 +774,7 @@ async def test_track_template(opp):
 
     template_condition = Template("{{states.switch.test.state == 'on'}}", opp)
     template_condition_var = Template(
-        "{{states.switch.test.state == 'on' and test == 5}}", opp
+        "{{states.switch.test.state == 'on' and test == 5}}",.opp
     )
 
     opp.states.async_set("switch.test", "off")
@@ -883,7 +886,7 @@ async def test_track_template_error_can_recover(opp, caplog):
     """Test tracking template with error."""
     opp.states.async_set("switch.data_system", "cow", {"opmode": 0})
     template_error = Template(
-        "{{ states.sensor.data_system.attributes['opmode'] == '0' }}", opp
+        "{{ states.sensor.data_system.attributes['opmode'] == '0' }}",.opp
     )
     error_calls = []
 
@@ -940,7 +943,9 @@ async def test_track_template_result(opp):
     wildercard_runs = []
 
     template_condition = Template("{{states.sensor.test.state}}", opp)
-    template_condition_var = Template("{{(states.sensor.test.state|int) + test }}", opp)
+    template_condition_var = Template(
+        "{{(states.sensor.test.state|int) + test }}",.opp
+    )
 
     def specific_run_callback(event, updates):
         track_result = updates.pop()
@@ -2429,15 +2434,18 @@ async def test_track_sunrise(opp, legacy_patchable_time):
         opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
     )
 
+    location = LocationInfo(
+        latitude=opp.config.latitude, longitude=opp.config.longitude
+    )
+
     # Get next sunrise/sunset
-    astral = Astral()
     utc_now = datetime(2014, 5, 24, 12, 0, 0, tzinfo=dt_util.UTC)
     utc_today = utc_now.date()
 
     mod = -1
     while True:
-        next_rising = astral.sunrise_utc(
-            utc_today + timedelta(days=mod), latitude, longitude
+        next_rising = astral.sun.sunrise(
+            location.observer, date=utc_today + timedelta(days=mod)
         )
         if next_rising > utc_now:
             break
@@ -2489,15 +2497,18 @@ async def test_track_sunrise_update_location(opp, legacy_patchable_time):
         opp, sun.DOMAIN, {sun.DOMAIN: {sun.CONF_ELEVATION: 0}}
     )
 
+    location = LocationInfo(
+        latitude=opp.config.latitude, longitude=opp.config.longitude
+    )
+
     # Get next sunrise
-    astral = Astral()
     utc_now = datetime(2014, 5, 24, 12, 0, 0, tzinfo=dt_util.UTC)
     utc_today = utc_now.date()
 
     mod = -1
     while True:
-        next_rising = astral.sunrise_utc(
-            utc_today + timedelta(days=mod), opp.config.latitude, opp.config.longitude
+        next_rising = astral.sun.sunrise(
+            location.observer, date=utc_today + timedelta(days=mod)
         )
         if next_rising > utc_now:
             break
@@ -2518,6 +2529,11 @@ async def test_track_sunrise_update_location(opp, legacy_patchable_time):
         await opp.config.async_update(latitude=40.755931, longitude=-73.984606)
         await opp.async_block_till_done()
 
+    # update location for astral
+    location = LocationInfo(
+        latitude=opp.config.latitude, longitude=opp.config.longitude
+    )
+
     # Mimic sunrise
     async_fire_time_changed(opp, next_rising)
     await opp.async_block_till_done()
@@ -2527,8 +2543,8 @@ async def test_track_sunrise_update_location(opp, legacy_patchable_time):
     # Get next sunrise
     mod = -1
     while True:
-        next_rising = astral.sunrise_utc(
-            utc_today + timedelta(days=mod), opp.config.latitude, opp.config.longitude
+        next_rising = astral.sun.sunrise(
+            location.observer, date=utc_today + timedelta(days=mod)
         )
         if next_rising > utc_now:
             break
@@ -2545,6 +2561,8 @@ async def test_track_sunset(opp, legacy_patchable_time):
     latitude = 32.87336
     longitude = 117.22743
 
+    location = LocationInfo(latitude=latitude, longitude=longitude)
+
     # Setup sun component
     opp.config.latitude = latitude
     opp.config.longitude = longitude
@@ -2553,14 +2571,13 @@ async def test_track_sunset(opp, legacy_patchable_time):
     )
 
     # Get next sunrise/sunset
-    astral = Astral()
     utc_now = datetime(2014, 5, 24, 12, 0, 0, tzinfo=dt_util.UTC)
     utc_today = utc_now.date()
 
     mod = -1
     while True:
-        next_setting = astral.sunset_utc(
-            utc_today + timedelta(days=mod), latitude, longitude
+        next_setting = astral.sun.sunset(
+            location.observer, date=utc_today + timedelta(days=mod)
         )
         if next_setting > utc_now:
             break
@@ -2891,8 +2908,8 @@ async def test_periodic_task_entering_dst(opp):
     specific_runs = []
 
     now = dt_util.utcnow()
-    time_that_will_not_match_right_away = timezone.localize(
-        datetime(now.year + 1, 3, 25, 2, 31, 0)
+    time_that_will_not_match_right_away = datetime(
+        now.year + 1, 3, 25, 2, 31, 0, tzinfo=timezone
     )
 
     with patch(
@@ -2907,25 +2924,25 @@ async def test_periodic_task_entering_dst(opp):
         )
 
     async_fire_time_changed(
-        opp, timezone.localize(datetime(now.year + 1, 3, 25, 1, 50, 0, 999999))
+        opp, datetime(now.year + 1, 3, 25, 1, 50, 0, 999999, tzinfo=timezone)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 0
 
     async_fire_time_changed(
-        opp, timezone.localize(datetime(now.year + 1, 3, 25, 3, 50, 0, 999999))
+        opp, datetime(now.year + 1, 3, 25, 3, 50, 0, 999999, tzinfo=timezone)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 0
 
     async_fire_time_changed(
-        opp, timezone.localize(datetime(now.year + 1, 3, 26, 1, 50, 0, 999999))
+        opp, datetime(now.year + 1, 3, 26, 1, 50, 0, 999999, tzinfo=timezone)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 0
 
     async_fire_time_changed(
-        opp, timezone.localize(datetime(now.year + 1, 3, 26, 2, 50, 0, 999999))
+        opp, datetime(now.year + 1, 3, 26, 2, 50, 0, 999999, tzinfo=timezone)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
@@ -2941,8 +2958,8 @@ async def test_periodic_task_leaving_dst(opp):
 
     now = dt_util.utcnow()
 
-    time_that_will_not_match_right_away = timezone.localize(
-        datetime(now.year + 1, 10, 28, 2, 28, 0), is_dst=True
+    time_that_will_not_match_right_away = datetime(
+        now.year + 1, 10, 28, 2, 28, 0, tzinfo=timezone, fold=1
     )
 
     with patch(
@@ -2957,46 +2974,33 @@ async def test_periodic_task_leaving_dst(opp):
         )
 
     async_fire_time_changed(
-        opp,
-        timezone.localize(
-            datetime(now.year + 1, 10, 28, 2, 5, 0, 999999), is_dst=False
-        ),
+        opp, datetime(now.year + 1, 10, 28, 2, 5, 0, 999999, tzinfo=timezone, fold=0)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 0
 
     async_fire_time_changed(
-        opp,
-        timezone.localize(
-            datetime(now.year + 1, 10, 28, 2, 55, 0, 999999), is_dst=False
-        ),
+        opp, datetime(now.year + 1, 10, 28, 2, 55, 0, 999999, tzinfo=timezone, fold=0)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 1
 
     async_fire_time_changed(
         opp,
-        timezone.localize(
-            datetime(now.year + 2, 10, 28, 2, 45, 0, 999999), is_dst=True
-        ),
+        datetime(now.year + 2, 10, 28, 2, 45, 0, 999999, tzinfo=timezone, fold=1),
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
 
     async_fire_time_changed(
         opp,
-        timezone.localize(
-            datetime(now.year + 2, 10, 28, 2, 55, 0, 999999), is_dst=True
-        ),
+        datetime(now.year + 2, 10, 28, 2, 55, 0, 999999, tzinfo=timezone, fold=1),
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
 
     async_fire_time_changed(
-        opp,
-        timezone.localize(
-            datetime(now.year + 2, 10, 28, 2, 55, 0, 999999), is_dst=True
-        ),
+        opp, datetime(now.year + 2, 10, 28, 2, 55, 0, 999999, tzinfo=timezone, fold=1)
     )
     await opp.async_block_till_done()
     assert len(specific_runs) == 2
@@ -3019,7 +3023,7 @@ async def test_call_later(opp):
 
     assert len(mock.mock_calls) == 1
     p_opp, p_action, p_point = mock.mock_calls[0][1]
-    assert p_opp is opp
+    assert p_opp is.opp
     assert p_action is action
     assert p_point == now + timedelta(seconds=3)
 
@@ -3039,7 +3043,7 @@ async def test_async_call_later(opp):
 
     assert len(mock.mock_calls) == 1
     p_opp, p_action, p_point = mock.mock_calls[0][1]
-    assert p_opp is opp
+    assert p_opp is.opp
     assert p_action is action
     assert p_point == now + timedelta(seconds=3)
     assert remove is mock()
@@ -3161,7 +3165,7 @@ async def test_track_point_in_utc_time_cancel(opp):
         utc_now = dt_util.utcnow()
 
         with pytest.raises(TypeError):
-            track_point_in_utc_time("notopp", run_callback, utc_now)
+            track_point_in_utc_time("notopp., run_callback, utc_now)
 
         unsub1 = opp.helpers.event.track_point_in_utc_time(
             run_callback, utc_now + timedelta(seconds=0.1)
@@ -3207,7 +3211,7 @@ async def test_async_track_point_in_time_cancel(opp):
     await asyncio.sleep(0.2)
 
     assert len(times) == 1
-    assert times[0].tzinfo.zone == "US/Hawaii"
+    assert "US/Hawaii" in str(times[0].tzinfo)
 
 
 async def test_async_track_entity_registry_updated_event(opp):

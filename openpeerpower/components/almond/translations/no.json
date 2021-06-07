@@ -8,8 +8,8 @@
         },
         "step": {
             "oppio_confirm": {
-                "description": "Vil du konfigurere Open Peer Power til \u00e5 koble til Almond levert av Opp.io-tillegg: {addon}?",
-                "title": "Almond via Opp.io-tillegg"
+                "description": "Vil du konfigurere Open Peer Power for \u00e5 koble til Almond levert av tillegget: {addon} ?",
+                "title": "Almond via Open Peer Power-tillegg"
             },
             "pick_implementation": {
                 "title": "Velg godkjenningsmetode"

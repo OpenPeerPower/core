@@ -6,7 +6,7 @@ import logging
 
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_COMMAND,
     CONF_NAME,
@@ -17,7 +17,6 @@ from openpeerpower.const import (
 from openpeerpower.exceptions import TemplateError
 from openpeerpower.helpers import template
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.reload import setup_reload_service
 
 from . import check_output_or_log
@@ -63,7 +62,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     )
 
 
-class CommandSensor(Entity):
+class CommandSensor(SensorEntity):
     """Representation of a sensor that is using shell commands."""
 
     def __init__(
@@ -95,7 +94,7 @@ class CommandSensor(Entity):
         return self._state
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return self._attributes
 

@@ -1,13 +1,13 @@
 """Support for Blink system camera sensors."""
 import logging
 
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import (
     DEVICE_CLASS_SIGNAL_STRENGTH,
     DEVICE_CLASS_TEMPERATURE,
     SIGNAL_STRENGTH_DECIBELS_MILLIWATT,
     TEMP_FAHRENHEIT,
 )
-from openpeerpower.helpers.entity import Entity
 
 from .const import DOMAIN, TYPE_TEMPERATURE, TYPE_WIFI_STRENGTH
 
@@ -34,7 +34,7 @@ async def async_setup_entry(opp, config, async_add_entities):
     async_add_entities(entities)
 
 
-class BlinkSensor(Entity):
+class BlinkSensor(SensorEntity):
     """A Blink camera sensor."""
 
     def __init__(self, data, camera, sensor_type):

@@ -4,7 +4,8 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/daikin",
   "requirements": ["pydaikin==2.4.1"],
-  "codeowners": [],
+  "codeowners": ["@fredrike"],
   "zeroconf": ["_dkapi._tcp.local."],
-  "quality_scale": "platinum"
+  "quality_scale": "platinum",
+  "iot_class": "local_polling"
 }

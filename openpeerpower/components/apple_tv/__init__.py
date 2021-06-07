@@ -8,6 +8,7 @@ from pyatv.const import Protocol
 
 from openpeerpower.components.media_player import DOMAIN as MP_DOMAIN
 from openpeerpower.components.remote import DOMAIN as REMOTE_DOMAIN
+from openpeerpower.config_entries import SOURCE_REAUTH
 from openpeerpower.const import (
     CONF_ADDRESS,
     CONF_NAME,
@@ -34,17 +35,10 @@ BACKOFF_TIME_UPPER_LIMIT = 300  # Five minutes
 NOTIFICATION_TITLE = "Apple TV Notification"
 NOTIFICATION_ID = "apple_tv_notification"
 
-SOURCE_REAUTH = "reauth"
-
 SIGNAL_CONNECTED = "apple_tv_connected"
 SIGNAL_DISCONNECTED = "apple_tv_disconnected"
 
 PLATFORMS = [MP_DOMAIN, REMOTE_DOMAIN]
-
-
-async def async_setup(opp, config):
-    """Set up the Apple TV integration."""
-    return True
 
 
 async def async_setup_entry(opp, entry):
@@ -53,10 +47,12 @@ async def async_setup_entry(opp, entry):
     opp.data.setdefault(DOMAIN, {})[entry.unique_id] = manager
 
     async def on_opp_stop(event):
-        """Stop push updates when opp stops."""
+        """Stop push updates when opp.stops."""
         await manager.disconnect()
 
-    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on_opp_stop)
+    entry.async_on_unload(
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on_opp_stop)
+    )
 
     async def setup_platforms():
         """Set up platforms and initiate connection."""
@@ -75,14 +71,8 @@ async def async_setup_entry(opp, entry):
 
 async def async_unload_entry(opp, entry):
     """Unload an Apple TV config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
+
     if unload_ok:
         manager = opp.data[DOMAIN].pop(entry.unique_id)
         await manager.disconnect()
@@ -151,6 +141,13 @@ class AppleTVEntity(Entity):
         """No polling needed for Apple TV."""
         return False
 
+    @property
+    def device_info(self):
+        """Return the device info."""
+        return {
+            "identifiers": {(DOMAIN, self._identifier)},
+        }
+
 
 class AppleTVManager:
     """Connection and power manager for an Apple TV.
@@ -181,7 +178,7 @@ class AppleTVManager:
         This is a callback function from pyatv.interface.DeviceListener.
         """
         _LOGGER.warning(
-            'Connection lost to Apple TV "%s"', self.config_entry.data.get(CONF_NAME)
+            'Connection lost to Apple TV "%s"', self.config_entry.data[CONF_NAME]
         )
         self._connection_was_lost = True
         self._handle_disconnect()
@@ -268,12 +265,12 @@ class AppleTVManager:
         """Problem to authenticate occurred that needs intervention."""
         _LOGGER.debug("Authentication error, reconfigure integration")
 
-        name = self.config_entry.data.get(CONF_NAME)
+        name = self.config_entry.data[CONF_NAME]
         identifier = self.config_entry.unique_id
 
         self.opp.components.persistent_notification.create(
             "An irrecoverable connection problem occurred when connecting to "
-            f"`f{name}`. Please go to the Integrations page and reconfigure it",
+            f"`{name}`. Please go to the Integrations page and reconfigure it",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
@@ -337,7 +334,8 @@ class AppleTVManager:
         self._connection_attempts = 0
         if self._connection_was_lost:
             _LOGGER.info(
-                'Connection was re-established to Apple TV "%s"', self.atv.service.name
+                'Connection was re-established to Apple TV "%s"',
+                self.config_entry.data[CONF_NAME],
             )
             self._connection_was_lost = False
 
@@ -348,10 +346,16 @@ class AppleTVManager:
             "name": self.config_entry.data[CONF_NAME],
         }
 
+        area = attrs["name"]
+        name_trailer = f" {DEFAULT_NAME}"
+        if area.endswith(name_trailer):
+            area = area[: -len(name_trailer)]
+        attrs["suggested_area"] = area
+
         if self.atv:
             dev_info = self.atv.device_info
 
-            attrs["model"] = "Apple TV " + dev_info.model.name.replace("Gen", "")
+            attrs["model"] = DEFAULT_NAME + " " + dev_info.model.name.replace("Gen", "")
             attrs["sw_version"] = dev_info.version
 
             if dev_info.mac:

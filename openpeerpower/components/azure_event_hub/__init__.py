@@ -1,9 +1,11 @@
 """Support for Azure Event Hubs."""
+from __future__ import annotations
+
 import asyncio
 import json
 import logging
 import time
-from typing import Any, Dict
+from typing import Any
 
 from azure.eventhub import EventData
 from azure.eventhub.aio import EventHubProducerClient, EventHubSharedKeyCredential
@@ -95,12 +97,12 @@ class AzureEventHub:
     def __init__(
         self,
         opp: OpenPeerPower,
-        client_args: Dict[str, Any],
+        client_args: dict[str, Any],
         conn_str_client: bool,
         entities_filter: vol.Schema,
         send_interval: int,
         max_delay: int,
-    ):
+    ) -> None:
         """Initialize the listener."""
         self.opp = opp
         self.queue = asyncio.PriorityQueue()
@@ -120,7 +122,9 @@ class AzureEventHub:
         logging.getLogger("azure.eventhub").setLevel(logging.WARNING)
 
         self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, self.async_shutdown)
-        self._listener_remover = self.opp.bus.async_listen(MATCH_ALL, self.async_listen)
+        self._listener_remover = self.opp.bus.async_listen(
+            MATCH_ALL, self.async_listen
+        )
         # schedule the first send after 10 seconds to capture startup events, after that each send will schedule the next after the interval.
         self._next_send_remover = async_call_later(self.opp, 10, self.async_send)
 

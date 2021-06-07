@@ -84,9 +84,8 @@ async def test_install_missing_package(opp):
     """Test an install attempt on an existing package."""
     with patch(
         "openpeerpower.util.package.install_package", return_value=False
-    ) as mock_inst:
-        with pytest.raises(RequirementsNotFound):
-            await async_process_requirements(opp, "test_component", ["hello==1.0.0"])
+    ) as mock_inst, pytest.raises(RequirementsNotFound):
+        await async_process_requirements(opp, "test_component", ["hello==1.0.0"])
 
     assert len(mock_inst.mock_calls) == 1
 
@@ -138,6 +137,151 @@ async def test_get_integration_with_requirements(opp):
         "test-comp-dep==1.0.0",
         "test-comp==1.0.0",
     ]
+
+
+async def test_get_integration_with_requirements_pip_install_fails_two_passes(opp):
+    """Check getting an integration with loaded requirements and the pip install fails two passes."""
+    opp.config.skip_pip = False
+    mock_integration(
+        opp, MockModule("test_component_dep", requirements=["test-comp-dep==1.0.0"])
+    )
+    mock_integration(
+        opp,
+        MockModule(
+            "test_component_after_dep", requirements=["test-comp-after-dep==1.0.0"]
+        ),
+    )
+    mock_integration(
+        opp,
+        MockModule(
+            "test_component",
+            requirements=["test-comp==1.0.0"],
+            dependencies=["test_component_dep"],
+            partial_manifest={"after_dependencies": ["test_component_after_dep"]},
+        ),
+    )
+
+    def _mock_install_package(package, **kwargs):
+        if package == "test-comp==1.0.0":
+            return True
+        return False
+
+    # 1st pass
+    with pytest.raises(RequirementsNotFound), patch(
+        "openpeerpower.util.package.is_installed", return_value=False
+    ) as mock_is_installed, patch(
+        "openpeerpower.util.package.install_package", side_effect=_mock_install_package
+    ) as mock_inst:
+
+        integration = await async_get_integration_with_requirements(
+            opp, "test_component"
+        )
+        assert integration
+        assert integration.domain == "test_component"
+
+    assert len(mock_is_installed.mock_calls) == 3
+    assert sorted(mock_call[1][0] for mock_call in mock_is_installed.mock_calls) == [
+        "test-comp-after-dep==1.0.0",
+        "test-comp-dep==1.0.0",
+        "test-comp==1.0.0",
+    ]
+
+    assert len(mock_inst.mock_calls) == 3
+    assert sorted(mock_call[1][0] for mock_call in mock_inst.mock_calls) == [
+        "test-comp-after-dep==1.0.0",
+        "test-comp-dep==1.0.0",
+        "test-comp==1.0.0",
+    ]
+
+    # 2nd pass
+    with pytest.raises(RequirementsNotFound), patch(
+        "openpeerpower.util.package.is_installed", return_value=False
+    ) as mock_is_installed, patch(
+        "openpeerpower.util.package.install_package", side_effect=_mock_install_package
+    ) as mock_inst:
+
+        integration = await async_get_integration_with_requirements(
+            opp, "test_component"
+        )
+        assert integration
+        assert integration.domain == "test_component"
+
+    assert len(mock_is_installed.mock_calls) == 3
+    assert sorted(mock_call[1][0] for mock_call in mock_is_installed.mock_calls) == [
+        "test-comp-after-dep==1.0.0",
+        "test-comp-dep==1.0.0",
+        "test-comp==1.0.0",
+    ]
+
+    assert len(mock_inst.mock_calls) == 3
+    assert sorted(mock_call[1][0] for mock_call in mock_inst.mock_calls) == [
+        "test-comp-after-dep==1.0.0",
+        "test-comp-dep==1.0.0",
+        "test-comp==1.0.0",
+    ]
+
+
+async def test_get_integration_with_missing_dependencies(opp):
+    """Check getting an integration with missing dependencies."""
+    opp.config.skip_pip = False
+    mock_integration(
+        opp,
+        MockModule("test_component_after_dep"),
+    )
+    mock_integration(
+        opp,
+        MockModule(
+            "test_component",
+            dependencies=["test_component_dep"],
+            partial_manifest={"after_dependencies": ["test_component_after_dep"]},
+        ),
+    )
+    mock_integration(
+        opp,
+        MockModule(
+            "test_custom_component",
+            dependencies=["test_component_dep"],
+            partial_manifest={"after_dependencies": ["test_component_after_dep"]},
+        ),
+        built_in=False,
+    )
+    with pytest.raises(loader.IntegrationNotFound):
+        await async_get_integration_with_requirements(opp, "test_component")
+    with pytest.raises(loader.IntegrationNotFound):
+        await async_get_integration_with_requirements(opp, "test_custom_component")
+
+
+async def test_get_built_in_integration_with_missing_after_dependencies(opp):
+    """Check getting a built_in integration with missing after_dependencies results in exception."""
+    opp.config.skip_pip = False
+    mock_integration(
+        opp,
+        MockModule(
+            "test_component",
+            partial_manifest={"after_dependencies": ["test_component_after_dep"]},
+        ),
+        built_in=True,
+    )
+    with pytest.raises(loader.IntegrationNotFound):
+        await async_get_integration_with_requirements(opp, "test_component")
+
+
+async def test_get_custom_integration_with_missing_after_dependencies(opp):
+    """Check getting a custom integration with missing after_dependencies."""
+    opp.config.skip_pip = False
+    mock_integration(
+        opp,
+        MockModule(
+            "test_custom_component",
+            partial_manifest={"after_dependencies": ["test_component_after_dep"]},
+        ),
+        built_in=False,
+    )
+    integration = await async_get_integration_with_requirements(
+        opp, "test_custom_component"
+    )
+    assert integration
+    assert integration.domain == "test_custom_component"
 
 
 async def test_install_with_wheels_index(opp):
@@ -217,10 +361,14 @@ async def test_discovery_requirements_ssdp(opp):
     ) as mock_process:
         await async_get_integration_with_requirements(opp, "ssdp_comp")
 
-    assert len(mock_process.mock_calls) == 3
+    assert len(mock_process.mock_calls) == 4
     assert mock_process.mock_calls[0][1][2] == ssdp.requirements
     # Ensure zeroconf is a dep for ssdp
-    assert mock_process.mock_calls[1][1][1] == "zeroconf"
+    assert {
+        mock_process.mock_calls[1][1][1],
+        mock_process.mock_calls[2][1][1],
+        mock_process.mock_calls[3][1][1],
+    } == {"network", "zeroconf", "http"}
 
 
 @pytest.mark.parametrize(
@@ -242,7 +390,7 @@ async def test_discovery_requirements_zeroconf(opp, partial_manifest):
     ) as mock_process:
         await async_get_integration_with_requirements(opp, "comp")
 
-    assert len(mock_process.mock_calls) == 2  # zeroconf also depends on http
+    assert len(mock_process.mock_calls) == 3  # zeroconf also depends on http
     assert mock_process.mock_calls[0][1][2] == zeroconf.requirements
 
 

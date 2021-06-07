@@ -1,15 +1,15 @@
 """The awair component."""
+from __future__ import annotations
 
 from asyncio import gather
-from typing import Any, Optional
+from typing import Any
 
 from async_timeout import timeout
 from python_awair import Awair
 from python_awair.exceptions import AuthError
 
 from openpeerpower.const import CONF_ACCESS_TOKEN
-from openpeerpower.core import Config, OpenPeerPower
-from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.exceptions import ConfigEntryAuthFailed
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
@@ -18,41 +18,27 @@ from .const import API_TIMEOUT, DOMAIN, LOGGER, UPDATE_INTERVAL, AwairResult
 PLATFORMS = ["sensor"]
 
 
-async def async_setup(opp: OpenPeerPower, config: Config) -> bool:
-    """Set up Awair integration."""
-    return True
-
-
 async def async_setup_entry(opp, config_entry) -> bool:
     """Set up Awair integration from a config entry."""
     session = async_get_clientsession(opp)
     coordinator = AwairDataUpdateCoordinator(opp, config_entry, session)
 
-    await coordinator.async_refresh()
-
-    if not coordinator.last_update_success:
-        raise ConfigEntryNotReady
+    await coordinator.async_config_entry_first_refresh()
 
     opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][config_entry.entry_id] = coordinator
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(config_entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp, config_entry) -> bool:
     """Unload Awair configuration."""
-    tasks = []
-    for platform in PLATFORMS:
-        tasks.append(
-            opp.config_entries.async_forward_entry_unload(config_entry, platform)
-        )
+    unload_ok = await opp.config_entries.async_unload_platforms(
+        config_entry, PLATFORMS
+    )
 
-    unload_ok = all(await gather(*tasks))
     if unload_ok:
         opp.data[DOMAIN].pop(config_entry.entry_id)
 
@@ -70,7 +56,7 @@ class AwairDataUpdateCoordinator(DataUpdateCoordinator):
 
         super().__init__(opp, LOGGER, name=DOMAIN, update_interval=UPDATE_INTERVAL)
 
-    async def _async_update_data(self) -> Optional[Any]:
+    async def _async_update_data(self) -> Any | None:
         """Update data via Awair client library."""
         with timeout(API_TIMEOUT):
             try:
@@ -82,27 +68,7 @@ class AwairDataUpdateCoordinator(DataUpdateCoordinator):
                 )
                 return {result.device.uuid: result for result in results}
             except AuthError as err:
-                flow_context = {
-                    "source": "reauth",
-                    "unique_id": self._config_entry.unique_id,
-                }
-
-                matching_flows = [
-                    flow
-                    for flow in self.opp.config_entries.flow.async_progress()
-                    if flow["context"] == flow_context
-                ]
-
-                if not matching_flows:
-                    self.opp.async_create_task(
-                        self.opp.config_entries.flow.async_init(
-                            DOMAIN,
-                            context=flow_context,
-                            data=self._config_entry.data,
-                        )
-                    )
-
-                raise UpdateFailed(err) from err
+                raise ConfigEntryAuthFailed from err
             except Exception as err:
                 raise UpdateFailed(err) from err
 

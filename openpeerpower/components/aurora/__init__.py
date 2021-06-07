@@ -1,6 +1,5 @@
 """The aurora component."""
 
-import asyncio
 from datetime import timedelta
 import logging
 
@@ -10,7 +9,6 @@ from auroranoaa import AuroraForecast
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import ATTR_NAME, CONF_LATITUDE, CONF_LONGITUDE, CONF_NAME
 from openpeerpower.core import OpenPeerPower
-from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers import aiohttp_client
 from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
@@ -37,14 +35,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["binary_sensor", "sensor"]
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the Aurora component."""
-    opp.data.setdefault(DOMAIN, {})
-
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Aurora from a config entry."""
 
     conf = entry.data
@@ -60,7 +51,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     name = conf[CONF_NAME]
 
     coordinator = AuroraDataUpdateCoordinator(
-        opp=opp,
+        opp.opp,
         name=name,
         polling_interval=polling_interval,
         api=api,
@@ -69,34 +60,23 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         threshold=threshold,
     )
 
-    await coordinator.async_refresh()
+    await coordinator.async_config_entry_first_refresh()
 
-    if not coordinator.last_update_success:
-        raise ConfigEntryNotReady
-
+    opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = {
         COORDINATOR: coordinator,
         AURORA_API: api,
     }
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
+
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
 
@@ -115,11 +95,11 @@ class AuroraDataUpdateCoordinator(DataUpdateCoordinator):
         latitude: float,
         longitude: float,
         threshold: float,
-    ):
+    ) -> None:
         """Initialize the data updater."""
 
         super().__init__(
-            opp=opp,
+            opp.opp,
             logger=_LOGGER,
             name=name,
             update_interval=timedelta(minutes=polling_interval),
@@ -148,7 +128,7 @@ class AuroraEntity(CoordinatorEntity):
         coordinator: AuroraDataUpdateCoordinator,
         name: str,
         icon: str,
-    ):
+    ) -> None:
         """Initialize the Aurora Entity."""
 
         super().__init__(coordinator=coordinator)
@@ -168,7 +148,7 @@ class AuroraEntity(CoordinatorEntity):
         return self._name
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return {"attribution": ATTRIBUTION}
 

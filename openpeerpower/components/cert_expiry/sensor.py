@@ -3,7 +3,7 @@ from datetime import timedelta
 
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.config_entries import SOURCE_IMPORT
 from openpeerpower.const import (
     CONF_HOST,
@@ -33,7 +33,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 
     @callback
     def schedule_import(_):
-        """Schedule delayed import after OP is fully started."""
+        """Schedule delayed import after OPP is fully started."""
         async_call_later(opp, 10, do_import)
 
     @callback
@@ -68,7 +68,7 @@ class CertExpiryEntity(CoordinatorEntity):
         return "mdi:certificate"
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return additional sensor state attributes."""
         return {
             "is_valid": self.coordinator.is_cert_valid,
@@ -76,7 +76,7 @@ class CertExpiryEntity(CoordinatorEntity):
         }
 
 
-class SSLCertificateTimestamp(CertExpiryEntity):
+class SSLCertificateTimestamp(CertExpiryEntity, SensorEntity):
     """Implementation of the Cert Expiry timestamp sensor."""
 
     @property

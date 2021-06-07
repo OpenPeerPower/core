@@ -13,7 +13,6 @@ from axis.streammanager import SIGNAL_PLAYING, STATE_STOPPED
 from openpeerpower.components import mqtt
 from openpeerpower.components.mqtt import DOMAIN as MQTT_DOMAIN
 from openpeerpower.components.mqtt.models import Message
-from openpeerpower.config_entries import SOURCE_REAUTH
 from openpeerpower.const import (
     CONF_HOST,
     CONF_NAME,
@@ -23,7 +22,7 @@ from openpeerpower.const import (
     CONF_USERNAME,
 )
 from openpeerpower.core import OpenPeerPower, callback
-from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
 from openpeerpower.helpers.device_registry import CONNECTION_NETWORK_MAC
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
 from openpeerpower.helpers.httpx_client import get_async_client
@@ -58,8 +57,6 @@ class AxisNetworkDevice:
         self.api = None
         self.fw_version = None
         self.product_type = None
-
-        self.listeners = []
 
     @property
     def host(self):
@@ -191,7 +188,7 @@ class AxisNetworkDevice:
             status = {}
 
         if status.get("data", {}).get("status", {}).get("state") == "active":
-            self.listeners.append(
+            self.config_entry.async_on_unload(
                 await mqtt.async_subscribe(
                     opp, f"{self.api.vapix.serial_number}/#", self.mqtt_message
                 )
@@ -221,15 +218,8 @@ class AxisNetworkDevice:
         except CannotConnect as err:
             raise ConfigEntryNotReady from err
 
-        except AuthenticationRequired:
-            self.opp.async_create_task(
-                self.opp.config_entries.flow.async_init(
-                    AXIS_DOMAIN,
-                    context={"source": SOURCE_REAUTH},
-                    data=self.config_entry.data,
-                )
-            )
-            return False
+        except AuthenticationRequired as err:
+            raise ConfigEntryAuthFailed from err
 
         self.fw_version = self.api.vapix.firmware_version
         self.product_type = self.api.vapix.product_type
@@ -263,9 +253,7 @@ class AxisNetworkDevice:
     def disconnect_from_stream(self):
         """Stop stream."""
         if self.api.stream.state != STATE_STOPPED:
-            self.api.stream.connection_status_callback.remove(
-                self.async_connection_status_callback
-            )
+            self.api.stream.connection_status_callback.clear()
             self.api.stream.stop()
 
     async def shutdown(self, event):
@@ -276,23 +264,9 @@ class AxisNetworkDevice:
         """Reset this device to default state."""
         self.disconnect_from_stream()
 
-        unload_ok = all(
-            await asyncio.gather(
-                *[
-                    self.opp.config_entries.async_forward_entry_unload(
-                        self.config_entry, platform
-                    )
-                    for platform in PLATFORMS
-                ]
-            )
+        return await self.opp.config_entries.async_unload_platforms(
+            self.config_entry, PLATFORMS
         )
-        if not unload_ok:
-            return False
-
-        for unsubscribe_listener in self.listeners:
-            unsubscribe_listener()
-
-        return True
 
 
 async def get_device(opp, host, port, username, password):
@@ -304,13 +278,13 @@ async def get_device(opp, host, port, username, password):
     )
 
     try:
-        with async_timeout.timeout(15):
+        with async_timeout.timeout(30):
             await device.vapix.initialize()
 
         return device
 
     except axis.Unauthorized as err:
-        LOGGER.warning("Connected to device at %s but not registered.", host)
+        LOGGER.warning("Connected to device at %s but not registered", host)
         raise AuthenticationRequired from err
 
     except (asyncio.TimeoutError, axis.RequestError) as err:

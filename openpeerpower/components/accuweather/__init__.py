@@ -1,15 +1,18 @@
 """The AccuWeather component."""
-import asyncio
+from __future__ import annotations
+
 from datetime import timedelta
 import logging
+from typing import Any, Dict
 
 from accuweather import AccuWeather, ApiError, InvalidApiKeyError, RequestsExceededError
+from aiohttp import ClientSession
 from aiohttp.client_exceptions import ClientConnectorError
 from async_timeout import timeout
 
+from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_API_KEY
-from openpeerpower.core import Config, OpenPeerPower
-from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
@@ -26,17 +29,12 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["sensor", "weather"]
 
 
-async def async_setup(opp: OpenPeerPower, config: Config) -> bool:
-    """Set up configured AccuWeather."""
-    opp.data.setdefault(DOMAIN, {})
-    return True
-
-
-async def async_setup_entry(opp, config_entry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up AccuWeather as config entry."""
-    api_key = config_entry.data[CONF_API_KEY]
-    location_key = config_entry.unique_id
-    forecast = config_entry.options.get(CONF_FORECAST, False)
+    api_key: str = entry.data[CONF_API_KEY]
+    assert entry.unique_id is not None
+    location_key = entry.unique_id
+    forecast: bool = entry.options.get(CONF_FORECAST, False)
 
     _LOGGER.debug("Using location_key: %s, get forecast: %s", location_key, forecast)
 
@@ -45,54 +43,48 @@ async def async_setup_entry(opp, config_entry) -> bool:
     coordinator = AccuWeatherDataUpdateCoordinator(
         opp, websession, api_key, location_key, forecast
     )
-    await coordinator.async_refresh()
+    await coordinator.async_config_entry_first_refresh()
 
-    if not coordinator.last_update_success:
-        raise ConfigEntryNotReady
+    undo_listener = entry.add_update_listener(update_listener)
 
-    undo_listener = config_entry.add_update_listener(update_listener)
-
-    opp.data[DOMAIN][config_entry.entry_id] = {
+    opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {
         COORDINATOR: coordinator,
         UNDO_UPDATE_LISTENER: undo_listener,
     }
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
-async def async_unload_entry(opp, config_entry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(config_entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
-    opp.data[DOMAIN][config_entry.entry_id][UNDO_UPDATE_LISTENER]()
+    opp.data[DOMAIN][entry.entry_id][UNDO_UPDATE_LISTENER]()
 
     if unload_ok:
-        opp.data[DOMAIN].pop(config_entry.entry_id)
+        opp.data[DOMAIN].pop(entry.entry_id)
 
     return unload_ok
 
 
-async def update_listener(opp, config_entry):
+async def update_listener(opp: OpenPeerPower, entry: ConfigEntry) -> None:
     """Update listener."""
-    await opp.config_entries.async_reload(config_entry.entry_id)
+    await opp.config_entries.async_reload(entry.entry_id)
 
 
-class AccuWeatherDataUpdateCoordinator(DataUpdateCoordinator):
+class AccuWeatherDataUpdateCoordinator(DataUpdateCoordinator[Dict[str, Any]]):
     """Class to manage fetching AccuWeather data API."""
 
-    def __init__(self, opp, session, api_key, location_key, forecast: bool):
+    def __init__(
+        self,
+        opp: OpenPeerPower,
+        session: ClientSession,
+        api_key: str,
+        location_key: str,
+        forecast: bool,
+    ) -> None:
         """Initialize."""
         self.location_key = location_key
         self.forecast = forecast
@@ -111,7 +103,7 @@ class AccuWeatherDataUpdateCoordinator(DataUpdateCoordinator):
 
         super().__init__(opp, _LOGGER, name=DOMAIN, update_interval=update_interval)
 
-    async def _async_update_data(self):
+    async def _async_update_data(self) -> dict[str, Any]:
         """Update data via library."""
         try:
             async with timeout(10):
@@ -128,5 +120,5 @@ class AccuWeatherDataUpdateCoordinator(DataUpdateCoordinator):
             RequestsExceededError,
         ) as error:
             raise UpdateFailed(error) from error
-        _LOGGER.debug("Requests remaining: %s", self.accuweather.requests_remaining)
+        _LOGGER.debug("Requests remaining: %d", self.accuweather.requests_remaining)
         return {**current, **{ATTR_FORECAST: forecast}}

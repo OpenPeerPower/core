@@ -22,8 +22,7 @@ from openpeerpower.components.media_player.const import (
 )
 from openpeerpower.components.media_player.errors import BrowseError
 from openpeerpower.const import ATTR_ENTITY_ID, STATE_OFF, STATE_ON
-from openpeerpower.core import callback
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower, callback
 
 from .config_flow import get_entry_client
 from .const import (
@@ -38,7 +37,7 @@ _LOGGER = logging.getLogger(__name__)
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     config_entry: config_entries.ConfigEntry,
     async_add_entities,
 ):

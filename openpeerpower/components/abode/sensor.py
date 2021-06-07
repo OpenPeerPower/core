@@ -1,6 +1,7 @@
 """Support for Abode Security System sensors."""
 import abodepy.helpers.constants as CONST
 
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import (
     DEVICE_CLASS_HUMIDITY,
     DEVICE_CLASS_ILLUMINANCE,
@@ -33,7 +34,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     async_add_entities(entities)
 
 
-class AbodeSensor(AbodeDevice):
+class AbodeSensor(AbodeDevice, SensorEntity):
     """A sensor implementation for Abode devices."""
 
     def __init__(self, data, device, sensor_type):

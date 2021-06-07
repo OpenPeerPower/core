@@ -2,6 +2,7 @@
   "domain": "aprs",
   "name": "APRS",
   "documentation": "https://www.openpeerpower.io/integrations/aprs",
-  "codeowners": [],
-  "requirements": ["aprslib==0.6.46", "geopy==1.21.0"]
+  "codeowners": ["@PhilRW"],
+  "requirements": ["aprslib==0.6.46", "geopy==2.1.0"],
+  "iot_class": "cloud_push"
 }

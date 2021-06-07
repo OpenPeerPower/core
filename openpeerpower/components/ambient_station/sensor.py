@@ -1,5 +1,5 @@
 """Support for Ambient Weather Station sensors."""
-from openpeerpower.components.binary_sensor import DOMAIN as SENSOR
+from openpeerpower.components.sensor import DOMAIN as SENSOR, SensorEntity
 from openpeerpower.const import ATTR_NAME
 from openpeerpower.core import callback
 
@@ -36,7 +36,7 @@ async def async_setup_entry(opp, entry, async_add_entities):
     async_add_entities(sensor_list, True)
 
 
-class AmbientWeatherSensor(AmbientWeatherEntity):
+class AmbientWeatherSensor(AmbientWeatherEntity, SensorEntity):
     """Define an Ambient sensor."""
 
     def __init__(

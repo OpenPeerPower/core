@@ -9,16 +9,12 @@ from openpeerpower.const import CONF_HOST, CONF_PASSWORD, CONF_PORT, CONF_USERNA
 from openpeerpower.core import OpenPeerPower
 from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
-from openpeerpower.helpers.typing import ConfigType
 
 from .const import CONF_PASSKEY, DATA_BSBLAN_CLIENT, DOMAIN
 
 SCAN_INTERVAL = timedelta(seconds=30)
 
-
-async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
-    """Set up the BSB-Lan component."""
-    return True
+PLATFORMS = [CLIMATE_DOMAIN]
 
 
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
@@ -42,9 +38,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = {DATA_BSBLAN_CLIENT: bsblan}
 
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_setup(entry, CLIMATE_DOMAIN)
-    )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
@@ -52,11 +46,11 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload BSBLan config entry."""
 
-    await opp.config_entries.async_forward_entry_unload(entry, CLIMATE_DOMAIN)
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
+    if unload_ok:
+        # Cleanup
+        del opp.data[DOMAIN][entry.entry_id]
+        if not opp.data[DOMAIN]:
+            del opp.data[DOMAIN]
 
-    # Cleanup
-    del opp.data[DOMAIN][entry.entry_id]
-    if not opp.data[DOMAIN]:
-        del opp.data[DOMAIN]
-
-    return True
+    return unload_ok

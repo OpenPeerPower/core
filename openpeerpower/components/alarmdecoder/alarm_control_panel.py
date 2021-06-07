@@ -19,9 +19,9 @@ from openpeerpower.const import (
     STATE_ALARM_DISARMED,
     STATE_ALARM_TRIGGERED,
 )
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers import entity_platform
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import (
     CONF_ALT_NIGHT_MODE,
@@ -41,7 +41,7 @@ ATTR_KEYPRESS = "keypress"
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ):
     """Set up for AlarmDecoder alarm panels."""
     options = entry.options
@@ -56,8 +56,7 @@ async def async_setup_entry(
     )
     async_add_entities([entity])
 
-    platform = entity_platform.current_platform.get()
-
+    platform = entity_platform.async_get_current_platform()
     platform.async_register_entity_service(
         SERVICE_ALARM_TOGGLE_CHIME,
         {
@@ -163,7 +162,7 @@ class AlarmDecoderAlarmPanel(AlarmControlPanelEntity):
         return self._code_arm_required
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return {
             "ac_power": self._ac_power,

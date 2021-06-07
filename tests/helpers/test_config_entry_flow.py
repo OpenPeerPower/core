@@ -26,7 +26,7 @@ def discovery_flow_conf(opp):
 
     with patch.dict(config_entries.HANDLERS):
         config_entry_flow.register_discovery_flow(
-            "test", "Test", has_discovered_devices, config_entries.CONN_CLASS_LOCAL_POLL
+            "test", "Test", has_discovered_devices
         )
         yield handler_conf
 
@@ -78,11 +78,29 @@ async def test_user_has_confirmation(opp, discovery_flow_conf):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "confirm"
 
+    progress = opp.config_entries.flow.async_progress()
+    assert len(progress) == 1
+    assert progress[0]["flow_id"] == result["flow_id"]
+    assert progress[0]["context"] == {
+        "confirm_only": True,
+        "source": config_entries.SOURCE_USER,
+        "unique_id": "test",
+    }
+
     result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
 
 
-@pytest.mark.parametrize("source", ["discovery", "mqtt", "ssdp", "zeroconf", "dhcp"])
+@pytest.mark.parametrize(
+    "source",
+    [
+        config_entries.SOURCE_DISCOVERY,
+        config_entries.SOURCE_MQTT,
+        config_entries.SOURCE_SSDP,
+        config_entries.SOURCE_ZEROCONF,
+        config_entries.SOURCE_DHCP,
+    ],
+)
 async def test_discovery_single_instance(opp, discovery_flow_conf, source):
     """Test we not allow duplicates."""
     flow = config_entries.HANDLERS["test"]()
@@ -96,7 +114,16 @@ async def test_discovery_single_instance(opp, discovery_flow_conf, source):
     assert result["reason"] == "single_instance_allowed"
 
 
-@pytest.mark.parametrize("source", ["discovery", "mqtt", "ssdp", "zeroconf", "dhcp"])
+@pytest.mark.parametrize(
+    "source",
+    [
+        config_entries.SOURCE_DISCOVERY,
+        config_entries.SOURCE_MQTT,
+        config_entries.SOURCE_SSDP,
+        config_entries.SOURCE_ZEROCONF,
+        config_entries.SOURCE_DHCP,
+    ],
+)
 async def test_discovery_confirmation(opp, discovery_flow_conf, source):
     """Test we ask for confirmation via discovery."""
     flow = config_entries.HANDLERS["test"]()
@@ -293,7 +320,7 @@ async def test_webhook_create_cloudhook(opp, webhook_flow_conf):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
 
     with patch(
-        "opp_net.cloudhooks.Cloudhooks.async_create",
+        "opp_nabucasa.cloudhooks.Cloudhooks.async_create",
         return_value={"cloudhook_url": "https://example.com"},
     ) as mock_create, patch(
         "openpeerpower.components.cloud.async_active_subscription", return_value=True
@@ -309,7 +336,7 @@ async def test_webhook_create_cloudhook(opp, webhook_flow_conf):
     assert len(async_setup_entry.mock_calls) == 1
 
     with patch(
-        "opp_net.cloudhooks.Cloudhooks.async_delete",
+        "opp_nabucasa.cloudhooks.Cloudhooks.async_delete",
         return_value={"cloudhook_url": "https://example.com"},
     ) as mock_delete:
 
@@ -317,3 +344,14 @@ async def test_webhook_create_cloudhook(opp, webhook_flow_conf):
 
     assert len(mock_delete.mock_calls) == 1
     assert result["require_restart"] is False
+
+
+async def test_warning_deprecated_connection_class(opp, caplog):
+    """Test that we log a warning when the connection_class is used."""
+    discovery_function = Mock()
+    with patch.dict(config_entries.HANDLERS):
+        config_entry_flow.register_discovery_flow(
+            "test", "Test", discovery_function, connection_class="local_polling"
+        )
+
+    assert "integration is setting a connection_class" in caplog.text

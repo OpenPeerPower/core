@@ -4,7 +4,7 @@ import logging
 from apcaccess.status import ALL_UNITS
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_RESOURCES,
     ELECTRICAL_CURRENT_AMPERE,
@@ -18,7 +18,6 @@ from openpeerpower.const import (
     VOLT,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 from . import DOMAIN
 
@@ -156,7 +155,7 @@ def infer_unit(value):
     return value, None
 
 
-class APCUPSdSensor(Entity):
+class APCUPSdSensor(SensorEntity):
     """Representation of a sensor entity for APCUPSd status values."""
 
     def __init__(self, data, sensor_type):

@@ -1,7 +1,7 @@
 """Support the sensor of a BloomSky weather station."""
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     AREA_SQUARE_METERS,
     CONF_MONITORED_CONDITIONS,
@@ -12,7 +12,6 @@ from openpeerpower.const import (
     TEMP_FAHRENHEIT,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 from . import DOMAIN
 
@@ -70,7 +69,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
             add_entities([BloomSkySensor(bloomsky, device, variable)], True)
 
 
-class BloomSkySensor(Entity):
+class BloomSkySensor(SensorEntity):
     """Representation of a single sensor in a BloomSky device."""
 
     def __init__(self, bs, device, sensor_name):

@@ -7,7 +7,7 @@ from openpeerpower import config_entries
 from openpeerpower.const import CONF_HOST, CONF_PORT
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 
-from .const import DOMAIN, SERVER_URL  # pylint:disable=unused-import
+from .const import DOMAIN, SERVER_URL
 from .helpers import generate_url
 
 DEFAULT_PORT = 8090

@@ -1,9 +1,11 @@
 """Test the helper method for writing tests."""
+from __future__ import annotations
+
 import asyncio
 import collections
 from collections import OrderedDict
 from contextlib import contextmanager
-from datetime import timedelta
+from datetime import datetime, timedelta
 import functools as ft
 from io import StringIO
 import json
@@ -14,9 +16,8 @@ import threading
 import time
 from time import monotonic
 import types
-from typing import Any, Awaitable, Collection, Optional
+from typing import Any, Awaitable, Collection
 from unittest.mock import AsyncMock, Mock, patch
-import uuid
 
 from aiohttp.test_utils import unused_port as get_test_instance_port  # noqa: F401
 
@@ -43,7 +44,7 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
-from openpeerpower.core import BLOCK_LOG_TIMEOUT, State
+from openpeerpower.core import BLOCK_LOG_TIMEOUT, OpenPeerPower, State
 from openpeerpower.helpers import (
     area_registry,
     device_registry,
@@ -59,6 +60,7 @@ from openpeerpower.setup import async_setup_component, setup_component
 from openpeerpower.util.async_ import run_callback_threadsafe
 import openpeerpower.util.dt as date_util
 from openpeerpower.util.unit_system import METRIC_SYSTEM
+import openpeerpower.util.uuid as uuid_util
 import openpeerpower.util.yaml.loader as yaml_loader
 
 _LOGGER = logging.getLogger(__name__)
@@ -70,7 +72,7 @@ CLIENT_REDIRECT_URI = "https://example.com/app/callback"
 def threadsafe_callback_factory(func):
     """Create threadsafe functions out of callbacks.
 
-    Callback needs to have `opp` as first argument.
+    Callback needs to have `opp. as first argument.
     """
 
     @ft.wraps(func)
@@ -87,7 +89,7 @@ def threadsafe_callback_factory(func):
 def threadsafe_coroutine_factory(func):
     """Create threadsafe functions out of coroutine.
 
-    Callback needs to have `opp` as first argument.
+    Callback needs to have `opp. as first argument.
     """
 
     @ft.wraps(func)
@@ -197,12 +199,12 @@ async def async_test_open_peer_power(loop, load_registries=True):
         """
         # To flush out any call_soon_threadsafe
         await asyncio.sleep(0)
-        start_time: Optional[float] = None
+        start_time: float | None = None
 
         while len(self._pending_tasks) > max_remaining_tasks:
-            pending = [
+            pending: Collection[Awaitable[Any]] = [
                 task for task in self._pending_tasks if not task.done()
-            ]  # type: Collection[Awaitable[Any]]
+            ]
             self._pending_tasks.clear()
             if len(pending) > max_remaining_tasks:
                 remaining_pending = await self._await_count_and_log_pending(
@@ -258,7 +260,7 @@ async def async_test_open_peer_power(loop, load_registries=True):
     opp.async_create_task = async_create_task
     opp.async_wait_for_task_count = types.MethodType(async_wait_for_task_count, opp)
     opp._await_count_and_log_pending = types.MethodType(
-        _await_count_and_log_pending, opp
+        _await_count_and_log_pending,.opp
     )
 
     opp.data[loader.DATA_CUSTOM_COMPONENTS] = {}
@@ -268,13 +270,13 @@ async def async_test_open_peer_power(loop, load_registries=True):
     opp.config.latitude = 32.87336
     opp.config.longitude = -117.22743
     opp.config.elevation = 0
-    opp.config.time_zone = date_util.get_time_zone("US/Pacific")
+    opp.config.time_zone = "US/Pacific"
     opp.config.units = METRIC_SYSTEM
     opp.config.media_dirs = {"local": get_test_config_dir("media")}
     opp.config.skip_pip = True
 
     opp.config_entries = config_entries.ConfigEntries(opp, {})
-    opp.config_entries._entries = []
+    opp.config_entries._entries = {}
     opp.config_entries._store._async_ensure_stop_listener = lambda: None
 
     # Load the registries
@@ -359,7 +361,9 @@ fire_mqtt_message = threadsafe_callback_factory(async_fire_mqtt_message)
 
 
 @ha.callback
-def async_fire_time_changed(opp, datetime_, fire_all=False):
+def async_fire_time_changed(
+    opp: OpenPeerPower, datetime_: datetime, fire_all: bool = False
+) -> None:
     """Fire a time changes event."""
     opp.bus.async_fire(EVENT_TIME_CHANGED, {"now": date_util.as_utc(datetime_)})
 
@@ -564,7 +568,7 @@ class MockModule:
         if platform_schema_base is not None:
             self.PLATFORM_SCHEMA_BASE = platform_schema_base
 
-        if setup is not None:
+        if setup:
             # We run this in executor, wrap it in function
             self.setup = lambda *args: setup(*args)
 
@@ -655,7 +659,7 @@ class MockEntityPlatform(entity_platform.EntityPlatform):
             platform.PARALLEL_UPDATES = 0
 
         super().__init__(
-            opp=opp,
+            opp.opp,
             logger=logger,
             domain=domain,
             platform_name=platform_name,
@@ -728,21 +732,22 @@ class MockConfigEntry(config_entries.ConfigEntry):
         title="Mock Title",
         state=None,
         options={},
-        system_options={},
-        connection_class=config_entries.CONN_CLASS_UNKNOWN,
+        pref_disable_new_entities=None,
+        pref_disable_polling=None,
         unique_id=None,
         disabled_by=None,
+        reason=None,
     ):
         """Initialize a mock config entry."""
         kwargs = {
-            "entry_id": entry_id or uuid.uuid4().hex,
+            "entry_id": entry_id or uuid_util.random_uuid_hex(),
             "domain": domain,
             "data": data or {},
-            "system_options": system_options,
+            "pref_disable_new_entities": pref_disable_new_entities,
+            "pref_disable_polling": pref_disable_polling,
             "options": options,
             "version": version,
             "title": title,
-            "connection_class": connection_class,
             "unique_id": unique_id,
             "disabled_by": disabled_by,
         }
@@ -751,20 +756,22 @@ class MockConfigEntry(config_entries.ConfigEntry):
         if state is not None:
             kwargs["state"] = state
         super().__init__(**kwargs)
+        if reason is not None:
+            self.reason = reason
 
     def add_to_opp(self, opp):
         """Test helper to add entry to opp."""
-        opp.config_entries._entries.append(self)
+        opp.config_entries._entries[self.entry_id] = self
 
     def add_to_manager(self, manager):
         """Test helper to add entry to entry manager."""
-        manager._entries.append(self)
+        manager._entries[self.entry_id] = self
 
 
 def patch_yaml_files(files_dict, endswith=True):
     """Patch load_yaml with a dictionary of yaml files."""
     # match using endswith, start search with longest string
-    matchlist = sorted(list(files_dict.keys()), key=len) if endswith else []
+    matchlist = sorted(files_dict.keys(), key=len) if endswith else []
 
     def mock_open_f(fname, **_):
         """Mock open() in the yaml module, used by load_yaml."""
@@ -1044,10 +1051,15 @@ async def get_system_health_info(opp, domain):
     return await opp.data["system_health"][domain].info_callback(opp)
 
 
-def mock_integration(opp, module):
+def mock_integration(opp, module, built_in=True):
     """Mock an integration."""
     integration = loader.Integration(
-        opp, f"openpeerpower.components.{module.DOMAIN}", None, module.mock_manifest()
+        opp,
+        f"{loader.PACKAGE_BUILTIN}.{module.DOMAIN}"
+        if built_in
+        else f"{loader.PACKAGE_CUSTOM_COMPONENTS}.{module.DOMAIN}",
+        None,
+        module.mock_manifest(),
     )
 
     def mock_import_platform(platform_name):

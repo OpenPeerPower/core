@@ -1,5 +1,4 @@
 """Support for Blink Home Camera System."""
-import asyncio
 from copy import deepcopy
 import logging
 
@@ -8,7 +7,13 @@ from blinkpy.blinkpy import Blink
 import voluptuous as vol
 
 from openpeerpower.components import persistent_notification
-from openpeerpower.components.blink.const import (
+from openpeerpower.config_entries import SOURCE_REAUTH
+from openpeerpower.const import CONF_FILENAME, CONF_NAME, CONF_PIN, CONF_SCAN_INTERVAL
+from openpeerpower.core import callback
+from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.helpers import config_validation as cv
+
+from .const import (
     DEFAULT_SCAN_INTERVAL,
     DOMAIN,
     PLATFORMS,
@@ -16,10 +21,6 @@ from openpeerpower.components.blink.const import (
     SERVICE_SAVE_VIDEO,
     SERVICE_SEND_PIN,
 )
-from openpeerpower.const import CONF_FILENAME, CONF_NAME, CONF_PIN, CONF_SCAN_INTERVAL
-from openpeerpower.core import callback
-from openpeerpower.exceptions import ConfigEntryNotReady
-from openpeerpower.helpers import config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -49,7 +50,7 @@ def _reauth_flow_wrapper(opp, data):
     """Reauth flow wrapper."""
     opp.add_job(
         opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "reauth"}, data=data
+            DOMAIN, context={"source": SOURCE_REAUTH}, data=data
         )
     )
     persistent_notification.async_create(
@@ -59,17 +60,15 @@ def _reauth_flow_wrapper(opp, data):
     )
 
 
-async def async_setup(opp, config):
-    """Set up a Blink component."""
-    opp.data[DOMAIN] = {}
-    return True
-
-
 async def async_migrate_entry(opp, entry):
     """Handle migration of a previous version config entry."""
+    _LOGGER.debug("Migrating from version %s", entry.version)
     data = {**entry.data}
     if entry.version == 1:
         data.pop("login_response", None)
+        await opp.async_add_executor_job(_reauth_flow_wrapper, opp, data)
+        return False
+    if entry.version == 2:
         await opp.async_add_executor_job(_reauth_flow_wrapper, opp, data)
         return False
     return True
@@ -77,8 +76,9 @@ async def async_migrate_entry(opp, entry):
 
 async def async_setup_entry(opp, entry):
     """Set up Blink via config entry."""
-    _async_import_options_from_data_if_missing(opp, entry)
+    opp.data.setdefault(DOMAIN, {})
 
+    _async_import_options_from_data_if_missing(opp, entry)
     opp.data[DOMAIN][entry.entry_id] = await opp.async_add_executor_job(
         _blink_startup_wrapper, opp, entry
     )
@@ -86,10 +86,7 @@ async def async_setup_entry(opp, entry):
     if not opp.data[DOMAIN][entry.entry_id].available:
         raise ConfigEntryNotReady
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     def blink_refresh(event_time=None):
         """Call blink to refresh info."""
@@ -130,14 +127,7 @@ def _async_import_options_from_data_if_missing(opp, entry):
 
 async def async_unload_entry(opp, entry):
     """Unload Blink entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     if not unload_ok:
         return False
@@ -148,7 +138,7 @@ async def async_unload_entry(opp, entry):
         return True
 
     opp.services.async_remove(DOMAIN, SERVICE_REFRESH)
-    opp.services.async_remove(DOMAIN, SERVICE_SAVE_VIDEO_SCHEMA)
+    opp.services.async_remove(DOMAIN, SERVICE_SAVE_VIDEO)
     opp.services.async_remove(DOMAIN, SERVICE_SEND_PIN)
 
     return True

@@ -8,7 +8,7 @@ import voluptuous as vol
 from openpeerpower import config_entries
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME, HTTP_BAD_REQUEST
 
-from .const import DEFAULT_CACHEDB, DOMAIN, LOGGER  # pylint: disable=unused-import
+from .const import DEFAULT_CACHEDB, DOMAIN, LOGGER
 
 CONF_MFA = "mfa_code"
 CONF_POLLING = "polling"
@@ -18,7 +18,6 @@ class AbodeFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     """Config flow for Abode."""
 
     VERSION = 1
-    CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_POLL
 
     def __init__(self):
         """Initialize."""
@@ -98,7 +97,9 @@ class AbodeFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         existing_entry = await self.async_set_unique_id(self._username)
 
         if existing_entry:
-            self.opp.config_entries.async_update_entry(existing_entry, data=config_data)
+            self.opp.config_entries.async_update_entry(
+                existing_entry, data=config_data
+            )
             # Reload the Abode config entry otherwise devices will remain unavailable
             self.opp.async_create_task(
                 self.opp.config_entries.async_reload(existing_entry.entry_id)
@@ -161,7 +162,7 @@ class AbodeFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     async def async_step_import(self, import_config):
         """Import a config entry from configuration.yaml."""
         if self._async_current_entries():
-            LOGGER.warning("Already configured. Only a single configuration possible.")
+            LOGGER.warning("Already configured; Only a single configuration possible")
             return self.async_abort(reason="single_instance_allowed")
 
         self._polling = import_config.get(CONF_POLLING, False)

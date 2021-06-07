@@ -1,8 +1,8 @@
 """The tests for the Restore component."""
-from datetime import datetime
+from datetime import datetime, timedelta
 from unittest.mock import patch
 
-from openpeerpower.const import EVENT_OPENPEERPOWER_START
+from openpeerpower.const import EVENT_OPENPEERPOWER_START, EVENT_OPENPEERPOWER_STOP
 from openpeerpower.core import CoreState, State
 from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers.entity import Entity
@@ -14,6 +14,8 @@ from openpeerpower.helpers.restore_state import (
     StoredState,
 )
 from openpeerpower.util import dt as dt_util
+
+from tests.common import async_fire_time_changed
 
 
 async def test_caching_data(opp):
@@ -48,6 +50,52 @@ async def test_caching_data(opp):
     assert state.state == "on"
 
     assert mock_write_data.called
+
+
+async def test_periodic_write(opp):
+    """Test that we write periodiclly but not after stop."""
+    data = await RestoreStateData.async_get_instance(opp)
+    await opp.async_block_till_done()
+    await data.store.async_save([])
+
+    # Emulate a fresh load
+    opp.data[DATA_RESTORE_STATE_TASK] = None
+
+    entity = RestoreEntity()
+    entity.opp = opp
+    entity.entity_id = "input_boolean.b1"
+
+    with patch(
+        "openpeerpower.helpers.restore_state.Store.async_save"
+    ) as mock_write_data:
+        await entity.async_get_last_state()
+        await opp.async_block_till_done()
+
+    assert mock_write_data.called
+
+    with patch(
+        "openpeerpower.helpers.restore_state.Store.async_save"
+    ) as mock_write_data:
+        async_fire_time_changed(opp, dt_util.utcnow() + timedelta(minutes=15))
+        await opp.async_block_till_done()
+
+    assert mock_write_data.called
+
+    with patch(
+        "openpeerpower.helpers.restore_state.Store.async_save"
+    ) as mock_write_data:
+        opp.bus.async_fire(EVENT_OPENPEERPOWER_STOP)
+        await opp.async_block_till_done()
+
+    assert mock_write_data.called
+
+    with patch(
+        "openpeerpower.helpers.restore_state.Store.async_save"
+    ) as mock_write_data:
+        async_fire_time_changed(opp, dt_util.utcnow() + timedelta(minutes=30))
+        await opp.async_block_till_done()
+
+    assert not mock_write_data.called
 
 
 async def test_opp_starting(opp):
@@ -87,7 +135,7 @@ async def test_opp_starting(opp):
     # Assert that no data was written yet, since opp is still starting.
     assert not mock_write_data.called
 
-    # Finish opp startup
+    # Finish opp.startup
     with patch(
         "openpeerpower.helpers.restore_state.Store.async_save"
     ) as mock_write_data:

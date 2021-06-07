@@ -1,13 +1,11 @@
 """Advantage Air climate integration."""
 
-import asyncio
 from datetime import timedelta
 import logging
 
 from advantage_air import ApiError, advantage_air
 
 from openpeerpower.const import CONF_IP_ADDRESS, CONF_PORT
-from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
@@ -17,12 +15,6 @@ ADVANTAGE_AIR_SYNC_INTERVAL = 15
 PLATFORMS = ["climate", "cover", "binary_sensor", "sensor", "switch"]
 
 _LOGGER = logging.getLogger(__name__)
-
-
-async def async_setup(opp, config):
-    """Set up Advantage Air integration."""
-    opp.data[DOMAIN] = {}
-    return True
 
 
 async def async_setup_entry(opp, entry):
@@ -57,34 +49,22 @@ async def async_setup_entry(opp, entry):
         except ApiError as err:
             _LOGGER.warning(err)
 
-    await coordinator.async_refresh()
+    await coordinator.async_config_entry_first_refresh()
 
-    if not coordinator.data:
-        raise ConfigEntryNotReady
-
+    opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = {
         "coordinator": coordinator,
         "async_change": async_change,
     }
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp, entry):
     """Unload Advantage Air Config."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)

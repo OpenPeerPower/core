@@ -1,13 +1,13 @@
 """Support for AlarmDecoder sensors (Shows Panel Display)."""
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.helpers.entity import Entity
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from .const import SIGNAL_PANEL_MESSAGE
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ):
     """Set up for AlarmDecoder sensor."""
 
@@ -16,7 +16,7 @@ async def async_setup_entry(
     return True
 
 
-class AlarmDecoderSensor(Entity):
+class AlarmDecoderSensor(SensorEntity):
     """Representation of an AlarmDecoder keypad."""
 
     def __init__(self):

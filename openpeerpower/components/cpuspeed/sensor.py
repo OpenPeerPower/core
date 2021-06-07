@@ -2,10 +2,9 @@
 from cpuinfo import cpuinfo
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_NAME, FREQUENCY_GIGAHERTZ
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 ATTR_BRAND = "brand"
 ATTR_HZ = "ghz_advertised"
@@ -29,7 +28,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities([CpuSpeedSensor(name)], True)
 
 
-class CpuSpeedSensor(Entity):
+class CpuSpeedSensor(SensorEntity):
     """Representation of a CPU sensor."""
 
     def __init__(self, name):
@@ -54,7 +53,7 @@ class CpuSpeedSensor(Entity):
         return FREQUENCY_GIGAHERTZ
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         if self.info is not None:
             attrs = {

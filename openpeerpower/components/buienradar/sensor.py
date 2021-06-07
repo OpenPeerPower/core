@@ -20,7 +20,8 @@ from buienradar.constants import (
 )
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
+from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import (
     ATTR_ATTRIBUTION,
     CONF_LATITUDE,
@@ -37,12 +38,12 @@ from openpeerpower.const import (
     SPEED_KILOMETERS_PER_HOUR,
     TEMP_CELSIUS,
 )
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 from openpeerpower.util import dt as dt_util
 
-from .const import DEFAULT_TIMEFRAME
+from .const import CONF_TIMEFRAME, DEFAULT_TIMEFRAME
 from .util import BrData
 
 _LOGGER = logging.getLogger(__name__)
@@ -187,8 +188,6 @@ SENSOR_TYPES = {
     "symbol_5d": ["Symbol 5d", None, None],
 }
 
-CONF_TIMEFRAME = "timeframe"
-
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
         vol.Optional(
@@ -209,14 +208,29 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 
 async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
+    """Set up buienradar sensor platform."""
+    _LOGGER.warning(
+        "Platform configuration is deprecated, will be removed in a future release"
+    )
+
+
+async def async_setup_entry(
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
+) -> None:
     """Create the buienradar sensor."""
+    config = entry.data
+    options = entry.options
+
     latitude = config.get(CONF_LATITUDE, opp.config.latitude)
     longitude = config.get(CONF_LONGITUDE, opp.config.longitude)
-    timeframe = config[CONF_TIMEFRAME]
+
+    timeframe = options.get(
+        CONF_TIMEFRAME, config.get(CONF_TIMEFRAME, DEFAULT_TIMEFRAME)
+    )
 
     if None in (latitude, longitude):
         _LOGGER.error("Latitude or longitude not set in Open Peer Power config")
-        return False
+        return
 
     coordinates = {CONF_LATITUDE: float(latitude), CONF_LONGITUDE: float(longitude)}
 
@@ -226,17 +240,19 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         timeframe,
     )
 
-    dev = []
-    for sensor_type in config[CONF_MONITORED_CONDITIONS]:
-        dev.append(BrSensor(sensor_type, config.get(CONF_NAME), coordinates))
-    async_add_entities(dev)
+    entities = [
+        BrSensor(sensor_type, config.get(CONF_NAME, "Buienradar"), coordinates)
+        for sensor_type in SENSOR_TYPES
+    ]
 
-    data = BrData(opp, coordinates, timeframe, dev)
+    async_add_entities(entities)
+
+    data = BrData(opp, coordinates, timeframe, entities)
     # schedule the first update in 1 minute from now:
     await data.schedule_update(1)
 
 
-class BrSensor(Entity):
+class BrSensor(SensorEntity):
     """Representation of an Buienradar sensor."""
 
     def __init__(self, sensor_type, client_name, coordinates):
@@ -268,11 +284,11 @@ class BrSensor(Entity):
     @callback
     def data_updated(self, data):
         """Update data."""
-        if self._load_data(data) and self.opp:
+        if self._load_data(data) and self.opp.
             self.async_write_op_state()
 
     @callback
-    def _load_data(self, data):
+    def _load_data(self, data):  # noqa: C901
         """Load the sensor with relevant data."""
         # Find sensor
 
@@ -309,7 +325,7 @@ class BrSensor(Entity):
                 try:
                     condition = data.get(FORECAST)[fcday].get(CONDITION)
                 except IndexError:
-                    _LOGGER.warning("No forecast for fcday=%s...", fcday)
+                    _LOGGER.warning("No forecast for fcday=%s", fcday)
                     return False
 
                 if condition:
@@ -332,14 +348,14 @@ class BrSensor(Entity):
                 return False
 
             if self.type.startswith(WINDSPEED):
-                # opp wants windspeeds in km/h not m/s, so convert:
+                # opp.wants windspeeds in km/h not m/s, so convert:
                 try:
                     self._state = data.get(FORECAST)[fcday].get(self.type[:-3])
                     if self._state is not None:
                         self._state = round(self._state * 3.6, 1)
                     return True
                 except IndexError:
-                    _LOGGER.warning("No forecast for fcday=%s...", fcday)
+                    _LOGGER.warning("No forecast for fcday=%s", fcday)
                     return False
 
             # update all other sensors
@@ -347,7 +363,7 @@ class BrSensor(Entity):
                 self._state = data.get(FORECAST)[fcday].get(self.type[:-3])
                 return True
             except IndexError:
-                _LOGGER.warning("No forecast for fcday=%s...", fcday)
+                _LOGGER.warning("No forecast for fcday=%s", fcday)
                 return False
 
         if self.type == SYMBOL or self.type.startswith(CONDITION):
@@ -381,15 +397,15 @@ class BrSensor(Entity):
             self._state = nested.get(self.type[len(PRECIPITATION_FORECAST) + 1 :])
             return True
 
-        if self.type == WINDSPEED or self.type == WINDGUST:
-            # opp wants windspeeds in km/h not m/s, so convert:
+        if self.type in [WINDSPEED, WINDGUST]:
+            # opp.wants windspeeds in km/h not m/s, so convert:
             self._state = data.get(self.type)
             if self._state is not None:
                 self._state = round(data.get(self.type) * 3.6, 1)
             return True
 
         if self.type == VISIBILITY:
-            # opp wants visibility in km (not m), so convert:
+            # opp.wants visibility in km (not m), so convert:
             self._state = data.get(self.type)
             if self._state is not None:
                 self._state = round(self._state / 1000, 1)
@@ -430,7 +446,7 @@ class BrSensor(Entity):
         return self._entity_picture
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         if self.type.startswith(PRECIPITATION_FORECAST):
             result = {ATTR_ATTRIBUTION: self._attribution}
@@ -464,3 +480,8 @@ class BrSensor(Entity):
     def force_update(self):
         """Return true for continuous sensors, false for discrete sensors."""
         return self._force_update
+
+    @property
+    def entity_registry_enabled_default(self) -> bool:
+        """Return if the entity should be enabled when first added to the entity registry."""
+        return False

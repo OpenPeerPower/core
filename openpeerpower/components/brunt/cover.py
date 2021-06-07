@@ -56,7 +56,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     except (TypeError, KeyError, NameError, ValueError) as ex:
         _LOGGER.error("%s", ex)
         opp.components.persistent_notification.create(
-            "Error: {ex}<br />You will need to restart opp after fixing.",
+            "Error: {ex}<br />You will need to restart opp.after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
@@ -131,7 +131,7 @@ class BruntDevice(CoverEntity):
         return self.move_state == 2
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the detailed device state attributes."""
         return {
             ATTR_ATTRIBUTION: ATTRIBUTION,

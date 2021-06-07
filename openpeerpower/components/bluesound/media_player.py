@@ -130,7 +130,7 @@ def _add_player(opp, async_add_entities, host, port=None, name=None):
         async_add_entities([player])
         _LOGGER.info("Added device with name: %s", player.name)
 
-        if opp.is_running:
+        if opp is_running:
             _start_polling()
         else:
             opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _start_polling)
@@ -140,7 +140,7 @@ def _add_player(opp, async_add_entities, host, port=None, name=None):
     player = BluesoundPlayer(opp, host, port, name, _add_player_cb)
     opp.data[DATA_BLUESOUND].append(player)
 
-    if opp.is_running:
+    if opp is_running:
         _init_player()
     else:
         opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, _init_player)
@@ -850,7 +850,7 @@ class BluesoundPlayer(MediaPlayerEntity):
             _LOGGER.error("Master not found %s", master_device)
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """List members in group."""
         attributes = {}
         if self._group_list:

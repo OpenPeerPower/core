@@ -6,9 +6,8 @@ from openpeerpower.components.group import (
 )
 from openpeerpower.config import GROUP_CONFIG_PATH
 from openpeerpower.const import SERVICE_RELOAD
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from . import EditKeyBasedConfigView
 
@@ -35,7 +34,7 @@ async def async_setup(opp):
 
 @callback
 def async_describe_on_off_states(
-    opp: OpenPeerPowerType, registry: GroupIntegrationRegistry
+    opp: OpenPeerPower, registry: GroupIntegrationRegistry
 ) -> None:
     """Describe group on off states."""
     return

@@ -67,7 +67,7 @@ def setup(opp, config):
     except (ConnectTimeout, HTTPError) as ex:
         _LOGGER.error("Unable to connect to Netgear Arlo: %s", str(ex))
         opp.components.persistent_notification.create(
-            f"Error: {ex}<br />You will need to restart opp after fixing.",
+            f"Error: {ex}<br />You will need to restart opp.after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )

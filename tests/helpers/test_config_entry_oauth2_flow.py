@@ -99,9 +99,10 @@ def test_inherit_enforces_domain_set():
             """Return logger."""
             return logging.getLogger(__name__)
 
-    with patch.dict(config_entries.HANDLERS, {TEST_DOMAIN: TestFlowHandler}):
-        with pytest.raises(TypeError):
-            TestFlowHandler()
+    with patch.dict(
+        config_entries.HANDLERS, {TEST_DOMAIN: TestFlowHandler}
+    ), pytest.raises(TypeError):
+        TestFlowHandler()
 
 
 async def test_abort_if_no_implementation(opp, flow_handler):
@@ -113,7 +114,9 @@ async def test_abort_if_no_implementation(opp, flow_handler):
     assert result["reason"] == "missing_configuration"
 
 
-async def test_abort_if_authorization_timeout(opp, flow_handler, local_impl):
+async def test_abort_if_authorization_timeout(
+    opp, flow_handler, local_impl, current_request_with_host
+):
     """Check timeout generating authorization url."""
     flow_handler.async_register_implementation(opp, local_impl)
 
@@ -129,7 +132,9 @@ async def test_abort_if_authorization_timeout(opp, flow_handler, local_impl):
     assert result["reason"] == "authorize_url_timeout"
 
 
-async def test_abort_if_no_url_available(opp, flow_handler, local_impl):
+async def test_abort_if_no_url_available(
+    opp, flow_handler, local_impl, current_request_with_host
+):
     """Check no_url_available generating authorization url."""
     flow_handler.async_register_implementation(opp, local_impl)
 
@@ -336,7 +341,9 @@ async def test_full_flow(
     entry = opp.config_entries.async_entries(TEST_DOMAIN)[0]
 
     assert (
-        await config_entry_oauth2_flow.async_get_config_entry_implementation(opp, entry)
+        await config_entry_oauth2_flow.async_get_config_entry_implementation(
+            opp, entry
+        )
         is local_impl
     )
 
@@ -508,7 +515,8 @@ async def test_oauth_session_no_token_refresh_needed(
 async def test_implementation_provider(opp, local_impl):
     """Test providing an implementation provider."""
     assert (
-        await config_entry_oauth2_flow.async_get_implementations(opp, TEST_DOMAIN) == {}
+        await config_entry_oauth2_flow.async_get_implementations(opp, TEST_DOMAIN)
+        == {}
     )
 
     mock_domain_with_impl = "some_domain"

@@ -10,13 +10,12 @@ from openpeerpower.const import (
     STATE_ALARM_TRIGGERED,
     STATE_OFF,
 )
-from openpeerpower.core import callback
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower, callback
 
 
 @callback
 def async_describe_on_off_states(
-    opp: OpenPeerPowerType, registry: GroupIntegrationRegistry
+    opp: OpenPeerPower, registry: GroupIntegrationRegistry
 ) -> None:
     """Describe group on off states."""
     registry.on_off_states(

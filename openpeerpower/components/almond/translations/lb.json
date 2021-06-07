@@ -8,8 +8,8 @@
         },
         "step": {
             "oppio_confirm": {
-                "description": "W\u00ebllt dir Open Peer Power konfigur\u00e9iere fir sech mam Almond ze verbannen dee vun der opp.io Erweiderung {addon} bereet gestallt g\u00ebtt?",
-                "title": "Almond via Opp.io Erweiderung"
+                "description": "W\u00ebllt dir Open Peer Power konfigur\u00e9iere fir sech mam Almond ze verbannen dee vun der Supervisor Erweiderung {addon} bereet gestallt g\u00ebtt?",
+                "title": "Almond via Supervisor Erweiderung"
             },
             "pick_implementation": {
                 "title": "Wiel Authentifikatiouns Method aus"

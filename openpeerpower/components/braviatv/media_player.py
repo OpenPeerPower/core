@@ -68,7 +68,9 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     host = config[CONF_HOST]
 
     bravia_config_file_path = opp.config.path(BRAVIA_CONFIG_FILE)
-    bravia_config = await opp.async_add_executor_job(load_json, bravia_config_file_path)
+    bravia_config = await opp.async_add_executor_job(
+        load_json, bravia_config_file_path
+    )
     if not bravia_config:
         _LOGGER.error(
             "Configuration import failed, there is no bravia.conf file in the configuration folder"
@@ -119,6 +121,8 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
 class BraviaTVDevice(MediaPlayerEntity):
     """Representation of a Bravia TV."""
 
+    _attr_device_class = DEVICE_CLASS_TV
+
     def __init__(self, client, name, pin, unique_id, device_info, ignored_sources):
         """Initialize the Bravia TV device."""
 
@@ -139,6 +143,7 @@ class BraviaTVDevice(MediaPlayerEntity):
         self._playing = False
         self._start_date_time = None
         self._program_media_type = None
+        self._audio_output = None
         self._min_volume = None
         self._max_volume = None
         self._volume = None
@@ -189,9 +194,10 @@ class BraviaTVDevice(MediaPlayerEntity):
     async def _async_refresh_volume(self):
         """Refresh volume information."""
         volume_info = await self.opp.async_add_executor_job(
-            self._braviarc.get_volume_info
+            self._braviarc.get_volume_info, self._audio_output
         )
         if volume_info is not None:
+            self._audio_output = volume_info.get("target")
             self._volume = volume_info.get("volume")
             self._min_volume = volume_info.get("minVolume")
             self._max_volume = volume_info.get("maxVolume")
@@ -233,11 +239,6 @@ class BraviaTVDevice(MediaPlayerEntity):
     def name(self):
         """Return the name of the device."""
         return self._name
-
-    @property
-    def device_class(self):
-        """Set the device class to TV."""
-        return DEVICE_CLASS_TV
 
     @property
     def unique_id(self):
@@ -303,7 +304,7 @@ class BraviaTVDevice(MediaPlayerEntity):
 
     def set_volume_level(self, volume):
         """Set volume level, range 0..1."""
-        self._braviarc.set_volume_level(volume)
+        self._braviarc.set_volume_level(volume, self._audio_output)
 
     async def async_turn_on(self):
         """Turn the media player on."""
@@ -317,11 +318,11 @@ class BraviaTVDevice(MediaPlayerEntity):
 
     def volume_up(self):
         """Volume up the media player."""
-        self._braviarc.volume_up()
+        self._braviarc.volume_up(self._audio_output)
 
     def volume_down(self):
         """Volume down media player."""
-        self._braviarc.volume_down()
+        self._braviarc.volume_down(self._audio_output)
 
     def mute_volume(self, mute):
         """Send mute command."""

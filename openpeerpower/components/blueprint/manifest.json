@@ -2,8 +2,6 @@
   "domain": "blueprint",
   "name": "Blueprint",
   "documentation": "https://www.openpeerpower.io/integrations/blueprint",
-  "codeowners": [
-    "@open-peer-power/core"
-  ],
+  "codeowners": ["@openpeerpower/core"],
   "quality_scale": "internal"
 }

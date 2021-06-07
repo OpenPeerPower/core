@@ -2,6 +2,7 @@
   "domain": "bizkaibus",
   "name": "Bizkaibus",
   "documentation": "https://www.openpeerpower.io/integrations/bizkaibus",
-  "codeowners": [],
-  "requirements": ["bizkaibus==0.1.1"]
+  "codeowners": ["@UgaitzEtxebarria"],
+  "requirements": ["bizkaibus==0.1.1"],
+  "iot_class": "cloud_polling"
 }

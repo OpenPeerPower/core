@@ -8,7 +8,7 @@ from unittest.mock import MagicMock, PropertyMock, patch
 import pytest
 
 from openpeerpower.const import ATTR_DEVICE_CLASS, STATE_UNAVAILABLE, STATE_UNKNOWN
-from openpeerpower.core import Context
+from openpeerpower.core import Context, OpenPeerPowerError
 from openpeerpower.helpers import entity, entity_registry
 
 from tests.common import (
@@ -21,7 +21,7 @@ from tests.common import (
 
 
 def test_generate_entity_id_requires_opp_or_ids():
-    """Ensure we require at least opp or current ids."""
+    """Ensure we require at least opp.or current ids."""
     with pytest.raises(ValueError):
         entity.generate_entity_id("test.{}", "hello world")
 
@@ -94,10 +94,10 @@ class TestHelpersEntity:
         self.opp.stop()
 
     def test_generate_entity_id_given_opp(self):
-        """Test generating an entity id given opp object."""
+        """Test generating an entity id given oppjobject."""
         fmt = "test.{}"
         assert (
-            entity.generate_entity_id(fmt, "overwrite hidden true", opp=self.opp)
+            entity.generate_entity_id(fmt, "overwrite hidden true", opp.self.opp)
             == "test.overwrite_hidden_true_2"
         )
 
@@ -575,7 +575,7 @@ async def test_warn_disabled(opp, caplog):
         entity_id="hello.world",
         unique_id="test-unique-id",
         platform="test-platform",
-        disabled_by="user",
+        disabled_by=entity_registry.DISABLED_USER,
     )
     mock_registry(opp, {"hello.world": entry})
 
@@ -616,7 +616,9 @@ async def test_disabled_in_entity_registry(opp):
     await ent.add_to_platform_finish()
     assert opp.states.get("hello.world") is not None
 
-    entry2 = registry.async_update_entity("hello.world", disabled_by="user")
+    entry2 = registry.async_update_entity(
+        "hello.world", disabled_by=entity_registry.DISABLED_USER
+    )
     await opp.async_block_till_done()
     assert entry2 != entry
     assert ent.registry_entry == entry2
@@ -744,3 +746,45 @@ async def test_removing_entity_unavailable(opp):
     state = opp.states.get("hello.world")
     assert state is not None
     assert state.state == STATE_UNAVAILABLE
+
+
+async def test_get_supported_features_entity_registry(opp):
+    """Test get_supported_features falls back to entity registry."""
+    entity_reg = mock_registry(opp)
+    entity_id = entity_reg.async_get_or_create(
+        "hello", "world", "5678", supported_features=456
+    ).entity_id
+    assert entity.get_supported_features(opp, entity_id) == 456
+
+
+async def test_get_supported_features_prioritize_state(opp):
+    """Test get_supported_features gives priority to state."""
+    entity_reg = mock_registry(opp)
+    entity_id = entity_reg.async_get_or_create(
+        "hello", "world", "5678", supported_features=456
+    ).entity_id
+    assert entity.get_supported_features(opp, entity_id) == 456
+
+    opp.states.async_set(entity_id, None, {"supported_features": 123})
+
+    assert entity.get_supported_features(opp, entity_id) == 123
+
+
+async def test_get_supported_features_raises_on_unknown(opp):
+    """Test get_supported_features raises on unknown entity_id."""
+    with pytest.raises(OpenPeerPowerError):
+        entity.get_supported_features(opp, "hello.world")
+
+
+async def test_float_conversion(opp):
+    """Test conversion of float state to string rounds."""
+    assert 2.4 + 1.2 != 3.6
+    with patch.object(entity.Entity, "state", PropertyMock(return_value=2.4 + 1.2)):
+        ent = entity.Entity()
+        ent.opp = opp
+        ent.entity_id = "hello.world"
+        ent.async_write_op_state()
+
+    state = opp.states.get("hello.world")
+    assert state is not None
+    assert state.state == "3.6"

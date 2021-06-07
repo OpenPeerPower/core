@@ -1,5 +1,5 @@
 """Provide info to system health."""
-from opp_net import Cloud
+from opp_nabucasa import Cloud
 from yarl import URL
 
 from openpeerpower.components import system_health

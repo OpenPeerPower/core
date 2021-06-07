@@ -8,11 +8,10 @@ import aiohttp
 import async_timeout
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import ATTR_ATTRIBUTION, CONF_NAME, CONF_OFFSET
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 _RESOURCE = "https://hourlypricing.comed.com/api"
@@ -65,7 +64,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities(dev, True)
 
 
-class ComedHourlyPricingSensor(Entity):
+class ComedHourlyPricingSensor(SensorEntity):
     """Implementation of a ComEd Hourly Pricing sensor."""
 
     def __init__(self, loop, websession, sensor_type, offset, name):
@@ -97,7 +96,7 @@ class ComedHourlyPricingSensor(Entity):
         return self._unit_of_measurement
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return {ATTR_ATTRIBUTION: ATTRIBUTION}
 

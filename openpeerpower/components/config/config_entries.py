@@ -1,4 +1,6 @@
 """Http views to control the config manager."""
+from __future__ import annotations
+
 import aiohttp.web_exceptions
 import voluptuous as vol
 
@@ -7,7 +9,7 @@ from openpeerpower.auth.permissions.const import CAT_CONFIG_ENTRIES, POLICY_EDIT
 from openpeerpower.components import websocket_api
 from openpeerpower.components.http import OpenPeerPowerView
 from openpeerpower.const import HTTP_FORBIDDEN, HTTP_NOT_FOUND
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.exceptions import Unauthorized
 from openpeerpower.helpers.data_entry_flow import (
     FlowManagerIndexView,
@@ -31,8 +33,6 @@ async def async_setup(opp):
     opp.components.websocket_api.async_register_command(config_entry_disable)
     opp.components.websocket_api.async_register_command(config_entry_update)
     opp.components.websocket_api.async_register_command(config_entries_progress)
-    opp.components.websocket_api.async_register_command(system_options_list)
-    opp.components.websocket_api.async_register_command(system_options_update)
     opp.components.websocket_api.async_register_command(ignore_config_flow)
 
     return True
@@ -46,7 +46,7 @@ class ConfigManagerEntryIndexView(OpenPeerPowerView):
 
     async def get(self, request):
         """List available config entries."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
 
         return self.json(
             [entry_json(entry) for entry in opp.config_entries.async_entries()]
@@ -64,7 +64,7 @@ class ConfigManagerEntryResourceView(OpenPeerPowerView):
         if not request["opp_user"].is_admin:
             raise Unauthorized(config_entry_id=entry_id, permission="remove")
 
-        opp = request.app["opp"]
+        opp = request.app["opp.]
 
         try:
             result = await opp.config_entries.async_remove(entry_id)
@@ -85,7 +85,7 @@ class ConfigManagerEntryResourceReloadView(OpenPeerPowerView):
         if not request["opp_user"].is_admin:
             raise Unauthorized(config_entry_id=entry_id, permission="remove")
 
-        opp = request.app["opp"]
+        opp = request.app["opp.]
 
         try:
             result = await opp.config_entries.async_reload(entry_id)
@@ -95,6 +95,17 @@ class ConfigManagerEntryResourceReloadView(OpenPeerPowerView):
             return self.json_message("Invalid entry specified", HTTP_NOT_FOUND)
 
         return self.json({"require_restart": not result})
+
+
+def _prepare_config_flow_result_json(result, prepare_result_json):
+    """Convert result to JSON."""
+    if result["type"] != data_entry_flow.RESULT_TYPE_CREATE_ENTRY:
+        return prepare_result_json(result)
+
+    data = result.copy()
+    data["result"] = entry_json(result["result"])
+    data.pop("data")
+    return data
 
 
 class ConfigManagerFlowIndexView(FlowManagerIndexView):
@@ -118,13 +129,7 @@ class ConfigManagerFlowIndexView(FlowManagerIndexView):
 
     def _prepare_result_json(self, result):
         """Convert result to JSON."""
-        if result["type"] != data_entry_flow.RESULT_TYPE_CREATE_ENTRY:
-            return super()._prepare_result_json(result)
-
-        data = result.copy()
-        data["result"] = data["result"].entry_id
-        data.pop("data")
-        return data
+        return _prepare_config_flow_result_json(result, super()._prepare_result_json)
 
 
 class ConfigManagerFlowResourceView(FlowManagerResourceView):
@@ -151,13 +156,7 @@ class ConfigManagerFlowResourceView(FlowManagerResourceView):
 
     def _prepare_result_json(self, result):
         """Convert result to JSON."""
-        if result["type"] != data_entry_flow.RESULT_TYPE_CREATE_ENTRY:
-            return super()._prepare_result_json(result)
-
-        data = result.copy()
-        data["result"] = data["result"].entry_id
-        data.pop("data")
-        return data
+        return _prepare_config_flow_result_json(result, super()._prepare_result_json)
 
 
 class ConfigManagerAvailableFlowView(OpenPeerPowerView):
@@ -168,7 +167,7 @@ class ConfigManagerAvailableFlowView(OpenPeerPowerView):
 
     async def get(self, request):
         """List available flow handlers."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         return self.json(await async_get_config_flows(opp))
 
 
@@ -232,28 +231,21 @@ def config_entries_progress(opp, connection, msg):
     )
 
 
-@websocket_api.require_admin
-@websocket_api.async_response
-@websocket_api.websocket_command(
-    {"type": "config_entries/system_options/list", "entry_id": str}
-)
-async def system_options_list(opp, connection, msg):
-    """List all system options for a config entry."""
-    entry_id = msg["entry_id"]
-    entry = opp.config_entries.async_get_entry(entry_id)
-
-    if entry:
-        connection.send_result(msg["id"], entry.system_options.as_dict())
-
-
-def send_entry_not_found(connection, msg_id):
+def send_entry_not_found(
+    connection: websocket_api.ActiveConnection, msg_id: int
+) -> None:
     """Send Config entry not found error."""
     connection.send_error(
         msg_id, websocket_api.const.ERR_NOT_FOUND, "Config entry not found"
     )
 
 
-def get_entry(opp, connection, entry_id, msg_id):
+def get_entry(
+    opp: OpenPeerPower,
+    connection: websocket_api.ActiveConnection,
+    entry_id: str,
+    msg_id: int,
+) -> config_entries.ConfigEntry | None:
     """Get entry, send error message if it doesn't exist."""
     entry = opp.config_entries.async_get_entry(entry_id)
     if entry is None:
@@ -265,30 +257,12 @@ def get_entry(opp, connection, entry_id, msg_id):
 @websocket_api.async_response
 @websocket_api.websocket_command(
     {
-        "type": "config_entries/system_options/update",
+        "type": "config_entries/update",
         "entry_id": str,
-        vol.Optional("disable_new_entities"): bool,
+        vol.Optional("title"): str,
+        vol.Optional("pref_disable_new_entities"): bool,
+        vol.Optional("pref_disable_polling"): bool,
     }
-)
-async def system_options_update(opp, connection, msg):
-    """Update config entry system options."""
-    changes = dict(msg)
-    changes.pop("id")
-    changes.pop("type")
-    changes.pop("entry_id")
-
-    entry = get_entry(opp, connection, msg["entry_id"], msg["id"])
-    if entry is None:
-        return
-
-    opp.config_entries.async_update_entry(entry, system_options=changes)
-    connection.send_result(msg["id"], entry.system_options.as_dict())
-
-
-@websocket_api.require_admin
-@websocket_api.async_response
-@websocket_api.websocket_command(
-    {"type": "config_entries/update", "entry_id": str, vol.Optional("title"): str}
 )
 async def config_entry_update(opp, connection, msg):
     """Update config entry."""
@@ -301,8 +275,25 @@ async def config_entry_update(opp, connection, msg):
     if entry is None:
         return
 
+    old_disable_polling = entry.pref_disable_polling
+
     opp.config_entries.async_update_entry(entry, **changes)
-    connection.send_result(msg["id"], entry_json(entry))
+
+    result = {
+        "config_entry": entry_json(entry),
+        "require_restart": False,
+    }
+
+    if (
+        old_disable_polling != entry.pref_disable_polling
+        and entry.state is config_entries.ConfigEntryState.LOADED
+    ):
+        if not await opp.config_entries.async_reload(entry.entry_id):
+            result["require_restart"] = (
+                entry.state is config_entries.ConfigEntryState.FAILED_UNLOAD
+            )
+
+    connection.send_result(msg["id"], result)
 
 
 @websocket_api.require_admin
@@ -312,7 +303,7 @@ async def config_entry_update(opp, connection, msg):
         "type": "config_entries/disable",
         "entry_id": str,
         # We only allow setting disabled_by user via API.
-        "disabled_by": vol.Any("user", None),
+        "disabled_by": vol.Any(config_entries.DISABLED_USER, None),
     }
 )
 async def config_entry_disable(opp, connection, msg):
@@ -386,9 +377,11 @@ def entry_json(entry: config_entries.ConfigEntry) -> dict:
         "domain": entry.domain,
         "title": entry.title,
         "source": entry.source,
-        "state": entry.state,
-        "connection_class": entry.connection_class,
+        "state": entry.state.value,
         "supports_options": supports_options,
         "supports_unload": entry.supports_unload,
+        "pref_disable_new_entities": entry.pref_disable_new_entities,
+        "pref_disable_polling": entry.pref_disable_polling,
         "disabled_by": entry.disabled_by,
+        "reason": entry.reason,
     }

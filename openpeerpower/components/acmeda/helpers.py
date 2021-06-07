@@ -27,7 +27,7 @@ def async_add_acmeda_entities(
 
 
 async def update_devices(opp, config_entry, api):
-    """Tell opp that device info has been updated."""
+    """Tell opp.that device info has been updated."""
     dev_registry = await get_dev_reg(opp)
 
     for api_item in api.values():

@@ -1,7 +1,9 @@
 """Represent the AsusWrt router."""
+from __future__ import annotations
+
 from datetime import datetime, timedelta
 import logging
-from typing import Any, Dict, Optional
+from typing import Any
 
 from aioasuswrt.asuswrt import AsusWrt
 
@@ -19,11 +21,12 @@ from openpeerpower.const import (
     CONF_PROTOCOL,
     CONF_USERNAME,
 )
-from openpeerpower.core import CALLBACK_TYPE, callback
+from openpeerpower.core import CALLBACK_TYPE, OpenPeerPower, callback
 from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.helpers.entity import DeviceInfo
 from openpeerpower.helpers.event import async_track_time_interval
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from openpeerpower.util import dt as dt_util
 
 from .const import (
@@ -37,12 +40,95 @@ from .const import (
     DEFAULT_TRACK_UNKNOWN,
     DOMAIN,
     PROTOCOL_TELNET,
+    SENSOR_CONNECTED_DEVICE,
+    SENSOR_RX_BYTES,
+    SENSOR_RX_RATES,
+    SENSOR_TX_BYTES,
+    SENSOR_TX_RATES,
 )
 
 CONF_REQ_RELOAD = [CONF_DNSMASQ, CONF_INTERFACE, CONF_REQUIRE_IP]
+
+KEY_COORDINATOR = "coordinator"
+KEY_SENSORS = "sensors"
+
 SCAN_INTERVAL = timedelta(seconds=30)
 
+SENSORS_TYPE_BYTES = "sensors_bytes"
+SENSORS_TYPE_COUNT = "sensors_count"
+SENSORS_TYPE_RATES = "sensors_rates"
+
 _LOGGER = logging.getLogger(__name__)
+
+
+class AsusWrtSensorDataHandler:
+    """Data handler for AsusWrt sensor."""
+
+    def __init__(self, opp, api):
+        """Initialize a AsusWrt sensor data handler."""
+        self._opp = opp
+        self._api = api
+        self._connected_devices = 0
+
+    async def _get_connected_devices(self):
+        """Return number of connected devices."""
+        return {SENSOR_CONNECTED_DEVICE: self._connected_devices}
+
+    async def _get_bytes(self):
+        """Fetch byte information from the router."""
+        ret_dict: dict[str, Any] = {}
+        try:
+            datas = await self._api.async_get_bytes_total()
+        except OSError as exc:
+            raise UpdateFailed from exc
+
+        ret_dict[SENSOR_RX_BYTES] = datas[0]
+        ret_dict[SENSOR_TX_BYTES] = datas[1]
+
+        return ret_dict
+
+    async def _get_rates(self):
+        """Fetch rates information from the router."""
+        ret_dict: dict[str, Any] = {}
+        try:
+            rates = await self._api.async_get_current_transfer_rates()
+        except OSError as exc:
+            raise UpdateFailed from exc
+
+        ret_dict[SENSOR_RX_RATES] = rates[0]
+        ret_dict[SENSOR_TX_RATES] = rates[1]
+
+        return ret_dict
+
+    def update_device_count(self, conn_devices: int):
+        """Update connected devices attribute."""
+        if self._connected_devices == conn_devices:
+            return False
+        self._connected_devices = conn_devices
+        return True
+
+    async def get_coordinator(self, sensor_type: str, should_poll=True):
+        """Get the coordinator for a specific sensor type."""
+        if sensor_type == SENSORS_TYPE_COUNT:
+            method = self._get_connected_devices
+        elif sensor_type == SENSORS_TYPE_BYTES:
+            method = self._get_bytes
+        elif sensor_type == SENSORS_TYPE_RATES:
+            method = self._get_rates
+        else:
+            raise RuntimeError(f"Invalid sensor type: {sensor_type}")
+
+        coordinator = DataUpdateCoordinator(
+            self._opp,
+            _LOGGER,
+            name=sensor_type,
+            update_method=method,
+            # Polling interval. Will only be polled if there are subscribers.
+            update_interval=SCAN_INTERVAL if should_poll else None,
+        )
+        await coordinator.async_refresh()
+
+        return coordinator
 
 
 class AsusWrtDevInfo:
@@ -101,7 +187,7 @@ class AsusWrtDevInfo:
 class AsusWrtRouter:
     """Representation of a AsusWrt router."""
 
-    def __init__(self, opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
+    def __init__(self, opp: OpenPeerPower, entry: ConfigEntry) -> None:
         """Initialize a AsusWrt router."""
         self.opp = opp
         self._entry = entry
@@ -109,9 +195,15 @@ class AsusWrtRouter:
         self._api: AsusWrt = None
         self._protocol = entry.data[CONF_PROTOCOL]
         self._host = entry.data[CONF_HOST]
+        self._model = "Asus Router"
+        self._sw_v = None
 
-        self._devices: Dict[str, Any] = {}
+        self._devices: dict[str, Any] = {}
+        self._connected_devices = 0
         self._connect_error = False
+
+        self._sensors_data_handler: AsusWrtSensorDataHandler = None
+        self._sensors_coordinator: dict[str, Any] = {}
 
         self._on_close = []
 
@@ -134,10 +226,20 @@ class AsusWrtRouter:
         if not self._api.is_connected:
             raise ConfigEntryNotReady
 
+        # System
+        model = await _get_nvram_info(self._api, "MODEL")
+        if model:
+            self._model = model["model"]
+        firmware = await _get_nvram_info(self._api, "FIRMWARE")
+        if firmware:
+            self._sw_v = f"{firmware['firmver']} (build {firmware['buildno']})"
+
         # Load tracked entities from registry
         entity_registry = await self.opp.helpers.entity_registry.async_get_registry()
-        track_entries = self.opp.helpers.entity_registry.async_entries_for_config_entry(
-            entity_registry, self._entry.entry_id
+        track_entries = (
+            self.opp.helpers.entity_registry.async_entries_for_config_entry(
+                entity_registry, self._entry.entry_id
+            )
         )
         for entry in track_entries:
             if entry.domain == TRACKER_DOMAIN:
@@ -148,11 +250,14 @@ class AsusWrtRouter:
         # Update devices
         await self.update_devices()
 
+        # Init Sensors
+        await self.init_sensors_coordinator()
+
         self.async_on_close(
             async_track_time_interval(self.opp, self.update_all, SCAN_INTERVAL)
         )
 
-    async def update_all(self, now: Optional[datetime] = None) -> None:
+    async def update_all(self, now: datetime | None = None) -> None:
         """Update all AsusWrt platforms."""
         await self.update_devices()
 
@@ -199,11 +304,55 @@ class AsusWrtRouter:
         if new_device:
             async_dispatcher_send(self.opp, self.signal_device_new)
 
+        self._connected_devices = len(wrt_devices)
+        await self._update_unpolled_sensors()
+
+    async def init_sensors_coordinator(self) -> None:
+        """Init AsusWrt sensors coordinators."""
+        if self._sensors_data_handler:
+            return
+
+        self._sensors_data_handler = AsusWrtSensorDataHandler(self.opp, self._api)
+        self._sensors_data_handler.update_device_count(self._connected_devices)
+
+        conn_dev_coordinator = await self._sensors_data_handler.get_coordinator(
+            SENSORS_TYPE_COUNT, False
+        )
+        self._sensors_coordinator[SENSORS_TYPE_COUNT] = {
+            KEY_COORDINATOR: conn_dev_coordinator,
+            KEY_SENSORS: [SENSOR_CONNECTED_DEVICE],
+        }
+
+        bytes_coordinator = await self._sensors_data_handler.get_coordinator(
+            SENSORS_TYPE_BYTES
+        )
+        self._sensors_coordinator[SENSORS_TYPE_BYTES] = {
+            KEY_COORDINATOR: bytes_coordinator,
+            KEY_SENSORS: [SENSOR_RX_BYTES, SENSOR_TX_BYTES],
+        }
+
+        rates_coordinator = await self._sensors_data_handler.get_coordinator(
+            SENSORS_TYPE_RATES
+        )
+        self._sensors_coordinator[SENSORS_TYPE_RATES] = {
+            KEY_COORDINATOR: rates_coordinator,
+            KEY_SENSORS: [SENSOR_RX_RATES, SENSOR_TX_RATES],
+        }
+
+    async def _update_unpolled_sensors(self) -> None:
+        """Request refresh for AsusWrt unpolled sensors."""
+        if not self._sensors_data_handler:
+            return
+
+        if SENSORS_TYPE_COUNT in self._sensors_coordinator:
+            coordinator = self._sensors_coordinator[SENSORS_TYPE_COUNT][KEY_COORDINATOR]
+            if self._sensors_data_handler.update_device_count(self._connected_devices):
+                await coordinator.async_refresh()
+
     async def close(self) -> None:
         """Close the connection."""
-        if self._api is not None:
-            if self._protocol == PROTOCOL_TELNET:
-                await self._api.connection.disconnect()
+        if self._api is not None and self._protocol == PROTOCOL_TELNET:
+            self._api.connection.disconnect()
         self._api = None
 
         for func in self._on_close:
@@ -215,7 +364,7 @@ class AsusWrtRouter:
         """Add a function to call when router is closed."""
         self._on_close.append(func)
 
-    def update_options(self, new_options: Dict) -> bool:
+    def update_options(self, new_options: dict) -> bool:
         """Update router options."""
         req_reload = False
         for name, new_opt in new_options.items():
@@ -227,6 +376,17 @@ class AsusWrtRouter:
 
         self._options.update(new_options)
         return req_reload
+
+    @property
+    def device_info(self) -> DeviceInfo:
+        """Return the device information."""
+        return {
+            "identifiers": {(DOMAIN, "AsusWRT")},
+            "name": self._host,
+            "model": self._model,
+            "manufacturer": "Asus",
+            "sw_version": self._sw_v,
+        }
 
     @property
     def signal_device_new(self) -> str:
@@ -244,9 +404,14 @@ class AsusWrtRouter:
         return self._host
 
     @property
-    def devices(self) -> Dict[str, Any]:
+    def devices(self) -> dict[str, Any]:
         """Return devices."""
         return self._devices
+
+    @property
+    def sensors_coordinator(self) -> dict[str, Any]:
+        """Return sensors coordinators."""
+        return self._sensors_coordinator
 
     @property
     def api(self) -> AsusWrt:
@@ -254,7 +419,18 @@ class AsusWrtRouter:
         return self._api
 
 
-def get_api(conf: Dict, options: Optional[Dict] = None) -> AsusWrt:
+async def _get_nvram_info(api: AsusWrt, info_type: str) -> dict[str, Any]:
+    """Get AsusWrt router info from nvram."""
+    info = {}
+    try:
+        info = await api.async_get_nvram(info_type)
+    except OSError as exc:
+        _LOGGER.warning("Error calling method async_get_nvram(%s): %s", info_type, exc)
+
+    return info
+
+
+def get_api(conf: dict, options: dict | None = None) -> AsusWrt:
     """Get the AsusWrt API."""
     opt = options or {}
 

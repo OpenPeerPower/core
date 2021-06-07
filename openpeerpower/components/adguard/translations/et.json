@@ -1,16 +1,16 @@
 {
     "config": {
         "abort": {
-            "existing_instance_updated": "Olemasolevad seaded v\u00e4rskendatud.",
-            "single_instance_allowed": "Juba seadistatud. V\u00f5imalik on ainult \u00fcks seadistamine."
+            "already_configured": "Teenus on juba seadistatud",
+            "existing_instance_updated": "Olemasolevad seaded v\u00e4rskendatud."
         },
         "error": {
             "cannot_connect": "\u00dchendamine nurjus"
         },
         "step": {
             "oppio_confirm": {
-                "description": "Kas soovid seadistada Open Peer Power-i \u00fchenduse AdGuard Home'iga mida pakub Opp.io lisandmoodul: {addon} ?",
-                "title": "AdGuard Home Opp.io pistikprogrammi kaudu"
+                "description": "Kas soovid seadistada Open Peer Power-i \u00fchenduse AdGuard Home'iga mida pakub lisandmoodul: {addon} ?",
+                "title": "AdGuard Home  Open Peer Poweri lisandmooduli abil"
             },
             "user": {
                 "data": {

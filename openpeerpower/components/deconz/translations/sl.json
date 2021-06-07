@@ -13,8 +13,8 @@
         "flow_title": "deCONZ Zigbee prehod ({host})",
         "step": {
             "oppio_confirm": {
-                "description": "Ali \u017eelite konfigurirati Open Peer Power za povezavo s prehodom deCONZ, ki ga ponuja dodatek Opp.io {addon} ?",
-                "title": "deCONZ Zigbee prehod preko dodatka Opp.io"
+                "description": "Ali \u017eelite konfigurirati Open Peer Power za povezavo s prehodom deCONZ, ki ga ponuja dodatek Supervisor {addon} ?",
+                "title": "deCONZ Zigbee prehod preko dodatka Supervisor"
             },
             "link": {
                 "description": "Odklenite va\u0161 deCONZ gateway za registracijo s Open Peer Power-om. \n1. Pojdite v deCONZ sistemske nastavitve\n2. Pritisnite tipko \"odkleni prehod\"",

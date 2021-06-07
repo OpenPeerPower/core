@@ -1,5 +1,4 @@
 """The Bravia TV component."""
-import asyncio
 
 from bravia_tv import BraviaRC
 
@@ -8,11 +7,6 @@ from openpeerpower.const import CONF_HOST, CONF_MAC
 from .const import BRAVIARC, DOMAIN, UNDO_UPDATE_LISTENER
 
 PLATFORMS = ["media_player"]
-
-
-async def async_setup(opp, config):
-    """Set up the Bravia TV component."""
-    return True
 
 
 async def async_setup_entry(opp, config_entry):
@@ -28,23 +22,15 @@ async def async_setup_entry(opp, config_entry):
         UNDO_UPDATE_LISTENER: undo_listener,
     }
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(config_entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(config_entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
+    unload_ok = await opp.config_entries.async_unload_platforms(
+        config_entry, PLATFORMS
     )
 
     opp.data[DOMAIN][config_entry.entry_id][UNDO_UPDATE_LISTENER]()

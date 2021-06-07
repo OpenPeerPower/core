@@ -2,13 +2,8 @@
   "domain": "automation",
   "name": "Automation",
   "documentation": "https://www.openpeerpower.io/integrations/automation",
-  "dependencies": ["blueprint"],
-  "after_dependencies": [
-    "device_automation",
-    "webhook"
-  ],
-  "codeowners": [
-    "@open-peer-power/core"
-  ],
+  "dependencies": ["blueprint", "trace"],
+  "after_dependencies": ["device_automation", "webhook"],
+  "codeowners": ["@openpeerpower/core"],
   "quality_scale": "internal"
 }

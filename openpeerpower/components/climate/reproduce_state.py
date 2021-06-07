@@ -1,10 +1,12 @@
 """Module that groups code required to handle state restore for component."""
+from __future__ import annotations
+
 import asyncio
-from typing import Any, Dict, Iterable, Optional
+from collections.abc import Iterable
+from typing import Any
 
 from openpeerpower.const import ATTR_TEMPERATURE
-from openpeerpower.core import Context, State
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import Context, OpenPeerPower, State
 
 from .const import (
     ATTR_AUX_HEAT,
@@ -26,11 +28,11 @@ from .const import (
 
 
 async def _async_reproduce_states(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     state: State,
     *,
-    context: Optional[Context] = None,
-    reproduce_options: Optional[Dict[str, Any]] = None,
+    context: Context | None = None,
+    reproduce_options: dict[str, Any] | None = None,
 ) -> None:
     """Reproduce component states."""
 
@@ -73,11 +75,11 @@ async def _async_reproduce_states(
 
 
 async def async_reproduce_states(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     states: Iterable[State],
     *,
-    context: Optional[Context] = None,
-    reproduce_options: Optional[Dict[str, Any]] = None,
+    context: Context | None = None,
+    reproduce_options: dict[str, Any] | None = None,
 ) -> None:
     """Reproduce component states."""
     await asyncio.gather(

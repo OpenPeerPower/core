@@ -3,7 +3,7 @@ import logging
 
 from openpeerpower.components.binary_sensor import BinarySensorEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from .const import (
     CONF_RELAY_ADDR,
@@ -34,7 +34,7 @@ ATTR_RF_LOOP1 = "rf_loop1"
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ):
     """Set up for AlarmDecoder sensor."""
 
@@ -118,7 +118,7 @@ class AlarmDecoderBinarySensor(BinarySensorEntity):
         return False
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         attr = {CONF_ZONE_NUMBER: self._zone_number}
         if self._rfid and self._rfstate is not None:

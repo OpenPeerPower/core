@@ -1,5 +1,6 @@
 """Config validation helper for the automation integration."""
 import asyncio
+from contextlib import suppress
 
 import voluptuous as vol
 
@@ -7,8 +8,15 @@ from openpeerpower.components import blueprint
 from openpeerpower.components.device_automation.exceptions import (
     InvalidDeviceAutomationConfig,
 )
+from openpeerpower.components.trace import TRACE_CONFIG_SCHEMA
 from openpeerpower.config import async_log_exception, config_without_domain
-from openpeerpower.const import CONF_ALIAS, CONF_CONDITION, CONF_ID, CONF_VARIABLES
+from openpeerpower.const import (
+    CONF_ALIAS,
+    CONF_CONDITION,
+    CONF_DESCRIPTION,
+    CONF_ID,
+    CONF_VARIABLES,
+)
 from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers import config_per_platform, config_validation as cv, script
 from openpeerpower.helpers.condition import async_validate_condition_config
@@ -17,9 +25,9 @@ from openpeerpower.loader import IntegrationNotFound
 
 from .const import (
     CONF_ACTION,
-    CONF_DESCRIPTION,
     CONF_HIDE_ENTITY,
     CONF_INITIAL_STATE,
+    CONF_TRACE,
     CONF_TRIGGER,
     CONF_TRIGGER_VARIABLES,
     DOMAIN,
@@ -39,6 +47,7 @@ PLATFORM_SCHEMA = vol.All(
             CONF_ID: str,
             CONF_ALIAS: cv.string,
             vol.Optional(CONF_DESCRIPTION): cv.string,
+            vol.Optional(CONF_TRACE, default={}): TRACE_CONFIG_SCHEMA,
             vol.Optional(CONF_INITIAL_STATE): cv.boolean,
             vol.Optional(CONF_HIDE_ENTITY): cv.boolean,
             vol.Required(CONF_TRIGGER): cv.TRIGGER_SCHEMA,
@@ -79,8 +88,18 @@ async def async_validate_config_item(opp, config, full_config=None):
     return config
 
 
+class AutomationConfig(dict):
+    """Dummy class to allow adding attributes."""
+
+    raw_config = None
+
+
 async def _try_async_validate_config_item(opp, config, full_config=None):
     """Validate config item."""
+    raw_config = None
+    with suppress(ValueError):
+        raw_config = dict(config)
+
     try:
         config = await async_validate_config_item(opp, config, full_config)
     except (
@@ -92,6 +111,11 @@ async def _try_async_validate_config_item(opp, config, full_config=None):
         async_log_exception(ex, DOMAIN, full_config or config, opp)
         return None
 
+    if isinstance(config, blueprint.BlueprintInputs):
+        return config
+
+    config = AutomationConfig(config)
+    config.raw_config = raw_config
     return config
 
 

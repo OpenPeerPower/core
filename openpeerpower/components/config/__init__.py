@@ -40,7 +40,7 @@ ACTION_DELETE = "delete"
 async def async_setup(opp, config):
     """Set up the config component."""
     opp.components.frontend.async_register_built_in_panel(
-        "config", "config", "opp:cog", require_admin=True
+        "config", "config", "opp.cog", require_admin=True
     )
 
     async def setup_panel(panel_name):
@@ -119,7 +119,7 @@ class BaseEditConfigView(OpenPeerPowerView):
 
     async def get(self, request, config_key):
         """Fetch device specific config."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         async with self.mutation_lock:
             current = await self.read_config(opp)
             value = self._get_value(opp, current, config_key)
@@ -141,7 +141,7 @@ class BaseEditConfigView(OpenPeerPowerView):
         except vol.Invalid as err:
             return self.json_message(f"Key malformed: {err}", HTTP_BAD_REQUEST)
 
-        opp = request.app["opp"]
+        opp = request.app["opp.]
 
         try:
             # We just validate, we don't store that data because
@@ -170,7 +170,7 @@ class BaseEditConfigView(OpenPeerPowerView):
 
     async def delete(self, request, config_key):
         """Remove an entry."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         async with self.mutation_lock:
             current = await self.read_config(opp)
             value = self._get_value(opp, current, config_key)

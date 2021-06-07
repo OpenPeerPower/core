@@ -156,7 +156,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     }
 )
 
-# Translate from `AndroidTV` / `FireTV` reported state to OP state.
+# Translate from `AndroidTV` / `FireTV` reported state to OPP state.
 ANDROIDTV_STATES = {
     "off": STATE_OFF,
     "idle": STATE_IDLE,
@@ -230,10 +230,10 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         raise PlatformNotReady
 
     async def _async_close(event):
-        """Close the ADB socket connection when OP stops."""
+        """Close the ADB socket connection when OPP stops."""
         await aftv.adb_close()
 
-    # Close the ADB connection when OP stops
+    # Close the ADB connection when OPP stops
     opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _async_close)
 
     device_args = [
@@ -261,7 +261,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     if opp.services.has_service(ANDROIDTV_DOMAIN, SERVICE_ADB_COMMAND):
         return
 
-    platform = entity_platform.current_platform.get()
+    platform = entity_platform.async_get_current_platform()
 
     async def service_adb_command(service):
         """Dispatch service calls to target entities."""
@@ -469,7 +469,7 @@ class ADBDevice(MediaPlayerEntity):
         return self._available
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Provide the last ADB command's response and the device's HDMI input as attributes."""
         return {
             "adb_response": self._adb_response,

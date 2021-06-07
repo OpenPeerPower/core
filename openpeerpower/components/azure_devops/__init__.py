@@ -1,31 +1,24 @@
 """Support for Azure DevOps."""
+from __future__ import annotations
+
 import logging
-from typing import Any, Dict
 
 from aioazuredevops.client import DevOpsClient
 import aiohttp
 
-from openpeerpower.components.azure_devops.const import (
-    CONF_ORG,
-    CONF_PAT,
-    CONF_PROJECT,
-    DATA_AZURE_DEVOPS_CLIENT,
-    DOMAIN,
-)
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.exceptions import ConfigEntryNotReady
-from openpeerpower.helpers.entity import Entity
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
+from openpeerpower.helpers.entity import DeviceInfo, Entity
+
+from .const import CONF_ORG, CONF_PAT, CONF_PROJECT, DATA_AZURE_DEVOPS_CLIENT, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
 
-
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
-    """Set up the Azure DevOps components."""
-    return True
+PLATFORMS = ["sensor"]
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Azure DevOps from a config entry."""
     client = DevOpsClient()
 
@@ -33,17 +26,9 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         if entry.data[CONF_PAT] is not None:
             await client.authorize(entry.data[CONF_PAT], entry.data[CONF_ORG])
             if not client.authorized:
-                _LOGGER.warning(
+                raise ConfigEntryAuthFailed(
                     "Could not authorize with Azure DevOps. You may need to update your token"
                 )
-                opp.async_create_task(
-                    opp.config_entries.flow.async_init(
-                        DOMAIN,
-                        context={"source": "reauth"},
-                        data=entry.data,
-                    )
-                )
-                return False
         await client.get_project(entry.data[CONF_ORG], entry.data[CONF_PROJECT])
     except aiohttp.ClientError as exception:
         _LOGGER.warning(exception)
@@ -53,16 +38,16 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     opp.data.setdefault(instance_key, {})[DATA_AZURE_DEVOPS_CLIENT] = client
 
     # Setup components
-    opp.async_create_task(opp.config_entries.async_forward_entry_setup(entry, "sensor"))
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigType) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload Azure DevOps config entry."""
     del opp.data[f"{DOMAIN}_{entry.data[CONF_ORG]}_{entry.data[CONF_PROJECT]}"]
 
-    return await opp.config_entries.async_forward_entry_unload(entry, "sensor")
+    return await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
 
 class AzureDevOpsEntity(Entity):
@@ -98,7 +83,7 @@ class AzureDevOpsEntity(Entity):
         else:
             if self._available:
                 _LOGGER.debug(
-                    "An error occurred while updating Azure DevOps sensor.",
+                    "An error occurred while updating Azure DevOps sensor",
                     exc_info=True,
                 )
             self._available = False
@@ -112,7 +97,7 @@ class AzureDevOpsDeviceEntity(AzureDevOpsEntity):
     """Defines a Azure DevOps device entity."""
 
     @property
-    def device_info(self) -> Dict[str, Any]:
+    def device_info(self) -> DeviceInfo:
         """Return device information about this Azure DevOps instance."""
         return {
             "identifiers": {

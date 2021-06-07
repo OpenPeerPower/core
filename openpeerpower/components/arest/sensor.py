@@ -5,7 +5,7 @@ import logging
 import requests
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_MONITORED_VARIABLES,
     CONF_NAME,
@@ -16,7 +16,6 @@ from openpeerpower.const import (
 )
 from openpeerpower.exceptions import TemplateError
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
@@ -124,7 +123,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(dev, True)
 
 
-class ArestSensor(Entity):
+class ArestSensor(SensorEntity):
     """Implementation of an aREST sensor for exposed variables."""
 
     def __init__(

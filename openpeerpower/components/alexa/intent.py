@@ -18,7 +18,6 @@ INTENTS_API_ENDPOINT = "/api/alexa"
 
 
 class SpeechType(enum.Enum):
-    # pylint: disable=invalid-name
     """The Alexa speech types."""
 
     plaintext = "PlainText"
@@ -29,7 +28,6 @@ SPEECH_MAPPINGS = {"plain": SpeechType.plaintext, "ssml": SpeechType.ssml}
 
 
 class CardType(enum.Enum):
-    # pylint: disable=invalid-name
     """The Alexa card types."""
 
     simple = "Simple"
@@ -64,7 +62,7 @@ class AlexaIntentsView(http.OpenPeerPowerView):
 
     async def post(self, request):
         """Handle Alexa."""
-        opp = request.app["opp"]
+        opp = request.app["opp.]
         message = await request.json()
 
         _LOGGER.debug("Received Alexa request: %s", message)

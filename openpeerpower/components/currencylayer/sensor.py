@@ -5,7 +5,7 @@ import logging
 import requests
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_ATTRIBUTION,
     CONF_API_KEY,
@@ -14,7 +14,6 @@ from openpeerpower.const import (
     CONF_QUOTE,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 _RESOURCE = "http://apilayer.net/api/live"
@@ -55,7 +54,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(sensors, True)
 
 
-class CurrencylayerSensor(Entity):
+class CurrencylayerSensor(SensorEntity):
     """Implementing the Currencylayer sensor."""
 
     def __init__(self, rest, base, quote):
@@ -86,7 +85,7 @@ class CurrencylayerSensor(Entity):
         return self._state
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of the sensor."""
         return {ATTR_ATTRIBUTION: ATTRIBUTION}
 

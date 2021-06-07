@@ -2,7 +2,7 @@
 from beewi_smartclim import BeewiSmartClimPoller  # pylint: disable=import-error
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_MAC,
     CONF_NAME,
@@ -13,7 +13,6 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 # Default values
 DEFAULT_NAME = "BeeWi SmartClim"
@@ -56,7 +55,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(sensors)
 
 
-class BeewiSmartclimSensor(Entity):
+class BeewiSmartclimSensor(SensorEntity):
     """Representation of a Sensor."""
 
     def __init__(self, poller, name, mac, device, unit):

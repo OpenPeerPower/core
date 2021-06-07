@@ -1,21 +1,11 @@
 """Support for AdGuard Home."""
+from __future__ import annotations
+
 import logging
-from typing import Any, Dict
 
 from adguardhome import AdGuardHome, AdGuardHomeConnectionError, AdGuardHomeError
 import voluptuous as vol
 
-from openpeerpower.components.adguard.const import (
-    CONF_FORCE,
-    DATA_ADGUARD_CLIENT,
-    DATA_ADGUARD_VERION,
-    DOMAIN,
-    SERVICE_ADD_URL,
-    SERVICE_DISABLE_URL,
-    SERVICE_ENABLE_URL,
-    SERVICE_REFRESH,
-    SERVICE_REMOVE_URL,
-)
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import (
     CONF_HOST,
@@ -27,11 +17,23 @@ from openpeerpower.const import (
     CONF_USERNAME,
     CONF_VERIFY_SSL,
 )
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
-from openpeerpower.helpers.entity import Entity
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.entity import DeviceInfo, Entity
+
+from .const import (
+    CONF_FORCE,
+    DATA_ADGUARD_CLIENT,
+    DATA_ADGUARD_VERSION,
+    DOMAIN,
+    SERVICE_ADD_URL,
+    SERVICE_DISABLE_URL,
+    SERVICE_ENABLE_URL,
+    SERVICE_REFRESH,
+    SERVICE_REMOVE_URL,
+)
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -46,12 +48,7 @@ SERVICE_REFRESH_SCHEMA = vol.Schema(
 PLATFORMS = ["sensor", "switch"]
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
-    """Set up the AdGuard Home components."""
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up AdGuard Home from a config entry."""
     session = async_get_clientsession(opp, entry.data[CONF_VERIFY_SSL])
     adguard = AdGuardHome(
@@ -64,39 +61,40 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
         session=session,
     )
 
-    opp.data.setdefault(DOMAIN, {})[DATA_ADGUARD_CLIENT] = adguard
+    opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {DATA_ADGUARD_CLIENT: adguard}
 
     try:
         await adguard.version()
     except AdGuardHomeConnectionError as exception:
         raise ConfigEntryNotReady from exception
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     async def add_url(call) -> None:
         """Service call to add a new filter subscription to AdGuard Home."""
         await adguard.filtering.add_url(
-            call.data.get(CONF_NAME), call.data.get(CONF_URL)
+            allowlist=False, name=call.data.get(CONF_NAME), url=call.data.get(CONF_URL)
         )
 
     async def remove_url(call) -> None:
         """Service call to remove a filter subscription from AdGuard Home."""
-        await adguard.filtering.remove_url(call.data.get(CONF_URL))
+        await adguard.filtering.remove_url(allowlist=False, url=call.data.get(CONF_URL))
 
     async def enable_url(call) -> None:
         """Service call to enable a filter subscription in AdGuard Home."""
-        await adguard.filtering.enable_url(call.data.get(CONF_URL))
+        await adguard.filtering.enable_url(allowlist=False, url=call.data.get(CONF_URL))
 
     async def disable_url(call) -> None:
         """Service call to disable a filter subscription in AdGuard Home."""
-        await adguard.filtering.disable_url(call.data.get(CONF_URL))
+        await adguard.filtering.disable_url(
+            allowlist=False, url=call.data.get(CONF_URL)
+        )
 
     async def refresh(call) -> None:
         """Service call to refresh the filter subscriptions in AdGuard Home."""
-        await adguard.filtering.refresh(call.data.get(CONF_FORCE))
+        await adguard.filtering.refresh(
+            allowlist=False, force=call.data.get(CONF_FORCE)
+        )
 
     opp.services.async_register(
         DOMAIN, SERVICE_ADD_URL, add_url, schema=SERVICE_ADD_URL_SCHEMA
@@ -117,7 +115,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigType) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload AdGuard Home config entry."""
     opp.services.async_remove(DOMAIN, SERVICE_ADD_URL)
     opp.services.async_remove(DOMAIN, SERVICE_REMOVE_URL)
@@ -125,25 +123,30 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigType) -> bool:
     opp.services.async_remove(DOMAIN, SERVICE_DISABLE_URL)
     opp.services.async_remove(DOMAIN, SERVICE_REFRESH)
 
-    for platform in PLATFORMS:
-        await opp.config_entries.async_forward_entry_unload(entry, platform)
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
+    if unload_ok:
+        del opp.data[DOMAIN]
 
-    del opp.data[DOMAIN]
-
-    return True
+    return unload_ok
 
 
 class AdGuardHomeEntity(Entity):
     """Defines a base AdGuard Home entity."""
 
     def __init__(
-        self, adguard, name: str, icon: str, enabled_default: bool = True
+        self,
+        adguard: AdGuardHome,
+        entry: ConfigEntry,
+        name: str,
+        icon: str,
+        enabled_default: bool = True,
     ) -> None:
         """Initialize the AdGuard Home entity."""
         self._available = True
         self._enabled_default = enabled_default
         self._icon = icon
         self._name = name
+        self._entry = entry
         self.adguard = adguard
 
     @property
@@ -191,7 +194,7 @@ class AdGuardHomeDeviceEntity(AdGuardHomeEntity):
     """Defines a AdGuard Home device entity."""
 
     @property
-    def device_info(self) -> Dict[str, Any]:
+    def device_info(self) -> DeviceInfo:
         """Return device information about this AdGuard Home instance."""
         return {
             "identifiers": {
@@ -199,6 +202,8 @@ class AdGuardHomeDeviceEntity(AdGuardHomeEntity):
             },
             "name": "AdGuard Home",
             "manufacturer": "AdGuard Team",
-            "sw_version": self.opp.data[DOMAIN].get(DATA_ADGUARD_VERION),
+            "sw_version": self.opp.data[DOMAIN][self._entry.entry_id].get(
+                DATA_ADGUARD_VERSION
+            ),
             "entry_type": "service",
         }

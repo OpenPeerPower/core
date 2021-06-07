@@ -1,6 +1,6 @@
 """BleBox sensor entities."""
 
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.components.sensor import SensorEntity
 
 from . import BleBoxEntity, create_blebox_entities
 from .const import BLEBOX_TO_OPP_DEVICE_CLASSES, BLEBOX_TO_UNIT_MAP
@@ -14,7 +14,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     )
 
 
-class BleBoxSensorEntity(BleBoxEntity, Entity):
+class BleBoxSensorEntity(BleBoxEntity, SensorEntity):
     """Representation of a BleBox sensor feature."""
 
     @property

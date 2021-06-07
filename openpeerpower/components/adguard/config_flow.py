@@ -1,9 +1,11 @@
 """Config flow to configure the AdGuard Home integration."""
+from __future__ import annotations
+
+from typing import Any
+
 from adguardhome import AdGuardHome, AdGuardHomeConnectionError
 import voluptuous as vol
 
-from openpeerpower import config_entries
-from openpeerpower.components.adguard.const import DOMAIN
 from openpeerpower.config_entries import ConfigFlow
 from openpeerpower.const import (
     CONF_HOST,
@@ -13,19 +15,22 @@ from openpeerpower.const import (
     CONF_USERNAME,
     CONF_VERIFY_SSL,
 )
+from openpeerpower.data_entry_flow import FlowResult
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 
+from .const import DOMAIN
 
-@config_entries.HANDLERS.register(DOMAIN)
-class AdGuardHomeFlowHandler(ConfigFlow):
+
+class AdGuardHomeFlowHandler(ConfigFlow, domain=DOMAIN):
     """Handle a AdGuard Home config flow."""
 
     VERSION = 1
-    CONNECTION_CLASS = config_entries.CONN_CLASS_LOCAL_POLL
 
     _oppio_discovery = None
 
-    async def _show_setup_form(self, errors=None):
+    async def _show_setup_form(
+        self, errors: dict[str, str] | None = None
+    ) -> FlowResult:
         """Show the setup form to the user."""
         return self.async_show_form(
             step_id="user",
@@ -42,7 +47,9 @@ class AdGuardHomeFlowHandler(ConfigFlow):
             errors=errors or {},
         )
 
-    async def _show_oppio_form(self, errors=None):
+    async def _show_oppio_form(
+        self, errors: dict[str, str] | None = None
+    ) -> FlowResult:
         """Show the Opp.io confirmation form to the user."""
         return self.async_show_form(
             step_id="oppio_confirm",
@@ -51,13 +58,16 @@ class AdGuardHomeFlowHandler(ConfigFlow):
             errors=errors or {},
         )
 
-    async def async_step_user(self, user_input=None):
+    async def async_step_user(
+        self, user_input: dict[str, Any] | None = None
+    ) -> FlowResult:
         """Handle a flow initiated by the user."""
-        if self._async_current_entries():
-            return self.async_abort(reason="single_instance_allowed")
-
         if user_input is None:
             return await self._show_setup_form(user_input)
+
+        self._async_abort_entries_match(
+            {CONF_HOST: user_input[CONF_HOST], CONF_PORT: user_input[CONF_PORT]}
+        )
 
         errors = {}
 
@@ -91,46 +101,20 @@ class AdGuardHomeFlowHandler(ConfigFlow):
             },
         )
 
-    async def async_step_oppio(self, discovery_info):
+    async def async_step_oppio(self, discovery_info: dict[str, Any]) -> FlowResult:
         """Prepare configuration for a Opp.io AdGuard Home add-on.
 
         This flow is triggered by the discovery component.
         """
-        entries = self._async_current_entries()
+        await self._async_handle_discovery_without_unique_id()
 
-        if not entries:
-            self._oppio_discovery = discovery_info
-            return await self.async_step_oppio_confirm()
+        self._oppio_discovery = discovery_info
+        return await self.async_step_oppio_confirm()
 
-        cur_entry = entries[0]
-
-        if (
-            cur_entry.data[CONF_HOST] == discovery_info[CONF_HOST]
-            and cur_entry.data[CONF_PORT] == discovery_info[CONF_PORT]
-        ):
-            return self.async_abort(reason="single_instance_allowed")
-
-        is_loaded = cur_entry.state == config_entries.ENTRY_STATE_LOADED
-
-        if is_loaded:
-            await self.opp.config_entries.async_unload(cur_entry.entry_id)
-
-        self.opp.config_entries.async_update_entry(
-            cur_entry,
-            data={
-                **cur_entry.data,
-                CONF_HOST: discovery_info[CONF_HOST],
-                CONF_PORT: discovery_info[CONF_PORT],
-            },
-        )
-
-        if is_loaded:
-            await self.opp.config_entries.async_setup(cur_entry.entry_id)
-
-        return self.async_abort(reason="existing_instance_updated")
-
-    async def async_step_oppio_confirm(self, user_input=None):
-        """Confirm Opp.io discovery."""
+    async def async_step_oppio_confirm(
+        self, user_input: dict[str, Any] | None = None
+    ) -> FlowResult:
+        """Confirm Supervisor discovery."""
         if user_input is None:
             return await self._show_oppio_form()
 

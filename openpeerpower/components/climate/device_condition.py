@@ -1,5 +1,5 @@
 """Provide the device automations for Climate."""
-from typing import Dict, List
+from __future__ import annotations
 
 import voluptuous as vol
 
@@ -42,7 +42,7 @@ CONDITION_SCHEMA = vol.Any(HVAC_MODE_CONDITION, PRESET_MODE_CONDITION)
 
 async def async_get_conditions(
     opp: OpenPeerPower, device_id: str
-) -> List[Dict[str, str]]:
+) -> list[dict[str, str]]:
     """List device conditions for Climate devices."""
     registry = await entity_registry.async_get_registry(opp)
     conditions = []
@@ -54,29 +54,20 @@ async def async_get_conditions(
 
         state = opp.states.get(entry.entity_id)
 
-        conditions.append(
-            {
-                CONF_CONDITION: "device",
-                CONF_DEVICE_ID: device_id,
-                CONF_DOMAIN: DOMAIN,
-                CONF_ENTITY_ID: entry.entity_id,
-                CONF_TYPE: "is_hvac_mode",
-            }
-        )
+        base_condition = {
+            CONF_CONDITION: "device",
+            CONF_DEVICE_ID: device_id,
+            CONF_DOMAIN: DOMAIN,
+            CONF_ENTITY_ID: entry.entity_id,
+        }
+
+        conditions.append({**base_condition, CONF_TYPE: "is_hvac_mode"})
 
         if (
             state
             and state.attributes[ATTR_SUPPORTED_FEATURES] & const.SUPPORT_PRESET_MODE
         ):
-            conditions.append(
-                {
-                    CONF_CONDITION: "device",
-                    CONF_DEVICE_ID: device_id,
-                    CONF_DOMAIN: DOMAIN,
-                    CONF_ENTITY_ID: entry.entity_id,
-                    CONF_TYPE: "is_preset_mode",
-                }
-            )
+            conditions.append({**base_condition, CONF_TYPE: "is_preset_mode"})
 
     return conditions
 
@@ -119,6 +110,6 @@ async def async_get_condition_capabilities(opp, config):
         else:
             preset_modes = []
 
-        fields[vol.Required(const.ATTR_PRESET_MODES)] = vol.In(preset_modes)
+        fields[vol.Required(const.ATTR_PRESET_MODE)] = vol.In(preset_modes)
 
     return {"extra_fields": vol.Schema(fields)}

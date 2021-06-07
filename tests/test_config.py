@@ -115,6 +115,19 @@ async def test_ensure_config_exists_uses_existing_config(opp):
     assert content == ""
 
 
+async def test_ensure_existing_files_is_not_overwritten(opp):
+    """Test that calling async_create_default_config does not overwrite existing files."""
+    create_file(SECRET_PATH)
+
+    await config_util.async_create_default_config(opp)
+
+    with open(SECRET_PATH) as fp:
+        content = fp.read()
+
+    # File created with create_file are empty
+    assert content == ""
+
+
 def test_load_yaml_config_converts_empty_files_to_dict():
     """Test that loading an empty file returns an empty dict."""
     create_file(YAML_PATH)
@@ -205,7 +218,6 @@ def test_customize_dict_schema():
     values = ({ATTR_FRIENDLY_NAME: None}, {ATTR_ASSUMED_STATE: "2"})
 
     for val in values:
-        print(val)
         with pytest.raises(MultipleInvalid):
             config_util.CUSTOMIZE_DICT_SCHEMA(val)
 
@@ -337,7 +349,7 @@ def test_config_upgrade_no_file(opp):
 
 
 async def test_loading_configuration_from_storage(opp, opp_storage):
-    """Test loading core config onto opp object."""
+    """Test loading core config onto oppjobject."""
     opp_storage["core.config"] = {
         "data": {
             "elevation": 10,
@@ -361,7 +373,7 @@ async def test_loading_configuration_from_storage(opp, opp_storage):
     assert opp.config.elevation == 10
     assert opp.config.location_name == "Home"
     assert opp.config.units.name == CONF_UNIT_SYSTEM_METRIC
-    assert opp.config.time_zone.zone == "Europe/Copenhagen"
+    assert opp.config.time_zone == "Europe/Copenhagen"
     assert opp.config.external_url == "https://www.example.com"
     assert opp.config.internal_url == "http://example.local"
     assert len(opp.config.allowlist_external_dirs) == 3
@@ -370,7 +382,7 @@ async def test_loading_configuration_from_storage(opp, opp_storage):
 
 
 async def test_loading_configuration_from_storage_with_yaml_only(opp, opp_storage):
-    """Test loading core and YAML config onto opp object."""
+    """Test loading core and YAML config onto oppjobject."""
     opp_storage["core.config"] = {
         "data": {
             "elevation": 10,
@@ -392,7 +404,7 @@ async def test_loading_configuration_from_storage_with_yaml_only(opp, opp_storag
     assert opp.config.elevation == 10
     assert opp.config.location_name == "Home"
     assert opp.config.units.name == CONF_UNIT_SYSTEM_METRIC
-    assert opp.config.time_zone.zone == "Europe/Copenhagen"
+    assert opp.config.time_zone == "Europe/Copenhagen"
     assert len(opp.config.allowlist_external_dirs) == 3
     assert "/etc" in opp.config.allowlist_external_dirs
     assert opp.config.media_dirs == {"mymedia": "/usr"}
@@ -428,7 +440,7 @@ async def test_updating_configuration(opp, opp_storage):
 
 
 async def test_override_stored_configuration(opp, opp_storage):
-    """Test loading core and YAML config onto opp object."""
+    """Test loading core and YAML config onto oppjobject."""
     opp_storage["core.config"] = {
         "data": {
             "elevation": 10,
@@ -450,14 +462,14 @@ async def test_override_stored_configuration(opp, opp_storage):
     assert opp.config.elevation == 10
     assert opp.config.location_name == "Home"
     assert opp.config.units.name == CONF_UNIT_SYSTEM_METRIC
-    assert opp.config.time_zone.zone == "Europe/Copenhagen"
+    assert opp.config.time_zone == "Europe/Copenhagen"
     assert len(opp.config.allowlist_external_dirs) == 3
     assert "/etc" in opp.config.allowlist_external_dirs
     assert opp.config.config_source == config_util.SOURCE_YAML
 
 
 async def test_loading_configuration(opp):
-    """Test loading core config onto opp object."""
+    """Test loading core config onto oppjobject."""
     await config_util.async_process_op_core_config(
         opp,
         {
@@ -480,7 +492,7 @@ async def test_loading_configuration(opp):
     assert opp.config.elevation == 25
     assert opp.config.location_name == "Huis"
     assert opp.config.units.name == CONF_UNIT_SYSTEM_IMPERIAL
-    assert opp.config.time_zone.zone == "America/New_York"
+    assert opp.config.time_zone == "America/New_York"
     assert opp.config.external_url == "https://www.example.com"
     assert opp.config.internal_url == "http://example.local"
     assert len(opp.config.allowlist_external_dirs) == 3
@@ -512,14 +524,14 @@ async def test_loading_configuration_temperature_unit(opp):
     assert opp.config.elevation == 25
     assert opp.config.location_name == "Huis"
     assert opp.config.units.name == CONF_UNIT_SYSTEM_METRIC
-    assert opp.config.time_zone.zone == "America/New_York"
+    assert opp.config.time_zone == "America/New_York"
     assert opp.config.external_url == "https://www.example.com"
     assert opp.config.internal_url == "http://example.local"
     assert opp.config.config_source == config_util.SOURCE_YAML
 
 
 async def test_loading_configuration_default_media_dirs_docker(opp):
-    """Test loading core config onto opp object."""
+    """Test loading core config onto oppjobject."""
     with patch("openpeerpower.config.is_docker_env", return_value=True):
         await config_util.async_process_op_core_config(
             opp,
@@ -535,7 +547,7 @@ async def test_loading_configuration_default_media_dirs_docker(opp):
 
 
 async def test_loading_configuration_from_packages(opp):
-    """Test loading packages config onto opp object config."""
+    """Test loading packages config onto oppjobject config."""
     await config_util.async_process_op_core_config(
         opp,
         {
@@ -780,7 +792,6 @@ async def test_merge_id_schema(opp):
     types = {
         "panel_custom": "list",
         "group": "dict",
-        "script": "dict",
         "input_boolean": "dict",
         "shell_command": "dict",
         "qwikswitch": "dict",
@@ -807,7 +818,7 @@ async def test_merge_duplicate_keys(merge_log_err, opp):
 
 
 async def test_merge_customize(opp):
-    """Test loading core config onto opp object."""
+    """Test loading core config onto oppjobject."""
     core_config = {
         "latitude": 60,
         "longitude": 50,
@@ -826,7 +837,7 @@ async def test_merge_customize(opp):
 
 
 async def test_auth_provider_config(opp):
-    """Test loading auth provider config onto opp object."""
+    """Test loading auth provider config onto oppjobject."""
     core_config = {
         "latitude": 60,
         "longitude": 50,

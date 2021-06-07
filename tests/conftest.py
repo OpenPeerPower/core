@@ -15,8 +15,8 @@ import requests_mock as _requests_mock
 from openpeerpower import core as ha, loader, runner, util
 from openpeerpower.auth.const import GROUP_ID_ADMIN, GROUP_ID_READ_ONLY
 from openpeerpower.auth.models import Credentials
-from openpeerpower.auth.providers import legacy_api_password, openpeerpower
-from openpeerpower.components import mqtt
+from openpeerpower.auth.providers import openpeerpower, legacy_api_password
+from openpeerpower.components import mqtt, recorder
 from openpeerpower.components.websocket_api.auth import (
     TYPE_AUTH,
     TYPE_AUTH_OK,
@@ -39,6 +39,8 @@ from tests.common import (  # noqa: E402, isort:skip
     MockUser,
     async_fire_mqtt_message,
     async_test_open_peer_power,
+    get_test_open_peer_power,
+    init_recorder_component,
     mock_storage as mock_storage,
 )
 from tests.test_util.aiohttp import mock_aiohttp_client  # noqa: E402, isort:skip
@@ -122,7 +124,7 @@ def opp_storage():
 
 @pytest.fixture
 def load_registries():
-    """Fixture to control the loading of registries when setting up the opp fixture.
+    """Fixture to control the loading of registries when setting up the opp.fixture.
 
     To avoid loading the registries, tests can be marked with:
     @pytest.mark.parametrize("load_registries", [False])
@@ -155,7 +157,7 @@ def opp(loop, load_registries, opp_storage, request):
     orig_exception_handler = loop.get_exception_handler()
     loop.set_exception_handler(exc_handle)
 
-    yield opp
+    yield.opp
 
     loop.run_until_complete(opp.async_stop(force=True))
     for ex in exceptions:
@@ -171,7 +173,7 @@ def opp(loop, load_registries, opp_storage, request):
 
 @pytest.fixture
 async def stop_opp():
-    """Make sure all opp are stopped."""
+    """Make sure all opp.are stopped."""
     orig_opp = ha.OpenPeerPower
 
     created = []
@@ -258,7 +260,9 @@ def opp_owner_user(opp, local_auth):
 @pytest.fixture
 def opp_admin_user(opp, local_auth):
     """Return a Open Peer Power admin user."""
-    admin_group = opp.loop.run_until_complete(opp.auth.async_get_group(GROUP_ID_ADMIN))
+    admin_group = opp.loop.run_until_complete(
+        opp.auth.async_get_group(GROUP_ID_ADMIN)
+    )
     return MockUser(groups=[admin_group]).add_to_opp(opp)
 
 
@@ -306,7 +310,9 @@ def legacy_auth(opp):
 @pytest.fixture
 def local_auth(opp):
     """Load local auth provider."""
-    prv = openpeerpower.OppAuthProvider(opp, opp.auth._store, {"type": "openpeerpower"})
+    prv = openpeerpower.OppAuthProvider(
+        opp, opp.auth._store, {"type": "openpeerpower"}
+    )
     opp.loop.run_until_complete(prv.async_initialize())
     opp.auth._providers[(prv.type, prv.id)] = prv
     return prv
@@ -353,7 +359,7 @@ def current_request_with_host(current_request):
 def opp_ws_client(aiohttp_client, opp_access_token, opp):
     """Websocket client fixture connected to websocket server."""
 
-    async def create_client(opp=opp, access_token=opp_access_token):
+    async def create_client(opp.opp, access_token=opp_access_token):
         """Create a websocket client."""
         assert await async_setup_component(opp, "websocket_api", {})
 
@@ -474,7 +480,7 @@ async def mqtt_mock(opp, mqtt_client_mock, mqtt_config):
 @pytest.fixture
 def mock_zeroconf():
     """Mock zeroconf."""
-    with patch("openpeerpower.components.zeroconf.HaZeroconf") as mock_zc:
+    with patch("openpeerpower.components.zeroconf.models.HaZeroconf") as mock_zc:
         yield mock_zc.return_value
 
 
@@ -591,3 +597,36 @@ def legacy_patchable_time():
 def enable_custom_integrations(opp):
     """Enable custom integrations defined in the test dir."""
     opp.data.pop(loader.DATA_CUSTOM_COMPONENTS)
+
+
+@pytest.fixture
+def enable_statistics():
+    """Fixture to control enabling of recorder's statistics compilation.
+
+    To enable statistics, tests can be marked with:
+    @pytest.mark.parametrize("enable_statistics", [True])
+    """
+    return False
+
+
+@pytest.fixture
+def opp_recorder(enable_statistics):
+    """Open Peer Power fixture with in-memory recorder."""
+    opp = get_test_open_peer_power()
+    stats = recorder.Recorder.async_hourly_statistics if enable_statistics else None
+    with patch(
+        "openpeerpower.components.recorder.Recorder.async_hourly_statistics",
+        side_effect=stats,
+        autospec=True,
+    ):
+
+        def setup_recorder(config=None):
+            """Set up with params."""
+            init_recorder_component(opp, config)
+            opp.start()
+            opp.block_till_done()
+            opp.data[recorder.DATA_INSTANCE].block_till_done()
+            return opp
+
+        yield setup_recorder
+        opp.stop()

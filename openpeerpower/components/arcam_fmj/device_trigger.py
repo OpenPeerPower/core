@@ -1,5 +1,5 @@
 """Provides device automations for Arcam FMJ Receiver control."""
-from typing import List
+from __future__ import annotations
 
 import voluptuous as vol
 
@@ -13,7 +13,7 @@ from openpeerpower.const import (
     CONF_PLATFORM,
     CONF_TYPE,
 )
-from openpeerpower.core import CALLBACK_TYPE, Event, OpenPeerPower, OppJob, callback
+from openpeerpower.core import CALLBACK_TYPE, Event, OppJob, OpenPeerPower, callback
 from openpeerpower.helpers import config_validation as cv, entity_registry
 from openpeerpower.helpers.typing import ConfigType
 
@@ -28,7 +28,7 @@ TRIGGER_SCHEMA = TRIGGER_BASE_SCHEMA.extend(
 )
 
 
-async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> list[dict]:
     """List device triggers for Arcam FMJ Receiver control devices."""
     registry = await entity_registry.async_get_registry(opp)
     triggers = []
@@ -56,7 +56,7 @@ async def async_attach_trigger(
     automation_info: dict,
 ) -> CALLBACK_TYPE:
     """Attach a trigger."""
-    config = TRIGGER_SCHEMA(config)
+    trigger_id = automation_info.get("trigger_id") if automation_info else None
     job = OppJob(action)
 
     if config[CONF_TYPE] == "turn_on":
@@ -67,7 +67,13 @@ async def async_attach_trigger(
             if event.data[ATTR_ENTITY_ID] == entity_id:
                 opp.async_run_opp_job(
                     job,
-                    {"trigger": {**config, "description": f"{DOMAIN} - {entity_id}"}},
+                    {
+                        "trigger": {
+                            **config,
+                            "description": f"{DOMAIN} - {entity_id}",
+                            "id": trigger_id,
+                        }
+                    },
                     event.context,
                 )
 

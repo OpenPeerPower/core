@@ -4,6 +4,7 @@
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/almond",
   "dependencies": ["http", "conversation"],
-  "codeowners": [],
-  "requirements": ["pyalmond==0.0.2"]
+  "codeowners": ["@gcampax", "@balloob"],
+  "requirements": ["pyalmond==0.0.2"],
+  "iot_class": "local_polling"
 }

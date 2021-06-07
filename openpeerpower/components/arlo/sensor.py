@@ -3,7 +3,7 @@ import logging
 
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_ATTRIBUTION,
     CONCENTRATION_PARTS_PER_MILLION,
@@ -16,7 +16,6 @@ from openpeerpower.const import (
 from openpeerpower.core import callback
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.icon import icon_for_battery_level
 
 from . import ATTRIBUTION, DATA_ARLO, DEFAULT_BRAND, SIGNAL_UPDATE_ARLO
@@ -73,7 +72,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(sensors, True)
 
 
-class ArloSensor(Entity):
+class ArloSensor(SensorEntity):
     """An implementation of a Netgear Arlo IP sensor."""
 
     def __init__(self, name, device, sensor_type):
@@ -183,7 +182,7 @@ class ArloSensor(Entity):
                 self._state = None
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the device state attributes."""
         attrs = {}
 

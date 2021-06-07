@@ -20,7 +20,7 @@ import openpeerpower.helpers.config_validation as cv
 _LOGGER = logging.getLogger(__name__)
 
 BASE_API_URL = "https://rest.clicksend.com/v3"
-DEFAULT_SENDER = "opp"
+DEFAULT_SENDER = "opp.
 TIMEOUT = 5
 
 HEADERS = {CONTENT_TYPE: CONTENT_TYPE_JSON}

@@ -1,4 +1,8 @@
 """Provide info to system health."""
+from __future__ import annotations
+
+from typing import Any
+
 from accuweather.const import ENDPOINT
 
 from openpeerpower.components import system_health
@@ -15,7 +19,7 @@ def async_register(
     register.async_register_info(system_health_info)
 
 
-async def system_health_info(opp):
+async def system_health_info(opp: OpenPeerPower) -> dict[str, Any]:
     """Get info for the info page."""
     remaining_requests = list(opp.data[DOMAIN].values())[0][
         COORDINATOR

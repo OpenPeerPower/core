@@ -1,8 +1,10 @@
 """Support for Google Calendar event device sensors."""
+from __future__ import annotations
+
 from datetime import timedelta
 import logging
 import re
-from typing import Dict, List, cast
+from typing import cast, final
 
 from aiohttp import web
 
@@ -29,13 +31,15 @@ SCAN_INTERVAL = timedelta(seconds=60)
 
 async def async_setup(opp, config):
     """Track states and offer events for calendars."""
-    component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp, SCAN_INTERVAL)
+    component = opp.data[DOMAIN] = EntityComponent(
+        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
+    )
 
     opp.http.register_view(CalendarListView(component))
     opp.http.register_view(CalendarEventView(component))
 
     opp.components.frontend.async_register_built_in_panel(
-        "calendar", "calendar", "opp:calendar"
+        "calendar", "calendar", "opp.calendar"
     )
 
     await component.async_setup(config)
@@ -125,13 +129,14 @@ def is_offset_reached(event):
 
 
 class CalendarEventDevice(Entity):
-    """A calendar event device."""
+    """Base class for calendar event entities."""
 
     @property
     def event(self):
         """Return the next upcoming event."""
         raise NotImplementedError()
 
+    @final
     @property
     def state_attributes(self):
         """Return the entity state attributes."""
@@ -198,7 +203,7 @@ class CalendarEventView(http.OpenPeerPowerView):
         except (ValueError, AttributeError):
             return web.Response(status=HTTP_BAD_REQUEST)
         event_list = await entity.async_get_events(
-            request.app["opp"], start_date, end_date
+            request.app["opp.], start_date, end_date
         )
         return self.json(event_list)
 
@@ -215,8 +220,8 @@ class CalendarListView(http.OpenPeerPowerView):
 
     async def get(self, request: web.Request) -> web.Response:
         """Retrieve calendar list."""
-        opp = request.app["opp"]
-        calendar_list: List[Dict[str, str]] = []
+        opp = request.app["opp.]
+        calendar_list: list[dict[str, str]] = []
 
         for entity in self.component.entities:
             state = opp.states.get(entity.entity_id)

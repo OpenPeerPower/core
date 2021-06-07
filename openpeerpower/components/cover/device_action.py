@@ -1,5 +1,5 @@
 """Provides device automations for Cover."""
-from typing import List, Optional
+from __future__ import annotations
 
 import voluptuous as vol
 
@@ -58,7 +58,7 @@ POSITION_ACTION_SCHEMA = cv.DEVICE_ACTION_BASE_SCHEMA.extend(
 ACTION_SCHEMA = vol.Any(CMD_ACTION_SCHEMA, POSITION_ACTION_SCHEMA)
 
 
-async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_actions(opp: OpenPeerPower, device_id: str) -> list[dict]:
     """List device actions for Cover devices."""
     registry = await entity_registry.async_get_registry(opp)
     actions = []
@@ -75,72 +75,29 @@ async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
         supported_features = state.attributes[ATTR_SUPPORTED_FEATURES]
 
         # Add actions for each entity that belongs to this integration
+        base_action = {
+            CONF_DEVICE_ID: device_id,
+            CONF_DOMAIN: DOMAIN,
+            CONF_ENTITY_ID: entry.entity_id,
+        }
+
         if supported_features & SUPPORT_SET_POSITION:
-            actions.append(
-                {
-                    CONF_DEVICE_ID: device_id,
-                    CONF_DOMAIN: DOMAIN,
-                    CONF_ENTITY_ID: entry.entity_id,
-                    CONF_TYPE: "set_position",
-                }
-            )
+            actions.append({**base_action, CONF_TYPE: "set_position"})
         else:
             if supported_features & SUPPORT_OPEN:
-                actions.append(
-                    {
-                        CONF_DEVICE_ID: device_id,
-                        CONF_DOMAIN: DOMAIN,
-                        CONF_ENTITY_ID: entry.entity_id,
-                        CONF_TYPE: "open",
-                    }
-                )
+                actions.append({**base_action, CONF_TYPE: "open"})
             if supported_features & SUPPORT_CLOSE:
-                actions.append(
-                    {
-                        CONF_DEVICE_ID: device_id,
-                        CONF_DOMAIN: DOMAIN,
-                        CONF_ENTITY_ID: entry.entity_id,
-                        CONF_TYPE: "close",
-                    }
-                )
+                actions.append({**base_action, CONF_TYPE: "close"})
             if supported_features & SUPPORT_STOP:
-                actions.append(
-                    {
-                        CONF_DEVICE_ID: device_id,
-                        CONF_DOMAIN: DOMAIN,
-                        CONF_ENTITY_ID: entry.entity_id,
-                        CONF_TYPE: "stop",
-                    }
-                )
+                actions.append({**base_action, CONF_TYPE: "stop"})
 
         if supported_features & SUPPORT_SET_TILT_POSITION:
-            actions.append(
-                {
-                    CONF_DEVICE_ID: device_id,
-                    CONF_DOMAIN: DOMAIN,
-                    CONF_ENTITY_ID: entry.entity_id,
-                    CONF_TYPE: "set_tilt_position",
-                }
-            )
+            actions.append({**base_action, CONF_TYPE: "set_tilt_position"})
         else:
             if supported_features & SUPPORT_OPEN_TILT:
-                actions.append(
-                    {
-                        CONF_DEVICE_ID: device_id,
-                        CONF_DOMAIN: DOMAIN,
-                        CONF_ENTITY_ID: entry.entity_id,
-                        CONF_TYPE: "open_tilt",
-                    }
-                )
+                actions.append({**base_action, CONF_TYPE: "open_tilt"})
             if supported_features & SUPPORT_CLOSE_TILT:
-                actions.append(
-                    {
-                        CONF_DEVICE_ID: device_id,
-                        CONF_DOMAIN: DOMAIN,
-                        CONF_ENTITY_ID: entry.entity_id,
-                        CONF_TYPE: "close_tilt",
-                    }
-                )
+                actions.append({**base_action, CONF_TYPE: "close_tilt"})
 
     return actions
 
@@ -153,7 +110,7 @@ async def async_get_action_capabilities(opp: OpenPeerPower, config: dict) -> dic
     return {
         "extra_fields": vol.Schema(
             {
-                vol.Optional("position", default=0): vol.All(
+                vol.Optional(ATTR_POSITION, default=0): vol.All(
                     vol.Coerce(int), vol.Range(min=0, max=100)
                 )
             }
@@ -162,11 +119,9 @@ async def async_get_action_capabilities(opp: OpenPeerPower, config: dict) -> dic
 
 
 async def async_call_action_from_config(
-    opp: OpenPeerPower, config: dict, variables: dict, context: Optional[Context]
+    opp: OpenPeerPower, config: dict, variables: dict, context: Context | None
 ) -> None:
     """Execute a device action."""
-    config = ACTION_SCHEMA(config)
-
     service_data = {ATTR_ENTITY_ID: config[CONF_ENTITY_ID]}
 
     if config[CONF_TYPE] == "open":

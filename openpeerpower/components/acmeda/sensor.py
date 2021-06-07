@@ -1,4 +1,5 @@
 """Support for Acmeda Roller Blind Batteries."""
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import DEVICE_CLASS_BATTERY, PERCENTAGE
 from openpeerpower.core import callback
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
@@ -29,7 +30,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     )
 
 
-class AcmedaBattery(AcmedaBase):
+class AcmedaBattery(AcmedaBase, SensorEntity):
     """Representation of a Acmeda cover device."""
 
     device_class = DEVICE_CLASS_BATTERY

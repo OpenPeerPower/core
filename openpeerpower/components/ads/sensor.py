@@ -2,7 +2,7 @@
 import voluptuous as vol
 
 from openpeerpower.components import ads
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_NAME, CONF_UNIT_OF_MEASUREMENT
 import openpeerpower.helpers.config_validation as cv
 
@@ -43,7 +43,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities([entity])
 
 
-class AdsSensor(AdsEntity):
+class AdsSensor(AdsEntity, SensorEntity):
     """Representation of an ADS sensor entity."""
 
     def __init__(self, ads_hub, ads_var, ads_type, name, unit_of_measurement, factor):

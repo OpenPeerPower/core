@@ -11,12 +11,12 @@ from openpeerpower.components.notify import (
     PLATFORM_SCHEMA,
     BaseNotificationService,
 )
+from openpeerpower.const import CONF_URL
 import openpeerpower.helpers.config_validation as cv
 
 _LOGGER = logging.getLogger(__name__)
 
 CONF_FILE = "config"
-CONF_URL = "url"
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     {
@@ -42,11 +42,10 @@ def get_service(opp, config, discovery_info=None):
             _LOGGER.error("Invalid Apprise config url provided")
             return None
 
-    if config.get(CONF_URL):
-        # Ordered list of URLs
-        if not a_obj.add(config[CONF_URL]):
-            _LOGGER.error("Invalid Apprise URL(s) supplied")
-            return None
+    # Ordered list of URLs
+    if config.get(CONF_URL) and not a_obj.add(config[CONF_URL]):
+        _LOGGER.error("Invalid Apprise URL(s) supplied")
+        return None
 
     return AppriseNotificationService(a_obj)
 

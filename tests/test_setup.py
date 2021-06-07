@@ -1,9 +1,10 @@
 """Test component/platform setup."""
 # pylint: disable=protected-access
 import asyncio
+import datetime
 import os
 import threading
-from unittest.mock import Mock, patch
+from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
 import voluptuous as vol
@@ -65,7 +66,9 @@ class TestSetup:
     def test_validate_component_config(self):
         """Test validating component configuration."""
         config_schema = vol.Schema({"comp_conf": {"hello": str}}, required=True)
-        mock_integration(self.opp, MockModule("comp_conf", config_schema=config_schema))
+        mock_integration(
+            self.opp, MockModule("comp_conf", config_schema=config_schema)
+        )
 
         with assert_setup_component(0):
             assert not setup.setup_component(self.opp, "comp_conf", {})
@@ -73,7 +76,9 @@ class TestSetup:
         self.opp.data.pop(setup.DATA_SETUP)
 
         with assert_setup_component(0):
-            assert not setup.setup_component(self.opp, "comp_conf", {"comp_conf": None})
+            assert not setup.setup_component(
+                self.opp, "comp_conf", {"comp_conf": None}
+            )
 
         self.opp.data.pop(setup.DATA_SETUP)
 
@@ -308,7 +313,9 @@ class TestSetup:
 
     def test_component_failing_setup(self):
         """Test component that fails setup."""
-        mock_integration(self.opp, MockModule("comp", setup=lambda opp, config: False))
+        mock_integration(
+            self.opp, MockModule("comp", setup=lambda opp, config: False)
+        )
 
         assert not setup.setup_component(self.opp, "comp", {})
         assert "comp" not in self.opp.config.components
@@ -549,6 +556,41 @@ async def test_when_setup_already_loaded(opp):
     assert calls == ["test", "test"]
 
 
+async def test_async_when_setup_or_start_already_loaded(opp):
+    """Test when setup or start."""
+    calls = []
+
+    async def mock_callback(opp, component):
+        """Mock callback."""
+        calls.append(component)
+
+    setup.async_when_setup_or_start(opp, "test", mock_callback)
+    await opp.async_block_till_done()
+    assert calls == []
+
+    opp.config.components.add("test")
+    opp.bus.async_fire(EVENT_COMPONENT_LOADED, {"component": "test"})
+    await opp.async_block_till_done()
+    assert calls == ["test"]
+
+    # Event listener should be gone
+    opp.bus.async_fire(EVENT_COMPONENT_LOADED, {"component": "test"})
+    await opp.async_block_till_done()
+    assert calls == ["test"]
+
+    # Should be called right away
+    setup.async_when_setup_or_start(opp, "test", mock_callback)
+    await opp.async_block_till_done()
+    assert calls == ["test", "test"]
+
+    setup.async_when_setup_or_start(opp, "not_loaded", mock_callback)
+    await opp.async_block_till_done()
+    assert calls == ["test", "test"]
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    await opp.async_block_till_done()
+    assert calls == ["test", "test", "not_loaded"]
+
+
 async def test_setup_import_blows_up(opp):
     """Test that we handle it correctly when importing integration blows up."""
     with patch(
@@ -594,3 +636,75 @@ async def test_integration_disabled(opp, caplog):
     result = await setup.async_setup_component(opp, "test_component1", {})
     assert not result
     assert disabled_reason in caplog.text
+
+
+async def test_async_get_loaded_integrations(opp):
+    """Test we can enumerate loaded integations."""
+    opp.config.components.add("notbase")
+    opp.config.components.add("switch")
+    opp.config.components.add("notbase.switch")
+    opp.config.components.add("myintegration")
+    opp.config.components.add("device_tracker")
+    opp.config.components.add("device_tracker.other")
+    opp.config.components.add("myintegration.light")
+    assert setup.async_get_loaded_integrations(opp) == {
+        "other",
+        "switch",
+        "notbase",
+        "myintegration",
+        "device_tracker",
+    }
+
+
+async def test_integration_no_setup(opp, caplog):
+    """Test we fail integration setup without setup functions."""
+    mock_integration(
+        opp,
+        MockModule("test_integration_without_setup", setup=False),
+    )
+    result = await setup.async_setup_component(
+        opp, "test_integration_without_setup", {}
+    )
+    assert not result
+    assert "No setup or config entry setup function defined" in caplog.text
+
+
+async def test_integration_only_setup_entry(opp):
+    """Test we have an integration with only a setup entry method."""
+    mock_integration(
+        opp,
+        MockModule(
+            "test_integration_only_entry",
+            setup=False,
+            async_setup_entry=AsyncMock(return_value=True),
+        ),
+    )
+    assert await setup.async_setup_component(opp, "test_integration_only_entry", {})
+
+
+async def test_async_start_setup(opp):
+    """Test setup started context manager keeps track of setup times."""
+    with setup.async_start_setup(opp, ["august"]):
+        assert isinstance(
+            opp.data[setup.DATA_SETUP_STARTED]["august"], datetime.datetime
+        )
+        with setup.async_start_setup(opp, ["august"]):
+            assert isinstance(
+                opp.data[setup.DATA_SETUP_STARTED]["august_2"], datetime.datetime
+            )
+
+    assert "august" not in opp.data[setup.DATA_SETUP_STARTED]
+    assert isinstance(opp.data[setup.DATA_SETUP_TIME]["august"], datetime.timedelta)
+    assert "august_2" not in opp.data[setup.DATA_SETUP_TIME]
+
+
+async def test_async_start_setup_platforms(opp):
+    """Test setup started context manager keeps track of setup times for platforms."""
+    with setup.async_start_setup(opp, ["sensor.august"]):
+        assert isinstance(
+            opp.data[setup.DATA_SETUP_STARTED]["sensor.august"], datetime.datetime
+        )
+
+    assert "august" not in opp.data[setup.DATA_SETUP_STARTED]
+    assert isinstance(opp.data[setup.DATA_SETUP_TIME]["august"], datetime.timedelta)
+    assert "sensor" not in opp.data[setup.DATA_SETUP_TIME]

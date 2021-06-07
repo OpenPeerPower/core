@@ -1,0 +1,19 @@
+{
+    "config": {
+        "abort": {
+            "cannot_connect": "Gagal terhubung",
+            "missing_configuration": "Komponen tidak dikonfigurasi. Ikuti petunjuk dalam dokumentasi.",
+            "no_url_available": "Tidak ada URL yang tersedia. Untuk informasi tentang kesalahan ini, [lihat bagian bantuan]({docs_url})",
+            "single_instance_allowed": "Sudah dikonfigurasi. Hanya satu konfigurasi yang diizinkan."
+        },
+        "step": {
+            "oppio_confirm": {
+                "description": "Ingin mengonfigurasi Open Peer Power untuk terhubung ke Almond yang disediakan oleh add-on Supervisor {addon}?",
+                "title": "Almond melalui add-on Open Peer Power"
+            },
+            "pick_implementation": {
+                "title": "Pilih Metode Autentikasi"
+            }
+        }
+    }
+}

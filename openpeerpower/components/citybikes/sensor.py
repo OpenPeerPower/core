@@ -7,7 +7,11 @@ import aiohttp
 import async_timeout
 import voluptuous as vol
 
-from openpeerpower.components.sensor import ENTITY_ID_FORMAT, PLATFORM_SCHEMA
+from openpeerpower.components.sensor import (
+    ENTITY_ID_FORMAT,
+    PLATFORM_SCHEMA,
+    SensorEntity,
+)
 from openpeerpower.const import (
     ATTR_ATTRIBUTION,
     ATTR_ID,
@@ -25,7 +29,7 @@ from openpeerpower.const import (
 from openpeerpower.exceptions import PlatformNotReady
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity, async_generate_entity_id
+from openpeerpower.helpers.entity import async_generate_entity_id
 from openpeerpower.helpers.event import async_track_time_interval
 from openpeerpower.util import distance, location
 
@@ -188,7 +192,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
                 uid = "_".join([network.network_id, name, station_id])
             else:
                 uid = "_".join([network.network_id, station_id])
-            entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, uid, opp=opp)
+            entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, uid, opp.opp)
             devices.append(CityBikesStation(network, station_id, entity_id))
 
     async_add_entities(devices, True)
@@ -258,7 +262,7 @@ class CityBikesNetwork:
                 raise PlatformNotReady from err
 
 
-class CityBikesStation(Entity):
+class CityBikesStation(SensorEntity):
     """CityBikes API Sensor."""
 
     def __init__(self, network, station_id, entity_id):
@@ -286,7 +290,7 @@ class CityBikesStation(Entity):
                 break
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         if self._station_data:
             return {

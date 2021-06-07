@@ -8,8 +8,8 @@
         },
         "step": {
             "oppio_confirm": {
-                "description": "Do you want to configure Open Peer Power to connect to Almond provided by the Opp.io add-on: {addon}?",
-                "title": "Almond via Opp.io add-on"
+                "description": "Do you want to configure Open Peer Power to connect to Almond provided by the add-on: {addon}?",
+                "title": "Almond via Open Peer Power add-on"
             },
             "pick_implementation": {
                 "title": "Pick Authentication Method"

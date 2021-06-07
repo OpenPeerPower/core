@@ -2,17 +2,15 @@
 import asyncio
 import logging
 
-from opp_net import Cloud, cloud_api
-from opp_net.google_report_state import ErrorResponse
+from opp_nabucasa import Cloud, cloud_api
+from opp_nabucasa.google_report_state import ErrorResponse
 
+from openpeerpower.components.google_assistant.const import DOMAIN as GOOGLE_DOMAIN
 from openpeerpower.components.google_assistant.helpers import AbstractConfig
-from openpeerpower.const import (
-    CLOUD_NEVER_EXPOSED_ENTITIES,
-    EVENT_OPENPEERPOWER_STARTED,
-    HTTP_OK,
-)
+from openpeerpower.const import CLOUD_NEVER_EXPOSED_ENTITIES, HTTP_OK
 from openpeerpower.core import CoreState, split_entity_id
-from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers import entity_registry, start
+from openpeerpower.setup import async_setup_component
 
 from .const import (
     CONF_ENTITY_CONFIG,
@@ -87,8 +85,21 @@ class CloudGoogleConfig(AbstractConfig):
     async def async_initialize(self):
         """Perform async initialization of config."""
         await super().async_initialize()
-        # Remove bad data that was there until 0.103.6 - Jan 6, 2020
-        self._store.pop_agent_user_id(self._user)
+
+        async def opp_started(opp):
+            if self.enabled and GOOGLE_DOMAIN not in self.opp.config.components:
+                await async_setup_component(self.opp, GOOGLE_DOMAIN, {})
+
+        start.async_at_start(self.opp, opp_started)
+
+        # Remove old/wrong user agent ids
+        remove_agent_user_ids = []
+        for agent_user_id in self._store.agent_user_ids:
+            if agent_user_id != self.agent_user_id:
+                remove_agent_user_ids.append(agent_user_id)
+
+        for agent_user_id in remove_agent_user_ids:
+            await self.async_disconnect_agent_user(agent_user_id)
 
         self._prefs.async_listen_updates(self._async_prefs_updated)
 
@@ -128,6 +139,11 @@ class CloudGoogleConfig(AbstractConfig):
         """Return Agent User Id to use for query responses."""
         return self._cloud.username
 
+    @property
+    def has_registered_user_agent(self):
+        """Return if we have a Agent User Id registered."""
+        return len(self._store.agent_user_ids) > 0
+
     def get_agent_user_id(self, context):
         """Get agent user ID making request."""
         return self.agent_user_id
@@ -156,6 +172,9 @@ class CloudGoogleConfig(AbstractConfig):
 
     async def _async_prefs_updated(self, prefs):
         """Handle updated preferences."""
+        if self.enabled and GOOGLE_DOMAIN not in self.opp.config.components:
+            await async_setup_component(self.opp, GOOGLE_DOMAIN, {})
+
         if self.should_report_state != self.is_reporting_state:
             if self.should_report_state:
                 self.async_enable_report_state()
@@ -198,17 +217,7 @@ class CloudGoogleConfig(AbstractConfig):
         if not self._should_expose_entity_id(entity_id):
             return
 
-        if self.opp.state == CoreState.running:
-            self.async_schedule_google_sync_all()
+        if self.opp.state != CoreState.running:
             return
 
-        if self._sync_on_started:
-            return
-
-        self._sync_on_started = True
-
-        async def sync_google(_):
-            """Sync entities to Google."""
-            await self.async_sync_entities_all()
-
-        self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STARTED, sync_google)
+        self.async_schedule_google_sync_all()

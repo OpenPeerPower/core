@@ -1,6 +1,9 @@
 """Provide configuration end points for scripts."""
-from openpeerpower.components.script import DOMAIN, SCRIPT_ENTRY_SCHEMA
-from openpeerpower.components.script.config import async_validate_config_item
+from openpeerpower.components.script import DOMAIN
+from openpeerpower.components.script.config import (
+    SCRIPT_ENTITY_SCHEMA,
+    async_validate_config_item,
+)
 from openpeerpower.config import SCRIPT_CONFIG_PATH
 from openpeerpower.const import SERVICE_RELOAD
 import openpeerpower.helpers.config_validation as cv
@@ -16,14 +19,22 @@ async def async_setup(opp):
         await opp.services.async_call(DOMAIN, SERVICE_RELOAD)
 
     opp.http.register_view(
-        EditKeyBasedConfigView(
+        EditScriptConfigView(
             DOMAIN,
             "config",
             SCRIPT_CONFIG_PATH,
             cv.slug,
-            SCRIPT_ENTRY_SCHEMA,
+            SCRIPT_ENTITY_SCHEMA,
             post_write_hook=hook,
             data_validator=async_validate_config_item,
         )
     )
     return True
+
+
+class EditScriptConfigView(EditKeyBasedConfigView):
+    """Edit script config."""
+
+    def _write_value(self, opp, data, config_key, new_value):
+        """Set value."""
+        data[config_key] = new_value

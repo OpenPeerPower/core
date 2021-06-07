@@ -2,12 +2,8 @@
   "domain": "alexa",
   "name": "Amazon Alexa",
   "documentation": "https://www.openpeerpower.io/integrations/alexa",
-  "dependencies": [
-    "http"
-  ],
-  "after_dependencies": [
-    "camera"
-  ],
-  "codeowners": [
-  ]
+  "dependencies": ["http"],
+  "after_dependencies": ["camera"],
+  "codeowners": ["@openpeerpower/cloud", "@ochlocracy"],
+  "iot_class": "cloud_push"
 }

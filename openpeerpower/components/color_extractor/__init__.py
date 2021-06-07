@@ -9,12 +9,6 @@ import async_timeout
 from colorthief import ColorThief
 import voluptuous as vol
 
-from openpeerpower.components.color_extractor.const import (
-    ATTR_PATH,
-    ATTR_URL,
-    DOMAIN,
-    SERVICE_TURN_ON,
-)
 from openpeerpower.components.light import (
     ATTR_RGB_COLOR,
     DOMAIN as LIGHT_DOMAIN,
@@ -23,6 +17,8 @@ from openpeerpower.components.light import (
 )
 from openpeerpower.helpers import aiohttp_client
 import openpeerpower.helpers.config_validation as cv
+
+from .const import ATTR_PATH, ATTR_URL, DOMAIN, SERVICE_TURN_ON
 
 _LOGGER = logging.getLogger(__name__)
 

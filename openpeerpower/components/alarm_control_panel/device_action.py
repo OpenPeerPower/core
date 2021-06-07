@@ -1,5 +1,7 @@
 """Provides device automations for Alarm control panel."""
-from typing import List, Optional
+from __future__ import annotations
+
+from typing import Final
 
 import voluptuous as vol
 
@@ -21,6 +23,7 @@ from openpeerpower.const import (
 from openpeerpower.core import Context, OpenPeerPower
 from openpeerpower.helpers import entity_registry
 import openpeerpower.helpers.config_validation as cv
+from openpeerpower.helpers.typing import ConfigType
 
 from . import ATTR_CODE_ARM_REQUIRED, DOMAIN
 from .const import (
@@ -30,9 +33,15 @@ from .const import (
     SUPPORT_ALARM_TRIGGER,
 )
 
-ACTION_TYPES = {"arm_away", "arm_home", "arm_night", "disarm", "trigger"}
+ACTION_TYPES: Final[set[str]] = {
+    "arm_away",
+    "arm_home",
+    "arm_night",
+    "disarm",
+    "trigger",
+}
 
-ACTION_SCHEMA = cv.DEVICE_ACTION_BASE_SCHEMA.extend(
+ACTION_SCHEMA: Final = cv.DEVICE_ACTION_BASE_SCHEMA.extend(
     {
         vol.Required(CONF_TYPE): vol.In(ACTION_TYPES),
         vol.Required(CONF_ENTITY_ID): cv.entity_domain(DOMAIN),
@@ -41,7 +50,9 @@ ACTION_SCHEMA = cv.DEVICE_ACTION_BASE_SCHEMA.extend(
 )
 
 
-async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_actions(
+    opp: OpenPeerPower, device_id: str
+) -> list[dict[str, str]]:
     """List device actions for Alarm control panel devices."""
     registry = await entity_registry.async_get_registry(opp)
     actions = []
@@ -59,61 +70,30 @@ async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
 
         supported_features = state.attributes[ATTR_SUPPORTED_FEATURES]
 
+        base_action = {
+            CONF_DEVICE_ID: device_id,
+            CONF_DOMAIN: DOMAIN,
+            CONF_ENTITY_ID: entry.entity_id,
+        }
+
         # Add actions for each entity that belongs to this integration
         if supported_features & SUPPORT_ALARM_ARM_AWAY:
-            actions.append(
-                {
-                    CONF_DEVICE_ID: device_id,
-                    CONF_DOMAIN: DOMAIN,
-                    CONF_ENTITY_ID: entry.entity_id,
-                    CONF_TYPE: "arm_away",
-                }
-            )
+            actions.append({**base_action, CONF_TYPE: "arm_away"})
         if supported_features & SUPPORT_ALARM_ARM_HOME:
-            actions.append(
-                {
-                    CONF_DEVICE_ID: device_id,
-                    CONF_DOMAIN: DOMAIN,
-                    CONF_ENTITY_ID: entry.entity_id,
-                    CONF_TYPE: "arm_home",
-                }
-            )
+            actions.append({**base_action, CONF_TYPE: "arm_home"})
         if supported_features & SUPPORT_ALARM_ARM_NIGHT:
-            actions.append(
-                {
-                    CONF_DEVICE_ID: device_id,
-                    CONF_DOMAIN: DOMAIN,
-                    CONF_ENTITY_ID: entry.entity_id,
-                    CONF_TYPE: "arm_night",
-                }
-            )
-        actions.append(
-            {
-                CONF_DEVICE_ID: device_id,
-                CONF_DOMAIN: DOMAIN,
-                CONF_ENTITY_ID: entry.entity_id,
-                CONF_TYPE: "disarm",
-            }
-        )
+            actions.append({**base_action, CONF_TYPE: "arm_night"})
+        actions.append({**base_action, CONF_TYPE: "disarm"})
         if supported_features & SUPPORT_ALARM_TRIGGER:
-            actions.append(
-                {
-                    CONF_DEVICE_ID: device_id,
-                    CONF_DOMAIN: DOMAIN,
-                    CONF_ENTITY_ID: entry.entity_id,
-                    CONF_TYPE: "trigger",
-                }
-            )
+            actions.append({**base_action, CONF_TYPE: "trigger"})
 
     return actions
 
 
 async def async_call_action_from_config(
-    opp: OpenPeerPower, config: dict, variables: dict, context: Optional[Context]
+    opp: OpenPeerPower, config: ConfigType, variables: dict, context: Context | None
 ) -> None:
     """Execute a device action."""
-    config = ACTION_SCHEMA(config)
-
     service_data = {ATTR_ENTITY_ID: config[CONF_ENTITY_ID]}
     if CONF_CODE in config:
         service_data[ATTR_CODE] = config[CONF_CODE]
@@ -134,7 +114,9 @@ async def async_call_action_from_config(
     )
 
 
-async def async_get_action_capabilities(opp, config):
+async def async_get_action_capabilities(
+    opp: OpenPeerPower, config: ConfigType
+) -> dict[str, vol.Schema]:
     """List action capabilities."""
     state = opp.states.get(config[CONF_ENTITY_ID])
     code_required = state.attributes.get(ATTR_CODE_ARM_REQUIRED) if state else False

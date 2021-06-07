@@ -1,5 +1,4 @@
 """Support for AlarmDecoder devices."""
-import asyncio
 from datetime import timedelta
 import logging
 
@@ -14,7 +13,7 @@ from openpeerpower.const import (
     CONF_PROTOCOL,
     EVENT_OPENPEERPOWER_STOP,
 )
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.util import dt as dt_util
 
 from .const import (
@@ -39,12 +38,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["alarm_control_panel", "sensor", "binary_sensor"]
 
 
-async def async_setup(opp, config):
-    """Set up for the AlarmDecoder devices."""
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up AlarmDecoder config flow."""
     undo_listener = entry.add_update_listener(_update_listener)
 
@@ -130,25 +124,16 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
 
     await open_connection()
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
+
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a AlarmDecoder entry."""
     opp.data[DOMAIN][entry.entry_id][DATA_RESTART] = False
 
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     if not unload_ok:
         return False
@@ -165,7 +150,7 @@ async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     return True
 
 
-async def _update_listener(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def _update_listener(opp: OpenPeerPower, entry: ConfigEntry):
     """Handle options update."""
     _LOGGER.debug("AlarmDecoder options updated: %s", entry.as_dict()["options"])
     await opp.config_entries.async_reload(entry.entry_id)

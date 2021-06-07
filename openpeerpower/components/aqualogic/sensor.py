@@ -2,7 +2,7 @@
 
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_MONITORED_CONDITIONS,
     PERCENTAGE,
@@ -12,7 +12,6 @@ from openpeerpower.const import (
 )
 from openpeerpower.core import callback
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 from . import DOMAIN, UPDATE_TOPIC
 
@@ -56,7 +55,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities(sensors)
 
 
-class AquaLogicSensor(Entity):
+class AquaLogicSensor(SensorEntity):
     """Sensor implementation for the AquaLogic component."""
 
     def __init__(self, processor, sensor_type):
