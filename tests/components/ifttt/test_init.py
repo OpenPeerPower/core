@@ -1,5 +1,5 @@
 """Test the init file of IFTTT."""
-from openpeerpower import data_entry_flow
+from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.components import ifttt
 from openpeerpower.config import async_process_op_core_config
 from openpeerpower.core import callback
@@ -13,7 +13,7 @@ async def test_config_flow_registers_webhook(opp, aiohttp_client):
     )
 
     result = await opp.config_entries.flow.async_init(
-        "ifttt", context={"source": "user"}
+        "ifttt", context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM, result
 

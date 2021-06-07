@@ -70,7 +70,7 @@ async def test_get_actions(opp, device_reg, entity_reg):
     assert actions == expected_actions
 
 
-async def test_action(opp, calls):
+async def test_action(opp, calls, enable_custom_integrations):
     """Test for turn_on and turn_off actions."""
     platform = getattr(opp.components, f"test.{DOMAIN}")
 

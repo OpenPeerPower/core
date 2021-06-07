@@ -47,7 +47,7 @@ async def test_climate_thermostat_run(opp):
         "temperature": 22.2,
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
 
@@ -77,7 +77,7 @@ async def test_climate_thermostat_schedule_hold_unavailable(opp):
         "supported_features": 17,
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
 
@@ -111,7 +111,7 @@ async def test_climate_thermostat_schedule_hold_available(opp):
         "temperature": 26.1,
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
 
@@ -145,7 +145,7 @@ async def test_climate_thermostat_schedule_temporary_hold(opp):
         "temperature": 37.2,
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
     await opp.services.async_call(

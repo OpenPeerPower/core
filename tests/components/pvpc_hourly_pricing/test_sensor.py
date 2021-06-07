@@ -3,12 +3,11 @@ from datetime import datetime, timedelta
 import logging
 from unittest.mock import patch
 
-from pytz import timezone
-
 from openpeerpower.components.pvpc_hourly_pricing import ATTR_TARIFF, DOMAIN
 from openpeerpower.const import CONF_NAME
 from openpeerpower.core import ATTR_NOW, EVENT_TIME_CHANGED
 from openpeerpower.setup import async_setup_component
+from openpeerpower.util import dt as dt_util
 
 from .conftest import check_valid_state
 
@@ -32,7 +31,7 @@ async def test_sensor_availability(
     opp, caplog, legacy_patchable_time, pvpc_aioclient_mock: AiohttpClientMocker
 ):
     """Test sensor availability and handling of cloud access."""
-    opp.config.time_zone = timezone("Europe/Madrid")
+    opp.config.time_zone = dt_util.get_time_zone("Europe/Madrid")
     config = {DOMAIN: [{CONF_NAME: "test_dst", ATTR_TARIFF: "discrimination"}]}
     mock_data = {"return_time": datetime(2019, 10, 27, 20, 0, 0, tzinfo=date_util.UTC)}
 

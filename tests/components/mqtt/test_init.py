@@ -19,7 +19,7 @@ from openpeerpower.const import (
     TEMP_CELSIUS,
 )
 from openpeerpower.core import callback
-from openpeerpower.helpers import device_registry
+from openpeerpower.helpers import device_registry as dr
 from openpeerpower.setup import async_setup_component
 from openpeerpower.util.dt import utcnow
 
@@ -85,7 +85,7 @@ async def test_mqtt_connects_on_open_peer_power_mqtt_setup(
 
 
 async def test_mqtt_disconnects_on_open_peer_power_stop(opp, mqtt_mock):
-    """Test if client stops on OP stop."""
+    """Test if client stops on OPP stop."""
     opp.bus.fire(EVENT_OPENPEERPOWER_STOP)
     await opp.async_block_till_done()
     await opp.async_block_till_done()
@@ -245,12 +245,17 @@ def test_entity_device_info_schema():
     MQTT_ENTITY_DEVICE_INFO_SCHEMA({"identifiers": ["abcd"]})
     MQTT_ENTITY_DEVICE_INFO_SCHEMA({"identifiers": "abcd"})
     # just connection
-    MQTT_ENTITY_DEVICE_INFO_SCHEMA({"connections": [["mac", "02:5b:26:a8:dc:12"]]})
+    MQTT_ENTITY_DEVICE_INFO_SCHEMA(
+        {"connections": [[dr.CONNECTION_NETWORK_MAC, "02:5b:26:a8:dc:12"]]}
+    )
     # full device info
     MQTT_ENTITY_DEVICE_INFO_SCHEMA(
         {
             "identifiers": ["helloworld", "hello"],
-            "connections": [["mac", "02:5b:26:a8:dc:12"], ["zigbee", "zigbee_id"]],
+            "connections": [
+                [dr.CONNECTION_NETWORK_MAC, "02:5b:26:a8:dc:12"],
+                [dr.CONNECTION_ZIGBEE, "zigbee_id"],
+            ],
             "manufacturer": "Whatever",
             "name": "Beer",
             "model": "Glass",
@@ -261,7 +266,10 @@ def test_entity_device_info_schema():
     MQTT_ENTITY_DEVICE_INFO_SCHEMA(
         {
             "identifiers": ["helloworld", "hello"],
-            "connections": [["mac", "02:5b:26:a8:dc:12"], ["zigbee", "zigbee_id"]],
+            "connections": [
+                [dr.CONNECTION_NETWORK_MAC, "02:5b:26:a8:dc:12"],
+                [dr.CONNECTION_ZIGBEE, "zigbee_id"],
+            ],
             "manufacturer": "Whatever",
             "name": "Beer",
             "model": "Glass",
@@ -1058,7 +1066,7 @@ async def test_mqtt_ws_remove_non_mqtt_device(
 
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
-        connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
+        connections={(dr.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
     )
     assert device_entry is not None
 
@@ -1071,7 +1079,9 @@ async def test_mqtt_ws_remove_non_mqtt_device(
     assert response["error"]["code"] == websocket_api.const.ERR_NOT_FOUND
 
 
-async def test_mqtt_ws_get_device_debug_info(opp, device_reg, opp_ws_client, mqtt_mock):
+async def test_mqtt_ws_get_device_debug_info(
+    opp, device_reg, opp_ws_client, mqtt_mock
+):
     """Test MQTT websocket device debug info."""
     config = {
         "device": {"identifiers": ["0AFFD2"]},
@@ -1155,7 +1165,7 @@ async def test_debug_info_multiple_devices(opp, mqtt_mock):
         },
     ]
 
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
 
     for d in devices:
         data = json.dumps(d["config"])
@@ -1234,7 +1244,7 @@ async def test_debug_info_multiple_entities_triggers(opp, mqtt_mock):
         },
     ]
 
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
 
     for c in config:
         data = json.dumps(c["config"])
@@ -1282,7 +1292,7 @@ async def test_debug_info_non_mqtt(opp, device_reg, entity_reg):
     config_entry.add_to_opp(opp)
     device_entry = device_reg.async_get_or_create(
         config_entry_id=config_entry.entry_id,
-        connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
+        connections={(dr.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
     )
     for device_class in DEVICE_CLASSES:
         entity_reg.async_get_or_create(
@@ -1309,7 +1319,7 @@ async def test_debug_info_wildcard(opp, mqtt_mock):
         "unique_id": "veryunique",
     }
 
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
 
     data = json.dumps(config)
     async_fire_mqtt_message(opp, "openpeerpower/sensor/bla/config", data)
@@ -1355,7 +1365,7 @@ async def test_debug_info_filter_same(opp, mqtt_mock):
         "unique_id": "veryunique",
     }
 
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
 
     data = json.dumps(config)
     async_fire_mqtt_message(opp, "openpeerpower/sensor/bla/config", data)
@@ -1414,7 +1424,7 @@ async def test_debug_info_same_topic(opp, mqtt_mock):
         "unique_id": "veryunique",
     }
 
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
 
     data = json.dumps(config)
     async_fire_mqtt_message(opp, "openpeerpower/sensor/bla/config", data)
@@ -1465,7 +1475,7 @@ async def test_debug_info_qos_retain(opp, mqtt_mock):
         "unique_id": "veryunique",
     }
 
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
 
     data = json.dumps(config)
     async_fire_mqtt_message(opp, "openpeerpower/sensor/bla/config", data)

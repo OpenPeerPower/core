@@ -19,13 +19,13 @@ from openpeerpower.exceptions import ServiceNotFound, Unauthorized
 @pytest.fixture
 def mock_request():
     """Mock a request."""
-    return Mock(app={"opp": Mock(is_stopping=False)}, match_info={})
+    return Mock(app={"opp.: Mock(is_stopping=False)}, match_info={})
 
 
 @pytest.fixture
 def mock_request_with_stopping():
     """Mock a request."""
-    return Mock(app={"opp": Mock(is_stopping=True)}, match_info={})
+    return Mock(app={"opp.: Mock(is_stopping=True)}, match_info={})
 
 
 async def test_invalid_json(caplog):

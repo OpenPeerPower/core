@@ -1,21 +1,22 @@
 """Tests for the Samsung TV Integration."""
 from unittest.mock import Mock, call, patch
 
-import pytest
-
 from openpeerpower.components.media_player.const import DOMAIN, SUPPORT_TURN_ON
 from openpeerpower.components.samsungtv.const import (
     CONF_ON_ACTION,
     DOMAIN as SAMSUNGTV_DOMAIN,
+    METHOD_WEBSOCKET,
 )
 from openpeerpower.components.samsungtv.media_player import SUPPORT_SAMSUNGTV
 from openpeerpower.const import (
     ATTR_ENTITY_ID,
     ATTR_SUPPORTED_FEATURES,
     CONF_HOST,
+    CONF_METHOD,
     CONF_NAME,
     SERVICE_VOLUME_UP,
 )
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.setup import async_setup_component
 
 ENTITY_ID = f"{DOMAIN}.fake_name"
@@ -25,6 +26,7 @@ MOCK_CONFIG = {
             CONF_HOST: "fake_host",
             CONF_NAME: "fake_name",
             CONF_ON_ACTION: [{"delay": "00:00:01"}],
+            CONF_METHOD: METHOD_WEBSOCKET,
         }
     ]
 }
@@ -32,37 +34,22 @@ REMOTE_CALL = {
     "name": "OpenPeerPower",
     "description": "OpenPeerPower",
     "id": "ha.component.samsung",
-    "method": "legacy",
     "host": MOCK_CONFIG[SAMSUNGTV_DOMAIN][0][CONF_HOST],
+    "method": "legacy",
     "port": None,
     "timeout": 1,
 }
 
 
-@pytest.fixture(name="remote")
-def remote_fixture():
-    """Patch the samsungctl Remote."""
-    with patch(
-        "openpeerpower.components.samsungtv.bridge.Remote"
-    ) as remote_class, patch(
-        "openpeerpower.components.samsungtv.config_flow.socket"
-    ) as socket1, patch(
-        "openpeerpower.components.samsungtv.socket"
-    ) as socket2:
-        remote = Mock()
-        remote.__enter__ = Mock()
-        remote.__exit__ = Mock()
-        remote_class.return_value = remote
-        socket1.gethostbyname.return_value = "FAKE_IP_ADDRESS"
-        socket2.gethostbyname.return_value = "FAKE_IP_ADDRESS"
-        yield remote
-
-
-async def test_setup(opp, remote):
+async def test_setup(opp: OpenPeerPower, remote: Mock):
     """Test Samsung TV integration is setup."""
-    with patch("openpeerpower.components.samsungtv.bridge.Remote") as remote:
-        await async_setup_component(opp, SAMSUNGTV_DOMAIN, MOCK_CONFIG)
-        await opp.async_block_till_done()
+    with patch("openpeerpower.components.samsungtv.bridge.Remote") as remote, patch(
+        "openpeerpower.components.samsungtv.config_flow.socket.gethostbyname",
+        return_value="fake_host",
+    ):
+        with patch("openpeerpower.components.samsungtv.bridge.Remote") as remote:
+            await async_setup_component(opp, SAMSUNGTV_DOMAIN, MOCK_CONFIG)
+            await opp.async_block_till_done()
         state = opp.states.get(ENTITY_ID)
 
         # test name and turn_on
@@ -80,7 +67,7 @@ async def test_setup(opp, remote):
         assert remote.call_args == call(REMOTE_CALL)
 
 
-async def test_setup_duplicate_config(opp, remote, caplog):
+async def test_setup_duplicate_config(opp: OpenPeerPower, remote: Mock, caplog):
     """Test duplicate setup of platform."""
     DUPLICATE = {
         SAMSUNGTV_DOMAIN: [
@@ -95,7 +82,7 @@ async def test_setup_duplicate_config(opp, remote, caplog):
     assert "duplicate host entries found" in caplog.text
 
 
-async def test_setup_duplicate_entries(opp, remote, caplog):
+async def test_setup_duplicate_entries(opp: OpenPeerPower, remote: Mock, caplog):
     """Test duplicate setup of platform."""
     await async_setup_component(opp, SAMSUNGTV_DOMAIN, MOCK_CONFIG)
     await opp.async_block_till_done()

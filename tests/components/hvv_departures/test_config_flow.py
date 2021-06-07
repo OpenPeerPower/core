@@ -11,7 +11,7 @@ from openpeerpower.components.hvv_departures.const import (
     CONF_STATION,
     DOMAIN,
 )
-from openpeerpower.config_entries import CONN_CLASS_CLOUD_POLL, SOURCE_USER
+from openpeerpower.config_entries import SOURCE_USER
 from openpeerpower.const import CONF_HOST, CONF_OFFSET, CONF_PASSWORD, CONF_USERNAME
 
 from tests.common import MockConfigEntry, load_fixture
@@ -38,8 +38,6 @@ async def test_user_flow(opp):
     ), patch(
         "openpeerpower.components.hvv_departures.hub.GTI.stationInformation",
         return_value=FIXTURE_STATION_INFORMATION,
-    ), patch(
-        "openpeerpower.components.hvv_departures.async_setup", return_value=True
     ), patch(
         "openpeerpower.components.hvv_departures.async_setup_entry",
         return_value=True,
@@ -101,8 +99,6 @@ async def test_user_flow_no_results(opp):
     ), patch(
         "openpeerpower.components.hvv_departures.hub.GTI.checkName",
         return_value={"returnCode": "OK", "results": []},
-    ), patch(
-        "openpeerpower.components.hvv_departures.async_setup", return_value=True
     ), patch(
         "openpeerpower.components.hvv_departures.async_setup_entry",
         return_value=True,
@@ -259,9 +255,7 @@ async def test_options_flow(opp):
         domain=DOMAIN,
         title="Wartenau",
         data=FIXTURE_CONFIG_ENTRY,
-        source="user",
-        connection_class=CONN_CLASS_CLOUD_POLL,
-        system_options={"disable_new_entities": False},
+        source=SOURCE_USER,
         options=FIXTURE_OPTIONS,
         unique_id="1234",
     )
@@ -310,9 +304,7 @@ async def test_options_flow_invalid_auth(opp):
         domain=DOMAIN,
         title="Wartenau",
         data=FIXTURE_CONFIG_ENTRY,
-        source="user",
-        connection_class=CONN_CLASS_CLOUD_POLL,
-        system_options={"disable_new_entities": False},
+        source=SOURCE_USER,
         options=FIXTURE_OPTIONS,
         unique_id="1234",
     )
@@ -351,9 +343,7 @@ async def test_options_flow_cannot_connect(opp):
         domain=DOMAIN,
         title="Wartenau",
         data=FIXTURE_CONFIG_ENTRY,
-        source="user",
-        connection_class=CONN_CLASS_CLOUD_POLL,
-        system_options={"disable_new_entities": False},
+        source=SOURCE_USER,
         options=FIXTURE_OPTIONS,
         unique_id="1234",
     )

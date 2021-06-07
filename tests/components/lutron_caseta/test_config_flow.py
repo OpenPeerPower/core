@@ -17,10 +17,11 @@ from openpeerpower.components.lutron_caseta.const import (
     ERROR_CANNOT_CONNECT,
     STEP_IMPORT_FAILED,
 )
-from openpeerpower.components.zeroconf import ATTR_HOSTNAME
 from openpeerpower.const import CONF_HOST
 
 from tests.common import MockConfigEntry
+
+ATTR_HOSTNAME = "hostname"
 
 EMPTY_MOCK_CONFIG_ENTRY = {
     CONF_HOST: "",
@@ -188,7 +189,7 @@ async def test_duplicate_bridge_import(opp):
         )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
-    assert result["reason"] == CasetaConfigFlow.ABORT_REASON_ALREADY_CONFIGURED
+    assert result["reason"] == "already_configured"
     assert len(mock_setup_entry.mock_calls) == 0
 
 
@@ -196,7 +197,9 @@ async def test_already_configured_with_ignored(opp):
     """Test ignored entries do not break checking for existing entries."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
-    config_entry = MockConfigEntry(domain=DOMAIN, data={}, source="ignore")
+    config_entry = MockConfigEntry(
+        domain=DOMAIN, data={}, source=config_entries.SOURCE_IGNORE
+    )
     config_entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
@@ -215,7 +218,9 @@ async def test_already_configured_with_ignored(opp):
 async def test_form_user(opp, tmpdir):
     """Test we get the form and can pair."""
     await setup.async_setup_component(opp, "persistent_notification", {})
-    opp.config.config_dir = await opp.async_add_executor_job(tmpdir.mkdir, "tls_assets")
+    opp.config.config_dir = await opp.async_add_executor_job(
+        tmpdir.mkdir, "tls_assets"
+    )
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -264,7 +269,9 @@ async def test_form_user(opp, tmpdir):
 async def test_form_user_pairing_fails(opp, tmpdir):
     """Test we get the form and we handle pairing failure."""
     await setup.async_setup_component(opp, "persistent_notification", {})
-    opp.config.config_dir = await opp.async_add_executor_job(tmpdir.mkdir, "tls_assets")
+    opp.config.config_dir = await opp.async_add_executor_job(
+        tmpdir.mkdir, "tls_assets"
+    )
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -307,7 +314,9 @@ async def test_form_user_pairing_fails(opp, tmpdir):
 async def test_form_user_reuses_existing_assets_when_pairing_again(opp, tmpdir):
     """Test the tls assets saved on disk are reused when pairing again."""
     await setup.async_setup_component(opp, "persistent_notification", {})
-    opp.config.config_dir = await opp.async_add_executor_job(tmpdir.mkdir, "tls_assets")
+    opp.config.config_dir = await opp.async_add_executor_job(
+        tmpdir.mkdir, "tls_assets"
+    )
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -405,7 +414,9 @@ async def test_form_user_reuses_existing_assets_when_pairing_again(opp, tmpdir):
 async def test_zeroconf_host_already_configured(opp, tmpdir):
     """Test starting a flow from discovery when the host is already configured."""
     await setup.async_setup_component(opp, "persistent_notification", {})
-    opp.config.config_dir = await opp.async_add_executor_job(tmpdir.mkdir, "tls_assets")
+    opp.config.config_dir = await opp.async_add_executor_job(
+        tmpdir.mkdir, "tls_assets"
+    )
 
     config_entry = MockConfigEntry(domain=DOMAIN, data={CONF_HOST: "1.1.1.1"})
 
@@ -474,7 +485,9 @@ async def test_zeroconf_not_lutron_device(opp):
 async def test_zeroconf(opp, source, tmpdir):
     """Test starting a flow from discovery."""
     await setup.async_setup_component(opp, "persistent_notification", {})
-    opp.config.config_dir = await opp.async_add_executor_job(tmpdir.mkdir, "tls_assets")
+    opp.config.config_dir = await opp.async_add_executor_job(
+        tmpdir.mkdir, "tls_assets"
+    )
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,

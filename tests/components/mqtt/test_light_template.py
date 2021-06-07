@@ -141,6 +141,37 @@ async def test_setup_fails(opp, mqtt_mock):
     assert opp.states.get("light.test") is None
 
 
+async def test_rgb_light(opp, mqtt_mock):
+    """Test RGB light flags brightness support."""
+    assert await async_setup_component(
+        opp,
+        light.DOMAIN,
+        {
+            light.DOMAIN: {
+                "platform": "mqtt",
+                "schema": "template",
+                "name": "test",
+                "command_topic": "test_light_rgb/set",
+                "command_on_template": "on",
+                "command_off_template": "off",
+                "red_template": '{{ value.split(",")[4].' 'split("-")[0] }}',
+                "green_template": '{{ value.split(",")[4].' 'split("-")[1] }}',
+                "blue_template": '{{ value.split(",")[4].' 'split("-")[2] }}',
+            }
+        },
+    )
+    await opp.async_block_till_done()
+
+    state = opp.states.get("light.test")
+    expected_features = (
+        light.SUPPORT_TRANSITION
+        | light.SUPPORT_COLOR
+        | light.SUPPORT_FLASH
+        | light.SUPPORT_BRIGHTNESS
+    )
+    assert state.attributes.get(ATTR_SUPPORTED_FEATURES) == expected_features
+
+
 async def test_state_change_via_topic(opp, mqtt_mock):
     """Test state change via topic."""
     with assert_setup_component(1, light.DOMAIN):
@@ -298,39 +329,38 @@ async def test_sending_mqtt_commands_and_optimistic(opp, mqtt_mock):
     with patch(
         "openpeerpower.helpers.restore_state.RestoreEntity.async_get_last_state",
         return_value=fake_state,
-    ):
-        with assert_setup_component(1, light.DOMAIN):
-            assert await async_setup_component(
-                opp,
-                light.DOMAIN,
-                {
-                    light.DOMAIN: {
-                        "platform": "mqtt",
-                        "schema": "template",
-                        "name": "test",
-                        "command_topic": "test_light_rgb/set",
-                        "command_on_template": "on,"
-                        "{{ brightness|d }},"
-                        "{{ color_temp|d }},"
-                        "{{ white_value|d }},"
-                        "{{ red|d }}-"
-                        "{{ green|d }}-"
-                        "{{ blue|d }}",
-                        "command_off_template": "off",
-                        "effect_list": ["colorloop", "random"],
-                        "optimistic": True,
-                        "state_template": '{{ value.split(",")[0] }}',
-                        "color_temp_template": '{{ value.split(",")[2] }}',
-                        "white_value_template": '{{ value.split(",")[3] }}',
-                        "red_template": '{{ value.split(",")[4].' 'split("-")[0] }}',
-                        "green_template": '{{ value.split(",")[4].' 'split("-")[1] }}',
-                        "blue_template": '{{ value.split(",")[4].' 'split("-")[2] }}',
-                        "effect_template": '{{ value.split(",")[5] }}',
-                        "qos": 2,
-                    }
-                },
-            )
-            await opp.async_block_till_done()
+    ), assert_setup_component(1, light.DOMAIN):
+        assert await async_setup_component(
+            opp,
+            light.DOMAIN,
+            {
+                light.DOMAIN: {
+                    "platform": "mqtt",
+                    "schema": "template",
+                    "name": "test",
+                    "command_topic": "test_light_rgb/set",
+                    "command_on_template": "on,"
+                    "{{ brightness|d }},"
+                    "{{ color_temp|d }},"
+                    "{{ white_value|d }},"
+                    "{{ red|d }}-"
+                    "{{ green|d }}-"
+                    "{{ blue|d }}",
+                    "command_off_template": "off",
+                    "effect_list": ["colorloop", "random"],
+                    "optimistic": True,
+                    "state_template": '{{ value.split(",")[0] }}',
+                    "color_temp_template": '{{ value.split(",")[2] }}',
+                    "white_value_template": '{{ value.split(",")[3] }}',
+                    "red_template": '{{ value.split(",")[4].' 'split("-")[0] }}',
+                    "green_template": '{{ value.split(",")[4].' 'split("-")[1] }}',
+                    "blue_template": '{{ value.split(",")[4].' 'split("-")[2] }}',
+                    "effect_template": '{{ value.split(",")[5] }}',
+                    "qos": 2,
+                }
+            },
+        )
+        await opp.async_block_till_done()
 
     state = opp.states.get("light.test")
     assert state.state == STATE_ON
@@ -421,7 +451,9 @@ async def test_sending_mqtt_commands_and_optimistic(opp, mqtt_mock):
     assert state.attributes.get("rgb_color") == (0, 255, 128)
 
     # Half brightness - normalization+scaling of RGB values sent over MQTT
-    await common.async_turn_on(opp, "light.test", rgb_color=[0, 32, 16], white_value=40)
+    await common.async_turn_on(
+        opp, "light.test", rgb_color=[0, 32, 16], white_value=40
+    )
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,,,40,0-128-64", 2, False
     )
@@ -432,7 +464,9 @@ async def test_sending_mqtt_commands_and_optimistic(opp, mqtt_mock):
     assert state.attributes.get("rgb_color") == (0, 255, 127)
 
 
-async def test_sending_mqtt_commands_non_optimistic_brightness_template(opp, mqtt_mock):
+async def test_sending_mqtt_commands_non_optimistic_brightness_template(
+    opp, mqtt_mock
+):
     """Test the sending of command in optimistic mode."""
     with assert_setup_component(1, light.DOMAIN):
         assert await async_setup_component(
@@ -550,7 +584,9 @@ async def test_sending_mqtt_commands_non_optimistic_brightness_template(opp, mqt
     state = opp.states.get("light.test")
 
     # Half brightness - normalization but no scaling of RGB values sent over MQTT
-    await common.async_turn_on(opp, "light.test", rgb_color=[0, 32, 16], white_value=40)
+    await common.async_turn_on(
+        opp, "light.test", rgb_color=[0, 32, 16], white_value=40
+    )
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,,,40,0-255-127", 0, False
     )
@@ -744,7 +780,9 @@ async def test_invalid_values(opp, mqtt_mock):
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     # turn on the light, full white
-    async_fire_mqtt_message(opp, "test_light_rgb", "on,255,215,222,255-255-255,rainbow")
+    async_fire_mqtt_message(
+        opp, "test_light_rgb", "on,255,215,222,255-255-255,rainbow"
+    )
 
     state = opp.states.get("light.test")
     assert state.state == STATE_ON
@@ -917,7 +955,9 @@ async def test_discovery_update_light(opp, mqtt_mock, caplog):
         '  "command_on_template": "on",'
         '  "command_off_template": "off"}'
     )
-    await help_test_discovery_update(opp, mqtt_mock, caplog, light.DOMAIN, data1, data2)
+    await help_test_discovery_update(
+        opp, mqtt_mock, caplog, light.DOMAIN, data1, data2
+    )
 
 
 async def test_discovery_update_unchanged_light(opp, mqtt_mock, caplog):
@@ -950,7 +990,9 @@ async def test_discovery_broken(opp, mqtt_mock, caplog):
         '  "command_on_template": "on",'
         '  "command_off_template": "off"}'
     )
-    await help_test_discovery_broken(opp, mqtt_mock, caplog, light.DOMAIN, data1, data2)
+    await help_test_discovery_broken(
+        opp, mqtt_mock, caplog, light.DOMAIN, data1, data2
+    )
 
 
 async def test_entity_device_info_with_connection(opp, mqtt_mock):

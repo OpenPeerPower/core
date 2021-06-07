@@ -1,5 +1,7 @@
 """Test the MySensors config flow."""
-from typing import Dict, Optional, Tuple
+from __future__ import annotations
+
+from typing import Any
 from unittest.mock import patch
 
 import pytest
@@ -22,13 +24,13 @@ from openpeerpower.components.mysensors.const import (
     DOMAIN,
     ConfGatewayType,
 )
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from tests.common import MockConfigEntry
 
 
 async def get_form(
-    opp: OpenPeerPowerType, gatway_type: ConfGatewayType, expected_step_id: str
+    opp: OpenPeerPower, gatway_type: ConfGatewayType, expected_step_id: str
 ):
     """Get a form for the given gateway type."""
     await setup.async_setup_component(opp, "persistent_notification", {})
@@ -49,7 +51,7 @@ async def get_form(
     return result
 
 
-async def test_config_mqtt(opp: OpenPeerPowerType):
+async def test_config_mqtt(opp: OpenPeerPower, mqtt: None) -> None:
     """Test configuring a mqtt gateway."""
     step = await get_form(opp, CONF_GATEWAY_TYPE_MQTT, "gw_mqtt")
     flow_id = step["flow_id"]
@@ -87,7 +89,25 @@ async def test_config_mqtt(opp: OpenPeerPowerType):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_config_serial(opp: OpenPeerPowerType):
+async def test_missing_mqtt(opp: OpenPeerPower) -> None:
+    """Test configuring a mqtt gateway without mqtt integration setup."""
+    await setup.async_setup_component(opp, "persistent_notification", {})
+    result = await opp.config_entries.flow.async_init(
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
+    )
+    assert result["type"] == "form"
+    assert not result["errors"]
+
+    result = await opp.config_entries.flow.async_configure(
+        result["flow_id"],
+        {CONF_GATEWAY_TYPE: CONF_GATEWAY_TYPE_MQTT},
+    )
+    assert result["step_id"] == "user"
+    assert result["type"] == "form"
+    assert result["errors"] == {"base": "mqtt_required"}
+
+
+async def test_config_serial(opp: OpenPeerPower):
     """Test configuring a gateway via serial."""
     step = await get_form(opp, CONF_GATEWAY_TYPE_SERIAL, "gw_serial")
     flow_id = step["flow_id"]
@@ -127,7 +147,7 @@ async def test_config_serial(opp: OpenPeerPowerType):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_config_tcp(opp: OpenPeerPowerType):
+async def test_config_tcp(opp: OpenPeerPower):
     """Test configuring a gateway via tcp."""
     step = await get_form(opp, CONF_GATEWAY_TYPE_TCP, "gw_tcp")
     flow_id = step["flow_id"]
@@ -164,7 +184,7 @@ async def test_config_tcp(opp: OpenPeerPowerType):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_fail_to_connect(opp: OpenPeerPowerType):
+async def test_fail_to_connect(opp: OpenPeerPower):
     """Test configuring a gateway via tcp."""
     step = await get_form(opp, CONF_GATEWAY_TYPE_TCP, "gw_tcp")
     flow_id = step["flow_id"]
@@ -346,19 +366,23 @@ async def test_fail_to_connect(opp: OpenPeerPowerType):
     ],
 )
 async def test_config_invalid(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
+    mqtt: config_entries.ConfigEntry,
     gateway_type: ConfGatewayType,
     expected_step_id: str,
-    user_input: Dict[str, any],
+    user_input: dict[str, Any],
     err_field,
     err_string,
-):
+) -> None:
     """Perform a test that is expected to generate an error."""
     step = await get_form(opp, gateway_type, expected_step_id)
     flow_id = step["flow_id"]
 
     with patch(
         "openpeerpower.components.mysensors.config_flow.try_connect", return_value=True
+    ), patch(
+        "openpeerpower.components.mysensors.gateway.socket.getaddrinfo",
+        side_effect=OSError,
     ), patch(
         "openpeerpower.components.mysensors.async_setup", return_value=True
     ) as mock_setup, patch(
@@ -420,7 +444,7 @@ async def test_config_invalid(
         },
     ],
 )
-async def test_import(opp: OpenPeerPowerType, user_input: Dict):
+async def test_import(opp: OpenPeerPower, mqtt: None, user_input: dict) -> None:
     """Test importing a gateway."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -711,11 +735,12 @@ async def test_import(opp: OpenPeerPowerType, user_input: Dict):
     ],
 )
 async def test_duplicate(
-    opp: OpenPeerPowerType,
-    first_input: Dict,
-    second_input: Dict,
-    expected_result: Optional[Tuple[str, str]],
-):
+    opp: OpenPeerPower,
+    mqtt: None,
+    first_input: dict,
+    second_input: dict,
+    expected_result: tuple[str, str] | None,
+) -> None:
     """Test duplicate detection."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 

@@ -94,7 +94,7 @@ async def test_current_fan_mode(opp):
         device = (await api.async_fetch_devices())[_SERIAL]
         thermostat = MelissaClimate(api, _SERIAL, device)
         await thermostat.async_update()
-        assert SPEED_LOW == thermostat.fan_mode
+        assert thermostat.fan_mode == SPEED_LOW
 
         thermostat._cur_settings = None
         assert thermostat.fan_mode is None
@@ -185,7 +185,7 @@ async def test_state(opp):
         device = (await api.async_fetch_devices())[_SERIAL]
         thermostat = MelissaClimate(api, _SERIAL, device)
         await thermostat.async_update()
-        assert HVAC_MODE_HEAT == thermostat.state
+        assert thermostat.state == HVAC_MODE_HEAT
 
         thermostat._cur_settings = None
         assert thermostat.state is None
@@ -197,7 +197,7 @@ async def test_temperature_unit(opp):
         api = melissa_mock()
         device = (await api.async_fetch_devices())[_SERIAL]
         thermostat = MelissaClimate(api, _SERIAL, device)
-        assert TEMP_CELSIUS == thermostat.temperature_unit
+        assert thermostat.temperature_unit == TEMP_CELSIUS
 
 
 async def test_min_temp(opp):
@@ -225,7 +225,7 @@ async def test_supported_features(opp):
         device = (await api.async_fetch_devices())[_SERIAL]
         thermostat = MelissaClimate(api, _SERIAL, device)
         features = SUPPORT_TARGET_TEMPERATURE | SUPPORT_FAN_MODE
-        assert features == thermostat.supported_features
+        assert thermostat.supported_features == features
 
 
 async def test_set_temperature(opp):
@@ -249,7 +249,7 @@ async def test_fan_mode(opp):
         await opp.async_block_till_done()
         await thermostat.async_set_fan_mode(SPEED_HIGH)
         await opp.async_block_till_done()
-        assert SPEED_HIGH == thermostat.fan_mode
+        assert thermostat.fan_mode == SPEED_HIGH
 
 
 async def test_set_operation_mode(opp):
@@ -262,7 +262,7 @@ async def test_set_operation_mode(opp):
         await opp.async_block_till_done()
         await thermostat.async_set_hvac_mode(HVAC_MODE_COOL)
         await opp.async_block_till_done()
-        assert HVAC_MODE_COOL == thermostat.hvac_mode
+        assert thermostat.hvac_mode == HVAC_MODE_COOL
 
 
 async def test_send(opp):
@@ -275,7 +275,7 @@ async def test_send(opp):
         await opp.async_block_till_done()
         await thermostat.async_send({"fan": api.FAN_MEDIUM})
         await opp.async_block_till_done()
-        assert SPEED_MEDIUM == thermostat.fan_mode
+        assert thermostat.fan_mode == SPEED_MEDIUM
         api.async_send.return_value = AsyncMock(return_value=False)
         thermostat._cur_settings = None
         await thermostat.async_send({"fan": api.FAN_LOW})
@@ -288,19 +288,18 @@ async def test_update(opp):
     """Test update."""
     with patch(
         "openpeerpower.components.melissa.climate._LOGGER.warning"
-    ) as mocked_warning:
-        with patch("openpeerpower.components.melissa"):
-            api = melissa_mock()
-            device = (await api.async_fetch_devices())[_SERIAL]
-            thermostat = MelissaClimate(api, _SERIAL, device)
-            await thermostat.async_update()
-            assert SPEED_LOW == thermostat.fan_mode
-            assert HVAC_MODE_HEAT == thermostat.state
-            api.async_status = AsyncMock(side_effect=KeyError("boom"))
-            await thermostat.async_update()
-            mocked_warning.assert_called_once_with(
-                "Unable to update entity %s", thermostat.entity_id
-            )
+    ) as mocked_warning, patch("openpeerpower.components.melissa"):
+        api = melissa_mock()
+        device = (await api.async_fetch_devices())[_SERIAL]
+        thermostat = MelissaClimate(api, _SERIAL, device)
+        await thermostat.async_update()
+        assert thermostat.fan_mode == SPEED_LOW
+        assert thermostat.state == HVAC_MODE_HEAT
+        api.async_status = AsyncMock(side_effect=KeyError("boom"))
+        await thermostat.async_update()
+        mocked_warning.assert_called_once_with(
+            "Unable to update entity %s", thermostat.entity_id
+        )
 
 
 async def test_melissa_op_to_opp(opp):
@@ -309,10 +308,10 @@ async def test_melissa_op_to_opp(opp):
         api = melissa_mock()
         device = (await api.async_fetch_devices())[_SERIAL]
         thermostat = MelissaClimate(api, _SERIAL, device)
-        assert HVAC_MODE_FAN_ONLY == thermostat.melissa_op_to_opp(1)
-        assert HVAC_MODE_HEAT == thermostat.melissa_op_to_opp(2)
-        assert HVAC_MODE_COOL == thermostat.melissa_op_to_opp(3)
-        assert HVAC_MODE_DRY == thermostat.melissa_op_to_opp(4)
+        assert thermostat.melissa_op_to_opp(1) == HVAC_MODE_FAN_ONLY
+        assert thermostat.melissa_op_to_opp(2) == HVAC_MODE_HEAT
+        assert thermostat.melissa_op_to_opp(3) == HVAC_MODE_COOL
+        assert thermostat.melissa_op_to_opp(4) == HVAC_MODE_DRY
         assert thermostat.melissa_op_to_opp(5) is None
 
 
@@ -322,46 +321,44 @@ async def test_melissa_fan_to_opp(opp):
         api = melissa_mock()
         device = (await api.async_fetch_devices())[_SERIAL]
         thermostat = MelissaClimate(api, _SERIAL, device)
-        assert "auto" == thermostat.melissa_fan_to_opp(0)
-        assert SPEED_LOW == thermostat.melissa_fan_to_opp(1)
-        assert SPEED_MEDIUM == thermostat.melissa_fan_to_opp(2)
-        assert SPEED_HIGH == thermostat.melissa_fan_to_opp(3)
+        assert thermostat.melissa_fan_to_opp(0) == "auto"
+        assert thermostat.melissa_fan_to_opp(1) == SPEED_LOW
+        assert thermostat.melissa_fan_to_opp(2) == SPEED_MEDIUM
+        assert thermostat.melissa_fan_to_opp(3) == SPEED_HIGH
         assert thermostat.melissa_fan_to_opp(4) is None
 
 
 async def test_opp_mode_to_melissa(opp):
-    """Test for opp operations to melssa."""
+    """Test for opp.operations to melssa."""
     with patch(
         "openpeerpower.components.melissa.climate._LOGGER.warning"
-    ) as mocked_warning:
-        with patch("openpeerpower.components.melissa"):
-            api = melissa_mock()
-            device = (await api.async_fetch_devices())[_SERIAL]
-            thermostat = MelissaClimate(api, _SERIAL, device)
-            assert thermostat.opp_mode_to_melissa(HVAC_MODE_FAN_ONLY) == 1
-            assert thermostat.opp_mode_to_melissa(HVAC_MODE_HEAT) == 2
-            assert thermostat.opp_mode_to_melissa(HVAC_MODE_COOL) == 3
-            assert thermostat.opp_mode_to_melissa(HVAC_MODE_DRY) == 4
-            thermostat.opp_mode_to_melissa("test")
-            mocked_warning.assert_called_once_with(
-                "Melissa have no setting for %s mode", "test"
-            )
+    ) as mocked_warning, patch("openpeerpower.components.melissa"):
+        api = melissa_mock()
+        device = (await api.async_fetch_devices())[_SERIAL]
+        thermostat = MelissaClimate(api, _SERIAL, device)
+        assert thermostat.opp_mode_to_melissa(HVAC_MODE_FAN_ONLY) == 1
+        assert thermostat.opp_mode_to_melissa(HVAC_MODE_HEAT) == 2
+        assert thermostat.opp_mode_to_melissa(HVAC_MODE_COOL) == 3
+        assert thermostat.opp_mode_to_melissa(HVAC_MODE_DRY) == 4
+        thermostat.opp_mode_to_melissa("test")
+        mocked_warning.assert_called_once_with(
+            "Melissa have no setting for %s mode", "test"
+        )
 
 
 async def test_opp_fan_to_melissa(opp):
     """Test for translate melissa states to opp."""
     with patch(
         "openpeerpower.components.melissa.climate._LOGGER.warning"
-    ) as mocked_warning:
-        with patch("openpeerpower.components.melissa"):
-            api = melissa_mock()
-            device = (await api.async_fetch_devices())[_SERIAL]
-            thermostat = MelissaClimate(api, _SERIAL, device)
-            assert thermostat.opp_fan_to_melissa("auto") == 0
-            assert thermostat.opp_fan_to_melissa(SPEED_LOW) == 1
-            assert thermostat.opp_fan_to_melissa(SPEED_MEDIUM) == 2
-            assert thermostat.opp_fan_to_melissa(SPEED_HIGH) == 3
-            thermostat.opp_fan_to_melissa("test")
-            mocked_warning.assert_called_once_with(
-                "Melissa have no setting for %s fan mode", "test"
-            )
+    ) as mocked_warning, patch("openpeerpower.components.melissa"):
+        api = melissa_mock()
+        device = (await api.async_fetch_devices())[_SERIAL]
+        thermostat = MelissaClimate(api, _SERIAL, device)
+        assert thermostat.opp_fan_to_melissa("auto") == 0
+        assert thermostat.opp_fan_to_melissa(SPEED_LOW) == 1
+        assert thermostat.opp_fan_to_melissa(SPEED_MEDIUM) == 2
+        assert thermostat.opp_fan_to_melissa(SPEED_HIGH) == 3
+        thermostat.opp_fan_to_melissa("test")
+        mocked_warning.assert_called_once_with(
+            "Melissa have no setting for %s fan mode", "test"
+        )

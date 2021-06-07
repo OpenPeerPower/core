@@ -1,6 +1,7 @@
 """The tests for the litejet component."""
 from openpeerpower.components import scene
 from openpeerpower.const import ATTR_ENTITY_ID, SERVICE_TURN_ON
+from openpeerpower.helpers import entity_registry as er
 
 from . import async_init_integration
 
@@ -14,7 +15,7 @@ async def test_disabled_by_default(opp, mock_litejet):
     """Test the scene is disabled by default."""
     await async_init_integration(opp)
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     state = opp.states.get(ENTITY_SCENE)
     assert state is None
@@ -22,7 +23,7 @@ async def test_disabled_by_default(opp, mock_litejet):
     entry = registry.async_get(ENTITY_SCENE)
     assert entry
     assert entry.disabled
-    assert entry.disabled_by == "integration"
+    assert entry.disabled_by == er.DISABLED_INTEGRATION
 
 
 async def test_activate(opp, mock_litejet):

@@ -9,7 +9,6 @@ from aiohomekit.model.characteristics import CharacteristicsTypes
 from aiohomekit.model.services import ServicesTypes
 from aiohomekit.testing import FakeController
 
-from openpeerpower import config_entries
 from openpeerpower.components.homekit_controller import config_flow
 from openpeerpower.components.homekit_controller.const import (
     CONTROLLER,
@@ -99,7 +98,6 @@ async def setup_test_accessories(opp, accessories):
         entry_id="TestData",
         data={"AccessoryPairingID": pairing_id},
         title="test",
-        connection_class=config_entries.CONN_CLASS_LOCAL_PUSH,
     )
     config_entry.add_to_opp(opp)
 

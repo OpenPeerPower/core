@@ -36,7 +36,7 @@ from tests.common import async_fire_time_changed, async_mock_service
 
 
 async def test_outlet_set_state(opp, hk_driver, events):
-    """Test if Outlet accessory and OP are updated accordingly."""
+    """Test if Outlet accessory and OPP are updated accordingly."""
     entity_id = "switch.outlet_test"
 
     opp.states.async_set(entity_id, None)
@@ -89,7 +89,7 @@ async def test_outlet_set_state(opp, hk_driver, events):
     ],
 )
 async def test_switch_set_state(opp, hk_driver, entity_id, attrs, events):
-    """Test if accessory and OP are updated accordingly."""
+    """Test if accessory and OPP are updated accordingly."""
     domain = split_entity_id(entity_id)[0]
 
     opp.states.async_set(entity_id, None, attrs)
@@ -132,7 +132,7 @@ async def test_switch_set_state(opp, hk_driver, entity_id, attrs, events):
 
 
 async def test_valve_set_state(opp, hk_driver, events):
-    """Test if Valve accessory and OP are updated accordingly."""
+    """Test if Valve accessory and OPP are updated accordingly."""
     entity_id = "switch.valve_test"
 
     opp.states.async_set(entity_id, None)
@@ -201,7 +201,7 @@ async def test_valve_set_state(opp, hk_driver, events):
 async def test_vacuum_set_state_with_returnhome_and_start_support(
     opp, hk_driver, events
 ):
-    """Test if Vacuum accessory and OP are updated accordingly."""
+    """Test if Vacuum accessory and OPP are updated accordingly."""
     entity_id = "vacuum.roomba"
 
     opp.states.async_set(
@@ -235,7 +235,9 @@ async def test_vacuum_set_state_with_returnhome_and_start_support(
 
     # Set from HomeKit
     call_start = async_mock_service(opp, VACUUM_DOMAIN, SERVICE_START)
-    call_return_to_base = async_mock_service(opp, VACUUM_DOMAIN, SERVICE_RETURN_TO_BASE)
+    call_return_to_base = async_mock_service(
+        opp, VACUUM_DOMAIN, SERVICE_RETURN_TO_BASE
+    )
 
     await opp.async_add_executor_job(acc.char_on.client_update_value, 1)
     await opp.async_block_till_done()
@@ -257,7 +259,7 @@ async def test_vacuum_set_state_with_returnhome_and_start_support(
 async def test_vacuum_set_state_without_returnhome_and_start_support(
     opp, hk_driver, events
 ):
-    """Test if Vacuum accessory and OP are updated accordingly."""
+    """Test if Vacuum accessory and OPP are updated accordingly."""
     entity_id = "vacuum.roomba"
 
     opp.states.async_set(entity_id, None)

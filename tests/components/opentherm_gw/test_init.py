@@ -6,6 +6,7 @@ from pyotgw.vars import OTGW, OTGW_ABOUT
 from openpeerpower import setup
 from openpeerpower.components.opentherm_gw.const import DOMAIN
 from openpeerpower.const import CONF_DEVICE, CONF_ID, CONF_NAME
+from openpeerpower.helpers import device_registry as dr
 
 from tests.common import MockConfigEntry, mock_device_registry
 
@@ -38,7 +39,7 @@ async def test_device_registry_insert(opp):
 
     await opp.async_block_till_done()
 
-    device_registry = await opp.helpers.device_registry.async_get_registry()
+    device_registry = dr.async_get(opp)
 
     gw_dev = device_registry.async_get_device(identifiers={(DOMAIN, MOCK_GATEWAY_ID)})
     assert gw_dev.sw_version == VERSION_OLD

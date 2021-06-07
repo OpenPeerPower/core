@@ -33,6 +33,7 @@ from openpeerpower.const import (
     SERVICE_VOLUME_SET,
     SERVICE_VOLUME_UP,
 )
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.helpers.entity_component import async_update_entity
 
 from tests.common import MockConfigEntry
@@ -468,7 +469,9 @@ async def test_volume_up_down(opp):
     )
     assert monoprice.zones[11].volume == 0
 
-    await _call_media_player_service(opp, SERVICE_VOLUME_DOWN, {"entity_id": ZONE_1_ID})
+    await _call_media_player_service(
+        opp, SERVICE_VOLUME_DOWN, {"entity_id": ZONE_1_ID}
+    )
     # should not go below zero
     assert monoprice.zones[11].volume == 0
 
@@ -484,7 +487,9 @@ async def test_volume_up_down(opp):
     # should not go above 38
     assert monoprice.zones[11].volume == 38
 
-    await _call_media_player_service(opp, SERVICE_VOLUME_DOWN, {"entity_id": ZONE_1_ID})
+    await _call_media_player_service(
+        opp, SERVICE_VOLUME_DOWN, {"entity_id": ZONE_1_ID}
+    )
     assert monoprice.zones[11].volume == 37
 
 
@@ -493,7 +498,7 @@ async def test_first_run_with_available_zones(opp):
     monoprice = MockMonoprice()
     await _setup_monoprice(opp, monoprice)
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     entry = registry.async_get(ZONE_7_ID)
     assert not entry.disabled
@@ -506,14 +511,14 @@ async def test_first_run_with_failing_zones(opp):
     with patch.object(MockMonoprice, "zone_status", side_effect=SerialException):
         await _setup_monoprice(opp, monoprice)
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     entry = registry.async_get(ZONE_1_ID)
     assert not entry.disabled
 
     entry = registry.async_get(ZONE_7_ID)
     assert entry.disabled
-    assert entry.disabled_by == "integration"
+    assert entry.disabled_by == er.DISABLED_INTEGRATION
 
 
 async def test_not_first_run_with_failing_zone(opp):
@@ -523,7 +528,7 @@ async def test_not_first_run_with_failing_zone(opp):
     with patch.object(MockMonoprice, "zone_status", side_effect=SerialException):
         await _setup_monoprice_not_first_run(opp, monoprice)
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     entry = registry.async_get(ZONE_1_ID)
     assert not entry.disabled

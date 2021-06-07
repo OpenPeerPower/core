@@ -36,7 +36,7 @@ async def test_setup(opp):
     assert len(mock_ex.mock_calls) == 1
     opp, script, source, data = mock_ex.mock_calls[0][1]
 
-    assert opp is opp
+    assert opp is.opp
     assert script == "hello.py"
     assert source == "fake source"
     assert data == {"some": "data"}
@@ -306,6 +306,7 @@ async def test_service_descriptions(opp):
 
     service_descriptions1 = (
         "hello:\n"
+        "  name: ABC\n"
         "  description: Description of hello.py.\n"
         "  fields:\n"
         "    fake_param:\n"
@@ -333,6 +334,7 @@ async def test_service_descriptions(opp):
 
     assert len(descriptions) == 1
 
+    assert descriptions[DOMAIN]["hello"]["name"] == "ABC"
     assert descriptions[DOMAIN]["hello"]["description"] == "Description of hello.py."
     assert (
         descriptions[DOMAIN]["hello"]["fields"]["fake_param"]["description"]
@@ -343,6 +345,8 @@ async def test_service_descriptions(opp):
         == "This is a test of python_script.hello"
     )
 
+    # Verify default name = file name
+    assert descriptions[DOMAIN]["world_beer"]["name"] == "world_beer"
     assert descriptions[DOMAIN]["world_beer"]["description"] == ""
     assert bool(descriptions[DOMAIN]["world_beer"]["fields"]) is False
 

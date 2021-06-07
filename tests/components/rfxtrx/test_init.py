@@ -5,10 +5,7 @@ from unittest.mock import call
 from openpeerpower.components.rfxtrx import DOMAIN
 from openpeerpower.components.rfxtrx.const import EVENT_RFXTRX_EVENT
 from openpeerpower.core import callback
-from openpeerpower.helpers.device_registry import (
-    DeviceRegistry,
-    async_get_registry as async_get_device_registry,
-)
+from openpeerpower.helpers import device_registry as dr
 from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
@@ -79,7 +76,7 @@ async def test_fire_event(opp, rfxtrx):
     await opp.async_block_till_done()
     await opp.async_start()
 
-    device_registry: DeviceRegistry = await async_get_device_registry(opp)
+    device_registry: dr.DeviceRegistry = dr.async_get(opp)
 
     calls = []
 

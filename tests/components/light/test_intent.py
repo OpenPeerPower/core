@@ -1,7 +1,11 @@
 """Tests for the light intents."""
 from openpeerpower.components import light
-from openpeerpower.components.light import intent
-from openpeerpower.const import ATTR_ENTITY_ID, ATTR_SUPPORTED_FEATURES, SERVICE_TURN_ON
+from openpeerpower.components.light import (
+    ATTR_SUPPORTED_COLOR_MODES,
+    COLOR_MODE_HS,
+    intent,
+)
+from openpeerpower.const import ATTR_ENTITY_ID, SERVICE_TURN_ON
 from openpeerpower.helpers.intent import IntentHandleError
 
 from tests.common import async_mock_service
@@ -10,7 +14,7 @@ from tests.common import async_mock_service
 async def test_intent_set_color(opp):
     """Test the set color intent."""
     opp.states.async_set(
-        "light.hello_2", "off", {ATTR_SUPPORTED_FEATURES: light.SUPPORT_COLOR}
+        "light.hello_2", "off", {ATTR_SUPPORTED_COLOR_MODES: [COLOR_MODE_HS]}
     )
     opp.states.async_set("switch.hello", "off")
     calls = async_mock_service(opp, light.DOMAIN, light.SERVICE_TURN_ON)
@@ -55,9 +59,7 @@ async def test_intent_set_color_tests_feature(opp):
 async def test_intent_set_color_and_brightness(opp):
     """Test the set color intent."""
     opp.states.async_set(
-        "light.hello_2",
-        "off",
-        {ATTR_SUPPORTED_FEATURES: (light.SUPPORT_COLOR | light.SUPPORT_BRIGHTNESS)},
+        "light.hello_2", "off", {ATTR_SUPPORTED_COLOR_MODES: [COLOR_MODE_HS]}
     )
     opp.states.async_set("switch.hello", "off")
     calls = async_mock_service(opp, light.DOMAIN, light.SERVICE_TURN_ON)

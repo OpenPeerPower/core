@@ -95,8 +95,6 @@ async def test_storage_is_removed_on_config_entry_removal(opp, utcnow):
         "TestData",
         pairing_data,
         "test",
-        config_entries.CONN_CLASS_LOCAL_PUSH,
-        system_options={},
     )
 
     assert hkid in opp.data[ENTITY_MAP].storage_data

@@ -1,32 +1,19 @@
-"""SMA sensor tests."""
-from openpeerpower.components.sensor import DOMAIN
-from openpeerpower.const import ATTR_UNIT_OF_MEASUREMENT, VOLT
-from openpeerpower.setup import async_setup_component
+"""Test the sma sensor platform."""
+from openpeerpower.const import (
+    ATTR_UNIT_OF_MEASUREMENT,
+    ENERGY_KILO_WATT_HOUR,
+    POWER_WATT,
+)
 
-from tests.common import assert_setup_component
-
-BASE_CFG = {
-    "platform": "sma",
-    "host": "1.1.1.1",
-    "password": "",
-    "custom": {"my_sensor": {"key": "1234567890123", "unit": VOLT}},
-}
+from . import MOCK_CUSTOM_SENSOR
 
 
-async def test_sma_config(opp):
-    """Test new config."""
-    sensors = ["current_consumption"]
-
-    with assert_setup_component(1):
-        assert await async_setup_component(
-            opp, DOMAIN, {DOMAIN: dict(BASE_CFG, sensors=sensors)}
-        )
-        await opp.async_block_till_done()
-
-    state = opp.states.get("sensor.current_consumption")
+async def test_sensors(opp, init_integration):
+    """Test states of the sensors."""
+    state = opp.states.get("sensor.grid_power")
     assert state
-    assert ATTR_UNIT_OF_MEASUREMENT in state.attributes
-    assert "current_consumption" not in state.attributes
+    assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == POWER_WATT
 
-    state = opp.states.get("sensor.my_sensor")
+    state = opp.states.get(f"sensor.{MOCK_CUSTOM_SENSOR['name']}")
     assert state
+    assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == ENERGY_KILO_WATT_HOUR

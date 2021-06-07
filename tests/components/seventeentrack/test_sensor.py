@@ -1,6 +1,7 @@
 """Tests for the seventeentrack sensor."""
+from __future__ import annotations
+
 import datetime
-from typing import Union
 from unittest.mock import MagicMock, patch
 
 from py17track.package import Package
@@ -70,7 +71,7 @@ NEW_SUMMARY_DATA = {
 class ClientMock:
     """Mock the py17track client to inject the ProfileMock."""
 
-    def __init__(self, websession) -> None:
+    def __init__(self, session) -> None:
         """Mock the profile."""
         self.profile = ProfileMock()
 
@@ -100,9 +101,12 @@ class ProfileMock:
         return self.__class__.login_result
 
     async def packages(
-        self, package_state: Union[int, str] = "", show_archived: bool = False
+        self,
+        package_state: int | str = "",
+        show_archived: bool = False,
+        tz: str = "UTC",
     ) -> list:
-        """Packages mock."""
+        """Packages mock."""  # noqa: D401
         return self.__class__.package_list[:]
 
     async def summary(self, show_archived: bool = False) -> dict:
@@ -168,7 +172,14 @@ async def test_invalid_config(opp):
 async def test_add_package(opp):
     """Ensure package is added correctly when user add a new package."""
     package = Package(
-        "456", 206, "friendly name 1", "info text 1", "location 1", 206, 2
+        "456",
+        206,
+        "friendly name 1",
+        "info text 1",
+        "location 1",
+        "2020-08-10 10:32",
+        206,
+        2,
     )
     ProfileMock.package_list = [package]
 
@@ -177,7 +188,14 @@ async def test_add_package(opp):
     assert len(opp.states.async_entity_ids()) == 1
 
     package2 = Package(
-        "789", 206, "friendly name 2", "info text 2", "location 2", 206, 2
+        "789",
+        206,
+        "friendly name 2",
+        "info text 2",
+        "location 2",
+        "2020-08-10 14:25",
+        206,
+        2,
     )
     ProfileMock.package_list = [package, package2]
 
@@ -190,10 +208,24 @@ async def test_add_package(opp):
 async def test_remove_package(opp):
     """Ensure entity is not there anymore if package is not there."""
     package1 = Package(
-        "456", 206, "friendly name 1", "info text 1", "location 1", 206, 2
+        "456",
+        206,
+        "friendly name 1",
+        "info text 1",
+        "location 1",
+        "2020-08-10 10:32",
+        206,
+        2,
     )
     package2 = Package(
-        "789", 206, "friendly name 2", "info text 2", "location 2", 206, 2
+        "789",
+        206,
+        "friendly name 2",
+        "info text 2",
+        "location 2",
+        "2020-08-10 14:25",
+        206,
+        2,
     )
 
     ProfileMock.package_list = [package1, package2]
@@ -216,7 +248,14 @@ async def test_remove_package(opp):
 async def test_friendly_name_changed(opp):
     """Test friendly name change."""
     package = Package(
-        "456", 206, "friendly name 1", "info text 1", "location 1", 206, 2
+        "456",
+        206,
+        "friendly name 1",
+        "info text 1",
+        "location 1",
+        "2020-08-10 10:32",
+        206,
+        2,
     )
     ProfileMock.package_list = [package]
 
@@ -226,7 +265,14 @@ async def test_friendly_name_changed(opp):
     assert len(opp.states.async_entity_ids()) == 1
 
     package = Package(
-        "456", 206, "friendly name 2", "info text 1", "location 1", 206, 2
+        "456",
+        206,
+        "friendly name 2",
+        "info text 1",
+        "location 1",
+        "2020-08-10 10:32",
+        206,
+        2,
     )
     ProfileMock.package_list = [package]
 
@@ -243,7 +289,15 @@ async def test_friendly_name_changed(opp):
 async def test_delivered_not_shown(opp):
     """Ensure delivered packages are not shown."""
     package = Package(
-        "456", 206, "friendly name 1", "info text 1", "location 1", 206, 2, 40
+        "456",
+        206,
+        "friendly name 1",
+        "info text 1",
+        "location 1",
+        "2020-08-10 10:32",
+        206,
+        2,
+        40,
     )
     ProfileMock.package_list = [package]
 
@@ -258,7 +312,15 @@ async def test_delivered_not_shown(opp):
 async def test_delivered_shown(opp):
     """Ensure delivered packages are show when user choose to show them."""
     package = Package(
-        "456", 206, "friendly name 1", "info text 1", "location 1", 206, 2, 40
+        "456",
+        206,
+        "friendly name 1",
+        "info text 1",
+        "location 1",
+        "2020-08-10 10:32",
+        206,
+        2,
+        40,
     )
     ProfileMock.package_list = [package]
 
@@ -273,7 +335,14 @@ async def test_delivered_shown(opp):
 async def test_becomes_delivered_not_shown_notification(opp):
     """Ensure notification is triggered when package becomes delivered."""
     package = Package(
-        "456", 206, "friendly name 1", "info text 1", "location 1", 206, 2
+        "456",
+        206,
+        "friendly name 1",
+        "info text 1",
+        "location 1",
+        "2020-08-10 10:32",
+        206,
+        2,
     )
     ProfileMock.package_list = [package]
 
@@ -283,7 +352,15 @@ async def test_becomes_delivered_not_shown_notification(opp):
     assert len(opp.states.async_entity_ids()) == 1
 
     package_delivered = Package(
-        "456", 206, "friendly name 1", "info text 1", "location 1", 206, 2, 40
+        "456",
+        206,
+        "friendly name 1",
+        "info text 1",
+        "location 1",
+        "2020-08-10 10:32",
+        206,
+        2,
+        40,
     )
     ProfileMock.package_list = [package_delivered]
 
@@ -309,3 +386,31 @@ async def test_summary_correctly_updated(opp):
     assert len(opp.states.async_entity_ids()) == 7
     for state in opp.states.async_all():
         assert state.state == "1"
+
+
+async def test_utc_timestamp(opp):
+    """Ensure package timestamp is converted correctly from HA-defined time zone to UTC."""
+    package = Package(
+        "456",
+        206,
+        "friendly name 1",
+        "info text 1",
+        "location 1",
+        "2020-08-10 10:32",
+        206,
+        2,
+        tz="Asia/Jakarta",
+    )
+    ProfileMock.package_list = [package]
+
+    await _setup_seventeentrack(opp)
+    assert opp.states.get("sensor.seventeentrack_package_456") is not None
+    assert len(opp.states.async_entity_ids()) == 1
+    assert (
+        str(
+            opp.states.get("sensor.seventeentrack_package_456").attributes.get(
+                "timestamp"
+            )
+        )
+        == "2020-08-10 03:32:00+00:00"
+    )

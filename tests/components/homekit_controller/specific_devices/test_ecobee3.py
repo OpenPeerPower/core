@@ -14,7 +14,8 @@ from openpeerpower.components.climate.const import (
     SUPPORT_TARGET_TEMPERATURE,
     SUPPORT_TARGET_TEMPERATURE_RANGE,
 )
-from openpeerpower.config_entries import ENTRY_STATE_SETUP_RETRY
+from openpeerpower.config_entries import ConfigEntryState
+from openpeerpower.helpers import device_registry as dr, entity_registry as er
 
 from tests.components.homekit_controller.common import (
     Helper,
@@ -30,12 +31,14 @@ async def test_ecobee3_setup(opp):
     accessories = await setup_accessories_from_file(opp, "ecobee3.json")
     config_entry, pairing = await setup_test_accessories(opp, accessories)
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     climate = entity_registry.async_get("climate.homew")
     assert climate.unique_id == "homekit-123456789012-16"
 
-    climate_helper = Helper(opp, "climate.homew", pairing, accessories[0], config_entry)
+    climate_helper = Helper(
+        opp, "climate.homew", pairing, accessories[0], config_entry
+    )
     climate_state = await climate_helper.poll_and_get_state()
     assert climate_state.attributes["friendly_name"] == "HomeW"
     assert climate_state.attributes["supported_features"] == (
@@ -71,7 +74,7 @@ async def test_ecobee3_setup(opp):
     occ3 = entity_registry.async_get("binary_sensor.basement")
     assert occ3.unique_id == "homekit-AB3C-56"
 
-    device_registry = await opp.helpers.device_registry.async_get_registry()
+    device_registry = dr.async_get(opp)
 
     climate_device = device_registry.async_get(climate.device_id)
     assert climate_device.manufacturer == "ecobee Inc."
@@ -110,7 +113,7 @@ async def test_ecobee3_setup_from_cache(opp, opp_storage):
 
     await setup_test_accessories(opp, accessories)
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     climate = entity_registry.async_get("climate.homew")
     assert climate.unique_id == "homekit-123456789012-16"
@@ -129,7 +132,7 @@ async def test_ecobee3_setup_connection_failure(opp):
     """Test that Ecbobee can be correctly setup from its cached entity map."""
     accessories = await setup_accessories_from_file(opp, "ecobee3.json")
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     # Test that the connection fails during initial setup.
     # No entities should be created.
@@ -140,12 +143,12 @@ async def test_ecobee3_setup_connection_failure(opp):
         # If there is no cached entity map and the accessory connection is
         # failing then we have to fail the config entry setup.
         config_entry, pairing = await setup_test_accessories(opp, accessories)
-        assert config_entry.state == ENTRY_STATE_SETUP_RETRY
+        assert config_entry.state is ConfigEntryState.SETUP_RETRY
 
     climate = entity_registry.async_get("climate.homew")
     assert climate is None
 
-    # When accessory raises ConfigEntryNoteReady OP will retry - lets make
+    # When accessory raises ConfigEntryNoteReady OPP will retry - lets make
     # sure there is no cruft causing conflicts left behind by now doing
     # a successful setup.
 
@@ -168,7 +171,7 @@ async def test_ecobee3_setup_connection_failure(opp):
 
 async def test_ecobee3_add_sensors_at_runtime(opp):
     """Test that new sensors are automatically added."""
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     # Set up a base Ecobee 3 with no additional sensors.
     # There shouldn't be any entities but climate visible.

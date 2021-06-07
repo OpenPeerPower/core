@@ -59,8 +59,6 @@ async def test_form(opp):
     ), patch(
         "openpeerpower.components.risco.config_flow.RiscoAPI.close"
     ) as mock_close, patch(
-        "openpeerpower.components.risco.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.risco.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -72,7 +70,6 @@ async def test_form(opp):
     assert result2["type"] == "create_entry"
     assert result2["title"] == TEST_SITE_NAME
     assert result2["data"] == TEST_DATA
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
     mock_close.assert_awaited_once()
 
@@ -184,7 +181,7 @@ async def test_options_flow(opp):
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
-    assert result["step_id"] == "op_to_risco"
+    assert result["step_id"] == "ha_to_risco"
 
     with patch("openpeerpower.components.risco.async_setup_entry", return_value=True):
         result = await opp.config_entries.options.async_configure(
@@ -221,7 +218,7 @@ async def test_op_to_risco_schema(opp):
         user_input=TEST_RISCO_TO_HA,
     )
 
-    # Test an OP state that isn't used
+    # Test an OPP state that isn't used
     with pytest.raises(vol.error.MultipleInvalid):
         await opp.config_entries.options.async_configure(
             result["flow_id"],

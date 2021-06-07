@@ -3,7 +3,9 @@ from unittest.mock import patch
 
 import pytest
 
+from openpeerpower import config_entries
 from openpeerpower.components.met.const import DOMAIN, HOME_LOCATION_NAME
+from openpeerpower.config import async_process_op_core_config
 from openpeerpower.const import CONF_ELEVATION, CONF_LATITUDE, CONF_LONGITUDE
 
 from tests.common import MockConfigEntry
@@ -19,7 +21,7 @@ def met_setup_fixture():
 async def test_show_config_form(opp):
     """Test show configuration form."""
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "user"}
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     assert result["type"] == "form"
@@ -37,7 +39,7 @@ async def test_flow_with_home_location(opp):
     opp.config.elevation = 3
 
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "user"}
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     assert result["type"] == "form"
@@ -60,7 +62,7 @@ async def test_create_entry(opp):
     }
 
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "user"}, data=test_data
+        DOMAIN, context={"source": config_entries.SOURCE_USER}, data=test_data
     )
 
     assert result["type"] == "create_entry"
@@ -88,7 +90,7 @@ async def test_flow_entry_already_exists(opp):
     }
 
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "user"}, data=test_data
+        DOMAIN, context={"source": config_entries.SOURCE_USER}, data=test_data
     )
 
     assert result["type"] == "form"
@@ -106,6 +108,25 @@ async def test_onboarding_step(opp):
     assert result["data"] == {"track_home": True}
 
 
+@pytest.mark.parametrize("latitude,longitude", [(52.3731339, 4.8903147), (0.0, 0.0)])
+async def test_onboarding_step_abort_no_home(opp, latitude, longitude):
+    """Test entry not created when default step fails."""
+    await async_process_op_core_config(
+        opp,
+        {"latitude": latitude, "longitude": longitude},
+    )
+
+    assert opp.config.latitude == latitude
+    assert opp.config.longitude == longitude
+
+    result = await opp.config_entries.flow.async_init(
+        DOMAIN, context={"source": "onboarding"}, data={}
+    )
+
+    assert result["type"] == "abort"
+    assert result["reason"] == "no_home"
+
+
 async def test_import_step(opp):
     """Test initializing via import step."""
     test_data = {
@@ -116,7 +137,7 @@ async def test_import_step(opp):
         "track_home": True,
     }
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "import"}, data=test_data
+        DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=test_data
     )
 
     assert result["type"] == "create_entry"

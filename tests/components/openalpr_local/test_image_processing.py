@@ -108,9 +108,7 @@ class TestOpenAlprLocal:
             self.opp.block_till_done()
 
         state = self.opp.states.get("camera.demo_camera")
-        self.url = (
-            f"{self.opp.config.internal_url}{state.attributes.get(ATTR_ENTITY_PICTURE)}"
-        )
+        self.url = f"{self.opp.config.internal_url}{state.attributes.get(ATTR_ENTITY_PICTURE)}"
 
         self.alpr_events = []
 

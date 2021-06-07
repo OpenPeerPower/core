@@ -58,10 +58,10 @@ async def test_valid_data(opp):
             State(GOOD_CONFIG["sensors"][reading], value),
         )
     assert sensor.state == "ok"
-    attrib = sensor.state_attributes
+    attrib = sensor.extra_state_attributes
     for reading, value in GOOD_DATA.items():
         # battery level has a different name in
-        # the JSON format than in opp
+        # the JSON format than in.opp
         assert attrib[reading] == value
 
 
@@ -70,13 +70,13 @@ async def test_low_battery(opp):
     sensor = plant.Plant("other plant", GOOD_CONFIG)
     sensor.entity_id = "sensor.mqtt_plant_battery"
     sensor.opp = opp
-    assert sensor.state_attributes["problem"] == "none"
+    assert sensor.extra_state_attributes["problem"] == "none"
     sensor.state_changed(
         "sensor.mqtt_plant_battery",
         State("sensor.mqtt_plant_battery", 10),
     )
     assert sensor.state == "problem"
-    assert sensor.state_attributes["problem"] == "battery low"
+    assert sensor.extra_state_attributes["problem"] == "battery low"
 
 
 async def test_initial_states(opp):
@@ -88,7 +88,7 @@ async def test_initial_states(opp):
     )
     await opp.async_block_till_done()
     state = opp.states.get(f"plant.{plant_name}")
-    assert 5 == state.attributes[plant.READING_MOISTURE]
+    assert state.attributes[plant.READING_MOISTURE] == 5
 
 
 async def test_update_states(opp):
@@ -103,8 +103,8 @@ async def test_update_states(opp):
     opp.states.async_set(MOISTURE_ENTITY, 5, {ATTR_UNIT_OF_MEASUREMENT: CONDUCTIVITY})
     await opp.async_block_till_done()
     state = opp.states.get(f"plant.{plant_name}")
-    assert STATE_PROBLEM == state.state
-    assert 5 == state.attributes[plant.READING_MOISTURE]
+    assert state.state == STATE_PROBLEM
+    assert state.attributes[plant.READING_MOISTURE] == 5
 
 
 async def test_unavailable_state(opp):
@@ -177,9 +177,9 @@ async def test_load_from_db(opp):
     await opp.async_block_till_done()
 
     state = opp.states.get(f"plant.{plant_name}")
-    assert STATE_UNKNOWN == state.state
+    assert state.state == STATE_UNKNOWN
     max_brightness = state.attributes.get(plant.ATTR_MAX_BRIGHTNESS_HISTORY)
-    assert 30 == max_brightness
+    assert max_brightness == 30
 
 
 async def test_brightness_history(opp):
@@ -191,17 +191,17 @@ async def test_brightness_history(opp):
     opp.states.async_set(BRIGHTNESS_ENTITY, 100, {ATTR_UNIT_OF_MEASUREMENT: LIGHT_LUX})
     await opp.async_block_till_done()
     state = opp.states.get(f"plant.{plant_name}")
-    assert STATE_PROBLEM == state.state
+    assert state.state == STATE_PROBLEM
 
     opp.states.async_set(BRIGHTNESS_ENTITY, 600, {ATTR_UNIT_OF_MEASUREMENT: LIGHT_LUX})
     await opp.async_block_till_done()
     state = opp.states.get(f"plant.{plant_name}")
-    assert STATE_OK == state.state
+    assert state.state == STATE_OK
 
     opp.states.async_set(BRIGHTNESS_ENTITY, 100, {ATTR_UNIT_OF_MEASUREMENT: LIGHT_LUX})
     await opp.async_block_till_done()
     state = opp.states.get(f"plant.{plant_name}")
-    assert STATE_OK == state.state
+    assert state.state == STATE_OK
 
 
 def test_daily_history_no_data(opp):
@@ -217,7 +217,7 @@ def test_daily_history_one_day(opp):
     for i in range(len(values)):
         dh.add_measurement(values[i])
         max_value = max(values[0 : i + 1])
-        assert 1 == len(dh._days)
+        assert len(dh._days) == 1
         assert dh.max == max_value
 
 

@@ -5,8 +5,8 @@ from pybotvac.neato import Neato
 
 from openpeerpower import config_entries, data_entry_flow, setup
 from openpeerpower.components.neato.const import NEATO_DOMAIN
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers import config_entry_oauth2_flow
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from tests.common import MockConfigEntry
 
@@ -74,7 +74,7 @@ async def test_full_flow(
     assert len(mock_setup.mock_calls) == 1
 
 
-async def test_abort_if_already_setup(opp: OpenPeerPowerType):
+async def test_abort_if_already_setup(opp: OpenPeerPower):
     """Test we abort if Neato is already setup."""
     entry = MockConfigEntry(
         domain=NEATO_DOMAIN,
@@ -91,7 +91,7 @@ async def test_abort_if_already_setup(opp: OpenPeerPowerType):
 
 
 async def test_reauth(
-    opp: OpenPeerPowerType, aiohttp_client, aioclient_mock, current_request_with_host
+    opp: OpenPeerPower, aiohttp_client, aioclient_mock, current_request_with_host
 ):
     """Test initialization of the reauth flow."""
     assert await setup.async_setup_component(
@@ -152,6 +152,6 @@ async def test_reauth(
 
     assert result3["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result3["reason"] == "reauth_successful"
-    assert new_entry.state == "loaded"
+    assert new_entry.state == config_entries.ConfigEntryState.LOADED
     assert len(opp.config_entries.async_entries(NEATO_DOMAIN)) == 1
     assert len(mock_setup.mock_calls) == 1

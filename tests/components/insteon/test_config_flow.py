@@ -35,7 +35,7 @@ from openpeerpower.const import (
     CONF_PORT,
     CONF_USERNAME,
 )
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from .const import (
     MOCK_HOSTNAME,
@@ -93,7 +93,7 @@ async def _device_form(opp, flow_id, connection, user_input):
     return result, mock_setup, mock_setup_entry
 
 
-async def test_form_select_modem(opp: OpenPeerPowerType):
+async def test_form_select_modem(opp: OpenPeerPower):
     """Test we get a modem form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await _init_form(opp, HUB2)
@@ -101,7 +101,7 @@ async def test_form_select_modem(opp: OpenPeerPowerType):
     assert result["type"] == "form"
 
 
-async def test_fail_on_existing(opp: OpenPeerPowerType):
+async def test_fail_on_existing(opp: OpenPeerPower):
     """Test we fail if the integration is already configured."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -110,7 +110,7 @@ async def test_fail_on_existing(opp: OpenPeerPowerType):
         options={},
     )
     config_entry.add_to_opp(opp)
-    assert config_entry.state == config_entries.ENTRY_STATE_NOT_LOADED
+    assert config_entry.state is config_entries.ConfigEntryState.NOT_LOADED
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -121,7 +121,7 @@ async def test_fail_on_existing(opp: OpenPeerPowerType):
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test_form_select_plm(opp: OpenPeerPowerType):
+async def test_form_select_plm(opp: OpenPeerPower):
     """Test we set up the PLM correctly."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await _init_form(opp, PLM)
@@ -136,7 +136,7 @@ async def test_form_select_plm(opp: OpenPeerPowerType):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_select_hub_v1(opp: OpenPeerPowerType):
+async def test_form_select_hub_v1(opp: OpenPeerPower):
     """Test we set up the Hub v1 correctly."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await _init_form(opp, HUB1)
@@ -154,7 +154,7 @@ async def test_form_select_hub_v1(opp: OpenPeerPowerType):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_select_hub_v2(opp: OpenPeerPowerType):
+async def test_form_select_hub_v2(opp: OpenPeerPower):
     """Test we set up the Hub v2 correctly."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await _init_form(opp, HUB2)
@@ -172,7 +172,7 @@ async def test_form_select_hub_v2(opp: OpenPeerPowerType):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_failed_connection_plm(opp: OpenPeerPowerType):
+async def test_failed_connection_plm(opp: OpenPeerPower):
     """Test a failed connection with the PLM."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await _init_form(opp, PLM)
@@ -184,7 +184,7 @@ async def test_failed_connection_plm(opp: OpenPeerPowerType):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_failed_connection_hub(opp: OpenPeerPowerType):
+async def test_failed_connection_hub(opp: OpenPeerPower):
     """Test a failed connection with a Hub."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await _init_form(opp, HUB2)
@@ -206,7 +206,7 @@ async def _import_config(opp, config):
         )
 
 
-async def test_import_plm(opp: OpenPeerPowerType):
+async def test_import_plm(opp: OpenPeerPower):
     """Test importing a minimum PLM config from yaml."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -233,7 +233,7 @@ async def _options_init_form(opp, entry_id, step):
     return result2
 
 
-async def test_import_min_hub_v2(opp: OpenPeerPowerType):
+async def test_import_min_hub_v2(opp: OpenPeerPower):
     """Test importing a minimum Hub v2 config from yaml."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -251,7 +251,7 @@ async def test_import_min_hub_v2(opp: OpenPeerPowerType):
         assert entry.data[CONF_HUB_VERSION] == 2
 
 
-async def test_import_min_hub_v1(opp: OpenPeerPowerType):
+async def test_import_min_hub_v1(opp: OpenPeerPower):
     """Test importing a minimum Hub v1 config from yaml."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -267,7 +267,7 @@ async def test_import_min_hub_v1(opp: OpenPeerPowerType):
         assert entry.data[CONF_HUB_VERSION] == 1
 
 
-async def test_import_existing(opp: OpenPeerPowerType):
+async def test_import_existing(opp: OpenPeerPower):
     """Test we fail on an existing config imported."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -276,7 +276,7 @@ async def test_import_existing(opp: OpenPeerPowerType):
         options={},
     )
     config_entry.add_to_opp(opp)
-    assert config_entry.state == config_entries.ENTRY_STATE_NOT_LOADED
+    assert config_entry.state is config_entries.ConfigEntryState.NOT_LOADED
 
     result = await _import_config(
         opp, {**MOCK_IMPORT_MINIMUM_HUB_V2, CONF_PORT: 25105, CONF_HUB_VERSION: 2}
@@ -285,7 +285,7 @@ async def test_import_existing(opp: OpenPeerPowerType):
     assert result["reason"] == "single_instance_allowed"
 
 
-async def test_import_failed_connection(opp: OpenPeerPowerType):
+async def test_import_failed_connection(opp: OpenPeerPower):
     """Test a failed connection on import."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -310,7 +310,7 @@ async def _options_form(opp, flow_id, user_input):
         return result, mock_setup_entry
 
 
-async def test_options_change_hub_config(opp: OpenPeerPowerType):
+async def test_options_change_hub_config(opp: OpenPeerPower):
     """Test changing Hub v2 config."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -337,7 +337,7 @@ async def test_options_change_hub_config(opp: OpenPeerPowerType):
     assert config_entry.data == {**user_input, CONF_HUB_VERSION: 2}
 
 
-async def test_options_add_device_override(opp: OpenPeerPowerType):
+async def test_options_add_device_override(opp: OpenPeerPower):
     """Test adding a device override."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -380,7 +380,7 @@ async def test_options_add_device_override(opp: OpenPeerPowerType):
     assert result["data"] != result3["data"]
 
 
-async def test_options_remove_device_override(opp: OpenPeerPowerType):
+async def test_options_remove_device_override(opp: OpenPeerPower):
     """Test removing a device override."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -404,7 +404,7 @@ async def test_options_remove_device_override(opp: OpenPeerPowerType):
     assert len(config_entry.options[CONF_OVERRIDE]) == 1
 
 
-async def test_options_remove_device_override_with_x10(opp: OpenPeerPowerType):
+async def test_options_remove_device_override_with_x10(opp: OpenPeerPower):
     """Test removing a device override when an X10 device is configured."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -437,7 +437,7 @@ async def test_options_remove_device_override_with_x10(opp: OpenPeerPowerType):
     assert len(config_entry.options[CONF_X10]) == 1
 
 
-async def test_options_add_x10_device(opp: OpenPeerPowerType):
+async def test_options_add_x10_device(opp: OpenPeerPower):
     """Test adding an X10 device."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -484,7 +484,7 @@ async def test_options_add_x10_device(opp: OpenPeerPowerType):
     assert result2["data"] != result3["data"]
 
 
-async def test_options_remove_x10_device(opp: OpenPeerPowerType):
+async def test_options_remove_x10_device(opp: OpenPeerPower):
     """Test removing an X10 device."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -523,7 +523,7 @@ async def test_options_remove_x10_device(opp: OpenPeerPowerType):
     assert len(config_entry.options[CONF_X10]) == 1
 
 
-async def test_options_remove_x10_device_with_override(opp: OpenPeerPowerType):
+async def test_options_remove_x10_device_with_override(opp: OpenPeerPower):
     """Test removing an X10 device when a device override is configured."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -564,7 +564,7 @@ async def test_options_remove_x10_device_with_override(opp: OpenPeerPowerType):
     assert len(config_entry.options[CONF_OVERRIDE]) == 1
 
 
-async def test_options_dup_selection(opp: OpenPeerPowerType):
+async def test_options_dup_selection(opp: OpenPeerPower):
     """Test if a duplicate selection was made in options."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
@@ -586,7 +586,7 @@ async def test_options_dup_selection(opp: OpenPeerPowerType):
     assert result2["errors"] == {"base": "select_single"}
 
 
-async def test_options_override_bad_data(opp: OpenPeerPowerType):
+async def test_options_override_bad_data(opp: OpenPeerPower):
     """Test for bad data in a device override."""
 
     config_entry = MockConfigEntry(

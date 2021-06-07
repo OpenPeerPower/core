@@ -273,7 +273,9 @@ async def test_device_tracker_test1_no_coordinates(opp):
 
     assert await async_setup_component(opp, DOMAIN, config)
 
-    opp.states.async_set("device_tracker.test1", "not_home", {"friendly_name": "test1"})
+    opp.states.async_set(
+        "device_tracker.test1", "not_home", {"friendly_name": "test1"}
+    )
     await opp.async_block_till_done()
     state = opp.states.get("proximity.home")
     assert state.attributes.get("nearest") == "not set"
@@ -285,9 +287,13 @@ async def test_device_tracker_test1_awayfurther_than_test2_first_test1(opp):
     config_zones(opp)
     await opp.async_block_till_done()
 
-    opp.states.async_set("device_tracker.test1", "not_home", {"friendly_name": "test1"})
+    opp.states.async_set(
+        "device_tracker.test1", "not_home", {"friendly_name": "test1"}
+    )
     await opp.async_block_till_done()
-    opp.states.async_set("device_tracker.test2", "not_home", {"friendly_name": "test2"})
+    opp.states.async_set(
+        "device_tracker.test2", "not_home", {"friendly_name": "test2"}
+    )
     await opp.async_block_till_done()
 
     assert await async_setup_component(
@@ -331,9 +337,13 @@ async def test_device_tracker_test1_awayfurther_than_test2_first_test2(opp):
     config_zones(opp)
     await opp.async_block_till_done()
 
-    opp.states.async_set("device_tracker.test1", "not_home", {"friendly_name": "test1"})
+    opp.states.async_set(
+        "device_tracker.test1", "not_home", {"friendly_name": "test1"}
+    )
     await opp.async_block_till_done()
-    opp.states.async_set("device_tracker.test2", "not_home", {"friendly_name": "test2"})
+    opp.states.async_set(
+        "device_tracker.test2", "not_home", {"friendly_name": "test2"}
+    )
     await opp.async_block_till_done()
     assert await async_setup_component(
         opp,
@@ -372,7 +382,9 @@ async def test_device_tracker_test1_awayfurther_than_test2_first_test2(opp):
 
 async def test_device_tracker_test1_awayfurther_test2_in_ignored_zone(opp):
     """Test for tracker states."""
-    opp.states.async_set("device_tracker.test1", "not_home", {"friendly_name": "test1"})
+    opp.states.async_set(
+        "device_tracker.test1", "not_home", {"friendly_name": "test1"}
+    )
     await opp.async_block_till_done()
     opp.states.async_set("device_tracker.test2", "work", {"friendly_name": "test2"})
     await opp.async_block_till_done()
@@ -406,9 +418,13 @@ async def test_device_tracker_test1_awayfurther_test2_first(opp):
     config_zones(opp)
     await opp.async_block_till_done()
 
-    opp.states.async_set("device_tracker.test1", "not_home", {"friendly_name": "test1"})
+    opp.states.async_set(
+        "device_tracker.test1", "not_home", {"friendly_name": "test1"}
+    )
     await opp.async_block_till_done()
-    opp.states.async_set("device_tracker.test2", "not_home", {"friendly_name": "test2"})
+    opp.states.async_set(
+        "device_tracker.test2", "not_home", {"friendly_name": "test2"}
+    )
     await opp.async_block_till_done()
 
     assert await async_setup_component(
@@ -504,9 +520,13 @@ async def test_device_tracker_test1_nearest_after_test2_in_ignored_zone(opp):
     config_zones(opp)
     await opp.async_block_till_done()
 
-    opp.states.async_set("device_tracker.test1", "not_home", {"friendly_name": "test1"})
+    opp.states.async_set(
+        "device_tracker.test1", "not_home", {"friendly_name": "test1"}
+    )
     await opp.async_block_till_done()
-    opp.states.async_set("device_tracker.test2", "not_home", {"friendly_name": "test2"})
+    opp.states.async_set(
+        "device_tracker.test2", "not_home", {"friendly_name": "test2"}
+    )
     await opp.async_block_till_done()
 
     assert await async_setup_component(

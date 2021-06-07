@@ -30,7 +30,7 @@ async def test_automation_scenes(opp):
         "icon": "mdi:script-text-outline",
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -49,7 +49,7 @@ async def test_automation_scenes(opp):
         "icon": "mdi:script-text-outline",
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -66,7 +66,7 @@ async def test_automation_scenes(opp):
         "icon": "mdi:script-text-outline",
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )

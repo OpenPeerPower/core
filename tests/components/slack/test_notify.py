@@ -1,7 +1,8 @@
 """Test slack notifications."""
+from __future__ import annotations
+
 import copy
 import logging
-from typing import List
 from unittest.mock import AsyncMock, Mock, patch
 
 from _pytest.logging import LogCaptureFixture
@@ -21,7 +22,7 @@ from openpeerpower.const import (
     CONF_PLATFORM,
     CONF_USERNAME,
 )
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.setup import async_setup_component
 
 MODULE_PATH = "openpeerpower.components.slack.notify"
@@ -39,14 +40,14 @@ DEFAULT_CONFIG = {
 }
 
 
-def filter_log_records(caplog: LogCaptureFixture) -> List[logging.LogRecord]:
+def filter_log_records(caplog: LogCaptureFixture) -> list[logging.LogRecord]:
     """Filter all unrelated log records."""
     return [
         rec for rec in caplog.records if rec.name.endswith(f"{DOMAIN}.{notify.DOMAIN}")
     ]
 
 
-async def test_setup(opp: OpenPeerPowerType, caplog: LogCaptureFixture):
+async def test_setup(opp: OpenPeerPower, caplog: LogCaptureFixture):
     """Test setup slack notify."""
     config = DEFAULT_CONFIG
 
@@ -67,7 +68,7 @@ async def test_setup(opp: OpenPeerPowerType, caplog: LogCaptureFixture):
         client.auth_test.assert_called_once_with()
 
 
-async def test_setup_clientError(opp: OpenPeerPowerType, caplog: LogCaptureFixture):
+async def test_setup_clientError(opp: OpenPeerPower, caplog: LogCaptureFixture):
     """Test setup slack notify with aiohttp.ClientError exception."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config[notify.DOMAIN][0].update({CONF_USERNAME: "user", CONF_ICON: "icon"})
@@ -88,7 +89,7 @@ async def test_setup_clientError(opp: OpenPeerPowerType, caplog: LogCaptureFixtu
         assert aiohttp.ClientError.__qualname__ in record.message
 
 
-async def test_setup_slackApiError(opp: OpenPeerPowerType, caplog: LogCaptureFixture):
+async def test_setup_slackApiError(opp: OpenPeerPower, caplog: LogCaptureFixture):
     """Test setup slack notify with SlackApiError exception."""
     config = DEFAULT_CONFIG
 

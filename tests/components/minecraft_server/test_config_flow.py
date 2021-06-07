@@ -13,12 +13,12 @@ from openpeerpower.components.minecraft_server.const import (
 )
 from openpeerpower.config_entries import SOURCE_USER
 from openpeerpower.const import CONF_HOST, CONF_NAME, CONF_PORT
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.data_entry_flow import (
     RESULT_TYPE_ABORT,
     RESULT_TYPE_CREATE_ENTRY,
     RESULT_TYPE_FORM,
 )
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from tests.common import MockConfigEntry
 
@@ -80,7 +80,7 @@ SRV_RECORDS = asyncio.Future()
 SRV_RECORDS.set_result([QueryMock()])
 
 
-async def test_show_config_form(opp: OpenPeerPowerType) -> None:
+async def test_show_config_form(opp: OpenPeerPower) -> None:
     """Test if initial configuration form is shown."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}
@@ -90,7 +90,7 @@ async def test_show_config_form(opp: OpenPeerPowerType) -> None:
     assert result["step_id"] == "user"
 
 
-async def test_invalid_ip(opp: OpenPeerPowerType) -> None:
+async def test_invalid_ip(opp: OpenPeerPower) -> None:
     """Test error in case of an invalid IP address."""
     with patch("getmac.get_mac_address", return_value=None):
         result = await opp.config_entries.flow.async_init(
@@ -101,36 +101,32 @@ async def test_invalid_ip(opp: OpenPeerPowerType) -> None:
         assert result["errors"] == {"base": "invalid_ip"}
 
 
-async def test_same_host(opp: OpenPeerPowerType) -> None:
+async def test_same_host(opp: OpenPeerPower) -> None:
     """Test abort in case of same host name."""
-    with patch(
-        "aiodns.DNSResolver.query",
-        side_effect=aiodns.error.DNSError,
+    with patch("aiodns.DNSResolver.query", side_effect=aiodns.error.DNSError,), patch(
+        "mcstatus.server.MinecraftServer.status",
+        return_value=PingResponse(STATUS_RESPONSE_RAW),
     ):
-        with patch(
-            "mcstatus.server.MinecraftServer.status",
-            return_value=PingResponse(STATUS_RESPONSE_RAW),
-        ):
-            unique_id = "mc.dummyserver.com-25565"
-            config_data = {
-                CONF_NAME: DEFAULT_NAME,
-                CONF_HOST: "mc.dummyserver.com",
-                CONF_PORT: DEFAULT_PORT,
-            }
-            mock_config_entry = MockConfigEntry(
-                domain=DOMAIN, unique_id=unique_id, data=config_data
-            )
-            mock_config_entry.add_to_opp(opp)
+        unique_id = "mc.dummyserver.com-25565"
+        config_data = {
+            CONF_NAME: DEFAULT_NAME,
+            CONF_HOST: "mc.dummyserver.com",
+            CONF_PORT: DEFAULT_PORT,
+        }
+        mock_config_entry = MockConfigEntry(
+            domain=DOMAIN, unique_id=unique_id, data=config_data
+        )
+        mock_config_entry.add_to_opp(opp)
 
-            result = await opp.config_entries.flow.async_init(
-                DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT
-            )
+        result = await opp.config_entries.flow.async_init(
+            DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT
+        )
 
-            assert result["type"] == RESULT_TYPE_ABORT
-            assert result["reason"] == "already_configured"
+        assert result["type"] == RESULT_TYPE_ABORT
+        assert result["reason"] == "already_configured"
 
 
-async def test_port_too_small(opp: OpenPeerPowerType) -> None:
+async def test_port_too_small(opp: OpenPeerPower) -> None:
     """Test error in case of a too small port."""
     with patch(
         "aiodns.DNSResolver.query",
@@ -144,7 +140,7 @@ async def test_port_too_small(opp: OpenPeerPowerType) -> None:
         assert result["errors"] == {"base": "invalid_port"}
 
 
-async def test_port_too_large(opp: OpenPeerPowerType) -> None:
+async def test_port_too_large(opp: OpenPeerPower) -> None:
     """Test error in case of a too large port."""
     with patch(
         "aiodns.DNSResolver.query",
@@ -158,98 +154,85 @@ async def test_port_too_large(opp: OpenPeerPowerType) -> None:
         assert result["errors"] == {"base": "invalid_port"}
 
 
-async def test_connection_failed(opp: OpenPeerPowerType) -> None:
+async def test_connection_failed(opp: OpenPeerPower) -> None:
     """Test error in case of a failed connection."""
     with patch(
         "aiodns.DNSResolver.query",
         side_effect=aiodns.error.DNSError,
-    ):
-        with patch("mcstatus.server.MinecraftServer.status", side_effect=OSError):
-            result = await opp.config_entries.flow.async_init(
-                DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT
-            )
+    ), patch("mcstatus.server.MinecraftServer.status", side_effect=OSError):
+        result = await opp.config_entries.flow.async_init(
+            DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT
+        )
 
-            assert result["type"] == RESULT_TYPE_FORM
-            assert result["errors"] == {"base": "cannot_connect"}
+        assert result["type"] == RESULT_TYPE_FORM
+        assert result["errors"] == {"base": "cannot_connect"}
 
 
-async def test_connection_succeeded_with_srv_record(opp: OpenPeerPowerType) -> None:
+async def test_connection_succeeded_with_srv_record(opp: OpenPeerPower) -> None:
     """Test config entry in case of a successful connection with a SRV record."""
-    with patch(
-        "aiodns.DNSResolver.query",
-        return_value=SRV_RECORDS,
+    with patch("aiodns.DNSResolver.query", return_value=SRV_RECORDS,), patch(
+        "mcstatus.server.MinecraftServer.status",
+        return_value=PingResponse(STATUS_RESPONSE_RAW),
     ):
-        with patch(
-            "mcstatus.server.MinecraftServer.status",
-            return_value=PingResponse(STATUS_RESPONSE_RAW),
-        ):
-            result = await opp.config_entries.flow.async_init(
-                DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT_SRV
-            )
+        result = await opp.config_entries.flow.async_init(
+            DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT_SRV
+        )
 
-            assert result["type"] == RESULT_TYPE_CREATE_ENTRY
-            assert result["title"] == USER_INPUT_SRV[CONF_HOST]
-            assert result["data"][CONF_NAME] == USER_INPUT_SRV[CONF_NAME]
-            assert result["data"][CONF_HOST] == USER_INPUT_SRV[CONF_HOST]
+        assert result["type"] == RESULT_TYPE_CREATE_ENTRY
+        assert result["title"] == USER_INPUT_SRV[CONF_HOST]
+        assert result["data"][CONF_NAME] == USER_INPUT_SRV[CONF_NAME]
+        assert result["data"][CONF_HOST] == USER_INPUT_SRV[CONF_HOST]
 
 
-async def test_connection_succeeded_with_host(opp: OpenPeerPowerType) -> None:
+async def test_connection_succeeded_with_host(opp: OpenPeerPower) -> None:
     """Test config entry in case of a successful connection with a host name."""
-    with patch(
+    with patch("aiodns.DNSResolver.query", side_effect=aiodns.error.DNSError,), patch(
+        "mcstatus.server.MinecraftServer.status",
+        return_value=PingResponse(STATUS_RESPONSE_RAW),
+    ):
+        result = await opp.config_entries.flow.async_init(
+            DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT
+        )
+
+        assert result["type"] == RESULT_TYPE_CREATE_ENTRY
+        assert result["title"] == USER_INPUT[CONF_HOST]
+        assert result["data"][CONF_NAME] == USER_INPUT[CONF_NAME]
+        assert result["data"][CONF_HOST] == "mc.dummyserver.com"
+
+
+async def test_connection_succeeded_with_ip4(opp: OpenPeerPower) -> None:
+    """Test config entry in case of a successful connection with an IPv4 address."""
+    with patch("getmac.get_mac_address", return_value="01:23:45:67:89:ab"), patch(
         "aiodns.DNSResolver.query",
         side_effect=aiodns.error.DNSError,
+    ), patch(
+        "mcstatus.server.MinecraftServer.status",
+        return_value=PingResponse(STATUS_RESPONSE_RAW),
     ):
-        with patch(
-            "mcstatus.server.MinecraftServer.status",
-            return_value=PingResponse(STATUS_RESPONSE_RAW),
-        ):
-            result = await opp.config_entries.flow.async_init(
-                DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT
-            )
+        result = await opp.config_entries.flow.async_init(
+            DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT_IPV4
+        )
 
-            assert result["type"] == RESULT_TYPE_CREATE_ENTRY
-            assert result["title"] == USER_INPUT[CONF_HOST]
-            assert result["data"][CONF_NAME] == USER_INPUT[CONF_NAME]
-            assert result["data"][CONF_HOST] == "mc.dummyserver.com"
+        assert result["type"] == RESULT_TYPE_CREATE_ENTRY
+        assert result["title"] == USER_INPUT_IPV4[CONF_HOST]
+        assert result["data"][CONF_NAME] == USER_INPUT_IPV4[CONF_NAME]
+        assert result["data"][CONF_HOST] == "1.1.1.1"
 
 
-async def test_connection_succeeded_with_ip4(opp: OpenPeerPowerType) -> None:
-    """Test config entry in case of a successful connection with an IPv4 address."""
-    with patch("getmac.get_mac_address", return_value="01:23:45:67:89:ab"):
-        with patch(
-            "aiodns.DNSResolver.query",
-            side_effect=aiodns.error.DNSError,
-        ):
-            with patch(
-                "mcstatus.server.MinecraftServer.status",
-                return_value=PingResponse(STATUS_RESPONSE_RAW),
-            ):
-                result = await opp.config_entries.flow.async_init(
-                    DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT_IPV4
-                )
-
-                assert result["type"] == RESULT_TYPE_CREATE_ENTRY
-                assert result["title"] == USER_INPUT_IPV4[CONF_HOST]
-                assert result["data"][CONF_NAME] == USER_INPUT_IPV4[CONF_NAME]
-                assert result["data"][CONF_HOST] == "1.1.1.1"
-
-
-async def test_connection_succeeded_with_ip6(opp: OpenPeerPowerType) -> None:
+async def test_connection_succeeded_with_ip6(opp: OpenPeerPower) -> None:
     """Test config entry in case of a successful connection with an IPv6 address."""
-    with patch("getmac.get_mac_address", return_value="01:23:45:67:89:ab"):
-        with patch(
-            "aiodns.DNSResolver.query",
-            side_effect=aiodns.error.DNSError,
-        ):
-            with patch(
-                "mcstatus.server.MinecraftServer.status",
-                return_value=PingResponse(STATUS_RESPONSE_RAW),
-            ):
-                result = await opp.config_entries.flow.async_init(
-                    DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT_IPV6
-                )
+    with patch("getmac.get_mac_address", return_value="01:23:45:67:89:ab"), patch(
+        "aiodns.DNSResolver.query",
+        side_effect=aiodns.error.DNSError,
+    ), patch(
+        "mcstatus.server.MinecraftServer.status",
+        return_value=PingResponse(STATUS_RESPONSE_RAW),
+    ):
+        result = await opp.config_entries.flow.async_init(
+            DOMAIN, context={"source": SOURCE_USER}, data=USER_INPUT_IPV6
+        )
 
-                assert result["type"] == RESULT_TYPE_CREATE_ENTRY
-                assert result["title"] == USER_INPUT_IPV6[CONF_HOST]
-                assert result["data"][CONF_NAME] == USER_INPUT_IPV6[CONF_NAME]
-                assert result["data"][CONF_HOST] == "::ffff:0101:0101"
+        assert result["type"] == RESULT_TYPE_CREATE_ENTRY
+        assert result["title"] == USER_INPUT_IPV6[CONF_HOST]
+        assert result["data"][CONF_NAME] == USER_INPUT_IPV6[CONF_NAME]
+        assert result["data"][CONF_HOST] == "::ffff:0101:0101"

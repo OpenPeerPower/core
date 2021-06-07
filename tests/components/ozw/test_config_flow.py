@@ -4,7 +4,7 @@ from unittest.mock import patch
 import pytest
 
 from openpeerpower import config_entries, setup
-from openpeerpower.components.oppio.handler import OppioAPIError
+from openpeerpower.components.oppio.handler import HassioAPIError
 from openpeerpower.components.ozw.config_flow import TITLE
 from openpeerpower.components.ozw.const import DOMAIN
 
@@ -59,7 +59,9 @@ def mock_addon_options(addon_info):
 @pytest.fixture(name="set_addon_options")
 def mock_set_addon_options():
     """Mock set add-on options."""
-    with patch("openpeerpower.components.oppio.async_set_addon_options") as set_options:
+    with patch(
+        "openpeerpower.components.oppio.async_set_addon_options"
+    ) as set_options:
         yield set_options
 
 
@@ -82,8 +84,6 @@ async def test_user_not_supervisor_create_entry(opp, mqtt):
     await setup.async_setup_component(opp, "persistent_notification", {})
 
     with patch(
-        "openpeerpower.components.ozw.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.ozw.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -100,7 +100,6 @@ async def test_user_not_supervisor_create_entry(opp, mqtt):
         "use_addon": False,
         "integration_created_addon": False,
     }
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -134,8 +133,6 @@ async def test_not_addon(opp, supervisor, mqtt):
     )
 
     with patch(
-        "openpeerpower.components.ozw.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.ozw.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -152,7 +149,6 @@ async def test_not_addon(opp, supervisor, mqtt):
         "use_addon": False,
         "integration_created_addon": False,
     }
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -167,8 +163,6 @@ async def test_addon_running(opp, supervisor, addon_running, addon_options):
     )
 
     with patch(
-        "openpeerpower.components.ozw.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.ozw.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -185,13 +179,12 @@ async def test_addon_running(opp, supervisor, addon_running, addon_options):
         "use_addon": True,
         "integration_created_addon": False,
     }
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
 async def test_addon_info_failure(opp, supervisor, addon_info):
     """Test add-on info failure."""
-    addon_info.side_effect = OppioAPIError()
+    addon_info.side_effect = HassioAPIError()
     await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
@@ -220,8 +213,6 @@ async def test_addon_installed(
     )
 
     with patch(
-        "openpeerpower.components.ozw.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.ozw.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -238,7 +229,6 @@ async def test_addon_installed(
         "use_addon": True,
         "integration_created_addon": False,
     }
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -246,7 +236,7 @@ async def test_set_addon_config_failure(
     opp, supervisor, addon_installed, addon_options, set_addon_options
 ):
     """Test add-on set config failure."""
-    set_addon_options.side_effect = OppioAPIError()
+    set_addon_options.side_effect = HassioAPIError()
     await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
@@ -268,7 +258,7 @@ async def test_start_addon_failure(
     opp, supervisor, addon_installed, addon_options, set_addon_options, start_addon
 ):
     """Test add-on start failure."""
-    start_addon.side_effect = OppioAPIError()
+    start_addon.side_effect = HassioAPIError()
     await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
@@ -317,8 +307,6 @@ async def test_addon_not_installed(
     assert result["step_id"] == "start_addon"
 
     with patch(
-        "openpeerpower.components.ozw.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.ozw.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -335,14 +323,13 @@ async def test_addon_not_installed(
         "use_addon": True,
         "integration_created_addon": True,
     }
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
 async def test_install_addon_failure(opp, supervisor, addon_installed, install_addon):
     """Test add-on install failure."""
     addon_installed.return_value["version"] = None
-    install_addon.side_effect = OppioAPIError()
+    install_addon.side_effect = HassioAPIError()
     await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(
@@ -377,8 +364,6 @@ async def test_supervisor_discovery(opp, supervisor, addon_running, addon_option
     )
 
     with patch(
-        "openpeerpower.components.ozw.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.ozw.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -393,7 +378,6 @@ async def test_supervisor_discovery(opp, supervisor, addon_running, addon_option
         "use_addon": True,
         "integration_created_addon": False,
     }
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -419,8 +403,6 @@ async def test_clean_discovery_on_user_create(
     )
 
     with patch(
-        "openpeerpower.components.ozw.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.ozw.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -438,7 +420,6 @@ async def test_clean_discovery_on_user_create(
         "use_addon": False,
         "integration_created_addon": False,
     }
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -560,8 +541,6 @@ async def test_import_addon_installed(
     default_input = result["data_schema"]({})
 
     with patch(
-        "openpeerpower.components.ozw.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.ozw.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -578,5 +557,4 @@ async def test_import_addon_installed(
         "use_addon": True,
         "integration_created_addon": False,
     }
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1

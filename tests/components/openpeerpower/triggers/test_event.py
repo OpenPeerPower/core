@@ -37,7 +37,10 @@ async def test_if_fires_on_event(opp, calls):
         {
             automation.DOMAIN: {
                 "trigger": {"platform": "event", "event_type": "test_event"},
-                "action": {"service": "test.automation"},
+                "action": {
+                    "service": "test.automation",
+                    "data_template": {"id": "{{ trigger.id}}"},
+                },
             }
         },
     )
@@ -57,6 +60,7 @@ async def test_if_fires_on_event(opp, calls):
     opp.bus.async_fire("test_event")
     await opp.async_block_till_done()
     assert len(calls) == 1
+    assert calls[0].data["id"] == 0
 
 
 async def test_if_fires_on_templated_event(opp, calls):
@@ -325,7 +329,9 @@ async def test_if_not_fires_if_event_data_not_matches(opp, calls):
     assert len(calls) == 0
 
 
-async def test_if_not_fires_if_event_context_not_matches(opp, calls, context_with_user):
+async def test_if_not_fires_if_event_context_not_matches(
+    opp, calls, context_with_user
+):
     """Test firing of event if no context match."""
     assert await async_setup_component(
         opp,

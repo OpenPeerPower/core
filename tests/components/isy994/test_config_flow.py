@@ -1,10 +1,11 @@
 """Test the Universal Devices ISY994 config flow."""
-
+import re
 from unittest.mock import patch
 
+from pyisy import ISYConnectionError, ISYInvalidAuthError
+
 from openpeerpower import config_entries, data_entry_flow, setup
-from openpeerpower.components import ssdp
-from openpeerpower.components.isy994.config_flow import CannotConnect
+from openpeerpower.components import dhcp, ssdp
 from openpeerpower.components.isy994.const import (
     CONF_IGNORE_STRING,
     CONF_RESTORE_LIGHT_STATE,
@@ -15,9 +16,9 @@ from openpeerpower.components.isy994.const import (
     ISY_URL_POSTFIX,
     UDN_UUID_PREFIX,
 )
-from openpeerpower.config_entries import SOURCE_IMPORT, SOURCE_SSDP
+from openpeerpower.config_entries import SOURCE_DHCP, SOURCE_IMPORT, SOURCE_SSDP
 from openpeerpower.const import CONF_HOST, CONF_PASSWORD, CONF_USERNAME
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from tests.common import MockConfigEntry
 
@@ -61,16 +62,35 @@ MOCK_IMPORT_FULL_CONFIG = {
 }
 
 MOCK_DEVICE_NAME = "Name of the device"
-MOCK_UUID = "CE:FB:72:31:B7:B9"
-MOCK_VALIDATED_RESPONSE = {"name": MOCK_DEVICE_NAME, "uuid": MOCK_UUID}
+MOCK_UUID = "ce:fb:72:31:b7:b9"
+MOCK_MAC = "cefb7231b7b9"
 
-PATCH_CONFIGURATION = "openpeerpower.components.isy994.config_flow.Configuration"
-PATCH_CONNECTION = "openpeerpower.components.isy994.config_flow.Connection"
-PATCH_ASYNC_SETUP = "openpeerpower.components.isy994.async_setup"
-PATCH_ASYNC_SETUP_ENTRY = "openpeerpower.components.isy994.async_setup_entry"
+MOCK_CONFIG_RESPONSE = """<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <app_full_version>5.0.16C</app_full_version>
+    <platform>ISY-C-994</platform>
+    <root>
+        <id>ce:fb:72:31:b7:b9</id>
+        <name>Name of the device</name>
+    </root>
+    <features>
+        <feature>
+            <id>21040</id>
+            <desc>Networking Module</desc>
+            <isInstalled>true</isInstalled>
+            <isAvailable>true</isAvailable>
+        </feature>
+    </features>
+</configuration>
+"""
+
+INTEGRATION = "openpeerpower.components.isy994"
+PATCH_CONNECTION = f"{INTEGRATION}.config_flow.Connection.test_connection"
+PATCH_ASYNC_SETUP = f"{INTEGRATION}.async_setup"
+PATCH_ASYNC_SETUP_ENTRY = f"{INTEGRATION}.async_setup_entry"
 
 
-async def test_form(opp: OpenPeerPowerType):
+async def test_form(opp: OpenPeerPower):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -79,17 +99,12 @@ async def test_form(opp: OpenPeerPowerType):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] == {}
 
-    with patch(PATCH_CONFIGURATION) as mock_config_class, patch(
-        PATCH_CONNECTION
-    ) as mock_connection_class, patch(
+    with patch(PATCH_CONNECTION, return_value=MOCK_CONFIG_RESPONSE), patch(
         PATCH_ASYNC_SETUP, return_value=True
     ) as mock_setup, patch(
         PATCH_ASYNC_SETUP_ENTRY,
         return_value=True,
     ) as mock_setup_entry:
-        isy_conn = mock_connection_class.return_value
-        isy_conn.get_config.return_value = None
-        mock_config_class.return_value = MOCK_VALIDATED_RESPONSE
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             MOCK_USER_INPUT,
@@ -103,7 +118,7 @@ async def test_form(opp: OpenPeerPowerType):
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_form_invalid_host(opp: OpenPeerPowerType):
+async def test_form_invalid_host(opp: OpenPeerPower):
     """Test we handle invalid host."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -123,14 +138,14 @@ async def test_form_invalid_host(opp: OpenPeerPowerType):
     assert result2["errors"] == {"base": "invalid_host"}
 
 
-async def test_form_invalid_auth(opp: OpenPeerPowerType):
+async def test_form_invalid_auth(opp: OpenPeerPower):
     """Test we handle invalid auth."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
-    with patch(PATCH_CONFIGURATION), patch(
+    with patch(
         PATCH_CONNECTION,
-        side_effect=ValueError("PyISY could not connect to the ISY."),
+        side_effect=ISYInvalidAuthError(),
     ):
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
@@ -141,14 +156,14 @@ async def test_form_invalid_auth(opp: OpenPeerPowerType):
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
-async def test_form_cannot_connect(opp: OpenPeerPowerType):
-    """Test we handle cannot connect error."""
+async def test_form_isy_connection_error(opp: OpenPeerPower):
+    """Test we handle invalid auth."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
-    with patch(PATCH_CONFIGURATION), patch(
+    with patch(
         PATCH_CONNECTION,
-        side_effect=CannotConnect,
+        side_effect=ISYConnectionError(),
     ):
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
@@ -159,7 +174,45 @@ async def test_form_cannot_connect(opp: OpenPeerPowerType):
     assert result2["errors"] == {"base": "cannot_connect"}
 
 
-async def test_form_existing_config_entry(opp: OpenPeerPowerType):
+async def test_form_isy_parse_response_error(opp: OpenPeerPower, caplog):
+    """Test we handle poorly formatted XML response from ISY."""
+    result = await opp.config_entries.flow.async_init(
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
+    )
+    with patch(
+        PATCH_CONNECTION,
+        return_value=MOCK_CONFIG_RESPONSE.rsplit("\n", 3)[0],  # Test with invalid XML
+    ):
+        result2 = await opp.config_entries.flow.async_configure(
+            result["flow_id"],
+            MOCK_USER_INPUT,
+        )
+
+    assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
+    assert "ISY Could not parse response, poorly formatted XML." in caplog.text
+
+
+async def test_form_no_name_in_response(opp: OpenPeerPower):
+    """Test we handle invalid response from ISY with name not set."""
+    result = await opp.config_entries.flow.async_init(
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
+    )
+    with patch(
+        PATCH_CONNECTION,
+        return_value=re.sub(
+            r"\<name\>.*\n", "", MOCK_CONFIG_RESPONSE
+        ),  # Test with <name> line removed.
+    ):
+        result2 = await opp.config_entries.flow.async_configure(
+            result["flow_id"],
+            MOCK_USER_INPUT,
+        )
+
+    assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
+    assert result2["errors"] == {"base": "cannot_connect"}
+
+
+async def test_form_existing_config_entry(opp: OpenPeerPower):
     """Test if config entry already exists."""
     MockConfigEntry(domain=DOMAIN, unique_id=MOCK_UUID).add_to_opp(opp)
     await setup.async_setup_component(opp, "persistent_notification", {})
@@ -169,12 +222,7 @@ async def test_form_existing_config_entry(opp: OpenPeerPowerType):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] == {}
 
-    with patch(PATCH_CONFIGURATION) as mock_config_class, patch(
-        PATCH_CONNECTION
-    ) as mock_connection_class:
-        isy_conn = mock_connection_class.return_value
-        isy_conn.get_config.return_value = None
-        mock_config_class.return_value = MOCK_VALIDATED_RESPONSE
+    with patch(PATCH_CONNECTION, return_value=MOCK_CONFIG_RESPONSE):
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             MOCK_USER_INPUT,
@@ -182,17 +230,14 @@ async def test_form_existing_config_entry(opp: OpenPeerPowerType):
     assert result2["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
 
-async def test_import_flow_some_fields(opp: OpenPeerPowerType) -> None:
+async def test_import_flow_some_fields(opp: OpenPeerPower) -> None:
     """Test import config flow with just the basic fields."""
-    with patch(PATCH_CONFIGURATION) as mock_config_class, patch(
-        PATCH_CONNECTION
-    ) as mock_connection_class, patch(PATCH_ASYNC_SETUP, return_value=True), patch(
+    with patch(PATCH_CONNECTION, return_value=MOCK_CONFIG_RESPONSE), patch(
+        PATCH_ASYNC_SETUP, return_value=True
+    ), patch(
         PATCH_ASYNC_SETUP_ENTRY,
         return_value=True,
     ):
-        isy_conn = mock_connection_class.return_value
-        isy_conn.get_config.return_value = None
-        mock_config_class.return_value = MOCK_VALIDATED_RESPONSE
         result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
@@ -205,18 +250,15 @@ async def test_import_flow_some_fields(opp: OpenPeerPowerType) -> None:
     assert result["data"][CONF_PASSWORD] == MOCK_PASSWORD
 
 
-async def test_import_flow_with_https(opp: OpenPeerPowerType) -> None:
+async def test_import_flow_with_https(opp: OpenPeerPower) -> None:
     """Test import config with https."""
 
-    with patch(PATCH_CONFIGURATION) as mock_config_class, patch(
-        PATCH_CONNECTION
-    ) as mock_connection_class, patch(PATCH_ASYNC_SETUP, return_value=True), patch(
+    with patch(PATCH_CONNECTION, return_value=MOCK_CONFIG_RESPONSE), patch(
+        PATCH_ASYNC_SETUP, return_value=True
+    ), patch(
         PATCH_ASYNC_SETUP_ENTRY,
         return_value=True,
     ):
-        isy_conn = mock_connection_class.return_value
-        isy_conn.get_config.return_value = None
-        mock_config_class.return_value = MOCK_VALIDATED_RESPONSE
         result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
@@ -229,17 +271,14 @@ async def test_import_flow_with_https(opp: OpenPeerPowerType) -> None:
     assert result["data"][CONF_PASSWORD] == MOCK_PASSWORD
 
 
-async def test_import_flow_all_fields(opp: OpenPeerPowerType) -> None:
+async def test_import_flow_all_fields(opp: OpenPeerPower) -> None:
     """Test import config flow with all fields."""
-    with patch(PATCH_CONFIGURATION) as mock_config_class, patch(
-        PATCH_CONNECTION
-    ) as mock_connection_class, patch(PATCH_ASYNC_SETUP, return_value=True), patch(
+    with patch(PATCH_CONNECTION, return_value=MOCK_CONFIG_RESPONSE), patch(
+        PATCH_ASYNC_SETUP, return_value=True
+    ), patch(
         PATCH_ASYNC_SETUP_ENTRY,
         return_value=True,
     ):
-        isy_conn = mock_connection_class.return_value
-        isy_conn.get_config.return_value = None
-        mock_config_class.return_value = MOCK_VALIDATED_RESPONSE
         result = await opp.config_entries.flow.async_init(
             DOMAIN,
             context={"source": SOURCE_IMPORT},
@@ -257,7 +296,7 @@ async def test_import_flow_all_fields(opp: OpenPeerPowerType) -> None:
     assert result["data"][CONF_TLS_VER] == MOCK_TLS_VERSION
 
 
-async def test_form_ssdp_already_configured(opp: OpenPeerPowerType) -> None:
+async def test_form_ssdp_already_configured(opp: OpenPeerPower) -> None:
     """Test ssdp abort when the serial number is already configured."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -279,7 +318,7 @@ async def test_form_ssdp_already_configured(opp: OpenPeerPowerType) -> None:
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
 
-async def test_form_ssdp(opp: OpenPeerPowerType):
+async def test_form_ssdp(opp: OpenPeerPower):
     """Test we can setup from ssdp."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -296,17 +335,49 @@ async def test_form_ssdp(opp: OpenPeerPowerType):
     assert result["step_id"] == "user"
     assert result["errors"] == {}
 
-    with patch(PATCH_CONFIGURATION) as mock_config_class, patch(
-        PATCH_CONNECTION
-    ) as mock_connection_class, patch(
+    with patch(PATCH_CONNECTION, return_value=MOCK_CONFIG_RESPONSE), patch(
         PATCH_ASYNC_SETUP, return_value=True
     ) as mock_setup, patch(
         PATCH_ASYNC_SETUP_ENTRY,
         return_value=True,
     ) as mock_setup_entry:
-        isy_conn = mock_connection_class.return_value
-        isy_conn.get_config.return_value = None
-        mock_config_class.return_value = MOCK_VALIDATED_RESPONSE
+        result2 = await opp.config_entries.flow.async_configure(
+            result["flow_id"],
+            MOCK_USER_INPUT,
+        )
+        await opp.async_block_till_done()
+
+    assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
+    assert result2["title"] == f"{MOCK_DEVICE_NAME} ({MOCK_HOSTNAME})"
+    assert result2["result"].unique_id == MOCK_UUID
+    assert result2["data"] == MOCK_USER_INPUT
+    assert len(mock_setup.mock_calls) == 1
+    assert len(mock_setup_entry.mock_calls) == 1
+
+
+async def test_form_dhcp(opp: OpenPeerPower):
+    """Test we can setup from dhcp."""
+    await setup.async_setup_component(opp, "persistent_notification", {})
+
+    result = await opp.config_entries.flow.async_init(
+        DOMAIN,
+        context={"source": SOURCE_DHCP},
+        data={
+            dhcp.IP_ADDRESS: "1.2.3.4",
+            dhcp.HOSTNAME: "isy994-ems",
+            dhcp.MAC_ADDRESS: MOCK_MAC,
+        },
+    )
+    assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
+    assert result["step_id"] == "user"
+    assert result["errors"] == {}
+
+    with patch(PATCH_CONNECTION, return_value=MOCK_CONFIG_RESPONSE), patch(
+        PATCH_ASYNC_SETUP, return_value=True
+    ) as mock_setup, patch(
+        PATCH_ASYNC_SETUP_ENTRY,
+        return_value=True,
+    ) as mock_setup_entry:
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             MOCK_USER_INPUT,

@@ -16,7 +16,7 @@ from tests.common import async_mock_service
 
 
 async def test_lock_unlock(opp, hk_driver, events):
-    """Test if accessory and OP are updated accordingly."""
+    """Test if accessory and OPP are updated accordingly."""
     code = "1234"
     config = {ATTR_CODE: code}
     entity_id = "lock.kitchen_door"

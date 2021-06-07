@@ -88,21 +88,17 @@ async def test_default_setup(opp, monkeypatch):
 
     assert opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
 
-    # test changing state from OP propagates to RFLink
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
-        )
+    # test changing state from OPP propagates to RFLink
+    await opp.services.async_call(
+        DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
     )
     await opp.async_block_till_done()
     assert opp.states.get(f"{DOMAIN}.test").state == STATE_CLOSED
     assert protocol.send_command_ack.call_args_list[0][0][0] == "protocol_0_0"
     assert protocol.send_command_ack.call_args_list[0][0][1] == "DOWN"
 
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
-        )
+    await opp.services.async_call(
+        DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
     )
     await opp.async_block_till_done()
     assert opp.states.get(f"{DOMAIN}.test").state == STATE_OPEN
@@ -110,7 +106,7 @@ async def test_default_setup(opp, monkeypatch):
 
 
 async def test_firing_bus_event(opp, monkeypatch):
-    """Incoming RFLink command events should be put on the OP event bus."""
+    """Incoming RFLink command events should be put on the OPP event bus."""
     config = {
         "rflink": {"port": "/dev/ttyABC0"},
         DOMAIN: {
@@ -162,10 +158,8 @@ async def test_signal_repetitions(opp, monkeypatch):
     _, _, protocol, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
     # test if signal repetition is performed according to configuration
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
-        )
+    await opp.services.async_call(
+        DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
     )
 
     # wait for commands and repetitions to finish
@@ -174,10 +168,8 @@ async def test_signal_repetitions(opp, monkeypatch):
     assert protocol.send_command_ack.call_count == 2
 
     # test if default apply to configured devices
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test1"}
-        )
+    await opp.services.async_call(
+        DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test1"}
     )
 
     # wait for commands and repetitions to finish
@@ -202,15 +194,11 @@ async def test_signal_repetitions_alternation(opp, monkeypatch):
     # setup mocking rflink module
     _, _, protocol, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
-        )
+    await opp.services.async_call(
+        DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
     )
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test1"}
-        )
+    await opp.services.async_call(
+        DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test1"}
     )
 
     await opp.async_block_till_done()
@@ -234,16 +222,12 @@ async def test_signal_repetitions_cancelling(opp, monkeypatch):
     # setup mocking rflink module
     _, _, protocol, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
-        )
+    await opp.services.async_call(
+        DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
     )
 
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
-        )
+    await opp.services.async_call(
+        DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.test"}
     )
 
     await opp.async_block_till_done()
@@ -421,7 +405,9 @@ async def test_inverted_cover(opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    event_callback, _, protocol, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
+    event_callback, _, protocol, _ = await mock_rflink(
+        opp, config, DOMAIN, monkeypatch
+    )
 
     # test default state of cover loaded from config
     standard_cover = opp.states.get(f"{DOMAIN}.nonkaku_type_standard")
@@ -601,15 +587,13 @@ async def test_inverted_cover(opp, monkeypatch):
     inverted_cover = opp.states.get(f"{DOMAIN}.newkaku_type_inverted")
     assert inverted_cover.state == STATE_OPEN
 
-    # Sending the close command from OP should result
+    # Sending the close command from OPP should result
     # in an 'DOWN' command sent to a non-newkaku device
     # that has its type set to 'standard'.
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN,
-            SERVICE_CLOSE_COVER,
-            {ATTR_ENTITY_ID: f"{DOMAIN}.nonkaku_type_standard"},
-        )
+    await opp.services.async_call(
+        DOMAIN,
+        SERVICE_CLOSE_COVER,
+        {ATTR_ENTITY_ID: f"{DOMAIN}.nonkaku_type_standard"},
     )
 
     await opp.async_block_till_done()
@@ -618,15 +602,13 @@ async def test_inverted_cover(opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[0][0][0] == "nonkaku_device_1"
     assert protocol.send_command_ack.call_args_list[0][0][1] == "DOWN"
 
-    # Sending the open command from OP should result
+    # Sending the open command from OPP should result
     # in an 'UP' command sent to a non-newkaku device
     # that has its type set to 'standard'.
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN,
-            SERVICE_OPEN_COVER,
-            {ATTR_ENTITY_ID: f"{DOMAIN}.nonkaku_type_standard"},
-        )
+    await opp.services.async_call(
+        DOMAIN,
+        SERVICE_OPEN_COVER,
+        {ATTR_ENTITY_ID: f"{DOMAIN}.nonkaku_type_standard"},
     )
 
     await opp.async_block_till_done()
@@ -635,13 +617,11 @@ async def test_inverted_cover(opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[1][0][0] == "nonkaku_device_1"
     assert protocol.send_command_ack.call_args_list[1][0][1] == "UP"
 
-    # Sending the close command from OP should result
+    # Sending the close command from OPP should result
     # in an 'DOWN' command sent to a non-newkaku device
     # that has its type not specified.
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.nonkaku_type_none"}
-        )
+    await opp.services.async_call(
+        DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.nonkaku_type_none"}
     )
 
     await opp.async_block_till_done()
@@ -650,13 +630,11 @@ async def test_inverted_cover(opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[2][0][0] == "nonkaku_device_2"
     assert protocol.send_command_ack.call_args_list[2][0][1] == "DOWN"
 
-    # Sending the open command from OP should result
+    # Sending the open command from OPP should result
     # in an 'UP' command sent to a non-newkaku device
     # that has its type not specified.
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.nonkaku_type_none"}
-        )
+    await opp.services.async_call(
+        DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.nonkaku_type_none"}
     )
 
     await opp.async_block_till_done()
@@ -665,15 +643,13 @@ async def test_inverted_cover(opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[3][0][0] == "nonkaku_device_2"
     assert protocol.send_command_ack.call_args_list[3][0][1] == "UP"
 
-    # Sending the close command from OP should result
+    # Sending the close command from OPP should result
     # in an 'UP' command sent to a non-newkaku device
     # that has its type set to 'inverted'.
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN,
-            SERVICE_CLOSE_COVER,
-            {ATTR_ENTITY_ID: f"{DOMAIN}.nonkaku_type_inverted"},
-        )
+    await opp.services.async_call(
+        DOMAIN,
+        SERVICE_CLOSE_COVER,
+        {ATTR_ENTITY_ID: f"{DOMAIN}.nonkaku_type_inverted"},
     )
 
     await opp.async_block_till_done()
@@ -682,15 +658,13 @@ async def test_inverted_cover(opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[4][0][0] == "nonkaku_device_3"
     assert protocol.send_command_ack.call_args_list[4][0][1] == "UP"
 
-    # Sending the open command from OP should result
+    # Sending the open command from OPP should result
     # in an 'DOWN' command sent to a non-newkaku device
     # that has its type set to 'inverted'.
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN,
-            SERVICE_OPEN_COVER,
-            {ATTR_ENTITY_ID: f"{DOMAIN}.nonkaku_type_inverted"},
-        )
+    await opp.services.async_call(
+        DOMAIN,
+        SERVICE_OPEN_COVER,
+        {ATTR_ENTITY_ID: f"{DOMAIN}.nonkaku_type_inverted"},
     )
 
     await opp.async_block_till_done()
@@ -699,15 +673,13 @@ async def test_inverted_cover(opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[5][0][0] == "nonkaku_device_3"
     assert protocol.send_command_ack.call_args_list[5][0][1] == "DOWN"
 
-    # Sending the close command from OP should result
+    # Sending the close command from OPP should result
     # in an 'DOWN' command sent to a newkaku device
     # that has its type set to 'standard'.
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN,
-            SERVICE_CLOSE_COVER,
-            {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_type_standard"},
-        )
+    await opp.services.async_call(
+        DOMAIN,
+        SERVICE_CLOSE_COVER,
+        {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_type_standard"},
     )
 
     await opp.async_block_till_done()
@@ -716,15 +688,13 @@ async def test_inverted_cover(opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[6][0][0] == "newkaku_device_4"
     assert protocol.send_command_ack.call_args_list[6][0][1] == "DOWN"
 
-    # Sending the open command from OP should result
+    # Sending the open command from OPP should result
     # in an 'UP' command sent to a newkaku device
     # that has its type set to 'standard'.
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN,
-            SERVICE_OPEN_COVER,
-            {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_type_standard"},
-        )
+    await opp.services.async_call(
+        DOMAIN,
+        SERVICE_OPEN_COVER,
+        {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_type_standard"},
     )
 
     await opp.async_block_till_done()
@@ -733,13 +703,11 @@ async def test_inverted_cover(opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[7][0][0] == "newkaku_device_4"
     assert protocol.send_command_ack.call_args_list[7][0][1] == "UP"
 
-    # Sending the close command from OP should result
+    # Sending the close command from OPP should result
     # in an 'UP' command sent to a newkaku device
     # that has its type not specified.
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_type_none"}
-        )
+    await opp.services.async_call(
+        DOMAIN, SERVICE_CLOSE_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_type_none"}
     )
 
     await opp.async_block_till_done()
@@ -748,13 +716,11 @@ async def test_inverted_cover(opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[8][0][0] == "newkaku_device_5"
     assert protocol.send_command_ack.call_args_list[8][0][1] == "UP"
 
-    # Sending the open command from OP should result
+    # Sending the open command from OPP should result
     # in an 'DOWN' command sent to a newkaku device
     # that has its type not specified.
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_type_none"}
-        )
+    await opp.services.async_call(
+        DOMAIN, SERVICE_OPEN_COVER, {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_type_none"}
     )
 
     await opp.async_block_till_done()
@@ -763,15 +729,13 @@ async def test_inverted_cover(opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[9][0][0] == "newkaku_device_5"
     assert protocol.send_command_ack.call_args_list[9][0][1] == "DOWN"
 
-    # Sending the close command from OP should result
+    # Sending the close command from OPP should result
     # in an 'UP' command sent to a newkaku device
     # that has its type set to 'inverted'.
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN,
-            SERVICE_CLOSE_COVER,
-            {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_type_inverted"},
-        )
+    await opp.services.async_call(
+        DOMAIN,
+        SERVICE_CLOSE_COVER,
+        {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_type_inverted"},
     )
 
     await opp.async_block_till_done()
@@ -780,15 +744,13 @@ async def test_inverted_cover(opp, monkeypatch):
     assert protocol.send_command_ack.call_args_list[10][0][0] == "newkaku_device_6"
     assert protocol.send_command_ack.call_args_list[10][0][1] == "UP"
 
-    # Sending the open command from OP should result
+    # Sending the open command from OPP should result
     # in an 'DOWN' command sent to a newkaku device
     # that has its type set to 'inverted'.
-    opp.async_create_task(
-        opp.services.async_call(
-            DOMAIN,
-            SERVICE_OPEN_COVER,
-            {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_type_inverted"},
-        )
+    await opp.services.async_call(
+        DOMAIN,
+        SERVICE_OPEN_COVER,
+        {ATTR_ENTITY_ID: f"{DOMAIN}.newkaku_type_inverted"},
     )
 
     await opp.async_block_till_done()

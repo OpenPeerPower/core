@@ -29,7 +29,14 @@ def mock_all(aioclient_mock, request):
         "http://127.0.0.1/info",
         json={
             "result": "ok",
-            "data": {"supervisor": "222", "openpeerpower": "0.110.0", "oppos": None},
+            "data": {"supervisor": "222", "openpeerpower": "0.110.0", "opp.s": None},
+        },
+    )
+    aioclient_mock.get(
+        "http://127.0.0.1/store",
+        json={
+            "result": "ok",
+            "data": {"addons": [], "repositories": []},
         },
     )
     aioclient_mock.get(
@@ -39,7 +46,7 @@ def mock_all(aioclient_mock, request):
             "data": {
                 "result": "ok",
                 "data": {
-                    "coppis": "vm",
+                    "copp.s": "vm",
                     "operating_system": "Debian GNU/Linux 10 (buster)",
                     "kernel": "4.19.0-6-amd64",
                 },
@@ -67,6 +74,7 @@ def mock_all(aioclient_mock, request):
                     "update_available": False,
                     "version": "1.0.0",
                     "version_latest": "1.0.0",
+                    "repository": "core",
                     "url": "https://github.com/openpeerpower/addons/test",
                 },
                 {
@@ -76,6 +84,7 @@ def mock_all(aioclient_mock, request):
                     "update_available": False,
                     "version": "1.0.0",
                     "version_latest": "1.0.0",
+                    "repository": "core",
                     "url": "https://github.com",
                 },
             ],
@@ -92,7 +101,7 @@ async def test_setup_api_ping(opp, aioclient_mock):
         result = await async_setup_component(opp, "oppio", {})
         assert result
 
-    assert aioclient_mock.call_count == 9
+    assert aioclient_mock.call_count == 10
     assert opp.components.oppio.get_core_info()["version_latest"] == "1.0.0"
     assert opp.components.oppio.is_oppio()
 
@@ -108,7 +117,7 @@ async def test_setup_api_panel(opp, aioclient_mock):
 
     assert panels.get("oppio").to_response() == {
         "component_name": "custom",
-        "icon": "opp:open-peer-power",
+        "icon": "opp.open-peer-power",
         "title": "Supervisor",
         "url_path": "oppio",
         "require_admin": True,
@@ -131,7 +140,7 @@ async def test_setup_api_push_api_data(opp, aioclient_mock):
         )
         assert result
 
-    assert aioclient_mock.call_count == 9
+    assert aioclient_mock.call_count == 10
     assert not aioclient_mock.mock_calls[1][2]["ssl"]
     assert aioclient_mock.mock_calls[1][2]["port"] == 9999
     assert aioclient_mock.mock_calls[1][2]["watchdog"]
@@ -147,7 +156,7 @@ async def test_setup_api_push_api_data_server_host(opp, aioclient_mock):
         )
         assert result
 
-    assert aioclient_mock.call_count == 9
+    assert aioclient_mock.call_count == 10
     assert not aioclient_mock.mock_calls[1][2]["ssl"]
     assert aioclient_mock.mock_calls[1][2]["port"] == 9999
     assert not aioclient_mock.mock_calls[1][2]["watchdog"]
@@ -159,7 +168,7 @@ async def test_setup_api_push_api_data_default(opp, aioclient_mock, opp_storage)
         result = await async_setup_component(opp, "oppio", {"http": {}, "oppio": {}})
         assert result
 
-    assert aioclient_mock.call_count == 9
+    assert aioclient_mock.call_count == 10
     assert not aioclient_mock.mock_calls[1][2]["ssl"]
     assert aioclient_mock.mock_calls[1][2]["port"] == 8123
     refresh_token = aioclient_mock.mock_calls[1][2]["refresh_token"]
@@ -206,7 +215,7 @@ async def test_setup_api_existing_oppio_user(opp, aioclient_mock, opp_storage):
         result = await async_setup_component(opp, "oppio", {"http": {}, "oppio": {}})
         assert result
 
-    assert aioclient_mock.call_count == 9
+    assert aioclient_mock.call_count == 10
     assert not aioclient_mock.mock_calls[1][2]["ssl"]
     assert aioclient_mock.mock_calls[1][2]["port"] == 8123
     assert aioclient_mock.mock_calls[1][2]["refresh_token"] == token.token
@@ -220,7 +229,7 @@ async def test_setup_core_push_timezone(opp, aioclient_mock):
         result = await async_setup_component(opp, "oppio", {"oppio": {}})
         assert result
 
-    assert aioclient_mock.call_count == 9
+    assert aioclient_mock.call_count == 10
     assert aioclient_mock.mock_calls[2][2]["timezone"] == "testzone"
 
     with patch("openpeerpower.util.dt.set_default_time_zone"):
@@ -237,8 +246,8 @@ async def test_setup_oppio_no_additional_data(opp, aioclient_mock):
         result = await async_setup_component(opp, "oppio", {"oppio": {}})
         assert result
 
-    assert aioclient_mock.call_count == 9
-    assert aioclient_mock.mock_calls[-1][3]["X-Oppio-Key"] == "123456"
+    assert aioclient_mock.call_count == 10
+    assert aioclient_mock.mock_calls[-1][3]["X-Hassio-Key"] == "123456"
 
 
 async def test_fail_setup_without_environ_var(opp):

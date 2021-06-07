@@ -1,7 +1,7 @@
 """Test config flow."""
 from unittest.mock import Mock, patch
 
-from openpeerpower.components.oppio.handler import OppioAPIError
+from openpeerpower.components.oppio.handler import HassioAPIError
 from openpeerpower.const import EVENT_OPENPEERPOWER_START
 from openpeerpower.setup import async_setup_component
 
@@ -59,7 +59,7 @@ async def test_oppio_discovery_startup(opp, aioclient_mock, oppio_client):
 
 
 async def test_oppio_discovery_startup_done(opp, aioclient_mock, oppio_client):
-    """Test startup and discovery with opp discovery."""
+    """Test startup and discovery with opp.discovery."""
     aioclient_mock.post(
         "http://127.0.0.1/supervisor/options",
         json={"result": "ok", "data": {}},
@@ -96,7 +96,7 @@ async def test_oppio_discovery_startup_done(opp, aioclient_mock, oppio_client):
         return_value={"result": "ok"},
     ), patch(
         "openpeerpower.components.oppio.OppIO.get_info",
-        Mock(side_effect=OppioAPIError()),
+        Mock(side_effect=HassioAPIError()),
     ), patch(
         "openpeerpower.components.mqtt.config_flow.FlowHandler.async_step_oppio",
         return_value={"type": "abort"},

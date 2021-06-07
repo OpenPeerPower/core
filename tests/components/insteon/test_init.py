@@ -23,7 +23,7 @@ from openpeerpower.const import (
     CONF_USERNAME,
     EVENT_OPENPEERPOWER_STOP,
 )
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.setup import async_setup_component
 
 from .const import (
@@ -54,7 +54,7 @@ async def mock_failed_connection(*args, **kwargs):
     raise ConnectionError("Connection failed")
 
 
-async def test_setup_entry(opp: OpenPeerPowerType):
+async def test_setup_entry(opp: OpenPeerPower):
     """Test setting up the entry."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_USER_INPUT_PLM)
     config_entry.add_to_opp(opp)
@@ -77,7 +77,7 @@ async def test_setup_entry(opp: OpenPeerPowerType):
         assert mock_close.called
 
 
-async def test_import_plm(opp: OpenPeerPowerType):
+async def test_import_plm(opp: OpenPeerPower):
     """Test setting up the entry from YAML to a PLM."""
     config = {}
     config[DOMAIN] = MOCK_IMPORT_CONFIG_PLM
@@ -102,7 +102,7 @@ async def test_import_plm(opp: OpenPeerPowerType):
     assert CONF_PORT not in data
 
 
-async def test_import_hub1(opp: OpenPeerPowerType):
+async def test_import_hub1(opp: OpenPeerPower):
     """Test setting up the entry from YAML to a hub v1."""
     config = {}
     config[DOMAIN] = MOCK_IMPORT_MINIMUM_HUB_V1
@@ -129,7 +129,7 @@ async def test_import_hub1(opp: OpenPeerPowerType):
     assert CONF_PASSWORD not in data
 
 
-async def test_import_hub2(opp: OpenPeerPowerType):
+async def test_import_hub2(opp: OpenPeerPower):
     """Test setting up the entry from YAML to a hub v2."""
     config = {}
     config[DOMAIN] = MOCK_IMPORT_MINIMUM_HUB_V2
@@ -156,7 +156,7 @@ async def test_import_hub2(opp: OpenPeerPowerType):
     assert data[CONF_PASSWORD] == MOCK_IMPORT_MINIMUM_HUB_V2[CONF_PASSWORD]
 
 
-async def test_import_options(opp: OpenPeerPowerType):
+async def test_import_options(opp: OpenPeerPower):
     """Test setting up the entry from YAML including options."""
     config = {}
     config[DOMAIN] = MOCK_IMPORT_FULL_CONFIG_PLM
@@ -189,7 +189,7 @@ async def test_import_options(opp: OpenPeerPowerType):
     assert options[CONF_X10][1] == MOCK_IMPORT_FULL_CONFIG_PLM[CONF_X10][1]
 
 
-async def test_import_failed_connection(opp: OpenPeerPowerType):
+async def test_import_failed_connection(opp: OpenPeerPower):
     """Test a failed connection in import does not create a config entry."""
     config = {}
     config[DOMAIN] = MOCK_IMPORT_CONFIG_PLM
@@ -208,7 +208,7 @@ async def test_import_failed_connection(opp: OpenPeerPowerType):
         assert not opp.config_entries.async_entries(DOMAIN)
 
 
-async def test_setup_entry_failed_connection(opp: OpenPeerPowerType, caplog):
+async def test_setup_entry_failed_connection(opp: OpenPeerPower, caplog):
     """Test setting up the entry with a failed connection."""
     config_entry = MockConfigEntry(domain=DOMAIN, data=MOCK_USER_INPUT_PLM)
     config_entry.add_to_opp(opp)

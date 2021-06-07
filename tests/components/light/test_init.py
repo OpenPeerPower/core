@@ -106,7 +106,7 @@ async def test_methods(opp):
     assert call.data[light.ATTR_TRANSITION] == "transition_val"
 
 
-async def test_services(opp, mock_light_profiles):
+async def test_services(opp, mock_light_profiles, enable_custom_integrations):
     """Test the provided services."""
     platform = getattr(opp.components, "test.light")
 
@@ -117,6 +117,16 @@ async def test_services(opp, mock_light_profiles):
     await opp.async_block_till_done()
 
     ent1, ent2, ent3 = platform.ENTITIES
+    ent1.supported_color_modes = [light.COLOR_MODE_HS]
+    ent3.supported_color_modes = [light.COLOR_MODE_HS]
+    ent1.supported_features = light.SUPPORT_TRANSITION
+    ent2.supported_features = (
+        light.SUPPORT_COLOR
+        | light.SUPPORT_EFFECT
+        | light.SUPPORT_TRANSITION
+        | light.SUPPORT_WHITE_VALUE
+    )
+    ent3.supported_features = light.SUPPORT_FLASH | light.SUPPORT_TRANSITION
 
     # Test init
     assert light.is_on(opp, ent1.entity_id)
@@ -205,6 +215,7 @@ async def test_services(opp, mock_light_profiles):
         SERVICE_TURN_ON,
         {
             ATTR_ENTITY_ID: ent2.entity_id,
+            light.ATTR_EFFECT: "fun_effect",
             light.ATTR_RGB_COLOR: (255, 255, 255),
             light.ATTR_WHITE_VALUE: 255,
         },
@@ -215,6 +226,7 @@ async def test_services(opp, mock_light_profiles):
         SERVICE_TURN_ON,
         {
             ATTR_ENTITY_ID: ent3.entity_id,
+            light.ATTR_FLASH: "short",
             light.ATTR_XY_COLOR: (0.4, 0.6),
         },
         blocking=True,
@@ -228,10 +240,14 @@ async def test_services(opp, mock_light_profiles):
     }
 
     _, data = ent2.last_call("turn_on")
-    assert data == {light.ATTR_HS_COLOR: (0, 0), light.ATTR_WHITE_VALUE: 255}
+    assert data == {
+        light.ATTR_EFFECT: "fun_effect",
+        light.ATTR_HS_COLOR: (0, 0),
+        light.ATTR_WHITE_VALUE: 255,
+    }
 
     _, data = ent3.last_call("turn_on")
-    assert data == {light.ATTR_HS_COLOR: (71.059, 100)}
+    assert data == {light.ATTR_FLASH: "short", light.ATTR_HS_COLOR: (71.059, 100)}
 
     # Ensure attributes are filtered when light is turned off
     await opp.services.async_call(
@@ -491,7 +507,12 @@ async def test_services(opp, mock_light_profiles):
     ),
 )
 async def test_light_profiles(
-    opp, mock_light_profiles, profile_name, expected_data, last_call
+    opp,
+    mock_light_profiles,
+    profile_name,
+    expected_data,
+    last_call,
+    enable_custom_integrations,
 ):
     """Test light profiles."""
     platform = getattr(opp.components, "test.light")
@@ -516,6 +537,8 @@ async def test_light_profiles(
     await opp.async_block_till_done()
 
     ent1, _, _ = platform.ENTITIES
+    ent1.supported_color_modes = [light.COLOR_MODE_HS]
+    ent1.supported_features = light.SUPPORT_TRANSITION
 
     await opp.services.async_call(
         light.DOMAIN,
@@ -535,7 +558,9 @@ async def test_light_profiles(
     assert data == expected_data
 
 
-async def test_default_profiles_group(opp, mock_light_profiles):
+async def test_default_profiles_group(
+    opp, mock_light_profiles, enable_custom_integrations
+):
     """Test default turn-on light profile for all lights."""
     platform = getattr(opp.components, "test.light")
     platform.init()
@@ -549,6 +574,8 @@ async def test_default_profiles_group(opp, mock_light_profiles):
     mock_light_profiles[profile.name] = profile
 
     ent, _, _ = platform.ENTITIES
+    ent.supported_color_modes = [light.COLOR_MODE_HS]
+    ent.supported_features = light.SUPPORT_TRANSITION
     await opp.services.async_call(
         light.DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ent.entity_id}, blocking=True
     )
@@ -562,10 +589,15 @@ async def test_default_profiles_group(opp, mock_light_profiles):
 
 
 @pytest.mark.parametrize(
-    "extra_call_params, expected_params",
+    "extra_call_params, expected_params_state_was_off, expected_params_state_was_on",
     (
         (
             {},
+            {
+                light.ATTR_HS_COLOR: (50.353, 100),
+                light.ATTR_BRIGHTNESS: 100,
+                light.ATTR_TRANSITION: 3,
+            },
             {
                 light.ATTR_HS_COLOR: (50.353, 100),
                 light.ATTR_BRIGHTNESS: 100,
@@ -579,6 +611,10 @@ async def test_default_profiles_group(opp, mock_light_profiles):
                 light.ATTR_BRIGHTNESS: 22,
                 light.ATTR_TRANSITION: 3,
             },
+            {
+                light.ATTR_BRIGHTNESS: 22,
+                light.ATTR_TRANSITION: 3,
+            },
         ),
         (
             {light.ATTR_TRANSITION: 22},
@@ -587,10 +623,18 @@ async def test_default_profiles_group(opp, mock_light_profiles):
                 light.ATTR_BRIGHTNESS: 100,
                 light.ATTR_TRANSITION: 22,
             },
+            {
+                light.ATTR_TRANSITION: 22,
+            },
         ),
         (
             {
                 light.ATTR_XY_COLOR: [0.4448, 0.4066],
+                light.ATTR_BRIGHTNESS: 11,
+                light.ATTR_TRANSITION: 1,
+            },
+            {
+                light.ATTR_HS_COLOR: (38.88, 49.02),
                 light.ATTR_BRIGHTNESS: 11,
                 light.ATTR_TRANSITION: 1,
             },
@@ -607,11 +651,20 @@ async def test_default_profiles_group(opp, mock_light_profiles):
                 light.ATTR_BRIGHTNESS: 11,
                 light.ATTR_TRANSITION: 1,
             },
+            {
+                light.ATTR_BRIGHTNESS: 11,
+                light.ATTR_TRANSITION: 1,
+            },
         ),
     ),
 )
 async def test_default_profiles_light(
-    opp, mock_light_profiles, extra_call_params, expected_params
+    opp,
+    mock_light_profiles,
+    extra_call_params,
+    enable_custom_integrations,
+    expected_params_state_was_off,
+    expected_params_state_was_on,
 ):
     """Test default turn-on light profile for a specific light."""
     platform = getattr(opp.components, "test.light")
@@ -628,6 +681,8 @@ async def test_default_profiles_light(
     mock_light_profiles[profile.name] = profile
 
     dev = next(filter(lambda x: x.entity_id == "light.ceiling_2", platform.ENTITIES))
+    dev.supported_color_modes = [light.COLOR_MODE_HS]
+    dev.supported_features = light.SUPPORT_TRANSITION
     await opp.services.async_call(
         light.DOMAIN,
         SERVICE_TURN_ON,
@@ -639,14 +694,26 @@ async def test_default_profiles_light(
     )
 
     _, data = dev.last_call("turn_on")
-    assert data == expected_params
+    assert data == expected_params_state_was_off
 
     await opp.services.async_call(
         light.DOMAIN,
         SERVICE_TURN_ON,
         {
             ATTR_ENTITY_ID: dev.entity_id,
-            light.ATTR_BRIGHTNESS: 0,
+            **extra_call_params,
+        },
+        blocking=True,
+    )
+
+    _, data = dev.last_call("turn_on")
+    assert data == expected_params_state_was_on
+
+    await opp.services.async_call(
+        light.DOMAIN,
+        SERVICE_TURN_OFF,
+        {
+            ATTR_ENTITY_ID: dev.entity_id,
         },
         blocking=True,
     )
@@ -657,7 +724,7 @@ async def test_default_profiles_light(
     }
 
 
-async def test_light_context(opp, opp_admin_user):
+async def test_light_context(opp, opp_admin_user, enable_custom_integrations):
     """Test that light context works."""
     platform = getattr(opp.components, "test.light")
     platform.init()
@@ -681,7 +748,7 @@ async def test_light_context(opp, opp_admin_user):
     assert state2.context.user_id == opp_admin_user.id
 
 
-async def test_light_turn_on_auth(opp, opp_admin_user):
+async def test_light_turn_on_auth(opp, opp_admin_user, enable_custom_integrations):
     """Test that light context works."""
     platform = getattr(opp.components, "test.light")
     platform.init()
@@ -703,42 +770,69 @@ async def test_light_turn_on_auth(opp, opp_admin_user):
         )
 
 
-async def test_light_brightness_step(opp):
+async def test_light_brightness_step(opp, enable_custom_integrations):
     """Test that light context works."""
     platform = getattr(opp.components, "test.light")
-    platform.init()
-    entity = platform.ENTITIES[0]
-    entity.supported_features = light.SUPPORT_BRIGHTNESS
-    entity.brightness = 100
+    platform.init(empty=True)
+    platform.ENTITIES.append(platform.MockLight("Test_0", STATE_ON))
+    platform.ENTITIES.append(platform.MockLight("Test_1", STATE_ON))
+    entity0 = platform.ENTITIES[0]
+    entity0.supported_features = light.SUPPORT_BRIGHTNESS
+    entity0.brightness = 100
+    entity1 = platform.ENTITIES[1]
+    entity1.supported_features = light.SUPPORT_BRIGHTNESS
+    entity1.brightness = 50
     assert await async_setup_component(opp, "light", {"light": {"platform": "test"}})
     await opp.async_block_till_done()
 
-    state = opp.states.get(entity.entity_id)
+    state = opp.states.get(entity0.entity_id)
     assert state is not None
     assert state.attributes["brightness"] == 100
+    state = opp.states.get(entity1.entity_id)
+    assert state is not None
+    assert state.attributes["brightness"] == 50
 
     await opp.services.async_call(
         "light",
         "turn_on",
-        {"entity_id": entity.entity_id, "brightness_step": -10},
+        {"entity_id": [entity0.entity_id, entity1.entity_id], "brightness_step": -10},
         blocking=True,
     )
 
-    _, data = entity.last_call("turn_on")
-    assert data["brightness"] == 90, data
+    _, data = entity0.last_call("turn_on")
+    assert data["brightness"] == 90  # 100 - 10
+    _, data = entity1.last_call("turn_on")
+    assert data["brightness"] == 40  # 50 - 10
 
     await opp.services.async_call(
         "light",
         "turn_on",
-        {"entity_id": entity.entity_id, "brightness_step_pct": 10},
+        {
+            "entity_id": [entity0.entity_id, entity1.entity_id],
+            "brightness_step_pct": 10,
+        },
         blocking=True,
     )
 
-    _, data = entity.last_call("turn_on")
-    assert data["brightness"] == 126, data
+    _, data = entity0.last_call("turn_on")
+    assert data["brightness"] == 116  # 90 + (255 * 0.10)
+    _, data = entity1.last_call("turn_on")
+    assert data["brightness"] == 66  # 40 + (255 * 0.10)
+
+    await opp.services.async_call(
+        "light",
+        "turn_on",
+        {
+            "entity_id": entity0.entity_id,
+            "brightness_step": -126,
+        },
+        blocking=True,
+    )
+
+    assert entity0.state == "off"  # 126 - 126; brightness is 0, light should turn off
 
 
-async def test_light_brightness_pct_conversion(opp):
+async def test_light_brightness_pct_conversion(opp, enable_custom_integrations):
     """Test that light brightness percent conversion."""
     platform = getattr(opp.components, "test.light")
     platform.init()
@@ -760,7 +854,7 @@ async def test_light_brightness_pct_conversion(opp):
     )
 
     _, data = entity.last_call("turn_on")
-    assert data["brightness"] == 3, data
+    assert data["brightness"] == 3
 
     await opp.services.async_call(
         "light",
@@ -770,7 +864,7 @@ async def test_light_brightness_pct_conversion(opp):
     )
 
     _, data = entity.last_call("turn_on")
-    assert data["brightness"] == 5, data
+    assert data["brightness"] == 5
 
     await opp.services.async_call(
         "light",
@@ -780,7 +874,7 @@ async def test_light_brightness_pct_conversion(opp):
     )
 
     _, data = entity.last_call("turn_on")
-    assert data["brightness"] == 128, data
+    assert data["brightness"] == 128
 
     await opp.services.async_call(
         "light",
@@ -790,7 +884,7 @@ async def test_light_brightness_pct_conversion(opp):
     )
 
     _, data = entity.last_call("turn_on")
-    assert data["brightness"] == 252, data
+    assert data["brightness"] == 252
 
     await opp.services.async_call(
         "light",
@@ -800,7 +894,7 @@ async def test_light_brightness_pct_conversion(opp):
     )
 
     _, data = entity.last_call("turn_on")
-    assert data["brightness"] == 255, data
+    assert data["brightness"] == 255
 
 
 def test_deprecated_base_class(caplog):
@@ -900,3 +994,810 @@ invalid_no_brightness_no_color_no_transition,,,
         "invalid_no_brightness_no_color_no_transition",
     ):
         assert invalid_profile_name not in profiles.data
+
+
+@pytest.mark.parametrize("light_state", (STATE_ON, STATE_OFF))
+async def test_light_backwards_compatibility_supported_color_modes(
+    opp, light_state, enable_custom_integrations
+):
+    """Test supported_color_modes if not implemented by the entity."""
+    platform = getattr(opp.components, "test.light")
+    platform.init(empty=True)
+
+    platform.ENTITIES.append(platform.MockLight("Test_0", light_state))
+    platform.ENTITIES.append(platform.MockLight("Test_1", light_state))
+    platform.ENTITIES.append(platform.MockLight("Test_2", light_state))
+    platform.ENTITIES.append(platform.MockLight("Test_3", light_state))
+    platform.ENTITIES.append(platform.MockLight("Test_4", light_state))
+    platform.ENTITIES.append(platform.MockLight("Test_5", light_state))
+    platform.ENTITIES.append(platform.MockLight("Test_6", light_state))
+
+    entity0 = platform.ENTITIES[0]
+
+    entity1 = platform.ENTITIES[1]
+    entity1.supported_features = light.SUPPORT_BRIGHTNESS
+
+    entity2 = platform.ENTITIES[2]
+    entity2.supported_features = light.SUPPORT_BRIGHTNESS | light.SUPPORT_COLOR_TEMP
+
+    entity3 = platform.ENTITIES[3]
+    entity3.supported_features = light.SUPPORT_BRIGHTNESS | light.SUPPORT_COLOR
+
+    entity4 = platform.ENTITIES[4]
+    entity4.supported_features = (
+        light.SUPPORT_BRIGHTNESS | light.SUPPORT_COLOR | light.SUPPORT_WHITE_VALUE
+    )
+
+    entity5 = platform.ENTITIES[5]
+    entity5.supported_features = (
+        light.SUPPORT_BRIGHTNESS | light.SUPPORT_COLOR | light.SUPPORT_COLOR_TEMP
+    )
+
+    entity6 = platform.ENTITIES[6]
+    entity6.supported_features = (
+        light.SUPPORT_BRIGHTNESS
+        | light.SUPPORT_COLOR
+        | light.SUPPORT_COLOR_TEMP
+        | light.SUPPORT_WHITE_VALUE
+    )
+
+    assert await async_setup_component(opp, "light", {"light": {"platform": "test"}})
+    await opp.async_block_till_done()
+
+    state = opp.states.get(entity0.entity_id)
+    assert state.attributes["supported_color_modes"] == [light.COLOR_MODE_ONOFF]
+    if light_state == STATE_OFF:
+        assert "color_mode" not in state.attributes
+    else:
+        assert state.attributes["color_mode"] == light.COLOR_MODE_ONOFF
+
+    state = opp.states.get(entity1.entity_id)
+    assert state.attributes["supported_color_modes"] == [light.COLOR_MODE_BRIGHTNESS]
+    if light_state == STATE_OFF:
+        assert "color_mode" not in state.attributes
+    else:
+        assert state.attributes["color_mode"] == light.COLOR_MODE_UNKNOWN
+
+    state = opp.states.get(entity2.entity_id)
+    assert state.attributes["supported_color_modes"] == [light.COLOR_MODE_COLOR_TEMP]
+    if light_state == STATE_OFF:
+        assert "color_mode" not in state.attributes
+    else:
+        assert state.attributes["color_mode"] == light.COLOR_MODE_UNKNOWN
+
+    state = opp.states.get(entity3.entity_id)
+    assert state.attributes["supported_color_modes"] == [light.COLOR_MODE_HS]
+    if light_state == STATE_OFF:
+        assert "color_mode" not in state.attributes
+    else:
+        assert state.attributes["color_mode"] == light.COLOR_MODE_UNKNOWN
+
+    state = opp.states.get(entity4.entity_id)
+    assert state.attributes["supported_color_modes"] == [
+        light.COLOR_MODE_HS,
+        light.COLOR_MODE_RGBW,
+    ]
+    if light_state == STATE_OFF:
+        assert "color_mode" not in state.attributes
+    else:
+        assert state.attributes["color_mode"] == light.COLOR_MODE_UNKNOWN
+
+    state = opp.states.get(entity5.entity_id)
+    assert state.attributes["supported_color_modes"] == [
+        light.COLOR_MODE_COLOR_TEMP,
+        light.COLOR_MODE_HS,
+    ]
+    if light_state == STATE_OFF:
+        assert "color_mode" not in state.attributes
+    else:
+        assert state.attributes["color_mode"] == light.COLOR_MODE_UNKNOWN
+
+    state = opp.states.get(entity6.entity_id)
+    assert state.attributes["supported_color_modes"] == [
+        light.COLOR_MODE_COLOR_TEMP,
+        light.COLOR_MODE_HS,
+        light.COLOR_MODE_RGBW,
+    ]
+    if light_state == STATE_OFF:
+        assert "color_mode" not in state.attributes
+    else:
+        assert state.attributes["color_mode"] == light.COLOR_MODE_UNKNOWN
+
+
+async def test_light_backwards_compatibility_color_mode(
+    opp, enable_custom_integrations
+):
+    """Test color_mode if not implemented by the entity."""
+    platform = getattr(opp.components, "test.light")
+    platform.init(empty=True)
+
+    platform.ENTITIES.append(platform.MockLight("Test_0", STATE_ON))
+    platform.ENTITIES.append(platform.MockLight("Test_1", STATE_ON))
+    platform.ENTITIES.append(platform.MockLight("Test_2", STATE_ON))
+    platform.ENTITIES.append(platform.MockLight("Test_3", STATE_ON))
+    platform.ENTITIES.append(platform.MockLight("Test_4", STATE_ON))
+    platform.ENTITIES.append(platform.MockLight("Test_5", STATE_ON))
+    platform.ENTITIES.append(platform.MockLight("Test_6", STATE_ON))
+
+    entity0 = platform.ENTITIES[0]
+
+    entity1 = platform.ENTITIES[1]
+    entity1.supported_features = light.SUPPORT_BRIGHTNESS
+    entity1.brightness = 100
+
+    entity2 = platform.ENTITIES[2]
+    entity2.supported_features = light.SUPPORT_BRIGHTNESS | light.SUPPORT_COLOR_TEMP
+    entity2.color_temp = 100
+
+    entity3 = platform.ENTITIES[3]
+    entity3.supported_features = light.SUPPORT_BRIGHTNESS | light.SUPPORT_COLOR
+    entity3.hs_color = (240, 100)
+
+    entity4 = platform.ENTITIES[4]
+    entity4.supported_features = (
+        light.SUPPORT_BRIGHTNESS | light.SUPPORT_COLOR | light.SUPPORT_WHITE_VALUE
+    )
+    entity4.hs_color = (240, 100)
+    entity4.white_value = 100
+
+    entity5 = platform.ENTITIES[5]
+    entity5.supported_features = (
+        light.SUPPORT_BRIGHTNESS | light.SUPPORT_COLOR | light.SUPPORT_COLOR_TEMP
+    )
+    entity5.hs_color = (240, 100)
+    entity5.color_temp = 100
+
+    assert await async_setup_component(opp, "light", {"light": {"platform": "test"}})
+    await opp.async_block_till_done()
+
+    state = opp.states.get(entity0.entity_id)
+    assert state.attributes["supported_color_modes"] == [light.COLOR_MODE_ONOFF]
+    assert state.attributes["color_mode"] == light.COLOR_MODE_ONOFF
+
+    state = opp.states.get(entity1.entity_id)
+    assert state.attributes["supported_color_modes"] == [light.COLOR_MODE_BRIGHTNESS]
+    assert state.attributes["color_mode"] == light.COLOR_MODE_BRIGHTNESS
+
+    state = opp.states.get(entity2.entity_id)
+    assert state.attributes["supported_color_modes"] == [light.COLOR_MODE_COLOR_TEMP]
+    assert state.attributes["color_mode"] == light.COLOR_MODE_COLOR_TEMP
+
+    state = opp.states.get(entity3.entity_id)
+    assert state.attributes["supported_color_modes"] == [light.COLOR_MODE_HS]
+    assert state.attributes["color_mode"] == light.COLOR_MODE_HS
+
+    state = opp.states.get(entity4.entity_id)
+    assert state.attributes["supported_color_modes"] == [
+        light.COLOR_MODE_HS,
+        light.COLOR_MODE_RGBW,
+    ]
+    assert state.attributes["color_mode"] == light.COLOR_MODE_RGBW
+
+    state = opp.states.get(entity5.entity_id)
+    assert state.attributes["supported_color_modes"] == [
+        light.COLOR_MODE_COLOR_TEMP,
+        light.COLOR_MODE_HS,
+    ]
+    # hs color prioritized over color_temp, light should report mode COLOR_MODE_HS
+    assert state.attributes["color_mode"] == light.COLOR_MODE_HS
+
+
+async def test_light_service_call_rgbw(opp, enable_custom_integrations):
+    """Test backwards compatibility for rgbw functionality in service calls."""
+    platform = getattr(opp.components, "test.light")
+    platform.init(empty=True)
+
+    platform.ENTITIES.append(platform.MockLight("Test_legacy_white_value", STATE_ON))
+    platform.ENTITIES.append(platform.MockLight("Test_rgbw", STATE_ON))
+
+    entity0 = platform.ENTITIES[0]
+    entity0.supported_features = (
+        light.SUPPORT_BRIGHTNESS | light.SUPPORT_COLOR | light.SUPPORT_WHITE_VALUE
+    )
+
+    entity1 = platform.ENTITIES[1]
+    entity1.supported_color_modes = {light.COLOR_MODE_RGBW}
+
+    assert await async_setup_component(opp, "light", {"light": {"platform": "test"}})
+    await opp.async_block_till_done()
+
+    state = opp.states.get(entity0.entity_id)
+    assert state.attributes["supported_color_modes"] == [
+        light.COLOR_MODE_HS,
+        light.COLOR_MODE_RGBW,
+    ]
+
+    state = opp.states.get(entity1.entity_id)
+    assert state.attributes["supported_color_modes"] == [light.COLOR_MODE_RGBW]
+
+    await opp.services.async_call(
+        "light",
+        "turn_on",
+        {
+            "entity_id": [entity0.entity_id, entity1.entity_id],
+            "brightness_pct": 100,
+            "rgbw_color": (10, 20, 30, 40),
+        },
+        blocking=True,
+    )
+
+    _, data = entity0.last_call("turn_on")
+    assert data == {"brightness": 255, "hs_color": (210.0, 66.667), "white_value": 40}
+    _, data = entity1.last_call("turn_on")
+    assert data == {"brightness": 255, "rgbw_color": (10, 20, 30, 40)}
+
+
+async def test_light_state_rgbw(opp, enable_custom_integrations):
+    """Test rgbw color conversion in state updates."""
+    platform = getattr(opp.components, "test.light")
+    platform.init(empty=True)
+
+    platform.ENTITIES.append(platform.MockLight("Test_legacy_white_value", STATE_ON))
+    platform.ENTITIES.append(platform.MockLight("Test_rgbw", STATE_ON))
+
+    entity0 = platform.ENTITIES[0]
+    legacy_supported_features = (
+        light.SUPPORT_BRIGHTNESS | light.SUPPORT_COLOR | light.SUPPORT_WHITE_VALUE
+    )
+    entity0.supported_features = legacy_supported_features
+    entity0.hs_color = (210.0, 66.667)
+    entity0.rgb_color = "Invalid"  # Should be ignored
+    entity0.rgbww_color = "Invalid"  # Should be ignored
+    entity0.white_value = 40
+    entity0.xy_color = "Invalid"  # Should be ignored
+
+    entity1 = platform.ENTITIES[1]
+    entity1.supported_color_modes = {light.COLOR_MODE_RGBW}
+    entity1.color_mode = light.COLOR_MODE_RGBW
+    entity1.hs_color = "Invalid"  # Should be ignored
+    entity1.rgb_color = "Invalid"  # Should be ignored
+    entity1.rgbw_color = (1, 2, 3, 4)
+    entity1.rgbww_color = "Invalid"  # Should be ignored
+    entity1.white_value = "Invalid"  # Should be ignored
+    entity1.xy_color = "Invalid"  # Should be ignored
+
+    assert await async_setup_component(opp, "light", {"light": {"platform": "test"}})
+    await opp.async_block_till_done()
+
+    state = opp.states.get(entity0.entity_id)
+    assert state.attributes == {
+        "color_mode": light.COLOR_MODE_RGBW,
+        "friendly_name": "Test_legacy_white_value",
+        "supported_color_modes": [light.COLOR_MODE_HS, light.COLOR_MODE_RGBW],
+        "supported_features": legacy_supported_features,
+        "hs_color": (210.0, 66.667),
+        "rgb_color": (84, 169, 255),
+        "rgbw_color": (84, 169, 255, 40),
+        "white_value": 40,
+        "xy_color": (0.173, 0.207),
+    }
+
+    state = opp.states.get(entity1.entity_id)
+    assert state.attributes == {
+        "color_mode": light.COLOR_MODE_RGBW,
+        "friendly_name": "Test_rgbw",
+        "supported_color_modes": [light.COLOR_MODE_RGBW],
+        "supported_features": 0,
+        "hs_color": (240.0, 25.0),
+        "rgb_color": (3, 3, 4),
+        "rgbw_color": (1, 2, 3, 4),
+        "xy_color": (0.301, 0.295),
+    }
+
+
+async def test_light_state_rgbww(opp, enable_custom_integrations):
+    """Test rgbww color conversion in state updates."""
+    platform = getattr(opp.components, "test.light")
+    platform.init(empty=True)
+
+    platform.ENTITIES.append(platform.MockLight("Test_rgbww", STATE_ON))
+
+    entity0 = platform.ENTITIES[0]
+    entity0.supported_color_modes = {light.COLOR_MODE_RGBWW}
+    entity0.color_mode = light.COLOR_MODE_RGBWW
+    entity0.hs_color = "Invalid"  # Should be ignored
+    entity0.rgb_color = "Invalid"  # Should be ignored
+    entity0.rgbw_color = "Invalid"  # Should be ignored
+    entity0.rgbww_color = (1, 2, 3, 4, 5)
+    entity0.white_value = "Invalid"  # Should be ignored
+    entity0.xy_color = "Invalid"  # Should be ignored
+
+    assert await async_setup_component(opp, "light", {"light": {"platform": "test"}})
+    await opp.async_block_till_done()
+
+    state = opp.states.get(entity0.entity_id)
+    assert dict(state.attributes) == {
+        "color_mode": light.COLOR_MODE_RGBWW,
+        "friendly_name": "Test_rgbww",
+        "supported_color_modes": [light.COLOR_MODE_RGBWW],
+        "supported_features": 0,
+        "hs_color": (60.0, 20.0),
+        "rgb_color": (5, 5, 4),
+        "rgbww_color": (1, 2, 3, 4, 5),
+        "xy_color": (0.339, 0.354),
+    }
+
+
+async def test_light_service_call_color_conversion(opp, enable_custom_integrations):
+    """Test color conversion in service calls."""
+    platform = getattr(opp.components, "test.light")
+    platform.init(empty=True)
+
+    platform.ENTITIES.append(platform.MockLight("Test_hs", STATE_ON))
+    platform.ENTITIES.append(platform.MockLight("Test_rgb", STATE_ON))
+    platform.ENTITIES.append(platform.MockLight("Test_xy", STATE_ON))
+    platform.ENTITIES.append(platform.MockLight("Test_all", STATE_ON))
+    platform.ENTITIES.append(platform.MockLight("Test_legacy", STATE_ON))
+    platform.ENTITIES.append(platform.MockLight("Test_rgbw", STATE_ON))
+    platform.ENTITIES.append(platform.MockLight("Test_rgbww", STATE_ON))
+
+    entity0 = platform.ENTITIES[0]
+    entity0.supported_color_modes = {light.COLOR_MODE_HS}
+
+    entity1 = platform.ENTITIES[1]
+    entity1.supported_color_modes = {light.COLOR_MODE_RGB}
+
+    entity2 = platform.ENTITIES[2]
+    entity2.supported_color_modes = {light.COLOR_MODE_XY}
+
+    entity3 = platform.ENTITIES[3]
+    entity3.supported_color_modes = {
+        light.COLOR_MODE_HS,
+        light.COLOR_MODE_RGB,
+        light.COLOR_MODE_XY,
+    }
+
+    entity4 = platform.ENTITIES[4]
+    entity4.supported_features = light.SUPPORT_COLOR
+
+    entity5 = platform.ENTITIES[5]
+    entity5.supported_color_modes = {light.COLOR_MODE_RGBW}
+
+    entity6 = platform.ENTITIES[6]
+    entity6.supported_color_modes = {light.COLOR_MODE_RGBWW}
+
+    assert await async_setup_component(opp, "light", {"light": {"platform": "test"}})
+    await opp.async_block_till_done()
+
+    state = opp.states.get(entity0.entity_id)
+    assert state.attributes["supported_color_modes"] == [light.COLOR_MODE_HS]
+
+    state = opp.states.get(entity1.entity_id)
+    assert state.attributes["supported_color_modes"] == [light.COLOR_MODE_RGB]
+
+    state = opp.states.get(entity2.entity_id)
+    assert state.attributes["supported_color_modes"] == [light.COLOR_MODE_XY]
+
+    state = opp.states.get(entity3.entity_id)
+    assert state.attributes["supported_color_modes"] == [
+        light.COLOR_MODE_HS,
+        light.COLOR_MODE_RGB,
+        light.COLOR_MODE_XY,
+    ]
+
+    state = opp.states.get(entity4.entity_id)
+    assert state.attributes["supported_color_modes"] == [light.COLOR_MODE_HS]
+
+    state = opp.states.get(entity5.entity_id)
+    assert state.attributes["supported_color_modes"] == [light.COLOR_MODE_RGBW]
+
+    state = opp.states.get(entity6.entity_id)
+    assert state.attributes["supported_color_modes"] == [light.COLOR_MODE_RGBWW]
+
+    await opp.services.async_call(
+        "light",
+        "turn_on",
+        {
+            "entity_id": [
+                entity0.entity_id,
+                entity1.entity_id,
+                entity2.entity_id,
+                entity3.entity_id,
+                entity4.entity_id,
+                entity5.entity_id,
+                entity6.entity_id,
+            ],
+            "brightness_pct": 100,
+            "hs_color": (240, 100),
+        },
+        blocking=True,
+    )
+    _, data = entity0.last_call("turn_on")
+    assert data == {"brightness": 255, "hs_color": (240.0, 100.0)}
+    _, data = entity1.last_call("turn_on")
+    assert data == {"brightness": 255, "rgb_color": (0, 0, 255)}
+    _, data = entity2.last_call("turn_on")
+    assert data == {"brightness": 255, "xy_color": (0.136, 0.04)}
+    _, data = entity3.last_call("turn_on")
+    assert data == {"brightness": 255, "hs_color": (240.0, 100.0)}
+    _, data = entity4.last_call("turn_on")
+    assert data == {"brightness": 255, "hs_color": (240.0, 100.0)}
+    _, data = entity5.last_call("turn_on")
+    assert data == {"brightness": 255, "rgbw_color": (0, 0, 255, 0)}
+    _, data = entity6.last_call("turn_on")
+    assert data == {"brightness": 255, "rgbww_color": (0, 0, 255, 0, 0)}
+
+    await opp.services.async_call(
+        "light",
+        "turn_on",
+        {
+            "entity_id": [
+                entity0.entity_id,
+                entity1.entity_id,
+                entity2.entity_id,
+                entity3.entity_id,
+                entity4.entity_id,
+                entity5.entity_id,
+                entity6.entity_id,
+            ],
+            "brightness_pct": 100,
+            "hs_color": (240, 0),
+        },
+        blocking=True,
+    )
+    _, data = entity0.last_call("turn_on")
+    assert data == {"brightness": 255, "hs_color": (240.0, 0.0)}
+    _, data = entity1.last_call("turn_on")
+    assert data == {"brightness": 255, "rgb_color": (255, 255, 255)}
+    _, data = entity2.last_call("turn_on")
+    assert data == {"brightness": 255, "xy_color": (0.323, 0.329)}
+    _, data = entity3.last_call("turn_on")
+    assert data == {"brightness": 255, "hs_color": (240.0, 0.0)}
+    _, data = entity4.last_call("turn_on")
+    assert data == {"brightness": 255, "hs_color": (240.0, 0.0)}
+    _, data = entity5.last_call("turn_on")
+    assert data == {"brightness": 255, "rgbw_color": (0, 0, 0, 255)}
+    _, data = entity6.last_call("turn_on")
+    # The midpoint the the white channels is warm, compensated by adding green + blue
+    assert data == {"brightness": 255, "rgbww_color": (0, 76, 141, 255, 255)}
+
+    await opp.services.async_call(
+        "light",
+        "turn_on",
+        {
+            "entity_id": [
+                entity0.entity_id,
+                entity1.entity_id,
+                entity2.entity_id,
+                entity3.entity_id,
+                entity4.entity_id,
+                entity5.entity_id,
+                entity6.entity_id,
+            ],
+            "brightness_pct": 50,
+            "rgb_color": (128, 0, 0),
+        },
+        blocking=True,
+    )
+    _, data = entity0.last_call("turn_on")
+    assert data == {"brightness": 128, "hs_color": (0.0, 100.0)}
+    _, data = entity1.last_call("turn_on")
+    assert data == {"brightness": 128, "rgb_color": (128, 0, 0)}
+    _, data = entity2.last_call("turn_on")
+    assert data == {"brightness": 128, "xy_color": (0.701, 0.299)}
+    _, data = entity3.last_call("turn_on")
+    assert data == {"brightness": 128, "rgb_color": (128, 0, 0)}
+    _, data = entity4.last_call("turn_on")
+    assert data == {"brightness": 128, "hs_color": (0.0, 100.0)}
+    _, data = entity5.last_call("turn_on")
+    assert data == {"brightness": 128, "rgbw_color": (128, 0, 0, 0)}
+    _, data = entity6.last_call("turn_on")
+    assert data == {"brightness": 128, "rgbww_color": (128, 0, 0, 0, 0)}
+
+    await opp.services.async_call(
+        "light",
+        "turn_on",
+        {
+            "entity_id": [
+                entity0.entity_id,
+                entity1.entity_id,
+                entity2.entity_id,
+                entity3.entity_id,
+                entity4.entity_id,
+                entity5.entity_id,
+                entity6.entity_id,
+            ],
+            "brightness_pct": 50,
+            "rgb_color": (255, 255, 255),
+        },
+        blocking=True,
+    )
+    _, data = entity0.last_call("turn_on")
+    assert data == {"brightness": 128, "hs_color": (0.0, 0.0)}
+    _, data = entity1.last_call("turn_on")
+    assert data == {"brightness": 128, "rgb_color": (255, 255, 255)}
+    _, data = entity2.last_call("turn_on")
+    assert data == {"brightness": 128, "xy_color": (0.323, 0.329)}
+    _, data = entity3.last_call("turn_on")
+    assert data == {"brightness": 128, "rgb_color": (255, 255, 255)}
+    _, data = entity4.last_call("turn_on")
+    assert data == {"brightness": 128, "hs_color": (0.0, 0.0)}
+    _, data = entity5.last_call("turn_on")
+    assert data == {"brightness": 128, "rgbw_color": (0, 0, 0, 255)}
+    _, data = entity6.last_call("turn_on")
+    # The midpoint the the white channels is warm, compensated by adding green + blue
+    assert data == {"brightness": 128, "rgbww_color": (0, 76, 141, 255, 255)}
+
+    await opp.services.async_call(
+        "light",
+        "turn_on",
+        {
+            "entity_id": [
+                entity0.entity_id,
+                entity1.entity_id,
+                entity2.entity_id,
+                entity3.entity_id,
+                entity4.entity_id,
+                entity5.entity_id,
+                entity6.entity_id,
+            ],
+            "brightness_pct": 50,
+            "xy_color": (0.1, 0.8),
+        },
+        blocking=True,
+    )
+    _, data = entity0.last_call("turn_on")
+    assert data == {"brightness": 128, "hs_color": (125.176, 100.0)}
+    _, data = entity1.last_call("turn_on")
+    assert data == {"brightness": 128, "rgb_color": (0, 255, 22)}
+    _, data = entity2.last_call("turn_on")
+    assert data == {"brightness": 128, "xy_color": (0.1, 0.8)}
+    _, data = entity3.last_call("turn_on")
+    assert data == {"brightness": 128, "xy_color": (0.1, 0.8)}
+    _, data = entity4.last_call("turn_on")
+    assert data == {"brightness": 128, "hs_color": (125.176, 100.0)}
+    _, data = entity5.last_call("turn_on")
+    assert data == {"brightness": 128, "rgbw_color": (0, 255, 22, 0)}
+    _, data = entity6.last_call("turn_on")
+    assert data == {"brightness": 128, "rgbww_color": (0, 255, 22, 0, 0)}
+
+    await opp.services.async_call(
+        "light",
+        "turn_on",
+        {
+            "entity_id": [
+                entity0.entity_id,
+                entity1.entity_id,
+                entity2.entity_id,
+                entity3.entity_id,
+                entity4.entity_id,
+                entity5.entity_id,
+                entity6.entity_id,
+            ],
+            "brightness_pct": 50,
+            "xy_color": (0.323, 0.329),
+        },
+        blocking=True,
+    )
+    _, data = entity0.last_call("turn_on")
+    assert data == {"brightness": 128, "hs_color": (0.0, 0.392)}
+    _, data = entity1.last_call("turn_on")
+    assert data == {"brightness": 128, "rgb_color": (255, 254, 254)}
+    _, data = entity2.last_call("turn_on")
+    assert data == {"brightness": 128, "xy_color": (0.323, 0.329)}
+    _, data = entity3.last_call("turn_on")
+    assert data == {"brightness": 128, "xy_color": (0.323, 0.329)}
+    _, data = entity4.last_call("turn_on")
+    assert data == {"brightness": 128, "hs_color": (0.0, 0.392)}
+    _, data = entity5.last_call("turn_on")
+    assert data == {"brightness": 128, "rgbw_color": (1, 0, 0, 255)}
+    _, data = entity6.last_call("turn_on")
+    # The midpoint the the white channels is warm, compensated by adding green + blue
+    assert data == {"brightness": 128, "rgbww_color": (0, 75, 140, 255, 255)}
+
+
+async def test_light_state_color_conversion(opp, enable_custom_integrations):
+    """Test color conversion in state updates."""
+    platform = getattr(opp.components, "test.light")
+    platform.init(empty=True)
+
+    platform.ENTITIES.append(platform.MockLight("Test_hs", STATE_ON))
+    platform.ENTITIES.append(platform.MockLight("Test_rgb", STATE_ON))
+    platform.ENTITIES.append(platform.MockLight("Test_xy", STATE_ON))
+    platform.ENTITIES.append(platform.MockLight("Test_legacy", STATE_ON))
+
+    entity0 = platform.ENTITIES[0]
+    entity0.supported_color_modes = {light.COLOR_MODE_HS}
+    entity0.color_mode = light.COLOR_MODE_HS
+    entity0.hs_color = (240, 100)
+    entity0.rgb_color = "Invalid"  # Should be ignored
+    entity0.xy_color = "Invalid"  # Should be ignored
+
+    entity1 = platform.ENTITIES[1]
+    entity1.supported_color_modes = {light.COLOR_MODE_RGB}
+    entity1.color_mode = light.COLOR_MODE_RGB
+    entity1.hs_color = "Invalid"  # Should be ignored
+    entity1.rgb_color = (128, 0, 0)
+    entity1.xy_color = "Invalid"  # Should be ignored
+
+    entity2 = platform.ENTITIES[2]
+    entity2.supported_color_modes = {light.COLOR_MODE_XY}
+    entity2.color_mode = light.COLOR_MODE_XY
+    entity2.hs_color = "Invalid"  # Should be ignored
+    entity2.rgb_color = "Invalid"  # Should be ignored
+    entity2.xy_color = (0.1, 0.8)
+
+    entity3 = platform.ENTITIES[3]
+    entity3.hs_color = (240, 100)
+    entity3.supported_features = light.SUPPORT_COLOR
+
+    assert await async_setup_component(opp, "light", {"light": {"platform": "test"}})
+    await opp.async_block_till_done()
+
+    state = opp.states.get(entity0.entity_id)
+    assert state.attributes["color_mode"] == light.COLOR_MODE_HS
+    assert state.attributes["hs_color"] == (240, 100)
+    assert state.attributes["rgb_color"] == (0, 0, 255)
+    assert state.attributes["xy_color"] == (0.136, 0.04)
+
+    state = opp.states.get(entity1.entity_id)
+    assert state.attributes["color_mode"] == light.COLOR_MODE_RGB
+    assert state.attributes["hs_color"] == (0.0, 100.0)
+    assert state.attributes["rgb_color"] == (128, 0, 0)
+    assert state.attributes["xy_color"] == (0.701, 0.299)
+
+    state = opp.states.get(entity2.entity_id)
+    assert state.attributes["color_mode"] == light.COLOR_MODE_XY
+    assert state.attributes["hs_color"] == (125.176, 100.0)
+    assert state.attributes["rgb_color"] == (0, 255, 22)
+    assert state.attributes["xy_color"] == (0.1, 0.8)
+
+    state = opp.states.get(entity3.entity_id)
+    assert state.attributes["color_mode"] == light.COLOR_MODE_HS
+    assert state.attributes["hs_color"] == (240, 100)
+    assert state.attributes["rgb_color"] == (0, 0, 255)
+    assert state.attributes["xy_color"] == (0.136, 0.04)
+
+
+async def test_services_filter_parameters(
+    opp, mock_light_profiles, enable_custom_integrations
+):
+    """Test turn_on and turn_off filters unsupported parameters."""
+    platform = getattr(opp.components, "test.light")
+
+    platform.init()
+    assert await async_setup_component(
+        opp, light.DOMAIN, {light.DOMAIN: {CONF_PLATFORM: "test"}}
+    )
+    await opp.async_block_till_done()
+
+    ent1, _, _ = platform.ENTITIES
+
+    # turn off the light by setting brightness to 0, this should work even if the light
+    # doesn't support brightness
+    await opp.services.async_call(
+        light.DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: ENTITY_MATCH_ALL}, blocking=True
+    )
+    await opp.services.async_call(
+        light.DOMAIN,
+        SERVICE_TURN_ON,
+        {ATTR_ENTITY_ID: ENTITY_MATCH_ALL, light.ATTR_BRIGHTNESS: 0},
+        blocking=True,
+    )
+
+    assert not light.is_on(opp, ent1.entity_id)
+
+    # Ensure all unsupported attributes are filtered when light is turned on
+    await opp.services.async_call(
+        light.DOMAIN,
+        SERVICE_TURN_ON,
+        {
+            ATTR_ENTITY_ID: ent1.entity_id,
+            light.ATTR_BRIGHTNESS: 0,
+            light.ATTR_EFFECT: "fun_effect",
+            light.ATTR_FLASH: "short",
+            light.ATTR_TRANSITION: 10,
+            light.ATTR_WHITE_VALUE: 0,
+        },
+        blocking=True,
+    )
+    _, data = ent1.last_call("turn_on")
+    assert data == {}
+
+    await opp.services.async_call(
+        light.DOMAIN,
+        SERVICE_TURN_ON,
+        {
+            ATTR_ENTITY_ID: ent1.entity_id,
+            light.ATTR_COLOR_TEMP: 153,
+        },
+        blocking=True,
+    )
+    _, data = ent1.last_call("turn_on")
+    assert data == {}
+
+    await opp.services.async_call(
+        light.DOMAIN,
+        SERVICE_TURN_ON,
+        {
+            ATTR_ENTITY_ID: ent1.entity_id,
+            light.ATTR_HS_COLOR: (0, 0),
+        },
+        blocking=True,
+    )
+    _, data = ent1.last_call("turn_on")
+    assert data == {}
+
+    await opp.services.async_call(
+        light.DOMAIN,
+        SERVICE_TURN_ON,
+        {
+            ATTR_ENTITY_ID: ent1.entity_id,
+            light.ATTR_RGB_COLOR: (0, 0, 0),
+        },
+        blocking=True,
+    )
+    _, data = ent1.last_call("turn_on")
+    assert data == {}
+
+    await opp.services.async_call(
+        light.DOMAIN,
+        SERVICE_TURN_ON,
+        {
+            ATTR_ENTITY_ID: ent1.entity_id,
+            light.ATTR_RGBW_COLOR: (0, 0, 0, 0),
+        },
+        blocking=True,
+    )
+    _, data = ent1.last_call("turn_on")
+    assert data == {}
+
+    await opp.services.async_call(
+        light.DOMAIN,
+        SERVICE_TURN_ON,
+        {
+            ATTR_ENTITY_ID: ent1.entity_id,
+            light.ATTR_RGBWW_COLOR: (0, 0, 0, 0, 0),
+        },
+        blocking=True,
+    )
+    _, data = ent1.last_call("turn_on")
+    assert data == {}
+
+    await opp.services.async_call(
+        light.DOMAIN,
+        SERVICE_TURN_ON,
+        {
+            ATTR_ENTITY_ID: ent1.entity_id,
+            light.ATTR_XY_COLOR: (0, 0),
+        },
+        blocking=True,
+    )
+    _, data = ent1.last_call("turn_on")
+    assert data == {}
+
+    # Ensure all unsupported attributes are filtered when light is turned off
+    await opp.services.async_call(
+        light.DOMAIN,
+        SERVICE_TURN_ON,
+        {
+            ATTR_ENTITY_ID: ent1.entity_id,
+            light.ATTR_BRIGHTNESS: 0,
+            light.ATTR_EFFECT: "fun_effect",
+            light.ATTR_FLASH: "short",
+            light.ATTR_TRANSITION: 10,
+            light.ATTR_WHITE_VALUE: 0,
+        },
+        blocking=True,
+    )
+
+    assert not light.is_on(opp, ent1.entity_id)
+
+    _, data = ent1.last_call("turn_off")
+    assert data == {}
+
+    await opp.services.async_call(
+        light.DOMAIN,
+        SERVICE_TURN_OFF,
+        {
+            ATTR_ENTITY_ID: ent1.entity_id,
+            light.ATTR_FLASH: "short",
+            light.ATTR_TRANSITION: 10,
+        },
+        blocking=True,
+    )
+
+    assert not light.is_on(opp, ent1.entity_id)
+
+    _, data = ent1.last_call("turn_off")
+    assert data == {}

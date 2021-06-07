@@ -8,13 +8,19 @@ import plexapi
 import requests
 
 import openpeerpower.components.plex.const as const
-from openpeerpower.config_entries import (
-    ENTRY_STATE_LOADED,
-    ENTRY_STATE_NOT_LOADED,
-    ENTRY_STATE_SETUP_ERROR,
-    ENTRY_STATE_SETUP_RETRY,
+from openpeerpower.components.plex.models import (
+    LIVE_TV_SECTION,
+    TRANSIENT_SECTION,
+    UNKNOWN_SECTION,
 )
-from openpeerpower.const import CONF_TOKEN, CONF_URL, CONF_VERIFY_SSL, STATE_IDLE
+from openpeerpower.config_entries import ConfigEntryState
+from openpeerpower.const import (
+    CONF_TOKEN,
+    CONF_URL,
+    CONF_VERIFY_SSL,
+    STATE_IDLE,
+    STATE_PLAYING,
+)
 from openpeerpower.setup import async_setup_component
 import openpeerpower.util.dt as dt_util
 
@@ -27,7 +33,7 @@ from tests.common import MockConfigEntry, async_fire_time_changed
 async def test_set_config_entry_unique_id(opp, entry, mock_plex_server):
     """Test updating missing unique_id from config entry."""
     assert len(opp.config_entries.async_entries(const.DOMAIN)) == 1
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
 
     assert (
         opp.config_entries.async_entries(const.DOMAIN)[0].unique_id
@@ -46,7 +52,7 @@ async def test_setup_config_entry_with_error(opp, entry):
         await opp.async_block_till_done()
 
     assert len(opp.config_entries.async_entries(const.DOMAIN)) == 1
-    assert entry.state == ENTRY_STATE_SETUP_RETRY
+    assert entry.state is ConfigEntryState.SETUP_RETRY
 
     with patch(
         "openpeerpower.components.plex.PlexServer.connect",
@@ -57,7 +63,7 @@ async def test_setup_config_entry_with_error(opp, entry):
         await opp.async_block_till_done()
 
     assert len(opp.config_entries.async_entries(const.DOMAIN)) == 1
-    assert entry.state == ENTRY_STATE_SETUP_ERROR
+    assert entry.state is ConfigEntryState.SETUP_ERROR
 
 
 async def test_setup_with_insecure_config_entry(opp, entry, setup_plex_server):
@@ -69,7 +75,7 @@ async def test_setup_with_insecure_config_entry(opp, entry, setup_plex_server):
     await setup_plex_server(config_entry=entry)
 
     assert len(opp.config_entries.async_entries(const.DOMAIN)) == 1
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
 
 
 async def test_unload_config_entry(opp, entry, mock_plex_server):
@@ -77,7 +83,7 @@ async def test_unload_config_entry(opp, entry, mock_plex_server):
     config_entries = opp.config_entries.async_entries(const.DOMAIN)
     assert len(config_entries) == 1
     assert entry is config_entries[0]
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
 
     server_id = mock_plex_server.machine_identifier
     loaded_server = opp.data[const.DOMAIN][const.SERVERS][server_id]
@@ -86,7 +92,7 @@ async def test_unload_config_entry(opp, entry, mock_plex_server):
     websocket = opp.data[const.DOMAIN][const.WEBSOCKETS][server_id]
     await opp.config_entries.async_unload(entry.entry_id)
     assert websocket.close.called
-    assert entry.state == ENTRY_STATE_NOT_LOADED
+    assert entry.state is ConfigEntryState.NOT_LOADED
 
 
 async def test_setup_with_photo_session(opp, entry, setup_plex_server):
@@ -94,7 +100,7 @@ async def test_setup_with_photo_session(opp, entry, setup_plex_server):
     await setup_plex_server(session_type="photo")
 
     assert len(opp.config_entries.async_entries(const.DOMAIN)) == 1
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
     await opp.async_block_till_done()
 
     media_player = opp.states.get(
@@ -106,6 +112,66 @@ async def test_setup_with_photo_session(opp, entry, setup_plex_server):
 
     sensor = opp.states.get("sensor.plex_plex_server_1")
     assert sensor.state == "0"
+
+
+async def test_setup_with_live_tv_session(opp, entry, setup_plex_server):
+    """Test setup component with a Live TV session."""
+    await setup_plex_server(session_type="live_tv")
+
+    assert len(opp.config_entries.async_entries(const.DOMAIN)) == 1
+    assert entry.state is ConfigEntryState.LOADED
+    await opp.async_block_till_done()
+
+    media_player = opp.states.get(
+        "media_player.plex_plex_for_android_tv_shield_android_tv"
+    )
+    assert media_player.state == STATE_PLAYING
+    assert media_player.attributes["media_library_title"] == LIVE_TV_SECTION
+
+    await wait_for_debouncer(opp)
+
+    sensor = opp.states.get("sensor.plex_plex_server_1")
+    assert sensor.state == "1"
+
+
+async def test_setup_with_transient_session(opp, entry, setup_plex_server):
+    """Test setup component with a transient session."""
+    await setup_plex_server(session_type="transient")
+
+    assert len(opp.config_entries.async_entries(const.DOMAIN)) == 1
+    assert entry.state is ConfigEntryState.LOADED
+    await opp.async_block_till_done()
+
+    media_player = opp.states.get(
+        "media_player.plex_plex_for_android_tv_shield_android_tv"
+    )
+    assert media_player.state == STATE_PLAYING
+    assert media_player.attributes["media_library_title"] == TRANSIENT_SECTION
+
+    await wait_for_debouncer(opp)
+
+    sensor = opp.states.get("sensor.plex_plex_server_1")
+    assert sensor.state == "1"
+
+
+async def test_setup_with_unknown_session(opp, entry, setup_plex_server):
+    """Test setup component with an unknown session."""
+    await setup_plex_server(session_type="unknown")
+
+    assert len(opp.config_entries.async_entries(const.DOMAIN)) == 1
+    assert entry.state is ConfigEntryState.LOADED
+    await opp.async_block_till_done()
+
+    media_player = opp.states.get(
+        "media_player.plex_plex_for_android_tv_shield_android_tv"
+    )
+    assert media_player.state == STATE_PLAYING
+    assert media_player.attributes["media_library_title"] == UNKNOWN_SECTION
+
+    await wait_for_debouncer(opp)
+
+    sensor = opp.states.get("sensor.plex_plex_server_1")
+    assert sensor.state == "1"
 
 
 async def test_setup_when_certificate_changed(
@@ -155,7 +221,7 @@ async def test_setup_when_certificate_changed(
     assert await opp.config_entries.async_setup(old_entry.entry_id) is False
     await opp.async_block_till_done()
 
-    assert old_entry.state == ENTRY_STATE_SETUP_ERROR
+    assert old_entry.state is ConfigEntryState.SETUP_ERROR
     await opp.config_entries.async_unload(old_entry.entry_id)
 
     # Test with no servers found
@@ -165,7 +231,7 @@ async def test_setup_when_certificate_changed(
     assert await opp.config_entries.async_setup(old_entry.entry_id) is False
     await opp.async_block_till_done()
 
-    assert old_entry.state == ENTRY_STATE_SETUP_ERROR
+    assert old_entry.state is ConfigEntryState.SETUP_ERROR
     await opp.config_entries.async_unload(old_entry.entry_id)
 
     # Test with success
@@ -178,7 +244,7 @@ async def test_setup_when_certificate_changed(
     await opp.async_block_till_done()
 
     assert len(opp.config_entries.async_entries(const.DOMAIN)) == 1
-    assert old_entry.state == ENTRY_STATE_LOADED
+    assert old_entry.state is ConfigEntryState.LOADED
 
     assert old_entry.data[const.PLEX_SERVER_CONFIG][CONF_URL] == new_url
 
@@ -190,7 +256,7 @@ async def test_tokenless_server(entry, setup_plex_server):
     entry.data = TOKENLESS_DATA
 
     await setup_plex_server(config_entry=entry)
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
 
 
 async def test_bad_token_with_tokenless_server(
@@ -201,7 +267,7 @@ async def test_bad_token_with_tokenless_server(
 
     await setup_plex_server()
 
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
 
     # Ensure updates that rely on account return nothing
     trigger_plex_update(mock_websocket)

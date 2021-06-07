@@ -7,6 +7,7 @@ from requests.exceptions import RequestException
 from openpeerpower import config_entries, data_entry_flow, setup
 from openpeerpower.components.dhcp import HOSTNAME, IP_ADDRESS, MAC_ADDRESS
 from openpeerpower.components.nuki.const import DOMAIN
+from openpeerpower.const import CONF_TOKEN
 
 from .mock import HOST, MAC, MOCK_INFO, NAME, setup_nuki_integration
 
@@ -227,3 +228,103 @@ async def test_dhcp_flow_already_configured(opp):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
+
+
+async def test_reauth_success(opp):
+    """Test starting a reauthentication flow."""
+    entry = await setup_nuki_integration(opp)
+
+    result = await opp.config_entries.flow.async_init(
+        DOMAIN, context={"source": config_entries.SOURCE_REAUTH}, data=entry.data
+    )
+    assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
+    assert result["step_id"] == "reauth_confirm"
+
+    with patch(
+        "openpeerpower.components.nuki.config_flow.NukiBridge.info",
+        return_value=MOCK_INFO,
+    ), patch("openpeerpower.components.nuki.async_setup", return_value=True), patch(
+        "openpeerpower.components.nuki.async_setup_entry",
+        return_value=True,
+    ):
+        result2 = await opp.config_entries.flow.async_configure(
+            result["flow_id"],
+            user_input={CONF_TOKEN: "new-token"},
+        )
+        await opp.async_block_till_done()
+
+        assert result2["type"] == data_entry_flow.RESULT_TYPE_ABORT
+        assert result2["reason"] == "reauth_successful"
+        assert entry.data[CONF_TOKEN] == "new-token"
+
+
+async def test_reauth_invalid_auth(opp):
+    """Test starting a reauthentication flow with invalid auth."""
+    entry = await setup_nuki_integration(opp)
+
+    result = await opp.config_entries.flow.async_init(
+        DOMAIN, context={"source": config_entries.SOURCE_REAUTH}, data=entry.data
+    )
+    assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
+    assert result["step_id"] == "reauth_confirm"
+
+    with patch(
+        "openpeerpower.components.nuki.config_flow.NukiBridge.info",
+        side_effect=InvalidCredentialsException,
+    ):
+        result2 = await opp.config_entries.flow.async_configure(
+            result["flow_id"],
+            user_input={CONF_TOKEN: "new-token"},
+        )
+
+        assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
+        assert result2["step_id"] == "reauth_confirm"
+        assert result2["errors"] == {"base": "invalid_auth"}
+
+
+async def test_reauth_cannot_connect(opp):
+    """Test starting a reauthentication flow with cannot connect."""
+    entry = await setup_nuki_integration(opp)
+
+    result = await opp.config_entries.flow.async_init(
+        DOMAIN, context={"source": config_entries.SOURCE_REAUTH}, data=entry.data
+    )
+    assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
+    assert result["step_id"] == "reauth_confirm"
+
+    with patch(
+        "openpeerpower.components.nuki.config_flow.NukiBridge.info",
+        side_effect=RequestException,
+    ):
+        result2 = await opp.config_entries.flow.async_configure(
+            result["flow_id"],
+            user_input={CONF_TOKEN: "new-token"},
+        )
+
+        assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
+        assert result2["step_id"] == "reauth_confirm"
+        assert result2["errors"] == {"base": "cannot_connect"}
+
+
+async def test_reauth_unknown_exception(opp):
+    """Test starting a reauthentication flow with an unknown exception."""
+    entry = await setup_nuki_integration(opp)
+
+    result = await opp.config_entries.flow.async_init(
+        DOMAIN, context={"source": config_entries.SOURCE_REAUTH}, data=entry.data
+    )
+    assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
+    assert result["step_id"] == "reauth_confirm"
+
+    with patch(
+        "openpeerpower.components.nuki.config_flow.NukiBridge.info",
+        side_effect=Exception,
+    ):
+        result2 = await opp.config_entries.flow.async_configure(
+            result["flow_id"],
+            user_input={CONF_TOKEN: "new-token"},
+        )
+
+        assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
+        assert result2["step_id"] == "reauth_confirm"
+        assert result2["errors"] == {"base": "unknown"}

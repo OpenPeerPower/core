@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 import pytest
 
-from openpeerpower import data_entry_flow
+from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.components.owntracks import config_flow
 from openpeerpower.components.owntracks.config_flow import CONF_CLOUDHOOK, CONF_SECRET
 from openpeerpower.components.owntracks.const import DOMAIN
@@ -143,7 +143,7 @@ async def test_unload(opp):
         "openpeerpower.config_entries.ConfigEntries.async_forward_entry_setup"
     ) as mock_forward:
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "import"}, data={}
+            DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data={}
         )
 
     assert len(mock_forward.mock_calls) == 1
@@ -154,8 +154,8 @@ async def test_unload(opp):
     assert entry.data["webhook_id"] in opp.data["webhook"]
 
     with patch(
-        "openpeerpower.config_entries.ConfigEntries.async_forward_entry_unload",
-        return_value=None,
+        "openpeerpower.config_entries.ConfigEntries.async_unload_platforms",
+        return_value=True,
     ) as mock_unload:
         assert await opp.config_entries.async_unload(entry.entry_id)
 
@@ -175,7 +175,7 @@ async def test_with_cloud_sub(opp):
         return_value="https://hooks.nabu.casa/ABCD",
     ):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "user"}, data={}
+            DOMAIN, context={"source": config_entries.SOURCE_USER}, data={}
         )
 
     entry = result["result"]

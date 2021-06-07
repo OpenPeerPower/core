@@ -19,7 +19,7 @@ from sqlalchemy import (
     Text,
     distinct,
 )
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import declarative_base
 
 from openpeerpower.core import Event, EventOrigin, State, split_entity_id
 from openpeerpower.helpers.json import JSONEncoder
@@ -54,7 +54,7 @@ class Events(Base):  # type: ignore
         )
 
     def to_native(self):
-        """Convert to a natve OP Event."""
+        """Convert to a natve OPP Event."""
         try:
             return Event(
                 self.event_type,
@@ -112,7 +112,7 @@ class States(Base):  # type: ignore
         return dbstate
 
     def to_native(self):
-        """Convert to an OP state object."""
+        """Convert to an OPP state object."""
         try:
             return State(
                 self.entity_id,
@@ -170,5 +170,5 @@ def _process_timestamp(ts):
     if ts is None:
         return None
     if ts.tzinfo is None:
-        return dt_util.UTC.localize(ts)
+        return ts.replace(tzinfo=dt_util.UTC)
     return dt_util.as_utc(ts)

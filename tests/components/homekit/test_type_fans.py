@@ -28,7 +28,7 @@ from openpeerpower.const import (
     STATE_UNKNOWN,
 )
 from openpeerpower.core import CoreState
-from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers import entity_registry as er
 
 from tests.common import async_mock_service
 
@@ -526,7 +526,7 @@ async def test_fan_restore(opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
     opp.state = CoreState.not_running
 
-    registry = await entity_registry.async_get_registry(opp)
+    registry = er.async_get(opp)
 
     registry.async_get_or_create(
         "fan",

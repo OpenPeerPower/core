@@ -37,11 +37,7 @@ from openpeerpower.helpers.json import JSONEncoder
 from openpeerpower.setup import async_setup_component, setup_component
 import openpeerpower.util.dt as dt_util
 
-from tests.common import (
-    get_test_open_peer_power,
-    init_recorder_component,
-    mock_platform,
-)
+from tests.common import get_test_open_peer_power, init_recorder_component, mock_platform
 from tests.components.recorder.common import trigger_db_commit
 
 EMPTY_CONFIG = logbook.CONFIG_SCHEMA({logbook.DOMAIN: {}})
@@ -54,7 +50,7 @@ def opp_():
     init_recorder_component(opp)  # Force an in memory DB
     with patch("openpeerpower.components.http.start_http_server_and_save_config"):
         assert setup_component(opp, logbook.DOMAIN, EMPTY_CONFIG)
-        yield opp
+        yield.opp
     opp.stop()
 
 
@@ -165,7 +161,7 @@ def test_humanify_filter_sensor(opp_):
 
 
 def test_open_peer_power_start_stop_grouped(opp_):
-    """Test if OP start and stop events are grouped.
+    """Test if OPP start and stop events are grouped.
 
     Events that are occurring in the same minute.
     """
@@ -189,7 +185,7 @@ def test_open_peer_power_start_stop_grouped(opp_):
 
 
 def test_open_peer_power_start(opp_):
-    """Test if OP start is not filtered or converted into a restart."""
+    """Test if OPP start is not filtered or converted into a restart."""
     entity_id = "switch.bla"
     pointA = dt_util.utcnow()
     entity_attr_cache = logbook.EntityAttributeCache(opp_)
@@ -207,9 +203,7 @@ def test_open_peer_power_start(opp_):
     )
 
     assert len(entries) == 2
-    assert_entry(
-        entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN
-    )
+    assert_entry(entries[0], name="Open Peer Power", message="started", domain=ha.DOMAIN)
     assert_entry(entries[1], pointA, "bla", entity_id=entity_id)
 
 
@@ -1178,7 +1172,9 @@ async def test_logbook_context_from_template(opp, opp_client):
         id="9c5bd62de45711eaaeb351041eec8dd9",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
-    opp.states.async_set("switch.test_state", STATE_ON, context=switch_turn_off_context)
+    opp.states.async_set(
+        "switch.test_state", STATE_ON, context=switch_turn_off_context
+    )
     await opp.async_block_till_done()
 
     await opp.async_add_executor_job(trigger_db_commit, opp)
@@ -1262,7 +1258,9 @@ async def test_logbook_entity_matches_only(opp, opp_client):
         id="9c5bd62de45711eaaeb351041eec8dd9",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
-    opp.states.async_set("switch.test_state", STATE_ON, context=switch_turn_off_context)
+    opp.states.async_set(
+        "switch.test_state", STATE_ON, context=switch_turn_off_context
+    )
     await opp.async_block_till_done()
 
     await opp.async_add_executor_job(trigger_db_commit, opp)
@@ -1338,7 +1336,9 @@ async def test_logbook_entity_matches_only_multiple(opp, opp_client):
         id="9c5bd62de45711eaaeb351041eec8dd9",
         user_id="9400facee45711eaa9308bfd3d19e474",
     )
-    opp.states.async_set("switch.test_state", STATE_ON, context=switch_turn_off_context)
+    opp.states.async_set(
+        "switch.test_state", STATE_ON, context=switch_turn_off_context
+    )
     opp.states.async_set("light.test_state", STATE_ON, context=switch_turn_off_context)
     await opp.async_block_till_done()
 
@@ -1801,17 +1801,52 @@ async def test_empty_config(opp, opp_client):
     _assert_entry(entries[1], name="blu", entity_id=entity_id)
 
 
-async def _async_fetch_logbook(client):
+async def test_context_filter(opp, opp_client):
+    """Test we can filter by context."""
+    await opp.async_add_executor_job(init_recorder_component, opp)
+    assert await async_setup_component(opp, "logbook", {})
+    await opp.async_add_executor_job(opp.data[recorder.DATA_INSTANCE].block_till_done)
+
+    entity_id = "switch.blu"
+    context = ha.Context()
+
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
+    opp.bus.async_fire(EVENT_OPENPEERPOWER_STARTED)
+    opp.states.async_set(entity_id, None)
+    opp.states.async_set(entity_id, "on", context=context)
+    opp.states.async_set(entity_id, "off")
+    opp.states.async_set(entity_id, "unknown", context=context)
+
+    await _async_commit_and_wait(opp)
+    client = await opp_client()
+
+    # Test results
+    entries = await _async_fetch_logbook(client, {"context_id": context.id})
+
+    assert len(entries) == 2
+    _assert_entry(entries[0], entity_id=entity_id, state="on")
+    _assert_entry(entries[1], entity_id=entity_id, state="unknown")
+
+    # Test we can't combine context filter with entity_id filter
+    response = await client.get(
+        "/api/logbook", params={"context_id": context.id, "entity": entity_id}
+    )
+    assert response.status == 400
+
+
+async def _async_fetch_logbook(client, params=None):
+    if params is None:
+        params = {}
 
     # Today time 00:00:00
     start = dt_util.utcnow().date()
     start_date = datetime(start.year, start.month, start.day) - timedelta(hours=24)
 
+    if "end_time" not in params:
+        params["end_time"] = str(start + timedelta(hours=48))
+
     # Test today entries without filters
-    end_time = start + timedelta(hours=48)
-    response = await client.get(
-        f"/api/logbook/{start_date.isoformat()}?end_time={end_time}"
-    )
+    response = await client.get(f"/api/logbook/{start_date.isoformat()}", params=params)
     assert response.status == 200
     return await response.json()
 
@@ -1825,7 +1860,7 @@ async def _async_commit_and_wait(opp):
 
 
 def _assert_entry(
-    entry, when=None, name=None, message=None, domain=None, entity_id=None
+    entry, when=None, name=None, message=None, domain=None, entity_id=None, state=None
 ):
     """Assert an entry is what is expected."""
     if when:
@@ -1842,6 +1877,9 @@ def _assert_entry(
 
     if entity_id:
         assert entity_id == entry["entity_id"]
+
+    if state:
+        assert state == entry["state"]
 
 
 class MockLazyEventPartialState(ha.Event):

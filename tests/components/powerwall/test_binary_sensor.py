@@ -30,7 +30,7 @@ async def test_sensors(opp):
     assert state.state == STATE_ON
     expected_attributes = {"friendly_name": "Grid Status", "device_class": "power"}
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
     state = opp.states.get("binary_sensor.powerwall_status")
@@ -40,7 +40,7 @@ async def test_sensors(opp):
         "device_class": "power",
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
     state = opp.states.get("binary_sensor.powerwall_connected_to_tesla")
@@ -50,7 +50,7 @@ async def test_sensors(opp):
         "device_class": "connectivity",
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(item in state.attributes.items() for item in expected_attributes.items())
 
     state = opp.states.get("binary_sensor.powerwall_charging")
@@ -60,5 +60,5 @@ async def test_sensors(opp):
         "device_class": "battery_charging",
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(item in state.attributes.items() for item in expected_attributes.items())

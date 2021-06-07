@@ -9,7 +9,7 @@ from openpeerpower.components.ssdp import (
     ATTR_UPNP_SERIAL,
 )
 from openpeerpower.const import CONF_HOST, CONF_ID, CONF_NAME
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from tests.common import MockConfigEntry, load_fixture
 from tests.test_util.aiohttp import AiohttpClientMocker
@@ -162,7 +162,7 @@ def mock_connection_server_error(
 
 
 async def setup_integration(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     aioclient_mock: AiohttpClientMocker,
     device: str = "roku3",
     app: str = "roku",

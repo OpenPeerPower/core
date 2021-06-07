@@ -8,6 +8,7 @@ from aiohomekit.testing import FakePairing
 import pytest
 
 from openpeerpower.components.light import SUPPORT_BRIGHTNESS, SUPPORT_COLOR
+from openpeerpower.helpers import device_registry as dr, entity_registry as er
 import openpeerpower.util.dt as dt_util
 
 from tests.common import async_fire_time_changed
@@ -25,7 +26,7 @@ async def test_koogeek_ls1_setup(opp):
     accessories = await setup_accessories_from_file(opp, "koogeek_ls1.json")
     config_entry, pairing = await setup_test_accessories(opp, accessories)
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     # Assert that the entity is correctly added to the entity registry
     entry = entity_registry.async_get("light.koogeek_ls1_20833f")
@@ -44,7 +45,7 @@ async def test_koogeek_ls1_setup(opp):
         SUPPORT_BRIGHTNESS | SUPPORT_COLOR
     )
 
-    device_registry = await opp.helpers.device_registry.async_get_registry()
+    device_registry = dr.async_get(opp)
 
     device = device_registry.async_get(entry.device_id)
     assert device.manufacturer == "Koogeek"

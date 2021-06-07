@@ -1,11 +1,23 @@
 """Tests for the Hyperion integration."""
-from typing import Optional
+from __future__ import annotations
+
+from datetime import timedelta
 from unittest.mock import AsyncMock, Mock, call, patch
 
 from hyperion import const
 
-from openpeerpower.components.hyperion import light as hyperion_light
-from openpeerpower.components.hyperion.const import DEFAULT_ORIGIN, DOMAIN
+from openpeerpower.components.hyperion import (
+    get_hyperion_device_id,
+    light as hyperion_light,
+)
+from openpeerpower.components.hyperion.const import (
+    CONF_EFFECT_HIDE_LIST,
+    DEFAULT_ORIGIN,
+    DOMAIN,
+    HYPERION_MANUFACTURER_NAME,
+    HYPERION_MODEL_NAME,
+    TYPE_HYPERION_PRIORITY_LIGHT,
+)
 from openpeerpower.components.light import (
     ATTR_BRIGHTNESS,
     ATTR_EFFECT,
@@ -13,9 +25,10 @@ from openpeerpower.components.light import (
     DOMAIN as LIGHT_DOMAIN,
 )
 from openpeerpower.config_entries import (
-    ENTRY_STATE_SETUP_ERROR,
+    RELOAD_AFTER_UPDATE_DELAY,
     SOURCE_REAUTH,
     ConfigEntry,
+    ConfigEntryState,
 )
 from openpeerpower.const import (
     ATTR_ENTITY_ID,
@@ -26,18 +39,21 @@ from openpeerpower.const import (
     SERVICE_TURN_OFF,
     SERVICE_TURN_ON,
 )
-from openpeerpower.helpers.entity_registry import async_get_registry
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import device_registry as dr, entity_registry as er
+from openpeerpower.util import dt
 import openpeerpower.util.color as color_util
 
 from . import (
     TEST_AUTH_NOT_REQUIRED_RESP,
     TEST_AUTH_REQUIRED_RESP,
+    TEST_CONFIG_ENTRY_ID,
     TEST_ENTITY_ID_1,
     TEST_ENTITY_ID_2,
     TEST_ENTITY_ID_3,
     TEST_HOST,
     TEST_ID,
+    TEST_INSTANCE,
     TEST_INSTANCE_1,
     TEST_INSTANCE_2,
     TEST_INSTANCE_3,
@@ -48,29 +64,32 @@ from . import (
     add_test_config_entry,
     call_registered_callback,
     create_mock_client,
+    register_test_entity,
     setup_test_config_entry,
 )
+
+from tests.common import async_fire_time_changed
 
 COLOR_BLACK = color_util.COLORS["black"]
 
 
 def _get_config_entry_from_unique_id(
-    opp: OpenPeerPowerType, unique_id: str
-) -> Optional[ConfigEntry]:
+    opp: OpenPeerPower, unique_id: str
+) -> ConfigEntry | None:
     for entry in opp.config_entries.async_entries(domain=DOMAIN):
         if TEST_SYSINFO_ID == entry.unique_id:
             return entry
     return None
 
 
-async def test_setup_config_entry(opp: OpenPeerPowerType) -> None:
+async def test_setup_config_entry(opp: OpenPeerPower) -> None:
     """Test setting up the component via config entries."""
     await setup_test_config_entry(opp, hyperion_client=create_mock_client())
     assert opp.states.get(TEST_ENTITY_ID_1) is not None
 
 
 async def test_setup_config_entry_not_ready_connect_fail(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
 ) -> None:
     """Test the component not being ready."""
     client = create_mock_client()
@@ -80,7 +99,7 @@ async def test_setup_config_entry_not_ready_connect_fail(
 
 
 async def test_setup_config_entry_not_ready_switch_instance_fail(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
 ) -> None:
     """Test the component not being ready."""
     client = create_mock_client()
@@ -91,7 +110,7 @@ async def test_setup_config_entry_not_ready_switch_instance_fail(
 
 
 async def test_setup_config_entry_not_ready_load_state_fail(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
 ) -> None:
     """Test the component not being ready."""
     client = create_mock_client()
@@ -107,9 +126,9 @@ async def test_setup_config_entry_not_ready_load_state_fail(
     assert opp.states.get(TEST_ENTITY_ID_1) is None
 
 
-async def test_setup_config_entry_dynamic_instances(opp: OpenPeerPowerType) -> None:
+async def test_setup_config_entry_dynamic_instances(opp: OpenPeerPower) -> None:
     """Test dynamic changes in the instance configuration."""
-    registry = await async_get_registry(opp)
+    registry = er.async_get(opp)
 
     config_entry = add_test_config_entry(opp)
 
@@ -222,7 +241,7 @@ async def test_setup_config_entry_dynamic_instances(opp: OpenPeerPowerType) -> N
     assert opp.states.get(TEST_ENTITY_ID_3) is not None
 
 
-async def test_light_basic_properies(opp: OpenPeerPowerType) -> None:
+async def test_light_basic_properies(opp: OpenPeerPower) -> None:
     """Test the basic properties."""
     client = create_mock_client()
     await setup_test_config_entry(opp, hyperion_client=client)
@@ -243,7 +262,7 @@ async def test_light_basic_properies(opp: OpenPeerPowerType) -> None:
     )
 
 
-async def test_light_async_turn_on(opp: OpenPeerPowerType) -> None:
+async def test_light_async_turn_on(opp: OpenPeerPower) -> None:
     """Test turning the light on."""
     client = create_mock_client()
     await setup_test_config_entry(opp, hyperion_client=client)
@@ -363,8 +382,9 @@ async def test_light_async_turn_on(opp: OpenPeerPowerType) -> None:
     assert entity_state
     assert entity_state.attributes["brightness"] == brightness
 
-    # On (=), 100% (=), V4L (!), [0,255,255] (=)
-    effect = const.KEY_COMPONENTID_EXTERNAL_SOURCES[2]  # V4L
+    # On (=), 100% (=), "USB Capture (!), [0,255,255] (=)
+    component = "V4L"
+    effect = const.KEY_COMPONENTID_TO_NAME[component]
     client.async_send_clear = AsyncMock(return_value=True)
     client.async_send_set_component = AsyncMock(return_value=True)
     await opp.services.async_call(
@@ -403,7 +423,7 @@ async def test_light_async_turn_on(opp: OpenPeerPowerType) -> None:
             }
         ),
     ]
-    client.visible_priority = {const.KEY_COMPONENTID: effect}
+    client.visible_priority = {const.KEY_COMPONENTID: component}
     call_registered_callback(client, "priorities-update")
     entity_state = opp.states.get(TEST_ENTITY_ID_1)
     assert entity_state
@@ -486,30 +506,126 @@ async def test_light_async_turn_on(opp: OpenPeerPowerType) -> None:
     assert not client.async_send_set_effect.called
 
 
-async def test_light_async_turn_on_error_conditions(opp: OpenPeerPowerType) -> None:
-    """Test error conditions when turning the light on."""
+async def test_light_async_turn_on_fail_async_send_set_component(
+    opp: OpenPeerPower,
+) -> None:
+    """Test set_component failure when turning the light on."""
     client = create_mock_client()
     client.async_send_set_component = AsyncMock(return_value=False)
     client.is_on = Mock(return_value=False)
     await setup_test_config_entry(opp, hyperion_client=client)
-
-    # On (=), 100% (=), solid (=), [255,255,255] (=)
     await opp.services.async_call(
         LIGHT_DOMAIN, SERVICE_TURN_ON, {ATTR_ENTITY_ID: TEST_ENTITY_ID_1}, blocking=True
     )
-
-    assert client.async_send_set_component.call_args == call(
-        **{
-            const.KEY_COMPONENTSTATE: {
-                const.KEY_COMPONENT: const.KEY_COMPONENTID_ALL,
-                const.KEY_STATE: True,
-            }
-        }
+    assert client.method_calls[-1] == call.async_send_set_component(
+        componentstate={"component": "ALL", "state": True}
     )
 
 
-async def test_light_async_turn_off_error_conditions(opp: OpenPeerPowerType) -> None:
-    """Test error conditions when turning the light off."""
+async def test_light_async_turn_on_fail_async_send_set_component_source(
+    opp: OpenPeerPower,
+) -> None:
+    """Test async_send_set_component failure when selecting the source."""
+    client = create_mock_client()
+    client.async_send_clear = AsyncMock(return_value=True)
+    client.async_send_set_component = AsyncMock(return_value=False)
+    client.is_on = Mock(return_value=True)
+    await setup_test_config_entry(opp, hyperion_client=client)
+    await opp.services.async_call(
+        LIGHT_DOMAIN,
+        SERVICE_TURN_ON,
+        {
+            ATTR_ENTITY_ID: TEST_ENTITY_ID_1,
+            ATTR_EFFECT: const.KEY_COMPONENTID_TO_NAME["V4L"],
+        },
+        blocking=True,
+    )
+    assert client.method_calls[-1] == call.async_send_set_component(
+        componentstate={"component": "BOBLIGHTSERVER", "state": False}
+    )
+
+
+async def test_light_async_turn_on_fail_async_send_clear_source(
+    opp: OpenPeerPower,
+) -> None:
+    """Test async_send_clear failure when turning the light on."""
+    client = create_mock_client()
+    client.is_on = Mock(return_value=True)
+    client.async_send_clear = AsyncMock(return_value=False)
+    await setup_test_config_entry(opp, hyperion_client=client)
+    await opp.services.async_call(
+        LIGHT_DOMAIN,
+        SERVICE_TURN_ON,
+        {
+            ATTR_ENTITY_ID: TEST_ENTITY_ID_1,
+            ATTR_EFFECT: const.KEY_COMPONENTID_TO_NAME["V4L"],
+        },
+        blocking=True,
+    )
+    assert client.method_calls[-1] == call.async_send_clear(priority=180)
+
+
+async def test_light_async_turn_on_fail_async_send_clear_effect(
+    opp: OpenPeerPower,
+) -> None:
+    """Test async_send_clear failure when turning on an effect."""
+    client = create_mock_client()
+    client.is_on = Mock(return_value=True)
+    client.async_send_clear = AsyncMock(return_value=False)
+    await setup_test_config_entry(opp, hyperion_client=client)
+    await opp.services.async_call(
+        LIGHT_DOMAIN,
+        SERVICE_TURN_ON,
+        {ATTR_ENTITY_ID: TEST_ENTITY_ID_1, ATTR_EFFECT: "Warm Mood Blobs"},
+        blocking=True,
+    )
+    assert client.method_calls[-1] == call.async_send_clear(priority=180)
+
+
+async def test_light_async_turn_on_fail_async_send_set_effect(
+    opp: OpenPeerPower,
+) -> None:
+    """Test async_send_set_effect failure when turning on the light."""
+    client = create_mock_client()
+    client.is_on = Mock(return_value=True)
+    client.async_send_clear = AsyncMock(return_value=True)
+    client.async_send_set_effect = AsyncMock(return_value=False)
+    await setup_test_config_entry(opp, hyperion_client=client)
+    await opp.services.async_call(
+        LIGHT_DOMAIN,
+        SERVICE_TURN_ON,
+        {ATTR_ENTITY_ID: TEST_ENTITY_ID_1, ATTR_EFFECT: "Warm Mood Blobs"},
+        blocking=True,
+    )
+    assert client.method_calls[-1] == call.async_send_set_effect(
+        priority=180, effect={"name": "Warm Mood Blobs"}, origin="Open Peer Power"
+    )
+
+
+async def test_light_async_turn_on_fail_async_send_set_color(
+    opp: OpenPeerPower,
+) -> None:
+    """Test async_send_set_color failure when turning on the light."""
+    client = create_mock_client()
+    client.is_on = Mock(return_value=True)
+    client.async_send_clear = AsyncMock(return_value=True)
+    client.async_send_set_color = AsyncMock(return_value=False)
+    await setup_test_config_entry(opp, hyperion_client=client)
+    await opp.services.async_call(
+        LIGHT_DOMAIN,
+        SERVICE_TURN_ON,
+        {ATTR_ENTITY_ID: TEST_ENTITY_ID_1, ATTR_HS_COLOR: (240.0, 100.0)},
+        blocking=True,
+    )
+    assert client.method_calls[-1] == call.async_send_set_color(
+        priority=180, color=(0, 0, 255), origin="Open Peer Power"
+    )
+
+
+async def test_light_async_turn_off_fail_async_send_set_component(
+    opp: OpenPeerPower,
+) -> None:
+    """Test async_send_set_component failure when turning off the light."""
     client = create_mock_client()
     client.async_send_set_component = AsyncMock(return_value=False)
     await setup_test_config_entry(opp, hyperion_client=client)
@@ -520,18 +636,33 @@ async def test_light_async_turn_off_error_conditions(opp: OpenPeerPowerType) -> 
         {ATTR_ENTITY_ID: TEST_ENTITY_ID_1},
         blocking=True,
     )
-
-    assert client.async_send_set_component.call_args == call(
-        **{
-            const.KEY_COMPONENTSTATE: {
-                const.KEY_COMPONENT: const.KEY_COMPONENTID_LEDDEVICE,
-                const.KEY_STATE: False,
-            }
-        }
+    assert client.method_calls[-1] == call.async_send_set_component(
+        componentstate={"component": "LEDDEVICE", "state": False}
     )
 
 
-async def test_light_async_turn_off(opp: OpenPeerPowerType) -> None:
+async def test_priority_light_async_turn_off_fail_async_send_clear(
+    opp: OpenPeerPower,
+) -> None:
+    """Test async_send_clear failure when turning off a priority light."""
+    client = create_mock_client()
+    client.async_send_clear = AsyncMock(return_value=False)
+    with patch(
+        "openpeerpower.components.hyperion.light.HyperionPriorityLight.entity_registry_enabled_default"
+    ) as enabled_by_default_mock:
+        enabled_by_default_mock.return_value = True
+        await setup_test_config_entry(opp, hyperion_client=client)
+
+    await opp.services.async_call(
+        LIGHT_DOMAIN,
+        SERVICE_TURN_OFF,
+        {ATTR_ENTITY_ID: TEST_PRIORITY_LIGHT_ENTITY_ID_1},
+        blocking=True,
+    )
+    assert client.method_calls[-1] == call.async_send_clear(priority=180)
+
+
+async def test_light_async_turn_off(opp: OpenPeerPower) -> None:
     """Test turning the light off."""
     client = create_mock_client()
     await setup_test_config_entry(opp, hyperion_client=client)
@@ -574,7 +705,7 @@ async def test_light_async_turn_off(opp: OpenPeerPowerType) -> None:
 
 
 async def test_light_async_updates_from_hyperion_client(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
 ) -> None:
     """Test receiving a variety of Hyperion client callbacks."""
     client = create_mock_client()
@@ -617,7 +748,10 @@ async def test_light_async_updates_from_hyperion_client(
     assert entity_state
     assert entity_state.attributes["icon"] == hyperion_light.ICON_EXTERNAL_SOURCE
     assert entity_state.attributes["hs_color"] == (0.0, 0.0)
-    assert entity_state.attributes["effect"] == const.KEY_COMPONENTID_V4L
+    assert (
+        entity_state.attributes["effect"]
+        == const.KEY_COMPONENTID_TO_NAME[const.KEY_COMPONENTID_V4L]
+    )
 
     # Update priorities (Effect)
     effect = "foo"
@@ -663,7 +797,10 @@ async def test_light_async_updates_from_hyperion_client(
     assert entity_state
     assert entity_state.attributes["effect_list"] == [
         hyperion_light.KEY_EFFECT_SOLID
-    ] + const.KEY_COMPONENTID_EXTERNAL_SOURCES + [
+    ] + [
+        const.KEY_COMPONENTID_TO_NAME[component]
+        for component in const.KEY_COMPONENTID_EXTERNAL_SOURCES
+    ] + [
         effect[const.KEY_NAME] for effect in effects
     ]
 
@@ -688,7 +825,7 @@ async def test_light_async_updates_from_hyperion_client(
     assert entity_state.state == "on"
 
 
-async def test_full_state_loaded_on_start(opp: OpenPeerPowerType) -> None:
+async def test_full_state_loaded_on_start(opp: OpenPeerPower) -> None:
     """Test receiving a variety of Hyperion client callbacks."""
     client = create_mock_client()
 
@@ -711,7 +848,7 @@ async def test_full_state_loaded_on_start(opp: OpenPeerPowerType) -> None:
     assert entity_state.attributes["hs_color"] == (180.0, 100.0)
 
 
-async def test_unload_entry(opp: OpenPeerPowerType) -> None:
+async def test_unload_entry(opp: OpenPeerPower) -> None:
     """Test unload."""
     client = create_mock_client()
     await setup_test_config_entry(opp, hyperion_client=client)
@@ -725,7 +862,7 @@ async def test_unload_entry(opp: OpenPeerPowerType) -> None:
     assert client.async_client_disconnect.call_count == 2
 
 
-async def test_version_log_warning(caplog, opp: OpenPeerPowerType) -> None:  # type: ignore[no-untyped-def]
+async def test_version_log_warning(caplog, opp: OpenPeerPower) -> None:
     """Test warning on old version."""
     client = create_mock_client()
     client.async_sysinfo_version = AsyncMock(return_value="2.0.0-alpha.7")
@@ -734,7 +871,7 @@ async def test_version_log_warning(caplog, opp: OpenPeerPowerType) -> None:  # t
     assert "Please consider upgrading" in caplog.text
 
 
-async def test_version_no_log_warning(caplog, opp: OpenPeerPowerType) -> None:  # type: ignore[no-untyped-def]
+async def test_version_no_log_warning(caplog, opp: OpenPeerPower) -> None:
     """Test no warning on acceptable version."""
     client = create_mock_client()
     client.async_sysinfo_version = AsyncMock(return_value="2.0.0-alpha.9")
@@ -743,7 +880,7 @@ async def test_version_no_log_warning(caplog, opp: OpenPeerPowerType) -> None:  
     assert "Please consider upgrading" not in caplog.text
 
 
-async def test_setup_entry_no_token_reauth(opp: OpenPeerPowerType) -> None:
+async def test_setup_entry_no_token_reauth(opp: OpenPeerPower) -> None:
     """Verify a reauth flow when auth is required but no token provided."""
     client = create_mock_client()
     config_entry = add_test_config_entry(opp)
@@ -756,13 +893,17 @@ async def test_setup_entry_no_token_reauth(opp: OpenPeerPowerType) -> None:
         assert client.async_client_disconnect.called
         mock_flow_init.assert_called_once_with(
             DOMAIN,
-            context={CONF_SOURCE: SOURCE_REAUTH},
+            context={
+                CONF_SOURCE: SOURCE_REAUTH,
+                "entry_id": config_entry.entry_id,
+                "unique_id": config_entry.unique_id,
+            },
             data=config_entry.data,
         )
-        assert config_entry.state == ENTRY_STATE_SETUP_ERROR
+        assert config_entry.state is ConfigEntryState.SETUP_ERROR
 
 
-async def test_setup_entry_bad_token_reauth(opp: OpenPeerPowerType) -> None:
+async def test_setup_entry_bad_token_reauth(opp: OpenPeerPower) -> None:
     """Verify a reauth flow when a bad token is provided."""
     client = create_mock_client()
     config_entry = add_test_config_entry(
@@ -780,14 +921,18 @@ async def test_setup_entry_bad_token_reauth(opp: OpenPeerPowerType) -> None:
         assert client.async_client_disconnect.called
         mock_flow_init.assert_called_once_with(
             DOMAIN,
-            context={CONF_SOURCE: SOURCE_REAUTH},
+            context={
+                CONF_SOURCE: SOURCE_REAUTH,
+                "entry_id": config_entry.entry_id,
+                "unique_id": config_entry.unique_id,
+            },
             data=config_entry.data,
         )
-        assert config_entry.state == ENTRY_STATE_SETUP_ERROR
+        assert config_entry.state is ConfigEntryState.SETUP_ERROR
 
 
 async def test_priority_light_async_updates(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
 ) -> None:
     """Test receiving a variety of Hyperion client callbacks to a HyperionPriorityLight."""
     priority_template = {
@@ -801,13 +946,15 @@ async def test_priority_light_async_updates(
     client = create_mock_client()
     client.priorities = [{**priority_template}]
 
-    with patch(
-        "openpeerpower.components.hyperion.light.HyperionPriorityLight.entity_registry_enabled_default"
-    ) as enabled_by_default_mock:
-        enabled_by_default_mock.return_value = True
-        await setup_test_config_entry(opp, hyperion_client=client)
+    register_test_entity(
+        opp,
+        LIGHT_DOMAIN,
+        TYPE_HYPERION_PRIORITY_LIGHT,
+        TEST_PRIORITY_LIGHT_ENTITY_ID_1,
+    )
+    await setup_test_config_entry(opp, hyperion_client=client)
 
-    # == Scenario: Color at OP priority will show light as on.
+    # == Scenario: Color at OPP priority will show light as on.
     entity_state = opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
     assert entity_state
     assert entity_state.state == "on"
@@ -827,8 +974,8 @@ async def test_priority_light_async_updates(
     assert entity_state
     assert entity_state.state == "off"
 
-    # == Scenario: Lower priority than OP priority should have no impact on what HA
-    # shows when the OP priority is present.
+    # == Scenario: Lower priority than OPP priority should have no impact on what HA
+    # shows when the OPP priority is present.
     client.priorities = [
         {**priority_template, const.KEY_PRIORITY: TEST_PRIORITY - 1},
         {
@@ -843,7 +990,7 @@ async def test_priority_light_async_updates(
     assert entity_state
     assert entity_state.state == "off"
 
-    # == Scenario: Fresh color at OP priority should turn OP entity on (even though
+    # == Scenario: Fresh color at OPP priority should turn OPP entity on (even though
     # there's a lower priority enabled/visible in Hyperion).
     client.priorities = [
         {**priority_template, const.KEY_PRIORITY: TEST_PRIORITY - 1},
@@ -861,10 +1008,10 @@ async def test_priority_light_async_updates(
     assert entity_state.state == "on"
     assert entity_state.attributes["hs_color"] == (240.0, 33.333)
 
-    # == Scenario: V4L at a higher priority, with no other OP priority at all, should
+    # == Scenario: V4L at a higher priority, with no other OPP priority at all, should
     # have no effect.
 
-    # Emulate OP turning the light off with black at the OP priority.
+    # Emulate OPP turning the light off with black at the OPP priority.
     client.priorities = []
     client.visible_priority = None
 
@@ -947,7 +1094,7 @@ async def test_priority_light_async_updates(
 
 
 async def test_priority_light_async_updates_off_sets_black(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
 ) -> None:
     """Test turning the HyperionPriorityLight off."""
     client = create_mock_client()
@@ -961,11 +1108,13 @@ async def test_priority_light_async_updates_off_sets_black(
         }
     ]
 
-    with patch(
-        "openpeerpower.components.hyperion.light.HyperionPriorityLight.entity_registry_enabled_default"
-    ) as enabled_by_default_mock:
-        enabled_by_default_mock.return_value = True
-        await setup_test_config_entry(opp, hyperion_client=client)
+    register_test_entity(
+        opp,
+        LIGHT_DOMAIN,
+        TYPE_HYPERION_PRIORITY_LIGHT,
+        TEST_PRIORITY_LIGHT_ENTITY_ID_1,
+    )
+    await setup_test_config_entry(opp, hyperion_client=client)
 
     client.async_send_clear = AsyncMock(return_value=True)
     client.async_send_set_color = AsyncMock(return_value=True)
@@ -993,7 +1142,7 @@ async def test_priority_light_async_updates_off_sets_black(
 
 
 async def test_priority_light_prior_color_preserved_after_black(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
 ) -> None:
     """Test that color is preserved in an on->off->on cycle for a HyperionPriorityLight.
 
@@ -1013,11 +1162,13 @@ async def test_priority_light_prior_color_preserved_after_black(
     client.priorities = []
     client.visible_priority = None
 
-    with patch(
-        "openpeerpower.components.hyperion.light.HyperionPriorityLight.entity_registry_enabled_default"
-    ) as enabled_by_default_mock:
-        enabled_by_default_mock.return_value = True
-        await setup_test_config_entry(opp, hyperion_client=client)
+    register_test_entity(
+        opp,
+        LIGHT_DOMAIN,
+        TYPE_HYPERION_PRIORITY_LIGHT,
+        TEST_PRIORITY_LIGHT_ENTITY_ID_1,
+    )
+    await setup_test_config_entry(opp, hyperion_client=client)
 
     # Turn the light on full green...
     # On (=), 100% (=), solid (=), [0,0,255] (=)
@@ -1114,17 +1265,147 @@ async def test_priority_light_prior_color_preserved_after_black(
     assert entity_state.attributes["hs_color"] == hs_color
 
 
-async def test_priority_light_has_no_external_sources(opp: OpenPeerPowerType) -> None:
+async def test_priority_light_has_no_external_sources(opp: OpenPeerPower) -> None:
     """Ensure a HyperionPriorityLight does not list external sources."""
     client = create_mock_client()
     client.priorities = []
 
-    with patch(
-        "openpeerpower.components.hyperion.light.HyperionPriorityLight.entity_registry_enabled_default"
-    ) as enabled_by_default_mock:
-        enabled_by_default_mock.return_value = True
-        await setup_test_config_entry(opp, hyperion_client=client)
+    register_test_entity(
+        opp,
+        LIGHT_DOMAIN,
+        TYPE_HYPERION_PRIORITY_LIGHT,
+        TEST_PRIORITY_LIGHT_ENTITY_ID_1,
+    )
+    await setup_test_config_entry(opp, hyperion_client=client)
 
     entity_state = opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
     assert entity_state
     assert entity_state.attributes["effect_list"] == [hyperion_light.KEY_EFFECT_SOLID]
+
+
+async def test_light_option_effect_hide_list(opp: OpenPeerPower) -> None:
+    """Test the effect_hide_list option."""
+    client = create_mock_client()
+    client.effects = [{const.KEY_NAME: "One"}, {const.KEY_NAME: "Two"}]
+
+    await setup_test_config_entry(
+        opp,
+        hyperion_client=client,
+        options={CONF_EFFECT_HIDE_LIST: ["Two", "USB Capture"]},
+    )
+
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
+    assert entity_state
+    assert entity_state.attributes["effect_list"] == [
+        "Solid",
+        "Boblight Server",
+        "Platform Capture",
+        "One",
+    ]
+
+
+async def test_device_info(opp: OpenPeerPower) -> None:
+    """Verify device information includes expected details."""
+    client = create_mock_client()
+
+    register_test_entity(
+        opp,
+        LIGHT_DOMAIN,
+        TYPE_HYPERION_PRIORITY_LIGHT,
+        TEST_PRIORITY_LIGHT_ENTITY_ID_1,
+    )
+    await setup_test_config_entry(opp, hyperion_client=client)
+
+    device_id = get_hyperion_device_id(TEST_SYSINFO_ID, TEST_INSTANCE)
+    device_registry = dr.async_get(opp)
+
+    device = device_registry.async_get_device({(DOMAIN, device_id)})
+    assert device
+    assert device.config_entries == {TEST_CONFIG_ENTRY_ID}
+    assert device.identifiers == {(DOMAIN, device_id)}
+    assert device.manufacturer == HYPERION_MANUFACTURER_NAME
+    assert device.model == HYPERION_MODEL_NAME
+    assert device.name == TEST_INSTANCE_1["friendly_name"]
+
+    entity_registry = await er.async_get_registry(opp)
+    entities_from_device = [
+        entry.entity_id
+        for entry in er.async_entries_for_device(entity_registry, device.id)
+    ]
+    assert TEST_PRIORITY_LIGHT_ENTITY_ID_1 in entities_from_device
+    assert TEST_ENTITY_ID_1 in entities_from_device
+
+
+async def test_lights_can_be_enabled(opp: OpenPeerPower) -> None:
+    """Verify lights can be enabled."""
+    client = create_mock_client()
+    await setup_test_config_entry(opp, hyperion_client=client)
+
+    entity_registry = er.async_get(opp)
+    entry = entity_registry.async_get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
+    assert entry
+    assert entry.disabled
+    assert entry.disabled_by == er.DISABLED_INTEGRATION
+    entity_state = opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
+    assert not entity_state
+
+    with patch(
+        "openpeerpower.components.hyperion.client.HyperionClient",
+        return_value=client,
+    ):
+        updated_entry = entity_registry.async_update_entity(
+            TEST_PRIORITY_LIGHT_ENTITY_ID_1, disabled_by=None
+        )
+        assert not updated_entry.disabled
+        await opp.async_block_till_done()
+
+        async_fire_time_changed(
+            opp,
+            dt.utcnow() + timedelta(seconds=RELOAD_AFTER_UPDATE_DELAY + 1),
+        )
+        await opp.async_block_till_done()
+
+    entity_state = opp.states.get(TEST_PRIORITY_LIGHT_ENTITY_ID_1)
+    assert entity_state
+
+
+async def test_deprecated_effect_names(caplog, opp: OpenPeerPower) -> None:
+    """Test deprecated effects function and issue a warning."""
+    client = create_mock_client()
+    client.async_send_clear = AsyncMock(return_value=True)
+    client.async_send_set_component = AsyncMock(return_value=True)
+
+    await setup_test_config_entry(opp, hyperion_client=client)
+
+    for component in const.KEY_COMPONENTID_EXTERNAL_SOURCES:
+        await opp.services.async_call(
+            LIGHT_DOMAIN,
+            SERVICE_TURN_ON,
+            {ATTR_ENTITY_ID: TEST_ENTITY_ID_1, ATTR_EFFECT: component},
+            blocking=True,
+        )
+        assert "Use of Hyperion effect '%s' is deprecated" % component in caplog.text
+
+        # Simulate a state callback from Hyperion.
+        client.visible_priority = {
+            const.KEY_COMPONENTID: component,
+        }
+        call_registered_callback(client, "priorities-update")
+
+        entity_state = opp.states.get(TEST_ENTITY_ID_1)
+        assert entity_state
+        assert (
+            entity_state.attributes["effect"]
+            == const.KEY_COMPONENTID_TO_NAME[component]
+        )
+
+
+async def test_deprecated_effect_names_not_in_effect_list(
+    opp: OpenPeerPower,
+) -> None:
+    """Test deprecated effects are not in shown effect list."""
+    await setup_test_config_entry(opp)
+    entity_state = opp.states.get(TEST_ENTITY_ID_1)
+    assert entity_state
+    for component in const.KEY_COMPONENTID_EXTERNAL_SOURCES:
+        assert component not in entity_state.attributes["effect_list"]

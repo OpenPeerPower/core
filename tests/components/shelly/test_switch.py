@@ -47,12 +47,16 @@ async def test_update(opp, coap_wrapper, monkeypatch):
     await opp.async_block_till_done()
 
     monkeypatch.setattr(coap_wrapper.device.blocks[RELAY_BLOCK_ID], "output", False)
-    await opp.helpers.entity_component.async_update_entity("switch.test_name_channel_1")
+    await opp.helpers.entity_component.async_update_entity(
+        "switch.test_name_channel_1"
+    )
     await opp.async_block_till_done()
     assert opp.states.get("switch.test_name_channel_1").state == STATE_OFF
 
     monkeypatch.setattr(coap_wrapper.device.blocks[RELAY_BLOCK_ID], "output", True)
-    await opp.helpers.entity_component.async_update_entity("switch.test_name_channel_1")
+    await opp.helpers.entity_component.async_update_entity(
+        "switch.test_name_channel_1"
+    )
     await opp.async_block_till_done()
     assert opp.states.get("switch.test_name_channel_1").state == STATE_ON
 

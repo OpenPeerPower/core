@@ -5,7 +5,7 @@ from unittest.mock import patch
 from openpeerpower.components.ruckus_unleashed import API_MAC, DOMAIN
 from openpeerpower.components.ruckus_unleashed.const import API_AP, API_ID, API_NAME
 from openpeerpower.const import STATE_HOME, STATE_NOT_HOME, STATE_UNAVAILABLE
-from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers import device_registry as dr, entity_registry as er
 from openpeerpower.helpers.device_registry import CONNECTION_NETWORK_MAC
 from openpeerpower.util import utcnow
 
@@ -80,7 +80,7 @@ async def test_restoring_clients(opp):
     entry = mock_config_entry()
     entry.add_to_opp(opp)
 
-    registry = await entity_registry.async_get_registry(opp)
+    registry = er.async_get(opp)
     registry.async_get_or_create(
         "device_tracker",
         DOMAIN,
@@ -120,7 +120,7 @@ async def test_client_device_setup(opp):
 
     router_info = DEFAULT_AP_INFO[API_AP][API_ID]["1"]
 
-    device_registry = await opp.helpers.device_registry.async_get_registry()
+    device_registry = dr.async_get(opp)
     client_device = device_registry.async_get_device(
         identifiers={},
         connections={(CONNECTION_NETWORK_MAC, TEST_CLIENT[API_MAC])},

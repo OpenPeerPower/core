@@ -22,7 +22,9 @@ from tests.common import async_mock_service
 
 async def test_intent_set_humidity(opp):
     """Test the set humidity intent."""
-    opp.states.async_set("humidifier.bedroom_humidifier", STATE_ON, {ATTR_HUMIDITY: 40})
+    opp.states.async_set(
+        "humidifier.bedroom_humidifier", STATE_ON, {ATTR_HUMIDITY: 40}
+    )
     humidity_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_HUMIDITY)
     turn_on_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_ON)
     await intent.async_setup_intents(opp)
@@ -159,7 +161,9 @@ async def test_intent_set_mode_and_turn_on(opp):
 
 async def test_intent_set_mode_tests_feature(opp):
     """Test the set mode intent where modes are not supported."""
-    opp.states.async_set("humidifier.bedroom_humidifier", STATE_ON, {ATTR_HUMIDITY: 40})
+    opp.states.async_set(
+        "humidifier.bedroom_humidifier", STATE_ON, {ATTR_HUMIDITY: 40}
+    )
     mode_calls = async_mock_service(opp, DOMAIN, SERVICE_SET_MODE)
     await intent.async_setup_intents(opp)
 

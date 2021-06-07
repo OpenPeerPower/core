@@ -17,8 +17,6 @@ async def test_form_user(opp):
     assert result["errors"] is None
 
     with patch(
-        "openpeerpower.components.profiler.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.profiler.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -31,7 +29,6 @@ async def test_form_user(opp):
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Profiler"
     assert result2["data"] == {}
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 

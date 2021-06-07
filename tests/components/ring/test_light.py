@@ -1,5 +1,6 @@
 """The tests for the Ring light platform."""
 from openpeerpower.components.light import DOMAIN as LIGHT_DOMAIN
+from openpeerpower.helpers import entity_registry as er
 
 from .common import setup_platform
 
@@ -9,7 +10,7 @@ from tests.common import load_fixture
 async def test_entity_registry(opp, requests_mock):
     """Tests that the devices are registered in the entity registry."""
     await setup_platform(opp, LIGHT_DOMAIN)
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     entry = entity_registry.async_get("light.front_light")
     assert entry.unique_id == 765432

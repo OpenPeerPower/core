@@ -3,7 +3,7 @@ from datetime import timedelta
 
 from openpeerpower.components import mikrotik
 import openpeerpower.components.device_tracker as device_tracker
-from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.setup import async_setup_component
 import openpeerpower.util.dt as dt_util
 
@@ -101,7 +101,7 @@ async def test_restoring_devices(opp):
     )
     config_entry.add_to_opp(opp)
 
-    registry = await entity_registry.async_get_registry(opp)
+    registry = er.async_get(opp)
     registry.async_get_or_create(
         device_tracker.DOMAIN,
         mikrotik.DOMAIN,

@@ -20,7 +20,7 @@ async def test_create_sensors(opp):
         "unit_of_measurement": TEMP_CELSIUS,
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -32,7 +32,7 @@ async def test_create_sensors(opp):
         "friendly_name": "Nick Office Zone Setpoint Status",
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -45,7 +45,7 @@ async def test_create_sensors(opp):
         "friendly_name": "Nick Office Zone Status",
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -58,7 +58,7 @@ async def test_create_sensors(opp):
         "friendly_name": "Master Suite Air Cleaner Mode",
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -72,7 +72,7 @@ async def test_create_sensors(opp):
         "unit_of_measurement": PERCENTAGE,
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -87,7 +87,7 @@ async def test_create_sensors(opp):
         "unit_of_measurement": TEMP_CELSIUS,
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -102,7 +102,7 @@ async def test_create_sensors(opp):
         "unit_of_measurement": PERCENTAGE,
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -116,7 +116,7 @@ async def test_create_sensors(opp):
         "unit_of_measurement": PERCENTAGE,
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -129,7 +129,7 @@ async def test_create_sensors(opp):
         "friendly_name": "Master Suite System Status",
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )

@@ -5,7 +5,7 @@ from unittest.mock import patch
 import pytest
 import voluptuous as vol
 
-from openpeerpower import data_entry_flow
+from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.components import mqtt
 from openpeerpower.setup import async_setup_component
 
@@ -33,7 +33,7 @@ async def test_user_connection_works(opp, mock_try_connection, mock_finish_setup
     mock_try_connection.return_value = True
 
     result = await opp.config_entries.flow.async_init(
-        "mqtt", context={"source": "user"}
+        "mqtt", context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
 
@@ -58,7 +58,7 @@ async def test_user_connection_fails(opp, mock_try_connection, mock_finish_setup
     mock_try_connection.return_value = False
 
     result = await opp.config_entries.flow.async_init(
-        "mqtt", context={"source": "user"}
+        "mqtt", context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
 
@@ -84,7 +84,7 @@ async def test_manual_config_set(opp, mock_try_connection, mock_finish_setup):
     mock_try_connection.return_value = True
 
     result = await opp.config_entries.flow.async_init(
-        "mqtt", context={"source": "user"}
+        "mqtt", context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "abort"
 
@@ -94,7 +94,7 @@ async def test_user_single_instance(opp):
     MockConfigEntry(domain="mqtt").add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
-        "mqtt", context={"source": "user"}
+        "mqtt", context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "abort"
     assert result["reason"] == "single_instance_allowed"
@@ -105,7 +105,7 @@ async def test_oppio_single_instance(opp):
     MockConfigEntry(domain="mqtt").add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
-        "mqtt", context={"source": "oppio"}
+        "mqtt", context={"source": config_entries.SOURCE_OPPIO}
     )
     assert result["type"] == "abort"
     assert result["reason"] == "single_instance_allowed"
@@ -125,7 +125,7 @@ async def test_oppio_confirm(opp, mock_try_connection, mock_finish_setup):
             "password": "mock-pass",
             "protocol": "3.1.1",
         },
-        context={"source": "oppio"},
+        context={"source": config_entries.SOURCE_OPPIO},
     )
     assert result["type"] == "form"
     assert result["step_id"] == "oppio_confirm"

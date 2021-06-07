@@ -19,7 +19,7 @@ def entities(opp):
     yield platform.ENTITIES[0:2]
 
 
-async def test_config_yaml_alias_anchor(opp, entities):
+async def test_config_yaml_alias_anchor(opp, entities, enable_custom_integrations):
     """Test the usage of YAML aliases and anchors.
 
     The following test scene configuration is equivalent to:
@@ -60,11 +60,11 @@ async def test_config_yaml_alias_anchor(opp, entities):
 
     assert light.is_on(opp, light_1.entity_id)
     assert light.is_on(opp, light_2.entity_id)
-    assert 100 == light_1.last_call("turn_on")[1].get("brightness")
-    assert 100 == light_2.last_call("turn_on")[1].get("brightness")
+    assert light_1.last_call("turn_on")[1].get("brightness") == 100
+    assert light_2.last_call("turn_on")[1].get("brightness") == 100
 
 
-async def test_config_yaml_bool(opp, entities):
+async def test_config_yaml_bool(opp, entities, enable_custom_integrations):
     """Test parsing of booleans in yaml config."""
     light_1, light_2 = await setup_lights(opp, entities)
 
@@ -88,10 +88,10 @@ async def test_config_yaml_bool(opp, entities):
 
     assert light.is_on(opp, light_1.entity_id)
     assert light.is_on(opp, light_2.entity_id)
-    assert 100 == light_2.last_call("turn_on")[1].get("brightness")
+    assert light_2.last_call("turn_on")[1].get("brightness") == 100
 
 
-async def test_activate_scene(opp, entities):
+async def test_activate_scene(opp, entities, enable_custom_integrations):
     """Test active scene."""
     light_1, light_2 = await setup_lights(opp, entities)
 
@@ -116,6 +116,8 @@ async def test_activate_scene(opp, entities):
     assert light.is_on(opp, light_1.entity_id)
     assert light.is_on(opp, light_2.entity_id)
     assert light_2.last_call("turn_on")[1].get("brightness") == 100
+
+    await turn_off_lights(opp, [light_2.entity_id])
 
     calls = async_mock_service(opp, "light", "turn_on")
 
@@ -156,16 +158,22 @@ async def setup_lights(opp, entities):
     await opp.async_block_till_done()
 
     light_1, light_2 = entities
+    light_1.supported_color_modes = ["brightness"]
+    light_2.supported_color_modes = ["brightness"]
 
-    await opp.services.async_call(
-        "light",
-        "turn_off",
-        {"entity_id": [light_1.entity_id, light_2.entity_id]},
-        blocking=True,
-    )
-    await opp.async_block_till_done()
-
+    await turn_off_lights(opp, [light_1.entity_id, light_2.entity_id])
     assert not light.is_on(opp, light_1.entity_id)
     assert not light.is_on(opp, light_2.entity_id)
 
     return light_1, light_2
+
+
+async def turn_off_lights(opp, entity_ids):
+    """Turn lights off."""
+    await opp.services.async_call(
+        "light",
+        "turn_off",
+        {"entity_id": entity_ids},
+        blocking=True,
+    )
+    await opp.async_block_till_done()

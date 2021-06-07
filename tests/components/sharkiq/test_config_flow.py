@@ -24,8 +24,6 @@ async def test_form(opp):
     assert result["errors"] == {}
 
     with patch("sharkiqpy.AylaApi.async_sign_in", return_value=True), patch(
-        "openpeerpower.components.sharkiq.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.sharkiq.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -41,7 +39,6 @@ async def test_form(opp):
         "password": TEST_PASSWORD,
     }
     await opp.async_block_till_done()
-    mock_setup.assert_called_once()
     mock_setup_entry.assert_called_once()
 
 
@@ -76,7 +73,9 @@ async def test_reauth_success(opp: OpenPeerPower):
         mock_config.add_to_opp(opp)
 
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "reauth", "unique_id": UNIQUE_ID}, data=CONFIG
+            DOMAIN,
+            context={"source": config_entries.SOURCE_REAUTH, "unique_id": UNIQUE_ID},
+            data=CONFIG,
         )
 
         assert result["type"] == "abort"
@@ -102,7 +101,7 @@ async def test_reauth(
     with patch("sharkiqpy.AylaApi.async_sign_in", side_effect=side_effect):
         result = await opp.config_entries.flow.async_init(
             DOMAIN,
-            context={"source": "reauth", "unique_id": UNIQUE_ID},
+            context={"source": config_entries.SOURCE_REAUTH, "unique_id": UNIQUE_ID},
             data=CONFIG,
         )
 

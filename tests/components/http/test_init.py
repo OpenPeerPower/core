@@ -1,4 +1,5 @@
 """The tests for the Open Peer Power HTTP component."""
+from datetime import timedelta
 from ipaddress import ip_network
 import logging
 from unittest.mock import Mock, patch
@@ -7,7 +8,10 @@ import pytest
 
 import openpeerpower.components.http as http
 from openpeerpower.setup import async_setup_component
+from openpeerpower.util import dt as dt_util
 from openpeerpower.util.ssl import server_context_intermediate, server_context_modern
+
+from tests.common import async_fire_time_changed
 
 
 @pytest.fixture
@@ -47,7 +51,9 @@ class TestView(http.OpenPeerPowerView):
         return "hello"
 
 
-async def test_registering_view_while_running(opp, aiohttp_client, aiohttp_unused_port):
+async def test_registering_view_while_running(
+    opp, aiohttp_client, aiohttp_unused_port
+):
     """Test that we can register a view while the server is running."""
     await async_setup_component(
         opp, http.DOMAIN, {http.DOMAIN: {http.CONF_SERVER_PORT: aiohttp_unused_port()}}
@@ -187,6 +193,10 @@ async def test_storing_config(opp, aiohttp_client, aiohttp_unused_port):
     assert await async_setup_component(opp, http.DOMAIN, {http.DOMAIN: config})
 
     await opp.async_start()
+
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=200))
+    await opp.async_block_till_done()
+
     restored = await opp.components.http.async_get_last_config()
     restored["trusted_proxies"][0] = ip_network(restored["trusted_proxies"][0])
 

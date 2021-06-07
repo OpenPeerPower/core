@@ -5,6 +5,7 @@ from openpeerpower.components.fan import (
     SUPPORT_OSCILLATE,
     SUPPORT_SET_SPEED,
 )
+from openpeerpower.helpers import device_registry as dr, entity_registry as er
 
 from tests.components.homekit_controller.common import (
     Helper,
@@ -20,7 +21,7 @@ async def test_openpeerpower_bridge_fan_setup(opp):
     )
     config_entry, pairing = await setup_test_accessories(opp, accessories)
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     # Check that the fan is correctly found and set up
     fan_id = "fan.living_room_fan"
@@ -42,7 +43,7 @@ async def test_openpeerpower_bridge_fan_setup(opp):
         SUPPORT_DIRECTION | SUPPORT_SET_SPEED | SUPPORT_OSCILLATE
     )
 
-    device_registry = await opp.helpers.device_registry.async_get_registry()
+    device_registry = dr.async_get(opp)
 
     device = device_registry.async_get(fan.device_id)
     assert device.manufacturer == "Open Peer Power"

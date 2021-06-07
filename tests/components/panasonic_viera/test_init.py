@@ -7,7 +7,7 @@ from openpeerpower.components.panasonic_viera.const import (
     DEFAULT_NAME,
     DOMAIN,
 )
-from openpeerpower.config_entries import ENTRY_STATE_NOT_LOADED
+from openpeerpower.config_entries import ConfigEntryState
 from openpeerpower.const import CONF_HOST, STATE_UNAVAILABLE
 from openpeerpower.setup import async_setup_component
 
@@ -209,7 +209,7 @@ async def test_setup_unload_entry(opp, mock_remote):
     await opp.async_block_till_done()
 
     await opp.config_entries.async_unload(mock_entry.entry_id)
-    assert mock_entry.state == ENTRY_STATE_NOT_LOADED
+    assert mock_entry.state is ConfigEntryState.NOT_LOADED
 
     state_tv = opp.states.get("media_player.panasonic_viera_tv")
     state_remote = opp.states.get("remote.panasonic_viera_tv")

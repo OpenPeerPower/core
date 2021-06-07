@@ -47,8 +47,6 @@ async def test_user_flow(opp, user_flow):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         return_value=MockConnection(),
     ), patch(
-        "openpeerpower.components.kodi.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.kodi.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -66,7 +64,6 @@ async def test_user_flow(opp, user_flow):
         "timeout": DEFAULT_TIMEOUT,
     }
 
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -92,8 +89,6 @@ async def test_form_valid_auth(opp, user_flow):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         return_value=MockConnection(),
     ), patch(
-        "openpeerpower.components.kodi.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.kodi.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -112,7 +107,6 @@ async def test_form_valid_auth(opp, user_flow):
         "timeout": DEFAULT_TIMEOUT,
     }
 
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -142,8 +136,6 @@ async def test_form_valid_ws_port(opp, user_flow):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         return_value=MockConnection(),
     ), patch(
-        "openpeerpower.components.kodi.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.kodi.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -163,7 +155,6 @@ async def test_form_valid_ws_port(opp, user_flow):
         "timeout": DEFAULT_TIMEOUT,
     }
 
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -187,8 +178,6 @@ async def test_form_empty_ws_port(opp, user_flow):
     assert result["errors"] == {}
 
     with patch(
-        "openpeerpower.components.kodi.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.kodi.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -208,7 +197,6 @@ async def test_form_empty_ws_port(opp, user_flow):
         "timeout": DEFAULT_TIMEOUT,
     }
 
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -423,15 +411,15 @@ async def test_discovery(opp):
         return_value=MockConnection(),
     ):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
+            DOMAIN,
+            context={"source": config_entries.SOURCE_ZEROCONF},
+            data=TEST_DISCOVERY,
         )
 
     assert result["type"] == "form"
     assert result["step_id"] == "discovery_confirm"
 
     with patch(
-        "openpeerpower.components.kodi.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.kodi.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -451,7 +439,6 @@ async def test_discovery(opp):
         "timeout": DEFAULT_TIMEOUT,
     }
 
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -465,7 +452,9 @@ async def test_discovery_cannot_connect_http(opp):
         return_value=MockConnection(),
     ):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
+            DOMAIN,
+            context={"source": config_entries.SOURCE_ZEROCONF},
+            data=TEST_DISCOVERY,
         )
 
     assert result["type"] == "abort"
@@ -486,7 +475,9 @@ async def test_discovery_cannot_connect_ws(opp):
         new=get_kodi_connection,
     ):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
+            DOMAIN,
+            context={"source": config_entries.SOURCE_ZEROCONF},
+            data=TEST_DISCOVERY,
         )
 
     assert result["type"] == "form"
@@ -504,7 +495,9 @@ async def test_discovery_exception_http(opp, user_flow):
         return_value=MockConnection(),
     ):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
+            DOMAIN,
+            context={"source": config_entries.SOURCE_ZEROCONF},
+            data=TEST_DISCOVERY,
         )
 
     assert result["type"] == "abort"
@@ -521,7 +514,9 @@ async def test_discovery_invalid_auth(opp):
         return_value=MockConnection(),
     ):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
+            DOMAIN,
+            context={"source": config_entries.SOURCE_ZEROCONF},
+            data=TEST_DISCOVERY,
         )
 
     assert result["type"] == "form"
@@ -539,14 +534,16 @@ async def test_discovery_duplicate_data(opp):
         return_value=MockConnection(),
     ):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
+            DOMAIN,
+            context={"source": config_entries.SOURCE_ZEROCONF},
+            data=TEST_DISCOVERY,
         )
 
     assert result["type"] == "form"
     assert result["step_id"] == "discovery_confirm"
 
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
+        DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}, data=TEST_DISCOVERY
     )
 
     assert result["type"] == "abort"
@@ -564,7 +561,7 @@ async def test_discovery_updates_unique_id(opp):
     entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
+        DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}, data=TEST_DISCOVERY
     )
 
     assert result["type"] == "abort"
@@ -578,7 +575,9 @@ async def test_discovery_updates_unique_id(opp):
 async def test_discovery_without_unique_id(opp):
     """Test a discovery flow with no unique id aborts."""
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY_WO_UUID
+        DOMAIN,
+        context={"source": config_entries.SOURCE_ZEROCONF},
+        data=TEST_DISCOVERY_WO_UUID,
     )
 
     assert result["type"] == "abort"
@@ -594,8 +593,6 @@ async def test_form_import(opp):
         "openpeerpower.components.kodi.config_flow.get_kodi_connection",
         return_value=MockConnection(),
     ), patch(
-        "openpeerpower.components.kodi.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.kodi.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -610,7 +607,6 @@ async def test_form_import(opp):
     assert result["title"] == TEST_IMPORT["name"]
     assert result["data"] == TEST_IMPORT
 
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 

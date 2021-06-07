@@ -9,7 +9,7 @@ from simplipy.errors import (
 
 from openpeerpower import data_entry_flow
 from openpeerpower.components.simplisafe import DOMAIN
-from openpeerpower.config_entries import SOURCE_USER
+from openpeerpower.config_entries import SOURCE_REAUTH, SOURCE_USER
 from openpeerpower.const import CONF_CODE, CONF_PASSWORD, CONF_TOKEN, CONF_USERNAME
 
 from tests.common import MockConfigEntry
@@ -107,7 +107,7 @@ async def test_step_reauth(opp):
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
-        context={"source": "reauth"},
+        context={"source": SOURCE_REAUTH},
         data={CONF_CODE: "1234", CONF_USERNAME: "user@email.com"},
     )
     assert result["step_id"] == "reauth_confirm"

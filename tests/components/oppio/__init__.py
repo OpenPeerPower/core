@@ -14,7 +14,7 @@ def mock_all(aioclient_mock):
         "http://127.0.0.1/info",
         json={
             "result": "ok",
-            "data": {"supervisor": "222", "openpeerpower": "0.110.0", "oppos": None},
+            "data": {"supervisor": "222", "openpeerpower": "0.110.0", "opp.s": None},
         },
     )
     aioclient_mock.get(
@@ -24,7 +24,7 @@ def mock_all(aioclient_mock):
             "data": {
                 "result": "ok",
                 "data": {
-                    "coppis": "vm",
+                    "copp.s": "vm",
                     "operating_system": "Debian GNU/Linux 10 (buster)",
                     "kernel": "4.19.0-6-amd64",
                 },

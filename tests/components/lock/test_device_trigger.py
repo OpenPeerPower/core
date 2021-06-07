@@ -1,4 +1,6 @@
 """The tests for Lock device triggers."""
+from datetime import timedelta
+
 import pytest
 
 import openpeerpower.components.automation as automation
@@ -6,10 +8,13 @@ from openpeerpower.components.lock import DOMAIN
 from openpeerpower.const import STATE_LOCKED, STATE_UNLOCKED
 from openpeerpower.helpers import device_registry
 from openpeerpower.setup import async_setup_component
+import openpeerpower.util.dt as dt_util
 
 from tests.common import (
     MockConfigEntry,
     assert_lists_same,
+    async_fire_time_changed,
+    async_get_device_automation_capabilities,
     async_get_device_automations,
     async_mock_service,
     mock_device_registry,
@@ -63,6 +68,29 @@ async def test_get_triggers(opp, device_reg, entity_reg):
     ]
     triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     assert_lists_same(triggers, expected_triggers)
+
+
+async def test_get_trigger_capabilities(opp, device_reg, entity_reg):
+    """Test we get the expected capabilities from a lock."""
+    config_entry = MockConfigEntry(domain="test", data={})
+    config_entry.add_to_opp(opp)
+    device_entry = device_reg.async_get_or_create(
+        config_entry_id=config_entry.entry_id,
+        connections={(device_registry.CONNECTION_NETWORK_MAC, "12:34:56:AB:CD:EF")},
+    )
+    entity_reg.async_get_or_create(DOMAIN, "test", "5678", device_id=device_entry.id)
+
+    triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
+    assert len(triggers) == 2
+    for trigger in triggers:
+        capabilities = await async_get_device_automation_capabilities(
+            opp, "trigger", trigger
+        )
+        assert capabilities == {
+            "extra_fields": [
+                {"name": "for", "optional": True, "type": "positive_time_period_dict"}
+            ]
+        }
 
 
 async def test_if_fires_on_state_change(opp, calls):
@@ -131,3 +159,58 @@ async def test_if_fires_on_state_change(opp, calls):
     assert calls[1].data[
         "some"
     ] == "unlocked - device - {} - locked - unlocked - None".format("lock.entity")
+
+
+async def test_if_fires_on_state_change_with_for(opp, calls):
+    """Test for triggers firing with delay."""
+    entity_id = f"{DOMAIN}.entity"
+    opp.states.async_set(entity_id, STATE_UNLOCKED)
+
+    assert await async_setup_component(
+        opp,
+        automation.DOMAIN,
+        {
+            automation.DOMAIN: [
+                {
+                    "trigger": {
+                        "platform": "device",
+                        "domain": DOMAIN,
+                        "device_id": "",
+                        "entity_id": entity_id,
+                        "type": "locked",
+                        "for": {"seconds": 5},
+                    },
+                    "action": {
+                        "service": "test.automation",
+                        "data_template": {
+                            "some": "turn_off {{ trigger.%s }}"
+                            % "}} - {{ trigger.".join(
+                                (
+                                    "platform",
+                                    "entity_id",
+                                    "from_state.state",
+                                    "to_state.state",
+                                    "for",
+                                )
+                            )
+                        },
+                    },
+                }
+            ]
+        },
+    )
+    await opp.async_block_till_done()
+    assert opp.states.get(entity_id).state == STATE_UNLOCKED
+    assert len(calls) == 0
+
+    opp.states.async_set(entity_id, STATE_LOCKED)
+    await opp.async_block_till_done()
+    assert len(calls) == 0
+    async_fire_time_changed(opp, dt_util.utcnow() + timedelta(seconds=10))
+    await opp.async_block_till_done()
+    assert len(calls) == 1
+    await opp.async_block_till_done()
+    assert (
+        calls[0].data["some"]
+        == f"turn_off device - {entity_id} - unlocked - locked - 0:00:05"
+    )

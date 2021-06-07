@@ -14,7 +14,7 @@ async def test_create_binary_sensors(opp):
     assert state.state == STATE_ON
     expected_attributes = {"device_class": "connectivity"}
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )

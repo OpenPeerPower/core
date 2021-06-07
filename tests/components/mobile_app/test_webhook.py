@@ -9,7 +9,6 @@ from openpeerpower.components.zone import DOMAIN as ZONE_DOMAIN
 from openpeerpower.const import CONF_WEBHOOK_ID
 from openpeerpower.core import callback
 from openpeerpower.exceptions import OpenPeerPowerError
-from openpeerpower.setup import async_setup_component
 
 from .const import CALL_SERVICE, FIRE_EVENT, REGISTER_CLEARTEXT, RENDER_TEMPLATE, UPDATE
 
@@ -152,11 +151,29 @@ async def test_webhook_update_registration(webhook_client, authed_api_client):
 
 async def test_webhook_handle_get_zones(opp, create_registrations, webhook_client):
     """Test that we can get zones properly."""
-    await async_setup_component(
-        opp,
-        ZONE_DOMAIN,
-        {ZONE_DOMAIN: {}},
-    )
+    # Zone is already loaded as part of the fixture,
+    # so we just trigger a reload.
+    with patch(
+        "openpeerpower.config.load_yaml_config_file",
+        autospec=True,
+        return_value={
+            ZONE_DOMAIN: [
+                {
+                    "name": "School",
+                    "latitude": 32.8773367,
+                    "longitude": -117.2494053,
+                    "radius": 250,
+                    "icon": "mdi:school",
+                },
+                {
+                    "name": "Work",
+                    "latitude": 33.8773367,
+                    "longitude": -118.2494053,
+                },
+            ]
+        },
+    ):
+        await opp.services.async_call(ZONE_DOMAIN, "reload", blocking=True)
 
     resp = await webhook_client.post(
         "/api/webhook/{}".format(create_registrations[1]["webhook_id"]),
@@ -166,9 +183,20 @@ async def test_webhook_handle_get_zones(opp, create_registrations, webhook_clien
     assert resp.status == 200
 
     json = await resp.json()
-    assert len(json) == 1
+    assert len(json) == 3
     zones = sorted(json, key=lambda entry: entry["entity_id"])
     assert zones[0]["entity_id"] == "zone.home"
+
+    assert zones[1]["entity_id"] == "zone.school"
+    assert zones[1]["attributes"]["icon"] == "mdi:school"
+    assert zones[1]["attributes"]["latitude"] == 32.8773367
+    assert zones[1]["attributes"]["longitude"] == -117.2494053
+    assert zones[1]["attributes"]["radius"] == 250
+
+    assert zones[2]["entity_id"] == "zone.work"
+    assert "icon" not in zones[2]["attributes"]
+    assert zones[2]["attributes"]["latitude"] == 33.8773367
+    assert zones[2]["attributes"]["longitude"] == -118.2494053
 
 
 async def test_webhook_handle_get_config(opp, create_registrations, webhook_client):
@@ -341,7 +369,9 @@ async def test_webhook_camera_stream_non_existent(
     assert webhook_json["success"] is False
 
 
-async def test_webhook_camera_stream_non_hls(opp, create_registrations, webhook_client):
+async def test_webhook_camera_stream_non_hls(
+    opp, create_registrations, webhook_client
+):
     """Test fetching camera stream URLs for a non-HLS/stream-supporting camera."""
     opp.states.async_set("camera.non_stream_camera", "idle", {"supported_features": 0})
 

@@ -4,7 +4,7 @@ from unittest.mock import Mock, patch
 
 from openpeerpower.components.ipma import DOMAIN, config_flow
 from openpeerpower.const import CONF_LATITUDE, CONF_LONGITUDE, CONF_MODE
-from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.setup import async_setup_component
 
 from .test_weather import MockLocation
@@ -143,13 +143,13 @@ async def test_config_entry_migration(opp):
     mock_registry(
         opp,
         {
-            "weather.hometown": entity_registry.RegistryEntry(
+            "weather.hometown": er.RegistryEntry(
                 entity_id="weather.hometown",
                 unique_id="0, 0",
                 platform="ipma",
                 config_entry_id=ipma_entry.entry_id,
             ),
-            "weather.hometown_2": entity_registry.RegistryEntry(
+            "weather.hometown_2": er.RegistryEntry(
                 entity_id="weather.hometown_2",
                 unique_id="0, 0, hourly",
                 platform="ipma",
@@ -165,7 +165,7 @@ async def test_config_entry_migration(opp):
         assert await async_setup_component(opp, DOMAIN, {})
         await opp.async_block_till_done()
 
-        ent_reg = await entity_registry.async_get_registry(opp)
+        ent_reg = er.async_get(opp)
 
         weather_home = ent_reg.async_get("weather.hometown")
         assert weather_home.unique_id == "0, 0, daily"

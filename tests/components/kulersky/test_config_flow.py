@@ -1,5 +1,5 @@
 """Test the Kuler Sky config flow."""
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 import pykulersky
 
@@ -16,17 +16,13 @@ async def test_flow_success(opp):
     assert result["type"] == "form"
     assert result["errors"] is None
 
+    light = MagicMock(spec=pykulersky.Light)
+    light.address = "AA:BB:CC:11:22:33"
+    light.name = "Bedroom"
     with patch(
-        "openpeerpower.components.kulersky.config_flow.pykulersky.discover_bluetooth_devices",
-        return_value=[
-            {
-                "address": "AA:BB:CC:11:22:33",
-                "name": "Bedroom",
-            }
-        ],
+        "openpeerpower.components.kulersky.config_flow.pykulersky.discover",
+        return_value=[light],
     ), patch(
-        "openpeerpower.components.kulersky.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.kulersky.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -40,7 +36,6 @@ async def test_flow_success(opp):
     assert result2["title"] == "Kuler Sky"
     assert result2["data"] == {}
 
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -54,11 +49,9 @@ async def test_flow_no_devices_found(opp):
     assert result["errors"] is None
 
     with patch(
-        "openpeerpower.components.kulersky.config_flow.pykulersky.discover_bluetooth_devices",
+        "openpeerpower.components.kulersky.config_flow.pykulersky.discover",
         return_value=[],
     ), patch(
-        "openpeerpower.components.kulersky.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.kulersky.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -70,7 +63,6 @@ async def test_flow_no_devices_found(opp):
     assert result2["type"] == "abort"
     assert result2["reason"] == "no_devices_found"
     await opp.async_block_till_done()
-    assert len(mock_setup.mock_calls) == 0
     assert len(mock_setup_entry.mock_calls) == 0
 
 
@@ -84,11 +76,9 @@ async def test_flow_exceptions_caught(opp):
     assert result["errors"] is None
 
     with patch(
-        "openpeerpower.components.kulersky.config_flow.pykulersky.discover_bluetooth_devices",
+        "openpeerpower.components.kulersky.config_flow.pykulersky.discover",
         side_effect=pykulersky.PykulerskyException("TEST"),
     ), patch(
-        "openpeerpower.components.kulersky.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.kulersky.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -100,5 +90,4 @@ async def test_flow_exceptions_caught(opp):
     assert result2["type"] == "abort"
     assert result2["reason"] == "no_devices_found"
     await opp.async_block_till_done()
-    assert len(mock_setup.mock_calls) == 0
     assert len(mock_setup_entry.mock_calls) == 0

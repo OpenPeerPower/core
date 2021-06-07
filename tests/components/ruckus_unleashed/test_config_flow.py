@@ -30,8 +30,6 @@ async def test_form(opp):
         "openpeerpower.components.ruckus_unleashed.Ruckus.system_info",
         return_value=DEFAULT_SYSTEM_INFO,
     ), patch(
-        "openpeerpower.components.ruckus_unleashed.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.ruckus_unleashed.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -44,7 +42,6 @@ async def test_form(opp):
     assert result2["type"] == "create_entry"
     assert result2["title"] == DEFAULT_TITLE
     assert result2["data"] == CONFIG
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 

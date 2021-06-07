@@ -11,12 +11,7 @@ from unittest.mock import patch
 from google_nest_sdm.exceptions import AuthException, GoogleNestException
 
 from openpeerpower.components.nest import DOMAIN
-from openpeerpower.config_entries import (
-    ENTRY_STATE_LOADED,
-    ENTRY_STATE_NOT_LOADED,
-    ENTRY_STATE_SETUP_ERROR,
-    ENTRY_STATE_SETUP_RETRY,
-)
+from openpeerpower.config_entries import ConfigEntryState
 from openpeerpower.setup import async_setup_component
 
 from .common import CONFIG, async_setup_sdm_platform, create_config_entry
@@ -28,11 +23,11 @@ async def test_setup_success(opp, caplog):
     """Test successful setup."""
     with caplog.at_level(logging.ERROR, logger="openpeerpower.components.nest"):
         await async_setup_sdm_platform(opp, PLATFORM)
-        # assert not caplog.records
+        assert not caplog.records
 
     entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
-    assert entries[0].state == ENTRY_STATE_LOADED
+    assert entries[0].state is ConfigEntryState.LOADED
 
 
 async def async_setup_sdm(opp, config=CONFIG):
@@ -54,7 +49,7 @@ async def test_setup_configuration_failure(opp, caplog):
 
     entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
-    assert entries[0].state == ENTRY_STATE_SETUP_ERROR
+    assert entries[0].state is ConfigEntryState.SETUP_ERROR
 
     # This error comes from the python google-nest-sdm library, as a check added
     # to prevent common misconfigurations (e.g. confusing topic and subscriber)
@@ -73,7 +68,7 @@ async def test_setup_susbcriber_failure(opp, caplog):
 
     entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
-    assert entries[0].state == ENTRY_STATE_SETUP_RETRY
+    assert entries[0].state is ConfigEntryState.SETUP_RETRY
 
 
 async def test_setup_device_manager_failure(opp, caplog):
@@ -89,7 +84,7 @@ async def test_setup_device_manager_failure(opp, caplog):
 
     entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
-    assert entries[0].state == ENTRY_STATE_SETUP_RETRY
+    assert entries[0].state is ConfigEntryState.SETUP_RETRY
 
 
 async def test_subscriber_auth_failure(opp, caplog):
@@ -103,7 +98,7 @@ async def test_subscriber_auth_failure(opp, caplog):
 
     entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
-    assert entries[0].state == ENTRY_STATE_SETUP_ERROR
+    assert entries[0].state is ConfigEntryState.SETUP_ERROR
 
     flows = opp.config_entries.flow.async_progress()
     assert len(flows) == 1
@@ -121,7 +116,7 @@ async def test_setup_missing_subscriber_id(opp, caplog):
 
     entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 1
-    assert entries[0].state == ENTRY_STATE_NOT_LOADED
+    assert entries[0].state is ConfigEntryState.NOT_LOADED
 
 
 async def test_empty_config(opp, caplog):
@@ -129,7 +124,7 @@ async def test_empty_config(opp, caplog):
     with caplog.at_level(logging.ERROR, logger="openpeerpower.components.nest"):
         result = await async_setup_component(opp, DOMAIN, {})
         assert result
-        # assert not caplog.records
+        assert not caplog.records
 
     entries = opp.config_entries.async_entries(DOMAIN)
     assert len(entries) == 0

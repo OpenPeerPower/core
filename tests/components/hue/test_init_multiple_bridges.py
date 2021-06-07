@@ -1,17 +1,14 @@
 """Test Hue init with multiple bridges."""
+from unittest.mock import patch
 
-from unittest.mock import Mock, patch
-
-from aiohue.groups import Groups
-from aiohue.lights import Lights
-from aiohue.scenes import Scenes
-from aiohue.sensors import Sensors
 import pytest
 
-from openpeerpower import config_entries
 from openpeerpower.components import hue
-from openpeerpower.components.hue import sensor_base as hue_sensor_base
 from openpeerpower.setup import async_setup_component
+
+from .conftest import create_mock_bridge
+
+from tests.common import MockConfigEntry
 
 
 async def setup_component(opp):
@@ -109,10 +106,9 @@ async def test_hue_activate_scene_zero_responds(
 async def setup_bridge(opp, mock_bridge, config_entry):
     """Load the Hue light platform with the provided bridge."""
     mock_bridge.config_entry = config_entry
-    opp.data[hue.DOMAIN][config_entry.entry_id] = mock_bridge
-    await opp.config_entries.async_forward_entry_setup(config_entry, "light")
-    # To flush out the service call to update the group
-    await opp.async_block_till_done()
+    config_entry.add_to_opp(opp)
+    with patch("openpeerpower.components.hue.HueBridge", return_value=mock_bridge):
+        await opp.config_entries.async_setup(config_entry.entry_id)
 
 
 @pytest.fixture
@@ -129,14 +125,9 @@ def mock_config_entry2(opp):
 
 def create_config_entry():
     """Mock a config entry."""
-    return config_entries.ConfigEntry(
-        1,
-        hue.DOMAIN,
-        "Mock Title",
-        {"host": "mock-host"},
-        "test",
-        config_entries.CONN_CLASS_LOCAL_POLL,
-        system_options={},
+    return MockConfigEntry(
+        domain=hue.DOMAIN,
+        data={"host": "mock-host"},
     )
 
 
@@ -150,36 +141,3 @@ def mock_bridge1(opp):
 def mock_bridge2(opp):
     """Mock a Hue bridge."""
     return create_mock_bridge(opp)
-
-
-def create_mock_bridge(opp):
-    """Create a mock Hue bridge."""
-    bridge = Mock(
-        opp=opp,
-        available=True,
-        authorized=True,
-        allow_unreachable=False,
-        allow_groups=False,
-        api=Mock(),
-        reset_jobs=[],
-        spec=hue.HueBridge,
-    )
-    bridge.sensor_manager = hue_sensor_base.SensorManager(bridge)
-    bridge.mock_requests = []
-
-    async def mock_request(method, path, **kwargs):
-        kwargs["method"] = method
-        kwargs["path"] = path
-        bridge.mock_requests.append(kwargs)
-        return {}
-
-    async def async_request_call(task):
-        await task()
-
-    bridge.async_request_call = async_request_call
-    bridge.api.config.apiversion = "9.9.9"
-    bridge.api.lights = Lights({}, mock_request)
-    bridge.api.groups = Groups({}, mock_request)
-    bridge.api.sensors = Sensors({}, mock_request)
-    bridge.api.scenes = Scenes({}, mock_request)
-    return bridge

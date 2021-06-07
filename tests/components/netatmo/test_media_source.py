@@ -18,7 +18,9 @@ async def test_async_browse_media(opp):
 
     # Prepare cached Netatmo event date
     opp.data[DOMAIN] = {}
-    opp.data[DOMAIN][DATA_EVENTS] = ast.literal_eval(load_fixture("netatmo/events.txt"))
+    opp.data[DOMAIN][DATA_EVENTS] = ast.literal_eval(
+        load_fixture("netatmo/events.txt")
+    )
 
     opp.data[DOMAIN][DATA_CAMERAS] = {
         "12:34:56:78:90:ab": "MyCamera",
@@ -48,6 +50,16 @@ async def test_async_browse_media(opp):
             opp, f"{const.URI_SCHEME}{DOMAIN}/invalid/base"
         )
     assert str(excinfo.value) == "Unknown source directory."
+
+    # Test invalid base
+    with pytest.raises(ValueError) as excinfo:
+        await media_source.async_browse_media(opp, f"{const.URI_SCHEME}{DOMAIN}/")
+    assert str(excinfo.value) == "Invalid media source URI"
+
+    # Test successful listing
+    media = await media_source.async_browse_media(
+        opp, f"{const.URI_SCHEME}{DOMAIN}/events"
+    )
 
     # Test successful listing
     media = await media_source.async_browse_media(

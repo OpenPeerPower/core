@@ -37,13 +37,13 @@ from openpeerpower.const import (
     STATE_STANDBY,
 )
 from openpeerpower.core import CoreState
-from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers import entity_registry as er
 
 from tests.common import async_mock_service
 
 
 async def test_media_player_set_state(opp, hk_driver, events):
-    """Test if accessory and OP are updated accordingly."""
+    """Test if accessory and OPP are updated accordingly."""
     config = {
         CONF_FEATURE_LIST: {
             FEATURE_ON_OFF: None,
@@ -186,7 +186,7 @@ async def test_media_player_set_state(opp, hk_driver, events):
 
 
 async def test_media_player_television(opp, hk_driver, events, caplog):
-    """Test if television accessory and OP are updated accordingly."""
+    """Test if television accessory and OPP are updated accordingly."""
     entity_id = "media_player.television"
 
     # Supports 'select_source', 'volume_step', 'turn_on', 'turn_off',
@@ -364,7 +364,7 @@ async def test_media_player_television(opp, hk_driver, events, caplog):
 
 
 async def test_media_player_television_basic(opp, hk_driver, events, caplog):
-    """Test if basic television accessory and OP are updated accordingly."""
+    """Test if basic television accessory and OPP are updated accordingly."""
     entity_id = "media_player.television"
 
     # Supports turn_on', 'turn_off'
@@ -421,7 +421,7 @@ async def test_tv_restore(opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
     opp.state = CoreState.not_running
 
-    registry = await entity_registry.async_get_registry(opp)
+    registry = er.async_get(opp)
 
     registry.async_get_or_create(
         "media_player",

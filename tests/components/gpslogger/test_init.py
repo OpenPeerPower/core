@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 import pytest
 
-from openpeerpower import data_entry_flow
+from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.components import gpslogger, zone
 from openpeerpower.components.device_tracker import DOMAIN as DEVICE_TRACKER_DOMAIN
 from openpeerpower.components.gpslogger import DOMAIN, TRACKER_UPDATE
@@ -14,6 +14,7 @@ from openpeerpower.const import (
     STATE_HOME,
     STATE_NOT_HOME,
 )
+from openpeerpower.helpers import device_registry as dr, entity_registry as er
 from openpeerpower.helpers.dispatcher import DATA_DISPATCHER
 from openpeerpower.setup import async_setup_component
 
@@ -68,7 +69,7 @@ async def webhook_id(opp, gpslogger_client):
         {"internal_url": "http://example.local:8123"},
     )
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "user"}
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM, result
 
@@ -116,14 +117,14 @@ async def test_enter_and_exit(opp, gpslogger_client, webhook_id):
     await opp.async_block_till_done()
     assert req.status == HTTP_OK
     state_name = opp.states.get(f"{DEVICE_TRACKER_DOMAIN}.{data['device']}").state
-    assert STATE_HOME == state_name
+    assert state_name == STATE_HOME
 
     # Enter Home again
     req = await gpslogger_client.post(url, data=data)
     await opp.async_block_till_done()
     assert req.status == HTTP_OK
     state_name = opp.states.get(f"{DEVICE_TRACKER_DOMAIN}.{data['device']}").state
-    assert STATE_HOME == state_name
+    assert state_name == STATE_HOME
 
     data["longitude"] = 0
     data["latitude"] = 0
@@ -133,12 +134,12 @@ async def test_enter_and_exit(opp, gpslogger_client, webhook_id):
     await opp.async_block_till_done()
     assert req.status == HTTP_OK
     state_name = opp.states.get(f"{DEVICE_TRACKER_DOMAIN}.{data['device']}").state
-    assert STATE_NOT_HOME == state_name
+    assert state_name == STATE_NOT_HOME
 
-    dev_reg = await opp.helpers.device_registry.async_get_registry()
+    dev_reg = dr.async_get(opp)
     assert len(dev_reg.devices) == 1
 
-    ent_reg = await opp.helpers.entity_registry.async_get_registry()
+    ent_reg = er.async_get(opp)
     assert len(ent_reg.entities) == 1
 
 
@@ -212,7 +213,7 @@ async def test_load_unload_entry(opp, gpslogger_client, webhook_id):
     await opp.async_block_till_done()
     assert req.status == HTTP_OK
     state_name = opp.states.get(f"{DEVICE_TRACKER_DOMAIN}.{data['device']}").state
-    assert STATE_HOME == state_name
+    assert state_name == STATE_HOME
     assert len(opp.data[DATA_DISPATCHER][TRACKER_UPDATE]) == 1
 
     entry = opp.config_entries.async_entries(DOMAIN)[0]

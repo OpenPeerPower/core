@@ -61,7 +61,9 @@ async def test_lovelace_from_storage(opp, opp_ws_client, opp_storage):
     assert not response["success"]
 
 
-async def test_lovelace_from_storage_save_before_load(opp, opp_ws_client, opp_storage):
+async def test_lovelace_from_storage_save_before_load(
+    opp, opp_ws_client, opp_storage
+):
     """Test we can load lovelace config from storage."""
     assert await async_setup_component(opp, "lovelace", {})
     client = await opp_ws_client(opp)
@@ -473,7 +475,8 @@ async def test_storage_dashboard_migrate(opp, opp_ws_client, opp_storage):
     assert without_hyphen["url_path"] == "lovelace-tools"
 
     assert (
-        with_hyphen == opp_storage[dashboard.DASHBOARDS_STORAGE_KEY]["data"]["items"][1]
+        with_hyphen
+        == opp_storage[dashboard.DASHBOARDS_STORAGE_KEY]["data"]["items"][1]
     )
 
 

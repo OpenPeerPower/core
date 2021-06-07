@@ -4,14 +4,7 @@ from unittest.mock import patch
 import pytest
 
 from openpeerpower.components.ozw.websocket_api import ID, TYPE
-from openpeerpower.helpers.device_registry import (
-    DeviceEntry,
-    async_get_registry as async_get_device_registry,
-)
-from openpeerpower.helpers.entity_registry import (
-    RegistryEntry,
-    async_get_registry as async_get_entity_registry,
-)
+from openpeerpower.helpers import device_registry as dr, entity_registry as er
 
 from .common import setup_ozw
 
@@ -41,35 +34,35 @@ ZWAVE_POWER_ICON = "mdi:zwave-test-power"
 @pytest.fixture(name="zwave_migration_data")
 def zwave_migration_data_fixture(opp):
     """Return mock zwave migration data."""
-    zwave_source_node_device = DeviceEntry(
+    zwave_source_node_device = dr.DeviceEntry(
         id=ZWAVE_SOURCE_NODE_DEVICE_ID,
         name_by_user=ZWAVE_SOURCE_NODE_DEVICE_NAME,
         area_id=ZWAVE_SOURCE_NODE_DEVICE_AREA,
     )
-    zwave_source_node_entry = RegistryEntry(
+    zwave_source_node_entry = er.RegistryEntry(
         entity_id=ZWAVE_SOURCE_ENTITY,
         unique_id=ZWAVE_SOURCE_NODE_UNIQUE_ID,
         platform="zwave",
         name="Z-Wave Source Node",
     )
-    zwave_battery_device = DeviceEntry(
+    zwave_battery_device = dr.DeviceEntry(
         id=ZWAVE_BATTERY_DEVICE_ID,
         name_by_user=ZWAVE_BATTERY_DEVICE_NAME,
         area_id=ZWAVE_BATTERY_DEVICE_AREA,
     )
-    zwave_battery_entry = RegistryEntry(
+    zwave_battery_entry = er.RegistryEntry(
         entity_id=ZWAVE_BATTERY_ENTITY,
         unique_id=ZWAVE_BATTERY_UNIQUE_ID,
         platform="zwave",
         name=ZWAVE_BATTERY_NAME,
         icon=ZWAVE_BATTERY_ICON,
     )
-    zwave_power_device = DeviceEntry(
+    zwave_power_device = dr.DeviceEntry(
         id=ZWAVE_POWER_DEVICE_ID,
         name_by_user=ZWAVE_POWER_DEVICE_NAME,
         area_id=ZWAVE_POWER_DEVICE_AREA,
     )
-    zwave_power_entry = RegistryEntry(
+    zwave_power_entry = er.RegistryEntry(
         entity_id=ZWAVE_POWER_ENTITY,
         unique_id=ZWAVE_POWER_UNIQUE_ID,
         platform="zwave",
@@ -169,8 +162,8 @@ async def test_migrate_zwave(opp, migration_data, opp_ws_client, zwave_integrati
     assert result["migration_entity_map"] == migration_entity_map
     assert result["migrated"] is True
 
-    dev_reg = await async_get_device_registry(opp)
-    ent_reg = await async_get_entity_registry(opp)
+    dev_reg = dr.async_get(opp)
+    ent_reg = er.async_get(opp)
 
     # check the device registry migration
 
@@ -252,7 +245,7 @@ async def test_migrate_zwave_dry_run(
     assert result["migration_entity_map"] == migration_entity_map
     assert result["migrated"] is False
 
-    ent_reg = await async_get_entity_registry(opp)
+    ent_reg = er.async_get(opp)
 
     # no real migration should have been done
     assert ent_reg.async_is_registered("sensor.water_sensor_6_battery_level")

@@ -1,6 +1,7 @@
 """Tests for HomematicIP Cloud config flow."""
 from unittest.mock import patch
 
+from openpeerpower import config_entries
 from openpeerpower.components.homematicip_cloud.const import (
     DOMAIN as HMIPC_DOMAIN,
     HMIPC_AUTHTOKEN,
@@ -27,7 +28,9 @@ async def test_flow_works(opp, simple_mock_home):
         return_value=True,
     ):
         result = await opp.config_entries.flow.async_init(
-            HMIPC_DOMAIN, context={"source": "user"}, data=DEFAULT_CONFIG
+            HMIPC_DOMAIN,
+            context={"source": config_entries.SOURCE_USER},
+            data=DEFAULT_CONFIG,
         )
 
     assert result["type"] == "form"
@@ -70,7 +73,9 @@ async def test_flow_init_connection_error(opp):
         return_value=False,
     ):
         result = await opp.config_entries.flow.async_init(
-            HMIPC_DOMAIN, context={"source": "user"}, data=DEFAULT_CONFIG
+            HMIPC_DOMAIN,
+            context={"source": config_entries.SOURCE_USER},
+            data=DEFAULT_CONFIG,
         )
 
     assert result["type"] == "form"
@@ -90,7 +95,9 @@ async def test_flow_link_connection_error(opp):
         return_value=False,
     ):
         result = await opp.config_entries.flow.async_init(
-            HMIPC_DOMAIN, context={"source": "user"}, data=DEFAULT_CONFIG
+            HMIPC_DOMAIN,
+            context={"source": config_entries.SOURCE_USER},
+            data=DEFAULT_CONFIG,
         )
 
     assert result["type"] == "abort"
@@ -107,7 +114,9 @@ async def test_flow_link_press_button(opp):
         return_value=True,
     ):
         result = await opp.config_entries.flow.async_init(
-            HMIPC_DOMAIN, context={"source": "user"}, data=DEFAULT_CONFIG
+            HMIPC_DOMAIN,
+            context={"source": config_entries.SOURCE_USER},
+            data=DEFAULT_CONFIG,
         )
 
     assert result["type"] == "form"
@@ -119,7 +128,7 @@ async def test_init_flow_show_form(opp):
     """Test config flow shows up with a form."""
 
     result = await opp.config_entries.flow.async_init(
-        HMIPC_DOMAIN, context={"source": "user"}
+        HMIPC_DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == "form"
     assert result["step_id"] == "init"
@@ -133,7 +142,9 @@ async def test_init_already_configured(opp):
         return_value=True,
     ):
         result = await opp.config_entries.flow.async_init(
-            HMIPC_DOMAIN, context={"source": "user"}, data=DEFAULT_CONFIG
+            HMIPC_DOMAIN,
+            context={"source": config_entries.SOURCE_USER},
+            data=DEFAULT_CONFIG,
         )
 
     assert result["type"] == "abort"
@@ -155,7 +166,9 @@ async def test_import_config(opp, simple_mock_home):
         "openpeerpower.components.homematicip_cloud.hap.HomematicipHAP.async_connect",
     ):
         result = await opp.config_entries.flow.async_init(
-            HMIPC_DOMAIN, context={"source": "import"}, data=IMPORT_CONFIG
+            HMIPC_DOMAIN,
+            context={"source": config_entries.SOURCE_IMPORT},
+            data=IMPORT_CONFIG,
         )
 
     assert result["type"] == "create_entry"
@@ -178,7 +191,9 @@ async def test_import_existing_config(opp):
         return_value=True,
     ):
         result = await opp.config_entries.flow.async_init(
-            HMIPC_DOMAIN, context={"source": "import"}, data=IMPORT_CONFIG
+            HMIPC_DOMAIN,
+            context={"source": config_entries.SOURCE_IMPORT},
+            data=IMPORT_CONFIG,
         )
 
     assert result["type"] == "abort"

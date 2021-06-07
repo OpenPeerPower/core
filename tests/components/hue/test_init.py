@@ -27,7 +27,7 @@ async def test_setup_with_no_config(opp):
     assert len(opp.config_entries.flow.async_progress()) == 0
 
     # No configs stored
-    assert opp.data[hue.DOMAIN] == {}
+    assert hue.DOMAIN not in opp.data
 
 
 async def test_unload_entry(opp, mock_bridge_setup):
@@ -38,10 +38,15 @@ async def test_unload_entry(opp, mock_bridge_setup):
     assert await async_setup_component(opp, hue.DOMAIN, {}) is True
     assert len(mock_bridge_setup.mock_calls) == 1
 
-    mock_bridge_setup.async_reset = AsyncMock(return_value=True)
+    opp.data[hue.DOMAIN] = {entry.entry_id: mock_bridge_setup}
+
+    async def mock_reset():
+        opp.data[hue.DOMAIN].pop(entry.entry_id)
+        return True
+
+    mock_bridge_setup.async_reset = mock_reset
     assert await hue.async_unload_entry(opp, entry)
-    assert len(mock_bridge_setup.async_reset.mock_calls) == 1
-    assert opp.data[hue.DOMAIN] == {}
+    assert hue.DOMAIN not in opp.data
 
 
 async def test_setting_unique_id(opp, mock_bridge_setup):

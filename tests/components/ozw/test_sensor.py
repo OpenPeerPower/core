@@ -7,6 +7,7 @@ from openpeerpower.components.sensor import (
     DOMAIN as SENSOR_DOMAIN,
 )
 from openpeerpower.const import ATTR_DEVICE_CLASS
+from openpeerpower.helpers import entity_registry as er
 
 from .common import setup_ozw
 
@@ -34,7 +35,7 @@ async def test_sensor(opp, generic_data):
     assert state.attributes[ATTR_DEVICE_CLASS] == DEVICE_CLASS_POWER
 
     # Test ZWaveListSensor disabled by default
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
     entity_id = "sensor.water_sensor_6_instance_1_water"
     state = opp.states.get(entity_id)
     assert state is None
@@ -42,7 +43,7 @@ async def test_sensor(opp, generic_data):
     entry = registry.async_get(entity_id)
     assert entry
     assert entry.disabled
-    assert entry.disabled_by == "integration"
+    assert entry.disabled_by == er.DISABLED_INTEGRATION
 
     # Test enabling entity
     updated_entry = registry.async_update_entity(
@@ -55,7 +56,7 @@ async def test_sensor(opp, generic_data):
 async def test_sensor_enabled(opp, generic_data, sensor_msg):
     """Test enabling an advanced sensor."""
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     entry = registry.async_get_or_create(
         SENSOR_DOMAIN,
@@ -79,7 +80,7 @@ async def test_sensor_enabled(opp, generic_data, sensor_msg):
 async def test_string_sensor(opp, string_sensor_data):
     """Test so the returned type is a string sensor."""
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     entry = registry.async_get_or_create(
         SENSOR_DOMAIN,

@@ -82,7 +82,10 @@ async def setup_automation(opp, trigger):
                 {
                     "alias": "My Test",
                     "trigger": trigger,
-                    "action": {"service": "test.automation"},
+                    "action": {
+                        "service": "test.automation",
+                        "data_template": {"id": "{{ trigger.id}}"},
+                    },
                 }
             ]
         },
@@ -100,6 +103,7 @@ async def test_simple(opp, calls, mock_litejet):
     await simulate_release(opp, mock_litejet, ENTITY_OTHER_SWITCH_NUMBER)
 
     assert len(calls) == 1
+    assert calls[0].data["id"] == 0
 
 
 async def test_held_more_than_short(opp, calls, mock_litejet):
@@ -134,6 +138,7 @@ async def test_held_more_than_long(opp, calls, mock_litejet):
     assert len(calls) == 0
     await simulate_time(opp, mock_litejet, timedelta(seconds=0.3))
     assert len(calls) == 1
+    assert calls[0].data["id"] == 0
     await simulate_release(opp, mock_litejet, ENTITY_OTHER_SWITCH_NUMBER)
     assert len(calls) == 1
 
@@ -154,6 +159,7 @@ async def test_held_less_than_short(opp, calls, mock_litejet):
     assert len(calls) == 0
     await simulate_release(opp, mock_litejet, ENTITY_OTHER_SWITCH_NUMBER)
     assert len(calls) == 1
+    assert calls[0].data["id"] == 0
 
 
 async def test_held_less_than_long(opp, calls, mock_litejet):
@@ -211,6 +217,7 @@ async def test_held_in_range_just_right(opp, calls, mock_litejet):
     assert len(calls) == 0
     await simulate_release(opp, mock_litejet, ENTITY_OTHER_SWITCH_NUMBER)
     assert len(calls) == 1
+    assert calls[0].data["id"] == 0
 
 
 async def test_held_in_range_long(opp, calls, mock_litejet):

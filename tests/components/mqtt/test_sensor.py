@@ -9,6 +9,7 @@ import pytest
 import openpeerpower.components.sensor as sensor
 from openpeerpower.const import EVENT_STATE_CHANGED, STATE_UNAVAILABLE
 import openpeerpower.core as ha
+from openpeerpower.helpers import device_registry as dr
 from openpeerpower.setup import async_setup_component
 import openpeerpower.util.dt as dt_util
 
@@ -36,6 +37,7 @@ from .test_common import (
     help_test_entity_device_info_update,
     help_test_entity_device_info_with_connection,
     help_test_entity_device_info_with_identifier,
+    help_test_entity_disabled_by_default,
     help_test_entity_id_update_discovery_update,
     help_test_entity_id_update_subscriptions,
     help_test_setting_attribute_via_mqtt_json_message,
@@ -202,6 +204,104 @@ async def test_setting_sensor_value_via_mqtt_json_message(opp, mqtt_mock):
     state = opp.states.get("sensor.test")
 
     assert state.state == "100"
+
+
+async def test_setting_sensor_last_reset_via_mqtt_message(opp, mqtt_mock):
+    """Test the setting of the last_reset property via MQTT."""
+    assert await async_setup_component(
+        opp,
+        sensor.DOMAIN,
+        {
+            sensor.DOMAIN: {
+                "platform": "mqtt",
+                "name": "test",
+                "state_topic": "test-topic",
+                "unit_of_measurement": "fav unit",
+                "last_reset_topic": "last-reset-topic",
+            }
+        },
+    )
+    await opp.async_block_till_done()
+
+    async_fire_mqtt_message(opp, "last-reset-topic", "2020-01-02 08:11:00")
+    state = opp.states.get("sensor.test")
+    assert state.attributes.get("last_reset") == "2020-01-02T08:11:00"
+
+
+@pytest.mark.parametrize("datestring", ["2020-21-02 08:11:00", "Hello there!"])
+async def test_setting_sensor_bad_last_reset_via_mqtt_message(
+    opp, caplog, datestring, mqtt_mock
+):
+    """Test the setting of the last_reset property via MQTT."""
+    assert await async_setup_component(
+        opp,
+        sensor.DOMAIN,
+        {
+            sensor.DOMAIN: {
+                "platform": "mqtt",
+                "name": "test",
+                "state_topic": "test-topic",
+                "unit_of_measurement": "fav unit",
+                "last_reset_topic": "last-reset-topic",
+            }
+        },
+    )
+    await opp.async_block_till_done()
+
+    async_fire_mqtt_message(opp, "last-reset-topic", datestring)
+    state = opp.states.get("sensor.test")
+    assert state.attributes.get("last_reset") is None
+    assert "Invalid last_reset message" in caplog.text
+
+
+async def test_setting_sensor_empty_last_reset_via_mqtt_message(
+    opp, caplog, mqtt_mock
+):
+    """Test the setting of the last_reset property via MQTT."""
+    assert await async_setup_component(
+        opp,
+        sensor.DOMAIN,
+        {
+            sensor.DOMAIN: {
+                "platform": "mqtt",
+                "name": "test",
+                "state_topic": "test-topic",
+                "unit_of_measurement": "fav unit",
+                "last_reset_topic": "last-reset-topic",
+            }
+        },
+    )
+    await opp.async_block_till_done()
+
+    async_fire_mqtt_message(opp, "last-reset-topic", "")
+    state = opp.states.get("sensor.test")
+    assert state.attributes.get("last_reset") is None
+    assert "Ignoring empty last_reset message" in caplog.text
+
+
+async def test_setting_sensor_last_reset_via_mqtt_json_message(opp, mqtt_mock):
+    """Test the setting of the value via MQTT with JSON payload."""
+    assert await async_setup_component(
+        opp,
+        sensor.DOMAIN,
+        {
+            sensor.DOMAIN: {
+                "platform": "mqtt",
+                "name": "test",
+                "state_topic": "test-topic",
+                "unit_of_measurement": "fav unit",
+                "last_reset_topic": "last-reset-topic",
+                "last_reset_value_template": "{{ value_json.last_reset }}",
+            }
+        },
+    )
+    await opp.async_block_till_done()
+
+    async_fire_mqtt_message(
+        opp, "last-reset-topic", '{ "last_reset": "2020-01-02 08:11:00" }'
+    )
+    state = opp.states.get("sensor.test")
+    assert state.attributes.get("last_reset") == "2020-01-02T08:11:00"
 
 
 async def test_force_update_disabled(opp, mqtt_mock):
@@ -377,6 +477,51 @@ async def test_valid_device_class(opp, mqtt_mock):
     assert state.attributes["device_class"] == "temperature"
     state = opp.states.get("sensor.test_2")
     assert "device_class" not in state.attributes
+
+
+async def test_invalid_state_class(opp, mqtt_mock):
+    """Test state_class option with invalid value."""
+    assert await async_setup_component(
+        opp,
+        sensor.DOMAIN,
+        {
+            sensor.DOMAIN: {
+                "platform": "mqtt",
+                "name": "test",
+                "state_topic": "test-topic",
+                "state_class": "foobarnotreal",
+            }
+        },
+    )
+    await opp.async_block_till_done()
+
+    state = opp.states.get("sensor.test")
+    assert state is None
+
+
+async def test_valid_state_class(opp, mqtt_mock):
+    """Test state_class option with valid values."""
+    assert await async_setup_component(
+        opp,
+        "sensor",
+        {
+            "sensor": [
+                {
+                    "platform": "mqtt",
+                    "name": "Test 1",
+                    "state_topic": "test-topic",
+                    "state_class": "measurement",
+                },
+                {"platform": "mqtt", "name": "Test 2", "state_topic": "test-topic"},
+            ]
+        },
+    )
+    await opp.async_block_till_done()
+
+    state = opp.states.get("sensor.test_1")
+    assert state.attributes["state_class"] == "measurement"
+    state = opp.states.get("sensor.test_2")
+    assert "state_class" not in state.attributes
 
 
 async def test_setting_attribute_via_mqtt_json_message(opp, mqtt_mock):
@@ -574,7 +719,7 @@ async def test_entity_id_update_discovery_update(opp, mqtt_mock):
 
 async def test_entity_device_info_with_hub(opp, mqtt_mock):
     """Test MQTT sensor device registry integration."""
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
     hub = registry.async_get_or_create(
         config_entry_id="123",
         connections=set(),
@@ -631,3 +776,38 @@ async def test_entity_debug_info_update_entity_id(opp, mqtt_mock):
     await help_test_entity_debug_info_update_entity_id(
         opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
     )
+
+
+async def test_entity_disabled_by_default(opp, mqtt_mock):
+    """Test entity disabled by default."""
+    await help_test_entity_disabled_by_default(
+        opp, mqtt_mock, sensor.DOMAIN, DEFAULT_CONFIG
+    )
+
+
+async def test_value_template_with_entity_id(opp, mqtt_mock):
+    """Test the access to attributes in value_template via the entity_id."""
+    assert await async_setup_component(
+        opp,
+        sensor.DOMAIN,
+        {
+            sensor.DOMAIN: {
+                "platform": "mqtt",
+                "name": "test",
+                "state_topic": "test-topic",
+                "unit_of_measurement": "fav unit",
+                "value_template": '\
+                {% if state_attr(entity_id, "friendly_name") == "test" %} \
+                    {{ value | int + 1 }} \
+                {% else %} \
+                    {{ value }} \
+                {% endif %}',
+            }
+        },
+    )
+    await opp.async_block_till_done()
+
+    async_fire_mqtt_message(opp, "test-topic", "100")
+    state = opp.states.get("sensor.test")
+
+    assert state.state == "101"

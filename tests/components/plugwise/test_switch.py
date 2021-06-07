@@ -2,7 +2,7 @@
 
 from plugwise.exceptions import PlugwiseException
 
-from openpeerpower.config_entries import ENTRY_STATE_LOADED
+from openpeerpower.config_entries import ConfigEntryState
 
 from tests.components.plugwise.common import async_init_integration
 
@@ -10,7 +10,7 @@ from tests.components.plugwise.common import async_init_integration
 async def test_adam_climate_switch_entities(opp, mock_smile_adam):
     """Test creation of climate related switch entities."""
     entry = await async_init_integration(opp, mock_smile_adam)
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
 
     state = opp.states.get("switch.cv_pomp")
     assert str(state.state) == "on"
@@ -23,7 +23,7 @@ async def test_adam_climate_switch_negative_testing(opp, mock_smile_adam):
     """Test exceptions of climate related switch entities."""
     mock_smile_adam.set_relay_state.side_effect = PlugwiseException
     entry = await async_init_integration(opp, mock_smile_adam)
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
 
     await opp.services.async_call(
         "switch",
@@ -47,7 +47,7 @@ async def test_adam_climate_switch_negative_testing(opp, mock_smile_adam):
 async def test_adam_climate_switch_changes(opp, mock_smile_adam):
     """Test changing of climate related switch entities."""
     entry = await async_init_integration(opp, mock_smile_adam)
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
 
     await opp.services.async_call(
         "switch",
@@ -80,7 +80,7 @@ async def test_adam_climate_switch_changes(opp, mock_smile_adam):
 async def test_stretch_switch_entities(opp, mock_stretch):
     """Test creation of climate related switch entities."""
     entry = await async_init_integration(opp, mock_stretch)
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
 
     state = opp.states.get("switch.koelkast_92c4a")
     assert str(state.state) == "on"
@@ -92,7 +92,7 @@ async def test_stretch_switch_entities(opp, mock_stretch):
 async def test_stretch_switch_changes(opp, mock_stretch):
     """Test changing of power related switch entities."""
     entry = await async_init_integration(opp, mock_stretch)
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
 
     await opp.services.async_call(
         "switch",

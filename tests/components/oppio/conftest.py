@@ -4,7 +4,7 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from openpeerpower.components.oppio.handler import OppIO, OppioAPIError
+from openpeerpower.components.oppio.handler import OppIO, HassioAPIError
 from openpeerpower.core import CoreState
 from openpeerpower.setup import async_setup_component
 
@@ -17,9 +17,9 @@ def oppio_env():
     with patch.dict(os.environ, {"OPPIO": "127.0.0.1"}), patch(
         "openpeerpower.components.oppio.OppIO.is_connected",
         return_value={"result": "ok", "data": {}},
-    ), patch.dict(os.environ, {"OPPIO_TOKEN": "123456"}), patch(
+    ), patch.dict(os.environ, {"OPPIO_TOKEN": OPPIO_TOKEN}), patch(
         "openpeerpower.components.oppio.OppIO.get_info",
-        Mock(side_effect=OppioAPIError()),
+        Mock(side_effect=HassioAPIError()),
     ):
         yield
 
@@ -35,7 +35,7 @@ def oppio_stubs(oppio_env, opp, opp_client, aioclient_mock):
         return_value={"result": "ok"},
     ), patch(
         "openpeerpower.components.oppio.OppIO.get_info",
-        side_effect=OppioAPIError(),
+        side_effect=HassioAPIError(),
     ):
         opp.state = CoreState.starting
         opp.loop.run_until_complete(async_setup_component(opp, "oppio", {}))

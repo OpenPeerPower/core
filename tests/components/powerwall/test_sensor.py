@@ -1,9 +1,9 @@
 """The sensor tests for the powerwall platform."""
-
 from unittest.mock import patch
 
 from openpeerpower.components.powerwall.const import DOMAIN
 from openpeerpower.const import CONF_IP_ADDRESS, PERCENTAGE
+from openpeerpower.helpers import device_registry as dr
 
 from .mocks import _mock_powerwall_with_fixtures
 
@@ -26,7 +26,7 @@ async def test_sensors(opp):
         assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
-    device_registry = await opp.helpers.device_registry.async_get_registry()
+    device_registry = dr.async_get(opp)
     reg_device = device_registry.async_get_device(
         identifiers={("powerwall", "TG0123456789AB_TG9876543210BA")},
     )
@@ -48,7 +48,7 @@ async def test_sensors(opp):
         "is_active": False,
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     for key, value in expected_attributes.items():
         assert state.attributes[key] == value
 
@@ -65,7 +65,7 @@ async def test_sensors(opp):
         "is_active": True,
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     for key, value in expected_attributes.items():
         assert state.attributes[key] == value
 
@@ -82,7 +82,7 @@ async def test_sensors(opp):
         "is_active": True,
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     for key, value in expected_attributes.items():
         assert state.attributes[key] == value
 
@@ -99,7 +99,7 @@ async def test_sensors(opp):
         "is_active": True,
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     for key, value in expected_attributes.items():
         assert state.attributes[key] == value
 
@@ -111,6 +111,6 @@ async def test_sensors(opp):
         "device_class": "battery",
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     for key, value in expected_attributes.items():
         assert state.attributes[key] == value

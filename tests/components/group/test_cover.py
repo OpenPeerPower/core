@@ -405,7 +405,9 @@ async def test_open_tilts(opp, setup_comp):
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 
-    assert opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 100
+    assert (
+        opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 100
+    )
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])
@@ -442,7 +444,9 @@ async def test_toggle_tilts(opp, setup_comp):
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 
-    assert opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 100
+    assert (
+        opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 100
+    )
 
     # Toggle will tilt closed
     await opp.services.async_call(
@@ -472,7 +476,9 @@ async def test_toggle_tilts(opp, setup_comp):
     assert state.state == STATE_OPEN
     assert state.attributes[ATTR_CURRENT_TILT_POSITION] == 100
 
-    assert opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 100
+    assert (
+        opp.states.get(DEMO_COVER_TILT).attributes[ATTR_CURRENT_TILT_POSITION] == 100
+    )
 
 
 @pytest.mark.parametrize("config_count", [(CONFIG_ALL, 2)])

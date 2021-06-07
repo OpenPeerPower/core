@@ -175,4 +175,6 @@ async def test_discovery_broken(opp, mqtt_mock, caplog):
     """Test handling of bad discovery message."""
     data1 = '{ "name": "Beer" }'
     data2 = '{ "name": "Milk",' '  "command_topic": "test_topic" }'
-    await help_test_discovery_broken(opp, mqtt_mock, caplog, scene.DOMAIN, data1, data2)
+    await help_test_discovery_broken(
+        opp, mqtt_mock, caplog, scene.DOMAIN, data1, data2
+    )

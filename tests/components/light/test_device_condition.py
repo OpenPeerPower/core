@@ -91,7 +91,7 @@ async def test_get_condition_capabilities(opp, device_reg, entity_reg):
         assert capabilities == expected_capabilities
 
 
-async def test_if_state(opp, calls):
+async def test_if_state(opp, calls, enable_custom_integrations):
     """Test for turn_on and turn_off conditions."""
     platform = getattr(opp.components, f"test.{DOMAIN}")
 
@@ -165,7 +165,7 @@ async def test_if_state(opp, calls):
     assert calls[1].data["some"] == "is_off event - test_event2"
 
 
-async def test_if_fires_on_for_condition(opp, calls):
+async def test_if_fires_on_for_condition(opp, calls, enable_custom_integrations):
     """Test for firing if condition is on with delay."""
     point1 = dt_util.utcnow()
     point2 = point1 + timedelta(seconds=10)

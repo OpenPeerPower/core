@@ -2,6 +2,7 @@
 from openpeerpower.components import scene, switch
 from openpeerpower.components.litejet import DOMAIN
 from openpeerpower.const import CONF_PORT
+from openpeerpower.helpers import entity_registry as er
 
 from tests.common import MockConfigEntry
 
@@ -11,7 +12,7 @@ async def async_init_integration(
 ) -> MockConfigEntry:
     """Set up the LiteJet integration in Open Peer Power."""
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     entry_data = {CONF_PORT: "/dev/mock"}
 

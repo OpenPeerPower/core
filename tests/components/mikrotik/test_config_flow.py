@@ -5,7 +5,7 @@ from unittest.mock import patch
 import librouteros
 import pytest
 
-from openpeerpower import data_entry_flow
+from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.components import mikrotik
 from openpeerpower.const import (
     CONF_HOST,
@@ -81,7 +81,9 @@ def mock_api_connection_error():
 async def test_import(opp, api):
     """Test import step."""
     result = await opp.config_entries.flow.async_init(
-        mikrotik.DOMAIN, context={"source": "import"}, data=DEMO_CONFIG
+        mikrotik.DOMAIN,
+        context={"source": config_entries.SOURCE_IMPORT},
+        data=DEMO_CONFIG,
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
@@ -98,7 +100,7 @@ async def test_flow_works(opp, api):
     """Test config flow."""
 
     result = await opp.config_entries.flow.async_init(
-        mikrotik.DOMAIN, context={"source": "user"}
+        mikrotik.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
@@ -150,7 +152,7 @@ async def test_host_already_configured(opp, auth_error):
     entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
-        mikrotik.DOMAIN, context={"source": "user"}
+        mikrotik.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=DEMO_USER_INPUT
@@ -168,7 +170,7 @@ async def test_name_exists(opp, api):
     user_input[CONF_HOST] = "0.0.0.1"
 
     result = await opp.config_entries.flow.async_init(
-        mikrotik.DOMAIN, context={"source": "user"}
+        mikrotik.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=user_input
@@ -182,7 +184,7 @@ async def test_connection_error(opp, conn_error):
     """Test error when connection is unsuccessful."""
 
     result = await opp.config_entries.flow.async_init(
-        mikrotik.DOMAIN, context={"source": "user"}
+        mikrotik.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=DEMO_USER_INPUT
@@ -195,7 +197,7 @@ async def test_wrong_credentials(opp, auth_error):
     """Test error when credentials are wrong."""
 
     result = await opp.config_entries.flow.async_init(
-        mikrotik.DOMAIN, context={"source": "user"}
+        mikrotik.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=DEMO_USER_INPUT

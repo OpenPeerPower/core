@@ -6,6 +6,7 @@ import pytest
 import openpeerpower.components.automation as automation
 from openpeerpower.components.mqtt import DOMAIN, debug_info
 from openpeerpower.components.mqtt.device_trigger import async_attach_trigger
+from openpeerpower.helpers import device_registry as dr
 from openpeerpower.setup import async_setup_component
 
 from tests.common import (
@@ -448,7 +449,9 @@ async def test_if_fires_on_mqtt_message_late_discover(
     assert calls[1].data["some"] == "long_press"
 
 
-async def test_if_fires_on_mqtt_message_after_update(opp, device_reg, calls, mqtt_mock):
+async def test_if_fires_on_mqtt_message_after_update(
+    opp, device_reg, calls, mqtt_mock
+):
     """Test triggers firing after update."""
     data1 = (
         '{ "automation_type":"trigger",'
@@ -834,7 +837,7 @@ async def test_attach_remove_late2(opp, device_reg, mqtt_mock):
 
 async def test_entity_device_info_with_connection(opp, mqtt_mock):
     """Test MQTT device registry integration."""
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
 
     data = json.dumps(
         {
@@ -843,7 +846,7 @@ async def test_entity_device_info_with_connection(opp, mqtt_mock):
             "type": "foo",
             "subtype": "bar",
             "device": {
-                "connections": [["mac", "02:5b:26:a8:dc:12"]],
+                "connections": [[dr.CONNECTION_NETWORK_MAC, "02:5b:26:a8:dc:12"]],
                 "manufacturer": "Whatever",
                 "name": "Beer",
                 "model": "Glass",
@@ -854,9 +857,11 @@ async def test_entity_device_info_with_connection(opp, mqtt_mock):
     async_fire_mqtt_message(opp, "openpeerpower/device_automation/bla/config", data)
     await opp.async_block_till_done()
 
-    device = registry.async_get_device(set(), {("mac", "02:5b:26:a8:dc:12")})
+    device = registry.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, "02:5b:26:a8:dc:12")}
+    )
     assert device is not None
-    assert device.connections == {("mac", "02:5b:26:a8:dc:12")}
+    assert device.connections == {(dr.CONNECTION_NETWORK_MAC, "02:5b:26:a8:dc:12")}
     assert device.manufacturer == "Whatever"
     assert device.name == "Beer"
     assert device.model == "Glass"
@@ -865,7 +870,7 @@ async def test_entity_device_info_with_connection(opp, mqtt_mock):
 
 async def test_entity_device_info_with_identifier(opp, mqtt_mock):
     """Test MQTT device registry integration."""
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
 
     data = json.dumps(
         {
@@ -896,7 +901,7 @@ async def test_entity_device_info_with_identifier(opp, mqtt_mock):
 
 async def test_entity_device_info_update(opp, mqtt_mock):
     """Test device registry update."""
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
 
     config = {
         "automation_type": "trigger",
@@ -905,7 +910,7 @@ async def test_entity_device_info_update(opp, mqtt_mock):
         "subtype": "bar",
         "device": {
             "identifiers": ["helloworld"],
-            "connections": [["mac", "02:5b:26:a8:dc:12"]],
+            "connections": [[dr.CONNECTION_NETWORK_MAC, "02:5b:26:a8:dc:12"]],
             "manufacturer": "Whatever",
             "name": "Beer",
             "model": "Glass",
@@ -1157,34 +1162,70 @@ async def test_trigger_debug_info(opp, mqtt_mock):
 
     This is a test helper for MQTT debug_info.
     """
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
 
-    config = {
+    config1 = {
         "platform": "mqtt",
         "automation_type": "trigger",
         "topic": "test-topic",
         "type": "foo",
         "subtype": "bar",
         "device": {
-            "connections": [["mac", "02:5b:26:a8:dc:12"]],
+            "connections": [[dr.CONNECTION_NETWORK_MAC, "02:5b:26:a8:dc:12"]],
             "manufacturer": "Whatever",
             "name": "Beer",
             "model": "Glass",
             "sw_version": "0.1-beta",
         },
     }
-    data = json.dumps(config)
-    async_fire_mqtt_message(opp, "openpeerpower/device_automation/bla/config", data)
+    config2 = {
+        "platform": "mqtt",
+        "automation_type": "trigger",
+        "topic": "test-topic2",
+        "type": "foo",
+        "subtype": "bar",
+        "device": {
+            "connections": [[dr.CONNECTION_NETWORK_MAC, "02:5b:26:a8:dc:12"]],
+        },
+    }
+    data = json.dumps(config1)
+    async_fire_mqtt_message(opp, "openpeerpower/device_automation/bla1/config", data)
+    data = json.dumps(config2)
+    async_fire_mqtt_message(opp, "openpeerpower/device_automation/bla2/config", data)
     await opp.async_block_till_done()
 
-    device = registry.async_get_device(set(), {("mac", "02:5b:26:a8:dc:12")})
+    device = registry.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, "02:5b:26:a8:dc:12")}
+    )
     assert device is not None
 
+    debug_info_data = await debug_info.info_for_device(opp, device.id)
+    assert len(debug_info_data["entities"]) == 0
+    assert len(debug_info_data["triggers"]) == 2
+    topic_map = {
+        "openpeerpower/device_automation/bla1/config": config1,
+        "openpeerpower/device_automation/bla2/config": config2,
+    }
+    assert (
+        topic_map[debug_info_data["triggers"][0]["discovery_data"]["topic"]]
+        != topic_map[debug_info_data["triggers"][1]["discovery_data"]["topic"]]
+    )
+    assert (
+        debug_info_data["triggers"][0]["discovery_data"]["payload"]
+        == topic_map[debug_info_data["triggers"][0]["discovery_data"]["topic"]]
+    )
+    assert (
+        debug_info_data["triggers"][1]["discovery_data"]["payload"]
+        == topic_map[debug_info_data["triggers"][1]["discovery_data"]["topic"]]
+    )
+
+    async_fire_mqtt_message(opp, "openpeerpower/device_automation/bla1/config", "")
+    await opp.async_block_till_done()
     debug_info_data = await debug_info.info_for_device(opp, device.id)
     assert len(debug_info_data["entities"]) == 0
     assert len(debug_info_data["triggers"]) == 1
     assert (
         debug_info_data["triggers"][0]["discovery_data"]["topic"]
-        == "openpeerpower/device_automation/bla/config"
+        == "openpeerpower/device_automation/bla2/config"
     )
-    assert debug_info_data["triggers"][0]["discovery_data"]["payload"] == config
+    assert debug_info_data["triggers"][0]["discovery_data"]["payload"] == config2

@@ -5,16 +5,17 @@ from unittest.mock import patch
 
 from openpeerpower import setup
 from openpeerpower.components.profiler import (
-    CONF_SCAN_INTERVAL,
     CONF_SECONDS,
-    CONF_TYPE,
     SERVICE_DUMP_LOG_OBJECTS,
+    SERVICE_LOG_EVENT_LOOP_SCHEDULED,
+    SERVICE_LOG_THREAD_FRAMES,
     SERVICE_MEMORY,
     SERVICE_START,
     SERVICE_START_LOG_OBJECTS,
     SERVICE_STOP_LOG_OBJECTS,
 )
 from openpeerpower.components.profiler.const import DOMAIN
+from openpeerpower.const import CONF_SCAN_INTERVAL, CONF_TYPE
 import openpeerpower.util.dt as dt_util
 
 from tests.common import MockConfigEntry, async_fire_time_changed
@@ -143,6 +144,50 @@ async def test_dump_log_object(opp, caplog):
     await opp.async_block_till_done()
 
     assert "MockConfigEntry" in caplog.text
+    caplog.clear()
+
+    assert await opp.config_entries.async_unload(entry.entry_id)
+    await opp.async_block_till_done()
+
+
+async def test_log_thread_frames(opp, caplog):
+    """Test we can log thread frames."""
+
+    await setup.async_setup_component(opp, "persistent_notification", {})
+    entry = MockConfigEntry(domain=DOMAIN)
+    entry.add_to_opp(opp)
+
+    assert await opp.config_entries.async_setup(entry.entry_id)
+    await opp.async_block_till_done()
+
+    assert opp.services.has_service(DOMAIN, SERVICE_LOG_THREAD_FRAMES)
+
+    await opp.services.async_call(DOMAIN, SERVICE_LOG_THREAD_FRAMES, {})
+    await opp.async_block_till_done()
+
+    assert "SyncWorker_0" in caplog.text
+    caplog.clear()
+
+    assert await opp.config_entries.async_unload(entry.entry_id)
+    await opp.async_block_till_done()
+
+
+async def test_log_scheduled(opp, caplog):
+    """Test we can log scheduled items in the event loop."""
+
+    await setup.async_setup_component(opp, "persistent_notification", {})
+    entry = MockConfigEntry(domain=DOMAIN)
+    entry.add_to_opp(opp)
+
+    assert await opp.config_entries.async_setup(entry.entry_id)
+    await opp.async_block_till_done()
+
+    assert opp.services.has_service(DOMAIN, SERVICE_LOG_EVENT_LOOP_SCHEDULED)
+
+    await opp.services.async_call(DOMAIN, SERVICE_LOG_EVENT_LOOP_SCHEDULED, {})
+    await opp.async_block_till_done()
+
+    assert "Scheduled" in caplog.text
     caplog.clear()
 
     assert await opp.config_entries.async_unload(entry.entry_id)

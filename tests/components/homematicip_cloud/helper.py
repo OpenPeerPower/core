@@ -19,7 +19,7 @@ from openpeerpower.components.homematicip_cloud.generic_entity import (
     ATTR_MODEL_TYPE,
 )
 from openpeerpower.components.homematicip_cloud.hap import HomematicipHAP
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.setup import async_setup_component
 
 from tests.common import load_fixture
@@ -76,7 +76,7 @@ class HomeFactory:
 
     def __init__(
         self,
-        opp: OpenPeerPowerType,
+        opp: OpenPeerPower,
         mock_connection,
         hmip_config_entry: config_entries.ConfigEntry,
     ):

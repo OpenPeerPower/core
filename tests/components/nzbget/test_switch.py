@@ -7,6 +7,7 @@ from openpeerpower.const import (
     STATE_OFF,
     STATE_ON,
 )
+from openpeerpower.helpers import entity_registry as er
 
 from . import init_integration
 
@@ -18,7 +19,7 @@ async def test_download_switch(opp, nzbget_api) -> None:
     entry = await init_integration(opp)
     assert entry
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
     entity_id = "switch.nzbgettest_download"
     entity_entry = registry.async_get(entity_id)
     assert entity_entry

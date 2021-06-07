@@ -5,6 +5,7 @@ from openpeerpower.components.media_player.const import (
     SUPPORT_PLAY,
     SUPPORT_SELECT_SOURCE,
 )
+from openpeerpower.helpers import device_registry as dr, entity_registry as er
 
 from tests.common import async_get_device_automations
 from tests.components.homekit_controller.common import (
@@ -19,7 +20,7 @@ async def test_lg_tv(opp):
     accessories = await setup_accessories_from_file(opp, "lg_tv.json")
     config_entry, pairing = await setup_test_accessories(opp, accessories)
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     # Assert that the entity is correctly added to the entity registry
     entry = entity_registry.async_get("media_player.lg_webos_tv_af80")
@@ -54,7 +55,7 @@ async def test_lg_tv(opp):
     # CURRENT_MEDIA_STATE. Therefore "ok" is the best we can say.
     assert state.state == "ok"
 
-    device_registry = await opp.helpers.device_registry.async_get_registry()
+    device_registry = dr.async_get(opp)
 
     device = device_registry.async_get(entry.device_id)
     assert device.manufacturer == "LG Electronics"

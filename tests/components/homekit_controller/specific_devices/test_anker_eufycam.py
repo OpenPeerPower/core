@@ -1,4 +1,5 @@
 """Test against characteristics captured from a eufycam."""
+from openpeerpower.helpers import device_registry as dr, entity_registry as er
 
 from tests.components.homekit_controller.common import (
     Helper,
@@ -12,7 +13,7 @@ async def test_eufycam_setup(opp):
     accessories = await setup_accessories_from_file(opp, "anker_eufycam.json")
     config_entry, pairing = await setup_test_accessories(opp, accessories)
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     # Check that the camera is correctly found and set up
     camera_id = "camera.eufycam2_0000"
@@ -32,7 +33,7 @@ async def test_eufycam_setup(opp):
     assert camera_state.state == "idle"
     assert camera_state.attributes["supported_features"] == 0
 
-    device_registry = await opp.helpers.device_registry.async_get_registry()
+    device_registry = dr.async_get(opp)
 
     device = device_registry.async_get(camera.device_id)
     assert device.manufacturer == "Anker"

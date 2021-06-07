@@ -4,7 +4,7 @@ import hmac
 
 import pytest
 
-from openpeerpower import data_entry_flow
+from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.components import mailgun, webhook
 from openpeerpower.config import async_process_op_core_config
 from openpeerpower.const import CONF_API_KEY, CONF_DOMAIN
@@ -35,7 +35,7 @@ async def webhook_id_with_api_key(opp):
         {"internal_url": "http://example.local:8123"},
     )
     result = await opp.config_entries.flow.async_init(
-        "mailgun", context={"source": "user"}
+        "mailgun", context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM, result
 
@@ -55,7 +55,7 @@ async def webhook_id_without_api_key(opp):
         {"internal_url": "http://example.local:8123"},
     )
     result = await opp.config_entries.flow.async_init(
-        "mailgun", context={"source": "user"}
+        "mailgun", context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM, result
 

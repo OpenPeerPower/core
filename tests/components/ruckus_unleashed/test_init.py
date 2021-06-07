@@ -14,11 +14,8 @@ from openpeerpower.components.ruckus_unleashed import (
     DOMAIN,
     MANUFACTURER,
 )
-from openpeerpower.config_entries import (
-    ENTRY_STATE_LOADED,
-    ENTRY_STATE_NOT_LOADED,
-    ENTRY_STATE_SETUP_RETRY,
-)
+from openpeerpower.config_entries import ConfigEntryState
+from openpeerpower.helpers import device_registry as dr
 from openpeerpower.helpers.device_registry import CONNECTION_NETWORK_MAC
 
 from tests.components.ruckus_unleashed import (
@@ -55,7 +52,7 @@ async def test_setup_entry_connection_error(opp):
         await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
-    assert entry.state == ENTRY_STATE_SETUP_RETRY
+    assert entry.state is ConfigEntryState.SETUP_RETRY
 
 
 async def test_router_device_setup(opp):
@@ -64,7 +61,7 @@ async def test_router_device_setup(opp):
 
     device_info = DEFAULT_AP_INFO[API_AP][API_ID]["1"]
 
-    device_registry = await opp.helpers.device_registry.async_get_registry()
+    device_registry = dr.async_get(opp)
     device = device_registry.async_get_device(
         identifiers={(CONNECTION_NETWORK_MAC, device_info[API_MAC])},
         connections={(CONNECTION_NETWORK_MAC, device_info[API_MAC])},
@@ -83,12 +80,12 @@ async def test_unload_entry(opp):
     entry = await init_integration(opp)
 
     assert len(opp.config_entries.async_entries(DOMAIN)) == 1
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
 
     assert await opp.config_entries.async_unload(entry.entry_id)
     await opp.async_block_till_done()
 
-    assert entry.state == ENTRY_STATE_NOT_LOADED
+    assert entry.state is ConfigEntryState.NOT_LOADED
     assert not opp.data.get(DOMAIN)
 
 
@@ -112,4 +109,4 @@ async def test_config_not_ready_during_setup(opp):
         await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
-    assert entry.state == ENTRY_STATE_SETUP_RETRY
+    assert entry.state is ConfigEntryState.SETUP_RETRY

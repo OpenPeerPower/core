@@ -38,8 +38,6 @@ async def test_valid_credentials(opp):
     with patch(
         "poolsense.PoolSense.test_poolsense_credentials", return_value=True
     ), patch(
-        "openpeerpower.components.poolsense.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.poolsense.async_setup_entry", return_value=True
     ) as mock_setup_entry:
         result = await opp.config_entries.flow.async_init(
@@ -52,5 +50,4 @@ async def test_valid_credentials(opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == "test-email"
 
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1

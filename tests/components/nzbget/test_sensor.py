@@ -8,6 +8,7 @@ from openpeerpower.const import (
     DATA_RATE_MEGABYTES_PER_SECOND,
     DEVICE_CLASS_TIMESTAMP,
 )
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.util import dt as dt_util
 
 from . import init_integration
@@ -19,7 +20,7 @@ async def test_sensors(opp, nzbget_api) -> None:
     with patch("openpeerpower.components.nzbget.sensor.utcnow", return_value=now):
         entry = await init_integration(opp)
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     uptime = now - timedelta(seconds=600)
 

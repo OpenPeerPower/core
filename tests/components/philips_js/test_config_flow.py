@@ -19,15 +19,6 @@ from . import (
 
 
 @fixture(autouse=True)
-def mock_setup():
-    """Disable component setup."""
-    with patch(
-        "openpeerpower.components.philips_js.async_setup", return_value=True
-    ) as mock_setup:
-        yield mock_setup
-
-
-@fixture(autouse=True)
 def mock_setup_entry():
     """Disable component setup."""
     with patch(
@@ -50,7 +41,7 @@ async def mock_tv_pairable(mock_tv):
     return mock_tv
 
 
-async def test_import(opp, mock_setup, mock_setup_entry):
+async def test_import(opp, mock_setup_entry):
     """Test we get an item on import."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -61,7 +52,6 @@ async def test_import(opp, mock_setup, mock_setup_entry):
     assert result["type"] == "create_entry"
     assert result["title"] == "Philips TV (1234567890)"
     assert result["data"] == MOCK_CONFIG
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -77,7 +67,7 @@ async def test_import_exist(opp, mock_config_entry):
     assert result["reason"] == "already_configured"
 
 
-async def test_form(opp, mock_setup, mock_setup_entry):
+async def test_form(opp, mock_setup_entry):
     """Test we get the form."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -94,7 +84,6 @@ async def test_form(opp, mock_setup, mock_setup_entry):
     assert result2["type"] == "create_entry"
     assert result2["title"] == "Philips TV (1234567890)"
     assert result2["data"] == MOCK_CONFIG
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -128,7 +117,7 @@ async def test_form_unexpected_error(opp, mock_tv):
     assert result["errors"] == {"base": "unknown"}
 
 
-async def test_pairing(opp, mock_tv_pairable, mock_setup, mock_setup_entry):
+async def test_pairing(opp, mock_tv_pairable, mock_setup_entry):
     """Test we get the form."""
     mock_tv = mock_tv_pairable
 
@@ -163,14 +152,14 @@ async def test_pairing(opp, mock_tv_pairable, mock_setup, mock_setup_entry):
         "title": "55PUS7181/12 (ABCDEFGHIJKLF)",
         "data": MOCK_CONFIG_PAIRED,
         "version": 1,
+        "options": {},
     }
 
     await opp.async_block_till_done()
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_pair_request_failed(opp, mock_tv_pairable, mock_setup, mock_setup_entry):
+async def test_pair_request_failed(opp, mock_tv_pairable, mock_setup_entry):
     """Test we get the form."""
     mock_tv = mock_tv_pairable
     mock_tv.pairRequest.side_effect = PairingFailure({})
@@ -195,7 +184,7 @@ async def test_pair_request_failed(opp, mock_tv_pairable, mock_setup, mock_setup
     }
 
 
-async def test_pair_grant_failed(opp, mock_tv_pairable, mock_setup, mock_setup_entry):
+async def test_pair_grant_failed(opp, mock_tv_pairable, mock_setup_entry):
     """Test we get the form."""
     mock_tv = mock_tv_pairable
 

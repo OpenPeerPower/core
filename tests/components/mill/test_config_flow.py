@@ -3,6 +3,7 @@ from unittest.mock import patch
 
 import pytest
 
+from openpeerpower import config_entries
 from openpeerpower.components.mill.const import DOMAIN
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
 
@@ -19,7 +20,7 @@ def mill_setup_fixture():
 async def test_show_config_form(opp):
     """Test show configuration form."""
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "user"}
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     assert result["type"] == "form"
@@ -35,7 +36,7 @@ async def test_create_entry(opp):
 
     with patch("mill.Mill.connect", return_value=True):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "user"}, data=test_data
+            DOMAIN, context={"source": config_entries.SOURCE_USER}, data=test_data
         )
 
     assert result["type"] == "create_entry"
@@ -60,7 +61,7 @@ async def test_flow_entry_already_exists(opp):
 
     with patch("mill.Mill.connect", return_value=True):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "user"}, data=test_data
+            DOMAIN, context={"source": config_entries.SOURCE_USER}, data=test_data
         )
 
     assert result["type"] == "abort"
@@ -84,7 +85,7 @@ async def test_connection_error(opp):
 
     with patch("mill.Mill.connect", return_value=False):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "user"}, data=test_data
+            DOMAIN, context={"source": config_entries.SOURCE_USER}, data=test_data
         )
 
     assert result["type"] == "form"

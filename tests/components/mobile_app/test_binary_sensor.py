@@ -1,6 +1,6 @@
 """Entity tests for mobile_app."""
 from openpeerpower.const import STATE_OFF
-from openpeerpower.helpers import device_registry
+from openpeerpower.helpers import device_registry as dr
 
 
 async def test_sensor(opp, create_registrations, webhook_client):
@@ -70,7 +70,7 @@ async def test_sensor(opp, create_registrations, webhook_client):
     assert updated_entity.state == "off"
     assert "foo" not in updated_entity.attributes
 
-    dev_reg = await device_registry.async_get_registry(opp)
+    dev_reg = dr.async_get(opp)
     assert len(dev_reg.devices) == len(create_registrations)
 
     # Reload to verify state is restored

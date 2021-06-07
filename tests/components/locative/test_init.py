@@ -3,7 +3,7 @@ from unittest.mock import patch
 
 import pytest
 
-from openpeerpower import data_entry_flow
+from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.components import locative
 from openpeerpower.components.device_tracker import DOMAIN as DEVICE_TRACKER_DOMAIN
 from openpeerpower.components.locative import DOMAIN, TRACKER_UPDATE
@@ -39,7 +39,7 @@ async def webhook_id(opp, locative_client):
         {"internal_url": "http://example.local:8123"},
     )
     result = await opp.config_entries.flow.async_init(
-        "locative", context={"source": "user"}
+        "locative", context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM, result
 

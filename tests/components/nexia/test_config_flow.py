@@ -1,14 +1,17 @@
 """Test the nexia config flow."""
 from unittest.mock import MagicMock, patch
 
+from nexia.const import BRAND_ASAIR, BRAND_NEXIA
+import pytest
 from requests.exceptions import ConnectTimeout, HTTPError
 
 from openpeerpower import config_entries, setup
-from openpeerpower.components.nexia.const import DOMAIN
+from openpeerpower.components.nexia.const import CONF_BRAND, DOMAIN
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
 
 
-async def test_form(opp):
+@pytest.mark.parametrize("brand", [BRAND_ASAIR, BRAND_NEXIA])
+async def test_form(opp, brand):
     """Test we get the form."""
     await setup.async_setup_component(opp, "persistent_notification", {})
     result = await opp.config_entries.flow.async_init(
@@ -24,24 +27,22 @@ async def test_form(opp):
         "openpeerpower.components.nexia.config_flow.NexiaHome.login",
         side_effect=MagicMock(),
     ), patch(
-        "openpeerpower.components.nexia.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.nexia.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
-            {CONF_USERNAME: "username", CONF_PASSWORD: "password"},
+            {CONF_BRAND: brand, CONF_USERNAME: "username", CONF_PASSWORD: "password"},
         )
         await opp.async_block_till_done()
 
     assert result2["type"] == "create_entry"
     assert result2["title"] == "myhouse"
     assert result2["data"] == {
+        CONF_BRAND: brand,
         CONF_USERNAME: "username",
         CONF_PASSWORD: "password",
     }
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -54,7 +55,11 @@ async def test_form_invalid_auth(opp):
     with patch("openpeerpower.components.nexia.config_flow.NexiaHome.login"):
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
-            {CONF_USERNAME: "username", CONF_PASSWORD: "password"},
+            {
+                CONF_BRAND: BRAND_NEXIA,
+                CONF_USERNAME: "username",
+                CONF_PASSWORD: "password",
+            },
         )
 
     assert result2["type"] == "form"
@@ -73,7 +78,11 @@ async def test_form_cannot_connect(opp):
     ):
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
-            {CONF_USERNAME: "username", CONF_PASSWORD: "password"},
+            {
+                CONF_BRAND: BRAND_NEXIA,
+                CONF_USERNAME: "username",
+                CONF_PASSWORD: "password",
+            },
         )
 
     assert result2["type"] == "form"
@@ -94,7 +103,11 @@ async def test_form_invalid_auth_http_401(opp):
     ):
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
-            {CONF_USERNAME: "username", CONF_PASSWORD: "password"},
+            {
+                CONF_BRAND: BRAND_NEXIA,
+                CONF_USERNAME: "username",
+                CONF_PASSWORD: "password",
+            },
         )
 
     assert result2["type"] == "form"
@@ -115,7 +128,11 @@ async def test_form_cannot_connect_not_found(opp):
     ):
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
-            {CONF_USERNAME: "username", CONF_PASSWORD: "password"},
+            {
+                CONF_BRAND: BRAND_NEXIA,
+                CONF_USERNAME: "username",
+                CONF_PASSWORD: "password",
+            },
         )
 
     assert result2["type"] == "form"
@@ -134,7 +151,11 @@ async def test_form_broad_exception(opp):
     ):
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
-            {CONF_USERNAME: "username", CONF_PASSWORD: "password"},
+            {
+                CONF_BRAND: BRAND_NEXIA,
+                CONF_USERNAME: "username",
+                CONF_PASSWORD: "password",
+            },
         )
 
     assert result2["type"] == "form"

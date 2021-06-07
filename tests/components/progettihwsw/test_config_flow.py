@@ -48,9 +48,6 @@ async def test_form(opp):
     assert result2["errors"] == {}
 
     with patch(
-        "openpeerpower.components.progettihwsw.async_setup",
-        return_value=True,
-    ), patch(
         "openpeerpower.components.progettihwsw.async_setup_entry",
         return_value=True,
     ):

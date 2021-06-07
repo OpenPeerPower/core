@@ -5,6 +5,7 @@ https://github.com/openpeerpower/core/issues/20957
 """
 
 from openpeerpower.components.light import SUPPORT_BRIGHTNESS, SUPPORT_COLOR
+from openpeerpower.helpers import device_registry as dr, entity_registry as er
 
 from tests.components.homekit_controller.common import (
     Helper,
@@ -18,7 +19,7 @@ async def test_aqara_gateway_setup(opp):
     accessories = await setup_accessories_from_file(opp, "aqara_gateway.json")
     config_entry, pairing = await setup_test_accessories(opp, accessories)
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     # Check that the light is correctly found and set up
     alarm_id = "alarm_control_panel.aqara_hub_1563"
@@ -48,7 +49,7 @@ async def test_aqara_gateway_setup(opp):
         SUPPORT_BRIGHTNESS | SUPPORT_COLOR
     )
 
-    device_registry = await opp.helpers.device_registry.async_get_registry()
+    device_registry = dr.async_get(opp)
 
     # All the entities are services of the same accessory
     # So it looks at the protocol like a single physical device

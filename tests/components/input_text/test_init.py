@@ -25,7 +25,7 @@ from openpeerpower.const import (
 )
 from openpeerpower.core import Context, CoreState, State
 from openpeerpower.exceptions import Unauthorized
-from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.loader import bind_opp
 from openpeerpower.setup import async_setup_component
 
@@ -393,7 +393,7 @@ async def test_ws_delete(opp, opp_ws_client, storage_setup):
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry(opp)
+    ent_reg = er.async_get(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is not None
@@ -419,7 +419,7 @@ async def test_update(opp, opp_ws_client, storage_setup):
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry(opp)
+    ent_reg = er.async_get(opp)
 
     state = opp.states.get(input_entity_id)
     assert state.attributes[ATTR_FRIENDLY_NAME] == "from storage"
@@ -457,7 +457,7 @@ async def test_ws_create(opp, opp_ws_client, storage_setup):
 
     input_id = "new_input"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry(opp)
+    ent_reg = er.async_get(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is None

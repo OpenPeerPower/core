@@ -7,11 +7,12 @@ from ndms2_client.client import InterfaceInfo, RouterInfo
 import pytest
 
 from openpeerpower import config_entries, data_entry_flow
-from openpeerpower.components import keenetic_ndms2 as keenetic
+from openpeerpower.components import keenetic_ndms2 as keenetic, ssdp
 from openpeerpower.components.keenetic_ndms2 import const
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.const import CONF_HOST, CONF_SOURCE
+from openpeerpower.core import OpenPeerPower
 
-from . import MOCK_DATA, MOCK_NAME, MOCK_OPTIONS
+from . import MOCK_DATA, MOCK_NAME, MOCK_OPTIONS, MOCK_SSDP_DISCOVERY_INFO
 
 from tests.common import MockConfigEntry
 
@@ -43,7 +44,7 @@ def mock_keenetic_connect_failed():
         yield
 
 
-async def test_flow_works(opp: OpenPeerPowerType, connect):
+async def test_flow_works(opp: OpenPeerPower, connect) -> None:
     """Test config flow."""
 
     result = await opp.config_entries.flow.async_init(
@@ -53,8 +54,6 @@ async def test_flow_works(opp: OpenPeerPowerType, connect):
     assert result["step_id"] == "user"
 
     with patch(
-        "openpeerpower.components.keenetic_ndms2.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.keenetic_ndms2.async_setup_entry", return_value=True
     ) as mock_setup_entry:
         result2 = await opp.config_entries.flow.async_configure(
@@ -66,16 +65,13 @@ async def test_flow_works(opp: OpenPeerPowerType, connect):
     assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result2["title"] == MOCK_NAME
     assert result2["data"] == MOCK_DATA
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_import_works(opp: OpenPeerPowerType, connect):
+async def test_import_works(opp: OpenPeerPower, connect) -> None:
     """Test config flow."""
 
     with patch(
-        "openpeerpower.components.keenetic_ndms2.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.keenetic_ndms2.async_setup_entry", return_value=True
     ) as mock_setup_entry:
         result = await opp.config_entries.flow.async_init(
@@ -88,23 +84,19 @@ async def test_import_works(opp: OpenPeerPowerType, connect):
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["title"] == MOCK_NAME
     assert result["data"] == MOCK_DATA
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
-async def test_options(opp):
+async def test_options(opp: OpenPeerPower) -> None:
     """Test updating options."""
     entry = MockConfigEntry(domain=keenetic.DOMAIN, data=MOCK_DATA)
     entry.add_to_opp(opp)
     with patch(
-        "openpeerpower.components.keenetic_ndms2.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.keenetic_ndms2.async_setup_entry", return_value=True
     ) as mock_setup_entry:
         await opp.config_entries.async_setup(entry.entry_id)
         await opp.async_block_till_done()
 
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
     # fake router
@@ -136,7 +128,7 @@ async def test_options(opp):
     assert result2["data"] == MOCK_OPTIONS
 
 
-async def test_host_already_configured(opp, connect):
+async def test_host_already_configured(opp: OpenPeerPower, connect) -> None:
     """Test host already configured."""
 
     entry = MockConfigEntry(
@@ -145,7 +137,7 @@ async def test_host_already_configured(opp, connect):
     entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
-        keenetic.DOMAIN, context={"source": "user"}
+        keenetic.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
 
     result2 = await opp.config_entries.flow.async_configure(
@@ -156,14 +148,99 @@ async def test_host_already_configured(opp, connect):
     assert result2["reason"] == "already_configured"
 
 
-async def test_connection_error(opp, connect_error):
+async def test_connection_error(opp: OpenPeerPower, connect_error) -> None:
     """Test error when connection is unsuccessful."""
 
     result = await opp.config_entries.flow.async_init(
-        keenetic.DOMAIN, context={"source": "user"}
+        keenetic.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     result = await opp.config_entries.flow.async_configure(
         result["flow_id"], user_input=MOCK_DATA
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] == {"base": "cannot_connect"}
+
+
+async def test_ssdp_works(opp: OpenPeerPower, connect) -> None:
+    """Test host already configured and discovered."""
+
+    discovery_info = MOCK_SSDP_DISCOVERY_INFO.copy()
+    result = await opp.config_entries.flow.async_init(
+        keenetic.DOMAIN,
+        context={CONF_SOURCE: config_entries.SOURCE_SSDP},
+        data=discovery_info,
+    )
+
+    assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
+    assert result["step_id"] == "user"
+
+    with patch(
+        "openpeerpower.components.keenetic_ndms2.async_setup_entry", return_value=True
+    ) as mock_setup_entry:
+        user_input = MOCK_DATA.copy()
+        user_input.pop(CONF_HOST)
+
+        result2 = await opp.config_entries.flow.async_configure(
+            result["flow_id"],
+            user_input=user_input,
+        )
+        await opp.async_block_till_done()
+
+    assert result2["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
+    assert result2["title"] == MOCK_NAME
+    assert result2["data"] == MOCK_DATA
+    assert len(mock_setup_entry.mock_calls) == 1
+
+
+async def test_ssdp_already_configured(opp: OpenPeerPower) -> None:
+    """Test host already configured and discovered."""
+
+    entry = MockConfigEntry(
+        domain=keenetic.DOMAIN, data=MOCK_DATA, options=MOCK_OPTIONS
+    )
+    entry.add_to_opp(opp)
+
+    discovery_info = MOCK_SSDP_DISCOVERY_INFO.copy()
+    result = await opp.config_entries.flow.async_init(
+        keenetic.DOMAIN,
+        context={CONF_SOURCE: config_entries.SOURCE_SSDP},
+        data=discovery_info,
+    )
+
+    assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
+    assert result["reason"] == "already_configured"
+
+
+async def test_ssdp_reject_no_udn(opp: OpenPeerPower) -> None:
+    """Discovered device has no UDN."""
+
+    discovery_info = {
+        **MOCK_SSDP_DISCOVERY_INFO,
+    }
+    discovery_info.pop(ssdp.ATTR_UPNP_UDN)
+
+    result = await opp.config_entries.flow.async_init(
+        keenetic.DOMAIN,
+        context={CONF_SOURCE: config_entries.SOURCE_SSDP},
+        data=discovery_info,
+    )
+
+    assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
+    assert result["reason"] == "no_udn"
+
+
+async def test_ssdp_reject_non_keenetic(opp: OpenPeerPower) -> None:
+    """Discovered device does not look like a keenetic router."""
+
+    discovery_info = {
+        **MOCK_SSDP_DISCOVERY_INFO,
+        ssdp.ATTR_UPNP_FRIENDLY_NAME: "Suspicious device",
+    }
+    result = await opp.config_entries.flow.async_init(
+        keenetic.DOMAIN,
+        context={CONF_SOURCE: config_entries.SOURCE_SSDP},
+        data=discovery_info,
+    )
+
+    assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
+    assert result["reason"] == "not_keenetic_ndms2"

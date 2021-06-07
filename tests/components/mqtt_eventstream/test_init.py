@@ -3,7 +3,7 @@ import json
 from unittest.mock import ANY, patch
 
 import openpeerpower.components.mqtt_eventstream as eventstream
-from openpeerpower.const import EVENT_STATE_CHANGED
+from openpeerpower.const import EVENT_STATE_CHANGED, MATCH_ALL
 from openpeerpower.core import State, callback
 from openpeerpower.helpers.json import JSONEncoder
 from openpeerpower.setup import async_setup_component
@@ -114,6 +114,7 @@ async def test_time_event_does_not_send_message(opp, mqtt_mock):
     mqtt_mock.async_publish.reset_mock()
 
     async_fire_time_changed(opp, dt_util.utcnow())
+    await opp.async_block_till_done()
     assert not mqtt_mock.async_publish.called
 
 
@@ -138,7 +139,34 @@ async def test_receiving_remote_event_fires_opp_event(opp, mqtt_mock):
     async_fire_mqtt_message(opp, sub_topic, payload)
     await opp.async_block_till_done()
 
-    assert 1 == len(calls)
+    assert len(calls) == 1
+
+    await opp.async_block_till_done()
+
+
+async def test_receiving_blocked_event_fires_opp_event(opp, mqtt_mock):
+    """Test the receiving of blocked event does not fire."""
+    sub_topic = "foo"
+    assert await add_eventstream(opp, sub_topic=sub_topic)
+    await opp.async_block_till_done()
+
+    calls = []
+
+    @callback
+    def listener(_):
+        calls.append(1)
+
+    opp.bus.async_listen(MATCH_ALL, listener)
+    await opp.async_block_till_done()
+
+    for event in eventstream.BLOCKED_EVENTS:
+        payload = json.dumps({"event_type": event, "event_data": {}}, cls=JSONEncoder)
+        async_fire_mqtt_message(opp, sub_topic, payload)
+        await opp.async_block_till_done()
+
+    assert len(calls) == 0
+
+    await opp.async_block_till_done()
 
 
 async def test_ignored_event_doesnt_send_over_stream(opp, mqtt_mock):
@@ -158,6 +186,7 @@ async def test_ignored_event_doesnt_send_over_stream(opp, mqtt_mock):
 
     # Set a state of an entity
     mock_state_change_event(opp, State(e_id, "on"))
+    await opp.async_block_till_done()
     await opp.async_block_till_done()
 
     assert not mqtt_mock.async_publish.called

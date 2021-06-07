@@ -1,5 +1,10 @@
 """Tests for Search integration."""
 from openpeerpower.components import search
+from openpeerpower.helpers import (
+    area_registry as ar,
+    device_registry as dr,
+    entity_registry as er,
+)
 from openpeerpower.setup import async_setup_component
 
 from tests.common import MockConfigEntry
@@ -8,9 +13,9 @@ from tests.components.blueprint.conftest import stub_blueprint_populate  # noqa:
 
 async def test_search(opp):
     """Test that search works."""
-    area_reg = await opp.helpers.area_registry.async_get_registry()
-    device_reg = await opp.helpers.device_registry.async_get_registry()
-    entity_reg = await opp.helpers.entity_registry.async_get_registry()
+    area_reg = ar.async_get(opp)
+    device_reg = dr.async_get(opp)
+    entity_reg = er.async_get(opp)
 
     living_room_area = area_reg.async_create("Living Room")
 
@@ -188,6 +193,10 @@ async def test_search(opp):
         },
     )
 
+    # Ensure automations set up correctly.
+    assert opp.states.get("automation.wled_entity") is not None
+    assert opp.states.get("automation.wled_device") is not None
+
     # Explore the graph from every node and make sure we find the same results
     expected = {
         "config_entry": {wled_config_entry.entry_id},
@@ -271,12 +280,70 @@ async def test_search(opp):
         assert searcher.async_search(search_type, search_id) == {}
 
 
+async def test_area_lookup(opp):
+    """Test area based lookup."""
+    area_reg = ar.async_get(opp)
+    device_reg = dr.async_get(opp)
+    entity_reg = er.async_get(opp)
+
+    living_room_area = area_reg.async_create("Living Room")
+
+    await async_setup_component(
+        opp,
+        "script",
+        {
+            "script": {
+                "wled": {
+                    "sequence": [
+                        {
+                            "service": "light.turn_on",
+                            "target": {"area_id": living_room_area.id},
+                        },
+                    ]
+                },
+            }
+        },
+    )
+
+    assert await async_setup_component(
+        opp,
+        "automation",
+        {
+            "automation": [
+                {
+                    "alias": "area_turn_on",
+                    "trigger": {"platform": "template", "value_template": "true"},
+                    "action": [
+                        {
+                            "service": "light.turn_on",
+                            "data": {
+                                "area_id": living_room_area.id,
+                            },
+                        },
+                    ],
+                },
+            ]
+        },
+    )
+
+    searcher = search.Searcher(opp, device_reg, entity_reg)
+    assert searcher.async_search("area", living_room_area.id) == {
+        "script": {"script.wled"},
+        "automation": {"automation.area_turn_on"},
+    }
+
+    searcher = search.Searcher(opp, device_reg, entity_reg)
+    assert searcher.async_search("automation", "automation.area_turn_on") == {
+        "area": {living_room_area.id},
+    }
+
+
 async def test_ws_api(opp, opp_ws_client):
     """Test WS API."""
     assert await async_setup_component(opp, "search", {})
 
-    area_reg = await opp.helpers.area_registry.async_get_registry()
-    device_reg = await opp.helpers.device_registry.async_get_registry()
+    area_reg = ar.async_get(opp)
+    device_reg = dr.async_get(opp)
 
     kitchen_area = area_reg.async_create("Kitchen")
 

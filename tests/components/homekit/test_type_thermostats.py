@@ -61,13 +61,13 @@ from openpeerpower.const import (
     TEMP_FAHRENHEIT,
 )
 from openpeerpower.core import CoreState
-from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers import entity_registry as er
 
 from tests.common import async_mock_service
 
 
 async def test_thermostat(opp, hk_driver, events):
-    """Test if accessory and OP are updated accordingly."""
+    """Test if accessory and OPP are updated accordingly."""
     entity_id = "climate.test"
 
     opp.states.async_set(
@@ -407,7 +407,7 @@ async def test_thermostat(opp, hk_driver, events):
 
 
 async def test_thermostat_auto(opp, hk_driver, events):
-    """Test if accessory and OP are updated accordingly."""
+    """Test if accessory and OPP are updated accordingly."""
     entity_id = "climate.test"
 
     # support_auto = True
@@ -561,7 +561,7 @@ async def test_thermostat_auto(opp, hk_driver, events):
 
 
 async def test_thermostat_humidity(opp, hk_driver, events):
-    """Test if accessory and OP are updated accordingly with humidity."""
+    """Test if accessory and OPP are updated accordingly with humidity."""
     entity_id = "climate.test"
 
     # support_auto = True
@@ -620,7 +620,7 @@ async def test_thermostat_humidity(opp, hk_driver, events):
 
 
 async def test_thermostat_power_state(opp, hk_driver, events):
-    """Test if accessory and OP are updated accordingly."""
+    """Test if accessory and OPP are updated accordingly."""
     entity_id = "climate.test"
 
     # SUPPORT_ON_OFF = True
@@ -740,7 +740,7 @@ async def test_thermostat_power_state(opp, hk_driver, events):
 
 
 async def test_thermostat_fahrenheit(opp, hk_driver, events):
-    """Test if accessory and OP are updated accordingly."""
+    """Test if accessory and OPP are updated accordingly."""
     entity_id = "climate.test"
 
     # support_ = True
@@ -889,7 +889,7 @@ async def test_thermostat_restore(opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
     opp.state = CoreState.not_running
 
-    registry = await entity_registry.async_get_registry(opp)
+    registry = er.async_get(opp)
 
     registry.async_get_or_create(
         "climate", "generic", "1234", suggested_object_id="simple"
@@ -1570,7 +1570,7 @@ async def test_thermostat_without_target_temp_only_range(opp, hk_driver, events)
 
 
 async def test_water_heater(opp, hk_driver, events):
-    """Test if accessory and OP are updated accordingly."""
+    """Test if accessory and OPP are updated accordingly."""
     entity_id = "water_heater.test"
 
     opp.states.async_set(entity_id, HVAC_MODE_HEAT)
@@ -1648,7 +1648,7 @@ async def test_water_heater(opp, hk_driver, events):
 
 
 async def test_water_heater_fahrenheit(opp, hk_driver, events):
-    """Test if accessory and OP are update accordingly."""
+    """Test if accessory and OPP are update accordingly."""
     entity_id = "water_heater.test"
 
     opp.states.async_set(entity_id, HVAC_MODE_HEAT)
@@ -1705,7 +1705,7 @@ async def test_water_heater_restore(opp, hk_driver, events):
     """Test setting up an entity from state in the event registry."""
     opp.state = CoreState.not_running
 
-    registry = await entity_registry.async_get_registry(opp)
+    registry = er.async_get(opp)
 
     registry.async_get_or_create(
         "water_heater", "generic", "1234", suggested_object_id="simple"

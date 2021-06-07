@@ -36,8 +36,6 @@ async def test_form(opp):
         "openpeerpower.components.monoprice.config_flow.get_async_monoprice",
         return_value=True,
     ), patch(
-        "openpeerpower.components.monoprice.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.monoprice.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -52,7 +50,6 @@ async def test_form(opp):
         CONF_PORT: CONFIG[CONF_PORT],
         CONF_SOURCES: {"1": CONFIG[CONF_SOURCE_1], "4": CONFIG[CONF_SOURCE_4]},
     }
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 

@@ -8,6 +8,7 @@ from openpeerpower.components import mqtt
 from openpeerpower.components.mqtt import debug_info
 from openpeerpower.components.mqtt.const import MQTT_DISCONNECTED
 from openpeerpower.const import ATTR_ASSUMED_STATE, STATE_UNAVAILABLE
+from openpeerpower.helpers import device_registry as dr, entity_registry as er
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
 from openpeerpower.setup import async_setup_component
 
@@ -19,14 +20,16 @@ DEFAULT_CONFIG_DEVICE_INFO_ID = {
     "name": "Beer",
     "model": "Glass",
     "sw_version": "0.1-beta",
+    "suggested_area": "default_area",
 }
 
 DEFAULT_CONFIG_DEVICE_INFO_MAC = {
-    "connections": [["mac", "02:5b:26:a8:dc:12"]],
+    "connections": [[dr.CONNECTION_NETWORK_MAC, "02:5b:26:a8:dc:12"]],
     "manufacturer": "Whatever",
     "name": "Beer",
     "model": "Glass",
     "sw_version": "0.1-beta",
+    "suggested_area": "default_area",
 }
 
 
@@ -725,7 +728,7 @@ async def help_test_entity_device_info_with_identifier(opp, mqtt_mock, domain, c
     config["device"] = copy.deepcopy(DEFAULT_CONFIG_DEVICE_INFO_ID)
     config["unique_id"] = "veryunique"
 
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
 
     data = json.dumps(config)
     async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
@@ -738,6 +741,7 @@ async def help_test_entity_device_info_with_identifier(opp, mqtt_mock, domain, c
     assert device.name == "Beer"
     assert device.model == "Glass"
     assert device.sw_version == "0.1-beta"
+    assert device.suggested_area == "default_area"
 
 
 async def help_test_entity_device_info_with_connection(opp, mqtt_mock, domain, config):
@@ -750,19 +754,22 @@ async def help_test_entity_device_info_with_connection(opp, mqtt_mock, domain, c
     config["device"] = copy.deepcopy(DEFAULT_CONFIG_DEVICE_INFO_MAC)
     config["unique_id"] = "veryunique"
 
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
 
     data = json.dumps(config)
     async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
     await opp.async_block_till_done()
 
-    device = registry.async_get_device(set(), {("mac", "02:5b:26:a8:dc:12")})
+    device = registry.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, "02:5b:26:a8:dc:12")}
+    )
     assert device is not None
-    assert device.connections == {("mac", "02:5b:26:a8:dc:12")}
+    assert device.connections == {(dr.CONNECTION_NETWORK_MAC, "02:5b:26:a8:dc:12")}
     assert device.manufacturer == "Whatever"
     assert device.name == "Beer"
     assert device.model == "Glass"
     assert device.sw_version == "0.1-beta"
+    assert device.suggested_area == "default_area"
 
 
 async def help_test_entity_device_info_remove(opp, mqtt_mock, domain, config):
@@ -772,8 +779,8 @@ async def help_test_entity_device_info_remove(opp, mqtt_mock, domain, config):
     config["device"] = copy.deepcopy(DEFAULT_CONFIG_DEVICE_INFO_ID)
     config["unique_id"] = "veryunique"
 
-    dev_registry = await opp.helpers.device_registry.async_get_registry()
-    ent_registry = await opp.helpers.entity_registry.async_get_registry()
+    dev_registry = dr.async_get(opp)
+    ent_registry = er.async_get(opp)
 
     data = json.dumps(config)
     async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
@@ -801,7 +808,7 @@ async def help_test_entity_device_info_update(opp, mqtt_mock, domain, config):
     config["device"] = copy.deepcopy(DEFAULT_CONFIG_DEVICE_INFO_ID)
     config["unique_id"] = "veryunique"
 
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
 
     data = json.dumps(config)
     async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
@@ -913,7 +920,7 @@ async def help_test_entity_debug_info(opp, mqtt_mock, domain, config):
     config["device"] = copy.deepcopy(DEFAULT_CONFIG_DEVICE_INFO_ID)
     config["unique_id"] = "veryunique"
 
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
 
     data = json.dumps(config)
     async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
@@ -946,7 +953,7 @@ async def help_test_entity_debug_info_max_messages(opp, mqtt_mock, domain, confi
     config["device"] = copy.deepcopy(DEFAULT_CONFIG_DEVICE_INFO_ID)
     config["unique_id"] = "veryunique"
 
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
 
     data = json.dumps(config)
     async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
@@ -1008,7 +1015,7 @@ async def help_test_entity_debug_info_message(
     if payload is None:
         payload = "ON"
 
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
 
     data = json.dumps(config)
     async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
@@ -1054,7 +1061,7 @@ async def help_test_entity_debug_info_remove(opp, mqtt_mock, domain, config):
     config["device"] = copy.deepcopy(DEFAULT_CONFIG_DEVICE_INFO_ID)
     config["unique_id"] = "veryunique"
 
-    registry = await opp.helpers.device_registry.async_get_registry()
+    registry = dr.async_get(opp)
 
     data = json.dumps(config)
     async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla/config", data)
@@ -1097,7 +1104,7 @@ async def help_test_entity_debug_info_update_entity_id(opp, mqtt_mock, domain, c
     config["device"] = copy.deepcopy(DEFAULT_CONFIG_DEVICE_INFO_ID)
     config["unique_id"] = "veryunique"
 
-    dev_registry = await opp.helpers.device_registry.async_get_registry()
+    dev_registry = dr.async_get(opp)
     ent_registry = mock_registry(opp, {})
 
     data = json.dumps(config)
@@ -1138,4 +1145,42 @@ async def help_test_entity_debug_info_update_entity_id(opp, mqtt_mock, domain, c
         "subscriptions"
     ]
     assert len(debug_info_data["triggers"]) == 0
-    assert f"{domain}.test" not in opp.data[debug_info.DATA_MQTT_DEBUG_INFO]["entities"]
+    assert (
+        f"{domain}.test" not in opp.data[debug_info.DATA_MQTT_DEBUG_INFO]["entities"]
+    )
+
+
+async def help_test_entity_disabled_by_default(opp, mqtt_mock, domain, config):
+    """Test device registry remove."""
+    # Add device settings to config
+    config = copy.deepcopy(config[domain])
+    config["device"] = copy.deepcopy(DEFAULT_CONFIG_DEVICE_INFO_ID)
+    config["enabled_by_default"] = False
+    config["unique_id"] = "veryunique1"
+
+    dev_registry = dr.async_get(opp)
+    ent_registry = er.async_get(opp)
+
+    # Discover a disabled entity
+    data = json.dumps(config)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla1/config", data)
+    await opp.async_block_till_done()
+    entity_id = ent_registry.async_get_entity_id(domain, mqtt.DOMAIN, "veryunique1")
+    assert not opp.states.get(entity_id)
+    assert dev_registry.async_get_device({("mqtt", "helloworld")})
+
+    # Discover an enabled entity, tied to the same device
+    config["enabled_by_default"] = True
+    config["unique_id"] = "veryunique2"
+    data = json.dumps(config)
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla2/config", data)
+    await opp.async_block_till_done()
+    entity_id = ent_registry.async_get_entity_id(domain, mqtt.DOMAIN, "veryunique2")
+    assert opp.states.get(entity_id)
+
+    # Remove the enabled entity, both entities and the device should be removed
+    async_fire_mqtt_message(opp, f"openpeerpower/{domain}/bla2/config", "")
+    await opp.async_block_till_done()
+    assert not ent_registry.async_get_entity_id(domain, mqtt.DOMAIN, "veryunique1")
+    assert not ent_registry.async_get_entity_id(domain, mqtt.DOMAIN, "veryunique2")
+    assert not dev_registry.async_get_device({("mqtt", "helloworld")})

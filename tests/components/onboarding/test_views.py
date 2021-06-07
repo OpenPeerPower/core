@@ -8,6 +8,7 @@ import pytest
 from openpeerpower.components import onboarding
 from openpeerpower.components.onboarding import const, views
 from openpeerpower.const import HTTP_FORBIDDEN
+from openpeerpower.helpers import area_registry as ar
 from openpeerpower.setup import async_setup_component
 
 from . import mock_storage
@@ -25,7 +26,9 @@ def always_mock_weather(mock_weather):  # noqa: F811
 @pytest.fixture(autouse=True)
 def auth_active(opp):
     """Ensure auth is always active."""
-    opp.loop.run_until_complete(register_auth_provider(opp, {"type": "openpeerpower"}))
+    opp.loop.run_until_complete(
+        register_auth_provider(opp, {"type": "openpeerpower"})
+    )
 
 
 @pytest.fixture(name="rpi")
@@ -64,12 +67,18 @@ async def mock_supervisor_fixture(opp, aioclient_mock):
     with patch.dict(os.environ, {"OPPIO": "127.0.0.1"}), patch(
         "openpeerpower.components.oppio.OppIO.is_connected",
         return_value=True,
-    ), patch("openpeerpower.components.oppio.OppIO.get_info", return_value={},), patch(
+    ), patch(
+        "openpeerpower.components.oppio.OppIO.get_info",
+        return_value={},
+    ), patch(
         "openpeerpower.components.oppio.OppIO.get_host_info",
         return_value={},
     ), patch(
-        "openpeerpower.components.oppio.OppIO.get_supervisor_info",
+        "openpeerpower.components.oppio.OppIO.get_store",
         return_value={},
+    ), patch(
+        "openpeerpower.components.oppio.OppIO.get_supervisor_info",
+        return_value={"diagnostics": True},
     ), patch(
         "openpeerpower.components.oppio.OppIO.get_os_info",
         return_value={},
@@ -176,7 +185,7 @@ async def test_onboarding_user(opp, opp_storage, aiohttp_client):
     )
 
     # Validate created areas
-    area_registry = await opp.helpers.area_registry.async_get_registry()
+    area_registry = ar.async_get(opp)
     assert len(area_registry.areas) == 3
     assert sorted([area.name for area in area_registry.async_list_areas()]) == [
         "Bedroom",
@@ -412,3 +421,22 @@ async def test_onboarding_core_no_rpi_power(
 
     rpi_power_state = opp.states.get("binary_sensor.rpi_power_status")
     assert not rpi_power_state
+
+
+async def test_onboarding_analytics(opp, opp_storage, opp_client, opp_admin_user):
+    """Test finishing analytics step."""
+    mock_storage(opp_storage, {"done": [const.STEP_USER]})
+
+    assert await async_setup_component(opp, "onboarding", {})
+    await opp.async_block_till_done()
+
+    client = await opp_client()
+
+    resp = await client.post("/api/onboarding/analytics")
+
+    assert resp.status == 200
+
+    assert const.STEP_ANALYTICS in opp_storage[const.DOMAIN]["data"]["done"]
+
+    resp = await client.post("/api/onboarding/analytics")
+    assert resp.status == 403

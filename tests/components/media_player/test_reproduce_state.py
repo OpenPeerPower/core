@@ -132,7 +132,9 @@ async def test_attribute_no_state(opp):
 
     value = "dummy"
 
-    await async_reproduce_states(opp, [State(ENTITY_1, None, {ATTR_SOUND_MODE: value})])
+    await async_reproduce_states(
+        opp, [State(ENTITY_1, None, {ATTR_SOUND_MODE: value})]
+    )
 
     await opp.async_block_till_done()
 

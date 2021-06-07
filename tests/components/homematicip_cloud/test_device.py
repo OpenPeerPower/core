@@ -41,8 +41,8 @@ async def test_hmip_remove_device(opp, default_mock_hap_factory):
     assert ha_state.state == STATE_ON
     assert hmip_device
 
-    device_registry = await dr.async_get_registry(opp)
-    entity_registry = await er.async_get_registry(opp)
+    device_registry = dr.async_get(opp)
+    entity_registry = er.async_get(opp)
 
     pre_device_count = len(device_registry.devices)
     pre_entity_count = len(entity_registry.entities)
@@ -73,8 +73,8 @@ async def test_hmip_add_device(opp, default_mock_hap_factory, hmip_config_entry)
     assert ha_state.state == STATE_ON
     assert hmip_device
 
-    device_registry = await dr.async_get_registry(opp)
-    entity_registry = await er.async_get_registry(opp)
+    device_registry = dr.async_get(opp)
+    entity_registry = er.async_get(opp)
 
     pre_device_count = len(device_registry.devices)
     pre_entity_count = len(entity_registry.entities)
@@ -119,8 +119,8 @@ async def test_hmip_remove_group(opp, default_mock_hap_factory):
     assert ha_state.state == STATE_ON
     assert hmip_device
 
-    device_registry = await dr.async_get_registry(opp)
-    entity_registry = await er.async_get_registry(opp)
+    device_registry = dr.async_get(opp)
+    entity_registry = er.async_get(opp)
 
     pre_device_count = len(device_registry.devices)
     pre_entity_count = len(entity_registry.entities)
@@ -257,12 +257,12 @@ async def test_hmip_multi_area_device(opp, default_mock_hap_factory):
     assert ha_state
 
     # get the entity
-    entity_registry = await er.async_get_registry(opp)
+    entity_registry = er.async_get(opp)
     entity = entity_registry.async_get(ha_state.entity_id)
     assert entity
 
     # get the device
-    device_registry = await dr.async_get_registry(opp)
+    device_registry = dr.async_get(opp)
     device = device_registry.async_get(entity.device_id)
     assert device.name == "Wired Eingangsmodul – 32-fach"
 

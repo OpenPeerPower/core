@@ -24,6 +24,11 @@ FIXTURE_USER_INPUT_REAUTH = {
     CONF_PASSWORD: "password_fixed",
     CONF_REGION: "MNAO",
 }
+FIXTURE_USER_INPUT_REAUTH_CHANGED_EMAIL = {
+    CONF_EMAIL: "example2@example.com",
+    CONF_PASSWORD: "password_fixed",
+    CONF_REGION: "MNAO",
+}
 
 
 async def test_form(opp):
@@ -39,8 +44,6 @@ async def test_form(opp):
         "openpeerpower.components.mazda.config_flow.MazdaAPI.validate_credentials",
         return_value=True,
     ), patch(
-        "openpeerpower.components.mazda.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.mazda.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -53,8 +56,37 @@ async def test_form(opp):
     assert result2["type"] == "create_entry"
     assert result2["title"] == FIXTURE_USER_INPUT[CONF_EMAIL]
     assert result2["data"] == FIXTURE_USER_INPUT
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
+
+
+async def test_account_already_exists(opp):
+    """Test account already exists."""
+    mock_config = MockConfigEntry(
+        domain=DOMAIN,
+        unique_id=FIXTURE_USER_INPUT[CONF_EMAIL],
+        data=FIXTURE_USER_INPUT,
+    )
+    mock_config.add_to_opp(opp)
+
+    result = await opp.config_entries.flow.async_init(
+        DOMAIN, context={"source": config_entries.SOURCE_USER}
+    )
+    assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
+    assert result["step_id"] == "user"
+    assert result["errors"] == {}
+
+    with patch(
+        "openpeerpower.components.mazda.config_flow.MazdaAPI.validate_credentials",
+        return_value=True,
+    ):
+        result2 = await opp.config_entries.flow.async_configure(
+            result["flow_id"],
+            FIXTURE_USER_INPUT,
+        )
+        await opp.async_block_till_done()
+
+    assert result2["type"] == "abort"
+    assert result2["reason"] == "already_configured"
 
 
 async def test_form_invalid_auth(opp: OpenPeerPower) -> None:
@@ -148,37 +180,43 @@ async def test_form_unknown_error(opp):
 async def test_reauth_flow(opp: OpenPeerPower) -> None:
     """Test reauth works."""
     await setup.async_setup_component(opp, "persistent_notification", {})
+    mock_config = MockConfigEntry(
+        domain=DOMAIN,
+        unique_id=FIXTURE_USER_INPUT[CONF_EMAIL],
+        data=FIXTURE_USER_INPUT,
+    )
+    mock_config.add_to_opp(opp)
 
     with patch(
         "openpeerpower.components.mazda.config_flow.MazdaAPI.validate_credentials",
         side_effect=MazdaAuthenticationException("Failed to authenticate"),
+    ), patch(
+        "openpeerpower.components.mazda.async_setup_entry",
+        return_value=True,
     ):
-        mock_config = MockConfigEntry(
-            domain=DOMAIN,
-            unique_id=FIXTURE_USER_INPUT[CONF_EMAIL],
-            data=FIXTURE_USER_INPUT,
-        )
-        mock_config.add_to_opp(opp)
-
         await opp.config_entries.async_setup(mock_config.entry_id)
         await opp.async_block_till_done()
 
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "reauth"}, data=FIXTURE_USER_INPUT
+            DOMAIN,
+            context={
+                "source": config_entries.SOURCE_REAUTH,
+                "entry_id": mock_config.entry_id,
+            },
+            data=FIXTURE_USER_INPUT,
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
-        assert result["step_id"] == "reauth"
-        assert result["errors"] == {"base": "invalid_auth"}
+        assert result["step_id"] == "user"
+        assert result["errors"] == {}
 
     with patch(
         "openpeerpower.components.mazda.config_flow.MazdaAPI.validate_credentials",
         return_value=True,
-    ):
-        result2 = await opp.config_entries.flow.async_init(
-            DOMAIN,
-            context={"source": "reauth", "unique_id": FIXTURE_USER_INPUT[CONF_EMAIL]},
-            data=FIXTURE_USER_INPUT_REAUTH,
+    ), patch("openpeerpower.components.mazda.async_setup_entry", return_value=True):
+        result2 = await opp.config_entries.flow.async_configure(
+            result["flow_id"],
+            FIXTURE_USER_INPUT_REAUTH,
         )
         await opp.async_block_till_done()
 
@@ -188,16 +226,31 @@ async def test_reauth_flow(opp: OpenPeerPower) -> None:
 
 async def test_reauth_authorization_error(opp: OpenPeerPower) -> None:
     """Test we show user form on authorization error."""
+    mock_config = MockConfigEntry(
+        domain=DOMAIN,
+        unique_id=FIXTURE_USER_INPUT[CONF_EMAIL],
+        data=FIXTURE_USER_INPUT,
+    )
+    mock_config.add_to_opp(opp)
+
     with patch(
         "openpeerpower.components.mazda.config_flow.MazdaAPI.validate_credentials",
         side_effect=MazdaAuthenticationException("Failed to authenticate"),
+    ), patch(
+        "openpeerpower.components.mazda.async_setup_entry",
+        return_value=True,
     ):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "reauth"}, data=FIXTURE_USER_INPUT
+            DOMAIN,
+            context={
+                "source": config_entries.SOURCE_REAUTH,
+                "entry_id": mock_config.entry_id,
+            },
+            data=FIXTURE_USER_INPUT,
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
-        assert result["step_id"] == "reauth"
+        assert result["step_id"] == "user"
 
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
@@ -206,22 +259,37 @@ async def test_reauth_authorization_error(opp: OpenPeerPower) -> None:
         await opp.async_block_till_done()
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
-        assert result2["step_id"] == "reauth"
+        assert result2["step_id"] == "user"
         assert result2["errors"] == {"base": "invalid_auth"}
 
 
 async def test_reauth_account_locked(opp: OpenPeerPower) -> None:
     """Test we show user form on account_locked error."""
+    mock_config = MockConfigEntry(
+        domain=DOMAIN,
+        unique_id=FIXTURE_USER_INPUT[CONF_EMAIL],
+        data=FIXTURE_USER_INPUT,
+    )
+    mock_config.add_to_opp(opp)
+
     with patch(
         "openpeerpower.components.mazda.config_flow.MazdaAPI.validate_credentials",
         side_effect=MazdaAccountLockedException("Account locked"),
+    ), patch(
+        "openpeerpower.components.mazda.async_setup_entry",
+        return_value=True,
     ):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "reauth"}, data=FIXTURE_USER_INPUT
+            DOMAIN,
+            context={
+                "source": config_entries.SOURCE_REAUTH,
+                "entry_id": mock_config.entry_id,
+            },
+            data=FIXTURE_USER_INPUT,
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
-        assert result["step_id"] == "reauth"
+        assert result["step_id"] == "user"
 
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
@@ -230,22 +298,37 @@ async def test_reauth_account_locked(opp: OpenPeerPower) -> None:
         await opp.async_block_till_done()
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
-        assert result2["step_id"] == "reauth"
+        assert result2["step_id"] == "user"
         assert result2["errors"] == {"base": "account_locked"}
 
 
 async def test_reauth_connection_error(opp: OpenPeerPower) -> None:
     """Test we show user form on connection error."""
+    mock_config = MockConfigEntry(
+        domain=DOMAIN,
+        unique_id=FIXTURE_USER_INPUT[CONF_EMAIL],
+        data=FIXTURE_USER_INPUT,
+    )
+    mock_config.add_to_opp(opp)
+
     with patch(
         "openpeerpower.components.mazda.config_flow.MazdaAPI.validate_credentials",
         side_effect=aiohttp.ClientError,
+    ), patch(
+        "openpeerpower.components.mazda.async_setup_entry",
+        return_value=True,
     ):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "reauth"}, data=FIXTURE_USER_INPUT
+            DOMAIN,
+            context={
+                "source": config_entries.SOURCE_REAUTH,
+                "entry_id": mock_config.entry_id,
+            },
+            data=FIXTURE_USER_INPUT,
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
-        assert result["step_id"] == "reauth"
+        assert result["step_id"] == "user"
 
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
@@ -254,50 +337,37 @@ async def test_reauth_connection_error(opp: OpenPeerPower) -> None:
         await opp.async_block_till_done()
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
-        assert result2["step_id"] == "reauth"
+        assert result2["step_id"] == "user"
         assert result2["errors"] == {"base": "cannot_connect"}
 
 
 async def test_reauth_unknown_error(opp: OpenPeerPower) -> None:
     """Test we show user form on unknown error."""
+    mock_config = MockConfigEntry(
+        domain=DOMAIN,
+        unique_id=FIXTURE_USER_INPUT[CONF_EMAIL],
+        data=FIXTURE_USER_INPUT,
+    )
+    mock_config.add_to_opp(opp)
+
     with patch(
         "openpeerpower.components.mazda.config_flow.MazdaAPI.validate_credentials",
         side_effect=Exception,
-    ):
-        result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "reauth"}, data=FIXTURE_USER_INPUT
-        )
-
-        assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
-        assert result["step_id"] == "reauth"
-
-        result2 = await opp.config_entries.flow.async_configure(
-            result["flow_id"],
-            FIXTURE_USER_INPUT_REAUTH,
-        )
-        await opp.async_block_till_done()
-
-        assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
-        assert result2["step_id"] == "reauth"
-        assert result2["errors"] == {"base": "unknown"}
-
-
-async def test_reauth_unique_id_not_found(opp: OpenPeerPower) -> None:
-    """Test we show user form when unique id not found during reauth."""
-    with patch(
-        "openpeerpower.components.mazda.config_flow.MazdaAPI.validate_credentials",
+    ), patch(
+        "openpeerpower.components.mazda.async_setup_entry",
         return_value=True,
     ):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "reauth"}, data=FIXTURE_USER_INPUT
+            DOMAIN,
+            context={
+                "source": config_entries.SOURCE_REAUTH,
+                "entry_id": mock_config.entry_id,
+            },
+            data=FIXTURE_USER_INPUT,
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
-        assert result["step_id"] == "reauth"
-
-        # Change the unique_id of the flow in order to cause a mismatch
-        flows = opp.config_entries.flow.async_progress()
-        flows[0]["context"]["unique_id"] = "example2@example.com"
+        assert result["step_id"] == "user"
 
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
@@ -306,5 +376,48 @@ async def test_reauth_unique_id_not_found(opp: OpenPeerPower) -> None:
         await opp.async_block_till_done()
 
         assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
-        assert result2["step_id"] == "reauth"
+        assert result2["step_id"] == "user"
         assert result2["errors"] == {"base": "unknown"}
+
+
+async def test_reauth_user_has_new_email_address(opp: OpenPeerPower) -> None:
+    """Test reauth with a new email address but same account."""
+    mock_config = MockConfigEntry(
+        domain=DOMAIN,
+        unique_id=FIXTURE_USER_INPUT[CONF_EMAIL],
+        data=FIXTURE_USER_INPUT,
+    )
+    mock_config.add_to_opp(opp)
+
+    with patch(
+        "openpeerpower.components.mazda.config_flow.MazdaAPI.validate_credentials",
+        return_value=True,
+    ), patch(
+        "openpeerpower.components.mazda.async_setup_entry",
+        return_value=True,
+    ):
+        result = await opp.config_entries.flow.async_init(
+            DOMAIN,
+            context={
+                "source": config_entries.SOURCE_REAUTH,
+                "entry_id": mock_config.entry_id,
+            },
+            data=FIXTURE_USER_INPUT,
+        )
+
+        assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
+        assert result["step_id"] == "user"
+
+        # Change the email and ensure the entry and its unique id gets
+        # updated in the event the user has changed their email with mazda
+        result2 = await opp.config_entries.flow.async_configure(
+            result["flow_id"],
+            FIXTURE_USER_INPUT_REAUTH_CHANGED_EMAIL,
+        )
+        await opp.async_block_till_done()
+
+        assert (
+            mock_config.unique_id == FIXTURE_USER_INPUT_REAUTH_CHANGED_EMAIL[CONF_EMAIL]
+        )
+        assert result2["type"] == data_entry_flow.RESULT_TYPE_ABORT
+        assert result2["reason"] == "reauth_successful"

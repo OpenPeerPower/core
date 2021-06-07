@@ -657,7 +657,9 @@ async def test_thermostat_set_heat_cool(opp, auth):
     assert thermostat is not None
     assert thermostat.state == HVAC_MODE_HEAT_COOL
 
-    await common.async_set_temperature(opp, target_temp_low=20.0, target_temp_high=24.0)
+    await common.async_set_temperature(
+        opp, target_temp_low=20.0, target_temp_high=24.0
+    )
     await opp.async_block_till_done()
 
     assert auth.method == "post"

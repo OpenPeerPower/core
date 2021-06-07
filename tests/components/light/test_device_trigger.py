@@ -91,7 +91,7 @@ async def test_get_trigger_capabilities(opp, device_reg, entity_reg):
         assert capabilities == expected_capabilities
 
 
-async def test_if_fires_on_state_change(opp, calls):
+async def test_if_fires_on_state_change(opp, calls, enable_custom_integrations):
     """Test for turn_on and turn_off triggers firing."""
     platform = getattr(opp.components, f"test.{DOMAIN}")
 
@@ -178,7 +178,9 @@ async def test_if_fires_on_state_change(opp, calls):
     )
 
 
-async def test_if_fires_on_state_change_with_for(opp, calls):
+async def test_if_fires_on_state_change_with_for(
+    opp, calls, enable_custom_integrations
+):
     """Test for triggers firing with delay."""
     platform = getattr(opp.components, f"test.{DOMAIN}")
 

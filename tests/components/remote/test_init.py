@@ -48,14 +48,16 @@ async def test_turn_on(opp):
     assert len(turn_on_calls) == 1
     call = turn_on_calls[-1]
 
-    assert DOMAIN == call.domain
+    assert call.domain == DOMAIN
 
 
 async def test_turn_off(opp):
     """Test turn_off."""
     turn_off_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_OFF)
 
-    await opp.services.async_call(DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_ID})
+    await opp.services.async_call(
+        DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_ID}
+    )
 
     await opp.async_block_till_done()
 

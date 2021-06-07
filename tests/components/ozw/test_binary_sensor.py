@@ -5,6 +5,7 @@ from openpeerpower.components.binary_sensor import (
 )
 from openpeerpower.components.ozw.const import DOMAIN
 from openpeerpower.const import ATTR_DEVICE_CLASS
+from openpeerpower.helpers import entity_registry as er
 
 from .common import setup_ozw
 
@@ -14,14 +15,14 @@ async def test_binary_sensor(opp, generic_data, binary_sensor_msg):
     receive_msg = await setup_ozw(opp, fixture=generic_data)
 
     # Test Legacy sensor (disabled by default)
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
     entity_id = "binary_sensor.trisensor_sensor"
     state = opp.states.get(entity_id)
     assert state is None
     entry = registry.async_get(entity_id)
     assert entry
     assert entry.disabled
-    assert entry.disabled_by == "integration"
+    assert entry.disabled_by == er.DISABLED_INTEGRATION
 
     # Test enabling legacy entity
     updated_entry = registry.async_update_entity(
@@ -46,7 +47,7 @@ async def test_binary_sensor(opp, generic_data, binary_sensor_msg):
 async def test_sensor_enabled(opp, generic_data, binary_sensor_alt_msg):
     """Test enabling a legacy binary_sensor."""
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     entry = registry.async_get_or_create(
         BINARY_SENSOR_DOMAIN,

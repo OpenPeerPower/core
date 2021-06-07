@@ -1,21 +1,18 @@
 """Tests for the local_ip component."""
-import pytest
-
 from openpeerpower.components.local_ip import DOMAIN
-from openpeerpower.setup import async_setup_component
 from openpeerpower.util import get_local_ip
 
-
-@pytest.fixture(name="config")
-def config_fixture():
-    """Create opp config fixture."""
-    return {DOMAIN: {}}
+from tests.common import MockConfigEntry
 
 
-async def test_basic_setup(opp, config):
+async def test_basic_setup(opp):
     """Test component setup creates entry from config."""
-    assert await async_setup_component(opp, DOMAIN, config)
+    entry = MockConfigEntry(domain=DOMAIN, data={})
+    entry.add_to_opp(opp)
+
+    await opp.config_entries.async_setup(entry.entry_id)
     await opp.async_block_till_done()
+
     local_ip = await opp.async_add_executor_job(get_local_ip)
     state = opp.states.get(f"sensor.{DOMAIN}")
     assert state

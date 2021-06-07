@@ -85,9 +85,6 @@ async def test_full_flow_implementation(opp: OpenPeerPower) -> None:
         "openpeerpower.components.ovo_energy.config_flow.OVOEnergy.authenticate",
         return_value=True,
     ), patch(
-        "openpeerpower.components.ovo_energy.async_setup",
-        return_value=True,
-    ), patch(
         "openpeerpower.components.ovo_energy.async_setup_entry",
         return_value=True,
     ):
@@ -108,7 +105,9 @@ async def test_reauth_authorization_error(opp: OpenPeerPower) -> None:
         return_value=False,
     ):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "reauth"}, data=FIXTURE_USER_INPUT
+            DOMAIN,
+            context={"source": config_entries.SOURCE_REAUTH},
+            data=FIXTURE_USER_INPUT,
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -132,7 +131,9 @@ async def test_reauth_connection_error(opp: OpenPeerPower) -> None:
         side_effect=aiohttp.ClientError,
     ):
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "reauth"}, data=FIXTURE_USER_INPUT
+            DOMAIN,
+            context={"source": config_entries.SOURCE_REAUTH},
+            data=FIXTURE_USER_INPUT,
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
@@ -161,7 +162,9 @@ async def test_reauth_flow(opp: OpenPeerPower) -> None:
         mock_config.add_to_opp(opp)
 
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "reauth"}, data=FIXTURE_USER_INPUT
+            DOMAIN,
+            context={"source": config_entries.SOURCE_REAUTH},
+            data=FIXTURE_USER_INPUT,
         )
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_FORM

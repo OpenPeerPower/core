@@ -5,6 +5,7 @@ https://github.com/openpeerpower/core/issues/26180
 """
 
 from openpeerpower.components.fan import SUPPORT_DIRECTION, SUPPORT_SET_SPEED
+from openpeerpower.helpers import device_registry as dr, entity_registry as er
 
 from tests.components.homekit_controller.common import (
     Helper,
@@ -18,7 +19,7 @@ async def test_simpleconnect_fan_setup(opp):
     accessories = await setup_accessories_from_file(opp, "simpleconnect_fan.json")
     config_entry, pairing = await setup_test_accessories(opp, accessories)
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     # Check that the fan is correctly found and set up
     fan_id = "fan.simpleconnect_fan_06f674"
@@ -40,7 +41,7 @@ async def test_simpleconnect_fan_setup(opp):
         SUPPORT_DIRECTION | SUPPORT_SET_SPEED
     )
 
-    device_registry = await opp.helpers.device_registry.async_get_registry()
+    device_registry = dr.async_get(opp)
 
     device = device_registry.async_get(fan.device_id)
     assert device.manufacturer == "Hunter Fan"

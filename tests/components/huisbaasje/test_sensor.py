@@ -2,10 +2,10 @@
 from unittest.mock import patch
 
 from openpeerpower.components import huisbaasje
-from openpeerpower.config_entries import CONN_CLASS_CLOUD_POLL, ConfigEntry
 from openpeerpower.const import CONF_ID, CONF_PASSWORD, CONF_USERNAME
 from openpeerpower.core import OpenPeerPower
 
+from tests.common import MockConfigEntry
 from tests.components.huisbaasje.test_data import (
     MOCK_CURRENT_MEASUREMENTS,
     MOCK_LIMITED_CURRENT_MEASUREMENTS,
@@ -24,20 +24,18 @@ async def test_setup_entry(opp: OpenPeerPower):
     ) as mock_current_measurements:
 
         opp.config.components.add(huisbaasje.DOMAIN)
-        config_entry = ConfigEntry(
-            1,
-            huisbaasje.DOMAIN,
-            "userId",
-            {
+        config_entry = MockConfigEntry(
+            version=1,
+            domain=huisbaasje.DOMAIN,
+            title="userId",
+            data={
                 CONF_ID: "userId",
                 CONF_USERNAME: "username",
                 CONF_PASSWORD: "password",
             },
-            "test",
-            CONN_CLASS_CLOUD_POLL,
-            system_options={},
+            source="test",
         )
-        opp.config_entries._entries.append(config_entry)
+        config_entry.add_to_opp(opp)
 
         assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
@@ -50,7 +48,8 @@ async def test_setup_entry(opp: OpenPeerPower):
         )
         assert opp.states.get("sensor.huisbaasje_current_power_out").state == "unknown"
         assert (
-            opp.states.get("sensor.huisbaasje_current_power_out_low").state == "unknown"
+            opp.states.get("sensor.huisbaasje_current_power_out_low").state
+            == "unknown"
         )
         assert opp.states.get("sensor.huisbaasje_current_gas").state == "0.0"
         assert opp.states.get("sensor.huisbaasje_energy_today").state == "3.3"
@@ -80,20 +79,18 @@ async def test_setup_entry_absent_measurement(opp: OpenPeerPower):
     ) as mock_current_measurements:
 
         opp.config.components.add(huisbaasje.DOMAIN)
-        config_entry = ConfigEntry(
-            1,
-            huisbaasje.DOMAIN,
-            "userId",
-            {
+        config_entry = MockConfigEntry(
+            version=1,
+            domain=huisbaasje.DOMAIN,
+            title="userId",
+            data={
                 CONF_ID: "userId",
                 CONF_USERNAME: "username",
                 CONF_PASSWORD: "password",
             },
-            "test",
-            CONN_CLASS_CLOUD_POLL,
-            system_options={},
+            source="test",
         )
-        opp.config_entries._entries.append(config_entry)
+        config_entry.add_to_opp(opp)
 
         assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
@@ -106,7 +103,8 @@ async def test_setup_entry_absent_measurement(opp: OpenPeerPower):
         )
         assert opp.states.get("sensor.huisbaasje_current_power_out").state == "unknown"
         assert (
-            opp.states.get("sensor.huisbaasje_current_power_out_low").state == "unknown"
+            opp.states.get("sensor.huisbaasje_current_power_out_low").state
+            == "unknown"
         )
         assert opp.states.get("sensor.huisbaasje_current_gas").state == "unknown"
         assert opp.states.get("sensor.huisbaasje_energy_today").state == "3.3"

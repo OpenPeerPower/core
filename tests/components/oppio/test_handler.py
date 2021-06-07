@@ -3,7 +3,7 @@
 import aiohttp
 import pytest
 
-from openpeerpower.components.oppio.handler import OppioAPIError
+from openpeerpower.components.oppio.handler import HassioAPIError
 
 
 async def test_api_ping(oppio_handler, aioclient_mock):
@@ -36,13 +36,13 @@ async def test_api_info(oppio_handler, aioclient_mock):
         "http://127.0.0.1/info",
         json={
             "result": "ok",
-            "data": {"supervisor": "222", "openpeerpower": "0.110.0", "oppos": None},
+            "data": {"supervisor": "222", "openpeerpower": "0.110.0", "opp.s": None},
         },
     )
 
     data = await oppio_handler.get_info()
     assert aioclient_mock.call_count == 1
-    assert data["oppos"] is None
+    assert data["opp.s"] is None
     assert data["openpeerpower"] == "0.110.0"
     assert data["supervisor"] == "222"
 
@@ -53,7 +53,7 @@ async def test_api_info_error(oppio_handler, aioclient_mock):
         "http://127.0.0.1/info", json={"result": "error", "message": None}
     )
 
-    with pytest.raises(OppioAPIError):
+    with pytest.raises(HassioAPIError):
         await oppio_handler.get_info()
 
     assert aioclient_mock.call_count == 1
@@ -66,7 +66,7 @@ async def test_api_host_info(oppio_handler, aioclient_mock):
         json={
             "result": "ok",
             "data": {
-                "coppis": "vm",
+                "copp.s": "vm",
                 "operating_system": "Debian GNU/Linux 10 (buster)",
                 "kernel": "4.19.0-6-amd64",
             },
@@ -75,7 +75,7 @@ async def test_api_host_info(oppio_handler, aioclient_mock):
 
     data = await oppio_handler.get_host_info()
     assert aioclient_mock.call_count == 1
-    assert data["coppis"] == "vm"
+    assert data["copp.s"] == "vm"
     assert data["kernel"] == "4.19.0-6-amd64"
     assert data["operating_system"] == "Debian GNU/Linux 10 (buster)"
 
@@ -119,7 +119,7 @@ async def test_api_host_info_error(oppio_handler, aioclient_mock):
         "http://127.0.0.1/host/info", json={"result": "error", "message": None}
     )
 
-    with pytest.raises(OppioAPIError):
+    with pytest.raises(HassioAPIError):
         await oppio_handler.get_host_info()
 
     assert aioclient_mock.call_count == 1
@@ -143,7 +143,7 @@ async def test_api_core_info_error(oppio_handler, aioclient_mock):
         "http://127.0.0.1/core/info", json={"result": "error", "message": None}
     )
 
-    with pytest.raises(OppioAPIError):
+    with pytest.raises(HassioAPIError):
         await oppio_handler.get_core_info()
 
     assert aioclient_mock.call_count == 1

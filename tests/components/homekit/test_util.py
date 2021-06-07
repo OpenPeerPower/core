@@ -33,6 +33,7 @@ from openpeerpower.components.homekit.util import (
     format_sw_version,
     port_is_available,
     show_setup_message,
+    state_needs_accessory_mode,
     temperature_to_homekit,
     temperature_to_states,
     validate_entity_config as vec,
@@ -196,7 +197,7 @@ def test_cleanup_name_for_homekit():
 
 
 def test_temperature_to_homekit():
-    """Test temperature conversion from OP to HomeKit."""
+    """Test temperature conversion from OPP to HomeKit."""
     assert temperature_to_homekit(20.46, TEMP_CELSIUS) == 20.5
     assert temperature_to_homekit(92.1, TEMP_FAHRENHEIT) == 33.4
 
@@ -294,5 +295,13 @@ async def test_accessory_friendly_name():
 
     accessory = Mock()
     accessory.display_name = "same"
-    assert accessory_friendly_name("same", accessory) == "same"
-    assert accessory_friendly_name("opp title", accessory) == "opp title (same)"
+    assert accessory_friendly_name("Same", accessory) == "Same"
+    assert accessory_friendly_name("opp.title", accessory) == "opp.title (same)"
+    accessory.display_name = "Hass title 123"
+    assert accessory_friendly_name("opp.title", accessory) == "Hass title 123"
+
+
+async def test_lock_state_needs_accessory_mode(opp):
+    """Test that locks are setup as accessories."""
+    opp.states.async_set("lock.mine", "locked")
+    assert state_needs_accessory_mode(opp.states.get("lock.mine")) is True

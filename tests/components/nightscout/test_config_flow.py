@@ -27,7 +27,7 @@ async def test_form(opp):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] == {}
 
-    with _patch_glucose_readings(), _patch_server_status(), _patch_async_setup() as mock_setup, _patch_async_setup_entry() as mock_setup_entry:
+    with _patch_glucose_readings(), _patch_server_status(), _patch_async_setup_entry() as mock_setup_entry:
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
             CONFIG,
@@ -37,7 +37,6 @@ async def test_form(opp):
         assert result2["title"] == SERVER_STATUS.name  # pylint: disable=maybe-no-member
         assert result2["data"] == CONFIG
         await opp.async_block_till_done()
-        assert len(mock_setup.mock_calls) == 1
         assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -114,10 +113,6 @@ async def test_user_form_duplicate(opp):
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "already_configured"
-
-
-def _patch_async_setup():
-    return patch("openpeerpower.components.nightscout.async_setup", return_value=True)
 
 
 def _patch_async_setup_entry():

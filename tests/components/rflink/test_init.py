@@ -107,10 +107,8 @@ async def test_send_no_wait(opp, monkeypatch):
     # setup mocking rflink module
     _, _, protocol, _ = await mock_rflink(opp, config, domain, monkeypatch)
 
-    opp.async_create_task(
-        opp.services.async_call(
-            domain, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: "switch.test"}
-        )
+    await opp.services.async_call(
+        domain, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: "switch.test"}
     )
     await opp.async_block_till_done()
     assert protocol.send_command.call_args_list[0][0][0] == "protocol_0_0"
@@ -133,10 +131,8 @@ async def test_cover_send_no_wait(opp, monkeypatch):
     # setup mocking rflink module
     _, _, protocol, _ = await mock_rflink(opp, config, domain, monkeypatch)
 
-    opp.async_create_task(
-        opp.services.async_call(
-            domain, SERVICE_STOP_COVER, {ATTR_ENTITY_ID: "cover.test"}
-        )
+    await opp.services.async_call(
+        domain, SERVICE_STOP_COVER, {ATTR_ENTITY_ID: "cover.test"}
     )
     await opp.async_block_till_done()
     assert protocol.send_command.call_args_list[0][0][0] == "RTS_0100F2_0"
@@ -151,12 +147,10 @@ async def test_send_command(opp, monkeypatch):
     # setup mocking rflink module
     _, _, protocol, _ = await mock_rflink(opp, config, domain, monkeypatch)
 
-    opp.async_create_task(
-        opp.services.async_call(
-            domain,
-            SERVICE_SEND_COMMAND,
-            {"device_id": "newkaku_0000c6c2_1", "command": "on"},
-        )
+    await opp.services.async_call(
+        domain,
+        SERVICE_SEND_COMMAND,
+        {"device_id": "newkaku_0000c6c2_1", "command": "on"},
     )
     await opp.async_block_till_done()
     assert protocol.send_command_ack.call_args_list[0][0][0] == "newkaku_0000c6c2_1"
@@ -194,6 +188,48 @@ async def test_send_command_invalid_arguments(opp, monkeypatch):
         {"device_id": "newkaku_0000c6c2_1", "command": "no_command"},
     )
     assert not success, "send command should not succeed for unknown command"
+
+
+async def test_send_command_event_propagation(opp, monkeypatch):
+    """Test event propagation for send_command service."""
+    domain = "light"
+    config = {
+        "rflink": {"port": "/dev/ttyABC0"},
+        domain: {
+            "platform": "rflink",
+            "devices": {
+                "protocol_0_1": {"name": "test1"},
+            },
+        },
+    }
+
+    # setup mocking rflink module
+    _, _, protocol, _ = await mock_rflink(opp, config, domain, monkeypatch)
+
+    # default value = 'off'
+    assert opp.states.get(f"{domain}.test1").state == "off"
+
+    await opp.services.async_call(
+        "rflink",
+        SERVICE_SEND_COMMAND,
+        {"device_id": "protocol_0_1", "command": "on"},
+        blocking=True,
+    )
+    await opp.async_block_till_done()
+    assert protocol.send_command_ack.call_args_list[0][0][0] == "protocol_0_1"
+    assert protocol.send_command_ack.call_args_list[0][0][1] == "on"
+    assert opp.states.get(f"{domain}.test1").state == "on"
+
+    await opp.services.async_call(
+        "rflink",
+        SERVICE_SEND_COMMAND,
+        {"device_id": "protocol_0_1", "command": "alloff"},
+        blocking=True,
+    )
+    await opp.async_block_till_done()
+    assert protocol.send_command_ack.call_args_list[1][0][0] == "protocol_0_1"
+    assert protocol.send_command_ack.call_args_list[1][0][1] == "alloff"
+    assert opp.states.get(f"{domain}.test1").state == "off"
 
 
 async def test_reconnecting_after_disconnect(opp, monkeypatch):

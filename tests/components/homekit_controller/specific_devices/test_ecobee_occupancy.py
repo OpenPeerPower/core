@@ -4,6 +4,8 @@ Regression tests for Ecobee occupancy.
 https://github.com/openpeerpower/core/issues/31827
 """
 
+from openpeerpower.helpers import device_registry as dr, entity_registry as er
+
 from tests.components.homekit_controller.common import (
     Helper,
     setup_accessories_from_file,
@@ -16,7 +18,7 @@ async def test_ecobee_occupancy_setup(opp):
     accessories = await setup_accessories_from_file(opp, "ecobee_occupancy.json")
     config_entry, pairing = await setup_test_accessories(opp, accessories)
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     sensor = entity_registry.async_get("binary_sensor.master_fan")
     assert sensor.unique_id == "homekit-111111111111-56"
@@ -27,7 +29,7 @@ async def test_ecobee_occupancy_setup(opp):
     sensor_state = await sensor_helper.poll_and_get_state()
     assert sensor_state.attributes["friendly_name"] == "Master Fan"
 
-    device_registry = await opp.helpers.device_registry.async_get_registry()
+    device_registry = dr.async_get(opp)
 
     device = device_registry.async_get(sensor.device_id)
     assert device.manufacturer == "ecobee Inc."

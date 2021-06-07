@@ -10,7 +10,7 @@ from openpeerpower.components.openweathermap.const import (
     DEFAULT_LANGUAGE,
     DOMAIN,
 )
-from openpeerpower.config_entries import SOURCE_USER
+from openpeerpower.config_entries import SOURCE_USER, ConfigEntryState
 from openpeerpower.const import (
     CONF_API_KEY,
     CONF_LATITUDE,
@@ -57,11 +57,11 @@ async def test_form(opp):
 
         conf_entries = opp.config_entries.async_entries(DOMAIN)
         entry = conf_entries[0]
-        assert entry.state == "loaded"
+        assert entry.state == ConfigEntryState.LOADED
 
         await opp.config_entries.async_unload(conf_entries[0].entry_id)
         await opp.async_block_till_done()
-        assert entry.state == "not_loaded"
+        assert entry.state == ConfigEntryState.NOT_LOADED
 
         assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         assert result["title"] == CONFIG[CONF_NAME]
@@ -86,7 +86,7 @@ async def test_form_options(opp):
         assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
-        assert config_entry.state == "loaded"
+        assert config_entry.state == ConfigEntryState.LOADED
 
         result = await opp.config_entries.options.async_init(config_entry.entry_id)
 
@@ -105,7 +105,7 @@ async def test_form_options(opp):
 
         await opp.async_block_till_done()
 
-        assert config_entry.state == "loaded"
+        assert config_entry.state == ConfigEntryState.LOADED
 
         result = await opp.config_entries.options.async_init(config_entry.entry_id)
 
@@ -124,7 +124,7 @@ async def test_form_options(opp):
 
         await opp.async_block_till_done()
 
-        assert config_entry.state == "loaded"
+        assert config_entry.state == ConfigEntryState.LOADED
 
 
 async def test_form_invalid_api_key(opp):

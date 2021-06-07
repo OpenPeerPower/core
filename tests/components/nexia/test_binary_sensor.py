@@ -17,7 +17,7 @@ async def test_create_binary_sensors(opp):
         "friendly_name": "Master Suite Blower Active",
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )
@@ -29,7 +29,7 @@ async def test_create_binary_sensors(opp):
         "friendly_name": "Downstairs East Wing Blower Active",
     }
     # Only test for a subset of attributes in case
-    # OP changes the implementation and a new one appears
+    # OPP changes the implementation and a new one appears
     assert all(
         state.attributes[key] == expected_attributes[key] for key in expected_attributes
     )

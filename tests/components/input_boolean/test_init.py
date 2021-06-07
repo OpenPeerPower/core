@@ -20,7 +20,7 @@ from openpeerpower.const import (
     STATE_ON,
 )
 from openpeerpower.core import Context, CoreState, State
-from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.setup import async_setup_component
 
 from tests.common import mock_component, mock_restore_cache
@@ -109,13 +109,13 @@ async def test_config_options(opp):
     assert state_1 is not None
     assert state_2 is not None
 
-    assert STATE_OFF == state_1.state
+    assert state_1.state == STATE_OFF
     assert ATTR_ICON not in state_1.attributes
     assert ATTR_FRIENDLY_NAME not in state_1.attributes
 
-    assert STATE_ON == state_2.state
-    assert "Hello World" == state_2.attributes.get(ATTR_FRIENDLY_NAME)
-    assert "mdi:work" == state_2.attributes.get(ATTR_ICON)
+    assert state_2.state == STATE_ON
+    assert state_2.attributes.get(ATTR_FRIENDLY_NAME) == "Hello World"
+    assert state_2.attributes.get(ATTR_ICON) == "mdi:work"
 
 
 async def test_restore_state(opp):
@@ -192,7 +192,7 @@ async def test_input_boolean_context(opp, opp_admin_user):
 async def test_reload(opp, opp_admin_user):
     """Test reload service."""
     count_start = len(opp.states.async_entity_ids())
-    ent_reg = await entity_registry.async_get_registry(opp)
+    ent_reg = er.async_get(opp)
 
     _LOGGER.debug("ENTITIES @ start: %s", opp.states.async_entity_ids())
 
@@ -218,7 +218,7 @@ async def test_reload(opp, opp_admin_user):
     assert state_1 is not None
     assert state_2 is not None
     assert state_3 is None
-    assert STATE_ON == state_2.state
+    assert state_2.state == STATE_ON
 
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, "test_1") is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, "test_2") is not None
@@ -259,9 +259,9 @@ async def test_reload(opp, opp_admin_user):
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, "test_2") is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, "test_3") is not None
 
-    assert STATE_ON == state_2.state  # reload is not supposed to change entity state
-    assert "Hello World reloaded" == state_2.attributes.get(ATTR_FRIENDLY_NAME)
-    assert "mdi:work_reloaded" == state_2.attributes.get(ATTR_ICON)
+    assert state_2.state == STATE_ON  # reload is not supposed to change entity state
+    assert state_2.attributes.get(ATTR_FRIENDLY_NAME) == "Hello World reloaded"
+    assert state_2.attributes.get(ATTR_ICON) == "mdi:work_reloaded"
 
 
 async def test_load_from_storage(opp, storage_setup):
@@ -313,7 +313,7 @@ async def test_ws_delete(opp, opp_ws_client, storage_setup):
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry(opp)
+    ent_reg = er.async_get(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is not None

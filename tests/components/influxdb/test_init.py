@@ -127,7 +127,7 @@ async def test_setup_config_full(opp, mock_client, config_ext, get_write_api):
     assert await async_setup_component(opp, influxdb.DOMAIN, config)
     await opp.async_block_till_done()
     assert opp.bus.listen.called
-    assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
+    assert opp.bus.listen.call_args_list[0][0][0] == EVENT_STATE_CHANGED
     assert get_write_api(mock_client).call_count == 1
 
 
@@ -254,14 +254,15 @@ async def test_setup_config_ssl(
     config = {"influxdb": config_base.copy()}
     config["influxdb"].update(config_ext)
 
-    with patch("os.access", return_value=True):
-        with patch("os.path.isfile", return_value=True):
-            assert await async_setup_component(opp, influxdb.DOMAIN, config)
-            await opp.async_block_till_done()
+    with patch("os.access", return_value=True), patch(
+        "os.path.isfile", return_value=True
+    ):
+        assert await async_setup_component(opp, influxdb.DOMAIN, config)
+        await opp.async_block_till_done()
 
-            assert opp.bus.listen.called
-            assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
-            assert expected_client_args.items() <= mock_client.call_args.kwargs.items()
+        assert opp.bus.listen.called
+        assert opp.bus.listen.call_args_list[0][0][0] == EVENT_STATE_CHANGED
+        assert expected_client_args.items() <= mock_client.call_args.kwargs.items()
 
 
 @pytest.mark.parametrize(
@@ -280,7 +281,7 @@ async def test_setup_minimal_config(opp, mock_client, config_ext, get_write_api)
     assert await async_setup_component(opp, influxdb.DOMAIN, config)
     await opp.async_block_till_done()
     assert opp.bus.listen.called
-    assert EVENT_STATE_CHANGED == opp.bus.listen.call_args_list[0][0][0]
+    assert opp.bus.listen.call_args_list[0][0][0] == EVENT_STATE_CHANGED
     assert get_write_api(mock_client).call_count == 1
 
 
@@ -366,7 +367,7 @@ async def test_event_listener(
     """Test the event listener."""
     handler_method = await _setup(opp, mock_client, config_ext, get_write_api)
 
-    # map of OP State to valid influxdb [state, value] fields
+    # map of OPP State to valid influxdb [state, value] fields
     valid = {
         "1": [None, 1],
         "1.0": [None, 1.0],
@@ -933,7 +934,7 @@ async def test_event_listener_invalid_type(
     """Test the event listener when an attribute has an invalid type."""
     handler_method = await _setup(opp, mock_client, config_ext, get_write_api)
 
-    # map of OP State to valid influxdb [state, value] fields
+    # map of OPP State to valid influxdb [state, value] fields
     valid = {
         "1": [None, 1],
         "1.0": [None, 1.0],

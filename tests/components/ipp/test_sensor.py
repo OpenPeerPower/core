@@ -6,18 +6,21 @@ from openpeerpower.components.ipp.const import DOMAIN
 from openpeerpower.components.sensor import DOMAIN as SENSOR_DOMAIN
 from openpeerpower.const import ATTR_ICON, ATTR_UNIT_OF_MEASUREMENT, PERCENTAGE
 from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.util import dt as dt_util
 
 from tests.components.ipp import init_integration, mock_connection
 from tests.test_util.aiohttp import AiohttpClientMocker
 
 
-async def test_sensors(opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker) -> None:
+async def test_sensors(
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
+) -> None:
     """Test the creation and values of the IPP sensors."""
     mock_connection(aioclient_mock)
 
     entry = await init_integration(opp, aioclient_mock, skip_setup=True)
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     # Pre-create registry entries for disabled by default sensors
     registry.async_get_or_create(
@@ -84,7 +87,7 @@ async def test_disabled_by_default_sensors(
 ) -> None:
     """Test the disabled by default IPP sensors."""
     await init_integration(opp, aioclient_mock)
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     state = opp.states.get("sensor.epson_xp_6000_series_uptime")
     assert state is None
@@ -92,7 +95,7 @@ async def test_disabled_by_default_sensors(
     entry = registry.async_get("sensor.epson_xp_6000_series_uptime")
     assert entry
     assert entry.disabled
-    assert entry.disabled_by == "integration"
+    assert entry.disabled_by == er.DISABLED_INTEGRATION
 
 
 async def test_missing_entry_unique_id(
@@ -100,7 +103,7 @@ async def test_missing_entry_unique_id(
 ) -> None:
     """Test the unique_id of IPP sensor when printer is missing identifiers."""
     entry = await init_integration(opp, aioclient_mock, uuid=None, unique_id=None)
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     entity = registry.async_get("sensor.epson_xp_6000_series")
     assert entity

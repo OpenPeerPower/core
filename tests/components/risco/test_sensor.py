@@ -8,6 +8,7 @@ from openpeerpower.components.risco import (
     UnauthorizedError,
 )
 from openpeerpower.components.risco.const import DOMAIN
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.util import dt
 
 from .util import TEST_CONFIG, TEST_SITE_UUID, setup_risco
@@ -120,7 +121,7 @@ async def test_cannot_connect(opp):
         await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
     for id in ENTITY_IDS.values():
         assert not registry.async_is_registered(id)
 
@@ -137,7 +138,7 @@ async def test_unauthorized(opp):
         await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
     for id in ENTITY_IDS.values():
         assert not registry.async_is_registered(id)
 
@@ -167,7 +168,7 @@ def _check_state(opp, category, entity_id):
 
 async def test_setup(opp, two_zone_alarm):  # noqa: F811
     """Test entity setup."""
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     for id in ENTITY_IDS.values():
         assert not registry.async_is_registered(id)

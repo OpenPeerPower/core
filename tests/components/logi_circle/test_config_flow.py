@@ -4,7 +4,7 @@ from unittest.mock import AsyncMock, Mock, patch
 
 import pytest
 
-from openpeerpower import data_entry_flow
+from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.components.logi_circle import config_flow
 from openpeerpower.components.logi_circle.config_flow import (
     DOMAIN,
@@ -13,7 +13,7 @@ from openpeerpower.components.logi_circle.config_flow import (
 )
 from openpeerpower.setup import async_setup_component
 
-from tests.common import mock_coro
+from tests.common import MockConfigEntry, mock_coro
 
 
 class MockRequest:
@@ -21,7 +21,7 @@ class MockRequest:
 
     def __init__(self, opp, query):
         """Init request object."""
-        self.app = {"opp": opp}
+        self.app = {"opp.: opp.
         self.query = query
 
 
@@ -121,24 +121,26 @@ async def test_abort_if_no_implementation_registered(opp):
 async def test_abort_if_already_setup(opp):
     """Test we abort if Logi Circle is already setup."""
     flow = init_config_flow(opp)
+    MockConfigEntry(domain=config_flow.DOMAIN).add_to_opp(opp)
 
-    with patch.object(opp.config_entries, "async_entries", return_value=[{}]):
-        result = await flow.async_step_user()
+    result = await opp.config_entries.flow.async_init(
+        config_flow.DOMAIN,
+        context={"source": config_entries.SOURCE_USER},
+    )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
 
-    with patch.object(opp.config_entries, "async_entries", return_value=[{}]):
-        result = await flow.async_step_import()
+    result = await opp.config_entries.flow.async_init(
+        config_flow.DOMAIN,
+        context={"source": config_entries.SOURCE_IMPORT},
+    )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "already_configured"
 
-    with patch.object(opp.config_entries, "async_entries", return_value=[{}]):
+    with pytest.raises(data_entry_flow.AbortFlow):
         result = await flow.async_step_code()
-    assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
-    assert result["reason"] == "already_configured"
 
-    with patch.object(opp.config_entries, "async_entries", return_value=[{}]):
-        result = await flow.async_step_auth()
+    result = await flow.async_step_auth()
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "external_setup"
 

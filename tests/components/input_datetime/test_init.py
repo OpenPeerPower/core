@@ -28,7 +28,7 @@ from openpeerpower.components.input_datetime import (
 from openpeerpower.const import ATTR_ENTITY_ID, ATTR_FRIENDLY_NAME, ATTR_NAME
 from openpeerpower.core import Context, CoreState, State
 from openpeerpower.exceptions import Unauthorized
-from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.setup import async_setup_component
 from openpeerpower.util import dt as dt_util
 
@@ -415,7 +415,7 @@ async def test_input_datetime_context(opp, opp_admin_user):
 async def test_reload(opp, opp_admin_user, opp_read_only_user):
     """Test reload service."""
     count_start = len(opp.states.async_entity_ids())
-    ent_reg = await entity_registry.async_get_registry(opp)
+    ent_reg = er.async_get(opp)
 
     assert await async_setup_component(
         opp,
@@ -544,7 +544,7 @@ async def test_ws_delete(opp, opp_ws_client, storage_setup):
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.datetime_from_storage"
-    ent_reg = await entity_registry.async_get_registry(opp)
+    ent_reg = er.async_get(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is not None
@@ -570,7 +570,7 @@ async def test_update(opp, opp_ws_client, storage_setup):
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.datetime_from_storage"
-    ent_reg = await entity_registry.async_get_registry(opp)
+    ent_reg = er.async_get(opp)
 
     state = opp.states.get(input_entity_id)
     assert state.attributes[ATTR_FRIENDLY_NAME] == "datetime from storage"
@@ -602,7 +602,7 @@ async def test_ws_create(opp, opp_ws_client, storage_setup):
 
     input_id = "new_datetime"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry(opp)
+    ent_reg = er.async_get(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is None

@@ -13,7 +13,7 @@ from openpeerpower.components.meteo_france.const import (
 )
 from openpeerpower.config_entries import SOURCE_IMPORT, SOURCE_USER
 from openpeerpower.const import CONF_LATITUDE, CONF_LONGITUDE, CONF_MODE
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from tests.common import MockConfigEntry
 
@@ -214,7 +214,7 @@ async def test_abort_if_already_setup(opp, client_single):
     assert result["reason"] == "already_configured"
 
 
-async def test_options_flow(opp: OpenPeerPowerType):
+async def test_options_flow(opp: OpenPeerPower):
     """Test config flow options."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,

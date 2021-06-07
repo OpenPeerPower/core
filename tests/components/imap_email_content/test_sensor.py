@@ -47,13 +47,13 @@ async def test_allowed_sender(opp):
     sensor.entity_id = "sensor.emailtest"
     sensor.async_schedule_update_op_state(True)
     await opp.async_block_till_done()
-    assert "Test" == sensor.state
-    assert "Test Message" == sensor.device_state_attributes["body"]
-    assert "sender@test.com" == sensor.device_state_attributes["from"]
-    assert "Test" == sensor.device_state_attributes["subject"]
+    assert sensor.state == "Test"
+    assert sensor.extra_state_attributes["body"] == "Test Message"
+    assert sensor.extra_state_attributes["from"] == "sender@test.com"
+    assert sensor.extra_state_attributes["subject"] == "Test"
     assert (
         datetime.datetime(2016, 1, 1, 12, 44, 57)
-        == sensor.device_state_attributes["date"]
+        == sensor.extra_state_attributes["date"]
     )
 
 
@@ -83,8 +83,8 @@ async def test_multi_part_with_text(opp):
     sensor.entity_id = "sensor.emailtest"
     sensor.async_schedule_update_op_state(True)
     await opp.async_block_till_done()
-    assert "Link" == sensor.state
-    assert "Test Message" == sensor.device_state_attributes["body"]
+    assert sensor.state == "Link"
+    assert sensor.extra_state_attributes["body"] == "Test Message"
 
 
 async def test_multi_part_only_html(opp):
@@ -110,10 +110,10 @@ async def test_multi_part_only_html(opp):
     sensor.entity_id = "sensor.emailtest"
     sensor.async_schedule_update_op_state(True)
     await opp.async_block_till_done()
-    assert "Link" == sensor.state
+    assert sensor.state == "Link"
     assert (
-        "<html><head></head><body>Test Message</body></html>"
-        == sensor.device_state_attributes["body"]
+        sensor.extra_state_attributes["body"]
+        == "<html><head></head><body>Test Message</body></html>"
     )
 
 
@@ -140,8 +140,8 @@ async def test_multi_part_only_other_text(opp):
     sensor.entity_id = "sensor.emailtest"
     sensor.async_schedule_update_op_state(True)
     await opp.async_block_till_done()
-    assert "Link" == sensor.state
-    assert "Test Message" == sensor.device_state_attributes["body"]
+    assert sensor.state == "Link"
+    assert sensor.extra_state_attributes["body"] == "Test Message"
 
 
 async def test_multiple_emails(opp):
@@ -180,10 +180,10 @@ async def test_multiple_emails(opp):
     sensor.async_schedule_update_op_state(True)
     await opp.async_block_till_done()
 
-    assert "Test" == states[0].state
-    assert "Test 2" == states[1].state
+    assert states[0].state == "Test"
+    assert states[1].state == "Test 2"
 
-    assert "Test Message 2" == sensor.device_state_attributes["body"]
+    assert sensor.extra_state_attributes["body"] == "Test Message 2"
 
 
 async def test_sender_not_allowed(opp):
@@ -227,4 +227,4 @@ async def test_template(opp):
     sensor.entity_id = "sensor.emailtest"
     sensor.async_schedule_update_op_state(True)
     await opp.async_block_till_done()
-    assert "Test from sender@test.com with message Test Message" == sensor.state
+    assert sensor.state == "Test from sender@test.com with message Test Message"

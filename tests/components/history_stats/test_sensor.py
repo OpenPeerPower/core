@@ -6,7 +6,6 @@ import unittest
 from unittest.mock import patch
 
 import pytest
-import pytz
 
 from openpeerpower import config as opp_config
 from openpeerpower.components.history_stats import DOMAIN
@@ -17,7 +16,11 @@ from openpeerpower.helpers.template import Template
 from openpeerpower.setup import async_setup_component, setup_component
 import openpeerpower.util.dt as dt_util
 
-from tests.common import get_test_open_peer_power, init_recorder_component
+from tests.common import (
+    async_init_recorder_component,
+    get_test_open_peer_power,
+    init_recorder_component,
+)
 
 
 class TestHistoryStatsSensor(unittest.TestCase):
@@ -32,7 +35,6 @@ class TestHistoryStatsSensor(unittest.TestCase):
         """Test the history statistics sensor setup."""
         self.init_recorder()
         config = {
-            "history": {},
             "sensor": {
                 "platform": "history_stats",
                 "entity_id": "binary_sensor.test_id",
@@ -54,7 +56,6 @@ class TestHistoryStatsSensor(unittest.TestCase):
         """Test the history statistics sensor setup for multiple states."""
         self.init_recorder()
         config = {
-            "history": {},
             "sensor": {
                 "platform": "history_stats",
                 "entity_id": "binary_sensor.test_id",
@@ -78,7 +79,7 @@ class TestHistoryStatsSensor(unittest.TestCase):
     )
     def test_period_parsing(self, mock):
         """Test the conversion from templates to period."""
-        now = datetime(2019, 1, 1, 23, 30, 0, tzinfo=pytz.utc)
+        now = datetime(2019, 1, 1, 23, 30, 0, tzinfo=dt_util.UTC)
         with patch("openpeerpower.util.dt.now", return_value=now):
             today = Template(
                 "{{ now().replace(hour=0).replace(minute=0).replace(second=0) }}",
@@ -118,146 +119,6 @@ class TestHistoryStatsSensor(unittest.TestCase):
         assert sensor2_end.minute == 0
         assert sensor2_end.second == 0
 
-    def test_measure(self):
-        """Test the history statistics sensor measure."""
-        t0 = dt_util.utcnow() - timedelta(minutes=40)
-        t1 = t0 + timedelta(minutes=20)
-        t2 = dt_util.utcnow() - timedelta(minutes=10)
-
-        # Start     t0        t1        t2        End
-        # |--20min--|--20min--|--10min--|--10min--|
-        # |---off---|---on----|---off---|---on----|
-
-        fake_states = {
-            "binary_sensor.test_id": [
-                ha.State("binary_sensor.test_id", "on", last_changed=t0),
-                ha.State("binary_sensor.test_id", "off", last_changed=t1),
-                ha.State("binary_sensor.test_id", "on", last_changed=t2),
-            ]
-        }
-
-        start = Template("{{ as_timestamp(now()) - 3600 }}", self.opp)
-        end = Template("{{ now() }}", self.opp)
-
-        sensor1 = HistoryStatsSensor(
-            self.opp, "binary_sensor.test_id", "on", start, end, None, "time", "Test"
-        )
-
-        sensor2 = HistoryStatsSensor(
-            self.opp, "unknown.id", "on", start, end, None, "time", "Test"
-        )
-
-        sensor3 = HistoryStatsSensor(
-            self.opp, "binary_sensor.test_id", "on", start, end, None, "count", "test"
-        )
-
-        sensor4 = HistoryStatsSensor(
-            self.opp, "binary_sensor.test_id", "on", start, end, None, "ratio", "test"
-        )
-
-        assert sensor1._type == "time"
-        assert sensor3._type == "count"
-        assert sensor4._type == "ratio"
-
-        with patch(
-            "openpeerpower.components.history.state_changes_during_period",
-            return_value=fake_states,
-        ):
-            with patch("openpeerpower.components.history.get_state", return_value=None):
-                sensor1.update()
-                sensor2.update()
-                sensor3.update()
-                sensor4.update()
-
-        assert sensor1.state == 0.5
-        assert sensor2.state is None
-        assert sensor3.state == 2
-        assert sensor4.state == 50
-
-    def test_measure_multiple(self):
-        """Test the history statistics sensor measure for multiple states."""
-        t0 = dt_util.utcnow() - timedelta(minutes=40)
-        t1 = t0 + timedelta(minutes=20)
-        t2 = dt_util.utcnow() - timedelta(minutes=10)
-
-        # Start     t0        t1        t2        End
-        # |--20min--|--20min--|--10min--|--10min--|
-        # |---------|--orange-|-default-|---blue--|
-
-        fake_states = {
-            "input_select.test_id": [
-                ha.State("input_select.test_id", "orange", last_changed=t0),
-                ha.State("input_select.test_id", "default", last_changed=t1),
-                ha.State("input_select.test_id", "blue", last_changed=t2),
-            ]
-        }
-
-        start = Template("{{ as_timestamp(now()) - 3600 }}", self.opp)
-        end = Template("{{ now() }}", self.opp)
-
-        sensor1 = HistoryStatsSensor(
-            self.opp,
-            "input_select.test_id",
-            ["orange", "blue"],
-            start,
-            end,
-            None,
-            "time",
-            "Test",
-        )
-
-        sensor2 = HistoryStatsSensor(
-            self.opp,
-            "unknown.id",
-            ["orange", "blue"],
-            start,
-            end,
-            None,
-            "time",
-            "Test",
-        )
-
-        sensor3 = HistoryStatsSensor(
-            self.opp,
-            "input_select.test_id",
-            ["orange", "blue"],
-            start,
-            end,
-            None,
-            "count",
-            "test",
-        )
-
-        sensor4 = HistoryStatsSensor(
-            self.opp,
-            "input_select.test_id",
-            ["orange", "blue"],
-            start,
-            end,
-            None,
-            "ratio",
-            "test",
-        )
-
-        assert sensor1._type == "time"
-        assert sensor3._type == "count"
-        assert sensor4._type == "ratio"
-
-        with patch(
-            "openpeerpower.components.history.state_changes_during_period",
-            return_value=fake_states,
-        ):
-            with patch("openpeerpower.components.history.get_state", return_value=None):
-                sensor1.update()
-                sensor2.update()
-                sensor3.update()
-                sensor4.update()
-
-        assert sensor1.state == 0.5
-        assert sensor2.state is None
-        assert sensor3.state == 2
-        assert sensor4.state == 50
-
     def test_wrong_date(self):
         """Test when start or end value is not a timestamp or a date."""
         good = Template("{{ now() }}", self.opp)
@@ -283,7 +144,6 @@ class TestHistoryStatsSensor(unittest.TestCase):
         """Test when duration value is not a timedelta."""
         self.init_recorder()
         config = {
-            "history": {},
             "sensor": {
                 "platform": "history_stats",
                 "entity_id": "binary_sensor.test_id",
@@ -324,7 +184,6 @@ class TestHistoryStatsSensor(unittest.TestCase):
         """Test config when not enough arguments provided."""
         self.init_recorder()
         config = {
-            "history": {},
             "sensor": {
                 "platform": "history_stats",
                 "entity_id": "binary_sensor.test_id",
@@ -343,7 +202,6 @@ class TestHistoryStatsSensor(unittest.TestCase):
         """Test config when too many arguments provided."""
         self.init_recorder()
         config = {
-            "history": {},
             "sensor": {
                 "platform": "history_stats",
                 "entity_id": "binary_sensor.test_id",
@@ -368,7 +226,7 @@ class TestHistoryStatsSensor(unittest.TestCase):
 
 async def test_reload(opp):
     """Verify we can reload history_stats sensors."""
-    await opp.async_add_executor_job(init_recorder_component, opp)  # force in memory db
+    await async_init_recorder_component(opp)
 
     opp.state = ha.CoreState.not_running
     opp.states.async_set("binary_sensor.test_id", "on")
@@ -413,6 +271,162 @@ async def test_reload(opp):
 
     assert opp.states.get("sensor.test") is None
     assert opp.states.get("sensor.second_test")
+
+
+async def test_measure_multiple(opp):
+    """Test the history statistics sensor measure for multiple ."""
+    await async_init_recorder_component(opp)
+
+    t0 = dt_util.utcnow() - timedelta(minutes=40)
+    t1 = t0 + timedelta(minutes=20)
+    t2 = dt_util.utcnow() - timedelta(minutes=10)
+
+    # Start     t0        t1        t2        End
+    # |--20min--|--20min--|--10min--|--10min--|
+    # |---------|--orange-|-default-|---blue--|
+
+    fake_states = {
+        "input_select.test_id": [
+            ha.State("input_select.test_id", "orange", last_changed=t0),
+            ha.State("input_select.test_id", "default", last_changed=t1),
+            ha.State("input_select.test_id", "blue", last_changed=t2),
+        ]
+    }
+
+    await async_setup_component(
+        opp,
+        "sensor",
+        {
+            "sensor": [
+                {
+                    "platform": "history_stats",
+                    "entity_id": "input_select.test_id",
+                    "name": "sensor1",
+                    "state": ["orange", "blue"],
+                    "start": "{{ as_timestamp(now()) - 3600 }}",
+                    "end": "{{ now() }}",
+                    "type": "time",
+                },
+                {
+                    "platform": "history_stats",
+                    "entity_id": "unknown.test_id",
+                    "name": "sensor2",
+                    "state": ["orange", "blue"],
+                    "start": "{{ as_timestamp(now()) - 3600 }}",
+                    "end": "{{ now() }}",
+                    "type": "time",
+                },
+                {
+                    "platform": "history_stats",
+                    "entity_id": "input_select.test_id",
+                    "name": "sensor3",
+                    "state": ["orange", "blue"],
+                    "start": "{{ as_timestamp(now()) - 3600 }}",
+                    "end": "{{ now() }}",
+                    "type": "count",
+                },
+                {
+                    "platform": "history_stats",
+                    "entity_id": "input_select.test_id",
+                    "name": "sensor4",
+                    "state": ["orange", "blue"],
+                    "start": "{{ as_timestamp(now()) - 3600 }}",
+                    "end": "{{ now() }}",
+                    "type": "ratio",
+                },
+            ]
+        },
+    )
+
+    with patch(
+        "openpeerpower.components.recorder.history.state_changes_during_period",
+        return_value=fake_states,
+    ), patch("openpeerpower.components.recorder.history.get_state", return_value=None):
+        for i in range(1, 5):
+            await opp.helpers.entity_component.async_update_entity(f"sensor.sensor{i}")
+        await opp.async_block_till_done()
+
+    assert opp.states.get("sensor.sensor1").state == "0.5"
+    assert opp.states.get("sensor.sensor2").state == STATE_UNKNOWN
+    assert opp.states.get("sensor.sensor3").state == "2"
+    assert opp.states.get("sensor.sensor4").state == "50.0"
+
+
+async def async_test_measure(opp):
+    """Test the history statistics sensor measure."""
+    t0 = dt_util.utcnow() - timedelta(minutes=40)
+    t1 = t0 + timedelta(minutes=20)
+    t2 = dt_util.utcnow() - timedelta(minutes=10)
+
+    # Start     t0        t1        t2        End
+    # |--20min--|--20min--|--10min--|--10min--|
+    # |---off---|---on----|---off---|---on----|
+
+    fake_states = {
+        "binary_sensor.test_id": [
+            ha.State("binary_sensor.test_id", "on", last_changed=t0),
+            ha.State("binary_sensor.test_id", "off", last_changed=t1),
+            ha.State("binary_sensor.test_id", "on", last_changed=t2),
+        ]
+    }
+
+    await async_setup_component(
+        opp,
+        "sensor",
+        {
+            "sensor": [
+                {
+                    "platform": "history_stats",
+                    "entity_id": "binary_sensor.test_id",
+                    "name": "sensor1",
+                    "state": "on",
+                    "start": "{{ as_timestamp(now()) - 3600 }}",
+                    "end": "{{ now() }}",
+                    "type": "time",
+                },
+                {
+                    "platform": "history_stats",
+                    "entity_id": "binary_sensor.test_id",
+                    "name": "sensor2",
+                    "state": "on",
+                    "start": "{{ as_timestamp(now()) - 3600 }}",
+                    "end": "{{ now() }}",
+                    "type": "time",
+                },
+                {
+                    "platform": "history_stats",
+                    "entity_id": "binary_sensor.test_id",
+                    "name": "sensor3",
+                    "state": "on",
+                    "start": "{{ as_timestamp(now()) - 3600 }}",
+                    "end": "{{ now() }}",
+                    "type": "count",
+                },
+                {
+                    "platform": "history_stats",
+                    "entity_id": "binary_sensor.test_id",
+                    "name": "sensor4",
+                    "state": "on",
+                    "start": "{{ as_timestamp(now()) - 3600 }}",
+                    "end": "{{ now() }}",
+                    "type": "ratio",
+                },
+            ]
+        },
+    )
+
+    with patch(
+        "openpeerpower.components.recorder.history.state_changes_during_period",
+        return_value=fake_states,
+    ), patch("openpeerpower.components.recorder.history.get_state", return_value=None):
+        for i in range(1, 5):
+            await opp.helpers.entity_component.async_update_entity(f"sensor.sensor{i}")
+        await opp.async_block_till_done()
+
+    assert opp.states.get("sensor.sensor1").state == "0.5"
+    assert opp.states.get("sensor.sensor2").state == STATE_UNKNOWN
+    assert opp.states.get("sensor.sensor3").state == "2"
+    assert opp.states.get("sensor.sensor4").state == "50.0"
 
 
 def _get_fixtures_base_path():

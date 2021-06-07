@@ -26,7 +26,7 @@ from openpeerpower.const import (
 )
 from openpeerpower.core import Context, State
 from openpeerpower.exceptions import Unauthorized
-from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.loader import bind_opp
 from openpeerpower.setup import async_setup_component
 
@@ -156,19 +156,19 @@ async def test_select_option(opp):
     entity_id = "input_select.test_1"
 
     state = opp.states.get(entity_id)
-    assert "some option" == state.state
+    assert state.state == "some option"
 
     select_option(opp, entity_id, "another option")
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
-    assert "another option" == state.state
+    assert state.state == "another option"
 
     select_option(opp, entity_id, "non existing option")
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
-    assert "another option" == state.state
+    assert state.state == "another option"
 
 
 async def test_select_next(opp):
@@ -188,19 +188,19 @@ async def test_select_next(opp):
     entity_id = "input_select.test_1"
 
     state = opp.states.get(entity_id)
-    assert "middle option" == state.state
+    assert state.state == "middle option"
 
     select_next(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
-    assert "last option" == state.state
+    assert state.state == "last option"
 
     select_next(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
-    assert "first option" == state.state
+    assert state.state == "first option"
 
 
 async def test_select_previous(opp):
@@ -220,19 +220,19 @@ async def test_select_previous(opp):
     entity_id = "input_select.test_1"
 
     state = opp.states.get(entity_id)
-    assert "middle option" == state.state
+    assert state.state == "middle option"
 
     select_previous(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
-    assert "first option" == state.state
+    assert state.state == "first option"
 
     select_previous(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
-    assert "last option" == state.state
+    assert state.state == "last option"
 
 
 async def test_select_first_last(opp):
@@ -252,19 +252,19 @@ async def test_select_first_last(opp):
     entity_id = "input_select.test_1"
 
     state = opp.states.get(entity_id)
-    assert "middle option" == state.state
+    assert state.state == "middle option"
 
     select_first(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
-    assert "first option" == state.state
+    assert state.state == "first option"
 
     select_last(opp, entity_id)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
-    assert "last option" == state.state
+    assert state.state == "last option"
 
 
 async def test_config_options(opp):
@@ -297,14 +297,14 @@ async def test_config_options(opp):
     assert state_1 is not None
     assert state_2 is not None
 
-    assert "1" == state_1.state
-    assert ["1", "2"] == state_1.attributes.get(ATTR_OPTIONS)
+    assert state_1.state == "1"
+    assert state_1.attributes.get(ATTR_OPTIONS) == ["1", "2"]
     assert ATTR_ICON not in state_1.attributes
 
-    assert "Better Option" == state_2.state
-    assert test_2_options == state_2.attributes.get(ATTR_OPTIONS)
-    assert "Hello World" == state_2.attributes.get(ATTR_FRIENDLY_NAME)
-    assert "mdi:work" == state_2.attributes.get(ATTR_ICON)
+    assert state_2.state == "Better Option"
+    assert state_2.attributes.get(ATTR_OPTIONS) == test_2_options
+    assert state_2.attributes.get(ATTR_FRIENDLY_NAME) == "Hello World"
+    assert state_2.attributes.get(ATTR_ICON) == "mdi:work"
 
 
 async def test_set_options_service(opp):
@@ -324,24 +324,24 @@ async def test_set_options_service(opp):
     entity_id = "input_select.test_1"
 
     state = opp.states.get(entity_id)
-    assert "middle option" == state.state
+    assert state.state == "middle option"
 
     data = {ATTR_OPTIONS: ["test1", "test2"], "entity_id": entity_id}
     await opp.services.async_call(DOMAIN, SERVICE_SET_OPTIONS, data)
     await opp.async_block_till_done()
 
     state = opp.states.get(entity_id)
-    assert "test1" == state.state
+    assert state.state == "test1"
 
     select_option(opp, entity_id, "first option")
     await opp.async_block_till_done()
     state = opp.states.get(entity_id)
-    assert "test1" == state.state
+    assert state.state == "test1"
 
     select_option(opp, entity_id, "test2")
     await opp.async_block_till_done()
     state = opp.states.get(entity_id)
-    assert "test2" == state.state
+    assert state.state == "test2"
 
 
 async def test_restore_state(opp):
@@ -425,7 +425,7 @@ async def test_input_select_context(opp, opp_admin_user):
 async def test_reload(opp, opp_admin_user, opp_read_only_user):
     """Test reload service."""
     count_start = len(opp.states.async_entity_ids())
-    ent_reg = await entity_registry.async_get_registry(opp)
+    ent_reg = er.async_get(opp)
 
     assert await async_setup_component(
         opp,
@@ -453,8 +453,8 @@ async def test_reload(opp, opp_admin_user, opp_read_only_user):
     assert state_1 is not None
     assert state_2 is not None
     assert state_3 is None
-    assert "middle option" == state_1.state
-    assert "an option" == state_2.state
+    assert state_1.state == "middle option"
+    assert state_2.state == "an option"
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, "test_1") is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, "test_2") is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, "test_3") is None
@@ -499,8 +499,8 @@ async def test_reload(opp, opp_admin_user, opp_read_only_user):
     assert state_1 is None
     assert state_2 is not None
     assert state_3 is not None
-    assert "an option" == state_2.state
-    assert "newer option" == state_3.state
+    assert state_2.state == "an option"
+    assert state_3.state == "newer option"
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, "test_1") is None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, "test_2") is not None
     assert ent_reg.async_get_entity_id(DOMAIN, DOMAIN, "test_3") is not None
@@ -559,7 +559,7 @@ async def test_ws_delete(opp, opp_ws_client, storage_setup):
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry(opp)
+    ent_reg = er.async_get(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is not None
@@ -592,7 +592,7 @@ async def test_update(opp, opp_ws_client, storage_setup):
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry(opp)
+    ent_reg = er.async_get(opp)
 
     state = opp.states.get(input_entity_id)
     assert state.attributes[ATTR_OPTIONS] == ["yaml update 1", "yaml update 2"]
@@ -633,7 +633,7 @@ async def test_ws_create(opp, opp_ws_client, storage_setup):
 
     input_id = "new_input"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry(opp)
+    ent_reg = er.async_get(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is None
