@@ -6,10 +6,9 @@ import aiohttp
 import async_timeout
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import ATTR_ATTRIBUTION, HTTP_OK, TIME_MINUTES
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -82,7 +81,7 @@ async def async_http_request(opp, uri):
         _LOGGER.error("Received non-JSON data from ViaggiaTreno API endpoint")
 
 
-class ViaggiaTrenoSensor(Entity):
+class ViaggiaTrenoSensor(SensorEntity):
     """Implementation of a ViaggiaTreno sensor."""
 
     def __init__(self, train_id, station_id, name):
@@ -119,7 +118,7 @@ class ViaggiaTrenoSensor(Entity):
         return self._unit
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return extra attributes."""
         self._attributes[ATTR_ATTRIBUTION] = ATTRIBUTION
         return self._attributes

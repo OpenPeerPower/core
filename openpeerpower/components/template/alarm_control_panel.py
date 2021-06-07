@@ -6,7 +6,7 @@ import voluptuous as vol
 from openpeerpower.components.alarm_control_panel import (
     ENTITY_ID_FORMAT,
     FORMAT_NUMBER,
-    PLATFORM_SCHEMA,
+    PLATFORM_SCHEMA as PARENT_PLATFORM_SCHEMA,
     AlarmControlPanelEntity,
 )
 from openpeerpower.components.alarm_control_panel.const import (
@@ -32,10 +32,8 @@ from openpeerpower.core import callback
 from openpeerpower.exceptions import TemplateError
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.entity import async_generate_entity_id
-from openpeerpower.helpers.reload import async_setup_reload_service
 from openpeerpower.helpers.script import Script
 
-from .const import DOMAIN, PLATFORMS
 from .template_entity import TemplateEntity
 
 _LOGGER = logging.getLogger(__name__)
@@ -70,7 +68,7 @@ ALARM_CONTROL_PANEL_SCHEMA = vol.Schema(
     }
 )
 
-PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
+PLATFORM_SCHEMA = PARENT_PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_ALARM_CONTROL_PANELS): cv.schema_with_slug_keys(
             ALARM_CONTROL_PANEL_SCHEMA
@@ -113,7 +111,6 @@ async def _async_create_entities(opp, config):
 
 async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Template Alarm Control Panels."""
-    await async_setup_reload_service(opp, DOMAIN, PLATFORMS)
     async_add_entities(await _async_create_entities(opp, config))
 
 
@@ -135,7 +132,9 @@ class AlarmControlPanelTemplate(TemplateEntity, AlarmControlPanelEntity):
     ):
         """Initialize the panel."""
         super().__init__()
-        self.entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, device_id, opp=opp)
+        self.entity_id = async_generate_entity_id(
+            ENTITY_ID_FORMAT, device_id, opp.opp
+        )
         self._name = name
         self._template = state_template
         self._disarm_script = None

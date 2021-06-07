@@ -60,13 +60,15 @@ WATER_HEATER_TIMER_SCHEMA = {
 }
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry, async_add_entities):
+async def async_setup_entry(
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
+):
     """Set up the Tado water heater platform."""
 
     tado = opp.data[DOMAIN][entry.entry_id][DATA]
     entities = await opp.async_add_executor_job(_generate_entities, tado)
 
-    platform = entity_platform.current_platform.get()
+    platform = entity_platform.async_get_current_platform()
 
     platform.async_register_entity_service(
         SERVICE_WATER_HEATER_TIMER,

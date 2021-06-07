@@ -6,8 +6,12 @@ from pytraccar.api import API
 from stringcase import camelcase
 import voluptuous as vol
 
-from openpeerpower.components.device_tracker import PLATFORM_SCHEMA, SOURCE_TYPE_GPS
+from openpeerpower.components.device_tracker import (
+    PLATFORM_SCHEMA as PARENT_PLATFORM_SCHEMA,
+    SOURCE_TYPE_GPS,
+)
 from openpeerpower.components.device_tracker.config_entry import TrackerEntity
+from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import (
     CONF_EVENT,
     CONF_HOST,
@@ -19,14 +23,13 @@ from openpeerpower.const import (
     CONF_USERNAME,
     CONF_VERIFY_SSL,
 )
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers import device_registry
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 from openpeerpower.helpers.event import async_track_time_interval
 from openpeerpower.helpers.restore_state import RestoreEntity
-from openpeerpower.helpers.typing import OpenPeerPowerType
 from openpeerpower.util import slugify
 
 from . import DOMAIN, TRACKER_UPDATE
@@ -71,7 +74,7 @@ _LOGGER = logging.getLogger(__name__)
 DEFAULT_SCAN_INTERVAL = timedelta(seconds=30)
 SCAN_INTERVAL = DEFAULT_SCAN_INTERVAL
 
-PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
+PLATFORM_SCHEMA = PARENT_PLATFORM_SCHEMA.extend(
     {
         vol.Required(CONF_PASSWORD): cv.string,
         vol.Required(CONF_USERNAME): cv.string,
@@ -114,7 +117,9 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry, async_add_entities):
+async def async_setup_entry(
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
+):
     """Configure a dispatcher connection based on a config entry."""
 
     @callback
@@ -129,9 +134,9 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry, async_add_entities):
             [TraccarEntity(device, latitude, longitude, battery, accuracy, attrs)]
         )
 
-    opp.data[DOMAIN]["unsub_device_tracker"][entry.entry_id] = async_dispatcher_connect(
-        opp, TRACKER_UPDATE, _receive_data
-    )
+    opp.data[DOMAIN]["unsub_device_tracker"][
+        entry.entry_id
+    ] = async_dispatcher_connect(opp, TRACKER_UPDATE, _receive_data)
 
     # Restore previously loaded devices
     dev_reg = await device_registry.async_get_registry(opp)
@@ -345,7 +350,7 @@ class TraccarEntity(TrackerEntity, RestoreEntity):
         return self._battery
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return device specific attributes."""
         return self._attributes
 

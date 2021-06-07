@@ -20,22 +20,17 @@ from openpeerpower.components.notify import (
     PLATFORM_SCHEMA,
     BaseNotificationService,
 )
-from openpeerpower.const import CONF_API_KEY, CONF_ICON, CONF_USERNAME
-from openpeerpower.core import callback
+from openpeerpower.const import ATTR_ICON, CONF_API_KEY, CONF_ICON, CONF_USERNAME
+from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers import aiohttp_client, config_validation as cv
 import openpeerpower.helpers.template as template
-from openpeerpower.helpers.typing import (
-    ConfigType,
-    DiscoveryInfoType,
-    OpenPeerPowerType,
-)
+from openpeerpower.helpers.typing import ConfigType, DiscoveryInfoType
 
 _LOGGER = logging.getLogger(__name__)
 
 ATTR_BLOCKS = "blocks"
 ATTR_BLOCKS_TEMPLATE = "blocks_template"
 ATTR_FILE = "file"
-ATTR_ICON = "icon"
 ATTR_PASSWORD = "password"
 ATTR_PATH = "path"
 ATTR_URL = "url"
@@ -110,7 +105,7 @@ class MessageT(TypedDict, total=False):
 
 
 async def async_get_service(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     config: ConfigType,
     discovery_info: DiscoveryInfoType | None = None,
 ) -> SlackNotificationService | None:
@@ -153,14 +148,16 @@ def _async_sanitize_channel_names(channel_list: list[str]) -> list[str]:
 
 
 @callback
-def _async_templatize_blocks(opp: OpenPeerPowerType, value: Any) -> Any:
+def _async_templatize_blocks(opp: OpenPeerPower, value: Any) -> Any:
     """Recursive template creator helper function."""
     if isinstance(value, list):
         return [_async_templatize_blocks(opp, item) for item in value]
     if isinstance(value, dict):
-        return {key: _async_templatize_blocks(opp, item) for key, item in value.items()}
+        return {
+            key: _async_templatize_blocks(opp, item) for key, item in value.items()
+        }
 
-    tmpl = template.Template(value, opp=opp)  # type: ignore  # no-untyped-call
+    tmpl = template.Template(value, opp.opp)  # type: ignore  # no-untyped-call
     return tmpl.async_render(parse_result=False)
 
 
@@ -169,7 +166,7 @@ class SlackNotificationService(BaseNotificationService):
 
     def __init__(
         self,
-        opp: OpenPeerPowerType,
+        opp: OpenPeerPower,
         client: WebClient,
         default_channel: str,
         username: str | None,
@@ -318,7 +315,9 @@ class SlackNotificationService(BaseNotificationService):
         # Message Type 1: A text-only message
         if ATTR_FILE not in data:
             if ATTR_BLOCKS_TEMPLATE in data:
-                blocks = _async_templatize_blocks(self._opp, data[ATTR_BLOCKS_TEMPLATE])
+                blocks = _async_templatize_blocks(
+                    self._opp, data[ATTR_BLOCKS_TEMPLATE]
+                )
             elif ATTR_BLOCKS in data:
                 blocks = data[ATTR_BLOCKS]
             else:

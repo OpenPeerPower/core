@@ -1,9 +1,9 @@
 """Support for Toon binary sensors."""
-from typing import Optional
+from __future__ import annotations
 
 from openpeerpower.components.binary_sensor import BinarySensorEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from .const import (
     ATTR_DEFAULT_ENABLED,
@@ -26,7 +26,7 @@ from .models import (
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up a Toon binary sensor based on a config entry."""
     coordinator = opp.data[DOMAIN][entry.entry_id]
@@ -84,7 +84,7 @@ class ToonBinarySensor(ToonEntity, BinarySensorEntity):
         return BINARY_SENSOR_ENTITIES[self.key][ATTR_DEVICE_CLASS]
 
     @property
-    def is_on(self) -> Optional[bool]:
+    def is_on(self) -> bool | None:
         """Return the status of the binary sensor."""
         section = getattr(
             self.coordinator.data, BINARY_SENSOR_ENTITIES[self.key][ATTR_SECTION]

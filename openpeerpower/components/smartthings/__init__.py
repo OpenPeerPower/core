@@ -1,14 +1,16 @@
 """Support for SmartThings Cloud."""
+from __future__ import annotations
+
 import asyncio
+from collections.abc import Iterable
 import importlib
 import logging
-from typing import Iterable
 
 from aiohttp.client_exceptions import ClientConnectionError, ClientResponseError
 from pysmartapp.event import EVENT_TYPE_DEVICE
 from pysmartthings import Attribute, Capability, SmartThings
 
-from openpeerpower.config_entries import ConfigEntry
+from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry
 from openpeerpower.const import (
     CONF_ACCESS_TOKEN,
     CONF_CLIENT_ID,
@@ -16,6 +18,7 @@ from openpeerpower.const import (
     HTTP_FORBIDDEN,
     HTTP_UNAUTHORIZED,
 )
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 from openpeerpower.helpers.dispatcher import (
@@ -24,7 +27,7 @@ from openpeerpower.helpers.dispatcher import (
 )
 from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.event import async_track_time_interval
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 
 from .config_flow import SmartThingsFlowHandler  # noqa: F401
 from .const import (
@@ -53,13 +56,13 @@ from .smartapp import (
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
+async def async_setup(opp: OpenPeerPower, config: ConfigType):
     """Initialize the SmartThings platform."""
     await setup_smartapp_endpoint(opp)
     return True
 
 
-async def async_migrate_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_migrate_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Handle migration of a previous version config entry.
 
     A config entry created under a previous version must go through the
@@ -72,14 +75,16 @@ async def async_migrate_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     flows = opp.config_entries.flow.async_progress()
     if not [flow for flow in flows if flow["handler"] == DOMAIN]:
         opp.async_create_task(
-            opp.config_entries.flow.async_init(DOMAIN, context={"source": "import"})
+            opp.config_entries.flow.async_init(
+                DOMAIN, context={"source": SOURCE_IMPORT}
+            )
         )
 
     # Return False because it could not be migrated.
     return False
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Initialize config entry which represents an installed SmartApp."""
     # For backwards compat
     if entry.unique_id is None:
@@ -178,14 +183,13 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
         flows = opp.config_entries.flow.async_progress()
         if not [flow for flow in flows if flow["handler"] == DOMAIN]:
             opp.async_create_task(
-                opp.config_entries.flow.async_init(DOMAIN, context={"source": "import"})
+                opp.config_entries.flow.async_init(
+                    DOMAIN, context={"source": SOURCE_IMPORT}
+                )
             )
         return False
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
     return True
 
 
@@ -204,20 +208,16 @@ async def async_get_entry_scenes(entry: ConfigEntry, api):
     return []
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     broker = opp.data[DOMAIN][DATA_BROKERS].pop(entry.entry_id, None)
     if broker:
         broker.disconnect()
 
-    tasks = [
-        opp.config_entries.async_forward_entry_unload(entry, platform)
-        for platform in PLATFORMS
-    ]
-    return all(await asyncio.gather(*tasks))
+    return await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
 
-async def async_remove_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> None:
+async def async_remove_entry(opp: OpenPeerPower, entry: ConfigEntry) -> None:
     """Perform clean-up when entry is being removed."""
     api = SmartThings(async_get_clientsession(opp), entry.data[CONF_ACCESS_TOKEN])
 
@@ -266,7 +266,7 @@ class DeviceBroker:
 
     def __init__(
         self,
-        opp: OpenPeerPowerType,
+        opp: OpenPeerPower,
         entry: ConfigEntry,
         token,
         smart_app,

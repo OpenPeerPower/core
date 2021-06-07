@@ -57,7 +57,7 @@ class TellstickCover(TellstickDevice, CoverEntity):
         """Turn the value received from tellcore into something useful."""
 
     def _parse_op_data(self, kwargs):
-        """Turn the value from OP into something useful."""
+        """Turn the value from OPP into something useful."""
 
     def _update_model(self, new_state, data):
         """Update the device entity state to match the arguments."""

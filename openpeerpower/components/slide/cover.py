@@ -55,7 +55,7 @@ class SlideCover(CoverEntity):
         return self._name
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return device specific state attributes."""
         return {ATTR_ID: self._id}
 
@@ -83,7 +83,7 @@ class SlideCover(CoverEntity):
 
     @property
     def assumed_state(self):
-        """Let OP know the integration is assumed state."""
+        """Let OPP know the integration is assumed state."""
         return True
 
     @property

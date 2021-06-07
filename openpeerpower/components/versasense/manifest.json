@@ -2,6 +2,7 @@
   "domain": "versasense",
   "name": "VersaSense",
   "documentation": "https://www.openpeerpower.io/integrations/versasense",
-  "codeowners": [],
-  "requirements": ["pyversasense==0.0.6"]
+  "codeowners": ["@flamm3blemuff1n"],
+  "requirements": ["pyversasense==0.0.6"],
+  "iot_class": "local_polling"
 }

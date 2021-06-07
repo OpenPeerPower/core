@@ -5,24 +5,18 @@ import logging
 from swisshydrodata import SwissHydroData
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import ATTR_ATTRIBUTION, CONF_MONITORED_CONDITIONS
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
 
 ATTRIBUTION = "Data provided by the Swiss Federal Office for the Environment FOEN"
 
-ATTR_DELTA_24H = "delta-24h"
-ATTR_MAX_1H = "max-1h"
 ATTR_MAX_24H = "max-24h"
-ATTR_MEAN_1H = "mean-1h"
 ATTR_MEAN_24H = "mean-24h"
-ATTR_MIN_1H = "min-1h"
 ATTR_MIN_24H = "min-24h"
-ATTR_PREVIOUS_24H = "previous-24h"
 ATTR_STATION = "station"
 ATTR_STATION_UPDATE = "station_update"
 ATTR_WATER_BODY = "water_body"
@@ -43,14 +37,9 @@ CONDITIONS = {
 }
 
 CONDITION_DETAILS = [
-    ATTR_DELTA_24H,
-    ATTR_MAX_1H,
     ATTR_MAX_24H,
-    ATTR_MEAN_1H,
     ATTR_MEAN_24H,
-    ATTR_MIN_1H,
     ATTR_MIN_24H,
-    ATTR_PREVIOUS_24H,
 ]
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
@@ -83,7 +72,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(entities, True)
 
 
-class SwissHydrologicalDataSensor(Entity):
+class SwissHydrologicalDataSensor(SensorEntity):
     """Implementation of a Swiss hydrological sensor."""
 
     def __init__(self, hydro_data, station, condition):
@@ -119,7 +108,7 @@ class SwissHydrologicalDataSensor(Entity):
         return None
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the device state attributes."""
         attrs = {}
 

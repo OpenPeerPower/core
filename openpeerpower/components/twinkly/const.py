@@ -8,7 +8,7 @@ CONF_ENTRY_HOST = "host"
 CONF_ENTRY_NAME = "name"
 CONF_ENTRY_MODEL = "model"
 
-# Strongly named OP attributes keys
+# Strongly named OPP attributes keys
 ATTR_HOST = "host"
 
 # Keys of attributes read from the get_device_info

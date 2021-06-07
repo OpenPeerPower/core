@@ -1,6 +1,7 @@
 """API for Somfy bound to Open Peer Power OAuth."""
+from __future__ import annotations
+
 from asyncio import run_coroutine_threadsafe
-from typing import Dict, Union
 
 from pymfy.api import somfy_api
 
@@ -16,7 +17,7 @@ class ConfigEntrySomfyApi(somfy_api.SomfyApi):
         opp: core.OpenPeerPower,
         config_entry: config_entries.ConfigEntry,
         implementation: config_entry_oauth2_flow.AbstractOAuth2Implementation,
-    ):
+    ) -> None:
         """Initialize the Config Entry Somfy API."""
         self.opp = opp
         self.config_entry = config_entry
@@ -27,7 +28,7 @@ class ConfigEntrySomfyApi(somfy_api.SomfyApi):
 
     def refresh_tokens(
         self,
-    ) -> Dict[str, Union[str, int]]:
+    ) -> dict[str, str | int]:
         """Refresh and return new Somfy tokens using Open Peer Power OAuth2 session."""
         run_coroutine_threadsafe(
             self.session.async_ensure_token_valid(), self.opp.loop

@@ -5,10 +5,9 @@ import logging
 import shodan
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import ATTR_ATTRIBUTION, CONF_API_KEY, CONF_NAME
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -47,7 +46,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities([ShodanSensor(data, name)], True)
 
 
-class ShodanSensor(Entity):
+class ShodanSensor(SensorEntity):
     """Representation of the Shodan sensor."""
 
     def __init__(self, data, name):
@@ -78,7 +77,7 @@ class ShodanSensor(Entity):
         return ICON
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of the sensor."""
         return {ATTR_ATTRIBUTION: ATTRIBUTION}
 

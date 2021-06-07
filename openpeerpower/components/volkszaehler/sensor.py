@@ -6,7 +6,7 @@ from volkszaehler import Volkszaehler
 from volkszaehler.exceptions import VolkszaehlerApiConnectionError
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_HOST,
     CONF_MONITORED_CONDITIONS,
@@ -18,7 +18,6 @@ from openpeerpower.const import (
 from openpeerpower.exceptions import PlatformNotReady
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
@@ -77,7 +76,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities(dev, True)
 
 
-class VolkszaehlerSensor(Entity):
+class VolkszaehlerSensor(SensorEntity):
     """Implementation of a Volkszaehler sensor."""
 
     def __init__(self, vz_api, name, sensor_type):
@@ -90,7 +89,7 @@ class VolkszaehlerSensor(Entity):
     @property
     def name(self):
         """Return the name of the sensor."""
-        return "{} {}".format(self._name, SENSOR_TYPES[self.type][0])
+        return f"{self._name} {SENSOR_TYPES[self.type][0]}"
 
     @property
     def icon(self):

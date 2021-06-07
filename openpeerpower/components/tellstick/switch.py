@@ -33,7 +33,7 @@ class TellstickSwitch(TellstickDevice, ToggleEntity):
     """Representation of a Tellstick switch."""
 
     def _parse_op_data(self, kwargs):
-        """Turn the value from OP into something useful."""
+        """Turn the value from OPP into something useful."""
 
     def _parse_tellcore_data(self, tellcore_data):
         """Turn the value received from tellcore into something useful."""

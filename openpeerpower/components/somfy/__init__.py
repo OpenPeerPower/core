@@ -1,30 +1,26 @@
 """Support for Somfy hubs."""
 from abc import abstractmethod
-import asyncio
 from datetime import timedelta
 import logging
 
 from pymfy.api.devices.category import Category
 import voluptuous as vol
 
-from openpeerpower.components.somfy import config_flow
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET, CONF_OPTIMISTIC
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers import (
     config_entry_oauth2_flow,
     config_validation as cv,
     device_registry as dr,
 )
 from openpeerpower.helpers.entity import Entity
-from openpeerpower.helpers.typing import OpenPeerPowerType
 from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
-    UpdateFailed,
 )
 
-from . import api
+from . import api, config_flow
 from .const import API, COORDINATOR, DOMAIN
 
 _LOGGER = logging.getLogger(__name__)
@@ -73,7 +69,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Somfy from a config entry."""
     # Backwards compat
     if "auth_implementation" not in entry.data:
@@ -82,7 +78,9 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
         )
 
     implementation = (
-        await config_entry_oauth2_flow.async_get_config_entry_implementation(opp, entry)
+        await config_entry_oauth2_flow.async_get_config_entry_implementation(
+            opp, entry
+        )
     )
 
     data = opp.data[DOMAIN]
@@ -94,7 +92,10 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
         previous_devices = data[COORDINATOR].data
         # Sometimes Somfy returns an empty list.
         if not devices and previous_devices:
-            raise UpdateFailed("No devices returned")
+            _LOGGER.debug(
+                "No devices returned. Assuming the previous ones are still valid"
+            )
+            return previous_devices
         return {dev.id: dev for dev in devices}
 
     coordinator = DataUpdateCoordinator(
@@ -106,7 +107,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     )
     data[COORDINATOR] = coordinator
 
-    await coordinator.async_refresh()
+    await coordinator.async_config_entry_first_refresh()
 
     if all(not bool(device.states) for device in coordinator.data.values()):
         _LOGGER.debug(
@@ -132,24 +133,15 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
             model=hub.type,
         )
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     opp.data[DOMAIN].pop(API, None)
-    await asyncio.gather(
-        *[
-            opp.config_entries.async_forward_entry_unload(entry, platform)
-            for platform in PLATFORMS
-        ]
-    )
-    return True
+    return await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
 
 class SomfyEntity(CoordinatorEntity, Entity):

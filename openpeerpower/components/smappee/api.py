@@ -18,7 +18,7 @@ class ConfigEntrySmappeeApi(api.SmappeeApi):
         opp: core.OpenPeerPower,
         config_entry: config_entries.ConfigEntry,
         implementation: config_entry_oauth2_flow.AbstractOAuth2Implementation,
-    ):
+    ) -> None:
         """Initialize Smappee Auth."""
         self.opp = opp
         self.config_entry = config_entry

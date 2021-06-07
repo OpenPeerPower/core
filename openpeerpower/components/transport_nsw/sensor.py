@@ -4,7 +4,7 @@ from datetime import timedelta
 from TransportNSW import TransportNSW
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_ATTRIBUTION,
     ATTR_MODE,
@@ -13,7 +13,6 @@ from openpeerpower.const import (
     TIME_MINUTES,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 ATTR_STOP_ID = "stop_id"
 ATTR_ROUTE = "route"
@@ -65,7 +64,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities([TransportNSWSensor(data, stop_id, name)], True)
 
 
-class TransportNSWSensor(Entity):
+class TransportNSWSensor(SensorEntity):
     """Implementation of an Transport NSW sensor."""
 
     def __init__(self, data, stop_id, name):
@@ -87,7 +86,7 @@ class TransportNSWSensor(Entity):
         return self._state
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         if self._times is not None:
             return {

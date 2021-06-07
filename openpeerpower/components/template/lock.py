@@ -13,10 +13,9 @@ from openpeerpower.const import (
 from openpeerpower.core import callback
 from openpeerpower.exceptions import TemplateError
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.reload import async_setup_reload_service
 from openpeerpower.helpers.script import Script
 
-from .const import CONF_AVAILABILITY_TEMPLATE, DOMAIN, PLATFORMS
+from .const import CONF_AVAILABILITY_TEMPLATE
 from .template_entity import TemplateEntity
 
 CONF_LOCK = "lock"
@@ -60,7 +59,6 @@ async def _async_create_entities(opp, config):
 
 async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the template lock."""
-    await async_setup_reload_service(opp, DOMAIN, PLATFORMS)
     async_add_entities(await _async_create_entities(opp, config))
 
 

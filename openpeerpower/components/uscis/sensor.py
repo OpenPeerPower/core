@@ -5,10 +5,9 @@ import logging
 import uscisstatus
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_NAME
 from openpeerpower.helpers import config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
@@ -33,7 +32,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         _LOGGER.error("Setup USCIS Sensor Fail check if your Case ID is Valid")
 
 
-class UscisSensor(Entity):
+class UscisSensor(SensorEntity):
     """USCIS Sensor will check case status on daily basis."""
 
     MIN_TIME_BETWEEN_UPDATES = timedelta(hours=24)
@@ -60,7 +59,7 @@ class UscisSensor(Entity):
         return self._state
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return self._attributes
 

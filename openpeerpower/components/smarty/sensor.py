@@ -3,6 +3,7 @@
 import datetime as dt
 import logging
 
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import (
     DEVICE_CLASS_TEMPERATURE,
     DEVICE_CLASS_TIMESTAMP,
@@ -10,7 +11,6 @@ from openpeerpower.const import (
 )
 from openpeerpower.core import callback
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
-from openpeerpower.helpers.entity import Entity
 import openpeerpower.util.dt as dt_util
 
 from . import DOMAIN, SIGNAL_UPDATE_SMARTY
@@ -35,7 +35,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities(sensors, True)
 
 
-class SmartySensor(Entity):
+class SmartySensor(SensorEntity):
     """Representation of a Smarty Sensor."""
 
     def __init__(

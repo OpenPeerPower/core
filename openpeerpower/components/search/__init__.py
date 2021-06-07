@@ -19,7 +19,6 @@ async def async_setup(opp: OpenPeerPower, config: dict):
     return True
 
 
-@websocket_api.async_response
 @websocket_api.websocket_command(
     {
         vol.Required("type"): "search/related",
@@ -38,12 +37,13 @@ async def async_setup(opp: OpenPeerPower, config: dict):
         vol.Required("item_id"): str,
     }
 )
-async def websocket_search_related(opp, connection, msg):
+@callback
+def websocket_search_related(opp, connection, msg):
     """Handle search."""
     searcher = Searcher(
         opp,
-        await device_registry.async_get_registry(opp),
-        await entity_registry.async_get_registry(opp),
+        device_registry.async_get(opp),
+        entity_registry.async_get(opp),
     )
     connection.send_result(
         msg["id"], searcher.async_search(msg["item_type"], msg["item_id"])
@@ -69,7 +69,7 @@ class Searcher:
         opp: OpenPeerPower,
         device_reg: device_registry.DeviceRegistry,
         entity_reg: entity_registry.EntityRegistry,
-    ):
+    ) -> None:
         """Search results."""
         self.opp = opp
         self._device_reg = device_reg
@@ -126,6 +126,12 @@ class Searcher:
             self._entity_reg, area_id
         ):
             self._add_or_resolve("entity", entity_entry.entity_id)
+
+        for entity_id in script.scripts_with_area(self.opp, area_id):
+            self._add_or_resolve("entity", entity_id)
+
+        for entity_id in automation.automations_with_area(self.opp, area_id):
+            self._add_or_resolve("entity", entity_id)
 
     @callback
     def _resolve_device(self, device_id) -> None:
@@ -190,11 +196,16 @@ class Searcher:
 
         Will only be called if automation is an entry point.
         """
-        for entity in automation.entities_in_automation(self.opp, automation_entity_id):
+        for entity in automation.entities_in_automation(
+            self.opp, automation_entity_id
+        ):
             self._add_or_resolve("entity", entity)
 
         for device in automation.devices_in_automation(self.opp, automation_entity_id):
             self._add_or_resolve("device", device)
+
+        for area in automation.areas_in_automation(self.opp, automation_entity_id):
+            self._add_or_resolve("area", area)
 
     @callback
     def _resolve_script(self, script_entity_id) -> None:
@@ -207,6 +218,9 @@ class Searcher:
 
         for device in script.devices_in_script(self.opp, script_entity_id):
             self._add_or_resolve("device", device)
+
+        for area in script.areas_in_script(self.opp, script_entity_id):
+            self._add_or_resolve("area", area)
 
     @callback
     def _resolve_group(self, group_entity_id) -> None:

@@ -11,7 +11,7 @@ from stringcase import camelcase, snakecase
 import thermoworks_smoke
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_BATTERY_LEVEL,
     CONF_EMAIL,
@@ -21,7 +21,6 @@ from openpeerpower.const import (
     TEMP_FAHRENHEIT,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -91,7 +90,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
             _LOGGER.error(msg)
 
 
-class ThermoworksSmokeSensor(Entity):
+class ThermoworksSmokeSensor(SensorEntity):
     """Implementation of a thermoworks smoke sensor."""
 
     def __init__(self, sensor_type, serial, mgr):
@@ -124,7 +123,7 @@ class ThermoworksSmokeSensor(Entity):
         return self._state
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return self._attributes
 

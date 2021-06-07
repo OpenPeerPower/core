@@ -1,6 +1,7 @@
 """Support for SimpliSafe freeze sensor."""
 from simplipy.entity import EntityTypes
 
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import DEVICE_CLASS_TEMPERATURE, TEMP_FAHRENHEIT
 from openpeerpower.core import callback
 
@@ -25,7 +26,7 @@ async def async_setup_entry(opp, entry, async_add_entities):
     async_add_entities(sensors)
 
 
-class SimplisafeFreezeSensor(SimpliSafeBaseSensor):
+class SimplisafeFreezeSensor(SimpliSafeBaseSensor, SensorEntity):
     """Define a SimpliSafe freeze sensor entity."""
 
     def __init__(self, simplisafe, system, sensor):

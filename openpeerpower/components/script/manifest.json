@@ -2,8 +2,7 @@
   "domain": "script",
   "name": "Scripts",
   "documentation": "https://www.openpeerpower.io/integrations/script",
-  "codeowners": [
-    "@open-peer-power/core"
-  ],
+  "dependencies": ["blueprint", "trace"],
+  "codeowners": ["@openpeerpower/core"],
   "quality_scale": "internal"
 }

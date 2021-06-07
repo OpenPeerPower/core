@@ -6,11 +6,10 @@ from solax import real_time_api
 from solax.inverter import InverterError
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_IP_ADDRESS, CONF_PORT, TEMP_CELSIUS
 from openpeerpower.exceptions import PlatformNotReady
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.event import async_track_time_interval
 
 DEFAULT_PORT = 80
@@ -73,7 +72,7 @@ class RealTimeDataEndpoint:
                 sensor.async_schedule_update_op_state()
 
 
-class Inverter(Entity):
+class Inverter(SensorEntity):
     """Class for a sensor."""
 
     def __init__(self, uid, serial, key, unit):

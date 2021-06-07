@@ -1,41 +1,50 @@
-"""The solaredge component."""
-import voluptuous as vol
+"""The SolarEdge integration."""
+from __future__ import annotations
 
-from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry
-from openpeerpower.const import CONF_API_KEY, CONF_NAME
+from requests.exceptions import ConnectTimeout, HTTPError
+from solaredge import Solaredge
+
+from openpeerpower.config_entries import ConfigEntry
+from openpeerpower.const import CONF_API_KEY
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.exceptions import ConfigEntryNotReady
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
-from .const import CONF_SITE_ID, DEFAULT_NAME, DOMAIN
+from .const import CONF_SITE_ID, DATA_API_CLIENT, DOMAIN, LOGGER
 
-CONFIG_SCHEMA = vol.Schema(
-    {
-        DOMAIN: vol.Schema(
-            {
-                vol.Optional(CONF_NAME, default=DEFAULT_NAME): cv.string,
-                vol.Required(CONF_API_KEY): cv.string,
-                vol.Required(CONF_SITE_ID): cv.string,
-            }
+CONFIG_SCHEMA = cv.deprecated(DOMAIN)
+
+PLATFORMS = ["sensor"]
+
+
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+    """Set up SolarEdge from a config entry."""
+    api = Solaredge(entry.data[CONF_API_KEY])
+
+    try:
+        response = await opp.async_add_executor_job(
+            api.get_details, entry.data[CONF_SITE_ID]
         )
-    },
-    extra=vol.ALLOW_EXTRA,
-)
+    except (ConnectTimeout, HTTPError) as ex:
+        LOGGER.error("Could not retrieve details from SolarEdge API")
+        raise ConfigEntryNotReady from ex
 
+    if "details" not in response:
+        LOGGER.error("Missing details data in SolarEdge response")
+        raise ConfigEntryNotReady
 
-async def async_setup(opp, config):
-    """Platform setup, do nothing."""
-    if DOMAIN not in config:
-        return True
+    if response["details"].get("status", "").lower() != "active":
+        LOGGER.error("SolarEdge site is not active")
+        return False
 
-    opp.async_create_task(
-        opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": SOURCE_IMPORT}, data=dict(config[DOMAIN])
-        )
-    )
+    opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {DATA_API_CLIENT: api}
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
-    """Load the saved entities."""
-    opp.async_create_task(opp.config_entries.async_forward_entry_setup(entry, "sensor"))
-    return True
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+    """Unload SolarEdge config entry."""
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
+    if unload_ok:
+        del opp.data[DOMAIN][entry.entry_id]
+    return unload_ok

@@ -2,6 +2,7 @@
   "domain": "sun",
   "name": "Sun",
   "documentation": "https://www.openpeerpower.io/integrations/sun",
-  "codeowners": [],
-  "quality_scale": "internal"
+  "codeowners": ["@Swamp-Ig"],
+  "quality_scale": "internal",
+  "iot_class": "calculated"
 }

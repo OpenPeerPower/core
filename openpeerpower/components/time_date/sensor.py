@@ -4,11 +4,10 @@ import logging
 
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_DISPLAY_OPTIONS
 from openpeerpower.core import callback
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.event import async_track_point_in_utc_time
 import openpeerpower.util.dt as dt_util
 
@@ -47,7 +46,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     )
 
 
-class TimeDateSensor(Entity):
+class TimeDateSensor(SensorEntity):
     """Implementation of a Time and Date sensor."""
 
     def __init__(self, opp, option_type):

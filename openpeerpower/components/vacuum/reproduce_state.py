@@ -1,7 +1,10 @@
 """Reproduce an Vacuum state."""
+from __future__ import annotations
+
 import asyncio
+from collections.abc import Iterable
 import logging
-from typing import Any, Dict, Iterable, Optional
+from typing import Any
 
 from openpeerpower.const import (
     ATTR_ENTITY_ID,
@@ -12,8 +15,7 @@ from openpeerpower.const import (
     STATE_ON,
     STATE_PAUSED,
 )
-from openpeerpower.core import Context, State
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import Context, OpenPeerPower, State
 
 from . import (
     ATTR_FAN_SPEED,
@@ -41,11 +43,11 @@ VALID_STATES_STATE = {
 
 
 async def _async_reproduce_state(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     state: State,
     *,
-    context: Optional[Context] = None,
-    reproduce_options: Optional[Dict[str, Any]] = None,
+    context: Context | None = None,
+    reproduce_options: dict[str, Any] | None = None,
 ) -> None:
     """Reproduce a single state."""
     cur_state = opp.states.get(state.entity_id)
@@ -96,11 +98,11 @@ async def _async_reproduce_state(
 
 
 async def async_reproduce_states(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     states: Iterable[State],
     *,
-    context: Optional[Context] = None,
-    reproduce_options: Optional[Dict[str, Any]] = None,
+    context: Context | None = None,
+    reproduce_options: dict[str, Any] | None = None,
 ) -> None:
     """Reproduce Vacuum states."""
     # Reproduce states in parallel.

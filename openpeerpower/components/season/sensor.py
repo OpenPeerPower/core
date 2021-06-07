@@ -6,10 +6,9 @@ import ephem
 import voluptuous as vol
 
 from openpeerpower import util
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_NAME, CONF_TYPE
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util.dt import utcnow
 
 _LOGGER = logging.getLogger(__name__)
@@ -109,7 +108,7 @@ def get_season(date, hemisphere, season_tracking_type):
     return HEMISPHERE_SEASON_SWAP.get(season)
 
 
-class Season(Entity):
+class Season(SensorEntity):
     """Representation of the current season."""
 
     def __init__(self, opp, hemisphere, season_tracking_type, name):

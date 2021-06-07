@@ -4,5 +4,6 @@
   "documentation": "https://www.openpeerpower.io/integrations/search",
   "dependencies": ["websocket_api"],
   "after_dependencies": ["scene", "group", "automation", "script"],
-  "codeowners": ["@open-peer-power/core"]
+  "codeowners": ["@openpeerpower/core"],
+  "quality_scale": "internal"
 }

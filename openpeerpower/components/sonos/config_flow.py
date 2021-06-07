@@ -1,17 +1,16 @@
 """Config flow for SONOS."""
 import pysonos
 
-from openpeerpower import config_entries
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers import config_entry_flow
 
 from .const import DOMAIN
 
 
-async def _async_has_devices(opp):
+async def _async_has_devices(opp: OpenPeerPower) -> bool:
     """Return if there are devices that can be discovered."""
-    return await opp.async_add_executor_job(pysonos.discover)
+    result = await opp.async_add_executor_job(pysonos.discover)
+    return bool(result)
 
 
-config_entry_flow.register_discovery_flow(
-    DOMAIN, "Sonos", _async_has_devices, config_entries.CONN_CLASS_LOCAL_PUSH
-)
+config_entry_flow.register_discovery_flow(DOMAIN, "Sonos", _async_has_devices)

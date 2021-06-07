@@ -5,8 +5,8 @@ from urllib.parse import ParseResult, urlparse
 from requests.exceptions import HTTPError, Timeout
 from sunwatcher.solarlog.solarlog import SolarLog
 
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import CONF_HOST
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 from .const import DOMAIN, SCAN_INTERVAL, SENSOR_TYPES
@@ -55,7 +55,7 @@ async def async_setup_entry(opp, entry, async_add_entities):
     return True
 
 
-class SolarlogSensor(Entity):
+class SolarlogSensor(SensorEntity):
     """Representation of a Sensor."""
 
     def __init__(self, entry_id, device_name, sensor_key, data):

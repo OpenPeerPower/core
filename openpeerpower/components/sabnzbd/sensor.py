@@ -1,6 +1,6 @@
 """Support for monitoring an SABnzbd NZB client."""
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
-from openpeerpower.helpers.entity import Entity
 
 from . import DATA_SABNZBD, SENSOR_TYPES, SIGNAL_SABNZBD_UPDATED
 
@@ -18,7 +18,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     )
 
 
-class SabnzbdSensor(Entity):
+class SabnzbdSensor(SensorEntity):
     """Representation of an SABnzbd sensor."""
 
     def __init__(self, sensor_type, sabnzbd_api_data, client_name):

@@ -1,5 +1,7 @@
 """Support for Vera cover - curtains, rollershutters etc."""
-from typing import Any, Callable, List
+from __future__ import annotations
+
+from typing import Any
 
 import pyvera as veraApi
 
@@ -11,7 +13,7 @@ from openpeerpower.components.cover import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.core import OpenPeerPower
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 
 from . import VeraDevice
 from .common import ControllerData, get_controller_data
@@ -20,7 +22,7 @@ from .common import ControllerData, get_controller_data
 async def async_setup_entry(
     opp: OpenPeerPower,
     entry: ConfigEntry,
-    async_add_entities: Callable[[List[Entity], bool], None],
+    async_add_entities: AddEntitiesCallback,
 ) -> None:
     """Set up the sensor config entry."""
     controller_data = get_controller_data(opp, entry)
@@ -38,7 +40,7 @@ class VeraCover(VeraDevice[veraApi.VeraCurtain], CoverEntity):
 
     def __init__(
         self, vera_device: veraApi.VeraCurtain, controller_data: ControllerData
-    ):
+    ) -> None:
         """Initialize the Vera device."""
         VeraDevice.__init__(self, vera_device, controller_data)
         self.entity_id = ENTITY_ID_FORMAT.format(self.vera_id)

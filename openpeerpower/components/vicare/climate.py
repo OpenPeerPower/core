@@ -104,14 +104,14 @@ async def async_setup_platform(
         ]
     )
 
-    platform = entity_platform.current_platform.get()
+    platform = entity_platform.async_get_current_platform()
 
     platform.async_register_entity_service(
         SERVICE_SET_VICARE_MODE,
         {
             vol.Required(SERVICE_SET_VICARE_MODE_ATTR_MODE): vol.In(
                 VICARE_TO_HA_HVAC_HEATING
-            ),
+            )
         },
         "set_vicare_mode",
     )
@@ -134,7 +134,7 @@ class ViCareClimate(ClimateEntity):
         self._current_action = None
 
     def update(self):
-        """Let OP know there has been an update from the ViCare API."""
+        """Let OPP know there has been an update from the ViCare API."""
         try:
             _room_temperature = self._api.getRoomTemperature()
             _supply_temperature = self._api.getSupplyTemperature()
@@ -278,7 +278,7 @@ class ViCareClimate(ClimateEntity):
         self._api.activateProgram(vicare_program)
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Show Device Attributes."""
         return self._attributes
 

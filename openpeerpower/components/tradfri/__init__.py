@@ -1,5 +1,4 @@
 """Support for IKEA Tradfri."""
-import asyncio
 from datetime import timedelta
 import logging
 
@@ -10,10 +9,11 @@ import voluptuous as vol
 from openpeerpower import config_entries
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import EVENT_OPENPEERPOWER_STOP
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.exceptions import ConfigEntryNotReady
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.event import async_track_time_interval
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 from openpeerpower.util.json import load_json
 
 from .const import (
@@ -55,7 +55,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
+async def async_setup(opp: OpenPeerPower, config: ConfigType):
     """Set up the Tradfri component."""
     conf = config.get(DOMAIN)
 
@@ -100,7 +100,7 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Create a gateway."""
     # host, identity, key, allow_tradfri_groups
     tradfri_data = opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {}
@@ -113,7 +113,7 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     )
 
     async def on_opp_stop(event):
-        """Close connection when opp stops."""
+        """Close connection when opp.stops."""
         await factory.shutdown()
 
     listeners.append(opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on_opp_stop))
@@ -148,13 +148,10 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
         sw_version=gateway_info.firmware_version,
     )
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     async def async_keep_alive(now):
-        if opp.is_stopping:
+        if opp is_stopping:
             return
 
         try:
@@ -169,16 +166,9 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         tradfri_data = opp.data[DOMAIN].pop(entry.entry_id)
         factory = tradfri_data[FACTORY]

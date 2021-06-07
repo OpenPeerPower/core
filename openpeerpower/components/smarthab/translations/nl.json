@@ -10,7 +10,9 @@
                 "data": {
                     "email": "E-mail",
                     "password": "Wachtwoord"
-                }
+                },
+                "description": "Om technische redenen moet u een tweede account gebruiken dat specifiek is voor uw Open Peer Power-installatie. U kunt er een aanmaken vanuit de SmartHab-toepassing.",
+                "title": "Stel SmartHab in"
             }
         }
     }

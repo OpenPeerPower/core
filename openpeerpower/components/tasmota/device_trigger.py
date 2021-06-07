@@ -1,6 +1,8 @@
 """Provides device automations for Tasmota."""
+from __future__ import annotations
+
 import logging
-from typing import Callable, List, Optional
+from typing import Callable
 
 import attr
 from hatasmota.trigger import TasmotaTrigger
@@ -15,7 +17,7 @@ from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.helpers.device_registry import CONNECTION_NETWORK_MAC
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 
 from .const import DOMAIN, TASMOTA_EVENT
 from .discovery import TASMOTA_DISCOVERY_ENTITY_UPDATED, clear_discovery_hash
@@ -46,8 +48,8 @@ class TriggerInstance:
 
     action: AutomationActionType = attr.ib()
     automation_info: dict = attr.ib()
-    trigger: "Trigger" = attr.ib()
-    remove: Optional[CALLBACK_TYPE] = attr.ib(default=None)
+    trigger: Trigger = attr.ib()
+    remove: CALLBACK_TYPE | None = attr.ib(default=None)
 
     async def async_attach_trigger(self):
         """Attach event trigger."""
@@ -80,12 +82,12 @@ class Trigger:
 
     device_id: str = attr.ib()
     discovery_hash: dict = attr.ib()
-    opp: OpenPeerPowerType = attr.ib()
+    opp: OpenPeerPower = attr.ib()
     remove_update_signal: Callable[[], None] = attr.ib()
     subtype: str = attr.ib()
     tasmota_trigger: TasmotaTrigger = attr.ib()
     type: str = attr.ib()
-    trigger_instances: List[TriggerInstance] = attr.ib(factory=list)
+    trigger_instances: list[TriggerInstance] = attr.ib(factory=list)
 
     async def add_trigger(self, action, automation_info):
         """Add Tasmota trigger."""
@@ -208,7 +210,7 @@ async def async_setup_trigger(opp, tasmota_trigger, config_entry, discovery_hash
         opp.data[DEVICE_TRIGGERS] = {}
     if discovery_id not in opp.data[DEVICE_TRIGGERS]:
         device_trigger = Trigger(
-            opp=opp,
+            opp.opp,
             device_id=device.id,
             discovery_hash=discovery_hash,
             subtype=tasmota_trigger.cfg.subtype,
@@ -238,7 +240,7 @@ async def async_remove_triggers(opp: OpenPeerPower, device_id: str):
             device_trigger.remove_update_signal()
 
 
-async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_triggers(opp: OpenPeerPower, device_id: str) -> list[dict]:
     """List device triggers for a Tasmota device."""
     triggers = []
 
@@ -271,14 +273,13 @@ async def async_attach_trigger(
     """Attach a device trigger."""
     if DEVICE_TRIGGERS not in opp.data:
         opp.data[DEVICE_TRIGGERS] = {}
-    config = TRIGGER_SCHEMA(config)
     device_id = config[CONF_DEVICE_ID]
     discovery_id = config[CONF_DISCOVERY_ID]
 
     if discovery_id not in opp.data[DEVICE_TRIGGERS]:
         # The trigger has not (yet) been discovered, prepare it for later
         opp.data[DEVICE_TRIGGERS][discovery_id] = Trigger(
-            opp=opp,
+            opp.opp,
             device_id=device_id,
             discovery_hash=None,
             remove_update_signal=None,

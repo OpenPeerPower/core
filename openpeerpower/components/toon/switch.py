@@ -10,7 +10,7 @@ from toonapi import (
 
 from openpeerpower.components.switch import SwitchEntity
 from openpeerpower.config_entries import ConfigEntry
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from .const import (
     ATTR_DEFAULT_ENABLED,
@@ -28,7 +28,7 @@ from .models import ToonDisplayDeviceEntity, ToonEntity
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up a Toon switches based on a config entry."""
     coordinator = opp.data[DOMAIN][entry.entry_id]

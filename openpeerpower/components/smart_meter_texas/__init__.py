@@ -32,13 +32,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["sensor"]
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the Smart Meter Texas component."""
-    opp.data.setdefault(DOMAIN, {})
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Smart Meter Texas from a config entry."""
 
     username = entry.data[CONF_USERNAME]
@@ -76,6 +70,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         ),
     )
 
+    opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = {
         DATA_COORDINATOR: coordinator,
         DATA_SMART_METER: smart_meter_texas_data,
@@ -83,10 +78,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 
     asyncio.create_task(coordinator.async_refresh())
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
@@ -94,7 +86,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
 class SmartMeterTexasData:
     """Manages coordinatation of API data updates."""
 
-    def __init__(self, opp: OpenPeerPower, entry: ConfigEntry, account: Account):
+    def __init__(
+        self, opp: OpenPeerPower, entry: ConfigEntry, account: Account
+    ) -> None:
         """Initialize the data coordintator."""
         self._entry = entry
         self.account = account
@@ -119,14 +113,7 @@ class SmartMeterTexasData:
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
 

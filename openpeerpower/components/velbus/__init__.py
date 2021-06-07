@@ -1,5 +1,4 @@
 """Support for Velbus devices."""
-import asyncio
 import logging
 
 import velbus
@@ -7,10 +6,10 @@ import voluptuous as vol
 
 from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry
 from openpeerpower.const import CONF_ADDRESS, CONF_NAME, CONF_PORT
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.exceptions import ConfigEntryNotReady
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.entity import Entity
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import CONF_MEMO_TEXT, DOMAIN, SERVICE_SET_MEMO_TEXT
 
@@ -44,7 +43,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Establish connection with velbus."""
     opp.data.setdefault(DOMAIN, {})
 
@@ -109,19 +108,14 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Remove the velbus connection."""
-    await asyncio.wait(
-        [
-            opp.config_entries.async_forward_entry_unload(entry, platform)
-            for platform in PLATFORMS
-        ]
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     opp.data[DOMAIN][entry.entry_id]["cntrl"].stop()
     opp.data[DOMAIN].pop(entry.entry_id)
     if not opp.data[DOMAIN]:
         opp.data.pop(DOMAIN)
-    return True
+    return unload_ok
 
 
 class VelbusEntity(Entity):

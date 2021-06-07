@@ -3,6 +3,7 @@
 from datetime import datetime, timedelta
 import logging
 
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import (
     DEVICE_CLASS_HUMIDITY,
     DEVICE_CLASS_TEMPERATURE,
@@ -12,7 +13,6 @@ from openpeerpower.const import (
 )
 from openpeerpower.core import callback
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
-from openpeerpower.helpers.entity import Entity
 
 from . import DOMAIN, METRIC_KEY_MODE, SIGNAL_VALLOX_STATE_UPDATE
 
@@ -96,7 +96,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities(sensors, update_before_add=False)
 
 
-class ValloxSensor(Entity):
+class ValloxSensor(SensorEntity):
     """Representation of a Vallox sensor."""
 
     def __init__(

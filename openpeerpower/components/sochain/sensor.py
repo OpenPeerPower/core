@@ -4,11 +4,10 @@ from datetime import timedelta
 from pysochain import ChainSo
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import ATTR_ATTRIBUTION, CONF_ADDRESS, CONF_NAME
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 ATTRIBUTION = "Data provided by chain.so"
 
@@ -40,7 +39,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities([SochainSensor(name, network.upper(), chainso)], True)
 
 
-class SochainSensor(Entity):
+class SochainSensor(SensorEntity):
     """Representation of a Sochain sensor."""
 
     def __init__(self, name, unit_of_measurement, chainso):
@@ -69,7 +68,7 @@ class SochainSensor(Entity):
         return self._unit_of_measurement
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of the sensor."""
         return {ATTR_ATTRIBUTION: ATTRIBUTION}
 

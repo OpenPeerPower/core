@@ -2,6 +2,7 @@
   "domain": "unifiled",
   "name": "Ubiquiti UniFi LED",
   "documentation": "https://www.openpeerpower.io/integrations/unifiled",
-  "codeowners": [],
-  "requirements": ["unifiled==0.11"]
+  "codeowners": ["@florisvdk"],
+  "requirements": ["unifiled==0.11"],
+  "iot_class": "local_polling"
 }

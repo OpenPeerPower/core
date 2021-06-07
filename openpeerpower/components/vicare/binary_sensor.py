@@ -85,6 +85,7 @@ SENSORS_BY_HEATINGTYPE = {
         SENSOR_HEATINGROD_LEVEL2,
         SENSOR_HEATINGROD_LEVEL3,
     ],
+    HeatingType.fuelcell: [SENSOR_BURNER_ACTIVE],
 }
 
 
@@ -103,7 +104,9 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
 
     add_entities(
         [
-            ViCareBinarySensor(opp.data[VICARE_DOMAIN][VICARE_NAME], vicare_api, sensor)
+            ViCareBinarySensor(
+                opp.data[VICARE_DOMAIN][VICARE_NAME], vicare_api, sensor
+            )
             for sensor in sensors
         ]
     )

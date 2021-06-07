@@ -2,9 +2,9 @@
 
 from datetime import timedelta
 
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.components.streamlabswater import DOMAIN as STREAMLABSWATER_DOMAIN
 from openpeerpower.const import VOLUME_GALLONS
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 DEPENDENCIES = ["streamlabswater"]
@@ -67,7 +67,7 @@ class StreamlabsUsageData:
         return self._this_year
 
 
-class StreamLabsDailyUsage(Entity):
+class StreamLabsDailyUsage(SensorEntity):
     """Monitors the daily water usage."""
 
     def __init__(self, location_name, streamlabs_usage_data):

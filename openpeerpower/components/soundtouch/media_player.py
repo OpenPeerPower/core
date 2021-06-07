@@ -347,7 +347,9 @@ class SoundTouchDevice(MediaPlayerEntity):
             """Schedule an update when all platform entities have been added."""
             self.async_schedule_update_op_state(True)
 
-        self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, async_update_on_start)
+        self.opp.bus.async_listen_once(
+            EVENT_OPENPEERPOWER_START, async_update_on_start
+        )
 
     def play_media(self, media_type, media_id, **kwargs):
         """Play a piece of media."""
@@ -438,7 +440,7 @@ class SoundTouchDevice(MediaPlayerEntity):
             self._device.add_zone_slave([slave.device for slave in slaves])
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return entity specific state attributes."""
         attributes = {}
 

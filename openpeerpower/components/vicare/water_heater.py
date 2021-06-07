@@ -79,7 +79,7 @@ class ViCareWater(WaterHeaterEntity):
         self._heating_type = heating_type
 
     def update(self):
-        """Let OP know there has been an update from the ViCare API."""
+        """Let OPP know there has been an update from the ViCare API."""
         try:
             current_temperature = self._api.getDomesticHotWaterStorageTemperature()
             if current_temperature != PYVICARE_ERROR:

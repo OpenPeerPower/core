@@ -1,14 +1,17 @@
 """Expose regular shell commands as services."""
+from __future__ import annotations
+
 import asyncio
+from contextlib import suppress
 import logging
 import shlex
 
 import voluptuous as vol
 
-from openpeerpower.core import ServiceCall
+from openpeerpower.core import OpenPeerPower, ServiceCall
 from openpeerpower.exceptions import TemplateError
 from openpeerpower.helpers import config_validation as cv, template
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 
 DOMAIN = "shell_command"
 
@@ -21,11 +24,11 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
+async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up the shell_command component."""
     conf = config.get(DOMAIN, {})
 
-    cache = {}
+    cache: dict[str, tuple[str, str | None, template.Template | None]] = {}
 
     async def async_service_handler(service: ServiceCall) -> None:
         """Execute a shell command service."""
@@ -87,10 +90,8 @@ async def async_setup(opp: OpenPeerPowerType, config: ConfigType) -> bool:
                 "Timed out running command: `%s`, after: %ss", cmd, COMMAND_TIMEOUT
             )
             if process:
-                try:
-                    await process.kill()
-                except TypeError:
-                    pass
+                with suppress(TypeError):
+                    process.kill()
                 del process
 
             return

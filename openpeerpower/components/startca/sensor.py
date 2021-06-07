@@ -7,7 +7,7 @@ import async_timeout
 import voluptuous as vol
 import xmltodict
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_API_KEY,
     CONF_MONITORED_VARIABLES,
@@ -18,7 +18,6 @@ from openpeerpower.const import (
 )
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
@@ -75,7 +74,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities(sensors, True)
 
 
-class StartcaSensor(Entity):
+class StartcaSensor(SensorEntity):
     """Representation of Start.ca Bandwidth sensor."""
 
     def __init__(self, startcadata, sensor_type, name):

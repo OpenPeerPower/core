@@ -2,11 +2,11 @@
 import logging
 
 from bs4 import BeautifulSoup
-from requests.auth import HTTPBasicAuth, HTTPDigestAuth
+import httpx
 import voluptuous as vol
 
 from openpeerpower.components.rest.data import RestData
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_AUTHENTICATION,
     CONF_HEADERS,
@@ -22,7 +22,6 @@ from openpeerpower.const import (
 )
 from openpeerpower.exceptions import PlatformNotReady
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -73,9 +72,9 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 
     if username and password:
         if config.get(CONF_AUTHENTICATION) == HTTP_DIGEST_AUTHENTICATION:
-            auth = HTTPDigestAuth(username, password)
+            auth = httpx.DigestAuth(username, password)
         else:
-            auth = HTTPBasicAuth(username, password)
+            auth = (username, password)
     else:
         auth = None
     rest = RestData(opp, method, resource, auth, headers, None, payload, verify_ssl)
@@ -89,7 +88,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     )
 
 
-class ScrapeSensor(Entity):
+class ScrapeSensor(SensorEntity):
     """Representation of a web scrape sensor."""
 
     def __init__(self, rest, name, select, attr, index, value_template, unit):

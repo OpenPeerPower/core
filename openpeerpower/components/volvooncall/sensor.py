@@ -1,4 +1,6 @@
 """Support for Volvo On Call sensors."""
+from openpeerpower.components.sensor import SensorEntity
+
 from . import DATA_KEY, VolvoEntity
 
 
@@ -9,7 +11,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities([VolvoSensor(opp.data[DATA_KEY], *discovery_info)])
 
 
-class VolvoSensor(VolvoEntity):
+class VolvoSensor(VolvoEntity, SensorEntity):
     """Representation of a Volvo sensor."""
 
     @property

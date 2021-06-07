@@ -7,7 +7,7 @@ import voluptuous as vol
 
 from openpeerpower.components.recorder.models import States
 from openpeerpower.components.recorder.util import execute, session_scope
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_UNIT_OF_MEASUREMENT,
     CONF_ENTITY_ID,
@@ -18,7 +18,6 @@ from openpeerpower.const import (
 )
 from openpeerpower.core import callback
 from openpeerpower.helpers import config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.event import (
     async_track_point_in_utc_time,
     async_track_state_change_event,
@@ -85,7 +84,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     return True
 
 
-class StatisticsSensor(Entity):
+class StatisticsSensor(SensorEntity):
     """Representation of a Statistics sensor."""
 
     def __init__(self, entity_id, name, sampling_size, max_age, precision):
@@ -184,7 +183,7 @@ class StatisticsSensor(Entity):
         return False
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of the sensor."""
         if not self.is_binary:
             return {
@@ -325,7 +324,7 @@ class StatisticsSensor(Entity):
 
         _LOGGER.debug("%s: initializing values from the database", self.entity_id)
 
-        with session_scope(opp=self.opp) as session:
+        with session_scope(opp.self.opp) as session:
             query = session.query(States).filter(
                 States.entity_id == self._entity_id.lower()
             )

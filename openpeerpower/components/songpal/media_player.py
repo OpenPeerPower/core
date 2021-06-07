@@ -25,13 +25,13 @@ from openpeerpower.components.media_player.const import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_NAME, EVENT_OPENPEERPOWER_STOP, STATE_OFF, STATE_ON
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.exceptions import PlatformNotReady
 from openpeerpower.helpers import (
     config_validation as cv,
     device_registry as dr,
     entity_platform,
 )
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import CONF_ENDPOINT, DOMAIN, SET_SOUND_SETTING
 
@@ -53,7 +53,7 @@ INITIAL_RETRY_DELAY = 10
 
 
 async def async_setup_platform(
-    opp: OpenPeerPowerType, config: dict, async_add_entities, discovery_info=None
+    opp: OpenPeerPower, config: dict, async_add_entities, discovery_info=None
 ) -> None:
     """Set up from legacy configuration file. Obsolete."""
     _LOGGER.error(
@@ -62,7 +62,7 @@ async def async_setup_platform(
 
 
 async def async_setup_entry(
-    opp: OpenPeerPowerType, config_entry: ConfigEntry, async_add_entities
+    opp: OpenPeerPower, config_entry: ConfigEntry, async_add_entities
 ) -> None:
     """Set up songpal media player."""
     name = config_entry.data[CONF_NAME]
@@ -82,7 +82,7 @@ async def async_setup_entry(
     songpal_entity = SongpalEntity(name, device)
     async_add_entities([songpal_entity], True)
 
-    platform = entity_platform.current_platform.get()
+    platform = entity_platform.async_get_current_platform()
     platform.async_register_entity_service(
         SET_SOUND_SETTING,
         {vol.Required(PARAM_NAME): cv.string, vol.Required(PARAM_VALUE): cv.string},
@@ -173,7 +173,7 @@ class SongpalEntity(MediaPlayerEntity):
                     _LOGGER.debug("Failed to reconnect: %s", ex)
                     delay = min(2 * delay, 300)
                 else:
-                    # We need to inform OP about the state in case we are coming
+                    # We need to inform OPP about the state in case we are coming
                     # back from a disconnected state.
                     await self.async_update_op_state(force_refresh=True)
 

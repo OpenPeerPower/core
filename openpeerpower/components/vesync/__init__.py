@@ -1,5 +1,4 @@
 """VeSync integration."""
-import asyncio
 import logging
 
 from pyvesync import VeSync
@@ -11,7 +10,6 @@ from openpeerpower.helpers import config_validation as cv
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
 
 from .common import async_process_devices
-from .config_flow import configured_instances
 from .const import (
     DOMAIN,
     SERVICE_UPDATE_DEVS,
@@ -28,14 +26,17 @@ PLATFORMS = ["switch", "fan", "light"]
 _LOGGER = logging.getLogger(__name__)
 
 CONFIG_SCHEMA = vol.Schema(
-    {
-        DOMAIN: vol.Schema(
-            {
-                vol.Required(CONF_USERNAME): cv.string,
-                vol.Required(CONF_PASSWORD): cv.string,
-            }
-        )
-    },
+    vol.All(
+        cv.deprecated(DOMAIN),
+        {
+            DOMAIN: vol.Schema(
+                {
+                    vol.Required(CONF_USERNAME): cv.string,
+                    vol.Required(CONF_PASSWORD): cv.string,
+                }
+            )
+        },
+    ),
     extra=vol.ALLOW_EXTRA,
 )
 
@@ -47,7 +48,7 @@ async def async_setup(opp, config):
     if conf is None:
         return True
 
-    if not configured_instances(opp):
+    if not opp.config_entries.async_entries(DOMAIN):
         opp.async_create_task(
             opp.config_entries.flow.async_init(
                 DOMAIN,
@@ -144,21 +145,16 @@ async def async_setup_entry(opp, config_entry):
             lights.extend(new_lights)
             opp.async_create_task(forward_setup(config_entry, "light"))
 
-    opp.services.async_register(DOMAIN, SERVICE_UPDATE_DEVS, async_new_device_discovery)
+    opp.services.async_register(
+        DOMAIN, SERVICE_UPDATE_DEVS, async_new_device_discovery
+    )
 
     return True
 
 
 async def async_unload_entry(opp, entry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
 

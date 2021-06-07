@@ -1,5 +1,4 @@
 """Support for SmartHab device integration."""
-import asyncio
 import logging
 
 import pysmarthab
@@ -7,9 +6,9 @@ import voluptuous as vol
 
 from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry
 from openpeerpower.const import CONF_EMAIL, CONF_PASSWORD
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.exceptions import ConfigEntryNotReady
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 DOMAIN = "smarthab"
 DATA_HUB = "hub"
@@ -18,14 +17,17 @@ PLATFORMS = ["light", "cover"]
 _LOGGER = logging.getLogger(__name__)
 
 CONFIG_SCHEMA = vol.Schema(
-    {
-        DOMAIN: vol.Schema(
-            {
-                vol.Required(CONF_EMAIL): cv.string,
-                vol.Required(CONF_PASSWORD): cv.string,
-            }
-        )
-    },
+    vol.All(
+        cv.deprecated(DOMAIN),
+        {
+            DOMAIN: vol.Schema(
+                {
+                    vol.Required(CONF_EMAIL): cv.string,
+                    vol.Required(CONF_PASSWORD): cv.string,
+                }
+            )
+        },
+    ),
     extra=vol.ALLOW_EXTRA,
 )
 
@@ -50,7 +52,7 @@ async def async_setup(opp, config) -> bool:
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up config entry for SmartHab integration."""
 
     # Assign configuration variables
@@ -69,27 +71,14 @@ async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
     # Pass hub object to child platforms
     opp.data[DOMAIN][entry.entry_id] = {DATA_HUB: hub}
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload config entry from SmartHab integration."""
-
-    result = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
-
-    if result:
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
+    if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
-
-    return result
+    return unload_ok

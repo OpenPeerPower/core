@@ -43,7 +43,7 @@ class Gateway:
         )
         entries = self.get_and_delete_all_sms(state_machine)
         _LOGGER.debug("SMS entries:%s", entries)
-        data = list()
+        data = []
 
         for entry in entries:
             decoded_entry = gammu.DecodeSMS(entry)
@@ -78,7 +78,7 @@ class Gateway:
         start_remaining = remaining
         # Get all sms
         start = True
-        entries = list()
+        entries = []
         all_parts = -1
         all_parts_arrived = False
         _LOGGER.debug("Start remaining:%i", start_remaining)
@@ -128,7 +128,7 @@ class Gateway:
 
     @callback
     def _notify_incoming_sms(self, messages):
-        """Notify opp when an incoming SMS message is received."""
+        """Notify opp.when an incoming SMS message is received."""
         for message in messages:
             event_data = {
                 "phone": message["phone"],

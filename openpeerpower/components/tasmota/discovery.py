@@ -12,9 +12,10 @@ from hatasmota.discovery import (
 )
 
 import openpeerpower.components.sensor as sensor
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import device_registry as dev_reg
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
 from openpeerpower.helpers.entity_registry import async_entries_for_device
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import DOMAIN, PLATFORMS
 
@@ -40,7 +41,7 @@ def set_discovery_hash(opp, discovery_hash):
 
 
 async def async_start(
-    opp: OpenPeerPowerType, discovery_topic, config_entry, tasmota_mqtt, setup_device
+    opp: OpenPeerPower, discovery_topic, config_entry, tasmota_mqtt, setup_device
 ) -> bool:
     """Start Tasmota device discovery."""
 
@@ -136,7 +137,9 @@ async def async_start(
 
         device_registry = await opp.helpers.device_registry.async_get_registry()
         entity_registry = await opp.helpers.entity_registry.async_get_registry()
-        device = device_registry.async_get_device(set(), {("mac", mac)})
+        device = device_registry.async_get_device(
+            set(), {(dev_reg.CONNECTION_NETWORK_MAC, mac)}
+        )
 
         if device is None:
             _LOGGER.warning("Got sensors for unknown device mac: %s", mac)
@@ -168,7 +171,7 @@ async def async_start(
     opp.data[TASMOTA_DISCOVERY_INSTANCE] = tasmota_discovery
 
 
-async def async_stop(opp: OpenPeerPowerType) -> bool:
+async def async_stop(opp: OpenPeerPower) -> bool:
     """Stop Tasmota device discovery."""
     opp.data.pop(ALREADY_DISCOVERED)
     tasmota_discovery = opp.data.pop(TASMOTA_DISCOVERY_INSTANCE)

@@ -6,10 +6,9 @@ from requests import HTTPError
 from tmb import IBus
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import ATTR_ATTRIBUTION, CONF_NAME, TIME_MINUTES
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 _LOGGER = logging.getLogger(__name__)
@@ -63,7 +62,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(sensors, True)
 
 
-class TMBSensor(Entity):
+class TMBSensor(SensorEntity):
     """Implementation of a TMB line/stop Sensor."""
 
     def __init__(self, ibus_client, stop, line, name):
@@ -92,7 +91,7 @@ class TMBSensor(Entity):
 
     @property
     def unique_id(self):
-        """Return a unique, OPP-friendly identifier for this entity."""
+        """Return a unique, HASS-friendly identifier for this entity."""
         return f"{self._stop}_{self._line}"
 
     @property
@@ -101,7 +100,7 @@ class TMBSensor(Entity):
         return self._state
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of the last update."""
         return {
             ATTR_ATTRIBUTION: ATTRIBUTION,

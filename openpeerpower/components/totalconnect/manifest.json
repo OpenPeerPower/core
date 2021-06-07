@@ -4,6 +4,7 @@
   "documentation": "https://www.openpeerpower.io/integrations/totalconnect",
   "requirements": ["total_connect_client==0.57"],
   "dependencies": [],
-  "codeowners": [],
-  "config_flow": true
+  "codeowners": ["@austinmroczek"],
+  "config_flow": true,
+  "iot_class": "cloud_polling"
 }

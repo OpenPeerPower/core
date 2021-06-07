@@ -1,6 +1,7 @@
 """Shark IQ Integration."""
 
 import asyncio
+from contextlib import suppress
 
 import async_timeout
 from sharkiqpy import (
@@ -20,12 +21,6 @@ from .update_coordinator import SharkIqUpdateCoordinator
 
 class CannotConnect(exceptions.OpenPeerPowerError):
     """Error to indicate we cannot connect."""
-
-
-async def async_setup(opp, config):
-    """Set up the sharkiq environment."""
-    opp.data.setdefault(DOMAIN, {})
-    return True
 
 
 async def async_connect_or_timeout(ayla_api: AylaApi) -> bool:
@@ -59,21 +54,16 @@ async def async_setup_entry(opp, config_entry):
         raise exceptions.ConfigEntryNotReady from exc
 
     shark_vacs = await ayla_api.async_get_devices(False)
-    device_names = ", ".join([d.name for d in shark_vacs])
+    device_names = ", ".join(d.name for d in shark_vacs)
     _LOGGER.debug("Found %d Shark IQ device(s): %s", len(shark_vacs), device_names)
     coordinator = SharkIqUpdateCoordinator(opp, config_entry, ayla_api, shark_vacs)
 
-    await coordinator.async_refresh()
+    await coordinator.async_config_entry_first_refresh()
 
-    if not coordinator.last_update_success:
-        raise exceptions.ConfigEntryNotReady
-
+    opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][config_entry.entry_id] = coordinator
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(config_entry, PLATFORMS)
 
     return True
 
@@ -81,11 +71,10 @@ async def async_setup_entry(opp, config_entry):
 async def async_disconnect_or_timeout(coordinator: SharkIqUpdateCoordinator):
     """Disconnect to vacuum."""
     _LOGGER.debug("Disconnecting from Ayla Api")
-    with async_timeout.timeout(5):
-        try:
-            await coordinator.ayla_api.async_sign_out()
-        except (SharkIqAuthError, SharkIqAuthExpiringError, SharkIqNotAuthedError):
-            pass
+    with async_timeout.timeout(5), suppress(
+        SharkIqAuthError, SharkIqAuthExpiringError, SharkIqNotAuthedError
+    ):
+        await coordinator.ayla_api.async_sign_out()
 
 
 async def async_update_options(opp, config_entry):
@@ -95,20 +84,13 @@ async def async_update_options(opp, config_entry):
 
 async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(config_entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
+    unload_ok = await opp.config_entries.async_unload_platforms(
+        config_entry, PLATFORMS
     )
     if unload_ok:
         domain_data = opp.data[DOMAIN][config_entry.entry_id]
-        try:
+        with suppress(SharkIqAuthError):
             await async_disconnect_or_timeout(coordinator=domain_data)
-        except SharkIqAuthError:
-            pass
         opp.data[DOMAIN].pop(config_entry.entry_id)
 
     return unload_ok

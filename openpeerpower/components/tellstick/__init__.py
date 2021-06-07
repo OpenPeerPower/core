@@ -36,7 +36,7 @@ SIGNAL_TELLCORE_CALLBACK = "tellstick_callback"
 TELLSTICK_LOCK = threading.RLock()
 
 # A TellstickRegistry that keeps a map from tellcore_id to the corresponding
-# tellcore_device and OP device (entity).
+# tellcore_device and OPP device (entity).
 TELLCORE_REGISTRY = None
 
 CONFIG_SCHEMA = vol.Schema(
@@ -209,7 +209,7 @@ class TellstickDevice(Entity):
         return self._state
 
     def _parse_op_data(self, kwargs):
-        """Turn the value from OP into something useful."""
+        """Turn the value from OPP into something useful."""
         raise NotImplementedError
 
     def _parse_tellcore_data(self, tellcore_data):

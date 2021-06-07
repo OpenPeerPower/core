@@ -1,5 +1,6 @@
 """Support for Tellstick Net/Telstick Live sensors."""
 from openpeerpower.components import sensor, tellduslive
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import (
     DEVICE_CLASS_HUMIDITY,
     DEVICE_CLASS_ILLUMINANCE,
@@ -71,7 +72,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     )
 
 
-class TelldusLiveSensor(TelldusLiveEntity):
+class TelldusLiveSensor(TelldusLiveEntity, SensorEntity):
     """Representation of a Telldus Live sensor."""
 
     @property

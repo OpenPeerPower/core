@@ -2,6 +2,7 @@
   "domain": "sinch",
   "name": "Sinch SMS",
   "documentation": "https://www.openpeerpower.io/integrations/sinch",
-  "codeowners": [],
-  "requirements": ["clx-sdk-xms==1.0.0"]
+  "codeowners": ["@bendikrb"],
+  "requirements": ["clx-sdk-xms==1.0.0"],
+  "iot_class": "cloud_push"
 }

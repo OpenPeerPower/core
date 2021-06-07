@@ -7,10 +7,9 @@ import requests
 from tank_utility import auth, device as tank_monitor
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_DEVICES, CONF_EMAIL, CONF_PASSWORD, PERCENTAGE
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -62,7 +61,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities(all_sensors, True)
 
 
-class TankUtilitySensor(Entity):
+class TankUtilitySensor(SensorEntity):
     """Representation of a Tank Utility sensor."""
 
     def __init__(self, email, password, token, device):
@@ -97,7 +96,7 @@ class TankUtilitySensor(Entity):
         return self._unit_of_measurement
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the attributes of the device."""
         return self._attributes
 

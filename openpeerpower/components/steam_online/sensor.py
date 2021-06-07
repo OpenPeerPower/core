@@ -6,11 +6,10 @@ from time import mktime
 import steam
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_API_KEY
 from openpeerpower.core import callback
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.helpers.event import track_time_interval
 from openpeerpower.util.dt import utc_from_timestamp
 
@@ -71,7 +70,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     track_time_interval(opp, do_update, BASE_INTERVAL)
 
 
-class SteamSensor(Entity):
+class SteamSensor(SensorEntity):
     """A class for the Steam account."""
 
     def __init__(self, account, steamod):
@@ -194,7 +193,7 @@ class SteamSensor(Entity):
         return None
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         attr = {}
         if self._game is not None:

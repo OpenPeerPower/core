@@ -15,7 +15,7 @@ from pysnmp.hlapi.asyncio import (
 )
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_HOST,
     CONF_NAME,
@@ -26,7 +26,6 @@ from openpeerpower.const import (
     STATE_UNKNOWN,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 from .const import (
     CONF_ACCEPT_ERRORS,
@@ -139,7 +138,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities([SnmpSensor(data, name, unit, value_template)], True)
 
 
-class SnmpSensor(Entity):
+class SnmpSensor(SensorEntity):
     """Representation of a SNMP sensor."""
 
     def __init__(self, data, name, unit_of_measurement, value_template):

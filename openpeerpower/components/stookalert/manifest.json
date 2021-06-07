@@ -2,6 +2,7 @@
   "domain": "stookalert",
   "name": "RIVM Stookalert",
   "documentation": "https://www.openpeerpower.io/integrations/stookalert",
-  "codeowners": [],
-  "requirements": ["stookalert==0.1.4"]
+  "codeowners": ["@fwestenberg"],
+  "requirements": ["stookalert==0.1.4"],
+  "iot_class": "cloud_polling"
 }

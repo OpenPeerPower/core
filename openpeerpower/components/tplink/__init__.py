@@ -4,9 +4,11 @@ import logging
 import voluptuous as vol
 
 from openpeerpower import config_entries
+from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_HOST
+from openpeerpower.core import OpenPeerPower
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.typing import ConfigType, OpenPeerPowerType
+from openpeerpower.helpers.typing import ConfigType
 
 from .common import (
     ATTR_CONFIG,
@@ -23,6 +25,8 @@ from .common import (
 _LOGGER = logging.getLogger(__name__)
 
 DOMAIN = "tplink"
+
+PLATFORMS = [CONF_LIGHT, CONF_SWITCH]
 
 TPLINK_HOST_SCHEMA = vol.Schema({vol.Required(CONF_HOST): cv.string})
 
@@ -51,7 +55,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup(opp, config):
+async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up the TP-Link component."""
     conf = config.get(DOMAIN)
 
@@ -68,7 +72,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, config_entry: ConfigType):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up TPLink from a config entry."""
     config_data = opp.data[DOMAIN].get(ATTR_CONFIG)
 
@@ -94,31 +98,28 @@ async def async_setup_entry(opp: OpenPeerPowerType, config_entry: ConfigType):
     forward_setup = opp.config_entries.async_forward_entry_setup
     if lights:
         _LOGGER.debug(
-            "Got %s lights: %s", len(lights), ", ".join([d.host for d in lights])
+            "Got %s lights: %s", len(lights), ", ".join(d.host for d in lights)
         )
-        opp.async_create_task(forward_setup(config_entry, "light"))
+
+        opp.async_create_task(forward_setup(entry, "light"))
+
     if switches:
         _LOGGER.debug(
-            "Got %s switches: %s", len(switches), ", ".join([d.host for d in switches])
+            "Got %s switches: %s",
+            len(switches),
+            ", ".join(d.host for d in switches),
         )
-        opp.async_create_task(forward_setup(config_entry, "switch"))
+
+        opp.async_create_task(forward_setup(entry, "switch"))
 
     return True
 
 
-async def async_unload_entry(opp, entry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    forward_unload = opp.config_entries.async_forward_entry_unload
-    remove_lights = remove_switches = False
-    if opp.data[DOMAIN][CONF_LIGHT]:
-        remove_lights = await forward_unload(entry, "light")
-    if opp.data[DOMAIN][CONF_SWITCH]:
-        remove_switches = await forward_unload(entry, "switch")
-
-    if remove_lights or remove_switches:
+    platforms = [platform for platform in PLATFORMS if opp.data[DOMAIN].get(platform)]
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, platforms)
+    if unload_ok:
         opp.data[DOMAIN].clear()
-        return True
 
-    # We were not able to unload the platforms, either because there
-    # were none or one of the forward_unloads failed.
-    return False
+    return unload_ok

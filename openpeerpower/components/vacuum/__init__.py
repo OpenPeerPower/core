@@ -2,6 +2,7 @@
 from datetime import timedelta
 from functools import partial
 import logging
+from typing import final
 
 import voluptuous as vol
 
@@ -84,7 +85,9 @@ def is_on(opp, entity_id):
 
 async def async_setup(opp, config):
     """Set up the vacuum component."""
-    component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp, SCAN_INTERVAL)
+    component = opp.data[DOMAIN] = EntityComponent(
+        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
+    )
 
     await component.async_setup(config)
 
@@ -269,6 +272,7 @@ class VacuumEntity(_BaseVacuum, ToggleEntity):
             battery_level=self.battery_level, charging=charging
         )
 
+    @final
     @property
     def state_attributes(self):
         """Return the state attributes of the vacuum cleaner."""

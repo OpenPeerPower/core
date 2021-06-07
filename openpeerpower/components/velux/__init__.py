@@ -54,7 +54,7 @@ class VeluxModule:
         """Velux component setup."""
 
         async def on_opp_stop(event):
-            """Close connection when opp stops."""
+            """Close connection when opp.stops."""
             _LOGGER.debug("Velux interface terminated")
             await self.pyvlx.disconnect()
 

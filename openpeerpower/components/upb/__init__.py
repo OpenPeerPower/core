@@ -1,28 +1,20 @@
 """Support the UPB PIM."""
-import asyncio
 
 import upb_lib
 
-from openpeerpower.const import CONF_FILE_PATH, CONF_HOST
-from openpeerpower.core import OpenPeerPower, callback
+from openpeerpower.const import ATTR_COMMAND, CONF_FILE_PATH, CONF_HOST
+from openpeerpower.core import callback
 from openpeerpower.helpers.entity import Entity
-from openpeerpower.helpers.typing import ConfigType
 
 from .const import (
     ATTR_ADDRESS,
     ATTR_BRIGHTNESS_PCT,
-    ATTR_COMMAND,
     ATTR_RATE,
     DOMAIN,
     EVENT_UPB_SCENE_CHANGED,
 )
 
 PLATFORMS = ["light", "scene"]
-
-
-async def async_setup(opp: OpenPeerPower, opp_config: ConfigType) -> bool:
-    """Set up the UPB platform."""
-    return True
 
 
 async def async_setup_entry(opp, config_entry):
@@ -36,10 +28,7 @@ async def async_setup_entry(opp, config_entry):
     opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][config_entry.entry_id] = {"upb": upb}
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(config_entry, PLATFORMS)
 
     def _element_changed(element, changeset):
         change = changeset.get("last_change")
@@ -67,21 +56,13 @@ async def async_setup_entry(opp, config_entry):
 
 async def async_unload_entry(opp, config_entry):
     """Unload the config_entry."""
-
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(config_entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
+    unload_ok = await opp.config_entries.async_unload_platforms(
+        config_entry, PLATFORMS
     )
-
     if unload_ok:
         upb = opp.data[DOMAIN][config_entry.entry_id]["upb"]
         upb.disconnect()
         opp.data[DOMAIN].pop(config_entry.entry_id)
-
     return unload_ok
 
 
@@ -111,7 +92,7 @@ class UpbEntity(Entity):
         return False
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the default attributes of the element."""
         return self._element.as_dict()
 

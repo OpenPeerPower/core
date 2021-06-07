@@ -1,5 +1,4 @@
 """Support for Toon van Eneco devices."""
-import asyncio
 
 import voluptuous as vol
 
@@ -15,7 +14,6 @@ from openpeerpower.const import (
     EVENT_OPENPEERPOWER_STARTED,
 )
 from openpeerpower.core import CoreState, OpenPeerPower
-from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers import config_validation as cv, device_registry as dr
 from openpeerpower.helpers.config_entry_oauth2_flow import (
     OAuth2Session,
@@ -98,10 +96,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     await coordinator.toon.activate_agreement(
         agreement_id=entry.data[CONF_AGREEMENT_ID]
     )
-    await coordinator.async_refresh()
-
-    if not coordinator.last_update_success:
-        raise ConfigEntryNotReady
+    await coordinator.async_config_entry_first_refresh()
 
     opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = coordinator
@@ -119,10 +114,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     )
 
     # Spin up the platforms
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     # If Open Peer Power is already in a running state, register the webhook
     # immediately, else trigger it after Open Peer Power has finished starting.
@@ -143,14 +135,7 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     await opp.data[DOMAIN][entry.entry_id].unregister_webhook()
 
     # Unload entities for this entry/device.
-    unload_ok = all(
-        await asyncio.gather(
-            *(
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            )
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     # Cleanup
     if unload_ok:

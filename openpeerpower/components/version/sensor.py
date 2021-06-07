@@ -1,41 +1,44 @@
 """Sensor that can display the current Open Peer Power versions."""
 from datetime import timedelta
+import logging
 
-from pyoppversion import (
-    DockerVersion,
-    LocalVersion,
-    OpIoVersion,
-    OppioVersion,
-    PyPiVersion,
-)
+from pyhaversion import HaVersion, HaVersionChannel, HaVersionSource
+from pyhaversion.exceptions import HaVersionFetchException, HaVersionParseException
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_NAME, CONF_SOURCE
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 ALL_IMAGES = [
     "default",
     "intel-nuc",
-    "qemux86",
-    "qemux86-64",
-    "qemuarm",
-    "qemuarm-64",
-    "raspberrypi",
-    "raspberrypi2",
-    "raspberrypi3",
-    "raspberrypi3-64",
-    "raspberrypi4",
-    "raspberrypi4-64",
-    "tinker",
     "odroid-c2",
     "odroid-n2",
     "odroid-xu",
+    "qemuarm-64",
+    "qemuarm",
+    "qemux86-64",
+    "qemux86",
+    "raspberrypi",
+    "raspberrypi2",
+    "raspberrypi3-64",
+    "raspberrypi3",
+    "raspberrypi4-64",
+    "raspberrypi4",
+    "tinker",
 ]
-ALL_SOURCES = ["local", "pypi", "oppio", "docker", "haio"]
+ALL_SOURCES = [
+    "container",
+    "haio",
+    "local",
+    "pypi",
+    "supervisor",
+    "oppio",  # Kept to not break existing configurations
+    "docker",  # Kept to not break existing configurations
+]
 
 CONF_BETA = "beta"
 CONF_IMAGE = "image"
@@ -58,6 +61,8 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
     }
 )
 
+_LOGGER: logging.Logger = logging.getLogger(__name__)
+
 
 async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Version sensor platform."""
@@ -69,21 +74,30 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 
     session = async_get_clientsession(opp)
 
-    if beta:
-        branch = "beta"
-    else:
-        branch = "stable"
+    channel = HaVersionChannel.BETA if beta else HaVersionChannel.STABLE
 
     if source == "pypi":
-        opversion = VersionData(PyPiVersion(opp.loop, session, branch))
-    elif source == "oppio":
-        opversion = VersionData(OppioVersion(opp.loop, session, branch, image))
-    elif source == "docker":
-        opversion = VersionData(DockerVersion(opp.loop, session, branch, image))
+        haversion = VersionData(
+            HaVersion(session, source=HaVersionSource.PYPI, channel=channel)
+        )
+    elif source in ["oppio", "supervisor"]:
+        haversion = VersionData(
+            HaVersion(
+                session, source=HaVersionSource.SUPERVISOR, channel=channel, image=image
+            )
+        )
+    elif source in ["docker", "container"]:
+        if image is not None and image != DEFAULT_IMAGE:
+            image = f"{image}-openpeerpower"
+        haversion = VersionData(
+            HaVersion(
+                session, source=HaVersionSource.CONTAINER, channel=channel, image=image
+            )
+        )
     elif source == "haio":
-        opversion = VersionData(OpIoVersion(opp.loop, session))
+        haversion = VersionData(HaVersion(session, source=HaVersionSource.HAIO))
     else:
-        opversion = VersionData(LocalVersion(opp.loop, session))
+        haversion = VersionData(HaVersion(session, source=HaVersionSource.LOCAL))
 
     if not name:
         if source == DEFAULT_SOURCE:
@@ -91,21 +105,41 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
         else:
             name = DEFAULT_NAME_LATEST
 
-    async_add_entities([VersionSensor(opversion, name)], True)
+    async_add_entities([VersionSensor(haversion, name)], True)
 
 
-class VersionSensor(Entity):
+class VersionData:
+    """Get the latest data and update the states."""
+
+    def __init__(self, api: HaVersion) -> None:
+        """Initialize the data object."""
+        self.api = api
+
+    @Throttle(TIME_BETWEEN_UPDATES)
+    async def async_update(self):
+        """Get the latest version information."""
+        try:
+            await self.api.get_version()
+        except HaVersionFetchException as exception:
+            _LOGGER.warning(exception)
+        except HaVersionParseException as exception:
+            _LOGGER.warning(
+                "Could not parse data received for %s - %s", self.api.source, exception
+            )
+
+
+class VersionSensor(SensorEntity):
     """Representation of a Open Peer Power version sensor."""
 
-    def __init__(self, opversion, name):
+    def __init__(self, data: VersionData, name: str) -> None:
         """Initialize the Version sensor."""
-        self.opversion = opversion
+        self.data = data
         self._name = name
         self._state = None
 
     async def async_update(self):
         """Get the latest version information."""
-        await self.opversion.async_update()
+        await self.data.async_update()
 
     @property
     def name(self):
@@ -115,27 +149,14 @@ class VersionSensor(Entity):
     @property
     def state(self):
         """Return the state of the sensor."""
-        return self.opversion.api.version
+        return self.data.api.version
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return attributes for the sensor."""
-        return self.opversion.api.version_data
+        return self.data.api.version_data
 
     @property
     def icon(self):
         """Return the icon to use in the frontend, if any."""
         return ICON
-
-
-class VersionData:
-    """Get the latest data and update the states."""
-
-    def __init__(self, api):
-        """Initialize the data object."""
-        self.api = api
-
-    @Throttle(TIME_BETWEEN_UPDATES)
-    async def async_update(self):
-        """Get the latest version information."""
-        await self.api.get_version()

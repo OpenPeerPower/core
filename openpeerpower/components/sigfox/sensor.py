@@ -7,10 +7,9 @@ from urllib.parse import urljoin
 import requests
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_NAME, HTTP_OK, HTTP_UNAUTHORIZED
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -109,7 +108,7 @@ class SigfoxAPI:
         return self._devices
 
 
-class SigfoxDevice(Entity):
+class SigfoxDevice(SensorEntity):
     """Class for single sigfox device."""
 
     def __init__(self, device_id, auth, name):
@@ -146,7 +145,7 @@ class SigfoxDevice(Entity):
 
     @property
     def name(self):
-        """Return the OP name of the sensor."""
+        """Return the OPP name of the sensor."""
         return self._name
 
     @property
@@ -155,6 +154,6 @@ class SigfoxDevice(Entity):
         return self._state
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return other details about the last message."""
         return self._message_data

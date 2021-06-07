@@ -24,7 +24,6 @@ from openpeerpower.helpers.device_registry import (
     EVENT_DEVICE_REGISTRY_UPDATED,
     async_entries_for_config_entry,
 )
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from . import device_automation, discovery
 from .const import (
@@ -36,11 +35,6 @@ from .const import (
 )
 
 _LOGGER = logging.getLogger(__name__)
-
-
-async def async_setup(opp: OpenPeerPowerType, config: dict):
-    """Set up the Tasmota component."""
-    return True
 
 
 async def async_setup_entry(opp, entry):
@@ -110,14 +104,7 @@ async def async_unload_entry(opp, entry):
     """Unload a config entry."""
 
     # cleanup platforms
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if not unload_ok:
         return False
 

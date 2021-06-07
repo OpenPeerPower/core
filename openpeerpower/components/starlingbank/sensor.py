@@ -5,10 +5,9 @@ import requests
 from starlingbank import StarlingAccount
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_ACCESS_TOKEN, CONF_NAME
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -62,7 +61,7 @@ def setup_platform(opp, config, add_devices, discovery_info=None):
     add_devices(sensors, True)
 
 
-class StarlingBalanceSensor(Entity):
+class StarlingBalanceSensor(SensorEntity):
     """Representation of a Starling balance sensor."""
 
     def __init__(self, starling_account, account_name, balance_data_type):

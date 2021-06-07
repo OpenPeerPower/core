@@ -44,7 +44,7 @@ class VeluxCover(CoverEntity):
 
     @callback
     def async_register_callbacks(self):
-        """Register callbacks to update opp after device was changed."""
+        """Register callbacks to update opp.after device was changed."""
 
         async def after_update_callback(device):
             """Call after device was updated."""

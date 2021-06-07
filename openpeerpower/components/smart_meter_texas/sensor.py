@@ -1,6 +1,7 @@
 """Support for Smart Meter Texas sensors."""
 from smart_meter_texas import Meter
 
+from openpeerpower.components.sensor import SensorEntity
 from openpeerpower.const import CONF_ADDRESS, ENERGY_KILO_WATT_HOUR
 from openpeerpower.core import callback
 from openpeerpower.helpers.restore_state import RestoreEntity
@@ -29,20 +30,17 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     )
 
 
-class SmartMeterTexasSensor(CoordinatorEntity, RestoreEntity):
+class SmartMeterTexasSensor(CoordinatorEntity, RestoreEntity, SensorEntity):
     """Representation of an Smart Meter Texas sensor."""
 
-    def __init__(self, meter: Meter, coordinator: DataUpdateCoordinator):
+    _attr_unit_of_measurement = ENERGY_KILO_WATT_HOUR
+
+    def __init__(self, meter: Meter, coordinator: DataUpdateCoordinator) -> None:
         """Initialize the sensor."""
         super().__init__(coordinator)
         self.meter = meter
         self._state = None
         self._available = False
-
-    @property
-    def unit_of_measurement(self):
-        """Return the unit of measurement."""
-        return ENERGY_KILO_WATT_HOUR
 
     @property
     def name(self):
@@ -65,7 +63,7 @@ class SmartMeterTexasSensor(CoordinatorEntity, RestoreEntity):
         return self._state
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the device specific state attributes."""
         attributes = {
             METER_NUMBER: self.meter.meter,

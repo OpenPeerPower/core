@@ -59,12 +59,12 @@ def setup(opp, config):
 
     def poll_device_update(event_time):
         """Update Smarty device."""
-        _LOGGER.debug("Updating Smarty device...")
+        _LOGGER.debug("Updating Smarty device")
         if smarty.update():
-            _LOGGER.debug("Update success...")
+            _LOGGER.debug("Update success")
             dispatcher_send(opp, SIGNAL_UPDATE_SMARTY)
         else:
-            _LOGGER.debug("Update failed...")
+            _LOGGER.debug("Update failed")
 
     track_time_interval(opp, poll_device_update, timedelta(seconds=30))
 

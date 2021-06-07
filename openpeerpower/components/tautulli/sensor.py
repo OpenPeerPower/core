@@ -4,7 +4,7 @@ from datetime import timedelta
 from pytautulli import Tautulli
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     CONF_API_KEY,
     CONF_HOST,
@@ -18,7 +18,6 @@ from openpeerpower.const import (
 from openpeerpower.exceptions import PlatformNotReady
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 from openpeerpower.util import Throttle
 
 CONF_MONITORED_USERS = "monitored_users"
@@ -72,7 +71,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     async_add_entities(sensor, True)
 
 
-class TautulliSensor(Entity):
+class TautulliSensor(SensorEntity):
     """Representation of a Tautulli sensor."""
 
     def __init__(self, tautulli, name, monitored_conditions, users):
@@ -130,7 +129,7 @@ class TautulliSensor(Entity):
         return "Watching"
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return attributes for the sensor."""
         return self._attributes
 

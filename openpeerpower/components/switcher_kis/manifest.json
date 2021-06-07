@@ -2,6 +2,7 @@
   "domain": "switcher_kis",
   "name": "Switcher",
   "documentation": "https://www.openpeerpower.io/integrations/switcher_kis/",
-  "codeowners": [],
-  "requirements": ["aioswitcher==1.2.1"]
+  "codeowners": ["@tomerfi","@thecode"],
+  "requirements": ["aioswitcher==1.2.3"],
+  "iot_class": "local_push"
 }

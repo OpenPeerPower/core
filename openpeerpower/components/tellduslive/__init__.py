@@ -7,13 +7,12 @@ from tellduslive import DIM, TURNON, UP, Session
 import voluptuous as vol
 
 from openpeerpower import config_entries
-from openpeerpower.const import CONF_SCAN_INTERVAL
+from openpeerpower.const import CONF_HOST, CONF_SCAN_INTERVAL
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
 from openpeerpower.helpers.event import async_call_later
 
 from .const import (
-    CONF_HOST,
     DOMAIN,
     KEY_SCAN_INTERVAL,
     KEY_SESSION,
@@ -52,7 +51,6 @@ INTERVAL_TRACKER = f"{DOMAIN}_INTERVAL"
 
 async def async_setup_entry(opp, entry):
     """Create a tellduslive session."""
-
     conf = entry.data[KEY_SESSION]
 
     if CONF_HOST in conf:
@@ -121,15 +119,13 @@ async def async_unload_entry(opp, config_entry):
         opp.data[NEW_CLIENT_TASK].cancel()
     interval_tracker = opp.data.pop(INTERVAL_TRACKER)
     interval_tracker()
-    await asyncio.wait(
-        [
-            opp.config_entries.async_forward_entry_unload(config_entry, platform)
-            for platform in opp.data.pop(CONFIG_ENTRY_IS_SETUP)
-        ]
+    unload_ok = await opp.config_entries.async_unload_platforms(
+        config_entry, CONFIG_ENTRY_IS_SETUP
     )
     del opp.data[DOMAIN]
     del opp.data[DATA_CONFIG_ENTRY_LOCK]
-    return True
+    del opp.data[CONFIG_ENTRY_IS_SETUP]
+    return unload_ok
 
 
 class TelldusLiveClient:
@@ -156,7 +152,7 @@ class TelldusLiveClient:
 
     @staticmethod
     def identify_device(device):
-        """Find out what type of OP component to create."""
+        """Find out what type of OPP component to create."""
         if device.is_sensor:
             return "sensor"
 

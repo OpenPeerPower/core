@@ -5,11 +5,12 @@ from datetime import timedelta
 import logging
 
 import async_timeout
+import httpx
 from teslajsonpy import Controller as TeslaAPI
 from teslajsonpy.exceptions import IncompleteCredentials, TeslaException
 import voluptuous as vol
 
-from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry
+from openpeerpower.config_entries import SOURCE_IMPORT
 from openpeerpower.const import (
     ATTR_BATTERY_CHARGING,
     ATTR_BATTERY_LEVEL,
@@ -18,11 +19,13 @@ from openpeerpower.const import (
     CONF_SCAN_INTERVAL,
     CONF_TOKEN,
     CONF_USERNAME,
+    EVENT_OPENPEERPOWER_CLOSE,
     HTTP_UNAUTHORIZED,
 )
-from openpeerpower.core import OpenPeerPower, callback
-from openpeerpower.exceptions import ConfigEntryNotReady
-from openpeerpower.helpers import aiohttp_client, config_validation as cv
+from openpeerpower.core import callback
+from openpeerpower.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
+from openpeerpower.helpers import config_validation as cv
+from openpeerpower.helpers.httpx_client import SERVER_SOFTWARE, USER_AGENT
 from openpeerpower.helpers.update_coordinator import (
     CoordinatorEntity,
     DataUpdateCoordinator,
@@ -32,6 +35,7 @@ from openpeerpower.util import slugify
 
 from .config_flow import CannotConnect, InvalidAuth, validate_input
 from .const import (
+    CONF_EXPIRATION,
     CONF_WAKE_ON_START,
     DATA_LISTENER,
     DEFAULT_SCAN_INTERVAL,
@@ -114,6 +118,7 @@ async def async_setup(opp, base_config):
                 CONF_PASSWORD: password,
                 CONF_ACCESS_TOKEN: info[CONF_ACCESS_TOKEN],
                 CONF_TOKEN: info[CONF_TOKEN],
+                CONF_EXPIRATION: info[CONF_EXPIRATION],
             },
             options={CONF_SCAN_INTERVAL: scan_interval},
         )
@@ -134,7 +139,8 @@ async def async_setup_entry(opp, config_entry):
     """Set up Tesla as config entry."""
     opp.data.setdefault(DOMAIN, {})
     config = config_entry.data
-    websession = aiohttp_client.async_get_clientsession(opp)
+    # Because users can have multiple accounts, we always create a new session so they have separate cookies
+    async_client = httpx.AsyncClient(headers={USER_AGENT: SERVER_SOFTWARE}, timeout=60)
     email = config_entry.title
     if email in opp.data[DOMAIN] and CONF_SCAN_INTERVAL in opp.data[DOMAIN][email]:
         scan_interval = opp.data[DOMAIN][email][CONF_SCAN_INTERVAL]
@@ -144,28 +150,48 @@ async def async_setup_entry(opp, config_entry):
         opp.data[DOMAIN].pop(email)
     try:
         controller = TeslaAPI(
-            websession,
+            async_client,
             email=config.get(CONF_USERNAME),
             password=config.get(CONF_PASSWORD),
             refresh_token=config[CONF_TOKEN],
             access_token=config[CONF_ACCESS_TOKEN],
+            expiration=config.get(CONF_EXPIRATION, 0),
             update_interval=config_entry.options.get(
                 CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
             ),
         )
-        (refresh_token, access_token) = await controller.connect(
+        result = await controller.connect(
             wake_if_asleep=config_entry.options.get(
                 CONF_WAKE_ON_START, DEFAULT_WAKE_ON_START
             )
         )
-    except IncompleteCredentials:
-        _async_start_reauth(opp, config_entry)
-        return False
+        refresh_token = result["refresh_token"]
+        access_token = result["access_token"]
+    except IncompleteCredentials as ex:
+        await async_client.aclose()
+        raise ConfigEntryAuthFailed from ex
+    except httpx.ConnectTimeout as ex:
+        await async_client.aclose()
+        raise ConfigEntryNotReady from ex
     except TeslaException as ex:
+        await async_client.aclose()
         if ex.code == HTTP_UNAUTHORIZED:
-            _async_start_reauth(opp, config_entry)
+            raise ConfigEntryAuthFailed from ex
         _LOGGER.error("Unable to communicate with Tesla API: %s", ex.message)
         return False
+
+    async def _async_close_client(*_):
+        await async_client.aclose()
+
+    @callback
+    def _async_create_close_task():
+        asyncio.create_task(_async_close_client())
+
+    config_entry.async_on_unload(
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_CLOSE, _async_close_client)
+    )
+    config_entry.async_on_unload(_async_create_close_task)
+
     _async_save_tokens(opp, config_entry, access_token, refresh_token)
     coordinator = TeslaDataUpdateCoordinator(
         opp, config_entry=config_entry, controller=controller
@@ -178,11 +204,9 @@ async def async_setup_entry(opp, config_entry):
     }
     _LOGGER.debug("Connected to the Tesla API")
 
-    await coordinator.async_refresh()
-    if not coordinator.last_update_success:
-        raise ConfigEntryNotReady
+    await coordinator.async_config_entry_first_refresh()
 
-    all_devices = controller.get_homeassistant_components()
+    all_devices = controller.get_openpeerpower_components()
 
     if not all_devices:
         return False
@@ -190,23 +214,15 @@ async def async_setup_entry(opp, config_entry):
     for device in all_devices:
         entry_data["devices"][device.opp_type].append(device)
 
-    for platform in PLATFORMS:
-        _LOGGER.debug("Loading %s", platform)
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(config_entry, PLATFORMS)
+
     return True
 
 
 async def async_unload_entry(opp, config_entry) -> bool:
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(config_entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
+    unload_ok = await opp.config_entries.async_unload_platforms(
+        config_entry, PLATFORMS
     )
     for listener in opp.data[DOMAIN][config_entry.entry_id][DATA_LISTENER]:
         listener()
@@ -216,17 +232,6 @@ async def async_unload_entry(opp, config_entry) -> bool:
         _LOGGER.debug("Unloaded entry for %s", username)
         return True
     return False
-
-
-def _async_start_reauth(opp: OpenPeerPower, entry: ConfigEntry):
-    opp.async_create_task(
-        opp.config_entries.flow.async_init(
-            DOMAIN,
-            context={"source": "reauth"},
-            data=entry.data,
-        )
-    )
-    _LOGGER.error("Credentials are no longer valid. Please reauthenticate")
 
 
 async def update_listener(opp, config_entry):
@@ -262,8 +267,12 @@ class TeslaDataUpdateCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self):
         """Fetch data from API endpoint."""
         if self.controller.is_token_refreshed():
-            (refresh_token, access_token) = self.controller.get_tokens()
-            _async_save_tokens(self.opp, self.config_entry, access_token, refresh_token)
+            result = self.controller.get_tokens()
+            refresh_token = result["refresh_token"]
+            access_token = result["access_token"]
+            _async_save_tokens(
+                self.opp, self.config_entry, access_token, refresh_token
+            )
             _LOGGER.debug("Saving new tokens in config_entry")
 
         try:
@@ -305,7 +314,7 @@ class TeslaDevice(CoordinatorEntity):
         return ICONS.get(self.tesla_device.type)
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of the device."""
         attr = self._attributes
         if self.tesla_device.has_battery():

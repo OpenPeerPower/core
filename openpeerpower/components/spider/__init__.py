@@ -1,5 +1,4 @@
 """Support for Spider Smart devices."""
-import asyncio
 import logging
 
 from spiderpy.spiderapi import SpiderApi, SpiderApiException, UnauthorizedException
@@ -66,25 +65,14 @@ async def async_setup_entry(opp, entry):
 
     opp.data[DOMAIN][entry.entry_id] = api
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
 async def async_unload_entry(opp, entry):
     """Unload Spider entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
-
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if not unload_ok:
         return False
 

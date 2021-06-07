@@ -85,7 +85,7 @@ class SatelIntegraAlarmPanel(alarm.AlarmControlPanelEntity):
             _LOGGER.debug("Ignoring alarm status message, same state")
 
     def _read_alarm_state(self):
-        """Read current status of the alarm and translate it into OP status."""
+        """Read current status of the alarm and translate it into OPP status."""
 
         # Default - disarmed:
         opp_alarm_status = STATE_ALARM_DISARMED

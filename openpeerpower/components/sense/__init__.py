@@ -8,21 +8,23 @@ from sense_energy import (
     SenseAPITimeoutException,
     SenseAuthenticationException,
 )
-import voluptuous as vol
 
-from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry
-from openpeerpower.const import CONF_EMAIL, CONF_PASSWORD, CONF_TIMEOUT
-from openpeerpower.core import OpenPeerPower
+from openpeerpower.config_entries import ConfigEntry
+from openpeerpower.const import (
+    CONF_EMAIL,
+    CONF_PASSWORD,
+    CONF_TIMEOUT,
+    EVENT_OPENPEERPOWER_STOP,
+)
+from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.exceptions import ConfigEntryNotReady
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
-import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
 from openpeerpower.helpers.event import async_track_time_interval
 from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import (
     ACTIVE_UPDATE_RATE,
-    DEFAULT_TIMEOUT,
     DOMAIN,
     SENSE_DATA,
     SENSE_DEVICE_UPDATE,
@@ -36,19 +38,6 @@ _LOGGER = logging.getLogger(__name__)
 
 PLATFORMS = ["binary_sensor", "sensor"]
 
-CONFIG_SCHEMA = vol.Schema(
-    {
-        DOMAIN: vol.Schema(
-            {
-                vol.Required(CONF_EMAIL): cv.string,
-                vol.Required(CONF_PASSWORD): cv.string,
-                vol.Optional(CONF_TIMEOUT, default=DEFAULT_TIMEOUT): cv.positive_int,
-            }
-        )
-    },
-    extra=vol.ALLOW_EXTRA,
-)
-
 
 class SenseDevicesData:
     """Data for each sense device."""
@@ -59,37 +48,14 @@ class SenseDevicesData:
 
     def set_devices_data(self, devices):
         """Store a device update."""
-        self._data_by_device = {}
-        for device in devices:
-            self._data_by_device[device["id"]] = device
+        self._data_by_device = {device["id"]: device for device in devices}
 
     def get_device_by_id(self, sense_device_id):
         """Get the latest device data."""
         return self._data_by_device.get(sense_device_id)
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the Sense component."""
-    opp.data.setdefault(DOMAIN, {})
-    conf = config.get(DOMAIN)
-    if not conf:
-        return True
-
-    opp.async_create_task(
-        opp.config_entries.flow.async_init(
-            DOMAIN,
-            context={"source": SOURCE_IMPORT},
-            data={
-                CONF_EMAIL: conf[CONF_EMAIL],
-                CONF_PASSWORD: conf[CONF_PASSWORD],
-                CONF_TIMEOUT: conf[CONF_TIMEOUT],
-            },
-        )
-    )
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Sense from a config entry."""
 
     entry_data = entry.data
@@ -130,19 +96,16 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     # This can take longer than 60s and we already know
     # sense is online since get_discovered_device_data was
     # successful so we do it later.
-    opp.loop.create_task(trends_coordinator.async_request_refresh())
+    asyncio.create_task(trends_coordinator.async_request_refresh())
 
-    opp.data[DOMAIN][entry.entry_id] = {
+    opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {
         SENSE_DATA: gateway,
         SENSE_DEVICES_DATA: sense_devices_data,
         SENSE_TRENDS_COORDINATOR: trends_coordinator,
         SENSE_DISCOVERED_DEVICES_DATA: sense_discovered_devices,
     }
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     async def async_sense_update(_):
         """Retrieve latest state."""
@@ -156,30 +119,27 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
             sense_devices_data.set_devices_data(data["devices"])
         async_dispatcher_send(opp, f"{SENSE_DEVICE_UPDATE}-{gateway.sense_monitor_id}")
 
-    opp.data[DOMAIN][entry.entry_id][
-        "track_time_remove_callback"
-    ] = async_track_time_interval(
+    remove_update_callback = async_track_time_interval(
         opp, async_sense_update, timedelta(seconds=ACTIVE_UPDATE_RATE)
     )
+
+    @callback
+    def _remove_update_callback_at_stop(event):
+        remove_update_callback()
+
+    entry.async_on_unload(remove_update_callback)
+    entry.async_on_unload(
+        opp.bus.async_listen_once(
+            EVENT_OPENPEERPOWER_STOP, _remove_update_callback_at_stop
+        )
+    )
+
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
-    track_time_remove_callback = opp.data[DOMAIN][entry.entry_id][
-        "track_time_remove_callback"
-    ]
-    track_time_remove_callback()
-
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
-
     return unload_ok

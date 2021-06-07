@@ -5,10 +5,9 @@ from requests.exceptions import HTTPError
 from twitch import TwitchClient
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import CONF_CLIENT_ID, CONF_TOKEN
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -56,7 +55,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     add_entities([TwitchSensor(channel_id, client) for channel_id in channel_ids], True)
 
 
-class TwitchSensor(Entity):
+class TwitchSensor(SensorEntity):
     """Representation of an Twitch channel."""
 
     def __init__(self, channel, client):
@@ -88,7 +87,7 @@ class TwitchSensor(Entity):
         return self._preview
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         attr = dict(self._statistics)
 

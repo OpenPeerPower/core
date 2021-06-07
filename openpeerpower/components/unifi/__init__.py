@@ -44,7 +44,9 @@ async def async_setup_entry(opp, config_entry):
 
     opp.data[UNIFI_DOMAIN][config_entry.entry_id] = controller
 
-    opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, controller.shutdown)
+    config_entry.async_on_unload(
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, controller.shutdown)
+    )
 
     LOGGER.debug("UniFi config options %s", config_entry.options)
 

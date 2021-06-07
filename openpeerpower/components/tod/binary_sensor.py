@@ -1,8 +1,8 @@
 """Support for representing current time of the day as binary sensors."""
 from datetime import datetime, timedelta
 import logging
+from typing import Callable
 
-import pytz
 import voluptuous as vol
 
 from openpeerpower.components.binary_sensor import PLATFORM_SCHEMA, BinarySensorEntity
@@ -70,6 +70,7 @@ class TodSensor(BinarySensorEntity):
         self._before_offset = before_offset
         self._before = before
         self._after = after
+        self._unsub_update: Callable[[], None] = None
 
     @property
     def should_poll(self):
@@ -82,58 +83,36 @@ class TodSensor(BinarySensorEntity):
         return self._name
 
     @property
-    def after(self):
-        """Return the timestamp for the beginning of the period."""
-        return self._time_after
-
-    @property
-    def before(self):
-        """Return the timestamp for the end of the period."""
-        return self._time_before
-
-    @property
     def is_on(self):
         """Return True is sensor is on."""
-        if self.after < self.before:
-            return self.after <= self.current_datetime < self.before
+        if self._time_after < self._time_before:
+            return self._time_after <= dt_util.utcnow() < self._time_before
         return False
 
     @property
-    def current_datetime(self):
-        """Return local current datetime according to opp configuration."""
-        return dt_util.utcnow()
-
-    @property
-    def next_update(self):
-        """Return the next update point in the UTC time."""
-        return self._next_update
-
-    @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of the sensor."""
+        time_zone = dt_util.get_time_zone(self.opp.config.time_zone)
         return {
-            ATTR_AFTER: self.after.astimezone(self.opp.config.time_zone).isoformat(),
-            ATTR_BEFORE: self.before.astimezone(self.opp.config.time_zone).isoformat(),
-            ATTR_NEXT_UPDATE: self.next_update.astimezone(
-                self.opp.config.time_zone
-            ).isoformat(),
+            ATTR_AFTER: self._time_after.astimezone(time_zone).isoformat(),
+            ATTR_BEFORE: self._time_before.astimezone(time_zone).isoformat(),
+            ATTR_NEXT_UPDATE: self._next_update.astimezone(time_zone).isoformat(),
         }
 
     def _naive_time_to_utc_datetime(self, naive_time):
         """Convert naive time from config to utc_datetime with current day."""
         # get the current local date from utc time
-        current_local_date = self.current_datetime.astimezone(
-            self.opp.config.time_zone
-        ).date()
-        # calculate utc datetime corecponding to local time
-        utc_datetime = self.opp.config.time_zone.localize(
-            datetime.combine(current_local_date, naive_time)
-        ).astimezone(tz=pytz.UTC)
-        return utc_datetime
+        current_local_date = (
+            dt_util.utcnow()
+            .astimezone(dt_util.get_time_zone(self.opp.config.time_zone))
+            .date()
+        )
+        # calculate utc datetime corresponding to local time
+        return dt_util.as_utc(datetime.combine(current_local_date, naive_time))
 
-    def _calculate_initial_boudary_time(self):
+    def _calculate_boudary_time(self):
         """Calculate internal absolute time boundaries."""
-        nowutc = self.current_datetime
+        nowutc = dt_util.utcnow()
         # If after value is a sun event instead of absolute time
         if is_sun_event(self._after):
             # Calculate the today's event utc time or
@@ -145,7 +124,7 @@ class TodSensor(BinarySensorEntity):
             # Convert local time provided to UTC today
             # datetime.combine(date, time, tzinfo) is not supported
             # in python 3.5. The self._after is provided
-            # with opp configured TZ not system wide
+            # with opp.configured TZ not system wide
             after_event_date = self._naive_time_to_utc_datetime(self._after)
 
         self._time_after = after_event_date
@@ -173,61 +152,38 @@ class TodSensor(BinarySensorEntity):
 
         self._time_before = before_event_date
 
-        # We are calculating the _time_after value assuming that it will happen today
-        # But that is not always true, e.g. after 23:00, before 12:00 and now is 10:00
-        # If _time_before and _time_after are ahead of current_datetime:
-        # _time_before is set to 12:00 next day
-        # _time_after is set to 23:00 today
-        # current_datetime is set to 10:00 today
-        if (
-            self._time_after > self.current_datetime
-            and self._time_before > self.current_datetime + timedelta(days=1)
-        ):
-            # remove one day from _time_before and _time_after
-            self._time_after -= timedelta(days=1)
-            self._time_before -= timedelta(days=1)
-
         # Add offset to utc boundaries according to the configuration
         self._time_after += self._after_offset
         self._time_before += self._before_offset
 
-    def _turn_to_next_day(self):
-        """Turn to to the next day."""
-        if is_sun_event(self._after):
-            self._time_after = get_astral_event_next(
-                self.opp, self._after, self._time_after - self._after_offset
-            )
-            self._time_after += self._after_offset
-        else:
-            # Offset is already there
-            self._time_after += timedelta(days=1)
-
-        if is_sun_event(self._before):
-            self._time_before = get_astral_event_next(
-                self.opp, self._before, self._time_before - self._before_offset
-            )
-            self._time_before += self._before_offset
-        else:
-            # Offset is already there
-            self._time_before += timedelta(days=1)
-
     async def async_added_to_opp(self):
         """Call when entity about to be added to Open Peer Power."""
-        self._calculate_initial_boudary_time()
+        self._calculate_boudary_time()
         self._calculate_next_update()
-        self._point_in_time_listener(dt_util.now())
+
+        @callback
+        def _clean_up_listener():
+            if self._unsub_update is not None:
+                self._unsub_update()
+                self._unsub_update = None
+
+        self.async_on_remove(_clean_up_listener)
+
+        self._unsub_update = event.async_track_point_in_utc_time(
+            self.opp, self._point_in_time_listener, self._next_update
+        )
 
     def _calculate_next_update(self):
         """Datetime when the next update to the state."""
-        now = self.current_datetime
-        if now < self.after:
-            self._next_update = self.after
+        now = dt_util.utcnow()
+        if now < self._time_after:
+            self._next_update = self._time_after
             return
-        if now < self.before:
-            self._next_update = self.before
+        if now < self._time_before:
+            self._next_update = self._time_before
             return
-        self._turn_to_next_day()
-        self._next_update = self.after
+        self._calculate_boudary_time()
+        self._next_update = self._time_after
 
     @callback
     def _point_in_time_listener(self, now):
@@ -235,6 +191,6 @@ class TodSensor(BinarySensorEntity):
         self._calculate_next_update()
         self.async_write_op_state()
 
-        event.async_track_point_in_utc_time(
-            self.opp, self._point_in_time_listener, self.next_update
+        self._unsub_update = event.async_track_point_in_utc_time(
+            self.opp, self._point_in_time_listener, self._next_update
         )

@@ -1,21 +1,27 @@
 """Component to interface with switches that can be controlled remotely."""
+from __future__ import annotations
+
 from datetime import timedelta
 import logging
+from typing import Any, cast, final
 
 import voluptuous as vol
 
+from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import (
     SERVICE_TOGGLE,
     SERVICE_TURN_OFF,
     SERVICE_TURN_ON,
     STATE_ON,
 )
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers.config_validation import (  # noqa: F401
     PLATFORM_SCHEMA,
     PLATFORM_SCHEMA_BASE,
 )
 from openpeerpower.helpers.entity import ToggleEntity
 from openpeerpower.helpers.entity_component import EntityComponent
+from openpeerpower.helpers.typing import ConfigType
 from openpeerpower.loader import bind_opp
 
 # mypy: allow-untyped-defs, no-check-untyped-defs
@@ -54,9 +60,11 @@ def is_on(opp, entity_id):
     return opp.states.is_state(entity_id, STATE_ON)
 
 
-async def async_setup(opp, config):
+async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Track states and offer events for switches."""
-    component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp, SCAN_INTERVAL)
+    component = opp.data[DOMAIN] = EntityComponent(
+        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
+    )
     await component.async_setup(config)
 
     component.async_register_entity_service(SERVICE_TURN_OFF, {}, "async_turn_off")
@@ -66,36 +74,35 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry(opp, entry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up a config entry."""
-    return await opp.data[DOMAIN].async_setup_entry(entry)
+    return cast(bool, await opp.data[DOMAIN].async_setup_entry(entry))
 
 
-async def async_unload_entry(opp, entry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    return await opp.data[DOMAIN].async_unload_entry(entry)
+    return cast(bool, await opp.data[DOMAIN].async_unload_entry(entry))
 
 
 class SwitchEntity(ToggleEntity):
-    """Representation of a switch."""
+    """Base class for switch entities."""
+
+    _attr_current_power_w: float | None = None
+    _attr_today_energy_kwh: float | None = None
 
     @property
-    def current_power_w(self):
+    def current_power_w(self) -> float | None:
         """Return the current power usage in W."""
-        return None
+        return self._attr_current_power_w
 
     @property
-    def today_energy_kwh(self):
+    def today_energy_kwh(self) -> float | None:
         """Return the today total energy usage in kWh."""
-        return None
+        return self._attr_today_energy_kwh
 
+    @final
     @property
-    def is_standby(self):
-        """Return true if device is in standby."""
-        return None
-
-    @property
-    def state_attributes(self):
+    def state_attributes(self) -> dict[str, Any] | None:
         """Return the optional state attributes."""
         data = {}
 
@@ -105,11 +112,6 @@ class SwitchEntity(ToggleEntity):
                 data[attr] = value
 
         return data
-
-    @property
-    def device_class(self):
-        """Return the class of this device, from component DEVICE_CLASSES."""
-        return None
 
 
 class SwitchDevice(SwitchEntity):

@@ -3,6 +3,15 @@
   "name": "Tuya",
   "documentation": "https://www.openpeerpower.io/integrations/tuya",
   "requirements": ["tuyaha==0.0.10"],
-  "codeowners": [],
-  "config_flow": true
+  "codeowners": ["@ollo69"],
+  "config_flow": true,
+  "iot_class": "cloud_polling",
+  "dhcp": [
+    {"macaddress": "508A06*"},
+    {"macaddress": "7CF666*"},
+    {"macaddress": "10D561*"},
+    {"macaddress": "D4A651*"},
+    {"macaddress": "68572D*"},
+    {"macaddress": "1869D8*"}
+  ] 
 }

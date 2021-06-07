@@ -5,8 +5,8 @@ import voluptuous as vol
 
 from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry
 from openpeerpower.const import CONF_NAME
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers import config_validation as cv
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from .const import CONF_ENDPOINT, DOMAIN
 
@@ -19,8 +19,10 @@ CONFIG_SCHEMA = vol.Schema(
     extra=vol.ALLOW_EXTRA,
 )
 
+PLATFORMS = ["media_player"]
 
-async def async_setup(opp: OpenPeerPowerType, config: OrderedDict) -> bool:
+
+async def async_setup(opp: OpenPeerPower, config: OrderedDict) -> bool:
     """Set up songpal environment."""
     conf = config.get(DOMAIN)
     if conf is None:
@@ -36,14 +38,12 @@ async def async_setup(opp: OpenPeerPowerType, config: OrderedDict) -> bool:
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up songpal media player."""
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_setup(entry, "media_player")
-    )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPowerType, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload songpal media player."""
-    return await opp.config_entries.async_forward_entry_unload(entry, "media_player")
+    return await opp.config_entries.async_unload_platforms(entry, PLATFORMS)

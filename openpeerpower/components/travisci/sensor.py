@@ -1,4 +1,4 @@
-"""This component provides OP sensor support for Travis CI framework."""
+"""This component provides OPP sensor support for Travis CI framework."""
 from datetime import timedelta
 import logging
 
@@ -6,7 +6,7 @@ from travispy import TravisPy
 from travispy.errors import TravisError
 import voluptuous as vol
 
-from openpeerpower.components.sensor import PLATFORM_SCHEMA
+from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
 from openpeerpower.const import (
     ATTR_ATTRIBUTION,
     CONF_API_KEY,
@@ -15,7 +15,6 @@ from openpeerpower.const import (
     TIME_SECONDS,
 )
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -69,7 +68,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         _LOGGER.error("Unable to connect to Travis CI service: %s", str(ex))
         opp.components.persistent_notification.create(
             "Error: {}<br />"
-            "You will need to restart opp after fixing."
+            "You will need to restart opp.after fixing."
             "".format(ex),
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
@@ -94,7 +93,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     return True
 
 
-class TravisCISensor(Entity):
+class TravisCISensor(SensorEntity):
     """Representation of a Travis CI sensor."""
 
     def __init__(self, data, repo_name, user, branch, sensor_type):
@@ -106,7 +105,7 @@ class TravisCISensor(Entity):
         self._user = user
         self._branch = branch
         self._state = None
-        self._name = "{} {}".format(self._repo_name, SENSOR_TYPES[self._sensor_type][0])
+        self._name = f"{self._repo_name} {SENSOR_TYPES[self._sensor_type][0]}"
 
     @property
     def name(self):
@@ -124,7 +123,7 @@ class TravisCISensor(Entity):
         return self._state
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         attrs = {}
         attrs[ATTR_ATTRIBUTION] = ATTRIBUTION

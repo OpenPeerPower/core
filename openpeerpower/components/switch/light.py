@@ -1,5 +1,7 @@
 """Light support for switch entities."""
-from typing import Any, Callable, Optional, Sequence, cast
+from __future__ import annotations
+
+from typing import Any, cast
 
 import voluptuous as vol
 
@@ -12,15 +14,11 @@ from openpeerpower.const import (
     STATE_ON,
     STATE_UNAVAILABLE,
 )
-from openpeerpower.core import State, callback
+from openpeerpower.core import OpenPeerPower, State, callback
 import openpeerpower.helpers.config_validation as cv
-from openpeerpower.helpers.entity import Entity
+from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 from openpeerpower.helpers.event import async_track_state_change_event
-from openpeerpower.helpers.typing import (
-    ConfigType,
-    DiscoveryInfoType,
-    OpenPeerPowerType,
-)
+from openpeerpower.helpers.typing import ConfigType, DiscoveryInfoType
 
 # mypy: allow-untyped-calls, allow-untyped-defs, no-check-untyped-defs
 
@@ -35,10 +33,10 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(
 
 
 async def async_setup_platform(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     config: ConfigType,
-    async_add_entities: Callable[[Sequence[Entity]], None],
-    discovery_info: Optional[DiscoveryInfoType] = None,
+    async_add_entities: AddEntitiesCallback,
+    discovery_info: DiscoveryInfoType | None = None,
 ) -> None:
     """Initialize Light Switch platform."""
 
@@ -65,7 +63,7 @@ class LightSwitch(LightEntity):
         self._name = name
         self._switch_entity_id = switch_entity_id
         self._unique_id = unique_id
-        self._switch_state: Optional[State] = None
+        self._switch_state: State | None = None
 
     @property
     def name(self) -> str:
@@ -120,13 +118,11 @@ class LightSwitch(LightEntity):
 
     async def async_added_to_opp(self) -> None:
         """Register callbacks."""
-        assert self.opp is not None
         self._switch_state = self.opp.states.get(self._switch_entity_id)
 
         @callback
         def async_state_changed_listener(*_: Any) -> None:
             """Handle child updates."""
-            assert self.opp is not None
             self._switch_state = self.opp.states.get(self._switch_entity_id)
             self.async_write_op_state()
 

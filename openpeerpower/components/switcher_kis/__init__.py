@@ -1,20 +1,21 @@
 """Open Peer Power Switcher Component."""
+from __future__ import annotations
+
 from asyncio import QueueEmpty, TimeoutError as Asyncio_TimeoutError, wait_for
 from datetime import datetime, timedelta
 import logging
-from typing import Dict, Optional
 
 from aioswitcher.bridge import SwitcherV2Bridge
 import voluptuous as vol
 
 from openpeerpower.components.switch import DOMAIN as SWITCH_DOMAIN
 from openpeerpower.const import CONF_DEVICE_ID, EVENT_OPENPEERPOWER_STOP
-from openpeerpower.core import callback
+from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.helpers.discovery import async_load_platform
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
 from openpeerpower.helpers.event import async_track_time_interval
-from openpeerpower.helpers.typing import EventType, OpenPeerPowerType
+from openpeerpower.helpers.typing import EventType
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -45,7 +46,7 @@ CONFIG_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup(opp: OpenPeerPowerType, config: Dict) -> bool:
+async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
     """Set up the switcher component."""
     phone_id = config[DOMAIN][CONF_PHONE_ID]
     device_id = config[DOMAIN][CONF_DEVICE_ID]
@@ -72,7 +73,7 @@ async def async_setup(opp: OpenPeerPowerType, config: Dict) -> bool:
     opp.async_create_task(async_load_platform(opp, SWITCH_DOMAIN, DOMAIN, {}, config))
 
     @callback
-    def device_updates(timestamp: Optional[datetime]) -> None:
+    def device_updates(timestamp: datetime | None) -> None:
         """Use for updating the device data from the queue."""
         if v2bridge.running:
             try:

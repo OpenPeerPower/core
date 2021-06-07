@@ -3,7 +3,7 @@ import voluptuous as vol
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_SCAN_INTERVAL
-from openpeerpower.core import Config, OpenPeerPower
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.exceptions import ConfigEntryNotReady
 
 from .account import StarlineAccount
@@ -19,14 +19,9 @@ from .const import (
 )
 
 
-async def async_setup(opp: OpenPeerPower, config: Config) -> bool:
-    """Set up configured StarLine."""
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up the StarLine device from a config entry."""
-    account = StarlineAccount(opp, config_entry)
+    account = StarlineAccount(opp, entry)
     await account.update()
     await account.update_obd()
     if not account.api.available:
@@ -34,30 +29,27 @@ async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
 
     if DOMAIN not in opp.data:
         opp.data[DOMAIN] = {}
-    opp.data[DOMAIN][config_entry.entry_id] = account
+    opp.data[DOMAIN][entry.entry_id] = account
 
     device_registry = await opp.helpers.device_registry.async_get_registry()
     for device in account.api.devices.values():
         device_registry.async_get_or_create(
-            config_entry_id=config_entry.entry_id, **account.device_info(device)
+            config_entry_id=entry.entry_id, **account.device_info(device)
         )
 
-    for domain in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(config_entry, domain)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     async def async_set_scan_interval(call):
         """Set scan interval."""
-        options = dict(config_entry.options)
+        options = dict(entry.options)
         options[CONF_SCAN_INTERVAL] = call.data[CONF_SCAN_INTERVAL]
-        opp.config_entries.async_update_entry(entry=config_entry, options=options)
+        opp.config_entries.async_update_entry(entry=entry, options=options)
 
     async def async_set_scan_obd_interval(call):
         """Set OBD info scan interval."""
-        options = dict(config_entry.options)
+        options = dict(entry.options)
         options[CONF_SCAN_OBD_INTERVAL] = call.data[CONF_SCAN_INTERVAL]
-        opp.config_entries.async_update_entry(entry=config_entry, options=options)
+        opp.config_entries.async_update_entry(entry=entry, options=options)
 
     async def async_update(call=None):
         """Update all data."""
@@ -90,20 +82,21 @@ async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bo
         ),
     )
 
-    config_entry.add_update_listener(async_options_updated)
-    await async_options_updated(opp, config_entry)
+    entry.async_on_unload(entry.add_update_listener(async_options_updated))
+    await async_options_updated(opp, entry)
 
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    for domain in PLATFORMS:
-        await opp.config_entries.async_forward_entry_unload(config_entry, domain)
+    unload_ok = await opp.config_entries.async_unload_platforms(
+        config_entry, PLATFORMS
+    )
 
     account: StarlineAccount = opp.data[DOMAIN][config_entry.entry_id]
     account.unload()
-    return True
+    return unload_ok
 
 
 async def async_options_updated(opp: OpenPeerPower, config_entry: ConfigEntry) -> None:

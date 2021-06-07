@@ -61,7 +61,7 @@ def setup(opp, config):
         _LOGGER.error("Unable to connect to Skybell service: %s", str(ex))
         opp.components.persistent_notification.create(
             "Error: {}<br />"
-            "You will need to restart opp after fixing."
+            "You will need to restart opp.after fixing."
             "".format(ex),
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
@@ -71,7 +71,7 @@ def setup(opp, config):
 
 
 class SkybellDevice(Entity):
-    """A OP implementation for Skybell devices."""
+    """A OPP implementation for Skybell devices."""
 
     def __init__(self, device):
         """Initialize a sensor for Skybell device."""
@@ -82,7 +82,7 @@ class SkybellDevice(Entity):
         self._device.refresh()
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes."""
         return {
             ATTR_ATTRIBUTION: ATTRIBUTION,

@@ -2,6 +2,7 @@
   "domain": "sql",
   "name": "SQL",
   "documentation": "https://www.openpeerpower.io/integrations/sql",
-  "requirements": ["sqlalchemy==1.3.23"],
-  "codeowners": []
+  "requirements": ["sqlalchemy==1.4.13"],
+  "codeowners": ["@dgomes"],
+  "iot_class": "local_polling"
 }

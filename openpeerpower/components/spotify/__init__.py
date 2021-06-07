@@ -5,11 +5,10 @@ from spotipy import Spotify, SpotifyException
 import voluptuous as vol
 
 from openpeerpower.components.media_player import DOMAIN as MEDIA_PLAYER_DOMAIN
-from openpeerpower.components.spotify import config_flow
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import ATTR_CREDENTIALS, CONF_CLIENT_ID, CONF_CLIENT_SECRET
 from openpeerpower.core import OpenPeerPower
-from openpeerpower.exceptions import ConfigEntryNotReady
+from openpeerpower.exceptions import ConfigEntryAuthFailed, ConfigEntryNotReady
 from openpeerpower.helpers import config_entry_oauth2_flow, config_validation as cv
 from openpeerpower.helpers.config_entry_oauth2_flow import (
     OAuth2Session,
@@ -17,6 +16,7 @@ from openpeerpower.helpers.config_entry_oauth2_flow import (
 )
 from openpeerpower.helpers.typing import ConfigType
 
+from . import config_flow
 from .const import (
     DATA_SPOTIFY_CLIENT,
     DATA_SPOTIFY_ME,
@@ -36,6 +36,8 @@ CONFIG_SCHEMA = vol.Schema(
     },
     extra=vol.ALLOW_EXTRA,
 )
+
+PLATFORMS = [MEDIA_PLAYER_DOMAIN]
 
 
 async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
@@ -84,28 +86,20 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     }
 
     if not set(session.token["scope"].split(" ")).issuperset(SPOTIFY_SCOPES):
-        opp.async_create_task(
-            opp.config_entries.flow.async_init(
-                DOMAIN,
-                context={"source": "reauth"},
-                data=entry.data,
-            )
-        )
+        raise ConfigEntryAuthFailed
 
-    opp.async_create_task(
-        opp.config_entries.async_forward_entry_setup(entry, MEDIA_PLAYER_DOMAIN)
-    )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
     return True
 
 
 async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload Spotify config entry."""
     # Unload entities for this entry/device.
-    await opp.config_entries.async_forward_entry_unload(entry, MEDIA_PLAYER_DOMAIN)
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
 
     # Cleanup
     del opp.data[DOMAIN][entry.entry_id]
     if not opp.data[DOMAIN]:
         del opp.data[DOMAIN]
 
-    return True
+    return unload_ok

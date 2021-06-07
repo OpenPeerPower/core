@@ -66,7 +66,11 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     device_class = config.get(CONF_DEVICE_CLASS)
 
     async_add_entities(
-        [ThresholdSensor(opp, entity_id, name, lower, upper, hysteresis, device_class)],
+        [
+            ThresholdSensor(
+                opp, entity_id, name, lower, upper, hysteresis, device_class
+            )
+        ],
     )
 
 
@@ -140,7 +144,7 @@ class ThresholdSensor(BinarySensorEntity):
             return TYPE_UPPER
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return the state attributes of the sensor."""
         return {
             ATTR_ENTITY_ID: self._entity_id,

@@ -38,10 +38,9 @@ from openpeerpower.core import callback
 from openpeerpower.exceptions import TemplateError
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.entity import async_generate_entity_id
-from openpeerpower.helpers.reload import async_setup_reload_service
 from openpeerpower.helpers.script import Script
 
-from .const import CONF_AVAILABILITY_TEMPLATE, DOMAIN, PLATFORMS
+from .const import CONF_AVAILABILITY_TEMPLATE
 from .template_entity import TemplateEntity
 
 _LOGGER = logging.getLogger(__name__)
@@ -160,7 +159,6 @@ async def _async_create_entities(opp, config):
 
 async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the Template cover."""
-    await async_setup_reload_service(opp, DOMAIN, PLATFORMS)
     async_add_entities(await _async_create_entities(opp, config))
 
 
@@ -194,7 +192,9 @@ class CoverTemplate(TemplateEntity, CoverEntity):
             icon_template=icon_template,
             entity_picture_template=entity_picture_template,
         )
-        self.entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, device_id, opp=opp)
+        self.entity_id = async_generate_entity_id(
+            ENTITY_ID_FORMAT, device_id, opp.opp
+        )
         self._name = friendly_name
         self._template = state_template
         self._position_template = position_template
@@ -219,6 +219,8 @@ class CoverTemplate(TemplateEntity, CoverEntity):
         self._optimistic = optimistic or (not state_template and not position_template)
         self._tilt_optimistic = tilt_optimistic or not tilt_template
         self._position = None
+        self._is_opening = False
+        self._is_closing = False
         self._tilt_value = None
         self._unique_id = unique_id
 
@@ -260,6 +262,9 @@ class CoverTemplate(TemplateEntity, CoverEntity):
                 self._position = 100
             else:
                 self._position = 0
+
+            self._is_opening = state == STATE_OPENING
+            self._is_closing = state == STATE_CLOSING
         else:
             _LOGGER.error(
                 "Received invalid cover is_on state: %s. Expected: %s",
@@ -318,6 +323,16 @@ class CoverTemplate(TemplateEntity, CoverEntity):
     def is_closed(self):
         """Return if the cover is closed."""
         return self._position == 0
+
+    @property
+    def is_opening(self):
+        """Return if the cover is currently opening."""
+        return self._is_opening
+
+    @property
+    def is_closing(self):
+        """Return if the cover is currently closing."""
+        return self._is_closing
 
     @property
     def current_cover_position(self):

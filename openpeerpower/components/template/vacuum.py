@@ -41,10 +41,9 @@ from openpeerpower.core import callback
 from openpeerpower.exceptions import TemplateError
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.entity import async_generate_entity_id
-from openpeerpower.helpers.reload import async_setup_reload_service
 from openpeerpower.helpers.script import Script
 
-from .const import CONF_AVAILABILITY_TEMPLATE, DOMAIN, PLATFORMS
+from .const import CONF_AVAILABILITY_TEMPLATE
 from .template_entity import TemplateEntity
 
 _LOGGER = logging.getLogger(__name__)
@@ -147,7 +146,6 @@ async def _async_create_entities(opp, config):
 
 async def async_setup_platform(opp, config, async_add_entities, discovery_info=None):
     """Set up the template vacuums."""
-    await async_setup_reload_service(opp, DOMAIN, PLATFORMS)
     async_add_entities(await _async_create_entities(opp, config))
 
 
@@ -179,7 +177,9 @@ class TemplateVacuum(TemplateEntity, StateVacuumEntity):
             attribute_templates=attribute_templates,
             availability_template=availability_template,
         )
-        self.entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, device_id, opp=opp)
+        self.entity_id = async_generate_entity_id(
+            ENTITY_ID_FORMAT, device_id, opp.opp
+        )
         self._name = friendly_name
 
         self._template = state_template

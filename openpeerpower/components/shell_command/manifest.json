@@ -3,5 +3,6 @@
   "name": "Shell Command",
   "documentation": "https://www.openpeerpower.io/integrations/shell_command",
   "codeowners": ["@openpeerpower/core"],
-  "quality_scale": "internal"
+  "quality_scale": "internal",
+  "iot_class": "local_push"
 }

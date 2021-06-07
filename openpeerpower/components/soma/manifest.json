@@ -3,6 +3,7 @@
   "name": "Soma Connect",
   "config_flow": true,
   "documentation": "https://www.openpeerpower.io/integrations/soma",
-  "codeowners": [],
-  "requirements": ["pysoma==0.0.10"]
+  "codeowners": ["@ratsept"],
+  "requirements": ["pysoma==0.0.10"],
+  "iot_class": "local_polling"
 }

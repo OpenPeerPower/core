@@ -210,7 +210,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     asyncio.create_task(_discovery())
 
     # Register entity services
-    platform = entity_platform.current_platform.get()
+    platform = entity_platform.async_get_current_platform()
     platform.async_register_entity_service(
         SERVICE_CALL_METHOD,
         {
@@ -239,7 +239,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
     platform.async_register_entity_service(SERVICE_UNSYNC, None, "async_unsync")
 
     # Start server discovery task if not already running
-    if opp.is_running:
+    if opp is_running:
         asyncio.create_task(start_server_discovery(opp))
     else:
         opp.bus.async_listen_once(
@@ -265,7 +265,7 @@ class SqueezeBoxEntity(MediaPlayerEntity):
         self._remove_dispatcher = None
 
     @property
-    def device_state_attributes(self):
+    def extra_state_attributes(self):
         """Return device-specific attributes."""
         squeezebox_attr = {
             attr: getattr(self, attr)

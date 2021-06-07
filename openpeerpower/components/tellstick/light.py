@@ -54,7 +54,7 @@ class TellstickLight(TellstickDevice, LightEntity):
         return SUPPORT_TELLSTICK
 
     def _parse_op_data(self, kwargs):
-        """Turn the value from OP into something useful."""
+        """Turn the value from OPP into something useful."""
         return kwargs.get(ATTR_BRIGHTNESS)
 
     def _parse_tellcore_data(self, tellcore_data):
