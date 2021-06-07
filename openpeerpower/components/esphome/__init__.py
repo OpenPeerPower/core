@@ -224,9 +224,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             # Re-connection logic will trigger after this
             await cli.disconnect()
 
-    reconnect_logic = ReconnectLogic(
-        opp, cli, entry, host, on_login, zeroconf_instance
-    )
+    reconnect_logic = ReconnectLogic(opp, cli, entry, host, on_login, zeroconf_instance)
 
     async def complete_setup() -> None:
         """Complete the config entry setup."""
@@ -608,9 +606,7 @@ async def _setup_services(
         await _register_service(opp, entry_data, service)
 
 
-async def _cleanup_instance(
-    opp: OpenPeerPower, entry: ConfigEntry
-) -> RuntimeEntryData:
+async def _cleanup_instance(opp: OpenPeerPower, entry: ConfigEntry) -> RuntimeEntryData:
     """Cleanup the esphome client if it exists."""
     data: RuntimeEntryData = opp.data[DOMAIN].pop(entry.entry_id)
     for disconnect_cb in data.disconnect_callbacks:

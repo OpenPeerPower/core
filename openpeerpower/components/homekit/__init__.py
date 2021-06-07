@@ -408,8 +408,7 @@ def _async_register_events_and_services(opp: OpenPeerPower):
             _async_update_config_entry_if_from_yaml(opp, entries_by_name, conf)
 
         reload_tasks = [
-            opp.config_entries.async_reload(entry.entry_id)
-            for entry in current_entries
+            opp.config_entries.async_reload(entry.entry_id) for entry in current_entries
         ]
 
         await asyncio.gather(*reload_tasks)
@@ -786,12 +785,12 @@ class HomeKitPairingQRView(OpenPeerPowerView):
         entry_id, secret = request.query_string.split("-")
 
         if (
-            entry_id not in request.app["opp.].data[DOMAIN]
+            entry_id not in request.app["opp"].data[DOMAIN]
             or secret
-            != request.app["opp.].data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR_SECRET]
+            != request.app["opp"].data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR_SECRET]
         ):
             raise Unauthorized()
         return web.Response(
-            body=request.app["opp.].data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR],
+            body=request.app["opp"].data[DOMAIN][entry_id][HOMEKIT_PAIRING_QR],
             content_type="image/svg+xml",
         )

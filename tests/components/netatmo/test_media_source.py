@@ -18,9 +18,7 @@ async def test_async_browse_media(opp):
 
     # Prepare cached Netatmo event date
     opp.data[DOMAIN] = {}
-    opp.data[DOMAIN][DATA_EVENTS] = ast.literal_eval(
-        load_fixture("netatmo/events.txt")
-    )
+    opp.data[DOMAIN][DATA_EVENTS] = ast.literal_eval(load_fixture("netatmo/events.txt"))
 
     opp.data[DOMAIN][DATA_CAMERAS] = {
         "12:34:56:78:90:ab": "MyCamera",

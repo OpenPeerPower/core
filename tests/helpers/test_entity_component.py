@@ -309,7 +309,7 @@ async def test_setup_entry(opp):
     assert await component.async_setup_entry(entry)
     assert len(mock_setup_entry.mock_calls) == 1
     p_opp, p_entry, _ = mock_setup_entry.mock_calls[0][1]
-    assert p_opp is.opp
+    assert p_opp is opp
     assert p_entry is entry
 
     assert component._platforms[entry.entry_id].scan_interval == timedelta(seconds=5)

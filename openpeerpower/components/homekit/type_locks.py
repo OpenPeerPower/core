@@ -19,7 +19,7 @@ OPP_TO_HOMEKIT = {
     STATE_UNKNOWN: 3,
 }
 
-HOMEKIT_TO_HASS = {c: s for s, c in OPP_TO_HOMEKIT.items()}
+HOMEKIT_TO_OPP = {c: s for s, c in OPP_TO_HOMEKIT.items()}
 
 STATE_TO_SERVICE = {STATE_LOCKED: "lock", STATE_UNLOCKED: "unlock"}
 
@@ -52,7 +52,7 @@ class Lock(HomeAccessory):
         """Set lock state to value if call came from HomeKit."""
         _LOGGER.debug("%s: Set state to %d", self.entity_id, value)
 
-        opp_value = HOMEKIT_TO_HASS.get(value)
+        opp_value = HOMEKIT_TO_OPP.get(value)
         service = STATE_TO_SERVICE[opp_value]
 
         if self.char_current_state.value != value:

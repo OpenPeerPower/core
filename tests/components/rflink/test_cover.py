@@ -405,9 +405,7 @@ async def test_inverted_cover(opp, monkeypatch):
     }
 
     # setup mocking rflink module
-    event_callback, _, protocol, _ = await mock_rflink(
-        opp, config, DOMAIN, monkeypatch
-    )
+    event_callback, _, protocol, _ = await mock_rflink(opp, config, DOMAIN, monkeypatch)
 
     # test default state of cover loaded from config
     standard_cover = opp.states.get(f"{DOMAIN}.nonkaku_type_standard")

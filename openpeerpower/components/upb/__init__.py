@@ -56,9 +56,7 @@ async def async_setup_entry(opp, config_entry):
 
 async def async_unload_entry(opp, config_entry):
     """Unload the config_entry."""
-    unload_ok = await opp.config_entries.async_unload_platforms(
-        config_entry, PLATFORMS
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(config_entry, PLATFORMS)
     if unload_ok:
         upb = opp.data[DOMAIN][config_entry.entry_id]["upb"]
         upb.disconnect()

@@ -276,7 +276,7 @@ class FitbitAuthCallbackView(OpenPeerPowerView):
     @callback
     async def get(self, request: Request) -> str:
         """Finish OAuth callback request."""
-        opp: OpenPeerPower = request.app["opp.]
+        opp: OpenPeerPower = request.app["opp"]
         data = request.query
 
         response_message = """Fitbit has been successfully authorized!

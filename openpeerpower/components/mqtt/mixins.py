@@ -162,9 +162,7 @@ async def async_setup_entry_helper(opp, domain, async_setup, schema):
         except Exception:
             discovery_hash = discovery_data[ATTR_DISCOVERY_HASH]
             clear_discovery_hash(opp, discovery_hash)
-            async_dispatcher_send(
-                opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None
-            )
+            async_dispatcher_send(opp, MQTT_DISCOVERY_DONE.format(discovery_hash), None)
             raise
 
     async_dispatcher_connect(
@@ -321,7 +319,7 @@ class MqttAvailability(Entity):
     @callback
     def async_mqtt_connect(self):
         """Update state on connection/disconnection to MQTT broker."""
-        if not self.opp is_stopping:
+        if not self.opp.is_stopping:
             self.async_write_op_state()
 
     async def async_will_remove_from_opp(self):
@@ -333,7 +331,7 @@ class MqttAvailability(Entity):
     @property
     def available(self) -> bool:
         """Return if the device is available."""
-        if not self.opp.data[DATA_MQTT].connected and not self.opp is_stopping:
+        if not self.opp.data[DATA_MQTT].connected and not self.opp.is_stopping:
             return False
         if not self._avail_topics:
             return True
@@ -440,7 +438,7 @@ class MqttDiscoveryUpdate(Entity):
 
     async def async_removed_from_registry(self) -> None:
         """Clear retained discovery topic in broker."""
-        if not self._removed_from_opp.
+        if not self._removed_from_opp:
             discovery_topic = self._discovery_data[ATTR_DISCOVERY_TOPIC]
             publish(self.opp, discovery_topic, "", retain=True)
 
@@ -461,7 +459,7 @@ class MqttDiscoveryUpdate(Entity):
 
     def _cleanup_discovery_on_remove(self) -> None:
         """Stop listening to signal and cleanup discovery data."""
-        if self._discovery_data and not self._removed_from_opp.
+        if self._discovery_data and not self._removed_from_opp:
             debug_info.remove_entity_data(self.opp, self.entity_id)
             clear_discovery_hash(self.opp, self._discovery_data[ATTR_DISCOVERY_HASH])
             self._removed_from_opp = True

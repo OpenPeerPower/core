@@ -53,9 +53,7 @@ async def async_setup(opp, config):
         """Update the FreeDNS entry."""
         await _update_freedns(opp, session, url, auth_token)
 
-    opp.helpers.event.async_track_time_interval(
-        update_domain_callback, update_interval
-    )
+    opp.helpers.event.async_track_time_interval(update_domain_callback, update_interval)
 
     return True
 

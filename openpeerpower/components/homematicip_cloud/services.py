@@ -276,9 +276,7 @@ async def _async_deactivate_vacation(opp: OpenPeerPower, service: ServiceCall) -
             await hap.home.deactivate_vacation()
 
 
-async def _set_active_climate_profile(
-    opp: OpenPeerPower, service: ServiceCall
-) -> None:
+async def _set_active_climate_profile(opp: OpenPeerPower, service: ServiceCall) -> None:
     """Service to set the active climate profile."""
     entity_id_list = service.data[ATTR_ENTITY_ID]
     climate_profile_index = service.data[ATTR_CLIMATE_PROFILE_INDEX] - 1

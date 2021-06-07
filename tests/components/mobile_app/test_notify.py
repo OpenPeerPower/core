@@ -119,9 +119,7 @@ async def test_notify_works(opp, aioclient_mock, setup_push_receiver):
     assert call_json["registration_info"]["app_version"] == "1.0"
 
 
-async def test_notify_ws_works(
-    opp, aioclient_mock, setup_push_receiver, opp_ws_client
-):
+async def test_notify_ws_works(opp, aioclient_mock, setup_push_receiver, opp_ws_client):
     """Test notify works."""
     client = await opp_ws_client(opp)
 

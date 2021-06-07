@@ -149,9 +149,7 @@ async def test_track_state_change_from_to_state_match(opp):
     def no_to_from_specified_callback(entity_id, old_state, new_state):
         no_to_from_specified_runs.append(1)
 
-    async_track_state_change(
-        opp, "light.Bowl", from_and_to_state_callback, "on", "off"
-    )
+    async_track_state_change(opp, "light.Bowl", from_and_to_state_callback, "on", "off")
     async_track_state_change(opp, "light.Bowl", only_from_state_callback, "on", None)
     async_track_state_change(
         opp, "light.Bowl", only_to_state_callback, None, ["off", "standby"]
@@ -774,7 +772,7 @@ async def test_track_template(opp):
 
     template_condition = Template("{{states.switch.test.state == 'on'}}", opp)
     template_condition_var = Template(
-        "{{states.switch.test.state == 'on' and test == 5}}",.opp
+        "{{states.switch.test.state == 'on' and test == 5}}", opp
     )
 
     opp.states.async_set("switch.test", "off")
@@ -886,7 +884,7 @@ async def test_track_template_error_can_recover(opp, caplog):
     """Test tracking template with error."""
     opp.states.async_set("switch.data_system", "cow", {"opmode": 0})
     template_error = Template(
-        "{{ states.sensor.data_system.attributes['opmode'] == '0' }}",.opp
+        "{{ states.sensor.data_system.attributes['opmode'] == '0' }}", opp
     )
     error_calls = []
 
@@ -943,9 +941,7 @@ async def test_track_template_result(opp):
     wildercard_runs = []
 
     template_condition = Template("{{states.sensor.test.state}}", opp)
-    template_condition_var = Template(
-        "{{(states.sensor.test.state|int) + test }}",.opp
-    )
+    template_condition_var = Template("{{(states.sensor.test.state|int) + test }}", opp)
 
     def specific_run_callback(event, updates):
         track_result = updates.pop()
@@ -3023,7 +3019,7 @@ async def test_call_later(opp):
 
     assert len(mock.mock_calls) == 1
     p_opp, p_action, p_point = mock.mock_calls[0][1]
-    assert p_opp is.opp
+    assert p_opp is opp
     assert p_action is action
     assert p_point == now + timedelta(seconds=3)
 
@@ -3043,7 +3039,7 @@ async def test_async_call_later(opp):
 
     assert len(mock.mock_calls) == 1
     p_opp, p_action, p_point = mock.mock_calls[0][1]
-    assert p_opp is.opp
+    assert p_opp is opp
     assert p_action is action
     assert p_point == now + timedelta(seconds=3)
     assert remove is mock()
@@ -3165,7 +3161,7 @@ async def test_track_point_in_utc_time_cancel(opp):
         utc_now = dt_util.utcnow()
 
         with pytest.raises(TypeError):
-            track_point_in_utc_time("notopp., run_callback, utc_now)
+            track_point_in_utc_time("notopp", run_callback, utc_now)
 
         unsub1 = opp.helpers.event.track_point_in_utc_time(
             run_callback, utc_now + timedelta(seconds=0.1)

@@ -44,9 +44,7 @@ async def test_inovelli_lzw36(opp, client, inovelli_lzw36, integration):
     assert state
 
 
-async def test_vision_security_zl7432(
-    opp, client, vision_security_zl7432, integration
-):
+async def test_vision_security_zl7432(opp, client, vision_security_zl7432, integration):
     """Test Vision Security ZL7432 is caught by the device specific discovery."""
     for entity_id in (
         "switch.in_wall_dual_relay_switch",

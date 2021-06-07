@@ -73,9 +73,7 @@ STATE_CLASSES_SCHEMA: Final = vol.All(vol.Lower, vol.In(STATE_CLASSES))
 
 async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Track states and offer events for sensors."""
-    component = opp.data[DOMAIN] = EntityComponent(
-        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
-    )
+    component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp, SCAN_INTERVAL)
 
     await component.async_setup(config)
     return True

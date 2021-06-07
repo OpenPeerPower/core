@@ -69,9 +69,7 @@ IZONE_SERVICE_AIRFLOW_SCHEMA = {
 }
 
 
-async def async_setup_entry(
-    opp: OpenPeerPower, config: ConfigType, async_add_entities
-):
+async def async_setup_entry(opp: OpenPeerPower, config: ConfigType, async_add_entities):
     """Initialize an IZone Controller."""
     disco = opp.data[DATA_DISCOVERY_SERVICE]
 

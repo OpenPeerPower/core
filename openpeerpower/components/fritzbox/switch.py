@@ -97,9 +97,7 @@ class FritzboxSwitch(FritzBoxEntity, SwitchEntity):
             attrs[ATTR_TOTAL_CONSUMPTION_UNIT] = ATTR_TOTAL_CONSUMPTION_UNIT_VALUE
         if self.device.has_temperature_sensor:
             attrs[ATTR_TEMPERATURE] = str(
-                self.opp.config.units.temperature(
-                    self.device.temperature, TEMP_CELSIUS
-                )
+                self.opp.config.units.temperature(self.device.temperature, TEMP_CELSIUS)
             )
             attrs[ATTR_TEMPERATURE_UNIT] = self.opp.config.units.temperature_unit
         return attrs

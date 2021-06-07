@@ -229,9 +229,7 @@ class WemoDiscovery:
             for device in await gather_with_concurrency(
                 MAX_CONCURRENCY,
                 *[
-                    self._opp.async_add_executor_job(
-                        validate_static_config, host, port
-                    )
+                    self._opp.async_add_executor_job(validate_static_config, host, port)
                     for host, port in self._static_config
                 ],
             ):

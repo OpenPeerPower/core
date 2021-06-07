@@ -465,7 +465,7 @@ async def test_discover_dynamic_group(opp, dial_mock, pycast_mock, caplog):
 
     pycast_mock.get_chromecast_from_cast_info.assert_not_called()
     discover_cast, remove_cast, add_dev1 = await async_setup_cast_internal_discovery(
-       .opp
+        opp
     )
 
     # Discover cast service

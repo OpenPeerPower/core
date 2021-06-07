@@ -15,7 +15,7 @@ import requests_mock as _requests_mock
 from openpeerpower import core as ha, loader, runner, util
 from openpeerpower.auth.const import GROUP_ID_ADMIN, GROUP_ID_READ_ONLY
 from openpeerpower.auth.models import Credentials
-from openpeerpower.auth.providers import openpeerpower, legacy_api_password
+from openpeerpower.auth.providers import legacy_api_password, openpeerpower
 from openpeerpower.components import mqtt, recorder
 from openpeerpower.components.websocket_api.auth import (
     TYPE_AUTH,
@@ -157,7 +157,7 @@ def opp(loop, load_registries, opp_storage, request):
     orig_exception_handler = loop.get_exception_handler()
     loop.set_exception_handler(exc_handle)
 
-    yield.opp
+    yield opp
 
     loop.run_until_complete(opp.async_stop(force=True))
     for ex in exceptions:
@@ -260,9 +260,7 @@ def opp_owner_user(opp, local_auth):
 @pytest.fixture
 def opp_admin_user(opp, local_auth):
     """Return a Open Peer Power admin user."""
-    admin_group = opp.loop.run_until_complete(
-        opp.auth.async_get_group(GROUP_ID_ADMIN)
-    )
+    admin_group = opp.loop.run_until_complete(opp.auth.async_get_group(GROUP_ID_ADMIN))
     return MockUser(groups=[admin_group]).add_to_opp(opp)
 
 
@@ -310,9 +308,7 @@ def legacy_auth(opp):
 @pytest.fixture
 def local_auth(opp):
     """Load local auth provider."""
-    prv = openpeerpower.OppAuthProvider(
-        opp, opp.auth._store, {"type": "openpeerpower"}
-    )
+    prv = openpeerpower.OppAuthProvider(opp, opp.auth._store, {"type": "openpeerpower"})
     opp.loop.run_until_complete(prv.async_initialize())
     opp.auth._providers[(prv.type, prv.id)] = prv
     return prv
@@ -359,7 +355,7 @@ def current_request_with_host(current_request):
 def opp_ws_client(aiohttp_client, opp_access_token, opp):
     """Websocket client fixture connected to websocket server."""
 
-    async def create_client(opp.opp, access_token=opp_access_token):
+    async def create_client(opp=opp, access_token=opp_access_token):
         """Create a websocket client."""
         assert await async_setup_component(opp, "websocket_api", {})
 

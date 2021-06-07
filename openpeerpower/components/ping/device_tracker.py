@@ -135,7 +135,7 @@ async def async_setup_scanner(opp, config, async_see, discovery_info=None):
         try:
             await async_update(now)
         finally:
-            if not opp is_stopping:
+            if not opp.is_stopping:
                 async_track_point_in_utc_time(
                     opp, _async_update_interval, util.dt.utcnow() + interval
                 )

@@ -53,9 +53,7 @@ async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> b
     server = opp.data[DOMAIN][unique_id]
 
     # Unload platforms.
-    unload_ok = await opp.config_entries.async_unload_platforms(
-        config_entry, PLATFORMS
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(config_entry, PLATFORMS)
 
     # Clean up.
     server.stop_periodic_update()

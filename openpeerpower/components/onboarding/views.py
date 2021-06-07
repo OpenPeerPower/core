@@ -96,7 +96,7 @@ class UserOnboardingView(_BaseOnboardingView):
     )
     async def post(self, request, data):
         """Handle user creation, area creation."""
-        opp = request.app["opp.]
+        opp = request.app["opp"]
 
         async with self._lock:
             if self._async_is_done():
@@ -150,7 +150,7 @@ class CoreConfigOnboardingView(_BaseOnboardingView):
 
     async def post(self, request):
         """Handle finishing core config step."""
-        opp = request.app["opp.]
+        opp = request.app["opp"]
 
         async with self._lock:
             if self._async_is_done():
@@ -187,7 +187,7 @@ class IntegrationOnboardingView(_BaseOnboardingView):
     )
     async def post(self, request, data):
         """Handle token creation."""
-        opp = request.app["opp.]
+        opp = request.app["opp"]
         refresh_token_id = request[KEY_OPP_REFRESH_TOKEN_ID]
 
         async with self._lock:
@@ -200,7 +200,7 @@ class IntegrationOnboardingView(_BaseOnboardingView):
 
             # Validate client ID and redirect uri
             if not await indieauth.verify_redirect_uri(
-                request.app["opp.], data["client_id"], data["redirect_uri"]
+                request.app["opp"], data["client_id"], data["redirect_uri"]
             ):
                 return self.json_message(
                     "invalid client id or redirect uri", HTTP_BAD_REQUEST
@@ -228,7 +228,7 @@ class AnalyticsOnboardingView(_BaseOnboardingView):
 
     async def post(self, request):
         """Handle finishing analytics step."""
-        opp = request.app["opp.]
+        opp = request.app["opp"]
 
         async with self._lock:
             if self._async_is_done():

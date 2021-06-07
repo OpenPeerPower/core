@@ -306,7 +306,7 @@ class KonnectedView(OpenPeerPowerView):
 
     async def update_sensor(self, request: Request, device_id) -> Response:
         """Process a put or post."""
-        opp = request.app["opp.]
+        opp = request.app["opp"]
         data = opp.data[DOMAIN]
 
         auth = request.headers.get(AUTHORIZATION)
@@ -378,7 +378,7 @@ class KonnectedView(OpenPeerPowerView):
 
     async def get(self, request: Request, device_id) -> Response:
         """Return the current binary state of a switch."""
-        opp = request.app["opp.]
+        opp = request.app["opp"]
         data = opp.data[DOMAIN]
 
         device = data[CONF_DEVICES].get(device_id)

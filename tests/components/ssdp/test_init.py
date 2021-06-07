@@ -335,9 +335,7 @@ async def test_unexpected_exception_while_fetching(opp, aioclient_mock, caplog):
         "openpeerpower.components.ssdp.descriptions.ElementTree.fromstring",
         side_effect=ValueError,
     ):
-        mock_init = await _async_run_mocked_scan(
-            opp, mock_ssdp_response, mock_get_ssdp
-        )
+        mock_init = await _async_run_mocked_scan(opp, mock_ssdp_response, mock_get_ssdp)
 
     assert len(mock_init.mock_calls) == 0
     assert "Failed to fetch ssdp data from: http://1.1.1.1" in caplog.text

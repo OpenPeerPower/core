@@ -329,9 +329,7 @@ async def test_if_not_fires_if_event_data_not_matches(opp, calls):
     assert len(calls) == 0
 
 
-async def test_if_not_fires_if_event_context_not_matches(
-    opp, calls, context_with_user
-):
+async def test_if_not_fires_if_event_context_not_matches(opp, calls, context_with_user):
     """Test firing of event if no context match."""
     assert await async_setup_component(
         opp,

@@ -411,7 +411,7 @@ class OAuth2AuthorizeCallbackView(http.OpenPeerPowerView):
                 text=f"Missing code or state parameter in {request.url}"
             )
 
-        opp = request.app["opp.]
+        opp = request.app["opp"]
 
         state = _decode_jwt(opp, request.query["state"])
 

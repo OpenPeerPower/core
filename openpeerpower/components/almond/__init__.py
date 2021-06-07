@@ -195,7 +195,7 @@ async def _configure_almond_for_ha(
             await api.async_create_device(
                 {
                     "kind": "io.open-peer-power",
-                    "opp.rl": opp_url,
+                    "opp:rl": opp_url,
                     "accessToken": access_token,
                     "refreshToken": "",
                     # 5 years from now in ms.

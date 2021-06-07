@@ -59,9 +59,7 @@ async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Home Connect from a config entry."""
     implementation = (
-        await config_entry_oauth2_flow.async_get_config_entry_implementation(
-            opp, entry
-        )
+        await config_entry_oauth2_flow.async_get_config_entry_implementation(opp, entry)
     )
 
     hc_api = api.ConfigEntryAuth(opp, entry, implementation)

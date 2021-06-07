@@ -192,9 +192,7 @@ class CoverTemplate(TemplateEntity, CoverEntity):
             icon_template=icon_template,
             entity_picture_template=entity_picture_template,
         )
-        self.entity_id = async_generate_entity_id(
-            ENTITY_ID_FORMAT, device_id, opp.opp
-        )
+        self.entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, device_id, opp.opp)
         self._name = friendly_name
         self._template = state_template
         self._position_template = position_template

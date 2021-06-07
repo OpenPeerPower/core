@@ -32,9 +32,7 @@ from tests.components.wled import init_integration
 from tests.test_util.aiohttp import AiohttpClientMocker
 
 
-async def test_sensors(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
-) -> None:
+async def test_sensors(opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker) -> None:
     """Test the creation and values of the WLED sensors."""
 
     entry = await init_integration(opp, aioclient_mock, skip_setup=True)

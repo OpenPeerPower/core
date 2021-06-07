@@ -60,9 +60,7 @@ async def test_temperature(opp, hk_driver):
     await opp.async_block_till_done()
     assert acc.char_temp.value == 20
 
-    opp.states.async_set(
-        entity_id, "75.2", {ATTR_UNIT_OF_MEASUREMENT: TEMP_FAHRENHEIT}
-    )
+    opp.states.async_set(entity_id, "75.2", {ATTR_UNIT_OF_MEASUREMENT: TEMP_FAHRENHEIT})
     await opp.async_block_till_done()
     assert acc.char_temp.value == 24
 
@@ -286,9 +284,7 @@ async def test_motion_uses_bool(opp, hk_driver):
     await opp.async_block_till_done()
     assert acc.char_detected.value is True
 
-    opp.states.async_set(
-        entity_id, STATE_OFF, {ATTR_DEVICE_CLASS: DEVICE_CLASS_MOTION}
-    )
+    opp.states.async_set(entity_id, STATE_OFF, {ATTR_DEVICE_CLASS: DEVICE_CLASS_MOTION})
     await opp.async_block_till_done()
     assert acc.char_detected.value is False
 

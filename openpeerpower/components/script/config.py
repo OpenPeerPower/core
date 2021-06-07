@@ -71,10 +71,7 @@ async def async_validate_config_item(opp, config, full_config=None):
 
     config = SCRIPT_ENTITY_SCHEMA(config)
     config[CONF_SEQUENCE] = await asyncio.gather(
-        *[
-            async_validate_action_config(opp, action)
-            for action in config[CONF_SEQUENCE]
-        ]
+        *[async_validate_action_config(opp, action) for action in config[CONF_SEQUENCE]]
     )
 
     return config

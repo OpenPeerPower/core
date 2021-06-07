@@ -12,9 +12,7 @@ async def async_setup(opp):
     opp.components.websocket_api.async_register_command(websocket_create)
     opp.components.websocket_api.async_register_command(websocket_delete)
     opp.components.websocket_api.async_register_command(websocket_change_password)
-    opp.components.websocket_api.async_register_command(
-        websocket_admin_change_password
-    )
+    opp.components.websocket_api.async_register_command(websocket_admin_change_password)
     return True
 
 

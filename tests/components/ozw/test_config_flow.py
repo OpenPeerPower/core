@@ -59,9 +59,7 @@ def mock_addon_options(addon_info):
 @pytest.fixture(name="set_addon_options")
 def mock_set_addon_options():
     """Mock set add-on options."""
-    with patch(
-        "openpeerpower.components.oppio.async_set_addon_options"
-    ) as set_options:
+    with patch("openpeerpower.components.oppio.async_set_addon_options") as set_options:
         yield set_options
 
 

@@ -26,9 +26,7 @@ _LOGGER = logging.getLogger(__name__)
 SERVICE_HUE_SCENE = "hue_activate_scene"
 
 
-async def async_setup_entry(
-    opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
-):
+async def async_setup_entry(opp: core.OpenPeerPower, entry: config_entries.ConfigEntry):
     """Set up a bridge from a config entry."""
 
     # Migrate allow_unreachable from config entry data to config entry options
@@ -91,9 +89,7 @@ async def async_setup_entry(
 
         elif other_entry.source == config_entries.SOURCE_IGNORE:
             # There is another entry but it is ignored, delete that one and update this one
-            opp.async_create_task(
-                opp.config_entries.async_remove(other_entry.entry_id)
-            )
+            opp.async_create_task(opp.config_entries.async_remove(other_entry.entry_id))
             opp.config_entries.async_update_entry(entry, unique_id=unique_id)
         else:
             # There is another entry that already has the right unique ID. Delete this entry

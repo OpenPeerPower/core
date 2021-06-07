@@ -116,9 +116,7 @@ async def async_update_options(opp, config_entry):
 
 async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
-    unload_ok = await opp.config_entries.async_unload_platforms(
-        config_entry, PLATFORMS
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(config_entry, PLATFORMS)
     if unload_ok:
         domain_data = opp.data[DOMAIN][config_entry.entry_id]
         domain_data[CANCEL_STOP]()

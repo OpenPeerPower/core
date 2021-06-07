@@ -58,9 +58,7 @@ class FleetGoDeviceScanner:
     def setup(self, opp):
         """Set up a timer and start gathering devices."""
         self._refresh()
-        track_utc_time_change(
-            opp, lambda now: self._refresh(), second=range(0, 60, 30)
-        )
+        track_utc_time_change(opp, lambda now: self._refresh(), second=range(0, 60, 30))
 
     def login(self, opp):
         """Perform a login on the FleetGO API."""

@@ -431,12 +431,8 @@ async def test_service_calls(opp, mock_media_seek):
         blocking=True,
     )
     await opp.async_block_till_done()
-    assert (
-        opp.states.get("media_player.bedroom").attributes[ATTR_MEDIA_SHUFFLE] is True
-    )
-    assert (
-        opp.states.get("media_player.kitchen").attributes[ATTR_MEDIA_SHUFFLE] is True
-    )
+    assert opp.states.get("media_player.bedroom").attributes[ATTR_MEDIA_SHUFFLE] is True
+    assert opp.states.get("media_player.kitchen").attributes[ATTR_MEDIA_SHUFFLE] is True
     assert (
         opp.states.get("media_player.living_room").attributes[ATTR_MEDIA_SHUFFLE]
         is True

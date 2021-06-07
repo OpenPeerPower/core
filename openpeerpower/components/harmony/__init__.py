@@ -63,9 +63,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def _migrate_old_unique_ids(
-    opp: OpenPeerPower, entry_id: str, data: HarmonyData
-):
+async def _migrate_old_unique_ids(opp: OpenPeerPower, entry_id: str, data: HarmonyData):
     names_to_ids = {activity["label"]: activity["id"] for activity in data.activities}
 
     @callback

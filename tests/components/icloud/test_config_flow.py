@@ -224,9 +224,7 @@ async def test_import(opp: OpenPeerPower, service: MagicMock):
     assert result["step_id"] == "trusted_device"
 
 
-async def test_import_with_cookie(
-    opp: OpenPeerPower, service_authenticated: MagicMock
-):
+async def test_import_with_cookie(opp: OpenPeerPower, service_authenticated: MagicMock):
     """Test import step with presence of a cookie."""
     # import with required
     result = await opp.config_entries.flow.async_init(
@@ -265,9 +263,7 @@ async def test_import_with_cookie(
     assert result["data"][CONF_GPS_ACCURACY_THRESHOLD] == GPS_ACCURACY_THRESHOLD
 
 
-async def test_two_accounts_setup(
-    opp: OpenPeerPower, service_authenticated: MagicMock
-):
+async def test_two_accounts_setup(opp: OpenPeerPower, service_authenticated: MagicMock):
     """Test to setup two accounts."""
     MockConfigEntry(
         domain=DOMAIN,

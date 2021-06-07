@@ -35,9 +35,7 @@ VACUUM_PLATFORMS = ["vacuum"]
 AIR_MONITOR_PLATFORMS = ["air_quality", "sensor"]
 
 
-async def async_setup_entry(
-    opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
-):
+async def async_setup_entry(opp: core.OpenPeerPower, entry: config_entries.ConfigEntry):
     """Set up the Xiaomi Miio components from a config entry."""
     opp.data.setdefault(DOMAIN, {})
     if entry.data[

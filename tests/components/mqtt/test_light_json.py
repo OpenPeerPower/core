@@ -191,9 +191,7 @@ async def test_fail_setup_if_color_mode_deprecated(opp, mqtt_mock, deprecated):
 @pytest.mark.parametrize(
     "supported_color_modes", [["onoff", "rgb"], ["brightness", "rgb"], ["unknown"]]
 )
-async def test_fail_setup_if_color_modes_invalid(
-    opp, mqtt_mock, supported_color_modes
-):
+async def test_fail_setup_if_color_modes_invalid(opp, mqtt_mock, supported_color_modes):
     """Test if setup fails if supported color modes is invalid."""
     config = {
         light.DOMAIN: {
@@ -566,9 +564,7 @@ async def test_controlling_state_via_topic2(opp, mqtt_mock, caplog):
     caplog.clear()
 
     # Incomplete color
-    async_fire_mqtt_message(
-        opp, "test_light_rgb", '{"state":"ON", "color_mode":"rgb"}'
-    )
+    async_fire_mqtt_message(opp, "test_light_rgb", '{"state":"ON", "color_mode":"rgb"}')
     assert "Invalid or incomplete color value received" in caplog.text
     caplog.clear()
 
@@ -1787,9 +1783,7 @@ async def test_discovery_update_light(opp, mqtt_mock, caplog):
         '  "state_topic": "test_topic",'
         '  "command_topic": "test_topic" }'
     )
-    await help_test_discovery_update(
-        opp, mqtt_mock, caplog, light.DOMAIN, data1, data2
-    )
+    await help_test_discovery_update(opp, mqtt_mock, caplog, light.DOMAIN, data1, data2)
 
 
 async def test_discovery_update_unchanged_light(opp, mqtt_mock, caplog):
@@ -1818,9 +1812,7 @@ async def test_discovery_broken(opp, mqtt_mock, caplog):
         '  "state_topic": "test_topic",'
         '  "command_topic": "test_topic" }'
     )
-    await help_test_discovery_broken(
-        opp, mqtt_mock, caplog, light.DOMAIN, data1, data2
-    )
+    await help_test_discovery_broken(opp, mqtt_mock, caplog, light.DOMAIN, data1, data2)
 
 
 async def test_entity_device_info_with_connection(opp, mqtt_mock):

@@ -26,9 +26,7 @@ def always_mock_weather(mock_weather):  # noqa: F811
 @pytest.fixture(autouse=True)
 def auth_active(opp):
     """Ensure auth is always active."""
-    opp.loop.run_until_complete(
-        register_auth_provider(opp, {"type": "openpeerpower"})
-    )
+    opp.loop.run_until_complete(register_auth_provider(opp, {"type": "openpeerpower"}))
 
 
 @pytest.fixture(name="rpi")
@@ -67,10 +65,7 @@ async def mock_supervisor_fixture(opp, aioclient_mock):
     with patch.dict(os.environ, {"OPPIO": "127.0.0.1"}), patch(
         "openpeerpower.components.oppio.OppIO.is_connected",
         return_value=True,
-    ), patch(
-        "openpeerpower.components.oppio.OppIO.get_info",
-        return_value={},
-    ), patch(
+    ), patch("openpeerpower.components.oppio.OppIO.get_info", return_value={},), patch(
         "openpeerpower.components.oppio.OppIO.get_host_info",
         return_value={},
     ), patch(

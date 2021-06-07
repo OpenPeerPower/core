@@ -152,9 +152,7 @@ async def test_on_node_added_ready(opp, multisensor_6_state, client, integration
     assert dev_reg.async_get_device(identifiers={(DOMAIN, air_temperature_device_id)})
 
 
-async def test_unique_id_migration_dupes(
-    opp, multisensor_6_state, client, integration
-):
+async def test_unique_id_migration_dupes(opp, multisensor_6_state, client, integration):
     """Test we remove an entity when ."""
     ent_reg = er.async_get(opp)
 
@@ -326,9 +324,7 @@ async def test_unique_id_migration_notification_binary_sensor(
     assert ent_reg.async_get_entity_id("binary_sensor", DOMAIN, old_unique_id) is None
 
 
-async def test_old_entity_migration(
-    opp, hank_binary_switch_state, client, integration
-):
+async def test_old_entity_migration(opp, hank_binary_switch_state, client, integration):
     """Test old entity on a different endpoint is migrated to a new one."""
     node = Node(client, hank_binary_switch_state)
 

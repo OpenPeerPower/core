@@ -218,7 +218,7 @@ class ServiceIntentHandler(IntentHandler):
 class Intent:
     """Hold the intent."""
 
-    __slots__ = ["opp., "platform", "intent_type", "slots", "text_input", "context"]
+    __slots__ = ["opp", "platform", "intent_type", "slots", "text_input", "context"]
 
     def __init__(
         self,

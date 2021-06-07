@@ -19,9 +19,7 @@ async def test_device_setup(opp):
 
     with patch.object(
         opp.config_entries, "async_forward_entry_setup"
-    ) as mock_forward, patch.object(
-        opp.config_entries.flow, "async_init"
-    ) as mock_init:
+    ) as mock_forward, patch.object(opp.config_entries.flow, "async_init") as mock_init:
         mock_api, mock_entry = await device.setup_entry(opp)
 
     assert mock_entry.state == ConfigEntryState.LOADED
@@ -42,9 +40,7 @@ async def test_device_setup_authentication_error(opp):
 
     with patch.object(
         opp.config_entries, "async_forward_entry_setup"
-    ) as mock_forward, patch.object(
-        opp.config_entries.flow, "async_init"
-    ) as mock_init:
+    ) as mock_forward, patch.object(opp.config_entries.flow, "async_init") as mock_init:
         mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state == ConfigEntryState.SETUP_ERROR
@@ -66,9 +62,7 @@ async def test_device_setup_network_timeout(opp):
 
     with patch.object(
         opp.config_entries, "async_forward_entry_setup"
-    ) as mock_forward, patch.object(
-        opp.config_entries.flow, "async_init"
-    ) as mock_init:
+    ) as mock_forward, patch.object(opp.config_entries.flow, "async_init") as mock_init:
         mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state is ConfigEntryState.SETUP_RETRY
@@ -85,9 +79,7 @@ async def test_device_setup_os_error(opp):
 
     with patch.object(
         opp.config_entries, "async_forward_entry_setup"
-    ) as mock_forward, patch.object(
-        opp.config_entries.flow, "async_init"
-    ) as mock_init:
+    ) as mock_forward, patch.object(opp.config_entries.flow, "async_init") as mock_init:
         mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state is ConfigEntryState.SETUP_RETRY
@@ -104,9 +96,7 @@ async def test_device_setup_broadlink_exception(opp):
 
     with patch.object(
         opp.config_entries, "async_forward_entry_setup"
-    ) as mock_forward, patch.object(
-        opp.config_entries.flow, "async_init"
-    ) as mock_init:
+    ) as mock_forward, patch.object(opp.config_entries.flow, "async_init") as mock_init:
         mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state is ConfigEntryState.SETUP_ERROR
@@ -123,9 +113,7 @@ async def test_device_setup_update_network_timeout(opp):
 
     with patch.object(
         opp.config_entries, "async_forward_entry_setup"
-    ) as mock_forward, patch.object(
-        opp.config_entries.flow, "async_init"
-    ) as mock_init:
+    ) as mock_forward, patch.object(opp.config_entries.flow, "async_init") as mock_init:
         mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state is ConfigEntryState.SETUP_RETRY
@@ -146,9 +134,7 @@ async def test_device_setup_update_authorization_error(opp):
 
     with patch.object(
         opp.config_entries, "async_forward_entry_setup"
-    ) as mock_forward, patch.object(
-        opp.config_entries.flow, "async_init"
-    ) as mock_init:
+    ) as mock_forward, patch.object(opp.config_entries.flow, "async_init") as mock_init:
         mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state is ConfigEntryState.LOADED
@@ -170,9 +156,7 @@ async def test_device_setup_update_authentication_error(opp):
 
     with patch.object(
         opp.config_entries, "async_forward_entry_setup"
-    ) as mock_forward, patch.object(
-        opp.config_entries.flow, "async_init"
-    ) as mock_init:
+    ) as mock_forward, patch.object(opp.config_entries.flow, "async_init") as mock_init:
         mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state is ConfigEntryState.SETUP_RETRY
@@ -195,9 +179,7 @@ async def test_device_setup_update_broadlink_exception(opp):
 
     with patch.object(
         opp.config_entries, "async_forward_entry_setup"
-    ) as mock_forward, patch.object(
-        opp.config_entries.flow, "async_init"
-    ) as mock_init:
+    ) as mock_forward, patch.object(opp.config_entries.flow, "async_init") as mock_init:
         mock_api, mock_entry = await device.setup_entry(opp, mock_api=mock_api)
 
     assert mock_entry.state is ConfigEntryState.SETUP_RETRY

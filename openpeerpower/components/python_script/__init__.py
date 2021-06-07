@@ -35,7 +35,7 @@ FOLDER = "python_scripts"
 
 CONFIG_SCHEMA = vol.Schema({DOMAIN: vol.Schema(dict)}, extra=vol.ALLOW_EXTRA)
 
-ALLOWED_HASS = {"bus", "services", "states"}
+ALLOWED_OPP = {"bus", "services", "states"}
 ALLOWED_EVENTBUS = {"fire"}
 ALLOWED_STATEMACHINE = {
     "entity_ids",
@@ -166,8 +166,8 @@ def execute(opp, filename, source, data=None):
         if name.startswith("async_"):
             raise ScriptError("Not allowed to access async methods")
         if (
-            obj is.opp
-            and name not in ALLOWED_HASS
+            obj is opp
+            and name not in ALLOWED_OPP
             or obj is opp.bus
             and name not in ALLOWED_EVENTBUS
             or obj is opp.states
@@ -210,7 +210,7 @@ def execute(opp, filename, source, data=None):
         "_getitem_": default_guarded_getitem,
         "_iter_unpack_sequence_": guarded_iter_unpack_sequence,
         "_unpack_sequence_": guarded_unpack_sequence,
-        "opp.: opp,
+        "opp": opp,
         "data": data or {},
         "logger": logger,
     }

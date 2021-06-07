@@ -49,7 +49,7 @@ async def async_enable_proactive_mode(opp, smart_home_config):
         old_state: State | None,
         new_state: State | None,
     ):
-        if not opp is_running:
+        if not opp.is_running:
             return
 
         if not new_state:

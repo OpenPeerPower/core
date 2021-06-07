@@ -149,9 +149,7 @@ async def async_unload_entry(opp, config_entry):
     opp.services.async_remove(DOMAIN, SERVICE_CAPTURE_IMAGE)
     opp.services.async_remove(DOMAIN, SERVICE_TRIGGER_AUTOMATION)
 
-    unload_ok = await opp.config_entries.async_unload_platforms(
-        config_entry, PLATFORMS
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(config_entry, PLATFORMS)
 
     await opp.async_add_executor_job(opp.data[DOMAIN].abode.events.stop)
     await opp.async_add_executor_job(opp.data[DOMAIN].abode.logout)

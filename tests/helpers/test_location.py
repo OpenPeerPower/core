@@ -68,8 +68,7 @@ async def test_coordinates_function_device_tracker_in_zone(opp):
     )
     opp.states.async_set("device_tracker.device", "home")
     assert (
-        location.find_coordinates(opp, "device_tracker.device")
-        == "32.87336,-117.22943"
+        location.find_coordinates(opp, "device_tracker.device") == "32.87336,-117.22943"
     )
 
 

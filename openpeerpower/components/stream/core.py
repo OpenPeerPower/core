@@ -175,7 +175,7 @@ class StreamView(OpenPeerPowerView):
 
     async def get(self, request, token, sequence=None):
         """Start a GET request."""
-        opp = request.app["opp.]
+        opp = request.app["opp"]
 
         stream = next(
             (s for s in opp.data[DOMAIN][ATTR_STREAMS] if s.access_token == token),

@@ -14,7 +14,7 @@ def async_at_start(
 
     Will execute it now if Open Peer Power is already started.
     """
-    if opp is_running:
+    if opp.is_running:
         opp.async_create_task(at_start_cb(opp))
         return
 

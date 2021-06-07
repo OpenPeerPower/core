@@ -23,9 +23,7 @@ from .const import (
 )
 
 
-async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
-):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry, async_add_entities):
     """Configure a dispatcher connection based on a config entry."""
 
     @callback

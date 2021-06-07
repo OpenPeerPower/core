@@ -151,7 +151,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     async def async_keep_alive(now):
-        if opp is_stopping:
+        if opp.is_stopping:
             return
 
         try:

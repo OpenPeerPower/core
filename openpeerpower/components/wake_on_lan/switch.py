@@ -83,9 +83,7 @@ class WolSwitch(SwitchEntity):
         self._broadcast_address = broadcast_address
         self._broadcast_port = broadcast_port
         domain = __name__.split(".")[-2]
-        self._off_script = (
-            Script(opp, off_action, name, domain) if off_action else None
-        )
+        self._off_script = Script(opp, off_action, name, domain) if off_action else None
         self._state = False
         self._assumed_state = host is None
         self._unique_id = dr.format_mac(mac_address)

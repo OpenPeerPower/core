@@ -185,9 +185,7 @@ async def test_gateway_setup_fails(opp):
     assert not opp.data[DECONZ_DOMAIN]
 
 
-async def test_connection_status_signalling(
-    opp, aioclient_mock, mock_deconz_websocket
-):
+async def test_connection_status_signalling(opp, aioclient_mock, mock_deconz_websocket):
     """Make sure that connection status triggers a dispatcher send."""
     data = {
         "sensors": {

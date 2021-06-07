@@ -28,9 +28,7 @@ PLATFORMS = ["media_player"]
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry(
-    opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
-):
+async def async_setup_entry(opp: core.OpenPeerPower, entry: config_entries.ConfigEntry):
     """Set up the denonavr components from a config entry."""
     opp.data.setdefault(DOMAIN, {})
 
@@ -65,9 +63,7 @@ async def async_unload_entry(
     opp: core.OpenPeerPower, config_entry: config_entries.ConfigEntry
 ):
     """Unload a config entry."""
-    unload_ok = await opp.config_entries.async_unload_platforms(
-        config_entry, PLATFORMS
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(config_entry, PLATFORMS)
 
     opp.data[DOMAIN][config_entry.entry_id][UNDO_UPDATE_LISTENER]()
 

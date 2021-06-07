@@ -59,9 +59,7 @@ async def async_setup(opp: OpenPeerPower, config: dict[str, Any]) -> bool:
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up NEW_NAME from a config entry."""
     implementation = (
-        await config_entry_oauth2_flow.async_get_config_entry_implementation(
-            opp, entry
-        )
+        await config_entry_oauth2_flow.async_get_config_entry_implementation(opp, entry)
     )
 
     session = config_entry_oauth2_flow.OAuth2Session(opp, entry, implementation)

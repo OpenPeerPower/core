@@ -87,9 +87,7 @@ def run_driver(opp):
     ), patch(
         "pyhap.accessory_driver.AccessoryDriver.persist"
     ):
-        yield AccessoryDriver(
-            pincode=b"123-45-678", address="127.0.0.1", loop=opp.loop
-        )
+        yield AccessoryDriver(pincode=b"123-45-678", address="127.0.0.1", loop=opp.loop)
 
 
 def _get_exits_after_startup_mock_ffmpeg():
@@ -152,7 +150,7 @@ async def test_camera_stream_source_configured(opp, run_driver, events):
         4,
         {},
     )
-    bridge = HomeBridge("opp., run_driver, "Test Bridge")
+    bridge = HomeBridge("opp", run_driver, "Test Bridge")
     bridge.add_accessory(acc)
     bridge.add_accessory(not_camera_acc)
 
@@ -267,7 +265,7 @@ async def test_camera_stream_source_configured_with_failing_ffmpeg(
         4,
         {},
     )
-    bridge = HomeBridge("opp., run_driver, "Test Bridge")
+    bridge = HomeBridge("opp", run_driver, "Test Bridge")
     bridge.add_accessory(acc)
     bridge.add_accessory(not_camera_acc)
 
@@ -436,7 +434,7 @@ async def test_camera_stream_source_configured_and_copy_codec(opp, run_driver, e
             CONF_AUDIO_CODEC: AUDIO_CODEC_COPY,
         },
     )
-    bridge = HomeBridge("opp., run_driver, "Test Bridge")
+    bridge = HomeBridge("opp", run_driver, "Test Bridge")
     bridge.add_accessory(acc)
 
     await acc.run()
@@ -507,7 +505,7 @@ async def test_camera_streaming_fails_after_starting_ffmpeg(opp, run_driver, eve
             CONF_AUDIO_CODEC: AUDIO_CODEC_COPY,
         },
     )
-    bridge = HomeBridge("opp., run_driver, "Test Bridge")
+    bridge = HomeBridge("opp", run_driver, "Test Bridge")
     bridge.add_accessory(acc)
 
     await acc.run()
@@ -585,7 +583,7 @@ async def test_camera_with_linked_motion_sensor(opp, run_driver, events):
             CONF_LINKED_MOTION_SENSOR: motion_entity_id,
         },
     )
-    bridge = HomeBridge("opp., run_driver, "Test Bridge")
+    bridge = HomeBridge("opp", run_driver, "Test Bridge")
     bridge.add_accessory(acc)
 
     await acc.run()
@@ -641,7 +639,7 @@ async def test_camera_with_a_missing_linked_motion_sensor(opp, run_driver, event
         2,
         {CONF_LINKED_MOTION_SENSOR: motion_entity_id},
     )
-    bridge = HomeBridge("opp., run_driver, "Test Bridge")
+    bridge = HomeBridge("opp", run_driver, "Test Bridge")
     bridge.add_accessory(acc)
 
     await acc.run()
@@ -683,7 +681,7 @@ async def test_camera_with_linked_doorbell_sensor(opp, run_driver, events):
             CONF_LINKED_DOORBELL_SENSOR: doorbell_entity_id,
         },
     )
-    bridge = HomeBridge("opp., run_driver, "Test Bridge")
+    bridge = HomeBridge("opp", run_driver, "Test Bridge")
     bridge.add_accessory(acc)
 
     await acc.run()
@@ -750,7 +748,7 @@ async def test_camera_with_a_missing_linked_doorbell_sensor(opp, run_driver, eve
         2,
         {CONF_LINKED_DOORBELL_SENSOR: doorbell_entity_id},
     )
-    bridge = HomeBridge("opp., run_driver, "Test Bridge")
+    bridge = HomeBridge("opp", run_driver, "Test Bridge")
     bridge.add_accessory(acc)
 
     await acc.run()

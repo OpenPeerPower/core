@@ -50,7 +50,7 @@ async def test_open_peer_power_core_config_validation(opp):
     """Test if we pass in wrong information for OPP conf."""
     # Extensive OPP conf validation testing is done
     result = await bootstrap.async_from_config_dict(
-        {"openpeerpower": {"latitude": "some string"}},.opp
+        {"openpeerpower": {"latitude": "some string"}}, opp
     )
     assert result is None
 
@@ -654,9 +654,7 @@ async def test_empty_integrations_list_is_only_sent_at_the_end_of_bootstrap(opp)
     def _bootstrap_integrations(data):
         integrations.append(data)
 
-    async_dispatcher_connect(
-        opp, SIGNAL_BOOTSTRAP_INTEGRATONS, _bootstrap_integrations
-    )
+    async_dispatcher_connect(opp, SIGNAL_BOOTSTRAP_INTEGRATONS, _bootstrap_integrations)
     with patch.object(bootstrap, "SLOW_STARTUP_CHECK_INTERVAL", 0.05):
         await bootstrap._async_set_up_integrations(
             opp, {"normal_integration": {}, "an_after_dep": {}}

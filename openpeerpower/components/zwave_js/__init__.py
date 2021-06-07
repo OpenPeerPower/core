@@ -439,9 +439,7 @@ async def async_setup_entry(  # noqa: C901
         unsubscribe_callbacks.append(
             client.driver.controller.on(
                 "node added",
-                lambda event: opp.async_create_task(
-                    async_on_node_added(event["node"])
-                ),
+                lambda event: opp.async_create_task(async_on_node_added(event["node"])),
             )
         )
         # listen for nodes being removed from the mesh
@@ -517,9 +515,7 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     tasks = []
     for platform, task in info[DATA_PLATFORM_SETUP].items():
         if task.done():
-            tasks.append(
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-            )
+            tasks.append(opp.config_entries.async_forward_entry_unload(entry, platform))
         else:
             task.cancel()
             tasks.append(task)

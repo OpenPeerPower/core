@@ -469,9 +469,7 @@ async def test_volume_up_down(opp):
     )
     assert monoprice.zones[11].volume == 0
 
-    await _call_media_player_service(
-        opp, SERVICE_VOLUME_DOWN, {"entity_id": ZONE_1_ID}
-    )
+    await _call_media_player_service(opp, SERVICE_VOLUME_DOWN, {"entity_id": ZONE_1_ID})
     # should not go below zero
     assert monoprice.zones[11].volume == 0
 
@@ -487,9 +485,7 @@ async def test_volume_up_down(opp):
     # should not go above 38
     assert monoprice.zones[11].volume == 38
 
-    await _call_media_player_service(
-        opp, SERVICE_VOLUME_DOWN, {"entity_id": ZONE_1_ID}
-    )
+    await _call_media_player_service(opp, SERVICE_VOLUME_DOWN, {"entity_id": ZONE_1_ID})
     assert monoprice.zones[11].volume == 37
 
 

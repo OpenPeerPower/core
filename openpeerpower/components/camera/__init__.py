@@ -235,9 +235,7 @@ def _get_camera_from_entity_id(opp: OpenPeerPower, entity_id: str) -> Camera:
 
 async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up the camera component."""
-    component = opp.data[DOMAIN] = EntityComponent(
-        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
-    )
+    component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp, SCAN_INTERVAL)
 
     prefs = CameraPreferences(opp)
     await prefs.async_initialize()

@@ -68,9 +68,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
     host = config[CONF_HOST]
 
     bravia_config_file_path = opp.config.path(BRAVIA_CONFIG_FILE)
-    bravia_config = await opp.async_add_executor_job(
-        load_json, bravia_config_file_path
-    )
+    bravia_config = await opp.async_add_executor_job(load_json, bravia_config_file_path)
     if not bravia_config:
         _LOGGER.error(
             "Configuration import failed, there is no bravia.conf file in the configuration folder"

@@ -54,11 +54,9 @@ def get_service(opp, config, discovery_info=None):
 class LaMetricNotificationService(BaseNotificationService):
     """Implement the notification service for LaMetric."""
 
-    def __init__(
-        self, opp.ametricmanager, icon, lifetime, cycles, priority, icon_type
-    ):
+    def __init__(self, opplametricmanager, icon, lifetime, cycles, priority, icon_type):
         """Initialize the service."""
-        self.opp.ametricmanager = opp.ametricmanager
+        self.opp.ametricmanager = opplametricmanager
         self._icon = icon
         self._lifetime = lifetime
         self._cycles = cycles

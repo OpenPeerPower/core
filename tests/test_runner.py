@@ -30,7 +30,7 @@ async def test_setup_and_run_opp(opp, tmpdir):
     test_dir = tmpdir.mkdir("config")
     default_config = runner.RuntimeConfig(test_dir)
 
-    with patch("openpeerpower.bootstrap.async_setup_opp., return_value=opp), patch(
+    with patch("openpeerpower.bootstrap.async_setup_opp", return_value=opp), patch(
         "threading._shutdown"
     ), patch("openpeerpower.core.OpenPeerPower.async_run") as mock_run:
         await runner.setup_and_run_opp(default_config)

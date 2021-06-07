@@ -203,9 +203,7 @@ async def test_themes_persist(opp, opp_storage, opp_ws_client, ignore_frontend_d
 async def test_themes_save_storage(opp, opp_storage, frontend_themes):
     """Test that theme settings are restores after restart."""
 
-    await opp.services.async_call(
-        DOMAIN, "set_theme", {"name": "happy"}, blocking=True
-    )
+    await opp.services.async_call(DOMAIN, "set_theme", {"name": "happy"}, blocking=True)
 
     await opp.services.async_call(
         DOMAIN, "set_theme", {"name": "dark", "mode": "dark"}, blocking=True
@@ -224,9 +222,7 @@ async def test_themes_save_storage(opp, opp_storage, frontend_themes):
 
 async def test_themes_set_theme(opp, themes_ws_client):
     """Test frontend.set_theme service."""
-    await opp.services.async_call(
-        DOMAIN, "set_theme", {"name": "happy"}, blocking=True
-    )
+    await opp.services.async_call(DOMAIN, "set_theme", {"name": "happy"}, blocking=True)
 
     await themes_ws_client.send_json({"id": 5, "type": "frontend/get_themes"})
     msg = await themes_ws_client.receive_json()
@@ -242,9 +238,7 @@ async def test_themes_set_theme(opp, themes_ws_client):
 
     assert msg["result"]["default_theme"] == "default"
 
-    await opp.services.async_call(
-        DOMAIN, "set_theme", {"name": "happy"}, blocking=True
-    )
+    await opp.services.async_call(DOMAIN, "set_theme", {"name": "happy"}, blocking=True)
 
     await opp.services.async_call(DOMAIN, "set_theme", {"name": "none"}, blocking=True)
 
@@ -257,9 +251,7 @@ async def test_themes_set_theme(opp, themes_ws_client):
 async def test_themes_set_theme_wrong_name(opp, themes_ws_client):
     """Test frontend.set_theme service called with wrong name."""
 
-    await opp.services.async_call(
-        DOMAIN, "set_theme", {"name": "wrong"}, blocking=True
-    )
+    await opp.services.async_call(DOMAIN, "set_theme", {"name": "wrong"}, blocking=True)
 
     await themes_ws_client.send_json({"id": 5, "type": "frontend/get_themes"})
 
@@ -509,9 +501,7 @@ async def test_manifest_json(opp, frontend_themes, mock_http_client):
     json = await resp.json()
     assert json["theme_color"] == DEFAULT_THEME_COLOR
 
-    await opp.services.async_call(
-        DOMAIN, "set_theme", {"name": "happy"}, blocking=True
-    )
+    await opp.services.async_call(DOMAIN, "set_theme", {"name": "happy"}, blocking=True)
     await opp.async_block_till_done()
 
     resp = await mock_http_client.get("/manifest.json")

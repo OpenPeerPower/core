@@ -57,9 +57,7 @@ PROP_TO_ATTR: Final[dict[str, str]] = {
 
 async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up the air quality component."""
-    component = opp.data[DOMAIN] = EntityComponent(
-        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
-    )
+    component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp, SCAN_INTERVAL)
     await component.async_setup(config)
     return True
 

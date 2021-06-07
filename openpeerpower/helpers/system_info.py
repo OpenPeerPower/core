@@ -51,7 +51,7 @@ async def async_get_system_info(opp: OpenPeerPower) -> dict[str, Any]:
         info_object["docker_version"] = info.get("docker")
         info_object["copp.s"] = host.get("copp.s")
 
-        if info.get("opp.s") is not None:
+        if info.get("oppos") is not None:
             info_object["installation_type"] = "Open Peer Power OS"
         else:
             info_object["installation_type"] = "Open Peer Power Supervised"

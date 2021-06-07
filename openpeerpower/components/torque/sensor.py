@@ -44,9 +44,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     email = config.get(CONF_EMAIL)
     sensors = {}
 
-    opp.http.register_view(
-        TorqueReceiveDataView(email, vehicle, sensors, add_entities)
-    )
+    opp.http.register_view(TorqueReceiveDataView(email, vehicle, sensors, add_entities))
     return True
 
 
@@ -66,7 +64,7 @@ class TorqueReceiveDataView(OpenPeerPowerView):
     @callback
     def get(self, request):
         """Handle Torque data request."""
-        opp = request.app["opp.]
+        opp = request.app["opp"]
         data = request.query
 
         if self.email is not None and self.email != data[SENSOR_EMAIL_FIELD]:

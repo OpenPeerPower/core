@@ -146,7 +146,7 @@ class ImageUploadView(OpenPeerPowerView):
         request._client_max_size = MAX_SIZE  # pylint: disable=protected-access
 
         data = await request.post()
-        item = await request.app["opp.].data[DOMAIN].async_create_item(data)
+        item = await request.app["opp"].data[DOMAIN].async_create_item(data)
         return self.json(item)
 
 
@@ -183,7 +183,7 @@ class ImageServeView(OpenPeerPowerView):
         if image_info is None:
             raise web.HTTPNotFound()
 
-        opp = request.app["opp.]
+        opp = request.app["opp"]
         target_file = self.image_folder / image_id / f"{width}x{height}"
 
         if not target_file.is_file():

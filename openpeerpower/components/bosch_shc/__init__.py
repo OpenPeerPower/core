@@ -70,9 +70,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         await opp.async_add_executor_job(session.stop_polling)
 
     await opp.async_add_executor_job(session.start_polling)
-    opp.data[DOMAIN][entry.entry_id][
-        DATA_POLLING_HANDLER
-    ] = opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_polling)
+    opp.data[DOMAIN][entry.entry_id][DATA_POLLING_HANDLER] = opp.bus.async_listen_once(
+        EVENT_OPENPEERPOWER_STOP, stop_polling
+    )
 
     return True
 

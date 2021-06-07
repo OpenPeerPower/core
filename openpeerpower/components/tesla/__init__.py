@@ -221,9 +221,7 @@ async def async_setup_entry(opp, config_entry):
 
 async def async_unload_entry(opp, config_entry) -> bool:
     """Unload a config entry."""
-    unload_ok = await opp.config_entries.async_unload_platforms(
-        config_entry, PLATFORMS
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(config_entry, PLATFORMS)
     for listener in opp.data[DOMAIN][config_entry.entry_id][DATA_LISTENER]:
         listener()
     username = config_entry.title
@@ -270,9 +268,7 @@ class TeslaDataUpdateCoordinator(DataUpdateCoordinator):
             result = self.controller.get_tokens()
             refresh_token = result["refresh_token"]
             access_token = result["access_token"]
-            _async_save_tokens(
-                self.opp, self.config_entry, access_token, refresh_token
-            )
+            _async_save_tokens(self.opp, self.config_entry, access_token, refresh_token)
             _LOGGER.debug("Saving new tokens in config_entry")
 
         try:

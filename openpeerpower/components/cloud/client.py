@@ -118,7 +118,7 @@ class CloudClient(Interface):
             try:
                 await aconf.async_enable_proactive_mode()
             except aiohttp.ClientError as err:  # If no internet available yet
-                if self._opp is_running:
+                if self._opp.is_running:
                     logging.getLogger(__package__).warning(
                         "Unable to activate Alexa Report State: %s. Retrying in 30 seconds",
                         err,

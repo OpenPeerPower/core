@@ -43,7 +43,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     owm = OWM(api_key, config_dict).weather_manager()
     weather_coordinator = WeatherUpdateCoordinator(
-        owm, latitude, longitude, forecast_mode,.opp
+        owm, latitude, longitude, forecast_mode, opp
     )
 
     await weather_coordinator.async_config_entry_first_refresh()

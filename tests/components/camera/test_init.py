@@ -157,9 +157,7 @@ async def test_websocket_camera_thumbnail(opp, opp_ws_client, mock_camera):
     assert msg["result"]["content"] == base64.b64encode(b"Test").decode("utf-8")
 
 
-async def test_websocket_stream_no_source(
-    opp, opp_ws_client, mock_camera, mock_stream
-):
+async def test_websocket_stream_no_source(opp, opp_ws_client, mock_camera, mock_stream):
     """Test camera/stream websocket command with camera with no source."""
     await async_setup_component(opp, "camera", {})
 
@@ -325,9 +323,9 @@ async def test_preload_stream(opp, mock_stream):
 
 async def test_record_service_invalid_path(opp, mock_camera):
     """Test record service with invalid path."""
-    with patch.object(
-        opp.config, "is_allowed_path", return_value=False
-    ), pytest.raises(OpenPeerPowerError):
+    with patch.object(opp.config, "is_allowed_path", return_value=False), pytest.raises(
+        OpenPeerPowerError
+    ):
         # Call service
         await opp.services.async_call(
             camera.DOMAIN,

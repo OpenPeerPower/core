@@ -36,13 +36,13 @@ async def test_api_info(oppio_handler, aioclient_mock):
         "http://127.0.0.1/info",
         json={
             "result": "ok",
-            "data": {"supervisor": "222", "openpeerpower": "0.110.0", "opp.s": None},
+            "data": {"supervisor": "222", "openpeerpower": "0.110.0", "oppos": None},
         },
     )
 
     data = await oppio_handler.get_info()
     assert aioclient_mock.call_count == 1
-    assert data["opp.s"] is None
+    assert data["oppos"] is None
     assert data["openpeerpower"] == "0.110.0"
     assert data["supervisor"] == "222"
 

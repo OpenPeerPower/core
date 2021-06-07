@@ -959,7 +959,7 @@ class Script:
         self._top_level = top_level
         if top_level:
             all_scripts.append(
-                {"instance": self, "started_before_shutdown": not opp is_stopping}
+                {"instance": self, "started_before_shutdown": not opp.is_stopping}
             )
         if DATA_SCRIPT_BREAKPOINTS not in opp.data:
             opp.data[DATA_SCRIPT_BREAKPOINTS] = {}
@@ -1195,9 +1195,7 @@ class Script:
             cls = _ScriptRun
         else:
             cls = _QueuedScriptRun
-        run = cls(
-            self._opp, self, cast(dict, variables), context, self._log_exceptions
-        )
+        run = cls(self._opp, self, cast(dict, variables), context, self._log_exceptions)
         self._runs.append(run)
         if self.script_mode == SCRIPT_MODE_RESTART:
             # When script mode is SCRIPT_MODE_RESTART, first add the new run and then

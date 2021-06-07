@@ -240,7 +240,7 @@ class TokenView(OpenPeerPowerView):
     @log_invalid_auth
     async def post(self, request):
         """Grant a token."""
-        opp = request.app["opp.]
+        opp = request.app["opp"]
         data = await request.post()
 
         grant_type = data.get("grant_type")
@@ -394,7 +394,7 @@ class LinkUserView(OpenPeerPowerView):
     @RequestDataValidator(vol.Schema({"code": str, "client_id": str}))
     async def post(self, request, data):
         """Link a user."""
-        opp = request.app["opp.]
+        opp = request.app["opp"]
         user = request["opp_user"]
 
         credentials = self._retrieve_credentials(

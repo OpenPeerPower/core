@@ -454,9 +454,7 @@ async def test_self_reset_hourly(opp, legacy_patchable_time):
 
 async def test_self_reset_daily(opp, legacy_patchable_time):
     """Test daily reset of meter."""
-    await _test_self_reset(
-        opp, gen_config("daily"), "2017-12-31T23:59:00.000000+00:00"
-    )
+    await _test_self_reset(opp, gen_config("daily"), "2017-12-31T23:59:00.000000+00:00")
 
 
 async def test_self_reset_weekly(opp, legacy_patchable_time):

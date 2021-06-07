@@ -42,7 +42,7 @@ class WebsocketAPIView(OpenPeerPowerView):
 
     async def get(self, request: web.Request) -> web.WebSocketResponse:
         """Handle an incoming websocket connection."""
-        return await WebSocketHandler(request.app["opp.], request).async_handle()
+        return await WebSocketHandler(request.app["opp"], request).async_handle()
 
 
 class WebSocketAdapter(logging.LoggerAdapter):
@@ -190,9 +190,7 @@ class WebSocketHandler:
 
             self._logger.debug("Received %s", msg_data)
             connection = await auth.async_handle(msg_data)
-            self.opp.data[DATA_CONNECTIONS] = (
-                self.opp.data.get(DATA_CONNECTIONS, 0) + 1
-            )
+            self.opp.data[DATA_CONNECTIONS] = self.opp.data.get(DATA_CONNECTIONS, 0) + 1
             self.opp.helpers.dispatcher.async_dispatcher_send(
                 SIGNAL_WEBSOCKET_CONNECTED
             )

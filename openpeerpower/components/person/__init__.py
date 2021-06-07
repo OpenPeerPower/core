@@ -347,9 +347,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType):
             await filter_yaml_data(opp, conf.get(DOMAIN, []))
         )
 
-    service.async_register_admin_service(
-        opp, DOMAIN, SERVICE_RELOAD, async_reload_yaml
-    )
+    service.async_register_admin_service(opp, DOMAIN, SERVICE_RELOAD, async_reload_yaml)
 
     return True
 
@@ -427,7 +425,7 @@ class Person(RestoreEntity):
         if state:
             self._parse_source_state(state)
 
-        if self.opp is_running:
+        if self.opp.is_running:
             # Update person now if opp is already running.
             await self.async_update_config(self._config)
         else:
@@ -436,9 +434,7 @@ class Person(RestoreEntity):
             async def person_start_opp(now):
                 await self.async_update_config(self._config)
 
-            self.opp.bus.async_listen_once(
-                EVENT_OPENPEERPOWER_START, person_start_opp
-            )
+            self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, person_start_opp)
 
     async def async_update_config(self, config):
         """Handle when the config is updated."""
@@ -513,9 +509,7 @@ class Person(RestoreEntity):
 
 
 @websocket_api.websocket_command({vol.Required(CONF_TYPE): "person/list"})
-def ws_list_person(
-    opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg
-):
+def ws_list_person(opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg):
     """List persons."""
     yaml, storage = opp.data[DOMAIN]
     connection.send_result(

@@ -727,9 +727,7 @@ async def test_purge_entities(
         states = session.query(States)
         assert states.count() == 190
 
-        await _purge_entities(
-            opp, "sensor.purge_entity", "purge_domain", "*purge_glob"
-        )
+        await _purge_entities(opp, "sensor.purge_entity", "purge_domain", "*purge_glob")
         assert states.count() == 10
 
         states_sensor_kept = session.query(States).filter(

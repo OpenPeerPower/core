@@ -21,7 +21,7 @@ class MockRequest:
 
     def __init__(self, opp, query):
         """Init request object."""
-        self.app = {"opp.: opp.
+        self.app = {"opp": opp}
         self.query = query
 
 

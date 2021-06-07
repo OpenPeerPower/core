@@ -451,9 +451,7 @@ async def test_sending_mqtt_commands_and_optimistic(opp, mqtt_mock):
     assert state.attributes.get("rgb_color") == (0, 255, 128)
 
     # Half brightness - normalization+scaling of RGB values sent over MQTT
-    await common.async_turn_on(
-        opp, "light.test", rgb_color=[0, 32, 16], white_value=40
-    )
+    await common.async_turn_on(opp, "light.test", rgb_color=[0, 32, 16], white_value=40)
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,,,40,0-128-64", 2, False
     )
@@ -464,9 +462,7 @@ async def test_sending_mqtt_commands_and_optimistic(opp, mqtt_mock):
     assert state.attributes.get("rgb_color") == (0, 255, 127)
 
 
-async def test_sending_mqtt_commands_non_optimistic_brightness_template(
-    opp, mqtt_mock
-):
+async def test_sending_mqtt_commands_non_optimistic_brightness_template(opp, mqtt_mock):
     """Test the sending of command in optimistic mode."""
     with assert_setup_component(1, light.DOMAIN):
         assert await async_setup_component(
@@ -584,9 +580,7 @@ async def test_sending_mqtt_commands_non_optimistic_brightness_template(
     state = opp.states.get("light.test")
 
     # Half brightness - normalization but no scaling of RGB values sent over MQTT
-    await common.async_turn_on(
-        opp, "light.test", rgb_color=[0, 32, 16], white_value=40
-    )
+    await common.async_turn_on(opp, "light.test", rgb_color=[0, 32, 16], white_value=40)
     mqtt_mock.async_publish.assert_called_once_with(
         "test_light_rgb/set", "on,,,40,0-255-127", 0, False
     )
@@ -780,9 +774,7 @@ async def test_invalid_values(opp, mqtt_mock):
     assert not state.attributes.get(ATTR_ASSUMED_STATE)
 
     # turn on the light, full white
-    async_fire_mqtt_message(
-        opp, "test_light_rgb", "on,255,215,222,255-255-255,rainbow"
-    )
+    async_fire_mqtt_message(opp, "test_light_rgb", "on,255,215,222,255-255-255,rainbow")
 
     state = opp.states.get("light.test")
     assert state.state == STATE_ON
@@ -955,9 +947,7 @@ async def test_discovery_update_light(opp, mqtt_mock, caplog):
         '  "command_on_template": "on",'
         '  "command_off_template": "off"}'
     )
-    await help_test_discovery_update(
-        opp, mqtt_mock, caplog, light.DOMAIN, data1, data2
-    )
+    await help_test_discovery_update(opp, mqtt_mock, caplog, light.DOMAIN, data1, data2)
 
 
 async def test_discovery_update_unchanged_light(opp, mqtt_mock, caplog):
@@ -990,9 +980,7 @@ async def test_discovery_broken(opp, mqtt_mock, caplog):
         '  "command_on_template": "on",'
         '  "command_off_template": "off"}'
     )
-    await help_test_discovery_broken(
-        opp, mqtt_mock, caplog, light.DOMAIN, data1, data2
-    )
+    await help_test_discovery_broken(opp, mqtt_mock, caplog, light.DOMAIN, data1, data2)
 
 
 async def test_entity_device_info_with_connection(opp, mqtt_mock):

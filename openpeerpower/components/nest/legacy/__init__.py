@@ -83,10 +83,10 @@ def nest_update_event_broker(opp, nest):
     """
     _LOGGER.debug("Listening for nest.update_event")
 
-    while opp is_running:
+    while opp.is_running:
         nest.update_event.wait()
 
-        if not opp is_running:
+        if not opp.is_running:
             break
 
         nest.update_event.clear()
@@ -225,9 +225,7 @@ async def async_setup_legacy_entry(opp, entry):
         DOMAIN, SERVICE_SET_AWAY_MODE, set_away_mode, schema=SET_AWAY_MODE_SCHEMA
     )
 
-    opp.services.async_register(
-        DOMAIN, SERVICE_SET_ETA, set_eta, schema=SET_ETA_SCHEMA
-    )
+    opp.services.async_register(DOMAIN, SERVICE_SET_ETA, set_eta, schema=SET_ETA_SCHEMA)
 
     opp.services.async_register(
         DOMAIN, SERVICE_CANCEL_ETA, cancel_eta, schema=CANCEL_ETA_SCHEMA

@@ -203,9 +203,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         EVENT_OPENPEERPOWER_STOP, _async_cancel_tuya_tracker
     )
 
-    opp.services.async_register(
-        DOMAIN, SERVICE_PULL_DEVICES, async_poll_devices_update
-    )
+    opp.services.async_register(DOMAIN, SERVICE_PULL_DEVICES, async_poll_devices_update)
 
     async def async_force_update(call):
         """Force all devices to pull data."""

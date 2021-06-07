@@ -74,7 +74,7 @@ class OppIOAuth(OppIOBaseAuth):
     async def post(self, request, data):
         """Handle auth requests."""
         self._check_access(request)
-        provider = auth_ha.async_get_provider(request.app["opp.])
+        provider = auth_ha.async_get_provider(request.app["opp"])
 
         try:
             await provider.async_validate_login(
@@ -104,7 +104,7 @@ class OppIOPasswordReset(OppIOBaseAuth):
     async def post(self, request, data):
         """Handle password reset requests."""
         self._check_access(request)
-        provider = auth_ha.async_get_provider(request.app["opp.])
+        provider = auth_ha.async_get_provider(request.app["opp"])
 
         try:
             await provider.async_change_password(

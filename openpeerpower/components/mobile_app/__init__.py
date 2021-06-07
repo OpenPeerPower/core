@@ -58,9 +58,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType):
 
     for deleted_id in opp.data[DOMAIN][DATA_DELETED_IDS]:
         with suppress(ValueError):
-            webhook_register(
-                opp, DOMAIN, "Deleted Webhook", deleted_id, handle_webhook
-            )
+            webhook_register(opp, DOMAIN, "Deleted Webhook", deleted_id, handle_webhook)
 
     opp.async_create_task(
         discovery.async_load_platform(opp, "notify", DOMAIN, {}, config)

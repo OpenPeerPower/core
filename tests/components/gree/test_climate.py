@@ -392,9 +392,7 @@ async def test_send_target_temperature(opp, discovery, device, mock_now):
     assert state.attributes.get(ATTR_TEMPERATURE) == 25
 
 
-async def test_send_target_temperature_device_timeout(
-    opp, discovery, device, mock_now
-):
+async def test_send_target_temperature_device_timeout(opp, discovery, device, mock_now):
     """Test for sending target temperature command to the device with a device timeout."""
     device().push_state_update.side_effect = DeviceTimeoutError
 
@@ -614,9 +612,7 @@ async def test_send_invalid_fan_mode(opp, discovery, device, mock_now):
     "fan_mode",
     (FAN_AUTO, FAN_LOW, FAN_MEDIUM_LOW, FAN_MEDIUM, FAN_MEDIUM_HIGH, FAN_HIGH),
 )
-async def test_send_fan_mode_device_timeout(
-    opp, discovery, device, mock_now, fan_mode
-):
+async def test_send_fan_mode_device_timeout(opp, discovery, device, mock_now, fan_mode):
     """Test for sending fan mode command to the device with a device timeout."""
     device().push_state_update.side_effect = DeviceTimeoutError
 

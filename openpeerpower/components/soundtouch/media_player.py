@@ -347,9 +347,7 @@ class SoundTouchDevice(MediaPlayerEntity):
             """Schedule an update when all platform entities have been added."""
             self.async_schedule_update_op_state(True)
 
-        self.opp.bus.async_listen_once(
-            EVENT_OPENPEERPOWER_START, async_update_on_start
-        )
+        self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, async_update_on_start)
 
     def play_media(self, media_type, media_id, **kwargs):
         """Play a piece of media."""

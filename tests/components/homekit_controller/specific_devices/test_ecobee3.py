@@ -36,9 +36,7 @@ async def test_ecobee3_setup(opp):
     climate = entity_registry.async_get("climate.homew")
     assert climate.unique_id == "homekit-123456789012-16"
 
-    climate_helper = Helper(
-        opp, "climate.homew", pairing, accessories[0], config_entry
-    )
+    climate_helper = Helper(opp, "climate.homew", pairing, accessories[0], config_entry)
     climate_state = await climate_helper.poll_and_get_state()
     assert climate_state.attributes["friendly_name"] == "HomeW"
     assert climate_state.attributes["supported_features"] == (

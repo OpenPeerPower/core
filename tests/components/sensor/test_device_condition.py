@@ -166,9 +166,7 @@ async def test_get_condition_capabilities_none(
         assert capabilities == expected_capabilities
 
 
-async def test_if_state_not_above_below(
-    opp, calls, caplog, enable_custom_integrations
-):
+async def test_if_state_not_above_below(opp, calls, caplog, enable_custom_integrations):
     """Test for bad value conditions."""
     platform = getattr(opp.components, f"test.{DOMAIN}")
 

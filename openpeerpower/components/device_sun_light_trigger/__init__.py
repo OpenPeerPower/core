@@ -72,7 +72,7 @@ async def async_setup(opp, config):
             opp, device_group, light_group, light_profile, disable_turn_off
         )
 
-    if opp is_running:
+    if opp.is_running:
         await activate_on_start(None)
     else:
         opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, activate_on_start)

@@ -20,7 +20,7 @@ from openpeerpower.components.cover import (
 from openpeerpower.const import STATE_CLOSED, STATE_CLOSING, STATE_OPEN, STATE_OPENING
 from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN, MYQ_COORDINATOR, MYQ_GATEWAY, MYQ_TO_HASS
+from .const import DOMAIN, MYQ_COORDINATOR, MYQ_GATEWAY, MYQ_TO_OPP
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -71,22 +71,22 @@ class MyQDevice(CoordinatorEntity, CoverEntity):
     @property
     def is_closed(self):
         """Return true if cover is closed, else False."""
-        return MYQ_TO_HASS.get(self._device.state) == STATE_CLOSED
+        return MYQ_TO_OPP.get(self._device.state) == STATE_CLOSED
 
     @property
     def is_closing(self):
         """Return if the cover is closing or not."""
-        return MYQ_TO_HASS.get(self._device.state) == STATE_CLOSING
+        return MYQ_TO_OPP.get(self._device.state) == STATE_CLOSING
 
     @property
     def is_open(self):
         """Return if the cover is opening or not."""
-        return MYQ_TO_HASS.get(self._device.state) == STATE_OPEN
+        return MYQ_TO_OPP.get(self._device.state) == STATE_OPEN
 
     @property
     def is_opening(self):
         """Return if the cover is opening or not."""
-        return MYQ_TO_HASS.get(self._device.state) == STATE_OPENING
+        return MYQ_TO_OPP.get(self._device.state) == STATE_OPENING
 
     @property
     def supported_features(self):

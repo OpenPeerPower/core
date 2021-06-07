@@ -54,7 +54,7 @@ async def test_statsd_setup_defaults(opp):
         assert await async_setup_component(opp, statsd.DOMAIN, config)
 
         assert mock_init.call_count == 1
-        assert mock_init.call_args == mock.call(host="host", port=8125, prefix="opp.)
+        assert mock_init.call_args == mock.call(host="host", port=8125, prefix="opp")
     assert opp.bus.listen.called
 
 

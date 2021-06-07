@@ -254,9 +254,7 @@ async def test_setting_sensor_bad_last_reset_via_mqtt_message(
     assert "Invalid last_reset message" in caplog.text
 
 
-async def test_setting_sensor_empty_last_reset_via_mqtt_message(
-    opp, caplog, mqtt_mock
-):
+async def test_setting_sensor_empty_last_reset_via_mqtt_message(opp, caplog, mqtt_mock):
     """Test the setting of the last_reset property via MQTT."""
     assert await async_setup_component(
         opp,

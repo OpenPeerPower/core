@@ -130,9 +130,7 @@ def setup(opp, config):
     return True
 
 
-async def async_setup_entry(
-    opp: core.OpenPeerPower, entry: config_entries.ConfigEntry
-):
+async def async_setup_entry(opp: core.OpenPeerPower, entry: config_entries.ConfigEntry):
     """Set up the xiaomi aqara components from a config entry."""
     opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN].setdefault(GATEWAYS_KEY, {})

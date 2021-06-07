@@ -89,9 +89,7 @@ async def test_one_lock_operation(opp):
         == "online_with_doorsense Name"
     )
 
-    assert await opp.services.async_call(
-        LOCK_DOMAIN, SERVICE_LOCK, data, blocking=True
-    )
+    assert await opp.services.async_call(LOCK_DOMAIN, SERVICE_LOCK, data, blocking=True)
     await opp.async_block_till_done()
 
     lock_online_with_doorsense_name = opp.states.get("lock.online_with_doorsense_name")

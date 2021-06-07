@@ -130,7 +130,7 @@ class ConversationProcessView(http.OpenPeerPowerView):
     )
     async def post(self, request, data):
         """Send a request for processing."""
-        opp = request.app["opp.]
+        opp = request.app["opp"]
 
         try:
             intent_result = await _async_converse(

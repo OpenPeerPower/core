@@ -177,7 +177,7 @@ class DataUpdateCoordinator(Generic[T]):
 
         self._debounced_refresh.async_cancel()
 
-        if scheduled and self.opp is_stopping:
+        if scheduled and self.opp.is_stopping:
             return
 
         start = monotonic()
@@ -258,7 +258,7 @@ class DataUpdateCoordinator(Generic[T]):
                 self.name,
                 monotonic() - start,
             )
-            if not auth_failed and self._listeners and not self.opp is_stopping:
+            if not auth_failed and self._listeners and not self.opp.is_stopping:
                 self._schedule_refresh()
 
         for update_callback in self._listeners:

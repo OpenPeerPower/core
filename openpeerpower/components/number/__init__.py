@@ -41,9 +41,7 @@ _LOGGER = logging.getLogger(__name__)
 
 async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Set up Number entities."""
-    component = opp.data[DOMAIN] = EntityComponent(
-        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
-    )
+    component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp, SCAN_INTERVAL)
     await component.async_setup(config)
 
     component.async_register_entity_service(

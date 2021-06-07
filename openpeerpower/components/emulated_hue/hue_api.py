@@ -286,7 +286,7 @@ class HueOneLightStateView(OpenPeerPowerView):
         if not is_local(ip_address(request.remote)):
             return self.json_message("Only local IPs allowed", HTTP_UNAUTHORIZED)
 
-        opp = request.app["opp.]
+        opp = request.app["opp"]
         opp_entity_id = self.config.number_to_entity_id(entity_id)
 
         if opp_entity_id is None:
@@ -328,7 +328,7 @@ class HueOneLightChangeView(OpenPeerPowerView):
             return self.json_message("Only local IPs allowed", HTTP_UNAUTHORIZED)
 
         config = self.config
-        opp = request.app["opp.]
+        opp = request.app["opp"]
         entity_id = config.number_to_entity_id(entity_number)
 
         if entity_id is None:
@@ -840,7 +840,7 @@ def create_config_model(config, request):
 
 def create_list_of_entities(config, request):
     """Create a list of all entities."""
-    opp = request.app["opp.]
+    opp = request.app["opp"]
     json_response = {}
 
     for entity in config.filter_exposed_entities(opp.states.async_all()):

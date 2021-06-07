@@ -130,8 +130,6 @@ async def async_setup(opp, config):
 
     opp.async_create_task(async_load_platform(opp, "sensor", DOMAIN, {}, config))
 
-    opp.async_create_task(
-        async_load_platform(opp, "binary_sensor", DOMAIN, {}, config)
-    )
+    opp.async_create_task(async_load_platform(opp, "binary_sensor", DOMAIN, {}, config))
 
     return True

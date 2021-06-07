@@ -102,7 +102,7 @@ class RestoreStateData:
 
     def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize the restore state data class."""
-        self.opp: OpenPeerPower =.opp
+        self.opp: OpenPeerPower = opp
         self.store: Store = Store(
             opp, STORAGE_VERSION, STORAGE_KEY, encoder=JSONEncoder
         )
@@ -261,7 +261,7 @@ class RestoreEntity(Entity):
         """Get the entity state from the previous run."""
         if self.opp is None or self.entity_id is None:
             # Return None if this entity isn't added to opp.yet
-            _LOGGER.warning("Cannot get last state. Entity not added to opp.)  # type: ignore[unreachable]
+            _LOGGER.warning("Cannot get last state. Entity not added to opp")  # type: ignore[unreachable]
             return None
         data = await RestoreStateData.async_get_instance(self.opp)
         if self.entity_id not in data.last_states:

@@ -119,7 +119,9 @@ class TestMicrosoftFaceIdentify:
         self.opp.block_till_done()
 
         state = self.opp.states.get("camera.demo_camera")
-        url = f"{self.opp.config.internal_url}{state.attributes.get(ATTR_ENTITY_PICTURE)}"
+        url = (
+            f"{self.opp.config.internal_url}{state.attributes.get(ATTR_ENTITY_PICTURE)}"
+        )
 
         face_events = []
 

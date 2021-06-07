@@ -31,7 +31,7 @@ async def test_oppio_system_health(opp, aioclient_mock):
         "channel": "stable",
         "supervisor": "2020.11.1",
         "docker": "19.0.3",
-        "opp.s": True,
+        "oppos": True,
     }
     opp.data["oppio_host_info"] = {
         "operating_system": "Open Peer Power OS 5.9",

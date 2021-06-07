@@ -51,7 +51,7 @@ async def get_legacy_user(auth):
 def app(opp):
     """Fixture to set up a web.Application."""
     app = web.Application()
-    app["opp.] =.opp
+    app["opp"] = opp
     app.router.add_get("/", mock_handler)
     async_setup_forwarded(app, True, [])
     return app
@@ -61,7 +61,7 @@ def app(opp):
 def app2(opp):
     """Fixture to set up a web.Application without real_ip middleware."""
     app = web.Application()
-    app["opp.] =.opp
+    app["opp"] = opp
     app.router.add_get("/", mock_handler)
     return app
 
@@ -87,7 +87,7 @@ async def test_auth_middleware_loaded_by_default(opp):
 
 
 async def test_cant_access_with_password_in_header(
-    app, aiohttp_client, legacy_auth,.opp
+    app, aiohttp_client, legacy_auth, opp
 ):
     """Test access with password in header."""
     setup_auth(opp, app)
@@ -101,7 +101,7 @@ async def test_cant_access_with_password_in_header(
 
 
 async def test_cant_access_with_password_in_query(
-    app, aiohttp_client, legacy_auth,.opp
+    app, aiohttp_client, legacy_auth, opp
 ):
     """Test access with password in URL."""
     setup_auth(opp, app)
@@ -209,7 +209,7 @@ async def test_auth_active_access_with_trusted_ip(
 
 
 async def test_auth_legacy_support_api_password_cannot_access(
-    app, aiohttp_client, legacy_auth,.opp
+    app, aiohttp_client, legacy_auth, opp
 ):
     """Test access using api_password if auth.support_legacy."""
     setup_auth(opp, app)

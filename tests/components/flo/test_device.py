@@ -21,9 +21,9 @@ async def test_device(opp, config_entry, aioclient_mock_fixture, aioclient_mock)
     await opp.async_block_till_done()
     assert len(opp.data[FLO_DOMAIN][config_entry.entry_id]["devices"]) == 2
 
-    valve: FloDeviceDataUpdateCoordinator = opp.data[FLO_DOMAIN][
-        config_entry.entry_id
-    ]["devices"][0]
+    valve: FloDeviceDataUpdateCoordinator = opp.data[FLO_DOMAIN][config_entry.entry_id][
+        "devices"
+    ][0]
     assert valve.api_client is not None
     assert valve.available
     assert valve.consumption_today == 3.674

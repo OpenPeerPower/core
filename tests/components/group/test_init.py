@@ -325,9 +325,7 @@ async def test_expand_entity_ids_expands_nested_groups(opp):
 
     assert await async_setup_component(opp, "group", {})
 
-    await group.Group.async_create_group(
-        opp, "light", ["light.test_1", "light.test_2"]
-    )
+    await group.Group.async_create_group(opp, "light", ["light.test_1", "light.test_2"])
     await group.Group.async_create_group(
         opp, "switch", ["switch.test_1", "switch.test_2"]
     )

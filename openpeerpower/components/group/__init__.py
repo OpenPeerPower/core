@@ -638,9 +638,7 @@ class Group(Entity):
     async def async_added_to_opp(self):
         """Handle addition to Open Peer Power."""
         if self.opp.state != CoreState.running:
-            self.opp.bus.async_listen_once(
-                EVENT_OPENPEERPOWER_START, self._async_start
-            )
+            self.opp.bus.async_listen_once(EVENT_OPENPEERPOWER_START, self._async_start)
             return
 
         if self.tracking:

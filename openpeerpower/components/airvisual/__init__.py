@@ -306,9 +306,7 @@ async def async_migrate_entry(opp, config_entry):
 
 async def async_unload_entry(opp, config_entry):
     """Unload an AirVisual config entry."""
-    unload_ok = await opp.config_entries.async_unload_platforms(
-        config_entry, PLATFORMS
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(config_entry, PLATFORMS)
 
     if unload_ok:
         opp.data[DOMAIN][DATA_COORDINATOR].pop(config_entry.entry_id)

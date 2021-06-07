@@ -21,9 +21,7 @@ async def test_setup_component(
     vizio_update: pytest.fixture,
 ) -> None:
     """Test component setup."""
-    assert await async_setup_component(
-        opp, DOMAIN, {DOMAIN: MOCK_USER_VALID_TV_CONFIG}
-    )
+    assert await async_setup_component(opp, DOMAIN, {DOMAIN: MOCK_USER_VALID_TV_CONFIG})
     await opp.async_block_till_done()
     assert len(opp.states.async_entity_ids(MP_DOMAIN)) == 1
 

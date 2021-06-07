@@ -337,9 +337,7 @@ async def test_state_via_template_with_json_value(opp, mqtt_mock, caplog):
     state = opp.states.get("cover.test")
     assert state.state == STATE_OPEN
 
-    async_fire_mqtt_message(
-        opp, "state-topic", '{ "Var1": "closed", "Var2": "other" }'
-    )
+    async_fire_mqtt_message(opp, "state-topic", '{ "Var1": "closed", "Var2": "other" }')
 
     state = opp.states.get("cover.test")
     assert state.state == STATE_CLOSED
@@ -2366,9 +2364,7 @@ async def test_discovery_update_cover(opp, mqtt_mock, caplog):
     """Test update of discovered cover."""
     data1 = '{ "name": "Beer", "command_topic": "test_topic" }'
     data2 = '{ "name": "Milk", "command_topic": "test_topic" }'
-    await help_test_discovery_update(
-        opp, mqtt_mock, caplog, cover.DOMAIN, data1, data2
-    )
+    await help_test_discovery_update(opp, mqtt_mock, caplog, cover.DOMAIN, data1, data2)
 
 
 async def test_discovery_update_unchanged_cover(opp, mqtt_mock, caplog):
@@ -2387,9 +2383,7 @@ async def test_discovery_broken(opp, mqtt_mock, caplog):
     """Test handling of bad discovery message."""
     data1 = '{ "name": "Beer", "command_topic": "test_topic#" }'
     data2 = '{ "name": "Milk", "command_topic": "test_topic" }'
-    await help_test_discovery_broken(
-        opp, mqtt_mock, caplog, cover.DOMAIN, data1, data2
-    )
+    await help_test_discovery_broken(opp, mqtt_mock, caplog, cover.DOMAIN, data1, data2)
 
 
 async def test_entity_device_info_with_connection(opp, mqtt_mock):
@@ -2950,9 +2944,7 @@ async def test_position_template_without_position_topic_error(opp, caplog, mqtt_
     )
 
 
-async def test_set_position_template_without_set_position_topic(
-    opp, caplog, mqtt_mock
-):
+async def test_set_position_template_without_set_position_topic(opp, caplog, mqtt_mock):
     """Test error when set_position_template is used and set_position_topic is missing."""
     assert await async_setup_component(
         opp,
@@ -2974,9 +2966,7 @@ async def test_set_position_template_without_set_position_topic(
     )
 
 
-async def test_tilt_command_template_without_tilt_command_topic(
-    opp, caplog, mqtt_mock
-):
+async def test_tilt_command_template_without_tilt_command_topic(opp, caplog, mqtt_mock):
     """Test error when tilt_command_template is used and tilt_command_topic is missing."""
     assert await async_setup_component(
         opp,

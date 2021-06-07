@@ -69,9 +69,7 @@ async def async_migrate_entry(opp, config_entry):
         if old_unique_id != new_unique_id:
             await async_migrate_entries(opp, config_entry.entry_id, update_unique_id)
 
-            opp.config_entries.async_update_entry(
-                config_entry, unique_id=new_unique_id
-            )
+            opp.config_entries.async_update_entry(config_entry, unique_id=new_unique_id)
 
     _LOGGER.info("Migration to version %s successful", config_entry.version)
 

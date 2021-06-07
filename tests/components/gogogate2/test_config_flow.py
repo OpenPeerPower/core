@@ -173,9 +173,7 @@ async def test_form_homekit_ip_address(opp):
 
 @patch("openpeerpower.components.gogogate2.async_setup_entry", return_value=True)
 @patch("openpeerpower.components.gogogate2.common.ISmartGateApi")
-async def test_discovered_dhcp(
-    ismartgateapi_mock, async_setup_entry_mock,.opp
-) -> None:
+async def test_discovered_dhcp(ismartgateapi_mock, async_setup_entry_mock, opp) -> None:
     """Test we get the form with homekit and abort for dhcp source when we get both."""
     api: ISmartGateApi = MagicMock(spec=ISmartGateApi)
     ismartgateapi_mock.return_value = api

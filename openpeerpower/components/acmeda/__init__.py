@@ -33,9 +33,7 @@ async def async_unload_entry(
     """Unload a config entry."""
     hub = opp.data[DOMAIN][config_entry.entry_id]
 
-    unload_ok = await opp.config_entries.async_unload_platforms(
-        config_entry, PLATFORMS
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(config_entry, PLATFORMS)
 
     if not await hub.async_reset():
         return False

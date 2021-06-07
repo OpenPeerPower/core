@@ -24,7 +24,7 @@ from . import DEMO_DEVICES
 
 API_PASSWORD = "test1234"
 
-PROJECT_ID = "opp.est-1234"
+PROJECT_ID = "opp est-1234"
 CLIENT_ID = "helloworld"
 ACCESS_TOKEN = "superdoublesecret"
 

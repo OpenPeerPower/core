@@ -28,9 +28,9 @@ from openpeerpower.const import (
     ATTR_NAME,
     ATTR_SERVICE,
     EVENT_CALL_SERVICE,
+    EVENT_LOGBOOK_ENTRY,
     EVENT_OPENPEERPOWER_START,
     EVENT_OPENPEERPOWER_STOP,
-    EVENT_LOGBOOK_ENTRY,
     EVENT_STATE_CHANGED,
     HTTP_BAD_REQUEST,
 )
@@ -148,7 +148,7 @@ async def async_setup(opp, config):
         async_log_entry(opp, name, message, domain, entity_id)
 
     opp.components.frontend.async_register_built_in_panel(
-        "logbook", "logbook", "opp.format-list-bulleted-type"
+        "logbook", "logbook", "opp:format-list-bulleted-type"
     )
 
     conf = config.get(DOMAIN, {})
@@ -229,7 +229,7 @@ class LogbookView(OpenPeerPowerView):
             if end_day is None:
                 return self.json_message("Invalid end_time", HTTP_BAD_REQUEST)
 
-        opp = request.app["opp.]
+        opp = request.app["opp"]
 
         entity_matches_only = "entity_matches_only" in request.query
         context_id = request.query.get("context_id")
@@ -466,9 +466,7 @@ def _get_events(
         else:
             query = _generate_events_query(session)
             query = _apply_event_time_filter(query, start_day, end_day)
-            query = _apply_events_types_and_states_filter(
-                opp, query, old_state
-            ).filter(
+            query = _apply_events_types_and_states_filter(opp, query, old_state).filter(
                 (States.last_updated == States.last_changed)
                 | (Events.event_type != EVENT_STATE_CHANGED)
             )

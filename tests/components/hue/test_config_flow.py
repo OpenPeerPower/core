@@ -193,9 +193,9 @@ async def test_manual_flow_no_discovered_bridges(opp, aioclient_mock):
 async def test_flow_all_discovered_bridges_exist(opp, aioclient_mock):
     """Test config flow discovers only already configured bridges."""
     aioclient_mock.get(URL_NUPNP, json=[{"internalipaddress": "1.2.3.4", "id": "bla"}])
-    MockConfigEntry(
-        domain="hue", unique_id="bla", data={"host": "1.2.3.4"}
-    ).add_to_opp(opp)
+    MockConfigEntry(domain="hue", unique_id="bla", data={"host": "1.2.3.4"}).add_to_opp(
+        opp
+    )
 
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}
@@ -243,9 +243,9 @@ async def test_flow_two_bridges_discovered_one_new(opp, aioclient_mock):
             {"internalipaddress": "5.6.7.8", "id": "beer"},
         ],
     )
-    MockConfigEntry(
-        domain="hue", unique_id="bla", data={"host": "1.2.3.4"}
-    ).add_to_opp(opp)
+    MockConfigEntry(domain="hue", unique_id="bla", data={"host": "1.2.3.4"}).add_to_opp(
+        opp
+    )
 
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN, context={"source": config_entries.SOURCE_USER}

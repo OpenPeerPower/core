@@ -260,7 +260,7 @@ async def async_test_open_peer_power(loop, load_registries=True):
     opp.async_create_task = async_create_task
     opp.async_wait_for_task_count = types.MethodType(async_wait_for_task_count, opp)
     opp._await_count_and_log_pending = types.MethodType(
-        _await_count_and_log_pending,.opp
+        _await_count_and_log_pending, opp
     )
 
     opp.data[loader.DATA_CUSTOM_COMPONENTS] = {}

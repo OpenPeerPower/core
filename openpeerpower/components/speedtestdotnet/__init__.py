@@ -114,9 +114,7 @@ async def async_unload_entry(opp, config_entry):
 
     opp.data[DOMAIN].async_unload()
 
-    unload_ok = await opp.config_entries.async_unload_platforms(
-        config_entry, PLATFORMS
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(config_entry, PLATFORMS)
     if unload_ok:
         opp.data.pop(DOMAIN)
     return unload_ok

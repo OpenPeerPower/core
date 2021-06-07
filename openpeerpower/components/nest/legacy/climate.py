@@ -54,9 +54,9 @@ MODE_OPP_TO_NEST = {
     HVAC_MODE_OFF: NEST_MODE_OFF,
 }
 
-MODE_NEST_TO_HASS = {v: k for k, v in MODE_OPP_TO_NEST.items()}
+MODE_NEST_TO_OPP = {v: k for k, v in MODE_OPP_TO_NEST.items()}
 
-ACTION_NEST_TO_HASS = {
+ACTION_NEST_TO_OPP = {
     "off": CURRENT_HVAC_IDLE,
     "heating": CURRENT_HVAC_HEAT,
     "cooling": CURRENT_HVAC_COOL,
@@ -195,18 +195,18 @@ class NestThermostat(ClimateEntity):
     def hvac_mode(self):
         """Return current operation ie. heat, cool, idle."""
         if self._mode == NEST_MODE_ECO:
-            if self.device.previous_mode in MODE_NEST_TO_HASS:
-                return MODE_NEST_TO_HASS[self.device.previous_mode]
+            if self.device.previous_mode in MODE_NEST_TO_OPP:
+                return MODE_NEST_TO_OPP[self.device.previous_mode]
 
             # previous_mode not supported so return the first compatible mode
             return self._operation_list[0]
 
-        return MODE_NEST_TO_HASS[self._mode]
+        return MODE_NEST_TO_OPP[self._mode]
 
     @property
     def hvac_action(self):
         """Return the current hvac action."""
-        return ACTION_NEST_TO_HASS[self._action]
+        return ACTION_NEST_TO_OPP[self._action]
 
     @property
     def target_temperature(self):

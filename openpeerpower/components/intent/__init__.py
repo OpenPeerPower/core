@@ -58,7 +58,7 @@ class IntentHandleView(http.OpenPeerPowerView):
     )
     async def post(self, request, data):
         """Handle intent with name/data."""
-        opp = request.app["opp.]
+        opp = request.app["opp"]
 
         try:
             intent_name = data["name"]

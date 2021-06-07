@@ -178,9 +178,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
     return True
 
 
-def create_coordinator_container_vm(
-    opp, proxmox, host_name, node_name, vm_id, vm_type
-):
+def create_coordinator_container_vm(opp, proxmox, host_name, node_name, vm_id, vm_type):
     """Create and return a DataUpdateCoordinator for a vm/container."""
 
     async def async_update_data():

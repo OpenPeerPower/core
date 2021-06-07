@@ -6,9 +6,7 @@ from openpeerpower.core import OpenPeerPower
 from .const import SIGNAL_PANEL_MESSAGE
 
 
-async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
-):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry, async_add_entities):
     """Set up for AlarmDecoder sensor."""
 
     entity = AlarmDecoderSensor()

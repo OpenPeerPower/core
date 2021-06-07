@@ -402,9 +402,7 @@ def get_persist_fullpath_for_entry_id(opp: OpenPeerPower, entry_id: str):
 
 def get_aid_storage_fullpath_for_entry_id(opp: OpenPeerPower, entry_id: str):
     """Determine the path to the homekit aid storage file."""
-    return opp.config.path(
-        STORAGE_DIR, get_aid_storage_filename_for_entry_id(entry_id)
-    )
+    return opp.config.path(STORAGE_DIR, get_aid_storage_filename_for_entry_id(entry_id))
 
 
 def format_sw_version(version):

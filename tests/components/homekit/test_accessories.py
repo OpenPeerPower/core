@@ -76,7 +76,7 @@ async def test_home_accessory(opp, hk_driver):
     acc = HomeAccessory(
         opp, hk_driver, "Home Accessory", entity_id, 2, {"platform": "isy994"}
     )
-    assert acc.opp ==.opp
+    assert acc.opp == opp
     assert acc.display_name == "Home Accessory"
     assert acc.aid == 2
     assert acc.available is True
@@ -572,8 +572,8 @@ async def test_call_service(opp, hk_driver, events):
 
 def test_home_bridge(hk_driver):
     """Test HomeBridge class."""
-    bridge = HomeBridge("opp., hk_driver, BRIDGE_NAME)
-    assert bridge.opp == "opp.
+    bridge = HomeBridge("opp", hk_driver, BRIDGE_NAME)
+    assert bridge.opp == "opp"
     assert bridge.display_name == BRIDGE_NAME
     assert bridge.category == 2  # Category.BRIDGE
     assert len(bridge.services) == 1
@@ -585,7 +585,7 @@ def test_home_bridge(hk_driver):
     assert serv.get_characteristic(CHAR_MODEL).value == BRIDGE_MODEL
     assert serv.get_characteristic(CHAR_SERIAL_NUMBER).value == BRIDGE_SERIAL_NUMBER
 
-    bridge = HomeBridge("opp., hk_driver, "test_name")
+    bridge = HomeBridge("opp", hk_driver, "test_name")
     assert bridge.display_name == "test_name"
     assert len(bridge.services) == 1
     serv = bridge.services[0]  # SERV_ACCESSORY_INFO
@@ -603,7 +603,7 @@ def test_home_driver():
 
     with patch("pyhap.accessory_driver.AccessoryDriver.__init__") as mock_driver:
         driver = HomeDriver(
-            "opp.,
+            "opp",
             "entry_id",
             "name",
             "title",
@@ -624,7 +624,7 @@ def test_home_driver():
         driver.pair("client_uuid", "client_public")
 
     mock_pair.assert_called_with("client_uuid", "client_public")
-    mock_dissmiss_msg.assert_called_with("opp., "entry_id")
+    mock_dissmiss_msg.assert_called_with("opp", "entry_id")
 
     # unpair
     with patch("pyhap.accessory_driver.AccessoryDriver.unpair") as mock_unpair, patch(
@@ -633,4 +633,4 @@ def test_home_driver():
         driver.unpair("client_uuid")
 
     mock_unpair.assert_called_with("client_uuid")
-    mock_show_msg.assert_called_with("opp., "entry_id", "title (any)", pin, "X-HM://0")
+    mock_show_msg.assert_called_with("opp", "entry_id", "title (any)", pin, "X-HM://0")

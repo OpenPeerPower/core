@@ -64,9 +64,7 @@ async def async_setup_entry(opp, config_entry):
 
 async def async_unload_entry(opp, config_entry):
     """Unload a config entry."""
-    unload_ok = await opp.config_entries.async_unload_platforms(
-        config_entry, PLATFORMS
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(config_entry, PLATFORMS)
 
     opp.data[DOMAIN][config_entry.entry_id].untrack_home()
     opp.data[DOMAIN].pop(config_entry.entry_id)

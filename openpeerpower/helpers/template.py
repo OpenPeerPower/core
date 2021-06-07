@@ -291,7 +291,7 @@ class Template:
     __slots__ = (
         "__weakref__",
         "template",
-        "opp.,
+        "opp",
         "is_static",
         "_compiled_code",
         "_compiled",
@@ -300,7 +300,7 @@ class Template:
         "_strict",
     )
 
-    def __init__(self, template, opp.None):
+    def __init__(self, template, opp=None):
         """Instantiate a template."""
         if not isinstance(template, str):
             raise TypeError("Expected template to be a string")
@@ -490,7 +490,7 @@ class Template:
         self, variables: TemplateVarsType = None, strict: bool = False, **kwargs: Any
     ) -> RenderInfo:
         """Render the template and collect an entity filter."""
-        assert self.opp.and _RENDER_INFO not in self.opp.data
+        assert self.opp and _RENDER_INFO not in self.opp.data
 
         render_info = RenderInfo(self)
 
@@ -568,7 +568,7 @@ class Template:
         """Bind a template to a specific opp.instance."""
         self.ensure_valid()
 
-        assert self.opp is not None, "opp.variable not set on template"
+        assert self.opp is not None, "opp variable not set on template"
         assert (
             self._limited is None or self._limited == limited
         ), "can't change between limited and non limited template"
@@ -702,7 +702,7 @@ class DomainStates:
 class TemplateState(State):
     """Class to represent a state object in a template."""
 
-    __slots__ = ("_opp., "_state", "_collect")
+    __slots__ = ("_opp", "_state", "_collect")
 
     # Inheritance is done so functions that check against State keep working
     # pylint: disable=super-init-not-called
@@ -1472,7 +1472,7 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
         # evaluated fresh with every execution, rather than executed
         # at compile time and the value stored. The context itself
         # can be discarded, we only need to get at the oppjobject.
-        def opp.unction(func):
+        def oppfunction(func):
             """Wrap function that depend on opp."""
 
             @wraps(func)

@@ -755,7 +755,7 @@ def async_setup_cleanup(opp: OpenPeerPower, dev_reg: DeviceRegistry) -> None:
 
         return True
 
-    if opp is_running:
+    if opp.is_running:
         opp.bus.async_listen(
             entity_registry.EVENT_ENTITY_REGISTRY_UPDATED,
             entity_registry_changed,

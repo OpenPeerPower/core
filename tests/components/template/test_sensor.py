@@ -441,7 +441,7 @@ async def test_creating_sensor_loads_group(opp):
         new=async_setup_template,
     ):
         await async_from_config_dict(
-            {"sensor": {"platform": "template", "sensors": {}}, "group": {}},.opp
+            {"sensor": {"platform": "template", "sensors": {}}, "group": {}}, opp
         )
         await opp.async_block_till_done()
 

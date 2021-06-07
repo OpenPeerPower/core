@@ -110,9 +110,7 @@ async def test_record_stream(opp, opp_client, record_worker_sync):
     stream.stop()
 
 
-async def test_record_lookback(
-    opp, opp_client, stream_worker_sync, record_worker_sync
-):
+async def test_record_lookback(opp, opp_client, stream_worker_sync, record_worker_sync):
     """Exercise record with loopback."""
     await async_setup_component(opp, "stream", {"stream": {}})
 
@@ -173,9 +171,9 @@ async def test_record_path_not_allowed(opp, opp_client):
     # Setup demo track
     source = generate_h264_video()
     stream = create_stream(opp, source)
-    with patch.object(
-        opp.config, "is_allowed_path", return_value=False
-    ), pytest.raises(OpenPeerPowerError):
+    with patch.object(opp.config, "is_allowed_path", return_value=False), pytest.raises(
+        OpenPeerPowerError
+    ):
         await stream.async_record("/example/path")
 
 

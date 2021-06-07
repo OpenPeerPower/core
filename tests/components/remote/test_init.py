@@ -55,9 +55,7 @@ async def test_turn_off(opp):
     """Test turn_off."""
     turn_off_calls = async_mock_service(opp, DOMAIN, SERVICE_TURN_OFF)
 
-    await opp.services.async_call(
-        DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_ID}
-    )
+    await opp.services.async_call(DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_ID})
 
     await opp.async_block_till_done()
 

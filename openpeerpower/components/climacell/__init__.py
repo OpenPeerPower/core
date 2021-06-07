@@ -169,9 +169,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
 async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    unload_ok = await opp.config_entries.async_unload_platforms(
-        config_entry, PLATFORMS
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(config_entry, PLATFORMS)
 
     opp.data[DOMAIN].pop(config_entry.entry_id)
     if not opp.data[DOMAIN]:

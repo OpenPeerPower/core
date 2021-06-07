@@ -248,7 +248,7 @@ async def async_setup_entry(
                     await protocol.wait_closed()
 
                     # Unexpected disconnect
-                    if not opp is_stopping:
+                    if not opp.is_stopping:
                         stop_listener()
 
                 transport = None
@@ -305,7 +305,7 @@ class DSMREntity(SensorEntity):
     def update_data(self, telegram):
         """Update data."""
         self.telegram = telegram
-        if self.opp.and self._obis in self.telegram:
+        if self.opp and self._obis in self.telegram:
             self.async_write_op_state()
 
     def get_dsmr_object_attr(self, attribute):

@@ -232,9 +232,7 @@ async def async_setup_entry(  # noqa: C901
             return
 
         entry.async_on_unload(
-            ssdp.async_register_callback(
-                opp, _async_discovered_player, {"st": UPNP_ST}
-            )
+            ssdp.async_register_callback(opp, _async_discovered_player, {"st": UPNP_ST})
         )
 
     opp.async_create_task(setup_platforms_and_discovery())

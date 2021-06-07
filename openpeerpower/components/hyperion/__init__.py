@@ -296,9 +296,7 @@ async def _async_entry_updated(opp: OpenPeerPower, config_entry: ConfigEntry) ->
 
 async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    unload_ok = await opp.config_entries.async_unload_platforms(
-        config_entry, PLATFORMS
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(config_entry, PLATFORMS)
     if unload_ok and config_entry.entry_id in opp.data[DOMAIN]:
         config_data = opp.data[DOMAIN].pop(config_entry.entry_id)
         for func in config_data[CONF_ON_UNLOAD]:

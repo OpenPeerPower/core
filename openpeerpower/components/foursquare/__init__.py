@@ -107,4 +107,4 @@ class FoursquarePushReceiver(OpenPeerPowerView):
             )
             return self.json_message("Incorrect secret", HTTP_BAD_REQUEST)
 
-        request.app["opp.].bus.async_fire(EVENT_PUSH, data)
+        request.app["opp"].bus.async_fire(EVENT_PUSH, data)

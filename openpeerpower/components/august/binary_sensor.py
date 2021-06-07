@@ -250,7 +250,7 @@ class AugustDoorbellBinarySensor(AugustEntityMixin, BinarySensorEntity):
 
         # self.opp is only available after setup is completed
         # and we will recheck in async_added_to_opp
-        if not self.opp.
+        if not self.opp:
             return
 
         @callback

@@ -24,9 +24,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 CLIMATE_ID = f"{CLIMATE}.{DOMAIN}"
 
 
-async def test_climate(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
-) -> None:
+async def test_climate(opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker) -> None:
     """Test the creation and values of Atag climate device."""
     await init_integration(opp, aioclient_mock)
     entity_registry = er.async_get(opp)

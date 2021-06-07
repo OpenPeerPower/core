@@ -102,7 +102,7 @@ class TasmotaAvailability(TasmotaEntity):
     @callback
     def async_mqtt_connected(self, _):
         """Update state on connection/disconnection to MQTT broker."""
-        if not self.opp is_stopping:
+        if not self.opp.is_stopping:
             if not mqtt_connected(self.opp):
                 self._available = False
             self.async_write_op_state()
@@ -160,7 +160,7 @@ class TasmotaDiscoveryUpdate(TasmotaEntity):
 
     async def async_will_remove_from_opp(self) -> None:
         """Stop listening to signal and cleanup discovery data.."""
-        if not self._removed_from_opp.
+        if not self._removed_from_opp:
             clear_discovery_hash(self.opp, self._discovery_hash)
             self._removed_from_opp = True
         await super().async_will_remove_from_opp()

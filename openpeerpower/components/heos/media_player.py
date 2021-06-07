@@ -62,9 +62,7 @@ CONTROL_TO_SUPPORT = {
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
-):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry, async_add_entities):
     """Add media players for a config entry."""
     players = opp.data[HEOS_DOMAIN][DOMAIN]
     devices = [HeosMediaPlayer(player) for player in players.values()]

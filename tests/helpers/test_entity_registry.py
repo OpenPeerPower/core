@@ -76,7 +76,7 @@ def test_get_or_create_updates_data(registry):
         capabilities={"max": 100},
         supported_features=5,
         device_class="mock-device-class",
-        disabled_by=er.DISABLED_HASS,
+        disabled_by=er.DISABLED_OPP,
         unit_of_measurement="initial-unit_of_measurement",
         original_name="initial-original_name",
         original_icon="initial-original_icon",
@@ -87,7 +87,7 @@ def test_get_or_create_updates_data(registry):
     assert orig_entry.capabilities == {"max": 100}
     assert orig_entry.supported_features == 5
     assert orig_entry.device_class == "mock-device-class"
-    assert orig_entry.disabled_by == er.DISABLED_HASS
+    assert orig_entry.disabled_by == er.DISABLED_OPP
     assert orig_entry.unit_of_measurement == "initial-unit_of_measurement"
     assert orig_entry.original_name == "initial-original_name"
     assert orig_entry.original_icon == "initial-original_icon"
@@ -118,7 +118,7 @@ def test_get_or_create_updates_data(registry):
     assert new_entry.original_name == "updated-original_name"
     assert new_entry.original_icon == "updated-original_icon"
     # Should not be updated
-    assert new_entry.disabled_by == er.DISABLED_HASS
+    assert new_entry.disabled_by == er.DISABLED_OPP
 
 
 def test_get_or_create_suggested_object_id_conflict_register(registry):
@@ -164,12 +164,12 @@ async def test_loading_saving_data(opp, registry):
         capabilities={"max": 100},
         supported_features=5,
         device_class="mock-device-class",
-        disabled_by=er.DISABLED_HASS,
+        disabled_by=er.DISABLED_OPP,
         original_name="Original Name",
-        original_icon="opp.original-icon",
+        original_icon="opp original-icon",
     )
     orig_entry2 = registry.async_update_entity(
-        orig_entry2.entity_id, name="User Name", icon="opp.user-icon"
+        orig_entry2.entity_id, name="User Name", icon="opp user-icon"
     )
 
     assert len(registry.entities) == 2
@@ -189,14 +189,14 @@ async def test_loading_saving_data(opp, registry):
 
     assert new_entry2.device_id == "mock-dev-id"
     assert new_entry2.area_id == "mock-area-id"
-    assert new_entry2.disabled_by == er.DISABLED_HASS
+    assert new_entry2.disabled_by == er.DISABLED_OPP
     assert new_entry2.capabilities == {"max": 100}
     assert new_entry2.supported_features == 5
     assert new_entry2.device_class == "mock-device-class"
     assert new_entry2.name == "User Name"
-    assert new_entry2.icon == "opp.user-icon"
+    assert new_entry2.icon == "opp user-icon"
     assert new_entry2.original_name == "Original Name"
-    assert new_entry2.original_icon == "opp.original-icon"
+    assert new_entry2.original_icon == "opp original-icon"
 
 
 def test_generate_entity_considers_registered_entities(registry):
@@ -244,16 +244,16 @@ async def test_loading_extra_values(opp, opp_storage):
                     "disabled_by": er.DISABLED_USER,
                 },
                 {
-                    "entity_id": "test.disabled_opp.,
+                    "entity_id": "test.disabled_opp",
                     "platform": "super_platform",
-                    "unique_id": "disabled-opp.,
-                    "disabled_by": er.DISABLED_HASS,
+                    "unique_id": "disabled-opp",
+                    "disabled_by": er.DISABLED_OPP,
                 },
                 {
                     "entity_id": "test.invalid__entity",
                     "platform": "super_platform",
-                    "unique_id": "invalid-opp.,
-                    "disabled_by": er.DISABLED_HASS,
+                    "unique_id": "invalid-opp",
+                    "disabled_by": er.DISABLED_OPP,
                 },
             ]
         },
@@ -275,13 +275,13 @@ async def test_loading_extra_values(opp, opp_storage):
     assert not entry_with_name.disabled
 
     entry_disabled_opp = registry.async_get_or_create(
-        "test", "super_platform", "disabled-opp.
+        "test", "super_platform", "disabled-opp"
     )
     entry_disabled_user = registry.async_get_or_create(
         "test", "super_platform", "disabled-user"
     )
     assert entry_disabled_opp.disabled
-    assert entry_disabled_opp.disabled_by == er.DISABLED_HASS
+    assert entry_disabled_opp.disabled_by == er.DISABLED_OPP
     assert entry_disabled_user.disabled
     assert entry_disabled_user.disabled_by == er.DISABLED_USER
 
@@ -363,7 +363,7 @@ async def test_migration(opp):
             "unique_id": "test-unique",
             "platform": "test-platform",
             "name": "Test Name",
-            "disabled_by": er.DISABLED_HASS,
+            "disabled_by": er.DISABLED_OPP,
         }
     }
     with patch("os.path.isfile", return_value=True), patch("os.remove"), patch(
@@ -380,7 +380,7 @@ async def test_migration(opp):
         config_entry=mock_config,
     )
     assert entry.name == "Test Name"
-    assert entry.disabled_by == er.DISABLED_HASS
+    assert entry.disabled_by == er.DISABLED_OPP
     assert entry.config_entry_id == "test-config-id"
 
 
@@ -500,14 +500,14 @@ async def test_update_entity(registry):
 async def test_disabled_by(registry):
     """Test that we can disable an entry when we create it."""
     entry = registry.async_get_or_create(
-        "light", "hue", "5678", disabled_by=er.DISABLED_HASS
+        "light", "hue", "5678", disabled_by=er.DISABLED_OPP
     )
-    assert entry.disabled_by == er.DISABLED_HASS
+    assert entry.disabled_by == er.DISABLED_OPP
 
     entry = registry.async_get_or_create(
         "light", "hue", "5678", disabled_by=er.DISABLED_INTEGRATION
     )
-    assert entry.disabled_by == er.DISABLED_HASS
+    assert entry.disabled_by == er.DISABLED_OPP
 
     entry2 = registry.async_get_or_create("light", "hue", "1234")
     assert entry2.disabled_by is None
@@ -553,7 +553,7 @@ async def test_restore_states(opp):
         "hue",
         "5678",
         suggested_object_id="disabled",
-        disabled_by=er.DISABLED_HASS,
+        disabled_by=er.DISABLED_OPP,
     )
     registry.async_get_or_create(
         "light",
@@ -564,7 +564,7 @@ async def test_restore_states(opp):
         supported_features=5,
         device_class="mock-device-class",
         original_name="Mock Original Name",
-        original_icon="opp.original-icon",
+        original_icon="opp original-icon",
     )
 
     opp.bus.async_fire(EVENT_OPENPEERPOWER_START, {})
@@ -587,7 +587,7 @@ async def test_restore_states(opp):
         "device_class": "mock-device-class",
         "restored": True,
         "friendly_name": "Mock Original Name",
-        "icon": "opp.original-icon",
+        "icon": "opp original-icon",
     }
 
     registry.async_remove("light.disabled")

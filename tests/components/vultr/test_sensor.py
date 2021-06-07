@@ -156,9 +156,7 @@ class TestVultrSensorSetup(unittest.TestCase):
             CONF_MONITORED_CONDITIONS: vultr.MONITORED_CONDITIONS
         }  # No subs at all
 
-        no_sub_setup = vultr.setup_platform(
-            self.opp, bad_conf, self.add_entities, None
-        )
+        no_sub_setup = vultr.setup_platform(self.opp, bad_conf, self.add_entities, None)
 
         assert no_sub_setup is None
         assert len(self.DEVICES) == 0

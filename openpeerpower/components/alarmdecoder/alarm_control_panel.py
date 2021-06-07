@@ -40,9 +40,7 @@ SERVICE_ALARM_KEYPRESS = "alarm_keypress"
 ATTR_KEYPRESS = "keypress"
 
 
-async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
-):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry, async_add_entities):
     """Set up for AlarmDecoder alarm panels."""
     options = entry.options
     arm_options = options.get(OPTIONS_ARM, DEFAULT_ARM_OPTIONS)

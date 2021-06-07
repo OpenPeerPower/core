@@ -185,7 +185,7 @@ async def test_switch(opp, events):
     )
 
     await assert_power_controller_works(
-        "switch#test", "switch.turn_on", "switch.turn_off",.opp
+        "switch#test", "switch.turn_on", "switch.turn_off", opp
     )
 
     properties = await reported_properties(opp, "switch#test")
@@ -222,7 +222,7 @@ async def test_light(opp):
     )
 
     await assert_power_controller_works(
-        "light#test_1", "light.turn_on", "light.turn_off",.opp
+        "light#test_1", "light.turn_on", "light.turn_off", opp
     )
 
 
@@ -318,7 +318,7 @@ async def test_script(opp):
     assert scene_capability["supportsDeactivation"]
 
     await assert_scene_controller_works(
-        "script#test", "script.turn_on", "script.turn_off",.opp
+        "script#test", "script.turn_on", "script.turn_off", opp
     )
 
 
@@ -335,7 +335,7 @@ async def test_input_boolean(opp):
     )
 
     await assert_power_controller_works(
-        "input_boolean#test", "input_boolean.turn_on", "input_boolean.turn_off",.opp
+        "input_boolean#test", "input_boolean.turn_on", "input_boolean.turn_off", opp
     )
 
 
@@ -942,7 +942,7 @@ async def test_lock(opp):
     )
 
     _, msg = await assert_request_calls_service(
-        "Alexa.LockController", "Lock", "lock#test", "lock.lock",.opp
+        "Alexa.LockController", "Lock", "lock#test", "lock.lock", opp
     )
 
     properties = msg["context"]["properties"][0]
@@ -951,7 +951,7 @@ async def test_lock(opp):
     assert properties["value"] == "LOCKED"
 
     _, msg = await assert_request_calls_service(
-        "Alexa.LockController", "Unlock", "lock#test", "lock.unlock",.opp
+        "Alexa.LockController", "Unlock", "lock#test", "lock.unlock", opp
     )
 
     properties = msg["context"]["properties"][0]
@@ -1008,7 +1008,7 @@ async def test_media_player(opp):
         assert operation in supported_operations
 
     await assert_power_controller_works(
-        "media_player#test", "media_player.turn_on", "media_player.turn_off",.opp
+        "media_player#test", "media_player.turn_on", "media_player.turn_off", opp
     )
 
     await assert_request_calls_service(
@@ -1569,7 +1569,7 @@ async def test_alert(opp):
     )
 
     await assert_power_controller_works(
-        "alert#test", "alert.turn_on", "alert.turn_off",.opp
+        "alert#test", "alert.turn_on", "alert.turn_off", opp
     )
 
 
@@ -1586,7 +1586,7 @@ async def test_automation(opp):
     )
 
     await assert_power_controller_works(
-        "automation#test", "automation.turn_on", "automation.turn_off",.opp
+        "automation#test", "automation.turn_on", "automation.turn_off", opp
     )
 
 
@@ -1603,7 +1603,7 @@ async def test_group(opp):
     )
 
     await assert_power_controller_works(
-        "group#test", "openpeerpower.turn_on", "openpeerpower.turn_off",.opp
+        "group#test", "openpeerpower.turn_on", "openpeerpower.turn_off", opp
     )
 
 
@@ -3473,7 +3473,7 @@ async def test_timer_hold(opp):
     assert configuration["allowRemoteResume"] is True
 
     await assert_request_calls_service(
-        "Alexa.TimeHoldController", "Hold", "timer#laundry", "timer.pause",.opp
+        "Alexa.TimeHoldController", "Hold", "timer#laundry", "timer.pause", opp
     )
 
 
@@ -3490,7 +3490,7 @@ async def test_timer_resume(opp):
     properties.assert_equal("Alexa.PowerController", "powerState", "ON")
 
     await assert_request_calls_service(
-        "Alexa.TimeHoldController", "Resume", "timer#laundry", "timer.start",.opp
+        "Alexa.TimeHoldController", "Resume", "timer#laundry", "timer.start", opp
     )
 
 
@@ -3507,7 +3507,7 @@ async def test_timer_start(opp):
     properties.assert_equal("Alexa.PowerController", "powerState", "OFF")
 
     await assert_request_calls_service(
-        "Alexa.PowerController", "TurnOn", "timer#laundry", "timer.start",.opp
+        "Alexa.PowerController", "TurnOn", "timer#laundry", "timer.start", opp
     )
 
 
@@ -3524,7 +3524,7 @@ async def test_timer_cancel(opp):
     properties.assert_equal("Alexa.PowerController", "powerState", "ON")
 
     await assert_request_calls_service(
-        "Alexa.PowerController", "TurnOff", "timer#laundry", "timer.cancel",.opp
+        "Alexa.PowerController", "TurnOff", "timer#laundry", "timer.cancel", opp
     )
 
 
@@ -3561,11 +3561,11 @@ async def test_vacuum_discovery(opp):
     properties.assert_equal("Alexa.PowerController", "powerState", "OFF")
 
     await assert_request_calls_service(
-        "Alexa.PowerController", "TurnOn", "vacuum#test_1", "vacuum.turn_on",.opp
+        "Alexa.PowerController", "TurnOn", "vacuum#test_1", "vacuum.turn_on", opp
     )
 
     await assert_request_calls_service(
-        "Alexa.PowerController", "TurnOff", "vacuum#test_1", "vacuum.turn_off",.opp
+        "Alexa.PowerController", "TurnOff", "vacuum#test_1", "vacuum.turn_off", opp
     )
 
 
@@ -3732,7 +3732,7 @@ async def test_vacuum_pause(opp):
     assert configuration["allowRemoteResume"] is True
 
     await assert_request_calls_service(
-        "Alexa.TimeHoldController", "Hold", "vacuum#test_3", "vacuum.start_pause",.opp
+        "Alexa.TimeHoldController", "Hold", "vacuum#test_3", "vacuum.start_pause", opp
     )
 
 
@@ -3786,11 +3786,11 @@ async def test_vacuum_discovery_no_turn_on(opp):
     properties.assert_equal("Alexa.PowerController", "powerState", "ON")
 
     await assert_request_calls_service(
-        "Alexa.PowerController", "TurnOn", "vacuum#test_5", "vacuum.start",.opp
+        "Alexa.PowerController", "TurnOn", "vacuum#test_5", "vacuum.start", opp
     )
 
     await assert_request_calls_service(
-        "Alexa.PowerController", "TurnOff", "vacuum#test_5", "vacuum.turn_off",.opp
+        "Alexa.PowerController", "TurnOff", "vacuum#test_5", "vacuum.turn_off", opp
     )
 
 
@@ -3813,7 +3813,7 @@ async def test_vacuum_discovery_no_turn_off(opp):
     )
 
     await assert_request_calls_service(
-        "Alexa.PowerController", "TurnOn", "vacuum#test_6", "vacuum.turn_on",.opp
+        "Alexa.PowerController", "TurnOn", "vacuum#test_6", "vacuum.turn_on", opp
     )
 
     await assert_request_calls_service(
@@ -3842,7 +3842,7 @@ async def test_vacuum_discovery_no_turn_on_or_off(opp):
     )
 
     await assert_request_calls_service(
-        "Alexa.PowerController", "TurnOn", "vacuum#test_7", "vacuum.start",.opp
+        "Alexa.PowerController", "TurnOn", "vacuum#test_7", "vacuum.start", opp
     )
 
     await assert_request_calls_service(

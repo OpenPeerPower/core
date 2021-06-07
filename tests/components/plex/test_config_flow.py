@@ -155,9 +155,7 @@ async def test_no_servers_found(
         assert result["errors"]["base"] == "no_servers"
 
 
-async def test_single_available_server(
-    opp, mock_plex_calls, current_request_with_host
-):
+async def test_single_available_server(opp, mock_plex_calls, current_request_with_host):
     """Test creating an entry with one server available."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}

@@ -53,9 +53,7 @@ async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> b
     """Unload a config entry."""
     opp.data[DOMAIN][config_entry.entry_id][UNDO_UPDATE_LISTENER]()
 
-    unload_ok = await opp.config_entries.async_unload_platforms(
-        config_entry, PLATFORMS
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(config_entry, PLATFORMS)
 
     router: KeeneticRouter = opp.data[DOMAIN][config_entry.entry_id][ROUTER]
 

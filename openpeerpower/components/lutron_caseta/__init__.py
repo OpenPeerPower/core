@@ -280,9 +280,7 @@ async def async_unload_entry(opp, config_entry):
     if data[BRIDGE_LIP]:
         await data[BRIDGE_LIP].async_stop()
 
-    unload_ok = await opp.config_entries.async_unload_platforms(
-        config_entry, PLATFORMS
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(config_entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(config_entry.entry_id)
 

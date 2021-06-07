@@ -23,7 +23,7 @@ class FloDeviceDataUpdateCoordinator(DataUpdateCoordinator):
         self, opp: OpenPeerPower, api_client: API, location_id: str, device_id: str
     ) -> None:
         """Initialize the device."""
-        self.opp: OpenPeerPower =.opp
+        self.opp: OpenPeerPower = opp
         self.api_client: API = api_client
         self._flo_location_id: str = location_id
         self._flo_device_id: str = device_id

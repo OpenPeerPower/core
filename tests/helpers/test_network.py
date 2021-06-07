@@ -104,9 +104,7 @@ async def test_get_url_internal(opp: OpenPeerPower):
     assert opp.config.internal_url == "https://example.local:443"
     assert _get_internal_url(opp) == "https://example.local"
     assert _get_internal_url(opp, allow_ip=False) == "https://example.local"
-    assert (
-        _get_internal_url(opp, require_standard_port=True) == "https://example.local"
-    )
+    assert _get_internal_url(opp, require_standard_port=True) == "https://example.local"
     assert _get_internal_url(opp, require_ssl=True) == "https://example.local"
 
     # Test with internal URL: https://192.168.0.1
@@ -581,9 +579,7 @@ async def test_get_current_request_url_with_known_host(
         "openpeerpower.helpers.network._get_request_host",
         return_value="openpeerpower",
     ):
-        assert (
-            get_url(opp, require_current_request=True) == "http://openpeerpower:8123"
-        )
+        assert get_url(opp, require_current_request=True) == "http://openpeerpower:8123"
 
     with patch(
         "openpeerpower.helpers.network._get_request_host", return_value="unknown.local"

@@ -74,9 +74,7 @@ class AccuWeatherFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                     vol.Optional(
                         CONF_LONGITUDE, default=self.opp.config.longitude
                     ): cv.longitude,
-                    vol.Optional(
-                        CONF_NAME, default=self.opp.config.location_name
-                    ): str,
+                    vol.Optional(CONF_NAME, default=self.opp.config.location_name): str,
                 }
             ),
             errors=errors,

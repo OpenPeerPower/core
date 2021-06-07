@@ -309,9 +309,7 @@ def async_get_flow_for_user_id(opp: OpenPeerPower, user_id: int) -> list[dict]:
     ]
 
 
-def get_data_manager_by_user_id(
-    opp: OpenPeerPower, user_id: int
-) -> DataManager | None:
+def get_data_manager_by_user_id(opp: OpenPeerPower, user_id: int) -> DataManager | None:
     """Get a data manager by the user id."""
     return next(
         iter(

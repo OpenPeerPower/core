@@ -285,8 +285,7 @@ async def test_availability(ismartgateapi_mock, opp: OpenPeerPower) -> None:
         == DEVICE_CLASS_GARAGE
     )
     assert (
-        opp.states.get("cover.door2").attributes[ATTR_DEVICE_CLASS]
-        == DEVICE_CLASS_GATE
+        opp.states.get("cover.door2").attributes[ATTR_DEVICE_CLASS] == DEVICE_CLASS_GATE
     )
 
     api.async_info.side_effect = Exception("Error")

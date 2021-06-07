@@ -62,7 +62,7 @@ class RegistrationsView(OpenPeerPowerView):
     )
     async def post(self, request: Request, data: dict) -> Response:
         """Handle the POST request for registration."""
-        opp = request.app["opp.]
+        opp = request.app["opp"]
 
         webhook_id = secrets.token_hex()
 

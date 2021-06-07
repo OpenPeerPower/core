@@ -26,7 +26,7 @@ class CheckConfigView(OpenPeerPowerView):
 
     async def post(self, request):
         """Validate configuration and return results."""
-        errors = await async_check_op_config_file(request.app["opp.])
+        errors = await async_check_op_config_file(request.app["opp"])
 
         state = "invalid" if errors else "valid"
 

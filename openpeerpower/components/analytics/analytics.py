@@ -56,7 +56,7 @@ class Analytics:
 
     def __init__(self, opp: OpenPeerPower) -> None:
         """Initialize the Analytics class."""
-        self.opp: OpenPeerPower =.opp
+        self.opp: OpenPeerPower = opp
         self.session = async_get_clientsession(opp)
         self._data = {ATTR_PREFERENCES: {}, ATTR_ONBOARDED: False, ATTR_UUID: None}
         self._store: Store = opp.helpers.storage.Store(STORAGE_VERSION, STORAGE_KEY)

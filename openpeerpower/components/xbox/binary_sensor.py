@@ -17,13 +17,9 @@ from .const import DOMAIN
 PRESENCE_ATTRIBUTES = ["online", "in_party", "in_game", "in_multiplayer"]
 
 
-async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
-):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry, async_add_entities):
     """Set up Xbox Live friends."""
-    coordinator: XboxUpdateCoordinator = opp.data[DOMAIN][entry.entry_id][
-        "coordinator"
-    ]
+    coordinator: XboxUpdateCoordinator = opp.data[DOMAIN][entry.entry_id]["coordinator"]
 
     update_friends = partial(async_update_friends, coordinator, {}, async_add_entities)
 

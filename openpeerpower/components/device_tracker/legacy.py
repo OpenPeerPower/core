@@ -179,9 +179,7 @@ async def async_setup_integration(opp: OpenPeerPower, config: ConfigType) -> Non
     discovery.async_listen_platform(opp, DOMAIN, async_platform_discovered)
 
     # Clean up stale devices
-    async_track_utc_time_change(
-        opp, tracker.async_update_stale, second=range(0, 60, 5)
-    )
+    async_track_utc_time_change(opp, tracker.async_update_stale, second=range(0, 60, 5))
 
     async def async_see_service(call: ServiceCall) -> None:
         """Service to see a device."""
@@ -564,9 +562,7 @@ class DeviceTracker:
 
         # update known_devices.yaml
         self.opp.async_create_task(
-            self.async_update_config(
-                self.opp.config.path(YAML_DEVICES), dev_id, device
-            )
+            self.async_update_config(self.opp.config.path(YAML_DEVICES), dev_id, device)
         )
 
     async def async_update_config(self, path: str, dev_id: str, device: Device) -> None:
@@ -823,9 +819,7 @@ class DeviceScanner:
 
     async def async_scan_devices(self) -> list[str]:
         """Scan for devices."""
-        assert (
-            self.opp is not None
-        ), "opp.should be set by async_setup_scanner_platform"
+        assert self.opp is not None, "opp should be set by async_setup_scanner_platform"
         return await self.opp.async_add_executor_job(self.scan_devices)
 
     def get_device_name(self, device: str) -> str | None:
@@ -834,9 +828,7 @@ class DeviceScanner:
 
     async def async_get_device_name(self, device: str) -> str | None:
         """Get the name of a device."""
-        assert (
-            self.opp is not None
-        ), "opp.should be set by async_setup_scanner_platform"
+        assert self.opp is not None, "opp should be set by async_setup_scanner_platform"
         return await self.opp.async_add_executor_job(self.get_device_name, device)
 
     def get_extra_attributes(self, device: str) -> dict:
@@ -845,9 +837,7 @@ class DeviceScanner:
 
     async def async_get_extra_attributes(self, device: str) -> dict:
         """Get the extra attributes of a device."""
-        assert (
-            self.opp is not None
-        ), "opp.should be set by async_setup_scanner_platform"
+        assert self.opp is not None, "opp should be set by async_setup_scanner_platform"
         return await self.opp.async_add_executor_job(self.get_extra_attributes, device)
 
 

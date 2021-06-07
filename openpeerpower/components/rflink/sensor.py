@@ -121,9 +121,9 @@ class RflinkSensor(RflinkDevice, SensorEntity):
             tmp_entity
             in self.opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_SENSOR][self._device_id]
         ):
-            self.opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_SENSOR][
-                self._device_id
-            ].remove(tmp_entity)
+            self.opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_SENSOR][self._device_id].remove(
+                tmp_entity
+            )
 
         # Register id and aliases
         self.opp.data[DATA_ENTITY_LOOKUP][EVENT_KEY_SENSOR][self._device_id].append(

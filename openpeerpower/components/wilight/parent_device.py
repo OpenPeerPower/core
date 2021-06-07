@@ -69,9 +69,7 @@ class WiLightParent:
             )
 
             # handle shutdown of WiLight asyncio transport
-            opp.bus.async_listen_once(
-                EVENT_OPENPEERPOWER_STOP, lambda x: client.stop()
-            )
+            opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, lambda x: client.stop())
 
             _LOGGER.info("Connected to WiLight device: %s", api_device.device_id)
 

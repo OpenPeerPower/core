@@ -153,9 +153,7 @@ def _async_templatize_blocks(opp: OpenPeerPower, value: Any) -> Any:
     if isinstance(value, list):
         return [_async_templatize_blocks(opp, item) for item in value]
     if isinstance(value, dict):
-        return {
-            key: _async_templatize_blocks(opp, item) for key, item in value.items()
-        }
+        return {key: _async_templatize_blocks(opp, item) for key, item in value.items()}
 
     tmpl = template.Template(value, opp.opp)  # type: ignore  # no-untyped-call
     return tmpl.async_render(parse_result=False)
@@ -315,9 +313,7 @@ class SlackNotificationService(BaseNotificationService):
         # Message Type 1: A text-only message
         if ATTR_FILE not in data:
             if ATTR_BLOCKS_TEMPLATE in data:
-                blocks = _async_templatize_blocks(
-                    self._opp, data[ATTR_BLOCKS_TEMPLATE]
-                )
+                blocks = _async_templatize_blocks(self._opp, data[ATTR_BLOCKS_TEMPLATE])
             elif ATTR_BLOCKS in data:
                 blocks = data[ATTR_BLOCKS]
             else:

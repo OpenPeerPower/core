@@ -323,9 +323,7 @@ async def test_remove_entry_already_deleted(opp, config_entry, smartthings_mock)
     assert smartthings_mock.delete_app.call_count == 1
 
 
-async def test_remove_entry_installedapp_api_error(
-    opp, config_entry, smartthings_mock
-):
+async def test_remove_entry_installedapp_api_error(opp, config_entry, smartthings_mock):
     """Test raises exceptions removing the installed app."""
     request_info = Mock(real_url="http://example.com")
     # Arrange

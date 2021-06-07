@@ -355,9 +355,7 @@ async def async_setup_entry(opp, config_entry):
         await ambient.client.websocket.disconnect()
 
     config_entry.async_on_unload(
-        opp.bus.async_listen_once(
-            EVENT_OPENPEERPOWER_STOP, _async_disconnect_websocket
-        )
+        opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _async_disconnect_websocket)
     )
 
     return True

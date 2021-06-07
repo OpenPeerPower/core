@@ -29,9 +29,9 @@ async def test_duplicate_error(opp):
         CONF_SSL: True,
     }
 
-    MockConfigEntry(
-        domain=DOMAIN, unique_id="aa:bb:cc:dd:ee:ff", data=conf
-    ).add_to_opp(opp)
+    MockConfigEntry(domain=DOMAIN, unique_id="aa:bb:cc:dd:ee:ff", data=conf).add_to_opp(
+        opp
+    )
 
     with patch(
         "openpeerpower.components.rainmachine.config_flow.Client",
@@ -160,9 +160,9 @@ async def test_step_homekit_zeroconf_ip_already_exists(opp, source):
         CONF_SSL: True,
     }
 
-    MockConfigEntry(
-        domain=DOMAIN, unique_id="aa:bb:cc:dd:ee:ff", data=conf
-    ).add_to_opp(opp)
+    MockConfigEntry(domain=DOMAIN, unique_id="aa:bb:cc:dd:ee:ff", data=conf).add_to_opp(
+        opp
+    )
 
     with patch(
         "openpeerpower.components.rainmachine.config_flow.Client",

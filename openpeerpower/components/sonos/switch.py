@@ -121,9 +121,7 @@ class SonosAlarmEntity(SonosEntity, SwitchEntity):
 
         _LOGGER.debug("Updating alarm: %s", self.entity_id)
         if self.speaker.soco.uid != self.alarm.zone.uid:
-            self.speaker = self.opp.data[DATA_SONOS].discovered.get(
-                self.alarm.zone.uid
-            )
+            self.speaker = self.opp.data[DATA_SONOS].discovered.get(self.alarm.zone.uid)
             if self.speaker is None:
                 raise RuntimeError(
                     "No configured Sonos speaker has been found to match the alarm."

@@ -64,7 +64,7 @@ class WemoSwitch(WemoSubscriptionEntity, SwitchEntity):
         attr = {}
         if self.maker_params:
             # Is the maker sensor on or off.
-            if self.maker_params["opp.nsor"]:
+            if self.maker_params["hassensor"]:
                 # Note a state of 1 matches the WeMo app 'not triggered'!
                 if self.maker_params["sensorstate"]:
                     attr[ATTR_SENSOR_STATE] = STATE_OFF

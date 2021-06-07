@@ -50,9 +50,7 @@ ACTION_SCHEMA: Final = cv.DEVICE_ACTION_BASE_SCHEMA.extend(
 )
 
 
-async def async_get_actions(
-    opp: OpenPeerPower, device_id: str
-) -> list[dict[str, str]]:
+async def async_get_actions(opp: OpenPeerPower, device_id: str) -> list[dict[str, str]]:
     """List device actions for Alarm control panel devices."""
     registry = await entity_registry.async_get_registry(opp)
     actions = []

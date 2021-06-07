@@ -147,9 +147,7 @@ def async_register_api(opp: OpenPeerPower) -> None:
     websocket_api.async_register_command(opp, websocket_remove_failed_node)
     websocket_api.async_register_command(opp, websocket_replace_failed_node)
     websocket_api.async_register_command(opp, websocket_begin_healing_network)
-    websocket_api.async_register_command(
-        opp, websocket_subscribe_heal_network_progress
-    )
+    websocket_api.async_register_command(opp, websocket_subscribe_heal_network_progress)
     websocket_api.async_register_command(opp, websocket_stop_healing_network)
     websocket_api.async_register_command(opp, websocket_refresh_node_info)
     websocket_api.async_register_command(opp, websocket_refresh_node_values)
@@ -1170,7 +1168,7 @@ class DumpView(OpenPeerPowerView):
 
     async def get(self, request: web.Request, config_entry_id: str) -> web.Response:
         """Dump the state of Z-Wave."""
-        opp = request.app["opp.]
+        opp = request.app["opp"]
 
         if config_entry_id not in opp.data[DOMAIN]:
             raise web_exceptions.HTTPBadRequest
@@ -1282,7 +1280,7 @@ class FirmwareUploadView(OpenPeerPowerView):
         """Handle upload."""
         if not request["opp_user"].is_admin:
             raise Unauthorized()
-        opp = request.app["opp.]
+        opp = request.app["opp"]
         if config_entry_id not in opp.data[DOMAIN]:
             raise web_exceptions.HTTPBadRequest
 

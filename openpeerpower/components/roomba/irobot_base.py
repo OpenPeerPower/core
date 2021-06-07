@@ -258,6 +258,4 @@ class IRobotVacuum(IRobotEntity, StateVacuumEntity):
     async def async_send_command(self, command, params=None, **kwargs):
         """Send raw command."""
         _LOGGER.debug("async_send_command %s (%s), %s", command, params, kwargs)
-        await self.opp.async_add_executor_job(
-            self.vacuum.send_command, command, params
-        )
+        await self.opp.async_add_executor_job(self.vacuum.send_command, command, params)

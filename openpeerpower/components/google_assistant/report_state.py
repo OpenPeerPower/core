@@ -5,7 +5,7 @@ from collections import deque
 import logging
 
 from openpeerpower.const import MATCH_ALL
-from openpeerpower.core import CALLBACK_TYPE, OppJob, OpenPeerPower, callback
+from openpeerpower.core import CALLBACK_TYPE, OpenPeerPower, OppJob, callback
 from openpeerpower.helpers.event import async_call_later
 from openpeerpower.helpers.significant_change import create_checker
 
@@ -56,7 +56,7 @@ def async_enable_report_state(opp: OpenPeerPower, google_config: AbstractConfig)
     async def async_entity_state_listener(changed_entity, old_state, new_state):
         nonlocal unsub_pending
 
-        if not opp is_running:
+        if not opp.is_running:
             return
 
         if not new_state:

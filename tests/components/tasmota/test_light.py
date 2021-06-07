@@ -387,9 +387,7 @@ async def test_controlling_state_via_mqtt_ct(opp, mqtt_mock, setup_tasmota):
     assert state.attributes.get("brightness") == 127.5
     assert state.attributes.get("color_mode") == "color_temp"
 
-    async_fire_mqtt_message(
-        opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","CT":300}'
-    )
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","CT":300}')
     state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("color_temp") == 300
@@ -562,9 +560,7 @@ async def test_controlling_state_via_mqtt_rgbww(opp, mqtt_mock, setup_tasmota):
     assert "rgb_color" not in state.attributes
     assert state.attributes.get("color_mode") == "color_temp"
 
-    async_fire_mqtt_message(
-        opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","CT":300}'
-    )
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","CT":300}')
     state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("color_temp") == 300
@@ -669,9 +665,7 @@ async def test_controlling_state_via_mqtt_rgbww_hex(opp, mqtt_mock, setup_tasmot
     assert "rgb_color" not in state.attributes
     assert state.attributes.get("color_mode") == "color_temp"
 
-    async_fire_mqtt_message(
-        opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","CT":300}'
-    )
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","CT":300}')
     state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("color_temp") == 300
@@ -779,9 +773,7 @@ async def test_controlling_state_via_mqtt_rgbww_tuya(opp, mqtt_mock, setup_tasmo
     assert "rgb_color" not in state.attributes
     assert state.attributes.get("color_mode") == "color_temp"
 
-    async_fire_mqtt_message(
-        opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","CT":300}'
-    )
+    async_fire_mqtt_message(opp, "tasmota_49A3BC/tele/STATE", '{"POWER":"ON","CT":300}')
     state = opp.states.get("light.test")
     assert state.state == STATE_ON
     assert state.attributes.get("color_temp") == 300
@@ -1699,9 +1691,7 @@ async def test_availability_discovery_update(opp, mqtt_mock, setup_tasmota):
     await help_test_availability_discovery_update(opp, mqtt_mock, light.DOMAIN, config)
 
 
-async def test_availability_poll_state(
-    opp, mqtt_client_mock, mqtt_mock, setup_tasmota
-):
+async def test_availability_poll_state(opp, mqtt_client_mock, mqtt_mock, setup_tasmota):
     """Test polling after MQTT connection (re)established."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 2
@@ -1740,9 +1730,7 @@ async def test_discovery_removal_relay_as_light(opp, mqtt_mock, caplog, setup_ta
     )
 
 
-async def test_discovery_removal_relay_as_light2(
-    opp, mqtt_mock, caplog, setup_tasmota
-):
+async def test_discovery_removal_relay_as_light2(opp, mqtt_mock, caplog, setup_tasmota):
     """Test removal of discovered relay as light."""
     config1 = copy.deepcopy(DEFAULT_CONFIG)
     config1["rl"][0] = 1

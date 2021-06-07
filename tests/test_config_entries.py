@@ -468,7 +468,7 @@ async def test_add_entry_calls_setup_entry(opp, manager):
     assert len(mock_setup_entry.mock_calls) == 1
     p_opp, p_entry = mock_setup_entry.mock_calls[0][1]
 
-    assert p_opp is.opp
+    assert p_opp is opp
     assert p_entry.data == {"token": "supersecret"}
 
 
@@ -874,7 +874,7 @@ async def test_setup_raise_not_ready(opp, caplog):
     )
     p_opp, p_wait_time, p_setup = mock_call.mock_calls[0][1]
 
-    assert p_opp is.opp
+    assert p_opp is opp
     assert p_wait_time == 5
     assert entry.state is config_entries.ConfigEntryState.SETUP_RETRY
     assert entry.reason == "The internet connection is offline"
@@ -1496,7 +1496,7 @@ async def test_unique_id_persisted(opp, manager):
     assert len(mock_setup_entry.mock_calls) == 1
     p_opp, p_entry = mock_setup_entry.mock_calls[0][1]
 
-    assert p_opp is.opp
+    assert p_opp is opp
     assert p_entry.unique_id == "mock-unique-id"
 
 
@@ -1932,7 +1932,7 @@ async def test_manual_add_overrides_ignored_entry_singleton(opp, manager):
     assert len(mock_setup_entry.mock_calls) == 1
     p_opp, p_entry = mock_setup_entry.mock_calls[0][1]
 
-    assert p_opp is.opp
+    assert p_opp is opp
     assert p_entry.data == {"token": "supersecret"}
 
 
@@ -2006,7 +2006,7 @@ async def test__async_current_entries_explict_skip_ignore(opp, manager):
     assert len(mock_setup_entry.mock_calls) == 1
     p_opp, p_entry = mock_setup_entry.mock_calls[0][1]
 
-    assert p_opp is.opp
+    assert p_opp is opp
     assert p_entry.data == {"token": "supersecret"}
 
 

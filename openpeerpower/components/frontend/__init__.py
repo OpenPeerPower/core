@@ -385,7 +385,7 @@ async def async_setup(opp, config):
         "developer-tools",
         require_admin=True,
         sidebar_title="developer_tools",
-        sidebar_icon="opp.hammer",
+        sidebar_icon="opp:hammer",
     )
 
     opp.data[DATA_EXTRA_MODULE_URL] = UrlManager(conf.get(CONF_EXTRA_MODULE_URL, []))
@@ -577,7 +577,7 @@ class IndexView(web_urldispatcher.AbstractResource):
 
     async def get(self, request: web.Request) -> web.Response:
         """Serve the index page for panel pages."""
-        opp = request.app["opp.]
+        opp = request.app["opp"]
 
         if not opp.components.onboarding.async_is_onboarded():
             return web.Response(status=302, headers={"location": "/onboarding.html"})

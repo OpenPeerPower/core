@@ -23,9 +23,7 @@ from tests.test_util.aiohttp import AiohttpClientMocker
 UPCOMING_ENTITY_ID = f"{SENSOR_DOMAIN}.sonarr_upcoming"
 
 
-async def test_sensors(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
-) -> None:
+async def test_sensors(opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker) -> None:
     """Test the creation and values of the sensors."""
     entry = await setup_integration(opp, aioclient_mock, skip_entry_setup=True)
     registry = er.async_get(opp)

@@ -6,7 +6,7 @@ from openpeerpower.helpers import start
 
 async def test_at_start_when_running(opp):
     """Test at start when already running."""
-    assert opp is_running
+    assert opp.is_running
 
     calls = []
 
@@ -22,7 +22,7 @@ async def test_at_start_when_running(opp):
 async def test_at_start_when_starting(opp):
     """Test at start when yet to start."""
     opp.state = core.CoreState.not_running
-    assert not opp is_running
+    assert not opp.is_running
 
     calls = []
 

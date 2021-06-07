@@ -177,9 +177,7 @@ class TemplateVacuum(TemplateEntity, StateVacuumEntity):
             attribute_templates=attribute_templates,
             availability_template=availability_template,
         )
-        self.entity_id = async_generate_entity_id(
-            ENTITY_ID_FORMAT, device_id, opp.opp
-        )
+        self.entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, device_id, opp.opp)
         self._name = friendly_name
 
         self._template = state_template

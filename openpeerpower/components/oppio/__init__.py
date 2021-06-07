@@ -38,8 +38,8 @@ from .const import (
     ATTR_ADDONS,
     ATTR_DISCOVERY,
     ATTR_FOLDERS,
-    ATTR_OPENPEERPOWER,
     ATTR_INPUT,
+    ATTR_OPENPEERPOWER,
     ATTR_PASSWORD,
     ATTR_REPOSITORY,
     ATTR_SLUG,
@@ -49,7 +49,7 @@ from .const import (
     DOMAIN,
 )
 from .discovery import async_setup_discovery_view
-from .handler import OppIO, HassioAPIError, api_data
+from .handler import HassioAPIError, OppIO, api_data
 from .http import OppIOView
 from .ingress import async_setup_ingress_view
 from .websocket_api import async_load_websocket_api
@@ -236,9 +236,7 @@ async def async_stop_addon(opp: OpenPeerPower, slug: str) -> dict:
 
 @bind_opp
 @api_data
-async def async_set_addon_options(
-    opp: OpenPeerPower, slug: str, options: dict
-) -> dict:
+async def async_set_addon_options(opp: OpenPeerPower, slug: str, options: dict) -> dict:
     """Set add-on options.
 
     The caller of the function should handle HassioAPIError.
@@ -407,7 +405,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:  # noqa: 
         frontend_url_path="oppio",
         webcomponent_name="oppio-main",
         sidebar_title="Supervisor",
-        sidebar_icon="opp.open-peer-power",
+        sidebar_icon="opp:open-peer-power",
         js_url="/api/oppio/app/entrypoint.js",
         embed_iframe=True,
         require_admin=True,
@@ -634,7 +632,7 @@ class HassioDataUpdateCoordinator(DataUpdateCoordinator):
         self.data = {}
         self.entry_id = config_entry.entry_id
         self.dev_reg = dev_reg
-        self.is_opp_os = "opp.s" in get_info(self.opp)
+        self.is_opp_os = "opp:s" in get_info(self.opp)
 
     async def _async_update_data(self) -> dict[str, Any]:
         """Update data via library."""

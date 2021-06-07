@@ -716,9 +716,7 @@ async def test_begin_healing_network(
     assert msg["error"]["code"] == ERR_NOT_LOADED
 
 
-async def test_subscribe_heal_network_progress(
-    opp, integration, client, opp_ws_client
-):
+async def test_subscribe_heal_network_progress(opp, integration, client, opp_ws_client):
     """Test the subscribe_heal_network_progress command."""
     entry = integration
     ws_client = await opp_ws_client(opp)

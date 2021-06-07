@@ -197,21 +197,20 @@ def test_float(opp):
 
     assert (
         template.Template(
-            "{{ float(states.sensor.temperature.state) }}",.opp
+            "{{ float(states.sensor.temperature.state) }}", opp
         ).async_render()
         == 12.0
     )
 
     assert (
         template.Template(
-            "{{ float(states.sensor.temperature.state) > 11 }}",.opp
+            "{{ float(states.sensor.temperature.state) > 11 }}", opp
         ).async_render()
         is True
     )
 
     assert (
-        template.Template("{{ float('forgiving') }}", opp).async_render()
-        == "forgiving"
+        template.Template("{{ float('forgiving') }}", opp).async_render() == "forgiving"
     )
 
 
@@ -221,35 +220,35 @@ def test_rounding_value(opp):
 
     assert (
         template.Template(
-            "{{ states.sensor.temperature.state | round(1) }}",.opp
+            "{{ states.sensor.temperature.state | round(1) }}", opp
         ).async_render()
         == 12.8
     )
 
     assert (
         template.Template(
-            "{{ states.sensor.temperature.state | multiply(10) | round }}",.opp
+            "{{ states.sensor.temperature.state | multiply(10) | round }}", opp
         ).async_render()
         == 128
     )
 
     assert (
         template.Template(
-            '{{ states.sensor.temperature.state | round(1, "floor") }}',.opp
+            '{{ states.sensor.temperature.state | round(1, "floor") }}', opp
         ).async_render()
         == 12.7
     )
 
     assert (
         template.Template(
-            '{{ states.sensor.temperature.state | round(1, "ceil") }}',.opp
+            '{{ states.sensor.temperature.state | round(1, "ceil") }}', opp
         ).async_render()
         == 12.8
     )
 
     assert (
         template.Template(
-            '{{ states.sensor.temperature.state | round(1, "half") }}',.opp
+            '{{ states.sensor.temperature.state | round(1, "half") }}', opp
         ).async_render()
         == 13.0
     )
@@ -272,7 +271,7 @@ def test_multiply(opp):
     for inp, out in tests.items():
         assert (
             template.Template(
-                "{{ %s | multiply(10) | round }}" % inp,.opp
+                "{{ %s | multiply(10) | round }}" % inp, opp
             ).async_render()
             == out
         )
@@ -291,14 +290,14 @@ def test_logarithm(opp):
     for value, base, expected in tests:
         assert (
             template.Template(
-                f"{{{{ {value} | log({base}) | round(1) }}}}",.opp
+                f"{{{{ {value} | log({base}) | round(1) }}}}", opp
             ).async_render()
             == expected
         )
 
         assert (
             template.Template(
-                f"{{{{ log({value}, {base}) | round(1) }}}}",.opp
+                f"{{{{ log({value}, {base}) | round(1) }}}}", opp
             ).async_render()
             == expected
         )
@@ -459,13 +458,13 @@ def test_arc_tan2(opp):
     for y, x, expected in tests:
         assert (
             template.Template(
-                f"{{{{ ({y}, {x}) | atan2 | round(3) }}}}",.opp
+                f"{{{{ ({y}, {x}) | atan2 | round(3) }}}}", opp
             ).async_render()
             == expected
         )
         assert (
             template.Template(
-                f"{{{{ atan2({y}, {x}) | round(3) }}}}",.opp
+                f"{{{{ atan2({y}, {x}) | round(3) }}}}", opp
             ).async_render()
             == expected
         )
@@ -532,10 +531,10 @@ def test_as_local(opp):
     opp.states.async_set("test.object", "available")
     last_updated = opp.states.get("test.object").last_updated
     assert template.Template(
-        "{{ as_local(states.test.object.last_updated) }}",.opp
+        "{{ as_local(states.test.object.last_updated) }}", opp
     ).async_render() == str(dt_util.as_local(last_updated))
     assert template.Template(
-        "{{ states.test.object.last_updated | as_local }}",.opp
+        "{{ states.test.object.last_updated | as_local }}", opp
     ).async_render() == str(dt_util.as_local(last_updated))
 
 
@@ -546,7 +545,7 @@ def test_to_json(opp):
     # only the filters, so we don't need to be exhaustive with our sample JSON.
     expected_result = {"Foo": "Bar"}
     actual_result = template.Template(
-        "{{ {'Foo': 'Bar'} | to_json }}",.opp
+        "{{ {'Foo': 'Bar'} | to_json }}", opp
     ).async_render()
     assert actual_result == expected_result
 
@@ -558,7 +557,7 @@ def test_from_json(opp):
     # only the filters, so we don't need to be exhaustive with our sample JSON.
     expected_result = "Bar"
     actual_result = template.Template(
-        '{{ (\'{"Foo": "Bar"}\' | from_json).Foo }}',.opp
+        '{{ (\'{"Foo": "Bar"}\' | from_json).Foo }}', opp
     ).async_render()
     assert actual_result == expected_result
 
@@ -594,7 +593,7 @@ def test_base64_decode(opp):
     """Test the base64_decode filter."""
     assert (
         template.Template(
-            '{{ "aG9tZWFzc2lzdGFudA==" | base64_decode }}',.opp
+            '{{ "aG9tZWFzc2lzdGFudA==" | base64_decode }}', opp
         ).async_render()
         == "openpeerpower"
     )
@@ -643,8 +642,7 @@ def test_as_timestamp(opp):
     )
     opp.mock = None
     assert (
-        template.Template("{{ as_timestamp(states.mock) }}", opp).async_render()
-        is None
+        template.Template("{{ as_timestamp(states.mock) }}", opp).async_render() is None
     )
 
     tpl = (
@@ -770,7 +768,7 @@ def test_if_state_exists(opp):
     """Test if state exists works."""
     opp.states.async_set("test.object", "available")
     tpl = template.Template(
-        "{% if states.test.object %}exists{% else %}not exists{% endif %}",.opp
+        "{% if states.test.object %}exists{% else %}not exists{% endif %}", opp
     )
     assert tpl.async_render() == "exists"
 
@@ -868,7 +866,7 @@ def test_utcnow(mock_is_safe, opp):
     utcnow = dt_util.utcnow()
     with patch("openpeerpower.util.dt.utcnow", return_value=utcnow):
         info = template.Template(
-            "{{ utcnow().isoformat() }}",.opp
+            "{{ utcnow().isoformat() }}", opp
         ).async_render_to_info()
         assert utcnow.isoformat() == info.result()
 
@@ -937,9 +935,7 @@ def test_timedelta(mock_is_safe, opp):
         ).async_render()
         assert result == "1 day, 0:00:00"
 
-        result = template.Template(
-            "{{timedelta(days=1, hours=4)}}",.opp
-        ).async_render()
+        result = template.Template("{{timedelta(days=1, hours=4)}}", opp).async_render()
         assert result == "1 day, 4:00:00"
 
         result = template.Template(
@@ -1177,7 +1173,7 @@ def test_distance_function_with_2_states(opp):
         {"latitude": opp.config.latitude, "longitude": opp.config.longitude},
     )
     tpl = template.Template(
-        "{{ distance(states.test.object, states.test.object_2) | round }}",.opp
+        "{{ distance(states.test.object, states.test.object_2) | round }}", opp
     )
     assert tpl.async_render() == 187
 
@@ -1232,9 +1228,7 @@ def test_distance_function_return_none_if_invalid_state(opp):
 
 def test_distance_function_return_none_if_invalid_coord(opp):
     """Test distance function return None if invalid coord."""
-    assert (
-        template.Template('{{ distance("123", "abc") }}', opp).async_render() is None
-    )
+    assert template.Template('{{ distance("123", "abc") }}', opp).async_render() is None
 
     assert template.Template('{{ distance("123") }}', opp).async_render() is None
 
@@ -1259,7 +1253,7 @@ def test_distance_function_with_2_entity_ids(opp):
         {"latitude": opp.config.latitude, "longitude": opp.config.longitude},
     )
     tpl = template.Template(
-        '{{ distance("test.object", "test.object_2") | round }}',.opp
+        '{{ distance("test.object", "test.object_2") | round }}', opp
     )
     assert tpl.async_render() == 187
 
@@ -1273,7 +1267,7 @@ def test_distance_function_with_1_entity_1_coord(opp):
         {"latitude": opp.config.latitude, "longitude": opp.config.longitude},
     )
     tpl = template.Template(
-        '{{ distance("test.object", "32.87336", "-117.22943") | round }}',.opp
+        '{{ distance("test.object", "32.87336", "-117.22943") | round }}', opp
     )
     assert tpl.async_render() == 187
 
@@ -1297,14 +1291,14 @@ def test_closest_function_home_vs_domain(opp):
 
     assert (
         template.Template(
-            "{{ closest(states.test_domain).entity_id }}",.opp
+            "{{ closest(states.test_domain).entity_id }}", opp
         ).async_render()
         == "test_domain.object"
     )
 
     assert (
         template.Template(
-            "{{ (states.test_domain | closest).entity_id }}",.opp
+            "{{ (states.test_domain | closest).entity_id }}", opp
         ).async_render()
         == "test_domain.object"
     )
@@ -1877,7 +1871,7 @@ def test_closest_function_to_state(opp):
 
     assert (
         template.Template(
-            "{{ closest(states.zone.far_away, states.test_domain).entity_id }}",.opp
+            "{{ closest(states.zone.far_away, states.test_domain).entity_id }}", opp
         ).async_render()
         == "test_domain.closest_zone"
     )
@@ -1911,7 +1905,7 @@ def test_closest_function_state_with_invalid_location(opp):
 
     assert (
         template.Template(
-            "{{ closest(states.test_domain.closest_home, states) }}",.opp
+            "{{ closest(states.test_domain.closest_home, states) }}", opp
         ).async_render()
         is None
     )
@@ -1930,13 +1924,13 @@ def test_closest_function_invalid_coordinates(opp):
 
     assert (
         template.Template(
-            '{{ closest("invalid", "coord", states) }}',.opp
+            '{{ closest("invalid", "coord", states) }}', opp
         ).async_render()
         is None
     )
     assert (
         template.Template(
-            '{{ states | closest("invalid", "coord") }}',.opp
+            '{{ states | closest("invalid", "coord") }}', opp
         ).async_render()
         is None
     )
@@ -2099,7 +2093,7 @@ def test_state_with_unit(opp):
     assert tpl.async_render() == "wow"
 
     tpl = template.Template(
-        "{% for state in states %}{{ state.state_with_unit }} {% endfor %}",.opp
+        "{% for state in states %}{{ state.state_with_unit }} {% endfor %}", opp
     )
 
     assert tpl.async_render() == "23 beers wow"

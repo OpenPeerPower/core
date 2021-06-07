@@ -20,9 +20,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     )
 
     implementation = (
-        await config_entry_oauth2_flow.async_get_config_entry_implementation(
-            opp, entry
-        )
+        await config_entry_oauth2_flow.async_get_config_entry_implementation(opp, entry)
     )
 
     opp.data.setdefault(DOMAIN, {})

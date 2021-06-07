@@ -64,7 +64,7 @@ async def test_setup_provide_implementation(opp):
     assert "cloud" in implementations
     assert implementations["cloud"].domain == "cloud"
     assert implementations["cloud"].service == "test"
-    assert implementations["cloud"].opp is.opp
+    assert implementations["cloud"].opp is opp
 
 
 async def test_get_services_cached(opp):
@@ -125,9 +125,7 @@ async def test_implementation(opp, flow_handler, current_request_with_host):
         async_get_tokens=Mock(return_value=flow_finished),
     )
 
-    with patch(
-        "opp_nabucasa.account_link.AuthorizeAccountHelper", return_value=helper
-    ):
+    with patch("opp_nabucasa.account_link.AuthorizeAccountHelper", return_value=helper):
         result = await opp.config_entries.flow.async_init(
             TEST_DOMAIN, context={"source": config_entries.SOURCE_USER}
         )
@@ -163,8 +161,6 @@ async def test_implementation(opp, flow_handler, current_request_with_host):
     entry = opp.config_entries.async_entries(TEST_DOMAIN)[0]
 
     assert (
-        await config_entry_oauth2_flow.async_get_config_entry_implementation(
-            opp, entry
-        )
+        await config_entry_oauth2_flow.async_get_config_entry_implementation(opp, entry)
         is impl
     )

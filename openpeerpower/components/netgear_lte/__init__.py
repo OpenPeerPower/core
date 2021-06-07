@@ -213,9 +213,7 @@ async def async_setup(opp, config):
         }
 
         for service, schema in service_schemas.items():
-            opp.services.async_register(
-                DOMAIN, service, service_handler, schema=schema
-            )
+            opp.services.async_register(DOMAIN, service, service_handler, schema=schema)
 
     netgear_lte_config = config[DOMAIN]
 

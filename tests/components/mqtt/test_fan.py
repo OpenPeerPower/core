@@ -269,9 +269,7 @@ async def test_controlling_state_via_topic_with_different_speed_range(
     caplog.clear()
 
 
-async def test_controlling_state_via_topic_no_percentage_topics(
-    opp, mqtt_mock, caplog
-):
+async def test_controlling_state_via_topic_no_percentage_topics(opp, mqtt_mock, caplog):
     """Test the controlling state via topic without percentage topics."""
     assert await async_setup_component(
         opp,

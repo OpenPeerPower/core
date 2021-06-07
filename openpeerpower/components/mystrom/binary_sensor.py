@@ -30,7 +30,7 @@ class MyStromView(OpenPeerPowerView):
 
     async def get(self, request):
         """Handle the GET request received from a myStrom button."""
-        res = await self._handle(request.app["opp.], request.query)
+        res = await self._handle(request.app["opp"], request.query)
         return res
 
     async def _handle(self, opp, data):

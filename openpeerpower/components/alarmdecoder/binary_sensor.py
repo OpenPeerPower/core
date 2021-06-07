@@ -33,9 +33,7 @@ ATTR_RF_LOOP4 = "rf_loop4"
 ATTR_RF_LOOP1 = "rf_loop1"
 
 
-async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
-):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry, async_add_entities):
     """Set up for AlarmDecoder sensor."""
 
     zones = entry.options.get(OPTIONS_ZONES, DEFAULT_ZONE_OPTIONS)

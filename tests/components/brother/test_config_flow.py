@@ -126,7 +126,7 @@ async def test_device_exists_abort(opp):
         return_value=json.loads(load_fixture("brother_printer_data.json")),
     ):
         MockConfigEntry(domain=DOMAIN, unique_id="0123456789", data=CONFIG).add_to_opp(
-           .opp
+            opp
         )
         result = await opp.config_entries.flow.async_init(
             DOMAIN, context={"source": SOURCE_USER}, data=CONFIG
@@ -157,7 +157,7 @@ async def test_zeroconf_device_exists_abort(opp):
         return_value=json.loads(load_fixture("brother_printer_data.json")),
     ):
         MockConfigEntry(domain=DOMAIN, unique_id="0123456789", data=CONFIG).add_to_opp(
-           .opp
+            opp
         )
 
         result = await opp.config_entries.flow.async_init(

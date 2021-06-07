@@ -87,9 +87,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
             add_dpi_entities(controller, async_add_entities, dpi_groups)
 
     for signal in (controller.signal_update, controller.signal_options_update):
-        config_entry.async_on_unload(
-            async_dispatcher_connect(opp, signal, items_added)
-        )
+        config_entry.async_on_unload(async_dispatcher_connect(opp, signal, items_added))
 
     items_added()
     known_poe_clients.clear()

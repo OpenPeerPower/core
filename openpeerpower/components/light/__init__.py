@@ -315,9 +315,7 @@ def filter_turn_on_params(light, params):
 
 async def async_setup(opp, config):  # noqa: C901
     """Expose light control via state machine and services."""
-    component = opp.data[DOMAIN] = EntityComponent(
-        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
-    )
+    component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp, SCAN_INTERVAL)
     await component.async_setup(config)
 
     profiles = opp.data[DATA_PROFILES] = Profiles(opp)

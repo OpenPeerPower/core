@@ -51,7 +51,7 @@ async def system_health_info(opp: OpenPeerPower):
         "supported": supported,
     }
 
-    if info.get("opp.s") is not None:
+    if info.get("opp:s") is not None:
         os_info = opp.components.oppio.get_os_info()
         information["board"] = os_info.get("board")
 

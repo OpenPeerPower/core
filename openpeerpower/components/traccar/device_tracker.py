@@ -117,9 +117,7 @@ PLATFORM_SCHEMA = PARENT_PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
-):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry, async_add_entities):
     """Configure a dispatcher connection based on a config entry."""
 
     @callback
@@ -134,9 +132,9 @@ async def async_setup_entry(
             [TraccarEntity(device, latitude, longitude, battery, accuracy, attrs)]
         )
 
-    opp.data[DOMAIN]["unsub_device_tracker"][
-        entry.entry_id
-    ] = async_dispatcher_connect(opp, TRACKER_UPDATE, _receive_data)
+    opp.data[DOMAIN]["unsub_device_tracker"][entry.entry_id] = async_dispatcher_connect(
+        opp, TRACKER_UPDATE, _receive_data
+    )
 
     # Restore previously loaded devices
     dev_reg = await device_registry.async_get_registry(opp)

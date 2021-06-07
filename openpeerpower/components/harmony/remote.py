@@ -48,9 +48,7 @@ HARMONY_CHANGE_CHANNEL_SCHEMA = {
 }
 
 
-async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
-):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry, async_add_entities):
     """Set up the Harmony config entry."""
 
     data = opp.data[DOMAIN][entry.entry_id][HARMONY_DATA]

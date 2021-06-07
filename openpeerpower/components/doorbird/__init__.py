@@ -323,7 +323,7 @@ class DoorBirdRequestView(OpenPeerPowerView):
 
     async def get(self, request, event):
         """Respond to requests from the device."""
-        opp = request.app["opp.]
+        opp = request.app["opp"]
 
         token = request.query.get("token")
 

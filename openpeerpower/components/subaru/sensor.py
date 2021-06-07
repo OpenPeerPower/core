@@ -220,10 +220,7 @@ class SubaruSensor(SubaruEntity, SensorEntity):
                 self.opp.config.units.length(self.current_value, self.api_unit), 1
             )
 
-        if (
-            self.api_unit in PRESSURE_UNITS
-            and self.opp.config.units == IMPERIAL_SYSTEM
-        ):
+        if self.api_unit in PRESSURE_UNITS and self.opp.config.units == IMPERIAL_SYSTEM:
             return round(
                 self.opp.config.units.pressure(self.current_value, self.api_unit),
                 1,

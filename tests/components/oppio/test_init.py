@@ -29,7 +29,7 @@ def mock_all(aioclient_mock, request):
         "http://127.0.0.1/info",
         json={
             "result": "ok",
-            "data": {"supervisor": "222", "openpeerpower": "0.110.0", "opp.s": None},
+            "data": {"supervisor": "222", "openpeerpower": "0.110.0", "oppos": None},
         },
     )
     aioclient_mock.get(
@@ -117,7 +117,7 @@ async def test_setup_api_panel(opp, aioclient_mock):
 
     assert panels.get("oppio").to_response() == {
         "component_name": "custom",
-        "icon": "opp.open-peer-power",
+        "icon": "opp:open-peer-power",
         "title": "Supervisor",
         "url_path": "oppio",
         "require_admin": True,

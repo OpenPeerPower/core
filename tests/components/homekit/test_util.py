@@ -296,9 +296,9 @@ async def test_accessory_friendly_name():
     accessory = Mock()
     accessory.display_name = "same"
     assert accessory_friendly_name("Same", accessory) == "Same"
-    assert accessory_friendly_name("opp.title", accessory) == "opp.title (same)"
-    accessory.display_name = "Hass title 123"
-    assert accessory_friendly_name("opp.title", accessory) == "Hass title 123"
+    assert accessory_friendly_name("opp title", accessory) == "opp title (same)"
+    accessory.display_name = "Opp title 123"
+    assert accessory_friendly_name("opp title", accessory) == "Opp title 123"
 
 
 async def test_lock_state_needs_accessory_mode(opp):

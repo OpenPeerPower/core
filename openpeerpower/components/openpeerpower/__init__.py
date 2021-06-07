@@ -50,7 +50,7 @@ SCHEMA_RELOAD_CONFIG_ENTRY = vol.All(
 SHUTDOWN_SERVICES = (SERVICE_OPENPEERPOWER_STOP, SERVICE_OPENPEERPOWER_RESTART)
 
 
-async def async_setup(opp. ha.OpenPeerPower, config: dict) -> bool:  # noqa: C901
+async def async_setup(opp: ha.OpenPeerPower, config: dict) -> bool:  # noqa: C901
     """Set up general services related to Open Peer Power."""
 
     async def async_handle_turn_service(service):

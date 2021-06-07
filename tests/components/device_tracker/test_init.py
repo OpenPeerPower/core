@@ -76,7 +76,7 @@ async def test_reading_broken_yaml_config(opp):
         "allok.yaml": "My Device:\n  name: Device",
         "oneok.yaml": ("My Device!:\n  name: Device\nbad_device:\n  nme: Device"),
     }
-    args = {"opp.: opp, "consider_home": timedelta(seconds=60)}
+    args = {"opp": opp, "consider_home": timedelta(seconds=60)}
     with patch_yaml_files(files):
         assert await legacy.async_load_config("empty.yaml", **args) == []
         assert await legacy.async_load_config("nodict.yaml", **args) == []
@@ -107,9 +107,7 @@ async def test_reading_yaml_config(opp, yaml_devices, enable_custom_integrations
         picture="http://test.picture",
         icon="mdi:kettle",
     )
-    await opp.async_add_executor_job(
-        legacy.update_config, yaml_devices, dev_id, device
-    )
+    await opp.async_add_executor_job(legacy.update_config, yaml_devices, dev_id, device)
     assert await async_setup_component(opp, device_tracker.DOMAIN, TEST_PLATFORM)
     config = (await legacy.async_load_config(yaml_devices, opp, device.consider_home))[
         0

@@ -163,7 +163,7 @@ async def async_aiohttp_proxy_stream(
 
     # Suppressing something went wrong fetching data, closed connection
     with suppress(asyncio.TimeoutError, aiohttp.ClientError):
-        while opp is_running:
+        while opp.is_running:
             with async_timeout.timeout(timeout):
                 data = await stream.read(buffer_size)
 

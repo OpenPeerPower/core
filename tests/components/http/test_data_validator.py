@@ -11,7 +11,7 @@ from openpeerpower.components.http.data_validator import RequestDataValidator
 async def get_client(aiohttp_client, validator):
     """Generate a client that hits a view decorated with validator."""
     app = web.Application()
-    app["opp.] = Mock(is_stopping=False)
+    app["opp"] = Mock(is_stopping=False)
 
     class TestView(OpenPeerPowerView):
         url = "/"

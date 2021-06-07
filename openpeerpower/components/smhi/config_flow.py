@@ -58,10 +58,7 @@ class SmhiFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
 
         # If opp.config has the location set and is a valid coordinate the
         # default location is set as default values in the form
-        if (
-            not smhi_locations(self.opp)
-            and await self._openpeerpower_location_exists()
-        ):
+        if not smhi_locations(self.opp) and await self._openpeerpower_location_exists():
             return await self._show_config_form(
                 name=HOME_LOCATION_NAME,
                 latitude=self.opp.config.latitude,

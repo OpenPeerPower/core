@@ -63,9 +63,7 @@ class VerisureDataUpdateCoordinator(DataUpdateCoordinator):
     async def _async_update_data(self) -> dict:
         """Fetch data from Verisure."""
         try:
-            overview = await self.opp.async_add_executor_job(
-                self.verisure.get_overview
-            )
+            overview = await self.opp.async_add_executor_job(self.verisure.get_overview)
         except VerisureResponseError as ex:
             LOGGER.error("Could not read overview, %s", ex)
             if ex.status_code == HTTP_SERVICE_UNAVAILABLE:  # Service unavailable

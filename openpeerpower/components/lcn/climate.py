@@ -43,9 +43,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
 
     for entity_config in config_entry.data[CONF_ENTITIES]:
         if entity_config[CONF_DOMAIN] == DOMAIN_CLIMATE:
-            entities.append(
-                create_lcn_climate_entity(opp, entity_config, config_entry)
-            )
+            entities.append(create_lcn_climate_entity(opp, entity_config, config_entry))
 
     async_add_entities(entities)
 

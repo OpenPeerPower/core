@@ -77,9 +77,7 @@ def is_on(opp: OpenPeerPower, entity_id: str) -> bool:
 
 async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     """Track states and offer events for remotes."""
-    component = opp.data[DOMAIN] = EntityComponent(
-        _LOGGER, DOMAIN, opp, SCAN_INTERVAL
-    )
+    component = opp.data[DOMAIN] = EntityComponent(_LOGGER, DOMAIN, opp, SCAN_INTERVAL)
     await component.async_setup(config)
 
     component.async_register_entity_service(
@@ -196,9 +194,7 @@ class RemoteEntity(ToggleEntity):
 
     async def async_delete_command(self, **kwargs: Any) -> None:
         """Delete commands from the database."""
-        await self.opp.async_add_executor_job(
-            ft.partial(self.delete_command, **kwargs)
-        )
+        await self.opp.async_add_executor_job(ft.partial(self.delete_command, **kwargs))
 
 
 class RemoteDevice(RemoteEntity):

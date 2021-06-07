@@ -109,7 +109,7 @@ class SmartHomeView(OpenPeerPowerView):
         Lambda, which will need to forward the requests to here and pass back
         the response.
         """
-        opp = request.app["opp.]
+        opp = request.app["opp"]
         user = request["opp_user"]
         message = await request.json()
 

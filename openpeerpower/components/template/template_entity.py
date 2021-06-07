@@ -211,7 +211,7 @@ class TemplateEntity(Entity):
             if the template or validator resulted in an error.
 
         """
-        assert self.opp is not None, "opp.cannot be None"
+        assert self.opp is not None, "opp cannot be None"
         template.opp = self.opp
         attribute = _TemplateAttribute(
             self, attribute, template, validator, on_update, none_on_template_error

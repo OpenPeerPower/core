@@ -111,18 +111,14 @@ async def test_enter_and_exit(opp, client, webhook_id):
     req = await client.post(url, params=data)
     await opp.async_block_till_done()
     assert req.status == HTTP_OK
-    state_name = opp.states.get(
-        "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"])
-    ).state
+    state_name = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"])).state
     assert state_name == STATE_HOME
 
     # Enter Home again
     req = await client.post(url, params=data)
     await opp.async_block_till_done()
     assert req.status == HTTP_OK
-    state_name = opp.states.get(
-        "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"])
-    ).state
+    state_name = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"])).state
     assert state_name == STATE_HOME
 
     data["lon"] = 0
@@ -132,9 +128,7 @@ async def test_enter_and_exit(opp, client, webhook_id):
     req = await client.post(url, params=data)
     await opp.async_block_till_done()
     assert req.status == HTTP_OK
-    state_name = opp.states.get(
-        "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"])
-    ).state
+    state_name = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"])).state
     assert state_name == STATE_NOT_HOME
 
     dev_reg = dr.async_get(opp)
@@ -234,9 +228,7 @@ async def test_load_unload_entry(opp, client, webhook_id):
     req = await client.post(url, params=data)
     await opp.async_block_till_done()
     assert req.status == HTTP_OK
-    state_name = opp.states.get(
-        "{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"])
-    ).state
+    state_name = opp.states.get("{}.{}".format(DEVICE_TRACKER_DOMAIN, data["id"])).state
     assert state_name == STATE_HOME
     assert len(opp.data[DATA_DISPATCHER][TRACKER_UPDATE]) == 1
 

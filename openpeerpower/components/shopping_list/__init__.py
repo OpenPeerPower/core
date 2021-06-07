@@ -262,7 +262,7 @@ class ShoppingListView(http.OpenPeerPowerView):
     @callback
     def get(self, request):
         """Retrieve shopping list items."""
-        return self.json(request.app["opp.].data[DOMAIN].items)
+        return self.json(request.app["opp"].data[DOMAIN].items)
 
 
 class UpdateShoppingListItemView(http.OpenPeerPowerView):
@@ -276,8 +276,8 @@ class UpdateShoppingListItemView(http.OpenPeerPowerView):
         data = await request.json()
 
         try:
-            item = await request.app["opp.].data[DOMAIN].async_update(item_id, data)
-            request.app["opp.].bus.async_fire(EVENT)
+            item = await request.app["opp"].data[DOMAIN].async_update(item_id, data)
+            request.app["opp"].bus.async_fire(EVENT)
             return self.json(item)
         except KeyError:
             return self.json_message("Item not found", HTTP_NOT_FOUND)
@@ -294,8 +294,8 @@ class CreateShoppingListItemView(http.OpenPeerPowerView):
     @RequestDataValidator(vol.Schema({vol.Required("name"): str}))
     async def post(self, request, data):
         """Create a new shopping list item."""
-        item = await request.app["opp.].data[DOMAIN].async_add(data["name"])
-        request.app["opp.].bus.async_fire(EVENT)
+        item = await request.app["opp"].data[DOMAIN].async_add(data["name"])
+        request.app["opp"].bus.async_fire(EVENT)
         return self.json(item)
 
 
@@ -307,7 +307,7 @@ class ClearCompletedItemsView(http.OpenPeerPowerView):
 
     async def post(self, request):
         """Retrieve if API is running."""
-        opp = request.app["opp.]
+        opp = request.app["opp"]
         await opp.data[DOMAIN].async_clear_completed()
         opp.bus.async_fire(EVENT)
         return self.json_message("Cleared completed items.")

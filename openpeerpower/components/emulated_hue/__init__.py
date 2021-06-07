@@ -108,7 +108,7 @@ async def async_setup(opp, yaml_config):
     config = Config(opp, yaml_config.get(DOMAIN, {}))
 
     app = web.Application()
-    app["opp.] =.opp
+    app["opp"] = opp
 
     # We misunderstood the startup signal. You're not allowed to change
     # anything during startup. Temp workaround.

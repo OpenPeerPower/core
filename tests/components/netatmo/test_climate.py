@@ -315,9 +315,7 @@ async def test_service_preset_modes_thermostat(opp, config_entry, netatmo_auth):
     await simulate_webhook(opp, webhook_id, response)
 
     assert opp.states.get(climate_entity_livingroom).state == "auto"
-    assert (
-        opp.states.get(climate_entity_livingroom).attributes["preset_mode"] == "away"
-    )
+    assert opp.states.get(climate_entity_livingroom).attributes["preset_mode"] == "away"
 
     # Test service setting the preset mode to "boost"
     await opp.services.async_call(

@@ -74,9 +74,7 @@ async def async_setup_platform(
     else:
         ping_cls = PingDataICMPLib
 
-    async_add_entities(
-        [PingBinarySensor(name, ping_cls(opp, host, count, privileged))]
-    )
+    async_add_entities([PingBinarySensor(name, ping_cls(opp, host, count, privileged))])
 
 
 class PingBinarySensor(RestoreEntity, BinarySensorEntity):

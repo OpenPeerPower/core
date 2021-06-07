@@ -75,7 +75,7 @@ class MerakiView(OpenPeerPowerView):
         if not data["data"]["observations"]:
             _LOGGER.debug("No observations found")
             return
-        self._handle(request.app["opp.], data)
+        self._handle(request.app["opp"], data)
 
     @callback
     def _handle(self, opp, data):

@@ -140,16 +140,16 @@ async def assert_request_fails(
 async def assert_power_controller_works(endpoint, on_service, off_service, opp):
     """Assert PowerController API requests work."""
     await assert_request_calls_service(
-        "Alexa.PowerController", "TurnOn", endpoint, on_service,.opp
+        "Alexa.PowerController", "TurnOn", endpoint, on_service, opp
     )
 
     await assert_request_calls_service(
-        "Alexa.PowerController", "TurnOff", endpoint, off_service,.opp
+        "Alexa.PowerController", "TurnOff", endpoint, off_service, opp
     )
 
 
 async def assert_scene_controller_works(
-    endpoint, activate_service, deactivate_service,.opp
+    endpoint, activate_service, deactivate_service, opp
 ):
     """Assert SceneController API requests work."""
     _, response = await assert_request_calls_service(

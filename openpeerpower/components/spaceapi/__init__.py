@@ -265,7 +265,7 @@ class APISpaceApiView(OpenPeerPowerView):
     @ha.callback
     def get(self, request):
         """Get SpaceAPI data."""
-        opp = request.app["opp.]
+        opp = request.app["opp"]
         spaceapi = dict(opp.data[DATA_SPACEAPI])
         is_sensors = spaceapi.get("sensors")
 

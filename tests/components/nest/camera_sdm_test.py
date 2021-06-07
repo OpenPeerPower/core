@@ -278,9 +278,7 @@ async def test_refresh_expired_stream_token(opp, auth):
 
     # HLS stream is not re-created, just the source is updated
     with patch("openpeerpower.components.camera.create_stream") as create_stream:
-        hls_url1 = await camera.async_request_stream(
-            opp, "camera.my_camera", fmt="hls"
-        )
+        hls_url1 = await camera.async_request_stream(opp, "camera.my_camera", fmt="hls")
         assert hls_url == hls_url1
 
     # Next alarm is well before stream_2_expiration, no change
@@ -297,9 +295,7 @@ async def test_refresh_expired_stream_token(opp, auth):
 
     # HLS stream is still not re-created
     with patch("openpeerpower.components.camera.create_stream") as create_stream:
-        hls_url2 = await camera.async_request_stream(
-            opp, "camera.my_camera", fmt="hls"
-        )
+        hls_url2 = await camera.async_request_stream(opp, "camera.my_camera", fmt="hls")
         assert hls_url == hls_url2
 
 
@@ -409,9 +405,7 @@ async def test_refresh_expired_stream_failure(opp, auth):
     # Requesting an HLS stream will create an entirely new stream
     with patch("openpeerpower.components.camera.create_stream") as create_stream:
         # The HLS stream endpoint was invalidated, with a new auth token
-        hls_url2 = await camera.async_request_stream(
-            opp, "camera.my_camera", fmt="hls"
-        )
+        hls_url2 = await camera.async_request_stream(opp, "camera.my_camera", fmt="hls")
         assert hls_url != hls_url2
         assert hls_url2.startswith("/api/hls/")  # Includes access token
         assert create_stream.called

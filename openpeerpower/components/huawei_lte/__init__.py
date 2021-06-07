@@ -441,9 +441,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         router.update()
 
     # Set up periodic update
-    entry.async_on_unload(
-        async_track_time_interval(opp, _update_router, SCAN_INTERVAL)
-    )
+    entry.async_on_unload(async_track_time_interval(opp, _update_router, SCAN_INTERVAL))
 
     # Clean up at end
     entry.async_on_unload(

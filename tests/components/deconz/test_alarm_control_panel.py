@@ -111,9 +111,7 @@ async def test_alarm_control_panel(opp, aioclient_mock, mock_deconz_websocket):
     await mock_deconz_websocket(data=event_changed_sensor)
     await opp.async_block_till_done()
 
-    assert (
-        opp.states.get("alarm_control_panel.keypad").state == STATE_ALARM_ARMED_NIGHT
-    )
+    assert opp.states.get("alarm_control_panel.keypad").state == STATE_ALARM_ARMED_NIGHT
 
     # Event signals alarm control panel armed home
 
@@ -141,9 +139,7 @@ async def test_alarm_control_panel(opp, aioclient_mock, mock_deconz_websocket):
     await mock_deconz_websocket(data=event_changed_sensor)
     await opp.async_block_till_done()
 
-    assert (
-        opp.states.get("alarm_control_panel.keypad").state == STATE_ALARM_ARMED_NIGHT
-    )
+    assert opp.states.get("alarm_control_panel.keypad").state == STATE_ALARM_ARMED_NIGHT
 
     # Event signals alarm control panel disarmed
 

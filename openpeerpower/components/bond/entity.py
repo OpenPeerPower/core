@@ -110,7 +110,7 @@ class BondEntity(Entity):
     async def _async_update_if_bpup_not_alive(self, *_: Any) -> None:
         """Fetch via the API if BPUP is not alive."""
         if (
-            self.opp is_stopping
+            self.opp.is_stopping
             or self._bpup_subs.alive
             and self._initialized
             and self._available

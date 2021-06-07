@@ -126,11 +126,11 @@ async def test_view(opp):
     request = aiohttp.MockRequest(
         b"", query_string="code=test_code", mock_source="test"
     )
-    request.app = {"opp.: opp.
+    request.app = {"opp": opp}
     view = config_flow.AmbiclimateAuthCallbackView()
     assert await view.get(request) == "OK!"
 
     request = aiohttp.MockRequest(b"", query_string="", mock_source="test")
-    request.app = {"opp.: opp.
+    request.app = {"opp": opp}
     view = config_flow.AmbiclimateAuthCallbackView()
     assert await view.get(request) == "No code"

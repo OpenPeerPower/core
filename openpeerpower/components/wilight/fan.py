@@ -32,9 +32,7 @@ ORDERED_NAMED_FAN_SPEEDS = [WL_SPEED_LOW, WL_SPEED_MEDIUM, WL_SPEED_HIGH]
 SUPPORTED_FEATURES = SUPPORT_SET_SPEED | SUPPORT_DIRECTION
 
 
-async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities
-):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry, async_add_entities):
     """Set up WiLight lights from a config entry."""
     parent = opp.data[DOMAIN][entry.entry_id]
 

@@ -449,9 +449,7 @@ class HomeAccessory(Accessory):
 
         self.opp.bus.async_fire(EVENT_HOMEKIT_CHANGED, event_data, context=context)
         self.opp.async_create_task(
-            self.opp.services.async_call(
-                domain, service, service_data, context=context
-            )
+            self.opp.services.async_call(domain, service, service_data, context=context)
         )
 
     @ha_callback

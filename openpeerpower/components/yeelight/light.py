@@ -347,9 +347,7 @@ def _async_setup_services(opp: OpenPeerPower):
             action=Flow.actions[service_call.data[ATTR_ACTION]],
             transitions=_transitions_config_parser(service_call.data[ATTR_TRANSITIONS]),
         )
-        await opp.async_add_executor_job(
-            partial(entity.set_scene, SceneClass.CF, flow)
-        )
+        await opp.async_add_executor_job(partial(entity.set_scene, SceneClass.CF, flow))
 
     async def _async_set_auto_delay_off_scene(entity, service_call):
         await opp.async_add_executor_job(

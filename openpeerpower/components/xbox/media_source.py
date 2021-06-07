@@ -78,7 +78,7 @@ class XboxSource(MediaSource):
         """Initialize Xbox source."""
         super().__init__(DOMAIN)
 
-        self.opp: OpenPeerPower =.opp
+        self.opp: OpenPeerPower = opp
         self.client: XboxLiveClient = client
 
     async def async_resolve_media(self, item: MediaSourceItem) -> PlayMedia:

@@ -11,9 +11,7 @@ from .const import CONF_LISTEN_PORT, DEFAULT_NAME, DEFAULT_PORT, DOMAIN
 @callback
 def configured_servers(opp):
     """Return a set of the configured servers."""
-    return {
-        entry.data[CONF_NAME] for entry in opp.config_entries.async_entries(DOMAIN)
-    }
+    return {entry.data[CONF_NAME] for entry in opp.config_entries.async_entries(DOMAIN)}
 
 
 class EmulatedRokuFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):

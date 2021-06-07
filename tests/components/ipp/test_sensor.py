@@ -13,9 +13,7 @@ from tests.components.ipp import init_integration, mock_connection
 from tests.test_util.aiohttp import AiohttpClientMocker
 
 
-async def test_sensors(
-    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
-) -> None:
+async def test_sensors(opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker) -> None:
     """Test the creation and values of the IPP sensors."""
     mock_connection(aioclient_mock)
 

@@ -26,4 +26,4 @@ def opp_history(opp_recorder):
     )
     assert setup_component(opp, history.DOMAIN, config)
 
-    yield.opp
+    yield opp
