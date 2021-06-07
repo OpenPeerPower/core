@@ -17,11 +17,13 @@ from openpeerpower.components.fan import (
     SUPPORT_SET_SPEED,
 )
 from openpeerpower.components.smartthings.const import DOMAIN, SIGNAL_SMARTTHINGS_UPDATE
+from openpeerpower.config_entries import ConfigEntryState
 from openpeerpower.const import (
     ATTR_ENTITY_ID,
     ATTR_SUPPORTED_FEATURES,
     STATE_UNAVAILABLE,
 )
+from openpeerpower.helpers import device_registry as dr, entity_registry as er
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
 
 from .conftest import setup_platform
@@ -59,8 +61,8 @@ async def test_entity_and_device_attributes(opp, device_factory):
     )
     # Act
     await setup_platform(opp, FAN_DOMAIN, devices=[device])
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
-    device_registry = await opp.helpers.device_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
+    device_registry = dr.async_get(opp)
     # Assert
     entry = entity_registry.async_get("fan.fan_1")
     assert entry
@@ -185,6 +187,7 @@ async def test_unload_config_entry(opp, device_factory):
         status={Attribute.switch: "off", Attribute.fan_speed: 0},
     )
     config_entry = await setup_platform(opp, FAN_DOMAIN, devices=[device])
+    config_entry.state = ConfigEntryState.LOADED
     # Act
     await opp.config_entries.async_forward_entry_unload(config_entry, "fan")
     # Assert

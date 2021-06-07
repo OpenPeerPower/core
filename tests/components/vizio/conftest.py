@@ -68,6 +68,16 @@ def vizio_data_coordinator_update_fixture():
         yield
 
 
+@pytest.fixture(name="vizio_data_coordinator_update_failure")
+def vizio_data_coordinator_update_failure_fixture():
+    """Mock get data coordinator update failure."""
+    with patch(
+        "openpeerpower.components.vizio.gen_apps_list_from_url",
+        return_value=None,
+    ):
+        yield
+
+
 @pytest.fixture(name="vizio_no_unique_id")
 def vizio_no_unique_id_fixture():
     """Mock no vizio unique ID returrned."""
@@ -82,7 +92,7 @@ def vizio_no_unique_id_fixture():
 def vizio_connect_fixture():
     """Mock valid vizio device and entry setup."""
     with patch(
-        "openpeerpower.components.vizio.config_flow.VizioAsync.validate_ha_config",
+        "openpeerpower.components.vizio.config_flow.VizioAsync.validate_op_config",
         AsyncMock(return_value=True),
     ):
         yield
@@ -155,7 +165,7 @@ def vizio_guess_device_type_fixture():
 def vizio_cant_connect_fixture():
     """Mock vizio device can't connect with valid auth."""
     with patch(
-        "openpeerpower.components.vizio.config_flow.VizioAsync.validate_ha_config",
+        "openpeerpower.components.vizio.config_flow.VizioAsync.validate_op_config",
         AsyncMock(return_value=False),
     ), patch(
         "openpeerpower.components.vizio.media_player.VizioAsync.get_power_state",

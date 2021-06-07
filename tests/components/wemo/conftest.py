@@ -7,6 +7,7 @@ import pywemo
 
 from openpeerpower.components.wemo import CONF_DISCOVERY, CONF_STATIC
 from openpeerpower.components.wemo.const import DOMAIN
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.setup import async_setup_component
 
 MOCK_HOST = "127.0.0.1"
@@ -72,7 +73,7 @@ async def async_wemo_entity_fixture(opp, pywemo_device):
     )
     await opp.async_block_till_done()
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
     entity_entries = list(entity_registry.entities.values())
     assert len(entity_entries) == 1
 

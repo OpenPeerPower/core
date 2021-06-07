@@ -12,7 +12,7 @@ async def test_switch(
     opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
-    vera_device = MagicMock(spec=pv.VeraSwitch)  # type: pv.VeraSwitch
+    vera_device: pv.VeraSwitch = MagicMock(spec=pv.VeraSwitch)
     vera_device.device_id = 1
     vera_device.vera_device_id = vera_device.device_id
     vera_device.comm_failure = False
@@ -22,7 +22,7 @@ async def test_switch(
     entity_id = "switch.dev1_1"
 
     component_data = await vera_component_factory.configure_component(
-        opp=opp,
+        opp.opp,
         controller_config=new_simple_controller_config(
             devices=(vera_device,), legacy_entity_unique_id=False
         ),

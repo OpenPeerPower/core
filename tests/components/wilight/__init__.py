@@ -14,7 +14,7 @@ from openpeerpower.components.wilight.config_flow import (
     CONF_SERIAL_NUMBER,
 )
 from openpeerpower.const import CONF_HOST
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from tests.common import MockConfigEntry
 
@@ -58,7 +58,7 @@ MOCK_SSDP_DISCOVERY_INFO_MISSING_MANUFACTORER = {
 
 
 async def setup_integration(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
 ) -> MockConfigEntry:
     """Mock ConfigEntry in Open Peer Power."""
 

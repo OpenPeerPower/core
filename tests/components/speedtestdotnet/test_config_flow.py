@@ -5,7 +5,7 @@ from unittest.mock import patch
 import pytest
 from speedtest import NoMatchedServers
 
-from openpeerpower import data_entry_flow
+from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.components import speedtestdotnet
 from openpeerpower.components.speedtestdotnet.const import (
     CONF_MANUAL,
@@ -34,7 +34,7 @@ def mock_setup():
 async def test_flow_works(opp, mock_setup):
     """Test user config."""
     result = await opp.config_entries.flow.async_init(
-        speedtestdotnet.DOMAIN, context={"source": "user"}
+        speedtestdotnet.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "user"
@@ -53,7 +53,7 @@ async def test_import_fails(opp, mock_setup):
         mock_api.return_value.get_servers.side_effect = NoMatchedServers
         result = await opp.config_entries.flow.async_init(
             speedtestdotnet.DOMAIN,
-            context={"source": "import"},
+            context={"source": config_entries.SOURCE_IMPORT},
             data={
                 CONF_SERVER_ID: "223",
                 CONF_MANUAL: True,
@@ -71,7 +71,7 @@ async def test_import_success(opp, mock_setup):
     with patch("speedtest.Speedtest"):
         result = await opp.config_entries.flow.async_init(
             speedtestdotnet.DOMAIN,
-            context={"source": "import"},
+            context={"source": config_entries.SOURCE_IMPORT},
             data={
                 CONF_SERVER_ID: "1",
                 CONF_MANUAL: True,
@@ -132,7 +132,7 @@ async def test_integration_already_configured(opp):
     )
     entry.add_to_opp(opp)
     result = await opp.config_entries.flow.async_init(
-        speedtestdotnet.DOMAIN, context={"source": "user"}
+        speedtestdotnet.DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
     assert result["reason"] == "single_instance_allowed"

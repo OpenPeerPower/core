@@ -1,4 +1,4 @@
-"""The tests the cover command line platform."""
+"""The tests for the Template cover platform."""
 import pytest
 
 from openpeerpower import setup
@@ -15,9 +15,11 @@ from openpeerpower.const import (
     SERVICE_TOGGLE,
     SERVICE_TOGGLE_COVER_TILT,
     STATE_CLOSED,
+    STATE_CLOSING,
     STATE_OFF,
     STATE_ON,
     STATE_OPEN,
+    STATE_OPENING,
     STATE_UNAVAILABLE,
 )
 
@@ -73,6 +75,18 @@ async def test_template_state_text(opp, calls):
 
     state = opp.states.get("cover.test_template_cover")
     assert state.state == STATE_CLOSED
+
+    state = opp.states.async_set("cover.test_state", STATE_OPENING)
+    await opp.async_block_till_done()
+
+    state = opp.states.get("cover.test_template_cover")
+    assert state.state == STATE_OPENING
+
+    state = opp.states.async_set("cover.test_state", STATE_CLOSING)
+    await opp.async_block_till_done()
+
+    state = opp.states.get("cover.test_template_cover")
+    assert state.state == STATE_CLOSING
 
 
 async def test_template_state_boolean(opp, calls):

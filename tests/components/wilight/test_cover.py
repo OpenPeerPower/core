@@ -20,7 +20,8 @@ from openpeerpower.const import (
     STATE_OPEN,
     STATE_OPENING,
 )
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import entity_registry as er
 
 from . import (
     HOST,
@@ -55,7 +56,7 @@ def mock_dummy_device_from_host_light_fan():
 
 
 async def test_loading_cover(
-    opp: OpenPeerPowerType,
+    opp: OpenPeerPower,
     dummy_device_from_host_cover,
 ) -> None:
     """Test the WiLight configuration entry loading."""
@@ -64,7 +65,7 @@ async def test_loading_cover(
     assert entry
     assert entry.unique_id == WILIGHT_ID
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     # First segment of the strip
     state = opp.states.get("cover.wl000000000099_1")
@@ -77,7 +78,7 @@ async def test_loading_cover(
 
 
 async def test_open_close_cover_state(
-    opp: OpenPeerPowerType, dummy_device_from_host_cover
+    opp: OpenPeerPower, dummy_device_from_host_cover
 ) -> None:
     """Test the change of state of the cover."""
     await setup_integration(opp)

@@ -19,7 +19,9 @@ from openpeerpower.components.cover import (
     STATE_OPENING,
 )
 from openpeerpower.components.smartthings.const import DOMAIN, SIGNAL_SMARTTHINGS_UPDATE
+from openpeerpower.config_entries import ConfigEntryState
 from openpeerpower.const import ATTR_BATTERY_LEVEL, ATTR_ENTITY_ID, STATE_UNAVAILABLE
+from openpeerpower.helpers import device_registry as dr, entity_registry as er
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
 
 from .conftest import setup_platform
@@ -31,8 +33,8 @@ async def test_entity_and_device_attributes(opp, device_factory):
     device = device_factory(
         "Garage", [Capability.garage_door_control], {Attribute.door: "open"}
     )
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
-    device_registry = await opp.helpers.device_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
+    device_registry = dr.async_get(opp)
     # Act
     await setup_platform(opp, COVER_DOMAIN, devices=[device])
     # Assert
@@ -190,6 +192,7 @@ async def test_unload_config_entry(opp, device_factory):
         "Garage", [Capability.garage_door_control], {Attribute.door: "open"}
     )
     config_entry = await setup_platform(opp, COVER_DOMAIN, devices=[device])
+    config_entry.state = ConfigEntryState.LOADED
     # Act
     await opp.config_entries.async_forward_entry_unload(config_entry, COVER_DOMAIN)
     # Assert

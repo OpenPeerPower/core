@@ -9,6 +9,7 @@ import pytest
 import openpeerpower.components.automation as automation
 from openpeerpower.components.tasmota.const import DEFAULT_PREFIX, DOMAIN
 from openpeerpower.components.tasmota.device_trigger import async_attach_trigger
+from openpeerpower.helpers import device_registry as dr
 from openpeerpower.setup import async_setup_component
 
 from .test_common import DEFAULT_CONFIG
@@ -33,7 +34,9 @@ async def test_get_triggers_btn(opp, device_reg, entity_reg, mqtt_mock, setup_ta
     async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
     expected_triggers = [
         {
             "platform": "device",
@@ -65,7 +68,9 @@ async def test_get_triggers_swc(opp, device_reg, entity_reg, mqtt_mock, setup_ta
     async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
     expected_triggers = [
         {
             "platform": "device",
@@ -92,7 +97,9 @@ async def test_get_unknown_triggers(
     async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
 
     assert await async_setup_component(
         opp,
@@ -133,7 +140,9 @@ async def test_get_non_existing_triggers(
     async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
     await opp.async_block_till_done()
 
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
     triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     assert_lists_same(triggers, [])
 
@@ -157,7 +166,9 @@ async def test_discover_bad_triggers(
         )
         await opp.async_block_till_done()
 
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
     triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     assert_lists_same(triggers, [])
 
@@ -189,7 +200,9 @@ async def test_discover_bad_triggers(
         )
         await opp.async_block_till_done()
 
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
     triggers = await async_get_device_automations(opp, "trigger", device_entry.id)
     assert_lists_same(triggers, [])
 
@@ -231,7 +244,9 @@ async def test_update_remove_triggers(
     async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
     await opp.async_block_till_done()
 
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
 
     expected_triggers1 = [
         {
@@ -287,7 +302,9 @@ async def test_if_fires_on_mqtt_message_btn(
 
     async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
 
     assert await async_setup_component(
         opp,
@@ -357,7 +374,9 @@ async def test_if_fires_on_mqtt_message_swc(
 
     async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
 
     assert await async_setup_component(
         opp,
@@ -453,7 +472,9 @@ async def test_if_fires_on_mqtt_message_late_discover(
     async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
     await opp.async_block_till_done()
 
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
 
     assert await async_setup_component(
         opp,
@@ -527,7 +548,9 @@ async def test_if_fires_on_mqtt_message_after_update(
     async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
     await opp.async_block_till_done()
 
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
 
     assert await async_setup_component(
         opp,
@@ -604,7 +627,9 @@ async def test_no_resubscribe_same_topic(opp, device_reg, mqtt_mock, setup_tasmo
     async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
 
     assert await async_setup_component(
         opp,
@@ -650,7 +675,9 @@ async def test_not_fires_on_mqtt_message_after_remove_by_mqtt(
     async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
 
     assert await async_setup_component(
         opp,
@@ -719,7 +746,9 @@ async def test_not_fires_on_mqtt_message_after_remove_from_registry(
     async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
 
     assert await async_setup_component(
         opp,
@@ -774,7 +803,9 @@ async def test_attach_remove(opp, device_reg, mqtt_mock, setup_tasmota):
     async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
 
     calls = []
 
@@ -829,7 +860,9 @@ async def test_attach_remove_late(opp, device_reg, mqtt_mock, setup_tasmota):
     async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
     await opp.async_block_till_done()
 
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
 
     calls = []
 
@@ -894,7 +927,9 @@ async def test_attach_remove_late2(opp, device_reg, mqtt_mock, setup_tasmota):
     async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
     await opp.async_block_till_done()
 
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
 
     calls = []
 
@@ -940,7 +975,9 @@ async def test_attach_remove_unknown1(opp, device_reg, mqtt_mock, setup_tasmota)
     async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
     await opp.async_block_till_done()
 
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
 
     remove = await async_attach_trigger(
         opp,
@@ -982,7 +1019,9 @@ async def test_attach_unknown_remove_device_from_registry(
     async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config1))
     await opp.async_block_till_done()
 
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
 
     await async_attach_trigger(
         opp,
@@ -1015,7 +1054,9 @@ async def test_attach_remove_config_entry(opp, device_reg, mqtt_mock, setup_tasm
     async_fire_mqtt_message(opp, f"{DEFAULT_PREFIX}/{mac}/config", json.dumps(config))
     await opp.async_block_till_done()
 
-    device_entry = device_reg.async_get_device(set(), {("mac", mac)})
+    device_entry = device_reg.async_get_device(
+        set(), {(dr.CONNECTION_NETWORK_MAC, mac)}
+    )
 
     calls = []
 

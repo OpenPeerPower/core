@@ -1,7 +1,12 @@
 """Tests for WebSocket API commands."""
+import datetime
+from unittest.mock import ANY, patch
+
 from async_timeout import timeout
+import pytest
 import voluptuous as vol
 
+from openpeerpower.bootstrap import SIGNAL_BOOTSTRAP_INTEGRATONS
 from openpeerpower.components.websocket_api import const
 from openpeerpower.components.websocket_api.auth import (
     TYPE_AUTH,
@@ -9,25 +14,19 @@ from openpeerpower.components.websocket_api.auth import (
     TYPE_AUTH_REQUIRED,
 )
 from openpeerpower.components.websocket_api.const import URL
-from openpeerpower.core import Context, callback
+from openpeerpower.core import Context, OpenPeerPower, callback
 from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers import entity
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
 from openpeerpower.loader import async_get_integration
-from openpeerpower.setup import async_setup_component
+from openpeerpower.setup import DATA_SETUP_TIME, async_setup_component
 
 from tests.common import MockEntity, MockEntityPlatform, async_mock_service
 
 
 async def test_call_service(opp, websocket_client):
     """Test call service command."""
-    calls = []
-
-    @callback
-    def service_call(call):
-        calls.append(call)
-
-    opp.services.async_register("domain_test", "test_service", service_call)
+    calls = async_mock_service(opp, "domain_test", "test_service")
 
     await websocket_client.send_json(
         {
@@ -50,17 +49,89 @@ async def test_call_service(opp, websocket_client):
     assert call.domain == "domain_test"
     assert call.service == "test_service"
     assert call.data == {"hello": "world"}
+    assert call.context.as_dict() == msg["result"]["context"]
+
+
+@pytest.mark.parametrize("command", ("call_service", "call_service_action"))
+async def test_call_service_blocking(opp, websocket_client, command):
+    """Test call service commands block, except for openpeerpower restart / stop."""
+    with patch(
+        "openpeerpower.core.ServiceRegistry.async_call", autospec=True
+    ) as mock_call:
+        await websocket_client.send_json(
+            {
+                "id": 5,
+                "type": "call_service",
+                "domain": "domain_test",
+                "service": "test_service",
+                "service_data": {"hello": "world"},
+            },
+        )
+        msg = await websocket_client.receive_json()
+
+    assert msg["id"] == 5
+    assert msg["type"] == const.TYPE_RESULT
+    assert msg["success"]
+    mock_call.assert_called_once_with(
+        ANY,
+        "domain_test",
+        "test_service",
+        {"hello": "world"},
+        blocking=True,
+        context=ANY,
+        target=ANY,
+    )
+
+    with patch(
+        "openpeerpower.core.ServiceRegistry.async_call", autospec=True
+    ) as mock_call:
+        await websocket_client.send_json(
+            {
+                "id": 6,
+                "type": "call_service",
+                "domain": "openpeerpower",
+                "service": "test_service",
+            },
+        )
+        msg = await websocket_client.receive_json()
+
+    assert msg["id"] == 6
+    assert msg["type"] == const.TYPE_RESULT
+    assert msg["success"]
+    mock_call.assert_called_once_with(
+        ANY,
+        "openpeerpower",
+        "test_service",
+        ANY,
+        blocking=True,
+        context=ANY,
+        target=ANY,
+    )
+
+    with patch(
+        "openpeerpower.core.ServiceRegistry.async_call", autospec=True
+    ) as mock_call:
+        await websocket_client.send_json(
+            {
+                "id": 7,
+                "type": "call_service",
+                "domain": "openpeerpower",
+                "service": "restart",
+            },
+        )
+        msg = await websocket_client.receive_json()
+
+    assert msg["id"] == 7
+    assert msg["type"] == const.TYPE_RESULT
+    assert msg["success"]
+    mock_call.assert_called_once_with(
+        ANY, "openpeerpower", "restart", ANY, blocking=True, context=ANY, target=ANY
+    )
 
 
 async def test_call_service_target(opp, websocket_client):
     """Test call service command with target."""
-    calls = []
-
-    @callback
-    def service_call(call):
-        calls.append(call)
-
-    opp.services.async_register("domain_test", "test_service", service_call)
+    calls = async_mock_service(opp, "domain_test", "test_service")
 
     await websocket_client.send_json(
         {
@@ -91,6 +162,29 @@ async def test_call_service_target(opp, websocket_client):
         "entity_id": ["entity.one", "entity.two"],
         "device_id": ["deviceid"],
     }
+    assert call.context.as_dict() == msg["result"]["context"]
+
+
+async def test_call_service_target_template(opp, websocket_client):
+    """Test call service command with target does not allow template."""
+    await websocket_client.send_json(
+        {
+            "id": 5,
+            "type": "call_service",
+            "domain": "domain_test",
+            "service": "test_service",
+            "service_data": {"hello": "world"},
+            "target": {
+                "entity_id": "{{ 1 }}",
+            },
+        }
+    )
+
+    msg = await websocket_client.receive_json()
+    assert msg["id"] == 5
+    assert msg["type"] == const.TYPE_RESULT
+    assert not msg["success"]
+    assert msg["error"]["code"] == const.ERR_INVALID_FORMAT
 
 
 async def test_call_service_not_found(opp, websocket_client):
@@ -134,11 +228,11 @@ async def test_call_service_child_not_found(opp, websocket_client):
     assert msg["id"] == 5
     assert msg["type"] == const.TYPE_RESULT
     assert not msg["success"]
-    assert msg["error"]["code"] == const.ERR_OPEN_PEER_POWER_ERROR
+    assert msg["error"]["code"] == const.ERR_HOME_ASSISTANT_ERROR
 
 
 async def test_call_service_schema_validation_error(
-    opp: OpenPeerPowerType, websocket_client
+    opp: OpenPeerPower, websocket_client
 ):
     """Test call service command with invalid service data."""
 
@@ -232,7 +326,6 @@ async def test_call_service_error(opp, websocket_client):
     )
 
     msg = await websocket_client.receive_json()
-    print(msg)
     assert msg["id"] == 5
     assert msg["type"] == const.TYPE_RESULT
     assert msg["success"] is False
@@ -249,7 +342,6 @@ async def test_call_service_error(opp, websocket_client):
     )
 
     msg = await websocket_client.receive_json()
-    print(msg)
     assert msg["id"] == 6
     assert msg["type"] == const.TYPE_RESULT
     assert msg["success"] is False
@@ -604,10 +696,19 @@ async def test_render_template_manual_entity_ids_no_longer_needed(
     }
 
 
-async def test_render_template_with_error(opp, websocket_client, caplog):
+@pytest.mark.parametrize(
+    "template",
+    [
+        "{{ my_unknown_func() + 1 }}",
+        "{{ my_unknown_var }}",
+        "{{ my_unknown_var + 1 }}",
+        "{{ now() | unknown_filter }}",
+    ],
+)
+async def test_render_template_with_error(opp, websocket_client, caplog, template):
     """Test a template with an error."""
     await websocket_client.send_json(
-        {"id": 5, "type": "render_template", "template": "{{ my_unknown_var() + 1 }}"}
+        {"id": 5, "type": "render_template", "template": template, "strict": True}
     )
 
     msg = await websocket_client.receive_json()
@@ -616,17 +717,30 @@ async def test_render_template_with_error(opp, websocket_client, caplog):
     assert not msg["success"]
     assert msg["error"]["code"] == const.ERR_TEMPLATE_ERROR
 
+    assert "Template variable error" not in caplog.text
     assert "TemplateError" not in caplog.text
 
 
-async def test_render_template_with_timeout_and_error(opp, websocket_client, caplog):
+@pytest.mark.parametrize(
+    "template",
+    [
+        "{{ my_unknown_func() + 1 }}",
+        "{{ my_unknown_var }}",
+        "{{ my_unknown_var + 1 }}",
+        "{{ now() | unknown_filter }}",
+    ],
+)
+async def test_render_template_with_timeout_and_error(
+    opp, websocket_client, caplog, template
+):
     """Test a template with an error with a timeout."""
     await websocket_client.send_json(
         {
             "id": 5,
             "type": "render_template",
-            "template": "{{ now() | rando }}",
+            "template": template,
             "timeout": 5,
+            "strict": True,
         }
     )
 
@@ -636,6 +750,7 @@ async def test_render_template_with_timeout_and_error(opp, websocket_client, cap
     assert not msg["success"]
     assert msg["error"]["code"] == const.ERR_TEMPLATE_ERROR
 
+    assert "Template variable error" not in caplog.text
     assert "TemplateError" not in caplog.text
 
 
@@ -977,3 +1092,100 @@ async def test_test_condition(opp, websocket_client):
     assert msg["type"] == const.TYPE_RESULT
     assert msg["success"]
     assert msg["result"]["result"] is True
+
+
+async def test_execute_script(opp, websocket_client):
+    """Test testing a condition."""
+    calls = async_mock_service(opp, "domain_test", "test_service")
+
+    await websocket_client.send_json(
+        {
+            "id": 5,
+            "type": "execute_script",
+            "sequence": [
+                {
+                    "service": "domain_test.test_service",
+                    "data": {"hello": "world"},
+                }
+            ],
+        }
+    )
+
+    msg_no_var = await websocket_client.receive_json()
+    assert msg_no_var["id"] == 5
+    assert msg_no_var["type"] == const.TYPE_RESULT
+    assert msg_no_var["success"]
+
+    await websocket_client.send_json(
+        {
+            "id": 6,
+            "type": "execute_script",
+            "sequence": {
+                "service": "domain_test.test_service",
+                "data": {"hello": "{{ name }}"},
+            },
+            "variables": {"name": "From variable"},
+        }
+    )
+
+    msg_var = await websocket_client.receive_json()
+    assert msg_var["id"] == 6
+    assert msg_var["type"] == const.TYPE_RESULT
+    assert msg_var["success"]
+
+    await opp.async_block_till_done()
+    await opp.async_block_till_done()
+
+    assert len(calls) == 2
+
+    call = calls[0]
+    assert call.domain == "domain_test"
+    assert call.service == "test_service"
+    assert call.data == {"hello": "world"}
+    assert call.context.as_dict() == msg_no_var["result"]["context"]
+
+    call = calls[1]
+    assert call.domain == "domain_test"
+    assert call.service == "test_service"
+    assert call.data == {"hello": "From variable"}
+    assert call.context.as_dict() == msg_var["result"]["context"]
+
+
+async def test_subscribe_unsubscribe_bootstrap_integrations(
+    opp, websocket_client, opp_admin_user
+):
+    """Test subscribe/unsubscribe bootstrap_integrations."""
+    await websocket_client.send_json(
+        {"id": 7, "type": "subscribe_bootstrap_integrations"}
+    )
+
+    msg = await websocket_client.receive_json()
+    assert msg["id"] == 7
+    assert msg["type"] == const.TYPE_RESULT
+    assert msg["success"]
+
+    message = {"august": 12.5, "isy994": 12.8}
+
+    async_dispatcher_send(opp, SIGNAL_BOOTSTRAP_INTEGRATONS, message)
+    msg = await websocket_client.receive_json()
+    assert msg["id"] == 7
+    assert msg["type"] == "event"
+    assert msg["event"] == message
+
+
+async def test_integration_setup_info(opp, websocket_client, opp_admin_user):
+    """Test subscribe/unsubscribe bootstrap_integrations."""
+    opp.data[DATA_SETUP_TIME] = {
+        "august": datetime.timedelta(seconds=12.5),
+        "isy994": datetime.timedelta(seconds=12.8),
+    }
+    await websocket_client.send_json({"id": 7, "type": "integration/setup_info"})
+
+    msg = await websocket_client.receive_json()
+    assert msg["id"] == 7
+    assert msg["type"] == const.TYPE_RESULT
+    assert msg["success"]
+    assert msg["result"] == [
+        {"domain": "august", "seconds": 12.5},
+        {"domain": "isy994", "seconds": 12.8},
+    ]

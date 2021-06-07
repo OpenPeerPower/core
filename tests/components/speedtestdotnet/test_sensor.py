@@ -25,5 +25,7 @@ async def test_speedtestdotnet_sensors(opp):
     assert len(opp.states.async_entity_ids(SENSOR_DOMAIN)) == 3
 
     for sensor_type in SENSOR_TYPES:
-        sensor = opp.states.get(f"sensor.{DEFAULT_NAME}_{SENSOR_TYPES[sensor_type][0]}")
+        sensor = opp.states.get(
+            f"sensor.{DEFAULT_NAME}_{SENSOR_TYPES[sensor_type][0]}"
+        )
         assert sensor.state == MOCK_STATES[sensor_type]

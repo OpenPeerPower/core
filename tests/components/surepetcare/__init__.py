@@ -1,11 +1,9 @@
 """Tests for Sure Petcare integration."""
-from unittest.mock import patch
-
 from openpeerpower.components.surepetcare.const import DOMAIN
 from openpeerpower.const import CONF_PASSWORD, CONF_USERNAME
 
-HOUSEHOLD_ID = "household-id"
-HUB_ID = "hub-id"
+HOUSEHOLD_ID = 987654321
+HUB_ID = 123456789
 
 MOCK_HUB = {
     "id": HUB_ID,
@@ -79,10 +77,3 @@ MOCK_CONFIG = {
         "pets": [24680],
     },
 }
-
-
-def _patch_sensor_setup():
-    return patch(
-        "openpeerpower.components.surepetcare.sensor.async_setup_platform",
-        return_value=True,
-    )

@@ -6,6 +6,7 @@ from aiohttp import ClientConnectionError, ClientResponseError
 from pysmartthings import InstalledAppStatus, OAuthToken
 import pytest
 
+from openpeerpower import config_entries
 from openpeerpower.components import cloud, smartthings
 from openpeerpower.components.smartthings.const import (
     CONF_CLOUDHOOK_URL,
@@ -41,7 +42,7 @@ async def test_migration_creates_new_flow(opp, smartthings_mock, config_entry):
     flows = opp.config_entries.flow.async_progress()
     assert len(flows) == 1
     assert flows[0]["handler"] == "smartthings"
-    assert flows[0]["context"] == {"source": "import"}
+    assert flows[0]["context"] == {"source": config_entries.SOURCE_IMPORT}
 
 
 async def test_unrecoverable_api_errors_create_new_flow(
@@ -71,7 +72,7 @@ async def test_unrecoverable_api_errors_create_new_flow(
     flows = opp.config_entries.flow.async_progress()
     assert len(flows) == 1
     assert flows[0]["handler"] == "smartthings"
-    assert flows[0]["context"] == {"source": "import"}
+    assert flows[0]["context"] == {"source": config_entries.SOURCE_IMPORT}
     opp.config_entries.flow.async_abort(flows[0]["flow_id"])
 
 
@@ -322,7 +323,9 @@ async def test_remove_entry_already_deleted(opp, config_entry, smartthings_mock)
     assert smartthings_mock.delete_app.call_count == 1
 
 
-async def test_remove_entry_installedapp_api_error(opp, config_entry, smartthings_mock):
+async def test_remove_entry_installedapp_api_error(
+    opp, config_entry, smartthings_mock
+):
     """Test raises exceptions removing the installed app."""
     request_info = Mock(real_url="http://example.com")
     # Arrange

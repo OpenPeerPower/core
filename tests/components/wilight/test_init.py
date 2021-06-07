@@ -5,12 +5,8 @@ import pytest
 import pywilight
 from pywilight.const import DOMAIN
 
-from openpeerpower.config_entries import (
-    ENTRY_STATE_LOADED,
-    ENTRY_STATE_NOT_LOADED,
-    ENTRY_STATE_SETUP_RETRY,
-)
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.config_entries import ConfigEntryState
+from openpeerpower.core import OpenPeerPower
 
 from tests.components.wilight import (
     HOST,
@@ -43,25 +39,23 @@ def mock_dummy_device_from_host():
         yield device
 
 
-async def test_config_entry_not_ready(opp: OpenPeerPowerType) -> None:
+async def test_config_entry_not_ready(opp: OpenPeerPower) -> None:
     """Test the WiLight configuration entry not ready."""
     entry = await setup_integration(opp)
 
-    assert entry.state == ENTRY_STATE_SETUP_RETRY
+    assert entry.state is ConfigEntryState.SETUP_RETRY
 
 
-async def test_unload_config_entry(
-    opp: OpenPeerPowerType, dummy_device_from_host
-) -> None:
+async def test_unload_config_entry(opp: OpenPeerPower, dummy_device_from_host) -> None:
     """Test the WiLight configuration entry unloading."""
     entry = await setup_integration(opp)
 
     assert entry.entry_id in opp.data[DOMAIN]
-    assert entry.state == ENTRY_STATE_LOADED
+    assert entry.state is ConfigEntryState.LOADED
 
     await opp.config_entries.async_unload(entry.entry_id)
     await opp.async_block_till_done()
 
     if DOMAIN in opp.data:
         assert entry.entry_id not in opp.data[DOMAIN]
-        assert entry.state == ENTRY_STATE_NOT_LOADED
+        assert entry.state is ConfigEntryState.NOT_LOADED

@@ -118,7 +118,8 @@ async def test_spaceapi_get(opp, mock_client):
     assert data["feeds"]["calendar"]["type"] == "ical"
     assert data["feeds"]["calendar"]["url"] == "https://openpeerpower.io/calendar"
     assert (
-        data["feeds"]["flicker"]["url"] == "https://www.flickr.com/photos/openpeerpower"
+        data["feeds"]["flicker"]["url"]
+        == "https://www.flickr.com/photos/openpeerpower"
     )
     assert data["cache"]["schedule"] == "m.02"
     assert data["projects"][0] == "https://openpeerpower.io/projects/1"

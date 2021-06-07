@@ -4,7 +4,7 @@ from unittest.mock import MagicMock, patch
 from wled import WLEDConnectionError
 
 from openpeerpower.components.wled.const import DOMAIN
-from openpeerpower.config_entries import ENTRY_STATE_SETUP_RETRY
+from openpeerpower.config_entries import ConfigEntryState
 from openpeerpower.core import OpenPeerPower
 
 from tests.components.wled import init_integration
@@ -17,7 +17,7 @@ async def test_config_entry_not_ready(
 ) -> None:
     """Test the WLED configuration entry not ready."""
     entry = await init_integration(opp, aioclient_mock)
-    assert entry.state == ENTRY_STATE_SETUP_RETRY
+    assert entry.state is ConfigEntryState.SETUP_RETRY
 
 
 async def test_unload_config_entry(

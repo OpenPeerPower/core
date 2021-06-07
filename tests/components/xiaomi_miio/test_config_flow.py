@@ -4,7 +4,6 @@ from unittest.mock import Mock, patch
 from miio import DeviceException
 
 from openpeerpower import config_entries
-from openpeerpower.components import zeroconf
 from openpeerpower.components.xiaomi_miio import const
 from openpeerpower.components.xiaomi_miio.config_flow import DEFAULT_GATEWAY_NAME
 from openpeerpower.const import CONF_HOST, CONF_NAME, CONF_TOKEN
@@ -106,7 +105,7 @@ async def test_zeroconf_gateway_success(opp):
         const.DOMAIN,
         context={"source": config_entries.SOURCE_ZEROCONF},
         data={
-            zeroconf.ATTR_HOST: TEST_HOST,
+            CONF_HOST: TEST_HOST,
             ZEROCONF_NAME: TEST_ZEROCONF_NAME,
             ZEROCONF_PROP: {ZEROCONF_MAC: TEST_MAC},
         },
@@ -146,7 +145,7 @@ async def test_zeroconf_unknown_device(opp):
         const.DOMAIN,
         context={"source": config_entries.SOURCE_ZEROCONF},
         data={
-            zeroconf.ATTR_HOST: TEST_HOST,
+            CONF_HOST: TEST_HOST,
             ZEROCONF_NAME: "not-a-xiaomi-miio-device",
             ZEROCONF_PROP: {ZEROCONF_MAC: TEST_MAC},
         },
@@ -171,7 +170,7 @@ async def test_zeroconf_missing_data(opp):
     result = await opp.config_entries.flow.async_init(
         const.DOMAIN,
         context={"source": config_entries.SOURCE_ZEROCONF},
-        data={zeroconf.ATTR_HOST: TEST_HOST, ZEROCONF_NAME: TEST_ZEROCONF_NAME},
+        data={CONF_HOST: TEST_HOST, ZEROCONF_NAME: TEST_ZEROCONF_NAME},
     )
 
     assert result["type"] == "abort"
@@ -342,7 +341,7 @@ async def zeroconf_device_success(opp, zeroconf_name_to_test, model_to_test):
         const.DOMAIN,
         context={"source": config_entries.SOURCE_ZEROCONF},
         data={
-            zeroconf.ATTR_HOST: TEST_HOST,
+            CONF_HOST: TEST_HOST,
             ZEROCONF_NAME: zeroconf_name_to_test,
             ZEROCONF_PROP: {"poch": f"0:mac={TEST_MAC_DEVICE}\x00"},
         },

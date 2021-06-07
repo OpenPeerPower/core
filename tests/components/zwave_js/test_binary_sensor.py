@@ -3,6 +3,7 @@ from zwave_js_server.event import Event
 
 from openpeerpower.components.binary_sensor import DEVICE_CLASS_MOTION
 from openpeerpower.const import DEVICE_CLASS_BATTERY, STATE_OFF, STATE_ON
+from openpeerpower.helpers import entity_registry as er
 
 from .common import (
     DISABLED_LEGACY_BINARY_SENSOR,
@@ -61,14 +62,14 @@ async def test_disabled_legacy_sensor(opp, multisensor_6, integration):
     """Test disabled legacy boolean binary sensor."""
     # this node has Notification CC implemented so legacy binary sensor should be disabled
 
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
     entity_id = DISABLED_LEGACY_BINARY_SENSOR
     state = opp.states.get(entity_id)
     assert state is None
     entry = registry.async_get(entity_id)
     assert entry
     assert entry.disabled
-    assert entry.disabled_by == "integration"
+    assert entry.disabled_by == er.DISABLED_INTEGRATION
 
     # Test enabling legacy entity
     updated_entry = registry.async_update_entity(

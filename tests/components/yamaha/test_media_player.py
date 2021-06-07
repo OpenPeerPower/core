@@ -80,7 +80,9 @@ async def test_setup_discovery(opp, device, main_zone):
         "control_url": "http://receiver",
         "description_url": "http://receiver/description",
     }
-    await async_load_platform(opp, mp.DOMAIN, "yamaha", discovery_info, {mp.DOMAIN: {}})
+    await async_load_platform(
+        opp, mp.DOMAIN, "yamaha", discovery_info, {mp.DOMAIN: {}}
+    )
     await opp.async_block_till_done()
 
     state = opp.states.get("media_player.yamaha_receiver_main_zone")

@@ -22,7 +22,7 @@ from openpeerpower.const import (
     STATE_UNKNOWN,
 )
 from openpeerpower.core import Context, callback
-from openpeerpower.setup import async_setup_component
+from openpeerpower.setup import async_setup_component, setup_component
 
 from tests.common import get_test_open_peer_power, mock_service
 
@@ -333,7 +333,7 @@ class TestMediaPlayer(unittest.TestCase):
         config = {"name": "test", "asdf": 5, "platform": "universal"}
 
         config = validate_config(config)
-        assert not ("asdf" in config)
+        assert "asdf" not in config
 
     def test_platform_setup(self):
         """Test platform setup."""
@@ -357,7 +357,7 @@ class TestMediaPlayer(unittest.TestCase):
         except MultipleInvalid:
             setup_ok = False
         assert not setup_ok
-        assert 0 == len(entities)
+        assert len(entities) == 0
 
         asyncio.run_coroutine_threadsafe(
             universal.async_setup_platform(
@@ -365,8 +365,8 @@ class TestMediaPlayer(unittest.TestCase):
             ),
             self.opp.loop,
         ).result()
-        assert 1 == len(entities)
-        assert "test" == entities[0].name
+        assert len(entities) == 1
+        assert entities[0].name == "test"
 
     def test_master_state(self):
         """Test master state property."""
@@ -382,9 +382,9 @@ class TestMediaPlayer(unittest.TestCase):
 
         ump = universal.UniversalMediaPlayer(self.opp, **config)
 
-        assert STATE_OFF == ump.master_state
+        assert ump.master_state == STATE_OFF
         self.opp.states.set(self.mock_state_switch_id, STATE_ON)
-        assert STATE_ON == ump.master_state
+        assert ump.master_state == STATE_ON
 
     def test_master_state_with_bad_attrs(self):
         """Test master state property."""
@@ -394,7 +394,7 @@ class TestMediaPlayer(unittest.TestCase):
 
         ump = universal.UniversalMediaPlayer(self.opp, **config)
 
-        assert STATE_OFF == ump.master_state
+        assert ump.master_state == STATE_OFF
 
     def test_active_child_state(self):
         """Test active child state property."""
@@ -454,7 +454,7 @@ class TestMediaPlayer(unittest.TestCase):
         self.mock_mp_1.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
-        assert STATE_PLAYING == ump.state
+        assert ump.state == STATE_PLAYING
 
     def test_state_with_children_and_attrs(self):
         """Test media player with children and master state."""
@@ -464,21 +464,21 @@ class TestMediaPlayer(unittest.TestCase):
         ump.entity_id = media_player.ENTITY_ID_FORMAT.format(config["name"])
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
 
-        assert STATE_OFF == ump.state
+        assert ump.state == STATE_OFF
 
         self.opp.states.set(self.mock_state_switch_id, STATE_ON)
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
-        assert STATE_ON == ump.state
+        assert ump.state == STATE_ON
 
         self.mock_mp_1._state = STATE_PLAYING
         self.mock_mp_1.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
-        assert STATE_PLAYING == ump.state
+        assert ump.state == STATE_PLAYING
 
         self.opp.states.set(self.mock_state_switch_id, STATE_OFF)
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
-        assert STATE_OFF == ump.state
+        assert ump.state == STATE_OFF
 
     def test_volume_level(self):
         """Test volume level property."""
@@ -494,13 +494,13 @@ class TestMediaPlayer(unittest.TestCase):
         self.mock_mp_1.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
-        assert 0 == ump.volume_level
+        assert ump.volume_level == 0
 
         self.mock_mp_1._volume_level = 1
         self.mock_mp_1.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
-        assert 1 == ump.volume_level
+        assert ump.volume_level == 1
 
     def test_media_image_url(self):
         """Test media_image_url property."""
@@ -550,10 +550,10 @@ class TestMediaPlayer(unittest.TestCase):
 
         ump = universal.UniversalMediaPlayer(self.opp, **config)
 
-        assert "['music', 'movie']" == ump.sound_mode_list
+        assert ump.sound_mode_list == "['music', 'movie']"
 
         self.opp.states.set(self.mock_sound_mode_list_id, ["music", "movie", "game"])
-        assert "['music', 'movie', 'game']" == ump.sound_mode_list
+        assert ump.sound_mode_list == "['music', 'movie', 'game']"
 
     def test_source_list_children_and_attr(self):
         """Test source list property w/ children and attrs."""
@@ -561,10 +561,10 @@ class TestMediaPlayer(unittest.TestCase):
 
         ump = universal.UniversalMediaPlayer(self.opp, **config)
 
-        assert "['dvd', 'htpc']" == ump.source_list
+        assert ump.source_list == "['dvd', 'htpc']"
 
         self.opp.states.set(self.mock_source_list_id, ["dvd", "htpc", "game"])
-        assert "['dvd', 'htpc', 'game']" == ump.source_list
+        assert ump.source_list == "['dvd', 'htpc', 'game']"
 
     def test_sound_mode_children_and_attr(self):
         """Test sound modeproperty w/ children and attrs."""
@@ -572,10 +572,10 @@ class TestMediaPlayer(unittest.TestCase):
 
         ump = universal.UniversalMediaPlayer(self.opp, **config)
 
-        assert "music" == ump.sound_mode
+        assert ump.sound_mode == "music"
 
         self.opp.states.set(self.mock_sound_mode_id, "movie")
-        assert "movie" == ump.sound_mode
+        assert ump.sound_mode == "movie"
 
     def test_source_children_and_attr(self):
         """Test source property w/ children and attrs."""
@@ -583,10 +583,10 @@ class TestMediaPlayer(unittest.TestCase):
 
         ump = universal.UniversalMediaPlayer(self.opp, **config)
 
-        assert "dvd" == ump.source
+        assert ump.source == "dvd"
 
         self.opp.states.set(self.mock_source_id, "htpc")
-        assert "htpc" == ump.source
+        assert ump.source == "htpc"
 
     def test_volume_level_children_and_attr(self):
         """Test volume level property w/ children and attrs."""
@@ -594,10 +594,10 @@ class TestMediaPlayer(unittest.TestCase):
 
         ump = universal.UniversalMediaPlayer(self.opp, **config)
 
-        assert 0 == ump.volume_level
+        assert ump.volume_level == 0
 
         self.opp.states.set(self.mock_volume_id, 100)
-        assert 100 == ump.volume_level
+        assert ump.volume_level == 100
 
     def test_is_volume_muted_children_and_attr(self):
         """Test is volume muted property w/ children and attrs."""
@@ -618,19 +618,19 @@ class TestMediaPlayer(unittest.TestCase):
         ump.entity_id = media_player.ENTITY_ID_FORMAT.format(config["name"])
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
 
-        assert 0 == ump.supported_features
+        assert ump.supported_features == 0
 
         self.mock_mp_1._supported_features = 512
         self.mock_mp_1._state = STATE_PLAYING
         self.mock_mp_1.schedule_update_op_state()
         self.opp.block_till_done()
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
-        assert 512 == ump.supported_features
+        assert ump.supported_features == 512
 
     def test_supported_features_children_and_cmds(self):
         """Test supported media commands with children and attrs."""
         config = copy(self.config_children_and_attr)
-        excmd = {"service": "media_player.test", "data": {"entity_id": "test"}}
+        excmd = {"service": "media_player.test", "data": {}}
         config["commands"] = {
             "turn_on": excmd,
             "turn_off": excmd,
@@ -648,6 +648,7 @@ class TestMediaPlayer(unittest.TestCase):
             "media_next_track": excmd,
             "media_previous_track": excmd,
             "toggle": excmd,
+            "play_media": excmd,
             "clear_playlist": excmd,
         }
         config = validate_config(config)
@@ -676,10 +677,184 @@ class TestMediaPlayer(unittest.TestCase):
             | universal.SUPPORT_STOP
             | universal.SUPPORT_NEXT_TRACK
             | universal.SUPPORT_PREVIOUS_TRACK
+            | universal.SUPPORT_PLAY_MEDIA
             | universal.SUPPORT_CLEAR_PLAYLIST
         )
 
         assert check_flags == ump.supported_features
+
+    def test_overrides(self):
+        """Test overrides."""
+        config = copy(self.config_children_and_attr)
+        excmd = {"service": "test.override", "data": {}}
+        config["name"] = "overridden"
+        config["commands"] = {
+            "turn_on": excmd,
+            "turn_off": excmd,
+            "volume_up": excmd,
+            "volume_down": excmd,
+            "volume_mute": excmd,
+            "volume_set": excmd,
+            "select_sound_mode": excmd,
+            "select_source": excmd,
+            "repeat_set": excmd,
+            "shuffle_set": excmd,
+            "media_play": excmd,
+            "media_play_pause": excmd,
+            "media_pause": excmd,
+            "media_stop": excmd,
+            "media_next_track": excmd,
+            "media_previous_track": excmd,
+            "clear_playlist": excmd,
+            "play_media": excmd,
+            "toggle": excmd,
+        }
+        setup_component(self.opp, "media_player", {"media_player": config})
+
+        service = mock_service(self.opp, "test", "override")
+        self.opp.services.call(
+            "media_player",
+            "turn_on",
+            service_data={"entity_id": "media_player.overridden"},
+            blocking=True,
+        )
+        assert len(service) == 1
+        self.opp.services.call(
+            "media_player",
+            "turn_off",
+            service_data={"entity_id": "media_player.overridden"},
+            blocking=True,
+        )
+        assert len(service) == 2
+        self.opp.services.call(
+            "media_player",
+            "volume_up",
+            service_data={"entity_id": "media_player.overridden"},
+            blocking=True,
+        )
+        assert len(service) == 3
+        self.opp.services.call(
+            "media_player",
+            "volume_down",
+            service_data={"entity_id": "media_player.overridden"},
+            blocking=True,
+        )
+        assert len(service) == 4
+        self.opp.services.call(
+            "media_player",
+            "volume_mute",
+            service_data={
+                "entity_id": "media_player.overridden",
+                "is_volume_muted": True,
+            },
+            blocking=True,
+        )
+        assert len(service) == 5
+        self.opp.services.call(
+            "media_player",
+            "volume_set",
+            service_data={"entity_id": "media_player.overridden", "volume_level": 1},
+            blocking=True,
+        )
+        assert len(service) == 6
+        self.opp.services.call(
+            "media_player",
+            "select_sound_mode",
+            service_data={
+                "entity_id": "media_player.overridden",
+                "sound_mode": "music",
+            },
+            blocking=True,
+        )
+        assert len(service) == 7
+        self.opp.services.call(
+            "media_player",
+            "select_source",
+            service_data={"entity_id": "media_player.overridden", "source": "video1"},
+            blocking=True,
+        )
+        assert len(service) == 8
+        self.opp.services.call(
+            "media_player",
+            "repeat_set",
+            service_data={"entity_id": "media_player.overridden", "repeat": "all"},
+            blocking=True,
+        )
+        assert len(service) == 9
+        self.opp.services.call(
+            "media_player",
+            "shuffle_set",
+            service_data={"entity_id": "media_player.overridden", "shuffle": True},
+            blocking=True,
+        )
+        assert len(service) == 10
+        self.opp.services.call(
+            "media_player",
+            "media_play",
+            service_data={"entity_id": "media_player.overridden"},
+            blocking=True,
+        )
+        assert len(service) == 11
+        self.opp.services.call(
+            "media_player",
+            "media_pause",
+            service_data={"entity_id": "media_player.overridden"},
+            blocking=True,
+        )
+        assert len(service) == 12
+        self.opp.services.call(
+            "media_player",
+            "media_stop",
+            service_data={"entity_id": "media_player.overridden"},
+            blocking=True,
+        )
+        assert len(service) == 13
+        self.opp.services.call(
+            "media_player",
+            "media_next_track",
+            service_data={"entity_id": "media_player.overridden"},
+            blocking=True,
+        )
+        assert len(service) == 14
+        self.opp.services.call(
+            "media_player",
+            "media_previous_track",
+            service_data={"entity_id": "media_player.overridden"},
+            blocking=True,
+        )
+        assert len(service) == 15
+        self.opp.services.call(
+            "media_player",
+            "clear_playlist",
+            service_data={"entity_id": "media_player.overridden"},
+            blocking=True,
+        )
+        assert len(service) == 16
+        self.opp.services.call(
+            "media_player",
+            "media_play_pause",
+            service_data={"entity_id": "media_player.overridden"},
+            blocking=True,
+        )
+        assert len(service) == 17
+        self.opp.services.call(
+            "media_player",
+            "play_media",
+            service_data={
+                "entity_id": "media_player.overridden",
+                "media_content_id": 1,
+                "media_content_type": "channel",
+            },
+            blocking=True,
+        )
+        assert len(service) == 18
+        self.opp.services.call(
+            "media_player",
+            "toggle",
+            service_data={"entity_id": "media_player.overridden"},
+            blocking=True,
+        )
+        assert len(service) == 19
 
     def test_supported_features_play_pause(self):
         """Test supported media commands with play_pause function."""
@@ -717,8 +892,8 @@ class TestMediaPlayer(unittest.TestCase):
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
 
         asyncio.run_coroutine_threadsafe(ump.async_turn_off(), self.opp.loop).result()
-        assert 0 == len(self.mock_mp_1.service_calls["turn_off"])
-        assert 0 == len(self.mock_mp_2.service_calls["turn_off"])
+        assert len(self.mock_mp_1.service_calls["turn_off"]) == 0
+        assert len(self.mock_mp_2.service_calls["turn_off"]) == 0
 
     def test_service_call_to_child(self):
         """Test service calls that should be routed to a child."""
@@ -734,92 +909,96 @@ class TestMediaPlayer(unittest.TestCase):
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
 
         asyncio.run_coroutine_threadsafe(ump.async_turn_off(), self.opp.loop).result()
-        assert 1 == len(self.mock_mp_2.service_calls["turn_off"])
+        assert len(self.mock_mp_2.service_calls["turn_off"]) == 1
 
         asyncio.run_coroutine_threadsafe(ump.async_turn_on(), self.opp.loop).result()
-        assert 1 == len(self.mock_mp_2.service_calls["turn_on"])
+        assert len(self.mock_mp_2.service_calls["turn_on"]) == 1
 
         asyncio.run_coroutine_threadsafe(
             ump.async_mute_volume(True), self.opp.loop
         ).result()
-        assert 1 == len(self.mock_mp_2.service_calls["mute_volume"])
+        assert len(self.mock_mp_2.service_calls["mute_volume"]) == 1
 
         asyncio.run_coroutine_threadsafe(
             ump.async_set_volume_level(0.5), self.opp.loop
         ).result()
-        assert 1 == len(self.mock_mp_2.service_calls["set_volume_level"])
+        assert len(self.mock_mp_2.service_calls["set_volume_level"]) == 1
 
-        asyncio.run_coroutine_threadsafe(ump.async_media_play(), self.opp.loop).result()
-        assert 1 == len(self.mock_mp_2.service_calls["media_play"])
+        asyncio.run_coroutine_threadsafe(
+            ump.async_media_play(), self.opp.loop
+        ).result()
+        assert len(self.mock_mp_2.service_calls["media_play"]) == 1
 
         asyncio.run_coroutine_threadsafe(
             ump.async_media_pause(), self.opp.loop
         ).result()
-        assert 1 == len(self.mock_mp_2.service_calls["media_pause"])
+        assert len(self.mock_mp_2.service_calls["media_pause"]) == 1
 
-        asyncio.run_coroutine_threadsafe(ump.async_media_stop(), self.opp.loop).result()
-        assert 1 == len(self.mock_mp_2.service_calls["media_stop"])
+        asyncio.run_coroutine_threadsafe(
+            ump.async_media_stop(), self.opp.loop
+        ).result()
+        assert len(self.mock_mp_2.service_calls["media_stop"]) == 1
 
         asyncio.run_coroutine_threadsafe(
             ump.async_media_previous_track(), self.opp.loop
         ).result()
-        assert 1 == len(self.mock_mp_2.service_calls["media_previous_track"])
+        assert len(self.mock_mp_2.service_calls["media_previous_track"]) == 1
 
         asyncio.run_coroutine_threadsafe(
             ump.async_media_next_track(), self.opp.loop
         ).result()
-        assert 1 == len(self.mock_mp_2.service_calls["media_next_track"])
+        assert len(self.mock_mp_2.service_calls["media_next_track"]) == 1
 
         asyncio.run_coroutine_threadsafe(
             ump.async_media_seek(100), self.opp.loop
         ).result()
-        assert 1 == len(self.mock_mp_2.service_calls["media_seek"])
+        assert len(self.mock_mp_2.service_calls["media_seek"]) == 1
 
         asyncio.run_coroutine_threadsafe(
             ump.async_play_media("movie", "batman"), self.opp.loop
         ).result()
-        assert 1 == len(self.mock_mp_2.service_calls["play_media"])
+        assert len(self.mock_mp_2.service_calls["play_media"]) == 1
 
         asyncio.run_coroutine_threadsafe(ump.async_volume_up(), self.opp.loop).result()
-        assert 1 == len(self.mock_mp_2.service_calls["volume_up"])
+        assert len(self.mock_mp_2.service_calls["volume_up"]) == 1
 
         asyncio.run_coroutine_threadsafe(
             ump.async_volume_down(), self.opp.loop
         ).result()
-        assert 1 == len(self.mock_mp_2.service_calls["volume_down"])
+        assert len(self.mock_mp_2.service_calls["volume_down"]) == 1
 
         asyncio.run_coroutine_threadsafe(
             ump.async_media_play_pause(), self.opp.loop
         ).result()
-        assert 1 == len(self.mock_mp_2.service_calls["media_play_pause"])
+        assert len(self.mock_mp_2.service_calls["media_play_pause"]) == 1
 
         asyncio.run_coroutine_threadsafe(
             ump.async_select_sound_mode("music"), self.opp.loop
         ).result()
-        assert 1 == len(self.mock_mp_2.service_calls["select_sound_mode"])
+        assert len(self.mock_mp_2.service_calls["select_sound_mode"]) == 1
 
         asyncio.run_coroutine_threadsafe(
             ump.async_select_source("dvd"), self.opp.loop
         ).result()
-        assert 1 == len(self.mock_mp_2.service_calls["select_source"])
+        assert len(self.mock_mp_2.service_calls["select_source"]) == 1
 
         asyncio.run_coroutine_threadsafe(
             ump.async_clear_playlist(), self.opp.loop
         ).result()
-        assert 1 == len(self.mock_mp_2.service_calls["clear_playlist"])
+        assert len(self.mock_mp_2.service_calls["clear_playlist"]) == 1
 
         asyncio.run_coroutine_threadsafe(
             ump.async_set_repeat(True), self.opp.loop
         ).result()
-        assert 1 == len(self.mock_mp_2.service_calls["repeat_set"])
+        assert len(self.mock_mp_2.service_calls["repeat_set"]) == 1
 
         asyncio.run_coroutine_threadsafe(
             ump.async_set_shuffle(True), self.opp.loop
         ).result()
-        assert 1 == len(self.mock_mp_2.service_calls["shuffle_set"])
+        assert len(self.mock_mp_2.service_calls["shuffle_set"]) == 1
 
         asyncio.run_coroutine_threadsafe(ump.async_toggle(), self.opp.loop).result()
-        assert 1 == len(self.mock_mp_2.service_calls["toggle"])
+        assert len(self.mock_mp_2.service_calls["toggle"]) == 1
 
     def test_service_call_to_command(self):
         """Test service call to command."""
@@ -839,7 +1018,7 @@ class TestMediaPlayer(unittest.TestCase):
         asyncio.run_coroutine_threadsafe(ump.async_update(), self.opp.loop).result()
 
         asyncio.run_coroutine_threadsafe(ump.async_turn_off(), self.opp.loop).result()
-        assert 1 == len(service)
+        assert len(service) == 1
 
 
 async def test_state_template(opp):
@@ -940,7 +1119,7 @@ async def test_master_state_with_template(opp):
     await opp.async_start()
 
     await opp.async_block_till_done()
-    opp.states.get("media_player.tv").state == STATE_ON
+    assert opp.states.get("media_player.tv").state == STATE_ON
 
     events = []
 
@@ -952,7 +1131,7 @@ async def test_master_state_with_template(opp):
     opp.states.async_set("input_boolean.test", STATE_ON, context=context)
     await opp.async_block_till_done()
 
-    opp.states.get("media_player.tv").state == STATE_OFF
+    assert opp.states.get("media_player.tv").state == STATE_OFF
     assert events[0].context == context
 
 
@@ -983,12 +1162,12 @@ async def test_reload(opp):
     await opp.async_start()
 
     await opp.async_block_till_done()
-    opp.states.get("media_player.tv").state == STATE_ON
+    assert opp.states.get("media_player.tv").state == STATE_ON
 
     opp.states.async_set("input_boolean.test", STATE_ON)
     await opp.async_block_till_done()
 
-    opp.states.get("media_player.tv").state == STATE_OFF
+    assert opp.states.get("media_player.tv").state == STATE_OFF
 
     opp.states.async_set("media_player.master_bedroom_2", STATE_OFF)
     opp.states.async_set(
@@ -1016,7 +1195,9 @@ async def test_reload(opp):
     assert opp.states.get("media_player.tv") is None
     assert opp.states.get("media_player.master_bed_tv").state == "on"
     assert opp.states.get("media_player.master_bed_tv").attributes["source"] == "act2"
-    assert "device_class" not in opp.states.get("media_player.master_bed_tv").attributes
+    assert (
+        "device_class" not in opp.states.get("media_player.master_bed_tv").attributes
+    )
 
 
 def _get_fixtures_base_path():

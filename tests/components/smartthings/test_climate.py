@@ -44,6 +44,7 @@ from openpeerpower.const import (
     SERVICE_TURN_ON,
     STATE_UNKNOWN,
 )
+from openpeerpower.helpers import device_registry as dr, entity_registry as er
 
 from .conftest import setup_platform
 
@@ -569,8 +570,8 @@ async def test_set_turn_on(opp, air_conditioner):
 async def test_entity_and_device_attributes(opp, thermostat):
     """Test the attributes of the entries are correct."""
     await setup_platform(opp, CLIMATE_DOMAIN, devices=[thermostat])
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
-    device_registry = await opp.helpers.device_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
+    device_registry = dr.async_get(opp)
 
     entry = entity_registry.async_get("climate.thermostat")
     assert entry

@@ -1,5 +1,5 @@
 """Test the init file of Twilio."""
-from openpeerpower import data_entry_flow
+from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.components import twilio
 from openpeerpower.config import async_process_op_core_config
 from openpeerpower.core import callback
@@ -12,7 +12,7 @@ async def test_config_flow_registers_webhook(opp, aiohttp_client):
         {"internal_url": "http://example.local:8123"},
     )
     result = await opp.config_entries.flow.async_init(
-        "twilio", context={"source": "user"}
+        "twilio", context={"source": config_entries.SOURCE_USER}
     )
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM, result
 

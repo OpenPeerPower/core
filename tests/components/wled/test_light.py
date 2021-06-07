@@ -36,6 +36,7 @@ from openpeerpower.const import (
     STATE_UNAVAILABLE,
 )
 from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import entity_registry as er
 import openpeerpower.util.dt as dt_util
 
 from tests.common import async_fire_time_changed, load_fixture
@@ -49,7 +50,7 @@ async def test_rgb_light_state(
     """Test the creation and values of the WLED lights."""
     await init_integration(opp, aioclient_mock)
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     # First segment of the strip
     state = opp.states.get("light.wled_rgb_light_segment_0")

@@ -2,8 +2,8 @@
 from unittest.mock import patch
 
 from openpeerpower import data_entry_flow
-from openpeerpower.components.totalconnect.const import CONF_LOCATION, DOMAIN
-from openpeerpower.config_entries import SOURCE_USER
+from openpeerpower.components.totalconnect.const import CONF_USERCODES, DOMAIN
+from openpeerpower.config_entries import SOURCE_REAUTH, SOURCE_USER
 from openpeerpower.const import CONF_PASSWORD
 
 from .common import (
@@ -67,7 +67,7 @@ async def test_user_show_locations(opp):
         # user enters an invalid usercode
         result2 = await opp.config_entries.flow.async_configure(
             result["flow_id"],
-            user_input={CONF_LOCATION: "bad"},
+            user_input={CONF_USERCODES: "bad"},
         )
         assert result2["type"] == data_entry_flow.RESULT_TYPE_FORM
         assert result2["step_id"] == "locations"
@@ -77,7 +77,7 @@ async def test_user_show_locations(opp):
         # user enters a valid usercode
         result3 = await opp.config_entries.flow.async_configure(
             result2["flow_id"],
-            user_input={CONF_LOCATION: "7890"},
+            user_input={CONF_USERCODES: "7890"},
         )
         assert result3["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
         # client should have sent another request to validate usercode
@@ -133,17 +133,16 @@ async def test_reauth(opp):
     entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "reauth"}, data=entry.data
+        DOMAIN, context={"source": SOURCE_REAUTH}, data=entry.data
     )
-    assert result["step_id"] == "reauth_confirm"
-
-    result = await opp.config_entries.flow.async_configure(result["flow_id"])
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["step_id"] == "reauth_confirm"
 
     with patch(
         "openpeerpower.components.totalconnect.config_flow.TotalConnectClient.TotalConnectClient"
-    ) as client_mock:
+    ) as client_mock, patch(
+        "openpeerpower.components.totalconnect.async_setup_entry", return_value=True
+    ):
         # first test with an invalid password
         client_mock.return_value.is_valid_credentials.return_value = False
 
@@ -162,5 +161,6 @@ async def test_reauth(opp):
         )
         assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
         assert result["reason"] == "reauth_successful"
+        await opp.async_block_till_done()
 
     assert len(opp.config_entries.async_entries()) == 1

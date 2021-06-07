@@ -9,7 +9,9 @@ from pysmartthings.device import Status
 
 from openpeerpower.components.lock import DOMAIN as LOCK_DOMAIN
 from openpeerpower.components.smartthings.const import DOMAIN, SIGNAL_SMARTTHINGS_UPDATE
+from openpeerpower.config_entries import ConfigEntryState
 from openpeerpower.const import STATE_UNAVAILABLE
+from openpeerpower.helpers import device_registry as dr, entity_registry as er
 from openpeerpower.helpers.dispatcher import async_dispatcher_send
 
 from .conftest import setup_platform
@@ -19,8 +21,8 @@ async def test_entity_and_device_attributes(opp, device_factory):
     """Test the attributes of the entity are correct."""
     # Arrange
     device = device_factory("Lock_1", [Capability.lock], {Attribute.lock: "unlocked"})
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
-    device_registry = await opp.helpers.device_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
+    device_registry = dr.async_get(opp)
     # Act
     await setup_platform(opp, LOCK_DOMAIN, devices=[device])
     # Assert
@@ -102,6 +104,7 @@ async def test_unload_config_entry(opp, device_factory):
     # Arrange
     device = device_factory("Lock_1", [Capability.lock], {Attribute.lock: "locked"})
     config_entry = await setup_platform(opp, LOCK_DOMAIN, devices=[device])
+    config_entry.state = ConfigEntryState.LOADED
     # Act
     await opp.config_entries.async_forward_entry_unload(config_entry, "lock")
     # Assert

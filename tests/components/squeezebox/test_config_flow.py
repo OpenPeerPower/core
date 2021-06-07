@@ -4,6 +4,7 @@ from unittest.mock import patch
 from pysqueezebox import Server
 
 from openpeerpower import config_entries
+from openpeerpower.components.dhcp import HOSTNAME, IP_ADDRESS, MAC_ADDRESS
 from openpeerpower.components.squeezebox.const import DOMAIN
 from openpeerpower.const import (
     CONF_HOST,
@@ -45,8 +46,6 @@ async def patch_async_query_unauthorized(self, *args):
 async def test_user_form(opp):
     """Test user-initiated flow, including discovery and the edit step."""
     with patch("pysqueezebox.Server.async_query", return_value={"uuid": UUID},), patch(
-        "openpeerpower.components.squeezebox.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.squeezebox.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry, patch(
@@ -77,7 +76,6 @@ async def test_user_form(opp):
         }
 
         await opp.async_block_till_done()
-        assert len(mock_setup.mock_calls) == 1
         assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -111,8 +109,6 @@ async def test_user_form_duplicate(opp):
         "openpeerpower.components.squeezebox.config_flow.async_discover",
         mock_discover,
     ), patch("openpeerpower.components.squeezebox.config_flow.TIMEOUT", 0.1), patch(
-        "openpeerpower.components.squeezebox.async_setup", return_value=True
-    ), patch(
         "openpeerpower.components.squeezebox.async_setup_entry",
         return_value=True,
     ):
@@ -201,11 +197,44 @@ async def test_discovery_no_uuid(opp):
         assert result["step_id"] == "edit"
 
 
+async def test_dhcp_discovery(opp):
+    """Test we can process discovery from dhcp."""
+    with patch(
+        "pysqueezebox.Server.async_query",
+        return_value={"uuid": UUID},
+    ):
+        result = await opp.config_entries.flow.async_init(
+            DOMAIN,
+            context={"source": config_entries.SOURCE_DHCP},
+            data={
+                IP_ADDRESS: "1.1.1.1",
+                MAC_ADDRESS: "AA:BB:CC:DD:EE:FF",
+                HOSTNAME: "any",
+            },
+        )
+        assert result["type"] == RESULT_TYPE_FORM
+        assert result["step_id"] == "edit"
+
+
+async def test_dhcp_discovery_no_connection(opp):
+    """Test we can process discovery from dhcp without connecting to squeezebox server."""
+    with patch("pysqueezebox.Server.async_query", new=patch_async_query_unauthorized):
+        result = await opp.config_entries.flow.async_init(
+            DOMAIN,
+            context={"source": config_entries.SOURCE_DHCP},
+            data={
+                IP_ADDRESS: "1.1.1.1",
+                MAC_ADDRESS: "AA:BB:CC:DD:EE:FF",
+                HOSTNAME: "any",
+            },
+        )
+        assert result["type"] == RESULT_TYPE_FORM
+        assert result["step_id"] == "edit"
+
+
 async def test_import(opp):
     """Test handling of configuration imported."""
     with patch("pysqueezebox.Server.async_query", return_value={"uuid": UUID},), patch(
-        "openpeerpower.components.squeezebox.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.squeezebox.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -217,7 +246,6 @@ async def test_import(opp):
         assert result["type"] == RESULT_TYPE_CREATE_ENTRY
 
         await opp.async_block_till_done()
-        assert len(mock_setup.mock_calls) == 1
         assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -253,8 +281,6 @@ async def test_import_bad_auth(opp):
 async def test_import_existing(opp):
     """Test handling of configuration import of existing server."""
     with patch(
-        "openpeerpower.components.squeezebox.async_setup", return_value=True
-    ), patch(
         "openpeerpower.components.squeezebox.async_setup_entry",
         return_value=True,
     ), patch(

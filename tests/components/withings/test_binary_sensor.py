@@ -8,22 +8,21 @@ from openpeerpower.components.withings.common import (
 from openpeerpower.components.withings.const import Measurement
 from openpeerpower.const import STATE_OFF, STATE_ON, STATE_UNAVAILABLE
 from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.helpers.entity_registry import EntityRegistry
 
 from .common import ComponentFactory, new_profile_config
 
 
 async def test_binary_sensor(
-    opp: OpenPeerPower, component_factory: ComponentFactory
+    opp: OpenPeerPower, component_factory: ComponentFactory, current_request_with_host
 ) -> None:
     """Test binary sensor."""
     in_bed_attribute = WITHINGS_MEASUREMENTS_MAP[Measurement.IN_BED]
     person0 = new_profile_config("person0", 0)
     person1 = new_profile_config("person1", 1)
 
-    entity_registry: EntityRegistry = (
-        await opp.helpers.entity_registry.async_get_registry()
-    )
+    entity_registry: EntityRegistry = er.async_get(opp)
 
     await component_factory.configure_component(profile_configs=(person0, person1))
     assert not await async_get_entity_id(opp, in_bed_attribute, person0.user_id)

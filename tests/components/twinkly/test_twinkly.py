@@ -1,6 +1,6 @@
 """Tests for the integration of a twinly device."""
+from __future__ import annotations
 
-from typing import Tuple
 from unittest.mock import patch
 
 from openpeerpower.components.twinkly.const import (
@@ -12,6 +12,7 @@ from openpeerpower.components.twinkly.const import (
 )
 from openpeerpower.components.twinkly.light import TwinklyLight
 from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import device_registry as dr, entity_registry as er
 from openpeerpower.helpers.device_registry import DeviceEntry
 from openpeerpower.helpers.entity_registry import RegistryEntry
 
@@ -154,7 +155,7 @@ async def test_update_name(opp: OpenPeerPower):
 
     Validate that if device name is changed from the Twinkly app,
     then the name of the entity is updated and it's also persisted,
-    so it can be restored when starting OP while Twinkly is offline.
+    so it can be restored when starting OPP while Twinkly is offline.
     """
     entity, _, client = await _create_entries(opp)
 
@@ -190,7 +191,7 @@ async def test_unload(opp: OpenPeerPower):
 
 async def _create_entries(
     opp: OpenPeerPower, client=None
-) -> Tuple[RegistryEntry, DeviceEntry, ClientMock]:
+) -> tuple[RegistryEntry, DeviceEntry, ClientMock]:
     client = ClientMock() if client is None else client
 
     def get_client_mock(client, _):
@@ -211,8 +212,8 @@ async def _create_entries(
         assert await opp.config_entries.async_setup(client.id)
         await opp.async_block_till_done()
 
-    device_registry = await opp.helpers.device_registry.async_get_registry()
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    device_registry = dr.async_get(opp)
+    entity_registry = er.async_get(opp)
 
     entity_id = entity_registry.async_get_entity_id("light", TWINKLY_DOMAIN, client.id)
     entity = entity_registry.async_get(entity_id)

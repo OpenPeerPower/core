@@ -19,18 +19,18 @@ from openpeerpower.components.upnp.const import (
     DISCOVERY_UNIQUE_ID,
     DISCOVERY_USN,
     DOMAIN,
-    DOMAIN_COORDINATORS,
 )
 from openpeerpower.components.upnp.device import Device
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.setup import async_setup_component
+from openpeerpower.util import dt
 
 from .mock_device import MockDevice
 
-from tests.common import MockConfigEntry
+from tests.common import MockConfigEntry, async_fire_time_changed
 
 
-async def test_flow_ssdp_discovery(opp: OpenPeerPowerType):
+async def test_flow_ssdp_discovery(opp: OpenPeerPower):
     """Test config flow: discovered + configured through ssdp."""
     udn = "uuid:device_1"
     location = "dummy"
@@ -82,7 +82,7 @@ async def test_flow_ssdp_discovery(opp: OpenPeerPowerType):
         }
 
 
-async def test_flow_ssdp_incomplete_discovery(opp: OpenPeerPowerType):
+async def test_flow_ssdp_incomplete_discovery(opp: OpenPeerPower):
     """Test config flow: incomplete discovery through ssdp."""
     udn = "uuid:device_1"
     location = "dummy"
@@ -103,7 +103,7 @@ async def test_flow_ssdp_incomplete_discovery(opp: OpenPeerPowerType):
     assert result["reason"] == "incomplete_discovery"
 
 
-async def test_flow_ssdp_discovery_ignored(opp: OpenPeerPowerType):
+async def test_flow_ssdp_discovery_ignored(opp: OpenPeerPower):
     """Test config flow: discovery through ssdp, but ignored."""
     udn = "uuid:device_random_1"
     location = "dummy"
@@ -151,7 +151,7 @@ async def test_flow_ssdp_discovery_ignored(opp: OpenPeerPowerType):
         assert result["reason"] == "discovery_ignored"
 
 
-async def test_flow_user(opp: OpenPeerPowerType):
+async def test_flow_user(opp: OpenPeerPower):
     """Test config flow: discovered + configured through user."""
     udn = "uuid:device_1"
     location = "dummy"
@@ -197,7 +197,7 @@ async def test_flow_user(opp: OpenPeerPowerType):
         }
 
 
-async def test_flow_import(opp: OpenPeerPowerType):
+async def test_flow_import(opp: OpenPeerPower):
     """Test config flow: discovered + configured through configuration.yaml."""
     udn = "uuid:device_1"
     mock_device = MockDevice(udn)
@@ -235,7 +235,7 @@ async def test_flow_import(opp: OpenPeerPowerType):
         }
 
 
-async def test_flow_import_already_configured(opp: OpenPeerPowerType):
+async def test_flow_import_already_configured(opp: OpenPeerPower):
     """Test config flow: discovered, but already configured."""
     udn = "uuid:device_1"
     mock_device = MockDevice(udn)
@@ -261,7 +261,7 @@ async def test_flow_import_already_configured(opp: OpenPeerPowerType):
     assert result["reason"] == "already_configured"
 
 
-async def test_flow_import_incomplete(opp: OpenPeerPowerType):
+async def test_flow_import_incomplete(opp: OpenPeerPower):
     """Test config flow: incomplete discovery, configured through configuration.yaml."""
     udn = "uuid:device_1"
     mock_device = MockDevice(udn)
@@ -288,7 +288,7 @@ async def test_flow_import_incomplete(opp: OpenPeerPowerType):
         assert result["reason"] == "incomplete_discovery"
 
 
-async def test_options_flow(opp: OpenPeerPowerType):
+async def test_options_flow(opp: OpenPeerPower):
     """Test options flow."""
     # Set up config entry.
     udn = "uuid:device_1"
@@ -325,10 +325,12 @@ async def test_options_flow(opp: OpenPeerPowerType):
         # Initialisation of component.
         await async_setup_component(opp, "upnp", config)
         await opp.async_block_till_done()
+        mock_device.times_polled = 0  # Reset.
 
-        # DataUpdateCoordinator gets a default of 30 seconds for updates.
-        coordinator = opp.data[DOMAIN][DOMAIN_COORDINATORS][mock_device.udn]
-        assert coordinator.update_interval == timedelta(seconds=DEFAULT_SCAN_INTERVAL)
+        # Forward time, ensure single poll after 30 (default) seconds.
+        async_fire_time_changed(opp, dt.utcnow() + timedelta(seconds=31))
+        await opp.async_block_till_done()
+        assert mock_device.times_polled == 1
 
         # Options flow with no input results in form.
         result = await opp.config_entries.options.async_init(
@@ -346,5 +348,18 @@ async def test_options_flow(opp: OpenPeerPowerType):
             CONFIG_ENTRY_SCAN_INTERVAL: 60,
         }
 
-        # Also updates DataUpdateCoordinator.
-        assert coordinator.update_interval == timedelta(seconds=60)
+        # Forward time, ensure single poll after 60 seconds, still from original setting.
+        async_fire_time_changed(opp, dt.utcnow() + timedelta(seconds=61))
+        await opp.async_block_till_done()
+        assert mock_device.times_polled == 2
+
+        # Now the updated interval takes effect.
+        # Forward time, ensure single poll after 120 seconds.
+        async_fire_time_changed(opp, dt.utcnow() + timedelta(seconds=121))
+        await opp.async_block_till_done()
+        assert mock_device.times_polled == 3
+
+        # Forward time, ensure single poll after 180 seconds.
+        async_fire_time_changed(opp, dt.utcnow() + timedelta(seconds=181))
+        await opp.async_block_till_done()
+        assert mock_device.times_polled == 4

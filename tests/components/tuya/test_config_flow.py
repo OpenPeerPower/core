@@ -96,24 +96,6 @@ async def test_user(opp, tuya):
     assert not result["result"].unique_id
 
 
-async def test_import(opp, tuya):
-    """Test import step."""
-    result = await opp.config_entries.flow.async_init(
-        DOMAIN,
-        context={"source": config_entries.SOURCE_IMPORT},
-        data=TUYA_USER_DATA,
-    )
-    await opp.async_block_till_done()
-
-    assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
-    assert result["title"] == USERNAME
-    assert result["data"][CONF_USERNAME] == USERNAME
-    assert result["data"][CONF_PASSWORD] == PASSWORD
-    assert result["data"][CONF_COUNTRYCODE] == COUNTRY_CODE
-    assert result["data"][CONF_PLATFORM] == TUYA_PLATFORM
-    assert not result["result"].unique_id
-
-
 async def test_abort_if_already_setup(opp, tuya):
     """Test we abort if Tuya is already setup."""
     MockConfigEntry(domain=DOMAIN, data=TUYA_USER_DATA).add_to_opp(opp)
@@ -121,14 +103,6 @@ async def test_abort_if_already_setup(opp, tuya):
     # Should fail, config exist (import)
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}, data=TUYA_USER_DATA
-    )
-
-    assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
-    assert result["reason"] == RESULT_SINGLE_INSTANCE
-
-    # Should fail, config exist (flow)
-    result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=TUYA_USER_DATA
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
@@ -146,13 +120,6 @@ async def test_abort_on_invalid_credentials(opp, tuya):
     assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
     assert result["errors"] == {"base": RESULT_AUTH_FAILED}
 
-    result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=TUYA_USER_DATA
-    )
-
-    assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
-    assert result["reason"] == RESULT_AUTH_FAILED
-
 
 async def test_abort_on_connection_error(opp, tuya):
     """Test when we have a network error."""
@@ -160,13 +127,6 @@ async def test_abort_on_connection_error(opp, tuya):
 
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}, data=TUYA_USER_DATA
-    )
-
-    assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
-    assert result["reason"] == RESULT_CONN_ERROR
-
-    result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": config_entries.SOURCE_IMPORT}, data=TUYA_USER_DATA
     )
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT

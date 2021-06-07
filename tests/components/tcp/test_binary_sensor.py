@@ -20,9 +20,9 @@ TEST_ENTITY = "binary_sensor.test_name"
 def mock_socket_fixture():
     """Mock the socket."""
     with patch(
-        "openpeerpower.components.tcp.sensor.socket.socket"
+        "openpeerpower.components.tcp.common.socket.socket"
     ) as mock_socket, patch(
-        "openpeerpower.components.tcp.sensor.select.select",
+        "openpeerpower.components.tcp.common.select.select",
         return_value=(True, False, False),
     ):
         # yield the return value of the socket context manager

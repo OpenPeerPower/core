@@ -5,7 +5,9 @@ The only mocking required is of the underlying SmartThings API object so
 real HTTP calls are not initiated during testing.
 """
 from openpeerpower.components.scene import DOMAIN as SCENE_DOMAIN
+from openpeerpower.config_entries import ConfigEntryState
 from openpeerpower.const import ATTR_ENTITY_ID, SERVICE_TURN_ON, STATE_UNAVAILABLE
+from openpeerpower.helpers import entity_registry as er
 
 from .conftest import setup_platform
 
@@ -13,7 +15,7 @@ from .conftest import setup_platform
 async def test_entity_and_device_attributes(opp, scene):
     """Test the attributes of the entity are correct."""
     # Arrange
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
     # Act
     await setup_platform(opp, SCENE_DOMAIN, scenes=[scene])
     # Assert
@@ -43,6 +45,7 @@ async def test_unload_config_entry(opp, scene):
     """Test the scene is removed when the config entry is unloaded."""
     # Arrange
     config_entry = await setup_platform(opp, SCENE_DOMAIN, scenes=[scene])
+    config_entry.state = ConfigEntryState.LOADED
     # Act
     await opp.config_entries.async_forward_entry_unload(config_entry, SCENE_DOMAIN)
     # Assert

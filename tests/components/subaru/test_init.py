@@ -8,12 +8,7 @@ from openpeerpower.components.openpeerpower import (
     SERVICE_UPDATE_ENTITY,
 )
 from openpeerpower.components.subaru.const import DOMAIN
-from openpeerpower.config_entries import (
-    ENTRY_STATE_LOADED,
-    ENTRY_STATE_NOT_LOADED,
-    ENTRY_STATE_SETUP_ERROR,
-    ENTRY_STATE_SETUP_RETRY,
-)
+from openpeerpower.config_entries import ConfigEntryState
 from openpeerpower.const import ATTR_ENTITY_ID
 from openpeerpower.setup import async_setup_component
 
@@ -44,7 +39,7 @@ async def test_setup_ev(opp, ev_entry):
     """Test setup with an EV vehicle."""
     check_entry = opp.config_entries.async_get_entry(ev_entry.entry_id)
     assert check_entry
-    assert check_entry.state == ENTRY_STATE_LOADED
+    assert check_entry.state is ConfigEntryState.LOADED
 
 
 async def test_setup_g2(opp):
@@ -57,7 +52,7 @@ async def test_setup_g2(opp):
     )
     check_entry = opp.config_entries.async_get_entry(entry.entry_id)
     assert check_entry
-    assert check_entry.state == ENTRY_STATE_LOADED
+    assert check_entry.state is ConfigEntryState.LOADED
 
 
 async def test_setup_g1(opp):
@@ -67,7 +62,7 @@ async def test_setup_g1(opp):
     )
     check_entry = opp.config_entries.async_get_entry(entry.entry_id)
     assert check_entry
-    assert check_entry.state == ENTRY_STATE_LOADED
+    assert check_entry.state is ConfigEntryState.LOADED
 
 
 async def test_unsuccessful_connect(opp):
@@ -81,7 +76,7 @@ async def test_unsuccessful_connect(opp):
     )
     check_entry = opp.config_entries.async_get_entry(entry.entry_id)
     assert check_entry
-    assert check_entry.state == ENTRY_STATE_SETUP_RETRY
+    assert check_entry.state is ConfigEntryState.SETUP_RETRY
 
 
 async def test_invalid_credentials(opp):
@@ -95,7 +90,7 @@ async def test_invalid_credentials(opp):
     )
     check_entry = opp.config_entries.async_get_entry(entry.entry_id)
     assert check_entry
-    assert check_entry.state == ENTRY_STATE_SETUP_ERROR
+    assert check_entry.state is ConfigEntryState.SETUP_ERROR
 
 
 async def test_update_skip_unsubscribed(opp):
@@ -147,7 +142,7 @@ async def test_fetch_failed(opp):
 
 async def test_unload_entry(opp, ev_entry):
     """Test that entry is unloaded."""
-    assert ev_entry.state == ENTRY_STATE_LOADED
+    assert ev_entry.state is ConfigEntryState.LOADED
     assert await opp.config_entries.async_unload(ev_entry.entry_id)
     await opp.async_block_till_done()
-    assert ev_entry.state == ENTRY_STATE_NOT_LOADED
+    assert ev_entry.state is ConfigEntryState.NOT_LOADED

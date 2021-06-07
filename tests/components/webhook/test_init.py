@@ -78,7 +78,7 @@ async def test_posting_webhook_json(opp, mock_client):
     resp = await mock_client.post(f"/api/webhook/{webhook_id}", json={"data": True})
     assert resp.status == 200
     assert len(hooks) == 1
-    assert hooks[0][0] is opp
+    assert hooks[0][0] is.opp
     assert hooks[0][1] == webhook_id
     assert hooks[0][2] == '{"data": true}'
 
@@ -97,7 +97,7 @@ async def test_posting_webhook_no_data(opp, mock_client):
     resp = await mock_client.post(f"/api/webhook/{webhook_id}")
     assert resp.status == 200
     assert len(hooks) == 1
-    assert hooks[0][0] is opp
+    assert hooks[0][0] is.opp
     assert hooks[0][1] == webhook_id
     assert hooks[0][2].method == "POST"
     assert await hooks[0][2].text() == ""
@@ -117,7 +117,7 @@ async def test_webhook_put(opp, mock_client):
     resp = await mock_client.put(f"/api/webhook/{webhook_id}")
     assert resp.status == 200
     assert len(hooks) == 1
-    assert hooks[0][0] is opp
+    assert hooks[0][0] is.opp
     assert hooks[0][1] == webhook_id
     assert hooks[0][2].method == "PUT"
 
@@ -136,12 +136,14 @@ async def test_webhook_head(opp, mock_client):
     resp = await mock_client.head(f"/api/webhook/{webhook_id}")
     assert resp.status == 200
     assert len(hooks) == 1
-    assert hooks[0][0] is opp
+    assert hooks[0][0] is.opp
     assert hooks[0][1] == webhook_id
     assert hooks[0][2].method == "HEAD"
 
 
-async def test_listing_webhook(opp, opp_ws_client, opp_access_token):
+async def test_listing_webhook(
+    opp, opp_ws_client, opp_access_token, enable_custom_integrations
+):
     """Test unregistering a webhook."""
     assert await async_setup_component(opp, "webhook", {})
     client = await opp_ws_client(opp, opp_access_token)

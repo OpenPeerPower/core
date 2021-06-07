@@ -27,8 +27,6 @@ async def test_form(opp):
         "openpeerpower.components.solarlog.config_flow.SolarLogConfigFlow._test_connection",
         return_value={"title": "solarlog test 1 2 3"},
     ), patch(
-        "openpeerpower.components.solarlog.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.solarlog.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -40,7 +38,6 @@ async def test_form(opp):
     assert result2["type"] == "create_entry"
     assert result2["title"] == "solarlog_test_1_2_3"
     assert result2["data"] == {"host": "http://1.1.1.1"}
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 

@@ -5,7 +5,7 @@ from spotipy import SpotifyException
 
 from openpeerpower import data_entry_flow, setup
 from openpeerpower.components.spotify.const import DOMAIN
-from openpeerpower.config_entries import SOURCE_USER, SOURCE_ZEROCONF
+from openpeerpower.config_entries import SOURCE_REAUTH, SOURCE_USER, SOURCE_ZEROCONF
 from openpeerpower.const import CONF_CLIENT_ID, CONF_CLIENT_SECRET
 from openpeerpower.helpers import config_entry_oauth2_flow
 
@@ -181,7 +181,7 @@ async def test_reauthentication(
     old_entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "reauth"}, data=old_entry.data
+        DOMAIN, context={"source": SOURCE_REAUTH}, data=old_entry.data
     )
 
     flows = opp.config_entries.flow.async_progress()
@@ -246,7 +246,7 @@ async def test_reauth_account_mismatch(
     old_entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "reauth"}, data=old_entry.data
+        DOMAIN, context={"source": SOURCE_REAUTH}, data=old_entry.data
     )
 
     flows = opp.config_entries.flow.async_progress()

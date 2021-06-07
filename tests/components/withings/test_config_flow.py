@@ -1,6 +1,7 @@
 """Tests for config flow."""
 from aiohttp.test_utils import TestClient
 
+from openpeerpower import config_entries
 from openpeerpower.components.withings import const
 from openpeerpower.config import async_process_op_core_config
 from openpeerpower.const import (
@@ -34,7 +35,7 @@ async def test_config_non_unique_profile(opp: OpenPeerPower) -> None:
 
 
 async def test_config_reauth_profile(
-    opp: OpenPeerPower, aiohttp_client, aioclient_mock
+    opp: OpenPeerPower, aiohttp_client, aioclient_mock, current_request_with_host
 ) -> None:
     """Test reauth an existing profile re-creates the config entry."""
     opp_config = {
@@ -58,7 +59,8 @@ async def test_config_reauth_profile(
     config_entry.add_to_opp(opp)
 
     result = await opp.config_entries.flow.async_init(
-        const.DOMAIN, context={"source": "reauth", "profile": "person0"}
+        const.DOMAIN,
+        context={"source": config_entries.SOURCE_REAUTH, "profile": "person0"},
     )
     assert result
     assert result["type"] == "form"

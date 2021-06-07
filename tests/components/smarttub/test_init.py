@@ -1,14 +1,13 @@
 """Test smarttub setup process."""
 
 import asyncio
+from unittest.mock import patch
 
 from smarttub import LoginFailed
 
 from openpeerpower.components import smarttub
-from openpeerpower.config_entries import (
-    ENTRY_STATE_SETUP_ERROR,
-    ENTRY_STATE_SETUP_RETRY,
-)
+from openpeerpower.components.smarttub.const import DOMAIN
+from openpeerpower.config_entries import SOURCE_REAUTH, ConfigEntryState
 from openpeerpower.setup import async_setup_component
 
 
@@ -27,7 +26,7 @@ async def test_setup_entry_not_ready(setup_component, opp, config_entry, smarttu
 
     config_entry.add_to_opp(opp)
     await opp.config_entries.async_setup(config_entry.entry_id)
-    assert config_entry.state == ENTRY_STATE_SETUP_RETRY
+    assert config_entry.state is ConfigEntryState.SETUP_RETRY
 
 
 async def test_setup_auth_failed(setup_component, opp, config_entry, smarttub_api):
@@ -35,8 +34,18 @@ async def test_setup_auth_failed(setup_component, opp, config_entry, smarttub_ap
     smarttub_api.login.side_effect = LoginFailed
 
     config_entry.add_to_opp(opp)
-    await opp.config_entries.async_setup(config_entry.entry_id)
-    assert config_entry.state == ENTRY_STATE_SETUP_ERROR
+    with patch.object(opp.config_entries.flow, "async_init") as mock_flow_init:
+        await opp.config_entries.async_setup(config_entry.entry_id)
+        assert config_entry.state is ConfigEntryState.SETUP_ERROR
+        mock_flow_init.assert_called_with(
+            DOMAIN,
+            context={
+                "source": SOURCE_REAUTH,
+                "entry_id": config_entry.entry_id,
+                "unique_id": config_entry.unique_id,
+            },
+            data=config_entry.data,
+        )
 
 
 async def test_config_passed_to_config_entry(opp, config_entry, config_data):

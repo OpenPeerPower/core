@@ -1,4 +1,5 @@
 """Tests for Srp Energy component Init."""
+from openpeerpower import config_entries
 from openpeerpower.components import srp_energy
 
 from tests.components.srp_energy import init_integration
@@ -7,7 +8,7 @@ from tests.components.srp_energy import init_integration
 async def test_setup_entry(opp):
     """Test setup entry fails if deCONZ is not available."""
     config_entry = await init_integration(opp)
-    assert config_entry.state == "loaded"
+    assert config_entry.state == config_entries.ConfigEntryState.LOADED
     assert opp.data[srp_energy.SRP_ENERGY_DOMAIN]
 
 

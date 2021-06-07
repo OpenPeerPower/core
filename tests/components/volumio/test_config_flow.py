@@ -42,8 +42,6 @@ async def test_form(opp):
         "openpeerpower.components.volumio.config_flow.Volumio.get_system_info",
         return_value=TEST_SYSTEM_INFO,
     ), patch(
-        "openpeerpower.components.volumio.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.volumio.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -57,7 +55,6 @@ async def test_form(opp):
     assert result2["title"] == "TestVolumio"
     assert result2["data"] == {**TEST_SYSTEM_INFO, **TEST_CONNECTION}
 
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -82,7 +79,7 @@ async def test_form_updates_unique_id(opp):
     with patch(
         "openpeerpower.components.volumio.config_flow.Volumio.get_system_info",
         return_value=TEST_SYSTEM_INFO,
-    ), patch("openpeerpower.components.volumio.async_setup", return_value=True), patch(
+    ), patch(
         "openpeerpower.components.volumio.async_setup_entry",
         return_value=True,
     ):
@@ -110,8 +107,6 @@ async def test_empty_system_info(opp):
         "openpeerpower.components.volumio.config_flow.Volumio.get_system_info",
         return_value={},
     ), patch(
-        "openpeerpower.components.volumio.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.volumio.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -130,7 +125,6 @@ async def test_empty_system_info(opp):
         "id": None,
     }
 
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -176,15 +170,13 @@ async def test_discovery(opp):
     """Test discovery flow works."""
 
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
+        DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}, data=TEST_DISCOVERY
     )
 
     with patch(
         "openpeerpower.components.volumio.config_flow.Volumio.get_system_info",
         return_value=TEST_SYSTEM_INFO,
     ), patch(
-        "openpeerpower.components.volumio.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.volumio.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
@@ -201,7 +193,6 @@ async def test_discovery(opp):
     assert result2["result"]
     assert result2["result"].unique_id == TEST_DISCOVERY_RESULT["id"]
 
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -209,7 +200,7 @@ async def test_discovery_cannot_connect(opp):
     """Test discovery aborts if cannot connect."""
 
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
+        DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}, data=TEST_DISCOVERY
     )
 
     with patch(
@@ -228,13 +219,13 @@ async def test_discovery_cannot_connect(opp):
 async def test_discovery_duplicate_data(opp):
     """Test discovery aborts if same mDNS packet arrives."""
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
+        DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}, data=TEST_DISCOVERY
     )
     assert result["type"] == "form"
     assert result["step_id"] == "discovery_confirm"
 
     result = await opp.config_entries.flow.async_init(
-        DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
+        DOMAIN, context={"source": config_entries.SOURCE_ZEROCONF}, data=TEST_DISCOVERY
     )
     assert result["type"] == "abort"
     assert result["reason"] == "already_in_progress"
@@ -251,19 +242,19 @@ async def test_discovery_updates_unique_id(opp):
             "name": "dummy",
             "id": TEST_DISCOVERY_RESULT["id"],
         },
-        state=config_entries.ENTRY_STATE_SETUP_RETRY,
+        state=config_entries.ConfigEntryState.SETUP_RETRY,
     )
 
     entry.add_to_opp(opp)
 
     with patch(
-        "openpeerpower.components.volumio.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.volumio.async_setup_entry",
         return_value=True,
     ) as mock_setup_entry:
         result = await opp.config_entries.flow.async_init(
-            DOMAIN, context={"source": "zeroconf"}, data=TEST_DISCOVERY
+            DOMAIN,
+            context={"source": config_entries.SOURCE_ZEROCONF},
+            data=TEST_DISCOVERY,
         )
         await opp.async_block_till_done()
 
@@ -271,5 +262,4 @@ async def test_discovery_updates_unique_id(opp):
     assert result["reason"] == "already_configured"
 
     assert entry.data == TEST_DISCOVERY_RESULT
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1

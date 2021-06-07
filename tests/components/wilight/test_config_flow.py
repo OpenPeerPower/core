@@ -10,12 +10,12 @@ from openpeerpower.components.wilight.config_flow import (
 )
 from openpeerpower.config_entries import SOURCE_SSDP
 from openpeerpower.const import CONF_HOST, CONF_NAME, CONF_SOURCE
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.data_entry_flow import (
     RESULT_TYPE_ABORT,
     RESULT_TYPE_CREATE_ENTRY,
     RESULT_TYPE_FORM,
 )
-from openpeerpower.helpers.typing import OpenPeerPowerType
 
 from tests.common import MockConfigEntry
 from tests.components.wilight import (
@@ -52,7 +52,7 @@ def mock_dummy_get_components_from_model_wrong():
         yield components
 
 
-async def test_show_ssdp_form(opp: OpenPeerPowerType) -> None:
+async def test_show_ssdp_form(opp: OpenPeerPower) -> None:
     """Test that the ssdp confirmation form is served."""
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO_P_B.copy()
@@ -68,7 +68,7 @@ async def test_show_ssdp_form(opp: OpenPeerPowerType) -> None:
     }
 
 
-async def test_ssdp_not_wilight_abort_1(opp: OpenPeerPowerType) -> None:
+async def test_ssdp_not_wilight_abort_1(opp: OpenPeerPower) -> None:
     """Test that the ssdp aborts not_wilight."""
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO_WRONG_MANUFACTORER.copy()
@@ -80,7 +80,7 @@ async def test_ssdp_not_wilight_abort_1(opp: OpenPeerPowerType) -> None:
     assert result["reason"] == "not_wilight_device"
 
 
-async def test_ssdp_not_wilight_abort_2(opp: OpenPeerPowerType) -> None:
+async def test_ssdp_not_wilight_abort_2(opp: OpenPeerPower) -> None:
     """Test that the ssdp aborts not_wilight."""
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO_MISSING_MANUFACTORER.copy()
@@ -93,7 +93,7 @@ async def test_ssdp_not_wilight_abort_2(opp: OpenPeerPowerType) -> None:
 
 
 async def test_ssdp_not_wilight_abort_3(
-    opp: OpenPeerPowerType, dummy_get_components_from_model_clear
+    opp: OpenPeerPower, dummy_get_components_from_model_clear
 ) -> None:
     """Test that the ssdp aborts not_wilight."""
 
@@ -107,7 +107,7 @@ async def test_ssdp_not_wilight_abort_3(
 
 
 async def test_ssdp_not_supported_abort(
-    opp: OpenPeerPowerType, dummy_get_components_from_model_wrong
+    opp: OpenPeerPower, dummy_get_components_from_model_wrong
 ) -> None:
     """Test that the ssdp aborts not_supported."""
 
@@ -120,7 +120,7 @@ async def test_ssdp_not_supported_abort(
     assert result["reason"] == "not_supported_device"
 
 
-async def test_ssdp_device_exists_abort(opp: OpenPeerPowerType) -> None:
+async def test_ssdp_device_exists_abort(opp: OpenPeerPower) -> None:
     """Test abort SSDP flow if WiLight already configured."""
     entry = MockConfigEntry(
         domain=DOMAIN,
@@ -145,7 +145,7 @@ async def test_ssdp_device_exists_abort(opp: OpenPeerPowerType) -> None:
     assert result["reason"] == "already_configured"
 
 
-async def test_full_ssdp_flow_implementation(opp: OpenPeerPowerType) -> None:
+async def test_full_ssdp_flow_implementation(opp: OpenPeerPower) -> None:
     """Test the full SSDP flow from start to finish."""
 
     discovery_info = MOCK_SSDP_DISCOVERY_INFO_P_B.copy()

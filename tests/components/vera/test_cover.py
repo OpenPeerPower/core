@@ -12,7 +12,7 @@ async def test_cover(
     opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
-    vera_device = MagicMock(spec=pv.VeraCurtain)  # type: pv.VeraCurtain
+    vera_device: pv.VeraCurtain = MagicMock(spec=pv.VeraCurtain)
     vera_device.device_id = 1
     vera_device.vera_device_id = vera_device.device_id
     vera_device.comm_failure = False
@@ -23,7 +23,7 @@ async def test_cover(
     entity_id = "cover.dev1_1"
 
     component_data = await vera_component_factory.configure_component(
-        opp=opp,
+        opp.opp,
         controller_config=new_simple_controller_config(devices=(vera_device,)),
     )
     update_callback = component_data.controller_data[0].update_callback

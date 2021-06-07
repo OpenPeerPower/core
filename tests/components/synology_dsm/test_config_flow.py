@@ -36,7 +36,7 @@ from openpeerpower.const import (
     CONF_USERNAME,
     CONF_VERIFY_SSL,
 )
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 
 from .consts import (
     DEVICE_TOKEN,
@@ -114,7 +114,7 @@ def mock_controller_service_failed():
         yield service_mock
 
 
-async def test_user(opp: OpenPeerPowerType, service: MagicMock):
+async def test_user(opp: OpenPeerPower, service: MagicMock):
     """Test user config."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=None
@@ -177,7 +177,7 @@ async def test_user(opp: OpenPeerPowerType, service: MagicMock):
     assert result["data"].get(CONF_VOLUMES) is None
 
 
-async def test_user_2sa(opp: OpenPeerPowerType, service_2sa: MagicMock):
+async def test_user_2sa(opp: OpenPeerPower, service_2sa: MagicMock):
     """Test user with 2sa authentication config."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -220,7 +220,7 @@ async def test_user_2sa(opp: OpenPeerPowerType, service_2sa: MagicMock):
     assert result["data"].get(CONF_VOLUMES) is None
 
 
-async def test_user_vdsm(opp: OpenPeerPowerType, service_vdsm: MagicMock):
+async def test_user_vdsm(opp: OpenPeerPower, service_vdsm: MagicMock):
     """Test user config."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": SOURCE_USER}, data=None
@@ -256,7 +256,7 @@ async def test_user_vdsm(opp: OpenPeerPowerType, service_vdsm: MagicMock):
     assert result["data"].get(CONF_VOLUMES) is None
 
 
-async def test_import(opp: OpenPeerPowerType, service: MagicMock):
+async def test_import(opp: OpenPeerPower, service: MagicMock):
     """Test import step."""
     # import with minimum setup
     result = await opp.config_entries.flow.async_init(
@@ -309,7 +309,7 @@ async def test_import(opp: OpenPeerPowerType, service: MagicMock):
     assert result["data"][CONF_VOLUMES] == ["volume_1"]
 
 
-async def test_abort_if_already_setup(opp: OpenPeerPowerType, service: MagicMock):
+async def test_abort_if_already_setup(opp: OpenPeerPower, service: MagicMock):
     """Test we abort if the account is already setup."""
     MockConfigEntry(
         domain=DOMAIN,
@@ -336,7 +336,7 @@ async def test_abort_if_already_setup(opp: OpenPeerPowerType, service: MagicMock
     assert result["reason"] == "already_configured"
 
 
-async def test_login_failed(opp: OpenPeerPowerType, service: MagicMock):
+async def test_login_failed(opp: OpenPeerPower, service: MagicMock):
     """Test when we have errors during login."""
     service.return_value.login = Mock(
         side_effect=(SynologyDSMLoginInvalidException(USERNAME))
@@ -351,7 +351,7 @@ async def test_login_failed(opp: OpenPeerPowerType, service: MagicMock):
     assert result["errors"] == {CONF_USERNAME: "invalid_auth"}
 
 
-async def test_connection_failed(opp: OpenPeerPowerType, service: MagicMock):
+async def test_connection_failed(opp: OpenPeerPower, service: MagicMock):
     """Test when we have errors during connection."""
     service.return_value.login = Mock(
         side_effect=SynologyDSMRequestException(IOError("arg"))
@@ -367,7 +367,7 @@ async def test_connection_failed(opp: OpenPeerPowerType, service: MagicMock):
     assert result["errors"] == {CONF_HOST: "cannot_connect"}
 
 
-async def test_unknown_failed(opp: OpenPeerPowerType, service: MagicMock):
+async def test_unknown_failed(opp: OpenPeerPower, service: MagicMock):
     """Test when we have an unknown error."""
     service.return_value.login = Mock(side_effect=SynologyDSMException(None, None))
 
@@ -381,9 +381,7 @@ async def test_unknown_failed(opp: OpenPeerPowerType, service: MagicMock):
     assert result["errors"] == {"base": "unknown"}
 
 
-async def test_missing_data_after_login(
-    opp: OpenPeerPowerType, service_failed: MagicMock
-):
+async def test_missing_data_after_login(opp: OpenPeerPower, service_failed: MagicMock):
     """Test when we have errors during connection."""
     result = await opp.config_entries.flow.async_init(
         DOMAIN,
@@ -394,7 +392,7 @@ async def test_missing_data_after_login(
     assert result["errors"] == {"base": "missing_data"}
 
 
-async def test_form_ssdp_already_configured(opp: OpenPeerPowerType, service: MagicMock):
+async def test_form_ssdp_already_configured(opp: OpenPeerPower, service: MagicMock):
     """Test ssdp abort when the serial number is already configured."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -421,7 +419,7 @@ async def test_form_ssdp_already_configured(opp: OpenPeerPowerType, service: Mag
     assert result["type"] == data_entry_flow.RESULT_TYPE_ABORT
 
 
-async def test_form_ssdp(opp: OpenPeerPowerType, service: MagicMock):
+async def test_form_ssdp(opp: OpenPeerPower, service: MagicMock):
     """Test we can setup from ssdp."""
     await setup.async_setup_component(opp, "persistent_notification", {})
 
@@ -457,7 +455,7 @@ async def test_form_ssdp(opp: OpenPeerPowerType, service: MagicMock):
     assert result["data"].get(CONF_VOLUMES) is None
 
 
-async def test_options_flow(opp: OpenPeerPowerType, service: MagicMock):
+async def test_options_flow(opp: OpenPeerPower, service: MagicMock):
     """Test config flow options."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,

@@ -1,4 +1,11 @@
 """Test discovery of entities for device-specific schemas for the Z-Wave JS integration."""
+import pytest
+
+from openpeerpower.components.zwave_js.discovery import (
+    FirmwareVersionRange,
+    ZWaveDiscoverySchema,
+    ZWaveValueDiscoverySchema,
+)
 
 
 async def test_iblinds_v2(opp, client, iblinds_v2, integration):
@@ -35,3 +42,26 @@ async def test_inovelli_lzw36(opp, client, inovelli_lzw36, integration):
 
     state = opp.states.get("fan.family_room_combo_2")
     assert state
+
+
+async def test_vision_security_zl7432(
+    opp, client, vision_security_zl7432, integration
+):
+    """Test Vision Security ZL7432 is caught by the device specific discovery."""
+    for entity_id in (
+        "switch.in_wall_dual_relay_switch",
+        "switch.in_wall_dual_relay_switch_2",
+    ):
+        state = opp.states.get(entity_id)
+        assert state
+        assert state.attributes["assumed_state"]
+
+
+async def test_firmware_version_range_exception(opp):
+    """Test FirmwareVersionRange exception."""
+    with pytest.raises(ValueError):
+        ZWaveDiscoverySchema(
+            "test",
+            ZWaveValueDiscoverySchema(command_class=1),
+            firmware_version_range=FirmwareVersionRange(),
+        )

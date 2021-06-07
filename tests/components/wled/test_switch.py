@@ -20,6 +20,7 @@ from openpeerpower.const import (
     STATE_UNAVAILABLE,
 )
 from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import entity_registry as er
 
 from tests.components.wled import init_integration
 from tests.test_util.aiohttp import AiohttpClientMocker
@@ -31,7 +32,7 @@ async def test_switch_state(
     """Test the creation and values of the WLED switches."""
     await init_integration(opp, aioclient_mock)
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     state = opp.states.get("switch.wled_rgb_light_nightlight")
     assert state

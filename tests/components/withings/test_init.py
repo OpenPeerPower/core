@@ -125,7 +125,10 @@ async def test_async_setup_no_config(opp: OpenPeerPower) -> None:
     ],
 )
 async def test_auth_failure(
-    opp: OpenPeerPower, component_factory: ComponentFactory, exception: Exception
+    opp: OpenPeerPower,
+    component_factory: ComponentFactory,
+    exception: Exception,
+    current_request_with_host,
 ) -> None:
     """Test auth failure."""
     person0 = new_profile_config(

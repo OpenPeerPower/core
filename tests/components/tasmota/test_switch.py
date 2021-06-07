@@ -156,10 +156,14 @@ async def test_availability_discovery_update(opp, mqtt_mock, setup_tasmota):
     """Test availability discovery update."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 1
-    await help_test_availability_discovery_update(opp, mqtt_mock, switch.DOMAIN, config)
+    await help_test_availability_discovery_update(
+        opp, mqtt_mock, switch.DOMAIN, config
+    )
 
 
-async def test_availability_poll_state(opp, mqtt_client_mock, mqtt_mock, setup_tasmota):
+async def test_availability_poll_state(
+    opp, mqtt_client_mock, mqtt_mock, setup_tasmota
+):
     """Test polling after MQTT connection (re)established."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 1
@@ -195,7 +199,9 @@ async def test_discovery_removal_relay_as_light(opp, mqtt_mock, caplog, setup_ta
     )
 
 
-async def test_discovery_update_unchanged_switch(opp, mqtt_mock, caplog, setup_tasmota):
+async def test_discovery_update_unchanged_switch(
+    opp, mqtt_mock, caplog, setup_tasmota
+):
     """Test update of discovered switch."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 1

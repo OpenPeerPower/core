@@ -15,7 +15,7 @@ from openpeerpower.const import (
 )
 from openpeerpower.core import Context
 from openpeerpower.exceptions import Unauthorized
-from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers import entity_registry as er
 
 from tests.common import MockConfigEntry
 
@@ -88,7 +88,7 @@ async def test_setup(opp):
 
 
 async def test_setup_zone_skips_home_zone(opp):
-    """Test that zone named Home should override opp home zone."""
+    """Test that zone named Home should override opp.home zone."""
     info = {"name": "Home", "latitude": 1.1, "longitude": -2.2}
     assert await setup.async_setup_component(opp, zone.DOMAIN, {"zone": info})
 
@@ -98,7 +98,7 @@ async def test_setup_zone_skips_home_zone(opp):
 
 
 async def test_setup_name_can_be_same_on_multiple_zones(opp):
-    """Test that zone named Home should override opp home zone."""
+    """Test that zone named Home should override opp.home zone."""
     info = {"name": "Test Zone", "latitude": 1.1, "longitude": -2.2}
     assert await setup.async_setup_component(opp, zone.DOMAIN, {"zone": [info, info]})
     assert len(opp.states.async_entity_ids("zone")) == 3
@@ -144,7 +144,7 @@ async def test_active_zone_skips_passive_zones_2(opp):
     )
     await opp.async_block_till_done()
     active = zone.async_active_zone(opp, 32.880700, -117.237561)
-    assert "zone.active_zone" == active.entity_id
+    assert active.entity_id == "zone.active_zone"
 
 
 async def test_active_zone_prefers_smaller_zone_if_same_distance(opp):
@@ -173,7 +173,7 @@ async def test_active_zone_prefers_smaller_zone_if_same_distance(opp):
     )
 
     active = zone.async_active_zone(opp, latitude, longitude)
-    assert "zone.small_zone" == active.entity_id
+    assert active.entity_id == "zone.small_zone"
 
 
 async def test_active_zone_prefers_smaller_zone_if_same_distance_2(opp):
@@ -196,7 +196,7 @@ async def test_active_zone_prefers_smaller_zone_if_same_distance_2(opp):
     )
 
     active = zone.async_active_zone(opp, latitude, longitude)
-    assert "zone.smallest_zone" == active.entity_id
+    assert active.entity_id == "zone.smallest_zone"
 
 
 async def test_in_zone_works_for_passive_zones(opp):
@@ -244,7 +244,7 @@ async def test_core_config_update(opp):
 async def test_reload(opp, opp_admin_user, opp_read_only_user):
     """Test reload service."""
     count_start = len(opp.states.async_entity_ids())
-    ent_reg = await entity_registry.async_get_registry(opp)
+    ent_reg = er.async_get(opp)
 
     assert await setup.async_setup_component(
         opp,
@@ -365,7 +365,7 @@ async def test_ws_delete(opp, opp_ws_client, storage_setup):
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry(opp)
+    ent_reg = er.async_get(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is not None
@@ -401,7 +401,7 @@ async def test_update(opp, opp_ws_client, storage_setup):
 
     input_id = "from_storage"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry(opp)
+    ent_reg = er.async_get(opp)
 
     state = opp.states.get(input_entity_id)
     assert state.attributes["latitude"] == 1
@@ -435,7 +435,7 @@ async def test_ws_create(opp, opp_ws_client, storage_setup):
 
     input_id = "new_input"
     input_entity_id = f"{DOMAIN}.{input_id}"
-    ent_reg = await entity_registry.async_get_registry(opp)
+    ent_reg = er.async_get(opp)
 
     state = opp.states.get(input_entity_id)
     assert state is None

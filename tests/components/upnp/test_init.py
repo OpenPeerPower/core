@@ -15,7 +15,7 @@ from openpeerpower.components.upnp.const import (
     DOMAIN,
 )
 from openpeerpower.components.upnp.device import Device
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.setup import async_setup_component
 
 from .mock_device import MockDevice
@@ -23,7 +23,7 @@ from .mock_device import MockDevice
 from tests.common import MockConfigEntry
 
 
-async def test_async_setup_entry_default(opp: OpenPeerPowerType):
+async def test_async_setup_entry_default(opp: OpenPeerPower):
     """Test async_setup_entry."""
     udn = "uuid:device_1"
     location = "http://192.168.1.1/desc.xml"
@@ -69,7 +69,7 @@ async def test_async_setup_entry_default(opp: OpenPeerPowerType):
         async_create_device.assert_called_with(opp, discoveries[0][DISCOVERY_LOCATION])
 
 
-async def test_sync_setup_entry_multiple_discoveries(opp: OpenPeerPowerType):
+async def test_sync_setup_entry_multiple_discoveries(opp: OpenPeerPower):
     """Test async_setup_entry."""
     udn_0 = "uuid:device_1"
     location_0 = "http://192.168.1.1/desc.xml"

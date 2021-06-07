@@ -1,10 +1,10 @@
 """UniFi switch platform tests."""
 from copy import deepcopy
+from unittest.mock import patch
 
 from aiounifi.controller import MESSAGE_CLIENT_REMOVED, MESSAGE_EVENT
-from aiounifi.websocket import SIGNAL_DATA
 
-from openpeerpower import config_entries
+from openpeerpower import config_entries, core
 from openpeerpower.components.device_tracker import DOMAIN as TRACKER_DOMAIN
 from openpeerpower.components.switch import DOMAIN as SWITCH_DOMAIN
 from openpeerpower.components.unifi.const import (
@@ -16,7 +16,8 @@ from openpeerpower.components.unifi.const import (
     DOMAIN as UNIFI_DOMAIN,
 )
 from openpeerpower.components.unifi.switch import POE_SWITCH
-from openpeerpower.helpers import entity_registry
+from openpeerpower.helpers import entity_registry as er
+from openpeerpower.helpers.dispatcher import async_dispatcher_send
 
 from .test_controller import (
     CONTROLLER_HOST,
@@ -370,6 +371,7 @@ async def test_switches(opp, aioclient_mock):
     dpi_switch = opp.states.get("switch.block_media_streaming")
     assert dpi_switch is not None
     assert dpi_switch.state == "on"
+    assert dpi_switch.attributes["icon"] == "mdi:network"
 
     # Block and unblock client
 
@@ -419,17 +421,22 @@ async def test_switches(opp, aioclient_mock):
     assert aioclient_mock.call_count == 14
     assert aioclient_mock.mock_calls[13][2] == {"enabled": True}
 
+    # Make sure no duplicates arise on generic signal update
+    async_dispatcher_send(opp, controller.signal_update)
+    await opp.async_block_till_done()
+    assert len(opp.states.async_entity_ids(SWITCH_DOMAIN)) == 4
 
-async def test_remove_switches(opp, aioclient_mock):
+
+async def test_remove_switches(opp, aioclient_mock, mock_unifi_websocket):
     """Test the update_items function with some clients."""
-    config_entry = await setup_unifi_integration(
+    await setup_unifi_integration(
         opp,
         aioclient_mock,
         options={CONF_BLOCK_CLIENT: [UNBLOCKED["mac"]]},
         clients_response=[CLIENT_1, UNBLOCKED],
         devices_response=[DEVICE_1],
     )
-    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
+
     assert len(opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
 
     poe_switch = opp.states.get("switch.poe_client_1")
@@ -438,11 +445,12 @@ async def test_remove_switches(opp, aioclient_mock):
     block_switch = opp.states.get("switch.block_client_2")
     assert block_switch is not None
 
-    controller.api.websocket._data = {
-        "meta": {"message": MESSAGE_CLIENT_REMOVED},
-        "data": [CLIENT_1, UNBLOCKED],
-    }
-    controller.api.session_handler(SIGNAL_DATA)
+    mock_unifi_websocket(
+        data={
+            "meta": {"message": MESSAGE_CLIENT_REMOVED},
+            "data": [CLIENT_1, UNBLOCKED],
+        }
+    )
     await opp.async_block_till_done()
 
     assert len(opp.states.async_entity_ids(SWITCH_DOMAIN)) == 0
@@ -454,7 +462,7 @@ async def test_remove_switches(opp, aioclient_mock):
     assert block_switch is None
 
 
-async def test_block_switches(opp, aioclient_mock):
+async def test_block_switches(opp, aioclient_mock, mock_unifi_websocket):
     """Test the update_items function with some clients."""
     config_entry = await setup_unifi_integration(
         opp,
@@ -479,11 +487,12 @@ async def test_block_switches(opp, aioclient_mock):
     assert unblocked is not None
     assert unblocked.state == "on"
 
-    controller.api.websocket._data = {
-        "meta": {"message": MESSAGE_EVENT},
-        "data": [EVENT_BLOCKED_CLIENT_UNBLOCKED],
-    }
-    controller.api.session_handler(SIGNAL_DATA)
+    mock_unifi_websocket(
+        data={
+            "meta": {"message": MESSAGE_EVENT},
+            "data": [EVENT_BLOCKED_CLIENT_UNBLOCKED],
+        }
+    )
     await opp.async_block_till_done()
 
     assert len(opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
@@ -491,11 +500,12 @@ async def test_block_switches(opp, aioclient_mock):
     assert blocked is not None
     assert blocked.state == "on"
 
-    controller.api.websocket._data = {
-        "meta": {"message": MESSAGE_EVENT},
-        "data": [EVENT_BLOCKED_CLIENT_BLOCKED],
-    }
-    controller.api.session_handler(SIGNAL_DATA)
+    mock_unifi_websocket(
+        data={
+            "meta": {"message": MESSAGE_EVENT},
+            "data": [EVENT_BLOCKED_CLIENT_BLOCKED],
+        }
+    )
     await opp.async_block_till_done()
 
     assert len(opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
@@ -526,9 +536,11 @@ async def test_block_switches(opp, aioclient_mock):
     }
 
 
-async def test_new_client_discovered_on_block_control(opp, aioclient_mock):
+async def test_new_client_discovered_on_block_control(
+    opp, aioclient_mock, mock_unifi_websocket
+):
     """Test if 2nd update has a new client."""
-    config_entry = await setup_unifi_integration(
+    await setup_unifi_integration(
         opp,
         aioclient_mock,
         options={
@@ -538,27 +550,28 @@ async def test_new_client_discovered_on_block_control(opp, aioclient_mock):
             CONF_DPI_RESTRICTIONS: False,
         },
     )
-    controller = opp.data[UNIFI_DOMAIN][config_entry.entry_id]
 
     assert len(opp.states.async_entity_ids(SWITCH_DOMAIN)) == 0
 
     blocked = opp.states.get("switch.block_client_1")
     assert blocked is None
 
-    controller.api.websocket._data = {
-        "meta": {"message": "sta:sync"},
-        "data": [BLOCKED],
-    }
-    controller.api.session_handler(SIGNAL_DATA)
+    mock_unifi_websocket(
+        data={
+            "meta": {"message": "sta:sync"},
+            "data": [BLOCKED],
+        }
+    )
     await opp.async_block_till_done()
 
     assert len(opp.states.async_entity_ids(SWITCH_DOMAIN)) == 0
 
-    controller.api.websocket._data = {
-        "meta": {"message": MESSAGE_EVENT},
-        "data": [EVENT_BLOCKED_CLIENT_CONNECTED],
-    }
-    controller.api.session_handler(SIGNAL_DATA)
+    mock_unifi_websocket(
+        data={
+            "meta": {"message": MESSAGE_EVENT},
+            "data": [EVENT_BLOCKED_CLIENT_CONNECTED],
+        }
+    )
     await opp.async_block_till_done()
 
     assert len(opp.states.async_entity_ids(SWITCH_DOMAIN)) == 1
@@ -634,7 +647,9 @@ async def test_option_remove_switches(opp, aioclient_mock):
     assert len(opp.states.async_entity_ids(SWITCH_DOMAIN)) == 0
 
 
-async def test_new_client_discovered_on_poe_control(opp, aioclient_mock):
+async def test_new_client_discovered_on_poe_control(
+    opp, aioclient_mock, mock_unifi_websocket
+):
     """Test if 2nd update has a new client."""
     config_entry = await setup_unifi_integration(
         opp,
@@ -647,20 +662,22 @@ async def test_new_client_discovered_on_poe_control(opp, aioclient_mock):
 
     assert len(opp.states.async_entity_ids(SWITCH_DOMAIN)) == 1
 
-    controller.api.websocket._data = {
-        "meta": {"message": "sta:sync"},
-        "data": [CLIENT_2],
-    }
-    controller.api.session_handler(SIGNAL_DATA)
+    mock_unifi_websocket(
+        data={
+            "meta": {"message": "sta:sync"},
+            "data": [CLIENT_2],
+        }
+    )
     await opp.async_block_till_done()
 
     assert len(opp.states.async_entity_ids(SWITCH_DOMAIN)) == 1
 
-    controller.api.websocket._data = {
-        "meta": {"message": MESSAGE_EVENT},
-        "data": [EVENT_CLIENT_2_CONNECTED],
-    }
-    controller.api.session_handler(SIGNAL_DATA)
+    mock_unifi_websocket(
+        data={
+            "meta": {"message": MESSAGE_EVENT},
+            "data": [EVENT_CLIENT_2_CONNECTED],
+        }
+    )
     await opp.async_block_till_done()
 
     assert len(opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
@@ -710,33 +727,172 @@ async def test_ignore_multiple_poe_clients_on_same_port(opp, aioclient_mock):
     assert switch_2 is None
 
 
-async def test_restoring_client(opp, aioclient_mock):
-    """Test the update_items function with some clients."""
+async def test_restore_client_succeed(opp, aioclient_mock):
+    """Test that RestoreEntity works as expected."""
+    POE_DEVICE = {
+        "device_id": "12345",
+        "ip": "1.0.1.1",
+        "mac": "00:00:00:00:01:01",
+        "last_seen": 1562600145,
+        "model": "US16P150",
+        "name": "POE Switch",
+        "port_overrides": [
+            {
+                "poe_mode": "off",
+                "port_idx": 1,
+                "portconf_id": "5f3edd2aba4cc806a19f2db2",
+            }
+        ],
+        "port_table": [
+            {
+                "media": "GE",
+                "name": "Port 1",
+                "op_mode": "switch",
+                "poe_caps": 7,
+                "poe_class": "Unknown",
+                "poe_current": "0.00",
+                "poe_enable": False,
+                "poe_good": False,
+                "poe_mode": "off",
+                "poe_power": "0.00",
+                "poe_voltage": "0.00",
+                "port_idx": 1,
+                "port_poe": True,
+                "portconf_id": "5f3edd2aba4cc806a19f2db2",
+                "up": False,
+            },
+        ],
+        "state": 1,
+        "type": "usw",
+        "version": "4.0.42.10433",
+    }
+    POE_CLIENT = {
+        "hostname": "poe_client",
+        "ip": "1.0.0.1",
+        "is_wired": True,
+        "last_seen": 1562600145,
+        "mac": "00:00:00:00:00:01",
+        "name": "POE Client",
+        "oui": "Producer",
+    }
+
+    fake_state = core.State(
+        "switch.poe_client",
+        "off",
+        {
+            "power": "0.00",
+            "switch": POE_DEVICE["mac"],
+            "port": 1,
+            "poe_mode": "auto",
+        },
+    )
+
     config_entry = config_entries.ConfigEntry(
         version=1,
         domain=UNIFI_DOMAIN,
         title="Mock Title",
         data=ENTRY_CONFIG,
         source="test",
-        connection_class=config_entries.CONN_CLASS_LOCAL_POLL,
-        system_options={},
         options={},
         entry_id=1,
     )
 
-    registry = await entity_registry.async_get_registry(opp)
+    registry = er.async_get(opp)
     registry.async_get_or_create(
         SWITCH_DOMAIN,
         UNIFI_DOMAIN,
-        f'{POE_SWITCH}-{CLIENT_1["mac"]}',
-        suggested_object_id=CLIENT_1["hostname"],
+        f'{POE_SWITCH}-{POE_CLIENT["mac"]}',
+        suggested_object_id=POE_CLIENT["hostname"],
         config_entry=config_entry,
     )
+
+    with patch(
+        "openpeerpower.helpers.restore_state.RestoreEntity.async_get_last_state",
+        return_value=fake_state,
+    ):
+        await setup_unifi_integration(
+            opp,
+            aioclient_mock,
+            options={
+                CONF_TRACK_CLIENTS: False,
+                CONF_TRACK_DEVICES: False,
+            },
+            clients_response=[],
+            devices_response=[POE_DEVICE],
+            clients_all_response=[POE_CLIENT],
+        )
+
+    assert len(opp.states.async_entity_ids(SWITCH_DOMAIN)) == 1
+
+    poe_client = opp.states.get("switch.poe_client")
+    assert poe_client.state == "off"
+
+
+async def test_restore_client_no_old_state(opp, aioclient_mock):
+    """Test that RestoreEntity without old state makes entity unavailable."""
+    POE_DEVICE = {
+        "device_id": "12345",
+        "ip": "1.0.1.1",
+        "mac": "00:00:00:00:01:01",
+        "last_seen": 1562600145,
+        "model": "US16P150",
+        "name": "POE Switch",
+        "port_overrides": [
+            {
+                "poe_mode": "off",
+                "port_idx": 1,
+                "portconf_id": "5f3edd2aba4cc806a19f2db2",
+            }
+        ],
+        "port_table": [
+            {
+                "media": "GE",
+                "name": "Port 1",
+                "op_mode": "switch",
+                "poe_caps": 7,
+                "poe_class": "Unknown",
+                "poe_current": "0.00",
+                "poe_enable": False,
+                "poe_good": False,
+                "poe_mode": "off",
+                "poe_power": "0.00",
+                "poe_voltage": "0.00",
+                "port_idx": 1,
+                "port_poe": True,
+                "portconf_id": "5f3edd2aba4cc806a19f2db2",
+                "up": False,
+            },
+        ],
+        "state": 1,
+        "type": "usw",
+        "version": "4.0.42.10433",
+    }
+    POE_CLIENT = {
+        "hostname": "poe_client",
+        "ip": "1.0.0.1",
+        "is_wired": True,
+        "last_seen": 1562600145,
+        "mac": "00:00:00:00:00:01",
+        "name": "POE Client",
+        "oui": "Producer",
+    }
+
+    config_entry = config_entries.ConfigEntry(
+        version=1,
+        domain=UNIFI_DOMAIN,
+        title="Mock Title",
+        data=ENTRY_CONFIG,
+        source="test",
+        options={},
+        entry_id=1,
+    )
+
+    registry = er.async_get(opp)
     registry.async_get_or_create(
         SWITCH_DOMAIN,
         UNIFI_DOMAIN,
-        f'{POE_SWITCH}-{CLIENT_2["mac"]}',
-        suggested_object_id=CLIENT_2["hostname"],
+        f'{POE_SWITCH}-{POE_CLIENT["mac"]}',
+        suggested_object_id=POE_CLIENT["hostname"],
         config_entry=config_entry,
     )
 
@@ -744,16 +900,15 @@ async def test_restoring_client(opp, aioclient_mock):
         opp,
         aioclient_mock,
         options={
-            CONF_BLOCK_CLIENT: ["random mac"],
             CONF_TRACK_CLIENTS: False,
             CONF_TRACK_DEVICES: False,
         },
-        clients_response=[CLIENT_2],
-        devices_response=[DEVICE_1],
-        clients_all_response=[CLIENT_1],
+        clients_response=[],
+        devices_response=[POE_DEVICE],
+        clients_all_response=[POE_CLIENT],
     )
 
-    assert len(opp.states.async_entity_ids(SWITCH_DOMAIN)) == 2
+    assert len(opp.states.async_entity_ids(SWITCH_DOMAIN)) == 1
 
-    device_1 = opp.states.get("switch.client_1")
-    assert device_1 is not None
+    poe_client = opp.states.get("switch.poe_client")
+    assert poe_client.state == "unavailable"  # self.poe_mode is None

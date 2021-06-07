@@ -532,7 +532,9 @@ async def test_availability_discovery_update(opp, mqtt_mock, setup_tasmota):
     )
 
 
-async def test_availability_poll_state(opp, mqtt_client_mock, mqtt_mock, setup_tasmota):
+async def test_availability_poll_state(
+    opp, mqtt_client_mock, mqtt_mock, setup_tasmota
+):
     """Test polling after MQTT connection (re)established."""
     config = copy.deepcopy(DEFAULT_CONFIG)
     config["rl"][0] = 3

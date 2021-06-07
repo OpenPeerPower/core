@@ -1,4 +1,6 @@
 """Test Subaru sensors."""
+from unittest.mock import patch
+
 from openpeerpower.components.subaru.const import VEHICLE_NAME
 from openpeerpower.components.subaru.sensor import (
     API_GEN_2_SENSORS,
@@ -19,20 +21,25 @@ from .api_responses import (
     VEHICLE_STATUS_EV,
 )
 
-from tests.components.subaru.conftest import setup_subaru_integration
+from tests.components.subaru.conftest import (
+    MOCK_API_FETCH,
+    MOCK_API_GET_DATA,
+    advance_time_to_next_fetch,
+)
 
 VEHICLE_NAME = VEHICLE_DATA[TEST_VIN_2_EV][VEHICLE_NAME]
 
 
-async def test_sensors_ev_imperial(opp):
+async def test_sensors_ev_imperial(opp, ev_entry):
     """Test sensors supporting imperial units."""
     opp.config.units = IMPERIAL_SYSTEM
-    await setup_subaru_integration(
-        opp,
-        vehicle_list=[TEST_VIN_2_EV],
-        vehicle_data=VEHICLE_DATA[TEST_VIN_2_EV],
-        vehicle_status=VEHICLE_STATUS_EV,
-    )
+
+    with patch(MOCK_API_FETCH), patch(
+        MOCK_API_GET_DATA, return_value=VEHICLE_STATUS_EV
+    ):
+        advance_time_to_next_fetch(opp)
+        await opp.async_block_till_done()
+
     _assert_data(opp, EXPECTED_STATE_EV_IMPERIAL)
 
 
@@ -41,14 +48,12 @@ async def test_sensors_ev_metric(opp, ev_entry):
     _assert_data(opp, EXPECTED_STATE_EV_METRIC)
 
 
-async def test_sensors_missing_vin_data(opp):
+async def test_sensors_missing_vin_data(opp, ev_entry):
     """Test for missing VIN dataset."""
-    await setup_subaru_integration(
-        opp,
-        vehicle_list=[TEST_VIN_2_EV],
-        vehicle_data=VEHICLE_DATA[TEST_VIN_2_EV],
-        vehicle_status=None,
-    )
+    with patch(MOCK_API_FETCH), patch(MOCK_API_GET_DATA, return_value=None):
+        advance_time_to_next_fetch(opp)
+        await opp.async_block_till_done()
+
     _assert_data(opp, EXPECTED_STATE_EV_UNAVAILABLE)
 
 

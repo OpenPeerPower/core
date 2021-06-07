@@ -12,7 +12,8 @@ from openpeerpower.const import (
     DATA_GIGABYTES,
     STATE_UNAVAILABLE,
 )
-from openpeerpower.helpers.typing import OpenPeerPowerType
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import entity_registry as er
 from openpeerpower.util import dt as dt_util
 
 from tests.common import async_fire_time_changed
@@ -23,11 +24,11 @@ UPCOMING_ENTITY_ID = f"{SENSOR_DOMAIN}.sonarr_upcoming"
 
 
 async def test_sensors(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test the creation and values of the sensors."""
     entry = await setup_integration(opp, aioclient_mock, skip_entry_setup=True)
-    registry = await opp.helpers.entity_registry.async_get_registry()
+    registry = er.async_get(opp)
 
     # Pre-create registry entries for disabled by default sensors
     sensors = {
@@ -103,12 +104,11 @@ async def test_sensors(
     ),
 )
 async def test_disabled_by_default_sensors(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker, entity_id: str
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker, entity_id: str
 ) -> None:
     """Test the disabled by default sensors."""
     await setup_integration(opp, aioclient_mock)
-    registry = await opp.helpers.entity_registry.async_get_registry()
-    print(registry.entities)
+    registry = er.async_get(opp)
 
     state = opp.states.get(entity_id)
     assert state is None
@@ -116,11 +116,11 @@ async def test_disabled_by_default_sensors(
     entry = registry.async_get(entity_id)
     assert entry
     assert entry.disabled
-    assert entry.disabled_by == "integration"
+    assert entry.disabled_by == er.DISABLED_INTEGRATION
 
 
 async def test_availability(
-    opp: OpenPeerPowerType, aioclient_mock: AiohttpClientMocker
+    opp: OpenPeerPower, aioclient_mock: AiohttpClientMocker
 ) -> None:
     """Test entity availability."""
     now = dt_util.utcnow()

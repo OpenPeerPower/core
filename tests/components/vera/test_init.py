@@ -11,8 +11,9 @@ from openpeerpower.components.vera import (
     CONF_LIGHTS,
     DOMAIN,
 )
-from openpeerpower.config_entries import ENTRY_STATE_NOT_LOADED
+from openpeerpower.config_entries import ConfigEntryState
 from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import entity_registry as er
 
 from .common import ComponentFactory, ConfigSource, new_simple_controller_config
 
@@ -23,7 +24,7 @@ async def test_init(
     opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
-    vera_device1 = MagicMock(spec=pv.VeraBinarySensor)  # type: pv.VeraBinarySensor
+    vera_device1: pv.VeraBinarySensor = MagicMock(spec=pv.VeraBinarySensor)
     vera_device1.device_id = 1
     vera_device1.vera_device_id = vera_device1.device_id
     vera_device1.name = "first_dev"
@@ -31,7 +32,7 @@ async def test_init(
     entity1_id = "binary_sensor.first_dev_1"
 
     await vera_component_factory.configure_component(
-        opp=opp,
+        opp.opp,
         controller_config=new_simple_controller_config(
             config={CONF_CONTROLLER: "http://127.0.0.1:111"},
             config_source=ConfigSource.CONFIG_FLOW,
@@ -40,7 +41,7 @@ async def test_init(
         ),
     )
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
     entry1 = entity_registry.async_get(entity1_id)
     assert entry1
     assert entry1.unique_id == "vera_first_serial_1"
@@ -50,7 +51,7 @@ async def test_init_from_file(
     opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
-    vera_device1 = MagicMock(spec=pv.VeraBinarySensor)  # type: pv.VeraBinarySensor
+    vera_device1: pv.VeraBinarySensor = MagicMock(spec=pv.VeraBinarySensor)
     vera_device1.device_id = 1
     vera_device1.vera_device_id = vera_device1.device_id
     vera_device1.name = "first_dev"
@@ -58,7 +59,7 @@ async def test_init_from_file(
     entity1_id = "binary_sensor.first_dev_1"
 
     await vera_component_factory.configure_component(
-        opp=opp,
+        opp.opp,
         controller_config=new_simple_controller_config(
             config={CONF_CONTROLLER: "http://127.0.0.1:111"},
             config_source=ConfigSource.FILE,
@@ -67,7 +68,7 @@ async def test_init_from_file(
         ),
     )
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
     entry1 = entity_registry.async_get(entity1_id)
     assert entry1
     assert entry1.unique_id == "vera_first_serial_1"
@@ -77,14 +78,14 @@ async def test_multiple_controllers_with_legacy_one(
     opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test multiple controllers with one legacy controller."""
-    vera_device1 = MagicMock(spec=pv.VeraBinarySensor)  # type: pv.VeraBinarySensor
+    vera_device1: pv.VeraBinarySensor = MagicMock(spec=pv.VeraBinarySensor)
     vera_device1.device_id = 1
     vera_device1.vera_device_id = vera_device1.device_id
     vera_device1.name = "first_dev"
     vera_device1.is_tripped = False
     entity1_id = "binary_sensor.first_dev_1"
 
-    vera_device2 = MagicMock(spec=pv.VeraBinarySensor)  # type: pv.VeraBinarySensor
+    vera_device2: pv.VeraBinarySensor = MagicMock(spec=pv.VeraBinarySensor)
     vera_device2.device_id = 2
     vera_device2.vera_device_id = vera_device2.device_id
     vera_device2.name = "second_dev"
@@ -98,7 +99,7 @@ async def test_multiple_controllers_with_legacy_one(
     )
 
     await vera_component_factory.configure_component(
-        opp=opp,
+        opp.opp,
         controller_config=new_simple_controller_config(
             config={CONF_CONTROLLER: "http://127.0.0.1:111"},
             config_source=ConfigSource.FILE,
@@ -108,7 +109,7 @@ async def test_multiple_controllers_with_legacy_one(
     )
 
     await vera_component_factory.configure_component(
-        opp=opp,
+        opp.opp,
         controller_config=new_simple_controller_config(
             config={CONF_CONTROLLER: "http://127.0.0.1:222"},
             config_source=ConfigSource.CONFIG_FLOW,
@@ -117,7 +118,7 @@ async def test_multiple_controllers_with_legacy_one(
         ),
     )
 
-    entity_registry = await opp.helpers.entity_registry.async_get_registry()
+    entity_registry = er.async_get(opp)
 
     entry1 = entity_registry.async_get(entity1_id)
     assert entry1
@@ -132,14 +133,14 @@ async def test_unload(
     opp: OpenPeerPower, vera_component_factory: ComponentFactory
 ) -> None:
     """Test function."""
-    vera_device1 = MagicMock(spec=pv.VeraBinarySensor)  # type: pv.VeraBinarySensor
+    vera_device1: pv.VeraBinarySensor = MagicMock(spec=pv.VeraBinarySensor)
     vera_device1.device_id = 1
     vera_device1.vera_device_id = vera_device1.device_id
     vera_device1.name = "first_dev"
     vera_device1.is_tripped = False
 
     await vera_component_factory.configure_component(
-        opp=opp, controller_config=new_simple_controller_config()
+        opp.opp, controller_config=new_simple_controller_config()
     )
 
     entries = opp.config_entries.async_entries(DOMAIN)
@@ -147,7 +148,7 @@ async def test_unload(
 
     for config_entry in entries:
         assert await opp.config_entries.async_unload(config_entry.entry_id)
-        assert config_entry.state == ENTRY_STATE_NOT_LOADED
+        assert config_entry.state is ConfigEntryState.NOT_LOADED
 
 
 async def test_async_setup_entry_error(
@@ -160,7 +161,7 @@ async def test_async_setup_entry_error(
         controller.get_scenes.side_effect = RequestException()
 
     await vera_component_factory.configure_component(
-        opp=opp,
+        opp.opp,
         controller_config=new_simple_controller_config(setup_callback=setup_callback),
     )
 
@@ -186,21 +187,21 @@ async def test_exclude_and_light_ids(
     opp: OpenPeerPower, vera_component_factory: ComponentFactory, options
 ) -> None:
     """Test device exclusion, marking switches as lights and fixing the data type."""
-    vera_device1 = MagicMock(spec=pv.VeraBinarySensor)  # type: pv.VeraBinarySensor
+    vera_device1: pv.VeraBinarySensor = MagicMock(spec=pv.VeraBinarySensor)
     vera_device1.device_id = 1
     vera_device1.vera_device_id = 1
     vera_device1.name = "dev1"
     vera_device1.is_tripped = False
     entity_id1 = "binary_sensor.dev1_1"
 
-    vera_device2 = MagicMock(spec=pv.VeraBinarySensor)  # type: pv.VeraBinarySensor
+    vera_device2: pv.VeraBinarySensor = MagicMock(spec=pv.VeraBinarySensor)
     vera_device2.device_id = 2
     vera_device2.vera_device_id = 2
     vera_device2.name = "dev2"
     vera_device2.is_tripped = False
     entity_id2 = "binary_sensor.dev2_2"
 
-    vera_device3 = MagicMock(spec=pv.VeraSwitch)  # type: pv.VeraSwitch
+    vera_device3: pv.VeraSwitch = MagicMock(spec=pv.VeraSwitch)
     vera_device3.device_id = 3
     vera_device3.vera_device_id = 3
     vera_device3.name = "dev3"
@@ -209,7 +210,7 @@ async def test_exclude_and_light_ids(
 
     entity_id3 = "switch.dev3_3"
 
-    vera_device4 = MagicMock(spec=pv.VeraSwitch)  # type: pv.VeraSwitch
+    vera_device4: pv.VeraSwitch = MagicMock(spec=pv.VeraSwitch)
     vera_device4.device_id = 4
     vera_device4.vera_device_id = 4
     vera_device4.name = "dev4"
@@ -222,7 +223,7 @@ async def test_exclude_and_light_ids(
     entity_id4 = "light.dev4_4"
 
     component_data = await vera_component_factory.configure_component(
-        opp=opp,
+        opp.opp,
         controller_config=new_simple_controller_config(
             config_source=ConfigSource.CONFIG_ENTRY,
             devices=(vera_device1, vera_device2, vera_device3, vera_device4),

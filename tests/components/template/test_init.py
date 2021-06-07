@@ -4,7 +4,8 @@ from os import path
 from unittest.mock import patch
 
 from openpeerpower import config
-from openpeerpower.components.template import DOMAIN, SERVICE_RELOAD
+from openpeerpower.components.template import DOMAIN
+from openpeerpower.helpers.reload import SERVICE_RELOAD
 from openpeerpower.setup import async_setup_component
 from openpeerpower.util import dt as dt_util
 
@@ -26,16 +27,44 @@ async def test_reloadable(opp):
                         "value_template": "{{ states.sensor.test_sensor.state }}"
                     },
                 },
-            }
+            },
+            "template": [
+                {
+                    "trigger": {"platform": "event", "event_type": "event_1"},
+                    "sensor": {
+                        "name": "top level",
+                        "state": "{{ trigger.event.data.source }}",
+                    },
+                },
+                {
+                    "sensor": {
+                        "name": "top level state",
+                        "state": "{{ states.sensor.top_level.state }} + 2",
+                    },
+                    "binary_sensor": {
+                        "name": "top level state",
+                        "state": "{{ states.sensor.top_level.state == 'init' }}",
+                    },
+                },
+            ],
         },
     )
     await opp.async_block_till_done()
 
     await opp.async_start()
     await opp.async_block_till_done()
+    assert opp.states.get("sensor.top_level_state").state == "unknown + 2"
+    assert opp.states.get("binary_sensor.top_level_state").state == "off"
 
+    opp.bus.async_fire("event_1", {"source": "init"})
+    await opp.async_block_till_done()
+
+    assert len(opp.states.async_all()) == 5
     assert opp.states.get("sensor.state").state == "mytest"
-    assert len(opp.states.async_all()) == 2
+    assert opp.states.get("sensor.top_level").state == "init"
+    await opp.async_block_till_done()
+    assert opp.states.get("sensor.top_level_state").state == "init + 2"
+    assert opp.states.get("binary_sensor.top_level_state").state == "on"
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -51,11 +80,16 @@ async def test_reloadable(opp):
         )
         await opp.async_block_till_done()
 
-    assert len(opp.states.async_all()) == 3
+    assert len(opp.states.async_all()) == 4
+
+    opp.bus.async_fire("event_2", {"source": "reload"})
+    await opp.async_block_till_done()
 
     assert opp.states.get("sensor.state") is None
+    assert opp.states.get("sensor.top_level") is None
     assert opp.states.get("sensor.watching_tv_in_master_bedroom").state == "off"
     assert float(opp.states.get("sensor.combined_sensor_energy_usage").state) == 0
+    assert opp.states.get("sensor.top_level_2").state == "reload"
 
 
 async def test_reloadable_can_remove(opp):
@@ -73,7 +107,14 @@ async def test_reloadable_can_remove(opp):
                         "value_template": "{{ states.sensor.test_sensor.state }}"
                     },
                 },
-            }
+            },
+            "template": {
+                "trigger": {"platform": "event", "event_type": "event_1"},
+                "sensor": {
+                    "name": "top level",
+                    "state": "{{ trigger.event.data.source }}",
+                },
+            },
         },
     )
     await opp.async_block_till_done()
@@ -81,8 +122,12 @@ async def test_reloadable_can_remove(opp):
     await opp.async_start()
     await opp.async_block_till_done()
 
+    opp.bus.async_fire("event_1", {"source": "init"})
+    await opp.async_block_till_done()
+
+    assert len(opp.states.async_all()) == 3
     assert opp.states.get("sensor.state").state == "mytest"
-    assert len(opp.states.async_all()) == 2
+    assert opp.states.get("sensor.top_level").state == "init"
 
     yaml_path = path.join(
         _get_fixtures_base_path(),
@@ -250,11 +295,12 @@ async def test_reloadable_multiple_platforms(opp):
         )
         await opp.async_block_till_done()
 
-    assert len(opp.states.async_all()) == 3
+    assert len(opp.states.async_all()) == 4
 
     assert opp.states.get("sensor.state") is None
     assert opp.states.get("sensor.watching_tv_in_master_bedroom").state == "off"
     assert float(opp.states.get("sensor.combined_sensor_energy_usage").state) == 0
+    assert opp.states.get("sensor.top_level_2") is not None
 
 
 async def test_reload_sensors_that_reference_other_template_sensors(opp):

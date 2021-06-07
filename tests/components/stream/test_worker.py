@@ -23,22 +23,23 @@ import av
 
 from openpeerpower.components.stream import Stream
 from openpeerpower.components.stream.const import (
+    HLS_PROVIDER,
     MAX_MISSING_DTS,
-    MIN_SEGMENT_DURATION,
     PACKETS_TO_WAIT_FOR_AUDIO,
+    TARGET_SEGMENT_DURATION,
 )
 from openpeerpower.components.stream.worker import SegmentBuffer, stream_worker
 
 STREAM_SOURCE = "some-stream-source"
 # Formats here are arbitrary, not exercised by tests
-STREAM_OUTPUT_FORMAT = "hls"
 AUDIO_STREAM_FORMAT = "mp3"
 VIDEO_STREAM_FORMAT = "h264"
 VIDEO_FRAME_RATE = 12
 AUDIO_SAMPLE_RATE = 11025
+KEYFRAME_INTERVAL = 1  # in seconds
 PACKET_DURATION = fractions.Fraction(1, VIDEO_FRAME_RATE)  # in seconds
 SEGMENT_DURATION = (
-    math.ceil(MIN_SEGMENT_DURATION / PACKET_DURATION) * PACKET_DURATION
+    math.ceil(TARGET_SEGMENT_DURATION / KEYFRAME_INTERVAL) * KEYFRAME_INTERVAL
 )  # in seconds
 TEST_SEQUENCE_LENGTH = 5 * VIDEO_FRAME_RATE
 LONGER_TEST_SEQUENCE_LENGTH = 20 * VIDEO_FRAME_RATE
@@ -56,6 +57,11 @@ class FakePyAvStream:
         self.name = name
         self.time_base = fractions.Fraction(1, rate)
         self.profile = "ignored-profile"
+
+        class FakeCodec:
+            name = "aac"
+
+        self.codec = FakeCodec()
 
 
 VIDEO_STREAM = FakePyAvStream(VIDEO_STREAM_FORMAT, VIDEO_FRAME_RATE)
@@ -87,13 +93,19 @@ class PacketSequence:
             raise StopIteration
         self.packet += 1
 
-        class FakePacket:
+        class FakePacket(bytearray):
+            # Be a bytearray so that memoryview works
+            def __init__(self):
+                super().__init__(3)
+
             time_base = fractions.Fraction(1, VIDEO_FRAME_RATE)
             dts = self.packet * PACKET_DURATION / time_base
             pts = self.packet * PACKET_DURATION / time_base
             duration = PACKET_DURATION / time_base
             stream = VIDEO_STREAM
-            is_keyframe = True
+            # Pretend we get 1 keyframe every second
+            is_keyframe = not (self.packet - 1) % (VIDEO_FRAME_RATE * KEYFRAME_INTERVAL)
+            size = 3
 
         return FakePacket()
 
@@ -107,8 +119,8 @@ class FakePyAvContainer:
         self.packets = PacketSequence(0)
 
         class FakePyAvStreams:
-            video = video_stream
-            audio = audio_stream
+            video = [video_stream] if video_stream else []
+            audio = [audio_stream] if audio_stream else []
 
         self.streams = FakePyAvStreams()
 
@@ -171,8 +183,8 @@ class MockPyAv:
 
     def __init__(self, video=True, audio=False):
         """Initialize the MockPyAv."""
-        video_stream = [VIDEO_STREAM] if video else []
-        audio_stream = [AUDIO_STREAM] if audio else []
+        video_stream = VIDEO_STREAM if video else None
+        audio_stream = AUDIO_STREAM if audio else None
         self.container = FakePyAvContainer(
             video_stream=video_stream, audio_stream=audio_stream
         )
@@ -188,7 +200,7 @@ class MockPyAv:
 async def async_decode_stream(opp, packets, py_av=None):
     """Start a stream worker that decodes incoming stream packets into output segments."""
     stream = Stream(opp, STREAM_SOURCE)
-    stream.add_provider(STREAM_OUTPUT_FORMAT)
+    stream.add_provider(HLS_PROVIDER)
 
     if not py_av:
         py_av = MockPyAv()
@@ -208,7 +220,7 @@ async def async_decode_stream(opp, packets, py_av=None):
 async def test_stream_open_fails(opp):
     """Test failure on stream open."""
     stream = Stream(opp, STREAM_SOURCE)
-    stream.add_provider(STREAM_OUTPUT_FORMAT)
+    stream.add_provider(HLS_PROVIDER)
     with patch("av.open") as av_open:
         av_open.side_effect = av.error.InvalidDataError(-2, "error")
         segment_buffer = SegmentBuffer(stream.outputs)
@@ -227,9 +239,9 @@ async def test_stream_worker_success(opp):
     # segment arrives, hence the subtraction of one from the sequence length.
     assert len(segments) == int((TEST_SEQUENCE_LENGTH - 1) * SEGMENTS_PER_PACKET)
     # Check sequence numbers
-    assert all([segments[i].sequence == i + 1 for i in range(len(segments))])
+    assert all(segments[i].sequence == i for i in range(len(segments)))
     # Check segment durations
-    assert all([s.duration == SEGMENT_DURATION for s in segments])
+    assert all(s.duration == SEGMENT_DURATION for s in segments)
     assert len(decoded_stream.video_packets) == TEST_SEQUENCE_LENGTH
     assert len(decoded_stream.audio_packets) == 0
 
@@ -237,21 +249,24 @@ async def test_stream_worker_success(opp):
 async def test_skip_out_of_order_packet(opp):
     """Skip a single out of order packet."""
     packets = list(PacketSequence(TEST_SEQUENCE_LENGTH))
+    # for this test, make sure the out of order index doesn't happen on a keyframe
+    out_of_order_index = OUT_OF_ORDER_PACKET_INDEX
+    if packets[out_of_order_index].is_keyframe:
+        out_of_order_index += 1
     # This packet is out of order
-    packets[OUT_OF_ORDER_PACKET_INDEX].dts = -9090
+    assert not packets[out_of_order_index].is_keyframe
+    packets[out_of_order_index].dts = -9090
 
     decoded_stream = await async_decode_stream(opp, iter(packets))
     segments = decoded_stream.segments
     # Check sequence numbers
-    assert all([segments[i].sequence == i + 1 for i in range(len(segments))])
+    assert all(segments[i].sequence == i for i in range(len(segments)))
     # If skipped packet would have been the first packet of a segment, the previous
     # segment will be longer by a packet duration
     # We also may possibly lose a segment due to the shifting pts boundary
-    if OUT_OF_ORDER_PACKET_INDEX % PACKETS_PER_SEGMENT == 0:
+    if out_of_order_index % PACKETS_PER_SEGMENT == 0:
         # Check duration of affected segment and remove it
-        longer_segment_index = int(
-            (OUT_OF_ORDER_PACKET_INDEX - 1) * SEGMENTS_PER_PACKET
-        )
+        longer_segment_index = int((out_of_order_index - 1) * SEGMENTS_PER_PACKET)
         assert (
             segments[longer_segment_index].duration
             == SEGMENT_DURATION + PACKET_DURATION
@@ -263,7 +278,7 @@ async def test_skip_out_of_order_packet(opp):
         # Check number of segments
         assert len(segments) == int((len(packets) - 1) * SEGMENTS_PER_PACKET)
     # Check remaining segment durations
-    assert all([s.duration == SEGMENT_DURATION for s in segments])
+    assert all(s.duration == SEGMENT_DURATION for s in segments)
     assert len(decoded_stream.video_packets) == len(packets) - 1
     assert len(decoded_stream.audio_packets) == 0
 
@@ -280,9 +295,9 @@ async def test_discard_old_packets(opp):
     # Check number of segments
     assert len(segments) == int((OUT_OF_ORDER_PACKET_INDEX - 1) * SEGMENTS_PER_PACKET)
     # Check sequence numbers
-    assert all([segments[i].sequence == i + 1 for i in range(len(segments))])
+    assert all(segments[i].sequence == i for i in range(len(segments)))
     # Check segment durations
-    assert all([s.duration == SEGMENT_DURATION for s in segments])
+    assert all(s.duration == SEGMENT_DURATION for s in segments)
     assert len(decoded_stream.video_packets) == OUT_OF_ORDER_PACKET_INDEX
     assert len(decoded_stream.audio_packets) == 0
 
@@ -299,9 +314,9 @@ async def test_packet_overflow(opp):
     # Check number of segments
     assert len(segments) == int((OUT_OF_ORDER_PACKET_INDEX - 1) * SEGMENTS_PER_PACKET)
     # Check sequence numbers
-    assert all([segments[i].sequence == i + 1 for i in range(len(segments))])
+    assert all(segments[i].sequence == i for i in range(len(segments)))
     # Check segment durations
-    assert all([s.duration == SEGMENT_DURATION for s in segments])
+    assert all(s.duration == SEGMENT_DURATION for s in segments)
     assert len(decoded_stream.video_packets) == OUT_OF_ORDER_PACKET_INDEX
     assert len(decoded_stream.audio_packets) == 0
 
@@ -317,15 +332,21 @@ async def test_skip_initial_bad_packets(opp):
 
     decoded_stream = await async_decode_stream(opp, iter(packets))
     segments = decoded_stream.segments
+    # Check sequence numbers
+    assert all(segments[i].sequence == i for i in range(len(segments)))
+    # Check segment durations
+    assert all(s.duration == SEGMENT_DURATION for s in segments)
+    assert (
+        len(decoded_stream.video_packets)
+        == num_packets
+        - math.ceil(num_bad_packets / (VIDEO_FRAME_RATE * KEYFRAME_INTERVAL))
+        * VIDEO_FRAME_RATE
+        * KEYFRAME_INTERVAL
+    )
     # Check number of segments
     assert len(segments) == int(
-        (num_packets - num_bad_packets - 1) * SEGMENTS_PER_PACKET
+        (len(decoded_stream.video_packets) - 1) * SEGMENTS_PER_PACKET
     )
-    # Check sequence numbers
-    assert all([segments[i].sequence == i + 1 for i in range(len(segments))])
-    # Check segment durations
-    assert all([s.duration == SEGMENT_DURATION for s in segments])
-    assert len(decoded_stream.video_packets) == num_packets - num_bad_packets
     assert len(decoded_stream.audio_packets) == 0
 
 
@@ -353,13 +374,16 @@ async def test_skip_missing_dts(opp):
     bad_packet_start = int(LONGER_TEST_SEQUENCE_LENGTH / 2)
     num_bad_packets = MAX_MISSING_DTS - 1
     for i in range(bad_packet_start, bad_packet_start + num_bad_packets):
+        if packets[i].is_keyframe:
+            num_bad_packets -= 1
+            continue
         packets[i].dts = None
 
     decoded_stream = await async_decode_stream(opp, iter(packets))
     segments = decoded_stream.segments
     # Check sequence numbers
-    assert all([segments[i].sequence == i + 1 for i in range(len(segments))])
-    # Check segment durations (not counting the elongated segment)
+    assert all(segments[i].sequence == i for i in range(len(segments)))
+    # Check segment durations (not counting the last segment)
     assert (
         sum([segments[i].duration == SEGMENT_DURATION for i in range(len(segments))])
         >= len(segments) - 1
@@ -413,6 +437,23 @@ async def test_audio_packets_not_found(opp):
     assert len(decoded_stream.audio_packets) == 0
 
 
+async def test_adts_aac_audio(opp):
+    """Set up an ADTS AAC audio stream and disable audio."""
+    py_av = MockPyAv(audio=True)
+
+    num_packets = PACKETS_TO_WAIT_FOR_AUDIO + 1
+    packets = list(PacketSequence(num_packets))
+    packets[1].stream = AUDIO_STREAM
+    packets[1].dts = packets[0].dts / VIDEO_FRAME_RATE * AUDIO_SAMPLE_RATE
+    packets[1].pts = packets[0].pts / VIDEO_FRAME_RATE * AUDIO_SAMPLE_RATE
+    # The following is packet data is a sign of ADTS AAC
+    packets[1][0] = 255
+    packets[1][1] = 241
+
+    decoded_stream = await async_decode_stream(opp, iter(packets), py_av=py_av)
+    assert len(decoded_stream.audio_packets) == 0
+
+
 async def test_audio_is_first_packet(opp):
     """Set up an audio stream and audio packet is the first packet in the stream."""
     py_av = MockPyAv(audio=True)
@@ -423,6 +464,7 @@ async def test_audio_is_first_packet(opp):
     packets[0].stream = AUDIO_STREAM
     packets[0].dts = packets[1].dts / VIDEO_FRAME_RATE * AUDIO_SAMPLE_RATE
     packets[0].pts = packets[1].pts / VIDEO_FRAME_RATE * AUDIO_SAMPLE_RATE
+    packets[1].is_keyframe = True  # Move the video keyframe from packet 0 to packet 1
     packets[2].stream = AUDIO_STREAM
     packets[2].dts = packets[3].dts / VIDEO_FRAME_RATE * AUDIO_SAMPLE_RATE
     packets[2].pts = packets[3].pts / VIDEO_FRAME_RATE * AUDIO_SAMPLE_RATE
@@ -468,9 +510,9 @@ async def test_pts_out_of_order(opp):
     # Check number of segments
     assert len(segments) == int((TEST_SEQUENCE_LENGTH - 1) * SEGMENTS_PER_PACKET)
     # Check sequence numbers
-    assert all([segments[i].sequence == i + 1 for i in range(len(segments))])
+    assert all(segments[i].sequence == i for i in range(len(segments)))
     # Check segment durations
-    assert all([s.duration == SEGMENT_DURATION for s in segments])
+    assert all(s.duration == SEGMENT_DURATION for s in segments)
     assert len(decoded_stream.video_packets) == len(packets)
     assert len(decoded_stream.audio_packets) == 0
 
@@ -485,7 +527,7 @@ async def test_stream_stopped_while_decoding(opp):
     worker_wake = threading.Event()
 
     stream = Stream(opp, STREAM_SOURCE)
-    stream.add_provider(STREAM_OUTPUT_FORMAT)
+    stream.add_provider(HLS_PROVIDER)
 
     py_av = MockPyAv()
     py_av.container.packets = PacketSequence(TEST_SEQUENCE_LENGTH)
@@ -512,7 +554,7 @@ async def test_update_stream_source(opp):
     worker_wake = threading.Event()
 
     stream = Stream(opp, STREAM_SOURCE)
-    stream.add_provider(STREAM_OUTPUT_FORMAT)
+    stream.add_provider(HLS_PROVIDER)
     # Note that keepalive is not set here.  The stream is "restarted" even though
     # it is not stopping due to failure.
 
@@ -545,5 +587,20 @@ async def test_update_stream_source(opp):
         assert last_stream_source == STREAM_SOURCE + "-updated-source"
         worker_wake.set()
 
-        # Ccleanup
+        # Cleanup
         stream.stop()
+
+
+async def test_worker_log(opp, caplog):
+    """Test that the worker logs the url without username and password."""
+    stream = Stream(opp, "https://abcd:efgh@foo.bar")
+    stream.add_provider(HLS_PROVIDER)
+    with patch("av.open") as av_open:
+        av_open.side_effect = av.error.InvalidDataError(-2, "error")
+        segment_buffer = SegmentBuffer(stream.outputs)
+        stream_worker(
+            "https://abcd:efgh@foo.bar", {}, segment_buffer, threading.Event()
+        )
+        await opp.async_block_till_done()
+    assert "https://abcd:efgh@foo.bar" not in caplog.text
+    assert "https://****:****@foo.bar" in caplog.text

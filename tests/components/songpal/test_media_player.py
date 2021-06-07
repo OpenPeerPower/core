@@ -113,7 +113,7 @@ async def test_state(opp):
     assert attributes["source"] == "title2"
     assert attributes["supported_features"] == SUPPORT_SONGPAL
 
-    device_registry = await dr.async_get_registry(opp)
+    device_registry = dr.async_get(opp)
     device = device_registry.async_get_device(identifiers={(songpal.DOMAIN, MAC)})
     assert device.connections == {(dr.CONNECTION_NETWORK_MAC, MAC)}
     assert device.manufacturer == "Sony Corporation"
@@ -121,7 +121,7 @@ async def test_state(opp):
     assert device.sw_version == SW_VERSION
     assert device.model == MODEL
 
-    entity_registry = await er.async_get_registry(opp)
+    entity_registry = er.async_get(opp)
     entity = entity_registry.async_get(ENTITY_ID)
     assert entity.unique_id == MAC
 

@@ -43,8 +43,6 @@ async def test_full_upb_flow_with_serial_port(opp):
     await setup.async_setup_component(opp, "persistent_notification", {})
 
     with mocked_upb(), patch(
-        "openpeerpower.components.upb.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.upb.async_setup_entry", return_value=True
     ) as mock_setup_entry:
         flow = await opp.config_entries.flow.async_init(
@@ -69,7 +67,6 @@ async def test_full_upb_flow_with_serial_port(opp):
         "host": "serial:///dev/ttyS0:115200",
         "file_path": "upb.upe",
     }
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
@@ -116,8 +113,6 @@ async def test_form_import(opp):
     await setup.async_setup_component(opp, "persistent_notification", {})
 
     with mocked_upb(), patch(
-        "openpeerpower.components.upb.async_setup", return_value=True
-    ) as mock_setup, patch(
         "openpeerpower.components.upb.async_setup_entry", return_value=True
     ) as mock_setup_entry:
         result = await opp.config_entries.flow.async_init(
@@ -131,7 +126,6 @@ async def test_form_import(opp):
     assert result["title"] == "UPB"
 
     assert result["data"] == {"host": "tcp://42.4.2.42", "file_path": "upb.upe"}
-    assert len(mock_setup.mock_calls) == 1
     assert len(mock_setup_entry.mock_calls) == 1
 
 
