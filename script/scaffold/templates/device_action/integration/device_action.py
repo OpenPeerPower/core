@@ -1,5 +1,5 @@
 """Provides device actions for NEW_NAME."""
-from typing import List, Optional
+from __future__ import annotations
 
 import voluptuous as vol
 
@@ -29,7 +29,7 @@ ACTION_SCHEMA = cv.DEVICE_ACTION_BASE_SCHEMA.extend(
 )
 
 
-async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
+async def async_get_actions(opp: OpenPeerPower, device_id: str) -> list[dict]:
     """List device actions for NEW_NAME devices."""
     registry = await entity_registry.async_get_registry(opp)
     actions = []
@@ -38,8 +38,8 @@ async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
     # This example shows how to iterate over the entities of this device
     # that match this integration. If your actions instead rely on
     # calling services, do something like:
-    # _device = await _async_get_device(opp, device_id)
-    # return _device.device_actions
+    # zha_device = await _async_get_zha_device(opp, device_id)
+    # return zha_device.device_actions
 
     # Get all the integrations entities for this device
     for entry in entity_registry.async_entries_for_device(registry, device_id):
@@ -48,28 +48,20 @@ async def async_get_actions(opp: OpenPeerPower, device_id: str) -> List[dict]:
 
         # Add actions for each entity that belongs to this integration
         # TODO add your own actions.
-        actions.append(
-            {
-                CONF_DEVICE_ID: device_id,
-                CONF_DOMAIN: DOMAIN,
-                CONF_ENTITY_ID: entry.entity_id,
-                CONF_TYPE: "turn_on",
-            }
-        )
-        actions.append(
-            {
-                CONF_DEVICE_ID: device_id,
-                CONF_DOMAIN: DOMAIN,
-                CONF_ENTITY_ID: entry.entity_id,
-                CONF_TYPE: "turn_off",
-            }
-        )
+        base_action = {
+            CONF_DEVICE_ID: device_id,
+            CONF_DOMAIN: DOMAIN,
+            CONF_ENTITY_ID: entry.entity_id,
+        }
+
+        actions.append({**base_action, CONF_TYPE: "turn_on"})
+        actions.append({**base_action, CONF_TYPE: "turn_off"})
 
     return actions
 
 
 async def async_call_action_from_config(
-    opp: OpenPeerPower, config: dict, variables: dict, context: Optional[Context]
+    opp: OpenPeerPower, config: dict, variables: dict, context: Context | None
 ) -> None:
     """Execute a device action."""
     service_data = {ATTR_ENTITY_ID: config[CONF_ENTITY_ID]}

@@ -1,10 +1,14 @@
 """Test reproduce state for NEW_NAME."""
-from openpeerpower.core import State
+import pytest
+
+from openpeerpower.core import OpenPeerPower, State
 
 from tests.common import async_mock_service
 
 
-async def test_reproducing_states(opp, caplog):
+async def test_reproducing_states(
+    opp: OpenPeerPower, caplog: pytest.LogCaptureFixture
+) -> None:
     """Test reproducing NEW_NAME states."""
     opp.states.async_set("NEW_DOMAIN.entity_off", "off", {})
     opp.states.async_set("NEW_DOMAIN.entity_on", "on", {"color": "red"})

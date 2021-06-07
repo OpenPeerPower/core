@@ -1,5 +1,7 @@
 """The NEW_NAME integration."""
-import asyncio
+from __future__ import annotations
+
+from typing import Any
 
 import voluptuous as vol
 
@@ -32,7 +34,7 @@ CONFIG_SCHEMA = vol.Schema(
 PLATFORMS = ["light"]
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
+async def async_setup(opp: OpenPeerPower, config: dict[str, Any]) -> bool:
     """Set up the NEW_NAME component."""
     opp.data[DOMAIN] = {}
 
@@ -54,10 +56,12 @@ async def async_setup(opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up NEW_NAME from a config entry."""
     implementation = (
-        await config_entry_oauth2_flow.async_get_config_entry_implementation(opp, entry)
+        await config_entry_oauth2_flow.async_get_config_entry_implementation(
+            opp, entry
+        )
     )
 
     session = config_entry_oauth2_flow.OAuth2Session(opp, entry, implementation)
@@ -70,24 +74,14 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
         aiohttp_client.async_get_clientsession(opp), session
     )
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
 

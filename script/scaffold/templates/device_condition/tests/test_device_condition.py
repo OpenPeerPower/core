@@ -1,10 +1,13 @@
 """The tests for NEW_NAME device conditions."""
+from __future__ import annotations
+
 import pytest
 
 from openpeerpower.components import automation
 from openpeerpower.components.NEW_DOMAIN import DOMAIN
 from openpeerpower.const import STATE_OFF, STATE_ON
-from openpeerpower.helpers import device_registry
+from openpeerpower.core import OpenPeerPower, ServiceCall
+from openpeerpower.helpers import device_registry, entity_registry
 from openpeerpower.setup import async_setup_component
 
 from tests.common import (
@@ -18,24 +21,28 @@ from tests.common import (
 
 
 @pytest.fixture
-def device_reg(opp):
+def device_reg(opp: OpenPeerPower) -> device_registry.DeviceRegistry:
     """Return an empty, loaded, registry."""
     return mock_device_registry(opp)
 
 
 @pytest.fixture
-def entity_reg(opp):
+def entity_reg(opp: OpenPeerPower) -> entity_registry.EntityRegistry:
     """Return an empty, loaded, registry."""
     return mock_registry(opp)
 
 
 @pytest.fixture
-def calls(opp):
+def calls(opp: OpenPeerPower) -> list[ServiceCall]:
     """Track calls to a mock service."""
     return async_mock_service(opp, "test", "automation")
 
 
-async def test_get_conditions(opp, device_reg, entity_reg):
+async def test_get_conditions(
+    opp: OpenPeerPower,
+    device_reg: device_registry.DeviceRegistry,
+    entity_reg: entity_registry.EntityRegistry,
+) -> None:
     """Test we get the expected conditions from a NEW_DOMAIN."""
     config_entry = MockConfigEntry(domain="test", data={})
     config_entry.add_to_opp(opp)
@@ -64,7 +71,7 @@ async def test_get_conditions(opp, device_reg, entity_reg):
     assert_lists_same(conditions, expected_conditions)
 
 
-async def test_if_state(opp, calls):
+async def test_if_state(opp: OpenPeerPower, calls: list[ServiceCall]) -> None:
     """Test for turn_on and turn_off conditions."""
     opp.states.async_set("NEW_DOMAIN.entity", STATE_ON)
 

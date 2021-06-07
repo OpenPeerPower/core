@@ -3,7 +3,8 @@ import pytest
 
 from openpeerpower.components import automation
 from openpeerpower.components.NEW_DOMAIN import DOMAIN
-from openpeerpower.helpers import device_registry
+from openpeerpower.core import OpenPeerPower
+from openpeerpower.helpers import device_registry, entity_registry
 from openpeerpower.setup import async_setup_component
 
 from tests.common import (
@@ -17,18 +18,22 @@ from tests.common import (
 
 
 @pytest.fixture
-def device_reg(opp):
+def device_reg(opp: OpenPeerPower) -> device_registry.DeviceRegistry:
     """Return an empty, loaded, registry."""
     return mock_device_registry(opp)
 
 
 @pytest.fixture
-def entity_reg(opp):
+def entity_reg(opp: OpenPeerPower) -> entity_registry.EntityRegistry:
     """Return an empty, loaded, registry."""
     return mock_registry(opp)
 
 
-async def test_get_actions(opp, device_reg, entity_reg):
+async def test_get_actions(
+    opp: OpenPeerPower,
+    device_reg: device_registry.DeviceRegistry,
+    entity_reg: entity_registry.EntityRegistry,
+) -> None:
     """Test we get the expected actions from a NEW_DOMAIN."""
     config_entry = MockConfigEntry(domain="test", data={})
     config_entry.add_to_opp(opp)
@@ -55,7 +60,7 @@ async def test_get_actions(opp, device_reg, entity_reg):
     assert_lists_same(actions, expected_actions)
 
 
-async def test_action(opp):
+async def test_action(opp: OpenPeerPower) -> None:
     """Test for turn_on and turn_off actions."""
     assert await async_setup_component(
         opp,

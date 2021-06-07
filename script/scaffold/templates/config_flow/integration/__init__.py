@@ -1,5 +1,5 @@
 """The NEW_NAME integration."""
-import asyncio
+from __future__ import annotations
 
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.core import OpenPeerPower
@@ -11,34 +11,19 @@ from .const import DOMAIN
 PLATFORMS = ["light"]
 
 
-async def async_setup(opp: OpenPeerPower, config: dict):
-    """Set up the NEW_NAME component."""
-    return True
-
-
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up NEW_NAME from a config entry."""
     # TODO Store an API object for your platforms to access
     # opp.data[DOMAIN][entry.entry_id] = MyApi(...)
 
-    for platform in PLATFORMS:
-        opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
-        )
+    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
 
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Unload a config entry."""
-    unload_ok = all(
-        await asyncio.gather(
-            *[
-                opp.config_entries.async_forward_entry_unload(entry, platform)
-                for platform in PLATFORMS
-            ]
-        )
-    )
+    unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok:
         opp.data[DOMAIN].pop(entry.entry_id)
 

@@ -7,6 +7,7 @@ from openpeerpower.components.NEW_DOMAIN.const import (
     OAUTH2_AUTHORIZE,
     OAUTH2_TOKEN,
 )
+from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers import config_entry_oauth2_flow
 
 CLIENT_ID = "1234"
@@ -14,8 +15,11 @@ CLIENT_SECRET = "5678"
 
 
 async def test_full_flow(
-    opp, aiohttp_client, aioclient_mock, current_request_with_host
-):
+    opp: OpenPeerPower,
+    aiohttp_client,
+    aioclient_mock,
+    current_request_with_host,
+) -> None:
     """Check full flow."""
     assert await setup.async_setup_component(
         opp,
