@@ -6,7 +6,7 @@ import pytest
 from zwave_js_server.exceptions import BaseZwaveJSServerError, InvalidServerVersion
 from zwave_js_server.model.node import Node
 
-from openpeerpower.components.oppio.handler import HassioAPIError
+from openpeerpower.components.oppio.handler import OppioAPIError
 from openpeerpower.components.zwave_js.const import DOMAIN
 from openpeerpower.components.zwave_js.helpers import get_device_id
 from openpeerpower.config_entries import DISABLED_USER, ConfigEntryState
@@ -613,7 +613,7 @@ async def test_install_addon(
     assert start_addon.call_args == call(opp, "core_zwave_js")
 
 
-@pytest.mark.parametrize("addon_info_side_effect", [HassioAPIError("Boom")])
+@pytest.mark.parametrize("addon_info_side_effect", [OppioAPIError("Boom")])
 async def test_addon_info_failure(
     opp,
     addon_installed,
@@ -688,8 +688,8 @@ async def test_addon_options_changed(
     [
         ("1.0", True, 1, 1, None, None),
         ("1.0", False, 0, 0, None, None),
-        ("1.0", True, 1, 1, HassioAPIError("Boom"), None),
-        ("1.0", True, 0, 1, None, HassioAPIError("Boom")),
+        ("1.0", True, 1, 1, OppioAPIError("Boom"), None),
+        ("1.0", True, 0, 1, None, OppioAPIError("Boom")),
     ],
 )
 async def test_update_addon(
@@ -742,7 +742,7 @@ async def test_update_addon(
     "stop_addon_side_effect, entry_state",
     [
         (None, ConfigEntryState.NOT_LOADED),
-        (HassioAPIError("Boom"), ConfigEntryState.LOADED),
+        (OppioAPIError("Boom"), ConfigEntryState.LOADED),
     ],
 )
 async def test_stop_addon(
@@ -835,7 +835,7 @@ async def test_remove_entry(
     # test add-on stop failure
     entry.add_to_opp(opp)
     assert len(opp.config_entries.async_entries(DOMAIN)) == 1
-    stop_addon.side_effect = HassioAPIError()
+    stop_addon.side_effect = OppioAPIError()
 
     await opp.config_entries.async_remove(entry.entry_id)
 
@@ -854,7 +854,7 @@ async def test_remove_entry(
     # test create snapshot failure
     entry.add_to_opp(opp)
     assert len(opp.config_entries.async_entries(DOMAIN)) == 1
-    create_shapshot.side_effect = HassioAPIError()
+    create_shapshot.side_effect = OppioAPIError()
 
     await opp.config_entries.async_remove(entry.entry_id)
 
@@ -878,7 +878,7 @@ async def test_remove_entry(
     # test add-on uninstall failure
     entry.add_to_opp(opp)
     assert len(opp.config_entries.async_entries(DOMAIN)) == 1
-    uninstall_addon.side_effect = HassioAPIError()
+    uninstall_addon.side_effect = OppioAPIError()
 
     await opp.config_entries.async_remove(entry.entry_id)
 

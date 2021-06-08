@@ -82,7 +82,7 @@ class CompensationSensor(SensorEntity):
         self._name = name
 
     async def async_added_to_opp(self):
-        """Handle added to Hass."""
+        """Handle added to Opp."""
         self.async_on_remove(
             async_track_state_change_event(
                 self.opp,

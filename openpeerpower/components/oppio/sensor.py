@@ -8,7 +8,7 @@ from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 
 from . import ADDONS_COORDINATOR
 from .const import ATTR_VERSION, ATTR_VERSION_LATEST
-from .entity import HassioAddonEntity, HassioOSEntity
+from .entity import OppioAddonEntity, OppioOSEntity
 
 
 async def async_setup_entry(
@@ -27,15 +27,15 @@ async def async_setup_entry(
     ):
         for addon in coordinator.data["addons"].values():
             entities.append(
-                HassioAddonSensor(coordinator, addon, attribute_name, sensor_name)
+                OppioAddonSensor(coordinator, addon, attribute_name, sensor_name)
             )
         if coordinator.is_opp_os:
-            entities.append(HassioOSSensor(coordinator, attribute_name, sensor_name))
+            entities.append(OppioOSSensor(coordinator, attribute_name, sensor_name))
 
     async_add_entities(entities)
 
 
-class HassioAddonSensor(HassioAddonEntity, SensorEntity):
+class OppioAddonSensor(OppioAddonEntity, SensorEntity):
     """Sensor to track a Opp.io add-on attribute."""
 
     @property
@@ -44,7 +44,7 @@ class HassioAddonSensor(HassioAddonEntity, SensorEntity):
         return self.addon_info[self.attribute_name]
 
 
-class HassioOSSensor(HassioOSEntity, SensorEntity):
+class OppioOSSensor(OppioOSEntity, SensorEntity):
     """Sensor to track a Opp.io add-on attribute."""
 
     @property

@@ -7,16 +7,16 @@ from openpeerpower.const import ATTR_NAME
 from openpeerpower.helpers.entity import DeviceInfo
 from openpeerpower.helpers.update_coordinator import CoordinatorEntity
 
-from . import DOMAIN, HassioDataUpdateCoordinator
+from . import DOMAIN, OppioDataUpdateCoordinator
 from .const import ATTR_SLUG
 
 
-class HassioAddonEntity(CoordinatorEntity):
+class OppioAddonEntity(CoordinatorEntity):
     """Base entity for a Opp.io add-on."""
 
     def __init__(
         self,
-        coordinator: HassioDataUpdateCoordinator,
+        coordinator: OppioDataUpdateCoordinator,
         addon: dict[str, Any],
         attribute_name: str,
         sensor_name: str,
@@ -55,12 +55,12 @@ class HassioAddonEntity(CoordinatorEntity):
         return {"identifiers": {(DOMAIN, self.addon_slug)}}
 
 
-class HassioOSEntity(CoordinatorEntity):
+class OppioOSEntity(CoordinatorEntity):
     """Base Entity for Opp.io OS."""
 
     def __init__(
         self,
-        coordinator: HassioDataUpdateCoordinator,
+        coordinator: OppioDataUpdateCoordinator,
         attribute_name: str,
         sensor_name: str,
     ) -> None:

@@ -213,10 +213,10 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
         # In practice, an instance can be in 3 states as seen by this function:
         #
-        #    * Exists, and is running: Should be present in HASS/registry.
+        #    * Exists, and is running: Should be present in OPP/registry.
         #    * Exists, but is not running: Cannot add it yet, but entity may have be
         #      registered from a previous time it was running.
-        #    * No longer exists at all: Should not be present in HASS/registry.
+        #    * No longer exists at all: Should not be present in OPP/registry.
 
         # Add instances that are missing.
         for instance in instances:

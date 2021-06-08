@@ -1,4 +1,4 @@
-"""API for Netatmo bound to HASS OAuth."""
+"""API for Netatmo bound to OPP OAuth."""
 from aiohttp import ClientSession
 import pyatmo
 

@@ -116,7 +116,7 @@ def _async_save_refresh_token(opp, config_entry, token):
 
 
 async def async_get_client_id(opp):
-    """Get a client ID (based on the HASS unique ID) for the SimpliSafe API.
+    """Get a client ID (based on the OPP unique ID) for the SimpliSafe API.
 
     Note that SimpliSafe requires full, "dashed" versions of UUIDs.
     """
@@ -321,7 +321,7 @@ class SimpliSafe:
     def _async_process_new_notifications(self, system):
         """Act on any new system notifications."""
         if self._opp.state != CoreState.running:
-            # If HASS isn't fully running yet, it may cause the SIMPLISAFE_NOTIFICATION
+            # If OPP isn't fully running yet, it may cause the SIMPLISAFE_NOTIFICATION
             # event to fire before dependent components (like automation) are fully
             # ready. If that's the case, skip:
             return

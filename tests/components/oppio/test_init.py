@@ -247,7 +247,7 @@ async def test_setup_oppio_no_additional_data(opp, aioclient_mock):
         assert result
 
     assert aioclient_mock.call_count == 10
-    assert aioclient_mock.mock_calls[-1][3]["X-Hassio-Key"] == "123456"
+    assert aioclient_mock.mock_calls[-1][3]["X-Oppio-Key"] == "123456"
 
 
 async def test_fail_setup_without_environ_var(opp):

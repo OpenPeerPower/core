@@ -49,7 +49,7 @@ from .const import (
     DOMAIN,
 )
 from .discovery import async_setup_discovery_view
-from .handler import HassioAPIError, OppIO, api_data
+from .handler import OppIO, OppioAPIError, api_data
 from .http import OppIOView
 from .ingress import async_setup_ingress_view
 from .websocket_api import async_load_websocket_api
@@ -158,7 +158,7 @@ MAP_SERVICE_API = {
 async def async_get_addon_info(opp: OpenPeerPower, slug: str) -> dict:
     """Return add-on info.
 
-    The caller of the function should handle HassioAPIError.
+    The caller of the function should handle OppioAPIError.
     """
     oppio = opp.data[DOMAIN]
     return await oppio.get_addon_info(slug)
@@ -168,7 +168,7 @@ async def async_get_addon_info(opp: OpenPeerPower, slug: str) -> dict:
 async def async_update_diagnostics(opp: OpenPeerPower, diagnostics: bool) -> dict:
     """Update Supervisor diagnostics toggle.
 
-    The caller of the function should handle HassioAPIError.
+    The caller of the function should handle OppioAPIError.
     """
     oppio = opp.data[DOMAIN]
     return await oppio.update_diagnostics(diagnostics)
@@ -179,7 +179,7 @@ async def async_update_diagnostics(opp: OpenPeerPower, diagnostics: bool) -> dic
 async def async_install_addon(opp: OpenPeerPower, slug: str) -> dict:
     """Install add-on.
 
-    The caller of the function should handle HassioAPIError.
+    The caller of the function should handle OppioAPIError.
     """
     oppio = opp.data[DOMAIN]
     command = f"/addons/{slug}/install"
@@ -191,7 +191,7 @@ async def async_install_addon(opp: OpenPeerPower, slug: str) -> dict:
 async def async_uninstall_addon(opp: OpenPeerPower, slug: str) -> dict:
     """Uninstall add-on.
 
-    The caller of the function should handle HassioAPIError.
+    The caller of the function should handle OppioAPIError.
     """
     oppio = opp.data[DOMAIN]
     command = f"/addons/{slug}/uninstall"
@@ -203,7 +203,7 @@ async def async_uninstall_addon(opp: OpenPeerPower, slug: str) -> dict:
 async def async_update_addon(opp: OpenPeerPower, slug: str) -> dict:
     """Update add-on.
 
-    The caller of the function should handle HassioAPIError.
+    The caller of the function should handle OppioAPIError.
     """
     oppio = opp.data[DOMAIN]
     command = f"/addons/{slug}/update"
@@ -215,7 +215,7 @@ async def async_update_addon(opp: OpenPeerPower, slug: str) -> dict:
 async def async_start_addon(opp: OpenPeerPower, slug: str) -> dict:
     """Start add-on.
 
-    The caller of the function should handle HassioAPIError.
+    The caller of the function should handle OppioAPIError.
     """
     oppio = opp.data[DOMAIN]
     command = f"/addons/{slug}/start"
@@ -227,7 +227,7 @@ async def async_start_addon(opp: OpenPeerPower, slug: str) -> dict:
 async def async_stop_addon(opp: OpenPeerPower, slug: str) -> dict:
     """Stop add-on.
 
-    The caller of the function should handle HassioAPIError.
+    The caller of the function should handle OppioAPIError.
     """
     oppio = opp.data[DOMAIN]
     command = f"/addons/{slug}/stop"
@@ -239,7 +239,7 @@ async def async_stop_addon(opp: OpenPeerPower, slug: str) -> dict:
 async def async_set_addon_options(opp: OpenPeerPower, slug: str, options: dict) -> dict:
     """Set add-on options.
 
-    The caller of the function should handle HassioAPIError.
+    The caller of the function should handle OppioAPIError.
     """
     oppio = opp.data[DOMAIN]
     command = f"/addons/{slug}/options"
@@ -262,7 +262,7 @@ async def async_create_snapshot(
 ) -> dict:
     """Create a full or partial snapshot.
 
-    The caller of the function should handle HassioAPIError.
+    The caller of the function should handle OppioAPIError.
     """
     oppio = opp.data[DOMAIN]
     snapshot_type = "partial" if partial else "full"
@@ -452,7 +452,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:  # noqa: 
                 payload=payload,
                 timeout=MAP_SERVICE_API[service.service][2],
             )
-        except HassioAPIError as err:
+        except OppioAPIError as err:
             _LOGGER.error("Error on Opp.io API: %s", err)
 
     for service, settings in MAP_SERVICE_API.items():
@@ -471,7 +471,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:  # noqa: 
             opp.data[DATA_OS_INFO] = await oppio.get_os_info()
             if ADDONS_COORDINATOR in opp.data:
                 await opp.data[ADDONS_COORDINATOR].async_refresh()
-        except HassioAPIError as err:
+        except OppioAPIError as err:
             _LOGGER.warning("Can't read last version: %s", err)
 
         opp.helpers.event.async_track_point_in_utc_time(
@@ -551,7 +551,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:  # noqa: 
 async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up a config entry."""
     dev_reg = await async_get_registry(opp)
-    coordinator = HassioDataUpdateCoordinator(opp, entry, dev_reg)
+    coordinator = OppioDataUpdateCoordinator(opp, entry, dev_reg)
     opp.data[ADDONS_COORDINATOR] = coordinator
     await coordinator.async_refresh()
 
@@ -616,7 +616,7 @@ def async_remove_addons_from_dev_reg(
             dev_reg.async_remove_device(dev.id)
 
 
-class HassioDataUpdateCoordinator(DataUpdateCoordinator):
+class OppioDataUpdateCoordinator(DataUpdateCoordinator):
     """Class to retrieve Opp.io status."""
 
     def __init__(

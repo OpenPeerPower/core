@@ -18,7 +18,7 @@ from openpeerpower.components.oppio import (
     async_uninstall_addon,
     async_update_addon,
 )
-from openpeerpower.components.oppio.handler import HassioAPIError
+from openpeerpower.components.oppio.handler import OppioAPIError
 from openpeerpower.core import OpenPeerPower, callback
 from openpeerpower.exceptions import OpenPeerPowerError
 from openpeerpower.helpers.singleton import singleton
@@ -38,16 +38,16 @@ def get_addon_manager(opp: OpenPeerPower) -> AddonManager:
 
 
 def api_error(error_message: str) -> Callable[[F], F]:
-    """Handle HassioAPIError and raise a specific AddonError."""
+    """Handle OppioAPIError and raise a specific AddonError."""
 
     def handle_oppio_api_error(func: F) -> F:
-        """Handle a HassioAPIError."""
+        """Handle a OppioAPIError."""
 
         async def wrapper(*args, **kwargs):  # type: ignore
             """Wrap an add-on manager method."""
             try:
                 return_value = await func(*args, **kwargs)
-            except HassioAPIError as err:
+            except OppioAPIError as err:
                 raise AddonError(f"{error_message}: {err}") from err
 
             return return_value

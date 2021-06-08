@@ -43,7 +43,7 @@ async def async_migrate_entry(opp, config_entry):
     """Migrate old entry."""
     _LOGGER.debug("Migrating from version %s", config_entry.version)
 
-    #  Flatten configuration but keep old data if user rollbacks HASS prior to 0.106
+    #  Flatten configuration but keep old data if user rollbacks OPP prior to 0.106
     if config_entry.version == 1:
         unique_id = config_entry.data[CONF_MAC]
         data = {**config_entry.data, **config_entry.data[CONF_DEVICE]}

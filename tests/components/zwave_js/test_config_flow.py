@@ -6,7 +6,7 @@ import pytest
 from zwave_js_server.version import VersionInfo
 
 from openpeerpower import config_entries, setup
-from openpeerpower.components.oppio.handler import HassioAPIError
+from openpeerpower.components.oppio.handler import OppioAPIError
 from openpeerpower.components.zwave_js.config_flow import SERVER_VERSION_TIMEOUT, TITLE
 from openpeerpower.components.zwave_js.const import DOMAIN
 
@@ -583,7 +583,7 @@ async def test_addon_running(
     [
         (
             {"config": ADDON_DISCOVERY_INFO},
-            HassioAPIError(),
+            OppioAPIError(),
             None,
             None,
             "addon_get_discovery_info_failed",
@@ -606,7 +606,7 @@ async def test_addon_running(
             {"config": ADDON_DISCOVERY_INFO},
             None,
             None,
-            HassioAPIError(),
+            OppioAPIError(),
             "addon_info_failed",
         ),
     ],
@@ -742,7 +742,7 @@ async def test_addon_installed(
 
 @pytest.mark.parametrize(
     "discovery_info, start_addon_side_effect",
-    [({"config": ADDON_DISCOVERY_INFO}, HassioAPIError())],
+    [({"config": ADDON_DISCOVERY_INFO}, OppioAPIError())],
 )
 async def test_addon_installed_start_failure(
     opp,
@@ -851,7 +851,7 @@ async def test_addon_installed_failures(
 
 @pytest.mark.parametrize(
     "set_addon_options_side_effect, discovery_info",
-    [(HassioAPIError(), {"config": ADDON_DISCOVERY_INFO})],
+    [(OppioAPIError(), {"config": ADDON_DISCOVERY_INFO})],
 )
 async def test_addon_installed_set_options_failure(
     opp,
@@ -1034,7 +1034,7 @@ async def test_addon_not_installed(
 async def test_install_addon_failure(opp, supervisor, addon_installed, install_addon):
     """Test add-on install failure."""
     addon_installed.return_value["version"] = None
-    install_addon.side_effect = HassioAPIError()
+    install_addon.side_effect = OppioAPIError()
     await setup.async_setup_component(opp, "persistent_notification", {})
 
     result = await opp.config_entries.flow.async_init(

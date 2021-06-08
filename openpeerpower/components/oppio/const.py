@@ -25,10 +25,10 @@ ATTR_RESULT = "result"
 ATTR_TIMEOUT = "timeout"
 
 
-X_OPPIO = "X-Hassio-Key"
+X_OPPIO = "X-Oppio-Key"
 X_INGRESS_PATH = "X-Ingress-Path"
-X_OPP_USER_ID = "X-Hass-User-ID"
-X_OPP_IS_ADMIN = "X-Hass-Is-Admin"
+X_OPP_USER_ID = "X-Opp-User-ID"
+X_OPP_IS_ADMIN = "X-Opp-Is-Admin"
 
 WS_TYPE = "type"
 WS_ID = "id"

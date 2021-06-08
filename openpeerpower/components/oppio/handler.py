@@ -17,7 +17,7 @@ from .const import X_OPPIO
 _LOGGER = logging.getLogger(__name__)
 
 
-class HassioAPIError(RuntimeError):
+class OppioAPIError(RuntimeError):
     """Return if a API trow a error."""
 
 
@@ -29,7 +29,7 @@ def _api_bool(funct):
         try:
             data = await funct(*argv, **kwargs)
             return data["result"] == "ok"
-        except HassioAPIError:
+        except OppioAPIError:
             return False
 
     return _wrapper
@@ -43,7 +43,7 @@ def api_data(funct):
         data = await funct(*argv, **kwargs)
         if data["result"] == "ok":
             return data["data"]
-        raise HassioAPIError(data["message"])
+        raise OppioAPIError(data["message"])
 
     return _wrapper
 
@@ -219,7 +219,7 @@ class OppIO:
 
             if request.status not in (HTTP_OK, HTTP_BAD_REQUEST):
                 _LOGGER.error("%s return code %d", command, request.status)
-                raise HassioAPIError()
+                raise OppioAPIError()
 
             answer = await request.json()
             return answer
@@ -230,4 +230,4 @@ class OppIO:
         except aiohttp.ClientError as err:
             _LOGGER.error("Client error on %s request %s", command, err)
 
-        raise HassioAPIError()
+        raise OppioAPIError()

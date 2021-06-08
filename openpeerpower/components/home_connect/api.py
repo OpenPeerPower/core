@@ -1,4 +1,4 @@
-"""API for Home Connect bound to HASS OAuth."""
+"""API for Home Connect bound to OPP OAuth."""
 
 from asyncio import run_coroutine_threadsafe
 import logging

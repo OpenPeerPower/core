@@ -1,4 +1,4 @@
-"""Component to interact with Hassbian tools."""
+"""Component to interact with Oppbian tools."""
 
 import voluptuous as vol
 
@@ -11,7 +11,7 @@ from openpeerpower.util import location
 
 
 async def async_setup(opp):
-    """Set up the Hassbian config."""
+    """Set up the Oppbian config."""
     opp.http.register_view(CheckConfigView)
     websocket_api.async_register_command(opp, websocket_update_config)
     websocket_api.async_register_command(opp, websocket_detect_config)
@@ -19,7 +19,7 @@ async def async_setup(opp):
 
 
 class CheckConfigView(OpenPeerPowerView):
-    """Hassbian packages endpoint."""
+    """Oppbian packages endpoint."""
 
     url = "/api/config/core/check_config"
     name = "api:config:core:check_config"

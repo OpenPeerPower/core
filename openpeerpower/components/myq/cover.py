@@ -112,13 +112,13 @@ class MyQDevice(CoordinatorEntity, CoverEntity):
 
             return
 
-        # Write closing state to HASS
+        # Write closing state to OPP
         self.async_write_op_state()
 
         if not await wait_task:
             _LOGGER.error("Closing of cover %s failed", self._device.name)
 
-        # Write final state to HASS
+        # Write final state to OPP
         self.async_write_op_state()
 
     async def async_open_cover(self, **kwargs):
@@ -134,13 +134,13 @@ class MyQDevice(CoordinatorEntity, CoverEntity):
             )
             return
 
-        # Write opening state to HASS
+        # Write opening state to OPP
         self.async_write_op_state()
 
         if not await wait_task:
             _LOGGER.error("Opening of cover %s failed", self._device.name)
 
-        # Write final state to HASS
+        # Write final state to OPP
         self.async_write_op_state()
 
     @property

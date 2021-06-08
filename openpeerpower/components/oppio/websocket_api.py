@@ -104,8 +104,8 @@ async def websocket_supervisor_api(
         )
 
         if result.get(ATTR_RESULT) == "error":
-            raise opp.components.oppio.HassioAPIError(result.get("message"))
-    except opp.components.oppio.HassioAPIError as err:
+            raise opp.components.oppio.OppioAPIError(result.get("message"))
+    except opp.components.oppio.OppioAPIError as err:
         _LOGGER.error("Failed to to call %s - %s", msg[ATTR_ENDPOINT], err)
         connection.send_error(
             msg[WS_ID], code=websocket_api.ERR_UNKNOWN_ERROR, message=str(err)

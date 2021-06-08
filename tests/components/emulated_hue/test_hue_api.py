@@ -469,7 +469,7 @@ async def test_discover_full_state(hue_client):
     assert "whitelist" in config_json
     assert HUE_API_USERNAME in config_json["whitelist"]
     assert "name" in config_json["whitelist"][HUE_API_USERNAME]
-    assert "HASS BRIDGE" in config_json["whitelist"][HUE_API_USERNAME]["name"]
+    assert "OPP BRIDGE" in config_json["whitelist"][HUE_API_USERNAME]["name"]
 
     # Make sure the correct ip in config
     assert "ipaddress" in config_json
@@ -508,7 +508,7 @@ async def test_discover_config(hue_client):
     assert "whitelist" in config_json
     assert HUE_API_USERNAME in config_json["whitelist"]
     assert "name" in config_json["whitelist"][HUE_API_USERNAME]
-    assert "HASS BRIDGE" in config_json["whitelist"][HUE_API_USERNAME]["name"]
+    assert "OPP BRIDGE" in config_json["whitelist"][HUE_API_USERNAME]["name"]
 
     # Make sure the correct ip in config
     assert "ipaddress" in config_json

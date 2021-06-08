@@ -9,7 +9,7 @@ from openpeerpower.const import ATTR_ICON, HTTP_BAD_REQUEST
 from openpeerpower.core import OpenPeerPower
 
 from .const import ATTR_ADMIN, ATTR_ENABLE, ATTR_PANELS, ATTR_TITLE
-from .handler import HassioAPIError
+from .handler import OppioAPIError
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -70,7 +70,7 @@ class OppIOAddonPanel(OpenPeerPowerView):
         try:
             data = await self.oppio.get_ingress_panels()
             return data[ATTR_PANELS]
-        except HassioAPIError as err:
+        except OppioAPIError as err:
             _LOGGER.error("Can't read panel info: %s", err)
         return {}
 

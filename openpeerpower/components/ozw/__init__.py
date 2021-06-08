@@ -21,7 +21,7 @@ from openzwavemqtt.models.value import OZWValue
 from openzwavemqtt.util.mqtt_client import MQTTClient
 
 from openpeerpower.components import mqtt
-from openpeerpower.components.oppio.handler import HassioAPIError
+from openpeerpower.components.oppio.handler import OppioAPIError
 from openpeerpower.config_entries import ConfigEntry, ConfigEntryState
 from openpeerpower.const import EVENT_OPENPEERPOWER_STOP
 from openpeerpower.core import OpenPeerPower, callback
@@ -327,12 +327,12 @@ async def async_remove_entry(opp: OpenPeerPower, entry: ConfigEntry) -> None:
 
     try:
         await opp.components.oppio.async_stop_addon("core_zwave")
-    except HassioAPIError as err:
+    except OppioAPIError as err:
         _LOGGER.error("Failed to stop the OpenZWave add-on: %s", err)
         return
     try:
         await opp.components.oppio.async_uninstall_addon("core_zwave")
-    except HassioAPIError as err:
+    except OppioAPIError as err:
         _LOGGER.error("Failed to uninstall the OpenZWave add-on: %s", err)
 
 

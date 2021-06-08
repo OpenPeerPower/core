@@ -8,7 +8,7 @@ from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 
 from . import ADDONS_COORDINATOR
 from .const import ATTR_UPDATE_AVAILABLE
-from .entity import HassioAddonEntity, HassioOSEntity
+from .entity import OppioAddonEntity, OppioOSEntity
 
 
 async def async_setup_entry(
@@ -20,19 +20,19 @@ async def async_setup_entry(
     coordinator = opp.data[ADDONS_COORDINATOR]
 
     entities = [
-        HassioAddonBinarySensor(
+        OppioAddonBinarySensor(
             coordinator, addon, ATTR_UPDATE_AVAILABLE, "Update Available"
         )
         for addon in coordinator.data["addons"].values()
     ]
     if coordinator.is_opp_os:
         entities.append(
-            HassioOSBinarySensor(coordinator, ATTR_UPDATE_AVAILABLE, "Update Available")
+            OppioOSBinarySensor(coordinator, ATTR_UPDATE_AVAILABLE, "Update Available")
         )
     async_add_entities(entities)
 
 
-class HassioAddonBinarySensor(HassioAddonEntity, BinarySensorEntity):
+class OppioAddonBinarySensor(OppioAddonEntity, BinarySensorEntity):
     """Binary sensor to track whether an update is available for a Opp.io add-on."""
 
     @property
@@ -41,7 +41,7 @@ class HassioAddonBinarySensor(HassioAddonEntity, BinarySensorEntity):
         return self.addon_info[self.attribute_name]
 
 
-class HassioOSBinarySensor(HassioOSEntity, BinarySensorEntity):
+class OppioOSBinarySensor(OppioOSEntity, BinarySensorEntity):
     """Binary sensor to track whether an update is available for Opp.io OS."""
 
     @property

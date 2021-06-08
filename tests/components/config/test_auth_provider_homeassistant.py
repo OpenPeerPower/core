@@ -15,7 +15,7 @@ async def setup_config(opp, local_auth):
 
 @pytest.fixture
 async def auth_provider(local_auth):
-    """Hass auth provider."""
+    """Opp auth provider."""
     return local_auth
 
 

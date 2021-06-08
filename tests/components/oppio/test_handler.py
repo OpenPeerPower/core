@@ -3,7 +3,7 @@
 import aiohttp
 import pytest
 
-from openpeerpower.components.oppio.handler import HassioAPIError
+from openpeerpower.components.oppio.handler import OppioAPIError
 
 
 async def test_api_ping(oppio_handler, aioclient_mock):
@@ -53,7 +53,7 @@ async def test_api_info_error(oppio_handler, aioclient_mock):
         "http://127.0.0.1/info", json={"result": "error", "message": None}
     )
 
-    with pytest.raises(HassioAPIError):
+    with pytest.raises(OppioAPIError):
         await oppio_handler.get_info()
 
     assert aioclient_mock.call_count == 1
@@ -119,7 +119,7 @@ async def test_api_host_info_error(oppio_handler, aioclient_mock):
         "http://127.0.0.1/host/info", json={"result": "error", "message": None}
     )
 
-    with pytest.raises(HassioAPIError):
+    with pytest.raises(OppioAPIError):
         await oppio_handler.get_host_info()
 
     assert aioclient_mock.call_count == 1
@@ -143,7 +143,7 @@ async def test_api_core_info_error(oppio_handler, aioclient_mock):
         "http://127.0.0.1/core/info", json={"result": "error", "message": None}
     )
 
-    with pytest.raises(HassioAPIError):
+    with pytest.raises(OppioAPIError):
         await oppio_handler.get_core_info()
 
     assert aioclient_mock.call_count == 1
