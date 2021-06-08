@@ -147,7 +147,7 @@ class Configurator:
         self, name, callback, description, submit_caption, fields, entity_picture
     ):
         """Set up a request for configuration."""
-        entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, name, opp.self.opp)
+        entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, name, opp=self.opp)
 
         if fields is None:
             fields = []

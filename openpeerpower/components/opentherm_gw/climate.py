@@ -64,7 +64,7 @@ class OpenThermClimate(ClimateEntity):
         """Initialize the device."""
         self._gateway = gw_dev
         self.entity_id = async_generate_entity_id(
-            ENTITY_ID_FORMAT, gw_dev.gw_id, opp.gw_dev.opp
+            ENTITY_ID_FORMAT, gw_dev.gw_id, opp=gw_dev.opp
         )
         self.friendly_name = gw_dev.name
         self.floor_temp = options.get(CONF_FLOOR_TEMP, DEFAULT_FLOOR_TEMP)

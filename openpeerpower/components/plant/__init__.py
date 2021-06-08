@@ -311,7 +311,7 @@ class Plant(Entity):
             return
 
         _LOGGER.debug("Initializing values for %s from the database", self._name)
-        with session_scope(opp.self.opp) as session:
+        with session_scope(opp=self.opp) as session:
             query = (
                 session.query(States)
                 .filter(

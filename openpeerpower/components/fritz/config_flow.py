@@ -60,7 +60,7 @@ class FritzBoxToolsFlowHandler(ConfigFlow, domain=DOMAIN):
     async def fritz_tools_init(self):
         """Initialize FRITZ!Box Tools class."""
         self.fritz_tools = FritzBoxTools(
-            opp.self.opp,
+            opp=self.opp,
             host=self._host,
             port=self._port,
             username=self._username,

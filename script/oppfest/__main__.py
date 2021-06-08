@@ -37,6 +37,7 @@ INTEGRATION_PLUGINS = [
 ]
 OPP_PLUGINS = [
     coverage,
+    mypy_config,
 ]
 
 

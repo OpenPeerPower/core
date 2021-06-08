@@ -21,7 +21,7 @@ from tests.common import (
 
 
 def test_generate_entity_id_requires_opp_or_ids():
-    """Ensure we require at least opp.or current ids."""
+    """Ensure we require at least opp or current ids."""
     with pytest.raises(ValueError):
         entity.generate_entity_id("test.{}", "hello world")
 
@@ -94,10 +94,10 @@ class TestHelpersEntity:
         self.opp.stop()
 
     def test_generate_entity_id_given_opp(self):
-        """Test generating an entity id given oppjobject."""
+        """Test generating an entity id given opp jobject."""
         fmt = "test.{}"
         assert (
-            entity.generate_entity_id(fmt, "overwrite hidden true", opp.self.opp)
+            entity.generate_entity_id(fmt, "overwrite hidden true", opp=self.opp)
             == "test.overwrite_hidden_true_2"
         )
 

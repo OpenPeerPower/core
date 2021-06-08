@@ -497,7 +497,7 @@ async def async_setup_entry(opp, config_entry):  # noqa: C901
             opp.data[DATA_ENTITY_VALUES] = new_values
 
     platform = EntityPlatform(
-        opp.opp,
+        opp=opp,
         logger=_LOGGER,
         domain=DOMAIN,
         platform_name=DOMAIN,
@@ -1191,7 +1191,7 @@ class ZWaveDeviceEntityValues:
         platform = import_module(f".{component}", __name__)
 
         device = platform.get_device(
-            node=self._node, values=self, node_config=node_config, opp.self._opp
+            node=self._node, values=self, node_config=node_config, opp=self._opp
         )
         if device is None:
             # No entity will be created for this value

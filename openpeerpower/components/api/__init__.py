@@ -363,7 +363,7 @@ class APIDomainServicesView(OpenPeerPowerView):
 
         Returns a list of changed states.
         """
-        opp.ha.OpenPeerPower = request.app["opp"]
+        opp: ha.OpenPeerPower = request.app["opp"]
         body = await request.text()
         try:
             data = json.loads(body) if body else None

@@ -32,7 +32,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 return self.async_abort(reason="already_configured")
         try:
             projector = await validate_projector(
-                opp.self.opp,
+                opp=self.opp,
                 host=import_config[CONF_HOST],
                 check_power=True,
                 check_powered_on=False,
@@ -55,7 +55,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             try:
                 projector = await validate_projector(
-                    opp.self.opp,
+                    opp=self.opp,
                     host=user_input[CONF_HOST],
                     check_power=True,
                     check_powered_on=True,

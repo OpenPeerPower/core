@@ -319,7 +319,7 @@ class EntityComponent:
             scan_interval = self.scan_interval
 
         return EntityPlatform(
-            opp.self.opp,
+            opp=self.opp,
             logger=self.logger,
             domain=self.domain,
             platform_name=platform_type,

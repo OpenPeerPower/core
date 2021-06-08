@@ -324,7 +324,7 @@ class StatisticsSensor(SensorEntity):
 
         _LOGGER.debug("%s: initializing values from the database", self.entity_id)
 
-        with session_scope(opp.self.opp) as session:
+        with session_scope(opp=self.opp) as session:
             query = session.query(States).filter(
                 States.entity_id == self._entity_id.lower()
             )
