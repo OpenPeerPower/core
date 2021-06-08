@@ -26,9 +26,9 @@ from openpeerpower.util import yaml
 from .const import (
     BLUEPRINT_FOLDER,
     CONF_BLUEPRINT,
-    CONF_OPENPEERPOWER,
     CONF_INPUT,
     CONF_MIN_VERSION,
+    CONF_OPENPEERPOWER,
     CONF_SOURCE_URL,
     CONF_USE_BLUEPRINT,
     DOMAIN,

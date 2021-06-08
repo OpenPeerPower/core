@@ -33,8 +33,8 @@ from openpeerpower.const import (
 from openpeerpower.core import (
     CoreState,
     Event,
-    OppJob,
     OpenPeerPower,
+    OppJob,
     ServiceCall,
     callback,
 )

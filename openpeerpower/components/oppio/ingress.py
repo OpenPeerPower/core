@@ -14,7 +14,7 @@ from multidict import CIMultiDict
 from openpeerpower.components.http import OpenPeerPowerView
 from openpeerpower.core import OpenPeerPower, callback
 
-from .const import X_OPPIO, X_INGRESS_PATH
+from .const import X_INGRESS_PATH, X_OPPIO
 
 _LOGGER = logging.getLogger(__name__)
 

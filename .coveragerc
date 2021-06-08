@@ -25,7 +25,6 @@ omit =
     openpeerpower/components/adguard/sensor.py
     openpeerpower/components/adguard/switch.py
     openpeerpower/components/ads/*
-    openpeerpower/components/aemet/abstract_aemet_sensor.py
     openpeerpower/components/aemet/weather_update_coordinator.py
     openpeerpower/components/aftership/sensor.py
     openpeerpower/components/agent_dvr/__init__.py
@@ -51,7 +50,6 @@ omit =
     openpeerpower/components/amcrest/*
     openpeerpower/components/ampio/*
     openpeerpower/components/android_ip_webcam/*
-    openpeerpower/components/anel_pwrctrl/switch.py
     openpeerpower/components/anthemav/media_player.py
     openpeerpower/components/apcupsd/*
     openpeerpower/components/apple_tv/__init__.py

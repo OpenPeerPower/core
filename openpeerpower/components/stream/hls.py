@@ -10,7 +10,7 @@ from .const import (
     MAX_SEGMENTS,
     NUM_PLAYLIST_SEGMENTS,
 )
-from .core import PROVIDERS, OpenPeerPower, IdleTimer, StreamOutput, StreamView
+from .core import PROVIDERS, IdleTimer, OpenPeerPower, StreamOutput, StreamView
 from .fmp4utils import get_codec_string
 
 

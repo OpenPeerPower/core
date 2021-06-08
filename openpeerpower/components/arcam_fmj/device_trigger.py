@@ -13,7 +13,7 @@ from openpeerpower.const import (
     CONF_PLATFORM,
     CONF_TYPE,
 )
-from openpeerpower.core import CALLBACK_TYPE, Event, OppJob, OpenPeerPower, callback
+from openpeerpower.core import CALLBACK_TYPE, Event, OpenPeerPower, OppJob, callback
 from openpeerpower.helpers import config_validation as cv, entity_registry
 from openpeerpower.helpers.typing import ConfigType
 
