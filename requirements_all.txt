@@ -1015,7 +1015,7 @@ onvif-zeep-async==1.0.0
 open-garage==0.1.4
 
 # openpeerpower.components.frontend
-open-peer-power-frontend==20210603.0
+openpeerpower-frontend==20210603.0
 
 # openpeerpower.components.opencv
 # opencv-python-headless==4.4.0.42

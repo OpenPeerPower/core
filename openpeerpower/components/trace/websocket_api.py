@@ -222,9 +222,7 @@ def websocket_subscribe_breakpoint_events(opp, connection, msg):
             )
         )
 
-    remove_signal = async_dispatcher_connect(
-        opp, SCRIPT_BREAKPOINT_HIT, breakpoint_hit
-    )
+    remove_signal = async_dispatcher_connect(opp, SCRIPT_BREAKPOINT_HIT, breakpoint_hit)
 
     @callback
     def unsub():

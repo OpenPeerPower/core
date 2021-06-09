@@ -19,7 +19,7 @@ emoji==1.2.0
 httpx==0.18.0
 ifaddr==0.1.7
 jinja2==3.0.1
-open-peer-power-frontend==20210603.0
+openpeerpower-frontend==20210603.0
 opp-net==0.1.0
 paho-mqtt==1.5.1
 pillow==8.1.2
