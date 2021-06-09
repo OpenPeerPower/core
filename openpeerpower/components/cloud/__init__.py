@@ -1,5 +1,5 @@
 """Component to integrate the Open Peer Power cloud."""
-from opp_nabucasa import Cloud
+from opp_net import Cloud
 import voluptuous as vol
 
 from openpeerpower.components.alexa import const as alexa_const

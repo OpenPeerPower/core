@@ -11,7 +11,7 @@ create_task:
       name: Name
       description: name of the new task, you can use the smart syntax here
       required: true
-      example: "do this ^today #from_opp.
+      example: "do this ^today #from_opp"
       selector:
         text:
     id:

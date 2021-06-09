@@ -6,7 +6,7 @@ import logging
 
 import aiohttp
 import async_timeout
-from opp_nabucasa import Cloud, cloud_api
+from opp_net import Cloud, cloud_api
 
 from openpeerpower.components.alexa import (
     DOMAIN as ALEXA_DOMAIN,

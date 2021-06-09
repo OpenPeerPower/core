@@ -2,8 +2,8 @@
 from __future__ import annotations
 
 from aiohttp import StreamReader
-from opp_nabucasa import Cloud
-from opp_nabucasa.voice import VoiceError
+from opp_net import Cloud
+from opp_net.voice import VoiceError
 
 from openpeerpower.components.stt import Provider, SpeechMetadata, SpeechResult
 from openpeerpower.components.stt.const import (

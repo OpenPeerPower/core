@@ -138,7 +138,6 @@ IGNORED_MODULES: Final[list[str]] = [
     "openpeerpower.components.nmap_tracker.*",
     "openpeerpower.components.norway_air.*",
     "openpeerpower.components.notion.*",
-    "openpeerpower.components.nsw_fuel_station.*",
     "openpeerpower.components.nuki.*",
     "openpeerpower.components.nws.*",
     "openpeerpower.components.nzbget.*",

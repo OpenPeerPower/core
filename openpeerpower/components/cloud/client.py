@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any
 
 import aiohttp
-from opp_nabucasa.client import CloudClient as Interface
+from opp_net.client import CloudClient as Interface
 
 from openpeerpower.components.alexa import (
     errors as alexa_errors,

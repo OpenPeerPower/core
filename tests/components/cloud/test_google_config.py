@@ -49,7 +49,7 @@ async def test_sync_entities(mock_conf, opp, cloud_prefs):
     assert len(mock_conf._store.agent_user_ids) == 1
 
     with patch(
-        "opp_nabucasa.cloud_api.async_google_actions_request_sync",
+        "opp_net.cloud_api.async_google_actions_request_sync",
         return_value=Mock(status=HTTP_NOT_FOUND),
     ) as mock_request_sync:
         assert await mock_conf.async_sync_entities("mock-user-id") == HTTP_NOT_FOUND

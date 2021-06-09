@@ -40,13 +40,11 @@ openpeerpower.components.hyperion.*
 openpeerpower.components.image_processing.*
 openpeerpower.components.integration.*
 openpeerpower.components.knx.*
-openpeerpower.components.kraken.*
 openpeerpower.components.light.*
 openpeerpower.components.local_ip.*
 openpeerpower.components.lock.*
 openpeerpower.components.mailbox.*
 openpeerpower.components.media_player.*
-openpeerpower.components.nam.*
 openpeerpower.components.network.*
 openpeerpower.components.notify.*
 openpeerpower.components.number.*
