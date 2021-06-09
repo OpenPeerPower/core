@@ -142,9 +142,6 @@ aioshelly==0.6.4
 # openpeerpower.components.switcher_kis
 aioswitcher==1.2.3
 
-# openpeerpower.components.syncthing
-aiosyncthing==0.5.1
-
 # openpeerpower.components.unifi
 aiounifi==26
 
@@ -203,6 +200,9 @@ blinkpy==0.17.0
 
 # openpeerpower.components.bond
 bond-api==0.1.12
+
+# openpeerpower.components.bosch_shc
+boschshcpy==0.2.19
 
 # openpeerpower.components.braviatv
 bravia-tv==1.0.11
@@ -268,9 +268,6 @@ dsmr_parser==0.29
 
 # openpeerpower.components.dynalite
 dynalite_devices==0.1.46
-
-# openpeerpower.components.ee_brightbox
-eebrightbox==0.0.4
 
 # openpeerpower.components.elgato
 elgato==2.1.1
@@ -350,9 +347,6 @@ glances_api==0.2.0
 # openpeerpower.components.goalzero
 goalzero==0.1.7
 
-# openpeerpower.components.gogogate2
-gogogate2-api==3.0.0
-
 # openpeerpower.components.google
 google-api-python-client==1.6.4
 
@@ -362,14 +356,8 @@ google-cloud-pubsub==2.1.0
 # openpeerpower.components.nest
 google-nest-sdm==0.2.12
 
-# openpeerpower.components.google_travel_time
-googlemaps==2.5.1
-
 # openpeerpower.components.gree
 greeclimate==0.11.4
-
-# openpeerpower.components.growatt_server
-growattServer==1.0.1
 
 # openpeerpower.components.profiler
 guppy3==3.1.0
@@ -431,6 +419,9 @@ influxdb-client==1.14.0
 
 # openpeerpower.components.influxdb
 influxdb==5.2.3
+
+# openpeerpower.components.gogogate2
+ismartgate==4.0.0
 
 # openpeerpower.components.rest
 jsonpath==0.82
@@ -501,6 +492,7 @@ nuheat==0.3.0
 # openpeerpower.components.numato
 numato-gpio==0.10.0
 
+# openpeerpower.components.compensation
 # openpeerpower.components.iqvia
 # openpeerpower.components.opencv
 # openpeerpower.components.tensorflow
@@ -522,11 +514,11 @@ ondilo==0.2.0
 # openpeerpower.components.onvif
 onvif-zeep-async==1.0.0
 
+# openpeerpower.components.frontend
+open-peer-power-frontend==20210603.0
+
 # openpeerpower.components.openerz
 openerz-api==0.1.0
-
-# openpeerpower.components.frontend
-openpeerpower-frontend==20210523.2
 
 # openpeerpower.components.cloud
 opp-net==0.1.0
@@ -602,9 +594,6 @@ pure-python-adb[async]==0.3.0.dev0
 # openpeerpower.components.pushbullet
 pushbullet.py==0.11.0
 
-# openpeerpower.components.august
-py-august==0.25.2
-
 # openpeerpower.components.canary
 py-canary==0.5.1
 
@@ -622,9 +611,6 @@ pyControl4==0.0.6
 
 # openpeerpower.components.tplink
 pyHS100==0.3.5.2
-
-# openpeerpower.components.met_eireann
-pyMetEireann==0.2
 
 # openpeerpower.components.met
 # openpeerpower.components.norway_air
@@ -727,14 +713,14 @@ pygatt[GATTTOOL]==4.0.5
 # openpeerpower.components.hvv_departures
 pygti==0.9.2
 
+# openpeerpower.components.version
+pyhaversion==21.5.0
+
 # openpeerpower.components.heos
 pyheos==0.7.2
 
 # openpeerpower.components.homematic
 pyhomematic==0.1.72
-
-# openpeerpower.components.ialarm
-pyialarm==1.7
 
 # openpeerpower.components.icloud
 pyicloud==0.10.2
@@ -832,9 +818,6 @@ pyopenuv==1.0.9
 # openpeerpower.components.opnsense
 pyopnsense==0.2.0
 
-# openpeerpower.components.version
-pyoppversion==3.4.2
-
 # openpeerpower.components.opentherm_gw
 pyotgw==1.1b1
 
@@ -848,9 +831,6 @@ pyowm==3.2.0
 
 # openpeerpower.components.onewire
 pyownet==0.10.0.post1
-
-# openpeerpower.components.lcn
-pypck==0.7.9
 
 # openpeerpower.components.plaato
 pyplaato==0.0.15
@@ -1155,6 +1135,7 @@ vsure==1.7.3
 # openpeerpower.components.vultr
 vultr==0.1.2
 
+# openpeerpower.components.samsungtv
 # openpeerpower.components.wake_on_lan
 wakeonlan==2.0.1
 
@@ -1182,6 +1163,9 @@ xbox-webapi==2.0.11
 # openpeerpower.components.ted5000
 # openpeerpower.components.zestimate
 xmltodict==0.12.0
+
+# openpeerpower.components.august
+yalexs==1.1.11
 
 # openpeerpower.components.yeelight
 yeelight==0.6.3
