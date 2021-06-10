@@ -3,7 +3,7 @@
   "name": "Open Peer Power Frontend",
   "documentation": "https://www.openpeerpower.io/integrations/frontend",
   "requirements": [
-    "openpeerpower-frontend==20210603.0"
+    "openpeerpower-frontend==20210523.2"
   ],
   "dependencies": [
     "api",

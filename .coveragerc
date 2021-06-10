@@ -270,7 +270,6 @@ omit =
     openpeerpower/components/eufy/*
     openpeerpower/components/everlights/light.py
     openpeerpower/components/evohome/*
-    openpeerpower/components/ezviz/*
     openpeerpower/components/familyhub/camera.py
     openpeerpower/components/faa_delays/__init__.py
     openpeerpower/components/faa_delays/binary_sensor.py
@@ -329,7 +328,6 @@ omit =
     openpeerpower/components/garmin_connect/alarm_util.py
     openpeerpower/components/gc100/*
     openpeerpower/components/geniushub/*
-    openpeerpower/components/geizhals/sensor.py
     openpeerpower/components/github/sensor.py
     openpeerpower/components/gitlab_ci/sensor.py
     openpeerpower/components/gitter/sensor.py
@@ -381,7 +379,6 @@ omit =
     openpeerpower/components/hikvisioncam/switch.py
     openpeerpower/components/hisense_aehw4a1/*
     openpeerpower/components/hitron_coda/device_tracker.py
-    openpeerpower/components/hive/*
     openpeerpower/components/hlk_sw16/__init__.py
     openpeerpower/components/hlk_sw16/switch.py
     openpeerpower/components/home_connect/*
@@ -493,12 +490,10 @@ omit =
     openpeerpower/components/lastfm/sensor.py
     openpeerpower/components/launch_library/const.py
     openpeerpower/components/launch_library/sensor.py
-    openpeerpower/components/lcn/*
     openpeerpower/components/lg_soundbar/media_player.py
     openpeerpower/components/life360/*
     openpeerpower/components/lifx/*
     openpeerpower/components/lifx_cloud/scene.py
-    openpeerpower/components/lifx_legacy/light.py
     openpeerpower/components/lightwave/*
     openpeerpower/components/limitlessled/light.py
     openpeerpower/components/linksys_smart/device_tracker.py
@@ -607,7 +602,6 @@ omit =
     openpeerpower/components/mystrom/binary_sensor.py
     openpeerpower/components/mystrom/light.py
     openpeerpower/components/mystrom/switch.py
-    openpeerpower/components/n26/*
     openpeerpower/components/nad/media_player.py
     openpeerpower/components/nanoleaf/light.py
     openpeerpower/components/neato/__init__.py
@@ -869,7 +863,6 @@ omit =
     openpeerpower/components/snapcast/*
     openpeerpower/components/snmp/*
     openpeerpower/components/sochain/sensor.py
-    openpeerpower/components/socialblade/sensor.py
     openpeerpower/components/solaredge/__init__.py
     openpeerpower/components/solaredge/sensor.py
     openpeerpower/components/solaredge_local/sensor.py
@@ -878,7 +871,6 @@ omit =
     openpeerpower/components/soma/__init__.py
     openpeerpower/components/soma/cover.py
     openpeerpower/components/soma/sensor.py
-    openpeerpower/components/somfy/*
     openpeerpower/components/somfy_mylink/__init__.py
     openpeerpower/components/somfy_mylink/cover.py
     openpeerpower/components/sonos/*
@@ -886,7 +878,6 @@ omit =
     openpeerpower/components/spc/*
     openpeerpower/components/speedtestdotnet/*
     openpeerpower/components/spider/*
-    openpeerpower/components/spotcrime/sensor.py
     openpeerpower/components/spotify/__init__.py
     openpeerpower/components/spotify/media_player.py
     openpeerpower/components/spotify/system_health.py
@@ -1037,7 +1028,6 @@ omit =
     openpeerpower/components/velbus/switch.py
     openpeerpower/components/velux/*
     openpeerpower/components/venstar/climate.py
-    openpeerpower/components/verisure/*
     openpeerpower/components/versasense/*
     openpeerpower/components/vesync/__init__.py
     openpeerpower/components/vesync/common.py

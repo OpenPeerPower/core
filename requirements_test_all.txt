@@ -514,11 +514,11 @@ ondilo==0.2.0
 # openpeerpower.components.onvif
 onvif-zeep-async==1.0.0
 
-# openpeerpower.components.frontend
-openpeerpower-frontend==20210603.0
-
 # openpeerpower.components.openerz
 openerz-api==0.1.0
+
+# openpeerpower.components.frontend
+openpeerpower-frontend==20210523.2
 
 # openpeerpower.components.cloud
 opp-net==0.1.0

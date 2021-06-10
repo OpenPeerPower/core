@@ -58,11 +58,6 @@ DHCP = [
         "macaddress": "B4430D*"
     },
     {
-        "domain": "emonitor",
-        "hostname": "emonitor*",
-        "macaddress": "0090C2*"
-    },
-    {
         "domain": "flume",
         "hostname": "flume-gw-*"
     },
@@ -174,11 +169,6 @@ DHCP = [
     {
         "domain": "samsungtv",
         "hostname": "tizen*"
-    },
-    {
-        "domain": "screenlogic",
-        "hostname": "pentair: *",
-        "macaddress": "00C033*"
     },
     {
         "domain": "sense",

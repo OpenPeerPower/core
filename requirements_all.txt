@@ -610,9 +610,6 @@ gTTS==2.2.2
 # openpeerpower.components.garmin_connect
 garminconnect_aio==0.1.1
 
-# openpeerpower.components.geizhals
-geizhals==0.0.9
-
 # openpeerpower.components.geniushub
 geniushub-client==0.6.30
 
@@ -839,9 +836,6 @@ libsoundtouch==0.8
 # openpeerpower.components.life360
 life360==4.1.1
 
-# openpeerpower.components.lifx_legacy
-liffylights==0.9.4
-
 # openpeerpower.components.osramlightify
 lightify==1.0.7.3
 
@@ -932,9 +926,6 @@ mychevy==2.1.1
 # openpeerpower.components.mycroft
 mycroftapi==2.0
 
-# openpeerpower.components.n26
-n26==0.2.7
-
 # openpeerpower.components.nad
 nad_receiver==0.0.12
 
@@ -1014,9 +1005,6 @@ onvif-zeep-async==1.0.0
 # openpeerpower.components.opengarage
 open-garage==0.1.4
 
-# openpeerpower.components.frontend
-openpeerpower-frontend==20210603.0
-
 # openpeerpower.components.opencv
 # opencv-python-headless==4.4.0.42
 
@@ -1028,6 +1016,9 @@ openevsewifi==1.1.0
 
 # openpeerpower.components.openhome
 openhomedevice==2.0.1
+
+# openpeerpower.components.frontend
+openpeerpower-frontend==20210523.2
 
 # openpeerpower.components.zwave
 openpeerpower-pyozw==0.1.10
@@ -2041,9 +2032,6 @@ smhi-pkg==1.0.15
 # openpeerpower.components.snapcast
 snapcast==2.1.3
 
-# openpeerpower.components.socialblade
-socialbladeclient==0.5
-
 # openpeerpower.components.solaredge_local
 solaredge-local==0.2.0
 
@@ -2070,9 +2058,6 @@ speedtest-cli==2.1.3
 
 # openpeerpower.components.spider
 spiderpy==1.4.2
-
-# openpeerpower.components.spotcrime
-spotcrime==1.0.4
 
 # openpeerpower.components.spotify
 spotipy==2.18.0
