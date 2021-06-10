@@ -1097,7 +1097,7 @@ pilight==0.1.1
 # openpeerpower.components.seven_segments
 # openpeerpower.components.sighthound
 # openpeerpower.components.tensorflow
-pillow==8.1.2
+pillow==8.2.0
 
 # openpeerpower.components.dominos
 pizzapi==0.0.3
