@@ -1080,6 +1080,9 @@ tellduslive==0.10.11
 # openpeerpower.components.powerwall
 tesla-powerwall==0.3.10
 
+# openpeerpower.components.tesla
+teslajsonpy==0.18.3
+
 # openpeerpower.components.toon
 toonapi==0.2.0
 

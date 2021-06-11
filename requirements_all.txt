@@ -2132,6 +2132,9 @@ temperusb==1.5.3
 # openpeerpower.components.powerwall
 tesla-powerwall==0.3.10
 
+# openpeerpower.components.tesla
+teslajsonpy==0.18.3
+
 # openpeerpower.components.tensorflow
 # tf-models-official==2.3.0
 
