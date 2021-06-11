@@ -70,19 +70,9 @@ ZEROCONF = {
             "domain": "enphase_envoy"
         }
     ],
-    "_esphomelib._tcp.local.": [
-        {
-            "domain": "esphome"
-        }
-    ],
     "_fbx-api._tcp.local.": [
         {
             "domain": "freebox"
-        }
-    ],
-    "_googlecast._tcp.local.": [
-        {
-            "domain": "cast"
         }
     ],
     "_hap._tcp.local.": [
@@ -190,11 +180,6 @@ ZEROCONF = {
     "_touch-able._tcp.local.": [
         {
             "domain": "apple_tv"
-        }
-    ],
-    "_viziocast._tcp.local.": [
-        {
-            "domain": "vizio"
         }
     ],
     "_wled._tcp.local.": [

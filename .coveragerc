@@ -204,7 +204,6 @@ omit =
     openpeerpower/components/downloader/*
     openpeerpower/components/dsmr_reader/*
     openpeerpower/components/dte_energy_bridge/sensor.py
-    openpeerpower/components/dublin_bus_transport/sensor.py
     openpeerpower/components/dunehd/__init__.py
     openpeerpower/components/dunehd/const.py
     openpeerpower/components/dunehd/media_player.py
@@ -255,16 +254,6 @@ omit =
     openpeerpower/components/epson/media_player.py
     openpeerpower/components/epsonworkforce/sensor.py
     openpeerpower/components/eq3btsmart/climate.py
-    openpeerpower/components/esphome/__init__.py
-    openpeerpower/components/esphome/binary_sensor.py
-    openpeerpower/components/esphome/camera.py
-    openpeerpower/components/esphome/climate.py
-    openpeerpower/components/esphome/cover.py
-    openpeerpower/components/esphome/entry_data.py
-    openpeerpower/components/esphome/fan.py
-    openpeerpower/components/esphome/light.py
-    openpeerpower/components/esphome/sensor.py
-    openpeerpower/components/esphome/switch.py
     openpeerpower/components/essent/sensor.py
     openpeerpower/components/etherscan/sensor.py
     openpeerpower/components/eufy/*
@@ -346,7 +335,6 @@ omit =
     openpeerpower/components/gpsd/sensor.py
     openpeerpower/components/greeneye_monitor/*
     openpeerpower/components/greeneye_monitor/sensor.py
-    openpeerpower/components/greenwave/light.py
     openpeerpower/components/group/notify.py
     openpeerpower/components/growatt_server/sensor.py
     openpeerpower/components/gstreamer/media_player.py
@@ -930,14 +918,6 @@ omit =
     openpeerpower/components/telnet/switch.py
     openpeerpower/components/temper/sensor.py
     openpeerpower/components/tensorflow/image_processing.py
-    openpeerpower/components/tesla/__init__.py
-    openpeerpower/components/tesla/binary_sensor.py
-    openpeerpower/components/tesla/climate.py
-    openpeerpower/components/tesla/const.py
-    openpeerpower/components/tesla/device_tracker.py
-    openpeerpower/components/tesla/lock.py
-    openpeerpower/components/tesla/sensor.py
-    openpeerpower/components/tesla/switch.py
     openpeerpower/components/tfiac/climate.py
     openpeerpower/components/thermoworks_smoke/sensor.py
     openpeerpower/components/thethingsnetwork/*

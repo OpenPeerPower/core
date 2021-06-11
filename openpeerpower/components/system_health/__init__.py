@@ -1,9 +1,12 @@
 """Support for System health ."""
+from __future__ import annotations
+
 import asyncio
+from collections.abc import Awaitable
 import dataclasses
 from datetime import datetime
 import logging
-from typing import Awaitable, Callable, Dict, Optional
+from typing import Callable
 
 import aiohttp
 import async_timeout
@@ -27,14 +30,14 @@ INFO_CALLBACK_TIMEOUT = 5
 def async_register_info(
     opp: OpenPeerPower,
     domain: str,
-    info_callback: Callable[[OpenPeerPower], Dict],
+    info_callback: Callable[[OpenPeerPower], dict],
 ):
     """Register an info callback.
 
     Deprecated.
     """
     _LOGGER.warning(
-        "system_health.async_register_info is deprecated. Add a system_health platform instead."
+        "Calling system_health.async_register_info is deprecated; Add a system_health platform instead"
     )
     opp.data.setdefault(DOMAIN, {})
     SystemHealthRegistration(opp, domain).async_register_info(info_callback)
@@ -58,7 +61,7 @@ async def _register_system_health_platform(opp, integration_domain, platform):
 
 
 async def get_integration_info(
-    opp: OpenPeerPower, registration: "SystemHealthRegistration"
+    opp: OpenPeerPower, registration: SystemHealthRegistration
 ):
     """Get integration system health."""
     try:
@@ -89,10 +92,10 @@ def _format_value(val):
 @websocket_api.async_response
 @websocket_api.websocket_command({vol.Required("type"): "system_health/info"})
 async def handle_info(
-    opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg: Dict
+    opp: OpenPeerPower, connection: websocket_api.ActiveConnection, msg: dict
 ):
     """Handle an info request via a subscription."""
-    registrations: Dict[str, SystemHealthRegistration] = opp.data[DOMAIN]
+    registrations: dict[str, SystemHealthRegistration] = opp.data[DOMAIN]
     data = {}
     pending_info = {}
 
@@ -187,14 +190,14 @@ class SystemHealthRegistration:
 
     opp: OpenPeerPower
     domain: str
-    info_callback: Optional[Callable[[OpenPeerPower], Awaitable[Dict]]] = None
-    manage_url: Optional[str] = None
+    info_callback: Callable[[OpenPeerPower], Awaitable[dict]] | None = None
+    manage_url: str | None = None
 
     @callback
     def async_register_info(
         self,
-        info_callback: Callable[[OpenPeerPower], Awaitable[Dict]],
-        manage_url: Optional[str] = None,
+        info_callback: Callable[[OpenPeerPower], Awaitable[dict]],
+        manage_url: str | None = None,
     ):
         """Register an info callback."""
         self.info_callback = info_callback
@@ -203,7 +206,7 @@ class SystemHealthRegistration:
 
 
 async def async_check_can_reach_url(
-    opp: OpenPeerPower, url: str, more_info: Optional[str] = None
+    opp: OpenPeerPower, url: str, more_info: str | None = None
 ) -> str:
     """Test if the url can be reached."""
     session = aiohttp_client.async_get_clientsession(opp)
@@ -213,6 +216,8 @@ async def async_check_can_reach_url(
         return "ok"
     except aiohttp.ClientError:
         data = {"type": "failed", "error": "unreachable"}
-        if more_info is not None:
-            data["more_info"] = more_info
-        return data
+    except asyncio.TimeoutError:
+        data = {"type": "failed", "error": "timeout"}
+    if more_info is not None:
+        data["more_info"] = more_info
+    return data

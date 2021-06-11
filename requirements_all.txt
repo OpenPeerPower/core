@@ -147,9 +147,6 @@ aiodns==3.0.0
 # openpeerpower.components.eafm
 aioeafm==0.1.2
 
-# openpeerpower.components.esphome
-aioesphomeapi==2.8.0
-
 # openpeerpower.components.flo
 aioflo==0.4.1
 
@@ -679,9 +676,6 @@ greeclimate==0.11.4
 
 # openpeerpower.components.greeneye_monitor
 greeneye_monitor==2.1
-
-# openpeerpower.components.greenwave
-greenwavereality==0.5.1
 
 # openpeerpower.components.growatt_server
 growattServer==1.0.1
@@ -1266,9 +1260,6 @@ pycfdns==1.2.1
 # openpeerpower.components.channels
 pychannels==1.0.0
 
-# openpeerpower.components.cast
-pychromecast==9.1.2
-
 # openpeerpower.components.pocketcasts
 pycketcasts==1.0.0
 
@@ -1849,9 +1840,6 @@ pyversasense==0.0.6
 # openpeerpower.components.vesync
 pyvesync==1.4.0
 
-# openpeerpower.components.vizio
-pyvizio==0.1.57
-
 # openpeerpower.components.velux
 pyvlx==0.2.19
 
@@ -2143,9 +2131,6 @@ temperusb==1.5.3
 
 # openpeerpower.components.powerwall
 tesla-powerwall==0.3.10
-
-# openpeerpower.components.tesla
-teslajsonpy==0.18.3
 
 # openpeerpower.components.tensorflow
 # tf-models-official==2.3.0
