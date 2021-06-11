@@ -19,7 +19,7 @@ async def test_scene(
     entity_id = "scene.dev1_1"
 
     await vera_component_factory.configure_component(
-        opp.opp,
+        opp=opp,
         controller_config=new_simple_controller_config(scenes=(vera_scene,)),
     )
 

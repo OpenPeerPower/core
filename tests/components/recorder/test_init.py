@@ -112,7 +112,7 @@ async def test_state_gets_saved_when_set_before_start_event(
 
     await async_wait_recording_done_without_instance(opp)
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         db_states = list(session.query(States))
         assert len(db_states) == 1
         assert db_states[0].event_id > 0
@@ -132,7 +132,7 @@ async def test_saving_state(
 
     await async_wait_recording_done(opp, instance)
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         db_states = list(session.query(States))
         assert len(db_states) == 1
         assert db_states[0].event_id > 0
@@ -161,7 +161,7 @@ async def test_saving_many_states(
 
     assert expire_all.called
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         db_states = list(session.query(States))
         assert len(db_states) == 6
         assert db_states[0].event_id > 0
@@ -187,7 +187,7 @@ async def test_saving_state_with_intermixed_time_changes(
 
     await async_wait_recording_done(opp, instance)
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         db_states = list(session.query(States))
         assert len(db_states) == 2
         assert db_states[0].event_id > 0
@@ -223,7 +223,7 @@ def test_saving_state_with_exception(opp, opp_recorder, caplog):
     opp.states.set(entity_id, state, attributes)
     wait_recording_done(opp)
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         db_states = list(session.query(States))
         assert len(db_states) >= 1
 
@@ -260,7 +260,7 @@ def test_saving_state_with_sqlalchemy_exception(opp, opp_recorder, caplog):
     opp.states.set(entity_id, state, attributes)
     wait_recording_done(opp)
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         db_states = list(session.query(States))
         assert len(db_states) >= 1
 
@@ -325,7 +325,7 @@ def test_saving_event(opp, opp_recorder):
 
     opp.data[DATA_INSTANCE].block_till_done()
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         db_events = list(session.query(Events).filter_by(event_type=event_type))
         assert len(db_events) == 1
         db_event = db_events[0].to_native()
@@ -353,7 +353,7 @@ def test_saving_state_with_commit_interval_zero(opp_recorder):
 
     wait_recording_done(opp)
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         db_states = list(session.query(States))
         assert len(db_states) == 1
         assert db_states[0].event_id > 0
@@ -366,18 +366,18 @@ def _add_entities(opp, entity_ids):
         opp.states.set(entity_id, f"state{idx}", attributes)
     wait_recording_done(opp)
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         return [st.to_native() for st in session.query(States)]
 
 
 def _add_events(opp, events):
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         session.query(Events).delete(synchronize_session=False)
     for event_type in events:
         opp.bus.fire(event_type)
     wait_recording_done(opp)
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         return [ev.to_native() for ev in session.query(Events)]
 
 
@@ -526,7 +526,7 @@ def test_saving_state_and_removing_entity(opp, opp_recorder):
 
     wait_recording_done(opp)
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         states = list(session.query(States))
         assert len(states) == 3
         assert states[0].entity_id == entity_id
@@ -744,7 +744,7 @@ def test_saving_sets_old_state(opp_recorder):
     opp.states.set("test.two", "off", {})
     wait_recording_done(opp)
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         states = list(session.query(States))
         assert len(states) == 4
 
@@ -771,7 +771,7 @@ def test_saving_state_with_serializable_data(opp_recorder, caplog):
     opp.states.set("test.two", "off", {})
     wait_recording_done(opp)
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         states = list(session.query(States))
         assert len(states) == 2
 
@@ -791,7 +791,7 @@ def test_run_information(opp_recorder):
     assert isinstance(run_info, RecorderRuns)
     assert run_info.closed_incorrect is False
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         run_info = run_information_with_session(session)
         assert isinstance(run_info, RecorderRuns)
         assert run_info.closed_incorrect is False
@@ -854,7 +854,7 @@ def test_service_disable_events_not_recording(opp, opp_recorder):
     assert len(events) == 1
     event = events[0]
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         db_events = list(session.query(Events).filter_by(event_type=event_type))
         assert len(db_events) == 0
 
@@ -873,7 +873,7 @@ def test_service_disable_events_not_recording(opp, opp_recorder):
     assert events[0] != events[1]
     assert events[0].data != events[1].data
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         db_events = list(session.query(Events).filter_by(event_type=event_type))
         assert len(db_events) == 1
         db_event = db_events[0].to_native()
@@ -902,7 +902,7 @@ def test_service_disable_states_not_recording(opp, opp_recorder):
     opp.states.set("test.one", "on", {})
     wait_recording_done(opp)
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         assert len(list(session.query(States))) == 0
 
     assert opp.services.call(
@@ -915,7 +915,7 @@ def test_service_disable_states_not_recording(opp, opp_recorder):
     opp.states.set("test.two", "off", {})
     wait_recording_done(opp)
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         db_states = list(session.query(States))
         assert len(db_states) == 1
         assert db_states[0].event_id > 0
@@ -932,7 +932,7 @@ def test_service_disable_run_information_recorded(tmpdir):
     opp.start()
     wait_recording_done(opp)
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         db_run_info = list(session.query(RecorderRuns))
         assert len(db_run_info) == 1
         assert db_run_info[0].start is not None
@@ -953,7 +953,7 @@ def test_service_disable_run_information_recorded(tmpdir):
     opp.start()
     wait_recording_done(opp)
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         db_run_info = list(session.query(RecorderRuns))
         assert len(db_run_info) == 2
         assert db_run_info[0].start is not None
@@ -1015,7 +1015,7 @@ async def test_database_corruption_while_running(opp, tmpdir, caplog):
     await async_wait_recording_done_without_instance(opp)
 
     def _get_last_state():
-        with session_scope(opp.opp) as session:
+        with session_scope(opp=opp) as session:
             db_states = list(session.query(States))
             assert len(db_states) == 1
             assert db_states[0].event_id > 0
@@ -1048,7 +1048,7 @@ def test_entity_id_filter(opp_recorder):
         opp.bus.fire("hello", data)
         wait_recording_done(opp)
 
-        with session_scope(opp.opp) as session:
+        with session_scope(opp=opp) as session:
             db_events = list(session.query(Events).filter_by(event_type="hello"))
             assert len(db_events) == idx + 1, data
 
@@ -1059,7 +1059,7 @@ def test_entity_id_filter(opp_recorder):
         opp.bus.fire("hello", data)
         wait_recording_done(opp)
 
-        with session_scope(opp.opp) as session:
+        with session_scope(opp=opp) as session:
             db_events = list(session.query(Events).filter_by(event_type="hello"))
             # Keep referring idx + 1, as no new events are being added
             assert len(db_events) == idx + 1, data

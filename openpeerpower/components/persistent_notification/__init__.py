@@ -116,7 +116,7 @@ async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
             entity_id = ENTITY_ID_FORMAT.format(slugify(notification_id))
         else:
             entity_id = async_generate_entity_id(
-                ENTITY_ID_FORMAT, DEFAULT_OBJECT_ID, opp.opp
+                ENTITY_ID_FORMAT, DEFAULT_OBJECT_ID, opp=opp
             )
             notification_id = entity_id.split(".")[1]
 

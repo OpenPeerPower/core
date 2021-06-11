@@ -147,7 +147,7 @@ class WeatherTemplate(TemplateEntity, WeatherEntity):
         self._forecast_template = forecast_template
         self._unique_id = unique_id
 
-        self.entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, name, opp.opp)
+        self.entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, name, opp=opp)
 
         self._condition = None
         self._temperature = None

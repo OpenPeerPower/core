@@ -192,7 +192,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
                 uid = "_".join([network.network_id, name, station_id])
             else:
                 uid = "_".join([network.network_id, station_id])
-            entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, uid, opp.opp)
+            entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, uid, opp=opp)
             devices.append(CityBikesStation(network, station_id, entity_id))
 
     async_add_entities(devices, True)

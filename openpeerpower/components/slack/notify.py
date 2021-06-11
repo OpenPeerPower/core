@@ -155,7 +155,7 @@ def _async_templatize_blocks(opp: OpenPeerPower, value: Any) -> Any:
     if isinstance(value, dict):
         return {key: _async_templatize_blocks(opp, item) for key, item in value.items()}
 
-    tmpl = template.Template(value, opp.opp)  # type: ignore  # no-untyped-call
+    tmpl = template.Template(value, opp=opp)  # type: ignore  # no-untyped-call
     return tmpl.async_render(parse_result=False)
 
 

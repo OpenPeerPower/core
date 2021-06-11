@@ -30,7 +30,7 @@ from tests.components.recorder import models_original
 
 
 def _get_native_states(opp, entity_id):
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         return [
             state.to_native()
             for state in session.query(States).filter(States.entity_id == entity_id)

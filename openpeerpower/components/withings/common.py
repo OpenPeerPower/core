@@ -1033,7 +1033,7 @@ async def async_get_data_manager(
             opp,
             profile,
             ConfigEntryWithingsApi(
-                opp.opp,
+                opp=opp,
                 config_entry=config_entry,
                 implementation=await config_entry_oauth2_flow.async_get_config_entry_implementation(
                     opp, config_entry

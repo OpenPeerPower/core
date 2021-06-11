@@ -34,7 +34,7 @@ async def test_purge_old_states(
     await _add_test_states(opp, instance)
 
     # make sure we start with 6 states
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         states = session.query(States)
         assert states.count() == 6
         assert states[0].old_state_id is None
@@ -84,7 +84,7 @@ async def test_purge_old_states_encouters_database_corruption(
     assert move_away.called
 
     # Ensure the whole database was reset due to the database error
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         states_after_purge = session.query(States)
         assert states_after_purge.count() == 0
 
@@ -158,7 +158,7 @@ async def test_purge_old_events(
 
     await _add_test_events(opp, instance)
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         events = session.query(Events).filter(Events.event_type.like("EVENT_TEST%"))
         assert events.count() == 6
 
@@ -182,7 +182,7 @@ async def test_purge_old_recorder_runs(
     await _add_test_recorder_runs(opp, instance)
 
     # make sure we start with 7 recorder runs
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         recorder_runs = session.query(RecorderRuns)
         assert recorder_runs.count() == 7
 
@@ -211,7 +211,7 @@ async def test_purge_method(
     await async_wait_recording_done(opp, instance)
 
     # make sure we start with 6 states
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         states = session.query(States)
         assert states.count() == 6
 
@@ -272,7 +272,7 @@ async def test_purge_edge_case(
     """Test states and events are purged even if they occurred shortly before purge_before."""
 
     async def _add_db_entries(opp: OpenPeerPower, timestamp: datetime) -> None:
-        with recorder.session_scope(opp.opp) as session:
+        with recorder.session_scope(opp=opp) as session:
             session.add(
                 Events(
                     event_id=1001,
@@ -303,7 +303,7 @@ async def test_purge_edge_case(
     timestamp = dt_util.utcnow() - timedelta(days=2, minutes=1)
 
     await _add_db_entries(opp, timestamp)
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         states = session.query(States)
         assert states.count() == 1
 
@@ -332,7 +332,7 @@ async def test_purge_filtered_states(
     assert instance.entity_filter("sensor.excluded") is False
 
     def _add_db_entries(opp: OpenPeerPower) -> None:
-        with recorder.session_scope(opp.opp) as session:
+        with recorder.session_scope(opp=opp) as session:
             # Add states and state_changed events that should be purged
             for days in range(1, 4):
                 timestamp = dt_util.utcnow() - timedelta(days=days)
@@ -416,7 +416,7 @@ async def test_purge_filtered_states(
     service_data = {"keep_days": 10}
     _add_db_entries(opp)
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         states = session.query(States)
         assert states.count() == 74
 
@@ -476,7 +476,7 @@ async def test_purge_filtered_events(
     instance = await async_setup_recorder_instance(opp, config)
 
     def _add_db_entries(opp: OpenPeerPower) -> None:
-        with recorder.session_scope(opp.opp) as session:
+        with recorder.session_scope(opp=opp) as session:
             # Add events that should be purged
             for days in range(1, 4):
                 timestamp = dt_util.utcnow() - timedelta(days=days)
@@ -506,7 +506,7 @@ async def test_purge_filtered_events(
     service_data = {"keep_days": 10}
     _add_db_entries(opp)
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         events_purge = session.query(Events).filter(Events.event_type == "EVENT_PURGE")
         events_keep = session.query(Events).filter(
             Events.event_type == EVENT_STATE_CHANGED
@@ -559,7 +559,7 @@ async def test_purge_filtered_events_state_changed(
     assert instance.entity_filter("sensor.excluded") is True
 
     def _add_db_entries(opp: OpenPeerPower) -> None:
-        with recorder.session_scope(opp.opp) as session:
+        with recorder.session_scope(opp=opp) as session:
             # Add states and state_changed events that should be purged
             for days in range(1, 4):
                 timestamp = dt_util.utcnow() - timedelta(days=days)
@@ -622,7 +622,7 @@ async def test_purge_filtered_events_state_changed(
     service_data = {"keep_days": 10, "apply_filter": True}
     _add_db_entries(opp)
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         events_keep = session.query(Events).filter(Events.event_type == "EVENT_KEEP")
         events_purge = session.query(Events).filter(
             Events.event_type == EVENT_STATE_CHANGED
@@ -675,7 +675,7 @@ async def test_purge_entities(
         await async_wait_purge_done(opp, instance)
 
     def _add_purge_records(opp: OpenPeerPower) -> None:
-        with recorder.session_scope(opp.opp) as session:
+        with recorder.session_scope(opp=opp) as session:
             # Add states and state_changed events that should be purged
             for days in range(1, 4):
                 timestamp = dt_util.utcnow() - timedelta(days=days)
@@ -707,7 +707,7 @@ async def test_purge_entities(
                     )
 
     def _add_keep_records(opp: OpenPeerPower) -> None:
-        with recorder.session_scope(opp.opp) as session:
+        with recorder.session_scope(opp=opp) as session:
             # Add states and state_changed events that should be kept
             timestamp = dt_util.utcnow() - timedelta(days=2)
             for event_id in range(200, 210):
@@ -723,7 +723,7 @@ async def test_purge_entities(
     _add_keep_records(opp)
 
     # Confirm standard service call
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         states = session.query(States)
         assert states.count() == 190
 
@@ -738,7 +738,7 @@ async def test_purge_entities(
     _add_purge_records(opp)
 
     # Confirm each parameter purges only the associated records
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         states = session.query(States)
         assert states.count() == 190
 
@@ -759,7 +759,7 @@ async def test_purge_entities(
     _add_purge_records(opp)
 
     # Confirm calling service without arguments matches all records (default filter behaviour)
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         states = session.query(States)
         assert states.count() == 190
 
@@ -777,7 +777,7 @@ async def _add_test_states(opp: OpenPeerPower, instance: recorder.Recorder):
     await opp.async_block_till_done()
     await async_wait_recording_done(opp, instance)
 
-    with recorder.session_scope(opp.opp) as session:
+    with recorder.session_scope(opp=opp) as session:
         old_state_id = None
         for event_id in range(6):
             if event_id < 2:
@@ -825,7 +825,7 @@ async def _add_test_events(opp: OpenPeerPower, instance: recorder.Recorder):
     await opp.async_block_till_done()
     await async_wait_recording_done(opp, instance)
 
-    with recorder.session_scope(opp.opp) as session:
+    with recorder.session_scope(opp=opp) as session:
         for event_id in range(6):
             if event_id < 2:
                 timestamp = eleven_days_ago
@@ -857,7 +857,7 @@ async def _add_test_recorder_runs(opp: OpenPeerPower, instance: recorder.Recorde
     await opp.async_block_till_done()
     await async_wait_recording_done(opp, instance)
 
-    with recorder.session_scope(opp.opp) as session:
+    with recorder.session_scope(opp=opp) as session:
         for rec_id in range(6):
             if rec_id < 2:
                 timestamp = eleven_days_ago

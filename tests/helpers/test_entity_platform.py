@@ -183,7 +183,7 @@ async def test_adding_entities_with_generator_and_thread_callback(opp):
     def create_entity(number):
         """Create entity helper."""
         entity = MockEntity(unique_id=f"unique{number}")
-        entity.entity_id = async_generate_entity_id(DOMAIN + ".{}", "Number", opp.opp)
+        entity.entity_id = async_generate_entity_id(DOMAIN + ".{}", "Number", opp=opp)
         return entity
 
     await component.async_add_entities(create_entity(i) for i in range(2))

@@ -84,7 +84,7 @@ def entity_reg_fixture(opp):
 
 def _mock_homekit(opp, entry, homekit_mode, entity_filter=None):
     return HomeKit(
-        opp.opp,
+        opp=opp,
         name=BRIDGE_NAME,
         port=DEFAULT_PORT,
         ip_address=None,

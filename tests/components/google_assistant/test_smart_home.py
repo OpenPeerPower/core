@@ -865,7 +865,7 @@ async def test_device_media_player(opp, device_class, google_type):
 
 async def test_query_disconnect(opp):
     """Test a disconnect message."""
-    config = MockConfig(opp.opp)
+    config = MockConfig(opp=opp)
     config.async_enable_report_state()
     assert config._unsub_report_state is not None
     with patch.object(config, "async_disconnect_agent_user") as mock_disconnect:

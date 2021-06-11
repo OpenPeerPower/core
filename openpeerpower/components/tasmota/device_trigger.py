@@ -210,7 +210,7 @@ async def async_setup_trigger(opp, tasmota_trigger, config_entry, discovery_hash
         opp.data[DEVICE_TRIGGERS] = {}
     if discovery_id not in opp.data[DEVICE_TRIGGERS]:
         device_trigger = Trigger(
-            opp.opp,
+            opp=opp,
             device_id=device.id,
             discovery_hash=discovery_hash,
             subtype=tasmota_trigger.cfg.subtype,
@@ -279,7 +279,7 @@ async def async_attach_trigger(
     if discovery_id not in opp.data[DEVICE_TRIGGERS]:
         # The trigger has not (yet) been discovered, prepare it for later
         opp.data[DEVICE_TRIGGERS][discovery_id] = Trigger(
-            opp.opp,
+            opp=opp,
             device_id=device_id,
             discovery_hash=None,
             remove_update_signal=None,

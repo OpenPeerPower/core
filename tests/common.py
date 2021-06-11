@@ -659,7 +659,7 @@ class MockEntityPlatform(entity_platform.EntityPlatform):
             platform.PARALLEL_UPDATES = 0
 
         super().__init__(
-            opp.opp,
+            opp=opp,
             logger=logger,
             domain=domain,
             platform_name=platform_name,

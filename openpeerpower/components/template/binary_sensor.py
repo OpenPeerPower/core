@@ -233,7 +233,7 @@ class BinarySensorTemplate(TemplateEntity, BinarySensorEntity):
         )
         if object_id is not None:
             self.entity_id = async_generate_entity_id(
-                ENTITY_ID_FORMAT, object_id, opp.opp
+                ENTITY_ID_FORMAT, object_id, opp=opp
             )
 
         self._name: str | None = None

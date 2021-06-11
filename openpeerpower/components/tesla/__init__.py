@@ -206,7 +206,7 @@ async def async_setup_entry(opp, config_entry):
 
     await coordinator.async_config_entry_first_refresh()
 
-    all_devices = controller.get_openpeerpower_components()
+    all_devices = controller.get_homeassistant_components()
 
     if not all_devices:
         return False

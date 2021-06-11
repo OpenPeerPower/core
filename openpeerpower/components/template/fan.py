@@ -195,7 +195,7 @@ class TemplateFan(TemplateEntity, FanEntity):
         """Initialize the fan."""
         super().__init__(availability_template=availability_template)
         self.opp = opp
-        self.entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, device_id, opp.opp)
+        self.entity_id = async_generate_entity_id(ENTITY_ID_FORMAT, device_id, opp=opp)
         self._name = friendly_name
 
         self._template = state_template

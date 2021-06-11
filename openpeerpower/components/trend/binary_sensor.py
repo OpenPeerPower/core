@@ -118,7 +118,7 @@ class SensorTrend(BinarySensorEntity):
     ):
         """Initialize the sensor."""
         self._opp = opp
-        self.entity_id = generate_entity_id(ENTITY_ID_FORMAT, device_id, opp.opp)
+        self.entity_id = generate_entity_id(ENTITY_ID_FORMAT, device_id, opp=opp)
         self._name = friendly_name
         self._entity_id = entity_id
         self._attribute = attribute

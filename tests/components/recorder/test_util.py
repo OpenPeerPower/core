@@ -24,7 +24,7 @@ def test_session_scope_not_setup(opp_recorder):
     with patch.object(
         opp.data[DATA_INSTANCE], "get_session", return_value=None
     ), pytest.raises(RuntimeError):
-        with util.session_scope(opp.opp):
+        with util.session_scope(opp=opp):
             pass
 
 
@@ -38,7 +38,7 @@ def test_recorder_bad_commit(opp_recorder):
 
     with patch(
         "openpeerpower.components.recorder.time.sleep"
-    ) as e_mock, util.session_scope(opp.opp) as session:
+    ) as e_mock, util.session_scope(opp=opp) as session:
         res = util.commit(session, work)
     assert res is False
     assert e_mock.call_count == 3
@@ -229,7 +229,7 @@ def test_end_incomplete_runs(opp_recorder, caplog):
     """Ensure we can end incomplete runs."""
     opp = opp_recorder()
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         run_info = run_information_with_session(session)
         assert isinstance(run_info, RecorderRuns)
         assert run_info.closed_incorrect is False

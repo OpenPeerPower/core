@@ -503,7 +503,7 @@ class Group(Entity):
         )
 
         group.entity_id = async_generate_entity_id(
-            ENTITY_ID_FORMAT, object_id or name, opp.opp
+            ENTITY_ID_FORMAT, object_id or name, opp=opp
         )
 
         # If called before the platform async_setup is called (test cases)

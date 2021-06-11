@@ -47,7 +47,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         raise ConfigEntryNotReady from error
 
     coordinator = OmniLogicUpdateCoordinator(
-        opp.opp,
+        opp=opp,
         api=api,
         name="Omnilogic",
         config_entry=entry,

@@ -178,7 +178,7 @@ async def async_setup_services(opp: OpenPeerPower) -> None:
     )
 
     async_register_admin_service(
-        opp.opp,
+        opp=opp,
         domain=HMIPC_DOMAIN,
         service=SERVICE_DUMP_HAP_CONFIG,
         service_func=async_call_hmipc_service,
@@ -186,7 +186,7 @@ async def async_setup_services(opp: OpenPeerPower) -> None:
     )
 
     async_register_admin_service(
-        opp.opp,
+        opp=opp,
         domain=HMIPC_DOMAIN,
         service=SERVICE_RESET_ENERGY_COUNTER,
         service_func=async_call_hmipc_service,

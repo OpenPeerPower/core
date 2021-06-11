@@ -87,7 +87,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
     devices = []
     for monitored_variable in monitored_variables:
         new_device = HpIloSensor(
-            opp.opp,
+            opp=opp,
             hp_ilo_data=hp_ilo_data,
             sensor_name=f"{config.get(CONF_NAME)} {monitored_variable[CONF_NAME]}",
             sensor_type=monitored_variable[CONF_SENSOR_TYPE],

@@ -76,7 +76,7 @@ def compile_statistics(instance: Recorder, start: datetime.datetime) -> bool:
 
 def statistics_during_period(opp, start_time, end_time=None, statistic_id=None):
     """Return states changes during UTC period start_time - end_time."""
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         baked_query = opp.data[STATISTICS_BAKERY](
             lambda session: session.query(*QUERY_STATISTICS)
         )
@@ -105,7 +105,7 @@ def statistics_during_period(opp, start_time, end_time=None, statistic_id=None):
 
 def get_last_statistics(opp, number_of_stats, statistic_id=None):
     """Return the last number_of_stats statistics."""
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         baked_query = opp.data[STATISTICS_BAKERY](
             lambda session: session.query(*QUERY_STATISTICS)
         )

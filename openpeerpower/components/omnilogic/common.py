@@ -41,7 +41,7 @@ class OmniLogicUpdateCoordinator(DataUpdateCoordinator):
         self.config_entry = config_entry
 
         super().__init__(
-            opp.opp,
+            opp=opp,
             logger=_LOGGER,
             name=name,
             update_interval=timedelta(seconds=polling_interval),

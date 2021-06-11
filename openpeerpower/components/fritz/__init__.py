@@ -25,7 +25,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up fritzboxtools from config entry."""
     _LOGGER.debug("Setting up FRITZ!Box Tools component")
     fritz_tools = FritzBoxTools(
-        opp.opp,
+        opp=opp,
         host=entry.data[CONF_HOST],
         port=entry.data[CONF_PORT],
         username=entry.data[CONF_USERNAME],

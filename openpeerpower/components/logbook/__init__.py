@@ -444,7 +444,7 @@ def _get_events(
     if entity_ids is not None:
         entities_filter = generate_filter([], entity_ids, [], [])
 
-    with session_scope(opp.opp) as session:
+    with session_scope(opp=opp) as session:
         old_state = aliased(States, name="old_state")
 
         if entity_ids is not None:

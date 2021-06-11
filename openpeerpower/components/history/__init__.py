@@ -245,7 +245,7 @@ class HistoryPeriodView(OpenPeerPowerView):
         """Fetch significant stats from the database as json."""
         timer_start = time.perf_counter()
 
-        with session_scope(opp.opp) as session:
+        with session_scope(opp=opp) as session:
             result = (
                 history._get_significant_states(  # pylint: disable=protected-access
                     opp,

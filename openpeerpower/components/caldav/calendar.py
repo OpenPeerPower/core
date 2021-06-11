@@ -92,7 +92,7 @@ def setup_platform(opp, config, add_entities, disc_info=None):
 
             name = cust_calendar[CONF_NAME]
             device_id = f"{cust_calendar[CONF_CALENDAR]} {cust_calendar[CONF_NAME]}"
-            entity_id = generate_entity_id(ENTITY_ID_FORMAT, device_id, opp.opp)
+            entity_id = generate_entity_id(ENTITY_ID_FORMAT, device_id, opp=opp)
             calendar_devices.append(
                 WebDavCalendarEventDevice(
                     name, calendar, entity_id, days, True, cust_calendar[CONF_SEARCH]
@@ -103,7 +103,7 @@ def setup_platform(opp, config, add_entities, disc_info=None):
         if not config[CONF_CUSTOM_CALENDARS]:
             name = calendar.name
             device_id = calendar.name
-            entity_id = generate_entity_id(ENTITY_ID_FORMAT, device_id, opp.opp)
+            entity_id = generate_entity_id(ENTITY_ID_FORMAT, device_id, opp=opp)
             calendar_devices.append(
                 WebDavCalendarEventDevice(name, calendar, entity_id, days)
             )
