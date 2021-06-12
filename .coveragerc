@@ -462,9 +462,6 @@ omit =
     openpeerpower/components/keyboard_remote/*
     openpeerpower/components/kira/*
     openpeerpower/components/kiwi/lock.py
-    openpeerpower/components/knx/*
-    openpeerpower/components/knx/climate.py
-    openpeerpower/components/knx/cover.py
     openpeerpower/components/kodi/__init__.py
     openpeerpower/components/kodi/browse_media.py
     openpeerpower/components/kodi/const.py

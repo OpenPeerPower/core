@@ -129,7 +129,6 @@ openpeerpower/components/ecovacs/* @OverloadUT
 openpeerpower/components/edl21/* @mtdcr
 openpeerpower/components/egardia/* @jeroenterheerdt
 openpeerpower/components/eight_sleep/* @mezz64
-openpeerpower/components/elgato/* @frenck
 openpeerpower/components/elkm1/* @gwww @bdraco
 openpeerpower/components/elv/* @majuss
 openpeerpower/components/emby/* @mezz64
@@ -242,7 +241,6 @@ openpeerpower/components/keenetic_ndms2/* @foxel
 openpeerpower/components/kef/* @basnijholt
 openpeerpower/components/keyboard_remote/* @bendavid
 openpeerpower/components/kmtronic/* @dgomes
-openpeerpower/components/knx/* @Julius2342 @farmio @marvin-w
 openpeerpower/components/kodi/* @OnFreund @cgtobi
 openpeerpower/components/konnected/* @heythisisnate @kit-klein
 openpeerpower/components/kulersky/* @emlove

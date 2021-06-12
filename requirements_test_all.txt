@@ -266,9 +266,6 @@ dsmr_parser==0.29
 # openpeerpower.components.dynalite
 dynalite_devices==0.1.46
 
-# openpeerpower.components.elgato
-elgato==2.1.1
-
 # openpeerpower.components.elkm1
 elkm1-lib==0.8.10
 

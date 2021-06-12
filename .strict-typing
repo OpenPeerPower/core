@@ -26,7 +26,6 @@ openpeerpower.components.device_automation.*
 openpeerpower.components.device_tracker.*
 openpeerpower.components.dnsip.*
 openpeerpower.components.dunehd.*
-openpeerpower.components.elgato.*
 openpeerpower.components.fitbit.*
 openpeerpower.components.fritzbox.*
 openpeerpower.components.frontend.*
@@ -39,7 +38,6 @@ openpeerpower.components.huawei_lte.*
 openpeerpower.components.hyperion.*
 openpeerpower.components.image_processing.*
 openpeerpower.components.integration.*
-openpeerpower.components.knx.*
 openpeerpower.components.light.*
 openpeerpower.components.local_ip.*
 openpeerpower.components.lock.*

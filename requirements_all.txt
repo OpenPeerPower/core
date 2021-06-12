@@ -508,9 +508,6 @@ ebusdpy==0.0.16
 # openpeerpower.components.ecoal_boiler
 ecoaliface==0.4.0
 
-# openpeerpower.components.elgato
-elgato==2.1.1
-
 # openpeerpower.components.eliqonline
 eliqonline==1.2.2
 
@@ -2262,9 +2259,6 @@ xbox-webapi==2.0.11
 
 # openpeerpower.components.xbox_live
 xboxapi==2.0.1
-
-# openpeerpower.components.knx
-xknx==0.18.5
 
 # openpeerpower.components.bluesound
 # openpeerpower.components.rest
