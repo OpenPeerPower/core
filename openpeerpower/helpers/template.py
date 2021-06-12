@@ -1483,7 +1483,7 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
 
             return contextfunction(wrapper)
 
-        self.globals["device_entities"] = opp.unction(device_entities)
+        self.globals["device_entities"] = oppfunction(device_entities)
         self.filters["device_entities"] = pass_context(self.globals["device_entities"])
 
         if limited:
@@ -1515,17 +1515,17 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
                 self.filters[filt] = unsupported(filt)
             return
 
-        self.globals["expand"] = opp.unction(expand)
+        self.globals["expand"] = oppfunction(expand)
         self.filters["expand"] = pass_context(self.globals["expand"])
-        self.globals["closest"] = opp.unction(closest)
-        self.filters["closest"] = pass_context(opp.unction(closest_filter))
-        self.globals["distance"] = opp.unction(distance)
-        self.globals["is_state"] = opp.unction(is_state)
-        self.globals["is_state_attr"] = opp.unction(is_state_attr)
-        self.globals["state_attr"] = opp.unction(state_attr)
+        self.globals["closest"] = oppfunction(closest)
+        self.filters["closest"] = pass_context(oppfunction(closest_filter))
+        self.globals["distance"] = oppfunction(distance)
+        self.globals["is_state"] = oppfunction(is_state)
+        self.globals["is_state_attr"] = oppfunction(is_state_attr)
+        self.globals["state_attr"] = oppfunction(state_attr)
         self.globals["states"] = AllStates(opp)
-        self.globals["utcnow"] = opp.unction(utcnow)
-        self.globals["now"] = opp.unction(now)
+        self.globals["utcnow"] = oppfunction(utcnow)
+        self.globals["now"] = oppfunction(now)
 
     def is_safe_callable(self, obj):
         """Test if callback is safe."""
