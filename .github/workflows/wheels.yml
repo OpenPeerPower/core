@@ -25,14 +25,14 @@ jobs:
 
       - name: Get information
         id: info
-        uses: openpeerpower/actions/helpers/info@master
+        uses: openpeerpower/actions/helpers/info@main
 
       - name: Create requirements_diff file
         run: |
           if [[ ${{ github.event_name }} =~ (schedule|workflow_dispatch) ]]; then
             touch requirements_diff.txt
           else
-            curl -s -o requirements_diff.txt https://raw.githubusercontent.com/openpeerpower/core/master/requirements.txt
+            curl -s -o requirements_diff.txt https://raw.githubusercontent.com/openpeerpower/core/main/requirements.txt
           fi
 
       - name: Write env-file
