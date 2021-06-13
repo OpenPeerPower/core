@@ -60,11 +60,6 @@ ZEROCONF = {
             "domain": "devolo_home_control"
         }
     ],
-    "_elg._tcp.local.": [
-        {
-            "domain": "elgato"
-        }
-    ],
     "_enphase-envoy._tcp.local.": [
         {
             "domain": "enphase_envoy"
