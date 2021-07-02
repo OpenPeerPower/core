@@ -34,16 +34,16 @@ jobs:
 
       - name: Get information
         id: info
-        uses: openpeerpower/actions/helpers/info@master
+        uses: openpeerpower/actions/helpers/info@main
 
       - name: Get version
         id: version
-        uses: openpeerpower/actions/helpers/version@master
+        uses: openpeerpower/actions/helpers/version@main
         with:
           type: ${{ env.BUILD_TYPE }}
 
       - name: Verify version
-        uses: openpeerpower/actions/helpers/verify-version@master
+        uses: openpeerpower/actions/helpers/verify-version@main
         with:
           ignore-dev: true
 
@@ -179,14 +179,14 @@ jobs:
         uses: actions/checkout@v2.3.4
 
       - name: Initialize git
-        uses: openpeerpower/actions/helpers/git-init@master
+        uses: openpeerpower/actions/helpers/git-init@main
         with:
           name: ${{ secrets.GIT_NAME }}
           email: ${{ secrets.GIT_EMAIL }}
           token: ${{ secrets.GIT_TOKEN }}
 
       - name: Update version file
-        uses: openpeerpower/actions/helpers/version-push@master
+        uses: openpeerpower/actions/helpers/version-push@main
         with:
           key: "openpeerpower[]"
           key-description: "Open Peer Power Core"
@@ -195,7 +195,7 @@ jobs:
 
       - name: Update version file (stable -> beta)
         if: needs.init.outputs.channel == 'stable'
-        uses: openpeerpower/actions/helpers/version-push@master
+        uses: openpeerpower/actions/helpers/version-push@main
         with:
           key: "openpeerpower[]"
           key-description: "Open Peer Power Core"
