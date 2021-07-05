@@ -4,16 +4,16 @@
 # https://github.com/blog/2392-introducing-code-owners
 
 # Open Peer Power Core
-setup.py @open-peer-power/core
-openpeerpower/*.py @open-peer-power/core
-openpeerpower/helpers/* @open-peer-power/core
-openpeerpower/util/* @open-peer-power/core
+setup.py @openpeerpower/core
+openpeerpower/*.py @openpeerpower/core
+openpeerpower/helpers/* @openpeerpower/core
+openpeerpower/util/* @openpeerpower/core
 
 # Open Peer Power Supervisor
-build.json @open-peer-power/supervisor
-machine/* @open-peer-power/supervisor
-rootfs/* @open-peer-power/supervisor
-Dockerfile @open-peer-power/supervisor
+build.json @openpeerpower/supervisor
+machine/* @openpeerpower/supervisor
+rootfs/* @openpeerpower/supervisor
+Dockerfile @openpeerpower/supervisor
 
 # Other code
 openpeerpower/scripts/check_config.py @kellerza
@@ -78,6 +78,7 @@ openpeerpower/components/brunt/* @eavanvalkenburg
 openpeerpower/components/bsblan/* @liudger
 openpeerpower/components/bt_smarthub/* @jxwolstenholme
 openpeerpower/components/buienradar/* @mjj4791 @ties @Robbie1221
+openpeerpower/components/cast/* @emontnemery
 openpeerpower/components/cert_expiry/* @Cereal2nd @jjlawren
 openpeerpower/components/circuit/* @braam
 openpeerpower/components/cisco_ios/* @fbradyirl
@@ -129,6 +130,7 @@ openpeerpower/components/ecovacs/* @OverloadUT
 openpeerpower/components/edl21/* @mtdcr
 openpeerpower/components/egardia/* @jeroenterheerdt
 openpeerpower/components/eight_sleep/* @mezz64
+openpeerpower/components/elgato/* @frenck
 openpeerpower/components/elkm1/* @gwww @bdraco
 openpeerpower/components/elv/* @majuss
 openpeerpower/components/emby/* @mezz64
@@ -143,6 +145,7 @@ openpeerpower/components/ephember/* @ttroy50
 openpeerpower/components/epson/* @pszafer
 openpeerpower/components/epsonworkforce/* @ThaStealth
 openpeerpower/components/eq3btsmart/* @rytilahti
+openpeerpower/components/esphome/* @OttoWinter
 openpeerpower/components/essent/* @TheLastProject
 openpeerpower/components/evohome/* @zxdavb
 openpeerpower/components/ezviz/* @RenierM26 @baqs
@@ -339,8 +342,8 @@ openpeerpower/components/orangepi_gpio/* @pascallj
 openpeerpower/components/oru/* @bvlaicu
 openpeerpower/components/ovo_energy/* @timmo001
 openpeerpower/components/ozw/* @cgarwood @marcelveldt @MartinHjelmare
-openpeerpower/components/panel_custom/* @open-peer-power/frontend
-openpeerpower/components/panel_iframe/* @open-peer-power/frontend
+openpeerpower/components/panel_custom/* @openpeerpower/frontend
+openpeerpower/components/panel_iframe/* @openpeerpower/frontend
 openpeerpower/components/pcal9535a/* @Shulyaka
 openpeerpower/components/persistent_notification/* @openpeerpower/core
 openpeerpower/components/philips_js/* @elupus
@@ -456,7 +459,7 @@ openpeerpower/components/surepetcare/* @benleb
 openpeerpower/components/swiss_hydrological_data/* @fabaff
 openpeerpower/components/swiss_public_transport/* @fabaff
 openpeerpower/components/switchbot/* @danielhiversen
-openpeerpower/components/switcher_kis/* @tomerfi @thecode
+openpeerpower/components/switcher_kis/* @tomerfi
 openpeerpower/components/switchmate/* @danielhiversen
 openpeerpower/components/syncthru/* @nielstron
 openpeerpower/components/synology_dsm/* @hacf-fr @Quentame @mib1185
@@ -484,7 +487,7 @@ openpeerpower/components/toon/* @frenck
 openpeerpower/components/totalconnect/* @austinmroczek
 openpeerpower/components/tplink/* @rytilahti @thegardenmonkey
 openpeerpower/components/traccar/* @ludeeus
-openpeerpower/components/trace/* @openpeerpower./core
+openpeerpower/components/trace/* @openpeerpower/core
 openpeerpower/components/trafikverket_train/* @endor-force
 openpeerpower/components/trafikverket_weatherstation/* @endor-force
 openpeerpower/components/transmission/* @engrbm87 @JPHutchins

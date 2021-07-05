@@ -60,14 +60,29 @@ ZEROCONF = {
             "domain": "devolo_home_control"
         }
     ],
+    "_elg._tcp.local.": [
+        {
+            "domain": "elgato"
+        }
+    ],
     "_enphase-envoy._tcp.local.": [
         {
             "domain": "enphase_envoy"
         }
     ],
+    "_esphomelib._tcp.local.": [
+        {
+            "domain": "esphome"
+        }
+    ],
     "_fbx-api._tcp.local.": [
         {
             "domain": "freebox"
+        }
+    ],
+    "_googlecast._tcp.local.": [
+        {
+            "domain": "cast"
         }
     ],
     "_hap._tcp.local.": [
