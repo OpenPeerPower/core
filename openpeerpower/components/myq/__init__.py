@@ -17,7 +17,7 @@ from .const import DOMAIN, MYQ_COORDINATOR, MYQ_GATEWAY, PLATFORMS, UPDATE_INTER
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up MyQ from a config entry."""
 
     opp.data.setdefault(DOMAIN, {})

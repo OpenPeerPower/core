@@ -90,7 +90,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up DoorBird from a config entry."""
 
     _async_import_options_from_data_if_missing(opp, entry)

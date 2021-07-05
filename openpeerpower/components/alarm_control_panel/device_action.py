@@ -68,22 +68,51 @@ async def async_get_actions(opp: OpenPeerPower, device_id: str) -> list[dict[str
 
         supported_features = state.attributes[ATTR_SUPPORTED_FEATURES]
 
-        base_action = {
-            CONF_DEVICE_ID: device_id,
-            CONF_DOMAIN: DOMAIN,
-            CONF_ENTITY_ID: entry.entity_id,
-        }
-
         # Add actions for each entity that belongs to this integration
         if supported_features & SUPPORT_ALARM_ARM_AWAY:
-            actions.append({**base_action, CONF_TYPE: "arm_away"})
+            actions.append(
+                {
+                    CONF_DEVICE_ID: device_id,
+                    CONF_DOMAIN: DOMAIN,
+                    CONF_ENTITY_ID: entry.entity_id,
+                    CONF_TYPE: "arm_away",
+                }
+            )
         if supported_features & SUPPORT_ALARM_ARM_HOME:
-            actions.append({**base_action, CONF_TYPE: "arm_home"})
+            actions.append(
+                {
+                    CONF_DEVICE_ID: device_id,
+                    CONF_DOMAIN: DOMAIN,
+                    CONF_ENTITY_ID: entry.entity_id,
+                    CONF_TYPE: "arm_home",
+                }
+            )
         if supported_features & SUPPORT_ALARM_ARM_NIGHT:
-            actions.append({**base_action, CONF_TYPE: "arm_night"})
-        actions.append({**base_action, CONF_TYPE: "disarm"})
+            actions.append(
+                {
+                    CONF_DEVICE_ID: device_id,
+                    CONF_DOMAIN: DOMAIN,
+                    CONF_ENTITY_ID: entry.entity_id,
+                    CONF_TYPE: "arm_night",
+                }
+            )
+        actions.append(
+            {
+                CONF_DEVICE_ID: device_id,
+                CONF_DOMAIN: DOMAIN,
+                CONF_ENTITY_ID: entry.entity_id,
+                CONF_TYPE: "disarm",
+            }
+        )
         if supported_features & SUPPORT_ALARM_TRIGGER:
-            actions.append({**base_action, CONF_TYPE: "trigger"})
+            actions.append(
+                {
+                    CONF_DEVICE_ID: device_id,
+                    CONF_DOMAIN: DOMAIN,
+                    CONF_ENTITY_ID: entry.entity_id,
+                    CONF_TYPE: "trigger",
+                }
+            )
 
     return actions
 

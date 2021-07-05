@@ -174,7 +174,7 @@ def validate_child(
     child: ChildSensor,
     value_type: int | None = None,
 ) -> defaultdict[str, list[DevId]]:
-    """Validate a child. Returns a dict mapping opp.platform names to list of DevId."""
+    """Validate a child. Returns a dict mapping opp platform names to list of DevId."""
     validated: defaultdict[str, list[DevId]] = defaultdict(list)
     pres: IntEnum = gateway.const.Presentation
     set_req: IntEnum = gateway.const.SetReq

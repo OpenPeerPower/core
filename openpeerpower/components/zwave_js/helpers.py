@@ -10,14 +10,8 @@ from zwave_js_server.model.value import Value as ZwaveValue
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import __version__ as HA_VERSION
 from openpeerpower.core import OpenPeerPower, callback
-from openpeerpower.helpers.device_registry import (
-    DeviceRegistry,
-    async_get as async_get_dev_reg,
-)
-from openpeerpower.helpers.entity_registry import (
-    EntityRegistry,
-    async_get as async_get_ent_reg,
-)
+from openpeerpower.helpers.device_registry import async_get as async_get_dev_reg
+from openpeerpower.helpers.entity_registry import async_get as async_get_ent_reg
 
 from .const import CONF_DATA_COLLECTION_OPTED_IN, DATA_CLIENT, DOMAIN
 
@@ -66,17 +60,13 @@ def get_home_and_node_id_from_device_id(device_id: tuple[str, ...]) -> list[str]
 
 
 @callback
-def async_get_node_from_device_id(
-    opp: OpenPeerPower, device_id: str, dev_reg: DeviceRegistry | None = None
-) -> ZwaveNode:
+def async_get_node_from_device_id(opp: OpenPeerPower, device_id: str) -> ZwaveNode:
     """
     Get node from a device ID.
 
     Raises ValueError if device is invalid or node can't be found.
     """
-    if not dev_reg:
-        dev_reg = async_get_dev_reg(opp)
-    device_entry = dev_reg.async_get(device_id)
+    device_entry = async_get_dev_reg(opp).async_get(device_id)
 
     if not device_entry:
         raise ValueError("Device ID is not valid")
@@ -121,25 +111,21 @@ def async_get_node_from_device_id(
 
 
 @callback
-def async_get_node_from_entity_id(
-    opp: OpenPeerPower,
-    entity_id: str,
-    ent_reg: EntityRegistry | None = None,
-    dev_reg: DeviceRegistry | None = None,
-) -> ZwaveNode:
+def async_get_node_from_entity_id(opp: OpenPeerPower, entity_id: str) -> ZwaveNode:
     """
     Get node from an entity ID.
 
     Raises ValueError if entity is invalid.
     """
-    if not ent_reg:
-        ent_reg = async_get_ent_reg(opp)
-    entity_entry = ent_reg.async_get(entity_id)
+    entity_entry = async_get_ent_reg(opp).async_get(entity_id)
 
-    if entity_entry is None or entity_entry.platform != DOMAIN:
-        raise ValueError(f"Entity {entity_id} is not a valid {DOMAIN} entity.")
+    if not entity_entry:
+        raise ValueError("Entity ID is not valid")
+
+    if entity_entry.platform != DOMAIN:
+        raise ValueError("Entity is not from zwave_js integration")
 
     # Assert for mypy, safe because we know that zwave_js entities are always
     # tied to a device
     assert entity_entry.device_id
-    return async_get_node_from_device_id(opp, entity_entry.device_id, dev_reg)
+    return async_get_node_from_device_id(opp, entity_entry.device_id)

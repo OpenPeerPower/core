@@ -16,7 +16,7 @@ from .const import (
     MIN_SEGMENT_DURATION,
     PACKETS_TO_WAIT_FOR_AUDIO,
     SEGMENT_CONTAINER_FORMAT,
-    SOURCE_TIMEOUT,
+    STREAM_TIMEOUT,
 )
 from .core import Segment, StreamOutput
 from .fmp4utils import get_init_and_moof_data
@@ -32,9 +32,7 @@ class SegmentBuffer:
         self._stream_id = 0
         self._outputs_callback = outputs_callback
         self._outputs: list[StreamOutput] = []
-        # sequence gets incremented before the first segment so the first segment
-        # has a sequence number of 0.
-        self._sequence = -1
+        self._sequence = 0
         self._segment_start_pts = None
         self._memory_file: BytesIO = cast(BytesIO, None)
         self._av_output: av.container.OutputContainer = None
@@ -149,7 +147,7 @@ def stream_worker(source, options, segment_buffer, quit_event):  # noqa: C901
     """Handle consuming streams."""
 
     try:
-        container = av.open(source, options=options, timeout=SOURCE_TIMEOUT)
+        container = av.open(source, options=options, timeout=STREAM_TIMEOUT)
     except av.AVError:
         _LOGGER.error("Error opening stream %s", redact_credentials(str(source)))
         return

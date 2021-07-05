@@ -535,17 +535,12 @@ class FanCapabilities(AlexaEntity):
         if supported & fan.SUPPORT_SET_SPEED:
             yield AlexaPercentageController(self.entity)
             yield AlexaPowerLevelController(self.entity)
-            # The use of legacy speeds is deprecated in the schema, support will be removed after a quarter (2021.7)
             yield AlexaRangeController(
                 self.entity, instance=f"{fan.DOMAIN}.{fan.ATTR_SPEED}"
             )
         if supported & fan.SUPPORT_OSCILLATE:
             yield AlexaToggleController(
                 self.entity, instance=f"{fan.DOMAIN}.{fan.ATTR_OSCILLATING}"
-            )
-        if supported & fan.SUPPORT_PRESET_MODE:
-            yield AlexaModeController(
-                self.entity, instance=f"{fan.DOMAIN}.{fan.ATTR_PRESET_MODE}"
             )
         if supported & fan.SUPPORT_DIRECTION:
             yield AlexaModeController(
@@ -874,7 +869,7 @@ class CameraCapabilities(AlexaEntity):
         yield Alexa(self.opp)
 
     def _check_requirements(self):
-        """Check the opp.URL for HTTPS scheme."""
+        """Check the opp URL for HTTPS scheme."""
         if "stream" not in self.opp.config.components:
             _LOGGER.debug(
                 "%s requires stream component for AlexaCameraStreamController",

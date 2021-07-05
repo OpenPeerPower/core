@@ -83,30 +83,30 @@ async def async_setup(opp: OpenPeerPower, base_config: dict) -> bool:
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Do setup of vera."""
     # Use options entered during initial config flow or provided from configuration.yml
-    if entry.data.get(CONF_LIGHTS) or entry.data.get(CONF_EXCLUDE):
+    if config_entry.data.get(CONF_LIGHTS) or config_entry.data.get(CONF_EXCLUDE):
         opp.config_entries.async_update_entry(
-            entry=entry,
-            data=entry.data,
+            entry=config_entry,
+            data=config_entry.data,
             options=new_options(
-                entry.data.get(CONF_LIGHTS, []),
-                entry.data.get(CONF_EXCLUDE, []),
+                config_entry.data.get(CONF_LIGHTS, []),
+                config_entry.data.get(CONF_EXCLUDE, []),
             ),
         )
 
-    saved_light_ids = entry.options.get(CONF_LIGHTS, [])
-    saved_exclude_ids = entry.options.get(CONF_EXCLUDE, [])
+    saved_light_ids = config_entry.options.get(CONF_LIGHTS, [])
+    saved_exclude_ids = config_entry.options.get(CONF_EXCLUDE, [])
 
-    base_url = entry.data[CONF_CONTROLLER]
+    base_url = config_entry.data[CONF_CONTROLLER]
     light_ids = fix_device_id_list(saved_light_ids)
     exclude_ids = fix_device_id_list(saved_exclude_ids)
 
     # If the ids were corrected. Update the config entry.
     if light_ids != saved_light_ids or exclude_ids != saved_exclude_ids:
         opp.config_entries.async_update_entry(
-            entry=entry, options=new_options(light_ids, exclude_ids)
+            entry=config_entry, options=new_options(light_ids, exclude_ids)
         )
 
     # Initialize the Vera controller.
@@ -139,15 +139,15 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         controller=controller,
         devices=vera_devices,
         scenes=vera_scenes,
-        config_entry=entry,
+        config_entry=config_entry,
     )
 
-    set_controller_data(opp, entry, controller_data)
+    set_controller_data(opp, config_entry, controller_data)
 
     # Forward the config data to the necessary platforms.
     for platform in get_configured_platforms(controller_data):
         opp.async_create_task(
-            opp.config_entries.async_forward_entry_setup(entry, platform)
+            opp.config_entries.async_forward_entry_setup(config_entry, platform)
         )
 
     def stop_subscription(event):
@@ -155,11 +155,13 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         controller.stop()
 
     await opp.async_add_executor_job(controller.start)
-    entry.async_on_unload(
+    config_entry.async_on_unload(
         opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, stop_subscription)
     )
 
-    entry.async_on_unload(entry.add_update_listener(_async_update_listener))
+    config_entry.async_on_unload(
+        config_entry.add_update_listener(_async_update_listener)
+    )
     return True
 
 

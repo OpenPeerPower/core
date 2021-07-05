@@ -642,7 +642,7 @@ def _load_file(
 
 
 class ModuleWrapper:
-    """Class to wrap a Python module and auto fill in opp.argument."""
+    """Class to wrap a Python module and auto fill in opp argument."""
 
     def __init__(self, opp: OpenPeerPower, module: ModuleType) -> None:
         """Initialize the module wrapper."""

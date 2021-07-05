@@ -213,7 +213,7 @@ async def test_switches_can_be_enabled(opp: OpenPeerPower) -> None:
             assert not updated_entry.disabled
             await opp.async_block_till_done()
 
-            async_fire_time_changed(
+            async_fire_time_changed(  # type: ignore[no-untyped-call]
                 opp,
                 dt.utcnow() + timedelta(seconds=RELOAD_AFTER_UPDATE_DELAY + 1),
             )

@@ -124,7 +124,7 @@ class TodSensor(BinarySensorEntity):
             # Convert local time provided to UTC today
             # datetime.combine(date, time, tzinfo) is not supported
             # in python 3.5. The self._after is provided
-            # with opp.configured TZ not system wide
+            # with opp configured TZ not system wide
             after_event_date = self._naive_time_to_utc_datetime(self._after)
 
         self._time_after = after_event_date
@@ -156,6 +156,26 @@ class TodSensor(BinarySensorEntity):
         self._time_after += self._after_offset
         self._time_before += self._before_offset
 
+    def _turn_to_next_day(self):
+        """Turn to to the next day."""
+        if is_sun_event(self._after):
+            self._time_after = get_astral_event_next(
+                self.opp, self._after, self._time_after - self._after_offset
+            )
+            self._time_after += self._after_offset
+        else:
+            # Offset is already there
+            self._time_after += timedelta(days=1)
+
+        if is_sun_event(self._before):
+            self._time_before = get_astral_event_next(
+                self.opp, self._before, self._time_before - self._before_offset
+            )
+            self._time_before += self._before_offset
+        else:
+            # Offset is already there
+            self._time_before += timedelta(days=1)
+
     async def async_added_to_opp(self):
         """Call when entity about to be added to Open Peer Power."""
         self._calculate_boudary_time()
@@ -182,7 +202,7 @@ class TodSensor(BinarySensorEntity):
         if now < self._time_before:
             self._next_update = self._time_before
             return
-        self._calculate_boudary_time()
+        self._turn_to_next_day()
         self._next_update = self._time_after
 
     @callback

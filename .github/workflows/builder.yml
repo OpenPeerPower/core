@@ -115,7 +115,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build base image
-        uses: openpeerpower/builder@2021.05.0
+        uses: openpeerpower/builder@2021.06.2
         with:
           args: |
             $BUILD_ARGS \
@@ -161,7 +161,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build base image
-        uses: openpeerpower/builder@2021.05.0
+        uses: openpeerpower/builder@2021.06.2
         with:
           args: |
             $BUILD_ARGS \
@@ -235,46 +235,46 @@ jobs:
             local tag_l=${2}
             local tag_r=${3}
 
-            docker manifest create "${docker_reg}/open-peer-power:${tag_l}" \
+            docker manifest create "${docker_reg}/openpeerpower:${tag_l}" \
               "${docker_reg}/amd64-openpeerpower:${tag_r}" \
               "${docker_reg}/i386-openpeerpower:${tag_r}" \
               "${docker_reg}/armhf-openpeerpower:${tag_r}" \
               "${docker_reg}/armv7-openpeerpower:${tag_r}" \
               "${docker_reg}/aarch64-openpeerpower:${tag_r}"
 
-            docker manifest annotate "${docker_reg}/open-peer-power:${tag_l}" \
+            docker manifest annotate "${docker_reg}/openpeerpower:${tag_l}" \
               "${docker_reg}/amd64-openpeerpower:${tag_r}" \
               --os linux --arch amd64
 
-            docker manifest annotate "${docker_reg}/open-peer-power:${tag_l}" \
+            docker manifest annotate "${docker_reg}/openpeerpower:${tag_l}" \
               "${docker_reg}/i386-openpeerpower:${tag_r}" \
               --os linux --arch 386
 
-            docker manifest annotate "${docker_reg}/open-peer-power:${tag_l}" \
+            docker manifest annotate "${docker_reg}/openpeerpower:${tag_l}" \
               "${docker_reg}/armhf-openpeerpower:${tag_r}" \
               --os linux --arch arm --variant=v6
 
-            docker manifest annotate "${docker_reg}/open-peer-power:${tag_l}" \
+            docker manifest annotate "${docker_reg}/openpeerpower:${tag_l}" \
               "${docker_reg}/armv7-openpeerpower:${tag_r}" \
               --os linux --arch arm --variant=v7
 
-            docker manifest annotate "${docker_reg}/open-peer-power:${tag_l}" \
+            docker manifest annotate "${docker_reg}/openpeerpower:${tag_l}" \
               "${docker_reg}/aarch64-openpeerpower:${tag_r}" \
               --os linux --arch arm64 --variant=v8
 
-            docker manifest push --purge "${docker_reg}/open-peer-power:${tag_l}"
+            docker manifest push --purge "${docker_reg}/openpeerpower:${tag_l}"
           }
 
           function validate_image() {
             local image=${1}
-            state="$(vcn authenticate --org open-peer-power.io --output json docker://${image} | jq '.verification.status // 2')"
+            state="$(vcn authenticate --org openpeerpower.io --output json docker://${image} | jq '.verification.status // 2')"
             if [[ "${state}" != "0" ]]; then
               echo "Invalid signature!"
               exit 1
             fi
           }
 
-          for docker_reg in "openpeerpower" "ghcr.io/open-peer-power"; do
+          for docker_reg in "openpeerpower" "ghcr.io/openpeerpower"; do
             docker pull "${docker_reg}/amd64-openpeerpower:${{ needs.init.outputs.version }}"
             docker pull "${docker_reg}/i386-openpeerpower:${{ needs.init.outputs.version }}"
             docker pull "${docker_reg}/armhf-openpeerpower:${{ needs.init.outputs.version }}"

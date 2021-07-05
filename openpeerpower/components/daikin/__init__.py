@@ -27,7 +27,7 @@ PLATFORMS = ["climate", "sensor", "switch"]
 CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Establish connection with Daikin."""
     conf = entry.data
     # For backwards compat, set unique ID

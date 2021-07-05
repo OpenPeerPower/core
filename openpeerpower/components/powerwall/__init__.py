@@ -83,7 +83,7 @@ async def _async_handle_api_changed_error(
     )
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Tesla Powerwall from a config entry."""
 
     entry_id = entry.entry_id

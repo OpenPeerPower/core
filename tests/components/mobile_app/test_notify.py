@@ -12,7 +12,7 @@ from tests.common import MockConfigEntry
 @pytest.fixture
 async def setup_push_receiver(opp, aioclient_mock, opp_admin_user):
     """Fixture that sets up a mocked push receiver."""
-    push_url = "https://mobile-push.open-peer-power.dev/push"
+    push_url = "https://mobile-push.openpeerpower.dev/push"
 
     now = datetime.now() + timedelta(hours=24)
     iso_time = now.strftime("%Y-%m-%dT%H:%M:%SZ")

@@ -74,7 +74,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Point from a config entry."""
 
     async def token_saver(token, **kwargs):

@@ -44,7 +44,7 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
             )
 
         old_style_entity_id = async_generate_entity_id(
-            ENTITY_ID_FORMAT, f"{var}_{gw_dev.gw_id}", opp.gw_dev.opp
+            ENTITY_ID_FORMAT, f"{var}_{gw_dev.gw_id}", opp=gw_dev.opp
         )
         old_ent = ent_reg.async_get(old_style_entity_id)
         if old_ent and old_ent.config_entry_id == config_entry.entry_id:

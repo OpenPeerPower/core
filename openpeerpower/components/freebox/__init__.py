@@ -39,7 +39,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Freebox entry."""
     router = FreeboxRouter(opp, entry)
     await router.setup()

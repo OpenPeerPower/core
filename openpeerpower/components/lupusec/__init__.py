@@ -47,7 +47,7 @@ def setup(opp, config):
         _LOGGER.error(ex)
 
         opp.components.persistent_notification.create(
-            f"Error: {ex}<br />You will need to restart opp.after fixing.",
+            f"Error: {ex}<br />You will need to restart opp after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )

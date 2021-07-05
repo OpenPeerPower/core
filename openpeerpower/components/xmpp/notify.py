@@ -48,7 +48,7 @@ CONF_TLS = "tls"
 CONF_VERIFY = "verify"
 
 DEFAULT_CONTENT_TYPE = "application/octet-stream"
-DEFAULT_RESOURCE = "open-peer-power"
+DEFAULT_RESOURCE = "openpeerpower"
 XEP_0363_TIMEOUT = 10
 
 PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend(

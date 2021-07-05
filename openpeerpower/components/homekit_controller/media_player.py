@@ -31,7 +31,7 @@ from . import KNOWN_DEVICES, HomeKitEntity
 _LOGGER = logging.getLogger(__name__)
 
 
-HK_TO_HA_STATE = {
+HK_TO_OP_STATE = {
     CurrentMediaStateValues.PLAYING: STATE_PLAYING,
     CurrentMediaStateValues.PAUSED: STATE_PAUSED,
     CurrentMediaStateValues.STOPPED: STATE_IDLE,
@@ -57,8 +57,6 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
 class HomeKitTelevision(HomeKitEntity, MediaPlayerEntity):
     """Representation of a HomeKit Controller Television."""
 
-    _attr_device_class = DEVICE_CLASS_TV
-
     def get_characteristic_types(self):
         """Define the homekit characteristics the entity cares about."""
         return [
@@ -71,6 +69,11 @@ class HomeKitTelevision(HomeKitEntity, MediaPlayerEntity):
             CharacteristicsTypes.CONFIGURED_NAME,
             CharacteristicsTypes.IDENTIFIER,
         ]
+
+    @property
+    def device_class(self):
+        """Define the device class for a HomeKit enabled TV."""
+        return DEVICE_CLASS_TV
 
     @property
     def supported_features(self):
@@ -164,7 +167,7 @@ class HomeKitTelevision(HomeKitEntity, MediaPlayerEntity):
 
         homekit_state = self.service.value(CharacteristicsTypes.CURRENT_MEDIA_STATE)
         if homekit_state is not None:
-            return HK_TO_HA_STATE.get(homekit_state, STATE_OK)
+            return HK_TO_OP_STATE.get(homekit_state, STATE_OK)
 
         return STATE_OK
 

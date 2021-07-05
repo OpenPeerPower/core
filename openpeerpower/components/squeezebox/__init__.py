@@ -13,7 +13,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = [MP_DOMAIN]
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Logitech Squeezebox from a config entry."""
     opp.config_entries.async_setup_platforms(entry, PLATFORMS)
     return True

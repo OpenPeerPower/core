@@ -11,9 +11,9 @@ import async_timeout
 from pyalmond import AbstractAlmondWebAuth, AlmondLocalAuth, WebAlmondAPI
 import voluptuous as vol
 
+from openpeerpower import config_entries
 from openpeerpower.auth.const import GROUP_ID_ADMIN
 from openpeerpower.components import conversation
-from openpeerpower.config_entries import SOURCE_IMPORT, ConfigEntry
 from openpeerpower.const import (
     CONF_CLIENT_ID,
     CONF_CLIENT_SECRET,
@@ -94,14 +94,14 @@ async def async_setup(opp, config):
         opp.async_create_task(
             opp.config_entries.flow.async_init(
                 DOMAIN,
-                context={"source": SOURCE_IMPORT},
+                context={"source": config_entries.SOURCE_IMPORT},
                 data={"type": TYPE_LOCAL, "host": conf[CONF_HOST]},
             )
         )
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: config_entries.ConfigEntry):
     """Set up Almond config entry."""
     websession = aiohttp_client.async_get_clientsession(opp)
 
@@ -150,7 +150,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
 
 async def _configure_almond_for_ha(
-    opp: OpenPeerPower, entry: ConfigEntry, api: WebAlmondAPI
+    opp: OpenPeerPower, entry: config_entries.ConfigEntry, api: WebAlmondAPI
 ):
     """Configure Almond to connect to HA."""
     try:
@@ -194,8 +194,8 @@ async def _configure_almond_for_ha(
         with async_timeout.timeout(30):
             await api.async_create_device(
                 {
-                    "kind": "io.open-peer-power",
-                    "opp:rl": opp_url,
+                    "kind": "io.openpeerpower",
+                    "oppUrl": opp_url,
                     "accessToken": access_token,
                     "refreshToken": "",
                     # 5 years from now in ms.
@@ -248,7 +248,7 @@ class AlmondAgent(conversation.AbstractConversationAgent):
     """Almond conversation agent."""
 
     def __init__(
-        self, opp: OpenPeerPower, api: WebAlmondAPI, entry: ConfigEntry
+        self, opp: OpenPeerPower, api: WebAlmondAPI, entry: config_entries.ConfigEntry
     ) -> None:
         """Initialize the agent."""
         self.opp = opp

@@ -12,7 +12,7 @@ from .hub import LitterRobotHub
 PLATFORMS = ["sensor", "switch", "vacuum"]
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Litter-Robot from a config entry."""
     opp.data.setdefault(DOMAIN, {})
     hub = opp.data[DOMAIN][entry.entry_id] = LitterRobotHub(opp, entry.data)

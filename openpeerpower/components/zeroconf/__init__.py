@@ -42,7 +42,7 @@ _LOGGER = logging.getLogger(__name__)
 
 DOMAIN = "zeroconf"
 
-ZEROCONF_TYPE = "_open-peer-power._tcp.local."
+ZEROCONF_TYPE = "_home-assistant._tcp.local."
 HOMEKIT_TYPES = [
     "_hap._tcp.local.",
     # Thread based devices

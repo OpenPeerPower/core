@@ -23,7 +23,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = [CLIMATE_DOMAIN, SWITCH_DOMAIN]
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Gree Climate from a config entry."""
     opp.data.setdefault(DOMAIN, {})
     gree_discovery = DiscoveryService(opp)

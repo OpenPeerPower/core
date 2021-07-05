@@ -51,7 +51,7 @@ LOG_INTERVAL_SUB = "log_interval_subscription"
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Profiler from a config entry."""
     lock = asyncio.Lock()
     domain_data = opp.data[DOMAIN] = {}
@@ -194,7 +194,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     for service in SERVICES:
         opp.services.async_remove(domain=DOMAIN, service=service)

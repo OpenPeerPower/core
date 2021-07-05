@@ -2,8 +2,6 @@
   "domain": "trace",
   "name": "Trace",
   "documentation": "https://www.openpeerpower.io/integrations/automation",
-  "codeowners": [
-    "@openpeerpower./core"
-  ],
+  "codeowners": ["@openpeerpower/core"],
   "quality_scale": "internal"
 }

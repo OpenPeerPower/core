@@ -46,7 +46,7 @@ def mock_all(aioclient_mock, request):
             "data": {
                 "result": "ok",
                 "data": {
-                    "copp.s": "vm",
+                    "coppis": "vm",
                     "operating_system": "Debian GNU/Linux 10 (buster)",
                     "kernel": "4.19.0-6-amd64",
                 },
@@ -117,7 +117,7 @@ async def test_setup_api_panel(opp, aioclient_mock):
 
     assert panels.get("oppio").to_response() == {
         "component_name": "custom",
-        "icon": "opp:open-peer-power",
+        "icon": "opp:openpeerpower",
         "title": "Supervisor",
         "url_path": "oppio",
         "require_admin": True,

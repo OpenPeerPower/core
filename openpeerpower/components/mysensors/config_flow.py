@@ -27,7 +27,7 @@ from openpeerpower.components.mysensors import (
 )
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.core import callback
-from openpeerpower.data_entry_flow import RESULT_TYPE_FORM, FlowResult
+from openpeerpower.data_entry_flow import FlowResult
 import openpeerpower.helpers.config_validation as cv
 
 from . import CONF_RETAIN, CONF_VERSION, DEFAULT_VERSION
@@ -132,7 +132,7 @@ class MySensorsConfigFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 user_input[CONF_GATEWAY_TYPE] = CONF_GATEWAY_TYPE_SERIAL
 
         result: dict[str, Any] = await self.async_step_user(user_input=user_input)
-        if result["type"] == RESULT_TYPE_FORM:
+        if result["type"] == "form":
             return self.async_abort(reason=next(iter(result["errors"].values())))
         return result
 

@@ -39,7 +39,7 @@ async def async_remove_entry(opp, entry):
         await opp.components.cloud.async_delete_cloudhook(entry.data[CONF_WEBHOOK_ID])
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up the Rachio config entry."""
 
     config = entry.data

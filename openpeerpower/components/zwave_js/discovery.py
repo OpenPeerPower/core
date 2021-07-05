@@ -103,7 +103,7 @@ class ZWaveDiscoverySchema:
     https://github.com/zwave-js/node-zwave-js/tree/master/specs
     """
 
-    # specify the opp.platform for which this scheme applies (e.g. light, sensor)
+    # specify the opp platform for which this scheme applies (e.g. light, sensor)
     platform: str
     # primary value belonging to this discovery scheme
     primary_value: ZWaveValueDiscoverySchema

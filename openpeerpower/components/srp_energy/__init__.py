@@ -16,7 +16,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["sensor"]
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up the SRP Energy component from a config entry."""
     # Store an SrpEnergyClient object for your srp_energy to access
     try:
@@ -35,9 +35,9 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry):
     """Unload a config entry."""
     # unload srp client
     opp.data[SRP_ENERGY_DOMAIN] = None
     # Remove config entry
-    return await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
+    return await opp.config_entries.async_unload_platforms(config_entry, PLATFORMS)

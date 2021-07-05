@@ -5,7 +5,6 @@ from openpeerpower import config_entries, setup
 from openpeerpower.components.NEW_DOMAIN.config_flow import CannotConnect, InvalidAuth
 from openpeerpower.components.NEW_DOMAIN.const import DOMAIN
 from openpeerpower.core import OpenPeerPower
-from openpeerpower.data_entry_flow import RESULT_TYPE_CREATE_ENTRY, RESULT_TYPE_FORM
 
 
 async def test_form(opp: OpenPeerPower) -> None:
@@ -14,7 +13,7 @@ async def test_form(opp: OpenPeerPower) -> None:
     result = await opp.config_entries.flow.async_init(
         DOMAIN, context={"source": config_entries.SOURCE_USER}
     )
-    assert result["type"] == RESULT_TYPE_FORM
+    assert result["type"] == "form"
     assert result["errors"] == {}
 
     with patch(
@@ -34,7 +33,7 @@ async def test_form(opp: OpenPeerPower) -> None:
         )
         await opp.async_block_till_done()
 
-    assert result2["type"] == RESULT_TYPE_CREATE_ENTRY
+    assert result2["type"] == "create_entry"
     assert result2["title"] == "Name of the device"
     assert result2["data"] == {
         "host": "1.1.1.1",
@@ -63,7 +62,7 @@ async def test_form_invalid_auth(opp: OpenPeerPower) -> None:
             },
         )
 
-    assert result2["type"] == RESULT_TYPE_FORM
+    assert result2["type"] == "form"
     assert result2["errors"] == {"base": "invalid_auth"}
 
 
@@ -86,5 +85,5 @@ async def test_form_cannot_connect(opp: OpenPeerPower) -> None:
             },
         )
 
-    assert result2["type"] == RESULT_TYPE_FORM
+    assert result2["type"] == "form"
     assert result2["errors"] == {"base": "cannot_connect"}

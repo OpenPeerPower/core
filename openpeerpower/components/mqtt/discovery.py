@@ -9,7 +9,6 @@ import time
 
 from openpeerpower.const import CONF_DEVICE, CONF_PLATFORM
 from openpeerpower.core import OpenPeerPower
-from openpeerpower.data_entry_flow import RESULT_TYPE_ABORT
 from openpeerpower.helpers.dispatcher import (
     async_dispatcher_connect,
     async_dispatcher_send,
@@ -273,7 +272,7 @@ async def async_start(  # noqa: C901
                 )
                 if (
                     result
-                    and result["type"] == RESULT_TYPE_ABORT
+                    and result["type"] == "abort"
                     and result["reason"]
                     in ["already_configured", "single_instance_allowed"]
                 ):

@@ -111,7 +111,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up AsusWrt platform."""
 
     # import options from yaml if empty

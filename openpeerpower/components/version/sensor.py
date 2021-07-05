@@ -2,8 +2,8 @@
 from datetime import timedelta
 import logging
 
-from pyhaversion import HaVersion, HaVersionChannel, HaVersionSource
-from pyhaversion.exceptions import HaVersionFetchException, HaVersionParseException
+from pyopversion import OpVersion, OpVersionChannel, OpVersionSource
+from pyopversion.exceptions import OpVersionFetchException, OpVersionParseException
 import voluptuous as vol
 
 from openpeerpower.components.sensor import PLATFORM_SCHEMA, SensorEntity
@@ -32,7 +32,7 @@ ALL_IMAGES = [
 ]
 ALL_SOURCES = [
     "container",
-    "haio",
+    "opio",
     "local",
     "pypi",
     "supervisor",
@@ -74,30 +74,33 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 
     session = async_get_clientsession(opp)
 
-    channel = HaVersionChannel.BETA if beta else HaVersionChannel.STABLE
+    channel = OpVersionChannel.BETA if beta else OpVersionChannel.STABLE
 
     if source == "pypi":
         haversion = VersionData(
-            HaVersion(session, source=HaVersionSource.PYPI, channel=channel)
+            OpVersion(session, source=OpVersionSource.PYPI, channel=channel)
         )
     elif source in ["oppio", "supervisor"]:
         haversion = VersionData(
-            HaVersion(
-                session, source=HaVersionSource.SUPERVISOR, channel=channel, image=image
+            OpVersion(
+                session,
+                source=OpVersionSource.SUPERVISOR,
+                channel=channel,
+                image=image,
             )
         )
     elif source in ["docker", "container"]:
         if image is not None and image != DEFAULT_IMAGE:
             image = f"{image}-openpeerpower"
         haversion = VersionData(
-            HaVersion(
-                session, source=HaVersionSource.CONTAINER, channel=channel, image=image
+            OpVersion(
+                session, source=OpVersionSource.CONTAINER, channel=channel, image=image
             )
         )
-    elif source == "haio":
-        haversion = VersionData(HaVersion(session, source=HaVersionSource.HAIO))
+    elif source == "opio":
+        haversion = VersionData(OpVersion(session, source=OpVersionSource.OPIO))
     else:
-        haversion = VersionData(HaVersion(session, source=HaVersionSource.LOCAL))
+        haversion = VersionData(OpVersion(session, source=OpVersionSource.LOCAL))
 
     if not name:
         if source == DEFAULT_SOURCE:
@@ -111,7 +114,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 class VersionData:
     """Get the latest data and update the states."""
 
-    def __init__(self, api: HaVersion) -> None:
+    def __init__(self, api: OpVersion) -> None:
         """Initialize the data object."""
         self.api = api
 
@@ -120,9 +123,9 @@ class VersionData:
         """Get the latest version information."""
         try:
             await self.api.get_version()
-        except HaVersionFetchException as exception:
+        except OpVersionFetchException as exception:
             _LOGGER.warning(exception)
-        except HaVersionParseException as exception:
+        except OpVersionParseException as exception:
             _LOGGER.warning(
                 "Could not parse data received for %s - %s", self.api.source, exception
             )

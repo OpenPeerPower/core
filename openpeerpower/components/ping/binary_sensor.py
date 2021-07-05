@@ -4,12 +4,13 @@ from __future__ import annotations
 import asyncio
 from contextlib import suppress
 from datetime import timedelta
+from functools import partial
 import logging
 import re
 import sys
 from typing import Any
 
-from icmplib import NameLookupError, async_ping
+from icmplib import NameLookupError, ping as icmp_ping
 import voluptuous as vol
 
 from openpeerpower.components.binary_sensor import (
@@ -21,6 +22,7 @@ from openpeerpower.const import CONF_HOST, CONF_NAME, STATE_ON
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.restore_state import RestoreEntity
 
+from . import async_get_next_ping_id
 from .const import DOMAIN, ICMP_TIMEOUT, PING_PRIVS, PING_TIMEOUT
 
 _LOGGER = logging.getLogger(__name__)
@@ -137,10 +139,10 @@ class PingBinarySensor(RestoreEntity, BinarySensorEntity):
         attributes = last_state.attributes
         self._ping.is_alive = True
         self._ping.data = {
-            "min": attributes[ATTR_ROUND_TRIP_TIME_MIN],
+            "min": attributes[ATTR_ROUND_TRIP_TIME_AVG],
             "max": attributes[ATTR_ROUND_TRIP_TIME_MAX],
-            "avg": attributes[ATTR_ROUND_TRIP_TIME_AVG],
-            "mdev": attributes[ATTR_ROUND_TRIP_TIME_MDEV],
+            "avg": attributes[ATTR_ROUND_TRIP_TIME_MDEV],
+            "mdev": attributes[ATTR_ROUND_TRIP_TIME_MIN],
         }
 
 
@@ -168,11 +170,15 @@ class PingDataICMPLib(PingData):
         """Retrieve the latest details from the host."""
         _LOGGER.debug("ping address: %s", self._ip_address)
         try:
-            data = await async_ping(
-                self._ip_address,
-                count=self._count,
-                timeout=ICMP_TIMEOUT,
-                privileged=self._privileged,
+            data = await self.opp.async_add_executor_job(
+                partial(
+                    icmp_ping,
+                    self._ip_address,
+                    count=self._count,
+                    timeout=ICMP_TIMEOUT,
+                    id=async_get_next_ping_id(self.opp),
+                    privileged=self._privileged,
+                )
             )
         except NameLookupError:
             self.is_alive = False

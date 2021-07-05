@@ -11,6 +11,7 @@ from openpeerpower.components.climate.const import (
     SUPPORT_TARGET_TEMPERATURE,
 )
 from openpeerpower.const import (
+    CONF_ADDRESS,
     CONF_NAME,
     CONF_OFFSET,
     CONF_STRUCTURE,
@@ -28,8 +29,11 @@ from .const import (
     CALL_TYPE_REGISTER_HOLDING,
     CALL_TYPE_WRITE_REGISTERS,
     CONF_CLIMATES,
+    CONF_CURRENT_TEMP,
+    CONF_CURRENT_TEMP_REGISTER_TYPE,
     CONF_DATA_COUNT,
     CONF_DATA_TYPE,
+    CONF_INPUT_TYPE,
     CONF_MAX_TEMP,
     CONF_MIN_TEMP,
     CONF_PRECISION,
@@ -104,8 +108,14 @@ class ModbusThermostat(BasePlatform, RestoreEntity, ClimateEntity):
         config: dict[str, Any],
     ) -> None:
         """Initialize the modbus thermostat."""
+        config[CONF_ADDRESS] = "0"
+        config[CONF_INPUT_TYPE] = ""
         super().__init__(hub, config)
         self._target_temperature_register = config[CONF_TARGET_TEMP]
+        self._current_temperature_register = config[CONF_CURRENT_TEMP]
+        self._current_temperature_register_type = config[
+            CONF_CURRENT_TEMP_REGISTER_TYPE
+        ]
         self._target_temperature = None
         self._current_temperature = None
         self._data_type = config[CONF_DATA_TYPE]
@@ -202,7 +212,7 @@ class ModbusThermostat(BasePlatform, RestoreEntity, ClimateEntity):
             CALL_TYPE_REGISTER_HOLDING, self._target_temperature_register
         )
         self._current_temperature = await self._async_read_register(
-            self._input_type, self._address
+            self._current_temperature_register_type, self._current_temperature_register
         )
 
         self.async_write_op_state()

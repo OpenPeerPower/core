@@ -400,48 +400,6 @@ async def test_report_fan_speed_state(opp):
     properties.assert_equal("Alexa.RangeController", "rangeValue", 3)
 
 
-async def test_report_fan_preset_mode(opp):
-    """Test ModeController reports fan preset_mode correctly."""
-    opp.states.async_set(
-        "fan.preset_mode",
-        "eco",
-        {
-            "friendly_name": "eco enabled fan",
-            "supported_features": 8,
-            "preset_mode": "eco",
-            "preset_modes": ["eco", "smart", "whoosh"],
-        },
-    )
-    properties = await reported_properties(opp, "fan.preset_mode")
-    properties.assert_equal("Alexa.ModeController", "mode", "preset_mode.eco")
-
-    opp.states.async_set(
-        "fan.preset_mode",
-        "smart",
-        {
-            "friendly_name": "smart enabled fan",
-            "supported_features": 8,
-            "preset_mode": "smart",
-            "preset_modes": ["eco", "smart", "whoosh"],
-        },
-    )
-    properties = await reported_properties(opp, "fan.preset_mode")
-    properties.assert_equal("Alexa.ModeController", "mode", "preset_mode.smart")
-
-    opp.states.async_set(
-        "fan.preset_mode",
-        "whoosh",
-        {
-            "friendly_name": "whoosh enabled fan",
-            "supported_features": 8,
-            "preset_mode": "whoosh",
-            "preset_modes": ["eco", "smart", "whoosh"],
-        },
-    )
-    properties = await reported_properties(opp, "fan.preset_mode")
-    properties.assert_equal("Alexa.ModeController", "mode", "preset_mode.whoosh")
-
-
 async def test_report_fan_oscillating(opp):
     """Test ToggleController reports fan oscillating correctly."""
     opp.states.async_set(

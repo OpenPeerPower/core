@@ -2,7 +2,6 @@
 from datetime import timedelta
 
 from openpeerpower.components.airly.sensor import ATTRIBUTION
-from openpeerpower.components.sensor import ATTR_STATE_CLASS, STATE_CLASS_MEASUREMENT
 from openpeerpower.const import (
     ATTR_ATTRIBUTION,
     ATTR_DEVICE_CLASS,
@@ -39,7 +38,6 @@ async def test_sensor(opp, aioclient_mock):
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == PERCENTAGE
     assert state.attributes.get(ATTR_DEVICE_CLASS) == DEVICE_CLASS_HUMIDITY
-    assert state.attributes.get(ATTR_STATE_CLASS) == STATE_CLASS_MEASUREMENT
 
     entry = registry.async_get("sensor.home_humidity")
     assert entry
@@ -54,7 +52,6 @@ async def test_sensor(opp, aioclient_mock):
         == CONCENTRATION_MICROGRAMS_PER_CUBIC_METER
     )
     assert state.attributes.get(ATTR_ICON) == "mdi:blur"
-    assert state.attributes.get(ATTR_STATE_CLASS) == STATE_CLASS_MEASUREMENT
 
     entry = registry.async_get("sensor.home_pm1")
     assert entry
@@ -66,7 +63,6 @@ async def test_sensor(opp, aioclient_mock):
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == PRESSURE_HPA
     assert state.attributes.get(ATTR_DEVICE_CLASS) == DEVICE_CLASS_PRESSURE
-    assert state.attributes.get(ATTR_STATE_CLASS) == STATE_CLASS_MEASUREMENT
 
     entry = registry.async_get("sensor.home_pressure")
     assert entry
@@ -78,7 +74,6 @@ async def test_sensor(opp, aioclient_mock):
     assert state.attributes.get(ATTR_ATTRIBUTION) == ATTRIBUTION
     assert state.attributes.get(ATTR_UNIT_OF_MEASUREMENT) == TEMP_CELSIUS
     assert state.attributes.get(ATTR_DEVICE_CLASS) == DEVICE_CLASS_TEMPERATURE
-    assert state.attributes.get(ATTR_STATE_CLASS) == STATE_CLASS_MEASUREMENT
 
     entry = registry.async_get("sensor.home_temperature")
     assert entry

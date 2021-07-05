@@ -8,7 +8,7 @@ from openpeerpower.core import OpenPeerPower
 from .const import DATA_LISTENER, DATA_TASK, DOMAIN, PLATFORMS
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up DSMR from a config entry."""
     opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = {}
@@ -40,6 +40,6 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     return unload_ok
 
 
-async def async_update_options(opp: OpenPeerPower, entry: ConfigEntry):
+async def async_update_options(opp: OpenPeerPower, config_entry: ConfigEntry):
     """Update options."""
-    await opp.config_entries.async_reload(entry.entry_id)
+    await opp.config_entries.async_reload(config_entry.entry_id)

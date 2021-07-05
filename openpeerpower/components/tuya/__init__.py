@@ -93,7 +93,7 @@ def _update_query_interval(opp, interval):
         _LOGGER.warning(ex)
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Tuya platform."""
 
     tuya = TuyaApi()

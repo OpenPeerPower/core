@@ -119,7 +119,7 @@ def threaded_listener_factory(
         opp = args[0]
 
         if not isinstance(opp, OpenPeerPower):
-            raise TypeError("First parameter needs to be a opp.instance")
+            raise TypeError("First parameter needs to be a opp instance")
 
         async_remove = run_callback_threadsafe(
             opp.loop, ft.partial(async_factory, *args, **kwargs)
@@ -658,19 +658,19 @@ def async_track_state_change_filtered(
 ) -> _TrackStateChangeFiltered:
     """Track state changes with a TrackStates filter that can be updated.
 
-     Parameters
-     ----------
-    .opp
-         Open Peer Power object.
-     track_states
-         A TrackStates data class.
-     action
-         Callable to call with results.
+    Parameters
+    ----------
+    opp
+        Open Peer Power object.
+    track_states
+        A TrackStates data class.
+    action
+        Callable to call with results.
 
-     Returns
-     -------
-     Object used to update the listeners (async_update_listeners) with a new TrackStates or
-     cancel the tracking (async_remove).
+    Returns
+    -------
+    Object used to update the listeners (async_update_listeners) with a new TrackStates or
+    cancel the tracking (async_remove).
 
     """
     tracker = _TrackStateChangeFiltered(opp, track_states, action)
@@ -688,38 +688,38 @@ def async_track_template(
 ) -> Callable[[], None]:
     """Add a listener that fires when a a template evaluates to 'true'.
 
-     Listen for the result of the template becoming true, or a true-like
-     string result, such as 'On', 'Open', or 'Yes'. If the template results
-     in an error state when the value changes, this will be logged and not
-     passed through.
+    Listen for the result of the template becoming true, or a true-like
+    string result, such as 'On', 'Open', or 'Yes'. If the template results
+    in an error state when the value changes, this will be logged and not
+    passed through.
 
-     If the initial check of the template is invalid and results in an
-     exception, the listener will still be registered but will only
-     fire if the template result becomes true without an exception.
+    If the initial check of the template is invalid and results in an
+    exception, the listener will still be registered but will only
+    fire if the template result becomes true without an exception.
 
-     Action arguments
-     ----------------
-     entity_id
-         ID of the entity that triggered the state change.
-     old_state
-         The old state of the entity that changed.
-     new_state
-         New state of the entity that changed.
+    Action arguments
+    ----------------
+    entity_id
+        ID of the entity that triggered the state change.
+    old_state
+        The old state of the entity that changed.
+    new_state
+        New state of the entity that changed.
 
-     Parameters
-     ----------
-    .opp
-         Open Peer Power object.
-     template
-         The template to calculate.
-     action
-         Callable to call with results. See above for arguments.
-     variables
-         Variables to pass to the template.
+    Parameters
+    ----------
+    opp
+        Open Peer Power object.
+    template
+        The template to calculate.
+    action
+        Callable to call with results. See above for arguments.
+    variables
+        Variables to pass to the template.
 
-     Returns
-     -------
-     Callable to unregister the listener.
+    Returns
+    -------
+    Callable to unregister the listener.
 
     """
     job = OppJob(action)
@@ -1029,37 +1029,37 @@ def async_track_template_result(
 ) -> _TrackTemplateResultInfo:
     """Add a listener that fires when the result of a template changes.
 
-     The action will fire with the initial result from the template, and
-     then whenever the output from the template changes. The template will
-     be reevaluated if any states referenced in the last run of the
-     template change, or if manually triggered. If the result of the
-     evaluation is different from the previous run, the listener is passed
-     the result.
+    The action will fire with the initial result from the template, and
+    then whenever the output from the template changes. The template will
+    be reevaluated if any states referenced in the last run of the
+    template change, or if manually triggered. If the result of the
+    evaluation is different from the previous run, the listener is passed
+    the result.
 
-     If the template results in an TemplateError, this will be returned to
-     the listener the first time this happens but not for subsequent errors.
-     Once the template returns to a non-error condition the result is sent
-     to the action as usual.
+    If the template results in an TemplateError, this will be returned to
+    the listener the first time this happens but not for subsequent errors.
+    Once the template returns to a non-error condition the result is sent
+    to the action as usual.
 
-     Parameters
-     ----------
-    .opp
-         Open Peer Power object.
-     track_templates
-         An iterable of TrackTemplate.
-     action
-         Callable to call with results.
-     raise_on_template_error
-         When set to True, if there is an exception
-         processing the template during setup, the system
-         will raise the exception instead of setting up
-         tracking.
-     strict
-         When set to True, raise on undefined variables.
+    Parameters
+    ----------
+    opp
+        Open Peer Power object.
+    track_templates
+        An iterable of TrackTemplate.
+    action
+        Callable to call with results.
+    raise_on_template_error
+        When set to True, if there is an exception
+        processing the template during setup, the system
+        will raise the exception instead of setting up
+        tracking.
+    strict
+        When set to True, raise on undefined variables.
 
-     Returns
-     -------
-     Info object used to unregister the listener, and refresh the template.
+    Returns
+    -------
+    Info object used to unregister the listener, and refresh the template.
 
     """
     tracker = _TrackTemplateResultInfo(opp, track_templates, action)

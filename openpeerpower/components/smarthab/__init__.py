@@ -52,7 +52,7 @@ async def async_setup(opp, config) -> bool:
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up config entry for SmartHab integration."""
 
     # Assign configuration variables

@@ -458,7 +458,7 @@ class HueOneLightChangeView(OpenPeerPowerView):
                         else:
                             sat = 0
 
-                        # Convert hs values to opp.hs values
+                        # Convert hs values to opp hs values
                         hue = int((hue / HUE_API_STATE_HUE_MAX) * 360)
                         sat = int((sat / HUE_API_STATE_SAT_MAX) * 100)
 
@@ -657,7 +657,7 @@ def get_entity_state(config, entity):
             if hue_sat is not None:
                 hue = hue_sat[0]
                 sat = hue_sat[1]
-                # Convert opp.hs values back to hue hs values
+                # Convert opp hs values back to hue hs values
                 data[STATE_HUE] = int((hue / 360.0) * HUE_API_STATE_HUE_MAX)
                 data[STATE_SATURATION] = int((sat / 100.0) * HUE_API_STATE_SAT_MAX)
             else:

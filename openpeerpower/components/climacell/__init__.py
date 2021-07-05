@@ -109,19 +109,19 @@ def _set_update_interval(opp: OpenPeerPower, current_entry: ConfigEntry) -> time
     return interval
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Set up ClimaCell API from a config entry."""
     opp.data.setdefault(DOMAIN, {})
 
     params = {}
     # If config entry options not set up, set them up
-    if not entry.options:
+    if not config_entry.options:
         params["options"] = {
             CONF_TIMESTEP: DEFAULT_TIMESTEP,
         }
     else:
         # Use valid timestep if it's invalid
-        timestep = entry.options[CONF_TIMESTEP]
+        timestep = config_entry.options[CONF_TIMESTEP]
         if timestep not in (1, 5, 15, 30):
             if timestep <= 2:
                 timestep = 1
@@ -131,38 +131,38 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
                 timestep = 15
             else:
                 timestep = 30
-            new_options = entry.options.copy()
+            new_options = config_entry.options.copy()
             new_options[CONF_TIMESTEP] = timestep
             params["options"] = new_options
     # Add API version if not found
-    if CONF_API_VERSION not in entry.data:
-        new_data = entry.data.copy()
+    if CONF_API_VERSION not in config_entry.data:
+        new_data = config_entry.data.copy()
         new_data[CONF_API_VERSION] = 3
         params["data"] = new_data
 
     if params:
-        opp.config_entries.async_update_entry(entry, **params)
+        opp.config_entries.async_update_entry(config_entry, **params)
 
-    api_class = ClimaCellV3 if entry.data[CONF_API_VERSION] == 3 else ClimaCellV4
+    api_class = ClimaCellV3 if config_entry.data[CONF_API_VERSION] == 3 else ClimaCellV4
     api = api_class(
-        entry.data[CONF_API_KEY],
-        entry.data.get(CONF_LATITUDE, opp.config.latitude),
-        entry.data.get(CONF_LONGITUDE, opp.config.longitude),
+        config_entry.data[CONF_API_KEY],
+        config_entry.data.get(CONF_LATITUDE, opp.config.latitude),
+        config_entry.data.get(CONF_LONGITUDE, opp.config.longitude),
         session=async_get_clientsession(opp),
     )
 
     coordinator = ClimaCellDataUpdateCoordinator(
         opp,
-        entry,
+        config_entry,
         api,
-        _set_update_interval(opp, entry),
+        _set_update_interval(opp, config_entry),
     )
 
     await coordinator.async_config_entry_first_refresh()
 
-    opp.data[DOMAIN][entry.entry_id] = coordinator
+    opp.data[DOMAIN][config_entry.entry_id] = coordinator
 
-    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
+    opp.config_entries.async_setup_platforms(config_entry, PLATFORMS)
 
     return True
 

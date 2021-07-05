@@ -3,7 +3,6 @@ from __future__ import annotations
 
 from typing import Final
 
-from openpeerpower.components.sensor import ATTR_STATE_CLASS, STATE_CLASS_MEASUREMENT
 from openpeerpower.const import (
     ATTR_DEVICE_CLASS,
     ATTR_ICON,
@@ -51,27 +50,23 @@ SENSOR_TYPES: dict[str, SensorDescription] = {
         ATTR_ICON: "mdi:blur",
         ATTR_LABEL: ATTR_API_PM1,
         ATTR_UNIT: CONCENTRATION_MICROGRAMS_PER_CUBIC_METER,
-        ATTR_STATE_CLASS: STATE_CLASS_MEASUREMENT,
     },
     ATTR_API_HUMIDITY: {
         ATTR_DEVICE_CLASS: DEVICE_CLASS_HUMIDITY,
         ATTR_ICON: None,
         ATTR_LABEL: ATTR_API_HUMIDITY.capitalize(),
         ATTR_UNIT: PERCENTAGE,
-        ATTR_STATE_CLASS: STATE_CLASS_MEASUREMENT,
     },
     ATTR_API_PRESSURE: {
         ATTR_DEVICE_CLASS: DEVICE_CLASS_PRESSURE,
         ATTR_ICON: None,
         ATTR_LABEL: ATTR_API_PRESSURE.capitalize(),
         ATTR_UNIT: PRESSURE_HPA,
-        ATTR_STATE_CLASS: STATE_CLASS_MEASUREMENT,
     },
     ATTR_API_TEMPERATURE: {
         ATTR_DEVICE_CLASS: DEVICE_CLASS_TEMPERATURE,
         ATTR_ICON: None,
         ATTR_LABEL: ATTR_API_TEMPERATURE.capitalize(),
         ATTR_UNIT: TEMP_CELSIUS,
-        ATTR_STATE_CLASS: STATE_CLASS_MEASUREMENT,
     },
 }

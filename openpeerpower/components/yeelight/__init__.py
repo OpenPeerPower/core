@@ -164,11 +164,16 @@ async def async_setup(opp: OpenPeerPower, config: dict) -> bool:
     # Import manually configured devices
     for host, device_config in config.get(DOMAIN, {}).get(CONF_DEVICES, {}).items():
         _LOGGER.debug("Importing configured %s", host)
-        entry_config = {CONF_HOST: host, **device_config}
+        entry_config = {
+            CONF_HOST: host,
+            **device_config,
+        }
         opp.async_create_task(
             opp.config_entries.flow.async_init(
-                DOMAIN, context={"source": SOURCE_IMPORT}, data=entry_config
-            )
+                DOMAIN,
+                context={"source": SOURCE_IMPORT},
+                data=entry_config,
+            ),
         )
 
     return True
@@ -198,7 +203,9 @@ async def _async_initialize(
 
     entry.async_on_unload(
         async_dispatcher_connect(
-            opp, DEVICE_INITIALIZED.format(host), _async_load_platforms
+            opp,
+            DEVICE_INITIALIZED.format(host),
+            _async_load_platforms,
         )
     )
 
@@ -217,7 +224,10 @@ def _async_populate_entry_options(opp: OpenPeerPower, entry: ConfigEntry) -> Non
 
     opp.config_entries.async_update_entry(
         entry,
-        data={CONF_HOST: entry.data.get(CONF_HOST), CONF_ID: entry.data.get(CONF_ID)},
+        data={
+            CONF_HOST: entry.data.get(CONF_HOST),
+            CONF_ID: entry.data.get(CONF_ID),
+        },
         options={
             CONF_NAME: entry.data.get(CONF_NAME, ""),
             CONF_MODEL: entry.data.get(CONF_MODEL, ""),
@@ -261,7 +271,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     data_config_entries = opp.data[DOMAIN][DATA_CONFIG_ENTRIES]
     entry_data = data_config_entries[entry.entry_id]
@@ -603,7 +613,9 @@ class YeelightEntity(Entity):
 
 
 async def _async_get_device(
-    opp: OpenPeerPower, host: str, entry: ConfigEntry
+    opp: OpenPeerPower,
+    host: str,
+    entry: ConfigEntry,
 ) -> YeelightDevice:
     # Get model from config and capabilities
     model = entry.options.get(CONF_MODEL)

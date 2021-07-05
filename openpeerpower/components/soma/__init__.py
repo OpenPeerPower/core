@@ -45,7 +45,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Soma from a config entry."""
     opp.data[DOMAIN] = {}
     opp.data[DOMAIN][API] = SomaApi(entry.data[HOST], entry.data[PORT])

@@ -7,7 +7,7 @@ from arcam.fmj import ConnectionFailed
 from arcam.fmj.client import Client
 import async_timeout
 
-from openpeerpower.config_entries import ConfigEntry
+from openpeerpower import config_entries
 from openpeerpower.const import CONF_HOST, CONF_PORT, EVENT_OPENPEERPOWER_STOP
 from openpeerpower.core import OpenPeerPower
 import openpeerpower.helpers.config_validation as cv
@@ -51,7 +51,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: config_entries.ConfigEntry):
     """Set up config entry."""
     entries = opp.data[DOMAIN_DATA_ENTRIES]
     tasks = opp.data[DOMAIN_DATA_TASKS]

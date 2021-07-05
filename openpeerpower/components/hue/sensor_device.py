@@ -43,7 +43,7 @@ class GenericHueDevice(entity.Entity):
     def device_info(self):
         """Return the device info.
 
-        Links individual entities together in the opp.device registry.
+        Links individual entities together in the opp device registry.
         """
         return {
             "identifiers": {(HUE_DOMAIN, self.device_id)},

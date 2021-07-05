@@ -24,7 +24,7 @@ DOMAIN = "atag"
 PLATFORMS = [CLIMATE, WATER_HEATER, SENSOR]
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Atag integration from a config entry."""
 
     async def _async_update_data():

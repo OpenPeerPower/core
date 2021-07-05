@@ -228,7 +228,7 @@ async def test_call_service_child_not_found(opp, websocket_client):
     assert msg["id"] == 5
     assert msg["type"] == const.TYPE_RESULT
     assert not msg["success"]
-    assert msg["error"]["code"] == const.ERR_HOME_ASSISTANT_ERROR
+    assert msg["error"]["code"] == const.ERR_OPENPEERPOWER_ERROR
 
 
 async def test_call_service_schema_validation_error(

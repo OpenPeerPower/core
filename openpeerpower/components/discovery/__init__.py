@@ -65,6 +65,7 @@ MIGRATED_SERVICE_HANDLERS = [
     "deconz",
     SERVICE_DAIKIN,
     "denonavr",
+    "esphome",
     "google_cast",
     SERVICE_OPP_IOS_APP,
     SERVICE_OPPIO,

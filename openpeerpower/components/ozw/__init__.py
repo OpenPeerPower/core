@@ -56,9 +56,7 @@ DATA_DEVICES = "zwave-mqtt-devices"
 DATA_STOP_MQTT_CLIENT = "ozw_stop_mqtt_client"
 
 
-async def async_setup_entry(  # noqa: C901
-    opp: OpenPeerPower, entry: ConfigEntry
-) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):  # noqa: C901
     """Set up ozw from a config entry."""
     opp.data.setdefault(DOMAIN, {})
     ozw_data = opp.data[DOMAIN][entry.entry_id] = {}
@@ -135,7 +133,7 @@ async def async_setup_entry(  # noqa: C901
     def async_node_removed(node):
         _LOGGER.debug("[NODE REMOVED] node_id: %s", node.id)
         data_nodes.pop(node.id)
-        # node added/removed events also happen on (re)starts of opp.mqtt/ozw
+        # node added/removed events also happen on (re)starts of opp/mqtt/ozw
         # cleanup device/entity registry if we know this node is permanently deleted
         # entities itself are removed by the values logic
         if node.id in removed_nodes:
@@ -148,7 +146,7 @@ async def async_setup_entry(  # noqa: C901
         event_data = message["data"]
         _LOGGER.debug("[INSTANCE EVENT]: %s - data: %s", event, event_data)
         # The actual removal action of a Z-Wave node is reported as instance event
-        # Only when this event is detected we cleanup the device and entities from.opp
+        # Only when this event is detected we cleanup the device and entities from opp
         # Note: Find a more elegant way of doing this, e.g. a notification of this event from OZW
         if event in ["removenode", "removefailednode"] and "Node" in event_data:
             removed_nodes.append(event_data["Node"])
@@ -300,7 +298,7 @@ async def async_setup_entry(  # noqa: C901
     return True
 
 
-async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     # cleanup platforms
     unload_ok = await opp.config_entries.async_unload_platforms(entry, PLATFORMS)
@@ -406,7 +404,7 @@ def async_handle_scene_activated(opp: OpenPeerPower, scene_value: OZWValue):
         scene_id,
         scene_value_id,
     )
-    # Simply forward it to the opp.event bus
+    # Simply forward it to the opp event bus
     opp.bus.async_fire(
         const.EVENT_SCENE_ACTIVATED,
         {

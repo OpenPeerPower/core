@@ -420,6 +420,18 @@ async def test_state_without_turnon(opp, remote):
         DOMAIN, SERVICE_TURN_OFF, {ATTR_ENTITY_ID: ENTITY_ID_NOTURNON}, True
     )
     state = opp.states.get(ENTITY_ID_NOTURNON)
+    # Should be STATE_UNAVAILABLE after the timer expires
+    assert state.state == STATE_OFF
+
+    next_update = dt_util.utcnow() + timedelta(seconds=20)
+    with patch(
+        "openpeerpower.components.samsungtv.bridge.Remote",
+        side_effect=OSError,
+    ), patch("openpeerpower.util.dt.utcnow", return_value=next_update):
+        async_fire_time_changed(opp, next_update)
+        await opp.async_block_till_done()
+
+    state = opp.states.get(ENTITY_ID_NOTURNON)
     # Should be STATE_UNAVAILABLE since there is no way to turn it back on
     assert state.state == STATE_UNAVAILABLE
 

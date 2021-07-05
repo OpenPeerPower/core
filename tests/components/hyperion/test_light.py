@@ -862,7 +862,7 @@ async def test_unload_entry(opp: OpenPeerPower) -> None:
     assert client.async_client_disconnect.call_count == 2
 
 
-async def test_version_log_warning(caplog, opp: OpenPeerPower) -> None:
+async def test_version_log_warning(caplog, opp: OpenPeerPower) -> None:  # type: ignore[no-untyped-def]
     """Test warning on old version."""
     client = create_mock_client()
     client.async_sysinfo_version = AsyncMock(return_value="2.0.0-alpha.7")
@@ -871,7 +871,7 @@ async def test_version_log_warning(caplog, opp: OpenPeerPower) -> None:
     assert "Please consider upgrading" in caplog.text
 
 
-async def test_version_no_log_warning(caplog, opp: OpenPeerPower) -> None:
+async def test_version_no_log_warning(caplog, opp: OpenPeerPower) -> None:  # type: ignore[no-untyped-def]
     """Test no warning on acceptable version."""
     client = create_mock_client()
     client.async_sysinfo_version = AsyncMock(return_value="2.0.0-alpha.9")
@@ -1359,7 +1359,7 @@ async def test_lights_can_be_enabled(opp: OpenPeerPower) -> None:
         assert not updated_entry.disabled
         await opp.async_block_till_done()
 
-        async_fire_time_changed(
+        async_fire_time_changed(  # type: ignore[no-untyped-call]
             opp,
             dt.utcnow() + timedelta(seconds=RELOAD_AFTER_UPDATE_DELAY + 1),
         )
@@ -1369,7 +1369,7 @@ async def test_lights_can_be_enabled(opp: OpenPeerPower) -> None:
     assert entity_state
 
 
-async def test_deprecated_effect_names(caplog, opp: OpenPeerPower) -> None:
+async def test_deprecated_effect_names(caplog, opp: OpenPeerPower) -> None:  # type: ignore[no-untyped-def]
     """Test deprecated effects function and issue a warning."""
     client = create_mock_client()
     client.async_send_clear = AsyncMock(return_value=True)

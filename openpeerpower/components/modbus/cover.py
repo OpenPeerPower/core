@@ -6,6 +6,7 @@ from typing import Any
 
 from openpeerpower.components.cover import SUPPORT_CLOSE, SUPPORT_OPEN, CoverEntity
 from openpeerpower.const import (
+    CONF_ADDRESS,
     CONF_COVERS,
     CONF_NAME,
     STATE_CLOSED,
@@ -22,8 +23,11 @@ from openpeerpower.helpers.typing import ConfigType, DiscoveryInfoType
 from .base_platform import BasePlatform
 from .const import (
     CALL_TYPE_COIL,
+    CALL_TYPE_REGISTER_HOLDING,
     CALL_TYPE_WRITE_COIL,
     CALL_TYPE_WRITE_REGISTER,
+    CONF_INPUT_TYPE,
+    CONF_REGISTER,
     CONF_STATE_CLOSED,
     CONF_STATE_CLOSING,
     CONF_STATE_OPEN,
@@ -45,7 +49,12 @@ async def async_setup_platform(
     discovery_info: DiscoveryInfoType | None = None,
 ):
     """Read configuration and create Modbus cover."""
-    if discovery_info is None:  # pragma: no cover
+    if discovery_info is None:
+        _LOGGER.warning(
+            "You're trying to init Modbus Cover in an unsupported way."
+            " Check https://www.openpeerpower.io/integrations/modbus/#configuring-platform-cover"
+            " and fix your configuration"
+        )
         return
 
     covers = []
@@ -65,7 +74,11 @@ class ModbusCover(BasePlatform, CoverEntity, RestoreEntity):
         config: dict[str, Any],
     ) -> None:
         """Initialize the modbus cover."""
+        config[CONF_ADDRESS] = "0"
+        config[CONF_INPUT_TYPE] = ""
         super().__init__(hub, config)
+        self._coil = config.get(CALL_TYPE_COIL)
+        self._register = config.get(CONF_REGISTER)
         self._state_closed = config[CONF_STATE_CLOSED]
         self._state_closing = config[CONF_STATE_CLOSING]
         self._state_open = config[CONF_STATE_OPEN]
@@ -76,23 +89,22 @@ class ModbusCover(BasePlatform, CoverEntity, RestoreEntity):
         # If we read cover status from coil, and not from optional status register,
         # we interpret boolean value False as closed cover, and value True as open cover.
         # Intermediate states are not supported in such a setup.
-        if self._input_type == CALL_TYPE_COIL:
+        if self._coil is not None:
             self._write_type = CALL_TYPE_WRITE_COIL
-            self._write_address = self._address
             if self._status_register is None:
                 self._state_closed = False
                 self._state_open = True
                 self._state_closing = None
                 self._state_opening = None
-        else:
-            # If we read cover status from the main register (i.e., an optional
-            # status register is not specified), we need to make sure the register_type
-            # is set to "holding".
+
+        # If we read cover status from the main register (i.e., an optional
+        # status register is not specified), we need to make sure the register_type
+        # is set to "holding".
+        if self._register is not None:
             self._write_type = CALL_TYPE_WRITE_REGISTER
-            self._write_address = self._address
-        if self._status_register:
-            self._address = self._status_register
-            self._input_type = self._status_register_type
+            if self._status_register is None:
+                self._status_register = self._register
+                self._status_register_type = CALL_TYPE_REGISTER_HOLDING
 
     async def async_added_to_opp(self):
         """Handle entity which will be added."""
@@ -132,7 +144,7 @@ class ModbusCover(BasePlatform, CoverEntity, RestoreEntity):
     async def async_open_cover(self, **kwargs: Any) -> None:
         """Open cover."""
         result = await self._hub.async_pymodbus_call(
-            self._slave, self._write_address, self._state_open, self._write_type
+            self._slave, self._register, self._state_open, self._write_type
         )
         self._available = result is not None
         await self.async_update()
@@ -140,7 +152,7 @@ class ModbusCover(BasePlatform, CoverEntity, RestoreEntity):
     async def async_close_cover(self, **kwargs: Any) -> None:
         """Close cover."""
         result = await self._hub.async_pymodbus_call(
-            self._slave, self._write_address, self._state_closed, self._write_type
+            self._slave, self._register, self._state_closed, self._write_type
         )
         self._available = result is not None
         await self.async_update()
@@ -149,16 +161,35 @@ class ModbusCover(BasePlatform, CoverEntity, RestoreEntity):
         """Update the state of the cover."""
         # remark "now" is a dummy parameter to avoid problems with
         # async_track_time_interval
+        if self._coil is not None and self._status_register is None:
+            self._value = await self._async_read_coil()
+        else:
+            self._value = await self._async_read_status_register()
+
+        self.async_write_op_state()
+
+    async def _async_read_status_register(self) -> int | None:
+        """Read status register using the Modbus hub slave."""
         result = await self._hub.async_pymodbus_call(
-            self._slave, self._address, 1, self._input_type
+            self._slave, self._status_register, 1, self._status_register_type
         )
         if result is None:
             self._available = False
-            self.async_write_op_state()
             return None
+
+        value = int(result.registers[0])
         self._available = True
-        if self._input_type == CALL_TYPE_COIL:
-            self._value = bool(result.bits[0] & 1)
-        else:
-            self._value = int(result.registers[0])
-        self.async_write_op_state()
+
+        return value
+
+    async def _async_read_coil(self) -> bool | None:
+        """Read coil using the Modbus hub slave."""
+        result = await self._hub.async_pymodbus_call(
+            self._slave, self._coil, 1, CALL_TYPE_COIL
+        )
+        if result is None:
+            self._available = False
+            return None
+
+        value = bool(result.bits[0] & 1)
+        return value

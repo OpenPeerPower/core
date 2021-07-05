@@ -43,7 +43,7 @@ from . import KNOWN_DEVICES, HomeKitEntity
 
 _LOGGER = logging.getLogger(__name__)
 
-# Map of Homekit operation modes to opp.modes
+# Map of Homekit operation modes to opp modes
 MODE_HOMEKIT_TO_OPP = {
     HeatingCoolingTargetValues.OFF: HVAC_MODE_OFF,
     HeatingCoolingTargetValues.HEAT: HVAC_MODE_HEAT,
@@ -75,7 +75,7 @@ TARGET_HEATER_COOLER_STATE_HOMEKIT_TO_OPP = {
     TargetHeaterCoolerStateValues.COOL: HVAC_MODE_COOL,
 }
 
-# Map of opp.operation modes to homekit modes
+# Map of opp operation modes to homekit modes
 MODE_OPP_TO_HOMEKIT = {v: k for k, v in MODE_HOMEKIT_TO_OPP.items()}
 
 TARGET_HEATER_COOLER_STATE_OPP_TO_HOMEKIT = {

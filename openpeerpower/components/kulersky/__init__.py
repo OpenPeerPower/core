@@ -8,7 +8,7 @@ from .const import DATA_ADDRESSES, DATA_DISCOVERY_SUBSCRIPTION, DOMAIN
 PLATFORMS = ["light"]
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Kuler Sky from a config entry."""
     if DOMAIN not in opp.data:
         opp.data[DOMAIN] = {}

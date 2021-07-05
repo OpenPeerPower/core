@@ -401,7 +401,7 @@ class WindowCoveringBasic(OpeningDeviceBase, HomeAccessory):
 
 
 def _opp_state_to_position_start(state):
-    """Convert opp.state to homekit position state."""
+    """Convert opp state to homekit position state."""
     if state == STATE_OPENING:
         return HK_POSITION_GOING_TO_MAX
     if state == STATE_CLOSING:

@@ -39,7 +39,7 @@ if TYPE_CHECKING:
 
 _LOGGER = logging.getLogger(__name__)
 
-ERROR_LOG_FILENAME = "open-peer-power.log"
+ERROR_LOG_FILENAME = "openpeerpower.log"
 
 # opp.data key for logging information.
 DATA_LOGGING = "logging"

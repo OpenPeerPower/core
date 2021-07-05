@@ -96,7 +96,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Netatmo from a config entry."""
     implementation = (
         await config_entry_oauth2_flow.async_get_config_entry_implementation(opp, entry)

@@ -471,7 +471,7 @@ class HyperionBaseLight(LightEntity):
         self._update_full_state()
 
     async def async_will_remove_from_opp(self) -> None:
-        """Cleanup prior to opp.removal."""
+        """Cleanup prior to opp removal."""
         self._client.remove_callbacks(self._client_callbacks)
 
     @property

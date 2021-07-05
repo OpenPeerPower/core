@@ -429,7 +429,7 @@ class Person(RestoreEntity):
             # Update person now if opp is already running.
             await self.async_update_config(self._config)
         else:
-            # Wait for opp.start to not have race between person
+            # Wait for opp start to not have race between person
             # and device trackers finishing setup.
             async def person_start_opp(now):
                 await self.async_update_config(self._config)

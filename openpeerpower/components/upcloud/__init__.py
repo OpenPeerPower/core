@@ -109,7 +109,7 @@ class UpCloudDataUpdateCoordinator(
 
 
 @dataclasses.dataclass
-class UpCloudOppData:
+class UpCloudHassData:
     """Open Peer Power UpCloud runtime data."""
 
     coordinators: dict[str, UpCloudDataUpdateCoordinator] = dataclasses.field(
@@ -140,7 +140,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     )
 
     if domain_config[CONF_SCAN_INTERVAL]:
-        opp.data[DATA_UPCLOUD] = UpCloudOppData()
+        opp.data[DATA_UPCLOUD] = UpCloudHassData()
         opp.data[DATA_UPCLOUD].scan_interval_migrations[
             domain_config[CONF_USERNAME]
         ] = domain_config[CONF_SCAN_INTERVAL]
@@ -162,11 +162,11 @@ async def _async_signal_options_update(
     )
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Set up the UpCloud config entry."""
 
     manager = upcloud_api.CloudManager(
-        entry.data[CONF_USERNAME], entry.data[CONF_PASSWORD]
+        config_entry.data[CONF_USERNAME], config_entry.data[CONF_PASSWORD]
     )
 
     try:
@@ -178,23 +178,24 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         _LOGGER.error("Failed to connect", exc_info=True)
         raise ConfigEntryNotReady from err
 
-    upcloud_data = opp.data.setdefault(DATA_UPCLOUD, UpCloudOppData())
+    upcloud_data = opp.data.setdefault(DATA_UPCLOUD, UpCloudHassData())
 
     # Handle pre config entry (0.117) scan interval migration to options
     migrated_scan_interval = upcloud_data.scan_interval_migrations.pop(
-        entry.data[CONF_USERNAME], None
+        config_entry.data[CONF_USERNAME], None
     )
     if migrated_scan_interval and (
-        not entry.options.get(CONF_SCAN_INTERVAL)
-        or entry.options[CONF_SCAN_INTERVAL] == DEFAULT_SCAN_INTERVAL.total_seconds()
+        not config_entry.options.get(CONF_SCAN_INTERVAL)
+        or config_entry.options[CONF_SCAN_INTERVAL]
+        == DEFAULT_SCAN_INTERVAL.total_seconds()
     ):
         update_interval = migrated_scan_interval
         opp.config_entries.async_update_entry(
-            entry,
+            config_entry,
             options={CONF_SCAN_INTERVAL: update_interval.total_seconds()},
         )
-    elif entry.options.get(CONF_SCAN_INTERVAL):
-        update_interval = timedelta(seconds=entry.options[CONF_SCAN_INTERVAL])
+    elif config_entry.options.get(CONF_SCAN_INTERVAL):
+        update_interval = timedelta(seconds=config_entry.options[CONF_SCAN_INTERVAL])
     else:
         update_interval = DEFAULT_SCAN_INTERVAL
 
@@ -202,26 +203,28 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         opp,
         update_interval=update_interval,
         cloud_manager=manager,
-        username=entry.data[CONF_USERNAME],
+        username=config_entry.data[CONF_USERNAME],
     )
 
     # Call the UpCloud API to refresh data
     await coordinator.async_config_entry_first_refresh()
 
     # Listen to config entry updates
-    entry.async_on_unload(entry.add_update_listener(_async_signal_options_update))
-    entry.async_on_unload(
+    config_entry.async_on_unload(
+        config_entry.add_update_listener(_async_signal_options_update)
+    )
+    config_entry.async_on_unload(
         async_dispatcher_connect(
             opp,
-            _config_entry_update_signal_name(entry),
+            _config_entry_update_signal_name(config_entry),
             coordinator.async_update_config,
         )
     )
 
-    upcloud_data.coordinators[entry.data[CONF_USERNAME]] = coordinator
+    upcloud_data.coordinators[config_entry.data[CONF_USERNAME]] = coordinator
 
     # Forward entry setup
-    opp.config_entries.async_setup_platforms(entry, CONFIG_ENTRY_DOMAINS)
+    opp.config_entries.async_setup_platforms(config_entry, CONFIG_ENTRY_DOMAINS)
 
     return True
 
@@ -239,8 +242,6 @@ async def async_unload_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> b
 
 class UpCloudServerEntity(CoordinatorEntity):
     """Entity class for UpCloud servers."""
-
-    _attr_device_class = DEFAULT_COMPONENT_DEVICE_CLASS
 
     def __init__(
         self,
@@ -274,19 +275,22 @@ class UpCloudServerEntity(CoordinatorEntity):
         return "mdi:server" if self.is_on else "mdi:server-off"
 
     @property
-    def is_on(self) -> bool:
-        """Return true if the server is on."""
+    def state(self) -> str | None:
+        """Return state of the server."""
         try:
-            return STATE_MAP.get(self._server.state, self._server.state) == STATE_ON
+            return STATE_MAP.get(self._server.state, self._server.state)
         except AttributeError:
-            return False
+            return None
 
     @property
-    def available(self) -> bool:
-        """Return True if entity is available."""
-        return super().available and STATE_MAP.get(
-            self._server.state, self._server.state
-        ) in [STATE_ON, STATE_OFF]
+    def is_on(self) -> bool:
+        """Return true if the server is on."""
+        return self.state == STATE_ON
+
+    @property
+    def device_class(self) -> str:
+        """Return the class of this server."""
+        return DEFAULT_COMPONENT_DEVICE_CLASS
 
     @property
     def extra_state_attributes(self) -> dict[str, Any]:

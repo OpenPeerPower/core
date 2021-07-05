@@ -94,7 +94,7 @@ class TestHelpersEntity:
         self.opp.stop()
 
     def test_generate_entity_id_given_opp(self):
-        """Test generating an entity id given opp jobject."""
+        """Test generating an entity id given opp object."""
         fmt = "test.{}"
         assert (
             entity.generate_entity_id(fmt, "overwrite hidden true", opp=self.opp)

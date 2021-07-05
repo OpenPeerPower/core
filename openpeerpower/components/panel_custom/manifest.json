@@ -3,6 +3,6 @@
   "name": "Custom Panel",
   "documentation": "https://www.openpeerpower.io/integrations/panel_custom",
   "dependencies": ["frontend"],
-  "codeowners": ["@open-peer-power/frontend"],
+  "codeowners": ["@openpeerpower/frontend"],
   "quality_scale": "internal"
 }

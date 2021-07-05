@@ -25,7 +25,7 @@ from .const import CONF_ACCOUNT, DATA_ENTRIES
 
 _LOGGER = logging.getLogger(__name__)
 
-ATTR_TO_HA_METRIC = {
+ATTR_TO_OP_METRIC = {
     # "<ID>": [<MDI_ICON>, <DEVICE_CLASS>, <UNIT_OF_MEASUREMENT>, <ENABLED_BY_DEFAULT>],
     "mileage": ["mdi:speedometer", None, LENGTH_KILOMETERS, True],
     "remaining_range_total": ["mdi:map-marker-distance", None, LENGTH_KILOMETERS, True],
@@ -62,7 +62,7 @@ ATTR_TO_HA_METRIC = {
     "total_distance": ["mdi:map-marker-distance", None, LENGTH_KILOMETERS, True],
 }
 
-ATTR_TO_HA_IMPERIAL = {
+ATTR_TO_OP_IMPERIAL = {
     # "<ID>": [<MDI_ICON>, <DEVICE_CLASS>, <UNIT_OF_MEASUREMENT>, <ENABLED_BY_DEFAULT>],
     "mileage": ["mdi:speedometer", None, LENGTH_MILES, True],
     "remaining_range_total": ["mdi:map-marker-distance", None, LENGTH_MILES, True],
@@ -94,7 +94,7 @@ ATTR_TO_HA_IMPERIAL = {
     "total_distance": ["mdi:map-marker-distance", None, LENGTH_MILES, True],
 }
 
-ATTR_TO_HA_GENERIC = {
+ATTR_TO_OP_GENERIC = {
     # "<ID>": [<MDI_ICON>, <DEVICE_CLASS>, <UNIT_OF_MEASUREMENT>, <ENABLED_BY_DEFAULT>],
     "charging_time_remaining": ["mdi:update", None, TIME_HOURS, True],
     "charging_status": ["mdi:battery-charging", None, None, True],
@@ -106,16 +106,16 @@ ATTR_TO_HA_GENERIC = {
     "electric_distance_ratio": ["mdi:percent-outline", None, PERCENTAGE, False],
 }
 
-ATTR_TO_HA_METRIC.update(ATTR_TO_HA_GENERIC)
-ATTR_TO_HA_IMPERIAL.update(ATTR_TO_HA_GENERIC)
+ATTR_TO_OP_METRIC.update(ATTR_TO_OP_GENERIC)
+ATTR_TO_OP_IMPERIAL.update(ATTR_TO_OP_GENERIC)
 
 
 async def async_setup_entry(opp, config_entry, async_add_entities):
     """Set up the BMW ConnectedDrive sensors from config entry."""
     if opp.config.units.name == CONF_UNIT_SYSTEM_IMPERIAL:
-        attribute_info = ATTR_TO_HA_IMPERIAL
+        attribute_info = ATTR_TO_OP_IMPERIAL
     else:
-        attribute_info = ATTR_TO_HA_METRIC
+        attribute_info = ATTR_TO_OP_METRIC
 
     account = opp.data[BMW_DOMAIN][DATA_ENTRIES][config_entry.entry_id][CONF_ACCOUNT]
     entities = []

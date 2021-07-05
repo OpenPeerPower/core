@@ -53,7 +53,7 @@ def _setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     return flume_auth, flume_devices, http_session
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up flume from a config entry."""
 
     flume_auth, flume_devices, http_session = await opp.async_add_executor_job(

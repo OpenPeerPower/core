@@ -26,9 +26,9 @@ And optional parameter 'type' has to set as 'link_user' if login flow used for
 link credential to exist user. Default 'type' is 'authorize'.
 
 {
-    "client_id": "https://opp.ian.local:8123/",
+    "client_id": "https://oppbian.local:8123/",
     "handler": ["local_provider", null],
-    "redirect_url": "https://opp.ian.local:8123/",
+    "redirect_url": "https://oppbian.local:8123/",
     "type': "authorize"
 }
 
@@ -52,7 +52,7 @@ flow for details.
 
 Progress the flow. Most flows will be 1 page, but could optionally add extra
 login challenges, like TFA. Once the flow has finished, the returned step will
-have type RESULT_TYPE_CREATE_ENTRY and "result" key will contain an authorization code.
+have type "create_entry" and "result" key will contain an authorization code.
 The authorization code associated with an authorized user by default, it will
 associate with an credential if "type" set to "link_user" in
 "/auth/login_flow"

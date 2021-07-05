@@ -164,14 +164,14 @@ async def async_setup_entry(opp, entry):
         # string, so we'll handle it separately.
         err = f"{_TIMEOUT}s timeout exceeded when connecting to Logi Circle API"
         opp.components.persistent_notification.create(
-            f"Error: {err}<br />You will need to restart opp.after fixing.",
+            f"Error: {err}<br />You will need to restart opp after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )
         return False
     except ClientResponseError as ex:
         opp.components.persistent_notification.create(
-            f"Error: {ex}<br />You will need to restart opp.after fixing.",
+            f"Error: {ex}<br />You will need to restart opp after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )

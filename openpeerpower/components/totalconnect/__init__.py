@@ -14,7 +14,7 @@ PLATFORMS = ["alarm_control_panel", "binary_sensor"]
 CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up upon config entry in user interface."""
     conf = entry.data
     username = conf[CONF_USERNAME]

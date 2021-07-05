@@ -21,7 +21,7 @@ PLATFORMS = ["cover", "sensor", "switch", "air_quality", "light", "climate"]
 PARALLEL_UPDATES = 0
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up BleBox devices from a config entry."""
 
     websession = async_get_clientsession(opp)

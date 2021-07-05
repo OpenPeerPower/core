@@ -43,7 +43,7 @@ class OpenPeerPowerConfig(OrderedDict):
     """Configuration result with errors attribute."""
 
     def __init__(self) -> None:
-        """Initialize OP config."""
+        """Initialize OPP config."""
         super().__init__()
         self.errors: list[CheckConfigError] = []
 

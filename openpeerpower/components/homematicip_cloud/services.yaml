@@ -115,7 +115,7 @@ dump_hap_config:
   fields:
     config_output_path:
       name: Config output path
-      description: (Default is 'Your open-peer-power config directory') Path where to store the config.
+      description: (Default is 'Your openpeerpower config directory') Path where to store the config.
       example: "/config"
       selector:
         text:

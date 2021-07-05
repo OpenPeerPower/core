@@ -146,7 +146,7 @@ def do_authentication(opp, opp_config, config):
         dev_flow = oauth.step1_get_device_and_user_codes()
     except OAuth2DeviceCodeError as err:
         opp.components.persistent_notification.create(
-            f"Error: {err}<br />You will need to restart opp.after fixing." "",
+            f"Error: {err}<br />You will need to restart opp after fixing." "",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )

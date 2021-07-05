@@ -45,7 +45,12 @@ from tests.common import MockConfigEntry
 async def test_ip_changes_fallback_discovery(opp: OpenPeerPower):
     """Test Yeelight ip changes and we fallback to discovery."""
     config_entry = MockConfigEntry(
-        domain=DOMAIN, data={CONF_ID: ID, CONF_HOST: "5.5.5.5"}, unique_id=ID
+        domain=DOMAIN,
+        data={
+            CONF_ID: ID,
+            CONF_HOST: "5.5.5.5",
+        },
+        unique_id=ID,
     )
     config_entry.add_to_opp(opp)
 
@@ -55,7 +60,12 @@ async def test_ip_changes_fallback_discovery(opp: OpenPeerPower):
         side_effect=[OSError, CAPABILITIES, CAPABILITIES]
     )
 
-    _discovered_devices = [{"capabilities": CAPABILITIES, "ip": IP_ADDRESS}]
+    _discovered_devices = [
+        {
+            "capabilities": CAPABILITIES,
+            "ip": IP_ADDRESS,
+        }
+    ]
     with patch(f"{MODULE}.Bulb", return_value=mocked_bulb), patch(
         f"{MODULE}.discover_bulbs", return_value=_discovered_devices
     ):
@@ -82,7 +92,12 @@ async def test_ip_changes_fallback_discovery(opp: OpenPeerPower):
 
 async def test_ip_changes_id_missing_cannot_fallback(opp: OpenPeerPower):
     """Test Yeelight ip changes and we fallback to discovery."""
-    config_entry = MockConfigEntry(domain=DOMAIN, data={CONF_HOST: "5.5.5.5"})
+    config_entry = MockConfigEntry(
+        domain=DOMAIN,
+        data={
+            CONF_HOST: "5.5.5.5",
+        },
+    )
     config_entry.add_to_opp(opp)
 
     mocked_bulb = _mocked_bulb(True)
@@ -155,7 +170,10 @@ async def test_unique_ids_device(opp: OpenPeerPower):
     """Test Yeelight unique IDs from yeelight device IDs."""
     config_entry = MockConfigEntry(
         domain=DOMAIN,
-        data={**CONFIG_ENTRY_DATA, CONF_NIGHTLIGHT_SWITCH: True},
+        data={
+            **CONFIG_ENTRY_DATA,
+            CONF_NIGHTLIGHT_SWITCH: True,
+        },
         unique_id=ID,
     )
     config_entry.add_to_opp(opp)
@@ -179,7 +197,11 @@ async def test_unique_ids_device(opp: OpenPeerPower):
 async def test_unique_ids_entry(opp: OpenPeerPower):
     """Test Yeelight unique IDs from entry IDs."""
     config_entry = MockConfigEntry(
-        domain=DOMAIN, data={**CONFIG_ENTRY_DATA, CONF_NIGHTLIGHT_SWITCH: True}
+        domain=DOMAIN,
+        data={
+            **CONFIG_ENTRY_DATA,
+            CONF_NIGHTLIGHT_SWITCH: True,
+        },
     )
     config_entry.add_to_opp(opp)
 
@@ -209,7 +231,12 @@ async def test_unique_ids_entry(opp: OpenPeerPower):
 async def test_bulb_off_while_adding_in_ha(opp: OpenPeerPower):
     """Test Yeelight off while adding to ha, for example on OPP start."""
     config_entry = MockConfigEntry(
-        domain=DOMAIN, data={**CONFIG_ENTRY_DATA, CONF_HOST: IP_ADDRESS}, unique_id=ID
+        domain=DOMAIN,
+        data={
+            **CONFIG_ENTRY_DATA,
+            CONF_HOST: IP_ADDRESS,
+        },
+        unique_id=ID,
     )
     config_entry.add_to_opp(opp)
 

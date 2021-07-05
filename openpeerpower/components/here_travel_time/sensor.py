@@ -477,7 +477,7 @@ class HERETravelTimeData:
 
     @staticmethod
     def _build_opp_attribution(source_attribution: dict) -> str | None:
-        """Build a opp.frontend ready string out of the sourceAttribution."""
+        """Build a opp frontend ready string out of the sourceAttribution."""
         suppliers = source_attribution.get("supplier")
         if suppliers is not None:
             supplier_titles = []

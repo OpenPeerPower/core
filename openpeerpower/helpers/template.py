@@ -88,7 +88,7 @@ template_cv: ContextVar[str | None] = ContextVar("template_cv", default=None)
 
 @bind_opp
 def attach(opp: OpenPeerPower, obj: Any) -> None:
-    """Recursively attach opp.to all template instances in list and dict."""
+    """Recursively attach opp to all template instances in list and dict."""
     if isinstance(obj, list):
         for child in obj:
             attach(opp, child)
@@ -348,7 +348,7 @@ class Template:
     ) -> Any:
         """Render given template.
 
-        If limited is True, the template is not allowed to access any function or filter depending on opp.or the state machine.
+        If limited is True, the template is not allowed to access any function or filter depending on opp or the state machine.
         """
         if self.is_static:
             if not parse_result or self.opp.config.legacy_templates:
@@ -373,7 +373,7 @@ class Template:
 
         This method must be run in the event loop.
 
-        If limited is True, the template is not allowed to access any function or filter depending on opp.or the state machine.
+        If limited is True, the template is not allowed to access any function or filter depending on opp or the state machine.
         """
         if self.is_static:
             if not parse_result or self.opp.config.legacy_templates:
@@ -565,7 +565,7 @@ class Template:
     def _ensure_compiled(
         self, limited: bool = False, strict: bool = False
     ) -> jinja2.Template:
-        """Bind a template to a specific opp.instance."""
+        """Bind a template to a specific opp instance."""
         self.ensure_valid()
 
         assert self.opp is not None, "opp variable not set on template"
@@ -1420,7 +1420,6 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
         self.filters["atan"] = arc_tangent
         self.filters["atan2"] = arc_tangent2
         self.filters["sqrt"] = square_root
-        self.filters["as_datetime"] = dt_util.parse_datetime
         self.filters["as_timestamp"] = forgiving_as_timestamp
         self.filters["as_local"] = dt_util.as_local
         self.filters["timestamp_custom"] = timestamp_custom
@@ -1455,7 +1454,6 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
         self.globals["atan"] = arc_tangent
         self.globals["atan2"] = arc_tangent2
         self.globals["float"] = forgiving_float
-        self.globals["as_datetime"] = dt_util.parse_datetime
         self.globals["as_local"] = dt_util.as_local
         self.globals["as_timestamp"] = forgiving_as_timestamp
         self.globals["relative_time"] = relative_time
@@ -1473,7 +1471,7 @@ class TemplateEnvironment(ImmutableSandboxedEnvironment):
         # We mark these as a context functions to ensure they get
         # evaluated fresh with every execution, rather than executed
         # at compile time and the value stored. The context itself
-        # can be discarded, we only need to get at the oppjobject.
+        # can be discarded, we only need to get at the opp object.
         def oppfunction(func):
             """Wrap function that depend on opp."""
 

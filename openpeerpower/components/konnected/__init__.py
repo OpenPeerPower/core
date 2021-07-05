@@ -250,7 +250,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up panel from a config entry."""
     client = AlarmPanel(opp, entry)
     # creates a panel data store in opp.data[DOMAIN][CONF_DEVICES]

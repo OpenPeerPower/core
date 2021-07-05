@@ -20,7 +20,7 @@ PLATFORMS = ["switch"]
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up kmtronic from a config entry."""
     session = aiohttp_client.async_get_clientsession(opp)
     auth = Auth(

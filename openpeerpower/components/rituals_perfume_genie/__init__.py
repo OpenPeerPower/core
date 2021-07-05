@@ -22,7 +22,7 @@ _LOGGER = logging.getLogger(__name__)
 UPDATE_INTERVAL = timedelta(seconds=30)
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Rituals Perfume Genie from a config entry."""
     session = async_get_clientsession(opp)
     account = Account(EMPTY_CREDENTIALS, EMPTY_CREDENTIALS, session)

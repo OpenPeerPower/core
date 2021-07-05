@@ -290,7 +290,7 @@ class LIFXManager:
         )
 
     def register_effects(self):
-        """Register the LIFX effects as opp.service calls."""
+        """Register the LIFX effects as opp service calls."""
 
         async def service_handler(service):
             """Apply a service, i.e. start an effect."""

@@ -25,7 +25,7 @@ from openpeerpower.const import (
 from .const import (
     CONF_CODE_ARM_REQUIRED,
     CONF_CODE_DISARM_REQUIRED,
-    CONF_HA_STATES_TO_RISCO,
+    CONF_OP_STATES_TO_RISCO,
     CONF_RISCO_STATES_TO_HA,
     DATA_COORDINATOR,
     DEFAULT_OPTIONS,
@@ -70,7 +70,7 @@ class RiscoAlarm(AlarmControlPanelEntity, RiscoEntity):
         self._code_arm_required = options[CONF_CODE_ARM_REQUIRED]
         self._code_disarm_required = options[CONF_CODE_DISARM_REQUIRED]
         self._risco_to_ha = options[CONF_RISCO_STATES_TO_HA]
-        self._op_to_risco = options[CONF_HA_STATES_TO_RISCO]
+        self._op_to_risco = options[CONF_OP_STATES_TO_RISCO]
         self._supported_states = 0
         for state in self._op_to_risco:
             self._supported_states |= STATES_TO_SUPPORTED_FEATURES[state]

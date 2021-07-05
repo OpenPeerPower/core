@@ -13,17 +13,17 @@ from .onewirehub import CannotConnect, OneWireHub
 _LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Set up a 1-Wire proxy for a config entry."""
     opp.data.setdefault(DOMAIN, {})
 
     onewirehub = OneWireHub(opp)
     try:
-        await onewirehub.initialize(entry)
+        await onewirehub.initialize(config_entry)
     except CannotConnect as exc:
         raise ConfigEntryNotReady() from exc
 
-    opp.data[DOMAIN][entry.entry_id] = onewirehub
+    opp.data[DOMAIN][config_entry.entry_id] = onewirehub
 
     async def cleanup_registry() -> None:
         # Get registries
@@ -35,7 +35,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         registry_devices = [
             entry.id
             for entry in dr.async_entries_for_config_entry(
-                device_registry, entry.entry_id
+                device_registry, config_entry.entry_id
             )
         ]
         # Remove devices that don't belong to any entity
@@ -54,7 +54,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         # wait until all required platforms are ready
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_setup(entry, platform)
+                opp.config_entries.async_forward_entry_setup(config_entry, platform)
                 for platform in PLATFORMS
             ]
         )

@@ -68,7 +68,7 @@ def setup_platform(opp, config, add_entities, discovery_info=None):
         _LOGGER.error("Unable to connect to Travis CI service: %s", str(ex))
         opp.components.persistent_notification.create(
             "Error: {}<br />"
-            "You will need to restart opp.after fixing."
+            "You will need to restart opp after fixing."
             "".format(ex),
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,

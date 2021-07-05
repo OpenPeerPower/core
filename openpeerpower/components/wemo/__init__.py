@@ -98,7 +98,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up a wemo config entry."""
     config = opp.data[DOMAIN].pop("config")
 
@@ -141,7 +141,7 @@ class WemoDispatcher:
     def async_add_unique_device(
         self, opp: OpenPeerPower, device: pywemo.WeMoDevice
     ) -> None:
-        """Add a WeMo device to opp.if it has not already been added."""
+        """Add a WeMo device to opp if it has not already been added."""
         if device.serialnumber in self._added_serial_numbers:
             return
 
@@ -204,7 +204,7 @@ class WemoDiscovery:
             await self.discover_statics()
 
         finally:
-            # Run discovery more frequently after opp.has just started.
+            # Run discovery more frequently after opp has just started.
             self._scan_delay = min(
                 self._scan_delay + self.ADDITIONAL_SECONDS_BETWEEN_SCANS,
                 self.MAX_SECONDS_BETWEEN_SCANS,

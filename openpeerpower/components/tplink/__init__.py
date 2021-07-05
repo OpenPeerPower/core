@@ -72,7 +72,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Set up TPLink from a config entry."""
     config_data = opp.data[DOMAIN].get(ATTR_CONFIG)
 
@@ -101,7 +101,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             "Got %s lights: %s", len(lights), ", ".join(d.host for d in lights)
         )
 
-        opp.async_create_task(forward_setup(entry, "light"))
+        opp.async_create_task(forward_setup(config_entry, "light"))
 
     if switches:
         _LOGGER.debug(
@@ -110,7 +110,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             ", ".join(d.host for d in switches),
         )
 
-        opp.async_create_task(forward_setup(entry, "switch"))
+        opp.async_create_task(forward_setup(config_entry, "switch"))
 
     return True
 

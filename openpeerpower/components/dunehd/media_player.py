@@ -31,7 +31,7 @@ from openpeerpower.core import OpenPeerPower
 import openpeerpower.helpers.config_validation as cv
 from openpeerpower.helpers.entity import DeviceInfo
 from openpeerpower.helpers.entity_platform import AddEntitiesCallback
-from openpeerpower.helpers.typing import ConfigType, DiscoveryInfoType
+from openpeerpower.helpers.typing import ConfigType, DiscoveryInfoType, StateType
 
 from .const import ATTR_MANUFACTURER, DEFAULT_NAME, DOMAIN
 
@@ -100,7 +100,7 @@ class DuneHDPlayerEntity(MediaPlayerEntity):
         return True
 
     @property
-    def state(self) -> str | None:
+    def state(self) -> StateType:
         """Return player state."""
         state = STATE_OFF
         if "playback_position" in self._state:

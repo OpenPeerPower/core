@@ -52,7 +52,7 @@ def setup_platform(
     except (TypeError, KeyError, NameError, ValueError) as ex:
         _LOGGER.error("%s", ex)
         opp.components.persistent_notification.create(
-            "Error: {ex}<br />You will need to restart opp.after fixing.",
+            "Error: {ex}<br />You will need to restart opp after fixing.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )

@@ -47,7 +47,7 @@ async def async_setup_entry(opp, entry):
     opp.data.setdefault(DOMAIN, {})[entry.unique_id] = manager
 
     async def on_opp_stop(event):
-        """Stop push updates when opp.stops."""
+        """Stop push updates when opp stops."""
         await manager.disconnect()
 
     entry.async_on_unload(
@@ -270,7 +270,7 @@ class AppleTVManager:
 
         self.opp.components.persistent_notification.create(
             "An irrecoverable connection problem occurred when connecting to "
-            f"`{name}`. Please go to the Integrations page and reconfigure it",
+            f"`f{name}`. Please go to the Integrations page and reconfigure it",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )

@@ -12,7 +12,7 @@ from .const import DOMAIN
 PLATFORMS = ["switch", "binary_sensor"]
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up ProgettiHWSW Automation from a config entry."""
     opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN][entry.entry_id] = ProgettiHWSWAPI(

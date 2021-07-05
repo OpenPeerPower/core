@@ -82,7 +82,7 @@ async def test_flow_works(opp):
     assert result["title"] == "Mock Bridge"
     assert result["data"] == {
         "host": "1.2.3.4",
-        "username": "open-peer-power#test-home",
+        "username": "openpeerpower#test-home",
     }
 
     assert len(mock_bridge.initialize.mock_calls) == 1

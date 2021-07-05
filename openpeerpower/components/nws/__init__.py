@@ -93,7 +93,7 @@ class NwsDataUpdateCoordinator(DataUpdateCoordinator):
         )
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up a National Weather Service entry."""
     latitude = entry.data[CONF_LATITUDE]
     longitude = entry.data[CONF_LONGITUDE]

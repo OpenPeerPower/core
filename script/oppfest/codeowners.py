@@ -10,16 +10,16 @@ BASE = """
 # https://github.com/blog/2392-introducing-code-owners
 
 # Open Peer Power Core
-setup.py @open-peer-power/core
-openpeerpower/*.py @open-peer-power/core
-openpeerpower/helpers/* @open-peer-power/core
-openpeerpower/util/* @open-peer-power/core
+setup.py @openpeerpower/core
+openpeerpower/*.py @openpeerpower/core
+openpeerpower/helpers/* @openpeerpower/core
+openpeerpower/util/* @openpeerpower/core
 
 # Open Peer Power Supervisor
-build.json @open-peer-power/supervisor
-machine/* @open-peer-power/supervisor
-rootfs/* @open-peer-power/supervisor
-Dockerfile @open-peer-power/supervisor
+build.json @openpeerpower/supervisor
+machine/* @openpeerpower/supervisor
+rootfs/* @openpeerpower/supervisor
+Dockerfile @openpeerpower/supervisor
 
 # Other code
 openpeerpower/scripts/check_config.py @kellerza

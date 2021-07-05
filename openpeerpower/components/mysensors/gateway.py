@@ -159,7 +159,7 @@ async def _get_gateway(
     """Return gateway after setup of the gateway."""
 
     if persistence_file is not None:
-        # interpret relative paths to be in opp.config folder. absolute paths will be left as they are
+        # interpret relative paths to be in opp config folder. absolute paths will be left as they are
         persistence_file = opp.config.path(persistence_file)
 
     if device == MQTT_COMPONENT:

@@ -100,7 +100,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Create a gateway."""
     # host, identity, key, allow_tradfri_groups
     tradfri_data = opp.data.setdefault(DOMAIN, {})[entry.entry_id] = {}
@@ -113,7 +113,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     )
 
     async def on_opp_stop(event):
-        """Close connection when opp.stops."""
+        """Close connection when opp stops."""
         await factory.shutdown()
 
     listeners.append(opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, on_opp_stop))

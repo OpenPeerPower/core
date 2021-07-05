@@ -11,7 +11,6 @@ from openpeerpower.components.device_tracker import (
     SOURCE_TYPE_GPS,
 )
 from openpeerpower.components.device_tracker.config_entry import TrackerEntity
-from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import (
     CONF_EVENT,
     CONF_HOST,
@@ -117,7 +116,7 @@ PLATFORM_SCHEMA = PARENT_PLATFORM_SCHEMA.extend(
 )
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry, async_add_entities):
+async def async_setup_entry(opp: OpenPeerPower, entry, async_add_entities):
     """Configure a dispatcher connection based on a config entry."""
 
     @callback

@@ -22,12 +22,12 @@ from openpeerpower.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import DOMAIN
 
-PLATFORMS = ["media_player", "light", "remote"]
+PLATFORMS = ["media_player", "remote"]
 
 LOGGER = logging.getLogger(__name__)
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Philips TV from a config entry."""
 
     tvapi = PhilipsTV(

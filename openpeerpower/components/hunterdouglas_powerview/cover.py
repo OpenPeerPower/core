@@ -87,12 +87,12 @@ async def async_setup_entry(opp, entry, async_add_entities):
 
 
 def hd_position_to_opp(hd_position):
-    """Convert hunter douglas position to opp.position."""
+    """Convert hunter douglas position to opp position."""
     return round((hd_position / MAX_POSITION) * 100)
 
 
 def opp_position_to_hd(opp_positon):
-    """Convert opp.position to hunter douglas position."""
+    """Convert opp position to hunter douglas position."""
     return int(opp_positon / 100 * MAX_POSITION)
 
 

@@ -304,9 +304,9 @@ class HuaweiLteData:
     routers: dict[str, Router] = attr.ib(init=False, factory=dict)
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Set up Huawei LTE component from config entry."""
-    url = entry.data[CONF_URL]
+    url = config_entry.data[CONF_URL]
 
     # Override settings from YAML config, but only if they're changed in it
     # Old values are stored as *_from_yaml in the config entry
@@ -317,29 +317,30 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         for key in CONF_USERNAME, CONF_PASSWORD:
             if key in yaml_config:
                 value = yaml_config[key]
-                if value != entry.data.get(f"{key}_from_yaml"):
+                if value != config_entry.data.get(f"{key}_from_yaml"):
                     new_data[f"{key}_from_yaml"] = value
                     new_data[key] = value
         # Options
         new_options = {}
         yaml_recipient = yaml_config.get(NOTIFY_DOMAIN, {}).get(CONF_RECIPIENT)
-        if yaml_recipient is not None and yaml_recipient != entry.options.get(
+        if yaml_recipient is not None and yaml_recipient != config_entry.options.get(
             f"{CONF_RECIPIENT}_from_yaml"
         ):
             new_options[f"{CONF_RECIPIENT}_from_yaml"] = yaml_recipient
             new_options[CONF_RECIPIENT] = yaml_recipient
         yaml_notify_name = yaml_config.get(NOTIFY_DOMAIN, {}).get(CONF_NAME)
-        if yaml_notify_name is not None and yaml_notify_name != entry.options.get(
-            f"{CONF_NAME}_from_yaml"
+        if (
+            yaml_notify_name is not None
+            and yaml_notify_name != config_entry.options.get(f"{CONF_NAME}_from_yaml")
         ):
             new_options[f"{CONF_NAME}_from_yaml"] = yaml_notify_name
             new_options[CONF_NAME] = yaml_notify_name
         # Update entry if overrides were found
         if new_data or new_options:
             opp.config_entries.async_update_entry(
-                entry,
-                data={**entry.data, **new_data},
-                options={**entry.options, **new_options},
+                config_entry,
+                data={**config_entry.data, **new_data},
+                options={**config_entry.options, **new_options},
             )
 
     # Get MAC address for use in unique ids. Being able to use something
@@ -362,8 +363,8 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
         Authorized one if username/pass specified (even if empty), unauthorized one otherwise.
         """
-        username = entry.data.get(CONF_USERNAME)
-        password = entry.data.get(CONF_PASSWORD)
+        username = config_entry.data.get(CONF_USERNAME)
+        password = config_entry.data.get(CONF_PASSWORD)
         if username or password:
             connection: Connection = AuthorizedConnection(
                 url, username=username, password=password, timeout=CONNECTION_TIMEOUT
@@ -382,7 +383,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         raise ConfigEntryNotReady from ex
 
     # Set up router and store reference to it
-    router = Router(entry, connection, url, mac, signal_update)
+    router = Router(config_entry, connection, url, mac, signal_update)
     opp.data[DOMAIN].routers[url] = router
 
     # Do initial data update
@@ -408,7 +409,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             device_data["sw_version"] = sw_version
         device_registry = await dr.async_get_registry(opp)
         device_registry.async_get_or_create(
-            config_entry_id=entry.entry_id,
+            config_entry_id=config_entry.entry_id,
             connections=router.device_connections,
             identifiers=router.device_identifiers,
             name=router.device_name,
@@ -417,7 +418,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         )
 
     # Forward config entry setup to platforms
-    opp.config_entries.async_setup_platforms(entry, CONFIG_ENTRY_PLATFORMS)
+    opp.config_entries.async_setup_platforms(config_entry, CONFIG_ENTRY_PLATFORMS)
 
     # Notify doesn't support config entry setup yet, load with discovery for now
     await discovery.async_load_platform(
@@ -426,8 +427,8 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         DOMAIN,
         {
             CONF_URL: url,
-            CONF_NAME: entry.options.get(CONF_NAME, DEFAULT_NOTIFY_SERVICE_NAME),
-            CONF_RECIPIENT: entry.options.get(CONF_RECIPIENT),
+            CONF_NAME: config_entry.options.get(CONF_NAME, DEFAULT_NOTIFY_SERVICE_NAME),
+            CONF_RECIPIENT: config_entry.options.get(CONF_RECIPIENT),
         },
         opp.data[DOMAIN].opp_config,
     )
@@ -441,10 +442,12 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         router.update()
 
     # Set up periodic update
-    entry.async_on_unload(async_track_time_interval(opp, _update_router, SCAN_INTERVAL))
+    config_entry.async_on_unload(
+        async_track_time_interval(opp, _update_router, SCAN_INTERVAL)
+    )
 
     # Clean up at end
-    entry.async_on_unload(
+    config_entry.async_on_unload(
         opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, router.cleanup)
     )
 

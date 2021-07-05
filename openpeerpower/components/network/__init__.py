@@ -32,7 +32,7 @@ async def async_get_adapters(opp: OpenPeerPower) -> list[Adapter]:
 
 
 async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:
-    """Set up network for Home Assistant."""
+    """Set up network for Open Peer Power."""
 
     opp.data[DOMAIN] = network = Network(opp)
     await network.async_setup()

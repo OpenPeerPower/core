@@ -69,7 +69,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Somfy from a config entry."""
     # Backwards compat
     if "auth_implementation" not in entry.data:

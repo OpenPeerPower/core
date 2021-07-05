@@ -101,7 +101,7 @@ def _async_migrate_options_from_data_if_missing(opp, entry):
         opp.config_entries.async_update_entry(entry, data=data, options=options)
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up BMW Connected Drive from a config entry."""
     opp.data.setdefault(DOMAIN, {})
     opp.data[DOMAIN].setdefault(DATA_ENTRIES, {})

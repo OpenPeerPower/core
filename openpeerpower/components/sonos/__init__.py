@@ -6,7 +6,6 @@ from collections import OrderedDict, deque
 import datetime
 import logging
 import socket
-from urllib.parse import urlparse
 
 import pysonos
 from pysonos import events_asyncio
@@ -16,7 +15,6 @@ from pysonos.exceptions import SoCoException
 import voluptuous as vol
 
 from openpeerpower import config_entries
-from openpeerpower.components import ssdp
 from openpeerpower.components.media_player import DOMAIN as MP_DOMAIN
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import (
@@ -26,7 +24,7 @@ from openpeerpower.const import (
 )
 from openpeerpower.core import Event, OpenPeerPower, callback
 from openpeerpower.helpers import config_validation as cv
-from openpeerpower.helpers.dispatcher import async_dispatcher_send
+from openpeerpower.helpers.dispatcher import async_dispatcher_send, dispatcher_send
 
 from .const import (
     DATA_SONOS,
@@ -36,7 +34,6 @@ from .const import (
     SONOS_ALARM_UPDATE,
     SONOS_GROUP_UPDATE,
     SONOS_SEEN,
-    UPNP_ST,
 )
 from .favorites import SonosFavorites
 from .speaker import SonosSpeaker
@@ -78,8 +75,8 @@ class SonosData:
         self.alarms: dict[str, Alarm] = {}
         self.processed_alarm_events = deque(maxlen=5)
         self.topology_condition = asyncio.Condition()
+        self.discovery_thread = None
         self.hosts_heartbeat = None
-        self.ssdp_known: set[str] = set()
 
 
 async def async_setup(opp, config):
@@ -98,102 +95,88 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry(  # noqa: C901
-    opp: OpenPeerPower, entry: ConfigEntry
-) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     """Set up Sonos from a config entry."""
     pysonos.config.EVENTS_MODULE = events_asyncio
 
     if DATA_SONOS not in opp.data:
         opp.data[DATA_SONOS] = SonosData()
 
-    data = opp.data[DATA_SONOS]
     config = opp.data[DOMAIN].get("media_player", {})
-    hosts = config.get(CONF_HOSTS, [])
-    discovery_lock = asyncio.Lock()
     _LOGGER.debug("Reached async_setup_entry, config=%s", config)
 
     advertise_addr = config.get(CONF_ADVERTISE_ADDR)
     if advertise_addr:
         pysonos.config.EVENT_ADVERTISE_IP = advertise_addr
 
-    async def _async_stop_event_listener(event: Event) -> None:
-        if events_asyncio.event_listener:
-            await events_asyncio.event_listener.async_stop()
-
-    def _stop_manual_heartbeat(event: Event) -> None:
+    def _stop_discovery(event: Event) -> None:
+        data = opp.data[DATA_SONOS]
+        if data.discovery_thread:
+            data.discovery_thread.stop()
+            data.discovery_thread = None
         if data.hosts_heartbeat:
             data.hosts_heartbeat()
             data.hosts_heartbeat = None
 
-    def _discovered_player(soco: SoCo) -> None:
-        """Handle a (re)discovered player."""
-        try:
-            _LOGGER.debug("Reached _discovered_player, soco=%s", soco)
-            speaker_info = soco.get_speaker_info(True)
-            _LOGGER.debug("Adding new speaker: %s", speaker_info)
-            speaker = SonosSpeaker(opp, soco, speaker_info)
-            data.discovered[soco.uid] = speaker
-            if soco.household_id not in data.favorites:
-                data.favorites[soco.household_id] = SonosFavorites(
-                    opp, soco.household_id
-                )
-                data.favorites[soco.household_id].update()
-            speaker.setup()
-        except SoCoException as ex:
-            _LOGGER.debug("SoCoException, ex=%s", ex)
+    def _discovery(now: datetime.datetime | None = None) -> None:
+        """Discover players from network or configuration."""
+        hosts = config.get(CONF_HOSTS)
 
-    def _manual_hosts(now: datetime.datetime | None = None) -> None:
-        """Players from network configuration."""
-        for host in hosts:
+        def _discovered_player(soco: SoCo) -> None:
+            """Handle a (re)discovered player."""
             try:
-                _LOGGER.debug("Testing %s", host)
-                player = pysonos.SoCo(socket.gethostbyname(host))
-                if player.is_visible:
-                    # Make sure that the player is available
-                    _ = player.volume
-                _discovered_player(player)
-            except (OSError, SoCoException) as ex:
-                _LOGGER.debug("Issue connecting to '%s': %s", host, ex)
-                if now is None:
-                    _LOGGER.warning("Failed to initialize '%s'", host)
+                _LOGGER.debug("Reached _discovered_player, soco=%s", soco)
 
-        _LOGGER.debug("Tested all hosts")
-        data.hosts_heartbeat = opp.helpers.event.call_later(
-            DISCOVERY_INTERVAL.total_seconds(), _manual_hosts
-        )
+                data = opp.data[DATA_SONOS]
+
+                if soco.uid not in data.discovered:
+                    speaker_info = soco.get_speaker_info(True)
+                    _LOGGER.debug("Adding new speaker: %s", speaker_info)
+                    speaker = SonosSpeaker(opp, soco, speaker_info)
+                    data.discovered[soco.uid] = speaker
+                    if soco.household_id not in data.favorites:
+                        data.favorites[soco.household_id] = SonosFavorites(
+                            opp, soco.household_id
+                        )
+                        data.favorites[soco.household_id].update()
+                    speaker.setup()
+                else:
+                    dispatcher_send(opp, f"{SONOS_SEEN}-{soco.uid}", soco)
+
+            except SoCoException as ex:
+                _LOGGER.debug("SoCoException, ex=%s", ex)
+
+        if hosts:
+            for host in hosts:
+                try:
+                    _LOGGER.debug("Testing %s", host)
+                    player = pysonos.SoCo(socket.gethostbyname(host))
+                    if player.is_visible:
+                        # Make sure that the player is available
+                        _ = player.volume
+
+                        _discovered_player(player)
+                except (OSError, SoCoException) as ex:
+                    _LOGGER.debug("Exception %s", ex)
+                    if now is None:
+                        _LOGGER.warning("Failed to initialize '%s'", host)
+
+            _LOGGER.debug("Tested all hosts")
+            opp.data[DATA_SONOS].hosts_heartbeat = opp.helpers.event.call_later(
+                DISCOVERY_INTERVAL.total_seconds(), _discovery
+            )
+        else:
+            _LOGGER.debug("Starting discovery thread")
+            opp.data[DATA_SONOS].discovery_thread = pysonos.discover_thread(
+                _discovered_player,
+                interval=DISCOVERY_INTERVAL.total_seconds(),
+                interface_addr=config.get(CONF_INTERFACE_ADDR),
+            )
+            opp.data[DATA_SONOS].discovery_thread.name = "Sonos-Discovery"
 
     @callback
     def _async_signal_update_groups(event):
         async_dispatcher_send(opp, SONOS_GROUP_UPDATE)
-
-    def _discovered_ip(ip_address):
-        try:
-            player = pysonos.SoCo(ip_address)
-        except (OSError, SoCoException):
-            _LOGGER.debug("Failed to connect to discovered player '%s'", ip_address)
-            return
-        if player.is_visible:
-            _discovered_player(player)
-
-    async def _async_create_discovered_player(uid, discovered_ip):
-        """Only create one player at a time."""
-        async with discovery_lock:
-            if uid in data.discovered:
-                async_dispatcher_send(opp, f"{SONOS_SEEN}-{uid}")
-                return
-            await opp.async_add_executor_job(_discovered_ip, discovered_ip)
-
-    @callback
-    def _async_discovered_player(info):
-        uid = info.get(ssdp.ATTR_UPNP_UDN)
-        if uid.startswith("uuid:"):
-            uid = uid[5:]
-        if uid not in data.ssdp_known:
-            _LOGGER.debug("New discovery: %s", info)
-            data.ssdp_known.add(uid)
-        discovered_ip = urlparse(info[ssdp.ATTR_SSDP_LOCATION]).hostname
-        asyncio.create_task(_async_create_discovered_player(uid, discovered_ip))
 
     @callback
     def _async_signal_update_alarms(event):
@@ -207,6 +190,9 @@ async def async_setup_entry(  # noqa: C901
             ]
         )
         entry.async_on_unload(
+            opp.bus.async_listen_once(EVENT_OPENPEERPOWER_STOP, _stop_discovery)
+        )
+        entry.async_on_unload(
             opp.bus.async_listen_once(
                 EVENT_OPENPEERPOWER_START, _async_signal_update_groups
             )
@@ -216,24 +202,8 @@ async def async_setup_entry(  # noqa: C901
                 EVENT_OPENPEERPOWER_START, _async_signal_update_alarms
             )
         )
-        entry.async_on_unload(
-            opp.bus.async_listen_once(
-                EVENT_OPENPEERPOWER_STOP, _async_stop_event_listener
-            )
-        )
         _LOGGER.debug("Adding discovery job")
-        if hosts:
-            entry.async_on_unload(
-                opp.bus.async_listen_once(
-                    EVENT_OPENPEERPOWER_STOP, _stop_manual_heartbeat
-                )
-            )
-            await opp.async_add_executor_job(_manual_hosts)
-            return
-
-        entry.async_on_unload(
-            ssdp.async_register_callback(opp, _async_discovered_player, {"st": UPNP_ST})
-        )
+        await opp.async_add_executor_job(_discovery)
 
     opp.async_create_task(setup_platforms_and_discovery())
 

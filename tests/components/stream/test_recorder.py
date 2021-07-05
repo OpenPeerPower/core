@@ -15,7 +15,6 @@ import av
 import pytest
 
 from openpeerpower.components.stream import create_stream
-from openpeerpower.components.stream.const import HLS_PROVIDER, RECORDER_PROVIDER
 from openpeerpower.components.stream.core import Segment
 from openpeerpower.components.stream.fmp4utils import get_init_and_moof_data
 from openpeerpower.components.stream.recorder import recorder_save_worker
@@ -118,7 +117,7 @@ async def test_record_lookback(opp, opp_client, stream_worker_sync, record_worke
     stream = create_stream(opp, source)
 
     # Start an HLS feed to enable lookback
-    stream.add_provider(HLS_PROVIDER)
+    stream.add_provider("hls")
     stream.start()
 
     with patch.object(opp.config, "is_allowed_path", return_value=True):
@@ -147,7 +146,7 @@ async def test_recorder_timeout(opp, opp_client, stream_worker_sync):
         stream = create_stream(opp, source)
         with patch.object(opp.config, "is_allowed_path", return_value=True):
             await stream.async_record("/example/path")
-        recorder = stream.add_provider(RECORDER_PROVIDER)
+        recorder = stream.add_provider("recorder")
 
         await recorder.recv()
 
@@ -251,11 +250,11 @@ async def test_record_stream_audio(
         stream = create_stream(opp, source)
         with patch.object(opp.config, "is_allowed_path", return_value=True):
             await stream.async_record("/example/path")
-        recorder = stream.add_provider(RECORDER_PROVIDER)
+        recorder = stream.add_provider("recorder")
 
         while True:
-            await recorder.recv()
-            if not (segment := recorder.last_segment):
+            segment = await recorder.recv()
+            if not segment:
                 break
             last_segment = segment
             stream_worker_sync.resume()

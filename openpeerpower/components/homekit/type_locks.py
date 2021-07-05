@@ -15,7 +15,7 @@ _LOGGER = logging.getLogger(__name__)
 OPP_TO_HOMEKIT = {
     STATE_UNLOCKED: 0,
     STATE_LOCKED: 1,
-    # Value 2 is Jammed which opp.doesn't have a state for
+    # Value 2 is Jammed which opp doesn't have a state for
     STATE_UNKNOWN: 3,
 }
 

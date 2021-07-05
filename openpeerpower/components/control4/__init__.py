@@ -41,7 +41,7 @@ _LOGGER = logging.getLogger(__name__)
 PLATFORMS = ["light"]
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Control4 from a config entry."""
     opp.data.setdefault(DOMAIN, {})
     entry_data = opp.data[DOMAIN].setdefault(entry.entry_id, {})

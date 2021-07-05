@@ -193,7 +193,7 @@ def _async_find_matching_config_entry(opp, prefix):
             return entry
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Elk-M1 Control from a config entry."""
     conf = entry.data
 

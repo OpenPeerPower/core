@@ -59,7 +59,7 @@ async def async_setup(opp: OpenPeerPower, config: dict):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up ONVIF from a config entry."""
     if DOMAIN not in opp.data:
         opp.data[DOMAIN] = {}

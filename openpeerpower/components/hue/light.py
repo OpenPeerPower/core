@@ -257,12 +257,12 @@ def async_update_items(
 
 
 def hue_brightness_to_opp(value):
-    """Convert hue brightness 1..254 to opp.format 0..255."""
+    """Convert hue brightness 1..254 to opp format 0..255."""
     return min(255, round((value / 254) * 255))
 
 
 def opp_to_hue_brightness(value):
-    """Convert opp.brightness 0..255 to hue 1..254 scale."""
+    """Convert opp brightness 0..255 to hue 1..254 scale."""
     return max(1, round((value / 255) * 254))
 
 

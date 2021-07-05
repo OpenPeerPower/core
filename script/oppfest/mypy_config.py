@@ -30,6 +30,7 @@ IGNORED_MODULES: Final[list[str]] = [
     "openpeerpower.components.blueprint.*",
     "openpeerpower.components.bmw_connected_drive.*",
     "openpeerpower.components.bsblan.*",
+    "openpeerpower.components.cast.*",
     "openpeerpower.components.cert_expiry.*",
     "openpeerpower.components.climacell.*",
     "openpeerpower.components.climate.*",

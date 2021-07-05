@@ -83,7 +83,7 @@ HA_TO_NEXIA_HVAC_MODE_MAP = {
     HVAC_MODE_AUTO: OPERATION_MODE_AUTO,
     HVAC_MODE_OFF: OPERATION_MODE_OFF,
 }
-NEXIA_TO_HA_HVAC_MODE_MAP = {
+NEXIA_TO_OP_HVAC_MODE_MAP = {
     value: key for key, value in HA_TO_NEXIA_HVAC_MODE_MAP.items()
 }
 
@@ -290,7 +290,7 @@ class NexiaZone(NexiaThermostatZoneEntity, ClimateEntity):
         if hold and mode == OPERATION_MODE_AUTO:
             return HVAC_MODE_HEAT_COOL
 
-        return NEXIA_TO_HA_HVAC_MODE_MAP[mode]
+        return NEXIA_TO_OP_HVAC_MODE_MAP[mode]
 
     @property
     def hvac_modes(self):

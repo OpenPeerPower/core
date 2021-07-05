@@ -83,7 +83,7 @@ WEBHOOK_SCHEMA = vol.Schema(
 )
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Configure based on config entry."""
     opp.data.setdefault(DOMAIN, {})
     use_webhook = entry.data[CONF_USE_WEBHOOK]

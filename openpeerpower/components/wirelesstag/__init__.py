@@ -199,7 +199,7 @@ def setup(opp, config):
     except (ConnectTimeout, HTTPError, WirelessTagsException) as ex:
         _LOGGER.error("Unable to connect to wirelesstag.net service: %s", str(ex))
         opp.components.persistent_notification.create(
-            f"Error: {ex}<br />Please restart opp.after fixing this.",
+            f"Error: {ex}<br />Please restart opp after fixing this.",
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,
         )

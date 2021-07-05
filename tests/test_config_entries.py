@@ -9,7 +9,6 @@ import pytest
 from openpeerpower import config_entries, data_entry_flow, loader
 from openpeerpower.const import EVENT_OPENPEERPOWER_STARTED, EVENT_OPENPEERPOWER_STOP
 from openpeerpower.core import CoreState, callback
-from openpeerpower.data_entry_flow import RESULT_TYPE_ABORT
 from openpeerpower.exceptions import (
     ConfigEntryAuthFailed,
     ConfigEntryNotReady,
@@ -1627,7 +1626,7 @@ async def test_unique_id_update_existing_entry_without_reload(opp, manager):
         )
         await opp.async_block_till_done()
 
-    assert result["type"] == RESULT_TYPE_ABORT
+    assert result["type"] == "abort"
     assert result["reason"] == "already_configured"
     assert entry.data["host"] == "1.1.1.1"
     assert entry.data["additional"] == "data"
@@ -1672,7 +1671,7 @@ async def test_unique_id_update_existing_entry_with_reload(opp, manager):
         )
         await opp.async_block_till_done()
 
-    assert result["type"] == RESULT_TYPE_ABORT
+    assert result["type"] == "abort"
     assert result["reason"] == "already_configured"
     assert entry.data["host"] == "1.1.1.1"
     assert entry.data["additional"] == "data"
@@ -1689,7 +1688,7 @@ async def test_unique_id_update_existing_entry_with_reload(opp, manager):
         )
         await opp.async_block_till_done()
 
-    assert result["type"] == RESULT_TYPE_ABORT
+    assert result["type"] == "abort"
     assert result["reason"] == "already_configured"
     assert entry.data["host"] == "2.2.2.2"
     assert entry.data["additional"] == "data"
@@ -1732,7 +1731,7 @@ async def test_unique_id_not_update_existing_entry(opp, manager):
         )
         await opp.async_block_till_done()
 
-    assert result["type"] == RESULT_TYPE_ABORT
+    assert result["type"] == "abort"
     assert result["reason"] == "already_configured"
     assert entry.data["host"] == "0.0.0.0"
     assert entry.data["additional"] == "data"
@@ -2846,7 +2845,7 @@ async def test__async_abort_entries_match(opp, manager, matchers, reason):
         )
         await opp.async_block_till_done()
 
-    assert result["type"] == RESULT_TYPE_ABORT
+    assert result["type"] == "abort"
     assert result["reason"] == reason
 
 

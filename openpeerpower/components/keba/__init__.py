@@ -76,7 +76,7 @@ async def async_setup(opp, config):
     except ValueError as ex:
         _LOGGER.warning("Could not set failsafe mode %s", ex)
 
-    # Register services to.opp
+    # Register services to opp
     async def execute_service(call):
         """Execute a service to KEBA charging station.
 

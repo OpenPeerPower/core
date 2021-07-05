@@ -24,7 +24,7 @@ CONFIG_SCHEMA = cv.deprecated(DOMAIN)
 DEFAULT_UPDATE_RATE = 120
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Configure the base Nexia device for Open Peer Power."""
 
     conf = entry.data

@@ -12,7 +12,7 @@ be in JSON as it's more readable.
 Exchange the authorization code retrieved from the login flow for tokens.
 
 {
-    "client_id": "https://opp.ian.local:8123/",
+    "client_id": "https://oppbian.local:8123/",
     "grant_type": "authorization_code",
     "code": "411ee2f916e648d691e937ae9344681e"
 }
@@ -33,7 +33,7 @@ token.
 Request a new access token using a refresh token.
 
 {
-    "client_id": "https://opp.ian.local:8123/",
+    "client_id": "https://oppbian.local:8123/",
     "grant_type": "refresh_token",
     "refresh_token": "IJKLMNOPQRST"
 }

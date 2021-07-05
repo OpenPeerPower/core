@@ -71,7 +71,7 @@ ZW_HVAC_MODE_MAP: dict[int, str] = {
     ThermostatMode.OFF: HVAC_MODE_OFF,
     ThermostatMode.HEAT: HVAC_MODE_HEAT,
     ThermostatMode.COOL: HVAC_MODE_COOL,
-    # Z-Wave auto mode is actually heat/cool in the opp.world
+    # Z-Wave auto mode is actually heat/cool in the opp world
     ThermostatMode.AUTO: HVAC_MODE_HEAT_COOL,
     ThermostatMode.AUXILIARY: HVAC_MODE_HEAT,
     ThermostatMode.FAN: HVAC_MODE_FAN_ONLY,

@@ -10,7 +10,7 @@ import logging
 import math
 import sys
 from timeit import default_timer as timer
-from typing import Any, TypedDict, final
+from typing import Any, TypedDict
 
 from openpeerpower.config import DATA_CUSTOMIZE
 from openpeerpower.const import (
@@ -135,7 +135,7 @@ class Entity(ABC):
     # this class. These may be used to customize the behavior of the entity.
     entity_id: str = None  # type: ignore
 
-    # Owning opp.instance. Will be set by EntityPlatform
+    # Owning opp instance. Will be set by EntityPlatform
     # While not purely typed, it makes typehinting more useful for us
     # and removes the need for constant None checks or asserts.
     opp: OpenPeerPower = None  # type: ignore
@@ -766,11 +766,7 @@ class Entity(ABC):
 class ToggleEntity(Entity):
     """An abstract class for entities that can be turned on and off."""
 
-    _attr_is_on: bool
-    _attr_state: None = None
-
     @property
-    @final
     def state(self) -> str | None:
         """Return the state."""
         return STATE_ON if self.is_on else STATE_OFF
@@ -778,7 +774,7 @@ class ToggleEntity(Entity):
     @property
     def is_on(self) -> bool:
         """Return True if entity is on."""
-        return self._attr_is_on
+        raise NotImplementedError()
 
     def turn_on(self, **kwargs: Any) -> None:
         """Turn the entity on."""

@@ -269,7 +269,7 @@ async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 @callback
 def setup_mysensors_platform(
     opp: OpenPeerPower,
-    domain: str,  # opp.platform name
+    domain: str,  # opp platform name
     discovery_info: dict[str, list[DevId]],
     device_class: type[MySensorsDevice] | dict[SensorType, type[MySensorsEntity]],
     device_args: (

@@ -26,7 +26,6 @@ from tests.common import MockConfigEntry
 _LOGGER = logging.getLogger(__name__)
 CC_SENSOR_ENTITY_ID = "sensor.climacell_{}"
 
-O3 = "ozone"
 CO = "carbon_monoxide"
 NO2 = "nitrogen_dioxide"
 SO2 = "sulfur_dioxide"
@@ -73,7 +72,6 @@ async def _setup(opp: OpenPeerPower, config: dict[str, Any]) -> State:
         assert await opp.config_entries.async_setup(config_entry.entry_id)
         await opp.async_block_till_done()
         for entity_name in (
-            O3,
             CO,
             NO2,
             SO2,
@@ -92,7 +90,7 @@ async def _setup(opp: OpenPeerPower, config: dict[str, Any]) -> State:
         ):
             _enable_entity(opp, CC_SENSOR_ENTITY_ID.format(entity_name))
         await opp.async_block_till_done()
-        assert len(opp.states.async_entity_ids(SENSOR_DOMAIN)) == 16
+        assert len(opp.states.async_entity_ids(SENSOR_DOMAIN)) == 15
 
 
 def check_sensor_state(opp: OpenPeerPower, entity_name: str, value: str):
@@ -109,7 +107,6 @@ async def test_v3_sensor(
 ) -> None:
     """Test v3 sensor data."""
     await _setup(opp, API_V3_ENTRY_DATA)
-    check_sensor_state(opp, O3, "52.625")
     check_sensor_state(opp, CO, "0.875")
     check_sensor_state(opp, NO2, "14.1875")
     check_sensor_state(opp, SO2, "2")
@@ -133,7 +130,6 @@ async def test_v4_sensor(
 ) -> None:
     """Test v4 sensor data."""
     await _setup(opp, API_V4_ENTRY_DATA)
-    check_sensor_state(opp, O3, "46.53")
     check_sensor_state(opp, CO, "0.63")
     check_sensor_state(opp, NO2, "10.67")
     check_sensor_state(opp, SO2, "1.65")

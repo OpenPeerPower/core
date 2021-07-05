@@ -83,6 +83,10 @@ enum34==1000000000.0.0
 typing==1000000000.0.0
 uuid==1000000000.0.0
 
+# httpcore 0.13.4 breaks several integrations
+# https://github.com/openpeerpower/core/issues/51778
+httpcore==0.13.3
+
 """
 
 IGNORE_PRE_COMMIT_HOOK_ID = (
@@ -340,7 +344,7 @@ def diff_file(filename, content):
 def main(validate):
     """Run the script."""
     if not os.path.isfile("requirements_all.txt"):
-        print("Run this from OP root dir")
+        print("Run this from OPP root dir")
         return 1
 
     data = gather_modules()

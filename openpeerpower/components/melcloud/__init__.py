@@ -61,7 +61,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigEntry):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Establish connection with MELClooud."""
     conf = entry.data
     mel_devices = await mel_devices_setup(opp, conf[CONF_TOKEN])

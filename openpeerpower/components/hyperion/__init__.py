@@ -9,7 +9,6 @@ from typing import Any, Callable, cast
 from awesomeversion import AwesomeVersion
 from hyperion import client, const as hyperion_const
 
-from openpeerpower.components.camera.const import DOMAIN as CAMERA_DOMAIN
 from openpeerpower.components.light import DOMAIN as LIGHT_DOMAIN
 from openpeerpower.components.switch import DOMAIN as SWITCH_DOMAIN
 from openpeerpower.config_entries import ConfigEntry
@@ -35,7 +34,7 @@ from .const import (
     SIGNAL_INSTANCE_REMOVE,
 )
 
-PLATFORMS = [LIGHT_DOMAIN, SWITCH_DOMAIN, CAMERA_DOMAIN]
+PLATFORMS = [LIGHT_DOMAIN, SWITCH_DOMAIN]
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -137,11 +136,11 @@ def listen_for_instance_updates(
     )
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Set up Hyperion from a config entry."""
-    host = entry.data[CONF_HOST]
-    port = entry.data[CONF_PORT]
-    token = entry.data.get(CONF_TOKEN)
+    host = config_entry.data[CONF_HOST]
+    port = config_entry.data[CONF_PORT]
+    token = config_entry.data.get(CONF_TOKEN)
 
     hyperion_client = await async_create_connect_hyperion_client(
         host, port, token=token, raw_connection=True
@@ -191,7 +190,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     # We need 1 root client (to manage instances being removed/added) and then 1 client
     # per Hyperion server instance which is shared for all entities associated with
     # that instance.
-    opp.data[DOMAIN][entry.entry_id] = {
+    opp.data[DOMAIN][config_entry.entry_id] = {
         CONF_ROOT_CLIENT: hyperion_client,
         CONF_INSTANCE_CLIENTS: {},
         CONF_ON_UNLOAD: [],
@@ -208,15 +207,17 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         device_registry = dr.async_get(opp)
         running_instances: set[int] = set()
         stopped_instances: set[int] = set()
-        existing_instances = opp.data[DOMAIN][entry.entry_id][CONF_INSTANCE_CLIENTS]
-        server_id = cast(str, entry.unique_id)
+        existing_instances = opp.data[DOMAIN][config_entry.entry_id][
+            CONF_INSTANCE_CLIENTS
+        ]
+        server_id = cast(str, config_entry.unique_id)
 
         # In practice, an instance can be in 3 states as seen by this function:
         #
-        #    * Exists, and is running: Should be present in OPP/registry.
+        #    * Exists, and is running: Should be present in HASS/registry.
         #    * Exists, but is not running: Cannot add it yet, but entity may have be
         #      registered from a previous time it was running.
-        #    * No longer exists at all: Should not be present in OPP/registry.
+        #    * No longer exists at all: Should not be present in HASS/registry.
 
         # Add instances that are missing.
         for instance in instances:
@@ -238,7 +239,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             instance_name = instance.get(hyperion_const.KEY_FRIENDLY_NAME, DEFAULT_NAME)
             async_dispatcher_send(
                 opp,
-                SIGNAL_INSTANCE_ADD.format(entry.entry_id),
+                SIGNAL_INSTANCE_ADD.format(config_entry.entry_id),
                 instance_num,
                 instance_name,
             )
@@ -247,7 +248,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         for instance_num in set(existing_instances) - running_instances:
             del existing_instances[instance_num]
             async_dispatcher_send(
-                opp, SIGNAL_INSTANCE_REMOVE.format(entry.entry_id), instance_num
+                opp, SIGNAL_INSTANCE_REMOVE.format(config_entry.entry_id), instance_num
             )
 
         # Ensure every device associated with this config entry is still in the list of
@@ -257,7 +258,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             for instance_num in running_instances | stopped_instances
         }
         for device_entry in dr.async_entries_for_config_entry(
-            device_registry, entry.entry_id
+            device_registry, config_entry.entry_id
         ):
             for (kind, key) in device_entry.identifiers:
                 if kind == DOMAIN and key in known_devices:
@@ -274,15 +275,15 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     async def setup_then_listen() -> None:
         await asyncio.gather(
             *[
-                opp.config_entries.async_forward_entry_setup(entry, platform)
+                opp.config_entries.async_forward_entry_setup(config_entry, platform)
                 for platform in PLATFORMS
             ]
         )
         assert hyperion_client
         if hyperion_client.instances is not None:
             await async_instances_to_clients_raw(hyperion_client.instances)
-        opp.data[DOMAIN][entry.entry_id][CONF_ON_UNLOAD].append(
-            entry.add_update_listener(_async_entry_updated)
+        opp.data[DOMAIN][config_entry.entry_id][CONF_ON_UNLOAD].append(
+            config_entry.add_update_listener(_async_entry_updated)
         )
 
     opp.async_create_task(setup_then_listen())

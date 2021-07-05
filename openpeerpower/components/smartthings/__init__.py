@@ -62,7 +62,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType):
     return True
 
 
-async def async_migrate_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_migrate_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Handle migration of a previous version config entry.
 
     A config entry created under a previous version must go through the
@@ -84,7 +84,7 @@ async def async_migrate_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
     return False
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Initialize config entry which represents an installed SmartApp."""
     # For backwards compat
     if entry.unique_id is None:

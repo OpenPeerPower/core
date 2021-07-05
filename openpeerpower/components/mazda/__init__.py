@@ -43,7 +43,7 @@ async def with_timeout(task, timeout_seconds=10):
         return await task
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Mazda Connected Services from a config entry."""
     email = entry.data[CONF_EMAIL]
     password = entry.data[CONF_PASSWORD]
@@ -69,16 +69,16 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         """Handle a service call."""
         # Get device entry from device registry
         dev_reg = device_registry.async_get(opp)
-        device_id = service_call.data["device_id"]
+        device_id = service_call.data.get("device_id")
         device_entry = dev_reg.async_get(device_id)
 
         # Get vehicle VIN from device identifiers
-        mazda_identifiers = (
+        mazda_identifiers = [
             identifier
             for identifier in device_entry.identifiers
             if identifier[0] == DOMAIN
-        )
-        vin_identifier = next(mazda_identifiers)
+        ]
+        vin_identifier = next(iter(mazda_identifiers))
         vin = vin_identifier[1]
 
         # Get vehicle ID and API client from opp.data
@@ -89,7 +89,6 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
                 if vehicle["vin"] == vin:
                     vehicle_id = vehicle["id"]
                     api_client = entry_data[DATA_CLIENT]
-                    break
 
         if vehicle_id == 0 or api_client is None:
             raise OpenPeerPowerError("Vehicle ID not found")
@@ -97,13 +96,14 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         api_method = getattr(api_client, service_call.service)
         try:
             if service_call.service == "send_poi":
-                latitude = service_call.data["latitude"]
-                longitude = service_call.data["longitude"]
-                poi_name = service_call.data["poi_name"]
+                latitude = service_call.data.get("latitude")
+                longitude = service_call.data.get("longitude")
+                poi_name = service_call.data.get("poi_name")
                 await api_method(vehicle_id, latitude, longitude, poi_name)
             else:
                 await api_method(vehicle_id)
         except Exception as ex:
+            _LOGGER.exception("Error occurred during Mazda service call: %s", ex)
             raise OpenPeerPowerError(ex) from ex
 
     def validate_mazda_device_id(device_id):
@@ -119,7 +119,7 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
             for identifier in device_entry.identifiers
             if identifier[0] == DOMAIN
         ]
-        if not mazda_identifiers:
+        if len(mazda_identifiers) < 1:
             raise vol.Invalid("Device ID is not a Mazda vehicle")
 
         return device_id

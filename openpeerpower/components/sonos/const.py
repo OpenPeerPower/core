@@ -22,8 +22,6 @@ from openpeerpower.components.media_player.const import (
 from openpeerpower.components.sensor import DOMAIN as SENSOR_DOMAIN
 from openpeerpower.components.switch import DOMAIN as SWITCH_DOMAIN
 
-UPNP_ST = "urn:schemas-upnp-org:device:ZonePlayer:1"
-
 DOMAIN = "sonos"
 DATA_SONOS = "sonos_media_player"
 PLATFORMS = {BINARY_SENSOR_DOMAIN, MP_DOMAIN, SENSOR_DOMAIN, SWITCH_DOMAIN}

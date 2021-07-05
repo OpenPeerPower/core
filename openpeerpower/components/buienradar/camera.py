@@ -11,10 +11,10 @@ import voluptuous as vol
 from openpeerpower.components.camera import PLATFORM_SCHEMA, Camera
 from openpeerpower.config_entries import ConfigEntry
 from openpeerpower.const import CONF_LATITUDE, CONF_LONGITUDE, CONF_NAME
-from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers import config_validation as cv
 from openpeerpower.helpers.aiohttp_client import async_get_clientsession
 from openpeerpower.helpers.entity_platform import AddEntitiesCallback
+from openpeerpower.helpers.typing import OpenPeerPowerType
 from openpeerpower.util import dt as dt_util
 
 from .const import (
@@ -56,7 +56,7 @@ async def async_setup_platform(opp, config, async_add_entities, discovery_info=N
 
 
 async def async_setup_entry(
-    opp: OpenPeerPower, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
+    opp: OpenPeerPowerType, entry: ConfigEntry, async_add_entities: AddEntitiesCallback
 ) -> None:
     """Set up buienradar radar-loop camera component."""
     config = entry.data

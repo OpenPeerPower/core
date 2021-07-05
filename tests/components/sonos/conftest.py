@@ -3,7 +3,6 @@ from unittest.mock import AsyncMock, MagicMock, Mock, patch as patch
 
 import pytest
 
-from openpeerpower.components import ssdp
 from openpeerpower.components.media_player import DOMAIN as MP_DOMAIN
 from openpeerpower.components.sonos import DOMAIN
 from openpeerpower.const import CONF_HOSTS
@@ -54,7 +53,6 @@ def soco_fixture(music_library, speaker_info, battery_info, alarm_clock):
         "socket.gethostbyname", return_value="192.168.42.2"
     ):
         mock_soco = mock.return_value
-        mock_soco.ip_address = "192.168.42.2"
         mock_soco.uid = "RINCON_test"
         mock_soco.play_mode = "NORMAL"
         mock_soco.music_library = music_library
@@ -78,24 +76,17 @@ def soco_fixture(music_library, speaker_info, battery_info, alarm_clock):
 def discover_fixture(soco):
     """Create a mock pysonos discover fixture."""
 
-    def do_callback(opp, callback, *args, **kwargs):
-        callback(
-            {
-                ssdp.ATTR_UPNP_UDN: soco.uid,
-                ssdp.ATTR_SSDP_LOCATION: f"http://{soco.ip_address}/",
-            }
-        )
+    def do_callback(callback, **kwargs):
+        callback(soco)
         return MagicMock()
 
-    with patch(
-        "openpeerpower.components.ssdp.async_register_callback", side_effect=do_callback
-    ) as mock:
+    with patch("pysonos.discover_thread", side_effect=do_callback) as mock:
         yield mock
 
 
 @pytest.fixture(name="config")
 def config_fixture():
-    """Create opp.config fixture."""
+    """Create opp config fixture."""
     return {DOMAIN: {MP_DOMAIN: {CONF_HOSTS: ["192.168.42.1"]}}}
 
 

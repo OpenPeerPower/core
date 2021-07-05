@@ -231,7 +231,7 @@ def _async_update_config_entry_if_from_yaml(opp, entries_by_name, conf):
     return False
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up HomeKit from a config entry."""
     _async_import_options_from_data_if_missing(opp, entry)
 
@@ -297,7 +297,7 @@ async def _async_update_listener(opp: OpenPeerPower, entry: ConfigEntry):
     await opp.config_entries.async_reload(entry.entry_id)
 
 
-async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_unload_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Unload a config entry."""
     dismiss_setup_message(opp, entry.entry_id)
     homekit = opp.data[DOMAIN][entry.entry_id][HOMEKIT]

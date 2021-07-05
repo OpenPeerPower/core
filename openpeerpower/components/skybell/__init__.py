@@ -61,7 +61,7 @@ def setup(opp, config):
         _LOGGER.error("Unable to connect to Skybell service: %s", str(ex))
         opp.components.persistent_notification.create(
             "Error: {}<br />"
-            "You will need to restart opp.after fixing."
+            "You will need to restart opp after fixing."
             "".format(ex),
             title=NOTIFICATION_TITLE,
             notification_id=NOTIFICATION_ID,

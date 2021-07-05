@@ -17,7 +17,7 @@ async def async_setup(opp, config):
     return True
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up Zerproc from a config entry."""
     if DOMAIN not in opp.data:
         opp.data[DOMAIN] = {}

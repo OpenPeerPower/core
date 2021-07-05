@@ -41,7 +41,7 @@ async def validate_projector(
     return epson_proj
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up epson from a config entry."""
     projector = await validate_projector(
         opp=opp,

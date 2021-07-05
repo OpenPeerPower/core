@@ -26,7 +26,7 @@ from .entity import HMDevice
 
 _LOGGER = logging.getLogger(__name__)
 
-HM_STATE_HA_CAST = {
+HM_STATE_OP_CAST = {
     "IPGarage": {0: "closed", 1: "open", 2: "ventilation", 3: None},
     "RotaryHandleSensor": {0: "closed", 1: "tilted", 2: "open"},
     "RotaryHandleSensorIP": {0: "closed", 1: "tilted", 2: "open"},
@@ -41,7 +41,7 @@ HM_STATE_HA_CAST = {
     },
 }
 
-HM_UNIT_HA_CAST = {
+HM_UNIT_OP_CAST = {
     "HUMIDITY": PERCENTAGE,
     "TEMPERATURE": TEMP_CELSIUS,
     "ACTUAL_TEMPERATURE": TEMP_CELSIUS,
@@ -71,7 +71,7 @@ HM_UNIT_HA_CAST = {
     "DUTY_CYCLE_LEVEL": PERCENTAGE,
 }
 
-HM_DEVICE_CLASS_HA_CAST = {
+HM_DEVICE_CLASS_OP_CAST = {
     "HUMIDITY": DEVICE_CLASS_HUMIDITY,
     "TEMPERATURE": DEVICE_CLASS_TEMPERATURE,
     "ACTUAL_TEMPERATURE": DEVICE_CLASS_TEMPERATURE,
@@ -84,7 +84,7 @@ HM_DEVICE_CLASS_HA_CAST = {
     "CURRENT": DEVICE_CLASS_POWER,
 }
 
-HM_ICON_HA_CAST = {"WIND_SPEED": "mdi:weather-windy", "BRIGHTNESS": "mdi:invert-colors"}
+HM_ICON_OP_CAST = {"WIND_SPEED": "mdi:weather-windy", "BRIGHTNESS": "mdi:invert-colors"}
 
 
 def setup_platform(opp, config, add_entities, discovery_info=None):
@@ -108,8 +108,8 @@ class HMSensor(HMDevice, SensorEntity):
         """Return the state of the sensor."""
         # Does a cast exist for this class?
         name = self._hmdevice.__class__.__name__
-        if name in HM_STATE_HA_CAST:
-            return HM_STATE_HA_CAST[name].get(self._hm_get_state())
+        if name in HM_STATE_OP_CAST:
+            return HM_STATE_OP_CAST[name].get(self._hm_get_state())
 
         # No cast, return original value
         return self._hm_get_state()
@@ -117,17 +117,17 @@ class HMSensor(HMDevice, SensorEntity):
     @property
     def unit_of_measurement(self):
         """Return the unit of measurement of this entity, if any."""
-        return HM_UNIT_HA_CAST.get(self._state)
+        return HM_UNIT_OP_CAST.get(self._state)
 
     @property
     def device_class(self):
         """Return the device class to use in the frontend, if any."""
-        return HM_DEVICE_CLASS_HA_CAST.get(self._state)
+        return HM_DEVICE_CLASS_OP_CAST.get(self._state)
 
     @property
     def icon(self):
         """Return the icon to use in the frontend, if any."""
-        return HM_ICON_HA_CAST.get(self._state)
+        return HM_ICON_OP_CAST.get(self._state)
 
     def _init_data_struct(self):
         """Generate a data dictionary (self._data) from metadata."""

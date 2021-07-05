@@ -19,9 +19,9 @@ from .const import (
 )
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, config_entry: ConfigEntry) -> bool:
     """Set up the StarLine device from a config entry."""
-    account = StarlineAccount(opp, entry)
+    account = StarlineAccount(opp, config_entry)
     await account.update()
     await account.update_obd()
     if not account.api.available:
@@ -29,27 +29,27 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
 
     if DOMAIN not in opp.data:
         opp.data[DOMAIN] = {}
-    opp.data[DOMAIN][entry.entry_id] = account
+    opp.data[DOMAIN][config_entry.entry_id] = account
 
     device_registry = await opp.helpers.device_registry.async_get_registry()
     for device in account.api.devices.values():
         device_registry.async_get_or_create(
-            config_entry_id=entry.entry_id, **account.device_info(device)
+            config_entry_id=config_entry.entry_id, **account.device_info(device)
         )
 
-    opp.config_entries.async_setup_platforms(entry, PLATFORMS)
+    opp.config_entries.async_setup_platforms(config_entry, PLATFORMS)
 
     async def async_set_scan_interval(call):
         """Set scan interval."""
-        options = dict(entry.options)
+        options = dict(config_entry.options)
         options[CONF_SCAN_INTERVAL] = call.data[CONF_SCAN_INTERVAL]
-        opp.config_entries.async_update_entry(entry=entry, options=options)
+        opp.config_entries.async_update_entry(entry=config_entry, options=options)
 
     async def async_set_scan_obd_interval(call):
         """Set OBD info scan interval."""
-        options = dict(entry.options)
+        options = dict(config_entry.options)
         options[CONF_SCAN_OBD_INTERVAL] = call.data[CONF_SCAN_INTERVAL]
-        opp.config_entries.async_update_entry(entry=entry, options=options)
+        opp.config_entries.async_update_entry(entry=config_entry, options=options)
 
     async def async_update(call=None):
         """Update all data."""
@@ -82,8 +82,10 @@ async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
         ),
     )
 
-    entry.async_on_unload(entry.add_update_listener(async_options_updated))
-    await async_options_updated(opp, entry)
+    config_entry.async_on_unload(
+        config_entry.add_update_listener(async_options_updated)
+    )
+    await async_options_updated(opp, config_entry)
 
     return True
 

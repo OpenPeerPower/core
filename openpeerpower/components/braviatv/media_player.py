@@ -119,8 +119,6 @@ async def async_setup_entry(opp, config_entry, async_add_entities):
 class BraviaTVDevice(MediaPlayerEntity):
     """Representation of a Bravia TV."""
 
-    _attr_device_class = DEVICE_CLASS_TV
-
     def __init__(self, client, name, pin, unique_id, device_info, ignored_sources):
         """Initialize the Bravia TV device."""
 
@@ -237,6 +235,11 @@ class BraviaTVDevice(MediaPlayerEntity):
     def name(self):
         """Return the name of the device."""
         return self._name
+
+    @property
+    def device_class(self):
+        """Set the device class to TV."""
+        return DEVICE_CLASS_TV
 
     @property
     def unique_id(self):

@@ -3,7 +3,7 @@ from pysonos.exceptions import NotSupportedException
 
 from openpeerpower.components.sonos import DOMAIN
 from openpeerpower.components.sonos.binary_sensor import ATTR_BATTERY_POWER_SOURCE
-from openpeerpower.const import STATE_OFF, STATE_ON, STATE_UNAVAILABLE
+from openpeerpower.const import STATE_OFF, STATE_ON
 from openpeerpower.setup import async_setup_component
 
 
@@ -68,21 +68,18 @@ async def test_battery_on_S1(opp, config_entry, config, soco, battery_event):
 
     entity_registry = await opp.helpers.entity_registry.async_get_registry()
 
-    battery = entity_registry.entities["sensor.zone_a_battery"]
-    battery_state = opp.states.get(battery.entity_id)
-    assert battery_state.state == STATE_UNAVAILABLE
-
-    power = entity_registry.entities["binary_sensor.zone_a_power"]
-    power_state = opp.states.get(power.entity_id)
-    assert power_state.state == STATE_UNAVAILABLE
+    assert "sensor.zone_a_battery" not in entity_registry.entities
+    assert "binary_sensor.zone_a_power" not in entity_registry.entities
 
     # Update the speaker with a callback event
     sub_callback(battery_event)
     await opp.async_block_till_done()
 
+    battery = entity_registry.entities["sensor.zone_a_battery"]
     battery_state = opp.states.get(battery.entity_id)
     assert battery_state.state == "100"
 
+    power = entity_registry.entities["binary_sensor.zone_a_power"]
     power_state = opp.states.get(power.entity_id)
     assert power_state.state == STATE_OFF
     assert power_state.attributes.get(ATTR_BATTERY_POWER_SOURCE) == "BATTERY"

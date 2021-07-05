@@ -13,7 +13,7 @@ send_message:
       name: Target
       description: A list of room(s) to send the message to.
       required: true
-      example: "#opp.est:matrix.org"
+      example: "#opptest:matrix.org"
       selector:
         text:
     data:

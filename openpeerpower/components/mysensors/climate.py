@@ -21,7 +21,7 @@ from openpeerpower.core import OpenPeerPower
 from openpeerpower.helpers.dispatcher import async_dispatcher_connect
 from openpeerpower.helpers.entity_platform import AddEntitiesCallback
 
-DICT_HA_TO_MYS = {
+DICT_OP_TO_MYS = {
     HVAC_MODE_AUTO: "AutoChangeOver",
     HVAC_MODE_COOL: "CoolOn",
     HVAC_MODE_HEAT: "HeatOn",
@@ -199,7 +199,7 @@ class MySensorsHVAC(mysensors.device.MySensorsEntity, ClimateEntity):
             self.node_id,
             self.child_id,
             self.value_type,
-            DICT_HA_TO_MYS[hvac_mode],
+            DICT_OP_TO_MYS[hvac_mode],
             ack=1,
         )
         if self.assumed_state:

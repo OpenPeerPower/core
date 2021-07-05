@@ -5,7 +5,7 @@ from openpeerpower.core import OpenPeerPower
 PLATFORMS = ["sensor"]
 
 
-async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry) -> bool:
+async def async_setup_entry(opp: OpenPeerPower, entry: ConfigEntry):
     """Set up a config entry for solarlog."""
     opp.config_entries.async_setup_platforms(entry, PLATFORMS)
     return True

@@ -405,7 +405,7 @@ async def async_setup(opp: OpenPeerPower, config: ConfigType) -> bool:  # noqa: 
         frontend_url_path="oppio",
         webcomponent_name="oppio-main",
         sidebar_title="Supervisor",
-        sidebar_icon="opp:open-peer-power",
+        sidebar_icon="opp:openpeerpower",
         js_url="/api/oppio/app/entrypoint.js",
         embed_iframe=True,
         require_admin=True,
@@ -632,7 +632,7 @@ class OppioDataUpdateCoordinator(DataUpdateCoordinator):
         self.data = {}
         self.entry_id = config_entry.entry_id
         self.dev_reg = dev_reg
-        self.is_opp_os = "opp:s" in get_info(self.opp)
+        self.is_opp_os = "oppos" in get_info(self.opp)
 
     async def _async_update_data(self) -> dict[str, Any]:
         """Update data via library."""

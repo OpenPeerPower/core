@@ -1200,7 +1200,7 @@ async def test_services_firetv(opp):
 
 
 async def test_connection_closed_on_op_stop(opp):
-    """Test that the ADB socket connection is closed when OP stops."""
+    """Test that the ADB socket connection is closed when OPP stops."""
     patch_key, entity_id = _setup(CONFIG_ANDROIDTV_ADB_SERVER)
 
     with patchers.PATCH_ADB_DEVICE_TCP, patchers.patch_connect(True)[
@@ -1220,7 +1220,7 @@ async def test_connection_closed_on_op_stop(opp):
 async def test_exception(opp):
     """Test that the ADB connection gets closed when there is an unforeseen exception.
 
-    OP will attempt to reconnect on the next update.
+    OPP will attempt to reconnect on the next update.
     """
     patch_key, entity_id = _setup(CONFIG_ANDROIDTV_PYTHON_ADB)
 
@@ -1244,7 +1244,7 @@ async def test_exception(opp):
             assert state is not None
             assert state.state == STATE_UNAVAILABLE
 
-        # On the next update, OP will reconnect to the device
+        # On the next update, OPP will reconnect to the device
         await opp.helpers.entity_component.async_update_entity(entity_id)
         state = opp.states.get(entity_id)
         assert state is not None

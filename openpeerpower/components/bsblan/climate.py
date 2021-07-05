@@ -63,13 +63,13 @@ HA_STATE_TO_BSBLAN = {
     HVAC_MODE_OFF: "0",
 }
 
-BSBLAN_TO_HA_STATE = {value: key for key, value in HA_STATE_TO_BSBLAN.items()}
+BSBLAN_TO_OP_STATE = {value: key for key, value in HA_STATE_TO_BSBLAN.items()}
 
 HA_PRESET_TO_BSBLAN = {
     PRESET_ECO: "2",
 }
 
-BSBLAN_TO_HA_PRESET = {
+BSBLAN_TO_OP_PRESET = {
     2: PRESET_ECO,
 }
 
@@ -226,7 +226,7 @@ class BSBLanClimate(ClimateEntity):
         if state.hvac_mode.value == "2":
             self._preset_mode = PRESET_ECO
         else:
-            self._hvac_mode = BSBLAN_TO_HA_STATE[state.hvac_mode.value]
+            self._hvac_mode = BSBLAN_TO_OP_STATE[state.hvac_mode.value]
             self._preset_mode = PRESET_NONE
 
         self._temperature_unit = state.current_temperature.unit
