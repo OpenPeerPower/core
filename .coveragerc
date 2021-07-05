@@ -176,7 +176,6 @@ omit =
     openpeerpower/components/denon/media_player.py
     openpeerpower/components/denonavr/media_player.py
     openpeerpower/components/denonavr/receiver.py
-    openpeerpower/components/deutsche_bahn/sensor.py
     openpeerpower/components/devolo_home_control/binary_sensor.py
     openpeerpower/components/devolo_home_control/climate.py
     openpeerpower/components/devolo_home_control/const.py
