@@ -235,7 +235,6 @@ openpeerpower/components/ipp/* @ctalkington
 openpeerpower/components/iqvia/* @bachya
 openpeerpower/components/isy994/* @bdraco @shbatm
 openpeerpower/components/izone/* @Swamp-Ig
-openpeerpower/components/jewish_calendar/* @tsvi
 openpeerpower/components/juicenet/* @jesserockz
 openpeerpower/components/kaiterra/* @Michsior14
 openpeerpower/components/keba/* @dannerph
