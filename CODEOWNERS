@@ -145,7 +145,6 @@ openpeerpower/components/ephember/* @ttroy50
 openpeerpower/components/epson/* @pszafer
 openpeerpower/components/epsonworkforce/* @ThaStealth
 openpeerpower/components/eq3btsmart/* @rytilahti
-openpeerpower/components/esphome/* @OttoWinter
 openpeerpower/components/essent/* @TheLastProject
 openpeerpower/components/evohome/* @zxdavb
 openpeerpower/components/ezviz/* @RenierM26 @baqs
