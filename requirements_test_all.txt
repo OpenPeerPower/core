@@ -167,9 +167,11 @@ aprslib==0.6.46
 arcam-fmj==0.5.3
 
 # openpeerpower.components.dlna_dmr
-# openpeerpower.components.ssdp
 # openpeerpower.components.upnp
 async-upnp-client==0.18.0
+
+# openpeerpower.components.ssdp
+async-upnp-client==0.19.0
 
 # openpeerpower.components.aurora
 auroranoaa==0.0.2
@@ -475,7 +477,6 @@ ndms2_client==0.1.1
 nessclient==0.9.15
 
 # openpeerpower.components.discovery
-# openpeerpower.components.ssdp
 netdisco==2.8.3
 
 # openpeerpower.components.nexia
@@ -1166,7 +1167,7 @@ yeelight==0.6.3
 zeep[async]==4.0.0
 
 # openpeerpower.components.zeroconf
-zeroconf==0.31.0
+zeroconf==0.32.1
 
 # openpeerpower.components.zwave_js
 zwave-js-server-python==0.26.1
