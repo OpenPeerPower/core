@@ -70,6 +70,12 @@ ZEROCONF = {
             "domain": "enphase_envoy"
         }
     ],
+    "_esphomelib._tcp.local.": [
+        {
+            "domain": "zha",
+            "name": "tube*"
+        }
+    ],
     "_fbx-api._tcp.local.": [
         {
             "domain": "freebox"

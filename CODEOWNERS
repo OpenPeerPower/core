@@ -84,7 +84,6 @@ openpeerpower/components/circuit/* @braam
 openpeerpower/components/cisco_ios/* @fbradyirl
 openpeerpower/components/cisco_mobility_express/* @fbradyirl
 openpeerpower/components/cisco_webex_teams/* @fbradyirl
-openpeerpower/components/climacell/* @raman325
 openpeerpower/components/cloud/* @openpeerpower/cloud
 openpeerpower/components/cloudflare/* @ludeeus @ctalkington
 openpeerpower/components/color_extractor/* @GenericStudent
@@ -124,7 +123,6 @@ openpeerpower/components/dwd_weather_warnings/* @runningman84 @stephan192 @Humme
 openpeerpower/components/dweet/* @fabaff
 openpeerpower/components/dynalite/* @ziv1234
 openpeerpower/components/eafm/* @Jc2k
-openpeerpower/components/ecobee/* @marthoc
 openpeerpower/components/econet/* @vangorra @w1ll1am23
 openpeerpower/components/ecovacs/* @OverloadUT
 openpeerpower/components/edl21/* @mtdcr
@@ -167,7 +165,6 @@ openpeerpower/components/fritz/* @mammuth @AaronDavidSchneider @chemelli74
 openpeerpower/components/fritzbox/* @mib1185
 openpeerpower/components/fronius/* @nielstron
 openpeerpower/components/frontend/* @openpeerpower/frontend
-openpeerpower/components/garmin_connect/* @cyberjunky
 openpeerpower/components/gdacs/* @exxamalte
 openpeerpower/components/geniushub/* @zxdavb
 openpeerpower/components/geo_json_events/* @exxamalte
@@ -248,6 +245,7 @@ openpeerpower/components/kulersky/* @emlove
 openpeerpower/components/lametric/* @robbiet480
 openpeerpower/components/launch_library/* @ludeeus
 openpeerpower/components/lcn/* @alengwenus
+openpeerpower/components/lg_netcast/* @Drafteed
 openpeerpower/components/life360/* @pnbruckner
 openpeerpower/components/linux_battery/* @fabaff
 openpeerpower/components/litejet/* @joncar
@@ -298,7 +296,6 @@ openpeerpower/components/neato/* @dshokouhi @Santobert
 openpeerpower/components/nederlandse_spoorwegen/* @YarmoM
 openpeerpower/components/nello/* @pschmitt
 openpeerpower/components/ness_alarm/* @nickw444
-openpeerpower/components/nest/* @allenporter
 openpeerpower/components/netatmo/* @cgtobi
 openpeerpower/components/netdata/* @fabaff
 openpeerpower/components/nexia/* @bdraco
@@ -545,6 +542,7 @@ openpeerpower/components/yeelightsunflower/* @lindsaymarkward
 openpeerpower/components/yi/* @bachya
 openpeerpower/components/zeroconf/* @bdraco
 openpeerpower/components/zerproc/* @emlove
+openpeerpower/components/zha/* @dmulcahey @adminiuga
 openpeerpower/components/zodiac/* @JulienTant
 openpeerpower/components/zone/* @openpeerpower/core
 openpeerpower/components/zoneminder/* @rohankapoorcom

@@ -3,16 +3,11 @@ from unittest.mock import Mock, patch
 
 import pytest
 
-from openpeerpower import config_entries, data_entry_flow, setup
+from openpeerpower import config_entries, data_entry_flow
 from openpeerpower.config import async_process_op_core_config
 from openpeerpower.helpers import config_entry_flow
 
-from tests.common import (
-    MockConfigEntry,
-    MockModule,
-    mock_entity_platform,
-    mock_integration,
-)
+from tests.common import MockConfigEntry, mock_entity_platform
 
 
 @pytest.fixture
@@ -294,56 +289,6 @@ async def test_webhook_config_flow_registers_webhook(opp, webhook_flow_conf):
 
     assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
     assert result["data"]["webhook_id"] is not None
-
-
-async def test_webhook_create_cloudhook(opp, webhook_flow_conf):
-    """Test only a single entry is allowed."""
-    assert await setup.async_setup_component(opp, "cloud", {})
-
-    async_setup_entry = Mock(return_value=True)
-    async_unload_entry = Mock(return_value=True)
-
-    mock_integration(
-        opp,
-        MockModule(
-            "test_single",
-            async_setup_entry=async_setup_entry,
-            async_unload_entry=async_unload_entry,
-            async_remove_entry=config_entry_flow.webhook_async_remove_entry,
-        ),
-    )
-    mock_entity_platform(opp, "config_flow.test_single", None)
-
-    result = await opp.config_entries.flow.async_init(
-        "test_single", context={"source": config_entries.SOURCE_USER}
-    )
-    assert result["type"] == data_entry_flow.RESULT_TYPE_FORM
-
-    with patch(
-        "opp_net.cloudhooks.Cloudhooks.async_create",
-        return_value={"cloudhook_url": "https://example.com"},
-    ) as mock_create, patch(
-        "openpeerpower.components.cloud.async_active_subscription", return_value=True
-    ), patch(
-        "openpeerpower.components.cloud.async_is_logged_in", return_value=True
-    ):
-
-        result = await opp.config_entries.flow.async_configure(result["flow_id"], {})
-
-    assert result["type"] == data_entry_flow.RESULT_TYPE_CREATE_ENTRY
-    assert result["description_placeholders"]["webhook_url"] == "https://example.com"
-    assert len(mock_create.mock_calls) == 1
-    assert len(async_setup_entry.mock_calls) == 1
-
-    with patch(
-        "opp_net.cloudhooks.Cloudhooks.async_delete",
-        return_value={"cloudhook_url": "https://example.com"},
-    ) as mock_delete:
-
-        result = await opp.config_entries.async_remove(result["result"].entry_id)
-
-    assert len(mock_delete.mock_calls) == 1
-    assert result["require_restart"] is False
 
 
 async def test_warning_deprecated_connection_class(opp, caplog):

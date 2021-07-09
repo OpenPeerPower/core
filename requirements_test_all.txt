@@ -167,11 +167,9 @@ aprslib==0.6.46
 arcam-fmj==0.5.3
 
 # openpeerpower.components.dlna_dmr
+# openpeerpower.components.ssdp
 # openpeerpower.components.upnp
 async-upnp-client==0.18.0
-
-# openpeerpower.components.ssdp
-async-upnp-client==0.19.0
 
 # openpeerpower.components.aurora
 auroranoaa==0.0.2
@@ -187,6 +185,9 @@ azure-eventhub==5.1.0
 
 # openpeerpower.components.homekit
 base36==0.1.1
+
+# openpeerpower.components.zha
+bellows==0.24.0
 
 # openpeerpower.components.bmw_connected_drive
 bimmer_connected==0.7.15
@@ -259,6 +260,9 @@ devolo-home-control-api==0.17.3
 # openpeerpower.components.directv
 directv==0.4.0
 
+# openpeerpower.components.updater
+distro==1.5.0
+
 # openpeerpower.components.doorbird
 doorbirdpy==2.1.0
 
@@ -309,9 +313,6 @@ fritzconnection==1.4.2
 # openpeerpower.components.google_translate
 gTTS==2.2.2
 
-# openpeerpower.components.garmin_connect
-garminconnect_aio==0.1.1
-
 # openpeerpower.components.geo_json_events
 # openpeerpower.components.usgs_earthquakes_feed
 geojson_client==0.6
@@ -346,12 +347,6 @@ goalzero==0.1.7
 # openpeerpower.components.google
 google-api-python-client==1.6.4
 
-# openpeerpower.components.google_pubsub
-google-cloud-pubsub==2.1.0
-
-# openpeerpower.components.nest
-google-nest-sdm==0.2.12
-
 # openpeerpower.components.gree
 greeclimate==0.11.4
 
@@ -385,6 +380,9 @@ hole==0.5.1
 # openpeerpower.components.workday
 holidays==0.11.1
 
+# openpeerpower.components.zwave
+homeassistant-pyozw==0.1.10
+
 # openpeerpower.components.home_connect
 homeconnect==0.6.3
 
@@ -406,9 +404,6 @@ hyperion-py==0.7.4
 
 # openpeerpower.components.iaqualink
 iaqualink==0.3.90
-
-# openpeerpower.components.ping
-icmplib==2.1.1
 
 # openpeerpower.components.influxdb
 influxdb-client==1.14.0
@@ -477,6 +472,7 @@ ndms2_client==0.1.1
 nessclient==0.9.15
 
 # openpeerpower.components.discovery
+# openpeerpower.components.ssdp
 netdisco==2.8.3
 
 # openpeerpower.components.nexia
@@ -515,9 +511,6 @@ openerz-api==0.1.0
 
 # openpeerpower.components.frontend
 openpeerpower-frontend==20210523.2
-
-# openpeerpower.components.cloud
-opp-net==0.1.0
 
 # openpeerpower.components.ovo_energy
 ovoenergy==1.1.12
@@ -639,9 +632,6 @@ pyarlo==0.2.4
 # openpeerpower.components.atag
 pyatag==0.3.5.3
 
-# openpeerpower.components.netatmo
-pyatmo==5.0.1
-
 # openpeerpower.components.apple_tv
 pyatv==0.7.7
 
@@ -657,9 +647,6 @@ pycfdns==1.2.1
 # openpeerpower.components.cast
 pychromecast==9.1.2
 
-# openpeerpower.components.climacell
-pyclimacell==0.18.2
-
 # openpeerpower.components.comfoconnect
 pycomfoconnect==0.4
 
@@ -674,6 +661,9 @@ pydeconz==79
 
 # openpeerpower.components.dexcom
 pydexcom==0.2.0
+
+# openpeerpower.components.zwave
+pydispatcher==2.0.5
 
 # openpeerpower.components.econet
 pyeconet==0.1.14
@@ -852,6 +842,14 @@ pyrituals==0.0.3
 # openpeerpower.components.ruckus_unleashed
 pyruckus==0.12
 
+# openpeerpower.components.serial
+# openpeerpower.components.zha
+pyserial-asyncio==0.5
+
+# openpeerpower.components.acer_projector
+# openpeerpower.components.zha
+pyserial==3.5
+
 # openpeerpower.components.signal_messenger
 pysignalclirestapi==0.3.4
 
@@ -882,9 +880,6 @@ pysqueezebox==0.5.5
 # openpeerpower.components.syncthru
 pysyncthru==0.7.3
 
-# openpeerpower.components.ecobee
-python-ecobee-api==0.2.11
-
 # openpeerpower.components.darksky
 python-forecastio==1.4.0
 
@@ -896,9 +891,6 @@ python-juicenet==1.0.2
 
 # openpeerpower.components.xiaomi_miio
 python-miio==0.5.6
-
-# openpeerpower.components.nest
-python-nest==4.1.0
 
 # openpeerpower.components.ozw
 python-openzwave-mqtt[mqtt-client]==1.4.0
@@ -1168,6 +1160,27 @@ zeep[async]==4.0.0
 
 # openpeerpower.components.zeroconf
 zeroconf==0.32.1
+
+# openpeerpower.components.zha
+zha-quirks==0.0.57
+
+# openpeerpower.components.zha
+zigpy-cc==0.5.2
+
+# openpeerpower.components.zha
+zigpy-deconz==0.12.0
+
+# openpeerpower.components.zha
+zigpy-xbee==0.13.0
+
+# openpeerpower.components.zha
+zigpy-zigate==0.7.3
+
+# openpeerpower.components.zha
+zigpy-znp==0.5.1
+
+# openpeerpower.components.zha
+zigpy==0.33.0
 
 # openpeerpower.components.zwave_js
 zwave-js-server-python==0.26.1

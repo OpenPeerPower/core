@@ -11,7 +11,6 @@
         "step": {
             "locations": {
                 "data": {
-                    "location": "Location",
                     "usercode": "Usercode"
                 },
                 "description": "Enter the usercode for this user at location {location_id}",

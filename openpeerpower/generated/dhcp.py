@@ -109,10 +109,6 @@ DHCP = [
         "macaddress": "645299*"
     },
     {
-        "domain": "nest",
-        "macaddress": "18B430*"
-    },
-    {
         "domain": "nexia",
         "hostname": "xl857-*",
         "macaddress": "000231*"

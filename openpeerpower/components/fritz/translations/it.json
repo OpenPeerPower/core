@@ -51,14 +51,5 @@
                 "title": "Configura gli strumenti del FRITZ!Box"
             }
         }
-    },
-    "options": {
-        "step": {
-            "init": {
-                "data": {
-                    "consider_home": "Secondi per considerare un dispositivo \"a casa\""
-                }
-            }
-        }
     }
 }

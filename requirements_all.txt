@@ -45,6 +45,9 @@ PyQRCode==1.2.1
 # openpeerpower.components.rmvtransport
 PyRMVtransport==0.3.2
 
+# openpeerpower.components.telegram_bot
+PySocks==1.7.1
+
 # openpeerpower.components.switchbot
 # PySwitchbot==0.8.0
 
@@ -272,11 +275,9 @@ asmog==0.0.6
 asterisk_mbox==0.5.0
 
 # openpeerpower.components.dlna_dmr
+# openpeerpower.components.ssdp
 # openpeerpower.components.upnp
 async-upnp-client==0.18.0
-
-# openpeerpower.components.ssdp
-async-upnp-client==0.19.0
 
 # openpeerpower.components.supla
 asyncpysupla==0.0.5
@@ -328,6 +329,9 @@ beautifulsoup4==4.9.3
 
 # openpeerpower.components.beewi_smartclim
 # beewi_smartclim==0.0.10
+
+# openpeerpower.components.zha
+bellows==0.24.0
 
 # openpeerpower.components.bmw_connected_drive
 bimmer_connected==0.7.15
@@ -606,9 +610,6 @@ fritzconnection==1.4.2
 # openpeerpower.components.google_translate
 gTTS==2.2.2
 
-# openpeerpower.components.garmin_connect
-garminconnect_aio==0.1.1
-
 # openpeerpower.components.geniushub
 geniushub-client==0.6.30
 
@@ -657,9 +658,6 @@ google-cloud-pubsub==2.1.0
 
 # openpeerpower.components.google_cloud
 google-cloud-texttospeech==0.4.0
-
-# openpeerpower.components.nest
-google-nest-sdm==0.2.12
 
 # openpeerpower.components.google_travel_time
 googlemaps==2.5.1
@@ -935,6 +933,7 @@ nessclient==0.9.15
 netdata==0.2.0
 
 # openpeerpower.components.discovery
+# openpeerpower.components.ssdp
 netdisco==2.8.3
 
 # openpeerpower.components.neurio_energy
@@ -1265,9 +1264,6 @@ pychromecast==9.1.2
 # openpeerpower.components.pocketcasts
 pycketcasts==1.0.0
 
-# openpeerpower.components.climacell
-pyclimacell==0.18.2
-
 # openpeerpower.components.cmus
 pycmus==0.1.1
 
@@ -1442,6 +1438,9 @@ pylast==4.2.0
 
 # openpeerpower.components.launch_library
 pylaunches==1.0.0
+
+# openpeerpower.components.lg_netcast
+pylgnetcast==0.3.3
 
 # openpeerpower.components.forked_daapd
 pylibrespot-java==0.1.0
@@ -1626,9 +1625,11 @@ pysdcp==1
 pysensibo==1.0.3
 
 # openpeerpower.components.serial
+# openpeerpower.components.zha
 pyserial-asyncio==0.5
 
 # openpeerpower.components.acer_projector
+# openpeerpower.components.zha
 pyserial==3.5
 
 # openpeerpower.components.sesame
@@ -1706,9 +1707,6 @@ python-clementine-remote==1.0.1
 # openpeerpower.components.digital_ocean
 python-digitalocean==1.13.2
 
-# openpeerpower.components.ecobee
-python-ecobee-api==0.2.11
-
 # openpeerpower.components.eq3btsmart
 # python-eq3bt==0.1.11
 
@@ -1754,9 +1752,6 @@ python-mpd2==3.0.4
 # openpeerpower.components.mystrom
 python-mystrom==1.1.2
 
-# openpeerpower.components.nest
-python-nest==4.1.0
-
 # openpeerpower.components.nmap_tracker
 python-nmap==0.6.1
 
@@ -1780,6 +1775,9 @@ python-songpal==0.12
 
 # openpeerpower.components.tado
 python-tado==0.10.0
+
+# openpeerpower.components.telegram_bot
+python-telegram-bot==13.1
 
 # openpeerpower.components.vlc_telnet
 python-telnet-vlc==2.0.1
@@ -2296,11 +2294,32 @@ zengge==0.2
 # openpeerpower.components.zeroconf
 zeroconf==0.32.1
 
+# openpeerpower.components.zha
+zha-quirks==0.0.57
+
 # openpeerpower.components.zhong_hong
 zhong_hong_hvac==1.0.9
 
 # openpeerpower.components.ziggo_mediabox_xl
 ziggo-mediabox-xl==1.1.0
+
+# openpeerpower.components.zha
+zigpy-cc==0.5.2
+
+# openpeerpower.components.zha
+zigpy-deconz==0.12.0
+
+# openpeerpower.components.zha
+zigpy-xbee==0.13.0
+
+# openpeerpower.components.zha
+zigpy-zigate==0.7.3
+
+# openpeerpower.components.zha
+zigpy-znp==0.5.1
+
+# openpeerpower.components.zha
+zigpy==0.33.0
 
 # openpeerpower.components.zoneminder
 zm-py==0.5.2

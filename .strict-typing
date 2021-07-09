@@ -24,8 +24,8 @@ openpeerpower.components.canary.*
 openpeerpower.components.cover.*
 openpeerpower.components.device_automation.*
 openpeerpower.components.device_tracker.*
-openpeerpower.components.dnsip.*
 openpeerpower.components.dunehd.*
+openpeerpower.components.elgato.*
 openpeerpower.components.fitbit.*
 openpeerpower.components.fritzbox.*
 openpeerpower.components.frontend.*
@@ -39,7 +39,6 @@ openpeerpower.components.hyperion.*
 openpeerpower.components.image_processing.*
 openpeerpower.components.integration.*
 openpeerpower.components.light.*
-openpeerpower.components.local_ip.*
 openpeerpower.components.lock.*
 openpeerpower.components.mailbox.*
 openpeerpower.components.media_player.*
@@ -57,7 +56,6 @@ openpeerpower.components.scene.*
 openpeerpower.components.sensor.*
 openpeerpower.components.slack.*
 openpeerpower.components.sonos.media_player
-openpeerpower.components.ssdp.*
 openpeerpower.components.sun.*
 openpeerpower.components.switch.*
 openpeerpower.components.synology_dsm.*

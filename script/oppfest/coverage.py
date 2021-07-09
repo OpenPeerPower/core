@@ -43,7 +43,6 @@ ALLOWED_IGNORE_VIOLATIONS = {
     ("lifx", "config_flow.py"),
     ("lutron", "scene.py"),
     ("mobile_app", "config_flow.py"),
-    ("nest", "config_flow.py"),
     ("plaato", "config_flow.py"),
     ("point", "config_flow.py"),
     ("rachio", "config_flow.py"),
