@@ -46,7 +46,7 @@ async def test_async_browse_media(opp):
     media = await media_source.async_browse_media(opp, "")
     assert isinstance(media, media_source.models.BrowseMediaSource)
     assert media.title == "media/"
-    assert len(media.children) == 2
+    assert len(media.children) == 1
 
     # Test invalid media content
     with pytest.raises(ValueError):

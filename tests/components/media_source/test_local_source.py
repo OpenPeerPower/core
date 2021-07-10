@@ -95,8 +95,5 @@ async def test_media_view(opp, opp_client):
     resp = await client.get("/media/local/test.mp3")
     assert resp.status == 200
 
-    resp = await client.get("/media/local/Epic Sax Guy 10 Hours.mp4")
-    assert resp.status == 200
-
     resp = await client.get("/media/recordings/test.mp3")
     assert resp.status == 200
