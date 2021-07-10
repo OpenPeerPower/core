@@ -912,7 +912,7 @@ async def test_removed_device(opp, client, multiple_devices, integration):
     # Check how many entities there are
     ent_reg = er.async_get(opp)
     entity_entries = er.async_entries_for_config_entry(ent_reg, integration.entry_id)
-    assert len(entity_entries) == 26
+    assert len(entity_entries) == 24
 
     # Remove a node and reload the entry
     old_node = nodes.pop(13)
