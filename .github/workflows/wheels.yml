@@ -82,7 +82,7 @@ jobs:
           name: requirements_diff
 
       - name: Build wheels
-        uses: openpeerpower/wheels@2021.05.4
+        uses: openpeerpower/wheels@1.0.3
         with:
           tag: ${{ matrix.tag }}
           arch: ${{ matrix.arch }}
