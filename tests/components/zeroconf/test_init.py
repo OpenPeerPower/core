@@ -5,11 +5,7 @@ from zeroconf import InterfaceChoice, IPVersion, ServiceInfo, ServiceStateChange
 
 from openpeerpower.components import zeroconf
 from openpeerpower.components.zeroconf import CONF_DEFAULT_INTERFACE, CONF_IPV6
-from openpeerpower.const import (
-    EVENT_OPENPEERPOWER_START,
-    EVENT_OPENPEERPOWER_STARTED,
-    EVENT_OPENPEERPOWER_STOP,
-)
+from openpeerpower.const import EVENT_OPENPEERPOWER_STARTED, EVENT_OPENPEERPOWER_STOP
 from openpeerpower.generated import zeroconf as zc_gen
 from openpeerpower.setup import async_setup_component
 
@@ -163,28 +159,6 @@ async def test_setup(opp, mock_zeroconf):
     # Test instance is set.
     assert "zeroconf" in opp.data
     assert await opp.components.zeroconf.async_get_instance() is mock_zeroconf
-
-
-async def test_setup_with_overly_long_url_and_name(opp, mock_zeroconf, caplog):
-    """Test we still setup with long urls and names."""
-    with patch.object(opp.config_entries.flow, "async_init"), patch.object(
-        zeroconf, "HaServiceBrowser", side_effect=service_update_mock
-    ), patch(
-        "openpeerpower.components.zeroconf.get_url",
-        return_value="https://this.url.is.way.too.long/very/deep/path/that/will/make/us/go/over/the/maximum/string/length/and/would/cause/zeroconf/to/fail/to/startup/because/the/key/and/value/can/only/be/255/bytes/and/this/string/is/a/bit/longer/than/the/maximum/length/that/we/allow/for/a/value",
-    ), patch.object(
-        opp.config,
-        "location_name",
-        "\u00dcBER \u00dcber German Umlaut long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string long string",
-    ), patch(
-        "openpeerpower.components.zeroconf.ServiceInfo.request",
-    ):
-        assert await async_setup_component(opp, zeroconf.DOMAIN, {zeroconf.DOMAIN: {}})
-        opp.bus.async_fire(EVENT_OPENPEERPOWER_START)
-        await opp.async_block_till_done()
-
-    assert "https://this.url.is.way.too.long" in caplog.text
-    assert "German Umlaut" in caplog.text
 
 
 async def test_setup_with_default_interface(opp, mock_zeroconf):
