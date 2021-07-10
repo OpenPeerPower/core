@@ -6,7 +6,6 @@ import os
 from unittest.mock import ANY, AsyncMock, MagicMock, Mock, patch
 
 from pyhap.accessory import Accessory
-from pyhap.const import CATEGORY_CAMERA, CATEGORY_TELEVISION
 import pytest
 
 from openpeerpower import config as opp_config
@@ -52,7 +51,6 @@ from openpeerpower.const import (
     SERVICE_RELOAD,
     STATE_ON,
 )
-from openpeerpower.core import State
 from openpeerpower.helpers import device_registry
 from openpeerpower.helpers.entityfilter import generate_filter
 from openpeerpower.setup import async_setup_component

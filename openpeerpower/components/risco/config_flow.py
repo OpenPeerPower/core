@@ -164,5 +164,5 @@ class RiscoOptionsFlowHandler(config_entries.OptionsFlow):
             options[vol.Required(ha_state, default=current)] = vol.In(values)
 
         return self.async_show_form(
-            step_id="ha_to_risco", data_schema=vol.Schema(options)
+            step_id="op_to_risco", data_schema=vol.Schema(options)
         )

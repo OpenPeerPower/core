@@ -20,7 +20,7 @@
     },
     "options": {
         "step": {
-            "ha_to_risco": {
+            "op_to_risco": {
                 "data": {
                     "armed_away": "Attivo Fuori Casa",
                     "armed_custom_bypass": "Attivo con Bypass Personalizzato",
