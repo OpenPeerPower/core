@@ -121,8 +121,6 @@ jobs:
             $BUILD_ARGS \
             --${{ matrix.arch }} \
             --target /data \
-            --with-codenotary "${{ secrets.VCN_USER }}" "${{ secrets.VCN_PASSWORD }}" "${{ secrets.VCN_ORG }}" \
-            --validate-from "${{ secrets.VCN_ORG }}" \
             --generic ${{ needs.init.outputs.version }}
 
   build_machine:
@@ -166,8 +164,6 @@ jobs:
           args: |
             $BUILD_ARGS \
             --target /data/machine \
-            --with-codenotary "${{ secrets.VCN_USER }}" "${{ secrets.VCN_PASSWORD }}" "${{ secrets.VCN_ORG }}" \
-            --validate-from "${{ secrets.VCN_ORG }}" \
             --machine "${{ needs.init.outputs.version }}=${{ matrix.machine }}"
 
   publish_ha:
@@ -226,7 +222,6 @@ jobs:
       - name: Build Meta Image
         shell: bash
         run: |
-          bash <(curl https://getvcn.codenotary.com -L)
 
           export DOCKER_CLI_EXPERIMENTAL=enabled
 
