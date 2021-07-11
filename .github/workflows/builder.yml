@@ -115,7 +115,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build base image
-        uses: openpeerpower/builder@2021.06.2
+        uses: openpeerpower/builder@v3.1
         with:
           args: |
             $BUILD_ARGS \
@@ -161,7 +161,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build base image
-        uses: openpeerpower/builder@2021.06.2
+        uses: openpeerpower/builder@v3.1
         with:
           args: |
             $BUILD_ARGS \
