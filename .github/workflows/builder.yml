@@ -6,7 +6,7 @@ on:
   release:
     types: ["published"]
   schedule:
-    - cron: "0 2 * * *"
+    - cron: "0 0 1 * *"
 
 env:
   BUILD_TYPE: core
@@ -115,7 +115,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build base image
-        uses: openpeerpower/builder@v3.1
+        uses: openpeerpower/builder@2021.7.3
         with:
           args: |
             $BUILD_ARGS \
@@ -159,7 +159,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build base image
-        uses: openpeerpower/builder@v3.1
+        uses: openpeerpower/builder@2021.7.3
         with:
           args: |
             $BUILD_ARGS \
