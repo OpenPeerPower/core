@@ -2,11 +2,11 @@
   "image": "openpeerpower/{arch}-openpeerpower",
   "shadow_repository": "ghcr.io/openpeerpower",
   "build_from": {
-    "aarch64": "ghcr.io/openpeerpower/aarch64-openpeerpower-base:2021.05.0",
-    "armhf": "ghcr.io/openpeerpower/armhf-openpeerpower-base:2021.05.0",
-    "armv7": "ghcr.io/openpeerpower/armv7-openpeerpower-base:2021.05.0",
-    "amd64": "ghcr.io/openpeerpower/amd64-openpeerpower-base:2021.05.0",
-    "i386": "ghcr.io/openpeerpower/i386-openpeerpower-base:2021.05.0"
+    "aarch64": "ghcr.io/openpeerpower/aarch64-openpeerpower-base:2021.07.2",
+    "armhf": "ghcr.io/openpeerpower/armhf-openpeerpower-base:2021.07.2",
+    "armv7": "ghcr.io/openpeerpower/armv7-openpeerpower-base:2021.07.2",
+    "amd64": "ghcr.io/openpeerpower/amd64-openpeerpower-base:2021.07.2",
+    "i386": "ghcr.io/openpeerpower/i386-openpeerpower-base:2021.07.2"
   },
   "labels": {
     "io.opp.type": "core",
