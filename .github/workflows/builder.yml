@@ -111,8 +111,8 @@ jobs:
         uses: docker/login-action@v1.9.0
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.GIT_USER }}
+          password: ${{ secrets.GIT_TOKEN }}
 
       - name: Build base image
         uses: openpeerpower/builder@2021.7.3
@@ -155,8 +155,8 @@ jobs:
         uses: docker/login-action@v1.9.0
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.GIT_USER }}
+          password: ${{ secrets.GIT_TOKEN }}
 
       - name: Build base image
         uses: openpeerpower/builder@2021.7.3
@@ -216,8 +216,8 @@ jobs:
         uses: docker/login-action@v1.9.0
         with:
           registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          username: ${{ secrets.GIT_USER }}
+          password: ${{ secrets.GIT_TOKEN }}
 
       - name: Build Meta Image
         shell: bash
