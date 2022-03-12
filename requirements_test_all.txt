@@ -544,7 +544,7 @@ pilight==0.1.1
 # openpeerpower.components.seven_segments
 # openpeerpower.components.sighthound
 # openpeerpower.components.tensorflow
-pillow==8.1.2
+pillow==9.0.1
 
 # openpeerpower.components.plex
 plexapi==4.5.1
