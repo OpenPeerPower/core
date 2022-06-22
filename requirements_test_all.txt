@@ -489,7 +489,7 @@ numato-gpio==0.10.0
 # openpeerpower.components.opencv
 # openpeerpower.components.tensorflow
 # openpeerpower.components.trend
-numpy==1.20.3
+numpy==1.22.0
 
 # openpeerpower.components.google
 oauth2client==4.0.0
